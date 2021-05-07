@@ -28,7 +28,7 @@ export default class SelfDescriptionViewModel {
 
   public author: BasicEntryLinkViewModel<ArtistApiContract>;
 
-  public beginEdit = () => {
+  public beginEdit = (): void => {
     this.originalAuthor = this.author.id();
     this.originalText = this.text();
 
@@ -42,7 +42,7 @@ export default class SelfDescriptionViewModel {
     }
   };
 
-  public cancelEdit = () => {
+  public cancelEdit = (): void => {
     this.text(this.originalText);
     this.author.id(this.originalAuthor);
     this.editing(false);
@@ -53,7 +53,7 @@ export default class SelfDescriptionViewModel {
   private originalAuthor: number;
   private originalText: string;
 
-  public save = () => {
+  public save = (): void => {
     this.saveFunc(this);
     this.editing(false);
   };

@@ -12,7 +12,7 @@ export default class StatsViewModel {
     );
   });
 
-  private updateReport = () => {
+  private updateReport = (): void => {
     var cutoff =
       this.showTimespanFilter() && this.timespan()
         ? moment().subtract(parseInt(this.timespan()), 'hours').toISOString()

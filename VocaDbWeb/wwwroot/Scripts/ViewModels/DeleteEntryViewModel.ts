@@ -4,7 +4,7 @@ export default class DeleteEntryViewModel {
     public readonly notesRequired: boolean = false,
   ) {}
 
-  public deleteEntry = () => {
+  public deleteEntry = (): void => {
     this.dialogVisible(false);
     this.deleteCallback(this.notes());
   };
@@ -16,5 +16,5 @@ export default class DeleteEntryViewModel {
   /** Report is valid to be sent (either notes are specified or not required) */
   public isValid = ko.computed(() => !this.notesRequired || this.notes());
 
-  public show = () => this.dialogVisible(true);
+  public show = (): void => this.dialogVisible(true);
 }

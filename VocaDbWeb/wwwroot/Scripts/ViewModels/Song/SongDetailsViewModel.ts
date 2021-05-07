@@ -31,7 +31,7 @@ export default class SongDetailsViewModel {
 
   public comments: EditableCommentsViewModel;
 
-  public getMatchedSite = (page: string) => {
+  public getMatchedSite = (page: string): { siteUrl: string; id: number } => {
     // http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
     const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
     const match = regex.exec(page);
@@ -44,7 +44,7 @@ export default class SongDetailsViewModel {
     return { siteUrl: siteUrl, id: id };
   };
 
-  private getOriginal = (linkedPages: string[]) => {
+  private getOriginal = (linkedPages: string[]): void => {
     if (linkedPages == null || !linkedPages.length) return;
 
     const page = linkedPages[0];
@@ -70,7 +70,7 @@ export default class SongDetailsViewModel {
 
   public id: number;
 
-  public initLyrics = () => {
+  public initLyrics = (): void => {
     if (!this.selectedLyrics() && this.selectedLyricsId()) {
       this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
     }
@@ -140,7 +140,7 @@ export default class SongDetailsViewModel {
       true,
     );
 
-    this.getUsers = () => {
+    this.getUsers = (): void => {
       repository.getRatings(this.id).then((result) => {
         this.ratingsDialogViewModel.ratings(result);
         this.ratingsDialogViewModel.popupVisible(true);
@@ -185,7 +185,7 @@ export default class SongDetailsViewModel {
         ),
     );
 
-    this.showAllVersions = () => {
+    this.showAllVersions = (): void => {
       this.allVersionsVisible(true);
     };
 
@@ -203,9 +203,9 @@ export default class SongDetailsViewModel {
 
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepository.getSongTagSelections(this.id).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepository.updateSongTags(
             this.id,
             tags,
@@ -242,7 +242,7 @@ export class SongInListsViewModel {
   public show: () => void;
 
   constructor(repository: SongRepository, songId: number) {
-    this.show = () => {
+    this.show = (): void => {
       repository.songListsForSong(songId, (result) => {
         this.contentHtml(result);
         this.dialogVisible(true);
@@ -287,11 +287,11 @@ export class SongListsViewModel {
     resources: SongDetailsResources,
     songId: number,
   ) {
-    var isValid = () => {
+    var isValid = (): boolean => {
       return this.selectedListId() != null || this.newListName().length > 0;
     };
 
-    this.addSongToList = () => {
+    this.addSongToList = (): void => {
       if (isValid()) {
         const listId =
           this.tabName() !== SongListsViewModel.tabName_New
@@ -312,7 +312,7 @@ export class SongListsViewModel {
       }
     };
 
-    this.showSongLists = () => {
+    this.showSongLists = (): void => {
       repository.songListsForUser(songId, (songLists) => {
         var personalLists = _.filter(
           songLists,

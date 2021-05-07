@@ -12,7 +12,7 @@ declare global {
 export function userAutocomplete(
   element: HTMLElement,
   valueAccessor: () => any,
-) {
+): void {
   const params: EntryAutoCompleteParams<UserApiContract> = {
     acceptSelection: (id, term, itemType, item) => {
       valueAccessor()(item);

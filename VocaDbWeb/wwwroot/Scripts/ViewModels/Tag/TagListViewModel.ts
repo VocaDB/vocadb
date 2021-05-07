@@ -42,7 +42,7 @@ export default class TagListViewModel {
 
   public displayedTagUsages: KnockoutComputed<TagUsageForApiContract[]>;
 
-  public getTagUrl = (tag: TagUsageForApiContract) => {
+  public getTagUrl = (tag: TagUsageForApiContract): string => {
     return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
   };
 
@@ -50,7 +50,7 @@ export default class TagListViewModel {
 
   public tagUsages: KnockoutObservableArray<TagUsageForApiContract>;
 
-  public updateTagUsages = (usages: TagUsageForApiContract[]) => {
+  public updateTagUsages = (usages: TagUsageForApiContract[]): void => {
     this.tagUsages(
       _.chain(usages)
         .sortBy((u) => u.tag.name.toLowerCase())

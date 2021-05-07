@@ -21,10 +21,10 @@ export default class TagFilters {
       .extend({ notify: 'always' });
   }
 
-  public addTag = (tag: TagBaseContract) =>
+  public addTag = (tag: TagBaseContract): void =>
     this.tags.push(TagFilter.fromContract(tag));
 
-  public addTags = (selectedTagIds: number[]) => {
+  public addTags = (selectedTagIds: number[]): void => {
     if (!selectedTagIds) return;
 
     var filters = _.map(selectedTagIds, (a) => new TagFilter(a));
@@ -49,7 +49,7 @@ export default class TagFilters {
   // Fired when any of the tag filters is changed
   public filters: KnockoutComputed<void>;
 
-  public selectTag = (tag: TagBaseContract) => {
+  public selectTag = (tag: TagBaseContract): void => {
     this.tags([TagFilter.fromContract(tag)]);
   };
 

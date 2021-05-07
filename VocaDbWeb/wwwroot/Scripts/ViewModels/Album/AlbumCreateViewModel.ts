@@ -10,7 +10,7 @@ export default class AlbumCreateViewModel {
     private artistRepo: ArtistRepository,
   ) {}
 
-  private addArtist = (artistId: number) => {
+  private addArtist = (artistId: number): void => {
     if (artistId) {
       this.artistRepo
         .getOne(artistId)
@@ -24,7 +24,7 @@ export default class AlbumCreateViewModel {
     acceptSelection: this.addArtist,
   };
 
-  public checkDuplicates = () => {
+  public checkDuplicates = (): void => {
     var term1 = this.nameOriginal();
     var term2 = this.nameRomaji();
     var term3 = this.nameEnglish();
@@ -42,11 +42,11 @@ export default class AlbumCreateViewModel {
   public nameRomaji = ko.observable('');
   public nameEnglish = ko.observable('');
 
-  public removeArtist = (artist: ArtistContract) => {
+  public removeArtist = (artist: ArtistContract): void => {
     this.artists.remove(artist);
   };
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };

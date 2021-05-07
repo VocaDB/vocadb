@@ -14,7 +14,7 @@ function initPage(
   urlMapper,
   viewModel: ArtistDetailsViewModel,
   songRepo: SongRepository,
-) {
+): void {
   $('#addToUserLink').button({
     disabled: $('#addToUserLink').hasClass('disabled'),
     icons: { primary: 'ui-icon-heart' },
@@ -82,7 +82,7 @@ const ArtistDetails = (
   },
   reportTypes: IEntryReportType[],
   saveStr: string,
-) => {
+): void => {
   $(function () {
     moment.locale(vdb.values.culture);
 

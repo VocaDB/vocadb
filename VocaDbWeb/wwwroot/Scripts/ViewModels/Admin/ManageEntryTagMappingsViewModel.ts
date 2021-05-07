@@ -19,7 +19,7 @@ export default class ManageEntryTagMappingsViewModel {
     this.loadMappings();
   }
 
-  public addMapping = () => {
+  public addMapping = (): void => {
     if (!this.newEntryType || this.newTargetTag.isEmpty()) return;
 
     if (
@@ -57,17 +57,17 @@ export default class ManageEntryTagMappingsViewModel {
     this.newTargetTag.clear();
   };
 
-  public deleteMapping = (mapping: EditTagMappingViewModel) => {
+  public deleteMapping = (mapping: EditTagMappingViewModel): void => {
     mapping.isDeleted(true);
   };
 
-  public getTagUrl = (tag: EditTagMappingViewModel) => {
+  public getTagUrl = (tag: EditTagMappingViewModel): string => {
     return functions.mapAbsoluteUrl(
       EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
     );
   };
 
-  private loadMappings = async () => {
+  private loadMappings = async (): Promise<void> => {
     const result = await this.tagRepo.getEntryTagMappings();
     this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
   };
@@ -80,7 +80,10 @@ export default class ManageEntryTagMappingsViewModel {
     _.filter(this.mappings(), (m) => !m.isDeleted()),
   );
 
-  private getEnumValues = <TEnum>(Enum: any, selected?: Array<TEnum>) =>
+  private getEnumValues = <TEnum>(
+    Enum: any,
+    selected?: Array<TEnum>,
+  ): string[] =>
     Object.keys(Enum).filter(
       (k) =>
         (!selected || _.includes(selected, Enum[k])) &&
@@ -119,7 +122,7 @@ export default class ManageEntryTagMappingsViewModel {
       )?.values ?? [],
   );
 
-  public save = async () => {
+  public save = async (): Promise<void> => {
     const mappings = this.activeMappings();
     await this.tagRepo.saveEntryMappings(mappings);
     ui.showSuccessMessage('Saved');
@@ -139,5 +142,5 @@ export class EditEntryTagMappingViewModel {
   entryType: EntryTypeAndSubTypeContract;
   tag: TagBaseContract;
 
-  public deleteMapping = () => this.isDeleted(true);
+  public deleteMapping = (): void => this.isDeleted(true);
 }

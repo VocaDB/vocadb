@@ -13,7 +13,7 @@ export default class DiscussionRepository implements ICommentRepository {
     private urlMapper: UrlMapper,
   ) {}
 
-  private mapUrl = (relative: string) => {
+  private mapUrl = (relative: string): string => {
     return this.urlMapper.mapRelative(
       UrlMapper.mergeUrls('/api/discussions', relative),
     );

@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ManageTagMappingsViewModel from '../ViewModels/Admin/ManageTagMappingsViewModel';
 
-const AdminManageTagMappings = () => {
+const AdminManageTagMappings = (): void => {
   $(function () {
     ko.punches.enableAll();
 

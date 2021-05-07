@@ -72,9 +72,9 @@ export default class ArtistDetailsViewModel {
 
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepository.getArtistTagSelections(artistId).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepository.updateArtistTags(
             artistId,
             tags,
@@ -99,7 +99,7 @@ export default class ArtistDetailsViewModel {
     this.loadHighcharts();
   }
 
-  public addFollowedArtist = () => {
+  public addFollowedArtist = (): void => {
     this.userRepository.createArtistSubscription(this.artistId, () => {
       this.hasArtistSubscription(true);
       this.customizeSubscriptionDialog.notificationsMethod('Site');
@@ -114,7 +114,7 @@ export default class ArtistDetailsViewModel {
 
   private lang: string;
 
-  private loadHighcharts = () => {
+  private loadHighcharts = (): void => {
     // Delayed load highcharts stuff
     var highchartsPromise = $.getScript(
       this.urlMapper.mapRelative('scripts/highcharts/4.2.0/highcharts.js'),
@@ -143,7 +143,7 @@ export default class ArtistDetailsViewModel {
     );
   };
 
-  public removeFollowedArtist = () => {
+  public removeFollowedArtist = (): void => {
     this.userRepository.deleteArtistSubscription(this.artistId, () => {
       this.hasArtistSubscription(false);
     });
@@ -170,7 +170,7 @@ export default class ArtistDetailsViewModel {
 
   public tagUsages: TagListViewModel;
 
-  public initMainAlbums = () => {
+  public initMainAlbums = (): void => {
     if (this.mainAlbumsViewModel()) return;
 
     this.mainAlbumsViewModel(
@@ -194,7 +194,7 @@ export default class ArtistDetailsViewModel {
     );
   };
 
-  public initCollaborationAlbums = () => {
+  public initCollaborationAlbums = (): void => {
     if (this.collaborationAlbumsViewModel()) return;
 
     this.collaborationAlbumsViewModel(
@@ -218,7 +218,7 @@ export default class ArtistDetailsViewModel {
     );
   };
 
-  public initSongs = () => {
+  public initSongs = (): void => {
     if (this.songsViewModel()) return;
 
     this.songsViewModel(
@@ -276,7 +276,7 @@ export class CustomizeArtistSubscriptionViewModel {
     });
   }
 
-  public show = () => {
+  public show = (): void => {
     this.dialogVisible(true);
   };
 }

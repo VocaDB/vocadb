@@ -4,13 +4,13 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import VenueEditViewModel from '../ViewModels/Venue/VenueEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
-const VenueEdit = (model: VenueForEditContract) => {
+const VenueEdit = (model: VenueForEditContract): void => {
   $(function () {
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);

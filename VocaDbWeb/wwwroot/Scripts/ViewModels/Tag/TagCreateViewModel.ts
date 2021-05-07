@@ -25,7 +25,7 @@ export default class TagCreateViewModel {
     });
   }
 
-  public createTag = () => {
+  public createTag = (): void => {
     this.tagRepo
       .create(this.newTagName())
       .then(

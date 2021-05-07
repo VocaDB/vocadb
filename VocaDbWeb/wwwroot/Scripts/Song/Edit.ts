@@ -6,7 +6,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import SongEditViewModel from '../ViewModels/Song/SongEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#tabs').tabs();
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -34,7 +34,7 @@ const SongEdit = (
   },
   saveWarning,
   webLinkCategoryJson: TranslatedEnumField[],
-) => {
+): void => {
   $(document).ready(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

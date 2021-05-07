@@ -4,11 +4,11 @@ interface KnockoutBindingHandlers {
 
 // Code from http://stackoverflow.com/questions/8611327/integrating-jquery-ui-dialog-with-knockoutjs/8611892#8611892
 ko.bindingHandlers.dialog = {
-  init: function (element, valueAccessor, allBindingsAccessor) {
+  init: function (element, valueAccessor, allBindingsAccessor): void {
     var options: any = ko.utils.unwrapObservable(valueAccessor()) || {};
     //do in a setTimeout, so the applyBindings doesn't bind twice from element being copied and moved to bottom
     setTimeout(function () {
-      options.close = function () {
+      options.close = function (): void {
         allBindingsAccessor().dialogVisible(false);
       };
 
@@ -21,7 +21,7 @@ ko.bindingHandlers.dialog = {
       $(element).dialog('destroy');
     });
   },
-  update: function (element, valueAccessor, allBindingsAccessor) {
+  update: function (element, valueAccessor, allBindingsAccessor): void {
     var shouldBeOpen = ko.utils.unwrapObservable(
         allBindingsAccessor().dialogVisible,
       ),

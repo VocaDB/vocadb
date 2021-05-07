@@ -4,7 +4,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ReleaseEventEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#tabs').tabs();
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -14,7 +14,7 @@ function initPage() {
 const EventEdit = (
   artistRoleJson: { [key: string]: string },
   model: ReleaseEventContract,
-) => {
+): void => {
   $(function () {
     ko.punches.enableAll();
 

@@ -16,9 +16,10 @@ export default class PVRatingButtonsViewModel {
   public ratingInProgress = ko.observable(false);
 
   private setRating: (rating: SongVoteRating) => void;
-  public setRating_favorite = () => this.setRating(SongVoteRating.Favorite);
-  public setRating_like = () => this.setRating(SongVoteRating.Like);
-  public setRating_nothing = () => this.setRating(SongVoteRating.Nothing);
+  public setRating_favorite = (): void =>
+    this.setRating(SongVoteRating.Favorite);
+  public setRating_like = (): void => this.setRating(SongVoteRating.Like);
+  public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
 
   constructor(
     repository: UserRepository,
@@ -36,7 +37,7 @@ export default class PVRatingButtonsViewModel {
       () => this.rating() === SongVoteRating.Like,
     );
 
-    this.setRating = (rating: SongVoteRating) => {
+    this.setRating = (rating: SongVoteRating): void => {
       if (this.ratingInProgress() || !isLoggedIn) return;
 
       this.ratingInProgress(true);

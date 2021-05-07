@@ -41,7 +41,7 @@ export default class LyricsForSongEditViewModel {
     this.isNew = contract == null;
   }
 
-  public toggleAccordion = (vm, event: JQueryEventObject) => {
+  public toggleAccordion = (vm, event: JQueryEventObject): void => {
     var elem = $(event.target)
       .closest('.accordion-group')
       .find('.accordion-body') as any;
@@ -56,7 +56,7 @@ export default class LyricsForSongEditViewModel {
 
   public language: KnockoutObservable<string>;
 
-  public showLanguageSelection = () =>
+  public showLanguageSelection = (): boolean =>
     this.translationType() !== TranslationType[TranslationType.Romanized];
 
   public source: KnockoutObservable<string>;
@@ -72,7 +72,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
   LyricsForSongEditViewModel,
   LyricsForSongContract
 > {
-  private find = (translationType: string) => {
+  private find = (translationType: string): LyricsForSongEditViewModel => {
     var vm = _.find(
       this.items(),
       (i) => i.translationType() === translationType,
@@ -90,7 +90,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
     this.romanized = this.find('Romanized');
   }
 
-  public changeToOriginal = (lyrics: LyricsForSongEditViewModel) => {
+  public changeToOriginal = (lyrics: LyricsForSongEditViewModel): void => {
     this.original.id(lyrics.id());
     this.original.value(lyrics.value());
     this.original.cultureCode(lyrics.cultureCode());
@@ -99,7 +99,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
     this.items.remove(lyrics);
   };
 
-  public changeToTranslation = (lyrics: LyricsForSongEditViewModel) => {
+  public changeToTranslation = (lyrics: LyricsForSongEditViewModel): void => {
     if (lyrics === this.original) {
       var newLyrics = new LyricsForSongEditViewModel({
         id: this.original.id(),

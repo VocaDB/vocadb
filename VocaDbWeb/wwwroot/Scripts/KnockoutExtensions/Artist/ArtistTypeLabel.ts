@@ -51,7 +51,7 @@ ko.bindingHandlers.artistTypeLabel = {
     element: HTMLElement,
     valueAccessor: () => string,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var val = valueAccessor();
 
     if (!val) {

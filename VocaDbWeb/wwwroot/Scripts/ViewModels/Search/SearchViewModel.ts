@@ -268,7 +268,7 @@ export default class SearchViewModel {
     }
   };
 
-  public updateResults = () => {
+  public updateResults = (): void => {
     var vm = this.currentCategoryViewModel();
 
     if (vm != null) vm.updateResultsWithTotalCount();

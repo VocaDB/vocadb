@@ -23,7 +23,7 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       this.tagRepo
         .getList({
           start: pagingProperties.start,

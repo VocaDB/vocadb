@@ -11,7 +11,7 @@ const TagViewVersion = (model: {
       id: number;
     };
   };
-}) => {
+}): void => {
   $(function () {
     $('#downloadXmlLink').button({
       icons: { primary: 'ui-icon-arrowthickstop-1-s' },

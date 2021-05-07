@@ -15,7 +15,7 @@ export default class EntryUrlMapper {
     typeName: string | EntryType,
     id: number,
     urlFriendlyName?: string,
-  ) {
+  ): string {
     var prefix;
 
     if (typeof typeName === 'string') {
@@ -63,11 +63,11 @@ export default class EntryUrlMapper {
     return prefix + urlFriendlyPart;
   }
 
-  public static details_entry(entry: EntryRefContract, slug?: string) {
+  public static details_entry(entry: EntryRefContract, slug?: string): string {
     return EntryUrlMapper.details(entry.entryType, entry.id, slug);
   }
 
-  public static details_song(entry: SongApiContract) {
+  public static details_song(entry: SongApiContract): string {
     return EntryUrlMapper.details(
       EntryType.Song,
       entry.id,
@@ -75,11 +75,13 @@ export default class EntryUrlMapper {
     );
   }
 
-  public static details_tag(id: number, slug?: string) {
+  public static details_tag(id: number, slug?: string): string {
     return EntryUrlMapper.details(EntryType.Tag, id, slug);
   }
 
-  public static details_tag_contract(tag: TagBaseContract | TagApiContract) {
+  public static details_tag_contract(
+    tag: TagBaseContract | TagApiContract,
+  ): string | null {
     if (!tag) return null;
 
     if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
@@ -87,7 +89,7 @@ export default class EntryUrlMapper {
     return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
   }
 
-  public static details_user_byName(name: string) {
+  public static details_user_byName(name: string): string {
     return functions.mapAbsoluteUrl('/Profile/' + name);
   }
 }

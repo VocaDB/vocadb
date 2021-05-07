@@ -2,7 +2,11 @@ import HtmlHelper from '../../Helpers/HtmlHelper';
 
 QUnit.module('HtmlHelper');
 
-var testBoldAndHtmlEncode = (text: string, term: string, expected: string) => {
+var testBoldAndHtmlEncode = (
+  text: string,
+  term: string,
+  expected: string,
+): void => {
   var actual = HtmlHelper.boldAndHtmlEncode(text, term);
   equal(actual, expected, 'with term ' + term);
 };

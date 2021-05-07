@@ -138,7 +138,7 @@ export default class PVPlayerViewModel {
     service: PVService,
     songId: number,
     callback: (pvId: string) => void,
-  ) => {
+  ): void => {
     this.songRepo.getPvId(songId, service).then(callback);
   };
 
@@ -151,18 +151,22 @@ export default class PVPlayerViewModel {
   );
   public resetSong: () => void = null;
   public selectedSong = ko.observable<IPVPlayerSong>(null);
-  private static serviceName = (service: PVService) => PVService[service];
+  private static serviceName = (service: PVService): string =>
+    PVService[service];
   public shuffle = ko.observable(false);
 
-  private songFinishedPlayback = () => {
+  private songFinishedPlayback = (): void => {
     if (this.autoplay() && this.nextSong) this.nextSong();
   };
 
-  private songHasPVService = (song: IPVPlayerSong, service: PVService) => {
+  private songHasPVService = (
+    song: IPVPlayerSong,
+    service: PVService,
+  ): boolean => {
     return _.includes(song.song.pvServicesArray, service);
   };
 
-  public songIsValid = (song: IPVPlayerSong) => {
+  public songIsValid = (song: IPVPlayerSong): boolean => {
     return (
       !this.autoplay() ||
       this.autoplayServices.some((s) =>

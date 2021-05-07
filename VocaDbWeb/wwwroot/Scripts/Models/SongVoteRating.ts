@@ -8,7 +8,7 @@ enum SongVoteRating {
 
 export default SongVoteRating;
 
-export function parseSongVoteRating(rating: string) {
+export function parseSongVoteRating(rating: string): SongVoteRating {
   switch (rating) {
     case 'Nothing':
       return SongVoteRating.Nothing;

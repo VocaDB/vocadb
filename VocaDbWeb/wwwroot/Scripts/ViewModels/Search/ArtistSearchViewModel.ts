@@ -30,7 +30,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       this.artistRepo
         .getList(
           pagingProperties,
@@ -52,7 +52,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
     };
   }
 
-  public artistTypeName = (artist: ArtistApiContract) => {
+  public artistTypeName = (artist: ArtistApiContract): string => {
     return this.searchViewModel.resources().artistTypeNames[artist.artistType];
   };
 

@@ -4,7 +4,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import CommentListViewModel from '../ViewModels/Comment/CommentListViewModel';
 
-const CommentCommentsByUser = (model: { id: number }) => {
+const CommentCommentsByUser = (model: { id: number }): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

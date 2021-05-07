@@ -40,7 +40,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       this.eventRepo
         .getList({
           start: pagingProperties.start,
@@ -89,7 +89,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
       : 'AdditionalNames,MainPicture,Series,Venue',
   );
 
-  public getCategoryName = (event: ReleaseEventContract) => {
+  public getCategoryName = (event: ReleaseEventContract): string => {
     var inherited = event.series ? event.series.category : event.category;
 
     if (!inherited || inherited === 'Unspecified') return '';

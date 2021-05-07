@@ -24,7 +24,7 @@ export default class PlayListViewModel {
     private languageSelection: ContentLanguagePreference,
   ) {
     pvPlayerViewModel.nextSong = this.nextSong;
-    pvPlayerViewModel.resetSong = () => {
+    pvPlayerViewModel.resetSong = (): void => {
       this.pvPlayerViewModel.selectedSong(
         _.find(this.page(), (song) => pvPlayerViewModel.songIsValid(song)),
       );
@@ -41,16 +41,16 @@ export default class PlayListViewModel {
     this.pvServiceIcons = new PVServiceIcons(urlMapper);
   }
 
-  public formatLength = (length: number) =>
+  public formatLength = (length: number): string =>
     DateTimeHelper.formatFromSeconds(length);
 
-  private getRandomSongIndex = () => {
+  private getRandomSongIndex = (): number => {
     return Math.floor(Math.random() * this.paging.totalItems());
   };
 
   // Gets the index of the currently playing song.
   // -1 if the currently playing song isn't in the current list of songs, which is possible if the search filters were changed.
-  private getSongIndex = (song: IPVPlayerSong) => {
+  private getSongIndex = (song: IPVPlayerSong): number => {
     // Might need to build a lookup for this for large playlists
     for (var i = 0; i < this.page().length; ++i) {
       if (this.page()[i].song.id == song.song.id) return i;
@@ -61,7 +61,7 @@ export default class PlayListViewModel {
 
   // Gets a song with a specific playlist index.
   // If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
-  private getSongWithPlayListIndex = (index: number) => {
+  private getSongWithPlayListIndex = (index: number): ISongForPlayList => {
     // Might need to build a lookup for this for large playlists
     return _.find(this.page(), (s) => s.indexInPlayList == index);
   };
@@ -70,14 +70,14 @@ export default class PlayListViewModel {
 
   public isInit = false;
 
-  public init = () => {
+  public init = (): void => {
     if (this.isInit) return;
 
     this.updateResultsWithTotalCount();
     this.isInit = true;
   };
 
-  public nextSong = () => {
+  public nextSong = (): void => {
     if (this.paging.totalItems() == 0) return;
 
     var index;
@@ -122,11 +122,11 @@ export default class PlayListViewModel {
   public pauseNotifications = false;
   public pvServiceIcons: PVServiceIcons;
 
-  private playSong = (song: ISongForPlayList) => {
+  private playSong = (song: ISongForPlayList): void => {
     this.pvPlayerViewModel.selectedSong(song);
   };
 
-  public scrollEnd = () => {
+  public scrollEnd = (): void => {
     // For now, disable autoload in shuffle mode
     if (this.hasMoreSongs() && !this.pvPlayerViewModel.shuffle()) {
       this.paging.nextPage();
@@ -136,15 +136,15 @@ export default class PlayListViewModel {
 
   public songsLoaded = ko.computed(() => this.page().length);
 
-  public updateResultsWithTotalCount = (callback?: () => void) =>
+  public updateResultsWithTotalCount = (callback?: () => void): void =>
     this.updateResults(true, null, callback);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
   public updateResults = (
     clearResults: boolean = true,
     songWithIndex?: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

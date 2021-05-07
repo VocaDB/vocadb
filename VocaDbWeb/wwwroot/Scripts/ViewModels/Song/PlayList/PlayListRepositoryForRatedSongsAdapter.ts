@@ -31,7 +31,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
     fields: SongOptionalFields,
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-  ) => {
+  ): void => {
     this.userRepo
       .getRatedSongsList(
         this.userId,

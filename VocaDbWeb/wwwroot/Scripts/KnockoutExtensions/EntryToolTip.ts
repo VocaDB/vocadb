@@ -20,7 +20,7 @@ export function initToolTip(
   id: number,
   params?: any,
   foreignDomain?: string,
-) {
+): void {
   const whitelistedDomains = [
     'http://vocadb.net',
     'https://vocadb.net',
@@ -65,7 +65,7 @@ ko.bindingHandlers.entryToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<EntryRefContract>,
-  ) => {
+  ): void => {
     var value: EntryRefContract = ko.unwrap(valueAccessor());
 
     switch (value.entryType) {
@@ -83,7 +83,7 @@ ko.bindingHandlers.albumToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-  ) => {
+  ): void => {
     initToolTip(element, '/Album/PopupContent', ko.unwrap(valueAccessor()));
   },
 };
@@ -92,7 +92,7 @@ ko.bindingHandlers.artistToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-  ) => {
+  ): void => {
     initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
   },
 };
@@ -101,7 +101,7 @@ ko.bindingHandlers.eventToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-  ) => {
+  ): void => {
     const culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), {
       culture: culture,
@@ -114,7 +114,7 @@ ko.bindingHandlers.songToolTip = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
     allPropertiesAccessor: () => TooltipOptions,
-  ) => {
+  ): void => {
     const allProps = allPropertiesAccessor();
     initToolTip(
       element,
@@ -130,7 +130,7 @@ ko.bindingHandlers.tagToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-  ) => {
+  ): void => {
     var culture = vdb.values.uiCulture || undefined;
     var lang =
       ContentLanguagePreference[vdb.values.languagePreference] || undefined;
@@ -145,7 +145,7 @@ ko.bindingHandlers.userToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-  ) => {
+  ): void => {
     var culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), {
       culture: culture,

@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export function albumAutoComplete(element: HTMLElement, valueAccessor) {
+export function albumAutoComplete(element: HTMLElement, valueAccessor): void {
   var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(
     valueAccessor(),
   );
@@ -19,7 +19,7 @@ export function albumAutoComplete(element: HTMLElement, valueAccessor) {
   var filter = properties.filter;
 
   if (properties.ignoreId) {
-    filter = (item) => {
+    filter = (item): boolean => {
       if (item.id == properties.ignoreId) {
         return false;
       }

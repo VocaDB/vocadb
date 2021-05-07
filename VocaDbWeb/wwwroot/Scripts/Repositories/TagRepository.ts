@@ -61,7 +61,7 @@ export default class TagRepository extends BaseRepository {
     });
   };
 
-  public getComments = () =>
+  public getComments = (): EntryCommentRepository =>
     new EntryCommentRepository(
       this.httpClient,
       new UrlMapper(this.baseUrl),

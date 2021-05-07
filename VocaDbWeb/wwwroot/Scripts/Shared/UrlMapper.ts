@@ -7,7 +7,7 @@ export default class UrlMapper {
     );
   };
 
-  public static mergeUrls = (base: string, relative: string) => {
+  public static mergeUrls = (base: string, relative: string): string => {
     if (base.charAt(base.length - 1) == '/' && relative.charAt(0) == '/')
       return base + relative.substr(1);
 
@@ -22,7 +22,7 @@ export default class UrlMapper {
 
   constructor(public baseUrl: string) {}
 
-  public mapRelative(relative: string) {
+  public mapRelative(relative: string): string {
     return functions.mergeUrls(this.baseUrl, relative);
   }
 }

@@ -15,7 +15,7 @@ export default class EntryMergeValidationHelper {
     targetStatus: string | EntryStatus,
     baseCreated: string,
     targetCreated: string,
-  ) {
+  ): IEntryMergeValidationResult {
     var baseStatusEnum = EntryMergeValidationHelper.toEnum(baseStatus);
     var targetStatusEnum = EntryMergeValidationHelper.toEnum(targetStatus);
 
@@ -35,7 +35,7 @@ export default class EntryMergeValidationHelper {
   public static validateEntry(
     base: CommonEntryContract,
     target: CommonEntryContract,
-  ) {
+  ): IEntryMergeValidationResult {
     if (base == null || target == null) {
       return {
         validationError_targetIsLessComplete: false,

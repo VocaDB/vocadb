@@ -181,7 +181,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       if (this.viewMode() === 'PlayList') {
         this.playListViewModel.updateResultsWithTotalCount();
         callback({ items: [], totalCount: 0 });
@@ -277,7 +277,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   public maxLengthFormatted: KnockoutComputed<string>;
 
   // Remember, JavaScript months start from 0 (who came up with that??)
-  private toDateOrNull = (mom: moment.Moment) =>
+  private toDateOrNull = (mom: moment.Moment): Date | null =>
     mom.isValid() ? mom.toDate() : null;
   private afterDate = ko.computed(() =>
     this.dateYear()
@@ -286,7 +286,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
         )
       : null,
   );
-  private beforeDate = () =>
+  private beforeDate = (): Date | null =>
     this.dateYear()
       ? this.toDateOrNull(
           moment
@@ -301,7 +301,9 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       : 'AdditionalNames,ThumbUrl',
   );
 
-  public getPVServiceIcons = (services: string) => {
+  public getPVServiceIcons = (
+    services: string,
+  ): { service: string; url: string }[] => {
     return this.pvServiceIcons.getIconUrls(services);
   };
 

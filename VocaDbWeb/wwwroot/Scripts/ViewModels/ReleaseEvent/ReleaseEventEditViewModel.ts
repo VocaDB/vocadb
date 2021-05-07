@@ -90,7 +90,7 @@ export default class ReleaseEventEditViewModel {
     }
   }
 
-  addArtist = (artistId?: number, customArtistName?: string) => {
+  addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
       this.artistRepository.getOne(artistId).then((artist) => {
         const data: ArtistForEventContract = {
@@ -143,7 +143,7 @@ export default class ReleaseEventEditViewModel {
 
   public description = ko.observable<string>();
 
-  public editArtistRoles = (artist: ArtistForEventEditViewModel) => {
+  public editArtistRoles = (artist: ArtistForEventEditViewModel): void => {
     this.artistRolesEditViewModel.show(artist);
   };
 
@@ -160,17 +160,17 @@ export default class ReleaseEventEditViewModel {
   public names: NamesEditViewModel;
   public pvs: PVListEditViewModel;
 
-  private redirectToDetails = () => {
+  private redirectToDetails = (): void => {
     window.location.href = this.urlMapper.mapRelative(
       EntryUrlMapper.details(EntryType.ReleaseEvent, this.id),
     );
   };
 
-  private redirectToRoot = () => {
+  private redirectToRoot = (): void => {
     window.location.href = this.urlMapper.mapRelative('Event');
   };
 
-  public removeArtist = (artist: ArtistForEventEditViewModel) => {
+  public removeArtist = (artist: ArtistForEventEditViewModel): void => {
     this.artistLinks.remove(artist);
   };
 
@@ -178,14 +178,14 @@ export default class ReleaseEventEditViewModel {
 
   public songList: BasicEntryLinkViewModel<SongListBaseContract>;
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };
 
   public submitting = ko.observable(false);
 
-  public translateArtistRole = (role: string) => {
+  public translateArtistRole = (role: string): string => {
     return this.artistRoleNames[role];
   };
 

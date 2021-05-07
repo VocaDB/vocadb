@@ -2,7 +2,7 @@ import AdminRepository from '../../Repositories/AdminRepository';
 import ui from '../../Shared/MessagesTyped';
 
 export default class ManageIPRulesViewModel {
-  public add = () => {
+  public add = (): void => {
     const addr = this.newAddress().trim();
 
     if (!addr) return;
@@ -20,7 +20,7 @@ export default class ManageIPRulesViewModel {
 
   public bannedIPs = ko.observableArray<string>();
 
-  public deleteOldRules = () => {
+  public deleteOldRules = (): void => {
     var cutOff = moment().subtract(1, 'years').toDate();
 
     var toBeRemoved = _.filter(this.rules(), (r) => r.created < cutOff);
@@ -29,15 +29,15 @@ export default class ManageIPRulesViewModel {
 
   public newAddress = ko.observable('');
 
-  public remove = (rule: IPRule) => {
+  public remove = (rule: IPRule): void => {
     this.rules.remove(rule);
   };
 
   public rules: KnockoutObservableArray<IPRule>;
 
-  public save = () => {
+  public save = (): void => {
     var json = ko.toJS(this);
-    ko.utils.postJson(location.href, json, null);
+    ko.utils.postJson(window.location.href, json, null);
   };
 
   constructor(data: IPRuleContract[], repo: AdminRepository) {

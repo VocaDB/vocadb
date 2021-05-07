@@ -32,7 +32,7 @@ function addArtist(
   viewModel: SongEditViewModel,
   artistType: ArtistType,
   roles: ArtistRoles,
-) {
+): void {
   const artist =
     artistType != null
       ? { id: 39, name: 'Clean Tears', artistType: ArtistType[artistType] }
@@ -68,7 +68,7 @@ QUnit.module('SongEditViewModelTests', {
   },
 });
 
-function createViewModel() {
+function createViewModel(): SongEditViewModel {
   return new SongEditViewModel(
     songRepo,
     artistRepo,

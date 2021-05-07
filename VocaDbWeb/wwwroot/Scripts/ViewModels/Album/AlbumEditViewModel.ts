@@ -40,7 +40,7 @@ export default class AlbumEditViewModel {
   // Adds a new artist to the album
   // artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-  addArtist = (artistId?: number, customArtistName?: string) => {
+  addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
       this.artistRepository.getOne(artistId).then((artist) => {
         var data: ArtistForAlbumContract = {
@@ -85,14 +85,14 @@ export default class AlbumEditViewModel {
 
   public catalogNumber: KnockoutObservable<string>;
 
-  public createNewIdentifier = () => {
+  public createNewIdentifier = (): void => {
     if (this.newIdentifier()) {
       this.identifiers.push(this.newIdentifier());
       this.newIdentifier('');
     }
   };
 
-  public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+  public customizeName = (artistLink: ArtistForAlbumEditViewModel): void => {
     this.editedArtistLink.open(artistLink);
   };
 
@@ -122,7 +122,7 @@ export default class AlbumEditViewModel {
 
   public discs: AlbumDiscPropertiesListEditViewModel;
 
-  public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
+  public editArtistRoles = (artist: ArtistForAlbumEditViewModel): void => {
     this.artistRolesEditViewModel.show(artist);
   };
 
@@ -182,7 +182,7 @@ export default class AlbumEditViewModel {
 
   public status: KnockoutObservable<string>;
 
-  public submit = () => {
+  public submit = (): boolean => {
     if (
       this.hasValidationErrors() &&
       this.status() !== 'Draft' &&
@@ -317,7 +317,7 @@ export default class AlbumEditViewModel {
       songId: number,
       songName: string,
       itemType?: string,
-    ) => {
+    ): void => {
       if (songId) {
         songRepository
           .getOneWithComponents(songId, 'AdditionalNames,Artists', null)
@@ -357,7 +357,7 @@ export default class AlbumEditViewModel {
       }
     };
 
-    this.addArtistsToSelectedTracks = () => {
+    this.addArtistsToSelectedTracks = (): void => {
       _.forEach(
         _.filter(this.tracks(), (s) => s.selected()),
         (song) => {
@@ -385,7 +385,7 @@ export default class AlbumEditViewModel {
       });
     });
 
-    this.artistsForTracks = () => {
+    this.artistsForTracks = (): ArtistContract[] => {
       var notAllowedTypes = ['Label'];
       return _.map(
         _.filter(
@@ -411,7 +411,7 @@ export default class AlbumEditViewModel {
 
     this.discs = new AlbumDiscPropertiesListEditViewModel(data.discs);
 
-    this.editMultipleTrackProperties = () => {
+    this.editMultipleTrackProperties = (): void => {
       var artists = this.artistsForTracks();
       this.editedSong(new TrackPropertiesViewModel(artists, null));
       this.trackPropertiesDialogButtons([
@@ -424,7 +424,7 @@ export default class AlbumEditViewModel {
       this.trackPropertiesDialogVisible(true);
     };
 
-    this.editTrackProperties = (song) => {
+    this.editTrackProperties = (song): void => {
       var artists = this.artistsForTracks();
       this.editedSong(new TrackPropertiesViewModel(artists, song));
       this.trackPropertiesDialogButtons([
@@ -435,7 +435,7 @@ export default class AlbumEditViewModel {
 
     this.editedSong = ko.observable(null);
 
-    this.getArtistLink = (artistForAlbumId) => {
+    this.getArtistLink = (artistForAlbumId): ArtistForAlbumEditViewModel => {
       return _.find(
         this.artistLinks(),
         (artist) => artist.id == artistForAlbumId,
@@ -450,11 +450,11 @@ export default class AlbumEditViewModel {
 
     this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
 
-    this.removeArtist = (artistForAlbum) => {
+    this.removeArtist = (artistForAlbum): void => {
       this.artistLinks.remove(artistForAlbum);
     };
 
-    this.removeArtistsFromSelectedTracks = () => {
+    this.removeArtistsFromSelectedTracks = (): void => {
       _.forEach(
         _.filter(this.tracks(), (s) => s.selected()),
         (song) => {
@@ -471,11 +471,11 @@ export default class AlbumEditViewModel {
       this.trackPropertiesDialogVisible(false);
     };
 
-    this.removeTrack = (song) => {
+    this.removeTrack = (song): void => {
       this.tracks.remove(song);
     };
 
-    this.saveTrackProperties = () => {
+    this.saveTrackProperties = (): void => {
       this.trackPropertiesDialogVisible(false);
 
       if (this.editedSong) {
@@ -518,11 +518,11 @@ export default class AlbumEditViewModel {
       extraQueryParams: { songTypes: songTypes },
     };
 
-    this.translateArtistRole = (role) => {
+    this.translateArtistRole = (role): string => {
       return artistRoleNames[role];
     };
 
-    this.updateTrackNumbers = () => {
+    this.updateTrackNumbers = (): void => {
       var track = 1;
       var disc = 1;
 

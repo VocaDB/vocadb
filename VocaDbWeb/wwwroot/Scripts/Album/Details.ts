@@ -13,7 +13,7 @@ function initAlbumDetailsPage(
   saveStr,
   urlMapper: UrlMapper,
   viewModel: AlbumDetailsViewModel,
-) {
+): void {
   $('#addAlbumLink').button({
     disabled: $('#addAlbumLink').hasClass('disabled'),
     icons: { primary: 'ui-icon-star' },
@@ -155,7 +155,7 @@ const AlbumDetails = (
   reportTypes: IEntryReportType[],
   saveStr: string,
   showTranslatedDescription: boolean,
-) => {
+): void => {
   $(document).ready(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

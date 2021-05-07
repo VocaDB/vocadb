@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import RequestVerificationViewModel from '../ViewModels/User/RequestVerificationViewModel';
 
-const UserRequestVerification = () => {
+const UserRequestVerification = (): void => {
   $(document).ready(function () {
     const httpClient = new HttpClient();
     var repoFactory = new RepositoryFactory(

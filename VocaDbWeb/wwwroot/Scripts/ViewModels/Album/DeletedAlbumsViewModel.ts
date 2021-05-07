@@ -10,7 +10,7 @@ export default class DeletedAlbumsViewModel {
     this.searchTerm.subscribe(() => this.updateResults(true));
   }
 
-  public discTypeName = (discType: string) => discType;
+  public discTypeName = (discType: string): string => discType;
   public loading = ko.observable(false);
   public page = ko.observableArray<AlbumContract>([]); // Current page of items
   public paging = new ServerSidePagingViewModel(20); // Paging view model
@@ -22,7 +22,7 @@ export default class DeletedAlbumsViewModel {
   public sort = ko.observable('Name');
   public viewMode = ko.observable('Details');
 
-  private updateResults = (clearResults: boolean) => {
+  private updateResults = (clearResults: boolean): void => {
     if (clearResults) {
       this.paging.page(1);
     }

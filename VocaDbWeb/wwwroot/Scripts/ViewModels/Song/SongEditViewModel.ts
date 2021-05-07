@@ -74,7 +74,7 @@ export default class SongEditViewModel {
   // Adds a new artist to the album
   // artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-  addArtist = (artistId?: number, customArtistName?: string) => {
+  addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
       this.artistRepository.getOne(artistId).then((artist) => {
         var data: ArtistForAlbumContract = {
@@ -105,13 +105,13 @@ export default class SongEditViewModel {
   public artistRolesEditViewModel: AlbumArtistRolesEditViewModel;
 
   // Clears fields that are not valid for the selected song type.
-  private clearInvalidData = () => {
+  private clearInvalidData = (): void => {
     if (!this.canHaveOriginalVersion()) {
       this.originalVersion.clear();
     }
   };
 
-  public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+  public customizeName = (artistLink: ArtistForAlbumEditViewModel): void => {
     this.editedArtistLink.open(artistLink);
   };
 
@@ -131,11 +131,11 @@ export default class SongEditViewModel {
     );
   });
 
-  public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
+  public editArtistRoles = (artist: ArtistForAlbumEditViewModel): void => {
     this.artistRolesEditViewModel.show(artist);
   };
 
-  public async findOriginalSongSuggestions() {
+  public async findOriginalSongSuggestions(): Promise<void> {
     this.originalVersionSuggestions.removeAll();
 
     const names = _.map(
@@ -164,15 +164,15 @@ export default class SongEditViewModel {
   public hasAlbums: boolean;
 
   // Removes an artist from this album.
-  public removeArtist = (artist: ArtistForAlbumEditViewModel) => {
+  public removeArtist = (artist: ArtistForAlbumEditViewModel): void => {
     this.artistLinks.remove(artist);
   };
 
-  public selectOriginalVersion = (song: SongContract) => {
+  public selectOriginalVersion = (song: SongContract): void => {
     this.originalVersion.entry(song);
   };
 
-  public submit = () => {
+  public submit = (): boolean => {
     if (
       this.hasValidationErrors() &&
       this.status() !== 'Draft' &&
@@ -213,7 +213,7 @@ export default class SongEditViewModel {
     return true;
   };
 
-  public translateArtistRole = (role: string) => {
+  public translateArtistRole = (role: string): string => {
     return this.artistRoleNames[role];
   };
 

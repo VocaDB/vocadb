@@ -12,9 +12,9 @@ export default class EventSeriesDetailsViewModel {
   ) {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepo.getEventSeriesTagSelections(this.seriesId).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepo.updateEventSeriesTags(
             this.seriesId,
             tags,

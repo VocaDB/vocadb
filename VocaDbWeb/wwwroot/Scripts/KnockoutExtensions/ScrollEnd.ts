@@ -5,7 +5,7 @@
 }
 
 ko.bindingHandlers.scrollEnd = {
-  init: (element: HTMLElement, valueAccessor: () => () => void) => {
+  init: (element: HTMLElement, valueAccessor: () => () => void): void => {
     var valFunc = valueAccessor();
 
     $(element).scroll(() => {

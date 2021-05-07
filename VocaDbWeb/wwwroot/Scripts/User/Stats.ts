@@ -1,4 +1,4 @@
-const UserStats = (model: { id: number }, type: string) => {
+const UserStats = (model: { id: number }, type: string): void => {
   $(function () {
     var userId = model.id;
 

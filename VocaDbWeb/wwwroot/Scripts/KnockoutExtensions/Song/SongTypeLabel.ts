@@ -66,7 +66,7 @@ var songTypeLabelInfos = {
 export function songTypeLabel(
   element: HTMLElement,
   valueAccessor: () => string,
-) {
+): void {
   var val = valueAccessor();
 
   if (!val) {

@@ -540,7 +540,7 @@ export default class WebLinkMatcher {
     },
   ];
 
-  private static isMatch(url: string, item: WebLinkMatcher) {
+  private static isMatch(url: string, item: WebLinkMatcher): boolean {
     return url.indexOf(item.url) !== -1;
   }
 

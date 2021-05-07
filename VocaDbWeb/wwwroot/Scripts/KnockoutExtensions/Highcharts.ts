@@ -4,7 +4,10 @@ declare global {
   }
 }
 
-export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
+export function setHighcharts(
+  element: HTMLElement,
+  result: HighchartsOptions,
+): void {
   if (
     result &&
     result.series &&
@@ -18,7 +21,7 @@ export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
 }
 
 ko.bindingHandlers.highcharts = {
-  update: (element: HTMLElement, valueAccessor) => {
+  update: (element: HTMLElement, valueAccessor): void => {
     var unwrapped = ko.utils.unwrapObservable(valueAccessor());
     if (_.isFunction(unwrapped)) {
       var func = unwrapped;

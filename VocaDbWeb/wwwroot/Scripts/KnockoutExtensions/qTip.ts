@@ -7,7 +7,7 @@ ko.bindingHandlers.qTip = {
   init: (
     element: Element,
     valueAccessor: () => KnockoutObservable<QTipProperties>,
-  ) => {
+  ): void => {
     var params = ko.unwrap(valueAccessor()) || {
       style: { classes: 'tooltip-wider' },
     };

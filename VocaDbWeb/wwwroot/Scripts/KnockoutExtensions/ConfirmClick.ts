@@ -13,7 +13,7 @@ ko.bindingHandlers.confirmClick = {
     element: HTMLElement,
     valueAccessor: () => ConfirmClickData,
     viewModel,
-  ) => {
+  ): void => {
     var value = valueAccessor();
     var message: string = ko.unwrap(value.message);
     var click = value.click;
@@ -21,7 +21,7 @@ ko.bindingHandlers.confirmClick = {
       element,
       {
         click: function () {
-          if (confirm(message))
+          if (window.confirm(message))
             return click.apply(this, Array.prototype.slice.apply(arguments));
         },
       },

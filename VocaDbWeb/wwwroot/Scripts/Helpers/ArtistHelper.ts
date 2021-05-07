@@ -42,7 +42,7 @@ export default class ArtistHelper {
     ArtistType.SynthesizerV,
   ];
 
-  public static canHaveChildVoicebanks(at: ArtistType) {
+  public static canHaveChildVoicebanks(at: ArtistType): boolean {
     if (at === null) return false;
 
     return (
@@ -65,7 +65,7 @@ export default class ArtistHelper {
   }
 
   // Whether the roles for an artist type can be customized
-  public static isCustomizable(at: ArtistType | string) {
+  public static isCustomizable(at: ArtistType | string): boolean {
     if (typeof at === 'string') {
       at = ArtistType[at];
     }
@@ -74,7 +74,7 @@ export default class ArtistHelper {
   }
 
   // Whether roles array indicates default roles
-  public static isDefaultRoles(roles: ArtistRoles[]) {
+  public static isDefaultRoles(roles: ArtistRoles[]): boolean {
     return roles.length === 0 || roles[0] === ArtistRoles.Default;
   }
 
@@ -83,7 +83,8 @@ export default class ArtistHelper {
     artistType: ArtistType,
     roles: ArtistRoles[],
     focus: ContentFocus,
-  ) {
+  ): boolean {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     if (ArtistHelper.useDefaultRoles(artistType, roles)) {
       return ArtistHelper.isProducerType(artistType, focus);
     }
@@ -106,7 +107,7 @@ export default class ArtistHelper {
     artist: ArtistContract,
     roles: ArtistRoles[],
     focus: ContentFocus,
-  ) {
+  ): boolean {
     return ArtistHelper.isProducerRoleType(
       artist != null ? ArtistType[artist.artistType] : ArtistType.Unknown,
       roles,
@@ -115,7 +116,10 @@ export default class ArtistHelper {
   }
 
   // Whether an artist type with default roles is to be considered a producer
-  static isProducerType(artistType: ArtistType | string, focus: ContentFocus) {
+  static isProducerType(
+    artistType: ArtistType | string,
+    focus: ContentFocus,
+  ): boolean {
     if (typeof artistType === 'string') {
       artistType = ArtistType[artistType];
     }
@@ -131,12 +135,15 @@ export default class ArtistHelper {
     );
   }
 
-  static isValidForPersonalDescription(artistLink: ArtistForAlbumContract) {
+  static isValidForPersonalDescription(
+    artistLink: ArtistForAlbumContract,
+  ): boolean {
     if (!artistLink.artist || artistLink.isSupport) return false;
 
     const artistType = ArtistType[artistLink.artist.artistType];
     const rolesArray = ArtistHelper.getRolesArray(artistLink.roles);
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
       const validTypes = [
         ArtistType.Producer,
@@ -163,7 +170,11 @@ export default class ArtistHelper {
     return _.some(validRoles, (r) => _.includes(rolesArray, r));
   }
 
-  static isVocalistRoleType(artistType: ArtistType, roles: ArtistRoles[]) {
+  static isVocalistRoleType(
+    artistType: ArtistType,
+    roles: ArtistRoles[],
+  ): boolean {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     if (ArtistHelper.useDefaultRoles(artistType, roles)) {
       return ArtistHelper.isVocalistType(artistType);
     }
@@ -175,20 +186,23 @@ export default class ArtistHelper {
     return res;
   }
 
-  static isVocalistRole(artist: ArtistContract, roles: ArtistRoles[]) {
+  static isVocalistRole(artist: ArtistContract, roles: ArtistRoles[]): boolean {
     return ArtistHelper.isVocalistRoleType(
       artist != null ? ArtistType[artist.artistType] : ArtistType.Unknown,
       roles,
     );
   }
 
-  static isVocalistType(artistType: ArtistType) {
+  static isVocalistType(artistType: ArtistType): boolean {
     return _.includes(ArtistHelper.vocalistTypes, artistType);
   }
 
   // Whether default roles should be used for an artist type and roles combination.
   // Some artist types do not allow customization. If no custom roles are specified default roles will be used.
-  private static useDefaultRoles(artistType: ArtistType, roles: ArtistRoles[]) {
+  private static useDefaultRoles(
+    artistType: ArtistType,
+    roles: ArtistRoles[],
+  ): boolean {
     return (
       roles == null ||
       ArtistHelper.isDefaultRoles(roles) ||

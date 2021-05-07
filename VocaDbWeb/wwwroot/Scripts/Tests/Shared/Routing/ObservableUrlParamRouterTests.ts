@@ -36,7 +36,7 @@ QUnit.module('ObservableUrlParamRouter', {
   },
 });
 
-var initRouter = () => {
+var initRouter = (): void => {
   new ObservableUrlParamRouter(testObject, win);
 };
 

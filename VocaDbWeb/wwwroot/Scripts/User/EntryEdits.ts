@@ -9,7 +9,7 @@ const UserEntryEdits = (
   model: {
     id: number;
   },
-) => {
+): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

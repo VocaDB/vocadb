@@ -2,7 +2,7 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import NameMatchMode from '../Models/NameMatchMode';
 
 export default class BaseRepository {
-  protected getDate(date?: Date) {
+  protected getDate(date?: Date): string | undefined {
     return date ? date.toISOString() : undefined;
   }
 

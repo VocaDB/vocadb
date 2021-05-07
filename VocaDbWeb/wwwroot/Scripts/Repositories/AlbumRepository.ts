@@ -37,7 +37,7 @@ export default class AlbumRepository
 
     this.urlMapper = new UrlMapper(baseUrl);
 
-    this.mapUrl = (relative) => {
+    this.mapUrl = (relative): string => {
       return `${functions.mergeUrls(baseUrl, '/Album')}${relative}`;
     };
   }
@@ -69,7 +69,7 @@ export default class AlbumRepository
     notes: string,
     versionNumber: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(
       this.urlMapper.mapRelative('/Album/CreateReport'),
       {

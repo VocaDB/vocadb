@@ -2,7 +2,10 @@ import AjaxHelper from '../../Helpers/AjaxHelper';
 
 QUnit.module('AjaxHelper');
 
-var testCreateUrl = (params: { [key: string]: any[] }, expected: string) => {
+var testCreateUrl = (
+  params: { [key: string]: any[] },
+  expected: string,
+): void => {
   var actual = AjaxHelper.createUrl(params);
   QUnit.equal(actual, expected);
 };

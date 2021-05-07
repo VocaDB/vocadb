@@ -6,7 +6,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ReleaseEventSeriesEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -17,7 +17,7 @@ const EventEditSeries = (model: {
   id: number;
   names: LocalizedStringWithIdContract[];
   webLinks: WebLinkContract[];
-}) => {
+}): void => {
   $(function () {
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);

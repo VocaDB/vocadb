@@ -9,7 +9,7 @@ const VenueDetails = (
     id: number;
   },
   reportTypes: IEntryReportType[],
-) => {
+): void => {
   $(function () {
     $('#editVenueLink').button({
       disabled: $('#editVenueLink').hasClass('disabled'),

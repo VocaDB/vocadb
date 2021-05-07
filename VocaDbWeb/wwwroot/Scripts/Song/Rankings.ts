@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import RankingsViewModel from '../ViewModels/Song/RankingsViewModel';
 
-const SongRankings = () => {
+const SongRankings = (): void => {
   moment.locale(vdb.values.culture);
   ko.punches.enableAll();
 

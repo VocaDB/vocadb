@@ -5,13 +5,13 @@ export default class CustomNameEditViewModel {
   public dialogVisible = ko.observable(false);
   public name = ko.observable<string>(null);
 
-  public open = (artist: ArtistForAlbumEditViewModel) => {
+  public open = (artist: ArtistForAlbumEditViewModel): void => {
     this.artistLink(artist);
     this.name(artist.isCustomName ? artist.name() : '');
     this.dialogVisible(true);
   };
 
-  public save = () => {
+  public save = (): void => {
     const isCustomName = !!this.name();
 
     this.artistLink().isCustomName = isCustomName;

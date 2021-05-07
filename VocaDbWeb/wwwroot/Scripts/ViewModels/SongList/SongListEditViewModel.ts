@@ -37,7 +37,7 @@ export default class SongListEditViewModel {
     this.songLinks = ko.observableArray([]);
   }
 
-  private acceptSongSelection = (songId: number) => {
+  private acceptSongSelection = (songId: number): void => {
     if (!songId) return;
 
     this.songRepo.getOne(songId).then((song: SongContract) => {
@@ -71,7 +71,7 @@ export default class SongListEditViewModel {
 
   public id: number;
 
-  public init = (loaded: () => void) => {
+  public init = (loaded: () => void): void => {
     if (this.id) {
       this.songListRepo.getForEdit(this.id).then((data) => {
         this.currentName = data.name;
@@ -107,17 +107,17 @@ export default class SongListEditViewModel {
 
   public name: KnockoutObservable<string>;
 
-  private redirectToDetails = () => {
+  private redirectToDetails = (): void => {
     window.location.href = this.urlMapper.mapRelative(
       EntryUrlMapper.details(EntryType.SongList, this.id),
     );
   };
 
-  private redirectToRoot = () => {
+  private redirectToRoot = (): void => {
     window.location.href = this.urlMapper.mapRelative('SongList/Featured');
   };
 
-  public removeSong = (songLink: SongInListEditViewModel) => {
+  public removeSong = (songLink: SongInListEditViewModel): void => {
     this.songLinks.remove(songLink);
   };
 
@@ -129,7 +129,7 @@ export default class SongListEditViewModel {
 
   public status: KnockoutObservable<string>;
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };

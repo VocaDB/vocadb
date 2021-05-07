@@ -13,13 +13,13 @@ export default class BasicListEditViewModel<TItem, TContract> {
   }
 
   // add new item by instansiating the item type with default parameters
-  public add = () => {
+  public add = (): void => {
     this.items.push(new this.type());
   };
 
   public items: KnockoutObservableArray<TItem>;
 
-  public remove = (item: TItem) => {
+  public remove = (item: TItem): void => {
     this.items.remove(item);
   };
 

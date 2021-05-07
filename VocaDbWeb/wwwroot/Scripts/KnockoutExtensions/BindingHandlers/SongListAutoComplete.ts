@@ -16,7 +16,7 @@ ko.bindingHandlers.songListAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<SongListContract>,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var allBindings = allBindingsAccessor();
     var category: string = allBindings.songListCategory;
 

@@ -48,13 +48,13 @@ export default class TagDetailsViewModel {
 
   public comments: EditableCommentsViewModel;
 
-  public followTag = () => {
+  public followTag = (): void => {
     if (!this.isLoggedIn) return;
     this.userRepo.addFollowedTag(this.tagId);
     this.isFollowed(true);
   };
 
-  public unfollowTag = () => {
+  public unfollowTag = (): void => {
     this.userRepo.deleteFollowedTag(this.tagId);
     this.isFollowed(false);
   };

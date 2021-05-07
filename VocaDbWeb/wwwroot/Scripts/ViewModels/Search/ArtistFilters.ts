@@ -46,13 +46,13 @@ export default class ArtistFilters {
   public hasSingleArtist = ko.computed(() => this.artists().length === 1);
   public includeMembers = ko.observable(false);
 
-  private firstArtist = () => this.artists()[0];
+  private firstArtist = (): ArtistFilter => this.artists()[0];
 
-  public selectArtist = (selectedArtistId: number) => {
+  public selectArtist = (selectedArtistId: number): void => {
     this.selectArtists([selectedArtistId]);
   };
 
-  public selectArtists = (selectedArtistIds: number[]) => {
+  public selectArtists = (selectedArtistIds: number[]): void => {
     if (!selectedArtistIds) return;
 
     var filters = _.map(selectedArtistIds, (a) => new ArtistFilter(a));

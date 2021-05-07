@@ -47,7 +47,9 @@ $(() => {
   });
 });
 
-export function setLanguagePreferenceCookie(languagePreference: string) {
+export function setLanguagePreferenceCookie(
+  languagePreference: string,
+): boolean {
   const httpClient = new HttpClient();
   var userRepo = new UserRepository(
     httpClient,

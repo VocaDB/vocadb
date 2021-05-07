@@ -9,8 +9,8 @@ import SongDetailsViewModel, {
   SongDetailsResources,
 } from '../ViewModels/Song/SongDetailsViewModel';
 
-function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
-  function initMediaPlayer() {
+function initPage(jsonModel, songId, saveStr, urlMapper, viewModel): void {
+  function initMediaPlayer(): void {
     $('audio').mediaelementplayer({
       pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
     });
@@ -79,7 +79,7 @@ const SongDetails = (
   resources: SongDetailsResources,
   saveStr: string,
   showTranslatedDescription: boolean,
-) => {
+): void => {
   $(document).ready(function () {
     moment.locale(vdb.values.culture);
 
@@ -114,7 +114,7 @@ const SongDetails = (
     );
     ko.applyBindings(viewModel);
 
-    viewModel.songListDialog.addedToList = function () {
+    viewModel.songListDialog.addedToList = function (): void {
       ui.showSuccessMessage(resources.addedToList);
     };
 

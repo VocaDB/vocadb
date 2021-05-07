@@ -3,7 +3,7 @@ import SongRepository from '../Repositories/SongRepository';
 import HttpClient from '../Shared/HttpClient';
 import SongMergeViewModel from '../ViewModels/Song/SongMergeViewModel';
 
-const SongMerge = (model: SongContract) => {
+const SongMerge = (model: SongContract): void => {
   $(function () {
     const httpClient = new HttpClient();
     var repo = new SongRepository(
@@ -16,7 +16,7 @@ const SongMerge = (model: SongContract) => {
     ko.applyBindings(vm);
 
     $('#mergeBtn').click(function () {
-      return confirm('Are you sure you want to merge the songs?');
+      return window.confirm('Are you sure you want to merge the songs?');
     });
   });
 };

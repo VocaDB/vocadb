@@ -6,7 +6,10 @@ var repository = new FakeUserRepository();
 
 QUnit.module('PVRatingButtonsViewModel');
 
-function createTarget(songId: number, rating: SongVoteRating) {
+function createTarget(
+  songId: number,
+  rating: SongVoteRating,
+): PVRatingButtonsViewModel {
   return new PVRatingButtonsViewModel(
     repository,
     { id: songId, vote: SongVoteRating[rating] },

@@ -60,7 +60,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       var artistIds = this.artistFilters.artistIds();
 
       this.albumRepo
@@ -92,7 +92,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
   public sortName: KnockoutComputed<string>;
   public viewMode: KnockoutObservable<string>;
 
-  public discTypeName = (discTypeStr: string) =>
+  public discTypeName = (discTypeStr: string): string =>
     this.resourceManager.resources().discTypeNames != null
       ? this.resourceManager.resources().discTypeNames[discTypeStr]
       : '';
@@ -103,7 +103,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
       : 'AdditionalNames,MainPicture,ReleaseEvent',
   );
 
-  public ratingStars = (album: AlbumContract) => {
+  public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
     if (!album) return [];
 
     var ratings = _.map([1, 2, 3, 4, 5], (rating) => {

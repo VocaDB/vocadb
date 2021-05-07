@@ -18,7 +18,7 @@ import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ArtistEditViewModel {
-  public addAssociatedArtist = () => {
+  public addAssociatedArtist = (): void => {
     if (this.newAssociatedArtist.isEmpty()) return;
 
     this.associatedArtists.push(
@@ -31,7 +31,7 @@ export default class ArtistEditViewModel {
     this.newAssociatedArtist.clear();
   };
 
-  private addGroup = (artistId: number) => {
+  private addGroup = (artistId: number): void => {
     if (artistId) {
       this.artistRepo.getOne(artistId).then((artist: ArtistContract) => {
         this.groups.push({ id: 0, parent: artist });
@@ -51,7 +51,7 @@ export default class ArtistEditViewModel {
   public canHaveReleaseDate: KnockoutComputed<boolean>;
 
   // Clears fields that are not valid for the selected artist type.
-  private clearInvalidData = () => {
+  private clearInvalidData = (): void => {
     if (!this.canHaveReleaseDate()) {
       this.releaseDate(null);
     }
@@ -106,13 +106,13 @@ export default class ArtistEditViewModel {
   public pictures: EntryPictureFileListEditViewModel;
   public releaseDate: KnockoutObservable<Date>;
 
-  public removeGroup = (group: ArtistForArtistContract) => {
+  public removeGroup = (group: ArtistForArtistContract): void => {
     this.groups.remove(group);
   };
 
   public status: KnockoutObservable<string>;
 
-  public submit = () => {
+  public submit = (): boolean => {
     if (
       this.hasValidationErrors() &&
       this.status() !== 'Draft' &&
@@ -161,7 +161,7 @@ export default class ArtistEditViewModel {
   public voiceProvider: BasicEntryLinkViewModel<ArtistContract>;
   public webLinks: WebLinksEditViewModel;
 
-  private canHaveBaseVoicebank(at: ArtistType) {
+  private canHaveBaseVoicebank(at: ArtistType): boolean {
     return (
       (ArtistHelper.isVocalistType(at) || at === ArtistType.OtherIndividual) &&
       at !== ArtistType.Vocalist
@@ -296,7 +296,7 @@ export class ArtistForArtistEditViewModel {
 
   public parent: ArtistContract;
 
-  public toContract = () => {
+  public toContract = (): ArtistForArtistContract => {
     return {
       linkType: this.linkType(),
       parent: this.parent,

@@ -11,7 +11,10 @@ export default class PVPlayerFile implements IPVPlayer {
     this.service = service;
   }
 
-  public attach = (reset: boolean = false, readyCallback?: () => void) => {
+  public attach = (
+    reset: boolean = false,
+    readyCallback?: () => void,
+  ): void => {
     if (!reset && this.player) {
       if (readyCallback) readyCallback();
       return;
@@ -25,14 +28,14 @@ export default class PVPlayerFile implements IPVPlayer {
     }
 
     this.player = <HTMLAudioElement>$('#' + this.playerElementId)[0];
-    this.player.onended = () => {
+    this.player.onended = (): void => {
       if (this.player && this.songFinishedCallback) this.songFinishedCallback();
     };
 
     if (readyCallback) readyCallback();
   };
 
-  public detach = () => {
+  public detach = (): void => {
     if (this.player) {
       this.player.onended = null;
     }
@@ -42,7 +45,7 @@ export default class PVPlayerFile implements IPVPlayer {
 
   private player: HTMLAudioElement = null;
 
-  public play = (pvId?: string) => {
+  public play = (pvId?: string): void => {
     if (!this.player) this.attach(false);
 
     if (pvId) {

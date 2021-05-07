@@ -16,7 +16,7 @@ export default class ManageTagMappingsViewModel {
     this.loadMappings();
   }
 
-  public addMapping = () => {
+  public addMapping = (): void => {
     if (!this.newSourceName || this.newTargetTag.isEmpty()) return;
 
     if (
@@ -43,23 +43,23 @@ export default class ManageTagMappingsViewModel {
     this.newTargetTag.clear();
   };
 
-  public deleteMapping = (mapping: EditTagMappingViewModel) => {
+  public deleteMapping = (mapping: EditTagMappingViewModel): void => {
     mapping.isDeleted(true);
   };
 
   public filter = ko.observable('');
 
-  public getSourceTagUrl = (tag: EditTagMappingViewModel) => {
+  public getSourceTagUrl = (tag: EditTagMappingViewModel): string => {
     return 'http://www.nicovideo.jp/tag/' + encodeURIComponent(tag.sourceTag);
   };
 
-  public getTagUrl = (tag: EditTagMappingViewModel) => {
+  public getTagUrl = (tag: EditTagMappingViewModel): string => {
     return functions.mapAbsoluteUrl(
       EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
     );
   };
 
-  private loadMappings = async () => {
+  private loadMappings = async (): Promise<void> => {
     const result = await this.tagRepo.getMappings({
       start: 0,
       maxEntries: 10000,
@@ -92,7 +92,7 @@ export default class ManageTagMappingsViewModel {
   public newSourceName = ko.observable('');
   public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
 
-  public save = async () => {
+  public save = async (): Promise<void> => {
     const mappings = this.activeMappings();
     await this.tagRepo.saveMappings(mappings);
     ui.showSuccessMessage('Saved');
@@ -123,5 +123,5 @@ export class EditTagMappingViewModel {
   sourceTag: string;
   tag: TagBaseContract;
 
-  public deleteMapping = () => this.isDeleted(true);
+  public deleteMapping = (): void => this.isDeleted(true);
 }

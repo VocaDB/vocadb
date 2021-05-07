@@ -16,7 +16,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<ReleaseEventContract>,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var queryParams = {
       nameMatchMode: 'Auto',
       lang: ContentLanguagePreference[vdb.values.languagePreference],

@@ -63,9 +63,10 @@ export default class TagEditViewModel {
   public validationError_needDescription: KnockoutComputed<boolean>;
   public webLinks: WebLinksEditViewModel;
 
-  public addRelatedTag = (tag: TagBaseContract) => this.relatedTags.push(tag);
+  public addRelatedTag = (tag: TagBaseContract): void =>
+    this.relatedTags.push(tag);
 
-  public allowRelatedTag = (tag: TagBaseContract) =>
+  public allowRelatedTag = (tag: TagBaseContract): boolean =>
     this.denySelf(tag) && _.every(this.relatedTags(), (t) => t.id !== tag.id);
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
@@ -85,16 +86,17 @@ export default class TagEditViewModel {
     );
   });
 
-  public denySelf = (tag: TagBaseContract) => tag && tag.id !== this.id;
+  public denySelf = (tag: TagBaseContract): boolean =>
+    tag && tag.id !== this.id;
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };
 
-  public hasTargetType = (target: EntryType) => {
-    const hasFlag = (t) => (this.targets() & t) === t;
-    const checkFlags = () => {
+  public hasTargetType = (target: EntryType): KnockoutComputed<boolean> => {
+    const hasFlag = (t): boolean => (this.targets() & t) === t;
+    const checkFlags = (): void => {
       const types = [
         EntryType.Album,
         EntryType.Artist,
@@ -112,11 +114,11 @@ export default class TagEditViewModel {
         );
       }
     };
-    const addFlag = () => {
+    const addFlag = (): void => {
       this.targets(this.targets() | target);
       checkFlags();
     };
-    const removeFlag = () => {
+    const removeFlag = (): void => {
       if (hasFlag(target)) {
         this.targets(this.targets() - target);
         checkFlags();

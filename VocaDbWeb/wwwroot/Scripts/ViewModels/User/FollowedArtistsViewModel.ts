@@ -24,7 +24,7 @@ export default class FollowedArtistsViewModel {
     this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
   }
 
-  public init = () => {
+  public init = (): void => {
     if (this.isInit) return;
 
     this.resourceRepo
@@ -45,10 +45,10 @@ export default class FollowedArtistsViewModel {
   public resources = ko.observable<any>();
   public tagFilters: TagFilters;
 
-  public updateResultsWithTotalCount = () => this.updateResults(true);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  public updateResults = (clearResults: boolean = true) => {
+  public updateResults = (clearResults: boolean = true): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

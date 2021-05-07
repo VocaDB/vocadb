@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-export function artistAutoComplete(element: HTMLElement, valueAccessor) {
+export function artistAutoComplete(element: HTMLElement, valueAccessor): void {
   var properties: ArtistAutoCompleteParams = ko.utils.unwrapObservable(
     valueAccessor(),
   );
@@ -20,7 +20,7 @@ export function artistAutoComplete(element: HTMLElement, valueAccessor) {
   var filter = properties.filter;
 
   if (properties.ignoreId) {
-    filter = (item) => {
+    filter = (item): boolean => {
       if (item.id === properties.ignoreId) {
         return false;
       }

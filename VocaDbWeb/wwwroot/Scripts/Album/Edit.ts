@@ -6,7 +6,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import AlbumEditViewModel from '../ViewModels/Album/AlbumEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -30,7 +30,7 @@ const AlbumEdit = (
   },
   saveWarning: string,
   webLinkCategoryJson: TranslatedEnumField[],
-) => {
+): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

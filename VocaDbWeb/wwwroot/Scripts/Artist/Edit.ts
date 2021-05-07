@@ -6,7 +6,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ArtistEditViewModel from '../ViewModels/Artist/ArtistEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#tabs').tabs();
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -22,7 +22,7 @@ const ArtistEdit = (
   },
   saveWarning,
   webLinkCategoryJson: TranslatedEnumField[],
-) => {
+): void => {
   $(document).ready(function () {
     vdb.resources.entryEdit = {
       saveWarning: saveWarning,

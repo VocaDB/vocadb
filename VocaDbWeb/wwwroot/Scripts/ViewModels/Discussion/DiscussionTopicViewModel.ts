@@ -25,7 +25,7 @@ export default class DiscussionTopicViewModel {
     );
   }
 
-  public beginEditTopic = () => {
+  public beginEditTopic = (): void => {
     this.editModel(
       new DiscussionTopicEditViewModel(
         this.loggedUserId,
@@ -37,7 +37,7 @@ export default class DiscussionTopicViewModel {
 
   public comments: EditableCommentsViewModel;
 
-  public cancelEdit = () => {
+  public cancelEdit = (): void => {
     this.editModel(null);
   };
 
@@ -47,7 +47,7 @@ export default class DiscussionTopicViewModel {
 
   public isBeingEdited = ko.computed(() => this.editModel() !== null);
 
-  public saveEditedTopic = () => {
+  public saveEditedTopic = (): void => {
     if (!this.isBeingEdited()) return;
 
     var editedContract = this.editModel().toContract();

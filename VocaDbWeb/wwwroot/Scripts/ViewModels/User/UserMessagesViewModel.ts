@@ -53,7 +53,7 @@ export default class UserMessagesViewModel {
     }
   }
 
-  private getInboxTabName = (inbox: UserInboxType) => {
+  private getInboxTabName = (inbox: UserInboxType): string | null => {
     switch (inbox) {
       case UserInboxType.Received:
         return '#receivedTab';
@@ -78,7 +78,7 @@ export default class UserMessagesViewModel {
 
   sentMessages: UserMessageFolderViewModel;
 
-  reply = () => {
+  reply = (): void => {
     if (!this.selectedMessage()) throw Error('No message selected');
 
     var msg = this.selectedMessage();
@@ -99,7 +99,7 @@ export default class UserMessagesViewModel {
   selectMessageById = (
     messageId: number,
     inbox: UserMessageFolderViewModel,
-  ) => {
+  ): void => {
     var message = _.find(inbox.items(), (msg) => msg.id === messageId);
 
     if (message) {
@@ -108,7 +108,7 @@ export default class UserMessagesViewModel {
     }
   };
 
-  selectMessage = (message: UserMessageViewModel) => {
+  selectMessage = (message: UserMessageViewModel): void => {
     this.userRepository.getMessage(message.id).then((message) => {
       this.selectedMessageBody(message.body);
     });
@@ -122,16 +122,16 @@ export default class UserMessagesViewModel {
     this.selectedMessage(message);
   };
 
-  private selectInbox = (inbox: UserInboxType) => {
+  private selectInbox = (inbox: UserInboxType): void => {
     this.selectTab(this.getInboxTabName(inbox));
   };
 
-  selectTab = (tabName: string) => {
+  selectTab = (tabName: string): void => {
     var index = $('#tabs > ul > li > a').index($(tabName));
     $('#tabs').tabs('option', 'active', index);
   };
 
-  public sendMessage = () => {
+  public sendMessage = (): void => {
     if (this.newMessageViewModel.receiver.isEmpty()) {
       this.newMessageViewModel.isReceiverInvalid(true);
       return;
@@ -189,15 +189,15 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
   public anotherUser: BasicEntryLinkViewModel<UserApiContract>;
 
-  public canFilterByUser = () =>
+  public canFilterByUser = (): boolean =>
     this.inbox === UserInboxType.Received || this.inbox === UserInboxType.Sent;
 
-  private deleteMessage = (message: UserMessageViewModel) => {
+  private deleteMessage = (message: UserMessageViewModel): void => {
     this.userRepo.deleteMessage(message.id);
     this.items.remove(message);
   };
 
-  public deleteSelected = () => {
+  public deleteSelected = (): void => {
     var selected = _.chain(this.items()).filter((m) => m.checked());
     var selectedIds = selected.map((m) => m.id).value();
 
@@ -207,7 +207,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
     this.items.removeAll(selected.value());
   };
 
-  public loadMoreItems = (callback) => {
+  public loadMoreItems = (callback): void => {
     this.userRepo
       .getMessageSummaries(
         this.userId,
@@ -228,7 +228,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
   selectAll = ko.observable(false);
 
-  selectMessage = (message: UserMessageViewModel) => {
+  selectMessage = (message: UserMessageViewModel): void => {
     _.each(this.items(), (msg) => {
       if (msg != message) msg.selected(false);
     });
@@ -289,14 +289,14 @@ export class NewMessageViewModel {
 
   subject = ko.observable<string>('');
 
-  public clear = () => {
+  public clear = (): void => {
     this.body('');
     this.highPriority(false);
     this.receiver.clear();
     this.subject('');
   };
 
-  public toContract = (senderId: number) => {
+  public toContract = (senderId: number): UserApiContract => {
     return {
       body: this.body(),
       highPriority: this.highPriority(),

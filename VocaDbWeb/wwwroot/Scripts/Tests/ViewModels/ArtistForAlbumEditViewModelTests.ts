@@ -25,7 +25,7 @@ QUnit.module('ArtistForAlbumEditViewModelTests', {
   },
 });
 
-function createViewModel() {
+function createViewModel(): ArtistForAlbumEditViewModel {
   return new ArtistForAlbumEditViewModel(rep, data);
 }
 

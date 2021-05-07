@@ -13,7 +13,7 @@ export default class EnglishTranslatedStringEditViewModel {
 
   public showTranslation: KnockoutObservable<boolean>;
 
-  public toContract = () => {
+  public toContract = (): EnglishTranslatedStringContract => {
     var contract: EnglishTranslatedStringContract = {
       english: this.english(),
       original: this.original(),

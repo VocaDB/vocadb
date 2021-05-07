@@ -32,11 +32,11 @@ export default class SongCreateViewModel {
     }),
   );
 
-  private getArtistIds = () => {
+  private getArtistIds = (): number[] => {
     return _.map(this.artists(), (a) => a.id);
   };
 
-  public checkDuplicatesAndPV = (vm?, event?: JQueryEventObject) => {
+  public checkDuplicatesAndPV = (vm?, event?: JQueryEventObject): void => {
     this.checkDuplicates(vm, event, true);
   };
 
@@ -44,7 +44,7 @@ export default class SongCreateViewModel {
     vm?,
     event?: JQueryEventObject,
     getPVInfo = false,
-  ) => {
+  ): boolean => {
     var term1 = this.nameOriginal();
     var term2 = this.nameRomaji();
     var term3 = this.nameEnglish();
@@ -90,7 +90,7 @@ export default class SongCreateViewModel {
     return false;
   };
 
-  private getSongTypeTag = async (songType: string) => {
+  private getSongTypeTag = async (songType: string): Promise<void> => {
     const tag = await this.tagRepository.getEntryTypeTag(
       EntryType.Song,
       songType,
@@ -129,13 +129,13 @@ export default class SongCreateViewModel {
 
   hasName: KnockoutComputed<boolean>;
 
-  selectOriginal = (dupe: DuplicateEntryResultContract) => {
+  selectOriginal = (dupe: DuplicateEntryResultContract): void => {
     this.songRepository
       .getOne(dupe.entry.id)
       .then((song) => this.originalVersion.entry(song));
   };
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };
@@ -159,7 +159,7 @@ export default class SongCreateViewModel {
       this.artists(data.artists || []);
     }
 
-    this.addArtist = (artistId: number) => {
+    this.addArtist = (artistId: number): void => {
       if (artistId) {
         artistRepository.getOne(artistId).then((artist) => {
           this.artists.push(artist);
@@ -203,7 +203,7 @@ export default class SongCreateViewModel {
       return _.take(this.dupeEntries(), 3);
     });
 
-    this.removeArtist = (artist: ArtistContract) => {
+    this.removeArtist = (artist: ArtistContract): void => {
       this.artists.remove(artist);
     };
 

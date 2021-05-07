@@ -13,7 +13,7 @@ ko.bindingHandlers.markdown = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<string>,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     const val: string = ko.unwrap(valueAccessor());
     const maxLength: number | null = allBindingsAccessor()?.maxLength;
     const truncated = maxLength ? _.truncate(val, { length: maxLength }) : val;

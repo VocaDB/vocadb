@@ -7,7 +7,7 @@ export default class ResourcesManager {
     private cultureCode: string,
   ) {}
 
-  private setsToLoad = (setNames: string[]) => {
+  private setsToLoad = (setNames: string[]): string[] => {
     var missing = _.filter(
       setNames,
       (setName) => this.resources[setName] == null,
@@ -17,7 +17,10 @@ export default class ResourcesManager {
 
   public resources: KnockoutObservable<ResourcesContract> = ko.observable({});
 
-  public loadResources = (callback?: () => void, ...setNames: string[]) => {
+  public loadResources = (
+    callback?: () => void,
+    ...setNames: string[]
+  ): void => {
     var setsToLoad = this.setsToLoad(setNames);
     this.resourcesRepo
       .getList(this.cultureCode, setsToLoad)

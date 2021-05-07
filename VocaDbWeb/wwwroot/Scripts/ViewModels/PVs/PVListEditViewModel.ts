@@ -18,7 +18,7 @@ export default class PVListEditViewModel {
     this.pvs = ko.observableArray(_.map(pvs, (pv) => new PVEditViewModel(pv)));
   }
 
-  public add = () => {
+  public add = (): void => {
     var newPvUrl = this.newPvUrl();
 
     if (!newPvUrl) return;
@@ -38,18 +38,18 @@ export default class PVListEditViewModel {
       });
   };
 
-  public formatLength = (seconds: number) => {
+  public formatLength = (seconds: number): string => {
     return DateTimeHelper.formatFromSeconds(seconds);
   };
 
-  public getPvServiceIcon = (service: string) => {
+  public getPvServiceIcon = (service: string): string => {
     return this.pvServiceIcons.getIconUrl(service);
   };
 
   public isPossibleInstrumental = ko.observable(false);
 
   // Attempts to identify whether the PV could be instrumental
-  private isPossibleInstrumentalPv = (pv: PVContract) => {
+  private isPossibleInstrumentalPv = (pv: PVContract): boolean => {
     return (
       pv &&
       pv.name &&
@@ -68,7 +68,7 @@ export default class PVListEditViewModel {
 
   public pvServiceIcons: PVServiceIcons;
 
-  public remove = (pv: PVEditViewModel) => {
+  public remove = (pv: PVEditViewModel): void => {
     this.pvs.remove(pv);
   };
 
@@ -76,7 +76,7 @@ export default class PVListEditViewModel {
     return ko.toJS(this.pvs());
   };
 
-  public uploadMedia = () => {
+  public uploadMedia = (): void => {
     var input: any = $('#uploadMedia')[0];
     var fd = new FormData();
 

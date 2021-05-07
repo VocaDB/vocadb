@@ -1,7 +1,9 @@
 import PVService from '../Models/PVs/PVService';
 
 export default class PVHelper {
-  public static pvServicesArrayFromString = (pvServices: string) => {
+  public static pvServicesArrayFromString = (
+    pvServices: string,
+  ): PVService[] => {
     if (!pvServices) return [];
 
     var values = pvServices.split(',');

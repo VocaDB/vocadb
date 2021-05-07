@@ -9,17 +9,17 @@ export default class ViewAuditLogViewModel {
 
   public onlyNewUsers = ko.observable(false);
 
-  public toggleFilter = () => {
+  public toggleFilter = (): void => {
     this.filterVisible(!this.filterVisible());
   };
 
   public userName = ko.observable('');
 
-  private split(val: string) {
+  private split(val: string): string[] {
     return val.split(/,\s*/);
   }
 
-  private extractLast(term: string) {
+  private extractLast(term: string): string {
     return this.split(term).pop();
   }
 

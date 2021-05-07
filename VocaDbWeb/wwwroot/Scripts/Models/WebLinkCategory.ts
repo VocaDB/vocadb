@@ -7,7 +7,7 @@ enum WebLinkCategory {
 
 export default WebLinkCategory;
 
-export function parseWebLinkCategory(rating: string) {
+export function parseWebLinkCategory(rating: string): WebLinkCategory {
   switch (rating) {
     case 'Official':
       return WebLinkCategory.Official;

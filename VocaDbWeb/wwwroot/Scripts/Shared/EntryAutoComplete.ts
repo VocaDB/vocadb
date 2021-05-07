@@ -55,7 +55,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
   nameBoxElem: HTMLElement,
   searchUrl: string,
   params: EntryAutoCompleteParams<TContract>,
-) {
+): void {
   if (!params) throw Error('params cannot be null');
 
   var createNewItem = params.createNewItem;
@@ -68,11 +68,11 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
   var termParamName = params.termParamName || 'query';
   var method = 'GET';
 
-  function bold(text: string, term: string) {
+  function bold(text: string, term: string): string {
     return HtmlHelper.boldAndHtmlEncode(text, term);
   }
 
-  function createHtml(item: AutoCompleteItem<TContract>) {
+  function createHtml(item: AutoCompleteItem<TContract>): string {
     var data = item.data;
 
     if (!data) {
@@ -114,7 +114,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
   function getItems(
     par,
     response: (result: AutoCompleteItem<TContract>[]) => void,
-  ) {
+  ): void {
     var queryParams = {};
     queryParams[termParamName] = par.term;
 
@@ -159,7 +159,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
     });
   }
 
-  function selectItem(event: Event, ui) {
+  function selectItem(event: Event, ui): boolean {
     var item: AutoCompleteItem<TContract> = ui.item;
 
     // namebox value is cleared when using keyboard
@@ -182,7 +182,10 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
     .data('ui-autocomplete');
 
   if (auto) {
-    auto._renderItem = (ul: HTMLElement, item: AutoCompleteItem<TContract>) => {
+    auto._renderItem = (
+      ul: HTMLElement,
+      item: AutoCompleteItem<TContract>,
+    ): JQuery => {
       return $('<li>')
         .data('item.ui-autocomplete', item)
         .append(createHtml(item))

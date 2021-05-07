@@ -5,7 +5,7 @@ import UserRepository from '../Repositories/UserRepository';
 
 // View model for the top bar.
 export default class TopBarViewModel {
-  public ensureMessagesLoaded = () => {
+  public ensureMessagesLoaded = (): void => {
     if (this.isLoaded()) return;
 
     this.userRepository

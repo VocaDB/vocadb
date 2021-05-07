@@ -7,7 +7,7 @@ ko.bindingHandlers.toggleClick = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<boolean>,
-  ) => {
+  ): void => {
     var value = valueAccessor();
 
     ko.utils.registerEventHandler(element, 'click', () => {

@@ -5,7 +5,7 @@ import ManageIPRulesViewModel, {
   IPRuleContract,
 } from '../ViewModels/Admin/ManageIPRulesViewModel';
 
-const AdminManageIPRules = (model: IPRuleContract[]) => {
+const AdminManageIPRules = (model: IPRuleContract[]): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

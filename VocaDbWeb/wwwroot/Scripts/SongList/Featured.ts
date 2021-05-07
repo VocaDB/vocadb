@@ -9,7 +9,7 @@ const SongListFeatured = (
   model: {
     tagId: number[];
   },
-) => {
+): void => {
   moment.locale(vdb.values.culture);
   ko.punches.enableAll();
 

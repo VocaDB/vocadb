@@ -30,7 +30,7 @@ export default class SongListRepository {
     );
   };
 
-  public getComments = () =>
+  public getComments = (): EntryCommentRepository =>
     new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
 
   public getFeatured = (

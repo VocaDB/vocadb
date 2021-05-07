@@ -22,13 +22,13 @@ export default class ReportEntryViewModel {
 
   public reportType = ko.observable<IEntryReportType>();
 
-  public send = () => {
+  public send = (): void => {
     this.sendFunc(this.reportType().id, this.notes());
     this.notes('');
     this.dialogVisible(false);
   };
 
-  public show = () => {
+  public show = (): void => {
     this.dialogVisible(true);
   };
 }
