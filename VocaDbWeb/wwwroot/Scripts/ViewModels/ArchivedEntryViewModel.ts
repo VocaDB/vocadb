@@ -27,5 +27,5 @@ export interface IEntryReportsRepository {
     reportType: string,
     notes: string,
     version?: number,
-  );
+  ): void;
 }

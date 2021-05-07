@@ -9,7 +9,13 @@ import SongDetailsViewModel, {
   SongDetailsResources,
 } from '../ViewModels/Song/SongDetailsViewModel';
 
-function initPage(jsonModel, songId, saveStr, urlMapper, viewModel): void {
+function initPage(
+  jsonModel: SongDetailsAjax,
+  songId: number,
+  saveStr: string,
+  urlMapper: UrlMapper,
+  viewModel: SongDetailsViewModel,
+): void {
   function initMediaPlayer(): void {
     $('audio').mediaelementplayer({
       pluginPath: 'https://cdnjs.com/libraries/mediaelement/',

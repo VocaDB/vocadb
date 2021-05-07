@@ -14,7 +14,7 @@ export default class DeletedAlbumsViewModel {
   public loading = ko.observable(false);
   public page = ko.observableArray<AlbumContract>([]); // Current page of items
   public paging = new ServerSidePagingViewModel(20); // Paging view model
-  public ratingStars = () => [];
+  public ratingStars = (): any[] => [];
   public searchTerm = ko
     .observable('')
     .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });

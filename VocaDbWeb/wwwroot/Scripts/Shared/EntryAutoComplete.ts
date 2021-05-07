@@ -112,10 +112,10 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
   }
 
   function getItems(
-    par,
+    par: { term: string },
     response: (result: AutoCompleteItem<TContract>[]) => void,
   ): void {
-    var queryParams = {};
+    var queryParams: any = {};
     queryParams[termParamName] = par.term;
 
     if (params.onQuery) params.onQuery(queryParams, par.term);
@@ -159,7 +159,10 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
     });
   }
 
-  function selectItem(event: Event, ui): boolean {
+  function selectItem(
+    event: Event,
+    ui: { item: AutoCompleteItem<TContract> },
+  ): boolean {
     var item: AutoCompleteItem<TContract> = ui.item;
 
     // namebox value is cleared when using keyboard

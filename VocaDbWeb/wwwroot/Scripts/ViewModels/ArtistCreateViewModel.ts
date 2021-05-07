@@ -44,7 +44,7 @@ export default class ArtistCreateViewModel {
   constructor(
     artistRepository: ArtistRepository,
     private readonly tagRepository: TagRepository,
-    data?,
+    data?: { nameOriginal: string; nameRomaji: string; nameEnglish: string },
   ) {
     if (data) {
       this.nameOriginal(data.nameOriginal || '');

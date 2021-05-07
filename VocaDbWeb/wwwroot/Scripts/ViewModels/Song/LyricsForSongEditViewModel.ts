@@ -41,7 +41,7 @@ export default class LyricsForSongEditViewModel {
     this.isNew = contract == null;
   }
 
-  public toggleAccordion = (vm, event: JQueryEventObject): void => {
+  public toggleAccordion = (vm: any, event: JQueryEventObject): void => {
     var elem = $(event.target)
       .closest('.accordion-group')
       .find('.accordion-body') as any;

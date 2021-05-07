@@ -65,7 +65,9 @@ export default class ArtistFilters {
 
       this.artistRepo.getOne(selectedArtistId).then((artist) => {
         newArtist.name(artist.name);
-        newArtist.artistType(ArtistType[artist.artistType]);
+        newArtist.artistType(
+          ArtistType[artist.artistType as keyof typeof ArtistType],
+        );
       });
     });
   };

@@ -10,8 +10,8 @@ import HttpClient from '../Shared/HttpClient';
 
 function initPage(
   artistId: number,
-  saveStr,
-  urlMapper,
+  saveStr: string,
+  urlMapper: UrlMapper,
   viewModel: ArtistDetailsViewModel,
   songRepo: SongRepository,
 ): void {

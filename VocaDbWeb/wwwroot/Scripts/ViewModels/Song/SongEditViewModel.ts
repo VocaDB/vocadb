@@ -241,7 +241,7 @@ export default class SongEditViewModel {
     canBulkDeletePVs: boolean,
     private dialogService: IDialogService,
     private instrumentalTagId: number,
-    public languageNames,
+    public languageNames: any,
   ) {
     this.albumEventId = data.albumEventId;
     this.albumReleaseDate = data.albumReleaseDate
@@ -280,7 +280,9 @@ export default class SongEditViewModel {
       null,
     );
     this.songTypeStr = ko.observable(data.songType);
-    this.songType = ko.computed(() => SongType[this.songTypeStr()]);
+    this.songType = ko.computed(
+      () => SongType[this.songTypeStr() as keyof typeof SongType],
+    );
     this.status = ko.observable(data.status);
     this.tags = data.tags;
     this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);

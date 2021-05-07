@@ -20,7 +20,7 @@ const ArtistEdit = (
     };
     editedArtist: ArtistForEditContract;
   },
-  saveWarning,
+  saveWarning: any,
   webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
   $(document).ready(function () {

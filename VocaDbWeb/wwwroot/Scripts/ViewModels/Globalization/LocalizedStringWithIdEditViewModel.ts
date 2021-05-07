@@ -15,7 +15,9 @@ export default class LocalizedStringWithIdEditViewModel {
     contract: LocalizedStringWithIdContract,
   ): LocalizedStringWithIdEditViewModel {
     return new LocalizedStringWithIdEditViewModel(
-      ContentLanguageSelection[contract.language],
+      ContentLanguageSelection[
+        contract.language as keyof typeof ContentLanguageSelection
+      ],
       contract.value,
       contract.id,
     );

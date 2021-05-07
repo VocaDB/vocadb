@@ -97,7 +97,11 @@ export default class AlbumRepository
     return this.httpClient.delete(url);
   }
 
-  public findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {
+  public findDuplicate = (params: {
+    term1: string;
+    term2: string;
+    term3: string;
+  }): Promise<DuplicateEntryResultContract[]> => {
     var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
     return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
   };

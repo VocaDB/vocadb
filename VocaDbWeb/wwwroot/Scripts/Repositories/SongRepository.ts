@@ -85,7 +85,12 @@ export default class SongRepository
     );
   };
 
-  public findDuplicate = (params): Promise<NewSongCheckResultContract> => {
+  public findDuplicate = (params: {
+    term: string[];
+    pv: string[];
+    artistIds: number[];
+    getPVInfo: boolean;
+  }): Promise<NewSongCheckResultContract> => {
     return this.httpClient.get<NewSongCheckResultContract>(
       this.urlMapper.mapRelative('/api/songs/findDuplicate'),
       params,
@@ -154,7 +159,7 @@ export default class SongRepository
 
   public getListByParams(
     params: SongQueryParams,
-    callback,
+    callback: any,
   ): Promise<PartialFindResultContract<SongApiContract>> {
     const url = functions.mergeUrls(this.baseUrl, '/api/songs');
     const jqueryPromise = $.getJSON(url, params);
@@ -359,7 +364,7 @@ export default class SongRepository
       $.get(this.mapUrl(relative), params, callback);
     };
 
-    this.getJSON = <T>(relative, params): Promise<T> => {
+    this.getJSON = <T>(relative: string, params: any): Promise<T> => {
       return this.httpClient.get<T>(this.mapUrl(relative), params);
     };
 

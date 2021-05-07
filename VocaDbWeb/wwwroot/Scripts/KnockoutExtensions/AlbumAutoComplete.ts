@@ -11,7 +11,10 @@ declare global {
   }
 }
 
-export function albumAutoComplete(element: HTMLElement, valueAccessor): void {
+export function albumAutoComplete(
+  element: HTMLElement,
+  valueAccessor: () => any,
+): void {
   var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(
     valueAccessor(),
   );

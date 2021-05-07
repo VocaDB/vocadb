@@ -68,7 +68,9 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
   );
 
   public canHaveChildVoicebanks = ko.computed(() =>
-    ArtistHelper.canHaveChildVoicebanks(ArtistType[this.artistType()]),
+    ArtistHelper.canHaveChildVoicebanks(
+      ArtistType[this.artistType() as keyof typeof ArtistType],
+    ),
   );
 
   public fields = ko.computed(() =>

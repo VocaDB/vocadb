@@ -92,7 +92,9 @@ export default class RatedSongsSearchViewModel {
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[languageSelection],
+      ContentLanguagePreference[
+        languageSelection as keyof typeof ContentLanguagePreference
+      ],
     );
 
     if (initialize) this.init();

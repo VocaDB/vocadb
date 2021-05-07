@@ -26,13 +26,13 @@ const SongEdit = (
   addExtraArtist: string,
   artistRoleJson: { [key: string]: string },
   canBulkDeletePVs: boolean,
-  languageNames,
+  languageNames: any,
   model: {
     editedSong: SongForEditContract;
     id: number;
     instrumentalTagId: number;
   },
-  saveWarning,
+  saveWarning: any,
   webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
   $(document).ready(function () {

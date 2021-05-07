@@ -15,7 +15,7 @@ export default class RequestVerificationViewModel {
     null,
   );
 
-  public setArtist = (targetArtistId): void => {
+  public setArtist = (targetArtistId: number): void => {
     this.artistRepository.getOne(targetArtistId).then((artist) => {
       this.selectedArtist(artist);
     });

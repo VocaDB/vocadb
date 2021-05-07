@@ -115,7 +115,7 @@ export default class ActivityEntryListViewModel {
     var sets = this.resources.resources();
     var namesSet: { [key: string]: string };
 
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
         namesSet = sets.album_albumEditableFieldNames;
         break;
@@ -151,7 +151,7 @@ export default class ActivityEntryListViewModel {
   public getEntryTypeName = (entry: EntryContract): string | null => {
     var sets = this.resources.resources();
 
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
         return sets.discTypeNames[entry.discType];
 
@@ -182,7 +182,8 @@ export default class ActivityEntryListViewModel {
 
   public loadMore = (): void => {
     var url = this.urlMapper.mapRelative('/api/activityEntries');
-    var sortRule = ActivityEntrySortRule[this.sort()];
+    var sortRule =
+      ActivityEntrySortRule[this.sort() as keyof typeof ActivityEntrySortRule];
     $.getJSON(
       url,
       {

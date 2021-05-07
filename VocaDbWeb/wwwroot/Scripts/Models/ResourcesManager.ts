@@ -10,7 +10,10 @@ export default class ResourcesManager {
   private setsToLoad = (setNames: string[]): string[] => {
     var missing = _.filter(
       setNames,
-      (setName) => this.resources[setName] == null,
+      (setName) =>
+        this.resources[
+          setName as keyof KnockoutObservable<ResourcesContract>
+        ] == null,
     );
     return missing;
   };
@@ -27,7 +30,9 @@ export default class ResourcesManager {
       .then((resources) => {
         _.each(
           setNames,
-          (setName) => (this.resources()[setName] = resources[setName]),
+          (setName) =>
+            (this.resources()[setName as keyof ResourcesContract] =
+              resources[setName as keyof ResourcesContract]),
         );
         this.resources.valueHasMutated();
         if (callback) callback();

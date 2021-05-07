@@ -80,7 +80,7 @@ export default class PlayListViewModel {
   public nextSong = (): void => {
     if (this.paging.totalItems() == 0) return;
 
-    var index;
+    var index: number;
 
     if (this.pvPlayerViewModel.shuffle()) {
       // Get a random index

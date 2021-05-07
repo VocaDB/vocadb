@@ -19,7 +19,7 @@ export default class EntryUrlMapper {
     var prefix;
 
     if (typeof typeName === 'string') {
-      typeName = EntryType[typeName];
+      typeName = EntryType[typeName as keyof typeof EntryType];
     }
 
     switch (typeName) {

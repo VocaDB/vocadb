@@ -63,7 +63,7 @@ export default class SongWithPreviewViewModel {
 
     this.switchPV = (newService: string): void => {
       this.pvService(newService);
-      var service: PVService = PVService[newService];
+      var service: PVService = PVService[newService as keyof typeof PVService];
       repository.pvForSongAndService(songId, service, (html) =>
         this.previewHtml(html),
       );

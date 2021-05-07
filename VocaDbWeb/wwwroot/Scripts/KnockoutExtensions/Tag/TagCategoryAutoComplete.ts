@@ -17,7 +17,7 @@ ko.bindingHandlers.tagCategoryAutoComplete = {
     var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
     $(element).autocomplete({
-      source: (ui, callback: (result: string[]) => void) =>
+      source: (ui: { term: any }, callback: (result: string[]) => void) =>
         $.getJSON(url, { query: ui.term }, callback),
       select: (event: Event, ui) => {
         var value = valueAccessor();

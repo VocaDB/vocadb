@@ -74,7 +74,8 @@ export function songTypeLabel(
     return;
   }
 
-  var typeInfo: SongTypeLabelInfo = songTypeLabelInfos[val];
+  var typeInfo: SongTypeLabelInfo =
+    songTypeLabelInfos[val as keyof typeof songTypeLabelInfos];
 
   if (typeInfo) {
     $(element)

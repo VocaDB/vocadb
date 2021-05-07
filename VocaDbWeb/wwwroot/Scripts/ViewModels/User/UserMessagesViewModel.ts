@@ -4,6 +4,7 @@ import UserApiContract from '../../DataContracts/User/UserApiContract';
 import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
 
 export default class UserMessagesViewModel {
   constructor(
@@ -155,7 +156,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
   constructor(
     private readonly userRepo: UserRepository,
     public readonly inbox: UserInboxType,
-    private readonly userId,
+    private readonly userId: number,
     getMessageCount: boolean,
   ) {
     super();
@@ -207,7 +208,9 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
     this.items.removeAll(selected.value());
   };
 
-  public loadMoreItems = (callback): void => {
+  public loadMoreItems = (
+    callback: (result: PartialFindResultContract<UserMessageViewModel>) => void,
+  ): void => {
     this.userRepo
       .getMessageSummaries(
         this.userId,

@@ -126,7 +126,10 @@ export default class ArtistDetailsViewModel {
 
     $.when(songsPerMonthDataPromise, highchartsPromise).done(
       (songsPerMonthData: JQueryPromiseCallback<CountPerDayContract[]>) => {
-        var points: CountPerDayContract[] = songsPerMonthData[0];
+        var points: CountPerDayContract[] =
+          songsPerMonthData[
+            0 as keyof JQueryPromiseCallback<CountPerDayContract[]>
+          ];
 
         // Need at least 2 points because lone point looks weird
         if (points && points.length >= 2) {

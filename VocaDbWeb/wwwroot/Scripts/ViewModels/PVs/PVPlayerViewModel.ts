@@ -77,7 +77,8 @@ export default class PVPlayerViewModel {
           })
           .then((result) => {
             this.playerHtml(result.playerHtml);
-            this.playerService = PVService[result.pvService];
+            this.playerService =
+              PVService[result.pvService as keyof typeof PVService];
             this.currentPlayer = this.players[result.pvService];
 
             if (this.currentPlayer) {

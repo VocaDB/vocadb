@@ -67,7 +67,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
     }
   };
 
-  public play = (pvId): void => {
+  public play = (pvId: string): void => {
     if (!this.player) {
       this.attach(false, () => this.doPlay(pvId));
     } else {

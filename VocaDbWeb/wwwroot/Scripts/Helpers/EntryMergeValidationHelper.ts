@@ -4,7 +4,7 @@ import EntryStatus from '../Models/EntryStatus';
 export default class EntryMergeValidationHelper {
   private static toEnum(statusStr: string | EntryStatus): EntryStatus {
     if (typeof statusStr === 'string') {
-      return EntryStatus[statusStr];
+      return EntryStatus[statusStr as keyof typeof EntryStatus];
     } else {
       return statusStr;
     }

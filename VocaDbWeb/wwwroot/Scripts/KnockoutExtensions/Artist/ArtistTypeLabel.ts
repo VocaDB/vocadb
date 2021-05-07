@@ -63,7 +63,8 @@ ko.bindingHandlers.artistTypeLabel = {
       $(element).attr('title', val);
     }
 
-    var typeInfo: ArtistTypeInfo = artistTypeInfos[val];
+    var typeInfo: ArtistTypeInfo =
+      artistTypeInfos[val as keyof typeof artistTypeInfos];
 
     if (typeInfo) {
       $(element)

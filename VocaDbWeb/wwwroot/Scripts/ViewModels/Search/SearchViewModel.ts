@@ -98,7 +98,9 @@ export default class SearchViewModel {
 
     this.eventSearchViewModel = new EventSearchViewModel(
       this,
-      ContentLanguagePreference[languageSelection],
+      ContentLanguagePreference[
+        languageSelection as keyof typeof ContentLanguagePreference
+      ],
       eventRepo,
       artistRepo,
       loggedUserId,
@@ -135,7 +137,9 @@ export default class SearchViewModel {
 
     this.tagSearchViewModel = new TagSearchViewModel(
       this,
-      ContentLanguagePreference[languageSelection],
+      ContentLanguagePreference[
+        languageSelection as keyof typeof ContentLanguagePreference
+      ],
       tagRepo,
     );
 

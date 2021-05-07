@@ -282,7 +282,9 @@ export default class AlbumEditViewModel {
       data.description,
     );
     this.discTypeStr = ko.observable(data.discType);
-    this.discType = ko.computed(() => AlbumType[this.discTypeStr()]);
+    this.discType = ko.computed(
+      () => AlbumType[this.discTypeStr() as keyof typeof AlbumType],
+    );
     this.id = data.id;
     this.pvs = new PVListEditViewModel(
       pvRepository,

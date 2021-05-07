@@ -83,7 +83,7 @@ export default class PVPlayerNico implements IPVPlayer {
 
   private player: nico.NicoPlayer = null;
 
-  public play = (pvId): void => {
+  public play = (pvId: string): void => {
     if (!this.player || this.currentPv !== pvId) {
       if (!pvId) {
         pvId = this.loadedPv;

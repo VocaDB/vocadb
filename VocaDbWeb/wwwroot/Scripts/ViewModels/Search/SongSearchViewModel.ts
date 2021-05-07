@@ -171,7 +171,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[lang],
+      ContentLanguagePreference[lang as keyof typeof ContentLanguagePreference],
     );
 
     this.loadResults = (

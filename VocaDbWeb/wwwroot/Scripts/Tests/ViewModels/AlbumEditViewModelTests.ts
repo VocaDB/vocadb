@@ -18,7 +18,7 @@ var rep = new FakeAlbumRepository();
 var songRep: FakeSongRepository;
 var artistRep: FakeArtistRepository;
 var userRepo = new FakeUserRepository();
-var pvRep = null;
+var pvRep: any = null;
 var urlMapper = new UrlMapper('');
 
 var song: SongApiContract;
@@ -67,7 +67,7 @@ var labelArtistLink = {
   name: '',
   roles: 'Default',
 };
-var customArtistLink = {
+var customArtistLink: any = {
   artist: null,
   id: 42,
   isSupport: false,

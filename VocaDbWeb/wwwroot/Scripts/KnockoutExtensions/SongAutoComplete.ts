@@ -14,7 +14,10 @@ declare global {
   }
 }
 
-export function songAutoComplete(element: HTMLElement, valueAccessor): void {
+export function songAutoComplete(
+  element: HTMLElement,
+  valueAccessor: () => any,
+): void {
   var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(
     valueAccessor(),
   );

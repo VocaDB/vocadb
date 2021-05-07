@@ -10,7 +10,7 @@ import HttpClient from '../Shared/HttpClient';
 function initAlbumDetailsPage(
   albumId: number,
   collectionRating: number,
-  saveStr,
+  saveStr: string,
   urlMapper: UrlMapper,
   viewModel: AlbumDetailsViewModel,
 ): void {
@@ -79,7 +79,7 @@ function initAlbumDetailsPage(
     width: 320,
     modal: false,
     buttons: [
-      {
+      ({
         text: saveStr,
         click: function () {
           $('#editCollectionDialog').dialog('close');
@@ -109,7 +109,7 @@ function initAlbumDetailsPage(
 
           ui.showSuccessMessage(vdb.resources.album.addedToCollection);
         },
-      } as JQueryUI.ButtonOptions,
+      } as unknown) as JQueryUI.ButtonOptions,
     ],
   });
 
@@ -144,7 +144,7 @@ function initAlbumDetailsPage(
 
 const AlbumDetails = (
   addedToCollection: string,
-  albumDetails,
+  albumDetails: typeof vdb.resources.albumDetails,
   canDeleteAllComments: boolean,
   formatString: string,
   model: {

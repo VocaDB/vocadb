@@ -57,7 +57,7 @@ export default class ArtistRepository
   };
 
   public findDuplicate: (
-    params,
+    params: any,
     callback: (result: DuplicateEntryResultContract[]) => void,
   ) => void;
 

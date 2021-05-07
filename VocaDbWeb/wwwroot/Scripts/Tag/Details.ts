@@ -243,7 +243,7 @@ const TagDetails = (
   model: {
     id: number;
     isFollowing: boolean;
-    jsonModel;
+    jsonModel: any;
     latestComments: CommentContract[];
   },
   reportTypes: IEntryReportType[],

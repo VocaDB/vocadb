@@ -49,7 +49,7 @@ export default class TopBarViewModel {
   // entryReportRepository: entry reports repository.
   // userRepository: user repository.
   constructor(
-    entryTypeTranslations,
+    entryTypeTranslations: { [x: string]: string },
     entryType: string,
     searchTerm: string,
     unreadMessagesCount: number,

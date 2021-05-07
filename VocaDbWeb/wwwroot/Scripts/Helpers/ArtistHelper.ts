@@ -53,7 +53,7 @@ export default class ArtistHelper {
 
   public static getRolesArray(roles: string[] | string): ArtistRoles[] {
     const stringArr = typeof roles === 'string' ? roles.split(',') : roles;
-    return _.map(stringArr, (s) => ArtistRoles[s]);
+    return _.map(stringArr, (s) => ArtistRoles[s as keyof typeof ArtistRoles]);
   }
 
   public static getRolesList(roles: ArtistRoles | ArtistRoles[]): string {
@@ -67,7 +67,7 @@ export default class ArtistHelper {
   // Whether the roles for an artist type can be customized
   public static isCustomizable(at: ArtistType | string): boolean {
     if (typeof at === 'string') {
-      at = ArtistType[at];
+      at = ArtistType[at as keyof typeof ArtistType];
     }
 
     return _.includes(ArtistHelper.customizableTypes, at);
@@ -109,7 +109,9 @@ export default class ArtistHelper {
     focus: ContentFocus,
   ): boolean {
     return ArtistHelper.isProducerRoleType(
-      artist != null ? ArtistType[artist.artistType] : ArtistType.Unknown,
+      artist != null
+        ? ArtistType[artist.artistType as keyof typeof ArtistType]
+        : ArtistType.Unknown,
       roles,
       focus,
     );
@@ -121,7 +123,7 @@ export default class ArtistHelper {
     focus: ContentFocus,
   ): boolean {
     if (typeof artistType === 'string') {
-      artistType = ArtistType[artistType];
+      artistType = ArtistType[artistType as keyof typeof ArtistType];
     }
 
     return (
@@ -140,7 +142,8 @@ export default class ArtistHelper {
   ): boolean {
     if (!artistLink.artist || artistLink.isSupport) return false;
 
-    const artistType = ArtistType[artistLink.artist.artistType];
+    const artistType =
+      ArtistType[artistLink.artist.artistType as keyof typeof ArtistType];
     const rolesArray = ArtistHelper.getRolesArray(artistLink.roles);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -188,7 +191,9 @@ export default class ArtistHelper {
 
   static isVocalistRole(artist: ArtistContract, roles: ArtistRoles[]): boolean {
     return ArtistHelper.isVocalistRoleType(
-      artist != null ? ArtistType[artist.artistType] : ArtistType.Unknown,
+      artist != null
+        ? ArtistType[artist.artistType as keyof typeof ArtistType]
+        : ArtistType.Unknown,
       roles,
     );
   }

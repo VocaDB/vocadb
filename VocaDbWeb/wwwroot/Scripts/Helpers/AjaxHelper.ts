@@ -4,7 +4,7 @@ export default class AjaxHelper {
   }): string | null => {
     if (!params) return null;
 
-    var par = [];
+    var par: string[] = [];
 
     _.forOwn(params, (val, key) => {
       par.push(

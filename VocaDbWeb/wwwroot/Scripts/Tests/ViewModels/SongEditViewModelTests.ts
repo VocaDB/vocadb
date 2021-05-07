@@ -24,7 +24,7 @@ var webLinkData = {
 var data: SongForEditContract;
 var songRepo = new FakeSongRepository();
 var artistRepo = new FakeArtistRepository();
-var pvRepo = null;
+var pvRepo: any = null;
 var userRepo = new FakeUserRepository();
 vdb.resources.song = { addExtraArtist: 'Add extra artist' };
 

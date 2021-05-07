@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ArtistCreateViewModel from '../ViewModels/ArtistCreateViewModel';
 
-const ArtistCreate = (model: ArtistCreateViewModel): void => {
+const ArtistCreate = (model: any): void => {
   $(document).ready(function () {
     ko.punches.enableAll();
     const httpClient = new HttpClient();

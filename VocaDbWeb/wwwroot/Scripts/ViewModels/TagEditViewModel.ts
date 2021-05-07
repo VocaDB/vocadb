@@ -95,7 +95,7 @@ export default class TagEditViewModel {
   };
 
   public hasTargetType = (target: EntryType): KnockoutComputed<boolean> => {
-    const hasFlag = (t): boolean => (this.targets() & t) === t;
+    const hasFlag = (t: EntryType): boolean => (this.targets() & t) === t;
     const checkFlags = (): void => {
       const types = [
         EntryType.Album,

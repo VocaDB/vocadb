@@ -14,6 +14,8 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import SongListContract from '../../DataContracts/Song/SongListContract';
 
 export default class UserDetailsViewModel {
   private static overview = 'Overview';
@@ -84,7 +86,12 @@ export default class UserDetailsViewModel {
 
   private loadEvents = (): void => {
     this.userRepo
-      .getEvents(this.userId, UserEventRelationshipType[this.eventsType()])
+      .getEvents(
+        this.userId,
+        UserEventRelationshipType[
+          this.eventsType() as keyof typeof UserEventRelationshipType
+        ],
+      )
       .then((events) => {
         this.events(events);
       });
@@ -198,7 +205,7 @@ export default class UserDetailsViewModel {
 
 export class UserSongListsViewModel extends SongListsBaseViewModel {
   constructor(
-    private readonly userId,
+    private readonly userId: number,
     private readonly userRepo: UserRepository,
     resourceRepo: ResourceRepository,
     tagRepo: TagRepository,
@@ -208,7 +215,9 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
     super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
   }
 
-  public loadMoreItems = (callback): void => {
+  public loadMoreItems = (
+    callback: (result: PartialFindResultContract<SongListContract>) => void,
+  ): void => {
     this.userRepo
       .getSongLists(
         this.userId,

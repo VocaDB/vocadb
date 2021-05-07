@@ -36,7 +36,10 @@ export default class ViewAuditLogViewModel {
     );
 
     $('#userNameField').autocomplete({
-      source: (ui, callback) => {
+      source: (
+        ui: { term: any },
+        callback: (data: any, textStatus: string, jqXHR: JQueryXHR) => any,
+      ) => {
         var url = functions.mapAbsoluteUrl('/api/users/names');
         $.getJSON(url, { query: ui.term }, callback);
       },
@@ -58,7 +61,13 @@ export default class ViewAuditLogViewModel {
       })
       .autocomplete({
         minLength: 1,
-        source: (request, response) => {
+        source: (
+          request: { term: string },
+          response: {
+            (arg0: {}): void;
+            (data: any, textStatus: string, jqXHR: JQueryXHR): any;
+          },
+        ) => {
           var name = this.extractLast(request.term);
           if (name.length == 0) response({});
           else

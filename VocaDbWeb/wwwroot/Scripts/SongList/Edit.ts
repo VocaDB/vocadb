@@ -3,7 +3,11 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import SongListEditViewModel from '../ViewModels/SongList/SongListEditViewModel';
 
-function initPage(repoFactory, urlMapper, listId): void {
+function initPage(
+  repoFactory: RepositoryFactory,
+  urlMapper: UrlMapper,
+  listId: number,
+): void {
   $('#tabs').tabs();
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });

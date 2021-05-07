@@ -4,12 +4,12 @@ import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 function initPage(): void {
-  function artistAdded(row): void {
+  function artistAdded(row: any): void {
     var artistsTable = $('#ownedArtistsTableBody');
     artistsTable.append(row);
   }
 
-  function acceptArtistSelection(artistId, term): void {
+  function acceptArtistSelection(artistId: any, term: any): void {
     if (!functions.isNullOrWhiteSpace(artistId)) {
       $.post(
         '../../User/OwnedArtistForUserEditRow',

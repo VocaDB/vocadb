@@ -177,7 +177,9 @@ export default class ArtistEditViewModel {
     private dialogService: IDialogService,
   ) {
     this.artistTypeStr = ko.observable(data.artistType);
-    this.artistType = ko.computed(() => ArtistType[this.artistTypeStr()]);
+    this.artistType = ko.computed(
+      () => ArtistType[this.artistTypeStr() as keyof typeof ArtistType],
+    );
     this.allowBaseVoicebank = ko.computed(() =>
       this.canHaveBaseVoicebank(this.artistType()),
     );

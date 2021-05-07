@@ -61,7 +61,7 @@ ko.bindingHandlers.jqButtonset = {
 
   update: function (element, valueAccessor): void {
     /////////////// addded code to ko checked binding /////////////////
-    var buttonSet = function (element): void {
+    var buttonSet = function (element: any): void {
       // now update the css classes
       // Normally when knockout updates button, there
       // isn't an event to transfer new status

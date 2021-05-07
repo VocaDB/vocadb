@@ -21,7 +21,7 @@ export default class HtmlHelper {
 
   public static formatMarkdown(
     value: string,
-    callback?: (err, content: string) => void,
+    callback?: (err: any, content: string) => void,
   ): void {
     if (!value) callback(null, '');
     // Using GitHub-flavored markdown with simple line breaks and HTML sanitation.

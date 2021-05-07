@@ -8,7 +8,8 @@
 		"alwaysStrict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": true
 	},
 	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
 }

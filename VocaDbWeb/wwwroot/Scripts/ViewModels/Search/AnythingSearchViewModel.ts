@@ -35,7 +35,7 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
   }
 
   public entryCategoryName = (entry: EntryContract): string => {
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Artist:
         return this.searchViewModel.resources().artistTypeNames[
           entry.artistType
