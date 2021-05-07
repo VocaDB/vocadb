@@ -20,7 +20,7 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
       childTags,
       status,
       callback,
-    ) =>
+    ): Promise<void> =>
       this.entryRepo
         .getList(
           pagingProperties,
@@ -34,8 +34,8 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
         .then(callback);
   }
 
-  public entryCategoryName = (entry: EntryContract) => {
-    switch (EntryType[entry.entryType]) {
+  public entryCategoryName = (entry: EntryContract): string => {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Artist:
         return this.searchViewModel.resources().artistTypeNames[
           entry.artistType
@@ -53,7 +53,7 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
     return null;
   };
 
-  public entryUrl = (entry: EntryContract) => {
+  public entryUrl = (entry: EntryContract): string => {
     return EntryUrlMapper.details(entry.entryType, entry.id);
   };
 

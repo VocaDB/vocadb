@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import SongCreateViewModel from '../ViewModels/SongCreateViewModel';
 
-const SongCreate = (model: SongCreateViewModel) => {
+const SongCreate = (model: any): void => {
   $(document).ready(function () {
     ko.punches.enableAll();
     const httpClient = new HttpClient();

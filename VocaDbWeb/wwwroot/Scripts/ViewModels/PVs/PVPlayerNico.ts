@@ -26,7 +26,10 @@ export default class PVPlayerNico implements IPVPlayer {
     });
   }
 
-  public attach = (reset: boolean = false, readyCallback?: () => void) => {
+  public attach = (
+    reset: boolean = false,
+    readyCallback?: () => void,
+  ): void => {
     if (reset) {
       $(this.wrapperElement).empty();
       $(this.wrapperElement).append(
@@ -34,7 +37,7 @@ export default class PVPlayerNico implements IPVPlayer {
       );
     }
 
-    window.onNicoPlayerFactoryReady = (factory) => {
+    window.onNicoPlayerFactoryReady = (factory): void => {
       PVPlayerNico.playerFactory = factory;
       if (readyCallback) {
         readyCallback();
@@ -74,13 +77,13 @@ export default class PVPlayerNico implements IPVPlayer {
     }
   };
 
-  public detach = () => {
+  public detach = (): void => {
     this.player = null;
   };
 
   private player: nico.NicoPlayer = null;
 
-  public play = (pvId) => {
+  public play = (pvId: string): void => {
     if (!this.player || this.currentPv !== pvId) {
       if (!pvId) {
         pvId = this.loadedPv;

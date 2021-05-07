@@ -2,7 +2,7 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 
 // Generic viewmodel that supports simple paging by loading more items
 export default class PagedItemsViewModel<TModel> {
-  public clear = () => {
+  public clear = (): void => {
     this.items([]);
     this.start = 0;
     this.loadMore();
@@ -12,7 +12,7 @@ export default class PagedItemsViewModel<TModel> {
 
   private isInit = false;
 
-  public init = (callback?: Function) => {
+  public init = (callback?: Function): void => {
     if (this.isInit) return;
 
     this.loadMore(callback);
@@ -21,7 +21,7 @@ export default class PagedItemsViewModel<TModel> {
 
   public items = ko.observableArray<TModel>([]);
 
-  public loadMore = (callback?: Function) => {
+  public loadMore = (callback?: Function): void => {
     this.loadMoreItems((result) => {
       this.itemsLoaded(result);
       if (callback) callback();
@@ -30,9 +30,9 @@ export default class PagedItemsViewModel<TModel> {
 
   public loadMoreItems = (
     callback: (result: PartialFindResultContract<TModel>) => void,
-  ) => {};
+  ): void => {};
 
-  public itemsLoaded = (result: PartialFindResultContract<TModel>) => {
+  public itemsLoaded = (result: PartialFindResultContract<TModel>): void => {
     ko.utils.arrayPushAll(this.items, result.items);
     this.start = this.start + result.items.length;
     this.hasMore(result.totalCount > this.start);

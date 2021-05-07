@@ -3,13 +3,13 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
-function initPage() {
-  function artistAdded(row) {
+function initPage(): void {
+  function artistAdded(row: any): void {
     var artistsTable = $('#ownedArtistsTableBody');
     artistsTable.append(row);
   }
 
-  function acceptArtistSelection(artistId, term) {
+  function acceptArtistSelection(artistId: any, term: any): void {
     if (!functions.isNullOrWhiteSpace(artistId)) {
       $.post(
         '../../User/OwnedArtistForUserEditRow',
@@ -42,7 +42,7 @@ function initPage() {
   });
 }
 
-const UserEdit = () => {
+const UserEdit = (): void => {
   $(document).ready(function () {
     initPage();
   });

@@ -5,7 +5,7 @@ import ArtistRepository from '../../Repositories/ArtistRepository';
 export default class RequestVerificationViewModel {
   constructor(private readonly artistRepository: ArtistRepository) {}
 
-  public clearArtist = () => {
+  public clearArtist = (): void => {
     this.selectedArtist(null);
   };
 
@@ -15,7 +15,7 @@ export default class RequestVerificationViewModel {
     null,
   );
 
-  public setArtist = (targetArtistId) => {
+  public setArtist = (targetArtistId: number): void => {
     this.artistRepository.getOne(targetArtistId).then((artist) => {
       this.selectedArtist(artist);
     });

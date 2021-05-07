@@ -4,7 +4,10 @@ import HttpClient from './HttpClient';
 
 $(() => {
   $('#globalSearchTerm').autocomplete({
-    source: (request, response: (items: string[]) => void) => {
+    source: (
+      request: { term: string },
+      response: (items: string[]) => void,
+    ) => {
       var urlMapper = new UrlMapper(vdb.values.baseAddress);
       var term: string = request.term;
       var entryType = $('#globalSearchObjectType').val();
@@ -47,7 +50,9 @@ $(() => {
   });
 });
 
-export function setLanguagePreferenceCookie(languagePreference: string) {
+export function setLanguagePreferenceCookie(
+  languagePreference: string,
+): boolean {
   const httpClient = new HttpClient();
   var userRepo = new UserRepository(
     httpClient,

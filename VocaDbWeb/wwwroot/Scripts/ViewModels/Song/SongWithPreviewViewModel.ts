@@ -35,11 +35,11 @@ export default class SongWithPreviewViewModel {
     public songId: number,
     public pvServices: string,
   ) {
-    this.destroyPV = () => {
+    this.destroyPV = (): void => {
       this.previewHtml(null);
     };
 
-    this.togglePreview = () => {
+    this.togglePreview = (): void => {
       if (this.preview()) {
         this.preview(false);
         this.ratingButtons(null);
@@ -61,9 +61,9 @@ export default class SongWithPreviewViewModel {
       });
     };
 
-    this.switchPV = (newService: string) => {
+    this.switchPV = (newService: string): void => {
       this.pvService(newService);
-      var service: PVService = PVService[newService];
+      var service: PVService = PVService[newService as keyof typeof PVService];
       repository.pvForSongAndService(songId, service, (html) =>
         this.previewHtml(html),
       );

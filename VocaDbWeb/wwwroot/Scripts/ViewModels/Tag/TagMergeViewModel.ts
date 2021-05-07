@@ -22,7 +22,7 @@ export default class TagMergeViewModel {
     });
   }
 
-  public tagFilter = (tag: TagApiContract) => {
+  public tagFilter = (tag: TagApiContract): boolean => {
     return tag.id !== this.base.id;
   };
 

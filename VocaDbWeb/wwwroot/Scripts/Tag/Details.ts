@@ -15,15 +15,15 @@ function initChart(
   children: TagBaseContract[],
   hasMoreSiblings: boolean,
   hasMoreChildren: boolean,
-) {
-  var tagUrl = (tag: TagBaseContract) =>
+): void {
+  var tagUrl = (tag: TagBaseContract): string =>
     urlMapper.mapRelative('/T/' + tag.id + '/' + tag.urlSlug);
-  var tagLink = (tag: TagBaseContract) => {
+  var tagLink = (tag: TagBaseContract): string => {
     var link = '<a href="' + tagUrl(tag) + '">' + tag.name + '</a>';
     return link;
   };
 
-  var tagLinks = (tagList: TagBaseContract[]) => {
+  var tagLinks = (tagList: TagBaseContract[]): string => {
     var str = '';
     const links = _.map(tagList, (item) => tagLink(item));
     const tagsPerRow = 7;
@@ -215,7 +215,7 @@ function initChart(
   });
 }
 
-function initTagsPage(vm: TagDetailsViewModel) {
+function initTagsPage(vm: TagDetailsViewModel): void {
   $('#tabs').tabs({
     activate: (event, ui) => {
       if (ui.newTab.data('tab') === 'Discussion') {
@@ -243,12 +243,12 @@ const TagDetails = (
   model: {
     id: number;
     isFollowing: boolean;
-    jsonModel;
+    jsonModel: any;
     latestComments: CommentContract[];
   },
   reportTypes: IEntryReportType[],
   showTranslatedDescription: boolean,
-) => {
+): void => {
   $(function () {
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
     var jsonModel = model.jsonModel;

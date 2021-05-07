@@ -11,7 +11,7 @@ const UserAlbumCollection = (
     };
   },
   publicCollection: boolean,
-) => {
+): void => {
   $(document).ready(function () {
     var cultureCode = vdb.values.uiCulture;
     var languageSelection =

@@ -58,9 +58,9 @@ export default class ReleaseEventDetailsViewModel {
 
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepo.getEventTagSelections(this.eventId).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepo.updateEventTags(
             this.eventId,
             tags,
@@ -89,7 +89,7 @@ export default class ReleaseEventDetailsViewModel {
     () => this.eventAssociationType() === UserEventRelationshipType.Interested,
   );
 
-  public removeEvent = () => {
+  public removeEvent = (): void => {
     this.userRepo.deleteEventForUser(this.eventId);
     this.eventAssociationType(null);
     var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
@@ -98,7 +98,7 @@ export default class ReleaseEventDetailsViewModel {
 
   public reportViewModel: ReportEntryViewModel;
 
-  public setEventAttending = () => {
+  public setEventAttending = (): void => {
     this.userRepo.updateEventForUser(
       this.eventId,
       UserEventRelationshipType.Attending,
@@ -109,7 +109,7 @@ export default class ReleaseEventDetailsViewModel {
     });
   };
 
-  public setEventInterested = () => {
+  public setEventInterested = (): void => {
     this.userRepo.updateEventForUser(
       this.eventId,
       UserEventRelationshipType.Interested,

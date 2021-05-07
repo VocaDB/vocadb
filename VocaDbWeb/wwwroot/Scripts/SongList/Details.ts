@@ -16,7 +16,7 @@ const SongListDetails = (
       tags: TagUsageForApiContract[];
     };
   },
-) => {
+): void => {
   $(function () {
     $('#editListLink').button({ icons: { primary: 'ui-icon-wrench' } });
     $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });

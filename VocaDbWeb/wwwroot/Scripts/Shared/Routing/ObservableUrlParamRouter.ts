@@ -34,7 +34,7 @@ export default class ObservableUrlParamRouter {
       if (!this.popState) win.history.pushState(val, null, '?' + val);
     });
 
-    win.onpopstate = (event) => {
+    win.onpopstate = (event): void => {
       if (!event) return;
 
       // History state includes the query string as key/value pairs separated by "&"

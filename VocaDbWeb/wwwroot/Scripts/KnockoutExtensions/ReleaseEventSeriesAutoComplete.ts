@@ -16,8 +16,8 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => any,
     allBindingsAccessor: () => any,
-  ) => {
-    var seriesFilter: (any) => boolean = allBindingsAccessor().tagFilter;
+  ): void => {
+    var seriesFilter: (any: any) => boolean = allBindingsAccessor().tagFilter;
     var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
     if (clearValue == null) clearValue = true;

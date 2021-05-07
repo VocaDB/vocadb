@@ -9,7 +9,7 @@ import FollowedArtistsViewModel from '../ViewModels/User/FollowedArtistsViewMode
 import RatedSongsSearchViewModel from '../ViewModels/User/RatedSongsSearchViewModel';
 import UserDetailsViewModel from '../ViewModels/User/UserDetailsViewModel';
 
-function initPage(confirmDisableStr: string) {
+function initPage(confirmDisableStr: string): void {
   $('#mySettingsLink').button({ icons: { primary: 'ui-icon-wrench' } });
   $('#messagesLink').button({ icons: { primary: 'ui-icon-mail-closed' } });
   $('#composeMessageLink').button({
@@ -22,7 +22,7 @@ function initPage(confirmDisableStr: string) {
   $('#avatar').tooltip(<any>{ placement: 'bottom' });
 
   $('#disableUserLink').click(function () {
-    return confirm(confirmDisableStr);
+    return window.confirm(confirmDisableStr);
   });
 
   $('#sfsCheckDialog').dialog(<any>{ autoOpen: false, model: true });
@@ -40,7 +40,7 @@ const UserDetails = (
     latestComments: CommentContract[];
   },
   publicCollection: boolean,
-) => {
+): void => {
   ko.punches.enableAll();
 
   $(function () {

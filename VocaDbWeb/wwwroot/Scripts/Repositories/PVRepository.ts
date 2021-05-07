@@ -12,7 +12,7 @@ export default class PVRepository {
     pvUrl: string,
     type: string,
     success: (pv: PVContract) => void,
-  ) => {
+  ): JQueryXHR => {
     var url = this.urlMapper.mapRelative('/api/pvs');
     return $.getJSON(url, { pvUrl: pvUrl, type: type }, success);
   };

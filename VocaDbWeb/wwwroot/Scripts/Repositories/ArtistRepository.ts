@@ -36,7 +36,7 @@ export default class ArtistRepository
     notes: string,
     versionNumber: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(
       this.urlMapper.mapRelative('/Artist/CreateReport'),
       {
@@ -57,7 +57,7 @@ export default class ArtistRepository
   };
 
   public findDuplicate: (
-    params,
+    params: any,
     callback: (result: DuplicateEntryResultContract[]) => void,
   ) => void;
 
@@ -162,14 +162,14 @@ export default class ArtistRepository
 
     this.urlMapper = new UrlMapper(baseUrl);
 
-    this.mapUrl = (relative: string) => {
+    this.mapUrl = (relative: string): string => {
       return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
     };
 
     this.findDuplicate = (
       params,
       callback: (result: DuplicateEntryResultContract[]) => void,
-    ) => {
+    ): void => {
       $.post(this.mapUrl('/FindDuplicate'), params, callback);
     };
   }

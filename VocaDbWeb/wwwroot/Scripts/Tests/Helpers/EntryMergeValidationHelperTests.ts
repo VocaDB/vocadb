@@ -10,7 +10,7 @@ function testValidate(
   targetStatus: EntryStatus,
   baseDate: moment.Moment,
   targetDate: moment.Moment,
-) {
+): void {
   var result = EntryMergeValidationHelper.validate(
     baseStatus,
     targetStatus,

@@ -5,13 +5,13 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import TagEditViewModel from '../ViewModels/TagEditViewModel';
 
-function initPage() {
+function initPage(): void {
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
-const TagEdit = (model: { id: number }) => {
+const TagEdit = (model: { id: number }): void => {
   $(document).ready(function () {
     initPage();
 

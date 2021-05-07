@@ -3,5 +3,5 @@ export interface IDialogService {
 }
 
 export default class DialogService implements IDialogService {
-  public confirm = (message: string) => confirm(message);
+  public confirm = (message: string): boolean => window.confirm(message);
 }

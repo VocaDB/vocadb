@@ -83,7 +83,7 @@ export default class AlbumCollectionViewModel {
     );
   });
 
-  public init = () => {
+  public init = (): void => {
     if (this.isInit) return;
 
     this.resourceRepo
@@ -100,24 +100,24 @@ export default class AlbumCollectionViewModel {
       });
   };
 
-  public ratingStars = (userRating: number) => {
+  public ratingStars = (userRating: number): { enabled: boolean }[] => {
     var ratings = _.map([1, 2, 3, 4, 5], (rating) => {
       return { enabled: Math.round(userRating) >= rating };
     });
     return ratings;
   };
 
-  public selectArtist = (selectedArtistId: number) => {
+  public selectArtist = (selectedArtistId: number): void => {
     this.artistId(selectedArtistId);
     this.artistRepo
       .getOne(selectedArtistId)
       .then((artist) => this.artistName(artist.name));
   };
 
-  public updateResultsWithTotalCount = () => this.updateResults(true);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  public updateResults = (clearResults: boolean = true) => {
+  public updateResults = (clearResults: boolean = true): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

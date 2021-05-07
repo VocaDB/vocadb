@@ -20,7 +20,13 @@ export default class FakeSongRepository extends SongRepository {
   constructor() {
     super(new HttpClient(), '');
 
-    this.addSongToList = (listId, songId, notes, newListName, callback?) => {
+    this.addSongToList = (
+      listId,
+      songId,
+      notes,
+      newListName,
+      callback?,
+    ): void => {
       if (listId !== 0) {
         this.songsInLists.push({
           listId: listId,
@@ -53,11 +59,11 @@ export default class FakeSongRepository extends SongRepository {
       return FakePromise.resolve(this.song);
     };
 
-    this.songListsForSong = (songId, callback) => {
+    this.songListsForSong = (songId, callback): void => {
       if (callback) callback('Miku!');
     };
 
-    this.songListsForUser = (ignoreSongId, callback) => {
+    this.songListsForUser = (ignoreSongId, callback): void => {
       if (callback) callback(this.songLists);
     };
   }

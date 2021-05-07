@@ -11,7 +11,7 @@ const UserMySettings = (model: {
   emailVerified: boolean;
   knownLanguages: UserKnownLanguageContract[];
   webLinks: WebLinkContract[];
-}) => {
+}): void => {
   $(document).ready(function () {
     $('#tabs').tabs();
 

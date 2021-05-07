@@ -4,14 +4,14 @@ interface KnockoutBindingHandlers {
 
 // Adapted from http://therunningprogrammer.blogspot.fi/2011/10/how-to-use-jquery-uis-button-with.html and http://jsfiddle.net/photo_tom/hjk93/light/
 ko.bindingHandlers.jqButtonset = {
-  init: function (element, valueAccessor, allBindingsAccessor) {
+  init: function (element, valueAccessor, allBindingsAccessor): void {
     var allbindings = allBindingsAccessor();
     var id = ko.utils.unwrapObservable<string>(allbindings.id);
     $(element).attr('id', id);
     $(element).find('~label').attr('for', id);
     $(element).button();
 
-    var updateHandler = function () {
+    var updateHandler = function (): void {
       var valueToWrite;
       if (element.type == 'checkbox') {
         valueToWrite = element.checked;
@@ -59,9 +59,9 @@ ko.bindingHandlers.jqButtonset = {
     //});
   },
 
-  update: function (element, valueAccessor) {
+  update: function (element, valueAccessor): void {
     /////////////// addded code to ko checked binding /////////////////
-    var buttonSet = function (element) {
+    var buttonSet = function (element: any): void {
       // now update the css classes
       // Normally when knockout updates button, there
       // isn't an event to transfer new status

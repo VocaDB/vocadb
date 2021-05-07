@@ -51,21 +51,21 @@ export default class DiscussionIndexViewModel {
     this.paging.pageSize.subscribe(this.loadTopicsForCurrentFolder);
   }
 
-  private canDeleteTopic = (topic: DiscussionTopicContract) => {
+  private canDeleteTopic = (topic: DiscussionTopicContract): boolean => {
     return (
       this.canDeleteAllComments ||
       (topic.author && topic.author.id === this.loggedUserId)
     );
   };
 
-  private canEditTopic = (topic: DiscussionTopicContract) => {
+  private canEditTopic = (topic: DiscussionTopicContract): boolean => {
     return (
       this.canDeleteAllComments ||
       (topic.author && topic.author.id === this.loggedUserId)
     );
   };
 
-  public createNewTopic = () => {
+  public createNewTopic = (): void => {
     var folder = this.selectedFolder();
     this.repo
       .createTopic(folder.id, this.newTopic().toContract())
@@ -80,7 +80,7 @@ export default class DiscussionIndexViewModel {
       });
   };
 
-  public deleteTopic = (topic: DiscussionTopicContract) => {
+  public deleteTopic = (topic: DiscussionTopicContract): void => {
     this.repo.deleteTopic(topic.id).then(() => {
       this.selectTopic(null);
     });
@@ -88,18 +88,18 @@ export default class DiscussionIndexViewModel {
 
   public folders = ko.observableArray<DiscussionFolderContract>([]);
 
-  private getFolder = (folderId: number) => {
+  private getFolder = (folderId: number): DiscussionFolderContract => {
     return _.find(this.folders(), (f) => f.id === folderId);
   };
 
-  private loadTopicsForCurrentFolder = () => {
+  private loadTopicsForCurrentFolder = (): void => {
     this.loadTopics(this.selectedFolder());
   };
 
   private loadTopics = (
     folder: DiscussionFolderContract,
     callback?: () => void,
-  ) => {
+  ): void => {
     if (!folder) {
       this.topics([]);
 
@@ -121,7 +121,7 @@ export default class DiscussionIndexViewModel {
   private mapRoute = (
     partialUrl: string,
     callback: (context: page.PageContext) => void,
-  ) => {
+  ): void => {
     page(UrlMapper.mergeUrls('/discussion/', partialUrl), callback);
   };
 
@@ -131,7 +131,7 @@ export default class DiscussionIndexViewModel {
 
   public recentTopics = ko.observableArray<DiscussionTopicContract>([]);
 
-  public selectFolder = (folder: DiscussionFolderContract) => {
+  public selectFolder = (folder: DiscussionFolderContract): void => {
     if (!folder) {
       page('/discussion');
     } else {
@@ -139,11 +139,11 @@ export default class DiscussionIndexViewModel {
     }
   };
 
-  private selectFolderById = (folderId: number) => {
+  private selectFolderById = (folderId: number): void => {
     this.selectedFolder(this.getFolder(folderId));
   };
 
-  public selectTopic = (topic: DiscussionTopicContract) => {
+  public selectTopic = (topic: DiscussionTopicContract): void => {
     if (!topic) {
       page('/discussion/topics');
     } else {
@@ -151,7 +151,7 @@ export default class DiscussionIndexViewModel {
     }
   };
 
-  private selectTopicById = (topicId: number) => {
+  private selectTopicById = (topicId: number): void => {
     if (!topicId) {
       this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null));
       return;

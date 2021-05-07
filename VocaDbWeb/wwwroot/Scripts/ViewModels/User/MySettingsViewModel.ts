@@ -42,11 +42,11 @@ export default class MySettingsViewModel {
     );
   }
 
-  public addKnownLanguage = () => {
+  public addKnownLanguage = (): void => {
     this.knownLanguages.push(new UserKnownLanguageEditViewModel());
   };
 
-  verifyEmail = () => {
+  verifyEmail = (): void => {
     this.emailVerificationSent(true);
     this.userRepository.requestEmailVerification(() => {
       ui.showSuccessMessage('Message sent, please check your email');

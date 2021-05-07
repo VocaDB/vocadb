@@ -1,7 +1,7 @@
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
 export default class TagFilter {
-  public static fromContract = (tag: TagBaseContract) => {
+  public static fromContract = (tag: TagBaseContract): TagFilter => {
     return new TagFilter(tag.id, tag.name, tag.urlSlug);
   };
 

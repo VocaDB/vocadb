@@ -1,22 +1,22 @@
 export default class functions {
-  public static getId(elem: HTMLElement) {
+  public static getId(elem: HTMLElement): string | null {
     if ($(elem) == null || $(elem).attr('id') == null) return null;
 
     var parts = $(elem).attr('id').split('_');
     return parts.length >= 2 ? parts[1] : null;
   }
 
-  public static isNullOrWhiteSpace(str: string) {
+  public static isNullOrWhiteSpace(str: string): boolean {
     if (str == null || str.length == 0) return true;
 
     return !/\S/.test(str);
   }
 
-  public static mapAbsoluteUrl(relative: string) {
+  public static mapAbsoluteUrl(relative: string): string {
     return functions.mergeUrls(vdb.values.baseAddress, relative);
   }
 
-  public static mergeUrls(base: string, relative: string) {
+  public static mergeUrls(base: string, relative: string): string {
     if (base.charAt(base.length - 1) == '/' && relative.charAt(0) == '/')
       return base + relative.substr(1);
 
@@ -29,7 +29,7 @@ export default class functions {
     return base + '/' + relative;
   }
 
-  public static getUrlDomain(url: string) {
+  public static getUrlDomain(url: string): string {
     // http://stackoverflow.com/a/8498629
     const matches = url
       ? url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
@@ -37,7 +37,7 @@ export default class functions {
     return matches && matches[1]; // domain will be null if no match is found
   }
 
-  public static trackOutboundLink(event: MouseEvent) {
+  public static trackOutboundLink(event: MouseEvent): void {
     // Skip tracking if ga not present, sendBeacon is not supported, or mouse button is right-click
     const mright = 2;
     if (

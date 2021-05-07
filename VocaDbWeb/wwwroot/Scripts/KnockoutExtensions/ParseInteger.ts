@@ -3,7 +3,7 @@
   parseInteger: (target: any) => KnockoutComputed<any>;
 }
 
-ko.extenders.parseInteger = (target) => {
+ko.extenders.parseInteger = (target): KnockoutComputed<any> => {
   //create a writeable computed observable to intercept writes to our observable
   var result = ko
     .computed({

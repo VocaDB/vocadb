@@ -11,7 +11,7 @@ const UserFavoriteSongs = (model: {
   user: {
     id: number;
   };
-}) => {
+}): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     var cultureCode = vdb.values.uiCulture;

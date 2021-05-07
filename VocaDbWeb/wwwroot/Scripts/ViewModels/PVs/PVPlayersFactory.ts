@@ -11,7 +11,9 @@ export default class PVPlayersFactory {
     public playerElementId: string = 'pv-player',
   ) {}
 
-  public createPlayers = (songFinishedCallback: () => void = null) => {
+  public createPlayers = (
+    songFinishedCallback: () => void = null,
+  ): { [index: string]: IPVPlayer } => {
     var players: { [index: string]: IPVPlayer } = {
       File: <IPVPlayer>(
         new PVPlayerFile(

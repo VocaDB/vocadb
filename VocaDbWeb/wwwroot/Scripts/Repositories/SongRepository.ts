@@ -36,7 +36,7 @@ export default class SongRepository
     notes: string,
     newListName: string,
     callback?: Function,
-  ) => {
+  ): void => {
     this.post(
       '/AddSongToList',
       {
@@ -65,7 +65,7 @@ export default class SongRepository
     notes: string,
     versionNumber: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(
       this.urlMapper.mapRelative('/Song/CreateReport'),
       {
@@ -85,7 +85,12 @@ export default class SongRepository
     );
   };
 
-  public findDuplicate = (params): Promise<NewSongCheckResultContract> => {
+  public findDuplicate = (params: {
+    term: string[];
+    pv: string[];
+    artistIds: number[];
+    getPVInfo: boolean;
+  }): Promise<NewSongCheckResultContract> => {
     return this.httpClient.get<NewSongCheckResultContract>(
       this.urlMapper.mapRelative('/api/songs/findDuplicate'),
       params,
@@ -152,7 +157,10 @@ export default class SongRepository
     });
   };
 
-  public getListByParams(params: SongQueryParams, callback) {
+  public getListByParams(
+    params: SongQueryParams,
+    callback: any,
+  ): Promise<PartialFindResultContract<SongApiContract>> {
     const url = functions.mergeUrls(this.baseUrl, '/api/songs');
     const jqueryPromise = $.getJSON(url, params);
 
@@ -238,7 +246,7 @@ export default class SongRepository
     timeUnit: TimeUnit,
     artistId: number,
     callback?: (points: CountPerDayContract[]) => void,
-  ) => {
+  ): JQueryXHR => {
     var url = this.urlMapper.mapRelative('/api/songs/over-time');
     return $.getJSON(
       url,
@@ -352,19 +360,19 @@ export default class SongRepository
 
     this.urlMapper = new UrlMapper(baseUrl);
 
-    this.get = (relative, params, callback) => {
+    this.get = (relative, params, callback): void => {
       $.get(this.mapUrl(relative), params, callback);
     };
 
-    this.getJSON = <T>(relative, params): Promise<T> => {
+    this.getJSON = <T>(relative: string, params: any): Promise<T> => {
       return this.httpClient.get<T>(this.mapUrl(relative), params);
     };
 
-    this.mapUrl = (relative: string) => {
+    this.mapUrl = (relative: string): string => {
       return `${functions.mergeUrls(baseUrl, '/Song')}${relative}`;
     };
 
-    this.post = (relative, params, callback) => {
+    this.post = (relative, params, callback): void => {
       $.post(this.mapUrl(relative), params, callback);
     };
 
@@ -372,7 +380,7 @@ export default class SongRepository
       songId: number,
       pvService: PVService,
       callback: (result: string) => void,
-    ) => {
+    ): void => {
       this.get(
         '/PVForSongAndService',
         { songId: songId, service: PVService[pvService] },
@@ -389,11 +397,11 @@ export default class SongRepository
       );
     };
 
-    this.songListsForSong = (songId, callback) => {
+    this.songListsForSong = (songId, callback): void => {
       this.get('/SongListsForSong', { songId: songId }, callback);
     };
 
-    this.songListsForUser = (ignoreSongId, callback) => {
+    this.songListsForUser = (ignoreSongId, callback): void => {
       this.post('/SongListsForUser', { ignoreSongId: ignoreSongId }, callback);
     };
   }

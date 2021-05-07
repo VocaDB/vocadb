@@ -8,7 +8,7 @@ import HttpClient from '../Shared/HttpClient';
 // Corresponds to the EntryApiController.
 export default class EntryRepository {
   // Maps a relative URL to an absolute one.
-  private mapUrl = (relative: string) => {
+  private mapUrl = (relative: string): string => {
     return functions.mergeUrls(
       functions.mergeUrls(this.baseUrl, '/api/entries'),
       relative,

@@ -2,8 +2,8 @@ import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
-function initPage() {
-  function acceptArtistSelection(albumId) {
+function initPage(): void {
+  function acceptArtistSelection(albumId: number): void {
     $.get(
       '../../api/albums/' + albumId,
       { lang: vdb.values.languagePreference },
@@ -11,7 +11,7 @@ function initPage() {
         $('#mergedAlbumId').append(
           "<option value='" + albumId + "'>" + album.name + '</option>',
         );
-        $('#mergedAlbumId').val(albumId);
+        $('#mergedAlbumId').val(`${albumId}`);
         $('#updateAlbumBtn').click();
       },
     );
@@ -31,7 +31,7 @@ function initPage() {
   });
 }
 
-const MikuDbAlbumPrepareForImport = () => {
+const MikuDbAlbumPrepareForImport = (): void => {
   $(document).ready(function () {
     initPage();
   });

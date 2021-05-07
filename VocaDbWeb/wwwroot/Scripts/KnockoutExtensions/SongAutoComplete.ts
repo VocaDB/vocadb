@@ -14,7 +14,10 @@ declare global {
   }
 }
 
-export function songAutoComplete(element: HTMLElement, valueAccessor) {
+export function songAutoComplete(
+  element: HTMLElement,
+  valueAccessor: () => any,
+): void {
   var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(
     valueAccessor(),
   );
@@ -22,7 +25,7 @@ export function songAutoComplete(element: HTMLElement, valueAccessor) {
   var filter = properties.filter;
 
   if (properties.ignoreId) {
-    filter = (item) => {
+    filter = (item): boolean => {
       if (item.id == properties.ignoreId) {
         return false;
       }

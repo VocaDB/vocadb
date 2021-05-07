@@ -20,7 +20,7 @@ QUnit.module('ObservableUrlParamRouter', {
 
     win = <any>{
       history: {
-        pushState: (statedata, title: string, url?: string) =>
+        pushState: (statedata: any, title: string, url?: string) =>
           history.push({ data: statedata, url: url }),
         go: (steps: number) => {
           for (var i = 0; i < -steps; i++) {
@@ -36,7 +36,7 @@ QUnit.module('ObservableUrlParamRouter', {
   },
 });
 
-var initRouter = () => {
+var initRouter = (): void => {
   new ObservableUrlParamRouter(testObject, win);
 };
 

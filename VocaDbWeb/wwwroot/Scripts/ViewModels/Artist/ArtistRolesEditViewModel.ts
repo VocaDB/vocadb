@@ -25,7 +25,7 @@ export default class ArtistRolesEditViewModel {
 
   public roleSelections: RoleSelection[];
 
-  public save = () => {
+  public save = (): void => {
     if (!this.selectedArtist()) return;
 
     var selectedRoles = _.chain(this.roleSelections)
@@ -41,7 +41,7 @@ export default class ArtistRolesEditViewModel {
 
   public selectedArtist = ko.observable<IEditableArtistWithSupport>(null);
 
-  public show = (artist: IEditableArtistWithSupport) => {
+  public show = (artist: IEditableArtistWithSupport): void => {
     _.forEach(this.roleSelections, (r) => {
       r.selected(artist && _.includes(artist.rolesArray(), r.id));
     });

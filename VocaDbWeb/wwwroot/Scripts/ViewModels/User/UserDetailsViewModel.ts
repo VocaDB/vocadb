@@ -14,11 +14,13 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import SongListContract from '../../DataContracts/Song/SongListContract';
 
 export default class UserDetailsViewModel {
   private static overview = 'Overview';
 
-  public addBan = () => {
+  public addBan = (): void => {
     this.adminRepo
       .addIpToBanList({ address: this.lastLoginAddress, notes: this.name })
       .then((result) => {
@@ -30,7 +32,7 @@ export default class UserDetailsViewModel {
       });
   };
 
-  public checkSFS = () => {
+  public checkSFS = (): void => {
     this.adminRepo.checkSFS(this.lastLoginAddress, (html) => {
       $('#sfsCheckDialog').html(html);
       $('#sfsCheckDialog').dialog('open');
@@ -69,11 +71,11 @@ export default class UserDetailsViewModel {
     );
   }, true);
 
-  public initComments = () => {
+  public initComments = (): void => {
     this.comments.initComments();
   };
 
-  private initEvents = () => {
+  private initEvents = (): void => {
     if (this.eventsLoaded) {
       return;
     }
@@ -82,9 +84,14 @@ export default class UserDetailsViewModel {
     this.eventsLoaded = true;
   };
 
-  private loadEvents = () => {
+  private loadEvents = (): void => {
     this.userRepo
-      .getEvents(this.userId, UserEventRelationshipType[this.eventsType()])
+      .getEvents(
+        this.userId,
+        UserEventRelationshipType[
+          this.eventsType() as keyof typeof UserEventRelationshipType
+        ],
+      )
       .then((events) => {
         this.events(events);
       });
@@ -95,7 +102,7 @@ export default class UserDetailsViewModel {
 
   public view = ko.observable(UserDetailsViewModel.overview);
 
-  private initializeView = (viewName: string) => {
+  private initializeView = (viewName: string): void => {
     switch (viewName) {
       case 'Albums':
         this.albumCollectionViewModel.init();
@@ -118,7 +125,7 @@ export default class UserDetailsViewModel {
     }
   };
 
-  public setView = (viewName: string) => {
+  public setView = (viewName: string): void => {
     if (!viewName) viewName = UserDetailsViewModel.overview;
 
     this.initializeView(viewName);
@@ -129,13 +136,13 @@ export default class UserDetailsViewModel {
     this.view(viewName);
   };
 
-  public setOverview = () => this.setView('Overview');
-  public setViewAlbums = () => this.setView('Albums');
-  public setViewArtists = () => this.setView('Artists');
-  public setComments = () => this.setView('Comments');
-  public setCustomLists = () => this.setView('CustomLists');
-  public setViewSongs = () => this.setView('Songs');
-  public setViewEvents = () => this.setView('Events');
+  public setOverview = (): void => this.setView('Overview');
+  public setViewAlbums = (): void => this.setView('Albums');
+  public setViewArtists = (): void => this.setView('Artists');
+  public setComments = (): void => this.setView('Comments');
+  public setCustomLists = (): void => this.setView('CustomLists');
+  public setViewSongs = (): void => this.setView('Songs');
+  public setViewEvents = (): void => this.setView('Events');
 
   public songLists: UserSongListsViewModel;
 
@@ -177,7 +184,7 @@ export default class UserDetailsViewModel {
       cultureCode,
     );
 
-    window.onhashchange = () => {
+    window.onhashchange = (): void => {
       if (window.location.hash && window.location.hash.length >= 1)
         this.setView(window.location.hash.substr(1));
     };
@@ -198,7 +205,7 @@ export default class UserDetailsViewModel {
 
 export class UserSongListsViewModel extends SongListsBaseViewModel {
   constructor(
-    private readonly userId,
+    private readonly userId: number,
     private readonly userRepo: UserRepository,
     resourceRepo: ResourceRepository,
     tagRepo: TagRepository,
@@ -208,7 +215,9 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
     super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
   }
 
-  public loadMoreItems = (callback) => {
+  public loadMoreItems = (
+    callback: (result: PartialFindResultContract<SongListContract>) => void,
+  ): void => {
     this.userRepo
       .getSongLists(
         this.userId,

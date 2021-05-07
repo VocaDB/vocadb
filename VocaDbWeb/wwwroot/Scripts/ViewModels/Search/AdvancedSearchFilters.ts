@@ -6,7 +6,7 @@ export default class AdvancedSearchFilters {
     param: string,
     description: string,
     negate?: boolean,
-  ) => {
+  ): void => {
     this.filters.push({
       filterType: filter,
       param: param,
@@ -17,7 +17,7 @@ export default class AdvancedSearchFilters {
 
   public filters = ko.observableArray<AdvancedSearchFilter>();
 
-  public hasFilter = (filterType: string, param: string) => {
+  public hasFilter = (filterType: string, param: string): boolean => {
     var result = _.some(
       this.filters(),
       (f) => f.filterType === filterType && f.param === param,

@@ -20,7 +20,7 @@ export default class ArtistCreateViewModel {
 
   public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
-  private getArtistTypeTag = async (artistType: string) => {
+  private getArtistTypeTag = async (artistType: string): Promise<void> => {
     const tag = await this.tagRepository.getEntryTypeTag(
       EntryType.Artist,
       artistType,
@@ -32,7 +32,7 @@ export default class ArtistCreateViewModel {
   public nameRomaji = ko.observable('');
   public nameEnglish = ko.observable('');
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };
@@ -44,7 +44,7 @@ export default class ArtistCreateViewModel {
   constructor(
     artistRepository: ArtistRepository,
     private readonly tagRepository: TagRepository,
-    data?,
+    data?: { nameOriginal: string; nameRomaji: string; nameEnglish: string },
   ) {
     if (data) {
       this.nameOriginal(data.nameOriginal || '');
@@ -52,7 +52,7 @@ export default class ArtistCreateViewModel {
       this.nameEnglish(data.nameEnglish || '');
     }
 
-    this.checkDuplicates = () => {
+    this.checkDuplicates = (): void => {
       var term1 = this.nameOriginal();
       var term2 = this.nameRomaji();
       var term3 = this.nameEnglish();

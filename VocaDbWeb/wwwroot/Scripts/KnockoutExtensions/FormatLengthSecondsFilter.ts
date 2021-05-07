@@ -6,6 +6,6 @@ declare global {
   }
 }
 
-ko.filters.formatLengthSeconds = (length) => {
+ko.filters.formatLengthSeconds = (length): string => {
   return DateTimeHelper.formatFromSeconds(length);
 };

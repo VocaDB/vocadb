@@ -6,7 +6,7 @@ ko.bindingHandlers.timeAgo = {
   update: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<Date>,
-  ) => {
+  ): void => {
     var val: Date = ko.unwrap(valueAccessor());
     var parsed = moment(val);
 

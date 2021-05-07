@@ -66,7 +66,7 @@ var songTypeLabelInfos = {
 export function songTypeLabel(
   element: HTMLElement,
   valueAccessor: () => string,
-) {
+): void {
   var val = valueAccessor();
 
   if (!val) {
@@ -74,7 +74,8 @@ export function songTypeLabel(
     return;
   }
 
-  var typeInfo: SongTypeLabelInfo = songTypeLabelInfos[val];
+  var typeInfo: SongTypeLabelInfo =
+    songTypeLabelInfos[val as keyof typeof songTypeLabelInfos];
 
   if (typeInfo) {
     $(element)

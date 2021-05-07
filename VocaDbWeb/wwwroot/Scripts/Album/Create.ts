@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import AlbumCreateViewModel from '../ViewModels/Album/AlbumCreateViewModel';
 
-const AlbumCreate = () => {
+const AlbumCreate = (): void => {
   $(function () {
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);

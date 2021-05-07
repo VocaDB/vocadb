@@ -33,7 +33,7 @@ export default class UserRepository implements ICommentRepository {
   public createArtistSubscription = (
     artistId: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(this.mapUrl('/AddArtistForUser'), { artistId: artistId }, callback);
   };
 
@@ -60,7 +60,7 @@ export default class UserRepository implements ICommentRepository {
   public deleteArtistSubscription = (
     artistId: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(
       this.mapUrl('/RemoveArtistFromUser'),
       { artistId: artistId },
@@ -87,12 +87,12 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteMessage = (messageId: number) => {
+  public deleteMessage = (messageId: number): void => {
     var url = this.urlMapper.mapRelative('/User/DeleteMessage');
     $.post(url, { messageId: messageId });
   };
 
-  public deleteMessages = (userId: number, messageIds: number[]) => {
+  public deleteMessages = (userId: number, messageIds: number[]): void => {
     var url = this.urlMapper.mapRelative(`/api/users/${userId}/messages`);
     AjaxHelper.deleteJSON_Url(url, 'messageId', messageIds);
   };
@@ -425,7 +425,7 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public requestEmailVerification = (callback?: () => void) => {
+  public requestEmailVerification = (callback?: () => void): void => {
     var url = this.mapUrl('/RequestEmailVerification');
     $.post(url, callback);
   };
@@ -434,7 +434,7 @@ export default class UserRepository implements ICommentRepository {
     albumId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
       tags,
@@ -447,7 +447,7 @@ export default class UserRepository implements ICommentRepository {
     artistId: number,
     emailNotifications?: boolean,
     siteNotifications?: boolean,
-  ) => {
+  ): void => {
     $.post(this.mapUrl('/UpdateArtistSubscription'), {
       artistId: artistId,
       emailNotifications: emailNotifications,
@@ -459,7 +459,7 @@ export default class UserRepository implements ICommentRepository {
     artistId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
       tags,
@@ -493,7 +493,7 @@ export default class UserRepository implements ICommentRepository {
     eventId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
       tags,
@@ -505,7 +505,7 @@ export default class UserRepository implements ICommentRepository {
     seriesId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(
         `/api/users/current/eventSeriesTags/${seriesId}`,
@@ -519,7 +519,7 @@ export default class UserRepository implements ICommentRepository {
     songListId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(
         `/api/users/current/songListTags/${songListId}`,
@@ -545,7 +545,7 @@ export default class UserRepository implements ICommentRepository {
     songId: number,
     tags: TagBaseContract[],
     callback: (usages: TagUsageForApiContract[]) => void,
-  ) => {
+  ): void => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
       tags,
@@ -562,7 +562,7 @@ export default class UserRepository implements ICommentRepository {
     settingName: string,
     value: string,
     callback: () => void,
-  ) => {
+  ): void => {
     var url = this.urlMapper.mapRelative(
       `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
     );
@@ -577,7 +577,7 @@ export default class UserRepository implements ICommentRepository {
     private urlMapper: UrlMapper,
     private loggedUserId?: number,
   ) {
-    this.mapUrl = (relative: string) => {
+    this.mapUrl = (relative: string): string => {
       return `${urlMapper.mapRelative('/User')}${relative}`;
     };
   }

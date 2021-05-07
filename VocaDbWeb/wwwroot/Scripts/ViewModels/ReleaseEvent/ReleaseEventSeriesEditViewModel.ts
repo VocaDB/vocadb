@@ -45,7 +45,7 @@ export default class ReleaseEventSeriesEditViewModel {
     }
   }
 
-  private checkName = (value: string) => {
+  private checkName = (value: string): void => {
     if (!value) {
       this.duplicateName(null);
       return;
@@ -73,7 +73,7 @@ export default class ReleaseEventSeriesEditViewModel {
     });
   });
 
-  private redirectToRoot = () => {
+  private redirectToRoot = (): void => {
     window.location.href = this.urlMapper.mapRelative('Event');
   };
 
@@ -83,9 +83,9 @@ export default class ReleaseEventSeriesEditViewModel {
       .then(this.redirectToRoot);
   });
 
-  private isNew = () => !this.id;
+  private isNew = (): boolean => !this.id;
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };

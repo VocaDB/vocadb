@@ -30,7 +30,7 @@ export default class PlayListRepositoryForSongListAdapter
     fields: SongOptionalFields,
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-  ) => {
+  ): void => {
     this.songListRepo
       .getSongs(
         this.songListId,

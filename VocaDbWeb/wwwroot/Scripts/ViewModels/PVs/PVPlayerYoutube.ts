@@ -8,7 +8,10 @@ export default class PVPlayerYoutube implements IPVPlayer {
     public songFinishedCallback: () => void = null,
   ) {}
 
-  public attach = (reset: boolean = false, readyCallback?: () => void) => {
+  public attach = (
+    reset: boolean = false,
+    readyCallback?: () => void,
+  ): void => {
     if (!reset && this.player) {
       if (readyCallback) readyCallback();
       return;
@@ -25,7 +28,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
       width: 560,
       height: 315,
       events: {
-        onStateChange: (event: YT.EventArgs) => {
+        onStateChange: (event: YT.EventArgs): void => {
           // This will still be fired once if the user disabled autoplay mode.
           if (
             this.player &&
@@ -35,10 +38,10 @@ export default class PVPlayerYoutube implements IPVPlayer {
             this.songFinishedCallback();
           }
         },
-        onReady: () => {
+        onReady: (): void => {
           if (readyCallback) readyCallback();
         },
-        onError: () => {
+        onError: (): void => {
           // Some delay, to let the user read the error message and to prevent infinite loop
           setTimeout(() => {
             if (this.player && this.songFinishedCallback) {
@@ -50,13 +53,13 @@ export default class PVPlayerYoutube implements IPVPlayer {
     });
   };
 
-  public detach = () => {
+  public detach = (): void => {
     this.player = null;
   };
 
   private player: YT.Player = null;
 
-  private doPlay = (pvId: string) => {
+  private doPlay = (pvId: string): void => {
     if (pvId) {
       this.player.loadVideoById(pvId);
     } else {
@@ -64,7 +67,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
     }
   };
 
-  public play = (pvId) => {
+  public play = (pvId: string): void => {
     if (!this.player) {
       this.attach(false, () => this.doPlay(pvId));
     } else {

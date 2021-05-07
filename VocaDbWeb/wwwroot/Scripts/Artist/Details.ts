@@ -10,11 +10,11 @@ import HttpClient from '../Shared/HttpClient';
 
 function initPage(
   artistId: number,
-  saveStr,
-  urlMapper,
+  saveStr: string,
+  urlMapper: UrlMapper,
   viewModel: ArtistDetailsViewModel,
   songRepo: SongRepository,
-) {
+): void {
   $('#addToUserLink').button({
     disabled: $('#addToUserLink').hasClass('disabled'),
     icons: { primary: 'ui-icon-heart' },
@@ -82,7 +82,7 @@ const ArtistDetails = (
   },
   reportTypes: IEntryReportType[],
   saveStr: string,
-) => {
+): void => {
   $(function () {
     moment.locale(vdb.values.culture);
 

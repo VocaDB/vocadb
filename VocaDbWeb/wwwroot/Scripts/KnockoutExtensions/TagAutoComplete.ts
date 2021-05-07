@@ -16,8 +16,8 @@ ko.bindingHandlers.tagAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => any,
     allBindingsAccessor: () => any,
-  ) => {
-    var tagFilter: (any) => boolean = allBindingsAccessor().tagFilter;
+  ): void => {
+    var tagFilter: (any: any) => boolean = allBindingsAccessor().tagFilter;
     var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
     var allowAliases: boolean = ko.unwrap(allBindingsAccessor().allowAliases);
 

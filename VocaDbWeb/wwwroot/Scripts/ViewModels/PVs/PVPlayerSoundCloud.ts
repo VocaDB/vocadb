@@ -8,7 +8,10 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
     public songFinishedCallback: () => void = null,
   ) {}
 
-  public attach = (reset: boolean = false, readyCallback?: () => void) => {
+  public attach = (
+    reset: boolean = false,
+    readyCallback?: () => void,
+  ): void => {
     if (!reset && this.player) {
       if (readyCallback) readyCallback();
       return;
@@ -21,7 +24,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
           "<div id='" +
             this.playerElementId +
             "' src='" +
-            location.protocol +
+            window.location.protocol +
             "//w.soundcloud.com/player/' />",
         ),
       );
@@ -45,7 +48,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
     });
   };
 
-  public detach = () => {
+  public detach = (): void => {
     if (this.player) {
       this.player.unbind(SC.Widget.Events.FINISH);
     }
@@ -53,7 +56,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
     this.player = null;
   };
 
-  private getUrlFromId = (pvId: string) => {
+  private getUrlFromId = (pvId: string): string | null => {
     if (!pvId) return null;
 
     var parts = pvId.split(' ');
@@ -63,7 +66,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
 
   private player: SC.SoundCloudWidget = null;
 
-  public play = (pvId?: string) => {
+  public play = (pvId?: string): void => {
     if (!this.player) this.attach(false);
 
     if (pvId) {

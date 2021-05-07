@@ -9,7 +9,7 @@ const ArtistViewVersion = (model: {
   artist: {
     id: number;
   };
-}) => {
+}): void => {
   $(function () {
     $('#revertLink').button({ icons: { primary: 'ui-icon-arrowrefresh-1-w' } });
     $('#downloadXmlLink').button({

@@ -27,7 +27,7 @@ const SearchIndex = (model: {
   sort: string;
   tagId: number[];
   viewMode: string;
-}) => {
+}): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     var cultureCode = vdb.values.uiCulture;

@@ -38,7 +38,10 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
       });
   }
 
-  public isFirstForYear = (current: SongListContract, index: number) => {
+  public isFirstForYear = (
+    current: SongListContract,
+    index: number,
+  ): boolean => {
     if (this.sort() !== SongListSortRule[SongListSortRule.Date]) return false;
 
     if (!current.eventDate) return false;
@@ -60,7 +63,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
     .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
   public resources = ko.observable<ResourcesContract>();
 
-  public selectTag = (tag: TagBaseContract) => {
+  public selectTag = (tag: TagBaseContract): void => {
     this.tagFilters.tags([TagFilter.fromContract(tag)]);
   };
 

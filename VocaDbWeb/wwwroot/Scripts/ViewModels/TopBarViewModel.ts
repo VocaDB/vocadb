@@ -5,7 +5,7 @@ import UserRepository from '../Repositories/UserRepository';
 
 // View model for the top bar.
 export default class TopBarViewModel {
-  public ensureMessagesLoaded = () => {
+  public ensureMessagesLoaded = (): void => {
     if (this.isLoaded()) return;
 
     this.userRepository
@@ -49,7 +49,7 @@ export default class TopBarViewModel {
   // entryReportRepository: entry reports repository.
   // userRepository: user repository.
   constructor(
-    entryTypeTranslations,
+    entryTypeTranslations: { [x: string]: string },
     entryType: string,
     searchTerm: string,
     unreadMessagesCount: number,

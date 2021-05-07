@@ -12,7 +12,7 @@ export default class TagsEditViewModel {
     ) => void,
   ) {}
 
-  public addTag = () => {
+  public addTag = (): void => {
     var tagName = this.newTagName();
 
     if (!tagName) return;
@@ -39,7 +39,7 @@ export default class TagsEditViewModel {
     }
   };
 
-  public autoCompletedTag = (tag: TagBaseContract) => {
+  public autoCompletedTag = (tag: TagBaseContract): void => {
     var selection = _.find(this.selections(), (sel) => sel.tag.id === tag.id);
 
     if (selection) {
@@ -56,7 +56,7 @@ export default class TagsEditViewModel {
   public getSuggestionText = (
     suggestion: TagUsageForApiContract,
     countText: string,
-  ) => {
+  ): string => {
     var text = '';
 
     if (suggestion.tag.additionalNames) {
@@ -74,7 +74,7 @@ export default class TagsEditViewModel {
 
   public selections = ko.observableArray<TagSelectionViewModel>();
 
-  public save = () => {
+  public save = (): void => {
     var tags = _.chain(this.selections())
       .filter((sel) => sel.selected())
       .map((sel) => sel.tag)
@@ -84,7 +84,7 @@ export default class TagsEditViewModel {
     this.dialogVisible(false);
   };
 
-  public show = () => {
+  public show = (): void => {
     this.repo.getTagSelections((selections) => {
       this.selections(
         _.map(selections, (selection) => new TagSelectionViewModel(selection)),

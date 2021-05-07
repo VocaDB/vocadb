@@ -52,7 +52,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
 
   public draftsOnly: KnockoutObservable<boolean>;
 
-  public formatDate = (dateStr: string) => {
+  public formatDate = (dateStr: string): string => {
     return moment(dateStr).utc().format('l');
   };
 
@@ -74,7 +74,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
 
   public searchTerm: KnockoutObservable<string>;
 
-  public selectTag = (tag: TagBaseContract) => {
+  public selectTag = (tag: TagBaseContract): void => {
     this.tags([TagFilter.fromContract(tag)]);
   };
 
@@ -86,13 +86,13 @@ export default class SearchCategoryBaseViewModel<TEntry>
 
   // Update results loading the first page and updating total number of items.
   // Commonly this is done after changing the filters or sorting.
-  public updateResultsWithTotalCount = () => this.updateResults(true);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
 
   // Update a new page of results. Does not update total number of items.
   // This assumes the filters have not changed. Commonly this is done when paging.
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  public updateResults = (clearResults: boolean) => {
+  public updateResults = (clearResults: boolean): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

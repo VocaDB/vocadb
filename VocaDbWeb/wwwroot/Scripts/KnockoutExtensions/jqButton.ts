@@ -13,7 +13,7 @@ ko.bindingHandlers.jqButton = {
     element: HTMLElement,
     valueAccessor: () => jqButtonParams,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var params: jqButtonParams = ko.unwrap(valueAccessor()) || {};
     var allBindings = allBindingsAccessor();
     var disable = ko.unwrap(allBindings.disable) || params.disabled || false;
@@ -24,7 +24,7 @@ ko.bindingHandlers.jqButton = {
     element: HTMLElement,
     valueAccessor: () => jqButtonParams,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var params: jqButtonParams = ko.unwrap(valueAccessor()) || {};
     var allBindings = allBindingsAccessor();
     var disable = ko.unwrap(allBindings.disable) || params.disabled || false;

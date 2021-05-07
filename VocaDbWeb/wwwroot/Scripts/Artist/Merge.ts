@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ArtistMergeViewModel from '../ViewModels/Artist/ArtistMergeViewModel';
 
-const ArtistMerge = (model: { id: number }) => {
+const ArtistMerge = (model: { id: number }): void => {
   $(function () {
     const httpClient = new HttpClient();
     var repoFactory = new RepositoryFactory(
@@ -16,7 +16,7 @@ const ArtistMerge = (model: { id: number }) => {
     ko.applyBindings(vm);
 
     $('#mergeBtn').click(function () {
-      return confirm('Are you sure you want to merge the artists?');
+      return window.confirm('Are you sure you want to merge the artists?');
     });
   });
 };

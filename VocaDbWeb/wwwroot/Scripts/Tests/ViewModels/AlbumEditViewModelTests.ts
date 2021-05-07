@@ -1,5 +1,7 @@
 import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
-import AlbumEditViewModel from '../../ViewModels/Album/AlbumEditViewModel';
+import AlbumEditViewModel, {
+  TrackArtistSelectionViewModel,
+} from '../../ViewModels/Album/AlbumEditViewModel';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
@@ -16,7 +18,7 @@ var rep = new FakeAlbumRepository();
 var songRep: FakeSongRepository;
 var artistRep: FakeArtistRepository;
 var userRepo = new FakeUserRepository();
-var pvRep = null;
+var pvRep: any = null;
 var urlMapper = new UrlMapper('');
 
 var song: SongApiContract;
@@ -65,7 +67,7 @@ var labelArtistLink = {
   name: '',
   roles: 'Default',
 };
-var customArtistLink = {
+var customArtistLink: any = {
   artist: null,
   id: 42,
   isSupport: false,
@@ -173,7 +175,7 @@ QUnit.module('AlbumEditViewModelTests', {
   },
 });
 
-function createViewModel() {
+function createViewModel(): AlbumEditViewModel {
   return new AlbumEditViewModel(
     rep,
     songRep,
@@ -191,7 +193,7 @@ function createViewModel() {
   );
 }
 
-function createTrackPropertiesViewModel() {
+function createTrackPropertiesViewModel(): TrackPropertiesViewModel {
   var songVm = new SongInAlbumEditViewModel(songInAlbum);
   return new TrackPropertiesViewModel([producer, vocalist], songVm);
 }
@@ -199,7 +201,7 @@ function createTrackPropertiesViewModel() {
 function findArtistSelection(
   target: TrackPropertiesViewModel,
   artist: ArtistContract,
-) {
+): TrackArtistSelectionViewModel {
   return _.find(target.artistSelections, (a) => a.artist == artist);
 }
 

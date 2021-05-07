@@ -27,7 +27,7 @@ export default class FeaturedSongListsViewModel {
       );
     });
 
-    window.onhashchange = () => {
+    window.onhashchange = (): void => {
       if (window.location.hash && window.location.hash.length >= 1)
         this.setCategory(window.location.hash.substr(1));
     };
@@ -39,7 +39,7 @@ export default class FeaturedSongListsViewModel {
 
   public category = ko.observable('Concerts');
 
-  public setCategory = (categoryName: string) => {
+  public setCategory = (categoryName: string): void => {
     if (!categoryName) categoryName = 'Concerts';
 
     window.scrollTo(0, 0);
@@ -71,7 +71,7 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 
   public loadMoreItems = (
     callback: (result: PartialFindResultContract<SongListContract>) => void,
-  ) => {
+  ): void => {
     this.listRepo
       .getFeatured(
         this.query(),

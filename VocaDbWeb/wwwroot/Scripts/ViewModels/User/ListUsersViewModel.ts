@@ -45,16 +45,16 @@ export default class ListUsersViewModel {
   public searchTerm: KnockoutObservable<string>;
   public sort = ko.observable('RegisterDate');
 
-  public userGroupName = (userGroup: string) => {
+  public userGroupName = (userGroup: string): string => {
     return this.resources.resources().userGroupNames != null
       ? this.resources.resources().userGroupNames[userGroup]
       : userGroup;
   };
 
-  public updateResultsWithTotalCount = () => this.updateResults(true);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  private updateResults = (clearResults: boolean) => {
+  private updateResults = (clearResults: boolean): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

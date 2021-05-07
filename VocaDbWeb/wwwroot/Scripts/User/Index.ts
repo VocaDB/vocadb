@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ListUsersViewModel from '../ViewModels/User/ListUsersViewModel';
 
-const UserIndex = (model: { filter: string; groupId: string }) => {
+const UserIndex = (model: { filter: string; groupId: string }): void => {
   $(function () {
     var cultureCode = vdb.values.culture;
     var uiCultureCode = vdb.values.uiCulture;

@@ -7,7 +7,7 @@ export default class EnglishTranslatedStringViewModel {
     false,
   );
 
-  public showFullDescription = () => {
+  public showFullDescription = (): void => {
     this.isFullDescriptionShown(true);
   };
 

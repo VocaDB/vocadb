@@ -8,7 +8,7 @@ export class EntryOptionalFields<T> {
 }
 
 export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {
-  public static create(...fields: SongOptionalField[]) {
+  public static create(...fields: SongOptionalField[]): SongOptionalFields {
     return new SongOptionalFields(fields);
   }
 

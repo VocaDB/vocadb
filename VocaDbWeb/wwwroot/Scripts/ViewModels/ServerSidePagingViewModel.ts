@@ -7,7 +7,7 @@ export default class ServerSidePagingViewModel {
     this.pageSize.subscribe(this.updateItems);
   }
 
-  updateItems = () => {
+  updateItems = (): void => {
     if (!this.getItemsCallback) return;
 
     this.getItemsCallback(this.getPagingProperties(false));
@@ -44,7 +44,9 @@ export default class ServerSidePagingViewModel {
 
   showMoreEnd = ko.computed(() => this.page() < this.totalPages() - 4);
 
-  getPagingProperties = (clearResults: boolean = false) => {
+  getPagingProperties = (
+    clearResults: boolean = false,
+  ): { start: number; maxEntries: number; getTotalCount: boolean } => {
     return {
       start: this.firstItem(),
       maxEntries: this.pageSize(),
@@ -52,15 +54,15 @@ export default class ServerSidePagingViewModel {
     };
   };
 
-  goToFirstPage = () => this.page(1);
+  goToFirstPage = (): void => this.page(1);
 
-  goToLastPage = () => this.page(this.totalPages());
+  goToLastPage = (): void => this.page(this.totalPages());
 
-  nextPage = () => {
+  nextPage = (): void => {
     if (!this.isLastPage()) this.page(this.page() + 1);
   };
 
-  previousPage = () => {
+  previousPage = (): void => {
     if (!this.isFirstPage()) this.page(this.page() - 1);
   };
 }

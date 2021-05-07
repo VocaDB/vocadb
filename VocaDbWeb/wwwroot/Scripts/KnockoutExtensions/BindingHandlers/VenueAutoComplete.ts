@@ -16,7 +16,7 @@ ko.bindingHandlers.venueAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<VenueForApiContract>,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var queryParams = {
       nameMatchMode: 'Auto',
       lang: ContentLanguagePreference[vdb.values.languagePreference],

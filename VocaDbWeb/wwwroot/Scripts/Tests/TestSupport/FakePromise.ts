@@ -1,7 +1,7 @@
 export default class FakePromise<T> {
   constructor(private readonly value: T) {}
 
-  public then = (onfulfilled: (value: T) => T) => {
+  public then = (onfulfilled: (value: T) => T): T => {
     return onfulfilled(this.value);
   };
 

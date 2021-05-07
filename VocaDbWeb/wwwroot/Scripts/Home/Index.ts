@@ -11,8 +11,8 @@ declare global {
   }
 }
 
-function initPage() {
-  function initRatingButtons() {
+function initPage(): void {
+  function initRatingButtons(): void {
     const httpClient = new HttpClient();
     const urlMapper = new UrlMapper(vdb.values.baseAddress);
     const repo = new UserRepository(httpClient, urlMapper);
@@ -61,7 +61,7 @@ function initPage() {
   $('#topAlbums img').vdbAlbumToolTip();
 }
 
-const HomeIndex = (blogUrl: string) => {
+const HomeIndex = (blogUrl: string): void => {
   $(function () {
     var viewModel = new NewsListViewModel(blogUrl);
     ko.applyBindings(viewModel);

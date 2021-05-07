@@ -7,7 +7,7 @@ import EventSeriesDetailsViewModel from '../ViewModels/ReleaseEvent/EventSeriesD
 const EventSeriesDetails = (model: {
   id: number;
   tags: TagUsageForApiContract[];
-}) => {
+}): void => {
   $(function () {
     $('#editEventLink').button({ icons: { primary: 'ui-icon-wrench' } });
     $('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });

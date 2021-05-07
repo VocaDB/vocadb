@@ -20,7 +20,7 @@ export default class CommentViewModel {
 
   public authorName: string;
 
-  public beginEdit = () => {
+  public beginEdit = (): void => {
     this.editedMessage(this.message());
   };
 
@@ -32,7 +32,7 @@ export default class CommentViewModel {
 
   public message: KnockoutObservable<string>;
 
-  public saveChanges = () => {
+  public saveChanges = (): void => {
     this.message(this.editedMessage());
   };
 

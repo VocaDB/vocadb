@@ -41,7 +41,7 @@ export default class AlbumDetailsViewModel {
 
   public usersContent = ko.observable<string>();
 
-  public getUsers = () => {
+  public getUsers = (): boolean => {
     $.post(
       functions.mapAbsoluteUrl('/Album/UsersWithAlbumInCollection'),
       { albumId: this.id },
@@ -107,9 +107,9 @@ export default class AlbumDetailsViewModel {
 
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepo.getAlbumTagSelections(this.id).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepo.updateAlbumTags(
             this.id,
             tags,
@@ -152,7 +152,7 @@ export interface AlbumDetailsAjax {
 export class DownloadTagsViewModel {
   public dialogVisible = ko.observable(false);
 
-  public downloadTags = () => {
+  public downloadTags = (): void => {
     this.dialogVisible(false);
 
     var url = '/Album/DownloadTags/' + this.albumId;
@@ -168,7 +168,7 @@ export class DownloadTagsViewModel {
     { text: vdb.resources.albumDetails.download, click: this.downloadTags },
   ]);
 
-  public show = () => {
+  public show = (): void => {
     this.dialogVisible(true);
   };
 
@@ -186,16 +186,16 @@ export class AlbumReviewsViewModel {
     private readonly loggedUserId?: number,
   ) {}
 
-  public beginEditReview = (review: AlbumReviewViewModel) => {
+  public beginEditReview = (review: AlbumReviewViewModel): void => {
     review.beginEdit();
     this.editReviewModel(review);
   };
 
-  public cancelEditReview = () => {
+  public cancelEditReview = (): void => {
     this.editReviewModel(null);
   };
 
-  private canDeleteReview = (comment: AlbumReviewContract) => {
+  private canDeleteReview = (comment: AlbumReviewContract): boolean => {
     // If one can edit they can also delete
     return (
       this.canDeleteAllComments ||
@@ -204,14 +204,14 @@ export class AlbumReviewsViewModel {
     );
   };
 
-  private canEditReview = (comment: AlbumReviewContract) => {
+  private canEditReview = (comment: AlbumReviewContract): boolean => {
     return (
       this.canEditAllComments ||
       (comment.user && comment.user.id === this.loggedUserId)
     );
   };
 
-  public async createNewReview() {
+  public async createNewReview(): Promise<void> {
     const contract = {
       date: new Date().toLocaleDateString(),
       languageCode: this.languageCode(),
@@ -236,7 +236,7 @@ export class AlbumReviewsViewModel {
     );
   }
 
-  public deleteReview = (review: AlbumReviewViewModel) => {
+  public deleteReview = (review: AlbumReviewViewModel): void => {
     this.reviews.remove(review);
 
     this.albumRepository.deleteReview(this.albumId, review.id);
@@ -252,14 +252,14 @@ export class AlbumReviewsViewModel {
       .value()[0];
   }
 
-  public ratingStars(userRating: number) {
+  public ratingStars(userRating: number): { enabled: boolean }[] {
     var ratings = _.map([1, 2, 3, 4, 5], (rating) => {
       return { enabled: Math.round(userRating) >= rating };
     });
     return ratings;
   }
 
-  public saveEditedReview = () => {
+  public saveEditedReview = (): void => {
     if (!this.editReviewModel()) return;
 
     this.editReviewModel().saveChanges();
@@ -270,7 +270,7 @@ export class AlbumReviewsViewModel {
     this.editReviewModel(null);
   };
 
-  public async loadReviews() {
+  public async loadReviews(): Promise<void> {
     const [reviews, ratings] = await Promise.all([
       this.albumRepository.getReviews(this.albumId),
       this.albumRepository.getUserCollections(this.albumId),
@@ -328,12 +328,12 @@ export class AlbumReviewViewModel {
     this.user = contract.user;
   }
 
-  public beginEdit = () => {
+  public beginEdit = (): void => {
     this.editedTitle(this.title());
     this.editedText(this.text());
   };
 
-  public saveChanges = () => {
+  public saveChanges = (): void => {
     this.text(this.editedText());
     this.title(this.editedTitle());
   };

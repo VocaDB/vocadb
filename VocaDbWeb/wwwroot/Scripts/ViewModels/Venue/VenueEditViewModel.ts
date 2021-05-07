@@ -59,7 +59,7 @@ export default class VenueEditViewModel {
   public address: KnockoutObservable<string>;
   public addressCountryCode: KnockoutObservable<string>;
 
-  private checkName = (value: string) => {
+  private checkName = (value: string): void => {
     if (!value) {
       this.duplicateName(null);
       return;
@@ -85,20 +85,20 @@ export default class VenueEditViewModel {
   public longitude: KnockoutObservable<number>;
   public names: NamesEditViewModel;
 
-  private redirectToDetails = () => {
+  private redirectToDetails = (): void => {
     window.location.href = this.urlMapper.mapRelative(
       EntryUrlMapper.details(EntryType.Venue, this.id),
     );
   };
 
-  private redirectToRoot = () => {
+  private redirectToRoot = (): void => {
     window.location.href = this.urlMapper.mapRelative('Event');
   };
 
   public submitting = ko.observable(false);
   public webLinks: WebLinksEditViewModel;
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };

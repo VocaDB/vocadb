@@ -10,7 +10,7 @@ interface KnockoutBindingHandlers {
     Arguments are the moved item and its new index.
 */
 ko.bindingHandlers.sortable = {
-  init: function (element, valueAccessor) {
+  init: function (element, valueAccessor): void {
     var list = valueAccessor();
     $(element).sortable({
       update: (event, ui) => {

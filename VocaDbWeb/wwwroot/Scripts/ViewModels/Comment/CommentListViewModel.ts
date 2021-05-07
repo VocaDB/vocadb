@@ -56,7 +56,7 @@ export default class CommentListViewModel {
     );
   }
 
-  private clear = () => {
+  private clear = (): void => {
     this.lastCommentDate = null;
     this.comments([]);
     this.loadMore();
@@ -66,10 +66,10 @@ export default class CommentListViewModel {
 
   public entryType: KnockoutObservable<string>;
 
-  public getEntryTypeName = (entry: EntryContract) => {
+  public getEntryTypeName = (entry: EntryContract): string | null => {
     var sets = this.resources.resources();
 
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
         return sets.discTypeNames[entry.discType];
 
@@ -92,15 +92,15 @@ export default class CommentListViewModel {
     }
   };
 
-  public getEntryUrl = (entry: EntryContract) => {
+  public getEntryUrl = (entry: EntryContract): string => {
     return EntryUrlMapper.details_entry(entry, entry.urlSlug);
   };
 
   private lastCommentDate: Date;
 
-  public loadMore = () => {
+  public loadMore = (): void => {
     var url = this.urlMapper.mapRelative('/api/comments');
-    var sortRule = CommentSortRule[this.sort()];
+    var sortRule = CommentSortRule[this.sort() as keyof typeof CommentSortRule];
     $.getJSON(
       url,
       {

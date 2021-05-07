@@ -43,7 +43,7 @@ export default class PlayListRepositoryForSongsAdapter
     fields: SongOptionalFields,
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-  ) => {
+  ): void => {
     this.songRepo
       .getList(
         paging,

@@ -10,10 +10,10 @@ import HttpClient from '../Shared/HttpClient';
 function initAlbumDetailsPage(
   albumId: number,
   collectionRating: number,
-  saveStr,
+  saveStr: string,
   urlMapper: UrlMapper,
   viewModel: AlbumDetailsViewModel,
-) {
+): void {
   $('#addAlbumLink').button({
     disabled: $('#addAlbumLink').hasClass('disabled'),
     icons: { primary: 'ui-icon-star' },
@@ -79,7 +79,7 @@ function initAlbumDetailsPage(
     width: 320,
     modal: false,
     buttons: [
-      {
+      ({
         text: saveStr,
         click: function () {
           $('#editCollectionDialog').dialog('close');
@@ -109,7 +109,7 @@ function initAlbumDetailsPage(
 
           ui.showSuccessMessage(vdb.resources.album.addedToCollection);
         },
-      } as JQueryUI.ButtonOptions,
+      } as unknown) as JQueryUI.ButtonOptions,
     ],
   });
 
@@ -144,7 +144,7 @@ function initAlbumDetailsPage(
 
 const AlbumDetails = (
   addedToCollection: string,
-  albumDetails,
+  albumDetails: typeof vdb.resources.albumDetails,
   canDeleteAllComments: boolean,
   formatString: string,
   model: {
@@ -155,7 +155,7 @@ const AlbumDetails = (
   reportTypes: IEntryReportType[],
   saveStr: string,
   showTranslatedDescription: boolean,
-) => {
+): void => {
   $(document).ready(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

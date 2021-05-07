@@ -34,11 +34,13 @@ export default class RankingsViewModel {
 
   public durationHours = ko.observable(168);
 
-  public getPVServiceIcons = (services: string) => {
+  public getPVServiceIcons = (
+    services: string,
+  ): { service: string; url: string }[] => {
     return this.pvServiceIcons.getIconUrls(services);
   };
 
-  private getSongs = () => {
+  private getSongs = (): void => {
     $.getJSON(
       this.urlMapper.mapRelative('/api/songs/top-rated'),
       {
@@ -69,7 +71,7 @@ export default class RankingsViewModel {
     );
   };
 
-  public getTagUrl = (tag: TagUsageForApiContract) => {
+  public getTagUrl = (tag: TagUsageForApiContract): string => {
     return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
   };
 

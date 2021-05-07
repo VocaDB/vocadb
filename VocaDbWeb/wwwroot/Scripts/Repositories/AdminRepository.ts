@@ -15,7 +15,10 @@ export default class AdminRepository {
     );
   };
 
-  public checkSFS = (ip: string, callback: (html: string) => void) => {
+  public checkSFS = (
+    ip: string,
+    callback: (html: string) => void,
+  ): JQueryXHR => {
     return $.get(
       this.urlMapper.mapRelative('/Admin/CheckSFS'),
       { ip: ip },

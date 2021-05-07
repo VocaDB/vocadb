@@ -12,12 +12,12 @@ ko.bindingHandlers.tagCategoryAutoComplete = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<string>,
     allBindingsAccessor: () => any,
-  ) => {
+  ): void => {
     var url = functions.mapAbsoluteUrl('/api/tags/categoryNames');
     var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
     $(element).autocomplete({
-      source: (ui, callback: (result: string[]) => void) =>
+      source: (ui: { term: any }, callback: (result: string[]) => void) =>
         $.getJSON(url, { query: ui.term }, callback),
       select: (event: Event, ui) => {
         var value = valueAccessor();

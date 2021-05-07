@@ -30,16 +30,16 @@ export default class EditableCommentsViewModel {
     }
   }
 
-  public beginEditComment = (comment: CommentViewModel) => {
+  public beginEditComment = (comment: CommentViewModel): void => {
     comment.beginEdit();
     this.editCommentModel(comment);
   };
 
-  public cancelEditComment = () => {
+  public cancelEditComment = (): void => {
     this.editCommentModel(null);
   };
 
-  private canDeleteComment = (comment: CommentContract) => {
+  private canDeleteComment = (comment: CommentContract): boolean => {
     // If one can edit they can also delete
     return (
       this.canDeleteAllComments ||
@@ -48,7 +48,7 @@ export default class EditableCommentsViewModel {
     );
   };
 
-  private canEditComment = (comment: CommentContract) => {
+  private canEditComment = (comment: CommentContract): boolean => {
     return (
       this.canEditAllComments ||
       (comment.author && comment.author.id === this.loggedUserId)
@@ -60,7 +60,7 @@ export default class EditableCommentsViewModel {
   // Whether all comments have been loaded
   private commentsLoaded: boolean;
 
-  public createComment = () => {
+  public createComment = (): void => {
     var comment = this.newComment();
 
     if (!comment) return;
@@ -88,7 +88,7 @@ export default class EditableCommentsViewModel {
     });
   };
 
-  public deleteComment = (comment: CommentViewModel) => {
+  public deleteComment = (comment: CommentViewModel): void => {
     this.comments.remove(comment);
 
     this.repo.deleteComment(comment.id);
@@ -97,7 +97,7 @@ export default class EditableCommentsViewModel {
 
   public editCommentModel = ko.observable<CommentViewModel>(null);
 
-  public initComments = () => {
+  public initComments = (): void => {
     if (this.commentsLoaded) return;
 
     this.repo.getComments(this.entryId).then((contracts) => {
@@ -115,7 +115,7 @@ export default class EditableCommentsViewModel {
 
   public pageOfComments: KnockoutComputed<CommentViewModel[]>;
 
-  private processComment = (contract: CommentContract) => {
+  private processComment = (contract: CommentContract): CommentViewModel => {
     return new CommentViewModel(
       contract,
       this.canDeleteComment(contract),
@@ -123,7 +123,7 @@ export default class EditableCommentsViewModel {
     );
   };
 
-  public saveEditedComment = () => {
+  public saveEditedComment = (): void => {
     if (!this.editCommentModel()) return;
 
     this.editCommentModel().saveChanges();
@@ -134,7 +134,7 @@ export default class EditableCommentsViewModel {
     this.editCommentModel(null);
   };
 
-  private setComments = (commentContracts: CommentContract[]) => {
+  private setComments = (commentContracts: CommentContract[]): void => {
     var commentViewModels = _.sortBy(
       _.map(commentContracts, (comment) => this.processComment(comment)),
       (comment) => comment.created,

@@ -30,7 +30,7 @@ export default class BasicEntryLinkViewModel<
     this.isEmpty = ko.computed(() => this.entry() == null);
   }
 
-  public clear = () => this.entry(null);
+  public clear = (): void => this.entry(null);
 
   public entry: KnockoutObservable<TEntry>;
 
@@ -41,6 +41,7 @@ export default class BasicEntryLinkViewModel<
 
   public name: KnockoutComputed<string>;
 
-  public subscribe = (callback: (newValue: number) => void) =>
-    this.id.subscribe(callback);
+  public subscribe = (
+    callback: (newValue: number) => void,
+  ): KnockoutSubscription => this.id.subscribe(callback);
 }

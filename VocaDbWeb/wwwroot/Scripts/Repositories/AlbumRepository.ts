@@ -37,7 +37,7 @@ export default class AlbumRepository
 
     this.urlMapper = new UrlMapper(baseUrl);
 
-    this.mapUrl = (relative) => {
+    this.mapUrl = (relative): string => {
       return `${functions.mergeUrls(baseUrl, '/Album')}${relative}`;
     };
   }
@@ -69,7 +69,7 @@ export default class AlbumRepository
     notes: string,
     versionNumber: number,
     callback?: () => void,
-  ) => {
+  ): void => {
     $.post(
       this.urlMapper.mapRelative('/Album/CreateReport'),
       {
@@ -97,7 +97,11 @@ export default class AlbumRepository
     return this.httpClient.delete(url);
   }
 
-  public findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {
+  public findDuplicate = (params: {
+    term1: string;
+    term2: string;
+    term3: string;
+  }): Promise<DuplicateEntryResultContract[]> => {
     var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
     return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
   };

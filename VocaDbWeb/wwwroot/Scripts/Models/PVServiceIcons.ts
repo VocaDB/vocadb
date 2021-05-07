@@ -19,12 +19,12 @@ export default class PVServiceIcons {
     };
   }
 
-  getIconUrl = (service: string) => {
+  getIconUrl = (service: string): string => {
     return this.icons[service];
   };
 
   // Gets icon URLs from a comma separated list of services
-  getIconUrls = (servicesStr: string) => {
+  getIconUrls = (servicesStr: string): { service: string; url: string }[] => {
     if (!servicesStr || servicesStr == 'Nothing') return [];
 
     var services = servicesStr.split(',');

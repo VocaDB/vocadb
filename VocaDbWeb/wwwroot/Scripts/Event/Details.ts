@@ -19,7 +19,7 @@ const EventDetails = (
     usersAttending: UserBaseContract[];
   },
   reportTypes: IEntryReportType[],
-) => {
+): void => {
   $(function () {
     $('#editEventLink').button({
       disabled: $('#editEventLink').hasClass('disabled'),

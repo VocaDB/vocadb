@@ -32,19 +32,22 @@ export default class SongCreateViewModel {
     }),
   );
 
-  private getArtistIds = () => {
+  private getArtistIds = (): number[] => {
     return _.map(this.artists(), (a) => a.id);
   };
 
-  public checkDuplicatesAndPV = (vm?, event?: JQueryEventObject) => {
+  public checkDuplicatesAndPV = (
+    vm?: undefined,
+    event?: JQueryEventObject,
+  ): void => {
     this.checkDuplicates(vm, event, true);
   };
 
   public checkDuplicates = (
-    vm?,
+    vm?: undefined,
     event?: JQueryEventObject,
     getPVInfo = false,
-  ) => {
+  ): boolean => {
     var term1 = this.nameOriginal();
     var term2 = this.nameRomaji();
     var term3 = this.nameEnglish();
@@ -90,7 +93,7 @@ export default class SongCreateViewModel {
     return false;
   };
 
-  private getSongTypeTag = async (songType: string) => {
+  private getSongTypeTag = async (songType: string): Promise<void> => {
     const tag = await this.tagRepository.getEntryTypeTag(
       EntryType.Song,
       songType,
@@ -124,18 +127,19 @@ export default class SongCreateViewModel {
   coverArtists: KnockoutComputed<ArtistContract[]>;
 
   canHaveOriginalVersion = ko.computed(
-    () => SongType[this.songType()] !== SongType.Original,
+    () =>
+      SongType[this.songType() as keyof typeof SongType] !== SongType.Original,
   );
 
   hasName: KnockoutComputed<boolean>;
 
-  selectOriginal = (dupe: DuplicateEntryResultContract) => {
+  selectOriginal = (dupe: DuplicateEntryResultContract): void => {
     this.songRepository
       .getOne(dupe.entry.id)
       .then((song) => this.originalVersion.entry(song));
   };
 
-  public submit = () => {
+  public submit = (): boolean => {
     this.submitting(true);
     return true;
   };
@@ -148,7 +152,14 @@ export default class SongCreateViewModel {
     private readonly songRepository: SongRepository,
     artistRepository: ArtistRepository,
     private readonly tagRepository: TagRepository,
-    data?,
+    data?: {
+      nameEnglish: string;
+      artists: ArtistContract[];
+      nameOriginal?: string;
+      nameRomaji?: string;
+      pvUrl?: string;
+      reprintPVUrl?: string;
+    },
   ) {
     if (data) {
       this.nameOriginal(data.nameOriginal || '');
@@ -159,7 +170,7 @@ export default class SongCreateViewModel {
       this.artists(data.artists || []);
     }
 
-    this.addArtist = (artistId: number) => {
+    this.addArtist = (artistId: number): void => {
       if (artistId) {
         artistRepository.getOne(artistId).then((artist) => {
           this.artists.push(artist);
@@ -203,7 +214,7 @@ export default class SongCreateViewModel {
       return _.take(this.dupeEntries(), 3);
     });
 
-    this.removeArtist = (artist: ArtistContract) => {
+    this.removeArtist = (artist: ArtistContract): void => {
       this.artists.remove(artist);
     };
 
@@ -217,7 +228,9 @@ export default class SongCreateViewModel {
     this.coverArtists = ko.computed(() => {
       return _.filter(
         this.artists(),
-        (a) => ArtistType[a.artistType] == ArtistType.CoverArtist,
+        (a) =>
+          ArtistType[a.artistType as keyof typeof ArtistType] ==
+          ArtistType.CoverArtist,
       );
     });
   }

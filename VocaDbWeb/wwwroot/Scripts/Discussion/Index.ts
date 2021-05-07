@@ -3,7 +3,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import DiscussionIndexViewModel from '../ViewModels/Discussion/DiscussionIndexViewModel';
 
-const DiscussionIndex = (canDeleteAllComments: boolean) => {
+const DiscussionIndex = (canDeleteAllComments: boolean): void => {
   $(function () {
     moment.locale(vdb.values.culture);
 

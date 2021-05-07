@@ -5,7 +5,7 @@
 }
 
 ko.bindingHandlers.show = {
-  init: (element: HTMLElement) => {
+  init: (element: HTMLElement): void => {
     $(element).css('visibility', 'visible');
   },
 };

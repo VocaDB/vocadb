@@ -23,11 +23,11 @@ export default class RepositoryFactory {
     private readonly loggedUserId?: number,
   ) {}
 
-  public adminRepository = () => {
+  public adminRepository = (): AdminRepository => {
     return new AdminRepository(this.httpClient, this.urlMapper);
   };
 
-  public albumRepository = () => {
+  public albumRepository = (): AlbumRepository => {
     return new AlbumRepository(
       this.httpClient,
       this.urlMapper.baseUrl,
@@ -35,7 +35,7 @@ export default class RepositoryFactory {
     );
   };
 
-  public artistRepository = () => {
+  public artistRepository = (): ArtistRepository => {
     return new ArtistRepository(
       this.httpClient,
       this.urlMapper.baseUrl,
@@ -43,31 +43,31 @@ export default class RepositoryFactory {
     );
   };
 
-  public discussionRepository = () => {
+  public discussionRepository = (): DiscussionRepository => {
     return new DiscussionRepository(this.httpClient, this.urlMapper);
   };
 
-  public entryRepository = () => {
+  public entryRepository = (): EntryRepository => {
     return new EntryRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
-  public eventRepository = () => {
+  public eventRepository = (): ReleaseEventRepository => {
     return new ReleaseEventRepository(this.httpClient, this.urlMapper);
   };
 
-  public pvRepository = () => {
+  public pvRepository = (): PVRepository => {
     return new PVRepository(this.httpClient, this.urlMapper);
   };
 
-  public resourceRepository = () => {
+  public resourceRepository = (): ResourceRepository => {
     return new ResourceRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
-  public songListRepository = () => {
+  public songListRepository = (): SongListRepository => {
     return new SongListRepository(this.httpClient, this.urlMapper);
   };
 
-  public songRepository = () => {
+  public songRepository = (): SongRepository => {
     return new SongRepository(
       this.httpClient,
       this.urlMapper.baseUrl,
@@ -75,7 +75,7 @@ export default class RepositoryFactory {
     );
   };
 
-  public tagRepository = () => {
+  public tagRepository = (): TagRepository => {
     return new TagRepository(
       this.httpClient,
       this.urlMapper.baseUrl,
@@ -83,7 +83,7 @@ export default class RepositoryFactory {
     );
   };
 
-  public userRepository = () => {
+  public userRepository = (): UserRepository => {
     return new UserRepository(
       this.httpClient,
       this.urlMapper,
@@ -91,7 +91,7 @@ export default class RepositoryFactory {
     );
   };
 
-  public venueRepository = () => {
+  public venueRepository = (): VenueRepository => {
     return new VenueRepository(this.httpClient, this.urlMapper);
   };
 }

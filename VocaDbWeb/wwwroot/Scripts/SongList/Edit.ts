@@ -3,7 +3,11 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import SongListEditViewModel from '../ViewModels/SongList/SongListEditViewModel';
 
-function initPage(repoFactory, urlMapper, listId) {
+function initPage(
+  repoFactory: RepositoryFactory,
+  urlMapper: UrlMapper,
+  listId: number,
+): void {
   $('#tabs').tabs();
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -22,7 +26,7 @@ function initPage(repoFactory, urlMapper, listId) {
   });
 }
 
-const SongListEdit = (model: { id: number }) => {
+const SongListEdit = (model: { id: number }): void => {
   $(document).ready(function () {
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);

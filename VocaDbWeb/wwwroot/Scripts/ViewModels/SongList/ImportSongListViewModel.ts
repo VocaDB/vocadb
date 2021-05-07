@@ -12,7 +12,7 @@ export default class ImportSongListViewModel {
 
   public items = ko.observableArray<ImportedSongInListContract>([]);
 
-  public loadMore = () => {
+  public loadMore = (): void => {
     $.getJSON(
       this.urlMapper.mapRelative('/api/songLists/import-songs'),
       {
@@ -41,7 +41,7 @@ export default class ImportSongListViewModel {
 
   public onlyRanked = ko.observable(false);
 
-  public parse = () => {
+  public parse = (): void => {
     $.getJSON(
       this.urlMapper.mapRelative('/api/songLists/import'),
       { url: this.url(), parseAll: !this.onlyRanked() },
@@ -60,7 +60,7 @@ export default class ImportSongListViewModel {
 
   public parsed = ko.observable(false);
 
-  public submit = () => {
+  public submit = (): void => {
     var order = 1;
     var songs = _.chain(this.items())
       .filter((i) => i.matchedSong != null)

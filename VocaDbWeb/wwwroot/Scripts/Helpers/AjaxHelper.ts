@@ -1,10 +1,10 @@
 export default class AjaxHelper {
   public static createUrl = (params: {
     [key: string]: string[] | number[];
-  }) => {
+  }): string | null => {
     if (!params) return null;
 
-    var par = [];
+    var par: string[] = [];
 
     _.forOwn(params, (val, key) => {
       par.push(
@@ -25,14 +25,18 @@ export default class AjaxHelper {
     dataParamName: string,
     data: any[],
     success?: any,
-  ) => {
+  ): void => {
     var dataParam =
       '?' + dataParamName + '=' + data.join('&' + dataParamName + '=');
     $.ajax(url + dataParam, { type: 'DELETE', success: success });
   };
 
   // Issues a PUT request with JSON-formatted body.
-  public static putJSON = (url: string, data?: any, success?: any) => {
+  public static putJSON = (
+    url: string,
+    data?: any,
+    success?: any,
+  ): JQueryXHR => {
     return $.ajax(url, {
       type: 'PUT',
       contentType: 'application/json; charset=utf-8',
@@ -48,7 +52,7 @@ export default class AjaxHelper {
     dataParamName: string,
     data: any[],
     success?: any,
-  ) => {
+  ): void => {
     var dataParam =
       '?' + dataParamName + '=' + data.join('&' + dataParamName + '=');
     $.ajax(url + dataParam, { type: 'PUT', success: success });
@@ -58,7 +62,7 @@ export default class AjaxHelper {
     url: string,
     params: { [key: string]: string[] | number[] },
     success?: any,
-  ) => {
+  ): void => {
     var dataParam = '?' + AjaxHelper.createUrl(params);
     $.ajax(url + dataParam, { type: 'PUT', success: success });
   };

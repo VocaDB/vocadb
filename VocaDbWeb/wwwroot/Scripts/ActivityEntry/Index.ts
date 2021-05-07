@@ -4,7 +4,7 @@ import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ActivityEntryListViewModel from '../ViewModels/ActivityEntry/ActivityEntryListViewModel';
 
-const ActivityEntryIndex = () => {
+const ActivityEntryIndex = (): void => {
   $(function () {
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();

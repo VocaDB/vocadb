@@ -1,4 +1,4 @@
-const EventEventsByVenue = () => {
+const EventEventsByVenue = (): void => {
   $(function () {
     $('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
     $('#createSeriesLink').button({ icons: { primary: 'ui-icon-plus' } });

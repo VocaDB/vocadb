@@ -8,13 +8,13 @@ export default class EntryPictureFileListEditViewModel {
     );
   }
 
-  public add = () => {
+  public add = (): void => {
     this.pictures.push(new EntryPictureFileEditViewModel());
   };
 
   public pictures: KnockoutObservableArray<EntryPictureFileEditViewModel>;
 
-  public remove = (picture: EntryPictureFileEditViewModel) => {
+  public remove = (picture: EntryPictureFileEditViewModel): void => {
     this.pictures.remove(picture);
   };
 

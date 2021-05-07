@@ -92,7 +92,9 @@ export default class RatedSongsSearchViewModel {
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[languageSelection],
+      ContentLanguagePreference[
+        languageSelection as keyof typeof ContentLanguagePreference
+      ],
     );
 
     if (initialize) this.init();
@@ -115,7 +117,7 @@ export default class RatedSongsSearchViewModel {
     .observable('')
     .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
-  public selectTag = (tag: TagBaseContract) => {
+  public selectTag = (tag: TagBaseContract): void => {
     this.tagFilters.tags([TagFilter.fromContract(tag)]);
   };
 
@@ -136,15 +138,17 @@ export default class RatedSongsSearchViewModel {
     return 'AdditionalNames,ThumbUrl' + (this.showTags() ? ',Tags' : '');
   });
 
-  public formatDate = (dateStr: string) => {
+  public formatDate = (dateStr: string): string => {
     return moment(dateStr).format('l');
   };
 
-  public getPVServiceIcons = (services: string) => {
+  public getPVServiceIcons = (
+    services: string,
+  ): { service: string; url: string }[] => {
     return this.pvServiceIcons.getIconUrls(services);
   };
 
-  public init = () => {
+  public init = (): void => {
     if (this.isInit) return;
 
     this.userRepo
@@ -171,10 +175,10 @@ export default class RatedSongsSearchViewModel {
       });
   };
 
-  public updateResultsWithTotalCount = () => this.updateResults(true);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  public updateResults = (clearResults: boolean = true) => {
+  public updateResults = (clearResults: boolean = true): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

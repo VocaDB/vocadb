@@ -24,7 +24,7 @@ var webLinkData = {
 var data: SongForEditContract;
 var songRepo = new FakeSongRepository();
 var artistRepo = new FakeArtistRepository();
-var pvRepo = null;
+var pvRepo: any = null;
 var userRepo = new FakeUserRepository();
 vdb.resources.song = { addExtraArtist: 'Add extra artist' };
 
@@ -32,7 +32,7 @@ function addArtist(
   viewModel: SongEditViewModel,
   artistType: ArtistType,
   roles: ArtistRoles,
-) {
+): void {
   const artist =
     artistType != null
       ? { id: 39, name: 'Clean Tears', artistType: ArtistType[artistType] }
@@ -68,7 +68,7 @@ QUnit.module('SongEditViewModelTests', {
   },
 });
 
-function createViewModel() {
+function createViewModel(): SongEditViewModel {
   return new SongEditViewModel(
     songRepo,
     artistRepo,

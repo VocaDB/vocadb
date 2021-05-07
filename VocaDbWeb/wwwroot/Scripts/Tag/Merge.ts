@@ -3,7 +3,7 @@ import TagRepository from '../Repositories/TagRepository';
 import HttpClient from '../Shared/HttpClient';
 import TagMergeViewModel from '../ViewModels/Tag/TagMergeViewModel';
 
-const TagMerge = (model: TagBaseContract) => {
+const TagMerge = (model: TagBaseContract): void => {
   $(function () {
     const httpClient = new HttpClient();
     var repo = new TagRepository(httpClient, vdb.values.baseAddress);
@@ -12,7 +12,7 @@ const TagMerge = (model: TagBaseContract) => {
     ko.applyBindings(vm);
 
     $('#mergeBtn').click(function () {
-      return confirm('Are you sure you want to merge the tags?');
+      return window.confirm('Are you sure you want to merge the tags?');
     });
   });
 };

@@ -118,9 +118,9 @@ export default class SongListViewModel {
 
     this.tagsEditViewModel = new TagsEditViewModel(
       {
-        getTagSelections: (callback) =>
+        getTagSelections: (callback): Promise<void> =>
           userRepo.getSongListTagSelections(this.listId).then(callback),
-        saveTagSelections: (tags) =>
+        saveTagSelections: (tags): void =>
           userRepo.updateSongListTags(
             this.listId,
             tags,
@@ -141,7 +141,7 @@ export default class SongListViewModel {
     this.updateResultsWithTotalCount();
   }
 
-  public addTag = (tag: TagBaseContract) =>
+  public addTag = (tag: TagBaseContract): void =>
     this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
 
   public advancedFilters = new AdvancedSearchFilters();
@@ -151,7 +151,7 @@ export default class SongListViewModel {
 
   public loading = ko.observable(true); // Currently loading for data
 
-  public mapTagUrl = (tagUsage: TagUsageForApiContract) => {
+  public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
     return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
   };
 
@@ -174,10 +174,10 @@ export default class SongListViewModel {
   public tagIds: KnockoutComputed<number[]>;
   public tagUsages: TagListViewModel;
 
-  public updateResultsWithTotalCount = () => this.updateResults(true);
-  public updateResultsWithoutTotalCount = () => this.updateResults(false);
+  public updateResultsWithTotalCount = (): void => this.updateResults(true);
+  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  private updateCurrentMode = (clearResults: boolean) => {
+  private updateCurrentMode = (clearResults: boolean): void => {
     if (this.playlistMode()) {
       this.playlistViewModel.updateResultsWithTotalCount();
     } else {
@@ -185,7 +185,7 @@ export default class SongListViewModel {
     }
   };
 
-  public updateResults = (clearResults: boolean = true) => {
+  public updateResults = (clearResults: boolean = true): void => {
     // Disable duplicate updates
     if (this.pauseNotifications) return;
 

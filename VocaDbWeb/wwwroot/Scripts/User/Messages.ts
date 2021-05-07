@@ -11,7 +11,7 @@ const UserMessages = (
     receiverName: string;
     selectedMessageId: number;
   },
-) => {
+): void => {
   $(function () {
     $('#tabs').tabs();
 
@@ -26,7 +26,7 @@ const UserMessages = (
       model.selectedMessageId,
       receiverName,
     );
-    viewModel.messageSent = function () {
+    viewModel.messageSent = function (): void {
       ui.showSuccessMessage(message);
     };
     ko.applyBindings(viewModel);

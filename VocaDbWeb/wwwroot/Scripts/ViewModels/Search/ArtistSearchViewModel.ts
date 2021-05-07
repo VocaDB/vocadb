@@ -30,7 +30,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
       childTags,
       status,
       callback,
-    ) => {
+    ): void => {
       this.artistRepo
         .getList(
           pagingProperties,
@@ -52,7 +52,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
     };
   }
 
-  public artistTypeName = (artist: ArtistApiContract) => {
+  public artistTypeName = (artist: ArtistApiContract): string => {
     return this.searchViewModel.resources().artistTypeNames[artist.artistType];
   };
 
@@ -68,7 +68,9 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
   );
 
   public canHaveChildVoicebanks = ko.computed(() =>
-    ArtistHelper.canHaveChildVoicebanks(ArtistType[this.artistType()]),
+    ArtistHelper.canHaveChildVoicebanks(
+      ArtistType[this.artistType() as keyof typeof ArtistType],
+    ),
   );
 
   public fields = ko.computed(() =>

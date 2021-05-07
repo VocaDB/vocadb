@@ -24,7 +24,7 @@ repository.results = {
 
 QUnit.module('SongCreateViewModelTests');
 
-function createViewModel() {
+function createViewModel(): SongCreateViewModel {
   return new SongCreateViewModel(repository, artistRepository, tagRepository);
 }
 

@@ -62,7 +62,7 @@ export default class ActivityEntryListViewModel {
 
   public additionsOnly: KnockoutObservable<boolean>;
 
-  private clear = () => {
+  private clear = (): void => {
     this.lastEntryDate = null;
     this.entries([]);
     this.loadMore();
@@ -72,7 +72,9 @@ export default class ActivityEntryListViewModel {
 
   public entryType: KnockoutObservable<string>;
 
-  public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
+  public getActivityFeedEventName = (
+    activityEntry: ActivityEntryContract,
+  ): string => {
     var activityFeedEventNames = this.resources.resources()
       .activityEntry_activityFeedEventNames;
 
@@ -102,7 +104,7 @@ export default class ActivityEntryListViewModel {
   public getChangedFieldNames = (
     entry: EntryContract,
     archivedVersion: ArchivedVersionContract,
-  ) => {
+  ): string | null => {
     if (
       archivedVersion == null ||
       archivedVersion.changedFields == null ||
@@ -113,7 +115,7 @@ export default class ActivityEntryListViewModel {
     var sets = this.resources.resources();
     var namesSet: { [key: string]: string };
 
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
         namesSet = sets.album_albumEditableFieldNames;
         break;
@@ -146,10 +148,10 @@ export default class ActivityEntryListViewModel {
     return names.join(', ');
   };
 
-  public getEntryTypeName = (entry: EntryContract) => {
+  public getEntryTypeName = (entry: EntryContract): string | null => {
     var sets = this.resources.resources();
 
-    switch (EntryType[entry.entryType]) {
+    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
         return sets.discTypeNames[entry.discType];
 
@@ -172,15 +174,16 @@ export default class ActivityEntryListViewModel {
     }
   };
 
-  public getEntryUrl = (entry: EntryContract) => {
+  public getEntryUrl = (entry: EntryContract): string => {
     return EntryUrlMapper.details_entry(entry, entry.urlSlug);
   };
 
   private lastEntryDate: Date;
 
-  public loadMore = () => {
+  public loadMore = (): void => {
     var url = this.urlMapper.mapRelative('/api/activityEntries');
-    var sortRule = ActivityEntrySortRule[this.sort()];
+    var sortRule =
+      ActivityEntrySortRule[this.sort() as keyof typeof ActivityEntrySortRule];
     $.getJSON(
       url,
       {

@@ -14,7 +14,10 @@ interface DatePickerOptions {
 
 // Parts from https://github.com/gvas/knockout-jqueryui/blob/master/src/datepicker.js
 ko.bindingHandlers.datepicker = {
-  init: (element: HTMLElement, valueAccessor: () => DatePickerOptions) => {
+  init: (
+    element: HTMLElement,
+    valueAccessor: () => DatePickerOptions,
+  ): void => {
     var options = valueAccessor();
     var value = ko.utils.unwrapObservable(options.value);
 
@@ -38,7 +41,7 @@ ko.bindingHandlers.datepicker = {
       });
     }
 
-    var selectDate = (selectedText: string) => {
+    var selectDate = (selectedText: string): void => {
       if (selectedText) {
         const format = $(element).datepicker('option', 'dateFormat');
         const parsed = $.datepicker.parseDate(format, selectedText);

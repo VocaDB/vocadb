@@ -2,7 +2,7 @@ import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository'
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import TopBarViewModel from '../../ViewModels/TopBarViewModel';
 
-var entryTypeTranslations;
+var entryTypeTranslations: { [x: string]: string };
 var entryReportRepo: FakeEntryReportRepository;
 var userRepo: FakeUserRepository;
 
@@ -35,7 +35,7 @@ QUnit.module('TopBarViewModel', {
   },
 });
 
-var create = (getNewReportsCount: boolean = false) => {
+var create = (getNewReportsCount: boolean = false): TopBarViewModel => {
   return new TopBarViewModel(
     entryTypeTranslations,
     'Album',

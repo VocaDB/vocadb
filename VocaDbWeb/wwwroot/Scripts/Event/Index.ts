@@ -1,4 +1,4 @@
-const EventIndex = () => {
+const EventIndex = (): void => {
   $(function () {
     $('#createSeriesLink').button({ icons: { primary: 'ui-icon-plus' } });
     $('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });

@@ -1,7 +1,9 @@
 import functions from '../Shared/GlobalFunctions';
-import ViewAuditLogViewModel from '../ViewModels/Admin/ViewAuditLogViewModel';
+import ViewAuditLogViewModel, {
+  ViewAuditLogContract,
+} from '../ViewModels/Admin/ViewAuditLogViewModel';
 
-const AdminViewAuditLog = (model) => {
+const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
   $(document).ready(function () {
     var json = model;
     var vm = new ViewAuditLogViewModel(json);
