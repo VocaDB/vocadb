@@ -250,6 +250,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   }
 
   public artistFilters: ArtistFilters;
+  public dateDay = ko.observable<number>(null);
   public dateMonth = ko.observable<number>(null);
   public dateYear = ko.observable<number>(null);
   public releaseEvent: BasicEntryLinkViewModel<IEntryWithIdAndName>;
@@ -279,21 +280,32 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   // Remember, JavaScript months start from 0 (who came up with that??)
   private toDateOrNull = (mom: moment.Moment): Date | null =>
     mom.isValid() ? mom.toDate() : null;
+
   private afterDate = ko.computed(() =>
     this.dateYear()
       ? this.toDateOrNull(
-          moment.utc([this.dateYear(), (this.dateMonth() || 1) - 1, 1]),
+          moment.utc([
+            this.dateYear(),
+            (this.dateMonth() || 1) - 1,
+            this.dateDay() || 1,
+          ]),
         )
       : null,
   );
-  private beforeDate = (): Date | null =>
-    this.dateYear()
-      ? this.toDateOrNull(
-          moment
-            .utc([this.dateYear(), (this.dateMonth() || 12) - 1, 1])
-            .add(1, 'M'),
-        )
-      : null;
+
+  private beforeDate = (): Date | null => {
+    if (!this.dateYear()) return null;
+
+    var mom = moment.utc([
+      this.dateYear(),
+      (this.dateMonth() || 12) - 1,
+      this.dateDay() || 1,
+    ]);
+
+    return this.toDateOrNull(
+      this.dateMonth() && this.dateDay() ? mom.add(1, 'd') : mom.add(1, 'M'),
+    );
+  };
 
   public fields = ko.computed(() =>
     this.showTags()
