@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Paging;
@@ -7,7 +5,7 @@ using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.Tags
 {
-	public class TagQueryParams
+	public sealed record TagQueryParams
 	{
 		public TagQueryParams() { }
 
@@ -17,18 +15,18 @@ namespace VocaDb.Model.Service.Search.Tags
 			Paging = paging;
 		}
 
-		public bool AllowChildren { get; set; }
+		public bool AllowChildren { get; init; }
 
-		public string CategoryName { get; set; }
+		public string? CategoryName { get; init; }
 
-		public CommonSearchParams Common { get; set; }
+		public CommonSearchParams Common { get; init; } = CommonSearchParams.Default;
 
-		public ContentLanguagePreference LanguagePreference { get; set; }
+		public ContentLanguagePreference LanguagePreference { get; init; }
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public TagSortRule SortRule { get; set; } = TagSortRule.Name;
+		public TagSortRule SortRule { get; init; } = TagSortRule.Name;
 
-		public TagTargetTypes Target { get; set; } = TagTargetTypes.All;
+		public TagTargetTypes Target { get; init; } = TagTargetTypes.All;
 	}
 }

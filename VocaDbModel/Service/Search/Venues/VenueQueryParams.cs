@@ -1,23 +1,21 @@
-#nullable disable
-
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.Venues
 {
-	public class VenueQueryParams
+	public sealed record VenueQueryParams
 	{
-		public GeoPointQueryParams Coordinates { get; set; } = GeoPointQueryParams.Empty;
+		public GeoPointQueryParams Coordinates { get; init; } = GeoPointQueryParams.Empty;
 
-		public DistanceUnit DistanceUnit { get; set; } = DistanceUnit.Kilometers;
+		public DistanceUnit DistanceUnit { get; init; } = DistanceUnit.Kilometers;
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public double? Radius { get; set; }
+		public double? Radius { get; init; }
 
-		public VenueSortRule SortRule { get; set; }
+		public VenueSortRule SortRule { get; init; }
 
-		public SearchTextQuery TextQuery { get; set; } = SearchTextQuery.Empty;
+		public SearchTextQuery TextQuery { get; init; } = SearchTextQuery.Empty;
 
 		public VenueQueryParams() { }
 	}

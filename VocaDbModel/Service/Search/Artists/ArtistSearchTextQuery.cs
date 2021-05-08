@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 
@@ -28,7 +26,7 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public ArtistSearchTextQuery() { }
 
-		public ArtistSearchTextQuery(string canonizedName, NameMatchMode matchMode, string originalQuery, string[] words = null)
+		public ArtistSearchTextQuery(string? canonizedName, NameMatchMode matchMode, string? originalQuery, string[]? words = null)
 			: base(canonizedName, matchMode, originalQuery, words)
 		{
 		}

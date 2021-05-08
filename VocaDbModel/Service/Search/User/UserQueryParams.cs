@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
@@ -9,26 +7,24 @@ namespace VocaDb.Model.Service.Search.User
 	/// <summary>
 	/// Query parameters for users.
 	/// </summary>
-	public class UserQueryParams
+	public sealed record UserQueryParams
 	{
-		public CommonSearchParams Common { get; set; }
+		public CommonSearchParams Common { get; init; } = CommonSearchParams.Default;
 
-		public UserGroupId Group { get; set; }
+		public UserGroupId Group { get; init; }
 
-		public bool IncludeDisabled { get; set; }
+		public bool IncludeDisabled { get; init; }
 
-		public DateTime? JoinDateAfter { get; set; }
+		public DateTime? JoinDateAfter { get; init; }
 
-		public DateTime? JoinDateBefore { get; set; }
+		public DateTime? JoinDateBefore { get; init; }
 
-#nullable enable
-		public string? KnowsLanguage { get; set; }
-#nullable disable
+		public string? KnowsLanguage { get; init; }
 
-		public bool OnlyVerifiedArtists { get; set; }
+		public bool OnlyVerifiedArtists { get; init; }
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public UserSortRule Sort { get; set; }
+		public UserSortRule Sort { get; init; }
 	}
 }

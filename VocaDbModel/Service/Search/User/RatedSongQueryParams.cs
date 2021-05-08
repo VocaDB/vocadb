@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
@@ -10,9 +8,8 @@ namespace VocaDb.Model.Service.Search.User
 	/// <summary>
 	/// Query parameters for rated (favorited/liked) songs by user.
 	/// </summary>
-	public class RatedSongQueryParams
+	public sealed record RatedSongQueryParams
 	{
-#nullable enable
 		public RatedSongQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -23,52 +20,46 @@ namespace VocaDb.Model.Service.Search.User
 			FilterByRating = SongVoteRating.Nothing;
 			GroupByRating = true;
 			SortRule = RatedSongForUserSortRule.Name;
-			TextQuery = new SearchTextQuery();
 		}
 
-		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
-#nullable disable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; init; }
 
-		public LogicalGrouping ArtistGrouping { get; set; }
+		public LogicalGrouping ArtistGrouping { get; init; }
 
-#nullable enable
-		public int[]? ArtistIds { get; set; }
-#nullable disable
+		public int[]? ArtistIds { get; init; }
 
-		public bool ChildVoicebanks { get; set; }
+		public bool ChildVoicebanks { get; init; }
 
-		public SongVoteRating FilterByRating { get; set; }
+		public SongVoteRating FilterByRating { get; init; }
 
 		/// <summary>
 		/// Group by rating.
 		/// </summary>
-		public bool GroupByRating { get; set; }
+		public bool GroupByRating { get; init; }
 
 		/// <summary>
 		/// Paging properties. Cannot be null.
 		/// </summary>
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; }
 
-		public PVServices? PVServices { get; set; }
+		public PVServices? PVServices { get; init; }
 
-		public int SonglistId { get; set; }
+		public int SonglistId { get; init; }
 
 		/// <summary>
 		/// Song sort rule.
 		/// </summary>
-		public RatedSongForUserSortRule SortRule { get; set; }
+		public RatedSongForUserSortRule SortRule { get; init; }
 
-#nullable enable
-		public string? TagName { get; set; }
+		public string? TagName { get; init; }
 
-		public int[]? TagIds { get; set; }
-#nullable disable
+		public int[]? TagIds { get; init; }
 
-		public SearchTextQuery TextQuery { get; set; }
+		public SearchTextQuery TextQuery { get; init; } = SearchTextQuery.Empty;
 
 		/// <summary>
 		/// Id of the user whose songs to get.
 		/// </summary>
-		public int UserId { get; set; }
+		public int UserId { get; init; }
 	}
 }

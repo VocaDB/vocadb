@@ -37,7 +37,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 		{
 			var result = _artistSearch.Find(new ArtistQueryParams
 			{
-				Common = {
+				Common = new()
+				{
 					TextQuery = ArtistSearchTextQuery.Create("XenonP")
 				}
 			});
@@ -51,7 +52,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 		{
 			var result = _artistSearch.Find(new ArtistQueryParams
 			{
-				Common = {
+				Common = new()
+				{
 					TextQuery = ArtistSearchTextQuery.Create("https://twitter.com/XenonP_XM")
 				}
 			});
@@ -69,7 +71,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 
 			var result = _artistSearch.Find(new ArtistQueryParams
 			{
-				Common = {
+				Common = new()
+				{
 					TextQuery = ArtistSearchTextQuery.Create("https://twitter.com/Uji_RaychoruiP")
 				}
 			});

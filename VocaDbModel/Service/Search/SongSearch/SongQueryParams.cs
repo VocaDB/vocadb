@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
@@ -13,20 +12,17 @@ namespace VocaDb.Model.Service.Search.SongSearch
 	/// <summary>
 	/// Query parameters for songs
 	/// </summary>
-	public class SongQueryParams
+	public sealed record SongQueryParams
 	{
 		private int[] _ignoredIds;
 		private SongType[] _songTypes;
 
 		public SongQueryParams()
 		{
-			Common = new CommonSearchParams();
 			IgnoredIds = new int[] { };
-			Paging = new PagingProperties(0, 30, true);
 			SongTypes = new SongType[] { };
 		}
 
-#nullable enable
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
 		/// <param name="songTypes">Allowed song types. Can be null or empy, in which case no filtering by song type is done.</param>
 		/// <param name="start">0-based order number of the first item to be returned.</param>
@@ -37,7 +33,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// <param name="onlyByName">Whether to search items only by name, and not for example NicoId. Ignored when query string is null or empty.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
-		public SongQueryParams(SearchTextQuery textQuery, SongType[] songTypes, int start, int maxResults,
+		public SongQueryParams(SearchTextQuery textQuery, SongType[]? songTypes, int start, int maxResults,
 			bool getTotalCount, SongSortRule sortRule,
 			bool onlyByName, bool moveExactToTop, int[]? ignoredIds)
 		{
@@ -51,102 +47,103 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			OnlyWithPVs = false;
 		}
 
-		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
-#nullable disable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; init; }
 
-		public DateTime? AfterDate { get; set; }
-		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new();
+		public DateTime? AfterDate { get; init; }
+		public ArtistParticipationQueryParams ArtistParticipation { get; init; } = new();
 
-		public string[] ArtistNames { get; set; }
+		public string[]? ArtistNames { get; init; }
 
-		public DateTime? BeforeDate { get; set; }
+		public DateTime? BeforeDate { get; init; }
 
-		public bool ChildTags { get; set; }
+		public bool ChildTags { get; init; }
 
-		public CommonSearchParams Common { get; set; }
+		public CommonSearchParams Common { get; init; } = CommonSearchParams.Default;
 
 		/// <summary>
 		/// Filter to include only songs with artists followed by the specified user.
 		/// 0 = no filtering (default).
 		/// </summary>
-		public int FollowedByUserId { get; set; }
+		public int FollowedByUserId { get; init; }
 
 		/// <summary>
 		/// List of songs that should be ignored from search. Cannot be null. If set to empty, will be replaced with empty list.
 		/// If empty, no filtering is done by song IDs.
 		/// TODO: this isn't really in use anymore. Filtering by ID should be done after search.
 		/// </summary>
+		[AllowNull]
 		public int[] IgnoredIds
 		{
 			get => _ignoredIds;
-			set
+			[MemberNotNull(nameof(_ignoredIds))]
+			init
 			{
 				_ignoredIds = value ?? new int[] { };
 			}
 		}
 
-		public ContentLanguagePreference LanguagePreference { get; set; }
+		public ContentLanguagePreference LanguagePreference { get; init; }
 
-		public int MinScore { get; set; }
+		public int MinScore { get; init; }
 
-		public bool OnlyWithPVs { get; set; }
+		public bool OnlyWithPVs { get; init; }
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
 		/// <summary>
 		/// ID of parent song to filter.
 		/// 0 = no filter.
 		/// </summary>
-		public int ParentSongId { get; set; }
+		public int ParentSongId { get; init; }
 
-		public PVServices? PVServices { get; set; }
+		public PVServices? PVServices { get; init; }
 
 		/// <summary>
 		/// Filter by release event.
 		/// 0 = no filter.
 		/// </summary>
-		public int ReleaseEventId { get; set; }
+		public int ReleaseEventId { get; init; }
 
 		/// <summary>
 		/// List of song types that should be searched for. Cannot be null.
 		/// If empty, all song types are included.
 		/// </summary>
+		[AllowNull]
 		public SongType[] SongTypes
 		{
 			get => _songTypes;
-			set
+			[MemberNotNull(nameof(_songTypes))]
+			init
 			{
 				_songTypes = value ?? new SongType[] { };
 			}
 		}
 
-		public SongSortRule SortRule { get; set; }
+		public SongSortRule SortRule { get; init; }
 
-#nullable enable
-		public string[]? Tags { get; set; }
+		public string[]? Tags { get; init; }
 
-		public int[]? TagIds { get; set; }
-#nullable disable
+		public int[]? TagIds { get; init; }
 
-		public TimeSpan TimeFilter { get; set; }
+		public TimeSpan TimeFilter { get; init; }
 
 		/// <summary>
 		/// When searching by entry type, search also by associated tag and vice versa.
 		/// </summary>
-		public bool UnifyEntryTypesAndTags { get; set; }
+		public bool UnifyEntryTypesAndTags { get; init; }
 
 		/// <summary>
 		/// Filter to include only songs rated by the specified user.
 		/// 0 = no filtering (default).
 		/// </summary>
-		public int UserCollectionId { get; set; }
+		public int UserCollectionId { get; init; }
 
-		public int? MinMilliBpm { get; set; }
+		public int? MinMilliBpm { get; init; }
 
-		public int? MaxMilliBpm { get; set; }
+		public int? MaxMilliBpm { get; init; }
 
-		public int? MinLength { get; set; }
+		public int? MinLength { get; init; }
 
-		public int? MaxLength { get; set; }
+		public int? MaxLength { get; init; }
 	}
 }

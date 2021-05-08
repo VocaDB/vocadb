@@ -206,7 +206,7 @@ namespace VocaDb.Web.Controllers.Api
 				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				LanguagePreference = lang,
 			};
-			queryParams.Common.EntryStatus = status;
+			queryParams = queryParams with { Common = queryParams.Common with { EntryStatus = status } };
 
 			var entries = _service.Find(a => new AlbumForApiContract(a, null, lang, _thumbPersister, fields, SongOptionalFields.None), queryParams);
 

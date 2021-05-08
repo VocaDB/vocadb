@@ -20,7 +20,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 	public class SongSearchTests
 	{
 		private Model.Service.Search.SongSearch.SongSearch _songSearch;
-		private readonly SongQueryParams _queryParams = new() { SortRule = SongSortRule.Name };
+		private SongQueryParams _queryParams = new() { SortRule = SongSortRule.Name };
 
 		[TestInitialize]
 		public void SetUp()
@@ -56,7 +56,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		[TestMethod]
 		public void Find_NameWords()
 		{
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("Anger");
+			_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("Anger") } };
 
 			var result = CallFind();
 
@@ -66,7 +66,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		[TestMethod]
 		public void Find_NameMatchModeExact()
 		{
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("Anger", NameMatchMode.Exact);
+			_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("Anger", NameMatchMode.Exact) } };
 
 			var result = CallFind();
 
@@ -79,7 +79,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		[TestMethod]
 		public void Find_NameQuotedExact()
 		{
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("\"Anger\"");
+			_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("\"Anger\"") } };
 
 			var result = CallFind();
 

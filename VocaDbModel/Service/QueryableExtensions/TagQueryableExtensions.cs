@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,7 +13,6 @@ namespace VocaDb.Model.Service.QueryableExtensions
 	/// </summary>
 	public static class TagQueryableExtensions
 	{
-#nullable enable
 		/// <summary>
 		/// Order query by <see cref="TagSortRule"/>.
 		/// </summary>
@@ -64,14 +61,12 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Where(t => t.Parent == null);
 		}
-#nullable disable
 
-		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, string categoryName)
+		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, string? categoryName)
 		{
 			return WhereHasCategoryName(query, SearchTextQuery.Create(categoryName, NameMatchMode.Exact));
 		}
 
-#nullable enable
 		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, SearchTextQuery textQuery)
 		{
 			if (textQuery.IsEmpty)
@@ -114,7 +109,6 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Where(t => (t.Targets & target) == target);
 		}
-#nullable disable
 	}
 
 	public enum TagSortRule

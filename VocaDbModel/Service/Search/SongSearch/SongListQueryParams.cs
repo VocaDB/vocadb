@@ -1,25 +1,21 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {
-	public class SongListQueryParams
+	public sealed record SongListQueryParams
 	{
-		public bool ChildTags { get; set; }
+		public bool ChildTags { get; init; }
 
-		public SongListFeaturedCategory? FeaturedCategory { get; set; }
+		public SongListFeaturedCategory? FeaturedCategory { get; init; }
 
-		public PagingProperties Paging { get; set; } = new(0, 30, true);
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public SongListSortRule SortRule { get; set; }
+		public SongListSortRule SortRule { get; init; }
 
-#nullable enable
-		public int[]? TagIds { get; set; }
-#nullable disable
+		public int[]? TagIds { get; init; }
 
-		public SearchTextQuery TextQuery { get; set; }
+		public SearchTextQuery TextQuery { get; init; } = SearchTextQuery.Empty;
 	}
 }

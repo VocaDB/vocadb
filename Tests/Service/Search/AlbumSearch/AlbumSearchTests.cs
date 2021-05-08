@@ -90,7 +90,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSkip()
 		{
-			_queryParams.Paging.Start = 1;
+			_queryParams = _queryParams with { Paging = _queryParams.Paging with { Start = 1 } };
 
 			var result = Find();
 
@@ -105,7 +105,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortName()
 		{
-			_queryParams.SortRule = AlbumSortRule.Name;
+			_queryParams = _queryParams with { SortRule = AlbumSortRule.Name };
 
 			var result = Find();
 
@@ -121,7 +121,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortRating()
 		{
-			_queryParams.SortRule = AlbumSortRule.RatingAverage;
+			_queryParams = _queryParams with { SortRule = AlbumSortRule.RatingAverage };
 
 			var result = Find();
 
@@ -137,7 +137,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortAdditionDate()
 		{
-			_queryParams.SortRule = AlbumSortRule.AdditionDate;
+			_queryParams = _queryParams with { SortRule = AlbumSortRule.AdditionDate };
 
 			var result = Find();
 
@@ -153,7 +153,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryName()
 		{
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("DIVINE");
+			_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("DIVINE") } };
 
 			var result = Find();
 
@@ -186,9 +186,15 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 			CreateName(_album, "Synthesis Miku", ContentLanguageSelection.Unspecified);
 			CreateName(_albumWithArtist, "DIVINE Miku", ContentLanguageSelection.Unspecified);
 
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("Miku Miku");
-			_queryParams.Paging.Start = 1;       // Skip the first result
-			_queryParams.Paging.MaxEntries = 1;
+			_queryParams = _queryParams with
+			{
+				Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("Miku Miku") },
+				Paging = _queryParams.Paging with
+				{
+					Start = 1,       // Skip the first result
+					MaxEntries = 1,
+				},
+			};
 
 			var result = Find();
 
@@ -206,7 +212,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 			_albumWithArtist.OriginalRelease.CatNum = "XMCD-1003";
 			_querySource.Add(CreateEntry.Album(name: "Reverberations"));
 
-			_queryParams.Common.TextQuery = SearchTextQuery.Create("XMCD-1003");
+			_queryParams = _queryParams with { Common = _queryParams.Common with { TextQuery = SearchTextQuery.Create("XMCD-1003") } };
 
 			var result = Find();
 
@@ -221,7 +227,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryType()
 		{
-			_queryParams.AlbumType = DiscType.Album;
+			_queryParams = _queryParams with { AlbumType = DiscType.Album };
 
 			var result = Find();
 

@@ -7,8 +7,10 @@ namespace VocaDb.Model.Service.Search
 	/// <summary>
 	/// Common search parameters for all entry types.
 	/// </summary>
-	public class CommonSearchParams : CommonSearchParams<SearchTextQuery>
+	public sealed record CommonSearchParams : CommonSearchParams<SearchTextQuery>
 	{
+		public static new readonly CommonSearchParams Default = new();
+
 		public static CommonSearchParams<TTextQuery> Create<TTextQuery>(TTextQuery textQuery, bool onlyByName, bool moveExactToTop) where TTextQuery : SearchTextQuery, new()
 		{
 			return new CommonSearchParams<TTextQuery>(textQuery, onlyByName, moveExactToTop);
@@ -23,12 +25,11 @@ namespace VocaDb.Model.Service.Search
 	/// <summary>
 	/// Common search parameters for all entry types.
 	/// </summary>
-	public class CommonSearchParams<TTextQuery> where TTextQuery : SearchTextQuery, new()
+	public record CommonSearchParams<TTextQuery> where TTextQuery : SearchTextQuery, new()
 	{
-		public CommonSearchParams()
-		{
-			TextQuery = new TTextQuery();
-		}
+		public static readonly CommonSearchParams<TTextQuery> Default = new();
+
+		public CommonSearchParams() { }
 
 		public CommonSearchParams(TTextQuery textQuery, bool onlyByName, bool moveExactToTop)
 			: this()
@@ -38,20 +39,20 @@ namespace VocaDb.Model.Service.Search
 			MoveExactToTop = moveExactToTop;
 		}
 
-		public EntryStatus? EntryStatus { get; set; }
+		public EntryStatus? EntryStatus { get; init; }
 
 		/// <summary>
 		/// Moves results that are exact matches or starting with the search term to top of the result set.
 		/// This parameter is mostly used for autocompletes and is not intended to work with paging.
 		/// </summary>
-		public bool MoveExactToTop { get; set; }
+		public bool MoveExactToTop { get; init; }
 
 		public NameMatchMode NameMatchMode => TextQuery.MatchMode;
 
-		public bool OnlyByName { get; set; }
+		public bool OnlyByName { get; init; }
 
 		public string Query => TextQuery.Query;
 
-		public TTextQuery TextQuery { get; set; }
+		public TTextQuery TextQuery { get; init; } = new TTextQuery();
 	}
 }

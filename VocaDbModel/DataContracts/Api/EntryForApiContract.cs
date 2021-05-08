@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -238,10 +236,10 @@ namespace VocaDb.Model.DataContracts.Api
 		public DateTime? ActivityDate { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; init; }
+		public string? AdditionalNames { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string ArtistString { get; init; }
+		public string? ArtistString { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistType? ArtistType { get; init; }
@@ -250,13 +248,13 @@ namespace VocaDb.Model.DataContracts.Api
 		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public string DefaultName { get; init; }
+		public string DefaultName { get; init; } = string.Empty;
 
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; init; }
+		public string? Description { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public DiscType? DiscType { get; init; }
@@ -279,19 +277,19 @@ namespace VocaDb.Model.DataContracts.Api
 		/// For songs this is the thumbnail.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
 
 		[DataMember]
-		public string Name { get; init; }
+		public string Name { get; init; } = string.Empty;
 
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; init; }
+		public LocalizedStringContract[]? Names { get; init; }
 
 		/// <summary>
 		/// List of PVs, for songs and albums. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public PVContract[] PVs { get; init; }
+		public PVContract[]? PVs { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public SongListFeaturedCategory? SongListFeaturedCategory { get; init; }
@@ -303,22 +301,22 @@ namespace VocaDb.Model.DataContracts.Api
 		public EntryStatus Status { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string ReleaseEventSeriesName { get; init; }
+		public string? ReleaseEventSeriesName { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string TagCategoryName { get; init; }
+		public string? TagCategoryName { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagUsageForApiContract[] Tags { get; init; }
+		public TagUsageForApiContract[]? Tags { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string UrlSlug { get; init; }
+		public string? UrlSlug { get; init; }
 
 		[DataMember]
 		public int Version { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedWebLinkContract[] WebLinks { get; init; }
+		public ArchivedWebLinkContract[]? WebLinks { get; init; }
 	}
 
 	[Flags]

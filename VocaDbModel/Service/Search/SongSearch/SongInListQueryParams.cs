@@ -6,33 +6,33 @@ using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {
-	public class SongInListQueryParams
+	public sealed record SongInListQueryParams
 	{
 #nullable enable
-		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; init; }
 
-		public int[]? ArtistIds { get; set; }
-#nullable disable
+		public int[]? ArtistIds { get; init; }
 
-		public bool ChildVoicebanks { get; set; }
+		public bool ChildVoicebanks { get; init; }
 
-		public int ListId { get; set; }
+		public int ListId { get; init; }
 
-		public SearchTextQuery TextQuery { get; set; }
+		public SearchTextQuery TextQuery { get; init; } = SearchTextQuery.Empty;
 
-		public PagingProperties Paging { get; set; } = new(0, 30, true);
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public PVServices? PVServices { get; set; }
+		public PVServices? PVServices { get; init; }
 
 		/// <summary>
 		/// Song sort rule. If null, Order field will be used.
 		/// </summary>
-		public SongSortRule? SortRule { get; set; }
+		public SongSortRule? SortRule { get; init; }
+#nullable disable
 
-		public SongType[] SongTypes { get; set; }
+		public SongType[] SongTypes { get; init; }
 
 #nullable enable
-		public int[]? TagIds { get; set; }
+		public int[]? TagIds { get; init; }
 #nullable disable
 	}
 }

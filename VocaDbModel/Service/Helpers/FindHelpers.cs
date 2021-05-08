@@ -7,6 +7,7 @@ using NHibernate;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Search;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Service.Helpers
 {
@@ -33,6 +34,7 @@ namespace VocaDb.Model.Service.Helpers
 			return criteria.ThenBy(OrderByExpression<T>(languagePreference));
 		}
 
+#nullable enable
 		/// <summary>
 		/// Processes T-SQL wildcards, specifically the brackets "[]" and percent wildcard "%" from the search term.
 		/// </summary>
@@ -42,7 +44,8 @@ namespace VocaDb.Model.Service.Helpers
 		/// Because brackets are used for character group wildcards in T-SQL "like" queries, 
 		/// searches such as "alone [SNDI RMX]" did not work.
 		/// </remarks>
-		public static string CleanTerm(string term)
+		[return: NotNullIfNotNull("term"/* TODO: use nameof */)]
+		public static string? CleanTerm(string? term)
 		{
 			if (string.IsNullOrEmpty(term))
 				return term;
@@ -65,7 +68,8 @@ namespace VocaDb.Model.Service.Helpers
 		/// <param name="matchMode">Current match mode. If Auto, will be set if something else besides Auto.</param>
 		/// <param name="defaultMode">Default match mode to be used for normal queries.</param>
 		/// <returns>Text query. Wildcard characters are removed. Can be null or empty, if original query is.</returns>
-		public static string GetMatchModeAndQueryForSearch(string query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words)
+		[return: NotNullIfNotNull("query"/* TODO: use nameof */)]
+		public static string? GetMatchModeAndQueryForSearch(string? query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words)
 		{
 			if (string.IsNullOrEmpty(query))
 				return query;
@@ -124,5 +128,6 @@ namespace VocaDb.Model.Service.Helpers
 				.Distinct()
 				.ToArray();
 		}
+#nullable disable
 	}
 }

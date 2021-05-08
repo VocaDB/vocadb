@@ -20,7 +20,8 @@ namespace VocaDb.Model.Service.Search.Tags
 			_languagePreference = languagePreference;
 		}
 
-		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode)
+#nullable enable
+		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string? queryText, NameMatchMode nameMatchMode)
 		{
 			var textQuery = TagSearchTextQuery.Create(queryText, nameMatchMode);
 
@@ -33,6 +34,7 @@ namespace VocaDb.Model.Service.Search.Tags
 
 			return query;
 		}
+#nullable disable
 
 		public PartialFindResult<Tag> Find(TagQueryParams queryParams, bool onlyMinimalFields)
 		{

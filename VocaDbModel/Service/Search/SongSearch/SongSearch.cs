@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
 
-			var typesAndTags = ProcessUnifiedTypesAndTags(queryParams);
+			var typesAndTags = ProcessUnifiedTypesAndTags(ref queryParams);
 
 			var query = Query<Song>()
 				.WhereNotDeleted()
@@ -76,15 +76,18 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			return SearchWord.GetTerm(query, testTerms);
 		}
 
-		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams)
+		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(ref SongQueryParams queryParams)
 		{
 			EntryTypeAndTagCollection<SongType> typesAndTags = null;
 
 			if (queryParams.UnifyEntryTypesAndTags)
 			{
 				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, _querySource);
-				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
-				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
+				queryParams = queryParams with
+				{
+					TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray(),
+					SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray(),
+				};
 			}
 
 			return typesAndTags;
@@ -101,14 +104,14 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			if (artistNames.Any())
 			{
-				queryParams.ArtistNames = artistNames;
+				queryParams = queryParams with { ArtistNames = artistNames };
 			}
 
 			var words = parsed.GetValues("").ToArray();
 
 			if (words.Any())
 			{
-				queryParams.Common.TextQuery = new SearchTextQuery(textQuery.Query, NameMatchMode.Words, textQuery.OriginalQuery, words);
+				queryParams = queryParams with { Common = queryParams.Common with { TextQuery = new SearchTextQuery(textQuery.Query, NameMatchMode.Words, textQuery.OriginalQuery, words) } };
 				return queryParams.Common.TextQuery;
 			}
 			else

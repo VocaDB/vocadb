@@ -32,6 +32,7 @@ namespace VocaDb.Web.Controllers
 		private readonly TagQueries _tagQueries;
 		private readonly IUserPermissionContext _permissionContext;
 
+#nullable enable
 		private ActionResult RedirectToAlbum(int id)
 		{
 			return RedirectToAction("Details", "Album", new { id });
@@ -42,7 +43,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", "Artist", new { id });
 		}
 
-		private ActionResult RedirectToReleaseEvent(int id, string urlSlug)
+		private ActionResult RedirectToReleaseEvent(int id, string? urlSlug)
 		{
 			return RedirectToAction("Details", "Event", new { id, urlSlug });
 		}
@@ -57,12 +58,12 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", "SongList", new { id });
 		}
 
-		private ActionResult RedirectToTag(int id, string urlSlug)
+		private ActionResult RedirectToTag(int id, string? urlSlug)
 		{
 			return RedirectToAction("DetailsById", "Tag", new { id, urlSlug });
 		}
 
-		private ActionResult TryRedirect(string filter, EntryType searchType)
+		private ActionResult? TryRedirect(string filter, EntryType searchType)
 		{
 			var textQuery = SearchTextQuery.Create(filter);
 			var artistTextQuery = ArtistSearchTextQuery.Create(filter);
@@ -173,6 +174,7 @@ namespace VocaDb.Web.Controllers
 
 			return null;
 		}
+#nullable disable
 
 		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries,
 			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext)

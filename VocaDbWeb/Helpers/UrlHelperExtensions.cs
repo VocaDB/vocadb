@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
@@ -17,7 +15,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
-		private static string EntryDetails(IUrlHelper urlHelper, EntryType entryType, int id, string urlSlug) => entryType switch
+		private static string EntryDetails(IUrlHelper urlHelper, EntryType entryType, int id, string? urlSlug) => entryType switch
 		{
 			EntryType.DiscussionTopic => urlHelper.Action("Index", "Discussion", new { clientPath = $"topics/{id}" }),
 			EntryType.ReleaseEvent => urlHelper.Action("Details", "Event", new { id, slug = urlSlug }),
@@ -26,7 +24,7 @@ namespace VocaDb.Web.Helpers
 			_ => urlHelper.Action("Details", entryType.ToString(), new { id }),
 		};
 
-		public static string EntryDetails(this IUrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null)
+		public static string EntryDetails(this IUrlHelper urlHelper, IEntryBase entryBase, string? urlSlug = null)
 		{
 			ParamIs.NotNull(() => entryBase);
 
@@ -42,7 +40,7 @@ namespace VocaDb.Web.Helpers
 
 		public static string EntryIndex(this IUrlHelper urlHelper, EntryTypeAndSubType fullEntryType)
 		{
-			SearchRouteParams searchRouteParams = null;
+			SearchRouteParams? searchRouteParams = null;
 			switch (fullEntryType.EntryType)
 			{
 				case EntryType.Artist:
