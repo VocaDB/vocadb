@@ -12,7 +12,8 @@
 		"noImplicitAny": true,
 		"strictBindCallApply": true,
 		"strictFunctionTypes": true,
-		"noImplicitThis": true
+		"noImplicitThis": true,
+		"noImplicitReturns": true
 	},
 	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
 }

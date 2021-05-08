@@ -17,5 +17,7 @@ export function parseWebLinkCategory(rating: string): WebLinkCategory {
       return WebLinkCategory.Reference;
     case 'Other':
       return WebLinkCategory.Other;
+    default:
+      return undefined;
   }
 }
