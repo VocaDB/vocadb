@@ -10,11 +10,11 @@ export default class TopBarViewModel {
 
     this.userRepository
       .getMessageSummaries(
-        null,
-        null,
+        null!,
+        null!,
         { maxEntries: 3, start: 0, getTotalCount: false },
         true,
-        null,
+        null!,
         40,
       )
       .then(

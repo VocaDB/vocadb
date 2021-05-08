@@ -19,7 +19,7 @@ QUnit.module('TopBarViewModel', {
         id: 39,
         inbox: 'Received',
         read: false,
-        receiver: null,
+        receiver: null!,
         subject: 'New message!',
       },
       {
@@ -28,7 +28,7 @@ QUnit.module('TopBarViewModel', {
         id: 40,
         inbox: 'Received',
         read: false,
-        receiver: null,
+        receiver: null!,
         subject: 'Another message',
       },
     ];

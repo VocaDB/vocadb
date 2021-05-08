@@ -31,7 +31,7 @@ export default class ArtistEditViewModel {
     this.newAssociatedArtist.clear();
   };
 
-  private addGroup = (artistId: number): void => {
+  private addGroup = (artistId?: number): void => {
     if (artistId) {
       this.artistRepo.getOne(artistId).then((artist: ArtistContract) => {
         this.groups.push({ id: 0, parent: artist });
@@ -53,7 +53,7 @@ export default class ArtistEditViewModel {
   // Clears fields that are not valid for the selected artist type.
   private clearInvalidData = (): void => {
     if (!this.canHaveReleaseDate()) {
-      this.releaseDate(null);
+      this.releaseDate(null!);
     }
 
     if (!this.canHaveRelatedArtists()) {
@@ -136,7 +136,9 @@ export default class ArtistEditViewModel {
       illustrator: this.illustrator.entry(),
       names: this.names.toContracts(),
       pictures: this.pictures.toContracts(),
-      releaseDate: this.releaseDate() ? this.releaseDate().toISOString() : null,
+      releaseDate: this.releaseDate()
+        ? this.releaseDate().toISOString()
+        : null!,
       status: this.status(),
       updateNotes: this.updateNotes(),
       voiceProvider: this.voiceProvider.entry(),
@@ -201,13 +203,13 @@ export default class ArtistEditViewModel {
       (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.names = NamesEditViewModel.fromContracts(data.names);
-    this.newAssociatedArtist = new BasicEntryLinkViewModel(
-      null,
+    this.newAssociatedArtist = new BasicEntryLinkViewModel<ArtistContract>(
+      null!,
       (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
     this.releaseDate = ko.observable(
-      data.releaseDate ? moment(data.releaseDate).toDate() : null,
+      data.releaseDate ? moment(data.releaseDate).toDate() : null!,
     ); // Assume server date is UTC
     this.status = ko.observable(data.status);
     this.voiceProvider = new BasicEntryLinkViewModel(

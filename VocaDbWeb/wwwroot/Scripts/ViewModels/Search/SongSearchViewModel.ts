@@ -57,7 +57,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       this.showTags = this.searchViewModel.showTags;
     } else {
       this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
-      this.resourceManager.loadResources(null, 'songSortRuleNames');
+      this.resourceManager.loadResources(null!, 'songSortRuleNames');
       this.showTags = ko.observable(false);
     }
 
@@ -67,7 +67,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     this.artistFilters.selectArtists(artistId);
 
     this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
-      { id: eventId, name: null },
+      { id: eventId, name: null! },
       (entryId, callback) =>
         this.eventRepo ? this.eventRepo.getOne(entryId).then(callback) : null,
     );
@@ -89,15 +89,15 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     this.viewMode = ko.observable(viewMode || 'Details');
 
     this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
-      null,
+      null!,
       (entryId, callback) => this.songRepo.getOne(entryId).then(callback),
     );
 
     this.minMilliBpm = ko
-      .observable(undefined)
+      .observable(undefined!)
       .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
     this.maxMilliBpm = ko
-      .observable(undefined)
+      .observable(undefined!)
       .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
     this.minLength = ko
@@ -135,7 +135,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
     this.sortName = ko.computed(() =>
       this.resourceManager.resources().songSortRuleNames != null
-        ? this.resourceManager.resources().songSortRuleNames[this.sort()]
+        ? this.resourceManager.resources().songSortRuleNames![this.sort()]
         : '',
     );
 
@@ -194,7 +194,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
             this.sort(),
             this.songType() != SongType[SongType.Unspecified]
               ? this.songType()
-              : null,
+              : null!,
             this.afterDate(),
             this.beforeDate(),
             tag,
@@ -206,18 +206,18 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
             this.artistFilters.includeMembers(),
             this.releaseEvent.id(),
             this.pvsOnly(),
-            null,
+            null!,
             this.since(),
             this.minScore(),
-            this.onlyRatedSongs() ? this.loggedUserId : null,
+            this.onlyRatedSongs() ? this.loggedUserId : null!,
             this.parentVersion.id(),
             this.fields(),
             status,
             this.advancedFilters.filters(),
             this.minMilliBpm(),
             this.maxMilliBpm(),
-            this.minLength() ? this.minLength() : null,
-            this.maxLength() ? this.maxLength() : null,
+            this.minLength() ? this.minLength() : null!,
+            this.maxLength() ? this.maxLength() : null!,
           )
           .then((result) => {
             _.each(result.items, (song: ISongSearchItem) => {
@@ -231,7 +231,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
                 song.previewViewModel.ratingComplete =
                   ui.showThankYouForRatingMessage;
               } else {
-                song.previewViewModel = null;
+                song.previewViewModel = null!;
               }
             });
 
@@ -250,9 +250,9 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   }
 
   public artistFilters: ArtistFilters;
-  public dateDay = ko.observable<number>(null);
-  public dateMonth = ko.observable<number>(null);
-  public dateYear = ko.observable<number>(null);
+  public dateDay = ko.observable<number>(null!);
+  public dateMonth = ko.observable<number>(null!);
+  public dateYear = ko.observable<number>(null!);
   public releaseEvent: BasicEntryLinkViewModel<IEntryWithIdAndName>;
   public minScore: KnockoutObservable<number>;
   public onlyRatedSongs = ko.observable(false);
@@ -290,13 +290,13 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
               (this.dateMonth() || 1) - 1,
               this.dateDay() || 1,
             ]),
-          )
-        : null,
+          )!
+        : null!,
     )
     .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
-  private beforeDate = (): Date | null => {
-    if (!this.dateYear()) return null;
+  private beforeDate = (): Date => {
+    if (!this.dateYear()) return null!;
 
     var mom = moment.utc([
       this.dateYear(),
@@ -306,7 +306,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
     return this.toDateOrNull(
       this.dateMonth() && this.dateDay() ? mom.add(1, 'd') : mom.add(1, 'M'),
-    );
+    )!;
   };
 
   public fields = ko.computed(() =>

@@ -43,10 +43,10 @@ export function artistAutoComplete(
     jQuery.extend(queryParams, properties.extraQueryParams);
 
   var params: EntryAutoCompleteParams<ArtistContract> = {
-    acceptSelection: properties.acceptSelection,
+    acceptSelection: properties.acceptSelection!,
     createNewItem: properties.createNewItem,
     createOptionFirstRow: (item) => item.name + ' (' + item.artistType + ')',
-    createOptionSecondRow: (item) => item.additionalNames,
+    createOptionSecondRow: (item) => item.additionalNames!,
     extraQueryParams: queryParams,
     filter: filter,
     termParamName: 'query',

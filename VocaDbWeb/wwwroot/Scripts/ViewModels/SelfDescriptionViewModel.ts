@@ -50,8 +50,8 @@ export default class SelfDescriptionViewModel {
 
   public editing = ko.observable(false);
 
-  private originalAuthor: number;
-  private originalText: string;
+  private originalAuthor!: number;
+  private originalText!: string;
 
   public save = (): void => {
     this.saveFunc(this);

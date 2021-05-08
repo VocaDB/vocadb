@@ -51,7 +51,7 @@ export default class ReleaseEventDetailsViewModel {
     this.reportViewModel = new ReportEntryViewModel(
       reportTypes,
       (reportType, notes) => {
-        repo.createReport(eventId, reportType, notes, null);
+        repo.createReport(eventId, reportType, notes, null!);
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
     );
@@ -75,7 +75,9 @@ export default class ReleaseEventDetailsViewModel {
 
   public comments: EditableCommentsViewModel;
 
-  private eventAssociationType = ko.observable<UserEventRelationshipType>(null);
+  private eventAssociationType = ko.observable<UserEventRelationshipType>(
+    null!,
+  );
 
   public hasEvent = ko.computed(() => {
     return !!this.eventAssociationType();
@@ -91,7 +93,7 @@ export default class ReleaseEventDetailsViewModel {
 
   public removeEvent = (): void => {
     this.userRepo.deleteEventForUser(this.eventId);
-    this.eventAssociationType(null);
+    this.eventAssociationType(null!);
     var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
     this.usersAttending.remove(link);
   };

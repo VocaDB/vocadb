@@ -15,9 +15,9 @@ ko.bindingHandlers.songListAutoComplete = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<SongListContract>,
-    allBindingsAccessor: () => any,
+    allBindingsAccessor?: () => any,
   ): void => {
-    var allBindings = allBindingsAccessor();
+    var allBindings = allBindingsAccessor!();
     var category: string = allBindings.songListCategory;
 
     var queryParams = {
@@ -33,17 +33,17 @@ ko.bindingHandlers.songListAutoComplete = {
       acceptSelection: (id, term, itemType, item) => {
         valueAccessor()(
           item || {
-            id: id,
-            name: term,
-            author: null,
-            description: null,
-            featuredCategory: null,
-            status: null,
+            id: id!,
+            name: term!,
+            author: null!,
+            description: null!,
+            featuredCategory: null!,
+            status: null!,
           },
         );
       },
       createOptionFirstRow: (item) => item.name,
-      createNewItem: allBindingsAccessor().createNewItem,
+      createNewItem: allBindingsAccessor!().createNewItem,
       extraQueryParams: queryParams,
     };
 

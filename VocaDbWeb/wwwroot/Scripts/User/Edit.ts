@@ -27,7 +27,7 @@ function initPage(): void {
     acceptSelection: acceptArtistSelection,
     createOptionFirstRow: (item: ArtistContract) =>
       item.name + ' (' + item.artistType + ')',
-    createOptionSecondRow: (item: ArtistContract) => item.additionalNames,
+    createOptionSecondRow: (item: ArtistContract) => item.additionalNames!,
     extraQueryParams: {
       nameMatchMode: 'Auto',
       lang: ContentLanguagePreference[vdb.values.languagePreference],

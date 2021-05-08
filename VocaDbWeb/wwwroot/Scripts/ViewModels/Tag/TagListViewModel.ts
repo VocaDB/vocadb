@@ -21,7 +21,10 @@ export default class TagListViewModel {
       var tags = _.chain(this.tagUsages())
         .orderBy((tagUsage) => tagUsage.tag.categoryName)
         .groupBy((tagUsage) => tagUsage.tag.categoryName)
-        .map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({
+        .map<
+          any,
+          { categoryName: string; tagUsages: TagUsageForApiContract[] }
+        >((tagUsages: TagUsageForApiContract[], categoryName: any) => ({
           categoryName,
           tagUsages,
         }));

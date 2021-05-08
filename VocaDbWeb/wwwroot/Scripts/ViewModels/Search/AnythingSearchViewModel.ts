@@ -37,20 +37,20 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
   public entryCategoryName = (entry: EntryContract): string => {
     switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Artist:
-        return this.searchViewModel.resources().artistTypeNames[
-          entry.artistType
+        return this.searchViewModel.resources().artistTypeNames![
+          entry.artistType!
         ];
       case EntryType.Album:
-        return this.searchViewModel.resources().discTypeNames[entry.discType];
+        return this.searchViewModel.resources().discTypeNames![entry.discType!];
       case EntryType.ReleaseEvent:
-        return this.searchViewModel.resources().eventCategoryNames[
-          entry.eventCategory
+        return this.searchViewModel.resources().eventCategoryNames![
+          entry.eventCategory!
         ];
       case EntryType.Song:
-        return this.searchViewModel.resources().songTypeNames[entry.songType];
+        return this.searchViewModel.resources().songTypeNames![entry.songType!];
     }
 
-    return null;
+    return null!;
   };
 
   public entryUrl = (entry: EntryContract): string => {

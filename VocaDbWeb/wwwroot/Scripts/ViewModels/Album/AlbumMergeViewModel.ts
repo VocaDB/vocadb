@@ -6,8 +6,9 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 
 export default class AlbumMergeViewModel {
   constructor(repo: AlbumRepository, id: number) {
-    this.target = new BasicEntryLinkViewModel(null, (entryId, callback) =>
-      repo.getOne(entryId).then(callback),
+    this.target = new BasicEntryLinkViewModel<AlbumContract>(
+      null!,
+      (entryId, callback) => repo.getOne(entryId).then(callback),
     );
 
     this.targetSearchParams = {

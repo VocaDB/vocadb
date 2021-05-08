@@ -8,13 +8,13 @@ export default class ArchivedEntryViewModel {
     private readonly repository: IEntryReportsRepository,
   ) {
     this.reportViewModel = new ReportEntryViewModel(
-      null,
+      null!,
       (reportType, notes) => {
         repository.createReport(entryId, reportType, notes, versionNumber);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
-      { notesRequired: true, id: 'Other', name: null },
+      { notesRequired: true, id: 'Other', name: null! },
     );
   }
 

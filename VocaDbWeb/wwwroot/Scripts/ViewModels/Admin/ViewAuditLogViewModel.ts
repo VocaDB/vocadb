@@ -20,7 +20,7 @@ export default class ViewAuditLogViewModel {
   }
 
   private extractLast(term: string): string {
-    return this.split(term).pop();
+    return this.split(term).pop()!;
   }
 
   constructor(data: ViewAuditLogContract) {

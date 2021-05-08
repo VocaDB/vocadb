@@ -24,7 +24,7 @@ export default class CommentRepository
     contract.entry = {
       entryType: EntryType[this.entryType],
       id: entryId,
-      name: null,
+      name: null!,
     };
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),

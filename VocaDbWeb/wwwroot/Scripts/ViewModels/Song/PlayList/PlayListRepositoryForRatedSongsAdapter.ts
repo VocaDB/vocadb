@@ -53,13 +53,16 @@ export default class PlayListRepositoryForRatedSongsAdapter
         (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
           var mapped = _.map(result.items, (song, idx) => {
             return {
-              name: song.song.name,
-              song: song.song,
-              indexInPlayList: paging.start + idx,
+              name: song.song!.name,
+              song: song.song!,
+              indexInPlayList: paging.start! + idx,
             };
           });
 
-          callback({ items: mapped, totalCount: result.totalCount });
+          callback({
+            items: mapped,
+            totalCount: result.totalCount,
+          });
         },
       );
   };

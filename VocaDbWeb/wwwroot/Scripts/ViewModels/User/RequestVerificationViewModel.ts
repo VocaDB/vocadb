@@ -6,17 +6,17 @@ export default class RequestVerificationViewModel {
   constructor(private readonly artistRepository: ArtistRepository) {}
 
   public clearArtist = (): void => {
-    this.selectedArtist(null);
+    this.selectedArtist(null!);
   };
 
   public privateMessage = ko.observable(false);
 
   public selectedArtist: KnockoutObservable<ArtistContract> = ko.observable(
-    null,
+    null!,
   );
 
-  public setArtist = (targetArtistId: number): void => {
-    this.artistRepository.getOne(targetArtistId).then((artist) => {
+  public setArtist = (targetArtistId?: number): void => {
+    this.artistRepository.getOne(targetArtistId!).then((artist) => {
       this.selectedArtist(artist);
     });
   };

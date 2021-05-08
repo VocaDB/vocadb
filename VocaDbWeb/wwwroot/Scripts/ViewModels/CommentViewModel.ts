@@ -8,12 +8,12 @@ export default class CommentViewModel {
     public canBeEdited: boolean,
   ) {
     this.author = contract.author;
-    this.authorName = contract.authorName;
-    this.created = contract.created;
-    this.id = contract.id;
+    this.authorName = contract.authorName!;
+    this.created = contract.created!;
+    this.id = contract.id!;
     this.message = ko.observable(contract.message);
 
-    this.editedMessage = ko.observable(null);
+    this.editedMessage = ko.observable(null!);
   }
 
   public author: UserApiContract;

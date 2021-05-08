@@ -15,7 +15,7 @@ export default class EditableCommentsViewModel {
     commentContracts?: CommentContract[],
     hasMoreComments: boolean = false,
   ) {
-    this.comments = ko.observableArray<CommentViewModel>(null);
+    this.comments = ko.observableArray<CommentViewModel>(null!);
     this.commentsLoaded = commentContracts != null && !hasMoreComments;
     this.topComments = ko.computed(() => _.take(this.comments(), 3));
     this.pageOfComments = ko.computed(() =>
@@ -36,7 +36,7 @@ export default class EditableCommentsViewModel {
   };
 
   public cancelEditComment = (): void => {
-    this.editCommentModel(null);
+    this.editCommentModel(null!);
   };
 
   private canDeleteComment = (comment: CommentContract): boolean => {
@@ -95,7 +95,7 @@ export default class EditableCommentsViewModel {
     this.paging.totalItems(this.paging.totalItems() - 1);
   };
 
-  public editCommentModel = ko.observable<CommentViewModel>(null);
+  public editCommentModel = ko.observable<CommentViewModel>(null!);
 
   public initComments = (): void => {
     if (this.commentsLoaded) return;
@@ -109,7 +109,7 @@ export default class EditableCommentsViewModel {
 
   public newComment = ko.observable('');
 
-  public onCommentCreated: (comment: CommentViewModel) => void;
+  public onCommentCreated!: (comment: CommentViewModel) => void;
 
   public paging: ServerSidePagingViewModel = new ServerSidePagingViewModel();
 
@@ -129,9 +129,9 @@ export default class EditableCommentsViewModel {
     this.editCommentModel().saveChanges();
     var editedContract = this.editCommentModel().toContract();
 
-    this.repo.updateComment(editedContract.id, editedContract);
+    this.repo.updateComment(editedContract.id!, editedContract);
 
-    this.editCommentModel(null);
+    this.editCommentModel(null!);
   };
 
   private setComments = (commentContracts: CommentContract[]): void => {

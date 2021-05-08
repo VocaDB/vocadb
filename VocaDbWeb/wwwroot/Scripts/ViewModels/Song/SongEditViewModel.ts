@@ -85,19 +85,19 @@ export default class SongEditViewModel {
           roles: 'Default',
         };
 
-        var link = new ArtistForAlbumEditViewModel(null, data);
+        var link = new ArtistForAlbumEditViewModel(null!, data);
         this.artistLinks.push(link);
       });
     } else {
       var data: ArtistForAlbumContract = {
-        artist: null,
+        artist: null!,
         name: customArtistName,
         isSupport: false,
         id: 0,
         roles: 'Default',
       };
 
-      var link = new ArtistForAlbumEditViewModel(null, data);
+      var link = new ArtistForAlbumEditViewModel(null!, data);
       this.artistLinks.push(link);
     }
   };
@@ -196,7 +196,9 @@ export default class SongEditViewModel {
       names: this.names.toContracts(),
       notes: this.notes.toContract(),
       originalVersion: this.originalVersion.entry(),
-      publishDate: this.publishDate() ? this.publishDate().toISOString() : null,
+      publishDate: this.publishDate()
+        ? this.publishDate().toISOString()
+        : null!,
       pvs: this.pvs.toContracts(),
       releaseEvent: this.releaseEvent.entry(),
       songType: this.songTypeStr(),
@@ -205,7 +207,7 @@ export default class SongEditViewModel {
       updateNotes: this.updateNotes(),
       webLinks: this.webLinks.toContracts(),
       minMilliBpm: this.minMilliBpm(),
-      maxMilliBpm: this.hasMaxMilliBpm() ? this.maxMilliBpm() : null,
+      maxMilliBpm: this.hasMaxMilliBpm() ? this.maxMilliBpm() : null!,
     };
 
     this.submittedJson(ko.toJSON(submittedModel));
@@ -243,14 +245,14 @@ export default class SongEditViewModel {
     private instrumentalTagId: number,
     public languageNames: any,
   ) {
-    this.albumEventId = data.albumEventId;
+    this.albumEventId = data.albumEventId!;
     this.albumReleaseDate = data.albumReleaseDate
       ? moment(data.albumReleaseDate)
-      : null;
+      : null!;
     this.artistLinks = ko.observableArray(
       _.map(
         data.artists,
-        (artist) => new ArtistForAlbumEditViewModel(null, artist),
+        (artist) => new ArtistForAlbumEditViewModel(null!, artist),
       ),
     );
     this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
@@ -265,7 +267,7 @@ export default class SongEditViewModel {
       (entryId, callback) => songRepository.getOne(entryId).then(callback),
     );
     this.publishDate = ko.observable(
-      data.publishDate ? moment(data.publishDate).toDate() : null,
+      data.publishDate ? moment(data.publishDate).toDate() : null!,
     ); // Assume server date is UTC
     this.pvs = new PVListEditViewModel(
       pvRepository,
@@ -277,7 +279,7 @@ export default class SongEditViewModel {
     );
     this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
       data.releaseEvent,
-      null,
+      null!,
     );
     this.songTypeStr = ko.observable(data.songType);
     this.songType = ko.computed(
@@ -286,10 +288,10 @@ export default class SongEditViewModel {
     this.status = ko.observable(data.status);
     this.tags = data.tags;
     this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
-    this.hasMaxMilliBpm = ko.observable(data.maxMilliBpm > data.minMilliBpm);
+    this.hasMaxMilliBpm = ko.observable(data.maxMilliBpm! > data.minMilliBpm!);
     this.minMilliBpm = ko.observable(data.minMilliBpm);
     this.maxMilliBpm = ko.observable(
-      data.maxMilliBpm > data.minMilliBpm ? data.maxMilliBpm : null,
+      data.maxMilliBpm! > data.minMilliBpm! ? data.maxMilliBpm : null!,
     );
 
     this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(
@@ -406,7 +408,7 @@ export default class SongEditViewModel {
 
     this.validationError_redundantEvent = ko.computed(
       () =>
-        this.albumEventId &&
+        !!this.albumEventId &&
         !this.releaseEvent.isEmpty() &&
         this.releaseEvent.id() === this.albumEventId,
     );
@@ -430,8 +432,8 @@ export default class SongEditViewModel {
 
     this.eventDate = ko.computed(() =>
       this.releaseEvent.entry() && this.releaseEvent.entry().date
-        ? moment(this.releaseEvent.entry().date)
-        : null,
+        ? moment(this.releaseEvent.entry().date!)
+        : null!,
     );
 
     this.firstPvDate = ko.computed(() => {

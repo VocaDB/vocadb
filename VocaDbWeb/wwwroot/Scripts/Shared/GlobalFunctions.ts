@@ -34,7 +34,7 @@ export default class functions {
     const matches = url
       ? url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
       : null;
-    return matches && matches[1]; // domain will be null if no match is found
+    return matches! && matches[1]; // domain will be null if no match is found
   }
 
   public static trackOutboundLink(event: MouseEvent): void {

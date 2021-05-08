@@ -154,11 +154,11 @@ export default class RatedSongsSearchViewModel {
     this.userRepo
       .getSongLists(
         this.loggedUserId,
-        null,
+        null!,
         { start: 0, maxEntries: 50, getTotalCount: false },
         [],
         'Name',
-        null,
+        null!,
       )
       .then((songLists) => this.songLists(songLists.items));
 
@@ -210,7 +210,7 @@ export default class RatedSongsSearchViewModel {
         this.songListId(),
         this.advancedFilters.filters(),
         this.groupByRating(),
-        null,
+        null!,
         this.fields(),
         this.sort(),
       )
@@ -219,7 +219,7 @@ export default class RatedSongsSearchViewModel {
           var songs: IRatedSongSearchItem[] = [];
 
           _.each(result.items, (item) => {
-            var song: IRatedSongSearchItem = item.song;
+            var song: IRatedSongSearchItem = item.song!;
 
             song.rating = item.rating;
 
@@ -233,7 +233,7 @@ export default class RatedSongsSearchViewModel {
               song.previewViewModel.ratingComplete =
                 ui.showThankYouForRatingMessage;
             } else {
-              song.previewViewModel = null;
+              song.previewViewModel = null!;
             }
 
             songs.push(song);

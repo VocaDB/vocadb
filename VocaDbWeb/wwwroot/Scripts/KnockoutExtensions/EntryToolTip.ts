@@ -113,9 +113,9 @@ ko.bindingHandlers.songToolTip = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
-    allPropertiesAccessor: () => TooltipOptions,
+    allPropertiesAccessor?: () => TooltipOptions,
   ): void => {
-    const allProps = allPropertiesAccessor();
+    const allProps = allPropertiesAccessor!();
     initToolTip(
       element,
       '/Song/PopupContentWithVote',

@@ -21,11 +21,11 @@ export default class KnockoutHelper {
     return ko.computed({
       read: () => {
         var val: any = observable();
-        return val ? new Decimal(val).div(1000).toString() : null;
+        return val ? new Decimal(val).div(1000).toString() : null!;
       },
       write: (val: string) => {
         observable(
-          val ? new Decimal(val).mul(1000).toInteger().toNumber() : null,
+          val ? new Decimal(val).mul(1000).toInteger().toNumber() : null!,
         );
       },
     });

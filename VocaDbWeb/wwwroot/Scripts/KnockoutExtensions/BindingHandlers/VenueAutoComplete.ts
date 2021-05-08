@@ -15,7 +15,7 @@ ko.bindingHandlers.venueAutoComplete = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<VenueForApiContract>,
-    allBindingsAccessor: () => any,
+    allBindingsAccessor?: () => any,
   ): void => {
     var queryParams = {
       nameMatchMode: 'Auto',
@@ -27,9 +27,9 @@ ko.bindingHandlers.venueAutoComplete = {
 
     const params: EntryAutoCompleteParams<VenueForApiContract> = {
       acceptSelection: (id, term, itemType, item) => {
-        valueAccessor()(item);
+        valueAccessor()(item!);
       },
-      createNewItem: null,
+      createNewItem: null!,
       createOptionFirstRow: (item) => item.name,
       extraQueryParams: queryParams,
       termParamName: 'query',

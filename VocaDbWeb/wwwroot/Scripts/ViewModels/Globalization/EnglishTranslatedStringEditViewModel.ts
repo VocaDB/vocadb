@@ -2,8 +2,8 @@ import EnglishTranslatedStringContract from '../../DataContracts/Globalization/E
 
 export default class EnglishTranslatedStringEditViewModel {
   constructor(contract: EnglishTranslatedStringContract) {
-    this.english = ko.observable(contract ? contract.english : null);
-    this.original = ko.observable(contract ? contract.original : null);
+    this.english = ko.observable(contract ? contract.english : null!);
+    this.original = ko.observable(contract ? contract.original : null!);
     this.showTranslation = ko.observable(contract && contract.english !== '');
   }
 

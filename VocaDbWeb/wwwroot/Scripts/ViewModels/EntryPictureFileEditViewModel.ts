@@ -13,9 +13,9 @@ export default class EntryPictureFileEditViewModel {
     }
   }
 
-  public entryType: string;
-  public id: number;
-  public mime: string;
+  public entryType!: string;
+  public id!: number;
+  public mime!: string;
   public name: KnockoutObservable<string>;
-  public thumbUrl: string;
+  public thumbUrl!: string;
 }

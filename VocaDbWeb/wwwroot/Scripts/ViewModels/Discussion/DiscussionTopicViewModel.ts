@@ -38,12 +38,12 @@ export default class DiscussionTopicViewModel {
   public comments: EditableCommentsViewModel;
 
   public cancelEdit = (): void => {
-    this.editModel(null);
+    this.editModel(null!);
   };
 
   public contract: KnockoutObservable<DiscussionTopicContract>;
 
-  public editModel = ko.observable<DiscussionTopicEditViewModel>(null);
+  public editModel = ko.observable<DiscussionTopicEditViewModel>(null!);
 
   public isBeingEdited = ko.computed(() => this.editModel() !== null);
 
@@ -59,7 +59,7 @@ export default class DiscussionTopicViewModel {
       editedContract.canBeEdited = this.contract().canBeEdited;
 
       this.contract(editedContract);
-      this.editModel(null);
+      this.editModel(null!);
     });
   };
 }
@@ -85,7 +85,7 @@ export class DiscussionTopicEditViewModel {
 
   public content = ko.observable('');
 
-  public folderId = ko.observable(null);
+  public folderId = ko.observable<number>(null!);
 
   public locked = ko.observable(false);
 

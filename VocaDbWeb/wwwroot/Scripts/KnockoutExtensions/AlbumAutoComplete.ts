@@ -41,7 +41,7 @@ export function albumAutoComplete(
     jQuery.extend(queryParams, properties.extraQueryParams);
 
   initEntrySearch(element, functions.mapAbsoluteUrl('/api/albums'), {
-    acceptSelection: properties.acceptSelection,
+    acceptSelection: properties.acceptSelection!,
     createNewItem: properties.createNewItem,
     createCustomItem: properties.createCustomItem,
     createOptionFirstRow: (item: AlbumContract) =>

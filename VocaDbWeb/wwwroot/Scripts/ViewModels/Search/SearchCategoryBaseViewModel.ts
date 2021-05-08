@@ -57,7 +57,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
   };
 
   // Method for loading a page of results.
-  public loadResults: (
+  public loadResults!: (
     pagingProperties: PagingProperties,
     searchTerm: string,
     tags: number[],
@@ -108,7 +108,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
       this.searchTerm(),
       this.tagIds(),
       this.childTags(),
-      this.draftsOnly() ? 'Draft' : null,
+      this.draftsOnly() ? 'Draft' : null!,
       (result: any) => {
         if (this.showTags()) {
           _.forEach(result.items, (item: EntryWithTagUsagesContract) => {

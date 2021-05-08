@@ -12,17 +12,17 @@ export default class BasicEntryLinkViewModel<
     entry?: TEntry,
     entryFunc?: (entryId: number, callback: (entry: TEntry) => void) => void,
   ) {
-    this.entry = ko.observable(entry && entry.id ? entry : null);
-    this.name = ko.computed(() => (this.entry() ? this.entry().name : null));
+    this.entry = ko.observable(entry && entry.id ? entry : null!);
+    this.name = ko.computed(() => (this.entry() ? this.entry().name! : null!));
 
     this.id = ko.computed({
-      read: () => (this.entry() ? this.entry().id : null),
+      read: () => (this.entry() ? this.entry().id : null!),
       write: (entryId: number) => {
         // Get entry by ID or clear.
         if (entryId) {
-          entryFunc(entryId, this.entry);
+          entryFunc!(entryId, this.entry);
         } else {
-          this.entry(null);
+          this.entry(null!);
         }
       },
     });
@@ -30,7 +30,7 @@ export default class BasicEntryLinkViewModel<
     this.isEmpty = ko.computed(() => this.entry() == null);
   }
 
-  public clear = (): void => this.entry(null);
+  public clear = (): void => this.entry(null!);
 
   public entry: KnockoutObservable<TEntry>;
 

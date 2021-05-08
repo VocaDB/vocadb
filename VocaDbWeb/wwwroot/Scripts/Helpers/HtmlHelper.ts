@@ -23,7 +23,7 @@ export default class HtmlHelper {
     value: string,
     callback?: (err: any, content: string) => void,
   ): void {
-    if (!value) callback(null, '');
+    if (!value) callback!(null, '');
     // Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
     marked(value, { gfm: true, breaks: true, sanitize: true }, callback);
   }

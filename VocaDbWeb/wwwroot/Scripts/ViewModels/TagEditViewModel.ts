@@ -21,7 +21,7 @@ export default class TagEditViewModel {
     this.categoryName = ko.observable(contract.categoryName);
     this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
     this.description = new EnglishTranslatedStringEditViewModel(
-      contract.translatedDescription,
+      contract.translatedDescription!,
     );
     this.id = contract.id;
     this.names = NamesEditViewModel.fromContracts(contract.names);
@@ -35,7 +35,7 @@ export default class TagEditViewModel {
     );
 
     this.parentName = ko.computed(() =>
-      this.parent() ? this.parent().name : null,
+      this.parent() ? this.parent().name : null!,
     );
 
     this.hasValidationErrors = ko.computed(() =>

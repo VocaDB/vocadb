@@ -9,14 +9,14 @@ import PVService from '../../Models/PVs/PVService';
 
 export default class PVPlayerNico implements IPVPlayer {
   private static scriptLoaded: boolean = false;
-  private static playerFactory: nico.NicoPlayerFactory = null;
-  private currentPv: string = null;
-  private loadedPv: string;
+  private static playerFactory: nico.NicoPlayerFactory = null!;
+  private currentPv: string = null!;
+  private loadedPv!: string;
 
   constructor(
     private readonly playerElementId: string,
     private readonly wrapperElement: HTMLElement,
-    public songFinishedCallback: () => void = null,
+    public songFinishedCallback: () => void = null!,
   ) {
     window.addEventListener('message', (e: nico.PlayerEvent) => {
       if (e.data.eventName === 'loadComplete') {
@@ -78,12 +78,12 @@ export default class PVPlayerNico implements IPVPlayer {
   };
 
   public detach = (): void => {
-    this.player = null;
+    this.player = null!;
   };
 
-  private player: nico.NicoPlayer = null;
+  private player: nico.NicoPlayer = null!;
 
-  public play = (pvId: string): void => {
+  public play = (pvId?: string): void => {
     if (!this.player || this.currentPv !== pvId) {
       if (!pvId) {
         pvId = this.loadedPv;

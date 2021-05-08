@@ -5,7 +5,7 @@ export default class PVPlayerFile implements IPVPlayer {
   constructor(
     private playerElementId: string,
     private wrapperElement: HTMLElement,
-    public songFinishedCallback: () => void = null,
+    public songFinishedCallback: () => void = null!,
     service: PVService = PVService.File,
   ) {
     this.service = service;
@@ -40,10 +40,10 @@ export default class PVPlayerFile implements IPVPlayer {
       this.player.onended = null;
     }
 
-    this.player = null;
+    this.player = null!;
   };
 
-  private player: HTMLAudioElement = null;
+  private player: HTMLAudioElement = null!;
 
   public play = (pvId?: string): void => {
     if (!this.player) this.attach(false);

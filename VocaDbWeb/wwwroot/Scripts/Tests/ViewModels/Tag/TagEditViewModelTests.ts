@@ -7,7 +7,7 @@ var viewModel: TagEditViewModel;
 
 QUnit.module('TagEditViewModel', {
   setup: () => {
-    viewModel = new TagEditViewModel(null, new FakeUserRepository(), {
+    viewModel = new TagEditViewModel(null!, new FakeUserRepository(), {
       targets: EntryType.Artist,
     } as TagApiContract);
   },

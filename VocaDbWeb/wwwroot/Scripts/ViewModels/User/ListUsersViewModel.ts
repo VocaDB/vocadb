@@ -19,7 +19,7 @@ export default class ListUsersViewModel {
       .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
     this.resources = new ResourcesManager(resourceRepo, cultureCode);
-    this.resources.loadResources(null, 'userGroupNames');
+    this.resources.loadResources(null!, 'userGroupNames');
 
     this.disabledUsers.subscribe(this.updateResultsWithTotalCount);
     this.group.subscribe(this.updateResultsWithTotalCount);
@@ -47,7 +47,7 @@ export default class ListUsersViewModel {
 
   public userGroupName = (userGroup: string): string => {
     return this.resources.resources().userGroupNames != null
-      ? this.resources.resources().userGroupNames[userGroup]
+      ? this.resources.resources().userGroupNames![userGroup]
       : userGroup;
   };
 

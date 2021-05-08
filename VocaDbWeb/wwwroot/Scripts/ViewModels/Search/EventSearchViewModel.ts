@@ -49,10 +49,10 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
           lang: lang,
           query: searchTerm,
           sort: this.sort(),
-          category: this.category() === 'Unspecified' ? null : this.category(),
+          category: this.category() === 'Unspecified' ? null! : this.category(),
           childTags: childTags,
           tagIds: tag,
-          userCollectionId: this.onlyMyEvents() ? loggedUserId : null,
+          userCollectionId: this.onlyMyEvents() ? loggedUserId : null!,
           artistId: this.artistFilters.artistIds(),
           childVoicebanks: this.artistFilters.childVoicebanks(),
           includeMembers: this.artistFilters.includeMembers(),
@@ -67,17 +67,17 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
     this.sortName = ko.computed(() => {
       return searchViewModel.resourcesManager.resources().eventSortRuleNames !=
         null
-        ? searchViewModel.resourcesManager.resources().eventSortRuleNames[
+        ? searchViewModel.resourcesManager.resources().eventSortRuleNames![
             this.sort()
           ]
         : '';
     });
   }
 
-  public afterDate = ko.observable<Date>(null);
+  public afterDate = ko.observable<Date>(null!);
   public allowAliases = ko.observable(false);
   public artistFilters: ArtistFilters;
-  public beforeDate = ko.observable<Date>(null);
+  public beforeDate = ko.observable<Date>(null!);
   public category = ko.observable('');
   public onlyMyEvents = ko.observable(false);
   public sort = ko.observable('Name');
@@ -96,7 +96,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 
     return this.searchViewModel.resourcesManager.resources()
       .eventCategoryNames != null
-      ? this.searchViewModel.resourcesManager.resources().eventCategoryNames[
+      ? this.searchViewModel.resourcesManager.resources().eventCategoryNames![
           inherited
         ]
       : '';

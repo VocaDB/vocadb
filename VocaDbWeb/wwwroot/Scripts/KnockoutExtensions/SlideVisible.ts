@@ -14,7 +14,7 @@ ko.bindingHandlers.slideVisible = {
     ko.utils.unwrapObservable(value)
       ? $(element).slideDown('fast')
       : $(element).slideUp('fast', () =>
-          allBindingsAccessor().complete(ko.dataFor(element)),
+          allBindingsAccessor!().complete(ko.dataFor(element)),
         );
   },
 };

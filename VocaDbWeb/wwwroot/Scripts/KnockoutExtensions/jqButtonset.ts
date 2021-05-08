@@ -5,7 +5,7 @@ interface KnockoutBindingHandlers {
 // Adapted from http://therunningprogrammer.blogspot.fi/2011/10/how-to-use-jquery-uis-button-with.html and http://jsfiddle.net/photo_tom/hjk93/light/
 ko.bindingHandlers.jqButtonset = {
   init: function (element, valueAccessor, allBindingsAccessor): void {
-    var allbindings = allBindingsAccessor();
+    var allbindings = allBindingsAccessor!();
     var id = ko.utils.unwrapObservable<string>(allbindings.id);
     $(element).attr('id', id);
     $(element).find('~label').attr('for', id);
@@ -42,7 +42,7 @@ ko.bindingHandlers.jqButtonset = {
           modelValue(valueToWrite);
         }
       } else {
-        var allBindings = allBindingsAccessor();
+        var allBindings = allBindingsAccessor!();
         if (
           allBindings['_ko_property_writers'] &&
           allBindings['_ko_property_writers']['checked']

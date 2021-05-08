@@ -31,7 +31,7 @@ export default class ObservableUrlParamRouter {
     });
 
     this.queryString.subscribe((val) => {
-      if (!this.popState) win.history.pushState(val, null, '?' + val);
+      if (!this.popState) win.history.pushState(val, null!, '?' + val);
     });
 
     win.onpopstate = (event): void => {

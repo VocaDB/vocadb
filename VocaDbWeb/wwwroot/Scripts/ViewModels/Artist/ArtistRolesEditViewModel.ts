@@ -39,7 +39,7 @@ export default class ArtistRolesEditViewModel {
     this.dialogVisible(false);
   };
 
-  public selectedArtist = ko.observable<IEditableArtistWithSupport>(null);
+  public selectedArtist = ko.observable<IEditableArtistWithSupport>(null!);
 
   public show = (artist: IEditableArtistWithSupport): void => {
     _.forEach(this.roleSelections, (r) => {

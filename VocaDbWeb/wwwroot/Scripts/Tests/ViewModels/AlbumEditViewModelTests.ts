@@ -105,7 +105,13 @@ QUnit.module('AlbumEditViewModelTests', {
       additionalNames: '',
       artistString: 'Tripshots',
       artists: [
-        { id: 0, artist: producer, isSupport: false, name: null, roles: null },
+        {
+          id: 0,
+          artist: producer,
+          isSupport: false,
+          name: null!,
+          roles: null!,
+        },
       ],
       id: 2,
       lengthSeconds: 0,
@@ -113,7 +119,7 @@ QUnit.module('AlbumEditViewModelTests', {
       pvServices: 'Nothing',
       ratingScore: 0,
       songType: 'Original',
-      createDate: null,
+      createDate: null!,
       status: 'Finished',
     };
     songRep.song = song;
@@ -163,7 +169,7 @@ QUnit.module('AlbumEditViewModelTests', {
       names: [],
       originalRelease: {
         catNum: '',
-        releaseEvent: null,
+        releaseEvent: null!,
         releaseDate: {},
       },
       pictures: [],
@@ -182,14 +188,14 @@ function createViewModel(): AlbumEditViewModel {
     artistRep,
     pvRep,
     userRepo,
-    null,
+    null!,
     urlMapper,
     roles,
     categories,
     data,
     true,
     false,
-    null,
+    null!,
   );
 }
 
@@ -227,7 +233,7 @@ QUnit.test('acceptTrackSelection existing', () => {
   var target = createViewModel();
   target.tracks.removeAll();
 
-  target.acceptTrackSelection(2, null);
+  target.acceptTrackSelection(2, null!);
 
   equal(target.tracks().length, 1, 'tracks.length');
   equal(target.tracks()[0].songId, 2, 'tracks[0].songId');
@@ -238,7 +244,7 @@ QUnit.test('acceptTrackSelection new', () => {
   var target = createViewModel();
   target.tracks.removeAll();
 
-  target.acceptTrackSelection(null, 'Anger RMX');
+  target.acceptTrackSelection(null!, 'Anger RMX');
 
   equal(target.tracks().length, 1, 'tracks.length');
   equal(target.tracks()[0].songId, 0, 'tracks[0].songId');
@@ -248,7 +254,7 @@ QUnit.test('acceptTrackSelection new', () => {
 QUnit.test('acceptTrackSelection add a second track', () => {
   var target = createViewModel();
 
-  target.acceptTrackSelection(2, null);
+  target.acceptTrackSelection(2, null!);
 
   equal(target.tracks().length, 3, 'tracks.length');
   equal(_.last(target.tracks()).trackNumber(), 3, 'tracks[2].trackNumber');
@@ -276,7 +282,7 @@ QUnit.test('addArtist existing', () => {
 
 QUnit.test('addArtist custom', () => {
   var target = createViewModel();
-  target.addArtist(null, 'Custom artist');
+  target.addArtist(null!, 'Custom artist');
 
   equal(target.artistLinks().length, 5, 'artistLinks().length');
   equal(
@@ -508,7 +514,7 @@ QUnit.test('translateArtistRole', () => {
 
 QUnit.test('updateTrackNumbers updated by setting isNextDisc', () => {
   var target = createViewModel();
-  target.acceptTrackSelection(3, null); // Adds a new track
+  target.acceptTrackSelection(3, null!); // Adds a new track
   target.tracks()[0].isNextDisc(true);
 
   equal(target.tracks()[0].discNumber(), 2, 'tracks[0].discNumber');

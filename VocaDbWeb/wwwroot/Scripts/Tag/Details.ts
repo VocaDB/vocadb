@@ -43,7 +43,7 @@ function initChart(
   $('#hierarchyContainer').highcharts({
     credits: { enabled: false },
     chart: {
-      backgroundColor: null,
+      backgroundColor: null!,
       events: {
         load: function (this: any) {
           // Draw the flow chart
@@ -100,7 +100,7 @@ function initChart(
             var parentLab = ren
               .label('Parent tag:<br/>' + tagLink(parent), 10, y)
               .attr({
-                fill: colors[0],
+                fill: colors![0],
                 stroke: 'white',
                 'stroke-width': 2,
                 padding: 5,
@@ -118,7 +118,7 @@ function initChart(
               .translate(50, y + 60)
               .attr({
                 'stroke-width': 2,
-                stroke: colors[3],
+                stroke: colors![3],
               })
               .add();
 
@@ -132,7 +132,7 @@ function initChart(
                 )
                 .attr({
                   'stroke-width': 2,
-                  stroke: colors[3],
+                  stroke: colors![3],
                 })
                 .add();
 
@@ -144,7 +144,7 @@ function initChart(
               ren
                 .label(siblingsText, 150, y + 115)
                 .attr({
-                  fill: colors[4],
+                  fill: colors![4],
                   stroke: 'white',
                   'stroke-width': 2,
                   padding: 5,
@@ -163,7 +163,7 @@ function initChart(
           ren
             .label('This tag:<br />' + thisTag, 10, y)
             .attr({
-              fill: colors[1],
+              fill: colors![1],
               stroke: 'white',
               'stroke-width': 2,
               padding: 5,
@@ -182,7 +182,7 @@ function initChart(
               .translate(50, y + 60)
               .attr({
                 'stroke-width': 2,
-                stroke: colors[3],
+                stroke: colors![3],
               })
               .add();
 
@@ -194,7 +194,7 @@ function initChart(
             ren
               .label(childrenText, 10, y + 115)
               .attr({
-                fill: colors[4],
+                fill: colors![4],
                 stroke: 'white',
                 'stroke-width': 2,
                 padding: 5,
@@ -210,7 +210,7 @@ function initChart(
       },
     },
     title: {
-      text: null,
+      text: null!,
     },
   });
 }

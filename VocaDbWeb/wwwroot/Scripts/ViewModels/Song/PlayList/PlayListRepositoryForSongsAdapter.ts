@@ -52,7 +52,7 @@ export default class PlayListRepositoryForSongsAdapter
         this.sort(),
         this.songType() != SongType[SongType.Unspecified]
           ? this.songType()
-          : null,
+          : null!,
         this.afterDate(),
         this.beforeDate(),
         this.tagIds(),
@@ -67,22 +67,22 @@ export default class PlayListRepositoryForSongsAdapter
         pvServices,
         this.since(),
         this.minScore(),
-        this.onlyRatedSongs() ? this.userCollectionId : null,
+        this.onlyRatedSongs() ? this.userCollectionId : null!,
         this.parentVersionId(),
         this.fields(),
-        this.draftsOnly() ? 'Draft' : null,
-        this.advancedFilters ? this.advancedFilters() : null,
-        null,
-        null,
-        null,
-        null,
+        this.draftsOnly() ? 'Draft' : null!,
+        this.advancedFilters ? this.advancedFilters() : null!,
+        null!,
+        null!,
+        null!,
+        null!,
       )
       .then((result: PartialFindResultContract<SongApiContract>) => {
         var mapped = _.map(result.items, (song, idx) => {
           return {
             name: song.name,
             song: song,
-            indexInPlayList: paging.start + idx,
+            indexInPlayList: paging.start! + idx,
           };
         });
 

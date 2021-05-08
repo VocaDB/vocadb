@@ -44,10 +44,10 @@ export default class EntryMergeValidationHelper {
     }
 
     return EntryMergeValidationHelper.validate(
-      base.status,
-      target.status,
-      base.createDate,
-      target.createDate,
+      base.status!,
+      target.status!,
+      base.createDate!,
+      target.createDate!,
     );
   }
 }

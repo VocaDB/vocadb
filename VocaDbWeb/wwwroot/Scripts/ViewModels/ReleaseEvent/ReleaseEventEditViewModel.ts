@@ -41,29 +41,29 @@ export default class ReleaseEventEditViewModel {
     );
     this.id = contract.id;
     this.date = ko.observable(
-      contract.date ? moment(contract.date).toDate() : null,
+      contract.date ? moment(contract.date).toDate() : null!,
     );
     this.dateStr = ko.computed(() =>
-      this.date() ? this.date().toISOString() : null,
+      this.date() ? this.date().toISOString() : null!,
     );
     this.endDate = ko.observable(
-      contract.endDate ? moment(contract.endDate).toDate() : null,
+      contract.endDate ? moment(contract.endDate).toDate() : null!,
     );
     this.endDateStr = ko.computed(() =>
-      this.endDate() ? this.endDate().toISOString() : null,
+      this.endDate() ? this.endDate().toISOString() : null!,
     );
 
     this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
-    this.names = NamesEditViewModel.fromContracts(contract.names);
+    this.names = NamesEditViewModel.fromContracts(contract.names!);
     this.pvs = new PVListEditViewModel(
       pvRepository,
       urlMapper,
-      contract.pvs,
+      contract.pvs!,
       false,
       true,
       false,
     );
-    this.series = new BasicEntryLinkViewModel(contract.series, null);
+    this.series = new BasicEntryLinkViewModel(contract.series, null!);
     this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
     this.isSeriesEventStr = ko.computed<string>({
@@ -75,8 +75,8 @@ export default class ReleaseEventEditViewModel {
       if (!val) this.series.clear();
     });
 
-    this.songList = new BasicEntryLinkViewModel(contract.songList, null);
-    this.venue = new BasicEntryLinkViewModel(contract.venue, null);
+    this.songList = new BasicEntryLinkViewModel(contract.songList, null!);
+    this.venue = new BasicEntryLinkViewModel(contract.venue, null!);
     this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
     this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
@@ -105,7 +105,7 @@ export default class ReleaseEventEditViewModel {
       });
     } else {
       const data: ArtistForEventContract = {
-        artist: null,
+        artist: null!,
         name: customArtistName,
         id: 0,
         roles: 'Default',

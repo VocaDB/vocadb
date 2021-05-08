@@ -34,7 +34,7 @@ export default class ResourcesManager {
             (this.resources()[setName as keyof ResourcesContract] =
               resources[setName as keyof ResourcesContract]),
         );
-        this.resources.valueHasMutated();
+        this.resources.valueHasMutated!();
         if (callback) callback();
       });
   };

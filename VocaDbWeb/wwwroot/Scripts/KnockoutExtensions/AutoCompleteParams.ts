@@ -6,7 +6,7 @@ import SongContract from '../DataContracts/Song/SongContract';
 import { SongQueryParams } from '../Repositories/SongRepository';
 
 export interface AutoCompleteParams {
-  acceptSelection?: (id: number, term: string, itemType?: string) => void;
+  acceptSelection?: (id?: number, term?: string, itemType?: string) => void;
 
   // String for creating a custom item (item with no entry), with {0} as the placeholder for entry type name.
   // If this is null (default), no custom items can be created this way.

@@ -35,7 +35,7 @@ export default class ImportSongListViewModel {
 
   public name = ko.observable('');
 
-  public nextPageToken = ko.observable<string>(null);
+  public nextPageToken = ko.observable<string>(null!);
 
   public hasMore = ko.computed(() => this.nextPageToken() != null);
 
@@ -69,14 +69,14 @@ export default class ImportSongListViewModel {
           order: order++,
           notes: '',
           song: i.matchedSong,
-          songInListId: null,
+          songInListId: null!,
         };
       })
       .value();
 
     var contract: SongListForEditContract = {
-      id: null,
-      author: null,
+      id: null!,
+      author: null!,
       name: this.name(),
       description: this.description(),
       featuredCategory: 'Nothing',
@@ -94,7 +94,7 @@ export default class ImportSongListViewModel {
     );
   };
 
-  public totalSongs = ko.observable(null);
+  public totalSongs = ko.observable<number>(null!);
 
   public url = ko.observable('');
 

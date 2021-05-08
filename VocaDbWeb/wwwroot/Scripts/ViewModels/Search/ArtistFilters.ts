@@ -48,8 +48,8 @@ export default class ArtistFilters {
 
   private firstArtist = (): ArtistFilter => this.artists()[0];
 
-  public selectArtist = (selectedArtistId: number): void => {
-    this.selectArtists([selectedArtistId]);
+  public selectArtist = (selectedArtistId?: number): void => {
+    this.selectArtists([selectedArtistId!]);
   };
 
   public selectArtists = (selectedArtistIds: number[]): void => {

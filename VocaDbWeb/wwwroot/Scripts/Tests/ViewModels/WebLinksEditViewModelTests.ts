@@ -19,7 +19,7 @@ test('constructor', () => {
   var target = new WebLinksEditViewModel([webLinkData], categories);
 
   equal(target.items().length, 1, 'webLinks.length');
-  equal(target.categories.length, 2, 'categories.length');
+  equal(target.categories!.length, 2, 'categories.length');
 });
 
 test('add new', () => {

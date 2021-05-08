@@ -47,9 +47,9 @@ ko.bindingHandlers.datepicker = {
         const parsed = $.datepicker.parseDate(format, selectedText);
         // Make sure the date is parsed as UTC as we don't want any timezones here. jQuery UI seems to always parse as local.
         const date = DateTimeHelper.convertToUtc(parsed);
-        options.value(date);
+        options.value(date!);
       } else {
-        options.value(null);
+        options.value(null!);
       }
     };
 

@@ -21,18 +21,18 @@ QUnit.module('ObservableUrlParamRouter', {
     win = <any>{
       history: {
         pushState: (statedata: any, title: string, url?: string) =>
-          history.push({ data: statedata, url: url }),
+          history.push({ data: statedata, url: url! }),
         go: (steps: number) => {
           for (var i = 0; i < -steps; i++) {
             history.pop();
             var latest = history.length ? history[history.length - 1] : null;
-            if (win.onpopstate) win.onpopstate(<any>{ state: latest.data });
+            if (win.onpopstate) win.onpopstate(<any>{ state: latest!.data });
           }
         },
       },
     };
 
-    jQuery.url = () => null;
+    jQuery.url = () => null!;
   },
 });
 

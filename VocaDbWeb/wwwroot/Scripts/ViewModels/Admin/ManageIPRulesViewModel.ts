@@ -77,8 +77,8 @@ export class IPRule {
 
   constructor(data: IPRuleContract) {
     this.address = ko.observable(data.address);
-    this.created = data.created;
-    this.id = data.id;
+    this.created = data.created!;
+    this.id = data.id!;
     this.notes = ko.observable(data.notes);
   }
 }

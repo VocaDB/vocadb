@@ -55,7 +55,7 @@ export default class ActivityEntryListViewModel {
 
     this.sortName = ko.computed(() =>
       this.resources.resources().activityEntrySortRuleNames != null
-        ? this.resources.resources().activityEntrySortRuleNames[this.sort()]
+        ? this.resources.resources().activityEntrySortRuleNames![this.sort()]
         : '',
     );
   }
@@ -63,7 +63,7 @@ export default class ActivityEntryListViewModel {
   public additionsOnly: KnockoutObservable<boolean>;
 
   private clear = (): void => {
-    this.lastEntryDate = null;
+    this.lastEntryDate = null!;
     this.entries([]);
     this.loadMore();
   };
@@ -79,24 +79,24 @@ export default class ActivityEntryListViewModel {
       .activityEntry_activityFeedEventNames;
 
     if (
-      activityFeedEventNames[
+      activityFeedEventNames![
         activityEntry.editEvent + activityEntry.entry.entryType
       ]
     ) {
-      return activityFeedEventNames[
+      return activityFeedEventNames![
         activityEntry.editEvent + activityEntry.entry.entryType
       ];
     } else if (
       activityEntry.editEvent === EntryEditEvent[EntryEditEvent.Created]
     ) {
-      return activityFeedEventNames['CreatedNew'].replace(
+      return activityFeedEventNames!['CreatedNew'].replace(
         '{0}',
-        activityFeedEventNames['Entry' + activityEntry.entry.entryType],
+        activityFeedEventNames!['Entry' + activityEntry.entry.entryType],
       );
     } else {
-      return activityFeedEventNames['Updated'].replace(
+      return activityFeedEventNames!['Updated'].replace(
         '{0}',
-        activityFeedEventNames['Entry' + activityEntry.entry.entryType],
+        activityFeedEventNames!['Entry' + activityEntry.entry.entryType],
       );
     }
   };
@@ -117,27 +117,27 @@ export default class ActivityEntryListViewModel {
 
     switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
-        namesSet = sets.album_albumEditableFieldNames;
+        namesSet = sets.album_albumEditableFieldNames!;
         break;
 
       case EntryType.Artist:
-        namesSet = sets.artist_artistEditableFieldNames;
+        namesSet = sets.artist_artistEditableFieldNames!;
         break;
 
       case EntryType.ReleaseEvent:
-        namesSet = sets.releaseEvent_releaseEventEditableFieldNames;
+        namesSet = sets.releaseEvent_releaseEventEditableFieldNames!;
         break;
 
       case EntryType.Song:
-        namesSet = sets.song_songEditableFieldNames;
+        namesSet = sets.song_songEditableFieldNames!;
         break;
 
       case EntryType.SongList:
-        namesSet = sets.songList_songListEditableFieldNames;
+        namesSet = sets.songList_songListEditableFieldNames!;
         break;
 
       case EntryType.Tag:
-        namesSet = sets.tag_tagEditableFieldNames;
+        namesSet = sets.tag_tagEditableFieldNames!;
         break;
 
       default:
@@ -153,21 +153,21 @@ export default class ActivityEntryListViewModel {
 
     switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
-        return sets.discTypeNames[entry.discType];
+        return sets.discTypeNames![entry.discType!];
 
       case EntryType.Artist:
-        return sets.artistTypeNames[entry.artistType];
+        return sets.artistTypeNames![entry.artistType!];
 
       case EntryType.Song:
-        return sets.songTypeNames[entry.songType];
+        return sets.songTypeNames![entry.songType!];
 
       case EntryType.SongList:
-        return sets.songList_songListFeaturedCategoryNames[
-          entry.songListFeaturedCategory
+        return sets.songList_songListFeaturedCategoryNames![
+          entry.songListFeaturedCategory!
         ];
 
       case EntryType.Tag:
-        return entry.tagCategoryName;
+        return entry.tagCategoryName!;
 
       default:
         return null;
@@ -178,7 +178,7 @@ export default class ActivityEntryListViewModel {
     return EntryUrlMapper.details_entry(entry, entry.urlSlug);
   };
 
-  private lastEntryDate: Date;
+  private lastEntryDate!: Date;
 
   public loadMore = (): void => {
     var url = this.urlMapper.mapRelative('/api/activityEntries');
@@ -207,7 +207,7 @@ export default class ActivityEntryListViewModel {
       (result: PartialFindResultContract<ActivityEntryContract>) => {
         var entries = result.items;
 
-        if (!entries && entries.length > 0) return;
+        if (!entries && entries!.length > 0) return;
 
         ko.utils.arrayPushAll(this.entries, entries);
         this.lastEntryDate = new Date(_.last(entries).createDate);

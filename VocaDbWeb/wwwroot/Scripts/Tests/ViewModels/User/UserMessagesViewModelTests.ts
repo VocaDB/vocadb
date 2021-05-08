@@ -24,7 +24,7 @@ var createMessage = (id: number, subject: string, sender?: UserApiContract) => {
 };
 
 var createViewModel = () => {
-  return new UserMessagesViewModel(repository, null, UserInboxType.Received);
+  return new UserMessagesViewModel(repository, null!, UserInboxType.Received);
 };
 
 QUnit.module('UserMessagesViewModel', {
@@ -42,13 +42,13 @@ QUnit.module('UserMessagesViewModel', {
     repository = new FakeUserRepository();
     repository.message = {
       body: 'Message body',
-      createdFormatted: null,
+      createdFormatted: null!,
       highPriority: false,
       id: 39,
       inbox: 'Received',
       read: false,
-      receiver: null,
-      sender: null,
+      receiver: null!,
+      sender: null!,
       subject: 'New message',
     };
     repository.messages = data.items;

@@ -39,11 +39,11 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
           this.sort(),
           this.artistType() != ArtistType[ArtistType.Unknown]
             ? this.artistType()
-            : null,
+            : null!,
           !this.onlyRootVoicebanks(),
           tags,
           childTags,
-          this.onlyFollowedByMe() ? this.loggedUserId : null,
+          this.onlyFollowedByMe() ? this.loggedUserId : null!,
           this.fields(),
           status,
           this.advancedFilters.filters(),
@@ -53,7 +53,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
   }
 
   public artistTypeName = (artist: ArtistApiContract): string => {
-    return this.searchViewModel.resources().artistTypeNames[artist.artistType];
+    return this.searchViewModel.resources().artistTypeNames![artist.artistType];
   };
 
   public artistType = ko.observable('Unknown');
@@ -63,7 +63,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
   public sort = ko.observable('Name');
   public sortName = ko.computed(() =>
     this.searchViewModel.resources().artistSortRuleNames != null
-      ? this.searchViewModel.resources().artistSortRuleNames[this.sort()]
+      ? this.searchViewModel.resources().artistSortRuleNames![this.sort()]
       : '',
   );
 

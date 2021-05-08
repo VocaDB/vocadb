@@ -10,7 +10,7 @@ export default class AlbumCreateViewModel {
     private artistRepo: ArtistRepository,
   ) {}
 
-  private addArtist = (artistId: number): void => {
+  private addArtist = (artistId?: number): void => {
     if (artistId) {
       this.artistRepo
         .getOne(artistId)

@@ -29,7 +29,7 @@ export default class TagCreateViewModel {
     this.tagRepo
       .create(this.newTagName())
       .then(
-        (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)),
+        (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)!),
       );
   };
 

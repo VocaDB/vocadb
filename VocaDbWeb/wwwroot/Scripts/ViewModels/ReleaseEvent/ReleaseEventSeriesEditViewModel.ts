@@ -47,14 +47,14 @@ export default class ReleaseEventSeriesEditViewModel {
 
   private checkName = (value: string): void => {
     if (!value) {
-      this.duplicateName(null);
+      this.duplicateName(null!);
       return;
     }
 
     this.eventRepository
       .getSeriesList(value, NameMatchMode.Exact, 1)
       .then((result) => {
-        this.duplicateName(result.items.length ? value : null);
+        this.duplicateName(result.items.length ? value : null!);
       });
   };
 

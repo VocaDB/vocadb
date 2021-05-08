@@ -10,7 +10,7 @@ export default class ReportEntryViewModel {
         !this.reportType().notesRequired ||
         this.notes() !== '',
     );
-    this.reportType(reportType);
+    this.reportType(reportType!);
   }
 
   public dialogVisible = ko.observable(false);

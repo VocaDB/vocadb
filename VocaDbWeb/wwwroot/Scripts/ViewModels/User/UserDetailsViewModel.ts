@@ -97,8 +97,8 @@ export default class UserDetailsViewModel {
       });
   };
 
-  private name: string;
-  public ratingsByGenreChart = ko.observable<HighchartsOptions>(null);
+  private name!: string;
+  public ratingsByGenreChart = ko.observable<HighchartsOptions>(null!);
 
   public view = ko.observable(UserDetailsViewModel.overview);
 
@@ -191,12 +191,12 @@ export default class UserDetailsViewModel {
 
     userRepo.getRatingsByGenre(userId).then((data) => {
       this.ratingsByGenreChart(
-        HighchartsHelper.simplePieChart(null, 'Songs', data),
+        HighchartsHelper.simplePieChart(null!, 'Songs', data),
       );
     });
 
-    userRepo.getOne(userId, null).then((data) => {
-      this.name = data.name;
+    userRepo.getOne(userId, null!).then((data) => {
+      this.name = data.name!;
     });
 
     this.eventsType.subscribe(this.loadEvents);

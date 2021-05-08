@@ -29,7 +29,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
     } else {
       this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
       this.resourceManager.loadResources(
-        null,
+        null!,
         'albumSortRuleNames',
         'discTypeNames',
       );
@@ -49,7 +49,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 
     this.sortName = ko.computed(() => {
       return this.resourceManager.resources().albumSortRuleNames != null
-        ? this.resourceManager.resources().albumSortRuleNames[this.sort()]
+        ? this.resourceManager.resources().albumSortRuleNames![this.sort()]
         : '';
     });
 
@@ -94,7 +94,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 
   public discTypeName = (discTypeStr: string): string =>
     this.resourceManager.resources().discTypeNames != null
-      ? this.resourceManager.resources().discTypeNames[discTypeStr]
+      ? this.resourceManager.resources().discTypeNames![discTypeStr]
       : '';
 
   public fields = ko.computed(() =>
