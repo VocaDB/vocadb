@@ -36,7 +36,7 @@ QUnit.module('SongDetailsViewModelTests', {
       new HttpClient(),
       rep,
       userRep,
-      null,
+      null!,
       res,
       false,
       data,
@@ -44,7 +44,7 @@ QUnit.module('SongDetailsViewModelTests', {
       0,
       ContentLanguagePreference.Default,
       false,
-      null,
+      null!,
     );
   },
 });

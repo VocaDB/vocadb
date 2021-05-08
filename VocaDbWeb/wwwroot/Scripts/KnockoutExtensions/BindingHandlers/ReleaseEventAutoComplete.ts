@@ -15,7 +15,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
   init: (
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<ReleaseEventContract>,
-    allBindingsAccessor: () => any,
+    allBindingsAccessor?: () => any,
   ): void => {
     var queryParams = {
       nameMatchMode: 'Auto',
@@ -29,9 +29,9 @@ ko.bindingHandlers.releaseEventAutoComplete = {
       acceptSelection: (id, term, itemType, item) => {
         valueAccessor()(
           item || {
-            id: id,
+            id: id!,
             artists: [],
-            name: term,
+            name: term!,
             webLinks: [],
             category: 'Unspecified',
             defaultNameLanguage: 'Undefined',
@@ -39,7 +39,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
         );
       },
       createOptionFirstRow: (item) => item.name,
-      createNewItem: allBindingsAccessor().createNewItem,
+      createNewItem: allBindingsAccessor!().createNewItem,
       extraQueryParams: queryParams,
     };
 

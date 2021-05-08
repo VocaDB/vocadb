@@ -12,7 +12,7 @@ export default class PVPlayersFactory {
   ) {}
 
   public createPlayers = (
-    songFinishedCallback: () => void = null,
+    songFinishedCallback: () => void = null!,
   ): { [index: string]: IPVPlayer } => {
     var players: { [index: string]: IPVPlayer } = {
       File: <IPVPlayer>(

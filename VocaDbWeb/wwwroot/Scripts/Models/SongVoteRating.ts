@@ -16,5 +16,7 @@ export function parseSongVoteRating(rating: string): SongVoteRating {
       return SongVoteRating.Like;
     case 'Favorite':
       return SongVoteRating.Favorite;
+    default:
+      return undefined!;
   }
 }

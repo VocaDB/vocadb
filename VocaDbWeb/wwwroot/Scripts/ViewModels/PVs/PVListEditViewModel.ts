@@ -51,8 +51,8 @@ export default class PVListEditViewModel {
   // Attempts to identify whether the PV could be instrumental
   private isPossibleInstrumentalPv = (pv: PVContract): boolean => {
     return (
-      pv &&
-      pv.name &&
+      !!pv &&
+      !!pv.name &&
       (pv.name.toLowerCase().indexOf('inst.') >= 0 ||
         pv.name.toLowerCase().indexOf('instrumental') >= 0 ||
         pv.name.indexOf('カラオケ') >= 0 ||

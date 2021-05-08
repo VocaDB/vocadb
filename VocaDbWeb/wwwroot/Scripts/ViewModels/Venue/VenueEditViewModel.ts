@@ -21,17 +21,17 @@ export default class VenueEditViewModel {
     this.addressCountryCode = ko.observable(contract.addressCountryCode);
     this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
     this.id = contract.id;
-    this.latitude = ko.observable(contract.coordinates?.latitude ?? null);
-    this.longitude = ko.observable(contract.coordinates?.longitude ?? null);
-    this.names = NamesEditViewModel.fromContracts(contract.names);
+    this.latitude = ko.observable(contract.coordinates?.latitude ?? null!);
+    this.longitude = ko.observable(contract.coordinates?.longitude ?? null!);
+    this.names = NamesEditViewModel.fromContracts(contract.names!);
     this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
     this.coordinates = ko.computed(() => {
-      if (!this.latitude() || !this.longitude()) return null;
+      if (!this.latitude() || !this.longitude()) return null!;
 
       return {
-        latitude: !isNaN(this.latitude()) ? this.latitude() : null,
-        longitude: !isNaN(this.longitude()) ? this.longitude() : null,
+        latitude: !isNaN(this.latitude()) ? this.latitude() : null!,
+        longitude: !isNaN(this.longitude()) ? this.longitude() : null!,
       };
     });
 
@@ -61,12 +61,12 @@ export default class VenueEditViewModel {
 
   private checkName = (value: string): void => {
     if (!value) {
-      this.duplicateName(null);
+      this.duplicateName(null!);
       return;
     }
 
     this.repo.getList(value, NameMatchMode.Exact, 1).then((result) => {
-      this.duplicateName(result.items.length ? value : null);
+      this.duplicateName(result.items.length ? value : null!);
     });
   };
 

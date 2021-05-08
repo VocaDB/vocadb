@@ -5,7 +5,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
   constructor(
     private playerElementId: string,
     private wrapperElement: HTMLElement,
-    public songFinishedCallback: () => void = null,
+    public songFinishedCallback: () => void = null!,
   ) {}
 
   public attach = (
@@ -54,10 +54,10 @@ export default class PVPlayerYoutube implements IPVPlayer {
   };
 
   public detach = (): void => {
-    this.player = null;
+    this.player = null!;
   };
 
-  private player: YT.Player = null;
+  private player: YT.Player = null!;
 
   private doPlay = (pvId: string): void => {
     if (pvId) {
@@ -67,11 +67,11 @@ export default class PVPlayerYoutube implements IPVPlayer {
     }
   };
 
-  public play = (pvId: string): void => {
+  public play = (pvId?: string): void => {
     if (!this.player) {
-      this.attach(false, () => this.doPlay(pvId));
+      this.attach(false, () => this.doPlay(pvId!));
     } else {
-      this.doPlay(pvId);
+      this.doPlay(pvId!);
     }
   };
 

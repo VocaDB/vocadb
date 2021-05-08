@@ -4,7 +4,7 @@ import HttpClient from '../../Shared/HttpClient';
 import FakePromise from './FakePromise';
 
 export default class FakeArtistRepository extends ArtistRepository {
-  result: ArtistContract = null;
+  result: ArtistContract = null!;
 
   constructor() {
     super(new HttpClient(), '');

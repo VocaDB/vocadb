@@ -83,8 +83,8 @@ export default class AlbumDetailsViewModel {
     );
 
     this.personalDescription = new SelfDescriptionViewModel(
-      data.personalDescriptionAuthor,
-      data.personalDescriptionText,
+      data.personalDescriptionAuthor!,
+      data.personalDescriptionText!,
       artistRepository,
       (callback) => {
         repo
@@ -94,7 +94,7 @@ export default class AlbumDetailsViewModel {
             ContentLanguagePreference[languagePreference],
           )
           .then((result) => {
-            var artists = _.chain(result.artists)
+            var artists = _.chain(result.artists!)
               .filter(ArtistHelper.isValidForPersonalDescription)
               .map((a) => a.artist)
               .value();
@@ -125,7 +125,7 @@ export default class AlbumDetailsViewModel {
     this.reportViewModel = new ReportEntryViewModel(
       reportTypes,
       (reportType, notes) => {
-        repo.createReport(this.id, reportType, notes, null);
+        repo.createReport(this.id, reportType, notes, null!);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
@@ -192,7 +192,7 @@ export class AlbumReviewsViewModel {
   };
 
   public cancelEditReview = (): void => {
-    this.editReviewModel(null);
+    this.editReviewModel(null!);
   };
 
   private canDeleteReview = (comment: AlbumReviewContract): boolean => {
@@ -217,7 +217,7 @@ export class AlbumReviewsViewModel {
       languageCode: this.languageCode(),
       text: this.newReviewText(),
       title: this.newReviewTitle(),
-      user: { id: this.loggedUserId },
+      user: { id: this.loggedUserId! },
     };
     this.newReviewText('');
     this.newReviewTitle('');
@@ -239,7 +239,7 @@ export class AlbumReviewsViewModel {
   public deleteReview = (review: AlbumReviewViewModel): void => {
     this.reviews.remove(review);
 
-    this.albumRepository.deleteReview(this.albumId, review.id);
+    this.albumRepository.deleteReview(this.albumId, review.id!);
   };
 
   public getRatingForUser(userId: number): number {
@@ -267,7 +267,7 @@ export class AlbumReviewsViewModel {
 
     this.albumRepository.createOrUpdateReview(this.albumId, editedContract);
 
-    this.editReviewModel(null);
+    this.editReviewModel(null!);
   };
 
   public async loadReviews(): Promise<void> {
@@ -288,7 +288,7 @@ export class AlbumReviewsViewModel {
     this.userRatings(ratings);
   }
 
-  public editReviewModel = ko.observable<AlbumReviewViewModel>(null);
+  public editReviewModel = ko.observable<AlbumReviewViewModel>(null!);
 
   public languageCode = ko.observable('');
 

@@ -90,7 +90,7 @@ export default class ArtistDetailsViewModel {
     this.reportViewModel = new ReportEntryViewModel(
       reportTypes,
       (reportType, notes) => {
-        repo.createReport(this.artistId, reportType, notes, null);
+        repo.createReport(this.artistId, reportType, notes, null!);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
@@ -136,7 +136,7 @@ export default class ArtistDetailsViewModel {
           this.songsOverTimeChart(
             HighchartsHelper.dateLineChartWithAverage(
               'Songs per month',
-              null,
+              null!,
               'Songs',
               points,
             ),
@@ -155,16 +155,16 @@ export default class ArtistDetailsViewModel {
   public showAllMembers = ko.observable(false);
   public description: EnglishTranslatedStringViewModel;
   public songsViewModel: KnockoutObservable<SongSearchViewModel> = ko.observable(
-    null,
+    null!,
   );
 
-  public songsOverTimeChart = ko.observable<HighchartsOptions>(null);
+  public songsOverTimeChart = ko.observable<HighchartsOptions>(null!);
 
   public collaborationAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
-    null,
+    null!,
   );
   public mainAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
-    null,
+    null!,
   );
 
   public reportViewModel: ReportEntryViewModel;
@@ -178,18 +178,18 @@ export default class ArtistDetailsViewModel {
 
     this.mainAlbumsViewModel(
       new AlbumSearchViewModel(
-        null,
+        null!,
         this.unknownPictureUrl,
         this.lang,
         this.albumRepo,
-        null,
+        null!,
         this.resourceRepo,
         this.cultureCode,
-        null,
+        null!,
         [this.artistId],
-        null,
+        null!,
         'Unknown',
-        null,
+        null!,
       ),
     );
     this.mainAlbumsViewModel().artistFilters.artistParticipationStatus(
@@ -202,18 +202,18 @@ export default class ArtistDetailsViewModel {
 
     this.collaborationAlbumsViewModel(
       new AlbumSearchViewModel(
-        null,
+        null!,
         this.unknownPictureUrl,
         this.lang,
         this.albumRepo,
-        null,
+        null!,
         this.resourceRepo,
         this.cultureCode,
-        null,
+        null!,
         [this.artistId],
-        null,
+        null!,
         'Unknown',
-        null,
+        null!,
       ),
     );
     this.collaborationAlbumsViewModel().artistFilters.artistParticipationStatus(
@@ -226,28 +226,28 @@ export default class ArtistDetailsViewModel {
 
     this.songsViewModel(
       new SongSearchViewModel(
-        null,
+        null!,
         this.urlMapper,
         this.lang,
         this.songRepo,
-        null,
+        null!,
         this.userRepository,
-        null,
+        null!,
         this.resourceRepo,
         this.cultureCode,
         this.loggedUserId,
-        null,
+        null!,
         [this.artistId],
-        null,
-        null,
-        null,
+        null!,
+        null!,
+        null!,
         false,
         false,
-        null,
-        null,
-        null,
-        null,
-        null,
+        null!,
+        null!,
+        null!,
+        null!,
+        null!,
         this.pvPlayersFactory,
       ),
     );

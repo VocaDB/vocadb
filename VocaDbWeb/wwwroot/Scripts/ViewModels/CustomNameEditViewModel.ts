@@ -3,7 +3,7 @@ import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 export default class CustomNameEditViewModel {
   public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
   public dialogVisible = ko.observable(false);
-  public name = ko.observable<string>(null);
+  public name = ko.observable<string>(null!);
 
   public open = (artist: ArtistForAlbumEditViewModel): void => {
     this.artistLink(artist);

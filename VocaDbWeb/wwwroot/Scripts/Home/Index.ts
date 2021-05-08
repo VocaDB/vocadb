@@ -37,7 +37,7 @@ function initPage(): void {
 
   initRatingButtons();
 
-  $('#songs-navi .scrollable-item').click(function (e) {
+  $('#songs-navi .scrollable-item').click(function (this: any, e) {
     e.preventDefault();
 
     $('#songs-navi .scrollable-item').removeClass('active');

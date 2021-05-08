@@ -18,7 +18,7 @@ import TagRepository from '../Repositories/TagRepository';
 
 // View model for song creation view
 export default class SongCreateViewModel {
-  addArtist: (artistId: number) => void;
+  addArtist: (artistId?: number) => void;
 
   artistSearchParams: ArtistAutoCompleteParams;
 
@@ -117,7 +117,7 @@ export default class SongCreateViewModel {
   pv1 = ko.observable('');
   pv2 = ko.observable('');
   songType = ko.observable('Original');
-  songTypeTag = ko.observable<TagApiContract>(null);
+  songTypeTag = ko.observable<TagApiContract>(null!);
   songTypeName = ko.computed(() => this.songTypeTag()?.name);
   songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
   songTypeTagUrl = ko.computed(() =>
@@ -170,7 +170,7 @@ export default class SongCreateViewModel {
       this.artists(data.artists || []);
     }
 
-    this.addArtist = (artistId: number): void => {
+    this.addArtist = (artistId?: number): void => {
       if (artistId) {
         artistRepository.getOne(artistId).then((artist) => {
           this.artists.push(artist);
@@ -199,7 +199,7 @@ export default class SongCreateViewModel {
     });
 
     this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
-      null,
+      null!,
       (entryId, callback) => songRepository.getOne(entryId).then(callback),
     );
 

@@ -33,7 +33,7 @@ export default class TagDetailsViewModel {
     this.reportViewModel = new ReportEntryViewModel(
       reportTypes,
       (reportType, notes) => {
-        repo.createReport(tagId, reportType, notes, null);
+        repo.createReport(tagId, reportType, notes, null!);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },

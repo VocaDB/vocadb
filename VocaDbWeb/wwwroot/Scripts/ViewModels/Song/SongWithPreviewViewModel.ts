@@ -12,17 +12,17 @@ export default class SongWithPreviewViewModel {
   public preview: KnockoutObservable<boolean> = ko.observable(false);
 
   // PV player HTML.
-  public previewHtml: KnockoutObservable<string> = ko.observable(null);
+  public previewHtml: KnockoutObservable<string> = ko.observable(null!);
 
-  public pvService = ko.observable<string>(null);
+  public pvService = ko.observable<string>(null!);
 
   // View model for rating buttons.
   public ratingButtons: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(
-    null,
+    null!,
   );
 
   // Event handler for the event when the song has been rated.
-  public ratingComplete: () => void;
+  public ratingComplete!: () => void;
 
   public switchPV: (pvService: string) => void;
 
@@ -36,13 +36,13 @@ export default class SongWithPreviewViewModel {
     public pvServices: string,
   ) {
     this.destroyPV = (): void => {
-      this.previewHtml(null);
+      this.previewHtml(null!);
     };
 
     this.togglePreview = (): void => {
       if (this.preview()) {
         this.preview(false);
-        this.ratingButtons(null);
+        this.ratingButtons(null!);
         return;
       }
 

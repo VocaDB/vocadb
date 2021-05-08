@@ -5,7 +5,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
   constructor(
     private playerElementId: string,
     private wrapperElement: HTMLElement,
-    public songFinishedCallback: () => void = null,
+    public songFinishedCallback: () => void = null!,
   ) {}
 
   public attach = (
@@ -53,7 +53,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
       this.player.unbind(SC.Widget.Events.FINISH);
     }
 
-    this.player = null;
+    this.player = null!;
   };
 
   private getUrlFromId = (pvId: string): string | null => {
@@ -64,13 +64,13 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
     return url;
   };
 
-  private player: SC.SoundCloudWidget = null;
+  private player: SC.SoundCloudWidget = null!;
 
   public play = (pvId?: string): void => {
     if (!this.player) this.attach(false);
 
     if (pvId) {
-      this.player.load(this.getUrlFromId(pvId), { auto_play: true });
+      this.player.load(this.getUrlFromId(pvId)!, { auto_play: true });
     } else {
       this.player.play();
     }

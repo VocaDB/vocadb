@@ -96,7 +96,7 @@ function initAlbumDetailsPage(
               mediaType: mediaType,
               rating: rating,
             },
-            null,
+            null!,
           );
 
           if (status == 'Nothing') {

@@ -49,14 +49,14 @@ function initPage(
   });
 
   $('#pvLoader')
-    .ajaxStart(function () {
+    .ajaxStart(function (this: any) {
       $(this).show();
     })
-    .ajaxStop(function () {
+    .ajaxStop(function (this: any) {
       $(this).hide();
     });
 
-  $('.pvLink:not(.disabled)').click(function () {
+  $('.pvLink:not(.disabled)').click(function (this: any) {
     var id = functions.getId(this);
     $.post(
       urlMapper.mapRelative('/Song/PVForSong'),

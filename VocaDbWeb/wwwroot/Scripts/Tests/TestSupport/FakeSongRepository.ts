@@ -12,8 +12,8 @@ export interface SongInList {
 }
 
 export default class FakeSongRepository extends SongRepository {
-  results: NewSongCheckResultContract = null;
-  song: SongApiContract = null;
+  results: NewSongCheckResultContract = null!;
+  song: SongApiContract = null!;
   songLists: SongListBaseContract[] = [];
   songsInLists: SongInList[] = [];
 

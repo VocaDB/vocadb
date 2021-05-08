@@ -3,7 +3,7 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 function initPage(): void {
-  function acceptArtistSelection(albumId: number): void {
+  function acceptArtistSelection(albumId?: number): void {
     $.get(
       '../../api/albums/' + albumId,
       { lang: vdb.values.languagePreference },

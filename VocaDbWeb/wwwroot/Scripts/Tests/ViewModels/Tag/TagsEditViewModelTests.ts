@@ -5,7 +5,7 @@ var viewModel: TagsEditViewModel;
 
 QUnit.module('TagsEditViewModel', {
   setup: () => {
-    viewModel = new TagsEditViewModel(null);
+    viewModel = new TagsEditViewModel(null!);
   },
 });
 

@@ -13,7 +13,7 @@ export default class ServerSidePagingViewModel {
     this.getItemsCallback(this.getPagingProperties(false));
   };
 
-  getItemsCallback: (paging: PagingProperties) => void;
+  getItemsCallback!: (paging: PagingProperties) => void;
 
   page = ko.observable(1);
 

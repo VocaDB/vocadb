@@ -50,7 +50,7 @@ export default class UserMessagesViewModel {
     if (receiverName) {
       userRepository
         .getOneByName(receiverName)
-        .then((result) => this.newMessageViewModel.receiver.entry(result));
+        .then((result) => this.newMessageViewModel.receiver.entry(result!));
     }
   }
 
@@ -69,7 +69,7 @@ export default class UserMessagesViewModel {
 
   private inboxes: UserMessageFolderViewModel[];
 
-  public messageSent: () => void = null;
+  public messageSent: () => void = null!;
 
   newMessageViewModel = new NewMessageViewModel();
 
@@ -111,7 +111,7 @@ export default class UserMessagesViewModel {
 
   selectMessage = (message: UserMessageViewModel): void => {
     this.userRepository.getMessage(message.id).then((message) => {
-      this.selectedMessageBody(message.body);
+      this.selectedMessageBody(message.body!);
     });
 
     this.receivedMessages.selectMessage(message);
@@ -124,7 +124,7 @@ export default class UserMessagesViewModel {
   };
 
   private selectInbox = (inbox: UserInboxType): void => {
-    this.selectTab(this.getInboxTabName(inbox));
+    this.selectTab(this.getInboxTabName(inbox)!);
   };
 
   selectTab = (tabName: string): void => {
@@ -174,8 +174,8 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
           inbox,
           { start: 0, maxEntries: 0, getTotalCount: true },
           true,
-          null,
-          null,
+          null!,
+          null!,
         )
         .then((result) => this.unreadOnServer(result.totalCount));
     }
@@ -184,7 +184,10 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
       _.forEach(this.items(), (m) => m.checked(selected));
     });
 
-    this.anotherUser = new BasicEntryLinkViewModel<UserApiContract>(null, null);
+    this.anotherUser = new BasicEntryLinkViewModel<UserApiContract>(
+      null!,
+      null!,
+    );
     this.anotherUser.id.subscribe(this.clear);
   }
 
@@ -239,7 +242,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
   unread: KnockoutComputed<number>;
 
-  private unreadOnServer = ko.observable(null);
+  private unreadOnServer = ko.observable<number>(null!);
 }
 
 export class UserMessageViewModel {
@@ -250,7 +253,7 @@ export class UserMessageViewModel {
     this.inbox = data.inbox;
     this.read = ko.observable(data.read);
     this.receiver = data.receiver;
-    this.sender = data.sender;
+    this.sender = data.sender!;
     this.subject = data.subject;
   }
 
@@ -306,7 +309,7 @@ export class NewMessageViewModel {
       receiver: this.receiver.entry(),
       sender: { id: senderId } as UserApiContract,
       subject: this.subject(),
-      id: null,
+      id: null!,
     } as UserApiContract;
   };
 }

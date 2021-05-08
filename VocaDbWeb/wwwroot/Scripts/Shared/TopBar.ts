@@ -11,7 +11,7 @@ $(() => {
       var urlMapper = new UrlMapper(vdb.values.baseAddress);
       var term: string = request.term;
       var entryType = $('#globalSearchObjectType').val();
-      var endpoint: string = null;
+      var endpoint: string = null!;
 
       switch (entryType) {
         case 'Undefined':
@@ -60,7 +60,7 @@ export function setLanguagePreferenceCookie(
     0,
   );
   userRepo.updateUserSetting(
-    null,
+    null!,
     'languagePreference',
     languagePreference,
     () => {

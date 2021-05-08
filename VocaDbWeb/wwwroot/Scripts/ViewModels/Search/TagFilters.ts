@@ -7,7 +7,7 @@ export default class TagFilters {
   constructor(
     private tagRepo: TagRepository,
     private languageSelection: string,
-    tags: KnockoutObservableArray<TagFilter> = null,
+    tags: KnockoutObservableArray<TagFilter> = null!,
   ) {
     this.tags = tags || ko.observableArray<TagFilter>();
     this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
@@ -36,10 +36,10 @@ export default class TagFilters {
       var selectedTagId = newTag.id;
 
       this.tagRepo
-        .getById(selectedTagId, null, this.languageSelection)
+        .getById(selectedTagId, null!, this.languageSelection)
         .then((tag) => {
           newTag.name(tag.name);
-          newTag.urlSlug(tag.urlSlug);
+          newTag.urlSlug(tag.urlSlug!);
         });
     });
   };

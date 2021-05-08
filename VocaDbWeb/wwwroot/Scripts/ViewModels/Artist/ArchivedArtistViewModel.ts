@@ -9,13 +9,13 @@ export default class ArchivedArtistViewModel {
     private repository: ArtistRepository,
   ) {
     this.reportViewModel = new ReportEntryViewModel(
-      null,
+      null!,
       (reportType, notes) => {
         repository.createReport(artistId, reportType, notes, versionNumber);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
-      { notesRequired: true, id: 'Other', name: null },
+      { notesRequired: true, id: 'Other', name: null! },
     );
   }
 

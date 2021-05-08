@@ -61,12 +61,12 @@ export default class SongListViewModel {
     );
 
     this.resourceManager = new ResourcesManager(resourceRepo, cultureCode);
-    this.resourceManager.loadResources(null, 'songSortRuleNames');
+    this.resourceManager.loadResources(null!, 'songSortRuleNames');
     this.sortName = ko.computed(() => {
       if (this.sort() === '') return defaultSortRuleName;
 
       return this.resourceManager.resources().songSortRuleNames != null
-        ? this.resourceManager.resources().songSortRuleNames[this.sort()]
+        ? this.resourceManager.resources().songSortRuleNames![this.sort()]
         : '';
     });
 
@@ -209,14 +209,14 @@ export default class SongListViewModel {
         this.query(),
         this.songType() !== SongType[SongType.Unspecified]
           ? this.songType()
-          : null,
+          : null!,
         this.tagIds(),
         this.childTags(),
         this.artistFilters.artistIds(),
         this.artistFilters.artistParticipationStatus(),
         this.artistFilters.childVoicebanks(),
         this.advancedFilters.filters(),
-        null,
+        null!,
         pagingProperties,
         new SongOptionalFields(fields),
         this.sort(),

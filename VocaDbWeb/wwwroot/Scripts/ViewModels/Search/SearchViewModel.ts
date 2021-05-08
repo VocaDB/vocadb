@@ -89,11 +89,11 @@ export default class SearchViewModel {
       artistRepo,
       resourceRepo,
       cultureCode,
-      isAlbum ? sort : null,
-      isAlbum ? artistId : null,
-      isAlbum ? childVoicebanks : null,
+      isAlbum ? sort : null!,
+      isAlbum ? artistId : null!,
+      isAlbum ? childVoicebanks : null!,
       albumType,
-      isAlbum ? viewMode : null,
+      isAlbum ? viewMode : null!,
     );
 
     this.eventSearchViewModel = new EventSearchViewModel(
@@ -120,16 +120,16 @@ export default class SearchViewModel {
       resourceRepo,
       cultureCode,
       loggedUserId,
-      isSong ? sort : null,
-      isSong ? artistId : null,
-      isSong ? childVoicebanks : null,
+      isSong ? sort : null!,
+      isSong ? artistId : null!,
+      isSong ? childVoicebanks : null!,
       songType,
       eventId,
       onlyWithPVs,
       onlyRatedSongs,
       since,
-      isSong ? minScore : null,
-      isSong ? viewMode : null,
+      isSong ? minScore : null!,
+      isSong ? viewMode : null!,
       autoplay,
       shuffle,
       pvPlayersFactory,
@@ -207,7 +207,7 @@ export default class SearchViewModel {
       });
 
     tagRepo
-      .getTopTags(languageSelection, Tag.commonCategory_Genres, null)
+      .getTopTags(languageSelection, Tag.commonCategory_Genres, null!)
       .then((result) => {
         this.genreTags(result);
       });
@@ -268,7 +268,7 @@ export default class SearchViewModel {
       case SearchType.Tag:
         return this.tagSearchViewModel;
       default:
-        return null;
+        return null!;
     }
   };
 

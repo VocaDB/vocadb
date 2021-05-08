@@ -79,7 +79,7 @@ export default class RankingsViewModel {
 
   private router: ObservableUrlParamRouter;
 
-  public songs = ko.observableArray<SongApiContract>(null);
+  public songs = ko.observableArray<SongApiContract>(null!);
 
-  public vocalistSelection = ko.observable<string>(null);
+  public vocalistSelection = ko.observable<string>(null!);
 }

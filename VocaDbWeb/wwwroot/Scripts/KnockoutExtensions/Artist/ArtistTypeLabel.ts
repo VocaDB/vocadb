@@ -50,7 +50,7 @@ ko.bindingHandlers.artistTypeLabel = {
   init: (
     element: HTMLElement,
     valueAccessor: () => string,
-    allBindingsAccessor: () => any,
+    allBindingsAccessor?: () => any,
   ): void => {
     var val = valueAccessor();
 
@@ -59,7 +59,7 @@ ko.bindingHandlers.artistTypeLabel = {
       return;
     }
 
-    if (allBindingsAccessor().typeLabelShowTitle) {
+    if (allBindingsAccessor!().typeLabelShowTitle) {
       $(element).attr('title', val);
     }
 

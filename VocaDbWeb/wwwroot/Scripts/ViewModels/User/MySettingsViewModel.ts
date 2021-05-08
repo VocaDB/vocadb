@@ -38,7 +38,7 @@ export default class MySettingsViewModel {
 
     // TODO: support showing the verification button by saving email immediately after it's changed
     this.canVerifyEmail = ko.computed(
-      () => email && !emailVerified && !this.emailVerificationSent(),
+      () => !!email && !emailVerified && !this.emailVerificationSent(),
     );
   }
 

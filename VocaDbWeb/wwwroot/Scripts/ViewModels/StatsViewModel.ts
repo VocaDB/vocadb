@@ -1,8 +1,8 @@
 export default class StatsViewModel {
   public categories: IReportCategory[];
   public chartData = ko.observable<any>(null);
-  private selectedReport = ko.observable<IReport>(null);
-  public timespan = ko.observable<string>(null);
+  private selectedReport = ko.observable<IReport>(null!);
+  public timespan = ko.observable<string>(null!);
 
   public showTimespanFilter = ko.computed(() => {
     return (

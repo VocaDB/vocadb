@@ -2,7 +2,7 @@ import AlbumDiscPropertiesContract from '../../DataContracts/Album/AlbumDiscProp
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
 export default class AlbumDiscPropertiesEditViewModel {
-  constructor(contract: AlbumDiscPropertiesContract) {
+  constructor(contract?: AlbumDiscPropertiesContract) {
     if (contract) {
       this.id = contract.id;
       this.mediaType = ko.observable(contract.mediaType);
@@ -13,7 +13,7 @@ export default class AlbumDiscPropertiesEditViewModel {
     }
   }
 
-  id: number;
+  id!: number;
 
   mediaType: KnockoutObservable<string>;
 

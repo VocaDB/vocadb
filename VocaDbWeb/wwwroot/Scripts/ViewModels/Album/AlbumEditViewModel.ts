@@ -32,8 +32,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 export default class AlbumEditViewModel {
   // Adds a song to the album, by either id (existing song) or name (new song).
   public acceptTrackSelection: (
-    songId: number,
-    songName: string,
+    songId?: number,
+    songName?: string,
     itemType?: string,
   ) => void;
 
@@ -56,7 +56,7 @@ export default class AlbumEditViewModel {
       });
     } else {
       var data: ArtistForAlbumContract = {
-        artist: null,
+        artist: null!,
         name: customArtistName,
         isSupport: false,
         id: 0,
@@ -137,7 +137,7 @@ export default class AlbumEditViewModel {
   // State for the song being edited in the properties dialog.
   public editedSong: KnockoutObservable<TrackPropertiesViewModel>;
 
-  public eventDate = ko.observable<moment.Moment>(null);
+  public eventDate = ko.observable<moment.Moment>(null!);
 
   // Gets an artist for album link view model by Id.
   public getArtistLink: (
@@ -305,7 +305,7 @@ export default class AlbumEditViewModel {
       .extend({ parseInteger: {} });
     this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
       data.originalRelease.releaseEvent,
-      null,
+      null!,
     );
     this.status = ko.observable(data.status);
 
@@ -316,16 +316,16 @@ export default class AlbumEditViewModel {
     };
 
     this.acceptTrackSelection = (
-      songId: number,
-      songName: string,
+      songId?: number,
+      songName?: string,
       itemType?: string,
     ): void => {
       if (songId) {
         songRepository
-          .getOneWithComponents(songId, 'AdditionalNames,Artists', null)
+          .getOneWithComponents(songId, 'AdditionalNames,Artists', null!)
           .then((song) => {
             var artists = _.filter(
-              _.map(song.artists, (artistLink) => artistLink.artist),
+              _.map(song.artists!, (artistLink) => artistLink.artist),
               (artist) => artist != null,
             );
 
@@ -344,7 +344,7 @@ export default class AlbumEditViewModel {
           });
       } else {
         var track = new SongInAlbumEditViewModel({
-          songName: songName,
+          songName: songName!,
           artists: [],
           artistString: '',
           discNumber: 1,
@@ -415,7 +415,7 @@ export default class AlbumEditViewModel {
 
     this.editMultipleTrackProperties = (): void => {
       var artists = this.artistsForTracks();
-      this.editedSong(new TrackPropertiesViewModel(artists, null));
+      this.editedSong(new TrackPropertiesViewModel(artists, null!));
       this.trackPropertiesDialogButtons([
         { text: 'Add to tracks', click: this.addArtistsToSelectedTracks },
         {
@@ -435,7 +435,7 @@ export default class AlbumEditViewModel {
       this.trackPropertiesDialogVisible(true);
     };
 
-    this.editedSong = ko.observable(null);
+    this.editedSong = ko.observable(null!);
 
     this.getArtistLink = (artistForAlbumId): ArtistForAlbumEditViewModel => {
       return _.find(
@@ -486,7 +486,7 @@ export default class AlbumEditViewModel {
           (a) => a.artist,
         );
         this.editedSong().song.artists(selected);
-        this.editedSong(null);
+        this.editedSong(null!);
       }
     };
 
@@ -516,7 +516,7 @@ export default class AlbumEditViewModel {
       createNewItem: "Create new song named '{0}'.", // TODO: localize
       createCustomItem: allowCustomTracks
         ? "Create custom track named '{0}'"
-        : null,
+        : null!,
       extraQueryParams: { songTypes: songTypes },
     };
 
@@ -592,15 +592,15 @@ export default class AlbumEditViewModel {
 
     this.eventDate = ko.computed(() =>
       this.releaseEvent.entry() && this.releaseEvent.entry().date
-        ? moment(this.releaseEvent.entry().date)
-        : null,
+        ? moment(this.releaseEvent.entry().date!)
+        : null!,
     );
 
     this.releaseDate = ko.computed({
       read: () => {
         return this.releaseYear() && this.releaseMonth() && this.releaseDay()
           ? moment([this.releaseYear(), this.releaseMonth(), this.releaseDay()])
-          : null;
+          : null!;
       },
       write: (val: moment.Moment) => {
         this.releaseYear(val.year());
@@ -639,7 +639,7 @@ export class TrackArtistSelectionViewModel {
 
       return (
         artist.name.toLowerCase().indexOf(f) >= 0 ||
-        artist.additionalNames.toLowerCase().indexOf(f) >= 0
+        artist.additionalNames!.toLowerCase().indexOf(f) >= 0
       );
     });
   }

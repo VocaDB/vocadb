@@ -17,8 +17,8 @@ export function userAutocomplete(
     acceptSelection: (id, term, itemType, item) => {
       valueAccessor()(item);
     },
-    createNewItem: null,
-    createOptionFirstRow: (item) => item.name,
+    createNewItem: null!,
+    createOptionFirstRow: (item) => item.name!,
     extraQueryParams: {},
     termParamName: 'query',
     singleRow: true,

@@ -37,7 +37,7 @@ export default class SongListEditViewModel {
     this.songLinks = ko.observableArray([]);
   }
 
-  private acceptSongSelection = (songId: number): void => {
+  private acceptSongSelection = (songId?: number): void => {
     if (!songId) return;
 
     this.songRepo.getOne(songId).then((song: SongContract) => {
@@ -51,7 +51,7 @@ export default class SongListEditViewModel {
     });
   };
 
-  public currentName: string;
+  public currentName!: string;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
     this.songListRepo
@@ -59,7 +59,7 @@ export default class SongListEditViewModel {
       .then(this.redirectToDetails);
   });
 
-  public description: KnockoutObservable<string>;
+  public description!: KnockoutObservable<string>;
 
   public eventDateDate = ko.observable<Date>();
 
@@ -67,7 +67,7 @@ export default class SongListEditViewModel {
     this.eventDateDate() ? this.eventDateDate().toISOString() : null,
   );
 
-  public featuredCategory: KnockoutObservable<string>;
+  public featuredCategory!: KnockoutObservable<string>;
 
   public id: number;
 
@@ -78,7 +78,7 @@ export default class SongListEditViewModel {
         this.name = ko.observable(data.name);
         this.description = ko.observable(data.description);
         this.eventDateDate(
-          data.eventDate ? moment(data.eventDate).toDate() : null,
+          data.eventDate ? moment(data.eventDate).toDate() : null!,
         ); // Assume server date is UTC
         this.featuredCategory = ko.observable(data.featuredCategory);
         this.status = ko.observable(data.status);
@@ -105,7 +105,7 @@ export default class SongListEditViewModel {
     });
   };
 
-  public name: KnockoutObservable<string>;
+  public name!: KnockoutObservable<string>;
 
   private redirectToDetails = (): void => {
     window.location.href = this.urlMapper.mapRelative(
@@ -127,7 +127,7 @@ export default class SongListEditViewModel {
     acceptSelection: this.acceptSongSelection,
   };
 
-  public status: KnockoutObservable<string>;
+  public status!: KnockoutObservable<string>;
 
   public submit = (): boolean => {
     this.submitting(true);

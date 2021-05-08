@@ -28,8 +28,8 @@ export default class DiscussionIndexViewModel {
     });
 
     this.mapRoute('/', () => {
-      this.selectedFolder(null);
-      this.selectedTopic(null);
+      this.selectedFolder(null!);
+      this.selectedTopic(null!);
     });
 
     repo.getFolders().then((folders) => {
@@ -41,7 +41,7 @@ export default class DiscussionIndexViewModel {
 
     this.selectedFolder.subscribe((folder) => {
       this.showCreateNewTopic(false);
-      this.selectedTopic(null);
+      this.selectedTopic(null!);
       this.paging.goToFirstPage();
 
       this.loadTopics(folder);
@@ -82,7 +82,7 @@ export default class DiscussionIndexViewModel {
 
   public deleteTopic = (topic: DiscussionTopicContract): void => {
     this.repo.deleteTopic(topic.id).then(() => {
-      this.selectTopic(null);
+      this.selectTopic(null!);
     });
   };
 
@@ -153,7 +153,7 @@ export default class DiscussionIndexViewModel {
 
   private selectTopicById = (topicId: number): void => {
     if (!topicId) {
-      this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null));
+      this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null!));
       return;
     }
 
@@ -174,9 +174,9 @@ export default class DiscussionIndexViewModel {
     });
   };
 
-  public selectedFolder = ko.observable<DiscussionFolderContract>(null);
+  public selectedFolder = ko.observable<DiscussionFolderContract>(null!);
 
-  public selectedTopic = ko.observable<DiscussionTopicViewModel>(null);
+  public selectedTopic = ko.observable<DiscussionTopicViewModel>(null!);
 
   public showCreateNewTopic = ko.observable(false);
 

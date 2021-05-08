@@ -4,12 +4,10 @@
 		"module": "commonjs",
 		"jsx": "react",
 		"removeComments": true,
-		"strict": false,
-		"alwaysStrict": true,
+		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"noImplicitAny": true
+		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
 }

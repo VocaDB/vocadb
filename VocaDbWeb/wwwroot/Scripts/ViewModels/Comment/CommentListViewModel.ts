@@ -51,13 +51,13 @@ export default class CommentListViewModel {
 
     this.sortName = ko.computed(() =>
       this.resources.resources().commentSortRuleNames != null
-        ? this.resources.resources().commentSortRuleNames[this.sort()]
+        ? this.resources.resources().commentSortRuleNames![this.sort()]
         : '',
     );
   }
 
   private clear = (): void => {
-    this.lastCommentDate = null;
+    this.lastCommentDate = null!;
     this.comments([]);
     this.loadMore();
   };
@@ -71,21 +71,21 @@ export default class CommentListViewModel {
 
     switch (EntryType[entry.entryType as keyof typeof EntryType]) {
       case EntryType.Album:
-        return sets.discTypeNames[entry.discType];
+        return sets.discTypeNames![entry.discType!];
 
       case EntryType.Artist:
-        return sets.artistTypeNames[entry.artistType];
+        return sets.artistTypeNames![entry.artistType!];
 
       case EntryType.Song:
-        return sets.songTypeNames[entry.songType];
+        return sets.songTypeNames![entry.songType!];
 
       case EntryType.SongList:
-        return sets.songList_songListFeaturedCategoryNames[
-          entry.songListFeaturedCategory
+        return sets.songList_songListFeaturedCategoryNames![
+          entry.songListFeaturedCategory!
         ];
 
       case EntryType.Tag:
-        return entry.tagCategoryName;
+        return entry.tagCategoryName!;
 
       default:
         return null;
@@ -96,7 +96,7 @@ export default class CommentListViewModel {
     return EntryUrlMapper.details_entry(entry, entry.urlSlug);
   };
 
-  private lastCommentDate: Date;
+  private lastCommentDate!: Date;
 
   public loadMore = (): void => {
     var url = this.urlMapper.mapRelative('/api/comments');
@@ -123,10 +123,10 @@ export default class CommentListViewModel {
       (result: PartialFindResultContract<CommentContract>) => {
         var entries = result.items;
 
-        if (!entries && entries.length > 0) return;
+        if (!entries && entries!.length > 0) return;
 
         ko.utils.arrayPushAll(this.comments, entries);
-        this.lastCommentDate = new Date(_.last(entries).created);
+        this.lastCommentDate = new Date(_.last(entries).created!);
       },
     );
   };

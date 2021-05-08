@@ -36,7 +36,7 @@ export default class SongDetailsViewModel {
     const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
     const match = regex.exec(page);
 
-    if (!match || match.length < 3) return null;
+    if (!match || match.length < 3) return null!;
 
     const siteUrl = match[1].replace('http://', 'https://'); // either http://utaitedb.net/ or http://vocadb.net/
     const id = parseInt(match[2]);
@@ -60,7 +60,7 @@ export default class SongDetailsViewModel {
       this.languagePreference,
     );
     // TODO: this should be cached, but first we need to make sure the other instances are not cached.
-    repo.getOneWithComponents(id, 'None', null).then((song) => {
+    repo.getOneWithComponents(id, 'None', null!).then((song) => {
       if (song.songType === SongType[SongType.Original])
         this.originalVersion({ entry: song, url: page, domain: siteUrl });
     });
@@ -147,20 +147,20 @@ export default class SongDetailsViewModel {
       });
     };
 
-    this.originalVersion = ko.observable({ entry: data.originalVersion });
+    this.originalVersion = ko.observable({ entry: data.originalVersion! });
 
     this.reportViewModel = new ReportEntryViewModel(
       reportTypes,
       (reportType, notes) => {
-        repository.createReport(this.id, reportType, notes, null);
+        repository.createReport(this.id, reportType, notes, null!);
 
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
       },
     );
 
     this.personalDescription = new SelfDescriptionViewModel(
-      data.personalDescriptionAuthor,
-      data.personalDescriptionText,
+      data.personalDescriptionAuthor!,
+      data.personalDescriptionText!,
       artistRepository,
       (callback) => {
         repository
@@ -170,7 +170,7 @@ export default class SongDetailsViewModel {
             ContentLanguagePreference[this.languagePreference],
           )
           .then((result) => {
-            var artists = _.chain(result.artists)
+            var artists = _.chain(result.artists!)
               .filter(ArtistHelper.isValidForPersonalDescription)
               .map((a) => a.artist)
               .value();
@@ -222,11 +222,11 @@ export default class SongDetailsViewModel {
       data.songType !== SongType[SongType.Original] &&
       this.originalVersion().entry == null
     ) {
-      this.getOriginal(data.linkedPages);
+      this.getOriginal(data.linkedPages!);
     }
 
     this.selectedLyricsId.subscribe((id) => {
-      this.selectedLyrics(null);
+      this.selectedLyrics(null!);
       repository
         .getLyrics(id, data.version)
         .then((lyrics) => this.selectedLyrics(lyrics));
@@ -256,7 +256,7 @@ export class SongListsViewModel {
   public static readonly tabName_Featured = 'Featured';
   public static readonly tabName_New = 'New';
 
-  public addedToList: () => void;
+  public addedToList!: () => void;
 
   public addSongToList: () => void;
 
@@ -270,7 +270,7 @@ export class SongListsViewModel {
 
   private personalLists = ko.observableArray<SongListBaseContract>();
 
-  public selectedListId: KnockoutObservable<number> = ko.observable(null);
+  public selectedListId: KnockoutObservable<number> = ko.observable(null!);
 
   public showSongLists: () => void;
 
@@ -334,7 +334,7 @@ export class SongListsViewModel {
 
         this.newListName('');
         this.selectedListId(
-          this.songLists().length > 0 ? this.songLists()[0].id : null,
+          this.songLists().length > 0 ? this.songLists()[0].id : null!,
         );
         this.dialogVisible(true);
       });
@@ -351,7 +351,7 @@ export class RatingsViewModel {
       _.chain(this.ratings())
         .filter((r) => r.user && r.rating === fav)
         .take(20)
-        .map((r) => r.user)
+        .map((r) => r.user!)
         .sortBy((u) => u.name)
         .value(),
     );
@@ -367,7 +367,7 @@ export class RatingsViewModel {
       _.chain(this.ratings())
         .filter((r) => r.user && r.rating === like)
         .take(20)
-        .map((r) => r.user)
+        .map((r) => r.user!)
         .sortBy((u) => u.name)
         .value(),
     );

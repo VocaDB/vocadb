@@ -25,7 +25,7 @@ export default class LocalizedStringWithIdEditViewModel {
 
   constructor(
     language: ContentLanguageSelection = ContentLanguageSelection.Unspecified,
-    value: string = null,
+    value: string = null!,
     id: number = 0,
   ) {
     this.language(language);

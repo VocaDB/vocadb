@@ -6,7 +6,7 @@
 
 ko.bindingHandlers.initialValue = {
   init: (element: HTMLElement, valueAccessor, allBindings): void => {
-    var bindings = allBindings();
+    var bindings = allBindings!();
     var val = $(element).val();
     if (bindings.value) {
       bindings.value(val);

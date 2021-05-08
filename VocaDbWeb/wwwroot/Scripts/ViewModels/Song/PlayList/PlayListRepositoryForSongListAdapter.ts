@@ -37,7 +37,7 @@ export default class PlayListRepositoryForSongListAdapter
         this.query(),
         this.songType() !== SongType[SongType.Unspecified]
           ? this.songType()
-          : null,
+          : null!,
         this.tagIds(),
         this.childTags(),
         this.artistIds(),
@@ -59,7 +59,7 @@ export default class PlayListRepositoryForSongListAdapter
               song.song.name +
               (song.notes ? ' (' + song.notes + ')' : ''),
             song: song.song,
-            indexInPlayList: paging.start + idx,
+            indexInPlayList: paging.start! + idx,
           };
         });
 

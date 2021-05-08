@@ -8,10 +8,10 @@ import FakePromise from './FakePromise';
 import HttpClient from '../../Shared/HttpClient';
 
 export default class FakeUserRepository extends UserRepository {
-  public message: UserMessageSummaryContract;
-  public messages: UserMessageSummaryContract[];
-  public songId: number;
-  public rating: SongVoteRating;
+  public message!: UserMessageSummaryContract;
+  public messages!: UserMessageSummaryContract[];
+  public songId!: number;
+  public rating!: SongVoteRating;
 
   constructor() {
     super(new HttpClient(), new UrlMapper(''));

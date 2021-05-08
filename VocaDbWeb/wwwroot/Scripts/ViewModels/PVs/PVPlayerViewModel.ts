@@ -29,15 +29,15 @@ export default class PVPlayerViewModel {
       if (song == null) {
         if (this.currentPlayer) {
           this.currentPlayer.detach();
-          this.currentPlayer = null;
+          this.currentPlayer = null!;
         }
 
         this.playerHtml('');
-        this.ratingButtonsViewModel(null);
+        this.ratingButtonsViewModel(null!);
         return;
       }
 
-      userRepo.getSongRating(null, song.song.id).then((rating) => {
+      userRepo.getSongRating(null!, song.song.id).then((rating) => {
         this.ratingButtonsViewModel(
           new PVRatingButtonsViewModel(
             userRepo,
@@ -61,7 +61,7 @@ export default class PVPlayerViewModel {
         // Detech old player
         if (this.currentPlayer) {
           this.currentPlayer.detach();
-          this.currentPlayer = null;
+          this.currentPlayer = null!;
         }
 
         var services = this.autoplay()
@@ -73,7 +73,7 @@ export default class PVPlayerViewModel {
           .pvPlayer(song.song.id, {
             elementId: pvPlayersFactory.playerElementId,
             enableScriptAccess: true,
-            pvServices: services,
+            pvServices: services!,
           })
           .then((result) => {
             this.playerHtml(result.playerHtml);
@@ -133,7 +133,7 @@ export default class PVPlayerViewModel {
     PVService.Youtube,
     PVService.SoundCloud,
   ];
-  private currentPlayer: IPVPlayer = null;
+  private currentPlayer: IPVPlayer = null!;
 
   private loadPVId = (
     service: PVService,
@@ -144,14 +144,14 @@ export default class PVPlayerViewModel {
   };
 
   private players: { [index: string]: IPVPlayer };
-  public nextSong: () => void;
-  public playerHtml = ko.observable<string>(null);
-  public playerService: PVService = null;
+  public nextSong!: () => void;
+  public playerHtml = ko.observable<string>(null!);
+  public playerService: PVService = null!;
   public ratingButtonsViewModel: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(
-    null,
+    null!,
   );
-  public resetSong: () => void = null;
-  public selectedSong = ko.observable<IPVPlayerSong>(null);
+  public resetSong: () => void = null!;
+  public selectedSong = ko.observable<IPVPlayerSong>(null!);
   private static serviceName = (service: PVService): string =>
     PVService[service];
   public shuffle = ko.observable(false);
@@ -164,14 +164,14 @@ export default class PVPlayerViewModel {
     song: IPVPlayerSong,
     service: PVService,
   ): boolean => {
-    return _.includes(song.song.pvServicesArray, service);
+    return _.includes(song.song.pvServicesArray!, service);
   };
 
   public songIsValid = (song: IPVPlayerSong): boolean => {
     return (
       !this.autoplay() ||
       this.autoplayServices.some((s) =>
-        _.includes(song.song.pvServicesArray, s),
+        _.includes(song.song.pvServicesArray!, s),
       )
     );
   };

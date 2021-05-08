@@ -6,7 +6,7 @@ import TagRepository from '../../Repositories/TagRepository';
 
 var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
-var tagRepository: TagRepository = null;
+var tagRepository: TagRepository = null!;
 var producer: ArtistContract = {
   artistType: 'Producer',
   id: 1,

@@ -1,5 +1,7 @@
 const mix = require('laravel-mix');
 
+require('laravel-mix-eslint');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -190,7 +192,12 @@ mix
 	.styles(
 		['wwwroot/Scripts/jqwidgets27/styles/jqx.base.css'],
 		'wwwroot/Scripts/jqwidgets27/styles/css.css',
-	);
+	)
+
+	.eslint({
+		fix: false,
+		extensions: ['ts', 'tsx'],
+	});
 
 if (mix.inProduction()) {
 	mix.scripts([], 'wwwroot/bundles/tests.js');

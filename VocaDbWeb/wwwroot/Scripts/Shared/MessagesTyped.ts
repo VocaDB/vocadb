@@ -23,11 +23,13 @@ export default class ui {
   public static showLoadingMessage = (): JQuery => {
     var ajaxLoadingMessage = $('#loadingMessage');
     if (ajaxLoadingMessage) return ajaxLoadingMessage.show();
+    return undefined!;
   };
 
   public static hideLoadingMessage = (): JQuery => {
     var ajaxLoadingMessage = $('#loadingMessage');
     if (ajaxLoadingMessage) return ajaxLoadingMessage.hide();
+    return undefined!;
   };
 
   private static thanksForRatingMessage: string;

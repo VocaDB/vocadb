@@ -66,7 +66,7 @@ export default class HighchartsHelper {
     title: string,
     seriesName: string,
     points: Tuple2<string, number>[],
-    backgroundColor: string = null,
+    backgroundColor: string = null!,
   ): HighchartsOptions => {
     var data: any[] = _.map(points, (p: Tuple2<string, number>) => [
       p.item1,
@@ -84,7 +84,7 @@ export default class HighchartsHelper {
       },
       xAxis: {
         title: {
-          text: null,
+          text: null!,
         },
       },
       yAxis: {

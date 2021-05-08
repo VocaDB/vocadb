@@ -9,7 +9,7 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 export default class ArtistCreateViewModel {
   artistType = ko.observable(ArtistType[ArtistType.Producer]);
-  artistTypeTag = ko.observable<TagApiContract>(null);
+  artistTypeTag = ko.observable<TagApiContract>(null!);
   artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
   artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
   artistTypeTagUrl = ko.computed(() =>

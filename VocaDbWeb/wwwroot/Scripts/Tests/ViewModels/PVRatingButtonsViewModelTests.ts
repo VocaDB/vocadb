@@ -13,7 +13,7 @@ function createTarget(
   return new PVRatingButtonsViewModel(
     repository,
     { id: songId, vote: SongVoteRating[rating] },
-    null,
+    null!,
   );
 }
 

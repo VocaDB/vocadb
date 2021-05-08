@@ -19,7 +19,7 @@ test('constructor', () => {
 });
 
 test('editing url sets description', () => {
-  var target = new WebLinkEditViewModel(null);
+  var target = new WebLinkEditViewModel(null!);
 
   target.url('http://www.nicovideo.jp/mylist/');
 

@@ -27,10 +27,10 @@ export default class ArtistForEventEditViewModel
   };
 
   constructor(data: ArtistForEventContract) {
-    this.artist = data.artist;
-    this.id = data.id;
+    this.artist = data.artist!;
+    this.id = data.id!;
 
-    this.name = data.name;
+    this.name = data.name!;
     this.rolesArray = ko.observableArray<string>([]);
 
     this.roles = ko.computed({

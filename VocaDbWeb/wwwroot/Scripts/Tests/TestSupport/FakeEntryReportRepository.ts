@@ -4,7 +4,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 import FakePromise from './FakePromise';
 
 export default class FakeEntryReportRepository extends EntryReportRepository {
-  public entryReportCount: number;
+  public entryReportCount!: number;
 
   constructor() {
     super(new HttpClient(), new UrlMapper(''));

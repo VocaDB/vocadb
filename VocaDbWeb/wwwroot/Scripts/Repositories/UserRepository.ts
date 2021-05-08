@@ -231,13 +231,13 @@ export default class UserRepository implements ICommentRepository {
     const result = await this.getList(
       {},
       username,
-      null,
-      null,
+      null!,
+      null!,
       false,
       false,
-      null,
+      null!,
       'Exact',
-      null,
+      null!,
     );
     return result.items.length === 1 ? result.items[0] : null;
   };
@@ -350,7 +350,7 @@ export default class UserRepository implements ICommentRepository {
   // songId: ID of the song for which to get the rating. Cannot be null.
   // callback: Callback receiving the rating. If the user has not rated the song, or if the user is not logged in, this will be "Nothing".
   public getSongRating = (userId: number, songId: number): Promise<string> => {
-    userId = userId || this.loggedUserId;
+    userId = userId || this.loggedUserId!;
 
     if (!userId) {
       return Promise.resolve('Nothing');

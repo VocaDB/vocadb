@@ -44,8 +44,8 @@ export default class ArtistForAlbumEditViewModel
 
   constructor(repository: AlbumRepository, data: ArtistForAlbumContract) {
     this.artist = data.artist;
-    this.id = data.id;
-    this.isCustomName = data.isCustomName;
+    this.id = data.id!;
+    this.isCustomName = data.isCustomName!;
     this.isSupport = ko.observable(data.isSupport);
 
     this.name = ko.observable(data.name);
@@ -53,7 +53,7 @@ export default class ArtistForAlbumEditViewModel
 
     this.isCustomizable = ko.computed(() => {
       return (
-        !this.artist || ArtistHelper.isCustomizable(this.artist.artistType)
+        !this.artist || ArtistHelper.isCustomizable(this.artist.artistType!)
       );
     });
 

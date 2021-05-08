@@ -38,8 +38,8 @@ function addArtist(
       ? { id: 39, name: 'Clean Tears', artistType: ArtistType[artistType] }
       : null;
   viewModel.artistLinks.push(
-    new ArtistForAlbumEditViewModel(null, {
-      artist: artist,
+    new ArtistForAlbumEditViewModel(null!, {
+      artist: artist!,
       isSupport: false,
       roles: ArtistHelper.getRolesList(roles),
     }),
@@ -58,7 +58,7 @@ QUnit.module('SongEditViewModelTests', {
       lyrics: [],
       names: [],
       notes: { original: '', english: '' },
-      originalVersion: null,
+      originalVersion: null!,
       pvs: [],
       songType: 'Original',
       status: 'Draft',
@@ -79,7 +79,7 @@ function createViewModel(): SongEditViewModel {
     categories,
     data,
     false,
-    null,
+    null!,
     0,
     null,
   );
@@ -181,7 +181,7 @@ QUnit.test('suggestedPublishDate with album date', () => {
 
 QUnit.test('validationError_duplicateArtist', () => {
   var target = createViewModel();
-  var artist = new ArtistForAlbumEditViewModel(null, {
+  var artist = new ArtistForAlbumEditViewModel(null!, {
     artist: { id: 1, name: '164' },
     roles: '',
   });
@@ -201,14 +201,14 @@ QUnit.test('validationError_duplicateArtist support', () => {
 
   const artist = { id: 39, name: 'Clean Tears' };
   target.artistLinks.push(
-    new ArtistForAlbumEditViewModel(null, {
+    new ArtistForAlbumEditViewModel(null!, {
       artist: artist,
       isSupport: false,
       roles: '',
     }),
   );
   target.artistLinks.push(
-    new ArtistForAlbumEditViewModel(null, {
+    new ArtistForAlbumEditViewModel(null!, {
       artist: artist,
       isSupport: true,
       roles: '',

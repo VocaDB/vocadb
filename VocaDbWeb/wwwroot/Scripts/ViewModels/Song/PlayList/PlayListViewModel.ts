@@ -106,7 +106,7 @@ export default class PlayListViewModel {
       } else {
         if (this.hasMoreSongs()) {
           this.paging.nextPage();
-          this.updateResults(false, null, () => {
+          this.updateResults(false, null!, () => {
             this.playSong(this.page()[index]);
           });
         } else {
@@ -137,7 +137,7 @@ export default class PlayListViewModel {
   public songsLoaded = ko.computed(() => this.page().length);
 
   public updateResultsWithTotalCount = (callback?: () => void): void =>
-    this.updateResults(true, null, callback);
+    this.updateResults(true, null!, callback);
   public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
   public updateResults = (

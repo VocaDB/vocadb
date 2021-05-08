@@ -45,7 +45,7 @@ export default class AlbumCollectionViewModel {
 
   public advancedFilters = new AdvancedSearchFilters();
   public albumType = ko.observable('Unknown');
-  public artistId = ko.observable<number>(null);
+  public artistId = ko.observable<number>(null!);
   public artistName = ko.observable('');
   public artistSearchParams: ArtistAutoCompleteParams;
   public collectionStatus = ko.observable('');
@@ -55,8 +55,8 @@ export default class AlbumCollectionViewModel {
   public paging = new ServerSidePagingViewModel(20); // Paging view model
   public pauseNotifications = false;
   public releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
-    null,
-    null,
+    null!,
+    null!,
   );
   public resources = ko.observable<ResourcesContract>();
   public searchTerm = ko
@@ -65,10 +65,10 @@ export default class AlbumCollectionViewModel {
   public sort = ko.observable('Name');
   public sortName = ko.computed(() =>
     this.resources() != null
-      ? this.resources().albumSortRuleNames[this.sort()]
+      ? this.resources().albumSortRuleNames![this.sort()]
       : '',
   );
-  public tag = ko.observable<TagBaseContract>(null);
+  public tag = ko.observable<TagBaseContract>(null!);
   public tagId = ko.computed(() => (this.tag() ? this.tag().id : null));
   public tagName = ko.computed(() => (this.tag() ? this.tag().name : null));
   public tagUrl = ko.computed(() =>
@@ -107,10 +107,10 @@ export default class AlbumCollectionViewModel {
     return ratings;
   };
 
-  public selectArtist = (selectedArtistId: number): void => {
-    this.artistId(selectedArtistId);
+  public selectArtist = (selectedArtistId?: number): void => {
+    this.artistId(selectedArtistId!);
     this.artistRepo
-      .getOne(selectedArtistId)
+      .getOne(selectedArtistId!)
       .then((artist) => this.artistName(artist.name));
   };
 
@@ -134,7 +134,7 @@ export default class AlbumCollectionViewModel {
         pagingProperties,
         this.languageSelection,
         this.searchTerm(),
-        this.tagId(),
+        this.tagId()!,
         this.albumType(),
         this.artistId(),
         this.collectionStatus(),

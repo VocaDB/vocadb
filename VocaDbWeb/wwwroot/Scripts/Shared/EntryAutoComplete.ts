@@ -79,7 +79,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
       return '<a><div>' + item.label + '</div></a>';
     }
 
-    var html: string = null;
+    var html: string = null!;
     var term = item.term;
     var firstRow: string;
 
@@ -141,7 +141,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
         if (createNewItem)
           mapped.push({
             label: createNewItem.replace('{0}', par.term),
-            value: null,
+            value: null!,
             term: par.term,
             itemType: 'new',
           });
@@ -149,7 +149,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
         if (createCustomItem)
           mapped.push({
             label: createCustomItem.replace('{0}', par.term),
-            value: null,
+            value: null!,
             term: par.term,
             itemType: 'custom',
           });
@@ -161,9 +161,9 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
 
   function selectItem(
     event: Event,
-    ui: { item: AutoCompleteItem<TContract> },
+    ui: { item?: AutoCompleteItem<TContract> },
   ): boolean {
-    var item: AutoCompleteItem<TContract> = ui.item;
+    var item: AutoCompleteItem<TContract> = ui.item!;
 
     // namebox value is cleared when using keyboard
     acceptSelection(
