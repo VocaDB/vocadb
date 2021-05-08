@@ -58,7 +58,7 @@ ko.bindingHandlers.datepicker = {
       $(element).datepicker(
         'option',
         'onSelect',
-        function (selectedText: string) {
+        function (this: any, selectedText: string) {
           selectDate(selectedText);
 
           if (typeof origOnSelect === 'function') {

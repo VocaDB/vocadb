@@ -11,7 +11,8 @@
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitAny": true,
 		"strictBindCallApply": true,
-		"strictFunctionTypes": true
+		"strictFunctionTypes": true,
+		"noImplicitThis": true
 	},
 	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
 }

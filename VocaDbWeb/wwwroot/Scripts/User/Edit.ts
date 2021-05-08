@@ -36,7 +36,7 @@ function initPage(): void {
     termParamName: 'query',
   });
 
-  $(document).on('click', 'a.artistRemove', function () {
+  $(document).on('click', 'a.artistRemove', function (this: any) {
     $(this).parent().parent().remove();
     return false;
   });

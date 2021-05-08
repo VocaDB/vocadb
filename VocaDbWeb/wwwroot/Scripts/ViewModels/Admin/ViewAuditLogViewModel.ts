@@ -51,7 +51,7 @@ export default class ViewAuditLogViewModel {
 
     $('#usersList')
       // don't navigate away from the field on tab when selecting an item
-      .bind('keydown', function (event) {
+      .bind('keydown', function (this: any, event) {
         if (
           event.keyCode === $.ui.keyCode.TAB &&
           $(this).data('ui-autocomplete').menu.active

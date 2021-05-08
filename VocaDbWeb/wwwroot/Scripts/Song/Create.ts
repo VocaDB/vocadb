@@ -19,10 +19,10 @@ const SongCreate = (model: any): void => {
     ko.applyBindings(new SongCreateViewModel(repo, artistRepo, tagRepo, json));
 
     $('#pvLoader')
-      .ajaxStart(function () {
+      .ajaxStart(function (this: any) {
         $(this).show();
       })
-      .ajaxStop(function () {
+      .ajaxStop(function (this: any) {
         $(this).hide();
       });
   });

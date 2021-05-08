@@ -12,10 +12,10 @@ function initPage(): void {
   $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
   $('#mergeLink').button();
   $('#pvLoader')
-    .ajaxStart(function () {
+    .ajaxStart(function (this: any) {
       $(this).show();
     })
-    .ajaxStop(function () {
+    .ajaxStop(function (this: any) {
       $(this).hide();
     });
 

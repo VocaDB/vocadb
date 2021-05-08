@@ -45,7 +45,7 @@ function initChart(
     chart: {
       backgroundColor: null,
       events: {
-        load: function () {
+        load: function (this: any) {
           // Draw the flow chart
           var ren = this.renderer,
             colors = Highcharts.getOptions().colors,
