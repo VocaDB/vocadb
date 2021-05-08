@@ -69,6 +69,7 @@
 		<div class="controls">
 			<input type="number" data-bind="textInput: dateYear" class="input-small" maxlength="4" max="2100" min="1900" placeholder="Year" />
 			<input type="number" data-bind="textInput: dateMonth, visible: dateYear" class="input-small" maxlength="2" max="12" min="1" placeholder="Month" />
+			<input type="number" data-bind="textInput: dateDay, visible: dateMonth" class="input-small" maxlength="2" max="31" min="1" placeholder="Day" />
 		</div>
 	</div>
 
