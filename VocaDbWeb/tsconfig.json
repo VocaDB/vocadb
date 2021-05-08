@@ -10,7 +10,8 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitAny": true,
-		"strictBindCallApply": true
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true
 	},
 	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
 }

@@ -22,7 +22,10 @@ ko.bindingHandlers.confirmClick = {
       {
         click: function () {
           if (window.confirm(message))
-            return click.apply(this, Array.prototype.slice.apply(arguments));
+            return click.apply(
+              this,
+              Array.prototype.slice.apply(arguments) as [],
+            );
         },
       },
       viewModel,

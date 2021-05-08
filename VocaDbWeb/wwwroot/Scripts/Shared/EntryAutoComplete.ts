@@ -161,7 +161,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
 
   function selectItem(
     event: Event,
-    ui: { item: AutoCompleteItem<TContract> },
+    ui: { item?: AutoCompleteItem<TContract> },
   ): boolean {
     var item: AutoCompleteItem<TContract> = ui.item;
 
