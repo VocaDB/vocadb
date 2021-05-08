@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+
 // ~/bundles/shared/common
 export { setLanguagePreferenceCookie } from './Shared/TopBar';
 export { default as ui } from './Shared/MessagesTyped';

@@ -1,5 +1,5 @@
 export default class DateTimeHelper {
-  private static addLeadingZero(val: any) {
+  private static addLeadingZero(val: any): any {
     return val < 10 ? '0' + val : val;
   }
 

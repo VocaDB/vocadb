@@ -10,7 +10,11 @@ var data: PartialFindResultContract<UserMessageSummaryContract>;
 var sender: UserApiContract;
 var repository: FakeUserRepository;
 
-var createMessage = (id: number, subject: string, sender?: UserApiContract) => {
+var createMessage = (
+  id: number,
+  subject: string,
+  sender?: UserApiContract,
+): UserMessageSummaryContract => {
   return {
     createdFormatted: '2039.3.9',
     highPriority: false,
@@ -23,7 +27,7 @@ var createMessage = (id: number, subject: string, sender?: UserApiContract) => {
   };
 };
 
-var createViewModel = () => {
+var createViewModel = (): UserMessagesViewModel => {
   return new UserMessagesViewModel(repository, null!, UserInboxType.Received);
 };
 

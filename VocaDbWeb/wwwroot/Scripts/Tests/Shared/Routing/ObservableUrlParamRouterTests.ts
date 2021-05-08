@@ -32,7 +32,7 @@ QUnit.module('ObservableUrlParamRouter', {
       },
     };
 
-    jQuery.url = () => null!;
+    jQuery.url = (): string => null!;
   },
 });
 
