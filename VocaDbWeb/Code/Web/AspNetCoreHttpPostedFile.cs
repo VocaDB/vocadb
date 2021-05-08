@@ -17,6 +17,10 @@ namespace VocaDb.Web
 
 		public string FileName => _file.FileName;
 
-		public void SaveAs(string path) => _file.CopyTo(new FileStream(path, FileMode.Create));
+		public void SaveAs(string path)
+		{
+			using var target = new FileStream(path, FileMode.Create);
+			_file.CopyTo(target);
+		}
 	}
 }
