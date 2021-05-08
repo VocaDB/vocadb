@@ -281,17 +281,19 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   private toDateOrNull = (mom: moment.Moment): Date | null =>
     mom.isValid() ? mom.toDate() : null;
 
-  private afterDate = ko.computed(() =>
-    this.dateYear()
-      ? this.toDateOrNull(
-          moment.utc([
-            this.dateYear(),
-            (this.dateMonth() || 1) - 1,
-            this.dateDay() || 1,
-          ]),
-        )
-      : null,
-  );
+  private afterDate = ko
+    .computed(() =>
+      this.dateYear()
+        ? this.toDateOrNull(
+            moment.utc([
+              this.dateYear(),
+              (this.dateMonth() || 1) - 1,
+              this.dateDay() || 1,
+            ]),
+          )
+        : null,
+    )
+    .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
   private beforeDate = (): Date | null => {
     if (!this.dateYear()) return null;
