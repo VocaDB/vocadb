@@ -10,6 +10,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./",
 		"paths": {
+			"@Bootstrap/*": ["ClientApp/src/Bootstrap/*"],
 			"@Components/*": ["ClientApp/src/Components/*"],
 			"@DataContracts/*": ["wwwroot/Scripts/DataContracts/*"],
 			"@Helpers/*": ["wwwroot/Scripts/Helpers/*"],

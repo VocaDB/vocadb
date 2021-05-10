@@ -25,6 +25,7 @@ mix
 		processCssUrls: false,
 	})
 	.alias({
+		'@Bootstrap': path.join(__dirname, 'ClientApp/src/Bootstrap'),
 		'@Components': path.join(__dirname, 'ClientApp/src/Components'),
 		'@DataContracts': path.join(__dirname, 'wwwroot/Scripts/DataContracts'),
 		'@Helpers': path.join(__dirname, 'wwwroot/Scripts/Helpers'),
