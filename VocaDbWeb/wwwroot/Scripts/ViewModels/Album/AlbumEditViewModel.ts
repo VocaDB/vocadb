@@ -353,7 +353,7 @@ export default class AlbumEditViewModel {
           songId: 0,
           songInAlbumId: 0,
           trackNumber: 1,
-          isCustomTrack: itemType == 'custom',
+          isCustomTrack: itemType === 'custom',
         });
         track.isNextDisc.subscribe(() => this.updateTrackNumbers());
         this.tracks.push(track);
@@ -369,7 +369,7 @@ export default class AlbumEditViewModel {
               this.editedSong().artistSelections,
               (a) =>
                 a.selected() &&
-                _.every(song.artists(), (a2) => a.artist.id != a2.id),
+                _.every(song.artists(), (a2) => a.artist.id !== a2.id),
             ),
             (a3) => a3.artist,
           );
@@ -441,7 +441,7 @@ export default class AlbumEditViewModel {
     this.getArtistLink = (artistForAlbumId): ArtistForAlbumEditViewModel => {
       return _.find(
         this.artistLinks(),
-        (artist) => artist.id == artistForAlbumId,
+        (artist) => artist.id === artistForAlbumId,
       );
     };
 
@@ -464,7 +464,7 @@ export default class AlbumEditViewModel {
           var removed = _.filter(song.artists(), (a) =>
             _.some(
               this.editedSong().artistSelections,
-              (a2) => a2.selected() && a.id == a2.artist.id,
+              (a2) => a2.selected() && a.id === a2.artist.id,
             ),
           );
           song.artists.removeAll(removed);
@@ -510,7 +510,7 @@ export default class AlbumEditViewModel {
     var songTypes =
       'Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,Other,Instrumental,Live,Illustration';
 
-    if (data.discType == 'Video') songTypes += ',MusicPV,DramaPV';
+    if (data.discType === 'Video') songTypes += ',MusicPV,DramaPV';
 
     this.trackSearchParams = {
       acceptSelection: this.acceptTrackSelection,
@@ -634,7 +634,7 @@ export class TrackArtistSelectionViewModel {
 
     this.visible = ko.computed(() => {
       var f = filter();
-      if (f.length == 0) return true;
+      if (f.length === 0) return true;
 
       f = f.trim().toLowerCase();
 
@@ -669,7 +669,7 @@ export class TrackPropertiesViewModel {
       (a) =>
         new TrackArtistSelectionViewModel(
           a,
-          song != null && _.some(song.artists(), (sa) => a.id == sa.id),
+          song != null && _.some(song.artists(), (sa) => a.id === sa.id),
           this.filter,
         ),
     );

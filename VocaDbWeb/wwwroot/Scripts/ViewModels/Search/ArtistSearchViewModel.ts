@@ -38,7 +38,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
           lang,
           searchTerm,
           this.sort(),
-          this.artistType() != ArtistType[ArtistType.Unknown]
+          this.artistType() !== ArtistType[ArtistType.Unknown]
             ? this.artistType()
             : null!,
           !this.onlyRootVoicebanks(),

@@ -51,7 +51,7 @@ export default class PlayListRepositoryForSongsAdapter
         ContentLanguagePreference[lang],
         this.query(),
         this.sort(),
-        this.songType() != SongType[SongType.Unspecified]
+        this.songType() !== SongType[SongType.Unspecified]
           ? this.songType()
           : null!,
         this.afterDate(),

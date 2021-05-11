@@ -54,7 +54,7 @@ export default class PlayListViewModel {
   private getSongIndex = (song: IPVPlayerSong): number => {
     // Might need to build a lookup for this for large playlists
     for (var i = 0; i < this.page().length; ++i) {
-      if (this.page()[i].song.id == song.song.id) return i;
+      if (this.page()[i].song.id === song.song.id) return i;
     }
 
     return -1;
@@ -64,7 +64,7 @@ export default class PlayListViewModel {
   // If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
   private getSongWithPlayListIndex = (index: number): ISongForPlayList => {
     // Might need to build a lookup for this for large playlists
-    return _.find(this.page(), (s) => s.indexInPlayList == index);
+    return _.find(this.page(), (s) => s.indexInPlayList === index);
   };
 
   private hasMoreSongs: KnockoutComputed<boolean>;
@@ -79,7 +79,7 @@ export default class PlayListViewModel {
   };
 
   public nextSong = (): void => {
-    if (this.paging.totalItems() == 0) return;
+    if (this.paging.totalItems() === 0) return;
 
     var index: number;
 

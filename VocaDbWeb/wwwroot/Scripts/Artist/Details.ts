@@ -51,13 +51,13 @@ function initPage(
     },
   });
 
-  if (window.location.hash == '#mainAlbumsTab') {
+  if (window.location.hash === '#mainAlbumsTab') {
     viewModel.initMainAlbums();
   }
-  if (window.location.hash == '#collaborationAlbumsTab') {
+  if (window.location.hash === '#collaborationAlbumsTab') {
     viewModel.initCollaborationAlbums();
   }
-  if (window.location.hash == '#songsTab') {
+  if (window.location.hash === '#songsTab') {
     viewModel.initSongs();
   }
 

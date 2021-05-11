@@ -1,4 +1,3 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';

@@ -26,6 +26,73 @@ import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
+export class RatingsViewModel {
+  constructor() {
+    const fav = SongVoteRating[SongVoteRating.Favorite];
+    const like = SongVoteRating[SongVoteRating.Like];
+
+    this.favorites = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.user && r.rating === fav)
+        .take(20)
+        .map((r) => r.user!)
+        .sortBy((u) => u.name)
+        .value(),
+    );
+
+    this.favoritesCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.rating === fav)
+        .size()
+        .value(),
+    );
+
+    this.likes = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.user && r.rating === like)
+        .take(20)
+        .map((r) => r.user!)
+        .sortBy((u) => u.name)
+        .value(),
+    );
+
+    this.likesCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.rating === like)
+        .size()
+        .value(),
+    );
+
+    this.hiddenRatingsCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => !r.user)
+        .size()
+        .value(),
+    );
+
+    this.showFavorites = ko.computed(() => !!this.favorites().length);
+    this.showLikes = ko.computed(() => !!this.likes().length);
+  }
+
+  public readonly favorites: KnockoutComputed<UserApiContract[]>;
+
+  public readonly favoritesCount: KnockoutComputed<number>;
+
+  public readonly hiddenRatingsCount: KnockoutComputed<number>;
+
+  public readonly likes: KnockoutComputed<UserApiContract[]>;
+
+  public readonly likesCount: KnockoutComputed<number>;
+
+  public readonly popupVisible = ko.observable(false);
+
+  public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
+
+  public readonly showFavorites: KnockoutComputed<boolean>;
+
+  public readonly showLikes: KnockoutComputed<boolean>;
+}
+
 // View model for the song details view.
 export default class SongDetailsViewModel {
   public allVersionsVisible: KnockoutObservable<boolean>;
@@ -341,73 +408,6 @@ export class SongListsViewModel {
       });
     };
   }
-}
-
-export class RatingsViewModel {
-  constructor() {
-    const fav = SongVoteRating[SongVoteRating.Favorite];
-    const like = SongVoteRating[SongVoteRating.Like];
-
-    this.favorites = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === fav)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
-
-    this.favoritesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === fav)
-        .size()
-        .value(),
-    );
-
-    this.likes = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === like)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
-
-    this.likesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === like)
-        .size()
-        .value(),
-    );
-
-    this.hiddenRatingsCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => !r.user)
-        .size()
-        .value(),
-    );
-
-    this.showFavorites = ko.computed(() => !!this.favorites().length);
-    this.showLikes = ko.computed(() => !!this.likes().length);
-  }
-
-  public readonly favorites: KnockoutComputed<UserApiContract[]>;
-
-  public readonly favoritesCount: KnockoutComputed<number>;
-
-  public readonly hiddenRatingsCount: KnockoutComputed<number>;
-
-  public readonly likes: KnockoutComputed<UserApiContract[]>;
-
-  public readonly likesCount: KnockoutComputed<number>;
-
-  public readonly popupVisible = ko.observable(false);
-
-  public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
-
-  public readonly showFavorites: KnockoutComputed<boolean>;
-
-  public readonly showLikes: KnockoutComputed<boolean>;
 }
 
 export interface SongDetailsAjax {

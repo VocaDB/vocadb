@@ -24,7 +24,7 @@ export function albumAutoComplete(
 
   if (properties.ignoreId) {
     filter = (item): boolean => {
-      if (item.id == properties.ignoreId) {
+      if (item.id === properties.ignoreId) {
         return false;
       }
 

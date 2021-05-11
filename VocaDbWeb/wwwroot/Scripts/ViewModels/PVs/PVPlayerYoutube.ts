@@ -33,7 +33,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
           // This will still be fired once if the user disabled autoplay mode.
           if (
             this.player &&
-            event.data == YT.PlayerState.ENDED &&
+            event.data === YT.PlayerState.ENDED &&
             this.songFinishedCallback
           ) {
             this.songFinishedCallback();

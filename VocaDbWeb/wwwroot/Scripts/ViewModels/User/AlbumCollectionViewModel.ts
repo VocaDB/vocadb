@@ -3,7 +3,6 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';

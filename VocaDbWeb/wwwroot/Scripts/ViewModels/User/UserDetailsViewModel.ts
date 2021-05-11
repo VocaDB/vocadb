@@ -133,7 +133,7 @@ export default class UserDetailsViewModel {
 
     window.scrollTo(0, 0);
     window.location.hash =
-      viewName != UserDetailsViewModel.overview ? viewName : '';
+      viewName !== UserDetailsViewModel.overview ? viewName : '';
     this.view(viewName);
   };
 

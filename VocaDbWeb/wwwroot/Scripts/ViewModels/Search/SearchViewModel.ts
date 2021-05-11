@@ -23,6 +23,15 @@ import SongSearchViewModel from './SongSearchViewModel';
 import TagFilters from './TagFilters';
 import TagSearchViewModel from './TagSearchViewModel';
 
+class SearchType {
+  public static Anything = 'Anything';
+  public static Artist = 'Artist';
+  public static Album = 'Album';
+  public static ReleaseEvent = 'ReleaseEvent';
+  public static Song = 'Song';
+  public static Tag = 'Tag';
+}
+
 export default class SearchViewModel {
   constructor(
     urlMapper: UrlMapper,
@@ -278,13 +287,4 @@ export default class SearchViewModel {
 
     if (vm != null) vm.updateResultsWithTotalCount();
   };
-}
-
-class SearchType {
-  public static Anything = 'Anything';
-  public static Artist = 'Artist';
-  public static Album = 'Album';
-  public static ReleaseEvent = 'ReleaseEvent';
-  public static Song = 'Song';
-  public static Tag = 'Tag';
 }

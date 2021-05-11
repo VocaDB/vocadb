@@ -274,8 +274,8 @@ export class CustomizeArtistSubscriptionViewModel {
     this.notificationsMethod.subscribe((method) => {
       userRepository.updateArtistSubscription(
         artistId,
-        method == 'Email',
-        method == 'Site' || method == 'Email',
+        method === 'Email',
+        method === 'Site' || method === 'Email',
       );
     });
   }

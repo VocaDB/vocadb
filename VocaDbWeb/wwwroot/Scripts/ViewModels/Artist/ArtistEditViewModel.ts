@@ -252,8 +252,8 @@ export default class ArtistEditViewModel {
     this.validationError_needReferences = ko.computed(
       () =>
         (this.description.original() == null ||
-          this.description.original().length) == 0 &&
-        this.webLinks.items().length == 0,
+          this.description.original().length) === 0 &&
+        this.webLinks.items().length === 0,
     );
     this.validationError_needType = ko.computed(
       () => this.artistType() === ArtistType.Unknown,

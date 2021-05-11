@@ -209,7 +209,7 @@ function findArtistSelection(
   target: TrackPropertiesViewModel,
   artist: ArtistContract,
 ): TrackArtistSelectionViewModel {
-  return _.find(target.artistSelections, (a) => a.artist == artist);
+  return _.find(target.artistSelections, (a) => a.artist === artist);
 }
 
 QUnit.test('constructor', () => {
@@ -275,7 +275,7 @@ QUnit.test('addArtist existing', () => {
 
   equal(target.artistLinks().length, 5, 'artistLinks().length');
   equal(
-    _.some(target.artistLinks(), (a) => a.artist == newVocalist),
+    _.some(target.artistLinks(), (a) => a.artist === newVocalist),
     true,
     'New vocalist was added',
   );
@@ -287,7 +287,7 @@ QUnit.test('addArtist custom', () => {
 
   equal(target.artistLinks().length, 5, 'artistLinks().length');
   equal(
-    _.some(target.artistLinks(), (a) => a.name() == 'Custom artist'),
+    _.some(target.artistLinks(), (a) => a.name() === 'Custom artist'),
     true,
     'Custom artist was added',
   );

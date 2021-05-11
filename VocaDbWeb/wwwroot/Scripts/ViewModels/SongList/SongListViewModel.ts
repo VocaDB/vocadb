@@ -228,7 +228,7 @@ export default class SongListViewModel {
           var song = item.song;
           var songAny: any = song;
 
-          if (song.pvServices && song.pvServices != 'Nothing') {
+          if (song.pvServices && song.pvServices !== 'Nothing') {
             songAny.previewViewModel = new SongWithPreviewViewModel(
               this.songRepo,
               this.userRepo,

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface KnockoutBindingHandlers {
   // Knockout binding for qTip tooltip.
   qTip: KnockoutBindingHandler;

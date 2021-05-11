@@ -50,7 +50,7 @@ export default class ServerSidePagingViewModel {
     return {
       start: this.firstItem(),
       maxEntries: this.pageSize(),
-      getTotalCount: clearResults || this.totalItems() == 0,
+      getTotalCount: clearResults || this.totalItems() === 0,
     };
   };
 

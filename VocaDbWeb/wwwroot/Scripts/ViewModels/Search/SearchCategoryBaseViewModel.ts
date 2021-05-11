@@ -13,6 +13,7 @@ export interface ISearchCategoryBaseViewModel {
 }
 
 // Base class for different types of searches.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class SearchCategoryBaseViewModel<TEntry>
   implements ISearchCategoryBaseViewModel {
   constructor(public searchViewModel: SearchViewModel) {

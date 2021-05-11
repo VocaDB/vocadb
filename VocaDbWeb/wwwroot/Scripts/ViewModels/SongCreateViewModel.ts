@@ -230,7 +230,7 @@ export default class SongCreateViewModel {
       return _.filter(
         this.artists(),
         (a) =>
-          ArtistType[a.artistType as keyof typeof ArtistType] ==
+          ArtistType[a.artistType as keyof typeof ArtistType] ===
           ArtistType.CoverArtist,
       );
     });

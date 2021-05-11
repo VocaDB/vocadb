@@ -4,7 +4,6 @@ import SongContract from '@DataContracts/Song/SongContract';
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import ArtistHelper from '@Helpers/ArtistHelper';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
 import SongHelper from '@Helpers/SongHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
@@ -18,7 +17,6 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
-import Decimal from 'decimal.js-light';
 
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';

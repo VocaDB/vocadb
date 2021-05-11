@@ -8,6 +8,12 @@ import PagedItemsViewModel from '../PagedItemsViewModel';
 import TagFilter from '../Search/TagFilter';
 import TagFilters from '../Search/TagFilters';
 
+enum SongListSortRule {
+  Name,
+  Date,
+  CreateDate,
+}
+
 export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
   constructor(
     resourceRepo: ResourceRepository,
@@ -80,10 +86,4 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
   public fields = ko.computed(() => {
     return 'MainPicture' + (this.showTags() ? ',Tags' : '');
   });
-}
-
-enum SongListSortRule {
-  Name,
-  Date,
-  CreateDate,
 }

@@ -22,6 +22,13 @@ import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
 import ICommentRepository from './ICommentRepository';
 
+export enum UserInboxType {
+  Nothing,
+  Received,
+  Sent,
+  Notifications,
+}
+
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
 export default class UserRepository implements ICommentRepository {
@@ -582,11 +589,4 @@ export default class UserRepository implements ICommentRepository {
       return `${urlMapper.mapRelative('/User')}${relative}`;
     };
   }
-}
-
-export enum UserInboxType {
-  Nothing,
-  Received,
-  Sent,
-  Notifications,
 }

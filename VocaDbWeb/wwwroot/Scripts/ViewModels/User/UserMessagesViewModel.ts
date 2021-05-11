@@ -7,6 +7,42 @@ import UserRepository from '@Repositories/UserRepository';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
 
+export class NewMessageViewModel {
+  constructor() {
+    this.receiver.id.subscribe(() => this.isReceiverInvalid(false));
+  }
+
+  body = ko.observable<string>('');
+
+  highPriority = ko.observable(false);
+
+  isReceiverInvalid = ko.observable(false);
+
+  isSending = ko.observable(false);
+
+  receiver = new BasicEntryLinkViewModel<UserApiContract>();
+
+  subject = ko.observable<string>('');
+
+  public clear = (): void => {
+    this.body('');
+    this.highPriority(false);
+    this.receiver.clear();
+    this.subject('');
+  };
+
+  public toContract = (senderId: number): UserApiContract => {
+    return {
+      body: this.body(),
+      highPriority: this.highPriority(),
+      receiver: this.receiver.entry(),
+      sender: { id: senderId } as UserApiContract,
+      subject: this.subject(),
+      id: null!,
+    } as UserApiContract;
+  };
+}
+
 export default class UserMessagesViewModel {
   constructor(
     private readonly userRepository: UserRepository,
@@ -237,7 +273,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
   selectMessage = (message: UserMessageViewModel): void => {
     _.each(this.items(), (msg) => {
-      if (msg != message) msg.selected(false);
+      if (msg !== message) msg.selected(false);
     });
   };
 
@@ -277,40 +313,4 @@ export class UserMessageViewModel {
   sender: UserApiContract;
 
   subject: string;
-}
-
-export class NewMessageViewModel {
-  constructor() {
-    this.receiver.id.subscribe(() => this.isReceiverInvalid(false));
-  }
-
-  body = ko.observable<string>('');
-
-  highPriority = ko.observable(false);
-
-  isReceiverInvalid = ko.observable(false);
-
-  isSending = ko.observable(false);
-
-  receiver = new BasicEntryLinkViewModel<UserApiContract>();
-
-  subject = ko.observable<string>('');
-
-  public clear = (): void => {
-    this.body('');
-    this.highPriority(false);
-    this.receiver.clear();
-    this.subject('');
-  };
-
-  public toContract = (senderId: number): UserApiContract => {
-    return {
-      body: this.body(),
-      highPriority: this.highPriority(),
-      receiver: this.receiver.entry(),
-      sender: { id: senderId } as UserApiContract,
-      subject: this.subject(),
-      id: null!,
-    } as UserApiContract;
-  };
 }

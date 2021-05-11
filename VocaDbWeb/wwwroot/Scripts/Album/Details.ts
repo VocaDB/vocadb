@@ -48,7 +48,7 @@ function initAlbumDetailsPage(
 
   $('#collectionRating').jqxRating();
 
-  if (collectionRating != 0) {
+  if (collectionRating !== 0) {
     $('#collectionRating').jqxRating({ value: collectionRating });
   }
 
@@ -99,7 +99,7 @@ function initAlbumDetailsPage(
             null!,
           );
 
-          if (status == 'Nothing') {
+          if (status === 'Nothing') {
             $('#updateAlbumLink').hide();
             $('#addAlbumLink').show();
           } else {

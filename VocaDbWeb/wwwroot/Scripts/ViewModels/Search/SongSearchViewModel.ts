@@ -1,5 +1,4 @@
 import SongApiContract from '@DataContracts/Song/SongApiContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
@@ -13,7 +12,6 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import Decimal from 'decimal.js-light';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
@@ -193,7 +191,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
             lang,
             searchTerm,
             this.sort(),
-            this.songType() != SongType[SongType.Unspecified]
+            this.songType() !== SongType[SongType.Unspecified]
               ? this.songType()
               : null!,
             this.afterDate(),
@@ -222,7 +220,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
           )
           .then((result) => {
             _.each(result.items, (song: ISongSearchItem) => {
-              if (song.pvServices && song.pvServices != 'Nothing') {
+              if (song.pvServices && song.pvServices !== 'Nothing') {
                 song.previewViewModel = new SongWithPreviewViewModel(
                   this.songRepo,
                   this.userRepo,

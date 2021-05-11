@@ -53,7 +53,7 @@ export default class RankingsViewModel {
       },
       (songs: SongApiContract[]) => {
         _.each(songs, (song: any) => {
-          if (song.pvServices && song.pvServices != 'Nothing') {
+          if (song.pvServices && song.pvServices !== 'Nothing') {
             song.previewViewModel = new SongWithPreviewViewModel(
               this.songRepo,
               this.userRepo,

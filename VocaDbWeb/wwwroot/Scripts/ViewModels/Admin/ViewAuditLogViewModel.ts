@@ -69,7 +69,7 @@ export default class ViewAuditLogViewModel {
           },
         ) => {
           var name = this.extractLast(request.term);
-          if (name.length == 0) response({});
+          if (name.length === 0) response({});
           else
             $.getJSON(
               '/api/users/names',
