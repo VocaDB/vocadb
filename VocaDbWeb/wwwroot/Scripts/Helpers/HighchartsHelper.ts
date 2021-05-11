@@ -107,11 +107,11 @@ export default class HighchartsHelper {
         enabled: false,
       },
       series: [
-        <any>{
+        {
           animation: false,
           name: seriesName,
           data: data,
-        },
+        } as any,
       ],
     };
   };

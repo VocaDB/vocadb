@@ -1,9 +1,10 @@
-import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '@Models/PVs/PVService';
+
 import PVPlayerFile from './PVPlayerFile';
 import PVPlayerNico from './PVPlayerNico';
 import PVPlayerSoundCloud from './PVPlayerSoundCloud';
+import { IPVPlayer } from './PVPlayerViewModel';
 import PVPlayerYoutube from './PVPlayerYoutube';
-import PVService from '@Models/PVs/PVService';
 
 export default class PVPlayersFactory {
   constructor(
@@ -15,42 +16,32 @@ export default class PVPlayersFactory {
     songFinishedCallback: () => void = null!,
   ): { [index: string]: IPVPlayer } => {
     var players: { [index: string]: IPVPlayer } = {
-      File: <IPVPlayer>(
-        new PVPlayerFile(
-          this.playerElementId,
-          this.wrapperElement,
-          songFinishedCallback,
-        )
-      ),
-      LocalFile: <IPVPlayer>(
-        new PVPlayerFile(
-          this.playerElementId,
-          this.wrapperElement,
-          songFinishedCallback,
-          PVService.LocalFile,
-        )
-      ),
-      NicoNicoDouga: <IPVPlayer>(
-        new PVPlayerNico(
-          this.playerElementId,
-          this.wrapperElement,
-          songFinishedCallback,
-        )
-      ),
-      Youtube: <IPVPlayer>(
-        new PVPlayerYoutube(
-          this.playerElementId,
-          this.wrapperElement,
-          songFinishedCallback,
-        )
-      ),
-      SoundCloud: <IPVPlayer>(
-        new PVPlayerSoundCloud(
-          this.playerElementId,
-          this.wrapperElement,
-          songFinishedCallback,
-        )
-      ),
+      File: new PVPlayerFile(
+        this.playerElementId,
+        this.wrapperElement,
+        songFinishedCallback,
+      ) as IPVPlayer,
+      LocalFile: new PVPlayerFile(
+        this.playerElementId,
+        this.wrapperElement,
+        songFinishedCallback,
+        PVService.LocalFile,
+      ) as IPVPlayer,
+      NicoNicoDouga: new PVPlayerNico(
+        this.playerElementId,
+        this.wrapperElement,
+        songFinishedCallback,
+      ) as IPVPlayer,
+      Youtube: new PVPlayerYoutube(
+        this.playerElementId,
+        this.wrapperElement,
+        songFinishedCallback,
+      ) as IPVPlayer,
+      SoundCloud: new PVPlayerSoundCloud(
+        this.playerElementId,
+        this.wrapperElement,
+        songFinishedCallback,
+      ) as IPVPlayer,
     };
 
     return players;

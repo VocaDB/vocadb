@@ -19,13 +19,13 @@ function initPage(confirmDisableStr: string): void {
   $('#disableUserLink').button({ icons: { primary: 'ui-icon-close' } });
   $('#reportUserLink').button({ icons: { primary: 'ui-icon-alert' } });
   $('#setToLimitedLink').button({ icons: { primary: 'ui-icon-close' } });
-  $('#avatar').tooltip(<any>{ placement: 'bottom' });
+  $('#avatar').tooltip({ placement: 'bottom' } as any);
 
   $('#disableUserLink').click(function () {
     return window.confirm(confirmDisableStr);
   });
 
-  $('#sfsCheckDialog').dialog(<any>{ autoOpen: false, model: true });
+  $('#sfsCheckDialog').dialog({ autoOpen: false, model: true } as any);
   $('#favoriteAlbums img').vdbAlbumToolTip();
 }
 

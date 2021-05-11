@@ -1,6 +1,6 @@
-import EntryReportRepository from '@Repositories/EntryReportRepository';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
 
 // View model for the top bar.
@@ -62,7 +62,7 @@ export default class TopBarViewModel {
     this.unreadMessagesCount = ko.observable(unreadMessagesCount);
 
     this.entryTypeName = ko.computed(() => {
-      return <string>entryTypeTranslations[this.entryType()];
+      return entryTypeTranslations[this.entryType()] as string;
     });
 
     this.hasNotifications = ko.computed(() => {

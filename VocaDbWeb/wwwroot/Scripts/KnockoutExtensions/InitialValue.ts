@@ -13,7 +13,7 @@ ko.bindingHandlers.initialValue = {
     } else if (bindings.textInput) {
       bindings.textInput(val);
     } else if (bindings.checked) {
-      bindings.checked((<HTMLInputElement>element).checked);
+      bindings.checked((element as HTMLInputElement).checked);
     }
   },
 };

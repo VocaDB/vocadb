@@ -1,5 +1,6 @@
-import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '@Models/PVs/PVService';
+
+import { IPVPlayer } from './PVPlayerViewModel';
 
 export default class PVPlayerFile implements IPVPlayer {
   constructor(
@@ -27,7 +28,7 @@ export default class PVPlayerFile implements IPVPlayer {
       );
     }
 
-    this.player = <HTMLAudioElement>$('#' + this.playerElementId)[0];
+    this.player = $('#' + this.playerElementId)[0] as HTMLAudioElement;
     this.player.onended = (): void => {
       if (this.player && this.songFinishedCallback) this.songFinishedCallback();
     };
