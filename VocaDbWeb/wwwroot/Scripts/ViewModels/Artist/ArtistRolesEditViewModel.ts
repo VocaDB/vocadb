@@ -1,4 +1,4 @@
-import ArtistRoles from '../../Models/Artists/ArtistRoles';
+import ArtistRoles from '@Models/Artists/ArtistRoles';
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 
 export default class ArtistRolesEditViewModel {

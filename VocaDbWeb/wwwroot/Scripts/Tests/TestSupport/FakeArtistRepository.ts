@@ -1,6 +1,6 @@
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import HttpClient from '../../Shared/HttpClient';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import HttpClient from '@Shared/HttpClient';
 import FakePromise from './FakePromise';
 
 export default class FakeArtistRepository extends ArtistRepository {

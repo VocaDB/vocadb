@@ -1,9 +1,9 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
-import RatedSongsSearchViewModel from '../ViewModels/User/RatedSongsSearchViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 
 const UserFavoriteSongs = (model: {
   groupByRating: boolean;

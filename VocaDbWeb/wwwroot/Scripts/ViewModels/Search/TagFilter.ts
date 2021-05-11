@@ -1,4 +1,4 @@
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 
 export default class TagFilter {
   public static fromContract = (tag: TagBaseContract): TagFilter => {

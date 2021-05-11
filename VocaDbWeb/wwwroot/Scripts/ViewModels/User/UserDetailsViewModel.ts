@@ -1,21 +1,21 @@
-import AdminRepository from '../../Repositories/AdminRepository';
+import AdminRepository from '@Repositories/AdminRepository';
 import AlbumCollectionViewModel from './AlbumCollectionViewModel';
-import CommentContract from '../../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import FollowedArtistsViewModel from './FollowedArtistsViewModel';
-import HighchartsHelper from '../../Helpers/HighchartsHelper';
+import HighchartsHelper from '@Helpers/HighchartsHelper';
 import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
-import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
-import ResourceRepository from '../../Repositories/ResourceRepository';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ResourceRepository from '@Repositories/ResourceRepository';
 import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
-import TagRepository from '../../Repositories/TagRepository';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
-import UserRepository from '../../Repositories/UserRepository';
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
-import SongListContract from '../../DataContracts/Song/SongListContract';
+import TagRepository from '@Repositories/TagRepository';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
+import UserRepository from '@Repositories/UserRepository';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import SongListContract from '@DataContracts/Song/SongListContract';
 
 export default class UserDetailsViewModel {
   private static overview = 'Overview';

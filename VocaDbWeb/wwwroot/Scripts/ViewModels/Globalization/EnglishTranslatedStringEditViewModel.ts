@@ -1,4 +1,4 @@
-import EnglishTranslatedStringContract from '../../DataContracts/Globalization/EnglishTranslatedStringContract';
+import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
 
 export default class EnglishTranslatedStringEditViewModel {
   constructor(contract: EnglishTranslatedStringContract) {

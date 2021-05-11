@@ -1,6 +1,6 @@
-import { IPRuleContract } from '../ViewModels/Admin/ManageIPRulesViewModel';
-import UrlMapper from '../Shared/UrlMapper';
-import HttpClient from '../Shared/HttpClient';
+import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
+import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@Shared/HttpClient';
 
 export default class AdminRepository {
   constructor(

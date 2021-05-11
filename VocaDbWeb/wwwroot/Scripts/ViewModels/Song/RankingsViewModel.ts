@@ -1,13 +1,13 @@
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import ObservableUrlParamRouter from '../../Shared/Routing/ObservableUrlParamRouter';
-import PVServiceIcons from '../../Models/PVServiceIcons';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongRepository from '../../Repositories/SongRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongRepository from '@Repositories/SongRepository';
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 
 export default class RankingsViewModel {
   constructor(

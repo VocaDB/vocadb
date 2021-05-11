@@ -1,8 +1,8 @@
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
-import TagApiContract from '../../DataContracts/Tag/TagApiContract';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
-import TagRepository from '../../Repositories/TagRepository';
+import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagRepository from '@Repositories/TagRepository';
 
 export default class TagMergeViewModel {
   constructor(tagRepo: TagRepository, private base: TagBaseContract) {

@@ -1,6 +1,6 @@
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import EntryThumbContract from '../EntryThumbContract';
-import EntryType from '../../Models/EntryType';
+import EntryType from '@Models/EntryType';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import TagBaseContract from './TagBaseContract';
 import WebLinkContract from '../WebLinkContract';

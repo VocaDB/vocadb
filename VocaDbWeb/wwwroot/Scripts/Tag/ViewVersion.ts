@@ -1,6 +1,6 @@
-import TagRepository from '../Repositories/TagRepository';
-import HttpClient from '../Shared/HttpClient';
-import ArchivedEntryViewModel from '../ViewModels/ArchivedEntryViewModel';
+import TagRepository from '@Repositories/TagRepository';
+import HttpClient from '@Shared/HttpClient';
+import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 
 const TagViewVersion = (model: {
   entry: {

@@ -1,26 +1,26 @@
-import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumRepository from '@Repositories/AlbumRepository';
 import AlbumSearchViewModel from './AlbumSearchViewModel';
 import AnythingSearchViewModel from './AnythingSearchViewModel';
-import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
 import ArtistSearchViewModel from './ArtistSearchViewModel';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
-import EntryRepository from '../../Repositories/EntryRepository';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import EntryRepository from '@Repositories/EntryRepository';
 import EventSearchViewModel from './EventSearchViewModel';
 import { ISearchCategoryBaseViewModel } from './SearchCategoryBaseViewModel';
 import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesContract from '../../DataContracts/ResourcesContract';
-import ResourcesManager from '../../Models/ResourcesManager';
-import SongRepository from '../../Repositories/SongRepository';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import ResourcesContract from '@DataContracts/ResourcesContract';
+import ResourcesManager from '@Models/ResourcesManager';
+import SongRepository from '@Repositories/SongRepository';
 import SongSearchViewModel from './SongSearchViewModel';
-import Tag from '../../Models/Tags/Tag';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import Tag from '@Models/Tags/Tag';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagFilters from './TagFilters';
-import TagRepository from '../../Repositories/TagRepository';
+import TagRepository from '@Repositories/TagRepository';
 import TagSearchViewModel from './TagSearchViewModel';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 
 export default class SearchViewModel {
   constructor(

@@ -1,5 +1,5 @@
-import UrlMapper from '../Shared/UrlMapper';
-import HttpClient from '../Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@Shared/HttpClient';
 
 export default class EntryReportRepository {
   public getNewReportCount = (): Promise<number> => {

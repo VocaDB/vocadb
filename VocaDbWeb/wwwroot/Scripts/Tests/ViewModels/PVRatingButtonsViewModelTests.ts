@@ -1,6 +1,6 @@
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
-import PVRatingButtonsViewModel from '../../ViewModels/PVRatingButtonsViewModel';
-import SongVoteRating from '../../Models/SongVoteRating';
+import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
+import SongVoteRating from '@Models/SongVoteRating';
 
 var repository = new FakeUserRepository();
 

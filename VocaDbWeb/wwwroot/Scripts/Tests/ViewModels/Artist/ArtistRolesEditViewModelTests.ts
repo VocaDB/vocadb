@@ -1,5 +1,5 @@
-import { AlbumArtistRolesEditViewModel } from '../../../ViewModels/Artist/ArtistRolesEditViewModel';
-import { IEditableArtistWithSupport } from '../../../ViewModels/ArtistForAlbumEditViewModel';
+import { AlbumArtistRolesEditViewModel } from '@ViewModels/Artist/ArtistRolesEditViewModel';
+import { IEditableArtistWithSupport } from '@ViewModels/ArtistForAlbumEditViewModel';
 
 var roleNames: { [key: string]: string } = {
   Arranger: 'Arranger',

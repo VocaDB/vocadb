@@ -1,14 +1,14 @@
-import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRoles from '../../Models/Artists/ArtistRoles';
-import ArtistType from '../../Models/Artists/ArtistType';
+import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistType from '@Models/Artists/ArtistType';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
-import SongEditViewModel from '../../ViewModels/Song/SongEditViewModel';
-import SongForEditContract from '../../DataContracts/Song/SongForEditContract';
-import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
-import UrlMapper from '../../Shared/UrlMapper';
+import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
+import SongForEditContract from '@DataContracts/Song/SongForEditContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import UrlMapper from '@Shared/UrlMapper';
 
 var categories: TranslatedEnumField[] = [
   { id: 'Official', name: 'Official' },

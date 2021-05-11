@@ -1,6 +1,6 @@
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistRepository from '../../Repositories/ArtistRepository';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistRepository from '@Repositories/ArtistRepository';
 
 export default class RequestVerificationViewModel {
   constructor(private readonly artistRepository: ArtistRepository) {}

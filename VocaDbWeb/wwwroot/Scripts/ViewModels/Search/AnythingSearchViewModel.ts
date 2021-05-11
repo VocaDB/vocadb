@@ -1,7 +1,7 @@
-import EntryContract from '../../DataContracts/EntryContract';
-import EntryRepository from '../../Repositories/EntryRepository';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import EntryContract from '@DataContracts/EntryContract';
+import EntryRepository from '@Repositories/EntryRepository';
+import EntryType from '@Models/EntryType';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 

@@ -1,4 +1,4 @@
-import AlbumDiscPropertiesContract from '../../DataContracts/Album/AlbumDiscPropertiesContract';
+import AlbumDiscPropertiesContract from '@DataContracts/Album/AlbumDiscPropertiesContract';
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
 export default class AlbumDiscPropertiesEditViewModel {

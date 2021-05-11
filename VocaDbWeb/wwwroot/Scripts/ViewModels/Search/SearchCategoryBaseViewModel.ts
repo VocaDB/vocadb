@@ -1,10 +1,10 @@
 import AdvancedSearchFilters from './AdvancedSearchFilters';
-import EntryContract from '../../DataContracts/EntryContract';
-import EntryWithTagUsagesContract from '../../DataContracts/Base/EntryWithTagUsagesContract';
-import PagingProperties from '../../DataContracts/PagingPropertiesContract';
+import EntryContract from '@DataContracts/EntryContract';
+import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import SearchViewModel from './SearchViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseViewModel {

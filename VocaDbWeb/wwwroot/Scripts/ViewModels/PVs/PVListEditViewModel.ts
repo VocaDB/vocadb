@@ -1,9 +1,9 @@
-import DateTimeHelper from '../../Helpers/DateTimeHelper';
-import PVContract from '../../DataContracts/PVs/PVContract';
+import DateTimeHelper from '@Helpers/DateTimeHelper';
+import PVContract from '@DataContracts/PVs/PVContract';
 import PVEditViewModel from './PVEditViewModel';
-import PVRepository from '../../Repositories/PVRepository';
-import PVServiceIcons from '../../Models/PVServiceIcons';
-import UrlMapper from '../../Shared/UrlMapper';
+import PVRepository from '@Repositories/PVRepository';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import UrlMapper from '@Shared/UrlMapper';
 
 export default class PVListEditViewModel {
   constructor(

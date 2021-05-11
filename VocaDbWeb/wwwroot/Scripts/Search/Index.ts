@@ -1,10 +1,10 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import functions from '../Shared/GlobalFunctions';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
-import SearchViewModel from '../ViewModels/Search/SearchViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import functions from '@Shared/GlobalFunctions';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import SearchViewModel from '@ViewModels/Search/SearchViewModel';
 
 const SearchIndex = (model: {
   artistId: number[];

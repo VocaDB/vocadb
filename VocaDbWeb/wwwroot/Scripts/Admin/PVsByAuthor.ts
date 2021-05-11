@@ -1,4 +1,4 @@
-import functions from '../Shared/GlobalFunctions';
+import functions from '@Shared/GlobalFunctions';
 
 const AdminPVsByAuthor = (): void => {
   $(document).ready(function () {

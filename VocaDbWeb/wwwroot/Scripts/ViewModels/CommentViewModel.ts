@@ -1,5 +1,5 @@
-import CommentContract from '../DataContracts/CommentContract';
-import UserApiContract from '../DataContracts/User/UserApiContract';
+import CommentContract from '@DataContracts/CommentContract';
+import UserApiContract from '@DataContracts/User/UserApiContract';
 
 export default class CommentViewModel {
   constructor(

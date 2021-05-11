@@ -3,7 +3,7 @@ import PVPlayerFile from './PVPlayerFile';
 import PVPlayerNico from './PVPlayerNico';
 import PVPlayerSoundCloud from './PVPlayerSoundCloud';
 import PVPlayerYoutube from './PVPlayerYoutube';
-import PVService from '../../Models/PVs/PVService';
+import PVService from '@Models/PVs/PVService';
 
 export default class PVPlayersFactory {
   constructor(

@@ -1,20 +1,20 @@
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistForArtistContract from '../../DataContracts/Artist/ArtistForArtistContract';
-import ArtistForEditContract from '../../DataContracts/Artist/ArtistForEditContract';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import ArtistType from '../../Models/Artists/ArtistType';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForArtistContract from '@DataContracts/Artist/ArtistForArtistContract';
+import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ArtistType from '@Models/Artists/ArtistType';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
-import EntryType from '../../Models/EntryType';
-import { IDialogService } from '../../Shared/DialogService';
+import EntryType from '@Models/EntryType';
+import { IDialogService } from '@Shared/DialogService';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ArtistEditViewModel {

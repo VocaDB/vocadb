@@ -1,7 +1,7 @@
-import EntryReportRepository from '../Repositories/EntryReportRepository';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
-import UserRepository from '../Repositories/UserRepository';
+import EntryReportRepository from '@Repositories/EntryReportRepository';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import UserRepository from '@Repositories/UserRepository';
 
 // View model for the top bar.
 export default class TopBarViewModel {

@@ -1,5 +1,5 @@
-import UrlMapper from '../Shared/UrlMapper';
-import UserRepository from '../Repositories/UserRepository';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 import HttpClient from './HttpClient';
 
 $(() => {

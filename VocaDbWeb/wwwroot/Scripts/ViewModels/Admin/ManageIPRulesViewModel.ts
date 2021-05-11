@@ -1,5 +1,5 @@
-import AdminRepository from '../../Repositories/AdminRepository';
-import ui from '../../Shared/MessagesTyped';
+import AdminRepository from '@Repositories/AdminRepository';
+import ui from '@Shared/MessagesTyped';
 
 export default class ManageIPRulesViewModel {
   public add = (): void => {

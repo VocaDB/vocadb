@@ -1,9 +1,9 @@
-import PVRatingButtonsViewModel from '../ViewModels/PVRatingButtonsViewModel';
-import ui from '../Shared/MessagesTyped';
-import UrlMapper from '../Shared/UrlMapper';
-import UserRepository from '../Repositories/UserRepository';
-import NewsListViewModel from '../ViewModels/NewsListViewModel';
-import HttpClient from '../Shared/HttpClient';
+import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
+import NewsListViewModel from '@ViewModels/NewsListViewModel';
+import HttpClient from '@Shared/HttpClient';
 
 declare global {
   interface JQuery {

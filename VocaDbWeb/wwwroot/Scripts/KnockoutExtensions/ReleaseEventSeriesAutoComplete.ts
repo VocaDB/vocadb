@@ -1,8 +1,8 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
-import functions from '../Shared/GlobalFunctions';
-import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
-import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
+import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
 
 declare global {
   interface KnockoutBindingHandlers {

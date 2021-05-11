@@ -1,4 +1,4 @@
-import HtmlHelper from '../../Helpers/HtmlHelper';
+import HtmlHelper from '@Helpers/HtmlHelper';
 
 QUnit.module('HtmlHelper');
 

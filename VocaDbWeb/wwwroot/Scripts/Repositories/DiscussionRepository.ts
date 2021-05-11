@@ -1,11 +1,11 @@
-import CommentContract from '../DataContracts/CommentContract';
-import DiscussionFolderContract from '../DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '../DataContracts/Discussion/DiscussionTopicContract';
+import CommentContract from '@DataContracts/CommentContract';
+import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import ICommentRepository from './ICommentRepository';
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import UrlMapper from '../Shared/UrlMapper';
-import HttpClient from '../Shared/HttpClient';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@Shared/HttpClient';
 
 export default class DiscussionRepository implements ICommentRepository {
   constructor(

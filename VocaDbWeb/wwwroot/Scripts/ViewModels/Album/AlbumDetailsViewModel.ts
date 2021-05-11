@@ -1,24 +1,24 @@
-import AlbumForUserForApiContract from '../../DataContracts/User/AlbumForUserForApiContract';
-import AlbumReviewContract from '../../DataContracts/Album/AlbumReviewContract';
-import AlbumRepository from '../../Repositories/AlbumRepository';
-import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import CommentContract from '../../DataContracts/CommentContract';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import CommentContract from '@DataContracts/CommentContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import EntryType from '../../Models/EntryType';
-import functions from '../../Shared/GlobalFunctions';
+import EntryType from '@Models/EntryType';
+import functions from '@Shared/GlobalFunctions';
 import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
-import ui from '../../Shared/MessagesTyped';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
-import UserRepository from '../../Repositories/UserRepository';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import ui from '@Shared/MessagesTyped';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import UserRepository from '@Repositories/UserRepository';
 
 export default class AlbumDetailsViewModel {
   public comments: EditableCommentsViewModel;

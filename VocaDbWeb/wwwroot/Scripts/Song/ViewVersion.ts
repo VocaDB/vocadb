@@ -1,6 +1,6 @@
-import SongRepository from '../Repositories/SongRepository';
-import HttpClient from '../Shared/HttpClient';
-import ArchivedSongViewModel from '../ViewModels/Song/ArchivedSongViewModel';
+import SongRepository from '@Repositories/SongRepository';
+import HttpClient from '@Shared/HttpClient';
+import ArchivedSongViewModel from '@ViewModels/Song/ArchivedSongViewModel';
 
 const SongViewVersion = (model: {
   archivedVersion: {

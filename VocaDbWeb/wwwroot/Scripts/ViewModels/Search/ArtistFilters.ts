@@ -1,8 +1,8 @@
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistFilter from './ArtistFilter';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import ArtistType from '../../Models/Artists/ArtistType';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ArtistType from '@Models/Artists/ArtistType';
 
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page

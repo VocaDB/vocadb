@@ -1,5 +1,5 @@
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 
 export default class SongInAlbumEditViewModel {
   public artists: KnockoutObservableArray<ArtistContract>;

@@ -1,9 +1,9 @@
-import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
-import functions from '../Shared/GlobalFunctions';
-import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
 
 declare global {
   interface KnockoutBindingHandlers {

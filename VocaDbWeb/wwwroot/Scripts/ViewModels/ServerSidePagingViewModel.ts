@@ -1,4 +1,4 @@
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
 
 export default class ServerSidePagingViewModel {
   constructor(pageSize: number = 10) {

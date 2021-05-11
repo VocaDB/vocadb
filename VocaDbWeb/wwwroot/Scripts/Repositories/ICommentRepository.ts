@@ -1,4 +1,4 @@
-import CommentContract from '../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
 
 // Repository for managing comments
 export default interface ICommentRepository {

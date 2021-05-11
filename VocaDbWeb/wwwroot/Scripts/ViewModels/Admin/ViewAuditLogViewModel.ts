@@ -1,4 +1,4 @@
-import functions from '../../Shared/GlobalFunctions';
+import functions from '@Shared/GlobalFunctions';
 
 export default class ViewAuditLogViewModel {
   public excludeUsers = ko.observable('');

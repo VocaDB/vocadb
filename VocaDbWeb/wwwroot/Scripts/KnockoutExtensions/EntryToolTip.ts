@@ -1,6 +1,6 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import EntryRefContract from '../DataContracts/EntryRefContract';
-import functions from '../Shared/GlobalFunctions';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import EntryRefContract from '@DataContracts/EntryRefContract';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {

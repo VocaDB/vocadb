@@ -1,6 +1,6 @@
-import EntryWithTagUsagesContract from '../DataContracts/Base/EntryWithTagUsagesContract';
-import HtmlHelper from '../Helpers/HtmlHelper';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
+import HtmlHelper from '@Helpers/HtmlHelper';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 
 export interface EntryAutoCompleteParams<TContract> {
   acceptSelection: (

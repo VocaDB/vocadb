@@ -1,29 +1,29 @@
-import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import CommentContract from '../../DataContracts/CommentContract';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import CommentContract from '@DataContracts/CommentContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import EntryType from '../../Models/EntryType';
+import EntryType from '@Models/EntryType';
 import { IEntryReportType } from '../ReportEntryViewModel';
-import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
+import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
+import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongListBaseContract from '../../DataContracts/SongListBaseContract';
-import SongVoteRating from '../../Models/SongVoteRating';
-import SongRepository from '../../Repositories/SongRepository';
-import SongType from '../../Models/Songs/SongType';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongListBaseContract from '@DataContracts/SongListBaseContract';
+import SongVoteRating from '@Models/SongVoteRating';
+import SongRepository from '@Repositories/SongRepository';
+import SongType from '@Models/Songs/SongType';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import ui from '../../Shared/MessagesTyped';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
-import UserRepository from '../../Repositories/UserRepository';
-import HttpClient from '../../Shared/HttpClient';
+import ui from '@Shared/MessagesTyped';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
 
 // View model for the song details view.
 export default class SongDetailsViewModel {

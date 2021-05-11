@@ -1,4 +1,4 @@
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 
 // Generic viewmodel that supports simple paging by loading more items
 export default class PagedItemsViewModel<TModel> {

@@ -1,6 +1,6 @@
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import NameMatchMode from '../../Models/NameMatchMode';
-import TagRepository from '../../Repositories/TagRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import NameMatchMode from '@Models/NameMatchMode';
+import TagRepository from '@Repositories/TagRepository';
 
 export default class TagCreateViewModel {
   constructor(private tagRepo: TagRepository) {

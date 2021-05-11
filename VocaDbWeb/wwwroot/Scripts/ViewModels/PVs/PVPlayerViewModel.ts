@@ -1,11 +1,11 @@
 import PVPlayersFactory from './PVPlayersFactory';
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import PVService from '../../Models/PVs/PVService';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongRepository from '../../Repositories/SongRepository';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
+import PVService from '@Models/PVs/PVService';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongRepository from '@Repositories/SongRepository';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 
 export default class PVPlayerViewModel {
   public static autoplayPVServicesString =

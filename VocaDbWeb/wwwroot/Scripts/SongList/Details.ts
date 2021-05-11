@@ -1,10 +1,10 @@
-import CommentContract from '../DataContracts/CommentContract';
-import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
-import SongListViewModel from '../ViewModels/SongList/SongListViewModel';
+import CommentContract from '@DataContracts/CommentContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
 
 const SongListDetails = (
   canDeleteAllComments: boolean,

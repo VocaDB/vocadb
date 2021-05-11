@@ -1,4 +1,4 @@
-import PVService from '../Models/PVs/PVService';
+import PVService from '@Models/PVs/PVService';
 
 export default class PVHelper {
   public static pvServicesArrayFromString = (

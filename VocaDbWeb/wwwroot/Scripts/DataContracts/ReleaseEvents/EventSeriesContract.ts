@@ -1,5 +1,5 @@
 import EntryThumbContract from '../EntryThumbContract';
-import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';
 

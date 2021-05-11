@@ -1,10 +1,10 @@
-import AlbumForEditContract from '../DataContracts/Album/AlbumForEditContract';
-import TranslatedEnumField from '../DataContracts/TranslatedEnumField';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import DialogService from '../Shared/DialogService';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import AlbumEditViewModel from '../ViewModels/Album/AlbumEditViewModel';
+import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import DialogService from '@Shared/DialogService';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import AlbumEditViewModel from '@ViewModels/Album/AlbumEditViewModel';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

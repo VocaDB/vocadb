@@ -1,4 +1,4 @@
-import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
+import WebLinkEditViewModel from '@ViewModels/WebLinkEditViewModel';
 
 var webLinkData = {
   category: 'Official',

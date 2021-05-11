@@ -1,11 +1,11 @@
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import functions from '../../Shared/GlobalFunctions';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import functions from '@Shared/GlobalFunctions';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
-import TagMappingContract from '../../DataContracts/Tag/TagMappingContract';
-import TagRepository from '../../Repositories/TagRepository';
-import ui from '../../Shared/MessagesTyped';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
+import TagRepository from '@Repositories/TagRepository';
+import ui from '@Shared/MessagesTyped';
 
 export default class ManageTagMappingsViewModel {
   constructor(private readonly tagRepo: TagRepository) {

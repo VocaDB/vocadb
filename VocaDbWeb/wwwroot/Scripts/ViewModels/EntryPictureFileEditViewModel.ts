@@ -1,4 +1,4 @@
-import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
+import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
 
 export default class EntryPictureFileEditViewModel {
   constructor(data?: EntryPictureFileContract) {

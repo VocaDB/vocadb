@@ -1,6 +1,6 @@
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';
-import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
+import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 
 var rep = new FakeAlbumRepository();

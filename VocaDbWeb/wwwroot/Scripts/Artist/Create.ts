@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ArtistCreateViewModel from '../ViewModels/ArtistCreateViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ArtistCreateViewModel from '@ViewModels/ArtistCreateViewModel';
 
 const ArtistCreate = (model: any): void => {
   $(document).ready(function () {

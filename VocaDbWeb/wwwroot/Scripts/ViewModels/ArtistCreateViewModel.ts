@@ -1,10 +1,10 @@
-import ArtistRepository from '../Repositories/ArtistRepository';
-import ArtistType from '../Models/Artists/ArtistType';
-import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
-import EntryType from '../Models/EntryType';
-import EntryUrlMapper from '../Shared/EntryUrlMapper';
-import TagApiContract from '../DataContracts/Tag/TagApiContract';
-import TagRepository from '../Repositories/TagRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ArtistType from '@Models/Artists/ArtistType';
+import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
+import EntryType from '@Models/EntryType';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagRepository from '@Repositories/TagRepository';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 export default class ArtistCreateViewModel {

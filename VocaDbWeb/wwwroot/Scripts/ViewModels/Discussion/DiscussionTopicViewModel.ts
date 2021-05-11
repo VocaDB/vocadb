@@ -1,8 +1,8 @@
-import DiscussionFolderContract from '../../DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '../../DataContracts/Discussion/DiscussionTopicContract';
-import DiscussionRepository from '../../Repositories/DiscussionRepository';
+import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
+import DiscussionRepository from '@Repositories/DiscussionRepository';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
+import UserApiContract from '@DataContracts/User/UserApiContract';
 
 export default class DiscussionTopicViewModel {
   constructor(

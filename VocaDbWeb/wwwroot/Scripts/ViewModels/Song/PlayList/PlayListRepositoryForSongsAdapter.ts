@@ -1,13 +1,13 @@
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
-import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { IPlayListRepository } from './PlayListViewModel';
 import { ISongForPlayList } from './PlayListViewModel';
-import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
-import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
-import SongApiContract from '../../../DataContracts/Song/SongApiContract';
-import SongRepository from '../../../Repositories/SongRepository';
-import SongType from '../../../Models/Songs/SongType';
+import { SongOptionalFields } from '@Models/EntryOptionalFields';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongRepository from '@Repositories/SongRepository';
+import SongType from '@Models/Songs/SongType';
 
 export default class PlayListRepositoryForSongsAdapter
   implements IPlayListRepository {

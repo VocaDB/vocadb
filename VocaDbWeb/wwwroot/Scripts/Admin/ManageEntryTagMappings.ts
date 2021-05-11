@@ -1,7 +1,7 @@
-import TagRepository from '../Repositories/TagRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ManageEntryTagMappingsViewModel from '../ViewModels/Admin/ManageEntryTagMappingsViewModel';
+import TagRepository from '@Repositories/TagRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ManageEntryTagMappingsViewModel from '@ViewModels/Admin/ManageEntryTagMappingsViewModel';
 
 const AdminManageEntryTagMappings = (): void => {
   $(function () {

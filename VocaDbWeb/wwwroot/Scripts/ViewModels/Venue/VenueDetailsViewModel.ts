@@ -1,7 +1,7 @@
 import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
-import ui from '../../Shared/MessagesTyped';
-import VenueRepository from '../../Repositories/VenueRepository';
+import ui from '@Shared/MessagesTyped';
+import VenueRepository from '@Repositories/VenueRepository';
 
 export default class VenueDetailsViewModel {
   constructor(

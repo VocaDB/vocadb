@@ -1,9 +1,9 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import TagRepository from '../Repositories/TagRepository';
-import UserRepository from '../Repositories/UserRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import TagEditViewModel from '../ViewModels/TagEditViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import TagEditViewModel from '@ViewModels/TagEditViewModel';
 
 function initPage(): void {
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });

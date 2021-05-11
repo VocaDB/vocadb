@@ -1,18 +1,18 @@
-import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
+import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
 import AlbumEditViewModel, {
   TrackArtistSelectionViewModel,
-} from '../../ViewModels/Album/AlbumEditViewModel';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+} from '@ViewModels/Album/AlbumEditViewModel';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongInAlbumEditContract from '../../DataContracts/Song/SongInAlbumEditContract';
-import SongInAlbumEditViewModel from '../../ViewModels/SongInAlbumEditViewModel';
-import { TrackPropertiesViewModel } from '../../ViewModels/Album/AlbumEditViewModel';
-import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
-import UrlMapper from '../../Shared/UrlMapper';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
+import SongInAlbumEditViewModel from '@ViewModels/SongInAlbumEditViewModel';
+import { TrackPropertiesViewModel } from '@ViewModels/Album/AlbumEditViewModel';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import UrlMapper from '@Shared/UrlMapper';
 
 var rep = new FakeAlbumRepository();
 var songRep: FakeSongRepository;

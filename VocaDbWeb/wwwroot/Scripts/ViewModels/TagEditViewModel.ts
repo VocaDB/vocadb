@@ -1,12 +1,12 @@
 import DeleteEntryViewModel from './DeleteEntryViewModel';
 import EnglishTranslatedStringEditViewModel from './Globalization/EnglishTranslatedStringEditViewModel';
-import EntryType from '../Models/EntryType';
-import EntryUrlMapper from '../Shared/EntryUrlMapper';
+import EntryType from '@Models/EntryType';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import NamesEditViewModel from './Globalization/NamesEditViewModel';
-import TagApiContract from '../DataContracts/Tag/TagApiContract';
-import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
-import UrlMapper from '../Shared/UrlMapper';
-import UserRepository from '../Repositories/UserRepository';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
 import WebLinksEditViewModel from './WebLinksEditViewModel';
 
 export default class TagEditViewModel {

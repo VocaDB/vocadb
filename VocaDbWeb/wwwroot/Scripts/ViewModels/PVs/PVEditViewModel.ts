@@ -1,5 +1,5 @@
-import DateTimeHelper from '../../Helpers/DateTimeHelper';
-import PVContract from '../../DataContracts/PVs/PVContract';
+import DateTimeHelper from '@Helpers/DateTimeHelper';
+import PVContract from '@DataContracts/PVs/PVContract';
 
 export default class PVEditViewModel {
   constructor(contract: PVContract, pvType?: string) {

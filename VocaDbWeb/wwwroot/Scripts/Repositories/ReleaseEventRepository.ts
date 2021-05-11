@@ -1,13 +1,13 @@
-import AjaxHelper from '../Helpers/AjaxHelper';
+import AjaxHelper from '@Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
-import functions from '../Shared/GlobalFunctions';
-import NameMatchMode from '../Models/NameMatchMode';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
-import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
-import UrlMapper from '../Shared/UrlMapper';
-import HttpClient from '../Shared/HttpClient';
+import functions from '@Shared/GlobalFunctions';
+import NameMatchMode from '@Models/NameMatchMode';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@Shared/HttpClient';
 
 export default class ReleaseEventRepository extends BaseRepository {
   constructor(

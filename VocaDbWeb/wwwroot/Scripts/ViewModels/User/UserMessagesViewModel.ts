@@ -1,10 +1,10 @@
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
-import { UserInboxType } from '../../Repositories/UserRepository';
-import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
-import UserRepository from '../../Repositories/UserRepository';
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import { UserInboxType } from '@Repositories/UserRepository';
+import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import UserRepository from '@Repositories/UserRepository';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 
 export default class UserMessagesViewModel {
   constructor(

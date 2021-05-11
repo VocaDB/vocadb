@@ -1,10 +1,10 @@
-import LocalizedStringWithIdContract from '../DataContracts/Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../DataContracts/WebLinkContract';
-import ReleaseEventRepository from '../Repositories/ReleaseEventRepository';
-import UserRepository from '../Repositories/UserRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ReleaseEventSeriesEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
+import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@DataContracts/WebLinkContract';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ReleaseEventSeriesEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

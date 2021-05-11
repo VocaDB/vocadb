@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ListUsersViewModel from '../ViewModels/User/ListUsersViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ListUsersViewModel from '@ViewModels/User/ListUsersViewModel';
 
 const UserIndex = (model: { filter: string; groupId: string }): void => {
   $(function () {

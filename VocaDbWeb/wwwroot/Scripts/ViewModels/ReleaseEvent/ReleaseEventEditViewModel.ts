@@ -1,23 +1,23 @@
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
-import ArtistEventRoles from '../../Models/Events/ArtistEventRoles';
-import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
+import ArtistEventRoles from '@Models/Events/ArtistEventRoles';
+import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
 import ArtistForEventEditViewModel from '../ReleaseEvent/ArtistForEventEditViewModel';
-import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
 import ArtistRolesEditViewModel from '../Artist/ArtistRolesEditViewModel';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import EntryType from '@Models/EntryType';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import PVListEditViewModel from '../PVs/PVListEditViewModel';
-import PVRepository from '../../Repositories/PVRepository';
-import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
-import SongListBaseContract from '../../DataContracts/SongListBaseContract';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
-import VenueForApiContract from '../../DataContracts/Venue/VenueForApiContract';
+import PVRepository from '@Repositories/PVRepository';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import SongListBaseContract from '@DataContracts/SongListBaseContract';
+import UrlMapper from '@Shared/UrlMapper';
+import UserRepository from '@Repositories/UserRepository';
+import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventEditViewModel {

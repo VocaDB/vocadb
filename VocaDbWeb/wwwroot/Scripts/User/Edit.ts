@@ -1,7 +1,7 @@
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import functions from '../Shared/GlobalFunctions';
-import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import functions from '@Shared/GlobalFunctions';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
 
 function initPage(): void {
   function artistAdded(row: any): void {

@@ -1,6 +1,6 @@
-import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
-import KnockoutHelper from '../../Helpers/KnockoutHelper';
-import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';
+import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import KnockoutHelper from '@Helpers/KnockoutHelper';
+import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 
 export default class LocalizedStringWithIdEditViewModel {
   public id: number;

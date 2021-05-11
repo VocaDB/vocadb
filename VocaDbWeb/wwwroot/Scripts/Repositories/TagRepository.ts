@@ -1,19 +1,19 @@
-import AjaxHelper from '../Helpers/AjaxHelper';
+import AjaxHelper from '@Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';
-import EntryTagMappingContract from '../DataContracts/Tag/EntryTagMappingContract';
-import EntryType from '../Models/EntryType';
-import functions from '../Shared/GlobalFunctions';
-import NameMatchMode from '../Models/NameMatchMode';
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import TagApiContract from '../DataContracts/Tag/TagApiContract';
-import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
-import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
-import UrlMapper from '../Shared/UrlMapper';
-import HttpClient from '../Shared/HttpClient';
+import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
+import EntryType from '@Models/EntryType';
+import functions from '@Shared/GlobalFunctions';
+import NameMatchMode from '@Models/NameMatchMode';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
+import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@Shared/HttpClient';
 
 export default class TagRepository extends BaseRepository {
   private readonly urlMapper: UrlMapper;

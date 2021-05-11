@@ -1,8 +1,8 @@
-import AlbumRepository from '../../Repositories/AlbumRepository';
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResultContract';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
 
 export default class AlbumCreateViewModel {
   constructor(

@@ -1,4 +1,4 @@
-import UrlMapper from '../Shared/UrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
 
 export default class NewsListViewModel {
   constructor(readonly blogUrl: string) {

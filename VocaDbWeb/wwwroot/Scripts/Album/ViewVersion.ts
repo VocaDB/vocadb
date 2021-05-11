@@ -1,6 +1,6 @@
-import AlbumRepository from '../Repositories/AlbumRepository';
-import HttpClient from '../Shared/HttpClient';
-import ArchivedAlbumViewModel from '../ViewModels/Album/ArchivedAlbumViewModel';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import HttpClient from '@Shared/HttpClient';
+import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
 
 const AlbumViewVersion = (model: {
   album: {

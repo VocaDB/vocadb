@@ -1,9 +1,9 @@
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
-import SongListContract from '../../DataContracts/Song/SongListContract';
-import SongListRepository from '../../Repositories/SongListRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import SongListContract from '@DataContracts/Song/SongListContract';
+import SongListRepository from '@Repositories/SongListRepository';
 import SongListsBaseViewModel from './SongListsBaseViewModel';
-import TagRepository from '../../Repositories/TagRepository';
+import TagRepository from '@Repositories/TagRepository';
 
 export default class FeaturedSongListsViewModel {
   constructor(

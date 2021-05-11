@@ -1,5 +1,5 @@
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 
 export default class TagListViewModel {
   private static maxDisplayedTags = 4;

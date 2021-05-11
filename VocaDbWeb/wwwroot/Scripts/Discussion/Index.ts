@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import DiscussionIndexViewModel from '../ViewModels/Discussion/DiscussionIndexViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import DiscussionIndexViewModel from '@ViewModels/Discussion/DiscussionIndexViewModel';
 
 const DiscussionIndex = (canDeleteAllComments: boolean): void => {
   $(function () {

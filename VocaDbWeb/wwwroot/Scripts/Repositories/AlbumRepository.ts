@@ -1,22 +1,22 @@
-import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
-import AlbumContract from '../DataContracts/Album/AlbumContract';
-import AlbumForApiContract from '../DataContracts/Album/AlbumForApiContract';
-import AlbumForEditContract from '../DataContracts/Album/AlbumForEditContract';
-import AlbumForUserForApiContract from '../DataContracts/User/AlbumForUserForApiContract';
-import AlbumReviewContract from '../DataContracts/Album/AlbumReviewContract';
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import AlbumContract from '@DataContracts/Album/AlbumContract';
+import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
+import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
+import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import BaseRepository from './BaseRepository';
-import CommentContract from '../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
-import functions from '../Shared/GlobalFunctions';
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
-import UrlMapper from '../Shared/UrlMapper';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
+import functions from '@Shared/GlobalFunctions';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import UrlMapper from '@Shared/UrlMapper';
 import ICommentRepository from './ICommentRepository';
-import HttpClient from '../Shared/HttpClient';
+import HttpClient from '@Shared/HttpClient';
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.

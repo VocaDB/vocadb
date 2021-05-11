@@ -1,9 +1,9 @@
-import AlbumContract from '../DataContracts/Album/AlbumContract';
-import { AlbumQueryParams } from '../Repositories/AlbumRepository';
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import { ArtistQueryParams } from '../Repositories/ArtistRepository';
-import SongContract from '../DataContracts/Song/SongContract';
-import { SongQueryParams } from '../Repositories/SongRepository';
+import AlbumContract from '@DataContracts/Album/AlbumContract';
+import { AlbumQueryParams } from '@Repositories/AlbumRepository';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import { ArtistQueryParams } from '@Repositories/ArtistRepository';
+import SongContract from '@DataContracts/Song/SongContract';
+import { SongQueryParams } from '@Repositories/SongRepository';
 
 export interface AutoCompleteParams {
   acceptSelection?: (id?: number, term?: string, itemType?: string) => void;

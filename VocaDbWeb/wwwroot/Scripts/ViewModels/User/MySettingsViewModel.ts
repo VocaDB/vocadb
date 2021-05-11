@@ -1,7 +1,7 @@
-import ui from '../../Shared/MessagesTyped';
-import UserKnownLanguageContract from '../../DataContracts/User/UserKnownLanguageContract';
-import UserRepository from '../../Repositories/UserRepository';
-import WebLinkContract from '../../DataContracts/WebLinkContract';
+import ui from '@Shared/MessagesTyped';
+import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageContract';
+import UserRepository from '@Repositories/UserRepository';
+import WebLinkContract from '@DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 // User my settings view model

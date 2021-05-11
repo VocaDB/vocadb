@@ -1,5 +1,5 @@
 import ReportEntryViewModel from './ReportEntryViewModel';
-import ui from '../Shared/MessagesTyped';
+import ui from '@Shared/MessagesTyped';
 
 export default class ArchivedEntryViewModel {
   constructor(

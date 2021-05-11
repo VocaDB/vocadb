@@ -1,4 +1,4 @@
-import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import DateTimeHelper from '@Helpers/DateTimeHelper';
 
 QUnit.module('DateTimeHelper');
 

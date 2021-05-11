@@ -1,19 +1,19 @@
-import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
-import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import ArtistForEditContract from '../DataContracts/Artist/ArtistForEditContract';
+import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
 import BaseRepository from './BaseRepository';
-import CommentContract from '../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
-import functions from '../Shared/GlobalFunctions';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
+import functions from '@Shared/GlobalFunctions';
 import ICommentRepository from './ICommentRepository';
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
-import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
-import UrlMapper from '../Shared/UrlMapper';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import HttpClient from '../Shared/HttpClient';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import UrlMapper from '@Shared/UrlMapper';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import HttpClient from '@Shared/HttpClient';
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.

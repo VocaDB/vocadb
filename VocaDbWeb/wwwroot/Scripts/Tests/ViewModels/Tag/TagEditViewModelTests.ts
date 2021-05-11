@@ -1,7 +1,7 @@
-import EntryType from '../../../Models/EntryType';
+import EntryType from '@Models/EntryType';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
-import TagApiContract from '../../../DataContracts/Tag/TagApiContract';
-import TagEditViewModel from '../../../ViewModels/TagEditViewModel';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagEditViewModel from '@ViewModels/TagEditViewModel';
 
 var viewModel: TagEditViewModel;
 

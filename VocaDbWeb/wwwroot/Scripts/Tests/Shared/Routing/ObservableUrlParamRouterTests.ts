@@ -1,4 +1,4 @@
-import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParamRouter';
+import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
 
 interface HistoryEntry {
   data: any;

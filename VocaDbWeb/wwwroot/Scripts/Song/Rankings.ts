@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import RankingsViewModel from '../ViewModels/Song/RankingsViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import RankingsViewModel from '@ViewModels/Song/RankingsViewModel';
 
 const SongRankings = (): void => {
   moment.locale(vdb.values.culture);

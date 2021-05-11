@@ -1,4 +1,4 @@
-import StatsViewModel from '../ViewModels/StatsViewModel';
+import StatsViewModel from '@ViewModels/StatsViewModel';
 
 const StatsIndex = (): void => {
   $(function () {
