@@ -24,6 +24,7 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "eslint-plugin-vue": "^7.9.0",
         "eslint-webpack-plugin": "^2.5.4",
+        "laravel-mix": "^6.0.19",
         "laravel-mix-eslint": "^0.2.0",
         "less": "^3.10.3",
         "less-loader": "^5.0.0",
@@ -40,7 +41,6 @@
         "jquery-ui": "^1.10.4",
         "knockout": "^3.5.1",
         "knockout-punches": "^0.5.1",
-        "laravel-mix": "^6.0.11",
         "lodash": "^4.17.19",
         "marked": "^0.3.18",
         "qtip2": "^3.0.3"
