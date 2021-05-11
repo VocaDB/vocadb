@@ -4,5 +4,7 @@
 	"semi": true,
 	"tabWidth": 2,
 	"trailingComma": "all",
-	"endOfLine": "auto"
+	"endOfLine": "auto",
+	"importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+	"importOrderSeparation": true
 }
