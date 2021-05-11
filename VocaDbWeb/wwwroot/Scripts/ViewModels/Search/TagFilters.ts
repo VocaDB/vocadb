@@ -1,6 +1,7 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagFilter from './TagFilter';
 import TagRepository from '@Repositories/TagRepository';
+
+import TagFilter from './TagFilter';
 
 // Manages tag filters for search
 export default class TagFilters {

@@ -1,8 +1,8 @@
+import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
-import functions from '@Shared/GlobalFunctions';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {

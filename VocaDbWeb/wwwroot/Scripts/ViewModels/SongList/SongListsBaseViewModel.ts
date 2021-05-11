@@ -1,11 +1,12 @@
-import PagedItemsViewModel from '../PagedItemsViewModel';
-import ResourceRepository from '@Repositories/ResourceRepository';
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import TagRepository from '@Repositories/TagRepository';
+
+import PagedItemsViewModel from '../PagedItemsViewModel';
 import TagFilter from '../Search/TagFilter';
 import TagFilters from '../Search/TagFilters';
-import TagRepository from '@Repositories/TagRepository';
 
 export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
   constructor(

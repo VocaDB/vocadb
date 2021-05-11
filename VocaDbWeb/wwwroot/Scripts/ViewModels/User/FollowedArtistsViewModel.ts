@@ -1,11 +1,12 @@
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import TagFilters from '../Search/TagFilters';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
+import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
+
+import TagFilters from '../Search/TagFilters';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class FollowedArtistsViewModel {
   constructor(

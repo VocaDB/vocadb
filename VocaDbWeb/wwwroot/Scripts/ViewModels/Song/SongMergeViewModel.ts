@@ -1,8 +1,9 @@
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import SongContract from '@DataContracts/Song/SongContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import SongContract from '@DataContracts/Song/SongContract';
 import SongRepository from '@Repositories/SongRepository';
+
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class SongMergeViewModel {
   constructor(songRepo: SongRepository, private base: SongContract) {

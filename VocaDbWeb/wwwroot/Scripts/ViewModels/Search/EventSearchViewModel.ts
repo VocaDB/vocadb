@@ -1,8 +1,9 @@
-import ArtistFilters from './ArtistFilters';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+
+import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 

@@ -1,6 +1,6 @@
+import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';
-import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import OptionalDateTimeContract from '../OptionalDateTimeContract';
 
 export default interface AlbumContract

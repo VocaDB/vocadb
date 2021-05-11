@@ -1,9 +1,9 @@
-import ArtistContract from './ArtistContract';
-import ArtistForArtistContract from './ArtistForArtistContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import EntryPictureFileContract from '../EntryPictureFileContract';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';
+import ArtistContract from './ArtistContract';
+import ArtistForArtistContract from './ArtistForArtistContract';
 
 export default interface ArtistForEditContract {
   artistType: string;

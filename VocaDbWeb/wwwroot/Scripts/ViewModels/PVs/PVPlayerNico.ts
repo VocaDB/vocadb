@@ -1,5 +1,6 @@
-import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '@Models/PVs/PVService';
+
+import { IPVPlayer } from './PVPlayerViewModel';
 
 /*
 		Note: I'm not terrible happy about the implementation for now.

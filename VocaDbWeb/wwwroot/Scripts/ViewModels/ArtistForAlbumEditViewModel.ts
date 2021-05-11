@@ -1,8 +1,8 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
+import AlbumRepository from '@Repositories/AlbumRepository';
 
 // View model for editing artist for album link.
 export default class ArtistForAlbumEditViewModel

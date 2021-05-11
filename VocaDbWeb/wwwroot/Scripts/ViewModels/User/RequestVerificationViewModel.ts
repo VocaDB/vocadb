@@ -1,5 +1,5 @@
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
 
 export default class RequestVerificationViewModel {

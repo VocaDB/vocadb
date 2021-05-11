@@ -1,12 +1,12 @@
-import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
-import SongRepository from '@Repositories/SongRepository';
-import UrlMapper from '@Shared/UrlMapper';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import CommentContract from '@DataContracts/CommentContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 
 function initPage(
   artistId: number,

@@ -1,10 +1,11 @@
-import BaseRepository from './BaseRepository';
 import CommentContract from '@DataContracts/CommentContract';
-import EntryType from '@Models/EntryType';
-import ICommentRepository from './ICommentRepository';
-import UrlMapper from '@Shared/UrlMapper';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import EntryType from '@Models/EntryType';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
+import BaseRepository from './BaseRepository';
+import ICommentRepository from './ICommentRepository';
 
 export default class CommentRepository
   extends BaseRepository

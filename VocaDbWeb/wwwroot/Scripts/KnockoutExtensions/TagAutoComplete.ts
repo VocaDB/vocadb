@@ -1,8 +1,8 @@
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
-import functions from '@Shared/GlobalFunctions';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {

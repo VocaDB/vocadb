@@ -1,25 +1,26 @@
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-import AjaxHelper from '@Helpers/AjaxHelper';
 import CommentContract from '@DataContracts/CommentContract';
-import EntryType from '@Models/EntryType';
-import ICommentRepository from './ICommentRepository';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
-import SongVoteRating from '@Models/SongVoteRating';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import { Tuple2 } from '@Helpers/HighchartsHelper';
-import UrlMapper from '@Shared/UrlMapper';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
+import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import AjaxHelper from '@Helpers/AjaxHelper';
+import { Tuple2 } from '@Helpers/HighchartsHelper';
+import EntryType from '@Models/EntryType';
+import SongVoteRating from '@Models/SongVoteRating';
+import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+
+import ICommentRepository from './ICommentRepository';
 
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.

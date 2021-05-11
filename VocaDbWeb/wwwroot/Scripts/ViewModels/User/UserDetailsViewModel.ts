@@ -1,21 +1,22 @@
-import AdminRepository from '@Repositories/AdminRepository';
-import AlbumCollectionViewModel from './AlbumCollectionViewModel';
 import CommentContract from '@DataContracts/CommentContract';
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import FollowedArtistsViewModel from './FollowedArtistsViewModel';
-import HighchartsHelper from '@Helpers/HighchartsHelper';
-import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongListContract from '@DataContracts/Song/SongListContract';
+import HighchartsHelper from '@Helpers/HighchartsHelper';
+import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
+import AdminRepository from '@Repositories/AdminRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
-import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
 import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import UserRepository from '@Repositories/UserRepository';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
+
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
+import AlbumCollectionViewModel from './AlbumCollectionViewModel';
+import FollowedArtistsViewModel from './FollowedArtistsViewModel';
+import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
 
 export default class UserDetailsViewModel {
   private static overview = 'Overview';

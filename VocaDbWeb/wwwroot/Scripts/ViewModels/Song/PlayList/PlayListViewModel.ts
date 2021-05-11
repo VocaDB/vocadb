@@ -1,18 +1,19 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import PVHelper from '@Helpers/PVHelper';
-import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
+import DateTimeHelper from '@Helpers/DateTimeHelper';
+import PVHelper from '@Helpers/PVHelper';
 import { SongOptionalField } from '@Models/EntryOptionalFields';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import PVServiceIcons from '@Models/PVServiceIcons';
 import SongRepository from '@Repositories/SongRepository';
-import UrlMapper from '@Shared/UrlMapper';
 import UserRepository from '@Repositories/UserRepository';
+import UrlMapper from '@Shared/UrlMapper';
+
+import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
+import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
+import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
 
 export default class PlayListViewModel {
   constructor(

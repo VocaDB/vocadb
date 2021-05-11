@@ -1,20 +1,21 @@
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistForArtistContract from '@DataContracts/Artist/ArtistForArtistContract';
 import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistRepository from '@Repositories/ArtistRepository';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistType from '@Models/Artists/ArtistType';
+import EntryType from '@Models/EntryType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import UserRepository from '@Repositories/UserRepository';
+import { IDialogService } from '@Shared/DialogService';
+import UrlMapper from '@Shared/UrlMapper';
+
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
-import EntryType from '@Models/EntryType';
-import { IDialogService } from '@Shared/DialogService';
+import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import UrlMapper from '@Shared/UrlMapper';
-import UserRepository from '@Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ArtistEditViewModel {

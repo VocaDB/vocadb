@@ -1,5 +1,5 @@
-import WebLinkCategory from '@Models/WebLinkCategory';
 import WebLinkContract from '@DataContracts/WebLinkContract';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import WebLinkMatcher from '@Shared/WebLinkMatcher';
 
 export default class WebLinkEditViewModel {

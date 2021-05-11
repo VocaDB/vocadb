@@ -1,5 +1,6 @@
-import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '@Models/PVs/PVService';
+
+import { IPVPlayer } from './PVPlayerViewModel';
 
 export default class PVPlayerYoutube implements IPVPlayer {
   constructor(

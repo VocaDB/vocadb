@@ -1,11 +1,11 @@
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import LyricsForSongContract from './LyricsForSongContract';
 import PVContract from '../PVs/PVContract';
 import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
-import SongContract from './SongContract';
 import WebLinkContract from '../WebLinkContract';
+import LyricsForSongContract from './LyricsForSongContract';
+import SongContract from './SongContract';
 
 export default interface SongForEditContract {
   albumEventId?: number;

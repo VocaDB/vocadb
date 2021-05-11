@@ -1,12 +1,13 @@
-import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import { IPlayListRepository } from './PlayListViewModel';
-import { ISongForPlayList } from './PlayListViewModel';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserRepository from '@Repositories/UserRepository';
+
+import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
+import { IPlayListRepository } from './PlayListViewModel';
+import { ISongForPlayList } from './PlayListViewModel';
 
 export default class PlayListRepositoryForRatedSongsAdapter
   implements IPlayListRepository {

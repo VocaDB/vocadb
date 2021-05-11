@@ -1,8 +1,8 @@
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
 import ImportedSongInListContract from '@DataContracts/SongList/ImportedSongInListContract';
 import ImportedSongListContract from '@DataContracts/SongList/ImportedSongListContract';
 import PartialImportedSongs from '@DataContracts/SongList/PartialImportedSongs';
-import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 
 export default class ImportSongListViewModel {

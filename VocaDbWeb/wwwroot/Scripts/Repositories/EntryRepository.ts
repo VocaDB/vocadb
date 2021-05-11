@@ -1,7 +1,7 @@
-import functions from '@Shared/GlobalFunctions';
+import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryContract from '@DataContracts/EntryContract';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
 // Repository for finding base class of common entry types.

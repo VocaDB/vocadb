@@ -1,18 +1,19 @@
-import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import ResourcesContract from '@DataContracts/ResourcesContract';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import UserRepository from '@Repositories/UserRepository';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ResourcesContract from '@DataContracts/ResourcesContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import EntryType from '@Models/EntryType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class AlbumCollectionViewModel {
   constructor(

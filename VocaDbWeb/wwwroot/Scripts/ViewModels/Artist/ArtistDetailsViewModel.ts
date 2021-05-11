@@ -1,26 +1,27 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import AlbumSearchViewModel from '../Search/AlbumSearchViewModel';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import CommentContract from '@DataContracts/CommentContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import EntryType from '@Models/EntryType';
+import CommentContract from '@DataContracts/CommentContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import ReportEntryViewModel from '../ReportEntryViewModel';
+import TimeUnit from '@Models/Aggregate/TimeUnit';
+import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import AlbumSearchViewModel from '../Search/AlbumSearchViewModel';
 import SongSearchViewModel from '../Search/SongSearchViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import TimeUnit from '@Models/Aggregate/TimeUnit';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
-import UserRepository from '@Repositories/UserRepository';
 
 export default class ArtistDetailsViewModel {
   constructor(

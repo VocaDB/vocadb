@@ -1,8 +1,9 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import AlbumRepository from '@Repositories/AlbumRepository';
+
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class AlbumMergeViewModel {
   constructor(repo: AlbumRepository, id: number) {

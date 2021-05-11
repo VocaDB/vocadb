@@ -1,11 +1,12 @@
-import AjaxHelper from '@Helpers/AjaxHelper';
-import BaseRepository from './BaseRepository';
-import functions from '@Shared/GlobalFunctions';
-import NameMatchMode from '@Models/NameMatchMode';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UrlMapper from '@Shared/UrlMapper';
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
+import AjaxHelper from '@Helpers/AjaxHelper';
+import NameMatchMode from '@Models/NameMatchMode';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
+import BaseRepository from './BaseRepository';
 
 export default class VenueRepository extends BaseRepository {
   constructor(

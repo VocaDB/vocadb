@@ -1,8 +1,9 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import TagRepository from '@Repositories/TagRepository';
+import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
+
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
-import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
-import TagRepository from '@Repositories/TagRepository';
 
 var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();

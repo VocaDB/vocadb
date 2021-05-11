@@ -1,11 +1,11 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
-import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import NameMatchMode from '@Models/NameMatchMode';
+import SongContract from '@DataContracts/Song/SongContract';
 import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import SongContract from '@DataContracts/Song/SongContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import NameMatchMode from '@Models/NameMatchMode';
 import { SongQueryParams } from '@Repositories/SongRepository';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {

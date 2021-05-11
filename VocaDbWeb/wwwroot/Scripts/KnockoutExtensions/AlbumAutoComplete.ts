@@ -1,8 +1,9 @@
-import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
+
+import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 
 declare global {
   interface KnockoutBindingHandlers {
