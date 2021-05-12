@@ -41,6 +41,8 @@ mix
 		extensions: ['ts', 'tsx'],
 	})
 
+	.extract()
+
 	.js('wwwroot/Scripts/libs.js', 'wwwroot/bundles/shared')
 
 	// SHARED BUNDLES
