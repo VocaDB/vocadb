@@ -41,20 +41,6 @@ mix
 		extensions: ['ts', 'tsx'],
 	})
 
-	/*.scripts([
-		"wwwroot/Scripts/jquery-2.2.1.js",
-		"wwwroot/Scripts/bootstrap.js",
-		//"wwwroot/Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
-		"wwwroot/Scripts/knockout-3.4.1.js",
-		"wwwroot/Scripts/knockout.punches.min.js",
-		"wwwroot/Scripts/lodash.js",
-		"wwwroot/Scripts/qTip/jquery.qtip.js",
-		"wwwroot/Scripts/marked.js"
-	], "wwwroot/bundles/shared/libs.js")
-
-	.scripts([
-		"wwwroot/Scripts/jquery-ui-1.10.4.js"
-	], "wwwroot/bundles/shared/jqui.js")*/
 	.js('wwwroot/Scripts/libs.js', 'wwwroot/bundles/shared')
 
 	// SHARED BUNDLES
@@ -77,63 +63,10 @@ mix
 
 	.scripts(
 		[
-			'wwwroot/Scripts/jquery.tools.min.js', // REVIEW
-		],
-		'wwwroot/bundles/Home/Index.js',
-	)
-
-	.scripts(
-		[
 			'wwwroot/Scripts/jqwidgets27/jqxcore.js',
 			'wwwroot/Scripts/jqwidgets27/jqxrating.js',
 		],
 		'wwwroot/bundles/jqxRating.js',
-	)
-
-	// VIEW-SPECIFIC BUNDLES
-
-	.scripts(
-		[
-			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
-		],
-		'wwwroot/bundles/Artist/Details.js',
-	)
-
-	.scripts(['wwwroot/Scripts/page.js'], 'wwwroot/bundles/Discussion/Index.js')
-
-	.scripts(
-		[
-			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
-		],
-		'wwwroot/bundles/Search/Index.js',
-	)
-
-	.scripts(
-		['wwwroot/Scripts/MediaElement/mediaelement-and-player.min.js'],
-		'wwwroot/bundles/Song/Details.js',
-	)
-
-	.scripts(['wwwroot/Scripts/url.js'], 'wwwroot/bundles/Song/TopRated.js')
-
-	.scripts(
-		[
-			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
-		],
-		'wwwroot/bundles/SongList/Details.js',
-	)
-
-	.scripts(
-		[
-			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
-		],
-		'wwwroot/bundles/User/Details.js',
-	)
-
-	.scripts(
-		[
-			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
-		],
-		'wwwroot/bundles/User/RatedSongs.js',
 	)
 
 	// Base CSS

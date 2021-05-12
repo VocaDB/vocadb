@@ -261,7 +261,7 @@
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-	<remikus path="/bundles/SongList/Details.js" />
+	<script src="@Url.Content("~/Scripts/soundcloud-api.js")" type="text/javascript"></script>
 	<script type="text/javascript">
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
