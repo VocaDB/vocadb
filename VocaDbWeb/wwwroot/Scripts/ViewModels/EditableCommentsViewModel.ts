@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import ICommentRepository from '@Repositories/ICommentRepository';
+import _ from 'lodash';
 
 import CommentViewModel from './CommentViewModel';
 import ServerSidePagingViewModel from './ServerSidePagingViewModel';

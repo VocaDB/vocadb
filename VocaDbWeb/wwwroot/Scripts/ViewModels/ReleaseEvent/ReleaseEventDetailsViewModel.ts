@@ -9,6 +9,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import { IEntryReportType } from '../ReportEntryViewModel';
@@ -95,7 +96,10 @@ export default class ReleaseEventDetailsViewModel {
   public removeEvent = (): void => {
     this.userRepo.deleteEventForUser(this.eventId);
     this.eventAssociationType(null!);
-    var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
+    var link = _.find(
+      this.usersAttending(),
+      (u) => u.id === this.loggedUserId,
+    )!;
     this.usersAttending.remove(link);
   };
 
@@ -118,7 +122,10 @@ export default class ReleaseEventDetailsViewModel {
       UserEventRelationshipType.Interested,
     );
     this.eventAssociationType(UserEventRelationshipType.Interested);
-    var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
+    var link = _.find(
+      this.usersAttending(),
+      (u) => u.id === this.loggedUserId,
+    )!;
     this.usersAttending.remove(link);
   };
 

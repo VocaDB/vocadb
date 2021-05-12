@@ -1,5 +1,6 @@
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
+import _ from 'lodash';
 
 export default class ManageIPRulesViewModel {
   public add = (): void => {

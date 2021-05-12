@@ -12,6 +12,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
 import PVPlayersFactory from '../PVs/PVPlayersFactory';

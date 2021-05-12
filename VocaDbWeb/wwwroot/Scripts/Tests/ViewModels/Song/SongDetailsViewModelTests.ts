@@ -5,6 +5,7 @@ import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
 import { SongDetailsResources } from '@ViewModels/Song/SongDetailsViewModel';
 import SongDetailsViewModel from '@ViewModels/Song/SongDetailsViewModel';
 import { SongListsViewModel } from '@ViewModels/Song/SongDetailsViewModel';
+import _ from 'lodash';
 
 import FakeSongRepository from '../../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
@@ -159,7 +160,7 @@ QUnit.test(
     var newList = _.find(
       rep.songLists,
       (sl) => sl.name === 'Favorite Rinnssss',
-    );
+    )!;
     ok(newList, 'newList: New list was created');
     equal(
       rep.songsInLists.length,

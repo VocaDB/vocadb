@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 declare global {
   interface KnockoutBindingHandlers {
     highcharts: KnockoutBindingHandler;

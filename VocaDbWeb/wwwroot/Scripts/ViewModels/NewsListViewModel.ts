@@ -1,4 +1,5 @@
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 export default class NewsListViewModel {
   constructor(readonly blogUrl: string) {

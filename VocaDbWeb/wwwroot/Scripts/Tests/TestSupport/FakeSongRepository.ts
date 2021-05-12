@@ -3,6 +3,7 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
+import _ from 'lodash';
 
 import FakePromise from './FakePromise';
 

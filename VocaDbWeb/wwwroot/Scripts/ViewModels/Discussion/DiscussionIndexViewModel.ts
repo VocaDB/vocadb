@@ -2,6 +2,7 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
@@ -90,7 +91,7 @@ export default class DiscussionIndexViewModel {
   public folders = ko.observableArray<DiscussionFolderContract>([]);
 
   private getFolder = (folderId: number): DiscussionFolderContract => {
-    return _.find(this.folders(), (f) => f.id === folderId);
+    return _.find(this.folders(), (f) => f.id === folderId)!;
   };
 
   private loadTopicsForCurrentFolder = (): void => {

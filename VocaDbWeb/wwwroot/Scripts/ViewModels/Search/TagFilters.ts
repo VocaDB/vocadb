@@ -1,5 +1,6 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
+import _ from 'lodash';
 
 import TagFilter from './TagFilter';
 

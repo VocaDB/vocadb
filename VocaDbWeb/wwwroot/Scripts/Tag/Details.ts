@@ -6,6 +6,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
+import _ from 'lodash';
 
 function initChart(
   urlMapper: UrlMapper,
@@ -29,7 +30,7 @@ function initChart(
     const tagsPerRow = 7;
 
     for (var i = 0; i < tagList.length; i += tagsPerRow) {
-      str += _.reduce<string, string>(
+      str += _.reduce(
         _.take(_.drop(links, i), tagsPerRow),
         (list, item) => list + ', ' + item,
       );

@@ -10,6 +10,7 @@ import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
+import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

@@ -11,6 +11,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistRolesEditViewModel from '../Artist/ArtistRolesEditViewModel';

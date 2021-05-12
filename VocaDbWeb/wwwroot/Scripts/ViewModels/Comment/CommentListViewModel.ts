@@ -6,6 +6,7 @@ import ResourcesManager, { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 enum CommentSortRule {
   CreateDateDescending,
@@ -124,7 +125,7 @@ export default class CommentListViewModel {
         if (!entries && entries!.length > 0) return;
 
         ko.utils.arrayPushAll(this.comments, entries);
-        this.lastCommentDate = new Date(_.last(entries).created!);
+        this.lastCommentDate = new Date(_.last(entries)!.created!);
       },
     );
   };

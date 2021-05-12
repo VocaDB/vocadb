@@ -17,6 +17,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
@@ -437,10 +438,12 @@ export default class SongEditViewModel {
 
     this.firstPvDate = ko.computed(() => {
       var val = _.chain(this.pvs.pvs())
-        .filter((pv) => pv.publishDate && pv.pvType === PVType[PVType.Original])
+        .filter(
+          (pv) => !!pv.publishDate && pv.pvType === PVType[PVType.Original],
+        )
         .map((pv) => moment(pv.publishDate))
         .sortBy((p) => p)
-        .head<_.LoDashExplicitObjectWrapper<moment.Moment>>()
+        .head()
         .value();
 
       return val;
@@ -453,7 +456,7 @@ export default class SongEditViewModel {
       ])
         .filter((d) => d.date != null)
         .sortBy((d) => d.date)
-        .head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
+        .head()
         .value(),
     );
 

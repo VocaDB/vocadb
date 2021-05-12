@@ -1,4 +1,5 @@
 import HtmlHelper from '@Helpers/HtmlHelper';
+import _ from 'lodash';
 
 declare global {
   interface KnockoutBindingHandlers {

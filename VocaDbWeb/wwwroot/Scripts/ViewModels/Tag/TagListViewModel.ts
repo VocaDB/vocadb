@@ -1,5 +1,6 @@
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import _ from 'lodash';
 
 export default class TagListViewModel {
   private static maxDisplayedTags = 4;
@@ -21,10 +22,7 @@ export default class TagListViewModel {
       var tags = _.chain(this.tagUsages())
         .orderBy((tagUsage) => tagUsage.tag.categoryName)
         .groupBy((tagUsage) => tagUsage.tag.categoryName)
-        .map<
-          any,
-          { categoryName: string; tagUsages: TagUsageForApiContract[] }
-        >((tagUsages: TagUsageForApiContract[], categoryName: any) => ({
+        .map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({
           categoryName,
           tagUsages,
         }));

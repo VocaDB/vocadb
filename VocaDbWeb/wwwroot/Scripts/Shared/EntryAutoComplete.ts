@@ -1,6 +1,7 @@
 import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import HtmlHelper from '@Helpers/HtmlHelper';
+import _ from 'lodash';
 
 export interface EntryAutoCompleteParams<TContract> {
   acceptSelection: (

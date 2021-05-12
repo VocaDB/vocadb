@@ -7,6 +7,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ui from '@Shared/MessagesTyped';
 import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';
 

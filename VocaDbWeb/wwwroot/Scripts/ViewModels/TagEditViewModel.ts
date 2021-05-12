@@ -4,6 +4,7 @@ import EntryType from '@Models/EntryType';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import DeleteEntryViewModel from './DeleteEntryViewModel';
 import EnglishTranslatedStringEditViewModel from './Globalization/EnglishTranslatedStringEditViewModel';

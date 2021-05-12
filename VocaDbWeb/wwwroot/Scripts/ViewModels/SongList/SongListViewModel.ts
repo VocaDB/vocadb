@@ -17,6 +17,7 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import PVPlayerViewModel from '../PVs/PVPlayerViewModel';

@@ -3,6 +3,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import _ from 'lodash';
 
 import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
