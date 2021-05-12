@@ -63,10 +63,6 @@ mix
 
 	.ts('wwwroot/Scripts/App.ts', 'wwwroot/bundles')
 
-	// Included on all pages (including front page)
-	// Generally the references go from viewmodels -> repositories -> models -> support classes
-	.scripts([], 'wwwroot/bundles/shared/common.js')
-
 	// Included on all pages except the front page (to optimize front page load time).
 	.scripts(
 		['wwwroot/Scripts/moment-with-locales.js'],
@@ -95,19 +91,6 @@ mix
 	)
 
 	// VIEW-SPECIFIC BUNDLES
-	.scripts([], 'wwwroot/bundles/ActivityEntry/Index.js')
-
-	// HACK: this produces an empty file called Create.js to prevent 404 errors.
-	// TODO: these scripts commands must be removed along with the corresponding RenderScripts in .cshtml files.
-	.scripts([], 'wwwroot/bundles/Album/Create.js')
-
-	.scripts([], 'wwwroot/bundles/Album/Details.js')
-
-	.scripts([], 'wwwroot/bundles/Album/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/Album/Merge.js')
-
-	.scripts([], 'wwwroot/bundles/Artist/Create.js')
 
 	.scripts(
 		[
@@ -116,19 +99,7 @@ mix
 		'wwwroot/bundles/Artist/Details.js',
 	)
 
-	.scripts([], 'wwwroot/bundles/Artist/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/Artist/Merge.js')
-
 	.scripts(['wwwroot/Scripts/page.js'], 'wwwroot/bundles/Discussion/Index.js')
-
-	.scripts([], 'wwwroot/bundles/EventSeries/Details.js')
-
-	.scripts([], 'wwwroot/bundles/EventSeries/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/ReleaseEvent/Details.js')
-
-	.scripts([], 'wwwroot/bundles/ReleaseEvent/Edit.js')
 
 	.scripts(
 		[
@@ -137,16 +108,10 @@ mix
 		'wwwroot/bundles/Search/Index.js',
 	)
 
-	.scripts([], 'wwwroot/bundles/Song/Create.js')
-
 	.scripts(
 		['wwwroot/Scripts/MediaElement/mediaelement-and-player.min.js'],
 		'wwwroot/bundles/Song/Details.js',
 	)
-
-	.scripts([], 'wwwroot/bundles/Song/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/Song/Merge.js')
 
 	.scripts(['wwwroot/Scripts/url.js'], 'wwwroot/bundles/Song/TopRated.js')
 
@@ -157,22 +122,6 @@ mix
 		'wwwroot/bundles/SongList/Details.js',
 	)
 
-	.scripts([], 'wwwroot/bundles/SongList/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/SongList/Featured.js')
-
-	.scripts([], 'wwwroot/bundles/SongList/Import.js')
-
-	.scripts([], 'wwwroot/bundles/Tag/Details.js')
-
-	.scripts([], 'wwwroot/bundles/Tag/Edit.js')
-
-	.scripts([], 'wwwroot/bundles/Tag/Index.js')
-
-	.scripts([], 'wwwroot/bundles/Tag/Merge.js')
-
-	.scripts([], 'wwwroot/bundles/User/AlbumCollection.js')
-
 	.scripts(
 		[
 			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
@@ -180,22 +129,12 @@ mix
 		'wwwroot/bundles/User/Details.js',
 	)
 
-	.scripts([], 'wwwroot/bundles/User/Index.js')
-
-	.scripts([], 'wwwroot/bundles/User/Messages.js')
-
-	.scripts([], 'wwwroot/bundles/User/MySettings.js')
-
 	.scripts(
 		[
 			'wwwroot/Scripts/soundcloud-api.js', // REVIEW
 		],
 		'wwwroot/bundles/User/RatedSongs.js',
 	)
-
-	.scripts([], 'wwwroot/bundles/Venue/Details.js')
-
-	.scripts([], 'wwwroot/bundles/Venue/Edit.js')
 
 	// Base CSS
 	.less('wwwroot/Content/css.less', 'wwwroot/Content')
