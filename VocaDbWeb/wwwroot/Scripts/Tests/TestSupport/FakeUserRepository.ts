@@ -1,11 +1,12 @@
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
-import SongVoteRating from '../../Models/SongVoteRating';
-import UrlMapper from '../../Shared/UrlMapper';
-import { UserInboxType } from '../../Repositories/UserRepository';
-import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
-import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import SongVoteRating from '@Models/SongVoteRating';
+import { UserInboxType } from '@Repositories/UserRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
 import FakePromise from './FakePromise';
-import HttpClient from '../../Shared/HttpClient';
 
 export default class FakeUserRepository extends UserRepository {
   public message!: UserMessageSummaryContract;

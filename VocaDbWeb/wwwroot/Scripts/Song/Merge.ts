@@ -1,7 +1,7 @@
-import SongContract from '../DataContracts/Song/SongContract';
-import SongRepository from '../Repositories/SongRepository';
-import HttpClient from '../Shared/HttpClient';
-import SongMergeViewModel from '../ViewModels/Song/SongMergeViewModel';
+import SongContract from '@DataContracts/Song/SongContract';
+import SongRepository from '@Repositories/SongRepository';
+import HttpClient from '@Shared/HttpClient';
+import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
 
 const SongMerge = (model: SongContract): void => {
   $(function () {

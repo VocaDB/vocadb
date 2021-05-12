@@ -1,9 +1,10 @@
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
+import EntryType from '@Models/EntryType';
+
 import EntryThumbContract from '../EntryThumbContract';
-import EntryType from '../../Models/EntryType';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import TagBaseContract from './TagBaseContract';
 import WebLinkContract from '../WebLinkContract';
+import TagBaseContract from './TagBaseContract';
 
 export default interface TagApiContract {
   additionalNames?: string;

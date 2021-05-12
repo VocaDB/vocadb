@@ -1,4 +1,5 @@
-import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
+import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
 export default class EntryPictureFileListEditViewModel {

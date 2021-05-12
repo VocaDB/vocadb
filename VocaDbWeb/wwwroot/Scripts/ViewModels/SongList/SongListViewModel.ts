@@ -1,34 +1,35 @@
+import CommentContract from '@DataContracts/CommentContract';
+import SongInListContract from '@DataContracts/Song/SongInListContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import { SongOptionalField } from '@Models/EntryOptionalFields';
+import { SongOptionalFields } from '@Models/EntryOptionalFields';
+import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import ResourcesManager from '@Models/ResourcesManager';
+import SongType from '@Models/Songs/SongType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongListRepository from '@Repositories/SongListRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ArtistFilters from '../Search/ArtistFilters';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import CommentContract from '../../DataContracts/CommentContract';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import TagFilter from '../Search/TagFilter';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import PlayListRepositoryForSongListAdapter from '../Song/PlayList/PlayListRepositoryForSongListAdapter';
 import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVServiceIcons from '../../Models/PVServiceIcons';
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesManager from '../../Models/ResourcesManager';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import SongInListContract from '../../DataContracts/Song/SongInListContract';
-import SongListRepository from '../../Repositories/SongListRepository';
-import { SongOptionalField } from '../../Models/EntryOptionalFields';
-import { SongOptionalFields } from '../../Models/EntryOptionalFields';
-import SongRepository from '../../Repositories/SongRepository';
-import SongType from '../../Models/Songs/SongType';
 import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
-import TagFilter from '../Search/TagFilter';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
 
 export default class SongListViewModel {
   constructor(
@@ -227,7 +228,7 @@ export default class SongListViewModel {
           var song = item.song;
           var songAny: any = song;
 
-          if (song.pvServices && song.pvServices != 'Nothing') {
+          if (song.pvServices && song.pvServices !== 'Nothing') {
             songAny.previewViewModel = new SongWithPreviewViewModel(
               this.songRepo,
               this.userRepo,

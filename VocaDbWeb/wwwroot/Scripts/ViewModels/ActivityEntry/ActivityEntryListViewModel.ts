@@ -1,14 +1,14 @@
-import ActivityEntryContract from '../../DataContracts/ActivityEntry/ActivityEntryContract';
-import ArchivedVersionContract from '../../DataContracts/Versioning/ArchivedVersionContract';
-import EntryContract from '../../DataContracts/EntryContract';
-import EntryEditEvent from '../../Models/ActivityEntries/EntryEditEvent';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesManager from '../../Models/ResourcesManager';
-import { ResourceSetNames } from '../../Models/ResourcesManager';
-import UrlMapper from '../../Shared/UrlMapper';
+import ActivityEntryContract from '@DataContracts/ActivityEntry/ActivityEntryContract';
+import EntryContract from '@DataContracts/EntryContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import ArchivedVersionContract from '@DataContracts/Versioning/ArchivedVersionContract';
+import EntryEditEvent from '@Models/ActivityEntries/EntryEditEvent';
+import EntryType from '@Models/EntryType';
+import ResourcesManager from '@Models/ResourcesManager';
+import { ResourceSetNames } from '@Models/ResourcesManager';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
 
 enum ActivityEntrySortRule {
   CreateDateDescending,

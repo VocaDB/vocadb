@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import AlbumCreateViewModel from '../ViewModels/Album/AlbumCreateViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import AlbumCreateViewModel from '@ViewModels/Album/AlbumCreateViewModel';
 
 const AlbumCreate = (): void => {
   $(function () {

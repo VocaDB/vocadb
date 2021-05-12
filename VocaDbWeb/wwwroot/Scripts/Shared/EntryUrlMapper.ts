@@ -1,10 +1,10 @@
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import EntryRefContract from '../DataContracts/EntryRefContract';
-import EntryType from '../Models/EntryType';
+import EntryRefContract from '@DataContracts/EntryRefContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import EntryType from '@Models/EntryType';
+
 import functions from './GlobalFunctions';
-import SongApiContract from '../DataContracts/Song/SongApiContract';
-import TagApiContract from '../DataContracts/Tag/TagApiContract';
-import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
 // Maps view URLs for common entry types.
 export default class EntryUrlMapper {

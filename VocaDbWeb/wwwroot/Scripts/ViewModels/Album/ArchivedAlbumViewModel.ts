@@ -1,6 +1,7 @@
-import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ui from '@Shared/MessagesTyped';
+
 import ReportEntryViewModel from '../ReportEntryViewModel';
-import ui from '../../Shared/MessagesTyped';
 
 export default class ArchivedAlbumViewModel {
   constructor(

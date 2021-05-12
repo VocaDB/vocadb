@@ -1,18 +1,19 @@
-import AlbumType from '../../Models/Albums/AlbumType';
-import ArtistType from '../../Models/Artists/ArtistType';
+import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
+import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
+import EntryType from '@Models/EntryType';
+import EventCategory from '@Models/Events/EventCategory';
+import SongType from '@Models/Songs/SongType';
+import TagRepository from '@Repositories/TagRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import functions from '@Shared/GlobalFunctions';
+import ui from '@Shared/MessagesTyped';
+
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import { EditTagMappingViewModel } from './ManageTagMappingsViewModel';
-import EntryTagMappingContract from '../../DataContracts/Tag/EntryTagMappingContract';
-import EntryType from '../../Models/EntryType';
-import EntryTypeAndSubTypeContract from '../../DataContracts/EntryTypeAndSubTypeContract';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import EventCategory from '../../Models/Events/EventCategory';
-import functions from '../../Shared/GlobalFunctions';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import SongType from '../../Models/Songs/SongType';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
-import TagRepository from '../../Repositories/TagRepository';
-import ui from '../../Shared/MessagesTyped';
+import { EditTagMappingViewModel } from './ManageTagMappingsViewModel';
 
 export default class ManageEntryTagMappingsViewModel {
   constructor(private readonly tagRepo: TagRepository) {

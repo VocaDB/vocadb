@@ -1,8 +1,8 @@
-import VenueForEditContract from '../DataContracts/Venue/VenueForEditContract';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import VenueEditViewModel from '../ViewModels/Venue/VenueEditViewModel';
+import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import VenueEditViewModel from '@ViewModels/Venue/VenueEditViewModel';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

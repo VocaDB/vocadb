@@ -1,9 +1,10 @@
-import AlbumContract from '../../DataContracts/Album/AlbumContract';
-import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumContract from '@DataContracts/Album/AlbumContract';
+import ResourcesManager from '@Models/ResourcesManager';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+
 import ArtistFilters from './ArtistFilters';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesManager from '../../Models/ResourcesManager';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 

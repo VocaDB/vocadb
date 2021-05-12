@@ -1,7 +1,7 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import RequestVerificationViewModel from '../ViewModels/User/RequestVerificationViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import RequestVerificationViewModel from '@ViewModels/User/RequestVerificationViewModel';
 
 const UserRequestVerification = (): void => {
   $(document).ready(function () {

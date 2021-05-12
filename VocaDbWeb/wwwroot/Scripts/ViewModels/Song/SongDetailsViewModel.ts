@@ -1,29 +1,97 @@
-import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import CommentContract from '../../DataContracts/CommentContract';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import CommentContract from '@DataContracts/CommentContract';
+import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongListBaseContract from '@DataContracts/SongListBaseContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import SongVoteRating from '@Models/SongVoteRating';
+import SongType from '@Models/Songs/SongType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import ui from '@Shared/MessagesTyped';
+
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import EntryType from '../../Models/EntryType';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
+import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongListBaseContract from '../../DataContracts/SongListBaseContract';
-import SongVoteRating from '../../Models/SongVoteRating';
-import SongRepository from '../../Repositories/SongRepository';
-import SongType from '../../Models/Songs/SongType';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import ui from '../../Shared/MessagesTyped';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
-import UserRepository from '../../Repositories/UserRepository';
-import HttpClient from '../../Shared/HttpClient';
+
+export class RatingsViewModel {
+  constructor() {
+    const fav = SongVoteRating[SongVoteRating.Favorite];
+    const like = SongVoteRating[SongVoteRating.Like];
+
+    this.favorites = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.user && r.rating === fav)
+        .take(20)
+        .map((r) => r.user!)
+        .sortBy((u) => u.name)
+        .value(),
+    );
+
+    this.favoritesCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.rating === fav)
+        .size()
+        .value(),
+    );
+
+    this.likes = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.user && r.rating === like)
+        .take(20)
+        .map((r) => r.user!)
+        .sortBy((u) => u.name)
+        .value(),
+    );
+
+    this.likesCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => r.rating === like)
+        .size()
+        .value(),
+    );
+
+    this.hiddenRatingsCount = ko.computed(() =>
+      _.chain(this.ratings())
+        .filter((r) => !r.user)
+        .size()
+        .value(),
+    );
+
+    this.showFavorites = ko.computed(() => !!this.favorites().length);
+    this.showLikes = ko.computed(() => !!this.likes().length);
+  }
+
+  public readonly favorites: KnockoutComputed<UserApiContract[]>;
+
+  public readonly favoritesCount: KnockoutComputed<number>;
+
+  public readonly hiddenRatingsCount: KnockoutComputed<number>;
+
+  public readonly likes: KnockoutComputed<UserApiContract[]>;
+
+  public readonly likesCount: KnockoutComputed<number>;
+
+  public readonly popupVisible = ko.observable(false);
+
+  public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
+
+  public readonly showFavorites: KnockoutComputed<boolean>;
+
+  public readonly showLikes: KnockoutComputed<boolean>;
+}
 
 // View model for the song details view.
 export default class SongDetailsViewModel {
@@ -340,73 +408,6 @@ export class SongListsViewModel {
       });
     };
   }
-}
-
-export class RatingsViewModel {
-  constructor() {
-    const fav = SongVoteRating[SongVoteRating.Favorite];
-    const like = SongVoteRating[SongVoteRating.Like];
-
-    this.favorites = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === fav)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
-
-    this.favoritesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === fav)
-        .size()
-        .value(),
-    );
-
-    this.likes = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === like)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
-
-    this.likesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === like)
-        .size()
-        .value(),
-    );
-
-    this.hiddenRatingsCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => !r.user)
-        .size()
-        .value(),
-    );
-
-    this.showFavorites = ko.computed(() => !!this.favorites().length);
-    this.showLikes = ko.computed(() => !!this.likes().length);
-  }
-
-  public readonly favorites: KnockoutComputed<UserApiContract[]>;
-
-  public readonly favoritesCount: KnockoutComputed<number>;
-
-  public readonly hiddenRatingsCount: KnockoutComputed<number>;
-
-  public readonly likes: KnockoutComputed<UserApiContract[]>;
-
-  public readonly likesCount: KnockoutComputed<number>;
-
-  public readonly popupVisible = ko.observable(false);
-
-  public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
-
-  public readonly showFavorites: KnockoutComputed<boolean>;
-
-  public readonly showLikes: KnockoutComputed<boolean>;
 }
 
 export interface SongDetailsAjax {

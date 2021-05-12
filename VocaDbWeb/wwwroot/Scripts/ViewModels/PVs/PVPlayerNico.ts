@@ -1,5 +1,60 @@
+import PVService from '@Models/PVs/PVService';
+
 import { IPVPlayer } from './PVPlayerViewModel';
-import PVService from '../../Models/PVs/PVService';
+
+declare namespace nico {
+  export interface NicoPlayerFactory {
+    create(element: HTMLElement, watchId: string): Promise<NicoPlayer>;
+  }
+
+  export interface PlayerEvent {
+    data: EventData;
+  }
+
+  export interface StatusEvent {
+    eventName: 'playerStatusChange';
+    data: {
+      playerStatus: PlayerStatus;
+    };
+  }
+
+  export interface MetadataEvent {
+    eventName: 'playerMetadataChange';
+    data: {
+      currentTime: number;
+      duration: number;
+    };
+  }
+
+  export interface LoadCompleteEvent {
+    eventName: 'loadComplete';
+    data: {
+      videoInfo: {
+        watchId: string;
+      };
+    };
+  }
+
+  export interface ErrorEvent {
+    eventName: 'error';
+    data: {
+      message: string;
+    };
+  }
+
+  type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent | ErrorEvent;
+
+  export interface NicoPlayer {
+    play(): void;
+    pause(): void;
+  }
+
+  export const enum PlayerStatus {
+    Play = 2,
+    Pause = 3,
+    End = 4,
+  }
+}
 
 /*
 		Note: I'm not terrible happy about the implementation for now.
@@ -109,59 +164,5 @@ export default class PVPlayerNico implements IPVPlayer {
 declare global {
   interface Window {
     onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
-  }
-}
-
-declare namespace nico {
-  export interface NicoPlayerFactory {
-    create(element: HTMLElement, watchId: string): Promise<NicoPlayer>;
-  }
-
-  export interface PlayerEvent {
-    data: EventData;
-  }
-
-  export interface StatusEvent {
-    eventName: 'playerStatusChange';
-    data: {
-      playerStatus: PlayerStatus;
-    };
-  }
-
-  export interface MetadataEvent {
-    eventName: 'playerMetadataChange';
-    data: {
-      currentTime: number;
-      duration: number;
-    };
-  }
-
-  export interface LoadCompleteEvent {
-    eventName: 'loadComplete';
-    data: {
-      videoInfo: {
-        watchId: string;
-      };
-    };
-  }
-
-  export interface ErrorEvent {
-    eventName: 'error';
-    data: {
-      message: string;
-    };
-  }
-
-  type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent | ErrorEvent;
-
-  export interface NicoPlayer {
-    play(): void;
-    pause(): void;
-  }
-
-  export const enum PlayerStatus {
-    Play = 2,
-    Pause = 3,
-    End = 4,
   }
 }

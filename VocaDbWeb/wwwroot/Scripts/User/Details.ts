@@ -1,13 +1,13 @@
-import CommentContract from '../DataContracts/CommentContract';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
-import AlbumCollectionViewModel from '../ViewModels/User/AlbumCollectionViewModel';
-import FollowedArtistsViewModel from '../ViewModels/User/FollowedArtistsViewModel';
-import RatedSongsSearchViewModel from '../ViewModels/User/RatedSongsSearchViewModel';
-import UserDetailsViewModel from '../ViewModels/User/UserDetailsViewModel';
+import CommentContract from '@DataContracts/CommentContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
+import FollowedArtistsViewModel from '@ViewModels/User/FollowedArtistsViewModel';
+import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
+import UserDetailsViewModel from '@ViewModels/User/UserDetailsViewModel';
 
 function initPage(confirmDisableStr: string): void {
   $('#mySettingsLink').button({ icons: { primary: 'ui-icon-wrench' } });
@@ -19,13 +19,13 @@ function initPage(confirmDisableStr: string): void {
   $('#disableUserLink').button({ icons: { primary: 'ui-icon-close' } });
   $('#reportUserLink').button({ icons: { primary: 'ui-icon-alert' } });
   $('#setToLimitedLink').button({ icons: { primary: 'ui-icon-close' } });
-  $('#avatar').tooltip(<any>{ placement: 'bottom' });
+  $('#avatar').tooltip({ placement: 'bottom' } as any);
 
   $('#disableUserLink').click(function () {
     return window.confirm(confirmDisableStr);
   });
 
-  $('#sfsCheckDialog').dialog(<any>{ autoOpen: false, model: true });
+  $('#sfsCheckDialog').dialog({ autoOpen: false, model: true } as any);
   $('#favoriteAlbums img').vdbAlbumToolTip();
 }
 

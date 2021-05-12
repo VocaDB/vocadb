@@ -1,4 +1,4 @@
-import functions from '../../Shared/GlobalFunctions';
+import functions from '@Shared/GlobalFunctions';
 
 export default class ViewAuditLogViewModel {
   public excludeUsers = ko.observable('');
@@ -69,7 +69,7 @@ export default class ViewAuditLogViewModel {
           },
         ) => {
           var name = this.extractLast(request.term);
-          if (name.length == 0) response({});
+          if (name.length === 0) response({});
           else
             $.getJSON(
               '/api/users/names',

@@ -1,6 +1,6 @@
-import functions from '../Shared/GlobalFunctions';
-import ResourcesContract from '../DataContracts/ResourcesContract';
-import HttpClient from '../Shared/HttpClient';
+import ResourcesContract from '@DataContracts/ResourcesContract';
+import functions from '@Shared/GlobalFunctions';
+import HttpClient from '@Shared/HttpClient';
 
 export default class ResourceRepository {
   constructor(

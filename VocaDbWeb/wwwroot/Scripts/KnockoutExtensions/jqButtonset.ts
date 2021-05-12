@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface KnockoutBindingHandlers {
   jqButtonset: KnockoutBindingHandler;
 }
@@ -13,9 +14,9 @@ ko.bindingHandlers.jqButtonset = {
 
     var updateHandler = function (): void {
       var valueToWrite;
-      if (element.type == 'checkbox') {
+      if (element.type === 'checkbox') {
         valueToWrite = element.checked;
-      } else if (element.type == 'radio' && element.checked) {
+      } else if (element.type === 'radio' && element.checked) {
         valueToWrite = element.value;
       } else {
         return; // "checked" binding only responds to checkboxes and selected radio buttons
@@ -23,13 +24,13 @@ ko.bindingHandlers.jqButtonset = {
 
       var modelValue = valueAccessor();
       if (
-        element.type == 'checkbox' &&
+        element.type === 'checkbox' &&
         ko.utils.unwrapObservable(modelValue) instanceof Array
       ) {
         // For checkboxes bound to an array, we add/remove the checkbox value to that array
         // This works for both observable and non-observable arrays
         var existingEntryIndex = ko.utils.arrayIndexOf(
-          <any>ko.utils.unwrapObservable(modelValue),
+          ko.utils.unwrapObservable(modelValue) as any,
           element.value,
         );
         if (element.checked && existingEntryIndex < 0)
@@ -90,11 +91,11 @@ ko.bindingHandlers.jqButtonset = {
     /////////////// end add ///////////////////////////
     var value = ko.utils.unwrapObservable(valueAccessor());
 
-    if (element.type == 'checkbox') {
+    if (element.type === 'checkbox') {
       if (value instanceof Array) {
         // When bound to an array, the checkbox being checked represents its value being present in that array
         element.checked =
-          ko.utils.arrayIndexOf(<any[]>value, element.value) >= 0;
+          ko.utils.arrayIndexOf(value as any[], element.value) >= 0;
       } else {
         // When bound to anything other value (not an array), the checkbox being checked represents the value being trueish
         element.checked = value;
@@ -108,13 +109,13 @@ ko.bindingHandlers.jqButtonset = {
           document.createElement("<input type='checkbox' checked='checked' />"),
           false,
         );
-    } else if (element.type == 'radio') {
-      element.checked = element.value == value;
+    } else if (element.type === 'radio') {
+      element.checked = element.value === value;
       /////////////// addded code to ko checked binding /////////////////
       buttonSet(element);
       /////////////// end add ///////////////////////////
       // Workaround for IE 6/7 bug - it fails to apply checked state to dynamically-created radio buttons if you merely say "element.checked = true"
-      if (element.value == value && (ko.utils.isIe6 || ko.utils.isIe7))
+      if (element.value === value && (ko.utils.isIe6 || ko.utils.isIe7))
         element.mergeAttributes(
           document.createElement("<input type='radio' checked='checked' />"),
           false,

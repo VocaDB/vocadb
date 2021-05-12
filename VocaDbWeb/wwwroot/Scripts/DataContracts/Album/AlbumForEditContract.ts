@@ -1,12 +1,12 @@
-import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
-import AlbumReleaseContract from './AlbumReleaseContract';
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import EntryPictureFileContract from '../EntryPictureFileContract';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import PVContract from '../PVs/PVContract';
 import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
 import WebLinkContract from '../WebLinkContract';
+import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
+import AlbumReleaseContract from './AlbumReleaseContract';
 
 export default interface AlbumForEditContract {
   artistLinks: ArtistForAlbumContract[];

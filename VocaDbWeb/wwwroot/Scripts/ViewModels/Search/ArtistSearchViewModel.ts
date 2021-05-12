@@ -1,7 +1,8 @@
-import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
-import ArtistHelper from '../../Helpers/ArtistHelper';
-import ArtistRepository from '../../Repositories/ArtistRepository';
-import ArtistType from '../../Models/Artists/ArtistType';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistHelper from '@Helpers/ArtistHelper';
+import ArtistType from '@Models/Artists/ArtistType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
@@ -37,7 +38,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
           lang,
           searchTerm,
           this.sort(),
-          this.artistType() != ArtistType[ArtistType.Unknown]
+          this.artistType() !== ArtistType[ArtistType.Unknown]
             ? this.artistType()
             : null!,
           !this.onlyRootVoicebanks(),

@@ -1,9 +1,9 @@
-import UserKnownLanguageContract from '../DataContracts/User/UserKnownLanguageContract';
-import WebLinkContract from '../DataContracts/WebLinkContract';
-import UserRepository from '../Repositories/UserRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import MySettingsViewModel from '../ViewModels/User/MySettingsViewModel';
+import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageContract';
+import WebLinkContract from '@DataContracts/WebLinkContract';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 
 const UserMySettings = (model: {
   aboutMe: string;

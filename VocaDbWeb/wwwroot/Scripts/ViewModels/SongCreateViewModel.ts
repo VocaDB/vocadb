@@ -1,20 +1,21 @@
-import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
-import ArtistRepository from '../Repositories/ArtistRepository';
-import ArtistRoles from '../Models/Artists/ArtistRoles';
-import ArtistType from '../Models/Artists/ArtistType';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
+import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
+import SongContract from '@DataContracts/Song/SongContract';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import SongHelper from '@Helpers/SongHelper';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistType from '@Models/Artists/ArtistType';
+import EntryType from '@Models/EntryType';
+import SongType from '@Models/Songs/SongType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import SongRepository from '@Repositories/SongRepository';
+import TagRepository from '@Repositories/TagRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
-import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
-import EntryType from '../Models/EntryType';
-import EntryUrlMapper from '../Shared/EntryUrlMapper';
-import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
-import SongContract from '../DataContracts/Song/SongContract';
-import SongHelper from '../Helpers/SongHelper';
-import SongRepository from '../Repositories/SongRepository';
-import SongType from '../Models/Songs/SongType';
-import TagApiContract from '../DataContracts/Tag/TagApiContract';
-import TagRepository from '../Repositories/TagRepository';
 
 // View model for song creation view
 export default class SongCreateViewModel {
@@ -229,7 +230,7 @@ export default class SongCreateViewModel {
       return _.filter(
         this.artists(),
         (a) =>
-          ArtistType[a.artistType as keyof typeof ArtistType] ==
+          ArtistType[a.artistType as keyof typeof ArtistType] ===
           ArtistType.CoverArtist,
       );
     });

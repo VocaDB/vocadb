@@ -1,8 +1,8 @@
-import functions from '../Shared/GlobalFunctions';
-import PagingProperties from '../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import EntryContract from '../DataContracts/EntryContract';
-import HttpClient from '../Shared/HttpClient';
+import EntryContract from '@DataContracts/EntryContract';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import functions from '@Shared/GlobalFunctions';
+import HttpClient from '@Shared/HttpClient';
 
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.

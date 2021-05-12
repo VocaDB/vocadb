@@ -1,11 +1,11 @@
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
 import AlbumDetailsViewModel, {
   AlbumDetailsAjax,
-} from '../ViewModels/Album/AlbumDetailsViewModel';
-import ui from '../Shared/MessagesTyped';
-import UrlMapper from '../Shared/UrlMapper';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
-import HttpClient from '../Shared/HttpClient';
+} from '@ViewModels/Album/AlbumDetailsViewModel';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 
 function initAlbumDetailsPage(
   albumId: number,
@@ -48,7 +48,7 @@ function initAlbumDetailsPage(
 
   $('#collectionRating').jqxRating();
 
-  if (collectionRating != 0) {
+  if (collectionRating !== 0) {
     $('#collectionRating').jqxRating({ value: collectionRating });
   }
 
@@ -99,7 +99,7 @@ function initAlbumDetailsPage(
             null!,
           );
 
-          if (status == 'Nothing') {
+          if (status === 'Nothing') {
             $('#updateAlbumLink').hide();
             $('#addAlbumLink').show();
           } else {

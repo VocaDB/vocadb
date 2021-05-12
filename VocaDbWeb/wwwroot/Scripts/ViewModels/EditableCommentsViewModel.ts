@@ -1,6 +1,7 @@
-import CommentContract from '../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
+import ICommentRepository from '@Repositories/ICommentRepository';
+
 import CommentViewModel from './CommentViewModel';
-import ICommentRepository from '../Repositories/ICommentRepository';
 import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 
 // Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).

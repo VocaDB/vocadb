@@ -1,5 +1,5 @@
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
 
 // View model for editing artist for album link.
 export default class ArtistForEventEditViewModel

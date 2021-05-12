@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 require('laravel-mix-eslint');
 
@@ -22,6 +23,22 @@ mix
 	})
 	.options({
 		processCssUrls: false,
+	})
+	.alias({
+		'@DataContracts': path.join(__dirname, 'wwwroot/Scripts/DataContracts'),
+		'@Helpers': path.join(__dirname, 'wwwroot/Scripts/Helpers'),
+		'@KnockoutExtensions': path.join(
+			__dirname,
+			'wwwroot/Scripts/KnockoutExtensions',
+		),
+		'@Models': path.join(__dirname, 'wwwroot/Scripts/Models'),
+		'@Repositories': path.join(__dirname, 'wwwroot/Scripts/Repositories'),
+		'@Shared': path.join(__dirname, 'wwwroot/Scripts/Shared'),
+		'@ViewModels': path.join(__dirname, 'wwwroot/Scripts/ViewModels'),
+	})
+	.eslint({
+		fix: false,
+		extensions: ['ts', 'tsx'],
 	})
 
 	/*.scripts([
@@ -192,12 +209,7 @@ mix
 	.styles(
 		['wwwroot/Scripts/jqwidgets27/styles/jqx.base.css'],
 		'wwwroot/Scripts/jqwidgets27/styles/css.css',
-	)
-
-	.eslint({
-		fix: false,
-		extensions: ['ts', 'tsx'],
-	});
+	);
 
 if (mix.inProduction()) {
 	mix.scripts([], 'wwwroot/bundles/tests.js');

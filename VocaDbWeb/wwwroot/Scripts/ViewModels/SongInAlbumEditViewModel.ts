@@ -1,5 +1,5 @@
-import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 
 export default class SongInAlbumEditViewModel {
   public artists: KnockoutObservableArray<ArtistContract>;
@@ -36,7 +36,7 @@ export default class SongInAlbumEditViewModel {
     this.trackNumber = ko.observable(data.trackNumber);
 
     this.isNextDisc = ko.observable(
-      this.trackNumber() == 1 && this.discNumber() > 1,
+      this.trackNumber() === 1 && this.discNumber() > 1,
     );
     this.selected = ko.observable(false);
 

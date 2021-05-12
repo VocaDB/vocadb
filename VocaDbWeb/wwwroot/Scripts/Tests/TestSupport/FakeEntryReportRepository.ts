@@ -1,6 +1,7 @@
-import EntryReportRepository from '../../Repositories/EntryReportRepository';
-import HttpClient from '../../Shared/HttpClient';
-import UrlMapper from '../../Shared/UrlMapper';
+import EntryReportRepository from '@Repositories/EntryReportRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
 import FakePromise from './FakePromise';
 
 export default class FakeEntryReportRepository extends EntryReportRepository {

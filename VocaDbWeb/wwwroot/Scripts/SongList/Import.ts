@@ -1,5 +1,5 @@
-import UrlMapper from '../Shared/UrlMapper';
-import ImportSongListViewModel from '../ViewModels/SongList/ImportSongListViewModel';
+import UrlMapper from '@Shared/UrlMapper';
+import ImportSongListViewModel from '@ViewModels/SongList/ImportSongListViewModel';
 
 const SongListImport = (): void => {
   ko.punches.enableAll();

@@ -1,10 +1,10 @@
-import SongForEditContract from '../DataContracts/Song/SongForEditContract';
-import TranslatedEnumField from '../DataContracts/TranslatedEnumField';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import DialogService from '../Shared/DialogService';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import SongEditViewModel from '../ViewModels/Song/SongEditViewModel';
+import SongForEditContract from '@DataContracts/Song/SongForEditContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import DialogService from '@Shared/DialogService';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
 
 function initPage(): void {
   $('#tabs').tabs();

@@ -1,7 +1,8 @@
+import PVService from '@Models/PVs/PVService';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import PVService from '../../Models/PVs/PVService';
-import SongRepository from '../../Repositories/SongRepository';
-import UserRepository from '../../Repositories/UserRepository';
 
 // View model for song with PV preview and rating buttons (for example, on front page and song index page).
 export default class SongWithPreviewViewModel {

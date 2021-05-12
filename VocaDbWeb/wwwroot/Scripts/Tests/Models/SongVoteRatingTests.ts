@@ -1,5 +1,5 @@
-import { parseSongVoteRating } from '../../Models/SongVoteRating';
-import SongVoteRating from '../../Models/SongVoteRating';
+import { parseSongVoteRating } from '@Models/SongVoteRating';
+import SongVoteRating from '@Models/SongVoteRating';
 
 QUnit.module('SongVoteRating');
 

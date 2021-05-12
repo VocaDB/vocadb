@@ -1,6 +1,6 @@
-import { parseSongVoteRating } from '../Models/SongVoteRating';
-import SongVoteRating from '../Models/SongVoteRating';
-import UserRepository from '../Repositories/UserRepository';
+import { parseSongVoteRating } from '@Models/SongVoteRating';
+import SongVoteRating from '@Models/SongVoteRating';
+import UserRepository from '@Repositories/UserRepository';
 
 // Knockout view model for PV rating buttons
 export default class PVRatingButtonsViewModel {

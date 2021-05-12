@@ -1,5 +1,5 @@
-import ResourceRepository from '../Repositories/ResourceRepository';
-import ResourcesContract from '../DataContracts/ResourcesContract';
+import ResourcesContract from '@DataContracts/ResourcesContract';
+import ResourceRepository from '@Repositories/ResourceRepository';
 
 export default class ResourcesManager {
   constructor(

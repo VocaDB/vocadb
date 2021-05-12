@@ -1,28 +1,27 @@
-import ArtistFilters from './ArtistFilters';
-import ArtistRepository from '../../Repositories/ArtistRepository';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import KnockoutHelper from '@Helpers/KnockoutHelper';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import ResourcesManager from '@Models/ResourcesManager';
+import SongType from '@Models/Songs/SongType';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
-import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
 import PlayListRepositoryForSongsAdapter from '../Song/PlayList/PlayListRepositoryForSongsAdapter';
 import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVServiceIcons from '../../Models/PVServiceIcons';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesManager from '../../Models/ResourcesManager';
+import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
+import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongRepository from '../../Repositories/SongRepository';
-import SongType from '../../Models/Songs/SongType';
-import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
-import Decimal from 'decimal.js-light';
-import DateTimeHelper from '../../Helpers/DateTimeHelper';
-import KnockoutHelper from '../../Helpers/KnockoutHelper';
 
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
   constructor(
@@ -192,7 +191,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
             lang,
             searchTerm,
             this.sort(),
-            this.songType() != SongType[SongType.Unspecified]
+            this.songType() !== SongType[SongType.Unspecified]
               ? this.songType()
               : null!,
             this.afterDate(),
@@ -221,7 +220,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
           )
           .then((result) => {
             _.each(result.items, (song: ISongSearchItem) => {
-              if (song.pvServices && song.pvServices != 'Nothing') {
+              if (song.pvServices && song.pvServices !== 'Nothing') {
                 song.previewViewModel = new SongWithPreviewViewModel(
                   this.songRepo,
                   this.userRepo,

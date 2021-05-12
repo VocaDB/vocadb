@@ -1,8 +1,8 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import ResourceRepository from '../Repositories/ResourceRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import CommentListViewModel from '../ViewModels/Comment/CommentListViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import CommentListViewModel from '@ViewModels/Comment/CommentListViewModel';
 
 const CommentCommentsByUser = (model: { id: number }): void => {
   $(function () {

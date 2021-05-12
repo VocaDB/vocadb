@@ -1,4 +1,5 @@
-﻿interface KnockoutFilters {
+﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface KnockoutFilters {
   truncate: (source: string, length: number) => string;
 }
 

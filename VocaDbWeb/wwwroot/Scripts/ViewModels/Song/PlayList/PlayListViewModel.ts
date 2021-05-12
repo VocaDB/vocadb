@@ -1,18 +1,19 @@
-import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
-import DateTimeHelper from '../../../Helpers/DateTimeHelper';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import DateTimeHelper from '@Helpers/DateTimeHelper';
+import PVHelper from '@Helpers/PVHelper';
+import { SongOptionalField } from '@Models/EntryOptionalFields';
+import { SongOptionalFields } from '@Models/EntryOptionalFields';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import UrlMapper from '@Shared/UrlMapper';
+
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
-import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
-import PVHelper from '../../../Helpers/PVHelper';
 import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
-import PVServiceIcons from '../../../Models/PVServiceIcons';
 import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
-import SongApiContract from '../../../DataContracts/Song/SongApiContract';
-import { SongOptionalField } from '../../../Models/EntryOptionalFields';
-import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
-import SongRepository from '../../../Repositories/SongRepository';
-import UrlMapper from '../../../Shared/UrlMapper';
-import UserRepository from '../../../Repositories/UserRepository';
 
 export default class PlayListViewModel {
   constructor(
@@ -53,7 +54,7 @@ export default class PlayListViewModel {
   private getSongIndex = (song: IPVPlayerSong): number => {
     // Might need to build a lookup for this for large playlists
     for (var i = 0; i < this.page().length; ++i) {
-      if (this.page()[i].song.id == song.song.id) return i;
+      if (this.page()[i].song.id === song.song.id) return i;
     }
 
     return -1;
@@ -63,7 +64,7 @@ export default class PlayListViewModel {
   // If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
   private getSongWithPlayListIndex = (index: number): ISongForPlayList => {
     // Might need to build a lookup for this for large playlists
-    return _.find(this.page(), (s) => s.indexInPlayList == index);
+    return _.find(this.page(), (s) => s.indexInPlayList === index);
   };
 
   private hasMoreSongs: KnockoutComputed<boolean>;
@@ -78,7 +79,7 @@ export default class PlayListViewModel {
   };
 
   public nextSong = (): void => {
-    if (this.paging.totalItems() == 0) return;
+    if (this.paging.totalItems() === 0) return;
 
     var index: number;
 

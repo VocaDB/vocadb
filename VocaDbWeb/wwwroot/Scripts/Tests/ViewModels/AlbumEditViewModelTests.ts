@@ -1,18 +1,19 @@
-import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
+import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel, {
   TrackArtistSelectionViewModel,
-} from '../../ViewModels/Album/AlbumEditViewModel';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+} from '@ViewModels/Album/AlbumEditViewModel';
+import { TrackPropertiesViewModel } from '@ViewModels/Album/AlbumEditViewModel';
+import SongInAlbumEditViewModel from '@ViewModels/SongInAlbumEditViewModel';
+
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongInAlbumEditContract from '../../DataContracts/Song/SongInAlbumEditContract';
-import SongInAlbumEditViewModel from '../../ViewModels/SongInAlbumEditViewModel';
-import { TrackPropertiesViewModel } from '../../ViewModels/Album/AlbumEditViewModel';
-import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
-import UrlMapper from '../../Shared/UrlMapper';
 
 var rep = new FakeAlbumRepository();
 var songRep: FakeSongRepository;
@@ -208,7 +209,7 @@ function findArtistSelection(
   target: TrackPropertiesViewModel,
   artist: ArtistContract,
 ): TrackArtistSelectionViewModel {
-  return _.find(target.artistSelections, (a) => a.artist == artist);
+  return _.find(target.artistSelections, (a) => a.artist === artist);
 }
 
 QUnit.test('constructor', () => {
@@ -274,7 +275,7 @@ QUnit.test('addArtist existing', () => {
 
   equal(target.artistLinks().length, 5, 'artistLinks().length');
   equal(
-    _.some(target.artistLinks(), (a) => a.artist == newVocalist),
+    _.some(target.artistLinks(), (a) => a.artist === newVocalist),
     true,
     'New vocalist was added',
   );
@@ -286,7 +287,7 @@ QUnit.test('addArtist custom', () => {
 
   equal(target.artistLinks().length, 5, 'artistLinks().length');
   equal(
-    _.some(target.artistLinks(), (a) => a.name() == 'Custom artist'),
+    _.some(target.artistLinks(), (a) => a.name() === 'Custom artist'),
     true,
     'Custom artist was added',
   );

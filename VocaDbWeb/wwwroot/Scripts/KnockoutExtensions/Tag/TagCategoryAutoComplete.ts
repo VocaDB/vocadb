@@ -1,4 +1,4 @@
-import functions from '../../Shared/GlobalFunctions';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {

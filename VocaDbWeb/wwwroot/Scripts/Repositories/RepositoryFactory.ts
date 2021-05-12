@@ -1,7 +1,10 @@
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
 import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';
 import ArtistRepository from './ArtistRepository';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import DiscussionRepository from './DiscussionRepository';
 import EntryRepository from './EntryRepository';
 import PVRepository from './PVRepository';
@@ -10,10 +13,8 @@ import ResourceRepository from './ResourceRepository';
 import SongListRepository from './SongListRepository';
 import SongRepository from './SongRepository';
 import TagRepository from './TagRepository';
-import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from './UserRepository';
 import VenueRepository from './VenueRepository';
-import HttpClient from '../Shared/HttpClient';
 
 export default class RepositoryFactory {
   constructor(

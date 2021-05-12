@@ -1,8 +1,8 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import ResourceRepository from '../Repositories/ResourceRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ActivityEntryListViewModel from '../ViewModels/ActivityEntry/ActivityEntryListViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ActivityEntryListViewModel from '@ViewModels/ActivityEntry/ActivityEntryListViewModel';
 
 const ActivityEntryIndex = (): void => {
   $(function () {

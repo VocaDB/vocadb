@@ -1,32 +1,33 @@
-import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
+import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import AlbumType from '@Models/Albums/AlbumType';
+import EntryType from '@Models/EntryType';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import PVRepository from '@Repositories/PVRepository';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import { IDialogService } from '@Shared/DialogService';
+import UrlMapper from '@Shared/UrlMapper';
+
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
-import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';
-import AlbumRepository from '../../Repositories/AlbumRepository';
-import AlbumType from '../../Models/Albums/AlbumType';
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';
 import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
-import ArtistRepository from '../../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import CustomNameEditViewModel from '../CustomNameEditViewModel';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
-import EntryType from '../../Models/EntryType';
-import { IDialogService } from '../../Shared/DialogService';
+import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import PVListEditViewModel from '../PVs/PVListEditViewModel';
-import PVRepository from '../../Repositories/PVRepository';
-import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
-import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import SongInAlbumEditViewModel from '../SongInAlbumEditViewModel';
-import SongRepository from '../../Repositories/SongRepository';
-import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
+import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';
 
 // Edit view model for album.
 export default class AlbumEditViewModel {
@@ -352,7 +353,7 @@ export default class AlbumEditViewModel {
           songId: 0,
           songInAlbumId: 0,
           trackNumber: 1,
-          isCustomTrack: itemType == 'custom',
+          isCustomTrack: itemType === 'custom',
         });
         track.isNextDisc.subscribe(() => this.updateTrackNumbers());
         this.tracks.push(track);
@@ -368,7 +369,7 @@ export default class AlbumEditViewModel {
               this.editedSong().artistSelections,
               (a) =>
                 a.selected() &&
-                _.every(song.artists(), (a2) => a.artist.id != a2.id),
+                _.every(song.artists(), (a2) => a.artist.id !== a2.id),
             ),
             (a3) => a3.artist,
           );
@@ -440,7 +441,7 @@ export default class AlbumEditViewModel {
     this.getArtistLink = (artistForAlbumId): ArtistForAlbumEditViewModel => {
       return _.find(
         this.artistLinks(),
-        (artist) => artist.id == artistForAlbumId,
+        (artist) => artist.id === artistForAlbumId,
       );
     };
 
@@ -463,7 +464,7 @@ export default class AlbumEditViewModel {
           var removed = _.filter(song.artists(), (a) =>
             _.some(
               this.editedSong().artistSelections,
-              (a2) => a2.selected() && a.id == a2.artist.id,
+              (a2) => a2.selected() && a.id === a2.artist.id,
             ),
           );
           song.artists.removeAll(removed);
@@ -509,7 +510,7 @@ export default class AlbumEditViewModel {
     var songTypes =
       'Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,Other,Instrumental,Live,Illustration';
 
-    if (data.discType == 'Video') songTypes += ',MusicPV,DramaPV';
+    if (data.discType === 'Video') songTypes += ',MusicPV,DramaPV';
 
     this.trackSearchParams = {
       acceptSelection: this.acceptTrackSelection,
@@ -633,7 +634,7 @@ export class TrackArtistSelectionViewModel {
 
     this.visible = ko.computed(() => {
       var f = filter();
-      if (f.length == 0) return true;
+      if (f.length === 0) return true;
 
       f = f.trim().toLowerCase();
 
@@ -668,7 +669,7 @@ export class TrackPropertiesViewModel {
       (a) =>
         new TrackArtistSelectionViewModel(
           a,
-          song != null && _.some(song.artists(), (sa) => a.id == sa.id),
+          song != null && _.some(song.artists(), (sa) => a.id === sa.id),
           this.filter,
         ),
     );

@@ -1,6 +1,6 @@
-import PVContract from '../DataContracts/PVs/PVContract';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
+import PVContract from '@DataContracts/PVs/PVContract';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 
 export default class PVRepository {
   constructor(

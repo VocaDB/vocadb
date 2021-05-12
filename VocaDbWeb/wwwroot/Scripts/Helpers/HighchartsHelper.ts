@@ -1,4 +1,4 @@
-import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
+import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
 
 export interface Tuple2<T1, T2> {
   item1: T1;
@@ -107,11 +107,11 @@ export default class HighchartsHelper {
         enabled: false,
       },
       series: [
-        <any>{
+        {
           animation: false,
           name: seriesName,
           data: data,
-        },
+        } as any,
       ],
     };
   };

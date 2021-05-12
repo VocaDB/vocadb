@@ -1,13 +1,14 @@
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongContract from '@DataContracts/Song/SongContract';
+import SongInListEditContract from '@DataContracts/Song/SongInListEditContract';
+import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import EntryType from '@Models/EntryType';
+import SongListRepository from '@Repositories/SongListRepository';
+import SongRepository from '@Repositories/SongRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
+
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongContract from '../../DataContracts/Song/SongContract';
-import SongInListEditContract from '../../DataContracts/Song/SongInListEditContract';
-import SongListRepository from '../../Repositories/SongListRepository';
-import SongRepository from '../../Repositories/SongRepository';
-import UrlMapper from '../../Shared/UrlMapper';
 
 export class SongInListEditViewModel {
   constructor(data: SongInListEditContract) {

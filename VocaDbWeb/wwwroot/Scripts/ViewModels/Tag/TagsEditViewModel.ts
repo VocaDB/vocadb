@@ -1,7 +1,7 @@
-import EntryType from '../../Models/EntryType';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '../../DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import EntryType from '@Models/EntryType';
 
 export default class TagsEditViewModel {
   constructor(

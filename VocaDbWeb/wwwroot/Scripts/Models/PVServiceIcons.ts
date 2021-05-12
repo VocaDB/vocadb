@@ -1,4 +1,4 @@
-import UrlMapper from '../Shared/UrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
 
 // Class for getting URLs of PV service icons.
 export default class PVServiceIcons {
@@ -25,7 +25,7 @@ export default class PVServiceIcons {
 
   // Gets icon URLs from a comma separated list of services
   getIconUrls = (servicesStr: string): { service: string; url: string }[] => {
-    if (!servicesStr || servicesStr == 'Nothing') return [];
+    if (!servicesStr || servicesStr === 'Nothing') return [];
 
     var services = servicesStr.split(',');
     return _.map(services, (service) => {

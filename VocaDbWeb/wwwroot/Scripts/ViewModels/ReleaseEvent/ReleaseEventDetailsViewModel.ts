@@ -1,19 +1,20 @@
-import CommentContract from '../../DataContracts/CommentContract';
-import CommentRepository from '../../Repositories/CommentRepository';
+import CommentContract from '@DataContracts/CommentContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import UserBaseContract from '@DataContracts/User/UserBaseContract';
+import EntryType from '@Models/EntryType';
+import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
+import CommentRepository from '@Repositories/CommentRepository';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EntryType from '../../Models/EntryType';
 import { IEntryReportType } from '../ReportEntryViewModel';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserBaseContract from '../../DataContracts/User/UserBaseContract';
-import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
-import UserRepository from '../../Repositories/UserRepository';
-import HttpClient from '../../Shared/HttpClient';
 
 export default class ReleaseEventDetailsViewModel {
   constructor(

@@ -1,8 +1,9 @@
-import EntryType from '../../Models/EntryType';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import EntryType from '@Models/EntryType';
+import UserRepository from '@Repositories/UserRepository';
+
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-import UserRepository from '../../Repositories/UserRepository';
 
 export default class EventSeriesDetailsViewModel {
   constructor(

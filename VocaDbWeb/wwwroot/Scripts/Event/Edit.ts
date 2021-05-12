@@ -1,8 +1,8 @@
-import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ReleaseEventEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ReleaseEventEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 
 function initPage(): void {
   $('#tabs').tabs();

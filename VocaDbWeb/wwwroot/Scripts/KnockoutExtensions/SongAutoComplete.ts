@@ -1,11 +1,11 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import functions from '../Shared/GlobalFunctions';
-import { initEntrySearch } from '../Shared/EntryAutoComplete';
-import NameMatchMode from '../Models/NameMatchMode';
-import SearchTextQueryHelper from '../Helpers/SearchTextQueryHelper';
-import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
-import SongContract from '../DataContracts/Song/SongContract';
-import { SongQueryParams } from '../Repositories/SongRepository';
+import SongContract from '@DataContracts/Song/SongContract';
+import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
+import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import NameMatchMode from '@Models/NameMatchMode';
+import { SongQueryParams } from '@Repositories/SongRepository';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -26,7 +26,7 @@ export function songAutoComplete(
 
   if (properties.ignoreId) {
     filter = (item): boolean => {
-      if (item.id == properties.ignoreId) {
+      if (item.id === properties.ignoreId) {
         return false;
       }
 

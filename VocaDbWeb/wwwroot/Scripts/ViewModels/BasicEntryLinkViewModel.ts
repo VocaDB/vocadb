@@ -1,4 +1,4 @@
-import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
+import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.

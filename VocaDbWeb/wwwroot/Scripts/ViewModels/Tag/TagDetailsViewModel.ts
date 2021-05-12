@@ -1,11 +1,12 @@
-import CommentContract from '../../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
+import ui from '@Shared/MessagesTyped';
+
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
 import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
-import TagRepository from '../../Repositories/TagRepository';
-import ui from '../../Shared/MessagesTyped';
-import UserRepository from '../../Repositories/UserRepository';
 
 export default class TagDetailsViewModel {
   constructor(

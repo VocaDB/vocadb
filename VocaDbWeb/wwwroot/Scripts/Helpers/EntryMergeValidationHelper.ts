@@ -1,5 +1,5 @@
-import CommonEntryContract from '../DataContracts/CommonEntryContract';
-import EntryStatus from '../Models/EntryStatus';
+import CommonEntryContract from '@DataContracts/CommonEntryContract';
+import EntryStatus from '@Models/EntryStatus';
 
 export default class EntryMergeValidationHelper {
   private static toEnum(statusStr: string | EntryStatus): EntryStatus {

@@ -1,5 +1,5 @@
-import WebLinkCategory from '../../Models/WebLinkCategory';
-import WebLinkMatcher from '../../Shared/WebLinkMatcher';
+import WebLinkCategory from '@Models/WebLinkCategory';
+import WebLinkMatcher from '@Shared/WebLinkMatcher';
 
 QUnit.module('WebLinkMatcher');
 

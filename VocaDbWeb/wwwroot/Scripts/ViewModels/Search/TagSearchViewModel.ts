@@ -1,8 +1,9 @@
-import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import TagRepository from '@Repositories/TagRepository';
+
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
-import TagApiContract from '../../DataContracts/Tag/TagApiContract';
-import TagRepository from '../../Repositories/TagRepository';
 
 export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
   constructor(

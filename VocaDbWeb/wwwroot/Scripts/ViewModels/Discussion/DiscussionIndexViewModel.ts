@@ -1,10 +1,11 @@
-import DiscussionRepository from '../../Repositories/DiscussionRepository';
-import DiscussionFolderContract from '../../DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '../../DataContracts/Discussion/DiscussionTopicContract';
+import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
+import DiscussionRepository from '@Repositories/DiscussionRepository';
+import UrlMapper from '@Shared/UrlMapper';
+
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
 import DiscussionTopicViewModel from './DiscussionTopicViewModel';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import UrlMapper from '../../Shared/UrlMapper';
 
 export default class DiscussionIndexViewModel {
   constructor(

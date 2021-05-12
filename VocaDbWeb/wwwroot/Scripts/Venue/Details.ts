@@ -1,8 +1,8 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
-import VenueDetailsViewModel from '../ViewModels/Venue/VenueDetailsViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
 
 const VenueDetails = (
   model: {

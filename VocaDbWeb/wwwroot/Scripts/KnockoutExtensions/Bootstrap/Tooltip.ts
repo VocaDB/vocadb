@@ -1,4 +1,5 @@
-﻿interface KnockoutBindingHandlers {
+﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface KnockoutBindingHandlers {
   // Shows bootstrap tooltip
   tooltip: KnockoutBindingHandler;
 }

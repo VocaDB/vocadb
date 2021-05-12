@@ -1,8 +1,9 @@
-import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
-import ArtistContract from '../../DataContracts/Artist/ArtistContract';
-import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
+import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import ArtistRepository from '@Repositories/ArtistRepository';
+
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
 
 export default class ArtistMergeViewModel {
   constructor(repo: ArtistRepository, id: number) {

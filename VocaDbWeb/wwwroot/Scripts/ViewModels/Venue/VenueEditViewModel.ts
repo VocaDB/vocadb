@@ -1,13 +1,14 @@
+import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
+import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
+import EntryType from '@Models/EntryType';
+import NameMatchMode from '@Models/NameMatchMode';
+import UserRepository from '@Repositories/UserRepository';
+import VenueRepository from '@Repositories/VenueRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
+
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import NameMatchMode from '../../Models/NameMatchMode';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import OptionalGeoPointContract from '../../DataContracts/OptionalGeoPointContract';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
-import VenueForEditContract from '../../DataContracts/Venue/VenueForEditContract';
-import VenueRepository from '../../Repositories/VenueRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class VenueEditViewModel {

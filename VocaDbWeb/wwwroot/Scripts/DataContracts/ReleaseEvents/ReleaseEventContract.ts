@@ -1,11 +1,11 @@
-import ArtistForEventContract from './ArtistForEventContract';
 import EntryThumbContract from '../EntryThumbContract';
-import EventSeriesContract from './EventSeriesContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import PVContract from '../PVs/PVContract';
 import SongListBaseContract from '../SongListBaseContract';
 import VenueForApiContract from '../Venue/VenueForApiContract';
 import WebLinkContract from '../WebLinkContract';
+import ArtistForEventContract from './ArtistForEventContract';
+import EventSeriesContract from './EventSeriesContract';
 
 // Matches ReleaseEventForApiContract
 export default interface ReleaseEventContract {

@@ -1,6 +1,6 @@
-import ArtistRepository from '../Repositories/ArtistRepository';
-import HttpClient from '../Shared/HttpClient';
-import ArchivedArtistViewModel from '../ViewModels/Artist/ArchivedArtistViewModel';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import HttpClient from '@Shared/HttpClient';
+import ArchivedArtistViewModel from '@ViewModels/Artist/ArchivedArtistViewModel';
 
 const ArtistViewVersion = (model: {
   archivedVersion: {

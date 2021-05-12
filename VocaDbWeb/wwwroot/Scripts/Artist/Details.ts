@@ -1,12 +1,12 @@
-import ArtistDetailsViewModel from '../ViewModels/Artist/ArtistDetailsViewModel';
-import SongRepository from '../Repositories/SongRepository';
-import UrlMapper from '../Shared/UrlMapper';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
-import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
-import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
-import CommentContract from '../DataContracts/CommentContract';
-import HttpClient from '../Shared/HttpClient';
+import CommentContract from '@DataContracts/CommentContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import SongRepository from '@Repositories/SongRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
+import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 
 function initPage(
   artistId: number,
@@ -51,13 +51,13 @@ function initPage(
     },
   });
 
-  if (window.location.hash == '#mainAlbumsTab') {
+  if (window.location.hash === '#mainAlbumsTab') {
     viewModel.initMainAlbums();
   }
-  if (window.location.hash == '#collaborationAlbumsTab') {
+  if (window.location.hash === '#collaborationAlbumsTab') {
     viewModel.initCollaborationAlbums();
   }
-  if (window.location.hash == '#songsTab') {
+  if (window.location.hash === '#songsTab') {
     viewModel.initSongs();
   }
 

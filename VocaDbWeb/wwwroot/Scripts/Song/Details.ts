@@ -1,13 +1,13 @@
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import functions from '../Shared/GlobalFunctions';
-import HttpClient from '../Shared/HttpClient';
-import ui from '../Shared/MessagesTyped';
-import UrlMapper from '../Shared/UrlMapper';
-import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import functions from '@Shared/GlobalFunctions';
+import HttpClient from '@Shared/HttpClient';
+import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import SongDetailsViewModel, {
   SongDetailsAjax,
   SongDetailsResources,
-} from '../ViewModels/Song/SongDetailsViewModel';
+} from '@ViewModels/Song/SongDetailsViewModel';
 
 function initPage(
   jsonModel: SongDetailsAjax,

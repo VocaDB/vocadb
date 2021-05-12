@@ -1,4 +1,4 @@
-import HtmlHelper from '../Helpers/HtmlHelper';
+import HtmlHelper from '@Helpers/HtmlHelper';
 
 declare global {
   interface KnockoutBindingHandlers {

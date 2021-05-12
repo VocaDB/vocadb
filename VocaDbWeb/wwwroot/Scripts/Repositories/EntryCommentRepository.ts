@@ -1,8 +1,9 @@
-import CommentContract from '../DataContracts/CommentContract';
+import CommentContract from '@DataContracts/CommentContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+
 import ICommentRepository from './ICommentRepository';
-import UrlMapper from '../Shared/UrlMapper';
-import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
-import HttpClient from '../Shared/HttpClient';
 
 export default class EntryCommentRepository implements ICommentRepository {
   private baseUrl: string;

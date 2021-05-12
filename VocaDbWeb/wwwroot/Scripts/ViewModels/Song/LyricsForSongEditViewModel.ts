@@ -1,8 +1,9 @@
+import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
+import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import TranslationType from '@Models/Globalization/TranslationType';
+import WebLinkMatcher from '@Shared/WebLinkMatcher';
+
 import BasicListEditViewModel from '../BasicListEditViewModel';
-import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
-import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
-import TranslationType from '../../Models/Globalization/TranslationType';
-import WebLinkMatcher from '../../Shared/WebLinkMatcher';
 
 export default class LyricsForSongEditViewModel {
   constructor(contract?: LyricsForSongContract) {

@@ -1,10 +1,11 @@
-import AdvancedSearchFilters from './AdvancedSearchFilters';
-import EntryContract from '../../DataContracts/EntryContract';
-import EntryWithTagUsagesContract from '../../DataContracts/Base/EntryWithTagUsagesContract';
-import PagingProperties from '../../DataContracts/PagingPropertiesContract';
-import SearchViewModel from './SearchViewModel';
+import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
+import EntryContract from '@DataContracts/EntryContract';
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import AdvancedSearchFilters from './AdvancedSearchFilters';
+import SearchViewModel from './SearchViewModel';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseViewModel {
@@ -12,6 +13,7 @@ export interface ISearchCategoryBaseViewModel {
 }
 
 // Base class for different types of searches.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class SearchCategoryBaseViewModel<TEntry>
   implements ISearchCategoryBaseViewModel {
   constructor(public searchViewModel: SearchViewModel) {

@@ -1,7 +1,7 @@
-import VenueRepository from '../Repositories/VenueRepository';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import ArchivedEntryViewModel from '../ViewModels/ArchivedEntryViewModel';
+import VenueRepository from '@Repositories/VenueRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 
 const VenueViewVersion = (model: {
   entry: {

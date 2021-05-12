@@ -1,5 +1,5 @@
-import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
-import EntryStatus from '../../Models/EntryStatus';
+import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
+import EntryStatus from '@Models/EntryStatus';
 
 QUnit.module('EntryMergeValidationHelper');
 

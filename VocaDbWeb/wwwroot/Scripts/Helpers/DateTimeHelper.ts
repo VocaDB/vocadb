@@ -36,6 +36,7 @@ export default class DateTimeHelper {
         }
         case 2: {
           var mins = parseInt(parts[0]) || 0;
+          // eslint-disable-next-line @typescript-eslint/no-redeclare
           var seconds = parseInt(parts[1]) || 0;
           return mins * 60 + seconds;
         }

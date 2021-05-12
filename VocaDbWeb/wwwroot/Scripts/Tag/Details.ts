@@ -1,11 +1,11 @@
-import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
-import TagDetailsViewModel from '../ViewModels/Tag/TagDetailsViewModel';
-import UrlMapper from '../Shared/UrlMapper';
-import TagRepository from '../Repositories/TagRepository';
-import UserRepository from '../Repositories/UserRepository';
-import CommentContract from '../DataContracts/CommentContract';
-import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
-import HttpClient from '../Shared/HttpClient';
+import CommentContract from '@DataContracts/CommentContract';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
 
 function initChart(
   urlMapper: UrlMapper,

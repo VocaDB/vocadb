@@ -1,4 +1,4 @@
-import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParamRouter';
+import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
 
 interface HistoryEntry {
   data: any;
@@ -18,7 +18,7 @@ QUnit.module('ObservableUrlParamRouter', {
 
     history = new Array<HistoryEntry>();
 
-    win = <any>{
+    win = {
       history: {
         pushState: (statedata: any, title: string, url?: string) =>
           history.push({ data: statedata, url: url! }),
@@ -26,11 +26,11 @@ QUnit.module('ObservableUrlParamRouter', {
           for (var i = 0; i < -steps; i++) {
             history.pop();
             var latest = history.length ? history[history.length - 1] : null;
-            if (win.onpopstate) win.onpopstate(<any>{ state: latest!.data });
+            if (win.onpopstate) win.onpopstate({ state: latest!.data } as any);
           }
         },
       },
-    };
+    } as any;
 
     jQuery.url = (): string => null!;
   },

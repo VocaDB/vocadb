@@ -1,6 +1,6 @@
-import AlbumRepository from '../Repositories/AlbumRepository';
-import HttpClient from '../Shared/HttpClient';
-import DeletedAlbumsViewModel from '../ViewModels/Album/DeletedAlbumsViewModel';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import HttpClient from '@Shared/HttpClient';
+import DeletedAlbumsViewModel from '@ViewModels/Album/DeletedAlbumsViewModel';
 
 const AlbumDeleted = (): void => {
   $(function () {

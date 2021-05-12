@@ -1,13 +1,14 @@
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import ObservableUrlParamRouter from '../../Shared/Routing/ObservableUrlParamRouter';
-import PVServiceIcons from '../../Models/PVServiceIcons';
-import SongApiContract from '../../DataContracts/Song/SongApiContract';
-import SongRepository from '../../Repositories/SongRepository';
+import SongApiContract from '@DataContracts/Song/SongApiContract';
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import PVServiceIcons from '@Models/PVServiceIcons';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ui from '@Shared/MessagesTyped';
+import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
+import UrlMapper from '@Shared/UrlMapper';
+
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';
-import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
-import ui from '../../Shared/MessagesTyped';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
 
 export default class RankingsViewModel {
   constructor(
@@ -52,7 +53,7 @@ export default class RankingsViewModel {
       },
       (songs: SongApiContract[]) => {
         _.each(songs, (song: any) => {
-          if (song.pvServices && song.pvServices != 'Nothing') {
+          if (song.pvServices && song.pvServices !== 'Nothing') {
             song.previewViewModel = new SongWithPreviewViewModel(
               this.songRepo,
               this.userRepo,

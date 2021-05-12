@@ -1,4 +1,4 @@
-import ArtistType from '../../Models/Artists/ArtistType';
+import ArtistType from '@Models/Artists/ArtistType';
 
 export default class ArtistFilter {
   constructor(public id: number) {}

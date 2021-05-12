@@ -1,13 +1,14 @@
+import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@DataContracts/WebLinkContract';
+import EntryType from '@Models/EntryType';
+import NameMatchMode from '@Models/NameMatchMode';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import UrlMapper from '@Shared/UrlMapper';
+
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EntryType from '../../Models/EntryType';
-import EntryUrlMapper from '../../Shared/EntryUrlMapper';
-import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import NameMatchMode from '../../Models/NameMatchMode';
-import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
-import UrlMapper from '../../Shared/UrlMapper';
-import UserRepository from '../../Repositories/UserRepository';
-import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventSeriesEditViewModel {

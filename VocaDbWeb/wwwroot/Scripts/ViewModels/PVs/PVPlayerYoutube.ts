@@ -1,5 +1,6 @@
+import PVService from '@Models/PVs/PVService';
+
 import { IPVPlayer } from './PVPlayerViewModel';
-import PVService from '../../Models/PVs/PVService';
 
 export default class PVPlayerYoutube implements IPVPlayer {
   constructor(
@@ -32,7 +33,7 @@ export default class PVPlayerYoutube implements IPVPlayer {
           // This will still be fired once if the user disabled autoplay mode.
           if (
             this.player &&
-            event.data == YT.PlayerState.ENDED &&
+            event.data === YT.PlayerState.ENDED &&
             this.songFinishedCallback
           ) {
             this.songFinishedCallback();

@@ -1,7 +1,7 @@
-import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
-import TagRepository from '../Repositories/TagRepository';
-import HttpClient from '../Shared/HttpClient';
-import TagMergeViewModel from '../ViewModels/Tag/TagMergeViewModel';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagRepository from '@Repositories/TagRepository';
+import HttpClient from '@Shared/HttpClient';
+import TagMergeViewModel from '@ViewModels/Tag/TagMergeViewModel';
 
 const TagMerge = (model: TagBaseContract): void => {
   $(function () {

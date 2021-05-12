@@ -1,6 +1,6 @@
-import AlbumRepository from '../Repositories/AlbumRepository';
-import HttpClient from '../Shared/HttpClient';
-import AlbumMergeViewModel from '../ViewModels/Album/AlbumMergeViewModel';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import HttpClient from '@Shared/HttpClient';
+import AlbumMergeViewModel from '@ViewModels/Album/AlbumMergeViewModel';
 
 const AlbumMerge = (model: { id: number }): void => {
   $(function () {

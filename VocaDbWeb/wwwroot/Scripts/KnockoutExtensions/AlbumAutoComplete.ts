@@ -1,8 +1,9 @@
+import AlbumContract from '@DataContracts/Album/AlbumContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import functions from '@Shared/GlobalFunctions';
+
 import { AlbumAutoCompleteParams } from './AutoCompleteParams';
-import AlbumContract from '../DataContracts/Album/AlbumContract';
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import functions from '../Shared/GlobalFunctions';
-import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -23,7 +24,7 @@ export function albumAutoComplete(
 
   if (properties.ignoreId) {
     filter = (item): boolean => {
-      if (item.id == properties.ignoreId) {
+      if (item.id === properties.ignoreId) {
         return false;
       }
 

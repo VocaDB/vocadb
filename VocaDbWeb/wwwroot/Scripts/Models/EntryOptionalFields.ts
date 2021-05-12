@@ -7,16 +7,6 @@ export class EntryOptionalFields<T> {
   public fields: string;
 }
 
-export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {
-  public static create(...fields: SongOptionalField[]): SongOptionalFields {
-    return new SongOptionalFields(fields);
-  }
-
-  constructor(fields: SongOptionalField[]) {
-    super((f) => SongOptionalField[f], fields);
-  }
-}
-
 export enum SongOptionalField {
   None = 0,
   AdditionalNames = 1 << 0,
@@ -27,4 +17,14 @@ export enum SongOptionalField {
   Tags = 1 << 5,
   ThumbUrl = 1 << 6,
   WebLinks = 1 << 7,
+}
+
+export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {
+  public static create(...fields: SongOptionalField[]): SongOptionalFields {
+    return new SongOptionalFields(fields);
+  }
+
+  constructor(fields: SongOptionalField[]) {
+    super((f) => SongOptionalField[f], fields);
+  }
 }

@@ -1,8 +1,8 @@
-import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
-import RepositoryFactory from '../Repositories/RepositoryFactory';
-import HttpClient from '../Shared/HttpClient';
-import UrlMapper from '../Shared/UrlMapper';
-import FeaturedSongListsViewModel from '../ViewModels/SongList/FeaturedSongListsViewModel';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
 
 const SongListFeatured = (
   categories: string[],

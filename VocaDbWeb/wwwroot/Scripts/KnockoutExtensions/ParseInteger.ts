@@ -1,4 +1,5 @@
-﻿interface KnockoutExtenders {
+﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface KnockoutExtenders {
   // Parses the value as integer, converting it to null if it's not a valid number.
   parseInteger: (target: any) => KnockoutComputed<any>;
 }
@@ -11,7 +12,7 @@ ko.extenders.parseInteger = (target): KnockoutComputed<any> => {
       write: (newValue: any) => {
         var current = target();
         var valueToWrite =
-          isNaN(newValue) || newValue == '' || newValue == null
+          isNaN(newValue) || newValue === '' || newValue == null
             ? null
             : parseInt(newValue);
 

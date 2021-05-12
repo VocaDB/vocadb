@@ -1,8 +1,9 @@
-import ResourceRepository from '../../Repositories/ResourceRepository';
-import ResourcesManager from '../../Models/ResourcesManager';
+import UserApiContract from '@DataContracts/User/UserApiContract';
+import ResourcesManager from '@Models/ResourcesManager';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import UserRepository from '@Repositories/UserRepository';
+
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import UserApiContract from '../../DataContracts/User/UserApiContract';
-import UserRepository from '../../Repositories/UserRepository';
 
 export default class ListUsersViewModel {
   constructor(

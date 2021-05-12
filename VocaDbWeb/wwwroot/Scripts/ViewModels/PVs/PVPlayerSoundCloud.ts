@@ -1,5 +1,6 @@
+import PVService from '@Models/PVs/PVService';
+
 import { IPVPlayer } from './PVPlayerViewModel';
-import PVService from '../../Models/PVs/PVService';
 
 export default class PVPlayerSoundCloud implements IPVPlayer {
   constructor(
