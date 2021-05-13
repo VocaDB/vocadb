@@ -11,6 +11,7 @@ import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import _ from 'lodash';
+import moment from 'moment';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';

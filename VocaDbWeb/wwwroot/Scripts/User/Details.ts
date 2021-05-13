@@ -8,6 +8,7 @@ import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel'
 import FollowedArtistsViewModel from '@ViewModels/User/FollowedArtistsViewModel';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import UserDetailsViewModel from '@ViewModels/User/UserDetailsViewModel';
+import moment from 'moment';
 
 function initPage(confirmDisableStr: string): void {
   $('#mySettingsLink').button({ icons: { primary: 'ui-icon-wrench' } });

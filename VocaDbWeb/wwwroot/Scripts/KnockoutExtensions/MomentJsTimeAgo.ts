@@ -1,6 +1,9 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  timeAgo: KnockoutBindingHandler;
+﻿import moment from 'moment';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    timeAgo: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.timeAgo = {

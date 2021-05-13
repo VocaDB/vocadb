@@ -8,6 +8,7 @@ import SongDetailsViewModel, {
   SongDetailsAjax,
   SongDetailsResources,
 } from '@ViewModels/Song/SongDetailsViewModel';
+import moment from 'moment';
 
 function initPage(
   jsonModel: SongDetailsAjax,

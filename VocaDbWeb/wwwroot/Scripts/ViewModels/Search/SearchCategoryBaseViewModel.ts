@@ -3,6 +3,7 @@ import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import _ from 'lodash';
+import moment from 'moment';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import AdvancedSearchFilters from './AdvancedSearchFilters';

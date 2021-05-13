@@ -44,6 +44,7 @@
         "knockout-punches": "^0.5.1",
         "lodash": "^4.17.19",
         "marked": "^0.3.18",
+        "moment": "^2.17.0",
         "qtip2": "^3.0.3"
     }
 }

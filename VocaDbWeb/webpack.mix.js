@@ -51,12 +51,6 @@ mix
 
 	.ts('wwwroot/Scripts/App.ts', 'wwwroot/bundles')
 
-	// Included on all pages except the front page (to optimize front page load time).
-	.scripts(
-		['wwwroot/Scripts/moment-with-locales.js'],
-		'wwwroot/bundles/shared/main.js',
-	)
-
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	.scripts(
 		['wwwroot/Scripts/knockout-sortable.js'],

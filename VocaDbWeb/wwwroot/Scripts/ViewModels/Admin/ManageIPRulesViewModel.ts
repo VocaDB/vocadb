@@ -1,6 +1,7 @@
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
 import _ from 'lodash';
+import moment from 'moment';
 
 export default class ManageIPRulesViewModel {
   public add = (): void => {

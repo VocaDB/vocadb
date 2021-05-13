@@ -29,6 +29,8 @@ require('qtip2');
 
 window.marked = require('marked');
 
+window.moment = require('moment');
+
 $.postJSON = function (url, data, callback, type) {
 	// Shift arguments if data argument was omitted
 	if (jQuery.isFunction(data)) {
@@ -37,5 +39,12 @@ $.postJSON = function (url, data, callback, type) {
 		data = undefined;
 	}
 
-	return $.ajax({ url: url, type: "POST", dataType: type, contentType: "application/json", data: ko.toJSON(data), success: callback });
+	return $.ajax({
+		url: url,
+		type: 'POST',
+		dataType: type,
+		contentType: 'application/json',
+		data: ko.toJSON(data),
+		success: callback,
+	});
 };

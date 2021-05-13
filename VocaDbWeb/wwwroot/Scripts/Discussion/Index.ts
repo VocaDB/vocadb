@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import DiscussionIndexViewModel from '@ViewModels/Discussion/DiscussionIndexViewModel';
+import moment from 'moment';
 
 const DiscussionIndex = (canDeleteAllComments: boolean): void => {
   $(function () {

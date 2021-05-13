@@ -7,6 +7,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import moment from 'moment';
 
 function initPage(
   artistId: number,

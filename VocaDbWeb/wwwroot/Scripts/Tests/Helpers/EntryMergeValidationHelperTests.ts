@@ -1,5 +1,6 @@
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import EntryStatus from '@Models/EntryStatus';
+import moment from 'moment';
 
 QUnit.module('EntryMergeValidationHelper');
 

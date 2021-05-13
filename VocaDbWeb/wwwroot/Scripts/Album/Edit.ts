@@ -5,6 +5,7 @@ import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel from '@ViewModels/Album/AlbumEditViewModel';
+import moment from 'moment';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
