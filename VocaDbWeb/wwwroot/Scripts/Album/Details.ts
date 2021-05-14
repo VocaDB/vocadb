@@ -81,9 +81,9 @@ function initAlbumDetailsPage(
     width: 320,
     modal: false,
     buttons: [
-      ({
+      {
         text: saveStr,
-        click: function () {
+        click: function (): void {
           $('#editCollectionDialog').dialog('close');
 
           var status = $('#collectionStatusSelect').val();
@@ -111,7 +111,7 @@ function initAlbumDetailsPage(
 
           ui.showSuccessMessage(vdb.resources.album.addedToCollection);
         },
-      } as unknown) as JQueryUI.ButtonOptions,
+      },
     ],
   });
 
