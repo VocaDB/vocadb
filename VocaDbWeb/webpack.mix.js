@@ -40,7 +40,11 @@ mix
 		fix: false,
 		extensions: ['ts', 'tsx'],
 	})
+	.babelConfig({
+		plugins: ['@babel/plugin-syntax-dynamic-import'],
+	})
 
+	.extract(['highcharts'], 'highcharts')
 	.extract()
 
 	.js('wwwroot/Scripts/libs.js', 'wwwroot/bundles/shared')
