@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export default class functions {
   public static getId(elem: HTMLElement): string | null {
     if ($(elem) == null || $(elem).attr('id') == null) return null;

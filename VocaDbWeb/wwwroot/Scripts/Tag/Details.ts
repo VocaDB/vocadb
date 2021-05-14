@@ -6,6 +6,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
+import $ from 'jquery';
 import _ from 'lodash';
 
 function initChart(

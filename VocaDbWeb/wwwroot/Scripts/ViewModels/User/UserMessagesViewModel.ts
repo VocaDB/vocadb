@@ -3,6 +3,7 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
+import $ from 'jquery';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';

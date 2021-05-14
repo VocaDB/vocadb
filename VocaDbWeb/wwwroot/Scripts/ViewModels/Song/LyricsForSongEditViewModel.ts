@@ -2,6 +2,7 @@ import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import TranslationType from '@Models/Globalization/TranslationType';
 import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import $ from 'jquery';
 import _ from 'lodash';
 
 import BasicListEditViewModel from '../BasicListEditViewModel';

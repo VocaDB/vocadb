@@ -1,7 +1,10 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Shows bootstrap tooltip
-  tooltip: KnockoutBindingHandler;
+﻿import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Shows bootstrap tooltip
+    tooltip: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.tooltip = {

@@ -2,6 +2,7 @@ import SongContract from '@DataContracts/Song/SongContract';
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
 import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
+import $ from 'jquery';
 
 const SongMerge = (model: SongContract): void => {
   $(function () {

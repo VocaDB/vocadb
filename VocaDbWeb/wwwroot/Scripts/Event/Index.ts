@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 const EventIndex = (): void => {
   $(function () {
     $('#createSeriesLink').button({ icons: { primary: 'ui-icon-plus' } });

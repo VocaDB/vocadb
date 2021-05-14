@@ -2,6 +2,7 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import TagMergeViewModel from '@ViewModels/Tag/TagMergeViewModel';
+import $ from 'jquery';
 
 const TagMerge = (model: TagBaseContract): void => {
   $(function () {

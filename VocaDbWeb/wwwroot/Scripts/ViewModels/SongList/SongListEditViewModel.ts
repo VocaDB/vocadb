@@ -7,6 +7,7 @@ import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 import moment from 'moment';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';

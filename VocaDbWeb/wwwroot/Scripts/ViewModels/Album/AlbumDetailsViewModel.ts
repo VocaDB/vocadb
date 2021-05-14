@@ -12,6 +12,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
+import $ from 'jquery';
 import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

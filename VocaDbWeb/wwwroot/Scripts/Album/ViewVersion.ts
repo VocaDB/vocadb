@@ -1,6 +1,7 @@
 import AlbumRepository from '@Repositories/AlbumRepository';
 import HttpClient from '@Shared/HttpClient';
 import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
+import $ from 'jquery';
 
 const AlbumViewVersion = (model: {
   album: {

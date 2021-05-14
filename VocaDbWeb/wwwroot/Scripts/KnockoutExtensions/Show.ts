@@ -1,8 +1,11 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Shows the element when the model has been bound.
-  // Can be used in conjunction with the js-cloak class.
-  show: KnockoutBindingHandler;
+﻿import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Shows the element when the model has been bound.
+    // Can be used in conjunction with the js-cloak class.
+    show: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.show = {

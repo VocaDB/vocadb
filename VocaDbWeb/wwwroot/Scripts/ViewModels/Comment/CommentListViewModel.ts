@@ -6,6 +6,7 @@ import ResourcesManager, { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 import _ from 'lodash';
 
 enum CommentSortRule {

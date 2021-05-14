@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  jqButtonset: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    jqButtonset: KnockoutBindingHandler;
+  }
 }
 
 // Adapted from http://therunningprogrammer.blogspot.fi/2011/10/how-to-use-jquery-uis-button-with.html and http://jsfiddle.net/photo_tom/hjk93/light/

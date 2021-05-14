@@ -8,6 +8,7 @@ import SongDetailsViewModel, {
   SongDetailsAjax,
   SongDetailsResources,
 } from '@ViewModels/Song/SongDetailsViewModel';
+import $ from 'jquery';
 import moment from 'moment';
 
 function initPage(

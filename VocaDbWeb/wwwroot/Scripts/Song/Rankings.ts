@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import RankingsViewModel from '@ViewModels/Song/RankingsViewModel';
+import $ from 'jquery';
 import moment from 'moment';
 
 const SongRankings = (): void => {

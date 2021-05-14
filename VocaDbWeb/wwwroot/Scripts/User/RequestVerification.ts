@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import RequestVerificationViewModel from '@ViewModels/User/RequestVerificationViewModel';
+import $ from 'jquery';
 
 const UserRequestVerification = (): void => {
   $(document).ready(function () {

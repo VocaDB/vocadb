@@ -10,6 +10,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 import _ from 'lodash';
 import moment from 'moment';
 

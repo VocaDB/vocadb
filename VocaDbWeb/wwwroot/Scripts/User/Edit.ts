@@ -2,6 +2,7 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import $ from 'jquery';
 
 function initPage(): void {
   function artistAdded(row: any): void {

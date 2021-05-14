@@ -10,6 +10,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

@@ -1,6 +1,7 @@
 import ArtistRepository from '@Repositories/ArtistRepository';
 import HttpClient from '@Shared/HttpClient';
 import ArchivedArtistViewModel from '@ViewModels/Artist/ArchivedArtistViewModel';
+import $ from 'jquery';
 
 const ArtistViewVersion = (model: {
   archivedVersion: {

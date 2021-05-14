@@ -1,4 +1,5 @@
 import HtmlHelper from '@Helpers/HtmlHelper';
+import $ from 'jquery';
 import _ from 'lodash';
 
 declare global {

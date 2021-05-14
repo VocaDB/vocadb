@@ -6,6 +6,7 @@ import AlbumDetailsViewModel, {
   AlbumDetailsAjax,
 } from '@ViewModels/Album/AlbumDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import $ from 'jquery';
 import moment from 'moment';
 
 function initAlbumDetailsPage(

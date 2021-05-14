@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistCreateViewModel from '@ViewModels/ArtistCreateViewModel';
+import $ from 'jquery';
 
 const ArtistCreate = (model: any): void => {
   $(document).ready(function () {

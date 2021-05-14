@@ -1,6 +1,7 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import $ from 'jquery';
 
 function initPage(): void {
   function acceptArtistSelection(albumId?: number): void {

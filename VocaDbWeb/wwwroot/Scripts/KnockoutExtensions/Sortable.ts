@@ -1,5 +1,9 @@
-interface KnockoutBindingHandlers {
-  sortable: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    sortable: KnockoutBindingHandler;
+  }
 }
 
 /* 

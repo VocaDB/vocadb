@@ -1,4 +1,5 @@
-﻿import moment from 'moment';
+﻿import $ from 'jquery';
+import moment from 'moment';
 
 declare global {
   interface KnockoutBindingHandlers {

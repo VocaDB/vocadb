@@ -1,4 +1,5 @@
 import DateTimeHelper from '@Helpers/DateTimeHelper';
+import $ from 'jquery';
 
 declare global {
   interface KnockoutBindingHandlers {

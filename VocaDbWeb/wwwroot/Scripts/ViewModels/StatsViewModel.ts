@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import moment from 'moment';
 
 export default class StatsViewModel {

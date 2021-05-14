@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';

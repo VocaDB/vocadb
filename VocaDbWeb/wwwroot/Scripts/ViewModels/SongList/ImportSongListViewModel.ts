@@ -4,6 +4,7 @@ import ImportedSongListContract from '@DataContracts/SongList/ImportedSongListCo
 import PartialImportedSongs from '@DataContracts/SongList/PartialImportedSongs';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 import _ from 'lodash';
 
 export default class ImportSongListViewModel {
