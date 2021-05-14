@@ -7,21 +7,23 @@ declare global {
   }
 }
 
-export function setHighcharts(
+const setHighcharts = (
   element: HTMLElement,
   result: HighchartsOptions,
-): void {
-  if (
-    result &&
-    result.series &&
-    result.series.length &&
-    result.series[0].data &&
-    result.series[0].data.length
-  ) {
-    $(element).show();
-    $(element).highcharts(result);
-  } else $(element).hide();
-}
+): void => {
+  import('highcharts').then(() => {
+    if (
+      result &&
+      result.series &&
+      result.series.length &&
+      result.series[0].data &&
+      result.series[0].data.length
+    ) {
+      $(element).show();
+      $(element).highcharts(result);
+    } else $(element).hide();
+  });
+};
 
 ko.bindingHandlers.highcharts = {
   update: (element: HTMLElement, valueAccessor): void => {

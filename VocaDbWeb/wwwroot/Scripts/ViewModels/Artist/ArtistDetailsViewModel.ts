@@ -118,9 +118,7 @@ export default class ArtistDetailsViewModel {
 
   private loadHighcharts = (): void => {
     // Delayed load highcharts stuff
-    var highchartsPromise = $.getScript(
-      this.urlMapper.mapRelative('scripts/highcharts/4.2.0/highcharts.js'),
-    );
+    const highchartsPromise = import('highcharts');
     var songsPerMonthDataPromise = this.songRepo.getOverTime(
       TimeUnit.month,
       this.artistId,
