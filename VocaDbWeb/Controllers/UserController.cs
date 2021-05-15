@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Discord.Webhook;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
@@ -24,6 +25,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -457,7 +459,11 @@ namespace VocaDb.Web.Controllers
 		// POST: /User/Create
 
 		[HttpPost]
-		public async Task<ActionResult> Create(RegisterModel model)
+		public async Task<ActionResult> Create(
+			RegisterModel model,
+			[FromServices] DiscordWebhookClient discordWebhookClient,
+			[FromServices] BrandableStringsManager brandableStrings
+		)
 		{
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
@@ -501,7 +507,14 @@ namespace VocaDb.Web.Controllers
 					Request.Headers[HeaderNames.UserAgent],
 					WebHelper.GetInterfaceCultureName(Request),
 					time, _ipRuleManager, url);
-				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
+				await Task.WhenAll(
+					SetAuthCookieAsync(user.Name, createPersistentCookie: false),
+					discordWebhookClient.SendMessageAsync(
+						text: $"New user registered: {VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = user.Name }))}",
+						username: brandableStrings.SiteName,
+						avatarUrl: AppConfig.DiscordAvatarUrl
+					)
+				);
 				return RedirectToAction("Index", "Home");
 			}
 			catch (UserNameAlreadyExistsException)

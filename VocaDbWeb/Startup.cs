@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
+using Discord.Webhook;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Builder;
@@ -235,6 +236,8 @@ namespace VocaDb.Web
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();
 			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
+
+			builder.Register(_ => new DiscordWebhookClient(AppConfig.DiscordWebhookUrl)).AsSelf().SingleInstance();
 
 			// Enable DI for action filters
 			//builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))
