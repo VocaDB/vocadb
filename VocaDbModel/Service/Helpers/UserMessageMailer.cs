@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public record SmtpSettings
 	{
-		public const string Smtp = "Smtp";
+		public const string Smtp = nameof(Smtp);
 
 		public string From { get; set; }
 		public string Host { get; set; }
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.Helpers
 
 		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
 		{
-			if (string.IsNullOrEmpty(toEmail))
+			if (string.IsNullOrEmpty(toEmail) || string.IsNullOrEmpty(_smtpSettings.From))
 				return false;
 
 			MailAddress to;
@@ -89,7 +89,7 @@ namespace VocaDb.Model.Service.Helpers
 
 		public async Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body)
 		{
-			if (string.IsNullOrEmpty(toEmail))
+			if (string.IsNullOrEmpty(toEmail) || string.IsNullOrEmpty(_smtpSettings.From))
 				return false;
 
 			MailAddress to;

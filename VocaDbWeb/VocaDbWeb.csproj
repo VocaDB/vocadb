@@ -25,7 +25,6 @@
     <PackageReference Include="AspNetCore.CacheOutput.InMemory" Version="1.0.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="BeginCollectionItemCore" Version="1.0.8" />
-    <PackageReference Include="Discord.Net.Webhook" Version="2.3.1" />
     <PackageReference Include="MarkdownSharp" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNet.WebHelpers" Version="3.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
