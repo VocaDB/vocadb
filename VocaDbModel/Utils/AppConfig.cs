@@ -240,8 +240,8 @@ namespace VocaDb.Model.Utils
 
 		public static string VimeoApiKey => Val("VimeoApiKey");
 
-		public static string DiscordWebhookUrl = Val("DiscordWebhookUrl");
+		public static string DiscordWebhookUrl => Val("DiscordWebhookUrl");
 
-		public static string DiscordAvatarUrl = Val("DiscordAvatarUrl");
+		public static string DiscordAvatarUrl => Val("DiscordAvatarUrl");
 	}
 }
