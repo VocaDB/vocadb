@@ -215,7 +215,7 @@ function initChart(
       title: {
         text: null!,
       },
-    });
+    } as any);
   });
 }
 

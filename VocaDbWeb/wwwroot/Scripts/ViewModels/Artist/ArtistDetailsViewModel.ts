@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import { Options } from 'highcharts';
 import $ from 'jquery';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -158,7 +159,7 @@ export default class ArtistDetailsViewModel {
     null!,
   );
 
-  public songsOverTimeChart = ko.observable<HighchartsOptions>(null!);
+  public songsOverTimeChart = ko.observable<Options>(null!);
 
   public collaborationAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
     null!,

@@ -1,3 +1,4 @@
+import { Options } from 'highcharts';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -7,20 +8,17 @@ declare global {
   }
 }
 
-const setHighcharts = (
-  element: HTMLElement,
-  result: HighchartsOptions,
-): void => {
+const setHighcharts = (element: HTMLElement, result: Options): void => {
   import('highcharts').then(() => {
     if (
       result &&
       result.series &&
       result.series.length &&
-      result.series[0].data &&
-      result.series[0].data.length
+      (result.series[0] as any).data &&
+      (result.series[0] as any).data.length
     ) {
       $(element).show();
-      $(element).highcharts(result);
+      $(element).highcharts(result as any);
     } else $(element).hide();
   });
 };
@@ -31,7 +29,7 @@ ko.bindingHandlers.highcharts = {
     if (_.isFunction(unwrapped)) {
       var func = unwrapped;
 
-      func((result: HighchartsOptions) => setHighcharts(element, result));
+      func((result: Options) => setHighcharts(element, result));
     } else {
       setHighcharts(element, unwrapped);
     }

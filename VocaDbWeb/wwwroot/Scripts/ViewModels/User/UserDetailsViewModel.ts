@@ -10,6 +10,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import { Options } from 'highcharts';
 import $ from 'jquery';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
@@ -100,7 +101,7 @@ export default class UserDetailsViewModel {
   };
 
   private name!: string;
-  public ratingsByGenreChart = ko.observable<HighchartsOptions>(null!);
+  public ratingsByGenreChart = ko.observable<Options>(null!);
 
   public view = ko.observable(UserDetailsViewModel.overview);
 
