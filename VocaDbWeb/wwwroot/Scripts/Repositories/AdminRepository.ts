@@ -1,3 +1,5 @@
+import WebhookContract from '@DataContracts/WebhookContract';
+import AjaxHelper from '@Helpers/AjaxHelper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
@@ -30,5 +32,16 @@ export default class AdminRepository {
     return this.httpClient.get<string[]>(
       this.urlMapper.mapRelative('/api/admin/tempBannedIPs'),
     );
+  };
+
+  public getWebhooks = (): Promise<WebhookContract[]> => {
+    return this.httpClient.get<WebhookContract[]>(
+      this.urlMapper.mapRelative('/api/webhooks'),
+    );
+  };
+
+  public saveWebhooks = (webhooks: WebhookContract[]): Promise<any> => {
+    var url = this.urlMapper.mapRelative('/api/webhooks');
+    return Promise.resolve(AjaxHelper.putJSON(url, webhooks));
   };
 }

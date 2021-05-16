@@ -34,5 +34,12 @@ namespace VocaDb.Model.Domain
 		public virtual WebhookEvents WebhookEvents { get; init; } = WebhookEvents.Default;
 
 		public Webhook() { }
+
+		public Webhook(string url, WebhookContentType contentType, WebhookEvents webhookEvents)
+		{
+			Url = url;
+			ContentType = contentType;
+			WebhookEvents = webhookEvents;
+		}
 	}
 }

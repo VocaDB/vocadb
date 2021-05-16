@@ -232,6 +232,7 @@ namespace VocaDb.Web
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
 			builder.RegisterType<VenueQueries>().AsSelf();
+			builder.RegisterType<WebhookQueries>().AsSelf();
 
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();

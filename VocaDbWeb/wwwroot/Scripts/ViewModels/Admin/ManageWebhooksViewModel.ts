@@ -1,4 +1,5 @@
 import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
+import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
 
 enum WebhookContentType {
@@ -37,10 +38,7 @@ class WebhookEventsEditViewModel {
       }
     }
 
-    this.webhookEventSelections = _.sortBy(
-      webhookEventSelections,
-      (s) => s.name,
-    );
+    this.webhookEventSelections = webhookEventSelections;
   }
 }
 
@@ -61,7 +59,9 @@ class WebhookEditViewModel {
     this.url = webhook.url;
     this.contentType = webhook.contentType;
     this.webhookEvents = webhook.webhookEvents;
-    this.webhookEventsArray = webhook.webhookEvents.split(',');
+    this.webhookEventsArray = _.map(webhook.webhookEvents.split(','), (val) =>
+      val.trim(),
+    );
     this.isNew = isNew;
   }
 
@@ -93,9 +93,14 @@ export default class ManageWebhooksViewModel {
     [WebhookContentType.Form, WebhookContentType.Json],
   );
 
+  public loadWebhooks: () => Promise<void>;
+
   public translateWebhookEvent: (webhookEvent: string) => string;
 
-  constructor(private readonly webhookEventNames: { [key: string]: string }) {
+  constructor(
+    private readonly webhookEventNames: { [key: string]: string },
+    private readonly adminRepo: AdminRepository,
+  ) {
     this.webhookEventsEditViewModel = new WebhookEventsEditViewModel(
       webhookEventNames,
       WebhookEvents[WebhookEvents.Default],
@@ -109,8 +114,20 @@ export default class ManageWebhooksViewModel {
         .join(',');
     });
 
+    this.loadWebhooks = async (): Promise<void> => {
+      const result = await this.adminRepo.getWebhooks();
+      this.webhooks(
+        _.map(
+          result,
+          (t) => new WebhookEditViewModel(t, false, webhookEventNames),
+        ),
+      );
+    };
+
     this.translateWebhookEvent = (webhookEvent: string): string =>
       webhookEventNames[webhookEvent];
+
+    this.loadWebhooks();
   }
 
   public webhooks = ko.observableArray<WebhookEditViewModel>([]);
@@ -138,7 +155,14 @@ export default class ManageWebhooksViewModel {
     this.newUrl('');
   };
 
-  public save = (): Promise<void> => {
-    return Promise.resolve();
+  public activeWebhooks = ko.computed(() =>
+    _.filter(this.webhooks(), (m) => !m.isDeleted()),
+  );
+
+  public save = async (): Promise<void> => {
+    const webhooks = this.activeWebhooks();
+    await this.adminRepo.saveWebhooks(webhooks);
+    ui.showSuccessMessage('Saved');
+    await this.loadWebhooks();
   };
 }
