@@ -43,6 +43,10 @@
 @if (UserContext.HasPermission(PermissionToken.ManageIPRules)) {
 <p><a asp-action="ManageIPRules">@("Manage IP rules")</a></p>	
 }
+
+@if (UserContext.HasPermission(PermissionToken.ManageWebhooks)) {
+<p><a asp-action="ManageWebhooks">Manage webhooks</a></p>
+}
 <br />
 
 @if (UserContext.HasPermission(PermissionToken.Admin)) {

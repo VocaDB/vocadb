@@ -13,6 +13,7 @@ namespace VocaDb.Model.Domain
 
 	/// <remarks>
 	/// Saved into database as a bitarray - do not change the number values.
+	/// Also remember to update the TypeScript file.
 	/// </remarks>
 	[Flags]
 	public enum WebhookEvents

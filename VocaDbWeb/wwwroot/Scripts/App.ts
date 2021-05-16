@@ -66,6 +66,9 @@ export { default as AdminRepository } from '@Repositories/AdminRepository';
 export { default as ManageIPRulesViewModel } from '@ViewModels/Admin/ManageIPRulesViewModel';
 export { default as AdminManageIPRules } from './Admin/ManageIPRules';
 
+// ~/bundles/Admin/ManageWebhooks
+export { default as AdminManageWebhooks } from './Admin/ManageWebhooks';
+
 // ~/bundles/Admin/PVsByAuthor
 export { default as AdminPVsByAuthor } from './Admin/PVsByAuthor';
 
