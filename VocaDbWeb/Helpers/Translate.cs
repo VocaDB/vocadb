@@ -220,6 +220,9 @@ namespace VocaDb.Web.Helpers
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
 			new(() => global::Resources.WebLinkCategoryNames.ResourceManager);
 
+		public static readonly TranslateableEnum<WebhookEvents> WebhookEventNames =
+			new(() => Resources.Domain.WebhookEventNames.ResourceManager);
+
 		public static string AlbumEditableField(AlbumEditableFields field)
 		{
 			return AlbumEditableFieldNames.GetName(field);

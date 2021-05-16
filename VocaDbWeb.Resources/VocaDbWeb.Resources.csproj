@@ -158,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Domain\Users\UserLanguageProficiencyNames.resx">
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\WebhookEventNames.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Helpers\ActivityFeedHelperStrings.resx">
       <CustomToolNamespace>HelperRes</CustomToolNamespace>
     </EmbeddedResource>
