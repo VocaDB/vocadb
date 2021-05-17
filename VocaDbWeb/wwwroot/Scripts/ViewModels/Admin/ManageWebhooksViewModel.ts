@@ -2,11 +2,6 @@ import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
 
-enum WebhookContentType {
-  Form,
-  Json,
-}
-
 interface WebhookEventSelection {
   // Webhook event Id, for example "EntryReport"
   id: string;
@@ -44,7 +39,6 @@ class WebhookEventsEditViewModel {
 
 class WebhookEditViewModel {
   public url: string;
-  public contentType: string;
   public webhookEvents: string;
   public webhookEventsArray: string[];
 
@@ -57,7 +51,6 @@ class WebhookEditViewModel {
     webhookEventNames: { [key: string]: string },
   ) {
     this.url = webhook.url;
-    this.contentType = webhook.contentType;
     this.webhookEvents = webhook.webhookEvents;
     this.webhookEventsArray = _.map(webhook.webhookEvents.split(','), (val) =>
       val.trim(),
@@ -70,9 +63,6 @@ class WebhookEditViewModel {
 
 export default class ManageWebhooksViewModel {
   public newUrl = ko.observable('');
-  public newContentType = ko.observable(
-    WebhookContentType[WebhookContentType.Form],
-  );
 
   public webhookEventsEditViewModel: WebhookEventsEditViewModel;
 
@@ -87,11 +77,6 @@ export default class ManageWebhooksViewModel {
         (!selected || _.includes(selected, Enum[k])) &&
         typeof Enum[k as any] === 'number',
     );
-
-  public contentTypes = this.getEnumValues<WebhookContentType>(
-    WebhookContentType,
-    [WebhookContentType.Form, WebhookContentType.Json],
-  );
 
   public loadWebhooks: () => Promise<void>;
 
@@ -144,7 +129,6 @@ export default class ManageWebhooksViewModel {
       new WebhookEditViewModel(
         {
           url: this.newUrl(),
-          contentType: this.newContentType(),
           webhookEvents: this.newWebhookEvents(),
         },
         true,

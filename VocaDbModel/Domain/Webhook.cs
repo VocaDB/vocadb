@@ -3,15 +3,6 @@ using System;
 namespace VocaDb.Model.Domain
 {
 	/// <remarks>
-	/// Do not persist the numeric values anywhere - they may change.
-	/// </remarks>
-	public enum WebhookContentType
-	{
-		Form,
-		Json,
-	}
-
-	/// <remarks>
 	/// Saved into database as a bitarray - do not change the number values.
 	/// Also remember to update the TypeScript file.
 	/// </remarks>
@@ -29,16 +20,13 @@ namespace VocaDb.Model.Domain
 
 		public virtual string Url { get; init; } = string.Empty;
 
-		public virtual WebhookContentType ContentType { get; init; } = WebhookContentType.Form;
-
 		public virtual WebhookEvents WebhookEvents { get; init; } = WebhookEvents.Default;
 
 		public Webhook() { }
 
-		public Webhook(string url, WebhookContentType contentType, WebhookEvents webhookEvents)
+		public Webhook(string url, WebhookEvents webhookEvents)
 		{
 			Url = url;
-			ContentType = contentType;
 			WebhookEvents = webhookEvents;
 		}
 	}

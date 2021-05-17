@@ -8,8 +8,6 @@ namespace VocaDb.Model.DataContracts
 	{
 		public string Url { get; init; } = string.Empty;
 
-		public WebhookContentType ContentType { get; init; } = WebhookContentType.Form;
-
 		[JsonConverter(typeof(StringEnumConverter))]
 		public WebhookEvents WebhookEvents { get; init; } = WebhookEvents.User;
 
@@ -18,7 +16,6 @@ namespace VocaDb.Model.DataContracts
 		public WebhookContract(Webhook webhook)
 		{
 			Url = webhook.Url;
-			ContentType = webhook.ContentType;
 			WebhookEvents = webhook.WebhookEvents;
 		}
 	}

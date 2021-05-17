@@ -16,7 +16,6 @@ namespace VocaDb.Migrations
 			Create.Table(TableNames.Webhooks)
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Url").AsString().NotNullable().Unique()
-				.WithColumn("ContentType").AsString(10).NotNullable()
 				.WithColumn("WebhookEvents").AsInt32().NotNullable();
 		}
 	}

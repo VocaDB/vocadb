@@ -43,8 +43,8 @@ namespace VocaDb.Model.Database.Queries
 				var diff = CollectionHelper.Sync(
 					existing,
 					webhooks,
-					equality: (left, right) => left.Url == right.Url && left.ContentType == right.ContentType && left.WebhookEvents == right.WebhookEvents,
-					create: t => new Webhook(t.Url, t.ContentType, t.WebhookEvents));
+					equality: (left, right) => left.Url == right.Url && left.WebhookEvents == right.WebhookEvents,
+					create: t => new Webhook(t.Url, t.WebhookEvents));
 
 				ctx.OfType<Webhook>().Sync(diff);
 

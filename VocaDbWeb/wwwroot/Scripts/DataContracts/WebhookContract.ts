@@ -6,6 +6,5 @@ export enum WebhookEvents {
 
 export default interface WebhookContract {
   url: string;
-  contentType: string;
   webhookEvents: string;
 }

@@ -10,7 +10,6 @@ namespace VocaDb.Model.Mapping
 			Id(m => m.Id);
 
 			Map(m => m.Url).Not.Nullable();
-			Map(m => m.ContentType).Not.Nullable();
 			Map(m => m.WebhookEvents).CustomType<WebhookEvents>().Not.Nullable();
 		}
 	}

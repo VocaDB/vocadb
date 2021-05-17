@@ -17,12 +17,6 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="newContentType">Content type</label>
-		<div class="controls">
-			<select id="newContentType" data-bind="options: contentTypes, value: newContentType"></select>
-		</div>
-	</div>
-	<div class="control-group">
 		<label class="control-label" for="newWebhookEvents">Events</label>
 		<div class="controls">
 			<div data-bind="with: webhookEventsEditViewModel">
@@ -54,7 +48,6 @@
 		<thead>
 			<tr>
 				<th>Payload URL</th>
-				<th>Content type</th>
 				<th>Events</th>
 				<th></th>
 			</tr>
@@ -62,7 +55,6 @@
 		<tbody data-bind="foreach: webhooks">
 			<tr data-bind="css: { 'row-new': $data.isNew, 'row-deleted': $data.isDeleted }">
 				<td data-bind="text: url"></td>
-				<td data-bind="text: contentType"></td>
 				<td>
 					<div data-bind="foreach: webhookEventsArray">
 						<!-- ko ifnot: $data == 'Default' -->

@@ -5,18 +5,6 @@ using VocaDb.Model.Domain;
 namespace VocaDb.Tests.Domain
 {
 	[TestClass]
-	public sealed class WebhookContentTypeTests
-	{
-		[DataRow("Form", nameof(WebhookContentType.Form))]
-		[DataRow("Json", nameof(WebhookContentType.Json))]
-		[TestMethod]
-		public void Name(string expected, string actual)
-		{
-			actual.Should().Be(expected);
-		}
-	}
-
-	[TestClass]
 	public sealed class WebhookEventsTests
 	{
 		[DataRow(0, WebhookEvents.Default)]
