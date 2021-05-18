@@ -1,12 +1,13 @@
 #nullable disable
 
-using NLog;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using Discord;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -40,7 +41,7 @@ namespace VocaDb.Model.Service.Queries
 		/// <param name="hostname">Reporter's hostname (IP address).</param>
 		/// <param name="notes">Report notes, if any. Can be empty.</param>
 		/// <returns>Tuple informing whether report was created, and report Id.</returns>
-		public (bool created, int reportId) CreateReport<TEntry, TReport, TReportType>(
+		public async Task<(bool created, int reportId)> CreateReport<TEntry, TReport, TReportType>(
 			IDatabaseContext<TEntry> ctx,
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Service.Queries
 			TReportType reportType,
 			string hostname,
 			string notes,
+			IDiscordWebhookNotifier discordWebhookNotifier,
 			bool allowNotification = true)
 			where TEntry : class, IEntryWithVersions, IEntryWithNames
 			where TReport : GenericEntryReport<TEntry, TReportType>
@@ -115,6 +117,14 @@ namespace VocaDb.Model.Service.Queries
 
 			msg = $"reported {entryLinkFactory.CreateEntryLink(entry)} as {reportType} ({HttpUtility.HtmlEncode(notes)})";
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));
+
+			await discordWebhookNotifier.SendMessageAsync(
+				WebhookEvents.EntryReport,
+				reporter,
+				title: $"[{entry.DefaultName}] Report opened",
+				url: entryLinkFactory.GetFullEntryUrl(entry),
+				description: notes,
+				color: new Color(235, 100, 32));
 
 			ctx.Save(report);
 			return (true, report.Id);

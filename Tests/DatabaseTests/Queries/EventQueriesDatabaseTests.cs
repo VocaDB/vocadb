@@ -36,8 +36,17 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		{
 			return _context.RunTestAsync(async repository =>
 			{
-				var queries = new EventQueries(repository, _entryLinkFactory, _userContext, _imageStore, _userIconFactory, _enumTranslations, _mailer,
-					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), _imageStore);
+				var queries = new EventQueries(
+					repository,
+					_entryLinkFactory,
+					_userContext,
+					_imageStore,
+					_userIconFactory,
+					_enumTranslations,
+					_mailer,
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+					_imageStore,
+					new FakeDiscordWebhookNotifier());
 
 				var updated = await queries.Update(contract, null);
 
@@ -59,8 +68,17 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 			_context.RunTest(repository =>
 			{
 				var id = Db.ReleaseEvent.Id;
-				var queries = new EventQueries(repository, _entryLinkFactory, _userContext, _imageStore, _userIconFactory, _enumTranslations, _mailer,
-					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), _imageStore);
+				var queries = new EventQueries(
+					repository,
+					_entryLinkFactory,
+					_userContext,
+					_imageStore,
+					_userIconFactory,
+					_enumTranslations,
+					_mailer,
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+					_imageStore,
+					new FakeDiscordWebhookNotifier());
 
 				queries.MoveToTrash(id, "Deleted");
 

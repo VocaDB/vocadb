@@ -36,9 +36,21 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 		private SongQueries Queries(ISongRepository repository)
 		{
-			return new SongQueries(repository, _userContext, new FakeEntryLinkFactory(), new FakePVParser(),
-				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(),
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
+			return new SongQueries(
+				repository,
+				_userContext,
+				new FakeEntryLinkFactory(),
+				new FakePVParser(),
+				new FakeUserMessageMailer(),
+				new FakeLanguageDetector(),
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new InMemoryImagePersister(),
+				new FakeObjectCache(),
+				new VdbConfigManager(),
+				new EntrySubTypeNameFactory(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+				new FakeDiscordWebhookNotifier());
 		}
 
 		private async Task<SongForEditContract> Update(SongForEditContract contract)

@@ -31,7 +31,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.EntryValidators;
-using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Translations;
@@ -51,6 +51,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IAggregatedEntryImageUrlFactory _imageUrlFactory;
 		private readonly IEntryPictureFilePersister _pictureFilePersister;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		class CachedAdvancedArtistStatsContract
 		{
@@ -160,9 +161,17 @@ namespace VocaDb.Model.Database.Queries
 			return session.OfType<ArtistMergeRecord>().Query().FirstOrDefault(s => s.Source == sourceId);
 		}
 
-		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
+		public ArtistQueries(
+			IArtistRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister imagePersister,
+			IEntryPictureFilePersister pictureFilePersister,
+			ObjectCache cache,
+			IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations,
+			IAggregatedEntryImageUrlFactory imageUrlFactory,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -172,6 +181,7 @@ namespace VocaDb.Model.Database.Queries
 			_userIconFactory = userIconFactory;
 			_enumTranslations = enumTranslations;
 			_imageUrlFactory = imageUrlFactory;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Artist> ctx)
@@ -259,18 +269,25 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx => Comments(ctx).Create(artistId, contract));
 		}
 
-		public (bool created, int reportId) CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? _enumTranslations.ArtistReportTypeNames[reportType] : null,
-					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
+					artistId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier,
+					reportType != ArtistReportType.OwnershipClaim);
 			});
 		}
 #nullable disable

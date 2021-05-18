@@ -238,7 +238,7 @@ namespace VocaDb.Web
 			builder.RegisterType<PVHelper>().AsSelf();
 			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
 
-			builder.RegisterType<DiscordWebhookNotifier>().As<IDiscordWebhookNotifier>().SingleInstance();
+			builder.RegisterType<DiscordWebhookNotifier>().As<IDiscordWebhookNotifier>();
 
 			// Enable DI for action filters
 			//builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))

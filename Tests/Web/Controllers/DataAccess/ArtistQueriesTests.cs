@@ -78,8 +78,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext = new FakePermissionContext(_user);
 			_imagePersister = new InMemoryImagePersister();
 
-			_queries = new ArtistQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, MemoryCache.Default,
-				new FakeUserIconFactory(), new EnumTranslations(), _imagePersister);
+			_queries = new ArtistQueries(
+				_repository,
+				_permissionContext,
+				new FakeEntryLinkFactory(),
+				_imagePersister,
+				_imagePersister,
+				MemoryCache.Default,
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				_imagePersister,
+				new FakeDiscordWebhookNotifier());
 
 			_newArtistContract = new CreateArtistContract
 			{
@@ -92,10 +101,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			};
 		}
 
-		private (bool created, ArtistReport report) CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null)
+		private async Task<(bool created, ArtistReport report)> CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null)
 		{
 			artist ??= _artist;
-			var result = _queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			var result = await _queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = _repository.Load<ArtistReport>(result.reportId);
 			return (result.created, report);
 		}
@@ -138,11 +147,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void CreateReport()
+		public async Task CreateReport()
 		{
 			var editor = _user2;
 			_repository.Save(ArchivedArtistVersion.Create(_artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
-			var (created, report) = CallCreateReport(ArtistReportType.InvalidInfo);
+			var (created, report) = await CallCreateReport(ArtistReportType.InvalidInfo);
 
 			created.Should().BeTrue("Report was created");
 			report.EntryBase.Id.Should().Be(_artist.Id);
@@ -156,11 +165,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void CreateReport_OwnershipClaim()
+		public async Task CreateReport_OwnershipClaim()
 		{
 			var editor = _user2;
 			_repository.Save(ArchivedArtistVersion.Create(_artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
-			var (created, _) = CallCreateReport(ArtistReportType.OwnershipClaim);
+			var (created, _) = await CallCreateReport(ArtistReportType.OwnershipClaim);
 
 			created.Should().BeTrue("Report was created");
 

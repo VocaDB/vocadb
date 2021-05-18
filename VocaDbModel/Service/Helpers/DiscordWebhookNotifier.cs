@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.Helpers
 
 	public interface IDiscordWebhookNotifier
 	{
-		Task SendMessageAsync(WebhookEvents webhookEvent, IUserWithEmail? user, string? title = null, string? url = null, string? description = null);
+		Task SendMessageAsync(WebhookEvents webhookEvent, IUserWithEmail? user, string? title = null, string? url = null, string? description = null, Color? color = null);
 	}
 
 	public sealed class DiscordWebhookNotifier : IDiscordWebhookNotifier
@@ -53,11 +53,14 @@ namespace VocaDb.Model.Service.Helpers
 			_userIconFactory = userIconFactory;
 		}
 
-		public async Task SendMessageAsync(WebhookEvents webhookEvent, IUserWithEmail? user, string? title = null, string? url = null, string? description = null)
+		public async Task SendMessageAsync(WebhookEvents webhookEvent, IUserWithEmail? user, string? title = null, string? url = null, string? description = null, Color? color = null)
 		{
 			EmbedBuilder CreateEmbedBuilder(IUserWithEmail? user)
 			{
-				var builder = new EmbedBuilder();
+				var builder = new EmbedBuilder
+				{
+					Color = color,
+				};
 
 				if (user is not null)
 				{

@@ -74,8 +74,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				culture,
 				timeSpan ?? TimeSpan.FromMinutes(39),
 				_ipRuleManager,
-				verifyEmailUrl: string.Empty,
-				profileUrl: string.Empty);
+				verifyEmailUrl: string.Empty);
 		}
 
 		private PartialFindResult<ServerOnlyUserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null)
@@ -367,7 +366,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task CreateTwitter()
 		{
 			var name = "hatsune_miku";
-			var result = await _data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty);
+			var result = await _data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 			result.Should().NotBeNull("Result is not null");
 			result.Name.Should().Be(name, "Name");
@@ -387,19 +386,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void CreateTwitter_NameAlreadyExists()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<UserNameAlreadyExistsException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
 		public void CreateTwitter_EmailAlreadyExists()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<UserEmailAlreadyExistsException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
 		public void CreateTwitter_InvalidEmailFormat()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<InvalidEmailFormatException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]

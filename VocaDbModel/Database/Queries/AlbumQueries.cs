@@ -62,6 +62,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IUserMessageMailer _mailer;
 		private readonly IPVParser _pvParser;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		private IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
@@ -151,10 +152,20 @@ namespace VocaDb.Model.Database.Queries
 			}
 		}
 
-		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer,
-			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
+		public AlbumQueries(
+			IAlbumRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister imagePersister,
+			IEntryPictureFilePersister pictureFilePersister,
+			IUserMessageMailer mailer,
+			IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations,
+			IPVParser pvParser,
+			IFollowedArtistNotifier followedArtistNotifier,
+			IAggregatedEntryImageUrlFactory entryThumbPersister,
+			ObjectCache cache,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -167,6 +178,7 @@ namespace VocaDb.Model.Database.Queries
 			_followedArtistNotifier = followedArtistNotifier;
 			_imageUrlFactory = entryThumbPersister;
 			_cache = cache;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract)
@@ -337,18 +349,24 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract));
 		}
 
-		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != AlbumReportType.Other ? _enumTranslations.AlbumReportTypeNames[reportType] : null,
-					albumId, reportType, hostname, notes);
+					albumId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier);
 			});
 		}
 #nullable disable

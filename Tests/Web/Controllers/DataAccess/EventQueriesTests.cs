@@ -77,8 +77,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_repository.Save(_user);
 			_permissionContext = new FakePermissionContext(_user);
 			var imageStore = new InMemoryImagePersister();
-			_queries = new EventQueries(_repository, new FakeEntryLinkFactory(), _permissionContext, imageStore, new FakeUserIconFactory(), new EnumTranslations(), _mailer,
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
+			_queries = new EventQueries(
+				_repository,
+				new FakeEntryLinkFactory(),
+				_permissionContext,
+				imageStore,
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				_mailer,
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+				imageStore,
+				new FakeDiscordWebhookNotifier());
 		}
 
 		[TestMethod]

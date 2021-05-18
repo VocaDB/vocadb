@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
@@ -13,6 +14,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Model.Service.Translations;
@@ -24,13 +26,21 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IEnumTranslations _enumTranslations;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
-		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
+		public VenueQueries(
+			IVenueRepository venueRepository,
+			IEntryLinkFactory entryLinkFactory,
+			IUserPermissionContext permissionContext,
+			IEnumTranslations enumTranslations,
+			IUserIconFactory userIconFactory,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(venueRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
 			_enumTranslations = enumTranslations;
 			_userIconFactory = userIconFactory;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
@@ -42,18 +52,24 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public (bool created, int reportId) CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new VenueReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != VenueReportType.Other ? _enumTranslations.Translation(reportType) : null,
-					venueId, reportType, hostname, notes);
+					venueId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier);
 			});
 		}
 #nullable disable

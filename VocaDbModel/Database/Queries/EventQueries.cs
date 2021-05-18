@@ -47,6 +47,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEntryThumbPersister _imagePersister;
 		private readonly IUserMessageMailer _mailer;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes)
 		{
@@ -64,9 +65,17 @@ namespace VocaDb.Model.Database.Queries
 			return archived;
 		}
 
-		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations,
-			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory imageUrlFactory)
+		public EventQueries(
+			IEventRepository eventRepository,
+			IEntryLinkFactory entryLinkFactory,
+			IUserPermissionContext permissionContext,
+			IEntryThumbPersister imagePersister,
+			IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations,
+			IUserMessageMailer mailer,
+			IFollowedArtistNotifier followedArtistNotifier,
+			IAggregatedEntryImageUrlFactory imageUrlFactory,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(eventRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -76,21 +85,28 @@ namespace VocaDb.Model.Database.Queries
 			_mailer = mailer;
 			_followedArtistNotifier = followedArtistNotifier;
 			_imageUrlFactory = imageUrlFactory;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 #nullable enable
-		public (bool created, int reportId) CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new EventReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != EventReportType.Other ? _enumTranslations.Translation(reportType) : null,
-					eventId, reportType, hostname, notes);
+					eventId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier);
 			});
 		}
 #nullable disable
