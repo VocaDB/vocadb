@@ -195,9 +195,12 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
 		{
-			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
-			if (!captchaResult.Success)
-				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
+			{
+				var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+				if (!captchaResult.Success)
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
+			}
 
 			if (!ModelState.IsValid)
 			{
@@ -474,12 +477,15 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
-			if (!recaptchaResult.Success)
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
 			{
-				ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
-				_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
-				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
+				var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+				if (!recaptchaResult.Success)
+				{
+					ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
+					_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
+				}
 			}
 
 			if (!ModelState.IsValid)
