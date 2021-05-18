@@ -354,7 +354,7 @@ namespace VocaDb.Model.Database.Queries
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx =>
+			return HandleTransactionAsync(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(
 					ctx,
