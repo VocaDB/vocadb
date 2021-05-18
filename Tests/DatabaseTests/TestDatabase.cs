@@ -2,6 +2,7 @@
 
 using System;
 using NHibernate;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -46,6 +47,11 @@ namespace VocaDb.Tests.DatabaseTests
 		public Tag Tag3 { get; private set; }
 		public Tag Tag4 { get; private set; }
 		public User UserWithEditPermissions { get; private set; }
+
+		public Webhook Webhook { get; private set; }
+		public Webhook Webhook2 { get; private set; }
+		public Webhook Webhook3 { get; private set; }
+		public Webhook Webhook4 { get; private set; }
 
 		public TestDatabase(ISessionFactory sessionFactory)
 		{
@@ -154,6 +160,18 @@ namespace VocaDb.Tests.DatabaseTests
 
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);
+
+				Webhook = new Webhook("https://discord.com/api/webhooks/39", WebhookEvents.User);
+				session.Save(Webhook);
+
+				Webhook2 = new Webhook("https://discord.com/api/webhooks/3939", WebhookEvents.User | WebhookEvents.EntryReport);
+				session.Save(Webhook2);
+
+				Webhook3 = new Webhook("https://discord.com/api/webhooks/393939", WebhookEvents.EntryReport);
+				session.Save(Webhook3);
+
+				Webhook4 = new Webhook("https://discord.com/api/webhooks/39393939", WebhookEvents.EntryReport);
+				session.Save(Webhook4);
 
 				tx.Commit();
 			}

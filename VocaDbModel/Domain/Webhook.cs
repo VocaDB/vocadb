@@ -10,7 +10,15 @@ namespace VocaDb.Model.Domain
 	public enum WebhookEvents
 	{
 		Default = 0,
+
+		/// <summary>
+		/// New user registered.
+		/// </summary>
 		User = 1 << 0,
+
+		/// <summary>
+		/// Entry report created.
+		/// </summary>
 		EntryReport = 1 << 1,
 	}
 

@@ -65,9 +65,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private Task<ServerOnlyUserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = DefaultHostname,
 			string culture = DefaultCulture, TimeSpan? timeSpan = null)
 		{
-			return _data.Create(name, pass, email, hostname, null,
+			return _data.Create(
+				name,
+				pass,
+				email,
+				hostname,
+				userAgent: null,
 				culture,
-				timeSpan ?? TimeSpan.FromMinutes(39), _ipRuleManager, string.Empty);
+				timeSpan ?? TimeSpan.FromMinutes(39),
+				_ipRuleManager,
+				verifyEmailUrl: string.Empty,
+				profileUrl: string.Empty);
 		}
 
 		private PartialFindResult<ServerOnlyUserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null)
@@ -104,8 +112,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_userWithEmail, ContentLanguagePreference.Default));
 			_stopForumSpamClient = new FakeStopForumSpamClient();
 			_mailer = new FakeUserMessageMailer();
-			_data = new UserQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _stopForumSpamClient, _mailer,
-				new FakeUserIconFactory(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(new VdbConfigManager()), new EnumTranslations());
+			_data = new UserQueries(
+				_repository,
+				_permissionContext,
+				new FakeEntryLinkFactory(),
+				_stopForumSpamClient,
+				_mailer,
+				new FakeUserIconFactory(),
+				new InMemoryImagePersister(),
+				new FakeObjectCache(),
+				new Model.Service.BrandableStrings.BrandableStringsManager(new VdbConfigManager()),
+				new EnumTranslations(),
+				new FakeDiscordWebhookNotifier());
 
 			_request = new PasswordResetRequest(_userWithEmail) { Id = Guid.NewGuid() };
 			_repository.Add(_request);
@@ -346,10 +364,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void CreateTwitter()
+		public async Task CreateTwitter()
 		{
 			var name = "hatsune_miku";
-			var result = _data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
+			var result = await _data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty);
 
 			result.Should().NotBeNull("Result is not null");
 			result.Name.Should().Be(name, "Name");
@@ -369,19 +387,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void CreateTwitter_NameAlreadyExists()
 		{
-			_data.Invoking(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserNameAlreadyExistsException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
 		public void CreateTwitter_EmailAlreadyExists()
 		{
-			_data.Invoking(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserEmailAlreadyExistsException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
 		public void CreateTwitter_InvalidEmailFormat()
 		{
-			_data.Invoking(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<InvalidEmailFormatException>();
+			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP", profileUrl: string.Empty)).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]

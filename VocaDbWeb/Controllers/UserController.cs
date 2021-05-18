@@ -409,8 +409,14 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
-					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
+				var user = await Data.CreateTwitter(
+					model.AccessToken,
+					model.UserName,
+					model.Email ?? string.Empty,
+					model.TwitterId,
+					model.TwitterName,
+					Hostname,
+					WebHelper.GetInterfaceCultureName(Request));
 				await SetAuthCookieAsync(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
@@ -503,15 +509,18 @@ namespace VocaDb.Web.Controllers
 			// Attempt to register the user
 			try
 			{
-				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
+				var verifyEmailUrl = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
+				var user = await Data.Create(
+					model.UserName,
+					model.Password,
+					model.Email ?? string.Empty,
+					Hostname,
 					Request.Headers[HeaderNames.UserAgent],
 					WebHelper.GetInterfaceCultureName(Request),
-					time, _ipRuleManager, url);
-				await Task.WhenAll(
-					SetAuthCookieAsync(user.Name, createPersistentCookie: false),
-					discordWebhookNotifier.SendMessageAsync(text: $"New user registered: {VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = user.Name }))}")
-				);
+					time,
+					_ipRuleManager,
+					verifyEmailUrl);
+				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 				return RedirectToAction("Index", "Home");
 			}
 			catch (UserNameAlreadyExistsException)
