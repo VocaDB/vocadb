@@ -1,0 +1,82 @@
+﻿@using VocaDb.Model.Domain
+
+@{
+	PageProperties.Title = "Manage webhooks";
+	ViewBag.Parents = new[]
+	{
+		Html.ActionLink("Manage", "Index"),
+	};
+}
+
+<form class="form-horizontal">
+	<h3>New webhook</h3>
+	<div class="control-group">
+		<label class="control-label" for="newUrl">Payload URL</label>
+		<div class="controls">
+			<input type="text" id="newUrl" placeholder="https://example.com/postreceive" data-bind="value: newUrl" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="newWebhookEvents">Events</label>
+		<div class="controls">
+			<div data-bind="with: webhookEventsEditViewModel">
+				<div data-bind="foreach: webhookEventSelections">
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: selected" />
+						<span data-bind="text: name"></span>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="button" class="btn btn-primary" data-bind="click: addWebhook">Add</button>
+		</div>
+	</div>
+</form>
+
+<hr />
+
+<form data-bind="submit: save, show" class="js-cloak">
+
+	<h3>Webhooks</h3>
+
+	<partial name="Partials/Shared/_SaveBtn" />
+
+	<table>
+		<thead>
+			<tr>
+				<th>Payload URL</th>
+				<th>Events</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: webhooks">
+			<tr data-bind="css: { 'row-new': $data.isNew, 'row-deleted': $data.isDeleted }">
+				<td data-bind="text: url"></td>
+				<td>
+					<div data-bind="foreach: webhookEventsArray">
+						<!-- ko ifnot: $data == 'Default' -->
+							<span data-bind="text: $root.translateWebhookEvent($data)"></span><span data-bind="visible: $data != _.last($parent.webhookEventsArray)">,</span>
+						<!-- /ko -->
+					</div>
+				</td>
+				<td>
+					<button class="btn btn-small btn-danger" data-bind="click: deleteWebhook, disable: isDeleted">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+
+	<partial name="Partials/Shared/_SaveBtn" />
+
+</form>
+
+@section BodyScripts {
+	<script type="text/javascript">
+		var webhookEventNames = @ToJS(Translate.WebhookEventNames.GetValuesAndNames(new[] { WebhookEvents.User, WebhookEvents.EntryReport }), false);
+		app.AdminManageWebhooks(webhookEventNames);
+	</script>
+}

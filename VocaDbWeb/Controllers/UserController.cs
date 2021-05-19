@@ -25,6 +25,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
@@ -194,9 +195,12 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
 		{
-			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
-			if (!captchaResult.Success)
-				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
+			{
+				var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+				if (!captchaResult.Success)
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
+			}
 
 			if (!ModelState.IsValid)
 			{
@@ -405,8 +409,14 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
-					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
+				var user = await Data.CreateTwitter(
+					model.AccessToken,
+					model.UserName,
+					model.Email ?? string.Empty,
+					model.TwitterId,
+					model.TwitterName,
+					Hostname,
+					WebHelper.GetInterfaceCultureName(Request));
 				await SetAuthCookieAsync(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
@@ -457,7 +467,7 @@ namespace VocaDb.Web.Controllers
 		// POST: /User/Create
 
 		[HttpPost]
-		public async Task<ActionResult> Create(RegisterModel model)
+		public async Task<ActionResult> Create(RegisterModel model, [FromServices] IDiscordWebhookNotifier discordWebhookNotifier)
 		{
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
@@ -473,12 +483,15 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
-			if (!recaptchaResult.Success)
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
 			{
-				ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
-				_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
-				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
+				var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+				if (!recaptchaResult.Success)
+				{
+					ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
+					_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
+				}
 			}
 
 			if (!ModelState.IsValid)
@@ -496,11 +509,17 @@ namespace VocaDb.Web.Controllers
 			// Attempt to register the user
 			try
 			{
-				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
+				var verifyEmailUrl = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
+				var user = await Data.Create(
+					model.UserName,
+					model.Password,
+					model.Email ?? string.Empty,
+					Hostname,
 					Request.Headers[HeaderNames.UserAgent],
 					WebHelper.GetInterfaceCultureName(Request),
-					time, _ipRuleManager, url);
+					time,
+					_ipRuleManager,
+					verifyEmailUrl);
 				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 				return RedirectToAction("Index", "Home");
 			}

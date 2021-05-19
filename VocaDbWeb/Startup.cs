@@ -66,6 +66,7 @@ namespace VocaDb.Web
 		{
 			// Code from: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-5.0
 			services.Configure<SmtpSettings>(Configuration.GetSection(SmtpSettings.Smtp));
+			services.Configure<DiscordWebhookSettings>(Configuration.GetSection(DiscordWebhookSettings.DiscordWebhook));
 
 			services
 				.AddControllersWithViews(options =>
@@ -231,10 +232,13 @@ namespace VocaDb.Web
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
 			builder.RegisterType<VenueQueries>().AsSelf();
+			builder.RegisterType<WebhookQueries>().AsSelf();
 
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();
 			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
+
+			builder.RegisterType<DiscordWebhookNotifier>().As<IDiscordWebhookNotifier>();
 
 			// Enable DI for action filters
 			//builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))

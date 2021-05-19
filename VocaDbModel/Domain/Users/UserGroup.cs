@@ -59,7 +59,9 @@ namespace VocaDb.Model.Domain.Users
 		);
 
 		private static readonly UserGroup s_admin = new(UserGroupId.Admin,
-			s_mod, PermissionToken.Admin);
+			s_mod,
+			PermissionToken.Admin,
+			PermissionToken.ManageWebhooks);
 
 		private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {
 			s_limited, s_regular, s_trusted, s_mod, s_admin

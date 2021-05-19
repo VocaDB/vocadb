@@ -8,6 +8,7 @@ using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Discord;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
@@ -97,6 +98,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IUserMessageMailer _mailer;
 		private readonly IStopForumSpamClient _sfsClient;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		public IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
@@ -361,10 +363,18 @@ namespace VocaDb.Model.Database.Queries
 			}
 		}
 
-		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
-			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister,
+		public UserQueries(
+			IUserRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IStopForumSpamClient sfsClient,
+			IUserMessageMailer mailer,
+			IUserIconFactory userIconFactory,
+			IAggregatedEntryImageUrlFactory entryImagePersister,
 			ObjectCache cache,
-			BrandableStringsManager brandableStringsManager, IEnumTranslations enumTranslations)
+			BrandableStringsManager brandableStringsManager,
+			IEnumTranslations enumTranslations,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(repository, permissionContext)
 		{
 			ParamIs.NotNull(() => repository);
@@ -381,6 +391,7 @@ namespace VocaDb.Model.Database.Queries
 			_cache = cache;
 			_brandableStringsManager = brandableStringsManager;
 			_enumTranslations = enumTranslations;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		public void AddFollowedTag(int userId, int tagId)
@@ -655,11 +666,16 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
 		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
-		public async Task<ServerOnlyUserContract> Create(string name, string pass, string email, string hostname,
+		public async Task<ServerOnlyUserContract> Create(
+			string name,
+			string pass,
+			string email,
+			string hostname,
 			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
-			IPRuleManager ipRuleManager, string verifyEmailUrl)
+			IPRuleManager ipRuleManager,
+			string verifyEmailUrl)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -716,7 +732,15 @@ namespace VocaDb.Model.Database.Queries
 				User user;
 				using (var tx = ctx.BeginTransaction())
 				{
-					user = await CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
+					user = await CreateUser(
+						ctx,
+						name,
+						pass,
+						email,
+						hostname,
+						culture,
+						sfsCheckResult,
+						verifyEmailUrl);
 					ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} in {timeSpan} (SFS check {sfsStr}, UA '{userAgent}').", user);
 					await tx.CommitAsync();
 				}
@@ -725,8 +749,15 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
-			SFSResponseContract sfsCheckResult, string verifyEmailUrl)
+		private async Task<User> CreateUser(
+			IDatabaseContext<User> ctx,
+			string name,
+			string pass,
+			string email,
+			string hostname,
+			string culture,
+			SFSResponseContract sfsCheckResult,
+			string verifyEmailUrl)
 		{
 			var confidenceReport = 1;
 			var confidenceLimited = 60;
@@ -755,6 +786,12 @@ namespace VocaDb.Model.Database.Queries
 				await SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);
 			}
 
+			await _discordWebhookNotifier.SendMessageAsync(
+				WebhookEvents.User,
+				user,
+				title: $"New user registered: {user.Name}",
+				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+
 			return user;
 		}
 
@@ -772,12 +809,19 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="InvalidEmailFormatException">If the email format was invalid.</exception>
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
-		public ServerOnlyUserContract CreateTwitter(string authToken, string name, string email, int twitterId, string twitterName, string hostname, string culture)
+		public Task<ServerOnlyUserContract> CreateTwitter(
+			string authToken,
+			string name,
+			string email,
+			int twitterId,
+			string twitterName,
+			string hostname,
+			string culture)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNull(() => email);
 
-			return _repository.HandleTransaction(ctx =>
+			return _repository.HandleTransactionAsync(async ctx =>
 			{
 				var lc = name.ToLowerInvariant();
 				var existing = ctx.Query().FirstOrDefault(u => u.NameLC == lc);
@@ -804,6 +848,12 @@ namespace VocaDb.Model.Database.Queries
 				ctx.Save(user);
 
 				ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} using Twitter name '{twitterName}'.", user);
+
+				await _discordWebhookNotifier.SendMessageAsync(
+					WebhookEvents.User,
+					user,
+					title: $"New user registered: {user.Name}",
+					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
 
 				return new ServerOnlyUserContract(user);
 			});

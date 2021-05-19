@@ -25,4 +25,5 @@ export default interface ResourcesContract {
   songSortRuleNames?: { [key: string]: string };
   songTypeNames?: { [key: string]: string };
   userGroupNames?: { [key: string]: string };
+  webhookEventNames?: { [key: string]: string };
 }

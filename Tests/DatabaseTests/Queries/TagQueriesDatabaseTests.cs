@@ -34,8 +34,16 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			return _context.RunTest(repository =>
 			{
-				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
-					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
+				var queries = new TagQueries(
+					repository,
+					permissionContext,
+					new FakeEntryLinkFactory(),
+					new InMemoryImagePersister(),
+					new InMemoryImagePersister(),
+					new FakeUserIconFactory(),
+					new EnumTranslations(),
+					new FakeObjectCache(),
+					new FakeDiscordWebhookNotifier());
 
 				queries.Merge(sourceId, targetId);
 
@@ -51,8 +59,16 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			return _context.RunTest(repository =>
 			{
-				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
-					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
+				var queries = new TagQueries(
+					repository,
+					permissionContext,
+					new FakeEntryLinkFactory(),
+					new InMemoryImagePersister(),
+					new InMemoryImagePersister(),
+					new FakeUserIconFactory(),
+					new EnumTranslations(),
+					new FakeObjectCache(),
+					new FakeDiscordWebhookNotifier());
 
 				var updated = queries.Update(contract, null);
 

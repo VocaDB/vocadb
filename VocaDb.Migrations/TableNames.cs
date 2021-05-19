@@ -75,6 +75,7 @@ namespace VocaDb.Migrations
 		public const string UserWebLinks = nameof(UserWebLinks);
 		public const string Venues = nameof(Venues);
 		public const string VenueWebLinks = nameof(VenueWebLinks);
+		public const string Webhooks = nameof(Webhooks);
 	}
 
 	public static class ColumnNames

@@ -33,9 +33,21 @@ namespace VocaDb.Tests.Web.Controllers
 		public SongControllerTests()
 		{
 			_permissionContext.SetLoggedUser(_repository.Save(CreateEntry.User()));
-			var queries = new SongQueries(_repository, _permissionContext, new FakeEntryLinkFactory(),
-				new FakePVParser(), new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(),
-				new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(), new FakeFollowedArtistNotifier());
+			var queries = new SongQueries(
+				_repository,
+				_permissionContext,
+				new FakeEntryLinkFactory(),
+				new FakePVParser(),
+				new FakeUserMessageMailer(),
+				new FakeLanguageDetector(),
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new InMemoryImagePersister(),
+				new FakeObjectCache(),
+				new VdbConfigManager(),
+				new EntrySubTypeNameFactory(),
+				new FakeFollowedArtistNotifier(),
+				new FakeDiscordWebhookNotifier());
 			_controller = new SongController(null, queries, null, null, null);
 		}
 

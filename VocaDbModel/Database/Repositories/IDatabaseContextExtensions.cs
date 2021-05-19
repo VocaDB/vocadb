@@ -144,7 +144,7 @@ namespace VocaDb.Model.Database.Repositories
 		}
 
 #nullable enable
-		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
+		private static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
 		{
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => diff);

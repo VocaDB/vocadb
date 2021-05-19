@@ -8,6 +8,18 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2021_05_26_0026)]
+	public class Webhook : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			Create.Table(TableNames.Webhooks)
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Url").AsString().NotNullable().Unique()
+				.WithColumn("WebhookEvents").AsInt32().NotNullable();
+		}
+	}
+
 	[Migration(2021_02_19_0000)]
 	public class SongMilliBpm : Migration
 	{

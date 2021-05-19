@@ -321,5 +321,13 @@ namespace VocaDb.Web.Controllers
 
 			//return View(new ViewSysLog(logContents));
 		}
+
+		[Authorize]
+		public IActionResult ManageWebhooks()
+		{
+			PermissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+
+			return View();
+		}
 	}
 }

@@ -63,6 +63,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IPVParser _pvParser;
 		private readonly TagMapper _tagMapper = new();
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		private void AddSongHit(IDatabaseContext<Song> session, Song song, string hostname)
 		{
@@ -273,9 +274,21 @@ namespace VocaDb.Model.Database.Queries
 			}
 		}
 
-		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory entryThumbPersister,
-			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory, IFollowedArtistNotifier followedArtistNotifier)
+		public SongQueries(
+			ISongRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IPVParser pvParser,
+			IUserMessageMailer mailer,
+			ILanguageDetector languageDetector,
+			IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations,
+			IAggregatedEntryImageUrlFactory entryThumbPersister,
+			ObjectCache cache,
+			VdbConfigManager config,
+			IEntrySubTypeNameFactory entrySubTypeNameFactory,
+			IFollowedArtistNotifier followedArtistNotifier,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -288,6 +301,7 @@ namespace VocaDb.Model.Database.Queries
 			_cache = cache;
 			_config = config;
 			_followedArtistNotifier = followedArtistNotifier;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Song> ctx)
@@ -430,18 +444,24 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract));
 		}
 
-		public (bool created, int reportId) CreateReport(int songId, SongReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int songId, SongReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx =>
+			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != SongReportType.Other ? _enumTranslations.SongReportTypeNames[reportType] : null,
-					songId, reportType, hostname, notes);
+					songId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier);
 			});
 		}
 #nullable disable

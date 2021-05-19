@@ -86,7 +86,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_user, ContentLanguagePreference.Default));
 
 			_imagePersister = new InMemoryImagePersister();
-			_queries = new TagQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
+			_queries = new TagQueries(
+				_repository,
+				_permissionContext,
+				new FakeEntryLinkFactory(),
+				_imagePersister,
+				_imagePersister,
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new FakeObjectCache(),
+				new FakeDiscordWebhookNotifier());
 		}
 
 		[TestMethod]

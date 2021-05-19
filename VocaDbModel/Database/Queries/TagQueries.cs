@@ -53,6 +53,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IAggregatedEntryImageUrlFactory _thumbStore;
 		private readonly IEntryThumbPersister _imagePersister;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
 
 		private class TagTopUsagesAndCount<T>
 		{
@@ -168,9 +169,16 @@ namespace VocaDb.Model.Database.Queries
 			return ctx.OfType<T>().Query().Where(a => a.Tag.Id == tagId);
 		}
 
-		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-			IEntryLinkFactory entryLinkFactory, IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory,
-			IEnumTranslations enumTranslations, ObjectCache cache)
+		public TagQueries(
+			ITagRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister imagePersister,
+			IAggregatedEntryImageUrlFactory thumbStore,
+			IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations,
+			ObjectCache cache,
+			IDiscordWebhookNotifier discordWebhookNotifier)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -179,6 +187,7 @@ namespace VocaDb.Model.Database.Queries
 			_userIconFactory = userIconFactory;
 			_enumTranslations = enumTranslations;
 			_cache = cache;
+			_discordWebhookNotifier = discordWebhookNotifier;
 		}
 
 		public ArchivedTagVersion Archive(IDatabaseContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason, string notes = "")
@@ -233,18 +242,24 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract));
 		}
 
-		public (bool created, int reportId) CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber)
+		public Task<(bool created, int reportId)> CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx =>
+			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+					ctx,
+					PermissionContext,
 					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new TagReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != TagReportType.Other ? _enumTranslations.Translation(reportType) : null,
-					tagId, reportType, hostname, notes);
+					tagId,
+					reportType,
+					hostname,
+					notes,
+					_discordWebhookNotifier);
 			});
 		}
 #nullable disable

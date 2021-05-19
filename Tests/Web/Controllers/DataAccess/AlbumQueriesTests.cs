@@ -144,10 +144,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_imagePersister = new InMemoryImagePersister();
 			_mailer = new FakeUserMessageMailer();
-			_queries = new AlbumQueries(_repository, _permissionContext, entryLinkFactory, _imagePersister, _imagePersister, _mailer,
-				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(),
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), new InMemoryImagePersister(),
-				new FakeObjectCache());
+			_queries = new AlbumQueries(
+				_repository,
+				_permissionContext,
+				entryLinkFactory,
+				_imagePersister,
+				_imagePersister,
+				_mailer,
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new FakePVParser(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
+				new InMemoryImagePersister(),
+				new FakeObjectCache(),
+				new FakeDiscordWebhookNotifier());
 		}
 
 		[TestMethod]

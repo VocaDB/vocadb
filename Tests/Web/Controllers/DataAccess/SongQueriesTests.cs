@@ -68,10 +68,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			return _queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], artistIds ?? new int[0], getPvInfo);
 		}
 
-		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null)
+		private async Task<(bool created, SongReport report)> CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null)
 		{
 			song ??= _song;
-			var result = _queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			var result = await _queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = _repository.Load<SongReport>(result.reportId);
 			if (created != null)
 				report.Created = created.Value;
@@ -153,9 +153,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_mailer = new FakeUserMessageMailer();
 
-			_queries = new SongQueries(_repository, _permissionContext, _entryLinkFactory, _pvParser, _mailer,
-				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager(), new EntrySubTypeNameFactory(),
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), _mailer, new EnumTranslations(), new EntrySubTypeNameFactory()));
+			_queries = new SongQueries(
+				_repository,
+				_permissionContext,
+				_entryLinkFactory,
+				_pvParser,
+				_mailer,
+				new FakeLanguageDetector(),
+				new FakeUserIconFactory(),
+				new EnumTranslations(),
+				new InMemoryImagePersister(),
+				new FakeObjectCache(),
+				new Model.Utils.Config.VdbConfigManager(),
+				new EntrySubTypeNameFactory(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), _mailer, new EnumTranslations(), new EntrySubTypeNameFactory()),
+				new FakeDiscordWebhookNotifier());
 		}
 
 		[TestMethod]
@@ -337,9 +349,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Basic report, no existing reports.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport()
+		public async Task CreateReport()
 		{
-			var (created, report) = CallCreateReport(SongReportType.InvalidInfo);
+			var (created, report) = await CallCreateReport(SongReportType.InvalidInfo);
 
 			created.Should().BeTrue("Report was created");
 			report.EntryBase.Id.Should().Be(_song.Id, "Entry Id");
@@ -351,11 +363,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Report specific version.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_Version()
+		public async Task CreateReport_Version()
 		{
 			var version = ArchivedSongVersion.Create(_song, new SongDiff(), new AgentLoginData(_user), SongArchiveReason.PropertiesUpdated, String.Empty);
 			_repository.Save(version);
-			CallCreateReport(SongReportType.Other, version.Version);
+			await CallCreateReport(SongReportType.Other, version.Version);
 
 			var report = _repository.List<SongReport>().First();
 
@@ -374,11 +386,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Open report exists for another entry.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_OtherEntry()
+		public async Task CreateReport_OtherEntry()
 		{
 			var song2 = _repository.Save(CreateEntry.Song());
-			CallCreateReport(SongReportType.InvalidInfo, song: song2);
-			var secondResult = CallCreateReport(SongReportType.Other);
+			await CallCreateReport(SongReportType.InvalidInfo, song: song2);
+			var secondResult = await CallCreateReport(SongReportType.Other);
 
 			var reports = _repository.List<SongReport>();
 
@@ -390,10 +402,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Duplicate report exists: skip.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_Duplicate()
+		public async Task CreateReport_Duplicate()
 		{
-			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
-			var secondResult = CallCreateReport(SongReportType.Other);
+			var (_, report) = await CallCreateReport(SongReportType.InvalidInfo);
+			var secondResult = await CallCreateReport(SongReportType.Other);
 
 			var reports = _repository.List<SongReport>();
 
@@ -406,11 +418,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Duplicate report exists, but it closed.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_Duplicate_Closed()
+		public async Task CreateReport_Duplicate_Closed()
 		{
-			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			var (_, report) = await CallCreateReport(SongReportType.InvalidInfo);
 			report.Status = ReportStatus.Closed;
-			var (secondCreated, _) = CallCreateReport(SongReportType.Other);
+			var (secondCreated, _) = await CallCreateReport(SongReportType.Other);
 
 			var reports = _repository.List<SongReport>();
 
@@ -422,12 +434,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Duplicate report exists. It is closed, but current user is not logged in. Skip.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_Duplicate_Closed_NotLoggedIn()
+		public async Task CreateReport_Duplicate_Closed_NotLoggedIn()
 		{
 			_permissionContext.LoggedUser = null;
-			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			var (_, report) = await CallCreateReport(SongReportType.InvalidInfo);
 			report.Status = ReportStatus.Closed;
-			var (secondCreated, _) = CallCreateReport(SongReportType.Other);
+			var (secondCreated, _) = await CallCreateReport(SongReportType.Other);
 
 			var reports = _repository.List<SongReport>();
 
@@ -440,12 +452,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Skip creating third report because of open report.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_Duplicate_Closed_Then_Open()
+		public async Task CreateReport_Duplicate_Closed_Then_Open()
 		{
-			var (_, report) = CallCreateReport(SongReportType.InvalidInfo, created: DateTime.UtcNow.AddDays(-2));
+			var (_, report) = await CallCreateReport(SongReportType.InvalidInfo, created: DateTime.UtcNow.AddDays(-2));
 			report.Status = ReportStatus.Closed;
-			CallCreateReport(SongReportType.Other, created: DateTime.UtcNow.AddDays(-1));
-			var (thirdCreated, _) = CallCreateReport(SongReportType.Other);
+			await CallCreateReport(SongReportType.Other, created: DateTime.UtcNow.AddDays(-1));
+			var (thirdCreated, _) = await CallCreateReport(SongReportType.Other);
 
 			var reports = _repository.List<SongReport>();
 
@@ -458,10 +470,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		/// Report is created using hostname.
 		/// </summary>
 		[TestMethod]
-		public void CreateReport_NotLoggedIn()
+		public async Task CreateReport_NotLoggedIn()
 		{
 			_permissionContext.LoggedUser = null;
-			CallCreateReport(SongReportType.Other);
+			await CallCreateReport(SongReportType.Other);
 
 			var report = _repository.List<SongReport>().FirstOrDefault();
 
