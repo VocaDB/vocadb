@@ -3,6 +3,7 @@ import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
 import ArtistType from '@Models/Artists/ArtistType';
 import ContentFocus from '@Models/ContentFocus';
+import _ from 'lodash';
 
 export default class ArtistHelper {
   /// <summary>

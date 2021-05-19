@@ -1,4 +1,5 @@
 import axios from 'axios';
+import $ from 'jquery';
 
 export default class HttpClient {
   public delete = async <T>(url: string): Promise<T> => {

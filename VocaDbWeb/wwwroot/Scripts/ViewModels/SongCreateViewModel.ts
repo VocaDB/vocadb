@@ -14,6 +14,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import _ from 'lodash';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 

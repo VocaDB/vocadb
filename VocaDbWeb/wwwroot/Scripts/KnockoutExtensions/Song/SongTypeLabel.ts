@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 declare global {
   interface KnockoutBindingHandlers {
     songTypeLabel: KnockoutBindingHandler;

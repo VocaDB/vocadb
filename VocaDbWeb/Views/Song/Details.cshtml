@@ -559,7 +559,7 @@
 </div>
 
 @section BodyScripts {
-	<remikus path="/bundles/Song/Details.js" />
+	<script src="@Url.Content("~/Scripts/MediaElement/mediaelement-and-player.min.js")" type="text/javascript"></script>
 	<script type="text/javascript">
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var model = {

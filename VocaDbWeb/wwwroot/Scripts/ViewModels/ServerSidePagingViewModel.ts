@@ -1,4 +1,5 @@
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import _ from 'lodash';
 
 export default class ServerSidePagingViewModel {
   constructor(pageSize: number = 10) {

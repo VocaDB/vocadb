@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  artistTypeLabel: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    artistTypeLabel: KnockoutBindingHandler;
+  }
 }
 
 interface ArtistTypeInfo {

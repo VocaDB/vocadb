@@ -9,6 +9,8 @@ import { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
+import _ from 'lodash';
 
 enum ActivityEntrySortRule {
   CreateDateDescending,
@@ -210,7 +212,7 @@ export default class ActivityEntryListViewModel {
         if (!entries && entries!.length > 0) return;
 
         ko.utils.arrayPushAll(this.entries, entries);
-        this.lastEntryDate = new Date(_.last(entries).createDate);
+        this.lastEntryDate = new Date(_.last(entries)!.createDate);
       },
     );
   };

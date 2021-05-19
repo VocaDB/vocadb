@@ -4,6 +4,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
+import $ from 'jquery';
 
 const UserMySettings = (model: {
   aboutMe: string;

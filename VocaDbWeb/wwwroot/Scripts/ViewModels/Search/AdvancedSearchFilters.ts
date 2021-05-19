@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 
 export default class AdvancedSearchFilters {

@@ -3,6 +3,8 @@ import ResourceRepository from '@Repositories/ResourceRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import CommentListViewModel from '@ViewModels/Comment/CommentListViewModel';
+import $ from 'jquery';
+import moment from 'moment';
 
 const CommentCommentsByUser = (model: { id: number }): void => {
   $(function () {

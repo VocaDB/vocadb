@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export class EntryOptionalFields<T> {
   // TODO: better way for generic constraints?
   constructor(type: (val: T) => string, fields: T[]) {

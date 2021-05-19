@@ -4,6 +4,8 @@ import UrlMapper from '@Shared/UrlMapper';
 import ManageIPRulesViewModel, {
   IPRuleContract,
 } from '@ViewModels/Admin/ManageIPRulesViewModel';
+import $ from 'jquery';
+import moment from 'moment';
 
 const AdminManageIPRules = (model: IPRuleContract[]): void => {
   $(function () {

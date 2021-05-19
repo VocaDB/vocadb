@@ -16,6 +16,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
+import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -33,7 +34,7 @@ export class RatingsViewModel {
 
     this.favorites = ko.computed(() =>
       _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === fav)
+        .filter((r) => !!r.user && r.rating === fav)
         .take(20)
         .map((r) => r.user!)
         .sortBy((u) => u.name)
@@ -49,7 +50,7 @@ export class RatingsViewModel {
 
     this.likes = ko.computed(() =>
       _.chain(this.ratings())
-        .filter((r) => r.user && r.rating === like)
+        .filter((r) => !!r.user && r.rating === like)
         .take(20)
         .map((r) => r.user!)
         .sortBy((u) => u.name)

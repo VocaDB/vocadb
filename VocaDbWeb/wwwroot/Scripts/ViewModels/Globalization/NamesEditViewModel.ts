@@ -1,5 +1,6 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import _ from 'lodash';
 
 import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';
 
@@ -20,7 +21,7 @@ export default class NamesEditViewModel {
   public getAllNames = (): LocalizedStringWithIdEditViewModel[] => {
     return _.filter(
       this.getAllPrimaryNames().concat(this.aliases()),
-      (name) => name && name.value && name.value(),
+      (name) => !!name && !!name.value && !!name.value(),
     );
   };
 
@@ -29,7 +30,7 @@ export default class NamesEditViewModel {
   };
 
   public getPrimaryNames = (): LocalizedStringWithIdEditViewModel[] =>
-    _.filter(this.getAllPrimaryNames(), (n) => n && n.value && n.value());
+    _.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value && !!n.value());
 
   // Whether the primary name is specified (in any language). This excludes aliases.
   public hasPrimaryName = (): boolean => {

@@ -3,6 +3,7 @@ import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
+import moment from 'moment';
 
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';

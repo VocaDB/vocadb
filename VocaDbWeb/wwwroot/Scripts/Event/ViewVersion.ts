@@ -2,6 +2,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
+import $ from 'jquery';
 
 const EventViewVersion = (model: {
   entry: {

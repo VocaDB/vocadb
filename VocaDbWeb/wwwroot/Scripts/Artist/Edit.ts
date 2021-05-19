@@ -5,6 +5,7 @@ import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
+import $ from 'jquery';
 
 function initPage(): void {
   $('#tabs').tabs();

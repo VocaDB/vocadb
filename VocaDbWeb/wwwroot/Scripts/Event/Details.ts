@@ -8,6 +8,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ReleaseEventDetailsViewModel from '@ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import $ from 'jquery';
 
 const EventDetails = (
   canDeleteAllComments: boolean,

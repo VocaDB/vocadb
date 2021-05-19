@@ -12,6 +12,8 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
+import $ from 'jquery';
+import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -246,7 +248,8 @@ export class AlbumReviewsViewModel {
   public getRatingForUser(userId: number): number {
     return _.chain(this.userRatings())
       .filter(
-        (rating) => rating.user && rating.user.id === userId && rating.rating,
+        (rating) =>
+          !!rating.user && rating.user.id === userId && !!rating.rating,
       )
       .map((rating) => rating.rating)
       .take(1)

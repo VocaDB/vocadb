@@ -11,6 +11,7 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import $ from 'jquery';
 
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';

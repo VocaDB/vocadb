@@ -1,4 +1,5 @@
 import functions from '@Shared/GlobalFunctions';
+import $ from 'jquery';
 
 const AdminPVsByAuthor = (): void => {
   $(document).ready(function () {

@@ -3,6 +3,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
+import _ from 'lodash';
 
 import SongListsBaseViewModel from './SongListsBaseViewModel';
 

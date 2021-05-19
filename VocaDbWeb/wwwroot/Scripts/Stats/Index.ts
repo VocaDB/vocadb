@@ -1,4 +1,5 @@
 import StatsViewModel from '@ViewModels/StatsViewModel';
+import $ from 'jquery';
 
 const StatsIndex = (): void => {
   $(function () {

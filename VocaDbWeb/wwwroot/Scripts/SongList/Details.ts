@@ -5,6 +5,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
+import $ from 'jquery';
 
 const SongListDetails = (
   canDeleteAllComments: boolean,

@@ -1,7 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Binding handler for jQuery focusout event.
-  focusout: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Binding handler for jQuery focusout event.
+    focusout: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.focusout = {

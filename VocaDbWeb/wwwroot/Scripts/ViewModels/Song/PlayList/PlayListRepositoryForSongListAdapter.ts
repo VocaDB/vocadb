@@ -4,6 +4,7 @@ import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongType from '@Models/Songs/SongType';
 import SongListRepository from '@Repositories/SongListRepository';
+import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
 import { IPlayListRepository } from './PlayListViewModel';

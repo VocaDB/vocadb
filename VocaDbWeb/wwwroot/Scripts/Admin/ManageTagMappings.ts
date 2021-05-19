@@ -1,6 +1,7 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import ManageTagMappingsViewModel from '@ViewModels/Admin/ManageTagMappingsViewModel';
+import $ from 'jquery';
 
 const AdminManageTagMappings = (): void => {
   $(function () {

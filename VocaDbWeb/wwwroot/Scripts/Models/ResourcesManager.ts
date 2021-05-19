@@ -1,5 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import _ from 'lodash';
 
 export default class ResourcesManager {
   constructor(

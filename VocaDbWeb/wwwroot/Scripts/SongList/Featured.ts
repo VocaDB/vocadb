@@ -3,6 +3,8 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
+import $ from 'jquery';
+import moment from 'moment';
 
 const SongListFeatured = (
   categories: string[],

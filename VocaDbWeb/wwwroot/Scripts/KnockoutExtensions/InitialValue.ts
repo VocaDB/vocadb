@@ -1,8 +1,11 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Gets the initial binding value from the element value instead of the model itself.
-  // From http://www.tysoncadenhead.com/blog/using-knockout-for-progressive-enhancement
-  initialValue: KnockoutBindingHandler;
+﻿import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Gets the initial binding value from the element value instead of the model itself.
+    // From http://www.tysoncadenhead.com/blog/using-knockout-for-progressive-enhancement
+    initialValue: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.initialValue = {

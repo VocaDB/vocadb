@@ -1,4 +1,5 @@
 import ArtistRoles from '@Models/Artists/ArtistRoles';
+import _ from 'lodash';
 
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 

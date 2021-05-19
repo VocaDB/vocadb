@@ -9,6 +9,7 @@ import AlbumEditViewModel, {
 } from '@ViewModels/Album/AlbumEditViewModel';
 import { TrackPropertiesViewModel } from '@ViewModels/Album/AlbumEditViewModel';
 import SongInAlbumEditViewModel from '@ViewModels/SongInAlbumEditViewModel';
+import _ from 'lodash';
 
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
@@ -209,7 +210,7 @@ function findArtistSelection(
   target: TrackPropertiesViewModel,
   artist: ArtistContract,
 ): TrackArtistSelectionViewModel {
-  return _.find(target.artistSelections, (a) => a.artist === artist);
+  return _.find(target.artistSelections, (a) => a.artist === artist)!;
 }
 
 QUnit.test('constructor', () => {
@@ -258,7 +259,7 @@ QUnit.test('acceptTrackSelection add a second track', () => {
   target.acceptTrackSelection(2, null!);
 
   equal(target.tracks().length, 3, 'tracks.length');
-  equal(_.last(target.tracks()).trackNumber(), 3, 'tracks[2].trackNumber');
+  equal(_.last(target.tracks())!.trackNumber(), 3, 'tracks[2].trackNumber');
 });
 
 QUnit.test('addArtist existing', () => {
