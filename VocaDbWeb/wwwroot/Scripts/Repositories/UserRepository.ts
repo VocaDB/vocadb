@@ -19,6 +19,7 @@ import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import $ from 'jquery';
 
 import ICommentRepository from './ICommentRepository';
 

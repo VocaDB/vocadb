@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import SongListEditViewModel from '@ViewModels/SongList/SongListEditViewModel';
+import $ from 'jquery';
 
 function initPage(
   repoFactory: RepositoryFactory,

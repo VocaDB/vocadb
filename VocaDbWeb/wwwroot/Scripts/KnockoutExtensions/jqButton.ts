@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  jqButton: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    jqButton: KnockoutBindingHandler;
+  }
 }
 
 interface jqButtonParams {

@@ -3,6 +3,8 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
+import $ from 'jquery';
+import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
@@ -76,7 +78,7 @@ export default class UserMessagesViewModel {
       this.sentMessages,
     ];
 
-    var inbox = _.find(this.inboxes, (i) => i.inbox === inboxType);
+    var inbox = _.find(this.inboxes, (i) => i.inbox === inboxType)!;
 
     inbox.init(() => {
       if (selectedMessageId != null) {

@@ -1,4 +1,6 @@
 import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
+import { Options, SeriesOptions } from 'highcharts';
+import _ from 'lodash';
 
 export interface Tuple2<T1, T2> {
   item1: T1;
@@ -11,8 +13,8 @@ export default class HighchartsHelper {
     pointsTitle: string,
     yAxisTitle: string,
     points: CountPerDayContract[],
-  ): HighchartsOptions => {
-    var dataSeries: HighchartsSeriesOptions = {
+  ): Options => {
+    var dataSeries: SeriesOptions = {
       animation: false,
       type: 'area',
       name: pointsTitle,
@@ -21,7 +23,7 @@ export default class HighchartsHelper {
         p.count,
       ]), // Month numbers start from 0, wtf
       showInLegend: pointsTitle != null,
-    } as HighchartsSeriesOptions;
+    } as SeriesOptions;
 
     return {
       chart: {
@@ -59,7 +61,7 @@ export default class HighchartsHelper {
         backgroundColor: '#FFFFFF',
       },
       series: [dataSeries],
-    } as HighchartsOptions;
+    } as Options;
   };
 
   public static simplePieChart = (
@@ -67,7 +69,7 @@ export default class HighchartsHelper {
     seriesName: string,
     points: Tuple2<string, number>[],
     backgroundColor: string = null!,
-  ): HighchartsOptions => {
+  ): Options => {
     var data: any[] = _.map(points, (p: Tuple2<string, number>) => [
       p.item1,
       p.item2,

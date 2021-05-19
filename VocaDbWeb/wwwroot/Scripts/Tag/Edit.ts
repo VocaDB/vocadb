@@ -4,6 +4,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TagEditViewModel from '@ViewModels/TagEditViewModel';
+import $ from 'jquery';
 
 function initPage(): void {
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });

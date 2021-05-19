@@ -1,7 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Knockout binding for qTip tooltip.
-  qTip: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Knockout binding for qTip tooltip.
+    qTip: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.qTip = {

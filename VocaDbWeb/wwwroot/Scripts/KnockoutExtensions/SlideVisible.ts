@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  slideVisible: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    slideVisible: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.slideVisible = {

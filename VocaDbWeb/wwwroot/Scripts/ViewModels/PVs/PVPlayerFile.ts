@@ -1,4 +1,5 @@
 import PVService from '@Models/PVs/PVService';
+import $ from 'jquery';
 
 import { IPVPlayer } from './PVPlayerViewModel';
 

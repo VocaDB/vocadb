@@ -1,4 +1,5 @@
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 // Class for getting URLs of PV service icons.
 export default class PVServiceIcons {

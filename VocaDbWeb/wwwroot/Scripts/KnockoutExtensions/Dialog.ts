@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  dialog: KnockoutBindingHandler;
+import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    dialog: KnockoutBindingHandler;
+  }
 }
 
 // Code from http://stackoverflow.com/questions/8611327/integrating-jquery-ui-dialog-with-knockoutjs/8611892#8611892

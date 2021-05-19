@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import _ from 'lodash';
+
 declare global {
   interface JQueryStatic {
     url: (param: string) => string;

@@ -1,5 +1,6 @@
 import CommonEntryContract from '@DataContracts/CommonEntryContract';
 import EntryStatus from '@Models/EntryStatus';
+import moment from 'moment';
 
 export default class EntryMergeValidationHelper {
   private static toEnum(statusStr: string | EntryStatus): EntryStatus {

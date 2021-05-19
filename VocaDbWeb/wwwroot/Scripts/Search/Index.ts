@@ -5,6 +5,8 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SearchViewModel from '@ViewModels/Search/SearchViewModel';
+import $ from 'jquery';
+import moment from 'moment';
 
 const SearchIndex = (model: {
   artistId: number[];

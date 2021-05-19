@@ -2,6 +2,7 @@ import functions from '@Shared/GlobalFunctions';
 import ViewAuditLogViewModel, {
   ViewAuditLogContract,
 } from '@ViewModels/Admin/ViewAuditLogViewModel';
+import $ from 'jquery';
 
 const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
   $(document).ready(function () {

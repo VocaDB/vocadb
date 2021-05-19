@@ -3,6 +3,7 @@ import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import _ from 'lodash';
 
 // View model for editing artist for album link.
 export default class ArtistForAlbumEditViewModel

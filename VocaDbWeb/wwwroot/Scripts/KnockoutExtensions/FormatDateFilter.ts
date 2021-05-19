@@ -1,6 +1,9 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutFilters {
-  formatDate: (date: Date, format: string) => string;
+﻿import moment from 'moment';
+
+declare global {
+  interface KnockoutFilters {
+    formatDate: (date: Date, format: string) => string;
+  }
 }
 
 ko.filters.formatDate = (date, format): string => {

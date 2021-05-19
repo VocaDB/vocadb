@@ -1,5 +1,6 @@
 import ContentFocus from '@Models/ContentFocus';
 import SongType from '@Models/Songs/SongType';
+import _ from 'lodash';
 
 export default class SongHelper {
   public static originalVersionTypes = [

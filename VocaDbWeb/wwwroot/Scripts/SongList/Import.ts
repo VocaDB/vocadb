@@ -1,5 +1,6 @@
 import UrlMapper from '@Shared/UrlMapper';
 import ImportSongListViewModel from '@ViewModels/SongList/ImportSongListViewModel';
+import $ from 'jquery';
 
 const SongListImport = (): void => {
   ko.punches.enableAll();

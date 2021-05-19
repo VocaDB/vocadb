@@ -1,6 +1,8 @@
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
+import $ from 'jquery';
+import _ from 'lodash';
 
 declare global {
   interface KnockoutBindingHandlers {

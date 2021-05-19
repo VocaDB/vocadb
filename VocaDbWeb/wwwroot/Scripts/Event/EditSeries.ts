@@ -5,6 +5,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ReleaseEventSeriesEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
+import $ from 'jquery';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

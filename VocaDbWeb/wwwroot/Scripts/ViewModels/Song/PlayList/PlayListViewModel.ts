@@ -10,6 +10,7 @@ import PVServiceIcons from '@Models/PVServiceIcons';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import _ from 'lodash';
 
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
 import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
@@ -27,7 +28,7 @@ export default class PlayListViewModel {
     pvPlayerViewModel.nextSong = this.nextSong;
     pvPlayerViewModel.resetSong = (): void => {
       this.pvPlayerViewModel.selectedSong(
-        _.find(this.page(), (song) => pvPlayerViewModel.songIsValid(song)),
+        _.find(this.page(), (song) => pvPlayerViewModel.songIsValid(song))!,
       );
     };
 
@@ -64,7 +65,7 @@ export default class PlayListViewModel {
   // If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
   private getSongWithPlayListIndex = (index: number): ISongForPlayList => {
     // Might need to build a lookup for this for large playlists
-    return _.find(this.page(), (s) => s.indexInPlayList === index);
+    return _.find(this.page(), (s) => s.indexInPlayList === index)!;
   };
 
   private hasMoreSongs: KnockoutComputed<boolean>;

@@ -1,4 +1,5 @@
 import WebLinkCategory from '@Models/WebLinkCategory';
+import _ from 'lodash';
 
 export default class WebLinkMatcher {
   static matchers: WebLinkMatcher[] = [
@@ -545,7 +546,7 @@ export default class WebLinkMatcher {
   }
 
   public static matchWebLink(url: string): WebLinkMatcher {
-    return _.find(WebLinkMatcher.matchers, (item) => this.isMatch(url, item));
+    return _.find(WebLinkMatcher.matchers, (item) => this.isMatch(url, item))!;
   }
 
   constructor(

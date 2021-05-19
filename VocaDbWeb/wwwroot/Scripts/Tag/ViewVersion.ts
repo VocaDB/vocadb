@@ -1,6 +1,7 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
+import $ from 'jquery';
 
 const TagViewVersion = (model: {
   entry: {

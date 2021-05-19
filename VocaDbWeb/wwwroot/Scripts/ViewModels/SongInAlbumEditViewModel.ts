@@ -1,5 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
+import _ from 'lodash';
 
 export default class SongInAlbumEditViewModel {
   public artists: KnockoutObservableArray<ArtistContract>;

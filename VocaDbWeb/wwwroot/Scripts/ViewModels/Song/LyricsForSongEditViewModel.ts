@@ -2,6 +2,8 @@ import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import TranslationType from '@Models/Globalization/TranslationType';
 import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import $ from 'jquery';
+import _ from 'lodash';
 
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
@@ -130,7 +132,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
     var result = ko.toJS(
       _.chain([this.original, this.romanized])
         .concat(this.items())
-        .filter((i) => i.value())
+        .filter((i) => !!i.value())
         .value(),
     );
     return result;

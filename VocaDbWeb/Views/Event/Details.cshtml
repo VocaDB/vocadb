@@ -254,7 +254,6 @@
 <partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
-<remikus path="/bundles/ReleaseEvent/Details.js" />
 <script type="text/javascript">
 	var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 	var eventAssociationType = @ToJS((int?)Model.EventAssociationType);

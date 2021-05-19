@@ -1,8 +1,11 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Fires an event when the end of a scrollable area has been reached.
-  // Currently only vertical scrolling is supported.
-  scrollEnd: KnockoutBindingHandler;
+﻿import $ from 'jquery';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Fires an event when the end of a scrollable area has been reached.
+    // Currently only vertical scrolling is supported.
+    scrollEnd: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.scrollEnd = {

@@ -4,6 +4,7 @@ import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import NewsListViewModel from '@ViewModels/NewsListViewModel';
 import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
+import $ from 'jquery';
 
 declare global {
   interface JQuery {

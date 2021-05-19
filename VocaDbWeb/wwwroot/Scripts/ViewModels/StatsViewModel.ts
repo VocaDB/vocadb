@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import moment from 'moment';
+
 export default class StatsViewModel {
   public categories: IReportCategory[];
   public chartData = ko.observable<any>(null);

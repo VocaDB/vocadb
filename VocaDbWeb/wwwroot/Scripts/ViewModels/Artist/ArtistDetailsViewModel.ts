@@ -12,6 +12,8 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import { Options } from 'highcharts';
+import $ from 'jquery';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -117,9 +119,7 @@ export default class ArtistDetailsViewModel {
 
   private loadHighcharts = (): void => {
     // Delayed load highcharts stuff
-    var highchartsPromise = $.getScript(
-      this.urlMapper.mapRelative('scripts/highcharts/4.2.0/highcharts.js'),
-    );
+    const highchartsPromise = import('highcharts');
     var songsPerMonthDataPromise = this.songRepo.getOverTime(
       TimeUnit.month,
       this.artistId,
@@ -159,7 +159,7 @@ export default class ArtistDetailsViewModel {
     null!,
   );
 
-  public songsOverTimeChart = ko.observable<HighchartsOptions>(null!);
+  public songsOverTimeChart = ko.observable<Options>(null!);
 
   public collaborationAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
     null!,

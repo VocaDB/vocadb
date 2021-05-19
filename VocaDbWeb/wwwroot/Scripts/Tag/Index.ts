@@ -1,6 +1,7 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import TagCreateViewModel from '@ViewModels/Tag/TagCreateViewModel';
+import $ from 'jquery';
 
 const TagIndex = (): void => {
   $(function () {

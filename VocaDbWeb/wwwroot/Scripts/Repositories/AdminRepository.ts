@@ -1,6 +1,7 @@
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
+import $ from 'jquery';
 
 export default class AdminRepository {
   constructor(

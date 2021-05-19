@@ -15,6 +15,9 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
+import _ from 'lodash';
+import moment from 'moment';
 
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
@@ -442,7 +445,7 @@ export default class AlbumEditViewModel {
       return _.find(
         this.artistLinks(),
         (artist) => artist.id === artistForAlbumId,
-      );
+      )!;
     };
 
     this.hasCover = data.coverPictureMime != null;

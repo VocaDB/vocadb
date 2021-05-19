@@ -2,6 +2,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
+import $ from 'jquery';
 
 const SongCreate = (model: any): void => {
   $(document).ready(function () {

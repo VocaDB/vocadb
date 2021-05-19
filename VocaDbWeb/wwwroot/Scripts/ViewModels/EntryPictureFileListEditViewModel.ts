@@ -1,4 +1,5 @@
 import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import _ from 'lodash';
 
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
