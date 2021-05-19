@@ -9,7 +9,7 @@ using VocaDb.Tests.TestSupport;
 namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 {
 	/// <summary>
-	/// Database tests for <see cref="WebhookQueryableExtensionsDatabaseTests"/>.
+	/// Database tests for <see cref="WebhookQueryableExtensions"/>.
 	/// </summary>
 	[TestClass]
 	public class WebhookQueryableExtensionsDatabaseTests
