@@ -1,6 +1,7 @@
 import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
+import _ from 'lodash';
 
 interface WebhookEventSelection {
   // Webhook event Id, for example "EntryReport"
