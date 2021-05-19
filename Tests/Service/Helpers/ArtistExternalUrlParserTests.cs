@@ -63,6 +63,12 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			TestGetExternalUrl("http://twitter.com/cleantears", "https://twitter.com/cleantears");
 		}
+		
+		[TestMethod]
+		public void Twitter_Shortcut()
+		{
+			TestGetExternalUrl("t/cleantears", "https://twitter.com/cleantears");
+		}
 
 		[TestMethod]
 		public void Piapro()

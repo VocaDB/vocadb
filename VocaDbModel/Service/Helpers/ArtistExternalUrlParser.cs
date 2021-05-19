@@ -12,7 +12,8 @@ namespace VocaDb.Model.Service.Helpers
 	{
 		private static readonly RegexLinkMatcher[] linkMatchers = {
 			new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
-			new RegexLinkMatcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
+			// `twitter.com/name` or `t/name`.
+			new RegexLinkMatcher("https://twitter.com/{0}", @"^(?:http(?:s)?://twitter\.com|t)/(\w+)")
 		};
 
 		private static readonly string[] whitelistedUrls = {

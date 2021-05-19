@@ -61,6 +61,20 @@ namespace VocaDb.Tests.Service.Search.Artists
 			result.Items.Length.Should().Be(1, "Got 1 result");
 			result.Items[0].DefaultName.Should().Be("XenonP", "Result as expected");
 		}
+		
+		[TestMethod]
+		public void Find_ByTwitter_WithShortcut()
+		{
+			var result = _artistSearch.Find(new ArtistQueryParams
+			{
+				Common = {
+					TextQuery = ArtistSearchTextQuery.Create("t/XenonP_XM")
+				}
+			});
+
+			result.Items.Length.Should().Be(1, "Got 1 result");
+			result.Items[0].DefaultName.Should().Be("XenonP", "Result as expected");
+		}
 
 		[TestMethod]
 		public void Find_ByTwitter_EndsWithP()
