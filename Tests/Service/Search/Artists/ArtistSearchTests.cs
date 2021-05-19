@@ -67,7 +67,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 		{
 			var result = _artistSearch.Find(new ArtistQueryParams
 			{
-				Common = {
+				Common = new()
+				{
 					TextQuery = ArtistSearchTextQuery.Create("t/XenonP_XM")
 				}
 			});
