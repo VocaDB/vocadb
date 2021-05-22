@@ -11,14 +11,14 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./",
 		"paths": {
-			"@DataContracts/*": ["wwwroot/Scripts/DataContracts/*"],
-			"@Helpers/*": ["wwwroot/Scripts/Helpers/*"],
-			"@KnockoutExtensions/*": ["wwwroot/Scripts/KnockoutExtensions/*"],
-			"@Models/*": ["wwwroot/Scripts/Models/*"],
-			"@Repositories/*": ["wwwroot/Scripts/Repositories/*"],
-			"@Shared/*": ["wwwroot/Scripts/Shared/*"],
-			"@ViewModels/*": ["wwwroot/Scripts/ViewModels/*"]
+			"@DataContracts/*": ["Scripts/DataContracts/*"],
+			"@Helpers/*": ["Scripts/Helpers/*"],
+			"@KnockoutExtensions/*": ["Scripts/KnockoutExtensions/*"],
+			"@Models/*": ["Scripts/Models/*"],
+			"@Repositories/*": ["Scripts/Repositories/*"],
+			"@Shared/*": ["Scripts/Shared/*"],
+			"@ViewModels/*": ["Scripts/ViewModels/*"]
 		}
 	},
-	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
+	"include": ["Scripts/**/*"]
 }

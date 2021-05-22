@@ -25,16 +25,13 @@ mix
 		processCssUrls: false,
 	})
 	.alias({
-		'@DataContracts': path.join(__dirname, 'wwwroot/Scripts/DataContracts'),
-		'@Helpers': path.join(__dirname, 'wwwroot/Scripts/Helpers'),
-		'@KnockoutExtensions': path.join(
-			__dirname,
-			'wwwroot/Scripts/KnockoutExtensions',
-		),
-		'@Models': path.join(__dirname, 'wwwroot/Scripts/Models'),
-		'@Repositories': path.join(__dirname, 'wwwroot/Scripts/Repositories'),
-		'@Shared': path.join(__dirname, 'wwwroot/Scripts/Shared'),
-		'@ViewModels': path.join(__dirname, 'wwwroot/Scripts/ViewModels'),
+		'@DataContracts': path.join(__dirname, 'Scripts/DataContracts'),
+		'@Helpers': path.join(__dirname, 'Scripts/Helpers'),
+		'@KnockoutExtensions': path.join(__dirname, 'Scripts/KnockoutExtensions'),
+		'@Models': path.join(__dirname, 'Scripts/Models'),
+		'@Repositories': path.join(__dirname, 'Scripts/Repositories'),
+		'@Shared': path.join(__dirname, 'Scripts/Shared'),
+		'@ViewModels': path.join(__dirname, 'Scripts/ViewModels'),
 	})
 	.eslint({
 		fix: false,
@@ -47,13 +44,13 @@ mix
 	.extract(['highcharts'], 'highcharts')
 	.extract()
 
-	.js('wwwroot/Scripts/libs.js', 'wwwroot/bundles/shared')
+	.js('Scripts/libs.js', 'wwwroot/bundles/shared')
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
 	.scripts(['wwwroot/Scripts/VocaDb.js'], 'wwwroot/bundles/VocaDB.js')
 
-	.ts('wwwroot/Scripts/App.ts', 'wwwroot/bundles')
+	.ts('Scripts/vdb.ts', 'wwwroot/bundles')
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	.scripts(
@@ -86,7 +83,7 @@ mix
 if (mix.inProduction()) {
 	mix.scripts([], 'wwwroot/bundles/tests.js');
 } else {
-	mix.ts('wwwroot/Scripts/tests.ts', 'wwwroot/bundles');
+	mix.ts('Scripts/tests.ts', 'wwwroot/bundles');
 }
 
 if (mix.inProduction()) {
