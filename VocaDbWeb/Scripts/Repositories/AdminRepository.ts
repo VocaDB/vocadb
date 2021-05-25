@@ -1,5 +1,4 @@
 import WebhookContract from '@DataContracts/WebhookContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
@@ -41,8 +40,8 @@ export default class AdminRepository {
     );
   };
 
-  public saveWebhooks = (webhooks: WebhookContract[]): Promise<any> => {
+  public saveWebhooks = (webhooks: WebhookContract[]): Promise<void> => {
     var url = this.urlMapper.mapRelative('/api/webhooks');
-    return Promise.resolve(AjaxHelper.putJSON(url, webhooks));
+    return this.httpClient.put<void>(url, webhooks);
   };
 }

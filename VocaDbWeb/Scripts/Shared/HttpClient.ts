@@ -24,4 +24,9 @@ export default class HttpClient {
     const response = await axios.post<T>(url, data);
     return response.data;
   };
+
+  public put = async <T>(url: string, data?: any): Promise<T> => {
+    const response = await axios.put<T>(url, data);
+    return response.data;
+  };
 }

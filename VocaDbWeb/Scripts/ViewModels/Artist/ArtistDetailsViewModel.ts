@@ -77,12 +77,10 @@ export default class ArtistDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepository.getArtistTagSelections(artistId).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepository.updateArtistTags(
-            artistId,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepository
+            .updateArtistTags(artistId, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.Artist,
       (callback) => repo.getTagSuggestions(this.artistId).then(callback),

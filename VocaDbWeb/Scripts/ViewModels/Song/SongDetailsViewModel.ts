@@ -274,12 +274,10 @@ export default class SongDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepository.getSongTagSelections(this.id).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepository.updateSongTags(
-            this.id,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepository
+            .updateSongTags(this.id, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.Song,
       (callback) => repository.getTagSuggestions(this.id).then(callback),

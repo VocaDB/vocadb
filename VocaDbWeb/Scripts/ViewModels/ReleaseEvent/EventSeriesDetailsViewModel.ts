@@ -15,12 +15,10 @@ export default class EventSeriesDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepo.getEventSeriesTagSelections(this.seriesId).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepo.updateEventSeriesTags(
-            this.seriesId,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepo
+            .updateEventSeriesTags(this.seriesId, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.ReleaseEvent /* Event series use event tags for now */,
     );

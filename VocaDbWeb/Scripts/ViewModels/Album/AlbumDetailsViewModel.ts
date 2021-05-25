@@ -112,12 +112,10 @@ export default class AlbumDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepo.getAlbumTagSelections(this.id).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepo.updateAlbumTags(
-            this.id,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepo
+            .updateAlbumTags(this.id, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.Album,
       (callback) => repo.getTagSuggestions(this.id).then(callback),

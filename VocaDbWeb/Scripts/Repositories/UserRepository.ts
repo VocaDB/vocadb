@@ -455,12 +455,10 @@ export default class UserRepository implements ICommentRepository {
   public updateAlbumTags = (
     albumId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
       tags,
-      callback,
     );
   };
 
@@ -480,12 +478,10 @@ export default class UserRepository implements ICommentRepository {
   public updateArtistTags = (
     artistId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
       tags,
-      callback,
     );
   };
 
@@ -514,40 +510,34 @@ export default class UserRepository implements ICommentRepository {
   public updateEventTags = (
     eventId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
       tags,
-      callback,
     );
   };
 
   public updateEventSeriesTags = (
     seriesId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(
         `/api/users/current/eventSeriesTags/${seriesId}`,
       ),
       tags,
-      callback,
     );
   };
 
   public updateSongListTags = (
     songListId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(
         `/api/users/current/songListTags/${songListId}`,
       ),
       tags,
-      callback,
     );
   };
 
@@ -566,12 +556,10 @@ export default class UserRepository implements ICommentRepository {
   public updateSongTags = (
     songId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
       tags,
-      callback,
     );
   };
 

@@ -122,12 +122,10 @@ export default class SongListViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepo.getSongListTagSelections(this.listId).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepo.updateSongListTags(
-            this.listId,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepo
+            .updateSongListTags(this.listId, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.SongList,
     );

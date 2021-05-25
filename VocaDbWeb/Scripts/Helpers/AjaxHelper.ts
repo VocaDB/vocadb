@@ -33,18 +33,4 @@ export default class AjaxHelper {
       '?' + dataParamName + '=' + data.join('&' + dataParamName + '=');
     $.ajax(url + dataParam, { type: 'DELETE', success: success });
   };
-
-  // Issues a PUT request with JSON-formatted body.
-  public static putJSON = (
-    url: string,
-    data?: any,
-    success?: any,
-  ): JQueryXHR => {
-    return $.ajax(url, {
-      type: 'PUT',
-      contentType: 'application/json; charset=utf-8',
-      success: success,
-      data: JSON.stringify(data),
-    });
-  };
 }
