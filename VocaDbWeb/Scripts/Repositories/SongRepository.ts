@@ -32,6 +32,63 @@ import ICommentRepository from './ICommentRepository';
 export default class SongRepository
   extends BaseRepository
   implements ICommentRepository {
+  private urlMapper: UrlMapper;
+
+  constructor(
+    private readonly httpClient: HttpClient,
+    baseUrl: string,
+    languagePreference = ContentLanguagePreference.Default,
+  ) {
+    super(baseUrl, languagePreference);
+
+    this.urlMapper = new UrlMapper(baseUrl);
+
+    this.get = (relative, params, callback): void => {
+      $.get(this.mapUrl(relative), params, callback);
+    };
+
+    this.getJSON = <T>(relative: string, params: any): Promise<T> => {
+      return this.httpClient.get<T>(this.mapUrl(relative), params);
+    };
+
+    this.mapUrl = (relative: string): string => {
+      return `${functions.mergeUrls(baseUrl, '/Song')}${relative}`;
+    };
+
+    this.post = (relative, params, callback): void => {
+      $.post(this.mapUrl(relative), params, callback);
+    };
+
+    this.pvForSongAndService = (
+      songId: number,
+      pvService: PVService,
+      callback: (result: string) => void,
+    ): void => {
+      this.get(
+        '/PVForSongAndService',
+        { songId: songId, service: PVService[pvService] },
+        callback,
+      );
+    };
+
+    this.pvPlayerWithRating = (
+      songId,
+    ): Promise<SongWithPVPlayerAndVoteContract> => {
+      return this.getJSON<SongWithPVPlayerAndVoteContract>(
+        '/PVPlayerWithRating',
+        { songId: songId },
+      );
+    };
+
+    this.songListsForSong = (songId, callback): void => {
+      this.get('/SongListsForSong', { songId: songId }, callback);
+    };
+
+    this.songListsForUser = (ignoreSongId, callback): void => {
+      this.post('/SongListsForUser', { ignoreSongId: ignoreSongId }, callback);
+    };
+  }
+
   public addSongToList = (
     listId: number,
     songId: number,
@@ -350,63 +407,6 @@ export default class SongRepository
     var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
     return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
   };
-
-  private urlMapper: UrlMapper;
-
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    languagePreference = ContentLanguagePreference.Default,
-  ) {
-    super(baseUrl, languagePreference);
-
-    this.urlMapper = new UrlMapper(baseUrl);
-
-    this.get = (relative, params, callback): void => {
-      $.get(this.mapUrl(relative), params, callback);
-    };
-
-    this.getJSON = <T>(relative: string, params: any): Promise<T> => {
-      return this.httpClient.get<T>(this.mapUrl(relative), params);
-    };
-
-    this.mapUrl = (relative: string): string => {
-      return `${functions.mergeUrls(baseUrl, '/Song')}${relative}`;
-    };
-
-    this.post = (relative, params, callback): void => {
-      $.post(this.mapUrl(relative), params, callback);
-    };
-
-    this.pvForSongAndService = (
-      songId: number,
-      pvService: PVService,
-      callback: (result: string) => void,
-    ): void => {
-      this.get(
-        '/PVForSongAndService',
-        { songId: songId, service: PVService[pvService] },
-        callback,
-      );
-    };
-
-    this.pvPlayerWithRating = (
-      songId,
-    ): Promise<SongWithPVPlayerAndVoteContract> => {
-      return this.getJSON<SongWithPVPlayerAndVoteContract>(
-        '/PVPlayerWithRating',
-        { songId: songId },
-      );
-    };
-
-    this.songListsForSong = (songId, callback): void => {
-      this.get('/SongListsForSong', { songId: songId }, callback);
-    };
-
-    this.songListsForUser = (ignoreSongId, callback): void => {
-      this.post('/SongListsForUser', { ignoreSongId: ignoreSongId }, callback);
-    };
-  }
 }
 
 export interface PVEmbedParams {

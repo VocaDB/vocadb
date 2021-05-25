@@ -33,6 +33,19 @@ export enum UserInboxType {
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
 export default class UserRepository implements ICommentRepository {
+  // Maps a relative URL to an absolute one.
+  private mapUrl: (relative: string) => string;
+
+  constructor(
+    private readonly httpClient: HttpClient,
+    private urlMapper: UrlMapper,
+    private loggedUserId?: number,
+  ) {
+    this.mapUrl = (relative: string): string => {
+      return `${urlMapper.mapRelative('/User')}${relative}`;
+    };
+  }
+
   public addFollowedTag = (tagId: number): Promise<void> => {
     return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
@@ -577,17 +590,4 @@ export default class UserRepository implements ICommentRepository {
     );
     $.postJSON(url, value, callback);
   };
-
-  // Maps a relative URL to an absolute one.
-  private mapUrl: (relative: string) => string;
-
-  constructor(
-    private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
-    private loggedUserId?: number,
-  ) {
-    this.mapUrl = (relative: string): string => {
-      return `${urlMapper.mapRelative('/User')}${relative}`;
-    };
-  }
 }

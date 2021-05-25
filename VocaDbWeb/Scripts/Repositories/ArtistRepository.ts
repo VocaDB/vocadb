@@ -22,6 +22,32 @@ import ICommentRepository from './ICommentRepository';
 export default class ArtistRepository
   extends BaseRepository
   implements ICommentRepository {
+  // Maps a relative URL to an absolute one.
+  private mapUrl: (relative: string) => string;
+
+  private urlMapper: UrlMapper;
+
+  constructor(
+    private readonly httpClient: HttpClient,
+    baseUrl: string,
+    lang?: ContentLanguagePreference,
+  ) {
+    super(baseUrl, lang);
+
+    this.urlMapper = new UrlMapper(baseUrl);
+
+    this.mapUrl = (relative: string): string => {
+      return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
+    };
+
+    this.findDuplicate = (
+      params,
+      callback: (result: DuplicateEntryResultContract[]) => void,
+    ): void => {
+      $.post(this.mapUrl('/FindDuplicate'), params, callback);
+    };
+  }
+
   public createComment = (
     artistId: number,
     contract: CommentContract,
@@ -140,11 +166,6 @@ export default class ArtistRepository
     );
   };
 
-  // Maps a relative URL to an absolute one.
-  private mapUrl: (relative: string) => string;
-
-  private urlMapper: UrlMapper;
-
   public updateComment = (
     commentId: number,
     contract: CommentContract,
@@ -154,27 +175,6 @@ export default class ArtistRepository
       contract,
     );
   };
-
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    lang?: ContentLanguagePreference,
-  ) {
-    super(baseUrl, lang);
-
-    this.urlMapper = new UrlMapper(baseUrl);
-
-    this.mapUrl = (relative: string): string => {
-      return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
-    };
-
-    this.findDuplicate = (
-      params,
-      callback: (result: DuplicateEntryResultContract[]) => void,
-    ): void => {
-      $.post(this.mapUrl('/FindDuplicate'), params, callback);
-    };
-  }
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
