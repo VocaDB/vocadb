@@ -4,7 +4,7 @@ import UrlMapper from '@Shared/UrlMapper';
 export default class EntryReportRepository {
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
   ) {}
 
   public getNewReportCount = (): Promise<number> => {

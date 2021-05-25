@@ -32,7 +32,7 @@ import ICommentRepository from './ICommentRepository';
 export default class SongRepository
   extends BaseRepository
   implements ICommentRepository {
-  private urlMapper: UrlMapper;
+  private readonly urlMapper: UrlMapper;
 
   constructor(
     private readonly httpClient: HttpClient,

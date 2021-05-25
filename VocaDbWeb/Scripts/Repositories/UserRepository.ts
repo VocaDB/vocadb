@@ -38,7 +38,7 @@ export default class UserRepository implements ICommentRepository {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
     private loggedUserId?: number,
   ) {
     this.mapUrl = (relative: string): string => {

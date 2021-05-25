@@ -10,7 +10,7 @@ export default class EntryCommentRepository implements ICommentRepository {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
     resourcePath: string,
   ) {
     this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);

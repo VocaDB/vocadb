@@ -12,7 +12,7 @@ export default class CommentRepository
   implements ICommentRepository {
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
     private entryType: EntryType,
   ) {
     super(urlMapper.baseUrl);

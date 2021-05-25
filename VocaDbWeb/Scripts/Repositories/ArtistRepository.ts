@@ -25,7 +25,7 @@ export default class ArtistRepository
   // Maps a relative URL to an absolute one.
   private mapUrl: (relative: string) => string;
 
-  private urlMapper: UrlMapper;
+  private readonly urlMapper: UrlMapper;
 
   constructor(
     private readonly httpClient: HttpClient,

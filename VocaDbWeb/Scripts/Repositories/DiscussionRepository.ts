@@ -11,7 +11,7 @@ import ICommentRepository from './ICommentRepository';
 export default class DiscussionRepository implements ICommentRepository {
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
   ) {}
 
   private mapUrl = (relative: string): string => {

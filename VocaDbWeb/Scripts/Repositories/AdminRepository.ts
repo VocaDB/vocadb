@@ -8,7 +8,7 @@ import $ from 'jquery';
 export default class AdminRepository {
   constructor(
     private readonly httpClient: HttpClient,
-    private urlMapper: UrlMapper,
+    private readonly urlMapper: UrlMapper,
   ) {}
 
   public addIpToBanList = (rule: IPRuleContract): Promise<boolean> => {
