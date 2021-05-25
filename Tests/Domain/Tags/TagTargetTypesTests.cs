@@ -15,6 +15,7 @@ namespace VocaDb.Tests.Domain.Tags
 		[DataRow(1 | 64, TagTargetTypes.AlbumSong)]
 		[DataRow(2 | 64, TagTargetTypes.ArtistSong)]
 		[DataRow(16, TagTargetTypes.Event)]
+		[DataRow(128, TagTargetTypes.SongList)]
 		[DataRow(1073741823, TagTargetTypes.All)]
 		[TestMethod]
 		public void Value(int expected, TagTargetTypes actual)

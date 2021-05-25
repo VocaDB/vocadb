@@ -34,6 +34,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		ArtistSong = Artist | Song,
 		Event = EntryType.ReleaseEvent,
+		SongList = EntryType.SongList,
 		/// <summary>
 		/// Valid for all entry types (default)
 		/// </summary>
