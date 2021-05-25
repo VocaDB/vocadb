@@ -47,26 +47,4 @@ export default class AjaxHelper {
       data: JSON.stringify(data),
     });
   };
-
-  // Put JSON, including a parameter with one or more values in the URL (instead of body).
-  // For example ?tag=vocarock&tag=metal
-  public static putJSON_Url = (
-    url: string,
-    dataParamName: string,
-    data: any[],
-    success?: any,
-  ): void => {
-    var dataParam =
-      '?' + dataParamName + '=' + data.join('&' + dataParamName + '=');
-    $.ajax(url + dataParam, { type: 'PUT', success: success });
-  };
-
-  public static putJSON_UrlParams = (
-    url: string,
-    params: { [key: string]: string[] | number[] },
-    success?: any,
-  ): void => {
-    var dataParam = '?' + AjaxHelper.createUrl(params);
-    $.ajax(url + dataParam, { type: 'PUT', success: success });
-  };
 }
