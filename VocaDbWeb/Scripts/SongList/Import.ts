@@ -1,3 +1,4 @@
+import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ImportSongListViewModel from '@ViewModels/SongList/ImportSongListViewModel';
 import $ from 'jquery';
@@ -6,8 +7,9 @@ const SongListImport = (): void => {
   ko.punches.enableAll();
 
   $(function () {
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var viewModel = new ImportSongListViewModel(urlMapper);
+    var viewModel = new ImportSongListViewModel(httpClient, urlMapper);
     ko.applyBindings(viewModel);
   });
 };

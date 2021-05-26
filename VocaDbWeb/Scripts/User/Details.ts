@@ -119,6 +119,7 @@ const UserDetails = (
       loggedUserId,
       lastLoginAddress,
       canDeleteComments,
+      httpClient,
       urlMapper,
       userRepo,
       adminRepo,

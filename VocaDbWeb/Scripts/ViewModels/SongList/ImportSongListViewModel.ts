@@ -3,12 +3,13 @@ import ImportedSongInListContract from '@DataContracts/SongList/ImportedSongInLi
 import ImportedSongListContract from '@DataContracts/SongList/ImportedSongListContract';
 import PartialImportedSongs from '@DataContracts/SongList/PartialImportedSongs';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import _ from 'lodash';
 
 export default class ImportSongListViewModel {
-  constructor(private urlMapper: UrlMapper) {}
+  constructor(private httpClient: HttpClient, private urlMapper: UrlMapper) {}
 
   public description = ko.observable('');
 
@@ -86,14 +87,11 @@ export default class ImportSongListViewModel {
       songLinks: songs,
     };
 
-    $.postJSON(
-      this.urlMapper.mapRelative('/api/songLists'),
-      contract,
-      (listId: number) => {
+    this.httpClient
+      .post<number>(this.urlMapper.mapRelative('/api/songLists'), contract)
+      .then((listId: number) => {
         window.location.href = EntryUrlMapper.details('SongList', listId);
-      },
-      'json',
-    );
+      });
   };
 
   public totalSongs = ko.observable<number>(null!);
