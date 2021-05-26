@@ -1,6 +1,17 @@
 import AjaxHelper from '@Helpers/AjaxHelper';
 import axios from 'axios';
 
+export interface ErrorResponse<T = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: any;
+}
+
+export interface HttpClientError<T = ErrorResponse> extends Error {
+  response?: T;
+}
+
 export default class HttpClient {
   public delete = async <T>(url: string): Promise<T> => {
     const response = await axios.delete<T>(url);

@@ -19,7 +19,6 @@ import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-import $ from 'jquery';
 
 import ICommentRepository from './ICommentRepository';
 
@@ -453,9 +452,11 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public requestEmailVerification = (callback?: () => void): void => {
+  public requestEmailVerification = (): Promise<void> => {
     var url = this.mapUrl('/RequestEmailVerification');
-    $.post(url, callback);
+    return this.httpClient.post<void>(url, undefined, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });
   };
 
   public updateAlbumTags = (
@@ -581,11 +582,12 @@ export default class UserRepository implements ICommentRepository {
     userId: number,
     settingName: string,
     value: string,
-    callback: () => void,
-  ): void => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
     );
-    $.postJSON(url, value, callback);
+    return this.httpClient.post<void>(url, `"${value}"`, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   };
 }

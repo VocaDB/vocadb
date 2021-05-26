@@ -61,14 +61,11 @@ export function setLanguagePreferenceCookie(
     new UrlMapper(vdb.values.baseAddress),
     0,
   );
-  userRepo.updateUserSetting(
-    null!,
-    'languagePreference',
-    languagePreference,
-    () => {
+  userRepo
+    .updateUserSetting(null!, 'languagePreference', languagePreference)
+    .then(() => {
       window.location.reload();
-    },
-  );
+    });
 
   return false;
 }

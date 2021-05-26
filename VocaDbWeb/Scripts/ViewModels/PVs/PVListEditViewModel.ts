@@ -2,6 +2,7 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import DateTimeHelper from '@Helpers/DateTimeHelper';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import PVRepository from '@Repositories/PVRepository';
+import { HttpClientError } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -29,13 +30,14 @@ export default class PVListEditViewModel {
     var pvType = this.newPvType();
 
     this.repo
-      .getPVByUrl(newPvUrl, this.newPvType(), (pv) => {
+      .getPVByUrl(newPvUrl, this.newPvType())
+      .then((pv) => {
         this.newPvUrl('');
         this.isPossibleInstrumental(this.isPossibleInstrumentalPv(pv));
         this.pvs.push(new PVEditViewModel(pv, pvType));
       })
-      .fail((jqXHR: JQueryXHR) => {
-        const error = jqXHR.responseText || jqXHR.statusText;
+      .catch(({ response }: HttpClientError) => {
+        const error = response?.data || response?.statusText;
 
         if (error) alert(error);
       });
