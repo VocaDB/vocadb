@@ -21,3 +21,4 @@ jobs:
         exempt-milestones: 'Backlog,Working Set'
         exempt-issue-labels: 'bug,exception,high-priority,infrastructure,permissions,security'
         exempt-pr-labels: 'dependencies'
+        exempt-all-assignees: true
