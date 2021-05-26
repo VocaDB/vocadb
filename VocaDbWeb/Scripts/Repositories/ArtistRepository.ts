@@ -6,12 +6,12 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-import $ from 'jquery';
 
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
@@ -40,11 +40,12 @@ export default class ArtistRepository
       return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
     };
 
-    this.findDuplicate = (
-      params,
-      callback: (result: DuplicateEntryResultContract[]) => void,
-    ): void => {
-      $.post(this.mapUrl('/FindDuplicate'), params, callback);
+    this.findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {
+      return this.httpClient.post<DuplicateEntryResultContract[]>(
+        this.mapUrl('/FindDuplicate'),
+        AjaxHelper.stringify(params),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      );
     };
   }
 
@@ -63,18 +64,16 @@ export default class ArtistRepository
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ): void => {
-    $.post(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative('/Artist/CreateReport'),
-      {
+      AjaxHelper.stringify({
         reportType: reportType,
         notes: notes,
         artistId: artistId,
         versionNumber: versionNumber,
-      },
-      callback,
-      'json',
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     );
   };
 
@@ -86,8 +85,7 @@ export default class ArtistRepository
 
   public findDuplicate: (
     params: any,
-    callback: (result: DuplicateEntryResultContract[]) => void,
-  ) => void;
+  ) => Promise<DuplicateEntryResultContract[]>;
 
   public getComments = (artistId: number): Promise<CommentContract[]> => {
     return this.httpClient.get<CommentContract[]>(

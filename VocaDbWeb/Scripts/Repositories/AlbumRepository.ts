@@ -9,12 +9,12 @@ import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-import $ from 'jquery';
 
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
@@ -70,18 +70,16 @@ export default class AlbumRepository
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ): void => {
-    $.post(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative('/Album/CreateReport'),
-      {
+      AjaxHelper.stringify({
         reportType: reportType,
         notes: notes,
         albumId: albumId,
         versionNumber: versionNumber,
-      },
-      callback,
-      'json',
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     );
   };
 

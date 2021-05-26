@@ -52,11 +52,14 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public createArtistSubscription = (
-    artistId: number,
-    callback?: () => void,
-  ): void => {
-    $.post(this.mapUrl('/AddArtistForUser'), { artistId: artistId }, callback);
+  public createArtistSubscription = (artistId: number): Promise<void> => {
+    return this.httpClient.post<void>(
+      this.mapUrl('/AddArtistForUser'),
+      AjaxHelper.stringify({
+        artistId: artistId,
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+    );
   };
 
   public createComment = (
@@ -79,14 +82,13 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteArtistSubscription = (
-    artistId: number,
-    callback?: () => void,
-  ): void => {
-    $.post(
+  public deleteArtistSubscription = (artistId: number): Promise<void> => {
+    return this.httpClient.post<void>(
       this.mapUrl('/RemoveArtistFromUser'),
-      { artistId: artistId },
-      callback,
+      AjaxHelper.stringify({
+        artistId: artistId,
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     );
   };
 
@@ -109,9 +111,13 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteMessage = (messageId: number): void => {
+  public deleteMessage = (messageId: number): Promise<void> => {
     var url = this.urlMapper.mapRelative('/User/DeleteMessage');
-    $.post(url, { messageId: messageId });
+    return this.httpClient.post<void>(
+      url,
+      AjaxHelper.stringify({ messageId: messageId }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+    );
   };
 
   public deleteMessages = (userId: number, messageIds: number[]): void => {
@@ -467,12 +473,16 @@ export default class UserRepository implements ICommentRepository {
     artistId: number,
     emailNotifications?: boolean,
     siteNotifications?: boolean,
-  ): void => {
-    $.post(this.mapUrl('/UpdateArtistSubscription'), {
-      artistId: artistId,
-      emailNotifications: emailNotifications,
-      siteNotifications: siteNotifications,
-    });
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
+      this.mapUrl('/UpdateArtistSubscription'),
+      AjaxHelper.stringify({
+        artistId: artistId,
+        emailNotifications: emailNotifications,
+        siteNotifications: siteNotifications,
+      }),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+    );
   };
 
   public updateArtistTags = (

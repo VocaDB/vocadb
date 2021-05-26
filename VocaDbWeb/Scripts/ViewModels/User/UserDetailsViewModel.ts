@@ -36,7 +36,7 @@ export default class UserDetailsViewModel {
   };
 
   public checkSFS = (): void => {
-    this.adminRepo.checkSFS(this.lastLoginAddress, (html) => {
+    this.adminRepo.checkSFS(this.lastLoginAddress).then((html) => {
       $('#sfsCheckDialog').html(html);
       $('#sfsCheckDialog').dialog('open');
     });
