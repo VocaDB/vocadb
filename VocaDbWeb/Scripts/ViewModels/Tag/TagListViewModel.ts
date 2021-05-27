@@ -1,12 +1,13 @@
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 export default class TagListViewModel {
   private static maxDisplayedTags = 4;
 
   constructor(tagUsages: TagUsageForApiContract[]) {
-    this.tagUsages = ko.observableArray([]);
+    this.tagUsages = ko.observableArray<TagUsageForApiContract>([]);
     this.updateTagUsages(tagUsages);
 
     if (tagUsages.length <= TagListViewModel.maxDisplayedTags + 1)
@@ -41,7 +42,7 @@ export default class TagListViewModel {
     });
   }
 
-  public displayedTagUsages: KnockoutComputed<TagUsageForApiContract[]>;
+  public displayedTagUsages: Computed<TagUsageForApiContract[]>;
 
   public getTagUrl = (tag: TagUsageForApiContract): string => {
     return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
@@ -49,7 +50,7 @@ export default class TagListViewModel {
 
   public expanded = ko.observable(false);
 
-  public tagUsages: KnockoutObservableArray<TagUsageForApiContract>;
+  public tagUsages: ObservableArray<TagUsageForApiContract>;
 
   public updateTagUsages = (usages: TagUsageForApiContract[]): void => {
     this.tagUsages(
@@ -60,7 +61,7 @@ export default class TagListViewModel {
     );
   };
 
-  public tagUsagesByCategories: KnockoutComputed<
+  public tagUsagesByCategories: Computed<
     { categoryName: string; tagUsages: TagUsageForApiContract[] }[]
   >;
 }

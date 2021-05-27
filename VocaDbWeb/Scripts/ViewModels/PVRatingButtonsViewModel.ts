@@ -1,16 +1,17 @@
 import { parseSongVoteRating } from '@Models/SongVoteRating';
 import SongVoteRating from '@Models/SongVoteRating';
 import UserRepository from '@Repositories/UserRepository';
+import ko, { Computed, Observable } from 'knockout';
 
 // Knockout view model for PV rating buttons
 export default class PVRatingButtonsViewModel {
-  public isRated: KnockoutComputed<boolean>;
+  public isRated: Computed<boolean>;
 
-  public isRatingFavorite: KnockoutComputed<boolean>;
+  public isRatingFavorite: Computed<boolean>;
 
-  public isRatingLike: KnockoutComputed<boolean>;
+  public isRatingLike: Computed<boolean>;
 
-  public rating: KnockoutObservable<SongVoteRating>;
+  public rating: Observable<SongVoteRating>;
 
   // Rating operation is in progress. Prevents racing conditions.
   public ratingInProgress = ko.observable(false);

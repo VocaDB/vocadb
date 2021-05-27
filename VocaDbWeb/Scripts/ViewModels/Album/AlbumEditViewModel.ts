@@ -16,6 +16,12 @@ import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, {
+  Computed,
+  Observable,
+  ObservableArray,
+  ObservableExtenderOptions,
+} from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -76,18 +82,18 @@ export default class AlbumEditViewModel {
   public addArtistsToSelectedTracks: () => void;
 
   // Whether all tracks should be selected.
-  public allTracksSelected: KnockoutObservable<boolean>;
+  public allTracksSelected: Observable<boolean>;
 
   private artistsForTracks: () => ArtistContract[];
 
   artistSearchParams: ArtistAutoCompleteParams;
 
   // List of artist links for this album.
-  public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
+  public artistLinks: ObservableArray<ArtistForAlbumEditViewModel>;
 
   public artistRolesEditViewModel: AlbumArtistRolesEditViewModel;
 
-  public catalogNumber: KnockoutObservable<string>;
+  public catalogNumber: Observable<string>;
 
   public createNewIdentifier = (): void => {
     if (this.newIdentifier()) {
@@ -100,7 +106,7 @@ export default class AlbumEditViewModel {
     this.editedArtistLink.open(artistLink);
   };
 
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public defaultNameLanguage: Observable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
     $.ajax(
@@ -121,8 +127,8 @@ export default class AlbumEditViewModel {
   public description: EnglishTranslatedStringEditViewModel;
 
   // Album disc type.
-  public discType: KnockoutObservable<AlbumType>;
-  public discTypeStr: KnockoutObservable<string>;
+  public discType: Computed<AlbumType>;
+  public discTypeStr: Observable<string>;
 
   public discs: AlbumDiscPropertiesListEditViewModel;
 
@@ -139,9 +145,9 @@ export default class AlbumEditViewModel {
   public editTrackProperties: (song: SongInAlbumEditViewModel) => void;
 
   // State for the song being edited in the properties dialog.
-  public editedSong: KnockoutObservable<TrackPropertiesViewModel>;
+  public editedSong: Observable<TrackPropertiesViewModel | null>;
 
-  public eventDate = ko.observable<moment.Moment>(null!);
+  public eventDate: Computed<moment.Moment>;
 
   // Gets an artist for album link view model by Id.
   public getArtistLink: (
@@ -152,25 +158,25 @@ export default class AlbumEditViewModel {
 
   public id: number;
 
-  public identifiers: KnockoutObservableArray<string>;
+  public identifiers: ObservableArray<string>;
 
   public names: NamesEditViewModel;
 
   public newIdentifier = ko.observable('');
 
-  public releaseDate: KnockoutComputed<moment.Moment>;
+  public releaseDate: Computed<moment.Moment>;
 
-  public releaseDay: KnockoutObservable<number>;
+  public releaseDay: Observable<number>;
 
   public releaseEvent: BasicEntryLinkViewModel<ReleaseEventContract>;
 
-  public releaseMonth: KnockoutObservable<number>;
+  public releaseMonth: Observable<number>;
 
   public pictures: EntryPictureFileListEditViewModel;
 
   public pvs: PVListEditViewModel;
 
-  public releaseYear: KnockoutObservable<number>;
+  public releaseYear: Observable<number>;
 
   // Removes an artist from this album.
   public removeArtist: (artist: ArtistForAlbumEditViewModel) => void;
@@ -184,7 +190,7 @@ export default class AlbumEditViewModel {
   // Copies modified state from track properties view model to the single track being edited.
   public saveTrackProperties: () => void;
 
-  public status: KnockoutObservable<string>;
+  public status: Observable<string>;
 
   public submit = (): boolean => {
     if (
@@ -232,13 +238,13 @@ export default class AlbumEditViewModel {
   public submitting = ko.observable(false);
 
   // Buttons for the track properties dialog.
-  public trackPropertiesDialogButtons: KnockoutObservableArray<any>;
+  public trackPropertiesDialogButtons: ObservableArray<any>;
 
   // Whether the track properties dialog should be visible.
-  public trackPropertiesDialogVisible: KnockoutObservable<boolean>;
+  public trackPropertiesDialogVisible: Observable<boolean>;
 
   // List of tracks for this album.
-  public tracks: KnockoutObservableArray<SongInAlbumEditViewModel>;
+  public tracks: ObservableArray<SongInAlbumEditViewModel>;
 
   // Search parameters for new tracks.
   public trackSearchParams: SongAutoCompleteParams;
@@ -254,16 +260,16 @@ export default class AlbumEditViewModel {
   // List of external links for this album.
   public webLinks: WebLinksEditViewModel;
 
-  public hasValidationErrors: KnockoutComputed<boolean>;
+  public hasValidationErrors: Computed<boolean>;
   public validationExpanded = ko.observable(false);
-  public validationError_duplicateArtist: KnockoutComputed<boolean>;
-  public validationError_needArtist: KnockoutComputed<boolean>;
-  public validationError_needCover: KnockoutComputed<boolean>;
-  public validationError_needReferences: KnockoutComputed<boolean>;
-  public validationError_needReleaseYear: KnockoutComputed<boolean>;
-  public validationError_needTracks: KnockoutComputed<boolean>;
-  public validationError_needType: KnockoutComputed<boolean>;
-  public validationError_unspecifiedNames: KnockoutComputed<boolean>;
+  public validationError_duplicateArtist: Computed<boolean>;
+  public validationError_needArtist: Computed<boolean>;
+  public validationError_needCover: Computed<boolean>;
+  public validationError_needReferences: Computed<boolean>;
+  public validationError_needReleaseYear: Computed<boolean>;
+  public validationError_needTracks: Computed<boolean>;
+  public validationError_needType: Computed<boolean>;
+  public validationError_unspecifiedNames: Computed<boolean>;
 
   constructor(
     public repository: AlbumRepository,
@@ -299,14 +305,14 @@ export default class AlbumEditViewModel {
       false,
     );
     this.releaseDay = ko
-      .observable(data.originalRelease.releaseDate.day)
-      .extend({ parseInteger: {} });
+      .observable(data.originalRelease.releaseDate.day!)
+      .extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
     this.releaseMonth = ko
-      .observable(data.originalRelease.releaseDate.month)
-      .extend({ parseInteger: {} });
+      .observable(data.originalRelease.releaseDate.month!)
+      .extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
     this.releaseYear = ko
-      .observable(data.originalRelease.releaseDate.year)
-      .extend({ parseInteger: {} });
+      .observable(data.originalRelease.releaseDate.year!)
+      .extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
     this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
       data.originalRelease.releaseEvent,
       null!,
@@ -369,7 +375,7 @@ export default class AlbumEditViewModel {
         (song) => {
           var added = _.map(
             _.filter(
-              this.editedSong().artistSelections,
+              this.editedSong()!.artistSelections,
               (a) =>
                 a.selected() &&
                 _.every(song.artists(), (a2) => a.artist.id !== a2.id),
@@ -466,7 +472,7 @@ export default class AlbumEditViewModel {
         (song) => {
           var removed = _.filter(song.artists(), (a) =>
             _.some(
-              this.editedSong().artistSelections,
+              this.editedSong()!.artistSelections,
               (a2) => a2.selected() && a.id === a2.artist.id,
             ),
           );
@@ -486,10 +492,10 @@ export default class AlbumEditViewModel {
 
       if (this.editedSong) {
         var selected = _.map(
-          _.filter(this.editedSong().artistSelections, (a) => a.selected()),
+          _.filter(this.editedSong()!.artistSelections, (a) => a.selected()),
           (a) => a.artist,
         );
-        this.editedSong().song.artists(selected);
+        this.editedSong()!.song.artists(selected);
         this.editedSong(null!);
       }
     };
@@ -623,15 +629,15 @@ export default class AlbumEditViewModel {
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionViewModel {
   // Whether this artist has been selected.
-  selected: KnockoutObservable<boolean>;
+  selected: Observable<boolean>;
 
   // Whether this selection is visible according to current filter.
-  visible: KnockoutComputed<boolean>;
+  visible: Computed<boolean>;
 
   constructor(
     public artist: ArtistContract,
     selected: boolean,
-    filter: KnockoutObservable<string>,
+    filter: Observable<string>,
   ) {
     this.selected = ko.observable(selected);
 
@@ -655,13 +661,13 @@ export class TrackPropertiesViewModel {
   artistSelections: TrackArtistSelectionViewModel[];
 
   // Artist filter string.
-  filter: KnockoutObservable<string> = ko.observable('');
+  filter: Observable<string> = ko.observable('');
 
   // At least one artist selected for this track.
-  somethingSelected: KnockoutComputed<boolean>;
+  somethingSelected: Computed<boolean>;
 
   // At least one artist selectable (not selected and visible).
-  somethingSelectable: KnockoutComputed<boolean>;
+  somethingSelectable: Computed<boolean>;
 
   constructor(
     artists: ArtistContract[],

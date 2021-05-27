@@ -1,5 +1,6 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import TagFilter from './TagFilter';
@@ -9,7 +10,7 @@ export default class TagFilters {
   constructor(
     private tagRepo: TagRepository,
     private languageSelection: string,
-    tags: KnockoutObservableArray<TagFilter> = null!,
+    tags: ObservableArray<TagFilter> = null!,
   ) {
     this.tags = tags || ko.observableArray<TagFilter>();
     this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
@@ -23,7 +24,7 @@ export default class TagFilters {
       .extend({ notify: 'always' });
   }
 
-  public addTag = (tag: TagBaseContract): void =>
+  public addTag = (tag: TagBaseContract): number =>
     this.tags.push(TagFilter.fromContract(tag));
 
   public addTags = (selectedTagIds: number[]): void => {
@@ -46,15 +47,15 @@ export default class TagFilters {
     });
   };
 
-  public childTags: KnockoutObservable<boolean>;
+  public childTags: Observable<boolean>;
 
   // Fired when any of the tag filters is changed
-  public filters: KnockoutComputed<void>;
+  public filters: Computed<void>;
 
   public selectTag = (tag: TagBaseContract): void => {
     this.tags([TagFilter.fromContract(tag)]);
   };
 
-  public tags: KnockoutObservableArray<TagFilter>;
-  public tagIds: KnockoutComputed<number[]>;
+  public tags: ObservableArray<TagFilter>;
+  public tagIds: Computed<number[]>;
 }

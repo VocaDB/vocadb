@@ -2,6 +2,7 @@ import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const TagViewVersion = (model: {
   entry: {

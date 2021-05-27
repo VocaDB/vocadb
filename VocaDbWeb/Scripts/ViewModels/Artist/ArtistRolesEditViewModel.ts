@@ -1,4 +1,5 @@
 import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
@@ -37,7 +38,7 @@ export default class ArtistRolesEditViewModel {
 
     if (selectedRoles.length === 0) selectedRoles = [this.defaultRoleName];
 
-    this.selectedArtist().rolesArray(selectedRoles);
+    this.selectedArtist()!.rolesArray(selectedRoles);
     this.dialogVisible(false);
   };
 
@@ -66,5 +67,5 @@ export interface RoleSelection {
   // User-visible role name, for example "Voice Manipulator"
   name: string;
 
-  selected: KnockoutObservable<boolean>;
+  selected: Observable<boolean>;
 }

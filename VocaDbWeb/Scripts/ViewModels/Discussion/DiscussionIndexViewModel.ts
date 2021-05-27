@@ -2,6 +2,7 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
@@ -46,7 +47,7 @@ export default class DiscussionIndexViewModel {
       this.selectedTopic(null!);
       this.paging.goToFirstPage();
 
-      this.loadTopics(folder);
+      this.loadTopics(folder!);
     });
 
     this.paging.page.subscribe(this.loadTopicsForCurrentFolder);
@@ -70,7 +71,7 @@ export default class DiscussionIndexViewModel {
   public createNewTopic = (): void => {
     var folder = this.selectedFolder();
     this.repo
-      .createTopic(folder.id, this.newTopic().toContract())
+      .createTopic(folder!.id, this.newTopic().toContract())
       .then((topic) => {
         topic.canBeDeleted = false;
         this.newTopic(
@@ -95,7 +96,7 @@ export default class DiscussionIndexViewModel {
   };
 
   private loadTopicsForCurrentFolder = (): void => {
-    this.loadTopics(this.selectedFolder());
+    this.loadTopics(this.selectedFolder()!);
   };
 
   private loadTopics = (
@@ -127,7 +128,7 @@ export default class DiscussionIndexViewModel {
     page(UrlMapper.mergeUrls('/discussion/', partialUrl), callback);
   };
 
-  public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
+  public newTopic: Observable<DiscussionTopicEditViewModel>;
 
   public paging = new ServerSidePagingViewModel(30); // Paging view model
 
@@ -155,7 +156,7 @@ export default class DiscussionIndexViewModel {
 
   private selectTopicById = (topicId: number): void => {
     if (!topicId) {
-      this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null!));
+      this.loadTopics(this.selectedFolder()!, () => this.selectedTopic(null!));
       return;
     }
 

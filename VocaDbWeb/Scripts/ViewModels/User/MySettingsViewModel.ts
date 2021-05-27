@@ -2,23 +2,24 @@ import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageCont
 import WebLinkContract from '@DataContracts/WebLinkContract';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 // User my settings view model
 export default class MySettingsViewModel {
-  aboutMe: KnockoutObservable<string>;
+  aboutMe: Observable<string>;
 
-  canVerifyEmail: KnockoutComputed<boolean>;
+  canVerifyEmail: Computed<boolean>;
 
-  email: KnockoutObservable<string>;
+  email: Observable<string>;
 
-  emailVerified: KnockoutObservable<boolean>;
+  emailVerified: Observable<boolean>;
 
   emailVerificationSent = ko.observable(false);
 
-  public knownLanguages: KnockoutObservableArray<UserKnownLanguageEditViewModel>;
+  public knownLanguages: ObservableArray<UserKnownLanguageEditViewModel>;
 
   webLinksViewModel: WebLinksEditViewModel;
 
@@ -66,7 +67,7 @@ export class UserKnownLanguageEditViewModel {
     );
   }
 
-  public cultureCode: KnockoutObservable<string>;
+  public cultureCode: Observable<string>;
 
-  public proficiency: KnockoutObservable<string>;
+  public proficiency: Observable<string>;
 }

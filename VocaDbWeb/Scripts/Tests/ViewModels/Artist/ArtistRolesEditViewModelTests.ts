@@ -1,5 +1,6 @@
 import { AlbumArtistRolesEditViewModel } from '@ViewModels/Artist/ArtistRolesEditViewModel';
 import { IEditableArtistWithSupport } from '@ViewModels/ArtistForAlbumEditViewModel';
+import ko from 'knockout';
 
 var roleNames: { [key: string]: string } = {
   Arranger: 'Arranger',

@@ -3,6 +3,7 @@ import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import ko from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {

@@ -16,6 +16,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -75,28 +76,28 @@ export class RatingsViewModel {
     this.showLikes = ko.computed(() => !!this.likes().length);
   }
 
-  public readonly favorites: KnockoutComputed<UserApiContract[]>;
+  public readonly favorites: Computed<UserApiContract[]>;
 
-  public readonly favoritesCount: KnockoutComputed<number>;
+  public readonly favoritesCount: Computed<number>;
 
-  public readonly hiddenRatingsCount: KnockoutComputed<number>;
+  public readonly hiddenRatingsCount: Computed<number>;
 
-  public readonly likes: KnockoutComputed<UserApiContract[]>;
+  public readonly likes: Computed<UserApiContract[]>;
 
-  public readonly likesCount: KnockoutComputed<number>;
+  public readonly likesCount: Computed<number>;
 
   public readonly popupVisible = ko.observable(false);
 
   public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
 
-  public readonly showFavorites: KnockoutComputed<boolean>;
+  public readonly showFavorites: Computed<boolean>;
 
-  public readonly showLikes: KnockoutComputed<boolean>;
+  public readonly showLikes: Computed<boolean>;
 }
 
 // View model for the song details view.
 export default class SongDetailsViewModel {
-  public allVersionsVisible: KnockoutObservable<boolean>;
+  public allVersionsVisible: Observable<boolean>;
 
   public comments: EditableCommentsViewModel;
 
@@ -147,15 +148,15 @@ export default class SongDetailsViewModel {
 
   public maintenanceDialogVisible = ko.observable(false);
 
-  public originalVersion: KnockoutObservable<SongLinkWithUrl>;
+  public originalVersion: Observable<SongLinkWithUrl>;
 
   public reportViewModel: ReportEntryViewModel;
 
   public selectedLyrics = ko.observable<LyricsForSongContract>();
 
-  public selectedLyricsId: KnockoutObservable<number>;
+  public selectedLyricsId: Observable<number>;
 
-  public selectedPvId: KnockoutObservable<number>;
+  public selectedPvId: Observable<number>;
 
   public personalDescription: SelfDescriptionViewModel;
 
@@ -337,7 +338,7 @@ export class SongListsViewModel {
 
   private personalLists = ko.observableArray<SongListBaseContract>();
 
-  public selectedListId: KnockoutObservable<number> = ko.observable(null!);
+  public selectedListId: Observable<number | null> = ko.observable(null!);
 
   public showSongLists: () => void;
 

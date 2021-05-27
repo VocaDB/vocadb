@@ -2,6 +2,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ImportSongListViewModel from '@ViewModels/SongList/ImportSongListViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const SongListImport = (): void => {
   ko.punches.enableAll();

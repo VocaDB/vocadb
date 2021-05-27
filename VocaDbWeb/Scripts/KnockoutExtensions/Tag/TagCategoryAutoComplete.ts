@@ -1,5 +1,6 @@
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -11,7 +12,7 @@ declare global {
 ko.bindingHandlers.tagCategoryAutoComplete = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<string>,
+    valueAccessor: () => Observable<string>,
     allBindingsAccessor?: () => any,
   ): void => {
     var url = functions.mapAbsoluteUrl('/api/tags/categoryNames');

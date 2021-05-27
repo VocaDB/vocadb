@@ -1,4 +1,5 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import ko from 'knockout';
 
 export default class TagFilter {
   public static fromContract = (tag: TagBaseContract): TagFilter => {

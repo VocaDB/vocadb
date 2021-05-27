@@ -17,6 +17,7 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -141,7 +142,7 @@ export default class SongListViewModel {
     this.updateResultsWithTotalCount();
   }
 
-  public addTag = (tag: TagBaseContract): void =>
+  public addTag = (tag: TagBaseContract): number =>
     this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
 
   public advancedFilters = new AdvancedSearchFilters();
@@ -167,11 +168,11 @@ export default class SongListViewModel {
   public showAdvancedFilters = ko.observable(false);
   public showTags = ko.observable(false);
   public sort = ko.observable('');
-  public sortName: KnockoutComputed<string>;
+  public sortName: Computed<string>;
   public songType = ko.observable(SongType[SongType.Unspecified]);
   public tagsEditViewModel: TagsEditViewModel;
   public tags = ko.observableArray<TagFilter>();
-  public tagIds: KnockoutComputed<number[]>;
+  public tagIds: Computed<number[]>;
   public tagUsages: TagListViewModel;
 
   public updateResultsWithTotalCount = (): void => this.updateResults(true);

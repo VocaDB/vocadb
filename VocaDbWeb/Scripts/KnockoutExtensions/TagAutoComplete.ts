@@ -3,6 +3,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import ko from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -10,7 +11,7 @@ declare global {
 ko.bindingHandlers.qTip = {
   init: (
     element: Element,
-    valueAccessor: () => KnockoutObservable<QTipProperties>,
+    valueAccessor: () => Observable<QTipProperties>,
   ): void => {
     var params = ko.unwrap(valueAccessor()) || {
       style: { classes: 'tooltip-wider' },

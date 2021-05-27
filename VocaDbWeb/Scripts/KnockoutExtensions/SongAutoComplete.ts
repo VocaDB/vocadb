@@ -6,6 +6,7 @@ import NameMatchMode from '@Models/NameMatchMode';
 import { SongQueryParams } from '@Repositories/SongRepository';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import ko from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {

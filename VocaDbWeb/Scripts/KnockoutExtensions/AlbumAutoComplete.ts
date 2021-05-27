@@ -2,6 +2,7 @@ import AlbumContract from '@DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import ko from 'knockout';
 
 import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 

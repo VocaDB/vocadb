@@ -7,6 +7,7 @@ import AlbumDetailsViewModel, {
 } from '@ViewModels/Album/AlbumDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 function initAlbumDetailsPage(

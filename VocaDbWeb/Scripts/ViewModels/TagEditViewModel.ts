@@ -5,6 +5,7 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import DeleteEntryViewModel from './DeleteEntryViewModel';
@@ -29,7 +30,7 @@ export default class TagEditViewModel {
     this.id = contract.id;
     this.names = NamesEditViewModel.fromContracts(contract.names);
     this.parent = ko.observable(contract.parent);
-    this.relatedTags = ko.observableArray(contract.relatedTags);
+    this.relatedTags = ko.observableArray(contract.relatedTags!);
     this.targets = ko.observable(contract.targets);
     this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
@@ -51,22 +52,22 @@ export default class TagEditViewModel {
     );
   }
 
-  public categoryName: KnockoutObservable<string>;
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public categoryName: Observable<string>;
+  public defaultNameLanguage: Observable<string>;
   public description: EnglishTranslatedStringEditViewModel;
-  public hasValidationErrors: KnockoutComputed<boolean>;
+  public hasValidationErrors: Computed<boolean>;
   private id: number;
   public names: NamesEditViewModel;
-  public parent: KnockoutObservable<TagBaseContract>;
-  public parentName: KnockoutComputed<string>;
-  public relatedTags: KnockoutObservableArray<TagBaseContract>;
+  public parent: Observable<TagBaseContract>;
+  public parentName: Computed<string>;
+  public relatedTags: ObservableArray<TagBaseContract>;
   public submitting = ko.observable(false);
-  public targets: KnockoutObservable<EntryType>;
+  public targets: Observable<EntryType>;
   public validationExpanded = ko.observable(false);
-  public validationError_needDescription: KnockoutComputed<boolean>;
+  public validationError_needDescription: Computed<boolean>;
   public webLinks: WebLinksEditViewModel;
 
-  public addRelatedTag = (tag: TagBaseContract): void =>
+  public addRelatedTag = (tag: TagBaseContract): number =>
     this.relatedTags.push(tag);
 
   public allowRelatedTag = (tag: TagBaseContract): boolean =>
@@ -97,7 +98,7 @@ export default class TagEditViewModel {
     return true;
   };
 
-  public hasTargetType = (target: EntryType): KnockoutComputed<boolean> => {
+  public hasTargetType = (target: EntryType): Computed<boolean> => {
     const hasFlag = (t: EntryType): boolean => (this.targets() & t) === t;
     const checkFlags = (): void => {
       const types = [

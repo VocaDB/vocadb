@@ -1,6 +1,9 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  confirmClick: KnockoutBindingHandler;
+﻿import ko from 'knockout';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    confirmClick: KnockoutBindingHandler;
+  }
 }
 
 interface ConfirmClickData {

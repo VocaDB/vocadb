@@ -1,5 +1,6 @@
 import { Options } from 'highcharts';
 import $ from 'jquery';
+import ko from 'knockout';
 import _ from 'lodash';
 
 declare global {

@@ -1,4 +1,5 @@
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import ko from 'knockout';
 import _ from 'lodash';
 
 export default class ServerSidePagingViewModel {

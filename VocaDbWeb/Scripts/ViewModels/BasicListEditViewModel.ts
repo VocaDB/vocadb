@@ -1,3 +1,4 @@
+import ko, { ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 // Basic list view model implementation where items are constructed from data contracts.
@@ -19,13 +20,13 @@ export default class BasicListEditViewModel<TItem, TContract> {
     this.items.push(new this.type());
   };
 
-  public items: KnockoutObservableArray<TItem>;
+  public items: ObservableArray<TItem>;
 
   public remove = (item: TItem): void => {
     this.items.remove(item);
   };
 
   public toContracts: () => TContract[] = () => {
-    return ko.toJS(this.items);
+    return (ko.toJS(this.items) as unknown) as TContract[];
   };
 }

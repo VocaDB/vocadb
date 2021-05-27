@@ -4,6 +4,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const VenueDetails = (
   model: {

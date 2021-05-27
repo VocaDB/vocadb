@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import ko from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {

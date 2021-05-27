@@ -8,6 +8,7 @@ import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 function initPage(

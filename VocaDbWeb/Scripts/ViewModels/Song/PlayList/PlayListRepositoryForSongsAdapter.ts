@@ -5,6 +5,7 @@ import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongType from '@Models/Songs/SongType';
 import SongRepository from '@Repositories/SongRepository';
+import { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
@@ -15,28 +16,28 @@ export default class PlayListRepositoryForSongsAdapter
   implements IPlayListRepository {
   constructor(
     private songRepo: SongRepository,
-    private query: KnockoutObservable<string>,
-    private sort: KnockoutObservable<string>,
-    private songType: KnockoutObservable<string>,
-    private afterDate: KnockoutObservable<Date>,
+    private query: Observable<string>,
+    private sort: Observable<string>,
+    private songType: Observable<string>,
+    private afterDate: Computed<Date>,
     private beforeDate: () => Date,
-    private tagIds: KnockoutObservable<number[]>,
-    private childTags: KnockoutObservable<boolean>,
-    private unifyTypesAndTags: KnockoutObservable<boolean>,
-    private artistIds: KnockoutComputed<number[]>,
-    private artistParticipationStatus: KnockoutObservable<string>,
-    private childVoicebanks: KnockoutObservable<boolean>,
-    private includeMembers: KnockoutObservable<boolean>,
-    private eventId: KnockoutComputed<number>,
-    private onlyWithPvs: KnockoutObservable<boolean>,
-    private since: KnockoutObservable<number>,
-    private minScore: KnockoutObservable<number>,
-    private onlyRatedSongs: KnockoutObservable<boolean>,
+    private tagIds: Computed<number[]>,
+    private childTags: Observable<boolean>,
+    private unifyTypesAndTags: Observable<boolean>,
+    private artistIds: Computed<number[]>,
+    private artistParticipationStatus: Observable<string>,
+    private childVoicebanks: Observable<boolean>,
+    private includeMembers: Observable<boolean>,
+    private eventId: Computed<number>,
+    private onlyWithPvs: Observable<boolean>,
+    private since: Observable<number>,
+    private minScore: Observable<number>,
+    private onlyRatedSongs: Observable<boolean>,
     private userCollectionId: number,
-    private parentVersionId: KnockoutComputed<number>,
-    private fields: KnockoutObservable<string>,
-    private draftsOnly: KnockoutObservable<boolean>,
-    private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>,
+    private parentVersionId: Computed<number>,
+    private fields: Computed<string>,
+    private draftsOnly: Observable<boolean>,
+    private advancedFilters: ObservableArray<AdvancedSearchFilter>,
   ) {}
 
   public getSongs = (

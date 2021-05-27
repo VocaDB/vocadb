@@ -1,3 +1,5 @@
+import ko from 'knockout';
+
 import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 
 export default class CustomNameEditViewModel {
@@ -14,11 +16,11 @@ export default class CustomNameEditViewModel {
   public save = (): void => {
     const isCustomName = !!this.name();
 
-    this.artistLink().isCustomName = isCustomName;
+    this.artistLink()!.isCustomName = isCustomName;
     this.dialogVisible(false);
 
     if (isCustomName) {
-      this.artistLink().name(this.name());
+      this.artistLink()!.name(this.name()!);
     }
   };
 }

@@ -1,3 +1,5 @@
+import ko from 'knockout';
+
 export default class DeleteEntryViewModel {
   constructor(
     private deleteCallback: (notes: string) => void,

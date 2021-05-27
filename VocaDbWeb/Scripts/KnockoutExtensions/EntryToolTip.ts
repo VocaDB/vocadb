@@ -2,6 +2,7 @@ import EntryRefContract from '@DataContracts/EntryRefContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 declare global {
@@ -66,7 +67,7 @@ export interface TooltipOptions {
 ko.bindingHandlers.entryToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<EntryRefContract>,
+    valueAccessor: () => Observable<EntryRefContract>,
   ): void => {
     var value: EntryRefContract = ko.unwrap(valueAccessor());
 
@@ -84,7 +85,7 @@ ko.bindingHandlers.entryToolTip = {
 ko.bindingHandlers.albumToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
   ): void => {
     initToolTip(element, '/Album/PopupContent', ko.unwrap(valueAccessor()));
   },
@@ -93,7 +94,7 @@ ko.bindingHandlers.albumToolTip = {
 ko.bindingHandlers.artistToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
   ): void => {
     initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
   },
@@ -102,7 +103,7 @@ ko.bindingHandlers.artistToolTip = {
 ko.bindingHandlers.eventToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
   ): void => {
     const culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), {
@@ -114,7 +115,7 @@ ko.bindingHandlers.eventToolTip = {
 ko.bindingHandlers.songToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
     allPropertiesAccessor?: () => TooltipOptions,
   ): void => {
     const allProps = allPropertiesAccessor!();
@@ -131,7 +132,7 @@ ko.bindingHandlers.songToolTip = {
 ko.bindingHandlers.tagToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
   ): void => {
     var culture = vdb.values.uiCulture || undefined;
     var lang =
@@ -146,7 +147,7 @@ ko.bindingHandlers.tagToolTip = {
 ko.bindingHandlers.userToolTip = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<number>,
+    valueAccessor: () => Observable<number>,
   ): void => {
     var culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), {

@@ -3,6 +3,7 @@ import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApi
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import ko from 'knockout';
 
 import TagFilters from '../Search/TagFilters';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

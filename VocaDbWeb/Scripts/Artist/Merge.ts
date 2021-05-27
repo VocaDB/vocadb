@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistMergeViewModel from '@ViewModels/Artist/ArtistMergeViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const ArtistMerge = (model: { id: number }): void => {
   $(function () {

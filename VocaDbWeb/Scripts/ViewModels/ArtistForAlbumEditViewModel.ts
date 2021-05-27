@@ -3,6 +3,7 @@ import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 // View model for editing artist for album link.
@@ -14,23 +15,23 @@ export default class ArtistForAlbumEditViewModel
   public id: number;
 
   // Whether the roles of this artist can be customized.
-  public isCustomizable: KnockoutComputed<boolean>;
+  public isCustomizable: Computed<boolean>;
 
   public isCustomName: boolean;
 
-  public isSupport: KnockoutObservable<boolean>;
+  public isSupport: Observable<boolean>;
 
-  public name: KnockoutObservable<string>;
+  public name: Observable<string>;
 
   public nameDialogVisible = ko.observable(false);
 
   // Roles as comma-separated string (for serializing to and from .NET enum for the server)
-  public roles: KnockoutComputed<string>;
+  public roles: Computed<string>;
 
   // List of roles for this artist.
-  public rolesArray: KnockoutObservableArray<string>;
+  public rolesArray: ObservableArray<string>;
 
-  public rolesArrayTyped: KnockoutComputed<ArtistRoles[]>;
+  public rolesArrayTyped: Computed<ArtistRoles[]>;
 
   public toContract: () => ArtistForAlbumContract = () => {
     return {
@@ -47,9 +48,9 @@ export default class ArtistForAlbumEditViewModel
     this.artist = data.artist;
     this.id = data.id!;
     this.isCustomName = data.isCustomName!;
-    this.isSupport = ko.observable(data.isSupport);
+    this.isSupport = ko.observable(data.isSupport!);
 
-    this.name = ko.observable(data.name);
+    this.name = ko.observable(data.name!);
     this.rolesArray = ko.observableArray<string>([]);
 
     this.isCustomizable = ko.computed(() => {
@@ -75,5 +76,5 @@ export default class ArtistForAlbumEditViewModel
 }
 
 export interface IEditableArtistWithSupport {
-  rolesArray: KnockoutObservableArray<string>;
+  rolesArray: ObservableArray<string>;
 }

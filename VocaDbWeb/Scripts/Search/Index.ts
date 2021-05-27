@@ -6,6 +6,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SearchViewModel from '@ViewModels/Search/SearchViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const SearchIndex = (model: {

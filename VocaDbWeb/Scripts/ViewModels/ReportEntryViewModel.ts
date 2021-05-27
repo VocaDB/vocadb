@@ -1,3 +1,5 @@
+import ko, { Computed } from 'knockout';
+
 export default class ReportEntryViewModel {
   constructor(
     public reportTypes: IEntryReportType[],
@@ -7,7 +9,7 @@ export default class ReportEntryViewModel {
     this.isValid = ko.computed(
       () =>
         !this.reportType() ||
-        !this.reportType().notesRequired ||
+        !this.reportType()!.notesRequired ||
         this.notes() !== '',
     );
     this.reportType(reportType!);
@@ -16,14 +18,14 @@ export default class ReportEntryViewModel {
   public dialogVisible = ko.observable(false);
 
   /** Report is valid to be sent (either notes are specified or not required) */
-  public isValid: KnockoutComputed<boolean>;
+  public isValid: Computed<boolean>;
 
   public notes = ko.observable('');
 
   public reportType = ko.observable<IEntryReportType>();
 
   public send = (): void => {
-    this.sendFunc(this.reportType().id, this.notes());
+    this.sendFunc(this.reportType()!.id, this.notes());
     this.notes('');
     this.dialogVisible(false);
   };

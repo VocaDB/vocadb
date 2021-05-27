@@ -9,6 +9,7 @@ import FollowedArtistsViewModel from '@ViewModels/User/FollowedArtistsViewModel'
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import UserDetailsViewModel from '@ViewModels/User/UserDetailsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 function initPage(confirmDisableStr: string): void {

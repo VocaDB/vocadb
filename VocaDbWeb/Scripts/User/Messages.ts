@@ -4,6 +4,7 @@ import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import UserMessagesViewModel from '@ViewModels/User/UserMessagesViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const UserMessages = (
   message: string,

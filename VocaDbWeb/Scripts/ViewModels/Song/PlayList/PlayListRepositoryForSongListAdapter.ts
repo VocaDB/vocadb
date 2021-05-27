@@ -4,6 +4,7 @@ import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongType from '@Models/Songs/SongType';
 import SongListRepository from '@Repositories/SongListRepository';
+import { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
@@ -15,15 +16,15 @@ export default class PlayListRepositoryForSongListAdapter
   constructor(
     private songListRepo: SongListRepository,
     private songListId: number,
-    private query: KnockoutObservable<string>,
-    private songType: KnockoutObservable<string>,
-    private tagIds: KnockoutObservable<number[]>,
-    private childTags: KnockoutObservable<boolean>,
-    private artistIds: KnockoutComputed<number[]>,
-    private artistParticipationStatus: KnockoutObservable<string>,
-    private childVoicebanks: KnockoutObservable<boolean>,
-    private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>,
-    private sort: KnockoutObservable<string>,
+    private query: Observable<string>,
+    private songType: Observable<string>,
+    private tagIds: Computed<number[]>,
+    private childTags: Observable<boolean>,
+    private artistIds: Computed<number[]>,
+    private artistParticipationStatus: Observable<string>,
+    private childVoicebanks: Observable<boolean>,
+    private advancedFilters: ObservableArray<AdvancedSearchFilter>,
+    private sort: Observable<string>,
   ) {}
 
   public getSongs = (

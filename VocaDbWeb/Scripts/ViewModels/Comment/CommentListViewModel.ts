@@ -7,6 +7,7 @@ import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 enum CommentSortRule {
@@ -64,7 +65,7 @@ export default class CommentListViewModel {
 
   public comments = ko.observableArray<CommentContract>([]);
 
-  public entryType: KnockoutObservable<string>;
+  public entryType: Observable<string>;
 
   public getEntryTypeName = (entry: EntryContract): string | null => {
     var sets = this.resources.resources();
@@ -133,6 +134,6 @@ export default class CommentListViewModel {
 
   public resources: ResourcesManager;
 
-  public sort: KnockoutObservable<string>;
-  public sortName: KnockoutComputed<string>;
+  public sort: Observable<string>;
+  public sortName: Computed<string>;
 }

@@ -12,6 +12,7 @@ import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import { Options } from 'highcharts';
+import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -109,7 +110,7 @@ export default class ArtistDetailsViewModel {
 
   customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
-  public hasArtistSubscription: KnockoutObservable<boolean>;
+  public hasArtistSubscription: Observable<boolean>;
 
   private lang: string;
 
@@ -146,16 +147,16 @@ export default class ArtistDetailsViewModel {
 
   public showAllMembers = ko.observable(false);
   public description: EnglishTranslatedStringViewModel;
-  public songsViewModel: KnockoutObservable<SongSearchViewModel> = ko.observable(
+  public songsViewModel: Observable<SongSearchViewModel | null> = ko.observable(
     null!,
   );
 
   public songsOverTimeChart = ko.observable<Options>(null!);
 
-  public collaborationAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
+  public collaborationAlbumsViewModel: Observable<AlbumSearchViewModel | null> = ko.observable(
     null!,
   );
-  public mainAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(
+  public mainAlbumsViewModel: Observable<AlbumSearchViewModel | null> = ko.observable(
     null!,
   );
 
@@ -184,7 +185,7 @@ export default class ArtistDetailsViewModel {
         null!,
       ),
     );
-    this.mainAlbumsViewModel().artistFilters.artistParticipationStatus(
+    this.mainAlbumsViewModel()!.artistFilters.artistParticipationStatus(
       'OnlyMainAlbums',
     );
   };
@@ -208,7 +209,7 @@ export default class ArtistDetailsViewModel {
         null!,
       ),
     );
-    this.collaborationAlbumsViewModel().artistFilters.artistParticipationStatus(
+    this.collaborationAlbumsViewModel()!.artistFilters.artistParticipationStatus(
       'OnlyCollaborations',
     );
   };
@@ -243,14 +244,14 @@ export default class ArtistDetailsViewModel {
         this.pvPlayersFactory,
       ),
     );
-    this.songsViewModel().updateResults(true);
+    this.songsViewModel()!.updateResults(true);
   };
 }
 
 export class CustomizeArtistSubscriptionViewModel {
   public dialogVisible = ko.observable(false);
 
-  public notificationsMethod: KnockoutObservable<string>;
+  public notificationsMethod: Observable<string>;
 
   constructor(
     artistId: number,

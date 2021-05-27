@@ -5,6 +5,7 @@ import PVRepository from '@Repositories/PVRepository';
 import { HttpClientError } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import PVEditViewModel from './PVEditViewModel';
@@ -69,7 +70,7 @@ export default class PVListEditViewModel {
 
   public newPvUrl = ko.observable('');
 
-  public pvs: KnockoutObservableArray<PVEditViewModel>;
+  public pvs: ObservableArray<PVEditViewModel>;
 
   public pvServiceIcons: PVServiceIcons;
 

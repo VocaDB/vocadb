@@ -1,15 +1,16 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import ko, { Observable } from 'knockout';
 
 export default class LocalizedStringWithIdEditViewModel {
   public id: number;
-  public language = ko.observable(ContentLanguageSelection.Unspecified); //: KnockoutObservable<cls.globalization.ContentLanguageSelection>;
+  public language = ko.observable(ContentLanguageSelection.Unspecified); //: Observable<cls.globalization.ContentLanguageSelection>;
   public languageStr = KnockoutHelper.stringEnum(
     this.language,
     ContentLanguageSelection,
   );
-  public value: KnockoutObservable<string>;
+  public value: Observable<string>;
 
   public static fromContract(
     contract: LocalizedStringWithIdContract,

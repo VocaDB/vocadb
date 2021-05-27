@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import CommentListViewModel from '@ViewModels/Comment/CommentListViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const CommentCommentsByUser = (model: { id: number }): void => {

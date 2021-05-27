@@ -2,6 +2,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
+import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -60,7 +61,7 @@ export default class TagDetailsViewModel {
     this.isFollowed(false);
   };
 
-  public isFollowed: KnockoutObservable<boolean>;
+  public isFollowed: Observable<boolean>;
 
   public isLoggedIn: boolean;
 

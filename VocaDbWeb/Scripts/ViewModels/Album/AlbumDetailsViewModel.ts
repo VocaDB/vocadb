@@ -13,6 +13,7 @@ import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -163,7 +164,7 @@ export class DownloadTagsViewModel {
       encodeURIComponent(this.formatString());
   };
 
-  public formatString: KnockoutObservable<string>;
+  public formatString: Observable<string>;
 
   public dialogButtons = ko.observableArray([
     { text: vdb.resources.albumDetails.download, click: this.downloadTags },
@@ -264,8 +265,8 @@ export class AlbumReviewsViewModel {
   public saveEditedReview = (): void => {
     if (!this.editReviewModel()) return;
 
-    this.editReviewModel().saveChanges();
-    var editedContract = this.editReviewModel().toContract();
+    this.editReviewModel()!.saveChanges();
+    var editedContract = this.editReviewModel()!.toContract();
 
     this.albumRepository.createOrUpdateReview(this.albumId, editedContract);
 
@@ -359,11 +360,11 @@ export class AlbumReviewViewModel {
 
   public id?: number;
 
-  public languageCode: KnockoutObservable<string>;
+  public languageCode: Observable<string>;
 
-  public text: KnockoutObservable<string>;
+  public text: Observable<string>;
 
-  public title: KnockoutObservable<string>;
+  public title: Observable<string>;
 
   public user: UserApiContract;
 }

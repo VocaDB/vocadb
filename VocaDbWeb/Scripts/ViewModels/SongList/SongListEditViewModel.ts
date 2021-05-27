@@ -8,6 +8,7 @@ import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
@@ -20,9 +21,9 @@ export class SongInListEditViewModel {
     this.song = data.song;
   }
 
-  public notes: KnockoutObservable<string>;
+  public notes: Observable<string>;
 
-  public order: KnockoutObservable<number>;
+  public order: Observable<number>;
 
   public song: SongApiContract;
 
@@ -37,7 +38,7 @@ export default class SongListEditViewModel {
     id: number,
   ) {
     this.id = id;
-    this.songLinks = ko.observableArray([]);
+    this.songLinks = ko.observableArray<SongInListEditViewModel>([]);
   }
 
   private acceptSongSelection = (songId?: number): void => {
@@ -62,15 +63,15 @@ export default class SongListEditViewModel {
       .then(this.redirectToDetails);
   });
 
-  public description!: KnockoutObservable<string>;
+  public description!: Observable<string>;
 
   public eventDateDate = ko.observable<Date>();
 
   public eventDate = ko.computed(() =>
-    this.eventDateDate() ? this.eventDateDate().toISOString() : null,
+    this.eventDateDate() ? this.eventDateDate()!.toISOString() : null,
   );
 
-  public featuredCategory!: KnockoutObservable<string>;
+  public featuredCategory!: Observable<string>;
 
   public id: number;
 
@@ -108,7 +109,7 @@ export default class SongListEditViewModel {
     });
   };
 
-  public name!: KnockoutObservable<string>;
+  public name!: Observable<string>;
 
   private redirectToDetails = (): void => {
     window.location.href = this.urlMapper.mapRelative(
@@ -124,13 +125,13 @@ export default class SongListEditViewModel {
     this.songLinks.remove(songLink);
   };
 
-  public songLinks: KnockoutObservableArray<SongInListEditViewModel>;
+  public songLinks: ObservableArray<SongInListEditViewModel>;
 
   public songSearchParams: SongAutoCompleteParams = {
     acceptSelection: this.acceptSongSelection,
   };
 
-  public status!: KnockoutObservable<string>;
+  public status!: Observable<string>;
 
   public submit = (): boolean => {
     this.submitting(true);

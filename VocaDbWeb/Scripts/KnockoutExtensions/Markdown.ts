@@ -1,5 +1,6 @@
 import HtmlHelper from '@Helpers/HtmlHelper';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 declare global {
@@ -13,7 +14,7 @@ declare global {
 ko.bindingHandlers.markdown = {
   update: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<string>,
+    valueAccessor: () => Observable<string>,
     allBindingsAccessor?: () => any,
   ): void => {
     const val: string = ko.unwrap(valueAccessor());

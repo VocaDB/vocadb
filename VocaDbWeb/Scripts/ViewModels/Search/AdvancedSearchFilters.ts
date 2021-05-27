@@ -1,3 +1,4 @@
+import ko from 'knockout';
 import _ from 'lodash';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';

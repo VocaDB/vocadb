@@ -1,13 +1,16 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  // Toggles value of boolean observable
-  toggleClick: KnockoutBindingHandler;
+﻿import ko, { Observable } from 'knockout';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    // Toggles value of boolean observable
+    toggleClick: KnockoutBindingHandler;
+  }
 }
 
 ko.bindingHandlers.toggleClick = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<boolean>,
+    valueAccessor: () => Observable<boolean>,
   ): void => {
     var value = valueAccessor();
 

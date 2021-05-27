@@ -1,10 +1,13 @@
-﻿// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutExtenders {
-  // Parses the value as integer, converting it to null if it's not a valid number.
-  parseInteger: (target: any) => KnockoutComputed<any>;
+﻿import ko, { Computed } from 'knockout';
+
+declare global {
+  interface KnockoutExtenders {
+    // Parses the value as integer, converting it to null if it's not a valid number.
+    parseInteger: (target: any) => Computed<any>;
+  }
 }
 
-ko.extenders.parseInteger = (target): KnockoutComputed<any> => {
+ko.extenders.parseInteger = (target): Computed<any> => {
   //create a writeable computed observable to intercept writes to our observable
   var result = ko
     .computed({

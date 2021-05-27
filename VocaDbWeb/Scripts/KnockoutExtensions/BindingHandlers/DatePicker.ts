@@ -1,5 +1,6 @@
 import DateTimeHelper from '@Helpers/DateTimeHelper';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -10,7 +11,7 @@ declare global {
 interface DatePickerOptions {
   dateFormat: string;
   // Current date. This is assumed to be UTC/GMT (for example, in GMT+2, hours would be 2).
-  value: KnockoutObservable<Date>;
+  value: Observable<Date>;
 }
 
 // Parts from https://github.com/gvas/knockout-jqueryui/blob/master/src/datepicker.js

@@ -12,6 +12,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import ko from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -125,7 +126,7 @@ export default class RatedSongsSearchViewModel {
   };
 
   public showTags = ko.observable(false);
-  public songListId = ko.observable<number>(undefined);
+  public songListId = ko.observable<number>(undefined!);
   public songLists = ko.observableArray<SongListBaseContract>([]);
   public sort = ko.observable('Name');
   public sortName = ko.computed(() =>
@@ -210,7 +211,7 @@ export default class RatedSongsSearchViewModel {
         this.artistFilters.artistIds(),
         this.artistFilters.childVoicebanks(),
         this.rating(),
-        this.songListId(),
+        this.songListId()!,
         this.advancedFilters.filters(),
         this.groupByRating(),
         null!,

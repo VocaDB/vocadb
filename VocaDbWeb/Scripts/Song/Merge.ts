@@ -3,6 +3,7 @@ import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
 import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const SongMerge = (model: SongContract): void => {
   $(function () {

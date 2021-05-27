@@ -5,6 +5,7 @@ import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko from 'knockout';
 
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
@@ -14,7 +15,7 @@ export default class ArtistCreateViewModel {
   artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
   artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
   artistTypeTagUrl = ko.computed(() =>
-    EntryUrlMapper.details_tag_contract(this.artistTypeTag()),
+    EntryUrlMapper.details_tag_contract(this.artistTypeTag()!),
   );
 
   public checkDuplicates: () => void;

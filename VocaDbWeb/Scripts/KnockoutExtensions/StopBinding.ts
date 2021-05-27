@@ -1,6 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface KnockoutBindingHandlers {
-  stopBinding: KnockoutBindingHandler;
+import ko from 'knockout';
+
+declare global {
+  interface KnockoutBindingHandlers {
+    stopBinding: KnockoutBindingHandler;
+  }
 }
 
 // Stops automatic Knockout binding for child elements.

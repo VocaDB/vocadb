@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumCreateViewModel from '@ViewModels/Album/AlbumCreateViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const AlbumCreate = (): void => {
   $(function () {

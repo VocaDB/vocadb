@@ -10,6 +10,7 @@ import PVServiceIcons from '@Models/PVServiceIcons';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
@@ -68,7 +69,7 @@ export default class PlayListViewModel {
     return _.find(this.page(), (s) => s.indexInPlayList === index)!;
   };
 
-  private hasMoreSongs: KnockoutComputed<boolean>;
+  private hasMoreSongs: Computed<boolean>;
 
   public isInit = false;
 
@@ -101,7 +102,7 @@ export default class PlayListViewModel {
       }
     } else {
       // Get the index of the next song to be played
-      index = this.getSongIndex(this.pvPlayerViewModel.selectedSong()) + 1;
+      index = this.getSongIndex(this.pvPlayerViewModel.selectedSong()!) + 1;
 
       if (index < this.songsLoaded()) {
         this.playSong(this.page()[index]);

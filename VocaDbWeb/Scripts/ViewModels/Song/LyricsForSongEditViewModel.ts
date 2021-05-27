@@ -3,6 +3,7 @@ import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelec
 import TranslationType from '@Models/Globalization/TranslationType';
 import WebLinkMatcher from '@Shared/WebLinkMatcher';
 import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import BasicListEditViewModel from '../BasicListEditViewModel';
@@ -10,13 +11,13 @@ import BasicListEditViewModel from '../BasicListEditViewModel';
 export default class LyricsForSongEditViewModel {
   constructor(contract?: LyricsForSongContract) {
     if (contract) {
-      this.id = ko.observable(contract.id);
-      this.cultureCode = ko.observable(contract.cultureCode);
-      this.language = ko.observable(contract.language);
-      this.source = ko.observable(contract.source);
+      this.id = ko.observable(contract.id!);
+      this.cultureCode = ko.observable(contract.cultureCode!);
+      this.language = ko.observable(contract.language!);
+      this.source = ko.observable(contract.source!);
       this.translationType = ko.observable(contract.translationType);
-      this.url = ko.observable(contract.url);
-      this.value = ko.observable(contract.value);
+      this.url = ko.observable(contract.url!);
+      this.value = ko.observable(contract.value!);
     } else {
       this.id = ko.observable(0);
       this.cultureCode = ko.observable('');
@@ -51,24 +52,24 @@ export default class LyricsForSongEditViewModel {
     elem.collapse('toggle');
   };
 
-  public cultureCode: KnockoutObservable<string>;
+  public cultureCode: Observable<string>;
 
-  public id: KnockoutObservable<number>;
+  public id: Observable<number>;
 
   public isNew: boolean;
 
-  public language: KnockoutObservable<string>;
+  public language: Observable<string>;
 
   public showLanguageSelection = (): boolean =>
     this.translationType() !== TranslationType[TranslationType.Romanized];
 
-  public source: KnockoutObservable<string>;
+  public source: Observable<string>;
 
-  public translationType: KnockoutObservable<string>;
+  public translationType: Observable<string>;
 
-  public url: KnockoutObservable<string>;
+  public url: Observable<string>;
 
-  public value: KnockoutObservable<string>;
+  public value: Observable<string>;
 }
 
 export class LyricsForSongListEditViewModel extends BasicListEditViewModel<

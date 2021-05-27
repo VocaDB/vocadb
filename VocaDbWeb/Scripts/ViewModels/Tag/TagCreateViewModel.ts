@@ -1,6 +1,7 @@
 import NameMatchMode from '@Models/NameMatchMode';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko from 'knockout';
 
 export default class TagCreateViewModel {
   constructor(private tagRepo: TagRepository) {

@@ -4,6 +4,7 @@ import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUser
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserRepository from '@Repositories/UserRepository';
+import { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
@@ -15,16 +16,16 @@ export default class PlayListRepositoryForRatedSongsAdapter
   constructor(
     private userRepo: UserRepository,
     private userId: number,
-    private query: KnockoutObservable<string>,
-    private sort: KnockoutObservable<string>,
-    private tagIds: KnockoutObservable<number[]>,
-    private artistIds: KnockoutComputed<number[]>,
-    private childVoicebanks: KnockoutObservable<boolean>,
-    private rating: KnockoutObservable<string>,
-    private songListId: KnockoutObservable<number>,
-    private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>,
-    private groupByRating: KnockoutObservable<boolean>,
-    private fields: KnockoutObservable<string>,
+    private query: Observable<string>,
+    private sort: Observable<string>,
+    private tagIds: Computed<number[]>,
+    private artistIds: Computed<number[]>,
+    private childVoicebanks: Observable<boolean>,
+    private rating: Observable<string>,
+    private songListId: Observable<number | null>,
+    private advancedFilters: ObservableArray<AdvancedSearchFilter>,
+    private groupByRating: Observable<boolean>,
+    private fields: Observable<string>,
   ) {}
 
   public getSongs = (
@@ -44,7 +45,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
         this.artistIds(),
         this.childVoicebanks(),
         this.rating(),
-        this.songListId(),
+        this.songListId()!,
         this.advancedFilters(),
         this.groupByRating(),
         pvServices,

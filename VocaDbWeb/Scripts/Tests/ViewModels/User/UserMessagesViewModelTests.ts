@@ -87,7 +87,7 @@ test('selectMessage', () => {
 
   ok(viewModel.selectedMessage(), 'viewModel.selectedMessage()');
   equal(
-    viewModel.selectedMessage().subject,
+    viewModel.selectedMessage()!.subject,
     'New message!',
     'viewModel.selectedMessage().subject',
   );
@@ -112,7 +112,7 @@ test('selectMessage deselectes others', () => {
 
   ok(viewModel.selectedMessage(), 'viewModel.selectedMessage()');
   equal(
-    viewModel.selectedMessage().subject,
+    viewModel.selectedMessage()!.subject,
     'Another message!',
     'viewModel.selectedMessage().subject',
   );

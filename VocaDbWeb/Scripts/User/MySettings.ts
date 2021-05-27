@@ -5,6 +5,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const UserMySettings = (model: {
   aboutMe: string;

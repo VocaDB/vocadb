@@ -5,6 +5,7 @@ import ManageIPRulesViewModel, {
   IPRuleContract,
 } from '@ViewModels/Admin/ManageIPRulesViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const AdminManageIPRules = (model: IPRuleContract[]): void => {

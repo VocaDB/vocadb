@@ -2,6 +2,7 @@ import AlbumRepository from '@Repositories/AlbumRepository';
 import HttpClient from '@Shared/HttpClient';
 import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const AlbumViewVersion = (model: {
   album: {

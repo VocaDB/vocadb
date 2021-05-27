@@ -6,6 +6,7 @@ import UserRepository from '@Repositories/UserRepository';
 import VenueRepository from '@Repositories/VenueRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
@@ -28,7 +29,7 @@ export default class VenueEditViewModel {
     this.names = NamesEditViewModel.fromContracts(contract.names!);
     this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
-    this.coordinates = ko.computed(() => {
+    this.coordinates = ko.computed<OptionalGeoPointContract>(() => {
       if (!this.latitude() || !this.longitude()) return null!;
 
       return {
@@ -58,8 +59,8 @@ export default class VenueEditViewModel {
     }
   }
 
-  public address: KnockoutObservable<string>;
-  public addressCountryCode: KnockoutObservable<string>;
+  public address: Observable<string>;
+  public addressCountryCode: Observable<string>;
 
   private checkName = (value: string): void => {
     if (!value) {
@@ -72,9 +73,9 @@ export default class VenueEditViewModel {
     });
   };
 
-  public coordinates: KnockoutComputed<OptionalGeoPointContract>;
+  public coordinates: Computed<OptionalGeoPointContract>;
 
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public defaultNameLanguage: Observable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
     this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
@@ -83,8 +84,8 @@ export default class VenueEditViewModel {
   public description = ko.observable<string>();
   public duplicateName = ko.observable<string>();
   private id: number;
-  public latitude: KnockoutObservable<number>;
-  public longitude: KnockoutObservable<number>;
+  public latitude: Observable<number>;
+  public longitude: Observable<number>;
   public names: NamesEditViewModel;
 
   private redirectToDetails = (): void => {

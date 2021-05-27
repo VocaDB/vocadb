@@ -1,12 +1,13 @@
 import Decimal from 'decimal.js-light';
+import ko, { Computed, Observable } from 'knockout';
 
 import DateTimeHelper from './DateTimeHelper';
 
 export default class KnockoutHelper {
   public static stringEnum<T>(
-    observable: KnockoutObservable<T>,
+    observable: Observable<T>,
     enumType: any,
-  ): KnockoutComputed<string> {
+  ): Computed<string> {
     return ko.computed({
       read: () => {
         var val: any = observable();
@@ -16,9 +17,7 @@ export default class KnockoutHelper {
     });
   }
 
-  public static bpm(
-    observable: KnockoutObservable<number>,
-  ): KnockoutComputed<string> {
+  public static bpm(observable: Observable<number>): Computed<string> {
     return ko.computed({
       read: () => {
         var val: any = observable();
@@ -33,8 +32,8 @@ export default class KnockoutHelper {
   }
 
   public static lengthFormatted(
-    observable: KnockoutObservable<number>,
-  ): KnockoutComputed<string> {
+    observable: Observable<number>,
+  ): Computed<string> {
     return ko.computed({
       read: () => {
         var val: any = observable();

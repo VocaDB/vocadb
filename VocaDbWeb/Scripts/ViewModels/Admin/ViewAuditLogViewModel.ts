@@ -1,5 +1,6 @@
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
+import ko from 'knockout';
 
 export default class ViewAuditLogViewModel {
   public excludeUsers = ko.observable('');
