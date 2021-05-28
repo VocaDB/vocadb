@@ -1,13 +1,13 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import TagRepository from '@Repositories/TagRepository';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
+import FakeTagRepository from '../TestSupport/FakeTagRepository';
 
 var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
-var tagRepository: TagRepository = null!;
+var tagRepository = new FakeTagRepository();
 var producer: ArtistContract = {
   artistType: 'Producer',
   id: 1,
