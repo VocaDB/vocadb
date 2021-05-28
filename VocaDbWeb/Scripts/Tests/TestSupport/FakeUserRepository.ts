@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
+import EntryType from '@Models/EntryType';
 import SongVoteRating from '@Models/SongVoteRating';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -35,6 +36,13 @@ export default class FakeUserRepository extends UserRepository {
         items: this.messages,
         totalCount: this.messages ? this.messages.length : 0,
       });
+    };
+
+    this.refreshEntryEdit = (
+      entryType: EntryType,
+      entryId: number,
+    ): Promise<void> => {
+      return Promise.resolve();
     };
 
     this.updateSongRating = (
