@@ -27,8 +27,7 @@ export default class FakeSongRepository extends SongRepository {
       songId,
       notes,
       newListName,
-      callback?,
-    ): void => {
+    ): Promise<void> => {
       if (listId !== 0) {
         this.songsInLists.push({
           listId: listId,
@@ -46,7 +45,7 @@ export default class FakeSongRepository extends SongRepository {
         });
       }
 
-      if (callback) callback();
+      return Promise.resolve();
     };
 
     this.findDuplicate = (params): Promise<NewSongCheckResultContract> => {
@@ -61,12 +60,12 @@ export default class FakeSongRepository extends SongRepository {
       return FakePromise.resolve(this.song);
     };
 
-    this.songListsForSong = (songId, callback): void => {
-      if (callback) callback('Miku!');
+    this.songListsForSong = (songId): Promise<string> => {
+      return FakePromise.resolve('Miku!');
     };
 
-    this.songListsForUser = (ignoreSongId, callback): void => {
-      if (callback) callback(this.songLists);
+    this.songListsForUser = (ignoreSongId): Promise<SongListBaseContract[]> => {
+      return FakePromise.resolve(this.songLists);
     };
   }
 }

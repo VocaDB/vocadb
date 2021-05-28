@@ -274,12 +274,10 @@ export default class SongDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepository.getSongTagSelections(this.id).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepository.updateSongTags(
-            this.id,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepository
+            .updateSongTags(this.id, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.Song,
       (callback) => repository.getTagSuggestions(this.id).then(callback),
@@ -312,7 +310,7 @@ export class SongInListsViewModel {
 
   constructor(repository: SongRepository, songId: number) {
     this.show = (): void => {
-      repository.songListsForSong(songId, (result) => {
+      repository.songListsForSong(songId).then((result) => {
         this.contentHtml(result);
         this.dialogVisible(true);
       });
@@ -366,23 +364,19 @@ export class SongListsViewModel {
           this.tabName() !== SongListsViewModel.tabName_New
             ? this.selectedListId() || 0
             : 0;
-        repository.addSongToList(
-          listId,
-          songId,
-          this.notes(),
-          this.newListName(),
-          () => {
+        repository
+          .addSongToList(listId, songId, this.notes(), this.newListName())
+          .then(() => {
             this.notes('');
             this.dialogVisible(false);
 
             if (this.addedToList) this.addedToList();
-          },
-        );
+          });
       }
     };
 
     this.showSongLists = (): void => {
-      repository.songListsForUser(songId, (songLists) => {
+      repository.songListsForUser(songId).then((songLists) => {
         var personalLists = _.filter(
           songLists,
           (list) => list.featuredCategory === 'Nothing',

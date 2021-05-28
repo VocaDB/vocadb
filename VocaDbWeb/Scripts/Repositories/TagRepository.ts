@@ -140,14 +140,14 @@ export default class TagRepository extends BaseRepository {
 
   public saveEntryMappings = (
     mappings: EntryTagMappingContract[],
-  ): Promise<any> => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative('/api/tags/entry-type-mappings');
-    return Promise.resolve(AjaxHelper.putJSON(url, mappings));
+    return this.httpClient.put<void>(url, mappings);
   };
 
-  public saveMappings = (mappings: TagMappingContract[]): Promise<any> => {
+  public saveMappings = (mappings: TagMappingContract[]): Promise<void> => {
     var url = this.urlMapper.mapRelative('/api/tags/mappings');
-    return Promise.resolve(AjaxHelper.putJSON(url, mappings));
+    return this.httpClient.put<void>(url, mappings);
   };
 }
 

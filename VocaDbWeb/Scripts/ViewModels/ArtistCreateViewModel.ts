@@ -59,12 +59,16 @@ export default class ArtistCreateViewModel {
       var term3 = this.nameEnglish();
       var linkUrl = this.webLink.url();
 
-      artistRepository.findDuplicate(
-        { term1: term1, term2: term2, term3: term3, linkUrl: linkUrl },
-        (result) => {
+      artistRepository
+        .findDuplicate({
+          term1: term1,
+          term2: term2,
+          term3: term3,
+          linkUrl: linkUrl,
+        })
+        .then((result) => {
           this.dupeEntries(result);
-        },
-      );
+        });
     };
 
     this.artistType.subscribe(this.getArtistTypeTag);

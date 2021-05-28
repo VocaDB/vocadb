@@ -8,6 +8,7 @@ import AdminRepository from '@Repositories/AdminRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import { Options } from 'highcharts';
@@ -36,7 +37,7 @@ export default class UserDetailsViewModel {
   };
 
   public checkSFS = (): void => {
-    this.adminRepo.checkSFS(this.lastLoginAddress, (html) => {
+    this.adminRepo.checkSFS(this.lastLoginAddress).then((html) => {
       $('#sfsCheckDialog').html(html);
       $('#sfsCheckDialog').dialog('open');
     });
@@ -50,28 +51,28 @@ export default class UserDetailsViewModel {
   );
 
   public limitedUserViewModel = new DeleteEntryViewModel((notes) => {
-    $.postJSON(
-      this.urlMapper.mapRelative(
-        'api/users/' + this.userId + '/status-limited',
-      ),
-      { reason: notes, createReport: true },
-      () => {
+    this.httpClient
+      .post<void>(
+        this.urlMapper.mapRelative(
+          'api/users/' + this.userId + '/status-limited',
+        ),
+        { reason: notes, createReport: true },
+      )
+      .then(() => {
         window.location.reload();
-      },
-      'json',
-    );
+      });
   });
 
   public reportUserViewModel = new DeleteEntryViewModel((notes) => {
-    $.postJSON(
-      this.urlMapper.mapRelative('api/users/' + this.userId + '/reports'),
-      { reason: notes, reportType: 'Spamming' },
-      () => {
+    this.httpClient
+      .post<boolean>(
+        this.urlMapper.mapRelative('api/users/' + this.userId + '/reports'),
+        { reason: notes, reportType: 'Spamming' },
+      )
+      .then(() => {
         ui.showSuccessMessage(vdb.resources.shared.reportSent);
         this.reportUserViewModel.notes('');
-      },
-      'json',
-    );
+      });
   }, true);
 
   public initComments = (): void => {
@@ -155,6 +156,7 @@ export default class UserDetailsViewModel {
     private loggedUserId: number,
     private lastLoginAddress: string,
     private canEditAllComments: boolean,
+    private httpClient: HttpClient,
     private urlMapper: UrlMapper,
     private userRepo: UserRepository,
     private adminRepo: AdminRepository,

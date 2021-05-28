@@ -1,5 +1,26 @@
+import AjaxHelper from '@Helpers/AjaxHelper';
 import axios from 'axios';
-import $ from 'jquery';
+
+export class HeaderNames {
+  public static readonly ContentType = 'Content-Type';
+}
+
+export class MediaTypes {
+  public static readonly APPLICATION_FORM_URLENCODED =
+    'application/x-www-form-urlencoded';
+  public static readonly APPLICATION_JSON = 'application/json';
+}
+
+export interface ErrorResponse<T = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: any;
+}
+
+export interface HttpClientError<T = ErrorResponse> extends Error {
+  response?: T;
+}
 
 export default class HttpClient {
   public delete = async <T>(url: string): Promise<T> => {
@@ -11,17 +32,22 @@ export default class HttpClient {
     const response = await axios.get<T>(url, {
       params: data,
       // HACK: This is required for advanced search filters.
-      paramsSerializer: (params) => {
-        // HACK: Removes undefined.
-        // Code from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript/30386744#30386744
-        return $.param(JSON.parse(JSON.stringify(params)));
-      },
+      paramsSerializer: AjaxHelper.stringify,
     });
     return response.data;
   };
 
-  public post = async <T>(url: string, data?: any): Promise<T> => {
-    const response = await axios.post<T>(url, data);
+  public post = async <T>(
+    url: string,
+    data?: any,
+    config?: { headers?: any },
+  ): Promise<T> => {
+    const response = await axios.post<T>(url, data, config);
+    return response.data;
+  };
+
+  public put = async <T>(url: string, data?: any): Promise<T> => {
+    const response = await axios.put<T>(url, data);
     return response.data;
   };
 }

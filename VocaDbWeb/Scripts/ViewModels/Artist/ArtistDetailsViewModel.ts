@@ -1,4 +1,3 @@
-import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
@@ -13,7 +12,6 @@ import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import { Options } from 'highcharts';
-import $ from 'jquery';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -77,12 +75,10 @@ export default class ArtistDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepository.getArtistTagSelections(artistId).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepository.updateArtistTags(
-            artistId,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepository
+            .updateArtistTags(artistId, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.Artist,
       (callback) => repo.getTagSuggestions(this.artistId).then(callback),
@@ -103,7 +99,7 @@ export default class ArtistDetailsViewModel {
   }
 
   public addFollowedArtist = (): void => {
-    this.userRepository.createArtistSubscription(this.artistId, () => {
+    this.userRepository.createArtistSubscription(this.artistId).then(() => {
       this.hasArtistSubscription(true);
       this.customizeSubscriptionDialog.notificationsMethod('Site');
     });
@@ -125,13 +121,8 @@ export default class ArtistDetailsViewModel {
       this.artistId,
     );
 
-    $.when(songsPerMonthDataPromise, highchartsPromise).done(
-      (songsPerMonthData: JQueryPromiseCallback<CountPerDayContract[]>) => {
-        var points: CountPerDayContract[] =
-          songsPerMonthData[
-            0 as keyof JQueryPromiseCallback<CountPerDayContract[]>
-          ];
-
+    Promise.all([songsPerMonthDataPromise, highchartsPromise]).then(
+      ([points]) => {
         // Need at least 2 points because lone point looks weird
         if (points && points.length >= 2) {
           this.songsOverTimeChart(
@@ -148,7 +139,7 @@ export default class ArtistDetailsViewModel {
   };
 
   public removeFollowedArtist = (): void => {
-    this.userRepository.deleteArtistSubscription(this.artistId, () => {
+    this.userRepository.deleteArtistSubscription(this.artistId).then(() => {
       this.hasArtistSubscription(false);
     });
   };

@@ -34,17 +34,9 @@ export default class AjaxHelper {
     $.ajax(url + dataParam, { type: 'DELETE', success: success });
   };
 
-  // Issues a PUT request with JSON-formatted body.
-  public static putJSON = (
-    url: string,
-    data?: any,
-    success?: any,
-  ): JQueryXHR => {
-    return $.ajax(url, {
-      type: 'PUT',
-      contentType: 'application/json; charset=utf-8',
-      success: success,
-      data: JSON.stringify(data),
-    });
+  public static stringify = (params: any): string => {
+    // HACK: Removes undefined.
+    // Code from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript/30386744#30386744
+    return $.param(JSON.parse(JSON.stringify(params)));
   };
 }

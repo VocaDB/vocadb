@@ -1,9 +1,7 @@
 import WebhookContract from '@DataContracts/WebhookContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
-import $ from 'jquery';
 
 export default class AdminRepository {
   constructor(
@@ -18,14 +16,10 @@ export default class AdminRepository {
     );
   };
 
-  public checkSFS = (
-    ip: string,
-    callback: (html: string) => void,
-  ): JQueryXHR => {
-    return $.get(
+  public checkSFS = (ip: string): Promise<string> => {
+    return this.httpClient.get<string>(
       this.urlMapper.mapRelative('/Admin/CheckSFS'),
       { ip: ip },
-      callback,
     );
   };
 
@@ -41,8 +35,8 @@ export default class AdminRepository {
     );
   };
 
-  public saveWebhooks = (webhooks: WebhookContract[]): Promise<any> => {
+  public saveWebhooks = (webhooks: WebhookContract[]): Promise<void> => {
     var url = this.urlMapper.mapRelative('/api/webhooks');
-    return Promise.resolve(AjaxHelper.putJSON(url, webhooks));
+    return this.httpClient.put<void>(url, webhooks);
   };
 }

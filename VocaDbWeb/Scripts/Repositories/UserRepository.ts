@@ -16,10 +16,9 @@ import { Tuple2 } from '@Helpers/HighchartsHelper';
 import EntryType from '@Models/EntryType';
 import SongVoteRating from '@Models/SongVoteRating';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import HttpClient from '@Shared/HttpClient';
+import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-import $ from 'jquery';
 
 import ICommentRepository from './ICommentRepository';
 
@@ -52,11 +51,18 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public createArtistSubscription = (
-    artistId: number,
-    callback?: () => void,
-  ): void => {
-    $.post(this.mapUrl('/AddArtistForUser'), { artistId: artistId }, callback);
+  public createArtistSubscription = (artistId: number): Promise<void> => {
+    return this.httpClient.post<void>(
+      this.mapUrl('/AddArtistForUser'),
+      AjaxHelper.stringify({
+        artistId: artistId,
+      }),
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
+    );
   };
 
   public createComment = (
@@ -79,14 +85,17 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteArtistSubscription = (
-    artistId: number,
-    callback?: () => void,
-  ): void => {
-    $.post(
+  public deleteArtistSubscription = (artistId: number): Promise<void> => {
+    return this.httpClient.post<void>(
       this.mapUrl('/RemoveArtistFromUser'),
-      { artistId: artistId },
-      callback,
+      AjaxHelper.stringify({
+        artistId: artistId,
+      }),
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 
@@ -109,9 +118,17 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteMessage = (messageId: number): void => {
+  public deleteMessage = (messageId: number): Promise<void> => {
     var url = this.urlMapper.mapRelative('/User/DeleteMessage');
-    $.post(url, { messageId: messageId });
+    return this.httpClient.post<void>(
+      url,
+      AjaxHelper.stringify({ messageId: messageId }),
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
+    );
   };
 
   public deleteMessages = (userId: number, messageIds: number[]): void => {
@@ -447,20 +464,22 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public requestEmailVerification = (callback?: () => void): void => {
+  public requestEmailVerification = (): Promise<void> => {
     var url = this.mapUrl('/RequestEmailVerification');
-    $.post(url, callback);
+    return this.httpClient.post<void>(url, undefined, {
+      headers: {
+        [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+      },
+    });
   };
 
   public updateAlbumTags = (
     albumId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
       tags,
-      callback,
     );
   };
 
@@ -469,23 +488,29 @@ export default class UserRepository implements ICommentRepository {
     artistId: number,
     emailNotifications?: boolean,
     siteNotifications?: boolean,
-  ): void => {
-    $.post(this.mapUrl('/UpdateArtistSubscription'), {
-      artistId: artistId,
-      emailNotifications: emailNotifications,
-      siteNotifications: siteNotifications,
-    });
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
+      this.mapUrl('/UpdateArtistSubscription'),
+      AjaxHelper.stringify({
+        artistId: artistId,
+        emailNotifications: emailNotifications,
+        siteNotifications: siteNotifications,
+      }),
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
+    );
   };
 
   public updateArtistTags = (
     artistId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
       tags,
-      callback,
     );
   };
 
@@ -514,40 +539,34 @@ export default class UserRepository implements ICommentRepository {
   public updateEventTags = (
     eventId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
       tags,
-      callback,
     );
   };
 
   public updateEventSeriesTags = (
     seriesId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(
         `/api/users/current/eventSeriesTags/${seriesId}`,
       ),
       tags,
-      callback,
     );
   };
 
   public updateSongListTags = (
     songListId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(
         `/api/users/current/songListTags/${songListId}`,
       ),
       tags,
-      callback,
     );
   };
 
@@ -566,12 +585,10 @@ export default class UserRepository implements ICommentRepository {
   public updateSongTags = (
     songId: number,
     tags: TagBaseContract[],
-    callback: (usages: TagUsageForApiContract[]) => void,
-  ): void => {
-    AjaxHelper.putJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.put<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
       tags,
-      callback,
     );
   };
 
@@ -583,11 +600,12 @@ export default class UserRepository implements ICommentRepository {
     userId: number,
     settingName: string,
     value: string,
-    callback: () => void,
-  ): void => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
     );
-    $.postJSON(url, value, callback);
+    return this.httpClient.post<void>(url, `"${value}"`, {
+      headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
+    });
   };
 }

@@ -62,12 +62,10 @@ export default class ReleaseEventDetailsViewModel {
       {
         getTagSelections: (callback): Promise<void> =>
           userRepo.getEventTagSelections(this.eventId).then(callback),
-        saveTagSelections: (tags): void =>
-          userRepo.updateEventTags(
-            this.eventId,
-            tags,
-            this.tagUsages.updateTagUsages,
-          ),
+        saveTagSelections: (tags): Promise<void> =>
+          userRepo
+            .updateEventTags(this.eventId, tags)
+            .then(this.tagUsages.updateTagUsages),
       },
       EntryType.ReleaseEvent,
     );
