@@ -19,7 +19,7 @@ import PVService from '@Models/PVs/PVService';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
@@ -59,7 +59,11 @@ export default class SongRepository
       return this.httpClient.post<T>(
         this.mapUrl(relative),
         AjaxHelper.stringify(params),
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+        {
+          headers: {
+            [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+          },
+        },
       );
     };
 
@@ -131,7 +135,11 @@ export default class SongRepository
         songId: songId,
         versionNumber: versionNumber,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 

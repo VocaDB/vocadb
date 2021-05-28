@@ -1,6 +1,16 @@
 import AjaxHelper from '@Helpers/AjaxHelper';
 import axios from 'axios';
 
+export class HeaderNames {
+  public static readonly ContentType = 'Content-Type';
+}
+
+export class MediaTypes {
+  public static readonly APPLICATION_FORM_URLENCODED =
+    'application/x-www-form-urlencoded';
+  public static readonly APPLICATION_JSON = 'application/json';
+}
+
 export interface ErrorResponse<T = any> {
   data: T;
   status: number;

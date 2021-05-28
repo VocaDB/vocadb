@@ -12,7 +12,7 @@ import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiCo
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
@@ -79,7 +79,11 @@ export default class AlbumRepository
         albumId: albumId,
         versionNumber: versionNumber,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 

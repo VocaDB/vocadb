@@ -9,7 +9,7 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
@@ -44,7 +44,11 @@ export default class ArtistRepository
       return this.httpClient.post<DuplicateEntryResultContract[]>(
         this.mapUrl('/FindDuplicate'),
         AjaxHelper.stringify(params),
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+        {
+          headers: {
+            [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+          },
+        },
       );
     };
   }
@@ -73,7 +77,11 @@ export default class ArtistRepository
         artistId: artistId,
         versionNumber: versionNumber,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 

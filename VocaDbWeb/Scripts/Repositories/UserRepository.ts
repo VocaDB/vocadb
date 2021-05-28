@@ -16,7 +16,7 @@ import { Tuple2 } from '@Helpers/HighchartsHelper';
 import EntryType from '@Models/EntryType';
 import SongVoteRating from '@Models/SongVoteRating';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import HttpClient from '@Shared/HttpClient';
+import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
@@ -57,7 +57,11 @@ export default class UserRepository implements ICommentRepository {
       AjaxHelper.stringify({
         artistId: artistId,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 
@@ -87,7 +91,11 @@ export default class UserRepository implements ICommentRepository {
       AjaxHelper.stringify({
         artistId: artistId,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 
@@ -115,7 +123,11 @@ export default class UserRepository implements ICommentRepository {
     return this.httpClient.post<void>(
       url,
       AjaxHelper.stringify({ messageId: messageId }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 
@@ -455,7 +467,9 @@ export default class UserRepository implements ICommentRepository {
   public requestEmailVerification = (): Promise<void> => {
     var url = this.mapUrl('/RequestEmailVerification');
     return this.httpClient.post<void>(url, undefined, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+      },
     });
   };
 
@@ -482,7 +496,11 @@ export default class UserRepository implements ICommentRepository {
         emailNotifications: emailNotifications,
         siteNotifications: siteNotifications,
       }),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
+      },
     );
   };
 
@@ -587,7 +605,7 @@ export default class UserRepository implements ICommentRepository {
       `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
     );
     return this.httpClient.post<void>(url, `"${value}"`, {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
     });
   };
 }
