@@ -1,5 +1,6 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ManageTagMappingsViewModel from '@ViewModels/Admin/ManageTagMappingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

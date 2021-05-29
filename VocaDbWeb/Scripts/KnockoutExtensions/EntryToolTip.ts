@@ -1,6 +1,7 @@
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
+import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';

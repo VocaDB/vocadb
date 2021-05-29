@@ -1,5 +1,6 @@
 import ArtistRepository from '@Repositories/ArtistRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ArchivedArtistViewModel from '@ViewModels/Artist/ArchivedArtistViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

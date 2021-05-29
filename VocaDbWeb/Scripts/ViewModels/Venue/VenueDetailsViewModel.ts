@@ -1,5 +1,6 @@
 import VenueRepository from '@Repositories/VenueRepository';
 import ui from '@Shared/MessagesTyped';
+import vdb from '@Shared/VdbStatic';
 
 import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';

@@ -1,6 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

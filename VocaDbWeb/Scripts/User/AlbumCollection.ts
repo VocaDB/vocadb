@@ -2,6 +2,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

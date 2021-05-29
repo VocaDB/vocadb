@@ -1,5 +1,6 @@
 import SongRepository from '@Repositories/SongRepository';
 import ui from '@Shared/MessagesTyped';
+import vdb from '@Shared/VdbStatic';
 
 import ReportEntryViewModel from '../ReportEntryViewModel';
 
