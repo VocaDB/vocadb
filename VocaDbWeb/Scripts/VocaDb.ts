@@ -22,7 +22,7 @@ vdb.functions.showLoginPopup = function (): void {
 
 (function ($): void {
   $.fn.vdbArtistToolTip = function (): void {
-    this.each(() => {
+    this.each(function (this: any) {
       var elem = this;
 
       $(elem).qtip({
@@ -47,7 +47,7 @@ vdb.functions.showLoginPopup = function (): void {
 
 (function ($): void {
   $.fn.vdbAlbumToolTip = function (): void {
-    this.each(() => {
+    this.each(function (this: any) {
       var elem = this;
 
       $(elem).qtip({
@@ -69,7 +69,7 @@ vdb.functions.showLoginPopup = function (): void {
 
 (function ($): void {
   $.fn.vdbAlbumWithCoverToolTip = function (): void {
-    this.each(() => {
+    this.each(function (this: any) {
       var elem = this;
 
       $(elem).qtip({
