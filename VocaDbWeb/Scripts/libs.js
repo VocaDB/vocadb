@@ -23,10 +23,6 @@ window.ko = require('knockout');
 
 require('knockout-punches');
 
-require('@KnockoutExtensions/FormatDateFilter');
-require('@KnockoutExtensions/FormatLengthSecondsFilter');
-require('@KnockoutExtensions/Filters/Truncate');
-
 window._ = require('lodash');
 
 require('qtip2');
