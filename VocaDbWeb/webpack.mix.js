@@ -47,6 +47,7 @@ mix
 	.js('Scripts/libs.js', 'wwwroot/bundles/shared')
 
 	// SHARED BUNDLES
+	// Legacy common scripts - should be phased out
 	.ts('Scripts/vdb.ts', 'wwwroot/bundles')
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
