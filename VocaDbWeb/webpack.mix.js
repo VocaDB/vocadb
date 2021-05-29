@@ -48,8 +48,6 @@ mix
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
-	.scripts(['wwwroot/Scripts/VocaDb.js'], 'wwwroot/bundles/VocaDB.js')
-
 	.ts('Scripts/vdb.ts', 'wwwroot/bundles')
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)

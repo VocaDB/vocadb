@@ -1,6 +1,7 @@
 import SongContract from '@DataContracts/Song/SongContract';
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

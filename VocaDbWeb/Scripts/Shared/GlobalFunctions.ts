@@ -1,3 +1,4 @@
+import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 
 export default class functions {

@@ -4,6 +4,7 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import AlbumEditViewModel, {
   TrackArtistSelectionViewModel,
 } from '@ViewModels/Album/AlbumEditViewModel';

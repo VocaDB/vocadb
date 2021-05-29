@@ -1,6 +1,7 @@
 import AdminRepository from '@Repositories/AdminRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ManageIPRulesViewModel, {
   IPRuleContract,
 } from '@ViewModels/Admin/ManageIPRulesViewModel';

@@ -1,5 +1,6 @@
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ArchivedSongViewModel from '@ViewModels/Song/ArchivedSongViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

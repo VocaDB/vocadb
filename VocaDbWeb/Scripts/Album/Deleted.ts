@@ -1,5 +1,6 @@
 import AlbumRepository from '@Repositories/AlbumRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import DeletedAlbumsViewModel from '@ViewModels/Album/DeletedAlbumsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

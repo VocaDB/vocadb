@@ -3,6 +3,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import TagEditViewModel from '@ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

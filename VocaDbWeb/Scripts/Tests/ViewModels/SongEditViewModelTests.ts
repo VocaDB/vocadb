@@ -1,6 +1,7 @@
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
 import moment from 'moment';
