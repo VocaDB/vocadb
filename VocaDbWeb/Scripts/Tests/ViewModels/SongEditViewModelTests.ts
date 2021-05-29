@@ -113,19 +113,19 @@ QUnit.test('firstPvDate with PVs', () => {
   data.pvs = [
     { pvType: 'Original', pvId: '3', service: 'YouTube' },
     {
-      publishDate: '2039-3-8',
+      publishDate: '2039-03-08',
       pvType: 'Reprint',
       pvId: '39',
       service: 'YouTube',
     },
     {
-      publishDate: '2039-3-9',
+      publishDate: '2039-03-09',
       pvType: 'Original',
       pvId: '3939',
       service: 'YouTube',
     },
     {
-      publishDate: '2039-3-10',
+      publishDate: '2039-03-10',
       pvType: 'Original',
       pvId: '3939',
       service: 'YouTube',
@@ -137,7 +137,7 @@ QUnit.test('firstPvDate with PVs', () => {
   QUnit.ok(target.firstPvDate(), 'firstPvDate');
   QUnit.equal(
     target.firstPvDate().toISOString(),
-    moment('2039-3-9').toISOString(),
+    moment('2039-03-09').toISOString(),
     'firstPvDate',
   );
 });
@@ -148,14 +148,14 @@ QUnit.test('suggestedPublishDate no date', () => {
 });
 
 QUnit.test('suggestedPublishDate with album date', () => {
-  data.albumReleaseDate = '2039-3-9';
+  data.albumReleaseDate = '2039-03-09';
 
   var target = createViewModel();
 
   QUnit.ok(target.suggestedPublishDate(), 'suggestedPublishDate');
   QUnit.equal(
     target.suggestedPublishDate().date.toISOString(),
-    moment('2039-3-9').toISOString(),
+    moment('2039-03-09').toISOString(),
     'suggestedPublishDate',
   );
 });
