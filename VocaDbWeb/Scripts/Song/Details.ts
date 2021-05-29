@@ -9,6 +9,7 @@ import SongDetailsViewModel, {
   SongDetailsResources,
 } from '@ViewModels/Song/SongDetailsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 function initPage(

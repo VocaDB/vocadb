@@ -9,6 +9,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -66,14 +67,14 @@ export default class AlbumCollectionViewModel {
   public sort = ko.observable('Name');
   public sortName = ko.computed(() =>
     this.resources() != null
-      ? this.resources().albumSortRuleNames![this.sort()]
+      ? this.resources()!.albumSortRuleNames![this.sort()]
       : '',
   );
   public tag = ko.observable<TagBaseContract>(null!);
-  public tagId = ko.computed(() => (this.tag() ? this.tag().id : null));
-  public tagName = ko.computed(() => (this.tag() ? this.tag().name : null));
+  public tagId = ko.computed(() => (this.tag() ? this.tag()!.id : null));
+  public tagName = ko.computed(() => (this.tag() ? this.tag()!.name : null));
   public tagUrl = ko.computed(() =>
-    EntryUrlMapper.details_tag_contract(this.tag()),
+    EntryUrlMapper.details_tag_contract(this.tag()!),
   );
   public viewMode = ko.observable('Details');
 
@@ -137,7 +138,7 @@ export default class AlbumCollectionViewModel {
         this.searchTerm(),
         this.tagId()!,
         this.albumType(),
-        this.artistId(),
+        this.artistId()!,
         this.collectionStatus(),
         this.releaseEvent.id(),
         this.advancedFilters.filters(),

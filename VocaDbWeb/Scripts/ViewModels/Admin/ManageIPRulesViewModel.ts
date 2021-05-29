@@ -1,5 +1,6 @@
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
+import ko, { Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -35,11 +36,11 @@ export default class ManageIPRulesViewModel {
     this.rules.remove(rule);
   };
 
-  public rules: KnockoutObservableArray<IPRule>;
+  public rules: ObservableArray<IPRule>;
 
   public save = (): void => {
     var json = ko.toJS(this);
-    ko.utils.postJson(window.location.href, json, null);
+    ko.utils.postJson(window.location.href, json, null!);
   };
 
   constructor(data: IPRuleContract[], repo: AdminRepository) {
@@ -69,18 +70,18 @@ export class IPRule {
     return i < 10 ? '0' + i : '' + i;
   }
 
-  address: KnockoutObservable<string>;
+  address: Observable<string>;
 
   created: Date;
 
   id: number;
 
-  notes: KnockoutObservable<string>;
+  notes: Observable<string>;
 
   constructor(data: IPRuleContract) {
-    this.address = ko.observable(data.address);
+    this.address = ko.observable(data.address!);
     this.created = data.created!;
     this.id = data.id!;
-    this.notes = ko.observable(data.notes);
+    this.notes = ko.observable(data.notes!);
   }
 }

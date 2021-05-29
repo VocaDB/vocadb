@@ -1,6 +1,7 @@
 import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
 import AdminRepository from '@Repositories/AdminRepository';
 import ui from '@Shared/MessagesTyped';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 interface WebhookEventSelection {
@@ -10,7 +11,7 @@ interface WebhookEventSelection {
   // User-visible webhook event name, for example "Entry report"
   name: string;
 
-  selected: KnockoutObservable<boolean>;
+  selected: Observable<boolean>;
 }
 
 class WebhookEventsEditViewModel {
@@ -67,7 +68,7 @@ export default class ManageWebhooksViewModel {
 
   public webhookEventsEditViewModel: WebhookEventsEditViewModel;
 
-  public newWebhookEvents: KnockoutObservable<string>;
+  public newWebhookEvents: Computed<string>;
 
   private getEnumValues = <TEnum>(
     Enum: any,

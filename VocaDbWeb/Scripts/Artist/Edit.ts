@@ -6,6 +6,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 function initPage(): void {
   $('#tabs').tabs();

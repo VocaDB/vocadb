@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 declare global {
@@ -10,7 +11,7 @@ declare global {
 // Uses HTML5 history API to update URL query string from a set of observables
 export default class ObservableUrlParamRouter {
   constructor(
-    routes: { [key: string]: KnockoutObservable<string | number> },
+    routes: { [key: string]: Observable<string | number | null> },
     private win: Window = window,
   ) {
     for (var route in routes) {
@@ -63,13 +64,13 @@ export default class ObservableUrlParamRouter {
 
   private paramDatas: ParamData[] = [];
 
-  private queryString: KnockoutComputed<string>;
+  private queryString: Computed<string>;
 }
 
 class ParamData {
   constructor(
     public name: string,
-    public observable: KnockoutObservable<any>,
+    public observable: Observable<any>,
     queryValue: string,
   ) {
     this.initialValue = this.observable();

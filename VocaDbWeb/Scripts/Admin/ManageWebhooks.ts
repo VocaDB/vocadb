@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ManageWebhooksViewModel from '@ViewModels/Admin/ManageWebhooksViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const AdminManageWebhooks = (webhookEventNames: {
   [key: string]: string;

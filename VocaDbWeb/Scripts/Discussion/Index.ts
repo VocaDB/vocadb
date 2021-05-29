@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import DiscussionIndexViewModel from '@ViewModels/Discussion/DiscussionIndexViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const DiscussionIndex = (canDeleteAllComments: boolean): void => {

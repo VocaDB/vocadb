@@ -1,4 +1,5 @@
 import AlbumDiscPropertiesContract from '@DataContracts/Album/AlbumDiscPropertiesContract';
+import ko, { Observable } from 'knockout';
 
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
@@ -16,9 +17,9 @@ export default class AlbumDiscPropertiesEditViewModel {
 
   id!: number;
 
-  mediaType: KnockoutObservable<string>;
+  mediaType: Observable<string>;
 
-  name: KnockoutObservable<string>;
+  name: Observable<string>;
 }
 
 export class AlbumDiscPropertiesListEditViewModel extends BasicListEditViewModel<

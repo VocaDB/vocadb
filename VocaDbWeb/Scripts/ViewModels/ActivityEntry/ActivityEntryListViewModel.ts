@@ -10,6 +10,7 @@ import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 enum ActivityEntrySortRule {
@@ -62,7 +63,7 @@ export default class ActivityEntryListViewModel {
     );
   }
 
-  public additionsOnly: KnockoutObservable<boolean>;
+  public additionsOnly: Observable<boolean>;
 
   private clear = (): void => {
     this.lastEntryDate = null!;
@@ -72,7 +73,7 @@ export default class ActivityEntryListViewModel {
 
   public entries = ko.observableArray<ActivityEntryContract>([]);
 
-  public entryType: KnockoutObservable<string>;
+  public entryType: Observable<string>;
 
   public getActivityFeedEventName = (
     activityEntry: ActivityEntryContract,
@@ -219,6 +220,6 @@ export default class ActivityEntryListViewModel {
 
   public resources: ResourcesManager;
 
-  public sort: KnockoutObservable<string>;
-  public sortName: KnockoutComputed<string>;
+  public sort: Observable<string>;
+  public sortName: Computed<string>;
 }

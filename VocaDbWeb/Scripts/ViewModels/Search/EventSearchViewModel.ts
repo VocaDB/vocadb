@@ -2,6 +2,7 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import ko, { Computed } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -57,8 +58,8 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
           artistId: this.artistFilters.artistIds(),
           childVoicebanks: this.artistFilters.childVoicebanks(),
           includeMembers: this.artistFilters.includeMembers(),
-          afterDate: this.afterDate(),
-          beforeDate: this.beforeDate(),
+          afterDate: this.afterDate()!,
+          beforeDate: this.beforeDate()!,
           status: status,
           fields: this.fields(),
         })
@@ -82,7 +83,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
   public category = ko.observable('');
   public onlyMyEvents = ko.observable(false);
   public sort = ko.observable('Name');
-  public sortName: KnockoutComputed<string>;
+  public sortName: Computed<string>;
 
   public fields = ko.computed(() =>
     this.searchViewModel.showTags()

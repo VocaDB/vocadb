@@ -2,6 +2,7 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import ArtistFilter from './ArtistFilter';
@@ -29,7 +30,7 @@ export default class ArtistFilters {
     this.showChildVoicebanks = ko.computed(
       () =>
         this.hasSingleArtist() &&
-        ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()),
+        ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()!),
     );
     this.showMembers = ko.computed(
       () =>
@@ -42,8 +43,8 @@ export default class ArtistFilters {
   public artistIds = ko.computed(() => _.map(this.artists(), (a) => a.id));
   public artistParticipationStatus = ko.observable('Everything');
   public artistSearchParams: ArtistAutoCompleteParams;
-  public childVoicebanks: KnockoutObservable<boolean>;
-  public filters: KnockoutComputed<void>;
+  public childVoicebanks: Observable<boolean>;
+  public filters: Computed<void>;
   public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
   public hasSingleArtist = ko.computed(() => this.artists().length === 1);
   public includeMembers = ko.observable(false);
@@ -74,6 +75,6 @@ export default class ArtistFilters {
     });
   };
 
-  public showChildVoicebanks: KnockoutComputed<boolean>;
-  public showMembers: KnockoutComputed<boolean>;
+  public showChildVoicebanks: Computed<boolean>;
+  public showMembers: Computed<boolean>;
 }

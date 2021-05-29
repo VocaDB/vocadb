@@ -1,7 +1,7 @@
 ﻿import _ from 'lodash';
 
 declare global {
-  interface KnockoutFilters {
+  interface KnockoutPunchesFilters {
     truncate: (source: string, length: number) => string;
   }
 }

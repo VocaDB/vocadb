@@ -2,6 +2,7 @@ import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';

@@ -1,7 +1,7 @@
 ﻿import moment from 'moment';
 
 declare global {
-  interface KnockoutFilters {
+  interface KnockoutPunchesFilters {
     formatDate: (date: Date, format: string) => string;
   }
 }

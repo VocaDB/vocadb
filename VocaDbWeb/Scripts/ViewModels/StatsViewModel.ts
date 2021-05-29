@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 export default class StatsViewModel {
@@ -11,18 +12,18 @@ export default class StatsViewModel {
     return (
       this.selectedReport &&
       this.selectedReport() &&
-      this.selectedReport().allowTimespan
+      this.selectedReport()!.allowTimespan
     );
   });
 
   private updateReport = (): void => {
     var cutoff =
       this.showTimespanFilter() && this.timespan()
-        ? moment().subtract(parseInt(this.timespan()), 'hours').toISOString()
+        ? moment().subtract(parseInt(this.timespan()!), 'hours').toISOString()
         : null;
 
     $.getJSON(
-      '/stats/' + this.selectedReport().url,
+      '/stats/' + this.selectedReport()!.url,
       { cutoff: cutoff },
       (data) => {
         this.chartData(data);

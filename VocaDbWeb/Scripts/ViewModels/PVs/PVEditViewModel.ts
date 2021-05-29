@@ -1,11 +1,12 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import DateTimeHelper from '@Helpers/DateTimeHelper';
+import ko, { Observable } from 'knockout';
 
 export default class PVEditViewModel {
   constructor(contract: PVContract, pvType?: string) {
     this.author = contract.author!;
     this.createdBy = contract.createdBy!;
-    this.disabled = ko.observable(contract.disabled);
+    this.disabled = ko.observable(contract.disabled!);
     this.extendedMetadata = contract.extendedMetadata;
     this.id = contract.id!;
     this.length = contract.length!;
@@ -16,7 +17,7 @@ export default class PVEditViewModel {
     this.thumbUrl = contract.thumbUrl!;
     this.url = contract.url!;
 
-    this.name = ko.observable(contract.name);
+    this.name = ko.observable(contract.name!);
     this.lengthFormatted = DateTimeHelper.formatFromSeconds(this.length);
   }
 
@@ -24,7 +25,7 @@ export default class PVEditViewModel {
 
   createdBy: number;
 
-  disabled: KnockoutObservable<boolean>;
+  disabled: Observable<boolean>;
 
   extendedMetadata: string;
 
@@ -34,7 +35,7 @@ export default class PVEditViewModel {
 
   lengthFormatted: string;
 
-  name: KnockoutObservable<string>;
+  name: Observable<string>;
 
   pvId: string;
 

@@ -5,6 +5,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const UserFavoriteSongs = (model: {

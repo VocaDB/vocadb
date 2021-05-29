@@ -2,6 +2,7 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
+import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 
@@ -42,7 +43,7 @@ export default class DiscussionTopicViewModel {
     this.editModel(null!);
   };
 
-  public contract: KnockoutObservable<DiscussionTopicContract>;
+  public contract: Observable<DiscussionTopicContract>;
 
   public editModel = ko.observable<DiscussionTopicEditViewModel>(null!);
 
@@ -51,7 +52,7 @@ export default class DiscussionTopicViewModel {
   public saveEditedTopic = (): void => {
     if (!this.isBeingEdited()) return;
 
-    var editedContract = this.editModel().toContract();
+    var editedContract = this.editModel()!.toContract();
 
     this.repo.updateTopic(this.contract().id, editedContract).then(() => {
       editedContract.id = this.contract().id;
@@ -93,6 +94,6 @@ export class DiscussionTopicEditViewModel {
   public name = ko.observable('');
 
   public toContract = (): DiscussionTopicContract => {
-    return ko.toJS(this);
+    return ko.toJS(this) as DiscussionTopicContract;
   };
 }

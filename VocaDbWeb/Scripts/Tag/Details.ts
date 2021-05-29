@@ -7,6 +7,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import _ from 'lodash';
 
 function initChart(

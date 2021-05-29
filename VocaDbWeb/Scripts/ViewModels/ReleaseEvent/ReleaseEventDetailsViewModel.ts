@@ -9,6 +9,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -131,5 +132,5 @@ export default class ReleaseEventDetailsViewModel {
 
   public tagUsages: TagListViewModel;
 
-  public usersAttending: KnockoutObservableArray<UserBaseContract>;
+  public usersAttending: ObservableArray<UserBaseContract>;
 }

@@ -2,6 +2,7 @@ import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import TagRepository from '@Repositories/TagRepository';
+import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 

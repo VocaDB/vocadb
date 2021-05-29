@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
+import ko, { Observable } from 'knockout';
 
 export default class CommentViewModel {
   constructor(
@@ -26,14 +27,14 @@ export default class CommentViewModel {
 
   public created: Date;
 
-  public editedMessage: KnockoutObservable<string>;
+  public editedMessage: Observable<string | null>;
 
   public id: number;
 
-  public message: KnockoutObservable<string>;
+  public message: Observable<string>;
 
   public saveChanges = (): void => {
-    this.message(this.editedMessage());
+    this.message(this.editedMessage()!);
   };
 
   public toContract: () => CommentContract = () => {

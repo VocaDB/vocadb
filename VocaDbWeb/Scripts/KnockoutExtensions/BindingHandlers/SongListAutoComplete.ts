@@ -3,6 +3,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
+import ko, { Observable } from 'knockout';
 
 declare global {
   interface KnockoutBindingHandlers {
@@ -14,7 +15,7 @@ declare global {
 ko.bindingHandlers.songListAutoComplete = {
   init: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<SongListContract>,
+    valueAccessor: () => Observable<SongListContract>,
     allBindingsAccessor?: () => any,
   ): void => {
     var allBindings = allBindingsAccessor!();

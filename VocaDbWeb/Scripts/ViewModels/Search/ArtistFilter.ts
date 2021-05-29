@@ -1,4 +1,5 @@
 import ArtistType from '@Models/Artists/ArtistType';
+import ko from 'knockout';
 
 export default class ArtistFilter {
   constructor(public id: number) {}

@@ -308,7 +308,7 @@ QUnit.test('editTrackProperties', () => {
   var track = target.tracks()[0];
 
   target.editTrackProperties(track);
-  var edited = target.editedSong();
+  var edited = target.editedSong()!;
 
   ok(edited, 'editedSong');
   equal(edited.song, track, 'editedSong.song');
@@ -365,7 +365,7 @@ QUnit.test('saveTrackProperties changed', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
-  target.editedSong().artistSelections[0].selected(false);
+  target.editedSong()!.artistSelections[0].selected(false);
 
   target.saveTrackProperties();
 
@@ -376,7 +376,7 @@ QUnit.test('filter displayName', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
-  var edited = target.editedSong();
+  var edited = target.editedSong()!;
 
   edited.filter('tri');
 
@@ -396,7 +396,7 @@ QUnit.test('filter additionalName', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
-  var edited = target.editedSong();
+  var edited = target.editedSong()!;
 
   edited.filter('初音ミク');
 
@@ -418,19 +418,19 @@ QUnit.test('editMultipleTrackProperties', () => {
   target.editMultipleTrackProperties();
 
   ok(target.editedSong(), 'editedSong');
-  ok(target.editedSong().artistSelections, 'editedSong.artistSelections');
+  ok(target.editedSong()!.artistSelections, 'editedSong.artistSelections');
   equal(
-    target.editedSong().artistSelections.length,
+    target.editedSong()!.artistSelections.length,
     2,
     'editedSong.artistSelections.length',
   ); // Label or custom artist are not included.
   equal(
-    target.editedSong().artistSelections[0].selected(),
+    target.editedSong()!.artistSelections[0].selected(),
     false,
     'editedSong.artistSelections[0].selected',
   );
   equal(
-    target.editedSong().artistSelections[1].selected(),
+    target.editedSong()!.artistSelections[1].selected(),
     false,
     'editedSong.artistSelections[1].selected',
   );
@@ -442,7 +442,7 @@ QUnit.test('addArtistsToSelectedTracks add new artists', () => {
   var track = target.tracks()[0];
   track.selected(true);
   target.editMultipleTrackProperties();
-  target.editedSong().artistSelections[1].selected(true); // Select vocalist, which is not added yet
+  target.editedSong()!.artistSelections[1].selected(true); // Select vocalist, which is not added yet
 
   target.addArtistsToSelectedTracks();
 
@@ -456,7 +456,7 @@ QUnit.test('addArtistsToSelectedTracks not changed', () => {
   var track = target.tracks()[0];
   track.selected(true);
   target.editMultipleTrackProperties();
-  target.editedSong().artistSelections[0].selected(true); // Select producer, who is added already
+  target.editedSong()!.artistSelections[0].selected(true); // Select producer, who is added already
 
   target.addArtistsToSelectedTracks();
 
@@ -469,7 +469,7 @@ QUnit.test('removeArtistsFromSelectedTracks remove artist', () => {
   var track = target.tracks()[0];
   track.selected(true);
   target.editMultipleTrackProperties();
-  target.editedSong().artistSelections[0].selected(true); // Select producer, who is added already
+  target.editedSong()!.artistSelections[0].selected(true); // Select producer, who is added already
 
   target.removeArtistsFromSelectedTracks();
 
@@ -481,7 +481,7 @@ QUnit.test('removeArtistsFromSelectedTracks not changed', () => {
   var track = target.tracks()[0];
   track.selected(true);
   target.editMultipleTrackProperties();
-  target.editedSong().artistSelections[1].selected(true); // Select vocalist, who isn't added
+  target.editedSong()!.artistSelections[1].selected(true); // Select vocalist, who isn't added
 
   target.removeArtistsFromSelectedTracks();
 

@@ -2,6 +2,7 @@ import SongContract from '@DataContracts/Song/SongContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import SongRepository from '@Repositories/SongRepository';
+import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
@@ -41,6 +42,6 @@ export default class SongMergeViewModel {
   public validationError_targetIsLessComplete = ko.observable(false);
   public validationError_targetIsNewer = ko.observable(false);
 
-  //public validationError_targetIsLessComplete: KnockoutObservable<boolean>;
-  //public validationError_targetIsNewer: KnockoutObservable<boolean>;
+  //public validationError_targetIsLessComplete: Observable<boolean>;
+  //public validationError_targetIsNewer: Observable<boolean>;
 }

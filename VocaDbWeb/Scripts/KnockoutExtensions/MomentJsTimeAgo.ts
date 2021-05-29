@@ -1,4 +1,5 @@
 ﻿import $ from 'jquery';
+import ko, { Observable } from 'knockout';
 import moment from 'moment';
 
 declare global {
@@ -10,7 +11,7 @@ declare global {
 ko.bindingHandlers.timeAgo = {
   update: (
     element: HTMLElement,
-    valueAccessor: () => KnockoutObservable<Date>,
+    valueAccessor: () => Observable<Date>,
   ): void => {
     var val: Date = ko.unwrap(valueAccessor());
     var parsed = moment(val);

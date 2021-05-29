@@ -9,6 +9,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import ReleaseEventDetailsViewModel from '@ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const EventDetails = (
   canDeleteAllComments: boolean,

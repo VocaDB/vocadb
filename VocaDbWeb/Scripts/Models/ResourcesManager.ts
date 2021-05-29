@@ -1,5 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 export default class ResourcesManager {
@@ -12,14 +13,12 @@ export default class ResourcesManager {
     var missing = _.filter(
       setNames,
       (setName) =>
-        this.resources[
-          setName as keyof KnockoutObservable<ResourcesContract>
-        ] == null,
+        this.resources[setName as keyof Observable<ResourcesContract>] == null,
     );
     return missing;
   };
 
-  public resources: KnockoutObservable<ResourcesContract> = ko.observable({});
+  public resources: Observable<ResourcesContract> = ko.observable({});
 
   public loadResources = (
     callback?: () => void,

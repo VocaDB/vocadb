@@ -11,6 +11,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -82,7 +83,9 @@ export default class ReleaseEventEditViewModel {
     this.venue = new BasicEntryLinkViewModel(contract.venue, null!);
     this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
-    this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
+    this.artistLinkContracts = ko.computed<ArtistForEventContract[]>(() =>
+      ko.toJS(this.artistLinks()),
+    );
 
     if (contract.id) {
       window.setInterval(
@@ -119,9 +122,9 @@ export default class ReleaseEventEditViewModel {
     }
   };
 
-  public artistLinks: KnockoutObservableArray<ArtistForEventEditViewModel>;
+  public artistLinks: ObservableArray<ArtistForEventEditViewModel>;
 
-  public artistLinkContracts: KnockoutComputed<ArtistForEventContract[]>;
+  public artistLinkContracts: Computed<ArtistForEventContract[]>;
 
   public artistRolesEditViewModel: EventArtistRolesEditViewModel;
 
@@ -133,12 +136,12 @@ export default class ReleaseEventEditViewModel {
   public customName = ko.observable(false);
 
   // Event date. This should always be in UTC.
-  public date: KnockoutObservable<Date>;
+  public date: Observable<Date>;
 
   // Date as ISO string, in UTC, ready to be posted to server
-  public dateStr: KnockoutComputed<string>;
+  public dateStr: Computed<string>;
 
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public defaultNameLanguage: Observable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
     this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
@@ -150,15 +153,15 @@ export default class ReleaseEventEditViewModel {
     this.artistRolesEditViewModel.show(artist);
   };
 
-  public endDate: KnockoutObservable<Date>;
+  public endDate: Observable<Date>;
 
-  public endDateStr: KnockoutComputed<string>;
+  public endDateStr: Computed<string>;
 
   private id: number;
 
-  public isSeriesEvent: KnockoutObservable<boolean>;
+  public isSeriesEvent: Observable<boolean>;
 
-  public isSeriesEventStr: KnockoutComputed<string>;
+  public isSeriesEventStr: Computed<string>;
 
   public names: NamesEditViewModel;
   public pvs: PVListEditViewModel;

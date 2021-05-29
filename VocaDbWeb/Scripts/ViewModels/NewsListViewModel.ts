@@ -1,5 +1,6 @@
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko from 'knockout';
 import _ from 'lodash';
 
 export default class NewsListViewModel {

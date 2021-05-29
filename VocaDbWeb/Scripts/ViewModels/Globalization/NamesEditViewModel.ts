@@ -1,11 +1,12 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import ko, { ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';
 
 export default class NamesEditViewModel {
-  public aliases: KnockoutObservableArray<LocalizedStringWithIdEditViewModel>;
+  public aliases: ObservableArray<LocalizedStringWithIdEditViewModel>;
   public englishName: LocalizedStringWithIdEditViewModel;
   public originalName: LocalizedStringWithIdEditViewModel;
   public romajiName: LocalizedStringWithIdEditViewModel;

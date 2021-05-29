@@ -4,6 +4,7 @@ import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryCo
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
 import $ from 'jquery';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -121,7 +122,7 @@ export default class UserMessagesViewModel {
   reply = (): void => {
     if (!this.selectedMessage()) throw Error('No message selected');
 
-    var msg = this.selectedMessage();
+    var msg = this.selectedMessage()!;
     this.newMessageViewModel.receiver.entry(msg.sender);
     this.newMessageViewModel.subject(
       msg.subject && msg.subject.indexOf('Re:') === 0
@@ -134,7 +135,7 @@ export default class UserMessagesViewModel {
 
   selectedMessage = ko.observable<UserMessageViewModel>();
 
-  selectedMessageBody: KnockoutObservable<string> = ko.observable('');
+  selectedMessageBody: Observable<string> = ko.observable('');
 
   selectMessageById = (
     messageId: number,
@@ -203,7 +204,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
     this.unread = ko.computed(() => {
       return this.items().length
         ? _.size(_.filter(this.items(), (msg) => !msg.read()))
-        : this.unreadOnServer();
+        : this.unreadOnServer()!;
     });
 
     if (getMessageCount) {
@@ -279,7 +280,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
     });
   };
 
-  unread: KnockoutComputed<number>;
+  unread: Computed<number>;
 
   private unreadOnServer = ko.observable<number>(null!);
 }
@@ -306,7 +307,7 @@ export class UserMessageViewModel {
 
   inbox: string;
 
-  read: KnockoutObservable<boolean>;
+  read: Observable<boolean>;
 
   receiver: UserApiContract;
 

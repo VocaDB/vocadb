@@ -1,17 +1,18 @@
 import WebLinkContract from '@DataContracts/WebLinkContract';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import ko, { Observable } from 'knockout';
 
 export default class WebLinkEditViewModel {
-  public category: KnockoutObservable<string>;
+  public category: Observable<string>;
 
-  public description: KnockoutObservable<string>;
+  public description: Observable<string>;
 
-  public disabled: KnockoutObservable<boolean>;
+  public disabled: Observable<boolean>;
 
   public id: number;
 
-  public url: KnockoutObservable<string>;
+  public url: Observable<string>;
 
   constructor(data?: WebLinkContract) {
     if (data) {

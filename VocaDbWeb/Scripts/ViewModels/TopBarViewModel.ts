@@ -2,6 +2,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
+import ko, { Computed, Observable } from 'knockout';
 
 // View model for the top bar.
 export default class TopBarViewModel {
@@ -25,21 +26,21 @@ export default class TopBarViewModel {
       );
   };
 
-  public entryType: KnockoutObservable<string>;
+  public entryType: Observable<string>;
 
-  public hasNotifications: KnockoutComputed<boolean>;
+  public hasNotifications: Computed<boolean>;
 
   public isLoaded = ko.observable(false);
 
   public reportCount = ko.observable(0);
 
-  public searchTerm: KnockoutObservable<string>;
+  public searchTerm: Observable<string>;
 
-  public entryTypeName: KnockoutComputed<string>;
+  public entryTypeName: Computed<string>;
 
   public unreadMessages = ko.observableArray<UserMessageSummaryContract>();
 
-  public unreadMessagesCount: KnockoutObservable<number>;
+  public unreadMessagesCount: Observable<number>;
 
   // Initializes view model
   // entryTypeTranslations: translations for entry types.

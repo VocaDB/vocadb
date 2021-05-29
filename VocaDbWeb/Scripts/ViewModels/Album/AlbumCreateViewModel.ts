@@ -3,6 +3,7 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import ko from 'knockout';
 
 export default class AlbumCreateViewModel {
   constructor(

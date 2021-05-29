@@ -4,6 +4,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
@@ -108,7 +109,7 @@ export default class PVPlayerViewModel {
 
         // Case 2
         var newService = _.find(this.autoplayServices, (s) =>
-          this.songHasPVService(this.selectedSong(), s),
+          this.songHasPVService(this.selectedSong()!, s),
         );
         if (newService) {
           this.playerService = newService;
@@ -116,7 +117,7 @@ export default class PVPlayerViewModel {
           this.currentPlayer.attach(true, () => {
             this.loadPVId(
               this.currentPlayer.service,
-              this.selectedSong().song.id,
+              this.selectedSong()!.song.id,
               this.currentPlayer.play,
             );
           });
@@ -149,7 +150,7 @@ export default class PVPlayerViewModel {
   public nextSong!: () => void;
   public playerHtml = ko.observable<string>(null!);
   public playerService: PVService = null!;
-  public ratingButtonsViewModel: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(
+  public ratingButtonsViewModel: Observable<PVRatingButtonsViewModel | null> = ko.observable(
     null!,
   );
   public resetSong: () => void = null!;

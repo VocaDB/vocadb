@@ -1,4 +1,5 @@
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import ko, { Computed, Observable } from 'knockout';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.
@@ -32,14 +33,14 @@ export default class BasicEntryLinkViewModel<
 
   public clear = (): void => this.entry(null!);
 
-  public entry: KnockoutObservable<TEntry>;
+  public entry: Observable<TEntry>;
 
   // Read/write entry ID. Both null and zero will clear the entry.
-  public id: KnockoutComputed<number>;
+  public id: Computed<number>;
 
-  public isEmpty: KnockoutComputed<boolean>;
+  public isEmpty: Computed<boolean>;
 
-  public name: KnockoutComputed<string>;
+  public name: Computed<string>;
 
   public subscribe = (
     callback: (newValue: number) => void,

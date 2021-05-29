@@ -14,6 +14,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
@@ -26,12 +27,11 @@ export default class SongCreateViewModel {
 
   artists = ko.observableArray<ArtistContract>([]);
 
-  public artistsWithRoles: KnockoutComputed<
-    ArtistForAlbumContract[]
-  > = ko.computed(() =>
-    _.map(this.artists(), (a) => {
-      return { artist: a, roles: ArtistRoles[ArtistRoles.Default] };
-    }),
+  public artistsWithRoles: Computed<ArtistForAlbumContract[]> = ko.computed(
+    () =>
+      _.map(this.artists(), (a) => {
+        return { artist: a, roles: ArtistRoles[ArtistRoles.Default] };
+      }),
   );
 
   private getArtistIds = (): number[] => {
@@ -105,13 +105,13 @@ export default class SongCreateViewModel {
 
   dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
-  isDuplicatePV: KnockoutComputed<boolean>;
+  isDuplicatePV: Computed<boolean>;
 
   nameOriginal = ko.observable('');
   nameRomaji = ko.observable('');
   nameEnglish = ko.observable('');
 
-  originalSongSuggestions: KnockoutComputed<DuplicateEntryResultContract[]>;
+  originalSongSuggestions: Computed<DuplicateEntryResultContract[]>;
 
   originalVersion: BasicEntryLinkViewModel<SongContract>;
   originalVersionSearchParams: SongAutoCompleteParams;
@@ -123,17 +123,17 @@ export default class SongCreateViewModel {
   songTypeName = ko.computed(() => this.songTypeTag()?.name);
   songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
   songTypeTagUrl = ko.computed(() =>
-    EntryUrlMapper.details_tag_contract(this.songTypeTag()),
+    EntryUrlMapper.details_tag_contract(this.songTypeTag()!),
   );
 
-  coverArtists: KnockoutComputed<ArtistContract[]>;
+  coverArtists: Computed<ArtistContract[]>;
 
   canHaveOriginalVersion = ko.computed(
     () =>
       SongType[this.songType() as keyof typeof SongType] !== SongType.Original,
   );
 
-  hasName: KnockoutComputed<boolean>;
+  hasName: Computed<boolean>;
 
   selectOriginal = (dupe: DuplicateEntryResultContract): void => {
     this.songRepository

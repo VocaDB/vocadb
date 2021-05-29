@@ -1,4 +1,5 @@
 import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
+import ko from 'knockout';
 
 interface HistoryEntry {
   data: any;

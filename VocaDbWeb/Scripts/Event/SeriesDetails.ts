@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import EventSeriesDetailsViewModel from '@ViewModels/ReleaseEvent/EventSeriesDetailsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const EventSeriesDetails = (model: {
   id: number;

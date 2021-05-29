@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistCreateViewModel from '@ViewModels/ArtistCreateViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const ArtistCreate = (model: any): void => {
   $(document).ready(function () {

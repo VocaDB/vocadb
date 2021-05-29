@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ActivityEntryListViewModel from '@ViewModels/ActivityEntry/ActivityEntryListViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 const ActivityEntryIndex = (): void => {

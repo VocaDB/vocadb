@@ -11,6 +11,7 @@ import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -43,16 +44,16 @@ export default class ArtistEditViewModel {
     }
   };
 
-  public artistType: KnockoutComputed<ArtistType>;
-  public artistTypeStr: KnockoutObservable<string>;
-  public allowBaseVoicebank: KnockoutComputed<boolean>;
-  public associatedArtists: KnockoutObservableArray<ArtistForArtistEditViewModel>;
+  public artistType: Computed<ArtistType>;
+  public artistTypeStr: Observable<string>;
+  public allowBaseVoicebank: Computed<boolean>;
+  public associatedArtists: ObservableArray<ArtistForArtistEditViewModel>;
   public baseVoicebank: BasicEntryLinkViewModel<ArtistContract>;
   public baseVoicebankSearchParams: ArtistAutoCompleteParams;
-  public canHaveCircles: KnockoutComputed<boolean>;
+  public canHaveCircles: Computed<boolean>;
   // Can have related artists (associatedArtists) such as voice provider and illustrator
-  public canHaveRelatedArtists: KnockoutComputed<boolean>;
-  public canHaveReleaseDate: KnockoutComputed<boolean>;
+  public canHaveRelatedArtists: Computed<boolean>;
+  public canHaveReleaseDate: Computed<boolean>;
 
   // Clears fields that are not valid for the selected artist type.
   private clearInvalidData = (): void => {
@@ -73,7 +74,7 @@ export default class ArtistEditViewModel {
     }
   };
 
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public defaultNameLanguage: Observable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
     $.ajax(
@@ -92,7 +93,7 @@ export default class ArtistEditViewModel {
   });
 
   public description: EnglishTranslatedStringEditViewModel;
-  public groups: KnockoutObservableArray<ArtistForArtistContract>;
+  public groups: ObservableArray<ArtistForArtistContract>;
 
   public groupSearchParams: ArtistAutoCompleteParams = {
     acceptSelection: this.addGroup,
@@ -100,7 +101,7 @@ export default class ArtistEditViewModel {
     height: 300,
   };
 
-  public hasValidationErrors: KnockoutComputed<boolean>;
+  public hasValidationErrors: Computed<boolean>;
   public id: number;
   public illustrator: BasicEntryLinkViewModel<ArtistContract>;
 
@@ -108,13 +109,13 @@ export default class ArtistEditViewModel {
   public newAssociatedArtist: BasicEntryLinkViewModel<ArtistContract>;
   public newAssociatedArtistType = ko.observable<string>();
   public pictures: EntryPictureFileListEditViewModel;
-  public releaseDate: KnockoutObservable<Date>;
+  public releaseDate: Observable<Date>;
 
   public removeGroup = (group: ArtistForArtistContract): void => {
     this.groups.remove(group);
   };
 
-  public status: KnockoutObservable<string>;
+  public status: Observable<string>;
 
   public submit = (): boolean => {
     if (
@@ -160,10 +161,10 @@ export default class ArtistEditViewModel {
   public submitting = ko.observable(false);
   public updateNotes = ko.observable('');
   public validationExpanded = ko.observable(false);
-  public validationError_needReferences: KnockoutComputed<boolean>;
-  public validationError_needType: KnockoutComputed<boolean>;
-  public validationError_unnecessaryPName: KnockoutComputed<boolean>;
-  public validationError_unspecifiedNames: KnockoutComputed<boolean>;
+  public validationError_needReferences: Computed<boolean>;
+  public validationError_needType: Computed<boolean>;
+  public validationError_unnecessaryPName: Computed<boolean>;
+  public validationError_unspecifiedNames: Computed<boolean>;
   public voiceProvider: BasicEntryLinkViewModel<ArtistContract>;
   public webLinks: WebLinksEditViewModel;
 
@@ -296,11 +297,11 @@ export default class ArtistEditViewModel {
 
 export class ArtistForArtistEditViewModel {
   constructor(link: ArtistForArtistContract) {
-    this.linkType = ko.observable(link.linkType);
+    this.linkType = ko.observable(link.linkType!);
     this.parent = link.parent;
   }
 
-  public linkType: KnockoutObservable<string>;
+  public linkType: Observable<string>;
 
   public parent: ArtistContract;
 

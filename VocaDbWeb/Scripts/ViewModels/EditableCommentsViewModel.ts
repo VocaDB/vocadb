@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import ICommentRepository from '@Repositories/ICommentRepository';
+import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 import CommentViewModel from './CommentViewModel';
@@ -57,7 +58,7 @@ export default class EditableCommentsViewModel {
     );
   };
 
-  public comments: KnockoutObservableArray<CommentViewModel>;
+  public comments: ObservableArray<CommentViewModel>;
 
   // Whether all comments have been loaded
   private commentsLoaded: boolean;
@@ -115,7 +116,7 @@ export default class EditableCommentsViewModel {
 
   public paging: ServerSidePagingViewModel = new ServerSidePagingViewModel();
 
-  public pageOfComments: KnockoutComputed<CommentViewModel[]>;
+  public pageOfComments: Computed<CommentViewModel[]>;
 
   private processComment = (contract: CommentContract): CommentViewModel => {
     return new CommentViewModel(
@@ -128,8 +129,8 @@ export default class EditableCommentsViewModel {
   public saveEditedComment = (): void => {
     if (!this.editCommentModel()) return;
 
-    this.editCommentModel().saveChanges();
-    var editedContract = this.editCommentModel().toContract();
+    this.editCommentModel()!.saveChanges();
+    var editedContract = this.editCommentModel()!.toContract();
 
     this.repo.updateComment(editedContract.id!, editedContract);
 
@@ -151,5 +152,5 @@ export default class EditableCommentsViewModel {
   };
 
   // Latest N comments
-  public topComments: KnockoutComputed<CommentViewModel[]>;
+  public topComments: Computed<CommentViewModel[]>;
 }

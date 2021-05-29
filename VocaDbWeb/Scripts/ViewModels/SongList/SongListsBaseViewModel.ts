@@ -3,6 +3,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
+import ko from 'knockout';
 import moment from 'moment';
 
 import PagedItemsViewModel from '../PagedItemsViewModel';
@@ -79,7 +80,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
   public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
   public sortName = ko.computed(() =>
     this.resources() != null
-      ? this.resources().songListSortRuleNames![this.sort()]
+      ? this.resources()!.songListSortRuleNames![this.sort()]
       : '',
   );
   public tagFilters: TagFilters;

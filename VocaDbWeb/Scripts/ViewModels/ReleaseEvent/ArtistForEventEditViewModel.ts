@@ -1,5 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
+import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 // View model for editing artist for album link.
@@ -13,10 +14,10 @@ export default class ArtistForEventEditViewModel
   public name: string;
 
   // Roles as comma-separated string (for serializing to and from .NET enum for the server)
-  public roles: KnockoutComputed<string>;
+  public roles: Computed<string>;
 
   // List of roles for this artist.
-  public rolesArray: KnockoutObservableArray<string>;
+  public rolesArray: ObservableArray<string>;
 
   public toContract: () => ArtistForEventContract = () => {
     return {
@@ -48,5 +49,5 @@ export default class ArtistForEventEditViewModel
 }
 
 export interface IEditableArtistWithSupport {
-  rolesArray: KnockoutObservableArray<string>;
+  rolesArray: ObservableArray<string>;
 }

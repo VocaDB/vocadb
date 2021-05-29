@@ -1,7 +1,7 @@
 import DateTimeHelper from '@Helpers/DateTimeHelper';
 
 declare global {
-  interface KnockoutFilters {
+  interface KnockoutPunchesFilters {
     formatLengthSeconds: (length: number) => string;
   }
 }

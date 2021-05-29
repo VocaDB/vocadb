@@ -18,6 +18,7 @@ import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -36,42 +37,42 @@ export default class SongEditViewModel {
   private albumEventId: number;
   public albumReleaseDate: moment.Moment;
   // List of artist links for this song.
-  public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
+  public artistLinks: ObservableArray<ArtistForAlbumEditViewModel>;
   artistSearchParams: ArtistAutoCompleteParams;
-  public canHaveOriginalVersion: KnockoutComputed<boolean>;
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public canHaveOriginalVersion: Computed<boolean>;
+  public defaultNameLanguage: Observable<string>;
   public deleted: boolean;
   public editedArtistLink = new CustomNameEditViewModel();
-  public eventDate: KnockoutComputed<moment.Moment>;
-  public firstPvDate: KnockoutComputed<moment.Moment>;
+  public eventDate: Computed<moment.Moment>;
+  public firstPvDate: Computed<moment.Moment>;
   public id: number;
-  public length: KnockoutObservable<number>;
-  public lengthFormatted: KnockoutComputed<string>;
+  public length: Observable<number>;
+  public lengthFormatted: Computed<string>;
   public lyrics: LyricsForSongListEditViewModel;
   public names: NamesEditViewModel;
   public notes: EnglishTranslatedStringEditViewModel;
   public originalVersion: BasicEntryLinkViewModel<SongContract>;
   public originalVersionSearchParams: SongAutoCompleteParams;
   public originalVersionSuggestions = ko.observableArray<SongContract>();
-  public publishDate: KnockoutObservable<Date>;
+  public publishDate: Observable<Date>;
   public pvs: PVListEditViewModel;
   public releaseEvent: BasicEntryLinkViewModel<ReleaseEventContract>;
-  public showLyricsNote: KnockoutComputed<boolean>;
-  public songType: KnockoutComputed<SongType>;
-  public songTypeStr: KnockoutObservable<string>;
-  public status: KnockoutObservable<string>;
+  public showLyricsNote: Computed<boolean>;
+  public songType: Computed<SongType>;
+  public songTypeStr: Observable<string>;
+  public status: Observable<string>;
   public submittedJson = ko.observable('');
   public submitting = ko.observable(false);
-  public suggestedPublishDate: KnockoutComputed<PotentialDate>;
+  public suggestedPublishDate: Computed<PotentialDate>;
   private tags: number[];
   public updateNotes = ko.observable('');
   public validationExpanded = ko.observable(false);
   public webLinks: WebLinksEditViewModel;
-  public hasMaxMilliBpm: KnockoutObservable<boolean>;
-  public minMilliBpm: KnockoutObservable<number>;
-  public maxMilliBpm: KnockoutObservable<number>;
-  public minBpm: KnockoutComputed<string>;
-  public maxBpm: KnockoutComputed<string>;
+  public hasMaxMilliBpm: Observable<boolean>;
+  public minMilliBpm: Observable<number>;
+  public maxMilliBpm: Observable<number>;
+  public minBpm: Computed<string>;
+  public maxBpm: Computed<string>;
 
   // Adds a new artist to the album
   // artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -221,17 +222,17 @@ export default class SongEditViewModel {
     return this.artistRoleNames[role];
   };
 
-  public hasValidationErrors: KnockoutComputed<boolean>;
-  public showInstrumentalNote: KnockoutComputed<boolean>;
-  public validationError_duplicateArtist: KnockoutComputed<boolean>;
-  public validationError_needArtist: KnockoutComputed<boolean>;
-  public validationError_needOriginal: KnockoutComputed<boolean>;
-  public validationError_needProducer: KnockoutComputed<boolean>;
-  public validationError_needReferences: KnockoutComputed<boolean>;
-  public validationError_needType: KnockoutComputed<boolean>;
-  public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
-  public validationError_redundantEvent: KnockoutComputed<boolean>;
-  public validationError_unspecifiedNames: KnockoutComputed<boolean>;
+  public hasValidationErrors: Computed<boolean>;
+  public showInstrumentalNote: Computed<boolean>;
+  public validationError_duplicateArtist: Computed<boolean>;
+  public validationError_needArtist: Computed<boolean>;
+  public validationError_needOriginal: Computed<boolean>;
+  public validationError_needProducer: Computed<boolean>;
+  public validationError_needReferences: Computed<boolean>;
+  public validationError_needType: Computed<boolean>;
+  public validationError_nonInstrumentalSongNeedsVocalists: Computed<boolean>;
+  public validationError_redundantEvent: Computed<boolean>;
+  public validationError_unspecifiedNames: Computed<boolean>;
 
   constructor(
     private songRepository: SongRepository,
@@ -291,9 +292,9 @@ export default class SongEditViewModel {
     this.tags = data.tags;
     this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
     this.hasMaxMilliBpm = ko.observable(data.maxMilliBpm! > data.minMilliBpm!);
-    this.minMilliBpm = ko.observable(data.minMilliBpm);
+    this.minMilliBpm = ko.observable(data.minMilliBpm!);
     this.maxMilliBpm = ko.observable(
-      data.maxMilliBpm! > data.minMilliBpm! ? data.maxMilliBpm : null!,
+      data.maxMilliBpm! > data.minMilliBpm! ? data.maxMilliBpm! : null!,
     );
 
     this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(

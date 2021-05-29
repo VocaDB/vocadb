@@ -2,6 +2,7 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -37,7 +38,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
       this.draftsOnly = ko.observable(false);
       this.searchTerm = ko.observable('');
       this.showTags = ko.observable(false);
-      this.tags = ko.observableArray([]);
+      this.tags = ko.observableArray<TagFilter>([]);
       this.childTags.subscribe(this.updateResultsWithTotalCount);
       this.draftsOnly.subscribe(this.updateResultsWithTotalCount);
       this.searchTerm.subscribe(this.updateResultsWithTotalCount);
@@ -54,7 +55,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
 
   public childTags = ko.observable(false);
 
-  public draftsOnly: KnockoutObservable<boolean>;
+  public draftsOnly: Observable<boolean>;
 
   public formatDate = (dateStr: string): string => {
     return moment(dateStr).utc().format('l');
@@ -76,17 +77,17 @@ export default class SearchCategoryBaseViewModel<TEntry>
   public paging = new ServerSidePagingViewModel(); // Paging view model
   public pauseNotifications = false;
 
-  public searchTerm: KnockoutObservable<string>;
+  public searchTerm: Observable<string>;
 
   public selectTag = (tag: TagBaseContract): void => {
     this.tags([TagFilter.fromContract(tag)]);
   };
 
-  public showTags: KnockoutObservable<boolean>;
+  public showTags: Observable<boolean>;
 
-  public tags: KnockoutObservableArray<TagFilter>;
+  public tags: ObservableArray<TagFilter>;
 
-  public tagIds: KnockoutComputed<number[]>;
+  public tagIds: Computed<number[]>;
 
   // Update results loading the first page and updating total number of items.
   // Commonly this is done after changing the filters or sorting.

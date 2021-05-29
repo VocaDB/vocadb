@@ -3,6 +3,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import ArtistFilters from './ArtistFilters';
@@ -87,12 +88,12 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
     };
   }
 
-  public albumType: KnockoutObservable<string>;
+  public albumType: Observable<string>;
   public artistFilters: ArtistFilters;
   private resourceManager: ResourcesManager;
-  public sort: KnockoutObservable<string>;
-  public sortName: KnockoutComputed<string>;
-  public viewMode: KnockoutObservable<string>;
+  public sort: Observable<string>;
+  public sortName: Computed<string>;
+  public viewMode: Observable<string>;
 
   public discTypeName = (discTypeStr: string): string =>
     this.resourceManager.resources().discTypeNames != null

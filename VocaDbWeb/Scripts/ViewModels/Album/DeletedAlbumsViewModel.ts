@@ -1,5 +1,6 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 

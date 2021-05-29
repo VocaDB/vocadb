@@ -6,6 +6,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
@@ -60,7 +61,7 @@ export default class ReleaseEventSeriesEditViewModel {
       });
   };
 
-  public defaultNameLanguage: KnockoutObservable<string>;
+  public defaultNameLanguage: Observable<string>;
   public description = ko.observable<string>();
   public duplicateName = ko.observable<string>();
   public names: NamesEditViewModel;

@@ -13,6 +13,7 @@ import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import { Options } from 'highcharts';
 import $ from 'jquery';
+import ko from 'knockout';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

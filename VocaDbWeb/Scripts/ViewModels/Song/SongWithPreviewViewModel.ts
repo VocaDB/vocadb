@@ -1,6 +1,7 @@
 import PVService from '@Models/PVs/PVService';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import ko, { Observable } from 'knockout';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 
@@ -10,15 +11,15 @@ export default class SongWithPreviewViewModel {
   public destroyPV: () => void;
 
   // Whether preview mode is active.
-  public preview: KnockoutObservable<boolean> = ko.observable(false);
+  public preview: Observable<boolean> = ko.observable(false);
 
   // PV player HTML.
-  public previewHtml: KnockoutObservable<string> = ko.observable(null!);
+  public previewHtml: Observable<string | null> = ko.observable(null!);
 
   public pvService = ko.observable<string>(null!);
 
   // View model for rating buttons.
-  public ratingButtons: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(
+  public ratingButtons: Observable<PVRatingButtonsViewModel | null> = ko.observable(
     null!,
   );
 

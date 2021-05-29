@@ -1,6 +1,7 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import ko, { Observable } from 'knockout';
 
 export default class RequestVerificationViewModel {
   constructor(private readonly artistRepository: ArtistRepository) {}
@@ -11,7 +12,7 @@ export default class RequestVerificationViewModel {
 
   public privateMessage = ko.observable(false);
 
-  public selectedArtist: KnockoutObservable<ArtistContract> = ko.observable(
+  public selectedArtist: Observable<ArtistContract | null> = ko.observable(
     null!,
   );
 

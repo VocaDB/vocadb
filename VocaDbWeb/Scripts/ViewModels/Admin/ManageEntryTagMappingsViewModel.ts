@@ -10,6 +10,7 @@ import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
+import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -116,7 +117,7 @@ export default class ManageEntryTagMappingsViewModel {
   public newEntrySubType = ko.observable('');
   public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
 
-  public entrySubTypes: KnockoutComputed<string[]> = ko.computed(
+  public entrySubTypes: Computed<string[]> = ko.computed(
     () =>
       _.find(
         this.entrySubTypesByType,

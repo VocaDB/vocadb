@@ -5,6 +5,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TagEditViewModel from '@ViewModels/TagEditViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 function initPage(): void {
   $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });

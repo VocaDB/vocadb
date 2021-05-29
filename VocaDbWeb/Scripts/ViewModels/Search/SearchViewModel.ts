@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed, Observable } from 'knockout';
 
 import PVPlayersFactory from '../PVs/PVPlayersFactory';
 import AlbumSearchViewModel from './AlbumSearchViewModel';
@@ -235,7 +236,7 @@ export default class SearchViewModel {
   public genreTags = ko.observableArray<TagBaseContract>();
   public pageSize = ko.observable(10);
   public resourcesManager: ResourcesManager;
-  public resources: KnockoutObservable<ResourcesContract>;
+  public resources: Observable<ResourcesContract>;
   public showAdvancedFilters = ko.observable(false);
   public searchTerm = ko
     .observable('')
@@ -243,13 +244,13 @@ export default class SearchViewModel {
   public searchType = ko.observable(SearchType.Anything);
   public tagFilters: TagFilters;
 
-  public showAnythingSearch: KnockoutComputed<boolean>;
-  public showArtistSearch: KnockoutComputed<boolean>;
-  public showAlbumSearch: KnockoutComputed<boolean>;
+  public showAnythingSearch: Computed<boolean>;
+  public showArtistSearch: Computed<boolean>;
+  public showAlbumSearch: Computed<boolean>;
   public showEventSearch = ko.computed(
     () => this.searchType() === SearchType.ReleaseEvent,
   );
-  public showSongSearch: KnockoutComputed<boolean>;
+  public showSongSearch: Computed<boolean>;
   public showTagSearch = ko.computed(
     () => this.searchType() === SearchType.Tag,
   );

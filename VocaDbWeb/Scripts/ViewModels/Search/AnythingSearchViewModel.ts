@@ -2,6 +2,7 @@ import EntryContract from '@DataContracts/EntryContract';
 import EntryType from '@Models/EntryType';
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';

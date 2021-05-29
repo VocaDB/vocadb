@@ -1,19 +1,20 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
+import ko, { Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
 export default class SongInAlbumEditViewModel {
-  public artists: KnockoutObservableArray<ArtistContract>;
+  public artists: ObservableArray<ArtistContract>;
 
-  public artistString: KnockoutObservable<string>;
+  public artistString: Observable<string>;
 
-  public discNumber: KnockoutObservable<number>;
+  public discNumber: Observable<number>;
 
   public isCustomTrack: boolean;
 
-  public isNextDisc: KnockoutObservable<boolean>;
+  public isNextDisc: Observable<boolean>;
 
-  public selected: KnockoutObservable<boolean>;
+  public selected: Observable<boolean>;
 
   public songAdditionalNames: string;
 
@@ -23,7 +24,7 @@ export default class SongInAlbumEditViewModel {
 
   public songName: string;
 
-  public trackNumber: KnockoutObservable<number>;
+  public trackNumber: Observable<number>;
 
   constructor(data: SongInAlbumEditContract) {
     this.artists = ko.observableArray(data.artists);

@@ -1,4 +1,5 @@
 import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import ko, { Observable } from 'knockout';
 
 export default class EntryPictureFileEditViewModel {
   constructor(data?: EntryPictureFileContract) {
@@ -16,6 +17,6 @@ export default class EntryPictureFileEditViewModel {
   public entryType!: string;
   public id!: number;
   public mime!: string;
-  public name: KnockoutObservable<string>;
+  public name: Observable<string>;
   public thumbUrl!: string;
 }

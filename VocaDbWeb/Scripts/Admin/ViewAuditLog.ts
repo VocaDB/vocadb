@@ -3,6 +3,7 @@ import ViewAuditLogViewModel, {
   ViewAuditLogContract,
 } from '@ViewModels/Admin/ViewAuditLogViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
   $(document).ready(function () {

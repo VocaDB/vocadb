@@ -1,6 +1,7 @@
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
+import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';

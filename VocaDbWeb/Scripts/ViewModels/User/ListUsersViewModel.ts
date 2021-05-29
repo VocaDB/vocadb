@@ -2,6 +2,7 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import ResourcesManager from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
+import ko, { Observable } from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
@@ -43,7 +44,7 @@ export default class ListUsersViewModel {
   public paging = new ServerSidePagingViewModel(20); // Paging view model
   public pauseNotifications = false;
   public resources: ResourcesManager;
-  public searchTerm: KnockoutObservable<string>;
+  public searchTerm: Observable<string>;
   public sort = ko.observable('RegisterDate');
 
   public userGroupName = (userGroup: string): string => {

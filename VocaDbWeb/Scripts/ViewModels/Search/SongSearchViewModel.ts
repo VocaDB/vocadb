@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -84,7 +85,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     if (onlyRatedSongs) this.onlyRatedSongs(onlyRatedSongs);
 
     this.minScore = ko
-      .observable(minScore || undefined)
+      .observable(minScore || undefined!)
       .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
     this.since = ko.observable(since);
     this.viewMode = ko.observable(viewMode || 'Details');
@@ -255,7 +256,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   public dateMonth = ko.observable<number>(null!);
   public dateYear = ko.observable<number>(null!);
   public releaseEvent: BasicEntryLinkViewModel<IEntryWithIdAndName>;
-  public minScore: KnockoutObservable<number>;
+  public minScore: Observable<number>;
   public onlyRatedSongs = ko.observable(false);
   public parentVersion: BasicEntryLinkViewModel<IEntryWithIdAndName>;
   public playListViewModel: PlayListViewModel;
@@ -263,20 +264,20 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   public pvsOnly = ko.observable(false);
   private pvServiceIcons: PVServiceIcons;
   private resourceManager: ResourcesManager;
-  public since: KnockoutObservable<number>;
+  public since: Observable<number>;
   public songType = ko.observable(SongType[SongType.Unspecified]);
   public sort = ko.observable('Name');
-  public sortName: KnockoutComputed<string>;
+  public sortName: Computed<string>;
   public unifyEntryTypesAndTags = ko.observable(false);
-  public viewMode: KnockoutObservable<string>;
-  public minMilliBpm: KnockoutObservable<number>;
-  public maxMilliBpm: KnockoutObservable<number>;
-  public minBpm: KnockoutComputed<string>;
-  public maxBpm: KnockoutComputed<string>;
-  public minLength: KnockoutObservable<number>;
-  public maxLength: KnockoutObservable<number>;
-  public minLengthFormatted: KnockoutComputed<string>;
-  public maxLengthFormatted: KnockoutComputed<string>;
+  public viewMode: Observable<string>;
+  public minMilliBpm: Observable<number>;
+  public maxMilliBpm: Observable<number>;
+  public minBpm: Computed<string>;
+  public maxBpm: Computed<string>;
+  public minLength: Observable<number>;
+  public maxLength: Observable<number>;
+  public minLengthFormatted: Computed<string>;
+  public maxLengthFormatted: Computed<string>;
 
   // Remember, JavaScript months start from 0 (who came up with that??)
   private toDateOrNull = (mom: moment.Moment): Date | null =>
@@ -287,7 +288,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       this.dateYear()
         ? this.toDateOrNull(
             moment.utc([
-              this.dateYear(),
+              this.dateYear()!,
               (this.dateMonth() || 1) - 1,
               this.dateDay() || 1,
             ]),
@@ -300,7 +301,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     if (!this.dateYear()) return null!;
 
     var mom = moment.utc([
-      this.dateYear(),
+      this.dateYear()!,
       (this.dateMonth() || 12) - 1,
       this.dateDay() || 1,
     ]);
@@ -310,7 +311,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     )!;
   };
 
-  public fields = ko.computed(() =>
+  public fields = ko.computed<string>(() =>
     this.showTags()
       ? 'AdditionalNames,ThumbUrl,Tags'
       : 'AdditionalNames,ThumbUrl',
@@ -322,7 +323,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
     return this.pvServiceIcons.getIconUrls(services);
   };
 
-  public showTags: KnockoutObservable<boolean>;
+  public showTags: Observable<boolean>;
 
   public showUnifyEntryTypesAndTags = ko.computed(
     () =>

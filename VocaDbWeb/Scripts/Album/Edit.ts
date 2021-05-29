@@ -6,6 +6,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel from '@ViewModels/Album/AlbumEditViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 import moment from 'moment';
 
 function initPage(): void {

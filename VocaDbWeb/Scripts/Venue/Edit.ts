@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import VenueEditViewModel from '@ViewModels/Venue/VenueEditViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

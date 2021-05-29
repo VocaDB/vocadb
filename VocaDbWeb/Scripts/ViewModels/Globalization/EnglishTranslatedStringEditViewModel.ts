@@ -1,4 +1,5 @@
 import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
+import ko, { Observable } from 'knockout';
 
 export default class EnglishTranslatedStringEditViewModel {
   constructor(contract: EnglishTranslatedStringContract) {
@@ -7,11 +8,11 @@ export default class EnglishTranslatedStringEditViewModel {
     this.showTranslation = ko.observable(contract && contract.english !== '');
   }
 
-  public english: KnockoutObservable<string>;
+  public english: Observable<string>;
 
-  public original: KnockoutObservable<string>;
+  public original: Observable<string>;
 
-  public showTranslation: KnockoutObservable<boolean>;
+  public showTranslation: Observable<boolean>;
 
   public toContract = (): EnglishTranslatedStringContract => {
     var contract: EnglishTranslatedStringContract = {

@@ -8,6 +8,7 @@ import ui from '@Shared/MessagesTyped';
 import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
+import ko from 'knockout';
 import _ from 'lodash';
 
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';

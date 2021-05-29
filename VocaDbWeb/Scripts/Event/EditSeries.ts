@@ -6,6 +6,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ReleaseEventSeriesEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 function initPage(): void {
   $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });

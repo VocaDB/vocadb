@@ -5,6 +5,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import NewsListViewModel from '@ViewModels/NewsListViewModel';
 import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
 import $ from 'jquery';
+import ko from 'knockout';
 
 declare global {
   interface JQuery {
