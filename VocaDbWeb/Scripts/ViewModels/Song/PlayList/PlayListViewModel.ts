@@ -24,7 +24,7 @@ export default class PlayListViewModel {
     private songRepo: SongRepository,
     private userRepo: UserRepository,
     private pvPlayerViewModel: PVPlayerViewModel,
-    private languageSelection: ContentLanguagePreference,
+    private lang: ContentLanguagePreference,
   ) {
     pvPlayerViewModel.nextSong = this.nextSong;
     pvPlayerViewModel.resetSong = (): void => {
@@ -177,7 +177,7 @@ export default class PlayListViewModel {
         SongOptionalField.AdditionalNames,
         SongOptionalField.ThumbUrl,
       ),
-      this.languageSelection,
+      this.lang,
       (result: PartialFindResultContract<ISongForPlayList>) => {
         this.pauseNotifications = false;
 

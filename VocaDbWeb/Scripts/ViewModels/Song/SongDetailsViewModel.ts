@@ -185,7 +185,7 @@ export default class SongDetailsViewModel {
     data: SongDetailsAjax,
     reportTypes: IEntryReportType[],
     loggedUserId: number,
-    private languagePreference: ContentLanguagePreference,
+    private lang: ContentLanguagePreference,
     canDeleteAllComments: boolean,
     ratingCallback: () => void,
   ) {

@@ -39,7 +39,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
       .getRatedSongsList(
         this.userId,
         paging,
-        ContentLanguagePreference[lang],
+        lang,
         this.query(),
         this.tagIds(),
         this.artistIds(),

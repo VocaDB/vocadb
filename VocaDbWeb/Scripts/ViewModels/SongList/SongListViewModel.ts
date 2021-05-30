@@ -44,7 +44,7 @@ export default class SongListViewModel {
     defaultSortRuleName: string,
     latestComments: CommentContract[],
     loggedUserId: number,
-    private languageSelection: ContentLanguagePreference,
+    private lang: ContentLanguagePreference,
     cultureCode: string,
     private listId: number,
     tagUsages: TagUsageForApiContract[],
@@ -101,7 +101,7 @@ export default class SongListViewModel {
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      languageSelection,
+      lang,
     );
     this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
@@ -221,7 +221,7 @@ export default class SongListViewModel {
         pagingProperties,
         new SongOptionalFields(fields),
         this.sort(),
-        this.languageSelection,
+        this.lang,
       )
       .then((result) => {
         _.each(result.items, (item) => {

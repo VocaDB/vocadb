@@ -1,3 +1,5 @@
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+
 interface VdbFunctionsStatic {
   boldCaseInsensitive: (text: string, term: string) => string;
 
@@ -26,7 +28,7 @@ interface VdbValuesStatic {
 
   loggedUserId: number;
 
-  languagePreference: number;
+  languagePreference: ContentLanguagePreference;
 
   culture: string;
 

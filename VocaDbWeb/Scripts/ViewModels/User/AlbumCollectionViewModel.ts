@@ -5,6 +5,7 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -22,7 +23,7 @@ export default class AlbumCollectionViewModel {
     private userRepo: UserRepository,
     private artistRepo: ArtistRepository,
     private resourceRepo: ResourceRepository,
-    private languageSelection: string,
+    private lang: ContentLanguagePreference,
     private loggedUserId: number,
     private cultureCode: string,
     public publicCollection: boolean,
@@ -135,7 +136,7 @@ export default class AlbumCollectionViewModel {
       .getAlbumCollectionList(
         this.loggedUserId,
         pagingProperties,
-        this.languageSelection,
+        this.lang,
         this.searchTerm(),
         this.tagId()!,
         this.albumType(),

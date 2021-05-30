@@ -2,6 +2,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -86,7 +87,9 @@ export default class ReleaseEventRepository extends BaseRepository {
       afterDate: this.getDate(queryParams.afterDate),
       beforeDate: this.getDate(queryParams.beforeDate),
       nameMatchMode: NameMatchMode[nameMatchMode],
-      lang: queryParams.lang,
+      lang: queryParams.lang
+        ? ContentLanguagePreference[queryParams.lang]
+        : undefined,
       sort: queryParams.sort,
     };
 

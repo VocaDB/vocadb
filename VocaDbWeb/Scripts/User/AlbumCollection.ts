@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -17,8 +16,7 @@ const UserAlbumCollection = (
 ): void => {
   $(document).ready(function () {
     var cultureCode = vdb.values.uiCulture;
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var loggedUserId = model.user.id;
 
     const httpClient = new HttpClient();
@@ -33,7 +31,7 @@ const UserAlbumCollection = (
       userRepo,
       artistRepo,
       resourceRepo,
-      languageSelection,
+      lang,
       loggedUserId,
       cultureCode,
       publicCollection,

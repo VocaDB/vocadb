@@ -1,4 +1,5 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -14,7 +15,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
   constructor(
     searchViewModel: SearchViewModel,
     private unknownPictureUrl: string,
-    lang: string,
+    lang: ContentLanguagePreference,
     private albumRepo: AlbumRepository,
     private artistRepo: ArtistRepository,
     resourceRep: ResourceRepository,

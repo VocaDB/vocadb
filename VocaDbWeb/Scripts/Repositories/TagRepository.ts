@@ -49,12 +49,12 @@ export default class TagRepository extends BaseRepository {
   public getById = (
     id: number,
     fields: string,
-    lang: string,
+    lang: ContentLanguagePreference,
   ): Promise<TagApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
     return this.httpClient.get<TagApiContract>(url, {
       fields: fields || undefined,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
     });
   };
 
@@ -95,7 +95,9 @@ export default class TagRepository extends BaseRepository {
       nameMatchMode: NameMatchMode[nameMatchMode],
       allowAliases: queryParams.allowAliases,
       categoryName: queryParams.categoryName,
-      lang: queryParams.lang,
+      lang: queryParams.lang
+        ? ContentLanguagePreference[queryParams.lang]
+        : undefined,
       sort: queryParams.sort,
     };
 
@@ -121,13 +123,13 @@ export default class TagRepository extends BaseRepository {
   };
 
   public getTopTags = (
-    lang: string,
+    lang: ContentLanguagePreference,
     categoryName?: string,
     entryType?: EntryType,
   ): Promise<TagBaseContract[]> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/tags/top');
     var data = {
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       categoryName: categoryName,
       entryType: entryType || undefined,
     };

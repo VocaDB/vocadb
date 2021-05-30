@@ -127,7 +127,7 @@ export default class ArtistRepository
 
   public getList = (
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     sort: string,
     artistTypes: string,
@@ -146,7 +146,7 @@ export default class ArtistRepository
       maxResults: paging.maxEntries,
       query: query,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
       artistTypes: artistTypes,

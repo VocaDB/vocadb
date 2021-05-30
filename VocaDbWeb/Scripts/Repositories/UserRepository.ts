@@ -14,6 +14,7 @@ import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryCo
 import AjaxHelper from '@Helpers/AjaxHelper';
 import { Tuple2 } from '@Helpers/HighchartsHelper';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
@@ -138,7 +139,7 @@ export default class UserRepository implements ICommentRepository {
   public getAlbumCollectionList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tag: number,
     albumType: string,
@@ -160,7 +161,7 @@ export default class UserRepository implements ICommentRepository {
       purchaseStatuses: purchaseStatuses,
       releaseEventId: releaseEventId || undefined,
       fields: 'AdditionalNames,MainPicture',
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
       advancedFilters: advancedFilters,
@@ -201,7 +202,7 @@ export default class UserRepository implements ICommentRepository {
   public getFollowedArtistsList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     tagIds: number[],
     artistType: string,
   ): Promise<PartialFindResultContract<ArtistForUserForApiContract>> => {
@@ -214,7 +215,7 @@ export default class UserRepository implements ICommentRepository {
       maxResults: paging.maxEntries,
       tagId: tagIds,
       fields: 'AdditionalNames,MainPicture',
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       artistType: artistType,
     };
@@ -311,7 +312,7 @@ export default class UserRepository implements ICommentRepository {
   public getRatedSongsList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tagIds: number[],
     artistIds: number[],
@@ -339,7 +340,7 @@ export default class UserRepository implements ICommentRepository {
       groupByRating: groupByRating,
       pvServices: pvServices,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
     };

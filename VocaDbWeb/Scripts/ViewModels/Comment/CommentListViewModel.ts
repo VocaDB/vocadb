@@ -2,6 +2,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import EntryContract from '@DataContracts/EntryContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager, { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
@@ -20,7 +21,7 @@ export default class CommentListViewModel {
   constructor(
     private urlMapper: UrlMapper,
     resourceRepo: ResourceRepository,
-    private languageSelection: string,
+    private lang: ContentLanguagePreference,
     cultureCode: string,
     private userId?: number,
   ) {
@@ -107,7 +108,7 @@ export default class CommentListViewModel {
       {
         fields: 'Entry',
         entryFields: 'AdditionalNames,MainPicture',
-        lang: this.languageSelection,
+        lang: ContentLanguagePreference[this.lang],
         before:
           sortRule === CommentSortRule.CreateDateDescending &&
           this.lastCommentDate

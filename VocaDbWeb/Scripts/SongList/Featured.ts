@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -24,8 +23,7 @@ const SongListFeatured = (
     var cultureCode = vdb.values.uiCulture;
     var tagIds = model.tagId;
 
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
@@ -37,7 +35,7 @@ const SongListFeatured = (
       songListRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       cultureCode,
       tagIds,
       categories,

@@ -31,7 +31,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   constructor(
     searchViewModel: SearchViewModel,
     urlMapper: UrlMapper,
-    lang: string,
+    lang: ContentLanguagePreference,
     private songRepo: SongRepository,
     private artistRepo: ArtistRepository,
     private userRepo: UserRepository,
@@ -177,7 +177,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[lang as keyof typeof ContentLanguagePreference],
+      lang,
     );
 
     this.loadResults = (

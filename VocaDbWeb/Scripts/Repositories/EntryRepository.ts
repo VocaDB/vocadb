@@ -1,6 +1,7 @@
 import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
@@ -22,7 +23,7 @@ export default class EntryRepository {
 
   getList = (
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tags: number[],
     childTags: boolean,
@@ -36,7 +37,7 @@ export default class EntryRepository {
       maxResults: paging.maxEntries,
       query: query,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       tagId: tags,
       childTags: childTags,

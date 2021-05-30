@@ -233,7 +233,7 @@ export default class SongRepository
 
   public getList = (
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     sort: string,
     songTypes: string,
@@ -268,7 +268,7 @@ export default class SongRepository
       maxResults: paging.maxEntries,
       query: query,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
       songTypes: songTypes,

@@ -66,7 +66,7 @@ export default class AlbumDetailsViewModel {
     data: AlbumDetailsAjax,
     reportTypes: IEntryReportType[],
     loggedUserId: number,
-    languagePreference: ContentLanguagePreference,
+    lang: ContentLanguagePreference,
     canDeleteAllComments: boolean,
     formatString: string,
     showTranslatedDescription: boolean,
@@ -92,15 +92,13 @@ export default class AlbumDetailsViewModel {
       data.personalDescriptionText!,
       artistRepository,
       (callback) => {
-        repo
-          .getOneWithComponents(this.id, 'Artists', languagePreference)
-          .then((result) => {
-            var artists = _.chain(result.artists!)
-              .filter(ArtistHelper.isValidForPersonalDescription)
-              .map((a) => a.artist)
-              .value();
-            callback(artists);
-          });
+        repo.getOneWithComponents(this.id, 'Artists', lang).then((result) => {
+          var artists = _.chain(result.artists!)
+            .filter(ArtistHelper.isValidForPersonalDescription)
+            .map((a) => a.artist)
+            .value();
+          callback(artists);
+        });
       },
       (vm) =>
         repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()),

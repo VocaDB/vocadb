@@ -142,7 +142,7 @@ export default class AlbumRepository
 
   getList = (
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     sort: string,
     discTypes: string,
@@ -164,7 +164,7 @@ export default class AlbumRepository
       maxResults: paging.maxEntries,
       query: query,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
       discTypes: discTypes,

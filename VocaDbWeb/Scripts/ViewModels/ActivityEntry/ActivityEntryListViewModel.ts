@@ -4,6 +4,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ArchivedVersionContract from '@DataContracts/Versioning/ArchivedVersionContract';
 import EntryEditEvent from '@Models/ActivityEntries/EntryEditEvent';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager from '@Models/ResourcesManager';
 import { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -23,7 +24,7 @@ export default class ActivityEntryListViewModel {
   constructor(
     private urlMapper: UrlMapper,
     resourceRepo: ResourceRepository,
-    private languageSelection: string,
+    private lang: ContentLanguagePreference,
     cultureCode: string,
     private userId?: number,
     additionsOnly?: boolean,
@@ -192,7 +193,7 @@ export default class ActivityEntryListViewModel {
       {
         fields: 'Entry,ArchivedVersion',
         entryFields: 'AdditionalNames,MainPicture',
-        lang: this.languageSelection,
+        lang: ContentLanguagePreference[this.lang],
         before:
           sortRule === ActivityEntrySortRule.CreateDateDescending &&
           this.lastEntryDate

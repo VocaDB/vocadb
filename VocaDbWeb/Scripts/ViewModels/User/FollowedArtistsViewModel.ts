@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -13,11 +14,11 @@ export default class FollowedArtistsViewModel {
     private userRepo: UserRepository,
     private resourceRepo: ResourceRepository,
     tagRepo: TagRepository,
-    private languageSelection: string,
+    private lang: ContentLanguagePreference,
     private loggedUserId: number,
     private cultureCode: string,
   ) {
-    this.tagFilters = new TagFilters(tagRepo, languageSelection);
+    this.tagFilters = new TagFilters(tagRepo, lang);
 
     this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
     this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
@@ -64,7 +65,7 @@ export default class FollowedArtistsViewModel {
       .getFollowedArtistsList(
         this.loggedUserId,
         pagingProperties,
-        this.languageSelection,
+        this.lang,
         this.tagFilters.tagIds(),
         this.artistType(),
       )

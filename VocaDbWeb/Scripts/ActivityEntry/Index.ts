@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -19,14 +18,13 @@ const ActivityEntryIndex = (): void => {
       httpClient,
       vdb.values.baseAddress,
     );
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var cultureCode = vdb.values.uiCulture;
 
     var vm = new ActivityEntryListViewModel(
       urlMapper,
       resourceRepo,
-      languageSelection,
+      lang,
       cultureCode,
     );
     ko.applyBindings(vm);
