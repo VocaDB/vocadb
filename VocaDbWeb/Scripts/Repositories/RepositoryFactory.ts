@@ -21,7 +21,6 @@ export default class RepositoryFactory {
     private readonly httpClient: HttpClient,
     private readonly urlMapper: UrlMapper,
     private readonly lang?: ContentLanguagePreference,
-    private readonly loggedUserId?: number,
   ) {}
 
   public adminRepository = (): AdminRepository => {
@@ -85,11 +84,7 @@ export default class RepositoryFactory {
   };
 
   public userRepository = (): UserRepository => {
-    return new UserRepository(
-      this.httpClient,
-      this.urlMapper,
-      this.loggedUserId,
-    );
+    return new UserRepository(this.httpClient, this.urlMapper);
   };
 
   public venueRepository = (): VenueRepository => {

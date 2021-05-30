@@ -4,6 +4,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -40,15 +41,17 @@ export default class PVPlayerViewModel {
         return;
       }
 
-      userRepo.getSongRating(null!, song.song.id).then((rating) => {
-        this.ratingButtonsViewModel(
-          new PVRatingButtonsViewModel(
-            userRepo,
-            { id: song.song.id, vote: rating },
-            ui.showThankYouForRatingMessage,
-          ),
-        );
-      });
+      userRepo
+        .getSongRating(vdb.values.loggedUserId, song.song.id)
+        .then((rating) => {
+          this.ratingButtonsViewModel(
+            new PVRatingButtonsViewModel(
+              userRepo,
+              { id: song.song.id, vote: rating },
+              ui.showThankYouForRatingMessage,
+            ),
+          );
+        });
 
       // Use current player
       if (

@@ -35,7 +35,6 @@ const SongListDetails = (
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      vdb.values.loggedUserId,
     );
     var userRepo = repoFactory.userRepository();
     var songRepo = repoFactory.songRepository();

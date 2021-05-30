@@ -170,7 +170,6 @@ const AlbumDetails = (
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      vdb.values.loggedUserId,
     );
     var albumRepo = repoFactory.albumRepository();
     var userRepo = repoFactory.userRepository();

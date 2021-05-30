@@ -16,11 +16,10 @@ const EventSeriesDetails = (model: {
     $('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
     $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 
-    var loggedUserId = vdb.values.loggedUserId;
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var userRepo = new UserRepository(httpClient, urlMapper, loggedUserId);
+    var userRepo = new UserRepository(httpClient, urlMapper);
     var tags = model.tags;
 
     var vm = new EventSeriesDetailsViewModel(userRepo, model.id, tags);

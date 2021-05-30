@@ -18,7 +18,6 @@ const SongRankings = (): void => {
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      vdb.values.loggedUserId,
     );
     var songRepo = repoFactory.songRepository();
     var userRepo = repoFactory.userRepository();

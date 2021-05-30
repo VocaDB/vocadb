@@ -60,10 +60,13 @@ export function setLanguagePreferenceCookie(
   var userRepo = new UserRepository(
     httpClient,
     new UrlMapper(vdb.values.baseAddress),
-    0,
   );
   userRepo
-    .updateUserSetting(null!, 'languagePreference', languagePreference)
+    .updateUserSetting(
+      vdb.values.loggedUserId,
+      'languagePreference',
+      languagePreference,
+    )
     .then(() => {
       window.location.reload();
     });

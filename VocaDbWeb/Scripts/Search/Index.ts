@@ -67,7 +67,6 @@ const SearchIndex = (model: {
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      loggedUserId,
     );
     var resourceRepo = repoFactory.resourceRepository();
     var entryRepo = repoFactory.entryRepository();

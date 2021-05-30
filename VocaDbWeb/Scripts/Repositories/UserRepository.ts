@@ -38,7 +38,6 @@ export default class UserRepository implements ICommentRepository {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly urlMapper: UrlMapper,
-    private loggedUserId?: number,
   ) {
     this.mapUrl = (relative: string): string => {
       return `${urlMapper.mapRelative('/User')}${relative}`;
@@ -296,9 +295,7 @@ export default class UserRepository implements ICommentRepository {
     anotherUserId?: number,
     iconSize: number = 40,
   ): Promise<PartialFindResultContract<UserMessageSummaryContract>> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/${userId || this.loggedUserId}/messages`,
-    );
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/messages`);
     return this.httpClient.get<
       PartialFindResultContract<UserMessageSummaryContract>
     >(url, {
@@ -385,12 +382,10 @@ export default class UserRepository implements ICommentRepository {
   };
 
   // Gets a specific user's rating for a specific song.
-  // userId: User ID. Can be null, in which case the logged user will be used (if any).
+  // userId: User ID.
   // songId: ID of the song for which to get the rating. Cannot be null.
   // callback: Callback receiving the rating. If the user has not rated the song, or if the user is not logged in, this will be "Nothing".
   public getSongRating = (userId: number, songId: number): Promise<string> => {
-    userId = userId || this.loggedUserId!;
-
     if (!userId) {
       return Promise.resolve('Nothing');
     }
@@ -593,7 +588,7 @@ export default class UserRepository implements ICommentRepository {
   };
 
   // Updates user setting.
-  // userId: user ID. Can be null in which case logged user ID (if any) will be used.
+  // userId: user ID.
   // settingName: name of the setting to be updated, for example 'showChatBox'.
   // value: setting value, for example 'false'.
   public updateUserSetting = (
@@ -602,7 +597,7 @@ export default class UserRepository implements ICommentRepository {
     value: string,
   ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
-      `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
+      `/api/users/${userId}/settings/${settingName}`,
     );
     return this.httpClient.post<void>(url, `"${value}"`, {
       headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },

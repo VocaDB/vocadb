@@ -63,7 +63,6 @@ const UserDetails = (
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      vdb.values.loggedUserId,
     );
     var adminRepo = repoFactory.adminRepository();
     var userRepo = repoFactory.userRepository();

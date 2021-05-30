@@ -33,7 +33,6 @@ const SongListFeatured = (
       httpClient,
       urlMapper,
       vdb.values.languagePreference,
-      vdb.values.loggedUserId,
     );
     var songListRepo = repoFactory.songListRepository();
     var resourceRepo = repoFactory.resourceRepository();
