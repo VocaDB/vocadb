@@ -55,7 +55,7 @@ export default class FakeSongRepository extends SongRepository {
     this.getOneWithComponents = (
       id,
       fields,
-      languagePreference,
+      lang,
     ): Promise<SongApiContract> => {
       return FakePromise.resolve(this.song);
     };

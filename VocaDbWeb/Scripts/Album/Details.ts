@@ -166,11 +166,7 @@ const AlbumDetails = (
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient, urlMapper);
     var albumRepo = repoFactory.albumRepository();
     var userRepo = repoFactory.userRepository();
     var artistRepo = repoFactory.artistRepository();

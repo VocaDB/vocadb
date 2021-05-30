@@ -27,12 +27,8 @@ export default class ArtistRepository
 
   private readonly urlMapper: UrlMapper;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    lang?: ContentLanguagePreference,
-  ) {
-    super(baseUrl, lang);
+  constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+    super(baseUrl);
 
     this.urlMapper = new UrlMapper(baseUrl);
 
@@ -106,22 +102,26 @@ export default class ArtistRepository
     return this.httpClient.get<ArtistForEditContract>(url);
   };
 
-  public getOne = (id: number): Promise<ArtistContract> => {
+  public getOne = (
+    id: number,
+    lang: ContentLanguagePreference,
+  ): Promise<ArtistContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
     return this.httpClient.get<ArtistContract>(url, {
       fields: 'AdditionalNames',
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 
   public getOneWithComponents = (
     id: number,
     fields: string,
+    lang: ContentLanguagePreference,
   ): Promise<ArtistApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
     return this.httpClient.get<ArtistApiContract>(url, {
       fields: fields,
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 

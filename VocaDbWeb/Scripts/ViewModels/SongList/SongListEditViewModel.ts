@@ -7,6 +7,7 @@ import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
@@ -44,15 +45,17 @@ export default class SongListEditViewModel {
   private acceptSongSelection = (songId?: number): void => {
     if (!songId) return;
 
-    this.songRepo.getOne(songId).then((song: SongContract) => {
-      var songInList = new SongInListEditViewModel({
-        songInListId: 0,
-        order: 0,
-        notes: '',
-        song: song,
+    this.songRepo
+      .getOne(songId, vdb.values.languagePreference)
+      .then((song: SongContract) => {
+        var songInList = new SongInListEditViewModel({
+          songInListId: 0,
+          order: 0,
+          notes: '',
+          song: song,
+        });
+        this.songLinks.push(songInList);
       });
-      this.songLinks.push(songInList);
-    });
   };
 
   public currentName!: string;

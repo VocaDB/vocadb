@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
@@ -20,7 +19,6 @@ export default class RepositoryFactory {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly urlMapper: UrlMapper,
-    private readonly lang?: ContentLanguagePreference,
   ) {}
 
   public adminRepository = (): AdminRepository => {
@@ -28,19 +26,11 @@ export default class RepositoryFactory {
   };
 
   public albumRepository = (): AlbumRepository => {
-    return new AlbumRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new AlbumRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
   public artistRepository = (): ArtistRepository => {
-    return new ArtistRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new ArtistRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
   public discussionRepository = (): DiscussionRepository => {
@@ -68,19 +58,11 @@ export default class RepositoryFactory {
   };
 
   public songRepository = (): SongRepository => {
-    return new SongRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new SongRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
   public tagRepository = (): TagRepository => {
-    return new TagRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new TagRepository(this.httpClient, this.urlMapper.baseUrl);
   };
 
   public userRepository = (): UserRepository => {

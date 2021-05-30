@@ -30,12 +30,8 @@ export default class AlbumRepository
 
   private readonly urlMapper: UrlMapper;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    languagePreference = ContentLanguagePreference.Default,
-  ) {
-    super(baseUrl, languagePreference);
+  constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+    super(baseUrl);
 
     this.urlMapper = new UrlMapper(baseUrl);
 
@@ -121,23 +117,26 @@ export default class AlbumRepository
     return this.httpClient.get<AlbumForEditContract>(url);
   };
 
-  public getOne = (id: number): Promise<AlbumContract> => {
+  public getOne = (
+    id: number,
+    lang: ContentLanguagePreference,
+  ): Promise<AlbumContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
     return this.httpClient.get<AlbumContract>(url, {
       fields: 'AdditionalNames',
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 
   public getOneWithComponents = (
     id: number,
     fields: string,
-    languagePreference: string,
+    lang: ContentLanguagePreference,
   ): Promise<AlbumForApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
     return this.httpClient.get<AlbumForApiContract>(url, {
       fields: fields,
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 

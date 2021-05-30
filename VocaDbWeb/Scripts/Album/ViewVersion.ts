@@ -23,11 +23,7 @@ const AlbumViewVersion = (model: {
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
     const httpClient = new HttpClient();
-    var rep = new AlbumRepository(
-      httpClient,
-      vdb.values.baseAddress,
-      vdb.values.languagePreference,
-    );
+    var rep = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
     var viewModel = new ArchivedAlbumViewModel(
       model.album.id,

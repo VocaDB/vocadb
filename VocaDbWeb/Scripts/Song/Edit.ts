@@ -55,11 +55,7 @@ const SongEdit = (
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient, urlMapper);
     var songRepo = repoFactory.songRepository();
     var artistRepo = repoFactory.artistRepository();
     var pvRepo = repoFactory.pvRepository();

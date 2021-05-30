@@ -2,6 +2,7 @@ import SongContract from '@DataContracts/Song/SongContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import SongRepository from '@Repositories/SongRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -10,7 +11,8 @@ export default class SongMergeViewModel {
   constructor(songRepo: SongRepository, private base: SongContract) {
     this.target = new BasicEntryLinkViewModel<SongContract>(
       null!,
-      (entryId, callback) => songRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        songRepo.getOne(entryId, vdb.values.languagePreference).then(callback),
     );
 
     this.targetSearchParams = {

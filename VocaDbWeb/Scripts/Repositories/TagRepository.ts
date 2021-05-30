@@ -19,12 +19,8 @@ import EntryCommentRepository from './EntryCommentRepository';
 export default class TagRepository extends BaseRepository {
   private readonly urlMapper: UrlMapper;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    lang?: ContentLanguagePreference,
-  ) {
-    super(baseUrl, lang);
+  constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+    super(baseUrl);
     this.urlMapper = new UrlMapper(baseUrl);
   }
 
@@ -71,7 +67,8 @@ export default class TagRepository extends BaseRepository {
 
   public getEntryTypeTag = (
     entryType: EntryType,
-    subType: string = '',
+    subType: string,
+    lang: ContentLanguagePreference,
   ): Promise<TagApiContract> => {
     var url = functions.mergeUrls(
       this.baseUrl,
@@ -79,7 +76,7 @@ export default class TagRepository extends BaseRepository {
     );
     return this.httpClient.get<TagApiContract>(url, {
       fields: 'Description',
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 

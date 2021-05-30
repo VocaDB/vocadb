@@ -13,7 +13,6 @@ const SongCreate = (model: any): void => {
     var repoFactory = new RepositoryFactory(
       httpClient,
       new UrlMapper(vdb.values.baseAddress),
-      vdb.values.languagePreference,
     );
     var repo = repoFactory.songRepository();
     var artistRepo = repoFactory.artistRepository();

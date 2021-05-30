@@ -23,11 +23,7 @@ const SongViewVersion = (model: {
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
     const httpClient = new HttpClient();
-    var rep = new SongRepository(
-      httpClient,
-      vdb.values.baseAddress,
-      vdb.values.languagePreference,
-    );
+    var rep = new SongRepository(httpClient, vdb.values.baseAddress);
 
     var viewModel = new ArchivedSongViewModel(
       model.song.id,

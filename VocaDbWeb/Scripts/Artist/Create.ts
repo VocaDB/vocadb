@@ -13,7 +13,6 @@ const ArtistCreate = (model: any): void => {
     var repoFactory = new RepositoryFactory(
       httpClient,
       new UrlMapper(vdb.values.baseAddress),
-      vdb.values.languagePreference,
     );
     var repo = repoFactory.artistRepository();
     var tagRepo = repoFactory.tagRepository();

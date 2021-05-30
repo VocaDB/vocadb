@@ -39,9 +39,11 @@ export default class ArtistEditViewModel {
 
   private addGroup = (artistId?: number): void => {
     if (artistId) {
-      this.artistRepo.getOne(artistId).then((artist: ArtistContract) => {
-        this.groups.push({ id: 0, parent: artist });
-      });
+      this.artistRepo
+        .getOne(artistId, vdb.values.languagePreference)
+        .then((artist: ArtistContract) => {
+          this.groups.push({ id: 0, parent: artist });
+        });
     }
   };
 
@@ -196,7 +198,10 @@ export default class ArtistEditViewModel {
     );
     this.baseVoicebank = new BasicEntryLinkViewModel(
       data.baseVoicebank,
-      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        artistRepo
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
     this.description = new EnglishTranslatedStringEditViewModel(
       data.description,
@@ -206,12 +211,18 @@ export default class ArtistEditViewModel {
     this.id = data.id;
     this.illustrator = new BasicEntryLinkViewModel(
       data.illustrator,
-      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        artistRepo
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
     this.names = NamesEditViewModel.fromContracts(data.names);
     this.newAssociatedArtist = new BasicEntryLinkViewModel<ArtistContract>(
       null!,
-      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        artistRepo
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
     this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
     this.releaseDate = ko.observable(
@@ -220,7 +231,10 @@ export default class ArtistEditViewModel {
     this.status = ko.observable(data.status);
     this.voiceProvider = new BasicEntryLinkViewModel(
       data.voiceProvider,
-      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        artistRepo
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
     this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 

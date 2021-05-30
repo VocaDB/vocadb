@@ -12,7 +12,6 @@ const ArtistMerge = (model: { id: number }): void => {
     var repoFactory = new RepositoryFactory(
       httpClient,
       new UrlMapper(vdb.values.baseAddress),
-      vdb.values.languagePreference,
     );
     var repo = repoFactory.artistRepository();
     var vm = new ArtistMergeViewModel(repo, model.id);

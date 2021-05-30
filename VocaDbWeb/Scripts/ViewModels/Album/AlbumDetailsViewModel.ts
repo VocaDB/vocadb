@@ -93,11 +93,7 @@ export default class AlbumDetailsViewModel {
       artistRepository,
       (callback) => {
         repo
-          .getOneWithComponents(
-            this.id,
-            'Artists',
-            ContentLanguagePreference[languagePreference],
-          )
+          .getOneWithComponents(this.id, 'Artists', languagePreference)
           .then((result) => {
             var artists = _.chain(result.artists!)
               .filter(ArtistHelper.isValidForPersonalDescription)

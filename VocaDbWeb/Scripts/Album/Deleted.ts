@@ -8,11 +8,7 @@ import ko from 'knockout';
 const AlbumDeleted = (): void => {
   $(function () {
     const httpClient = new HttpClient();
-    var repo = new AlbumRepository(
-      httpClient,
-      vdb.values.baseAddress,
-      vdb.values.languagePreference,
-    );
+    var repo = new AlbumRepository(httpClient, vdb.values.baseAddress);
     var viewModel = new DeletedAlbumsViewModel(repo);
     ko.applyBindings(viewModel);
   });

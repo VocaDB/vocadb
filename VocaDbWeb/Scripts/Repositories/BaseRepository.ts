@@ -6,15 +6,7 @@ export default class BaseRepository {
     return date ? date.toISOString() : undefined;
   }
 
-  // todo: protected
-  public languagePreferenceStr: string;
-
-  constructor(
-    public baseUrl: string,
-    languagePreference = ContentLanguagePreference.Default,
-  ) {
-    this.languagePreferenceStr = ContentLanguagePreference[languagePreference];
-  }
+  constructor(public baseUrl: string) {}
 }
 
 // Common parameters for entry queries (listings).

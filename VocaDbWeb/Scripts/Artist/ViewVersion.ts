@@ -23,11 +23,7 @@ const ArtistViewVersion = (model: {
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
     const httpClient = new HttpClient();
-    var rep = new ArtistRepository(
-      httpClient,
-      vdb.values.baseAddress,
-      vdb.values.languagePreference,
-    );
+    var rep = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
     var viewModel = new ArchivedArtistViewModel(
       model.artist.id,

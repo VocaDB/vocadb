@@ -1,5 +1,7 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
@@ -33,7 +35,7 @@ export default class DeletedAlbumsViewModel {
     this.albumRepo
       .getList(
         pagingProperties,
-        this.albumRepo.languagePreferenceStr,
+        ContentLanguagePreference[vdb.values.languagePreference],
         this.searchTerm(),
         'Name',
         undefined!,

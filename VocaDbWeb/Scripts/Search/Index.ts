@@ -63,11 +63,7 @@ const SearchIndex = (model: {
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient, urlMapper);
     var resourceRepo = repoFactory.resourceRepository();
     var entryRepo = repoFactory.entryRepository();
     var artistRepo = repoFactory.artistRepository();

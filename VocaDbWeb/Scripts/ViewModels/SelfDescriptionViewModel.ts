@@ -1,6 +1,7 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
@@ -17,7 +18,11 @@ export default class SelfDescriptionViewModel {
       author,
       (artistId, callback) => {
         artistRepo
-          .getOneWithComponents(artistId, 'MainPicture')
+          .getOneWithComponents(
+            artistId,
+            'MainPicture',
+            vdb.values.languagePreference,
+          )
           .then((artist) => {
             callback(artist);
           });

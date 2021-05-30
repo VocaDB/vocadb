@@ -34,12 +34,8 @@ export default class SongRepository
   implements ICommentRepository {
   private readonly urlMapper: UrlMapper;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    baseUrl: string,
-    languagePreference = ContentLanguagePreference.Default,
-  ) {
-    super(baseUrl, languagePreference);
+  constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+    super(baseUrl);
 
     this.urlMapper = new UrlMapper(baseUrl);
 
@@ -166,13 +162,14 @@ export default class SongRepository
   public getByNames(
     names: string[],
     ignoreIds: number[],
+    lang: ContentLanguagePreference,
     songTypes?: SongType[],
   ): Promise<SongApiContract[]> {
     const url = functions.mergeUrls(this.baseUrl, '/api/songs/by-names');
     return this.httpClient.get<SongApiContract[]>(url, {
       names: names,
       songTypes: songTypes,
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
       ignoreIds: ignoreIds,
     });
   }
@@ -204,20 +201,23 @@ export default class SongRepository
   public getOneWithComponents = (
     id: number,
     fields: string,
-    languagePreference: string,
+    lang: ContentLanguagePreference,
   ): Promise<SongApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
     return this.httpClient.get<SongApiContract>(url, {
       fields: fields,
-      lang: languagePreference || this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 
-  public getOne = (id: number): Promise<SongContract> => {
+  public getOne = (
+    id: number,
+    lang: ContentLanguagePreference,
+  ): Promise<SongContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
     return this.httpClient.get<SongContract>(url, {
       fields: 'AdditionalNames',
-      lang: this.languagePreferenceStr,
+      lang: ContentLanguagePreference[lang],
     });
   };
 

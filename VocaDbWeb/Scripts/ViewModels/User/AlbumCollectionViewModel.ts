@@ -9,6 +9,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import _ from 'lodash';
 
@@ -112,7 +113,7 @@ export default class AlbumCollectionViewModel {
   public selectArtist = (selectedArtistId?: number): void => {
     this.artistId(selectedArtistId!);
     this.artistRepo
-      .getOne(selectedArtistId!)
+      .getOne(selectedArtistId!, vdb.values.languagePreference)
       .then((artist) => this.artistName(artist.name));
   };
 
