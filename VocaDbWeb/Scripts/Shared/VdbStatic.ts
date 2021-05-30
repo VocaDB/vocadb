@@ -42,7 +42,12 @@ interface VdbStatic {
   values: VdbValuesStatic;
 }
 
-const vdb = {} as VdbStatic;
+const vdb = {
+  values: {
+    loggedUserId: 0,
+    languagePreference: ContentLanguagePreference.Default,
+  },
+} as VdbStatic;
 
 export default vdb;
 
