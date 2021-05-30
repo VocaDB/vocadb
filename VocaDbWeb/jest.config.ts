@@ -1,6 +1,8 @@
 import type { Config } from '@jest/types';
 import { pathsToModuleNameMapper } from 'ts-jest/utils';
 
+// `resolveJsonModule` in `tsconfig.json` needs to be set to `true`, so that `tsconfig.json` can be imported.
+// See also: https://github.com/VocaDB/vocadb/pull/885
 import { compilerOptions } from './tsconfig.json';
 
 const config: Config.InitialOptions = {
