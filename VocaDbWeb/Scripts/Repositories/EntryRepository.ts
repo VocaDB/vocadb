@@ -10,16 +10,10 @@ import HttpClient from '@Shared/HttpClient';
 export default class EntryRepository {
   // Maps a relative URL to an absolute one.
   private mapUrl = (relative: string): string => {
-    return functions.mergeUrls(
-      functions.mergeUrls(this.baseUrl, '/api/entries'),
-      relative,
-    );
+    return functions.mergeUrls('/api/entries', relative);
   };
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private baseUrl: string,
-  ) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   getList = (
     paging: PagingProperties,
@@ -30,7 +24,6 @@ export default class EntryRepository {
     fields: string,
     status: string,
   ): Promise<PartialFindResultContract<EntryContract>> => {
-    var url = this.mapUrl('');
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -45,7 +38,7 @@ export default class EntryRepository {
     };
 
     return this.httpClient.get<PartialFindResultContract<EntryContract>>(
-      url,
+      this.mapUrl(''),
       data,
     );
   };

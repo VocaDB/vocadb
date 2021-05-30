@@ -15,7 +15,7 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+    var repoFactory = new RepositoryFactory(httpClient);
     var repo = repoFactory.discussionRepository();
     ko.applyBindings(
       new DiscussionIndexViewModel(

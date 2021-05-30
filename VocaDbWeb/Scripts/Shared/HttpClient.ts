@@ -23,8 +23,10 @@ export interface HttpClientError<T = ErrorResponse> extends Error {
 }
 
 export default class HttpClient {
+  public baseUrl?: string;
+
   public delete = async <T>(url: string): Promise<T> => {
-    const response = await axios.delete<T>(url);
+    const response = await axios.delete<T>(url, { baseURL: this.baseUrl });
     return response.data;
   };
 
@@ -33,6 +35,7 @@ export default class HttpClient {
       params: data,
       // HACK: This is required for advanced search filters.
       paramsSerializer: AjaxHelper.stringify,
+      baseURL: this.baseUrl,
     });
     return response.data;
   };
@@ -42,12 +45,15 @@ export default class HttpClient {
     data?: any,
     config?: { headers?: any },
   ): Promise<T> => {
-    const response = await axios.post<T>(url, data, config);
+    const response = await axios.post<T>(url, data, {
+      baseURL: this.baseUrl,
+      ...config,
+    });
     return response.data;
   };
 
   public put = async <T>(url: string, data?: any): Promise<T> => {
-    const response = await axios.put<T>(url, data);
+    const response = await axios.put<T>(url, data, { baseURL: this.baseUrl });
     return response.data;
   };
 }

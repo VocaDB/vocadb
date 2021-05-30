@@ -33,7 +33,7 @@ const ArtistEdit = (
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+    var repoFactory = new RepositoryFactory(httpClient);
     var artistRepo = repoFactory.artistRepository();
     var userRepo = repoFactory.userRepository();
     var editedModel = model.editedArtist;

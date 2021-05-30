@@ -19,8 +19,8 @@ const TagEdit = (model: { id: number }): void => {
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-    var userRepo = new UserRepository(httpClient, urlMapper);
+    var tagRepo = new TagRepository(httpClient);
+    var userRepo = new UserRepository(httpClient);
 
     tagRepo
       .getById(

@@ -5,8 +5,6 @@ export default class BaseRepository {
   protected getDate(date?: Date): string | undefined {
     return date ? date.toISOString() : undefined;
   }
-
-  constructor(public baseUrl: string) {}
 }
 
 // Common parameters for entry queries (listings).

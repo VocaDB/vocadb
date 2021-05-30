@@ -2,8 +2,6 @@ import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageCont
 import WebLinkContract from '@DataContracts/WebLinkContract';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -19,8 +17,7 @@ const UserMySettings = (model: {
     $('#tabs').tabs();
 
     const httpClient = new HttpClient();
-    var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repository = new UserRepository(httpClient, urlMapper);
+    var repository = new UserRepository(httpClient);
 
     var viewModel = new MySettingsViewModel(
       repository,
