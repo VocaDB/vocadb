@@ -123,11 +123,15 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteMessages = (userId: number, messageIds: number[]): void => {
-    AjaxHelper.deleteJSON_Url(
-      `/api/users/${userId}/messages`,
-      'messageId',
-      messageIds,
+  public deleteMessages = (
+    userId: number,
+    messageIds: number[],
+  ): Promise<void> => {
+    var dataParamName = 'messageId';
+    var dataParam =
+      '?' + dataParamName + '=' + messageIds.join('&' + dataParamName + '=');
+    return this.httpClient.delete<void>(
+      `/api/users/${userId}/messages${dataParam}`,
     );
   };
 

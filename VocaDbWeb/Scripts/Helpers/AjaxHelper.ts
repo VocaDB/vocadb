@@ -23,17 +23,6 @@ export default class AjaxHelper {
     return query;
   };
 
-  public static deleteJSON_Url = (
-    url: string,
-    dataParamName: string,
-    data: any[],
-    success?: any,
-  ): void => {
-    var dataParam =
-      '?' + dataParamName + '=' + data.join('&' + dataParamName + '=');
-    $.ajax(url + dataParam, { type: 'DELETE', success: success });
-  };
-
   public static stringify = (params: any): string => {
     // HACK: Removes undefined.
     // Code from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript/30386744#30386744
