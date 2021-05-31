@@ -3,6 +3,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import FollowedArtistsViewModel from '@ViewModels/User/FollowedArtistsViewModel';
@@ -57,7 +58,7 @@ const UserDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var adminRepo = repoFactory.adminRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

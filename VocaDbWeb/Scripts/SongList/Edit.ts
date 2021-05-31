@@ -1,7 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import SongListEditViewModel from '@ViewModels/SongList/SongListEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -31,9 +31,8 @@ function initPage(
 
 const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		initPage(repoFactory, urlMapper, model.id);
 	});
 };

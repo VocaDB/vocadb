@@ -2,9 +2,9 @@ import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -31,9 +31,8 @@ const ArtistEdit = (
 			saveWarning: saveWarning,
 		};
 
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		var userRepo = repoFactory.userRepository();
 		var editedModel = model.editedArtist;

@@ -1,6 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -18,8 +18,7 @@ const UserAlbumCollection = (
 		var lang = vdb.values.languagePreference;
 		var loggedUserId = model.user.id;
 
-		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var resourceRepo = repoFactory.resourceRepository();

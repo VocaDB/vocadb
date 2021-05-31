@@ -2,9 +2,9 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
@@ -96,8 +96,7 @@ const ArtistDetails = (
 		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
-		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		var albumRepository = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();

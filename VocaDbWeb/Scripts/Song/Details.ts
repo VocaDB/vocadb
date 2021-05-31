@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import SongDetailsViewModel, {
 	SongDetailsAjax,
@@ -99,7 +100,7 @@ const SongDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

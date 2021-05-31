@@ -1,8 +1,8 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SearchViewModel from '@ViewModels/Search/SearchViewModel';
 import $ from 'jquery';
@@ -58,10 +58,9 @@ const SearchIndex = (model: {
 		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = functions.mapAbsoluteUrl('/Content/unknown.png');
 
-		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var resourceRepo = repoFactory.resourceRepository();
 		var entryRepo = repoFactory.entryRepository();
 		var artistRepo = repoFactory.artistRepository();

@@ -1,7 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import DiscussionIndexViewModel from '@ViewModels/Discussion/DiscussionIndexViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -13,9 +13,8 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 
 		ko.punches.enableAll();
 
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
 			new DiscussionIndexViewModel(

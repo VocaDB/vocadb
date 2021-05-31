@@ -2,9 +2,9 @@ import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import AlbumEditViewModel from '@ViewModels/Album/AlbumEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -43,11 +43,10 @@ const AlbumEdit = (
 			saveWarning: saveWarning,
 		};
 
-		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

@@ -1,13 +1,12 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
+import { container } from '@Shared/inversify.config';
 import AlbumCreateViewModel from '@ViewModels/Album/AlbumCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
 const AlbumCreate = (): void => {
 	$(function () {
-		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var artistRepo = repoFactory.artistRepository();
 

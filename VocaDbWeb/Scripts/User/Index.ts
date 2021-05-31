@@ -1,6 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ListUsersViewModel from '@ViewModels/User/ListUsersViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -14,8 +14,7 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 
 		var filter = model.filter;
 		var groupId = model.groupId;
-		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(
