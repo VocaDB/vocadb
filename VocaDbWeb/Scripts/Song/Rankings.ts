@@ -14,12 +14,7 @@ const SongRankings = (): void => {
   $(function () {
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-      vdb.values.loggedUserId,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var songRepo = repoFactory.songRepository();
     var userRepo = repoFactory.userRepository();
     var viewModel = new RankingsViewModel(

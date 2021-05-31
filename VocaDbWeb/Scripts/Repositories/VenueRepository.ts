@@ -2,18 +2,13 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 
 export default class VenueRepository extends BaseRepository {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly urlMapper: UrlMapper,
-  ) {
-    super(urlMapper.baseUrl);
+  constructor(private readonly httpClient: HttpClient) {
+    super();
   }
 
   public createReport = (
@@ -22,15 +17,13 @@ export default class VenueRepository extends BaseRepository {
     notes: string,
     versionNumber: number,
   ): Promise<void> => {
-    var url = functions.mergeUrls(
-      this.baseUrl,
+    return this.httpClient.post<void>(
       `/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
         reportType: [reportType],
         notes: [notes],
         versionNumber: [versionNumber],
       })}`,
     );
-    return this.httpClient.post<void>(url);
   };
 
   public delete = (
@@ -39,11 +32,9 @@ export default class VenueRepository extends BaseRepository {
     hardDelete: boolean,
   ): Promise<void> => {
     return this.httpClient.delete<void>(
-      this.urlMapper.mapRelative(
-        `/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-          notes,
-        )}`,
-      ),
+      `/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+        notes,
+      )}`,
     );
   };
 
@@ -52,7 +43,6 @@ export default class VenueRepository extends BaseRepository {
     nameMatchMode: NameMatchMode,
     maxResults: number,
   ): Promise<PartialFindResultContract<VenueForApiContract>> => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/venues');
     var data = {
       query: query,
       maxResults: maxResults,
@@ -60,7 +50,7 @@ export default class VenueRepository extends BaseRepository {
     };
 
     return this.httpClient.get<PartialFindResultContract<VenueForApiContract>>(
-      url,
+      '/api/venues',
       data,
     );
   };

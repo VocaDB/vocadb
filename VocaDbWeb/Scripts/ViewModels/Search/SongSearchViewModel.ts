@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -30,7 +31,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
   constructor(
     searchViewModel: SearchViewModel,
     urlMapper: UrlMapper,
-    lang: string,
+    lang: ContentLanguagePreference,
     private songRepo: SongRepository,
     private artistRepo: ArtistRepository,
     private userRepo: UserRepository,
@@ -92,7 +93,10 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
     this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
       null!,
-      (entryId, callback) => this.songRepo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        this.songRepo
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
 
     this.minMilliBpm = ko
@@ -173,7 +177,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[lang as keyof typeof ContentLanguagePreference],
+      lang,
     );
 
     this.loadResults = (

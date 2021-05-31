@@ -99,11 +99,7 @@ const SongDetails = (
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var repo = repoFactory.songRepository();
     var userRepo = repoFactory.userRepository();
     var artistRepo = repoFactory.artistRepository();

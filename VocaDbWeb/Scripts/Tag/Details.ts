@@ -271,8 +271,8 @@ const TagDetails = (
     );
 
     const httpClient = new HttpClient();
-    var repo = new TagRepository(httpClient, vdb.values.baseAddress);
-    var userRepo = new UserRepository(httpClient, urlMapper);
+    var repo = new TagRepository(httpClient);
+    var userRepo = new UserRepository(httpClient);
     var latestComments = model.latestComments;
 
     vm = new TagDetailsViewModel(

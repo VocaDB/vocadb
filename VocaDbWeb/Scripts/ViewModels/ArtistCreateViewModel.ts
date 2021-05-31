@@ -5,6 +5,7 @@ import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import WebLinkEditViewModel from './WebLinkEditViewModel';
@@ -26,6 +27,7 @@ export default class ArtistCreateViewModel {
     const tag = await this.tagRepository.getEntryTypeTag(
       EntryType.Artist,
       artistType,
+      vdb.values.languagePreference,
     );
     this.artistTypeTag(tag);
   };

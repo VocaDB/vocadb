@@ -1,6 +1,5 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
@@ -24,13 +23,7 @@ const VenueDetails = (
 
     var loggedUserId = vdb.values.loggedUserId;
     const httpClient = new HttpClient();
-    var rootPath = vdb.values.baseAddress;
-    var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var venueRepo = repoFactory.venueRepository();
 
     var vm = new VenueDetailsViewModel(

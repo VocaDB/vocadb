@@ -1,6 +1,5 @@
 import AdminRepository from '@Repositories/AdminRepository';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import ManageIPRulesViewModel, {
   IPRuleContract,
@@ -16,8 +15,7 @@ const AdminManageIPRules = (model: IPRuleContract[]): void => {
 
     var rules = model;
     const httpClient = new HttpClient();
-    var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repo = new AdminRepository(httpClient, urlMapper);
+    var repo = new AdminRepository(httpClient);
 
     var viewModel = new ManageIPRulesViewModel(rules, repo);
     ko.applyBindings(viewModel);

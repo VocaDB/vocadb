@@ -53,18 +53,20 @@ export default class AlbumEditViewModel {
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
   addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
-      this.artistRepository.getOne(artistId).then((artist) => {
-        var data: ArtistForAlbumContract = {
-          artist: artist,
-          isSupport: false,
-          name: artist.name,
-          id: 0,
-          roles: 'Default',
-        };
+      this.artistRepository
+        .getOne(artistId, vdb.values.languagePreference)
+        .then((artist) => {
+          var data: ArtistForAlbumContract = {
+            artist: artist,
+            isSupport: false,
+            name: artist.name,
+            id: 0,
+            roles: 'Default',
+          };
 
-        var link = new ArtistForAlbumEditViewModel(this.repository, data);
-        this.artistLinks.push(link);
-      });
+          var link = new ArtistForAlbumEditViewModel(this.repository, data);
+          this.artistLinks.push(link);
+        });
     } else {
       var data: ArtistForAlbumContract = {
         artist: null!,
@@ -333,7 +335,11 @@ export default class AlbumEditViewModel {
     ): void => {
       if (songId) {
         songRepository
-          .getOneWithComponents(songId, 'AdditionalNames,Artists', null!)
+          .getOneWithComponents(
+            songId,
+            'AdditionalNames,Artists',
+            vdb.values.languagePreference,
+          )
           .then((song) => {
             var artists = _.filter(
               _.map(song.artists!, (artistLink) => artistLink.artist),

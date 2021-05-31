@@ -1,7 +1,6 @@
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import NewsListViewModel from '@ViewModels/NewsListViewModel';
 import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
@@ -17,8 +16,7 @@ declare global {
 function initPage(): void {
   function initRatingButtons(): void {
     const httpClient = new HttpClient();
-    const urlMapper = new UrlMapper(vdb.values.baseAddress);
-    const repo = new UserRepository(httpClient, urlMapper);
+    const repo = new UserRepository(httpClient);
     const ratingBar = $('#rating-bar');
 
     if (!ratingBar.length) {

@@ -1,7 +1,5 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ArtistMergeViewModel from '@ViewModels/Artist/ArtistMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -9,11 +7,7 @@ import ko from 'knockout';
 const ArtistMerge = (model: { id: number }): void => {
   $(function () {
     const httpClient = new HttpClient();
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      new UrlMapper(vdb.values.baseAddress),
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var repo = repoFactory.artistRepository();
     var vm = new ArtistMergeViewModel(repo, model.id);
     ko.applyBindings(vm);

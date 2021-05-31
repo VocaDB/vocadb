@@ -1,6 +1,7 @@
 import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
@@ -9,34 +10,27 @@ import HttpClient from '@Shared/HttpClient';
 export default class EntryRepository {
   // Maps a relative URL to an absolute one.
   private mapUrl = (relative: string): string => {
-    return functions.mergeUrls(
-      functions.mergeUrls(this.baseUrl, '/api/entries'),
-      relative,
-    );
+    return functions.mergeUrls('/api/entries', relative);
   };
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private baseUrl: string,
-  ) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   getList = (
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tags: number[],
     childTags: boolean,
     fields: string,
     status: string,
   ): Promise<PartialFindResultContract<EntryContract>> => {
-    var url = this.mapUrl('');
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
       maxResults: paging.maxEntries,
       query: query,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       tagId: tags,
       childTags: childTags,
@@ -44,7 +38,7 @@ export default class EntryRepository {
     };
 
     return this.httpClient.get<PartialFindResultContract<EntryContract>>(
-      url,
+      this.mapUrl(''),
       data,
     );
   };

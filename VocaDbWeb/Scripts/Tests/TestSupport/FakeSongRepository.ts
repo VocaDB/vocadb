@@ -20,7 +20,7 @@ export default class FakeSongRepository extends SongRepository {
   songsInLists: SongInList[] = [];
 
   constructor() {
-    super(new HttpClient(), '');
+    super(new HttpClient());
 
     this.addSongToList = (
       listId,
@@ -55,7 +55,7 @@ export default class FakeSongRepository extends SongRepository {
     this.getOneWithComponents = (
       id,
       fields,
-      languagePreference,
+      lang,
     ): Promise<SongApiContract> => {
       return FakePromise.resolve(this.song);
     };

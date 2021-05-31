@@ -35,7 +35,7 @@ export default class RatedSongsSearchViewModel {
     private songRepo: SongRepository,
     private resourceRepo: ResourceRepository,
     tagRepo: TagRepository,
-    private languageSelection: string,
+    private lang: ContentLanguagePreference,
     private loggedUserId: number,
     private cultureCode: string,
     sort: string,
@@ -55,7 +55,7 @@ export default class RatedSongsSearchViewModel {
 
     if (groupByRating != null) this.groupByRating(groupByRating);
 
-    this.tagFilters = new TagFilters(tagRepo, languageSelection);
+    this.tagFilters = new TagFilters(tagRepo, lang);
 
     this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
     this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -96,9 +96,7 @@ export default class RatedSongsSearchViewModel {
       songRepo,
       userRepo,
       this.pvPlayerViewModel,
-      ContentLanguagePreference[
-        languageSelection as keyof typeof ContentLanguagePreference
-      ],
+      lang,
     );
 
     if (initialize) this.init();
@@ -205,7 +203,7 @@ export default class RatedSongsSearchViewModel {
       .getRatedSongsList(
         this.loggedUserId,
         pagingProperties,
-        this.languageSelection,
+        this.lang,
         this.searchTerm(),
         this.tagFilters.tagIds(),
         this.artistFilters.artistIds(),

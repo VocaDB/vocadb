@@ -2,6 +2,7 @@ import AlbumContract from '@DataContracts/Album/AlbumContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -10,7 +11,8 @@ export default class AlbumMergeViewModel {
   constructor(repo: AlbumRepository, id: number) {
     this.target = new BasicEntryLinkViewModel<AlbumContract>(
       null!,
-      (entryId, callback) => repo.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        repo.getOne(entryId, vdb.values.languagePreference).then(callback),
     );
 
     this.targetSearchParams = {
@@ -18,7 +20,7 @@ export default class AlbumMergeViewModel {
       ignoreId: id,
     };
 
-    repo.getOne(id).then((base) => {
+    repo.getOne(id, vdb.values.languagePreference).then((base) => {
       ko.computed(() => {
         var result = EntryMergeValidationHelper.validateEntry(
           base,

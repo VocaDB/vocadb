@@ -50,7 +50,7 @@ export default class PlayListRepositoryForSongsAdapter
     this.songRepo
       .getList(
         paging,
-        ContentLanguagePreference[lang],
+        lang,
         this.query(),
         this.sort(),
         this.songType() !== SongType[SongType.Unspecified]

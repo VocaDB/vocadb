@@ -8,7 +8,7 @@ function initPage(): void {
   function acceptArtistSelection(albumId?: number): void {
     $.get(
       '../../api/albums/' + albumId,
-      { lang: vdb.values.languagePreference },
+      { lang: ContentLanguagePreference[vdb.values.languagePreference] },
       function (album) {
         $('#mergedAlbumId').append(
           "<option value='" + albumId + "'>" + album.name + '</option>',

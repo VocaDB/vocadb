@@ -8,11 +8,7 @@ import ICommentRepository from './ICommentRepository';
 export default class EntryCommentRepository implements ICommentRepository {
   private baseUrl: string;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly urlMapper: UrlMapper,
-    resourcePath: string,
-  ) {
+  constructor(private readonly httpClient: HttpClient, resourcePath: string) {
     this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
   }
 
@@ -20,26 +16,22 @@ export default class EntryCommentRepository implements ICommentRepository {
     entryId: number,
     contract: CommentContract,
   ): Promise<CommentContract> => {
-    var url = this.urlMapper.mapRelative(
+    return this.httpClient.post<CommentContract>(
       UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
+      contract,
     );
-    return this.httpClient.post<CommentContract>(url, contract);
   };
 
   public deleteComment = (commentId: number): Promise<void> => {
-    var url = this.urlMapper.mapRelative(
+    return this.httpClient.delete<void>(
       UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
     );
-    return this.httpClient.delete<void>(url);
   };
 
   public getComments = async (listId: number): Promise<CommentContract[]> => {
-    var url = this.urlMapper.mapRelative(
-      UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
-    );
     const result = await this.httpClient.get<
       PartialFindResultContract<CommentContract>
-    >(url);
+    >(UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'));
     return result.items;
   };
 
@@ -47,9 +39,9 @@ export default class EntryCommentRepository implements ICommentRepository {
     commentId: number,
     contract: CommentContract,
   ): Promise<void> => {
-    var url = this.urlMapper.mapRelative(
+    return this.httpClient.post<void>(
       UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
+      contract,
     );
-    return this.httpClient.post<void>(url, contract);
   };
 }

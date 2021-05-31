@@ -1,6 +1,7 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import ko from 'knockout';
@@ -20,7 +21,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
   constructor(
     resourceRepo: ResourceRepository,
     tagRepo: TagRepository,
-    languageSelection: string,
+    lang: ContentLanguagePreference,
     cultureCode: string,
     tagIds: number[],
     public showEventDateSort: boolean,
@@ -30,7 +31,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
     if (!this.showEventDateSort)
       this.sort(SongListSortRule[SongListSortRule.Name]);
 
-    this.tagFilters = new TagFilters(tagRepo, languageSelection);
+    this.tagFilters = new TagFilters(tagRepo, lang);
 
     if (tagIds) this.tagFilters.addTags(tagIds);
 

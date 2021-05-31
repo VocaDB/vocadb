@@ -57,13 +57,13 @@ export function setLanguagePreferenceCookie(
   languagePreference: string,
 ): boolean {
   const httpClient = new HttpClient();
-  var userRepo = new UserRepository(
-    httpClient,
-    new UrlMapper(vdb.values.baseAddress),
-    0,
-  );
+  var userRepo = new UserRepository(httpClient);
   userRepo
-    .updateUserSetting(null!, 'languagePreference', languagePreference)
+    .updateUserSetting(
+      vdb.values.loggedUserId,
+      'languagePreference',
+      languagePreference,
+    )
     .then(() => {
       window.location.reload();
     });

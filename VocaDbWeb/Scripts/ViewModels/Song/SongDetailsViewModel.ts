@@ -125,16 +125,16 @@ export default class SongDetailsViewModel {
 
     const { siteUrl, id } = match;
 
-    const repo = new SongRepository(
-      this.httpClient,
-      siteUrl,
-      this.languagePreference,
-    );
+    const httpClient = new HttpClient();
+    httpClient.baseUrl = siteUrl;
+    const repo = new SongRepository(httpClient);
     // TODO: this should be cached, but first we need to make sure the other instances are not cached.
-    repo.getOneWithComponents(id, 'None', null!).then((song) => {
-      if (song.songType === SongType[SongType.Original])
-        this.originalVersion({ entry: song, url: page, domain: siteUrl });
-    });
+    repo
+      .getOneWithComponents(id, 'None', vdb.values.languagePreference)
+      .then((song) => {
+        if (song.songType === SongType[SongType.Original])
+          this.originalVersion({ entry: song, url: page, domain: siteUrl });
+      });
   };
 
   public getUsers: () => void;
@@ -187,7 +187,7 @@ export default class SongDetailsViewModel {
     data: SongDetailsAjax,
     reportTypes: IEntryReportType[],
     loggedUserId: number,
-    private languagePreference: ContentLanguagePreference,
+    private lang: ContentLanguagePreference,
     canDeleteAllComments: boolean,
     ratingCallback: () => void,
   ) {
@@ -238,7 +238,7 @@ export default class SongDetailsViewModel {
           .getOneWithComponents(
             this.id,
             'Artists',
-            ContentLanguagePreference[this.languagePreference],
+            vdb.values.languagePreference,
           )
           .then((result) => {
             var artists = _.chain(result.artists!)

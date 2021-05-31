@@ -2,6 +2,7 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -66,12 +67,14 @@ export default class ArtistFilters {
     _.forEach(filters, (newArtist) => {
       var selectedArtistId = newArtist.id;
 
-      this.artistRepo.getOne(selectedArtistId).then((artist) => {
-        newArtist.name(artist.name);
-        newArtist.artistType(
-          ArtistType[artist.artistType as keyof typeof ArtistType],
-        );
-      });
+      this.artistRepo
+        .getOne(selectedArtistId, vdb.values.languagePreference)
+        .then((artist) => {
+          newArtist.name(artist.name);
+          newArtist.artistType(
+            ArtistType[artist.artistType as keyof typeof ArtistType],
+          );
+        });
     });
   };
 

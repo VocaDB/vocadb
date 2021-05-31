@@ -35,7 +35,7 @@ export default class ArtistDetailsViewModel {
     siteNotifications: boolean,
     hasEnglishDescription: boolean,
     private unknownPictureUrl: string,
-    languagePreference: ContentLanguagePreference,
+    private lang: ContentLanguagePreference,
     private urlMapper: UrlMapper,
     private albumRepo: AlbumRepository,
     private songRepo: SongRepository,
@@ -48,7 +48,6 @@ export default class ArtistDetailsViewModel {
     private pvPlayersFactory: PVPlayersFactory,
     latestComments: CommentContract[],
   ) {
-    this.lang = ContentLanguagePreference[languagePreference];
     this.hasArtistSubscription = ko.observable(hasSubscription);
     this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(
       artistId,
@@ -58,8 +57,8 @@ export default class ArtistDetailsViewModel {
     );
     this.description = new EnglishTranslatedStringViewModel(
       hasEnglishDescription &&
-        (languagePreference === ContentLanguagePreference.English ||
-          languagePreference === ContentLanguagePreference.Romaji),
+        (lang === ContentLanguagePreference.English ||
+          lang === ContentLanguagePreference.Romaji),
     );
 
     this.comments = new EditableCommentsViewModel(
@@ -112,8 +111,6 @@ export default class ArtistDetailsViewModel {
   customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
   public hasArtistSubscription: Observable<boolean>;
-
-  private lang: string;
 
   private loadHighcharts = (): void => {
     // Delayed load highcharts stuff

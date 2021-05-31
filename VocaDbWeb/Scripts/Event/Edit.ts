@@ -23,11 +23,7 @@ const EventEdit = (
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var eventRepo = repoFactory.eventRepository();
     var userRepo = repoFactory.userRepository();
     var pvRepo = repoFactory.pvRepository();

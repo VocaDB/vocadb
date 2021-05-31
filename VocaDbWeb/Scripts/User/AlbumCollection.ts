@@ -1,7 +1,5 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
@@ -17,18 +15,11 @@ const UserAlbumCollection = (
 ): void => {
   $(document).ready(function () {
     var cultureCode = vdb.values.uiCulture;
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var loggedUserId = model.user.id;
 
     const httpClient = new HttpClient();
-    var rootPath = vdb.values.baseAddress;
-    var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var userRepo = repoFactory.userRepository();
     var artistRepo = repoFactory.artistRepository();
     var resourceRepo = repoFactory.resourceRepository();
@@ -37,7 +28,7 @@ const UserAlbumCollection = (
       userRepo,
       artistRepo,
       resourceRepo,
-      languageSelection,
+      lang,
       loggedUserId,
       cultureCode,
       publicCollection,

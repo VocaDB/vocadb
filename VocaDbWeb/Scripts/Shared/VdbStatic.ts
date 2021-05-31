@@ -1,3 +1,5 @@
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+
 interface VdbFunctionsStatic {
   boldCaseInsensitive: (text: string, term: string) => string;
 
@@ -26,7 +28,7 @@ interface VdbValuesStatic {
 
   loggedUserId: number;
 
-  languagePreference: number;
+  languagePreference: ContentLanguagePreference;
 
   culture: string;
 
@@ -40,7 +42,12 @@ interface VdbStatic {
   values: VdbValuesStatic;
 }
 
-const vdb = {} as VdbStatic;
+const vdb = {
+  values: {
+    loggedUserId: 0,
+    languagePreference: ContentLanguagePreference.Default,
+  },
+} as VdbStatic;
 
 export default vdb;
 

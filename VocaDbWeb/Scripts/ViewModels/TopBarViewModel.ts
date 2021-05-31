@@ -2,6 +2,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 
 // View model for the top bar.
@@ -11,7 +12,7 @@ export default class TopBarViewModel {
 
     this.userRepository
       .getMessageSummaries(
-        null!,
+        vdb.values.loggedUserId,
         null!,
         { maxEntries: 3, start: 0, getTotalCount: false },
         true,

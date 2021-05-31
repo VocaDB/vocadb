@@ -1,6 +1,7 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ko from 'knockout';
 
@@ -10,7 +11,7 @@ import SearchViewModel from './SearchViewModel';
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
   constructor(
     searchViewModel: SearchViewModel,
-    lang: string,
+    lang: ContentLanguagePreference,
     private readonly artistRepo: ArtistRepository,
     private readonly loggedUserId: number,
     artistType: string,

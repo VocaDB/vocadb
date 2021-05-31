@@ -80,18 +80,20 @@ export default class SongEditViewModel {
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
   addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
-      this.artistRepository.getOne(artistId).then((artist) => {
-        var data: ArtistForAlbumContract = {
-          artist: artist,
-          isSupport: false,
-          name: artist.name,
-          id: 0,
-          roles: 'Default',
-        };
+      this.artistRepository
+        .getOne(artistId, vdb.values.languagePreference)
+        .then((artist) => {
+          var data: ArtistForAlbumContract = {
+            artist: artist,
+            isSupport: false,
+            name: artist.name,
+            id: 0,
+            roles: 'Default',
+          };
 
-        var link = new ArtistForAlbumEditViewModel(null!, data);
-        this.artistLinks.push(link);
-      });
+          var link = new ArtistForAlbumEditViewModel(null!, data);
+          this.artistLinks.push(link);
+        });
     } else {
       var data: ArtistForAlbumContract = {
         artist: null!,
@@ -149,10 +151,15 @@ export default class SongEditViewModel {
       (n) => n.value(),
     );
     const [all, originals] = await Promise.all([
-      this.songRepository.getByNames(names, [this.id]),
       this.songRepository.getByNames(
         names,
         [this.id],
+        vdb.values.languagePreference,
+      ),
+      this.songRepository.getByNames(
+        names,
+        [this.id],
+        vdb.values.languagePreference,
         [SongType.Original, SongType.Remaster],
       ),
     ]);
@@ -268,7 +275,10 @@ export default class SongEditViewModel {
     this.notes = new EnglishTranslatedStringEditViewModel(data.notes);
     this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
       data.originalVersion,
-      (entryId, callback) => songRepository.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        songRepository
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
     this.publishDate = ko.observable(
       data.publishDate ? moment(data.publishDate).toDate() : null!,

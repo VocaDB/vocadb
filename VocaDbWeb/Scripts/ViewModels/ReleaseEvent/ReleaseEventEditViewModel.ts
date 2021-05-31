@@ -11,6 +11,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -98,17 +99,19 @@ export default class ReleaseEventEditViewModel {
 
   addArtist = (artistId?: number, customArtistName?: string): void => {
     if (artistId) {
-      this.artistRepository.getOne(artistId).then((artist) => {
-        const data: ArtistForEventContract = {
-          artist: artist,
-          name: artist.name,
-          id: 0,
-          roles: 'Default',
-        };
+      this.artistRepository
+        .getOne(artistId, vdb.values.languagePreference)
+        .then((artist) => {
+          const data: ArtistForEventContract = {
+            artist: artist,
+            name: artist.name,
+            id: 0,
+            roles: 'Default',
+          };
 
-        const link = new ArtistForEventEditViewModel(data);
-        this.artistLinks.push(link);
-      });
+          const link = new ArtistForEventEditViewModel(data);
+          this.artistLinks.push(link);
+        });
     } else {
       const data: ArtistForEventContract = {
         artist: null!,

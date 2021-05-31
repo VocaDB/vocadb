@@ -14,6 +14,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
@@ -99,6 +100,7 @@ export default class SongCreateViewModel {
     const tag = await this.tagRepository.getEntryTypeTag(
       EntryType.Song,
       songType,
+      vdb.values.languagePreference,
     );
     this.songTypeTag(tag);
   };
@@ -137,7 +139,7 @@ export default class SongCreateViewModel {
 
   selectOriginal = (dupe: DuplicateEntryResultContract): void => {
     this.songRepository
-      .getOne(dupe.entry.id)
+      .getOne(dupe.entry.id, vdb.values.languagePreference)
       .then((song) => this.originalVersion.entry(song));
   };
 
@@ -174,10 +176,12 @@ export default class SongCreateViewModel {
 
     this.addArtist = (artistId?: number): void => {
       if (artistId) {
-        artistRepository.getOne(artistId).then((artist) => {
-          this.artists.push(artist);
-          this.checkDuplicates();
-        });
+        artistRepository
+          .getOne(artistId, vdb.values.languagePreference)
+          .then((artist) => {
+            this.artists.push(artist);
+            this.checkDuplicates();
+          });
       }
     };
 
@@ -202,7 +206,10 @@ export default class SongCreateViewModel {
 
     this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
       null!,
-      (entryId, callback) => songRepository.getOne(entryId).then(callback),
+      (entryId, callback) =>
+        songRepository
+          .getOne(entryId, vdb.values.languagePreference)
+          .then(callback),
     );
 
     this.originalVersionSearchParams = {

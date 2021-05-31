@@ -136,11 +136,10 @@ ko.bindingHandlers.tagToolTip = {
     valueAccessor: () => Observable<number>,
   ): void => {
     var culture = vdb.values.uiCulture || undefined;
-    var lang =
-      ContentLanguagePreference[vdb.values.languagePreference] || undefined;
+    var lang = vdb.values.languagePreference;
     initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), {
       culture: culture,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
     });
   },
 };

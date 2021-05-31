@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -35,8 +34,7 @@ const SearchIndex = (model: {
   $(function () {
     moment.locale(vdb.values.culture);
     var cultureCode = vdb.values.uiCulture;
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var query = model.filter;
     var tagIds = model.tagId;
     var searchType = model.searchTypeName;
@@ -63,12 +61,7 @@ const SearchIndex = (model: {
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-      loggedUserId,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var resourceRepo = repoFactory.resourceRepository();
     var entryRepo = repoFactory.entryRepository();
     var artistRepo = repoFactory.artistRepository();
@@ -91,7 +84,7 @@ const SearchIndex = (model: {
       resourceRepo,
       userRepo,
       unknownPictureUrl,
-      languageSelection,
+      lang,
       loggedUserId,
       cultureCode,
       searchType,

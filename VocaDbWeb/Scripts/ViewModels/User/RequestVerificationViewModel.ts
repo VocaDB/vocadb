@@ -1,6 +1,7 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 export default class RequestVerificationViewModel {
@@ -17,9 +18,11 @@ export default class RequestVerificationViewModel {
   );
 
   public setArtist = (targetArtistId?: number): void => {
-    this.artistRepository.getOne(targetArtistId!).then((artist) => {
-      this.selectedArtist(artist);
-    });
+    this.artistRepository
+      .getOne(targetArtistId!, vdb.values.languagePreference)
+      .then((artist) => {
+        this.selectedArtist(artist);
+      });
   };
 
   public artistSearchParams: ArtistAutoCompleteParams = {

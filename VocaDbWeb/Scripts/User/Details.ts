@@ -1,5 +1,4 @@
 import CommentContract from '@DataContracts/CommentContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -52,19 +51,13 @@ const UserDetails = (
 
     moment.locale(vdb.values.culture);
 
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var userId = model.id;
     var loggedUserId = vdb.values.loggedUserId;
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-      vdb.values.loggedUserId,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var adminRepo = repoFactory.adminRepository();
     var userRepo = repoFactory.userRepository();
     var artistRepo = repoFactory.artistRepository();
@@ -81,7 +74,7 @@ const UserDetails = (
       userRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       userId,
       cultureCode,
     );
@@ -90,7 +83,7 @@ const UserDetails = (
       userRepo,
       artistRepo,
       resourceRepo,
-      languageSelection,
+      lang,
       userId,
       cultureCode,
       publicCollection,
@@ -104,7 +97,7 @@ const UserDetails = (
       songRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       userId,
       cultureCode,
       sort,
@@ -127,7 +120,7 @@ const UserDetails = (
       adminRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       followedArtistsViewModel,
       albumCollectionViewModel,
       ratedSongsViewModel,

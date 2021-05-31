@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -20,19 +19,15 @@ const UserEntryEdits = (
 
     const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var resourceRepo = new ResourceRepository(
-      httpClient,
-      vdb.values.baseAddress,
-    );
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var resourceRepo = new ResourceRepository(httpClient);
+    var lang = vdb.values.languagePreference;
     var cultureCode = vdb.values.uiCulture;
     var userId = model.id;
 
     var vm = new ActivityEntryListViewModel(
       urlMapper,
       resourceRepo,
-      languageSelection,
+      lang,
       cultureCode,
       userId,
       additionsOnly,

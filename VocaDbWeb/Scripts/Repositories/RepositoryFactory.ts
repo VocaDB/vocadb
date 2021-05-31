@@ -1,6 +1,4 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
 import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';
@@ -17,82 +15,57 @@ import UserRepository from './UserRepository';
 import VenueRepository from './VenueRepository';
 
 export default class RepositoryFactory {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly urlMapper: UrlMapper,
-    private readonly lang?: ContentLanguagePreference,
-    private readonly loggedUserId?: number,
-  ) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   public adminRepository = (): AdminRepository => {
-    return new AdminRepository(this.httpClient, this.urlMapper);
+    return new AdminRepository(this.httpClient);
   };
 
   public albumRepository = (): AlbumRepository => {
-    return new AlbumRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new AlbumRepository(this.httpClient);
   };
 
   public artistRepository = (): ArtistRepository => {
-    return new ArtistRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new ArtistRepository(this.httpClient);
   };
 
   public discussionRepository = (): DiscussionRepository => {
-    return new DiscussionRepository(this.httpClient, this.urlMapper);
+    return new DiscussionRepository(this.httpClient);
   };
 
   public entryRepository = (): EntryRepository => {
-    return new EntryRepository(this.httpClient, this.urlMapper.baseUrl);
+    return new EntryRepository(this.httpClient);
   };
 
   public eventRepository = (): ReleaseEventRepository => {
-    return new ReleaseEventRepository(this.httpClient, this.urlMapper);
+    return new ReleaseEventRepository(this.httpClient);
   };
 
   public pvRepository = (): PVRepository => {
-    return new PVRepository(this.httpClient, this.urlMapper);
+    return new PVRepository(this.httpClient);
   };
 
   public resourceRepository = (): ResourceRepository => {
-    return new ResourceRepository(this.httpClient, this.urlMapper.baseUrl);
+    return new ResourceRepository(this.httpClient);
   };
 
   public songListRepository = (): SongListRepository => {
-    return new SongListRepository(this.httpClient, this.urlMapper);
+    return new SongListRepository(this.httpClient);
   };
 
   public songRepository = (): SongRepository => {
-    return new SongRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new SongRepository(this.httpClient);
   };
 
   public tagRepository = (): TagRepository => {
-    return new TagRepository(
-      this.httpClient,
-      this.urlMapper.baseUrl,
-      this.lang,
-    );
+    return new TagRepository(this.httpClient);
   };
 
   public userRepository = (): UserRepository => {
-    return new UserRepository(
-      this.httpClient,
-      this.urlMapper,
-      this.loggedUserId,
-    );
+    return new UserRepository(this.httpClient);
   };
 
   public venueRepository = (): VenueRepository => {
-    return new VenueRepository(this.httpClient, this.urlMapper);
+    return new VenueRepository(this.httpClient);
   };
 }

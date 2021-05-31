@@ -1,7 +1,5 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
 import $ from 'jquery';
@@ -24,17 +22,9 @@ const SongListFeatured = (
     var cultureCode = vdb.values.uiCulture;
     var tagIds = model.tagId;
 
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     const httpClient = new HttpClient();
-    var rootPath = vdb.values.baseAddress;
-    var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-      vdb.values.loggedUserId,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var songListRepo = repoFactory.songListRepository();
     var resourceRepo = repoFactory.resourceRepository();
     var tagRepo = repoFactory.tagRepository();
@@ -42,7 +32,7 @@ const SongListFeatured = (
       songListRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       cultureCode,
       tagIds,
       categories,

@@ -1,5 +1,6 @@
 import EntryContract from '@DataContracts/EntryContract';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ko from 'knockout';
@@ -10,7 +11,7 @@ import SearchViewModel from './SearchViewModel';
 export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
   constructor(
     searchViewModel: SearchViewModel,
-    lang: string,
+    lang: ContentLanguagePreference,
     private entryRepo: EntryRepository,
   ) {
     super(searchViewModel);

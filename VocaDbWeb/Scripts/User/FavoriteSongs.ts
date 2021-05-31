@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -19,8 +18,7 @@ const UserFavoriteSongs = (model: {
   $(function () {
     moment.locale(vdb.values.culture);
     var cultureCode = vdb.values.uiCulture;
-    var languageSelection =
-      ContentLanguagePreference[vdb.values.languagePreference];
+    var lang = vdb.values.languagePreference;
     var loggedUserId = model.user.id;
     var sort = model.sort;
     var groupByRating = model.groupByRating;
@@ -28,11 +26,7 @@ const UserFavoriteSongs = (model: {
     const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(
-      httpClient,
-      urlMapper,
-      vdb.values.languagePreference,
-    );
+    var repoFactory = new RepositoryFactory(httpClient);
     var userRepo = repoFactory.userRepository();
     var artistRepo = repoFactory.artistRepository();
     var songRepo = repoFactory.songRepository();
@@ -47,7 +41,7 @@ const UserFavoriteSongs = (model: {
       songRepo,
       resourceRepo,
       tagRepo,
-      languageSelection,
+      lang,
       loggedUserId,
       cultureCode,
       sort,

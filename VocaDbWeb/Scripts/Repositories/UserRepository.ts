@@ -14,10 +14,10 @@ import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryCo
 import AjaxHelper from '@Helpers/AjaxHelper';
 import { Tuple2 } from '@Helpers/HighchartsHelper';
 import EntryType from '@Models/EntryType';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
 import ICommentRepository from './ICommentRepository';
@@ -35,19 +35,15 @@ export default class UserRepository implements ICommentRepository {
   // Maps a relative URL to an absolute one.
   private mapUrl: (relative: string) => string;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly urlMapper: UrlMapper,
-    private loggedUserId?: number,
-  ) {
+  constructor(private readonly httpClient: HttpClient) {
     this.mapUrl = (relative: string): string => {
-      return `${urlMapper.mapRelative('/User')}${relative}`;
+      return `/User${relative}`;
     };
   }
 
   public addFollowedTag = (tagId: number): Promise<void> => {
     return this.httpClient.post<void>(
-      this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
+      `/api/users/current/followedTags/${tagId}`,
     );
   };
 
@@ -70,7 +66,7 @@ export default class UserRepository implements ICommentRepository {
     contract: CommentContract,
   ): Promise<CommentContract> => {
     return this.httpClient.post<CommentContract>(
-      this.urlMapper.mapRelative(`/api/users/${userId}/profileComments`),
+      `/api/users/${userId}/profileComments`,
       contract,
     );
   };
@@ -80,7 +76,7 @@ export default class UserRepository implements ICommentRepository {
     contract: UserApiContract,
   ): Promise<UserMessageSummaryContract> => {
     return this.httpClient.post<UserMessageSummaryContract>(
-      this.urlMapper.mapRelative(`/api/users/${userId}/messages`),
+      `/api/users/${userId}/messages`,
       contract,
     );
   };
@@ -101,27 +97,23 @@ export default class UserRepository implements ICommentRepository {
 
   public deleteComment = (commentId: number): Promise<void> => {
     return this.httpClient.delete<void>(
-      this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
+      `/api/users/profileComments/${commentId}`,
     );
   };
 
   public deleteEventForUser = (eventId: number): Promise<void> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/current/events/${eventId}`,
-    );
-    return this.httpClient.delete<void>(url);
+    return this.httpClient.delete<void>(`/api/users/current/events/${eventId}`);
   };
 
   public deleteFollowedTag = (tagId: number): Promise<void> => {
     return this.httpClient.delete<void>(
-      this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
+      `/api/users/current/followedTags/${tagId}`,
     );
   };
 
   public deleteMessage = (messageId: number): Promise<void> => {
-    var url = this.urlMapper.mapRelative('/User/DeleteMessage');
     return this.httpClient.post<void>(
-      url,
+      '/User/DeleteMessage',
       AjaxHelper.stringify({ messageId: messageId }),
       {
         headers: {
@@ -131,15 +123,22 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteMessages = (userId: number, messageIds: number[]): void => {
-    var url = this.urlMapper.mapRelative(`/api/users/${userId}/messages`);
-    AjaxHelper.deleteJSON_Url(url, 'messageId', messageIds);
+  public deleteMessages = (
+    userId: number,
+    messageIds: number[],
+  ): Promise<void> => {
+    var dataParamName = 'messageId';
+    var dataParam =
+      '?' + dataParamName + '=' + messageIds.join('&' + dataParamName + '=');
+    return this.httpClient.delete<void>(
+      `/api/users/${userId}/messages${dataParam}`,
+    );
   };
 
   public getAlbumCollectionList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tag: number,
     albumType: string,
@@ -149,7 +148,6 @@ export default class UserRepository implements ICommentRepository {
     advancedFilters: AdvancedSearchFilter[],
     sort: string,
   ): Promise<PartialFindResultContract<AlbumForUserForApiContract>> => {
-    var url = this.urlMapper.mapRelative(`/api/users/${userId}/albums`);
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -161,7 +159,7 @@ export default class UserRepository implements ICommentRepository {
       purchaseStatuses: purchaseStatuses,
       releaseEventId: releaseEventId || undefined,
       fields: 'AdditionalNames,MainPicture',
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
       advancedFilters: advancedFilters,
@@ -169,13 +167,10 @@ export default class UserRepository implements ICommentRepository {
 
     return this.httpClient.get<
       PartialFindResultContract<AlbumForUserForApiContract>
-    >(url, data);
+    >(`/api/users/${userId}/albums`, data);
   };
 
   public getComments = async (userId: number): Promise<CommentContract[]> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/${userId}/profileComments`,
-    );
     var data = {
       start: 0,
       getTotalCount: false,
@@ -185,7 +180,7 @@ export default class UserRepository implements ICommentRepository {
 
     const result = await this.httpClient.get<
       PartialFindResultContract<CommentContract>
-    >(url, data);
+    >(`/api/users/${userId}/profileComments`, data);
     return result.items;
   };
 
@@ -193,36 +188,35 @@ export default class UserRepository implements ICommentRepository {
     userId: number,
     relationshipType: UserEventRelationshipType,
   ): Promise<ReleaseEventContract[]> => {
-    var url = this.urlMapper.mapRelative(`/api/users/${userId}/events`);
-    return this.httpClient.get<ReleaseEventContract[]>(url, {
-      relationshipType: relationshipType,
-    });
+    return this.httpClient.get<ReleaseEventContract[]>(
+      `/api/users/${userId}/events`,
+      {
+        relationshipType: relationshipType,
+      },
+    );
   };
 
   public getFollowedArtistsList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     tagIds: number[],
     artistType: string,
   ): Promise<PartialFindResultContract<ArtistForUserForApiContract>> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/${userId}/followedArtists`,
-    );
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
       maxResults: paging.maxEntries,
       tagId: tagIds,
       fields: 'AdditionalNames,MainPicture',
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       artistType: artistType,
     };
 
     return this.httpClient.get<
       PartialFindResultContract<ArtistForUserForApiContract>
-    >(url, data);
+    >(`/api/users/${userId}/followedArtists`, data);
   };
 
   public getList = (
@@ -236,7 +230,6 @@ export default class UserRepository implements ICommentRepository {
     nameMatchMode: string,
     fields: string,
   ): Promise<PartialFindResultContract<UserApiContract>> => {
-    var url = this.urlMapper.mapRelative('/api/users');
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -252,14 +245,13 @@ export default class UserRepository implements ICommentRepository {
     };
 
     return this.httpClient.get<PartialFindResultContract<UserApiContract>>(
-      url,
+      '/api/users',
       data,
     );
   };
 
   public getOne = (id: number, fields: string): Promise<UserApiContract> => {
-    var url = this.urlMapper.mapRelative(`/api/users/${id}`);
-    return this.httpClient.get<UserApiContract>(url, {
+    return this.httpClient.get<UserApiContract>(`/api/users/${id}`, {
       fields: fields || undefined,
     });
   };
@@ -284,8 +276,9 @@ export default class UserRepository implements ICommentRepository {
   public getMessage = (
     messageId: number,
   ): Promise<UserMessageSummaryContract> => {
-    var url = this.urlMapper.mapRelative(`/api/users/messages/${messageId}`);
-    return this.httpClient.get<UserMessageSummaryContract>(url);
+    return this.httpClient.get<UserMessageSummaryContract>(
+      `/api/users/messages/${messageId}`,
+    );
   };
 
   public getMessageSummaries = (
@@ -296,12 +289,9 @@ export default class UserRepository implements ICommentRepository {
     anotherUserId?: number,
     iconSize: number = 40,
   ): Promise<PartialFindResultContract<UserMessageSummaryContract>> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/${userId || this.loggedUserId}/messages`,
-    );
     return this.httpClient.get<
       PartialFindResultContract<UserMessageSummaryContract>
-    >(url, {
+    >(`/api/users/${userId}/messages`, {
       inbox: UserInboxType[inbox],
       start: paging.start,
       maxResults: paging.maxEntries,
@@ -314,7 +304,7 @@ export default class UserRepository implements ICommentRepository {
   public getRatedSongsList = (
     userId: number,
     paging: PagingProperties,
-    lang: string,
+    lang: ContentLanguagePreference,
     query: string,
     tagIds: number[],
     artistIds: number[],
@@ -327,7 +317,6 @@ export default class UserRepository implements ICommentRepository {
     fields: string,
     sort: string,
   ): Promise<PartialFindResultContract<RatedSongForUserForApiContract>> => {
-    var url = this.urlMapper.mapRelative(`/api/users/${userId}/ratedSongs`);
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -342,23 +331,22 @@ export default class UserRepository implements ICommentRepository {
       groupByRating: groupByRating,
       pvServices: pvServices,
       fields: fields,
-      lang: lang,
+      lang: ContentLanguagePreference[lang],
       nameMatchMode: 'Auto',
       sort: sort,
     };
 
     return this.httpClient.get<
       PartialFindResultContract<RatedSongForUserForApiContract>
-    >(url, data);
+    >(`/api/users/${userId}/ratedSongs`, data);
   };
 
   public getRatingsByGenre = (
     userId: number,
   ): Promise<Tuple2<string, number>[]> => {
-    var url = this.urlMapper.mapRelative(
+    return this.httpClient.get<Tuple2<string, number>[]>(
       `/api/users/${userId}/songs-per-genre/`,
     );
-    return this.httpClient.get<Tuple2<string, number>[]>(url);
   };
 
   public getSongLists = (
@@ -369,9 +357,8 @@ export default class UserRepository implements ICommentRepository {
     sort: string,
     fields: string,
   ): Promise<PartialFindResultContract<SongListContract>> => {
-    var url = this.urlMapper.mapRelative(`/api/users/${userId}/songLists`);
     return this.httpClient.get<PartialFindResultContract<SongListContract>>(
-      url,
+      `/api/users/${userId}/songLists`,
       {
         query: query,
         start: paging.start,
@@ -385,27 +372,24 @@ export default class UserRepository implements ICommentRepository {
   };
 
   // Gets a specific user's rating for a specific song.
-  // userId: User ID. Can be null, in which case the logged user will be used (if any).
+  // userId: User ID.
   // songId: ID of the song for which to get the rating. Cannot be null.
   // callback: Callback receiving the rating. If the user has not rated the song, or if the user is not logged in, this will be "Nothing".
   public getSongRating = (userId: number, songId: number): Promise<string> => {
-    userId = userId || this.loggedUserId!;
-
     if (!userId) {
       return Promise.resolve('Nothing');
     }
 
-    var url = this.urlMapper.mapRelative(
+    return this.httpClient.get<string>(
       `/api/users/${userId}/ratedSongs/${songId}`,
     );
-    return this.httpClient.get<string>(url);
   };
 
   public getAlbumTagSelections = (
     albumId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
+      `/api/users/current/albumTags/${albumId}`,
     );
   };
 
@@ -413,7 +397,7 @@ export default class UserRepository implements ICommentRepository {
     artistId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
+      `/api/users/current/artistTags/${artistId}`,
     );
   };
 
@@ -421,7 +405,7 @@ export default class UserRepository implements ICommentRepository {
     eventId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
+      `/api/users/current/eventTags/${eventId}`,
     );
   };
 
@@ -429,9 +413,7 @@ export default class UserRepository implements ICommentRepository {
     seriesId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(
-        `/api/users/current/eventSeriesTags/${seriesId}`,
-      ),
+      `/api/users/current/eventSeriesTags/${seriesId}`,
     );
   };
 
@@ -439,9 +421,7 @@ export default class UserRepository implements ICommentRepository {
     songListId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(
-        `/api/users/current/songListTags/${songListId}`,
-      ),
+      `/api/users/current/songListTags/${songListId}`,
     );
   };
 
@@ -449,7 +429,7 @@ export default class UserRepository implements ICommentRepository {
     songId: number,
   ): Promise<TagSelectionContract[]> => {
     return this.httpClient.get<TagSelectionContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
+      `/api/users/current/songTags/${songId}`,
     );
   };
 
@@ -458,19 +438,20 @@ export default class UserRepository implements ICommentRepository {
     entryId: number,
   ): Promise<void> => {
     return this.httpClient.post<void>(
-      this.urlMapper.mapRelative(
-        `/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
-      ),
+      `/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
     );
   };
 
   public requestEmailVerification = (): Promise<void> => {
-    var url = this.mapUrl('/RequestEmailVerification');
-    return this.httpClient.post<void>(url, undefined, {
-      headers: {
-        [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+    return this.httpClient.post<void>(
+      this.mapUrl('/RequestEmailVerification'),
+      undefined,
+      {
+        headers: {
+          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+        },
       },
-    });
+    );
   };
 
   public updateAlbumTags = (
@@ -478,7 +459,7 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
+      `/api/users/current/albumTags/${albumId}`,
       tags,
     );
   };
@@ -509,7 +490,7 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
+      `/api/users/current/artistTags/${artistId}`,
       tags,
     );
   };
@@ -519,7 +500,7 @@ export default class UserRepository implements ICommentRepository {
     contract: CommentContract,
   ): Promise<void> => {
     return this.httpClient.post<void>(
-      this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
+      `/api/users/profileComments/${commentId}`,
       contract,
     );
   };
@@ -528,10 +509,7 @@ export default class UserRepository implements ICommentRepository {
     eventId: number,
     associationType: UserEventRelationshipType,
   ): Promise<void> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/current/events/${eventId}`,
-    );
-    return this.httpClient.post<void>(url, {
+    return this.httpClient.post<void>(`/api/users/current/events/${eventId}`, {
       associationType: UserEventRelationshipType[associationType],
     });
   };
@@ -541,7 +519,7 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
+      `/api/users/current/eventTags/${eventId}`,
       tags,
     );
   };
@@ -551,9 +529,7 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(
-        `/api/users/current/eventSeriesTags/${seriesId}`,
-      ),
+      `/api/users/current/eventSeriesTags/${seriesId}`,
       tags,
     );
   };
@@ -563,9 +539,7 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(
-        `/api/users/current/songListTags/${songListId}`,
-      ),
+      `/api/users/current/songListTags/${songListId}`,
       tags,
     );
   };
@@ -578,8 +552,9 @@ export default class UserRepository implements ICommentRepository {
     songId: number,
     rating: SongVoteRating,
   ): Promise<void> => {
-    var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
-    return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
+    return this.httpClient.post<void>(`/api/songs/${songId}/ratings`, {
+      rating: SongVoteRating[rating],
+    });
   };
 
   public updateSongTags = (
@@ -587,13 +562,13 @@ export default class UserRepository implements ICommentRepository {
     tags: TagBaseContract[],
   ): Promise<TagUsageForApiContract[]> => {
     return this.httpClient.put<TagUsageForApiContract[]>(
-      this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
+      `/api/users/current/songTags/${songId}`,
       tags,
     );
   };
 
   // Updates user setting.
-  // userId: user ID. Can be null in which case logged user ID (if any) will be used.
+  // userId: user ID.
   // settingName: name of the setting to be updated, for example 'showChatBox'.
   // value: setting value, for example 'false'.
   public updateUserSetting = (
@@ -601,11 +576,12 @@ export default class UserRepository implements ICommentRepository {
     settingName: string,
     value: string,
   ): Promise<void> => {
-    var url = this.urlMapper.mapRelative(
-      `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
+    return this.httpClient.post<void>(
+      `/api/users/${userId}/settings/${settingName}`,
+      `"${value}"`,
+      {
+        headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
+      },
     );
-    return this.httpClient.post<void>(url, `"${value}"`, {
-      headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
-    });
   };
 }
