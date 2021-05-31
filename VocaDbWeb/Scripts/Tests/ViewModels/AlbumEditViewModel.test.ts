@@ -101,87 +101,85 @@ vdb.resources = {
   song: null,
 };
 
-QUnit.module('AlbumEditViewModelTests', {
-  setup: () => {
-    songRep = new FakeSongRepository();
-    song = {
-      additionalNames: '',
-      artistString: 'Tripshots',
-      artists: [
-        {
-          id: 0,
-          artist: producer,
-          isSupport: false,
-          name: null!,
-          roles: null!,
-        },
-      ],
-      id: 2,
-      lengthSeconds: 0,
-      name: 'Anger',
-      pvServices: 'Nothing',
-      ratingScore: 0,
-      songType: 'Original',
-      createDate: null!,
-      status: 'Finished',
-    };
-    songRep.song = song;
-
-    artistRep = new FakeArtistRepository();
-
-    songInAlbum = {
-      artists: [producer],
-      artistString: 'Tripshots',
-      discNumber: 1,
-      songAdditionalNames: '',
-      songId: 3,
-      songInAlbumId: 1,
-      songName: 'Nebula',
-      trackNumber: 1,
-    };
-
-    customTrack = {
-      artists: [],
-      artistString: '',
-      discNumber: 1,
-      songAdditionalNames: '',
-      songId: 0,
-      songInAlbumId: 2,
-      songName: 'Bonus Track',
-      trackNumber: 2,
-      isCustomTrack: true,
-    };
-
-    data = {
-      artistLinks: [
-        producerArtistLink,
-        vocalistArtistLink,
-        labelArtistLink,
-        customArtistLink,
-      ],
-      coverPictureMime: 'image/jpeg',
-      defaultNameLanguage: 'English',
-      description: {
-        original: '',
-        english: '',
+beforeEach(() => {
+  songRep = new FakeSongRepository();
+  song = {
+    additionalNames: '',
+    artistString: 'Tripshots',
+    artists: [
+      {
+        id: 0,
+        artist: producer,
+        isSupport: false,
+        name: null!,
+        roles: null!,
       },
-      discType: 'Album',
-      discs: [],
-      id: 0,
-      identifiers: [],
-      names: [],
-      originalRelease: {
-        catNum: '',
-        releaseEvent: null!,
-        releaseDate: {},
-      },
-      pictures: [],
-      pvs: [],
-      songs: [songInAlbum, customTrack],
-      status: 'Draft',
-      webLinks: [webLinkData],
-    };
-  },
+    ],
+    id: 2,
+    lengthSeconds: 0,
+    name: 'Anger',
+    pvServices: 'Nothing',
+    ratingScore: 0,
+    songType: 'Original',
+    createDate: null!,
+    status: 'Finished',
+  };
+  songRep.song = song;
+
+  artistRep = new FakeArtistRepository();
+
+  songInAlbum = {
+    artists: [producer],
+    artistString: 'Tripshots',
+    discNumber: 1,
+    songAdditionalNames: '',
+    songId: 3,
+    songInAlbumId: 1,
+    songName: 'Nebula',
+    trackNumber: 1,
+  };
+
+  customTrack = {
+    artists: [],
+    artistString: '',
+    discNumber: 1,
+    songAdditionalNames: '',
+    songId: 0,
+    songInAlbumId: 2,
+    songName: 'Bonus Track',
+    trackNumber: 2,
+    isCustomTrack: true,
+  };
+
+  data = {
+    artistLinks: [
+      producerArtistLink,
+      vocalistArtistLink,
+      labelArtistLink,
+      customArtistLink,
+    ],
+    coverPictureMime: 'image/jpeg',
+    defaultNameLanguage: 'English',
+    description: {
+      original: '',
+      english: '',
+    },
+    discType: 'Album',
+    discs: [],
+    id: 0,
+    identifiers: [],
+    names: [],
+    originalRelease: {
+      catNum: '',
+      releaseEvent: null!,
+      releaseDate: {},
+    },
+    pictures: [],
+    pvs: [],
+    songs: [songInAlbum, customTrack],
+    status: 'Draft',
+    webLinks: [webLinkData],
+  };
 });
 
 function createViewModel(): AlbumEditViewModel {
@@ -214,56 +212,60 @@ function findArtistSelection(
   return _.find(target.artistSelections, (a) => a.artist === artist)!;
 }
 
-QUnit.test('constructor', () => {
+test('constructor', () => {
   var target = createViewModel();
 
-  equal(target.artistLinks().length, 4, 'artistLinks.length');
-  equal(target.artistLinks()[0].id, 39, 'artistLinks[0].id');
-  ok(target.artistLinks()[0].artist, 'artistLinks[0].artist');
-  equal(target.artistLinks()[0].artist, producer, 'artistLinks[0].artist');
+  expect(target.artistLinks().length, 'artistLinks.length').toBe(4);
+  expect(target.artistLinks()[0].id, 'artistLinks[0].id').toBe(39);
+  expect(target.artistLinks()[0].artist, 'artistLinks[0].artist').toBeTruthy();
+  expect(target.artistLinks()[0].artist, 'artistLinks[0].artist').toBe(
+    producer,
+  );
 
-  equal(target.tracks().length, 2, 'tracks.length');
-  equal(target.tracks()[0].songId, 3, 'tracks[0].songId');
-  equal(target.tracks()[0].songName, 'Nebula', 'tracks[0].songName');
-  equal(target.tracks()[0].selected(), false, 'tracks[0].selected');
-  equal(target.tracks()[0].trackNumber(), 1, 'tracks[0].trackNumber');
+  expect(target.tracks().length, 'tracks.length').toBe(2);
+  expect(target.tracks()[0].songId, 'tracks[0].songId').toBe(3);
+  expect(target.tracks()[0].songName, 'tracks[0].songName').toBe('Nebula');
+  expect(target.tracks()[0].selected(), 'tracks[0].selected').toBe(false);
+  expect(target.tracks()[0].trackNumber(), 'tracks[0].trackNumber').toBe(1);
 
-  equal(target.webLinks.items().length, 1, 'webLinks.length');
-  equal(target.webLinks.items()[0].id, 123, 'webLinks[0].id');
+  expect(target.webLinks.items().length, 'webLinks.length').toBe(1);
+  expect(target.webLinks.items()[0].id, 'webLinks[0].id').toBe(123);
 });
 
-QUnit.test('acceptTrackSelection existing', () => {
+test('acceptTrackSelection existing', () => {
   var target = createViewModel();
   target.tracks.removeAll();
 
   target.acceptTrackSelection(2, null!);
 
-  equal(target.tracks().length, 1, 'tracks.length');
-  equal(target.tracks()[0].songId, 2, 'tracks[0].songId');
-  equal(target.tracks()[0].songName, 'Anger', 'tracks[0].songName');
+  expect(target.tracks().length, 'tracks.length').toBe(1);
+  expect(target.tracks()[0].songId, 'tracks[0].songId').toBe(2);
+  expect(target.tracks()[0].songName, 'tracks[0].songName').toBe('Anger');
 });
 
-QUnit.test('acceptTrackSelection new', () => {
+test('acceptTrackSelection new', () => {
   var target = createViewModel();
   target.tracks.removeAll();
 
   target.acceptTrackSelection(null!, 'Anger RMX');
 
-  equal(target.tracks().length, 1, 'tracks.length');
-  equal(target.tracks()[0].songId, 0, 'tracks[0].songId');
-  equal(target.tracks()[0].songName, 'Anger RMX', 'tracks[0].songName');
+  expect(target.tracks().length, 'tracks.length').toBe(1);
+  expect(target.tracks()[0].songId, 'tracks[0].songId').toBe(0);
+  expect(target.tracks()[0].songName, 'tracks[0].songName').toBe('Anger RMX');
 });
 
-QUnit.test('acceptTrackSelection add a second track', () => {
+test('acceptTrackSelection add a second track', () => {
   var target = createViewModel();
 
   target.acceptTrackSelection(2, null!);
 
-  equal(target.tracks().length, 3, 'tracks.length');
-  equal(_.last(target.tracks())!.trackNumber(), 3, 'tracks[2].trackNumber');
+  expect(target.tracks().length, 'tracks.length').toBe(3);
+  expect(_.last(target.tracks())!.trackNumber(), 'tracks[2].trackNumber').toBe(
+    3,
+  );
 });
 
-QUnit.test('addArtist existing', () => {
+test('addArtist existing', () => {
   var newVocalist: ArtistContract = {
     id: 4,
     name: 'Kagamine Rin',
@@ -275,94 +277,85 @@ QUnit.test('addArtist existing', () => {
   var target = createViewModel();
   target.addArtist(4);
 
-  equal(target.artistLinks().length, 5, 'artistLinks().length');
-  equal(
+  expect(target.artistLinks().length, 'artistLinks().length').toBe(5);
+  expect(
     _.some(target.artistLinks(), (a) => a.artist === newVocalist),
-    true,
     'New vocalist was added',
-  );
+  ).toBe(true);
 });
 
-QUnit.test('addArtist custom', () => {
+test('addArtist custom', () => {
   var target = createViewModel();
   target.addArtist(null!, 'Custom artist');
 
-  equal(target.artistLinks().length, 5, 'artistLinks().length');
-  equal(
+  expect(target.artistLinks().length, 'artistLinks().length').toBe(5);
+  expect(
     _.some(target.artistLinks(), (a) => a.name() === 'Custom artist'),
-    true,
     'Custom artist was added',
-  );
+  ).toBe(true);
 });
 
-QUnit.test('allTracksSelected', () => {
+test('allTracksSelected', () => {
   var target = createViewModel();
 
   target.allTracksSelected(true);
 
-  equal(target.tracks()[0].selected(), true, 'tracks[0].selected');
-  equal(target.tracks()[1].selected(), false, 'tracks[1].selected'); // Custom tracks won't be selected
+  expect(target.tracks()[0].selected(), 'tracks[0].selected').toBe(true);
+  expect(target.tracks()[1].selected(), 'tracks[1].selected').toBe(false); // Custom tracks won't be selected
 });
 
-QUnit.test('editTrackProperties', () => {
+test('editTrackProperties', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
 
   target.editTrackProperties(track);
   var edited = target.editedSong()!;
 
-  ok(edited, 'editedSong');
-  equal(edited.song, track, 'editedSong.song');
-  ok(edited.artistSelections, 'editedSong.artistSelections');
-  equal(
+  expect(edited, 'editedSong').toBeTruthy();
+  expect(edited.song, 'editedSong.song').toBe(track);
+  expect(edited.artistSelections, 'editedSong.artistSelections').toBeTruthy();
+  expect(
     edited.artistSelections.length,
-    2,
     'editedSong.artistSelections.length',
-  ); // Label or custom artist are not included.
-  equal(
+  ).toBe(2); // Label or custom artist are not included.
+  expect(
     edited.artistSelections[0].artist,
-    producer,
     'editedSong.artistSelections[0].artist',
-  );
-  equal(
+  ).toBe(producer);
+  expect(
     edited.artistSelections[0].selected(),
-    true,
     'editedSong.artistSelections[0].selected',
-  ); // Selected, because added to song
-  equal(
+  ).toBe(true); // Selected, because added to song
+  expect(
     edited.artistSelections[0].visible(),
-    true,
     'artistSelections[0].visible',
-  ); // No filter
-  equal(
+  ).toBe(true); // No filter
+  expect(
     edited.artistSelections[1].artist,
-    vocalist,
     'editedSong.artistSelections[1].artist',
-  );
-  equal(
+  ).toBe(vocalist);
+  expect(
     edited.artistSelections[1].selected(),
-    false,
     'editedSong.artistSelections[1].selected',
-  ); // Not seleted, because not added yet
-  equal(
+  ).toBe(false); // Not seleted, because not added yet
+  expect(
     edited.artistSelections[1].visible(),
-    true,
     'artistSelections[1].visible',
-  ); // No filter
+  ).toBe(true); // No filter
 });
 
-QUnit.test('saveTrackProperties not changed', () => {
+test('saveTrackProperties not changed', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
 
   target.saveTrackProperties();
 
-  equal(track.artists().length, 1, 'track.artists.length');
-  equal(track.artists()[0], producer, 'track.artists[0]');
+  expect(track.artists().length, 'track.artists.length').toBe(1);
+  expect(track.artists()[0], 'track.artists[0]').toBe(producer);
 });
 
-QUnit.test('saveTrackProperties changed', () => {
+test('saveTrackProperties changed', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
@@ -370,10 +363,10 @@ QUnit.test('saveTrackProperties changed', () => {
 
   target.saveTrackProperties();
 
-  equal(track.artists().length, 0, 'track.artists.length');
+  expect(track.artists().length, 'track.artists.length').toBe(0);
 });
 
-QUnit.test('filter displayName', () => {
+test('filter displayName', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
@@ -381,19 +374,17 @@ QUnit.test('filter displayName', () => {
 
   edited.filter('tri');
 
-  equal(
+  expect(
     edited.artistSelections[0].visible(),
-    true,
     'artistSelections[0].visible',
-  ); // Producer (Tripshots)
-  equal(
+  ).toBe(true); // Producer (Tripshots)
+  expect(
     edited.artistSelections[1].visible(),
-    false,
     'artistSelections[1].visible',
-  ); // Vocalist (Hatsune Miku)
+  ).toBe(false); // Vocalist (Hatsune Miku)
 });
 
-QUnit.test('filter additionalName', () => {
+test('filter additionalName', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   target.editTrackProperties(track);
@@ -401,44 +392,42 @@ QUnit.test('filter additionalName', () => {
 
   edited.filter('初音ミク');
 
-  equal(
+  expect(
     edited.artistSelections[0].visible(),
-    false,
     'artistSelections[0].visible',
-  ); // Producer (Tripshots)
-  equal(
+  ).toBe(false); // Producer (Tripshots)
+  expect(
     edited.artistSelections[1].visible(),
-    true,
     'artistSelections[1].visible',
-  ); // Vocalist (Hatsune Miku)
+  ).toBe(true); // Vocalist (Hatsune Miku)
 });
 
-QUnit.test('editMultipleTrackProperties', () => {
+test('editMultipleTrackProperties', () => {
   var target = createViewModel();
 
   target.editMultipleTrackProperties();
 
-  ok(target.editedSong(), 'editedSong');
-  ok(target.editedSong()!.artistSelections, 'editedSong.artistSelections');
-  equal(
+  expect(target.editedSong(), 'editedSong').toBeTruthy();
+  expect(
+    target.editedSong()!.artistSelections,
+    'editedSong.artistSelections',
+  ).toBeTruthy();
+  expect(
     target.editedSong()!.artistSelections.length,
-    2,
     'editedSong.artistSelections.length',
-  ); // Label or custom artist are not included.
-  equal(
+  ).toBe(2); // Label or custom artist are not included.
+  expect(
     target.editedSong()!.artistSelections[0].selected(),
-    false,
     'editedSong.artistSelections[0].selected',
-  );
-  equal(
+  ).toBe(false);
+  expect(
     target.editedSong()!.artistSelections[1].selected(),
-    false,
     'editedSong.artistSelections[1].selected',
-  );
+  ).toBe(false);
 });
 
 // Add an artist to a track that was not added before
-QUnit.test('addArtistsToSelectedTracks add new artists', () => {
+test('addArtistsToSelectedTracks add new artists', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   track.selected(true);
@@ -447,12 +436,12 @@ QUnit.test('addArtistsToSelectedTracks add new artists', () => {
 
   target.addArtistsToSelectedTracks();
 
-  equal(track.artists().length, 2, 'target.tracks[0].artists.length');
-  equal(track.artists()[0], producer, 'target.tracks[0].artists[0]');
-  equal(track.artists()[1], vocalist, 'target.tracks[0].artists[1]');
+  expect(track.artists().length, 'target.tracks[0].artists.length').toBe(2);
+  expect(track.artists()[0], 'target.tracks[0].artists[0]').toBe(producer);
+  expect(track.artists()[1], 'target.tracks[0].artists[1]').toBe(vocalist);
 });
 
-QUnit.test('addArtistsToSelectedTracks not changed', () => {
+test('addArtistsToSelectedTracks not changed', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   track.selected(true);
@@ -461,11 +450,11 @@ QUnit.test('addArtistsToSelectedTracks not changed', () => {
 
   target.addArtistsToSelectedTracks();
 
-  equal(track.artists().length, 1, 'target.tracks[0].artists.length');
-  equal(track.artists()[0], producer, 'target.tracks[0].artists[0]');
+  expect(track.artists().length, 'target.tracks[0].artists.length').toBe(1);
+  expect(track.artists()[0], 'target.tracks[0].artists[0]').toBe(producer);
 });
 
-QUnit.test('removeArtistsFromSelectedTracks remove artist', () => {
+test('removeArtistsFromSelectedTracks remove artist', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   track.selected(true);
@@ -474,10 +463,10 @@ QUnit.test('removeArtistsFromSelectedTracks remove artist', () => {
 
   target.removeArtistsFromSelectedTracks();
 
-  equal(track.artists().length, 0, 'target.tracks[0].artists.length');
+  expect(track.artists().length, 'target.tracks[0].artists.length').toBe(0);
 });
 
-QUnit.test('removeArtistsFromSelectedTracks not changed', () => {
+test('removeArtistsFromSelectedTracks not changed', () => {
   var target = createViewModel();
   var track = target.tracks()[0];
   track.selected(true);
@@ -486,79 +475,81 @@ QUnit.test('removeArtistsFromSelectedTracks not changed', () => {
 
   target.removeArtistsFromSelectedTracks();
 
-  equal(track.artists().length, 1, 'target.tracks[0].artists.length');
-  equal(track.artists()[0], producer, 'target.tracks[0].artists[0]');
+  expect(track.artists().length, 'target.tracks[0].artists.length').toBe(1);
+  expect(track.artists()[0], 'target.tracks[0].artists[0]').toBe(producer);
 });
 
-QUnit.test('getArtistLink found', () => {
+test('getArtistLink found', () => {
   var target = createViewModel();
 
   var result = target.getArtistLink(39);
 
-  ok(result, 'result');
-  equal(result.id, 39, 'result.id');
+  expect(result, 'result').toBeTruthy();
+  expect(result.id, 'result.id').toBe(39);
 });
 
-QUnit.test('getArtistLink not found', () => {
+test('getArtistLink not found', () => {
   var target = createViewModel();
 
   var result = target.getArtistLink(123);
 
-  ok(!result, 'result');
+  expect(!result, 'result').toBeTruthy();
 });
 
-QUnit.test('translateArtistRole', () => {
+test('translateArtistRole', () => {
   var target = createViewModel();
 
   var result = target.translateArtistRole('VoiceManipulator');
 
-  equal(result, 'Voice manipulator', 'result');
+  expect(result, 'result').toBe('Voice manipulator');
 });
 
-QUnit.test('updateTrackNumbers updated by setting isNextDisc', () => {
+test('updateTrackNumbers updated by setting isNextDisc', () => {
   var target = createViewModel();
   target.acceptTrackSelection(3, null!); // Adds a new track
   target.tracks()[0].isNextDisc(true);
 
-  equal(target.tracks()[0].discNumber(), 2, 'tracks[0].discNumber');
-  equal(target.tracks()[0].trackNumber(), 1, 'tracks[0].trackNumber');
-  equal(target.tracks()[1].trackNumber(), 2, 'tracks[1].trackNumber');
-  equal(target.tracks()[2].trackNumber(), 3, 'tracks[2].trackNumber');
+  expect(target.tracks()[0].discNumber(), 'tracks[0].discNumber').toBe(2);
+  expect(target.tracks()[0].trackNumber(), 'tracks[0].trackNumber').toBe(1);
+  expect(target.tracks()[1].trackNumber(), 'tracks[1].trackNumber').toBe(2);
+  expect(target.tracks()[2].trackNumber(), 'tracks[2].trackNumber').toBe(3);
 });
 
-QUnit.test('TrackPropertiesViewModel constructor', () => {
+test('TrackPropertiesViewModel constructor', () => {
   var target = createTrackPropertiesViewModel();
 
-  ok(target.artistSelections, 'artistSelections');
-  equal(target.somethingSelected(), true, 'somethingSelected');
-  equal(target.somethingSelectable(), true, 'somethingSelectable');
-  equal(target.artistSelections.length, 2, 'artistSelections.length');
+  expect(target.artistSelections, 'artistSelections').toBeTruthy();
+  expect(target.somethingSelected(), 'somethingSelected').toBe(true);
+  expect(target.somethingSelectable(), 'somethingSelectable').toBe(true);
+  expect(target.artistSelections.length, 'artistSelections.length').toBe(2);
 
   var producerSelection = findArtistSelection(target, producer);
-  ok(producerSelection, 'producerSelection');
-  equal(producerSelection.selected(), true, 'producerSelection.selected');
-  equal(producerSelection.visible(), true, 'producerSelection.visible');
+  expect(producerSelection, 'producerSelection').toBeTruthy();
+  expect(producerSelection.selected(), 'producerSelection.selected').toBe(true);
+  expect(producerSelection.visible(), 'producerSelection.visible').toBe(true);
 
   var vocalistSelection = findArtistSelection(target, vocalist);
-  ok(vocalistSelection, 'vocalistSelection');
-  equal(vocalistSelection.selected(), false, 'vocalistSelection.selected');
-  equal(vocalistSelection.visible(), true, 'vocalistSelection.visible');
+  expect(vocalistSelection, 'vocalistSelection').toBeTruthy();
+  expect(vocalistSelection.selected(), 'vocalistSelection.selected').toBe(
+    false,
+  );
+  expect(vocalistSelection.visible(), 'vocalistSelection.visible').toBe(true);
 });
 
-QUnit.test('TrackPropertiesViewModel filter matches artist', () => {
+test('TrackPropertiesViewModel filter matches artist', () => {
   var target = createTrackPropertiesViewModel();
 
   target.filter('miku');
 
   var vocalistSelection = findArtistSelection(target, vocalist);
-  equal(vocalistSelection.visible(), true, 'vocalistSelection.visible');
+  expect(vocalistSelection.visible(), 'vocalistSelection.visible').toBe(true);
 });
 
-QUnit.test('TrackPropertiesViewModel filter does not match artist', () => {
+test('TrackPropertiesViewModel filter does not match artist', () => {
   var target = createTrackPropertiesViewModel();
 
   target.filter('luka');
 
   var vocalistSelection = findArtistSelection(target, vocalist);
-  equal(vocalistSelection.visible(), false, 'vocalistSelection.visible');
+  expect(vocalistSelection.visible(), 'vocalistSelection.visible').toBe(false);
 });

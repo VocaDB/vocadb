@@ -12,35 +12,29 @@ var artist: IEditableArtistWithSupport = {
   rolesArray: ko.observableArray<string>(['Arranger']),
 };
 
-QUnit.module('ArtistRolesEditViewModel', {
-  setup: () => {
-    viewModel = new AlbumArtistRolesEditViewModel(roleNames);
-  },
+beforeEach(() => {
+  viewModel = new AlbumArtistRolesEditViewModel(roleNames);
 });
 
-QUnit.test('constructor', () => {
-  QUnit.ok(viewModel.roleSelections, 'roleSelections');
-  QUnit.equal(viewModel.roleSelections.length, 3, 'roleSelections.length');
+test('constructor', () => {
+  expect(viewModel.roleSelections, 'roleSelections').toBeTruthy();
+  expect(viewModel.roleSelections.length, 'roleSelections.length').toBe(3);
 
   var voiceManipulatorRole = viewModel.roleSelections[2];
-  QUnit.equal(
-    voiceManipulatorRole.id,
+  expect(voiceManipulatorRole.id, 'voiceManipulatorRole.id').toBe(
     'VoiceManipulator',
-    'voiceManipulatorRole.id',
   );
-  QUnit.equal(
-    voiceManipulatorRole.name,
+  expect(voiceManipulatorRole.name, 'voiceManipulatorRole.name').toBe(
     'Voice manipulator',
-    'voiceManipulatorRole.name',
   );
 });
 
-QUnit.test('show', () => {
+test('show', () => {
   viewModel.show(artist);
 
-  QUnit.equal(viewModel.selectedArtist(), artist, 'selectedArtist');
+  expect(viewModel.selectedArtist(), 'selectedArtist').toBe(artist);
 
   var arrangerRole = viewModel.roleSelections[0];
-  QUnit.equal(arrangerRole.id, 'Arranger', 'arrangerRole.id');
-  QUnit.equal(arrangerRole.selected(), true, 'arrangerRole.selected');
+  expect(arrangerRole.id, 'arrangerRole.id').toBe('Arranger');
+  expect(arrangerRole.selected(), 'arrangerRole.selected').toBe(true);
 });

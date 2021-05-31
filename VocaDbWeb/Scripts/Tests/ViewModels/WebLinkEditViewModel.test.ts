@@ -8,14 +8,12 @@ var webLinkData = {
   disabled: false,
 };
 
-QUnit.module('WebLinkEditViewModel');
-
 test('constructor', () => {
   var target = new WebLinkEditViewModel(webLinkData);
 
-  equal(target.category(), 'Official', 'category');
-  equal(target.description(), 'Youtube Channel', 'description');
-  equal(target.url(), 'http://www.youtube.com/user/tripshots', 'url');
+  expect(target.category(), 'category').toBe('Official');
+  expect(target.description(), 'description').toBe('Youtube Channel');
+  expect(target.url(), 'url').toBe('http://www.youtube.com/user/tripshots');
 });
 
 test('editing url sets description', () => {
@@ -23,6 +21,6 @@ test('editing url sets description', () => {
 
   target.url('http://www.nicovideo.jp/mylist/');
 
-  equal(target.category(), 'Official', 'category');
-  equal(target.description(), 'NND MyList', 'description');
+  expect(target.category(), 'category').toBe('Official');
+  expect(target.description(), 'description').toBe('NND MyList');
 });

@@ -32,71 +32,74 @@ var createViewModel = (): UserMessagesViewModel => {
   return new UserMessagesViewModel(repository, null!, UserInboxType.Received);
 };
 
-QUnit.module('UserMessagesViewModel', {
-  setup: () => {
-    receiver = { id: 39, name: 'Rin' };
-    sender = { id: 39, name: 'Miku' };
-    data = {
-      items: [
-        createMessage(39, 'New message!', sender),
-        createMessage(40, 'Another message!', sender),
-      ],
-      totalCount: 0,
-    };
+beforeEach(() => {
+  receiver = { id: 39, name: 'Rin' };
+  sender = { id: 39, name: 'Miku' };
+  data = {
+    items: [
+      createMessage(39, 'New message!', sender),
+      createMessage(40, 'Another message!', sender),
+    ],
+    totalCount: 0,
+  };
 
-    repository = new FakeUserRepository();
-    repository.message = {
-      body: 'Message body',
-      createdFormatted: null!,
-      highPriority: false,
-      id: 39,
-      inbox: 'Received',
-      read: false,
-      receiver: null!,
-      sender: null!,
-      subject: 'New message',
-    };
-    repository.messages = data.items;
-  },
+  repository = new FakeUserRepository();
+  repository.message = {
+    body: 'Message body',
+    createdFormatted: null!,
+    highPriority: false,
+    id: 39,
+    inbox: 'Received',
+    read: false,
+    receiver: null!,
+    sender: null!,
+    subject: 'New message',
+  };
+  repository.messages = data.items;
 });
 
 test('constructor', () => {
   var viewModel = createViewModel();
 
-  equal(
+  expect(
     viewModel.receivedMessages.items().length,
-    2,
     'viewModel.receivedMessages.messages().length',
-  );
-  equal(
+  ).toBe(2);
+  expect(
     viewModel.receivedMessages.items()[0].subject,
-    'New message!',
     'viewModel.receivedMessages.messages()[0].subject',
-  );
-  equal(viewModel.selectedMessage(), null, 'viewModel.selectedMessage()');
-  equal(viewModel.selectedMessageBody(), '', 'viewModel.selectedMessageBody()');
+  ).toBe('New message!');
+  expect(
+    viewModel.selectedMessage(),
+    'viewModel.selectedMessage()',
+  ).toBeUndefined();
+  expect(
+    viewModel.selectedMessageBody(),
+    'viewModel.selectedMessageBody()',
+  ).toBe('');
 });
 
 test('selectMessage', () => {
   var viewModel = createViewModel();
   var message = viewModel.receivedMessages.items()[0];
 
-  ok(message, 'message');
+  expect(message, 'message').toBeTruthy();
 
   viewModel.selectMessage(message);
 
-  ok(viewModel.selectedMessage(), 'viewModel.selectedMessage()');
-  equal(
+  expect(
+    viewModel.selectedMessage(),
+    'viewModel.selectedMessage()',
+  ).toBeTruthy();
+  expect(
     viewModel.selectedMessage()!.subject,
-    'New message!',
     'viewModel.selectedMessage().subject',
-  );
-  equal(
+  ).toBe('New message!');
+  expect(
     viewModel.selectedMessageBody(),
-    'Message body',
     'viewModel.selectedMessageBody()',
-  );
-  equal(message.selected(), true, 'message.selected()');
+  ).toBe('Message body');
+  expect(message.selected(), 'message.selected()').toBe(true);
 });
 
 test('selectMessage deselectes others', () => {
@@ -104,18 +107,20 @@ test('selectMessage deselectes others', () => {
   var message1 = viewModel.receivedMessages.items()[0];
   var message2 = viewModel.receivedMessages.items()[1];
 
-  ok(message1, 'message1');
-  ok(message2, 'message2');
+  expect(message1, 'message1').toBeTruthy();
+  expect(message2, 'message2').toBeTruthy();
 
   viewModel.selectMessage(message1);
   viewModel.selectMessage(message2);
 
-  ok(viewModel.selectedMessage(), 'viewModel.selectedMessage()');
-  equal(
+  expect(
+    viewModel.selectedMessage(),
+    'viewModel.selectedMessage()',
+  ).toBeTruthy();
+  expect(
     viewModel.selectedMessage()!.subject,
-    'Another message!',
     'viewModel.selectedMessage().subject',
-  );
-  equal(message1.selected(), false, 'message1.selected()');
-  equal(message2.selected(), true, 'message2.selected()');
+  ).toBe('Another message!');
+  expect(message1.selected(), 'message1.selected()').toBe(false);
+  expect(message2.selected(), 'message2.selected()').toBe(true);
 });

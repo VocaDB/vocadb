@@ -18,7 +18,8 @@
 			"@Repositories/*": ["Scripts/Repositories/*"],
 			"@Shared/*": ["Scripts/Shared/*"],
 			"@ViewModels/*": ["Scripts/ViewModels/*"]
-		}
+		},
+		"resolveJsonModule": true
 	},
 	"include": ["Scripts/**/*"]
 }

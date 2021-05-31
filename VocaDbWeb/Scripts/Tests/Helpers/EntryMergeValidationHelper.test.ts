@@ -2,8 +2,6 @@ import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import EntryStatus from '@Models/EntryStatus';
 import moment from 'moment';
 
-QUnit.module('EntryMergeValidationHelper');
-
 function testValidate(
   expectedLessComplete: boolean,
   expectedNewer: boolean,
@@ -18,15 +16,12 @@ function testValidate(
     baseDate.toISOString(),
     targetDate.toISOString(),
   );
-  QUnit.equal(
+  expect(
     result.validationError_targetIsLessComplete,
-    expectedLessComplete,
     'expectedLessComplete',
-  );
-  QUnit.equal(
-    result.validationError_targetIsNewer,
+  ).toBe(expectedLessComplete);
+  expect(result.validationError_targetIsNewer, 'expectedNewer').toBe(
     expectedNewer,
-    'expectedNewer',
   );
 }
 
@@ -42,7 +37,7 @@ function testValidate(
 
 // Always prefer merging from newer to older, except when the older entry is draft while the newer is more complete
 
-QUnit.test('target is older, no warning', () => {
+test('target is older, no warning', () => {
   testValidate(
     false,
     false,
@@ -53,29 +48,29 @@ QUnit.test('target is older, no warning', () => {
   );
 });
 
-QUnit.test('target is older and more complete, no warning', () => {
-  testValidate(
-    false,
-    false,
-    EntryStatus.Draft,
-    EntryStatus.Finished,
-    moment(3939),
-    moment(39),
-  );
-});
-
-QUnit.test('target is newer but more complete, no warning', () => {
+test('target is older and more complete, no warning', () => {
   testValidate(
     false,
     false,
     EntryStatus.Draft,
     EntryStatus.Finished,
+    moment(3939),
+    moment(39),
+  );
+});
+
+test('target is newer but more complete, no warning', () => {
+  testValidate(
+    false,
+    false,
+    EntryStatus.Draft,
+    EntryStatus.Finished,
     moment(39),
     moment(3939),
   );
 });
 
-QUnit.test('target is newer, show warning', () => {
+test('target is newer, show warning', () => {
   testValidate(
     false,
     true,
@@ -86,7 +81,7 @@ QUnit.test('target is newer, show warning', () => {
   );
 });
 
-QUnit.test('target is older but draft, show warning', () => {
+test('target is older but draft, show warning', () => {
   testValidate(
     true,
     false,
@@ -97,16 +92,13 @@ QUnit.test('target is older but draft, show warning', () => {
   );
 });
 
-QUnit.test(
-  "target is newer and draft, show only 'target is newer' warning",
-  () => {
-    testValidate(
-      false,
-      true,
-      EntryStatus.Finished,
-      EntryStatus.Draft,
-      moment(39),
-      moment(3939),
-    );
-  },
-);
+test("target is newer and draft, show only 'target is newer' warning", () => {
+  testValidate(
+    false,
+    true,
+    EntryStatus.Finished,
+    EntryStatus.Draft,
+    moment(39),
+    moment(3939),
+  );
+});

@@ -1,14 +1,12 @@
 import HtmlHelper from '@Helpers/HtmlHelper';
 
-QUnit.module('HtmlHelper');
-
 var testBoldAndHtmlEncode = (
   text: string,
   term: string,
   expected: string,
 ): void => {
   var actual = HtmlHelper.boldAndHtmlEncode(text, term);
-  equal(actual, expected, 'with term ' + term);
+  expect(actual, 'with term ' + term).toBe(expected);
 };
 
 test('boldAndHtmlEncode match, no HTML', () => {

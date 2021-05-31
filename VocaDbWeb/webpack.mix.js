@@ -79,11 +79,5 @@ mix
 	);
 
 if (mix.inProduction()) {
-	mix.scripts([], 'wwwroot/bundles/tests.js');
-} else {
-	mix.ts('Scripts/tests.ts', 'wwwroot/bundles');
-}
-
-if (mix.inProduction()) {
 	mix.version();
 }

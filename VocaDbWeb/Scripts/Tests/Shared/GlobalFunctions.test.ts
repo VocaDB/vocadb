@@ -1,27 +1,25 @@
 import functions from '@Shared/GlobalFunctions';
 
-QUnit.module('GlobalFunctions');
-
 test('mergeUrls bothWithSlash', () => {
   var result = functions.mergeUrls('/', '/Song');
 
-  equal(result, '/Song', 'result');
+  expect(result, 'result').toBe('/Song');
 });
 
 test('mergeUrls baseWithSlash', () => {
   var result = functions.mergeUrls('/', 'Song');
 
-  equal(result, '/Song', 'result');
+  expect(result, 'result').toBe('/Song');
 });
 
 test('mergeUrls relativeWithSlash', () => {
   var result = functions.mergeUrls('', '/Song');
 
-  equal(result, '/Song', 'result');
+  expect(result, 'result').toBe('/Song');
 });
 
 test('mergeUrls neitherWithSlash', () => {
   var result = functions.mergeUrls('', 'Song');
 
-  equal(result, '/Song', 'result');
+  expect(result, 'result').toBe('/Song');
 });

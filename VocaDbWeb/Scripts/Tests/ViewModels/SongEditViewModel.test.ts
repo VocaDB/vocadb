@@ -26,28 +26,33 @@ var songRepo = new FakeSongRepository();
 var artistRepo = new FakeArtistRepository();
 var pvRepo: any = null;
 var userRepo = new FakeUserRepository();
-vdb.resources.song = { addExtraArtist: 'Add extra artist' };
+vdb.resources = {
+  album: {},
+  albumDetails: { download: '' },
+  albumEdit: { addExtraArtist: '' },
+  entryEdit: {},
+  shared: null,
+  song: { addExtraArtist: 'Add extra artist' },
+};
 
-QUnit.module('SongEditViewModelTests', {
-  setup: () => {
-    data = {
-      artists: [],
-      defaultNameLanguage: 'English',
-      deleted: false,
-      id: 0,
-      lengthSeconds: 39,
-      hasAlbums: false,
-      lyrics: [],
-      names: [],
-      notes: { original: '', english: '' },
-      originalVersion: null!,
-      pvs: [],
-      songType: 'Original',
-      status: 'Draft',
-      tags: [],
-      webLinks: [webLinkData],
-    };
-  },
+beforeEach(() => {
+  data = {
+    artists: [],
+    defaultNameLanguage: 'English',
+    deleted: false,
+    id: 0,
+    lengthSeconds: 39,
+    hasAlbums: false,
+    lyrics: [],
+    names: [],
+    notes: { original: '', english: '' },
+    originalVersion: null!,
+    pvs: [],
+    songType: 'Original',
+    status: 'Draft',
+    tags: [],
+    webLinks: [webLinkData],
+  };
 });
 
 function createViewModel(): SongEditViewModel {
@@ -67,50 +72,49 @@ function createViewModel(): SongEditViewModel {
   );
 }
 
-QUnit.test('constructor', () => {
+test('constructor', () => {
   var target = createViewModel();
 
-  equal(target.length(), 39, 'length');
-  equal(target.lengthFormatted(), '0:39', 'lengthFormatted');
-  equal(target.webLinks.items().length, 1, 'webLinks.length');
-  equal(
+  expect(target.length(), 'length').toBe(39);
+  expect(target.lengthFormatted(), 'lengthFormatted').toBe('0:39');
+  expect(target.webLinks.items().length, 'webLinks.length').toBe(1);
+  expect(
     target.validationError_duplicateArtist(),
-    false,
     'validationError_duplicateArtist',
-  );
+  ).toBe(false);
 });
 
-QUnit.test('lengthFormatted only seconds', () => {
+test('lengthFormatted only seconds', () => {
   var target = createViewModel();
 
   target.lengthFormatted('39');
 
-  equal(target.length(), 39, 'length');
+  expect(target.length(), 'length').toBe(39);
 });
 
-QUnit.test('lengthFormatted over 1 minute', () => {
+test('lengthFormatted over 1 minute', () => {
   var target = createViewModel();
 
   target.lengthFormatted('393');
 
-  equal(target.length(), 393, 'length');
+  expect(target.length(), 'length').toBe(393);
 });
 
-QUnit.test('lengthFormatted minutes and seconds', () => {
+test('lengthFormatted minutes and seconds', () => {
   var target = createViewModel();
 
   target.lengthFormatted('3:39');
 
-  equal(target.length(), 219, 'length');
+  expect(target.length(), 'length').toBe(219);
 });
 
-QUnit.test('firstPvDate no PV', () => {
+test('firstPvDate no PV', () => {
   var target = createViewModel();
 
-  QUnit.equal(target.firstPvDate(), null, 'firstPvDate');
+  expect(target.firstPvDate(), 'firstPvDate').toBeUndefined();
 });
 
-QUnit.test('firstPvDate with PVs', () => {
+test('firstPvDate with PVs', () => {
   data.pvs = [
     { pvType: 'Original', pvId: '3', service: 'YouTube' },
     {
@@ -135,33 +139,30 @@ QUnit.test('firstPvDate with PVs', () => {
 
   var target = createViewModel();
 
-  QUnit.ok(target.firstPvDate(), 'firstPvDate');
-  QUnit.equal(
-    target.firstPvDate().toISOString(),
+  expect(target.firstPvDate(), 'firstPvDate').toBeTruthy();
+  expect(target.firstPvDate().toISOString(), 'firstPvDate').toBe(
     moment('2039-03-09').toISOString(),
-    'firstPvDate',
   );
 });
 
-QUnit.test('suggestedPublishDate no date', () => {
+test('suggestedPublishDate no date', () => {
   var target = createViewModel();
-  QUnit.equal(target.suggestedPublishDate(), null, 'suggestedPublishDate');
+  expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeUndefined();
 });
 
-QUnit.test('suggestedPublishDate with album date', () => {
+test('suggestedPublishDate with album date', () => {
   data.albumReleaseDate = '2039-03-09';
 
   var target = createViewModel();
 
-  QUnit.ok(target.suggestedPublishDate(), 'suggestedPublishDate');
-  QUnit.equal(
+  expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeTruthy();
+  expect(
     target.suggestedPublishDate().date.toISOString(),
-    moment('2039-03-09').toISOString(),
     'suggestedPublishDate',
-  );
+  ).toBe(moment('2039-03-09').toISOString());
 });
 
-QUnit.test('validationError_duplicateArtist', () => {
+test('validationError_duplicateArtist', () => {
   var target = createViewModel();
   var artist = new ArtistForAlbumEditViewModel(null!, {
     artist: { id: 1, name: '164' },
@@ -171,14 +172,13 @@ QUnit.test('validationError_duplicateArtist', () => {
   target.artistLinks.push(artist);
   target.artistLinks.push(artist);
 
-  equal(
+  expect(
     target.validationError_duplicateArtist(),
-    true,
     'validationError_duplicateArtist',
-  );
+  ).toBe(true);
 });
 
-QUnit.test('validationError_duplicateArtist support', () => {
+test('validationError_duplicateArtist support', () => {
   const target = createViewModel();
 
   const artist = { id: 39, name: 'Clean Tears' };
@@ -197,9 +197,8 @@ QUnit.test('validationError_duplicateArtist support', () => {
     }),
   );
 
-  equal(
+  expect(
     target.validationError_duplicateArtist(),
-    true,
     'validationError_duplicateArtist',
-  );
+  ).toBe(true);
 });

@@ -8,22 +8,20 @@ var rep = new FakeAlbumRepository();
 var producer: ArtistContract;
 var data: ArtistForAlbumContract;
 
-QUnit.module('ArtistForAlbumEditViewModelTests', {
-  setup: () => {
-    producer = {
-      id: 1,
-      name: 'Tripshots',
-      additionalNames: '',
-      artistType: 'Producer',
-    };
-    data = {
-      artist: producer,
-      id: 39,
-      isSupport: false,
-      name: '',
-      roles: 'Default',
-    };
-  },
+beforeEach(() => {
+  producer = {
+    id: 1,
+    name: 'Tripshots',
+    additionalNames: '',
+    artistType: 'Producer',
+  };
+  data = {
+    artist: producer,
+    id: 39,
+    isSupport: false,
+    name: '',
+    roles: 'Default',
+  };
 });
 
 function createViewModel(): ArtistForAlbumEditViewModel {
@@ -33,17 +31,17 @@ function createViewModel(): ArtistForAlbumEditViewModel {
 test('constructor', () => {
   var target = createViewModel();
 
-  equal(target.isCustomizable(), true, 'isCustomizable');
-  equal(target.roles(), 'Default', 'roles');
-  equal(target.rolesArray().length, 1, 'rolesArray.length');
-  equal(target.rolesArray()[0], 'Default', 'rolesArray[0]');
+  expect(target.isCustomizable(), 'isCustomizable').toBe(true);
+  expect(target.roles(), 'roles').toBe('Default');
+  expect(target.rolesArray().length, 'rolesArray.length').toBe(1);
+  expect(target.rolesArray()[0], 'rolesArray[0]').toBe('Default');
 });
 
 test('isCustomizable', () => {
   producer.artistType = 'Vocaloid';
   var target = createViewModel();
 
-  equal(target.isCustomizable(), false, 'isCustomizable');
+  expect(target.isCustomizable(), 'isCustomizable').toBe(false);
 });
 
 test('rolesArray write', () => {
@@ -51,7 +49,7 @@ test('rolesArray write', () => {
 
   target.rolesArray(['Composer', 'Arranger']);
 
-  equal(target.roles(), 'Composer,Arranger', 'roles');
+  expect(target.roles(), 'roles').toBe('Composer,Arranger');
 });
 
 test('roles write', () => {
@@ -59,7 +57,7 @@ test('roles write', () => {
 
   target.roles('Composer, Arranger');
 
-  equal(target.rolesArray().length, 2, 'rolesArray.length');
-  equal(target.rolesArray()[0], 'Composer', 'rolesArray[0]');
-  equal(target.rolesArray()[1], 'Arranger', 'rolesArray[1]');
+  expect(target.rolesArray().length, 'rolesArray.length').toBe(2);
+  expect(target.rolesArray()[0], 'rolesArray[0]').toBe('Composer');
+  expect(target.rolesArray()[1], 'rolesArray[1]').toBe('Arranger');
 });

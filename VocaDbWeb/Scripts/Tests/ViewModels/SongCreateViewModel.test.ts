@@ -23,8 +23,6 @@ repository.results = {
   songType: 'Original',
 };
 
-QUnit.module('SongCreateViewModelTests');
-
 function createViewModel(): SongCreateViewModel {
   return new SongCreateViewModel(repository, artistRepository, tagRepository);
 }
@@ -32,11 +30,11 @@ function createViewModel(): SongCreateViewModel {
 test('constructor empty', () => {
   var target = createViewModel();
 
-  equal(target.nameOriginal(), '', 'nameOriginal');
-  equal(target.nameEnglish(), '', 'nameEnglish');
-  equal(target.pv1(), '', 'pv1');
-  ok(target.artists(), 'artists');
-  equal(target.artists().length, 0, 'artists.length');
+  expect(target.nameOriginal(), 'nameOriginal').toBe('');
+  expect(target.nameEnglish(), 'nameEnglish').toBe('');
+  expect(target.pv1(), 'pv1').toBe('');
+  expect(target.artists(), 'artists').toBeTruthy();
+  expect(target.artists().length, 'artists.length').toBe(0);
 });
 
 test('constructor with data', () => {
@@ -47,10 +45,10 @@ test('constructor with data', () => {
     { nameEnglish: 'Nebula', artists: [producer] },
   );
 
-  equal(target.nameEnglish(), 'Nebula', 'nameEnglish');
-  ok(target.artists(), 'artists');
-  equal(target.artists().length, 1, 'artists.length');
-  equal(target.artists()[0].id, 1, 'artist id');
+  expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
+  expect(target.artists(), 'artists').toBeTruthy();
+  expect(target.artists().length, 'artists.length').toBe(1);
+  expect(target.artists()[0].id, 'artist id').toBe(1);
 });
 
 test('addArtist', () => {
@@ -58,8 +56,8 @@ test('addArtist', () => {
 
   target.addArtist(1);
 
-  equal(target.artists().length, 1, 'artists.length');
-  equal(target.artists()[0].id, 1, 'artist id');
+  expect(target.artists().length, 'artists.length').toBe(1);
+  expect(target.artists()[0].id, 'artist id').toBe(1);
 });
 
 test('checkDuplicatesAndPV title and artists', () => {
@@ -67,9 +65,9 @@ test('checkDuplicatesAndPV title and artists', () => {
 
   target.checkDuplicatesAndPV();
 
-  equal(target.nameEnglish(), 'Nebula', 'nameEnglish');
-  ok(target.artists(), 'artists');
-  equal(target.artists().length, 1, 'artists.length');
+  expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
+  expect(target.artists(), 'artists').toBeTruthy();
+  expect(target.artists().length, 'artists.length').toBe(1);
 });
 
 test('checkDuplicatesAndPV does not overwrite title', () => {
@@ -78,5 +76,5 @@ test('checkDuplicatesAndPV does not overwrite title', () => {
 
   target.checkDuplicatesAndPV();
 
-  equal(target.nameOriginal(), 'Overridden title', 'nameOriginal');
+  expect(target.nameOriginal(), 'nameOriginal').toBe('Overridden title');
 });

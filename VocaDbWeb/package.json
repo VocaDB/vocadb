@@ -7,10 +7,13 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "test": "jest"
     },
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^2.0.2",
+        "@types/jest": "^26.0.23",
+        "@types/jest-expect-message": "^1.0.3",
         "@types/jquery": "^1.10.8-alpha",
         "@types/jqueryui": "^1.9.14-alpha",
         "@types/knockout.punches": "^0.5.33",
@@ -28,12 +31,16 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "eslint-plugin-vue": "^7.9.0",
         "eslint-webpack-plugin": "^2.5.4",
+        "jest": "^27.0.1",
+        "jest-expect-message": "^1.0.2",
         "laravel-mix": "^6.0.19",
         "laravel-mix-eslint": "^0.2.0",
         "less": "^3.10.3",
         "less-loader": "^5.0.0",
         "prettier": "^2.2.1",
+        "ts-jest": "^27.0.1",
         "ts-loader": "^6.2.2",
+        "ts-node": "^10.0.0",
         "typescript": "^4.2.4",
         "vue-template-compiler": "^2.6.11"
     },

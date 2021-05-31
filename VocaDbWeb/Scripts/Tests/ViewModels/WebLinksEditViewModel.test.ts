@@ -13,13 +13,11 @@ var webLinkData = {
   disabled: false,
 };
 
-QUnit.module('WebLinksEditViewModel');
-
 test('constructor', () => {
   var target = new WebLinksEditViewModel([webLinkData], categories);
 
-  equal(target.items().length, 1, 'webLinks.length');
-  equal(target.categories!.length, 2, 'categories.length');
+  expect(target.items().length, 'webLinks.length').toBe(1);
+  expect(target.categories!.length, 'categories.length').toBe(2);
 });
 
 test('add new', () => {
@@ -27,7 +25,7 @@ test('add new', () => {
 
   target.add();
 
-  equal(target.items().length, 1, 'webLinks.length');
+  expect(target.items().length, 'webLinks.length').toBe(1);
 });
 
 test('remove', () => {
@@ -35,5 +33,5 @@ test('remove', () => {
 
   target.remove(target.items()[0]);
 
-  equal(target.items().length, 0, 'webLinks.length');
+  expect(target.items().length, 'webLinks.length').toBe(0);
 });
