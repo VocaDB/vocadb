@@ -3,11 +3,11 @@ import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';
 
 export default interface ArtistApiContract
-  extends CommonEntryContract,
-    EntryWithTagUsagesContract {
-  additionalNames: string;
+	extends CommonEntryContract,
+		EntryWithTagUsagesContract {
+	additionalNames: string;
 
-  artistType: string;
+	artistType: string;
 
-  mainPicture: EntryThumbContract;
+	mainPicture: EntryThumbContract;
 }

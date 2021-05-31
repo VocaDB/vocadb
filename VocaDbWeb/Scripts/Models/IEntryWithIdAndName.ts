@@ -1,5 +1,5 @@
 export default interface IEntryWithIdAndName {
-  id: number;
+	id: number;
 
-  name?: string;
+	name?: string;
 }

@@ -1,25 +1,25 @@
 import UserApiContract from './UserApiContract';
 
 export default interface UserMessageSummaryContract {
-  /* 
+	/* 
 			Message body, optional field. 
 			This field is encoded with Markdown.
 		*/
-  body?: string;
+	body?: string;
 
-  createdFormatted: string;
+	createdFormatted: string;
 
-  highPriority: boolean;
+	highPriority: boolean;
 
-  id: number;
+	id: number;
 
-  inbox: string;
+	inbox: string;
 
-  read: boolean;
+	read: boolean;
 
-  receiver: UserApiContract;
+	receiver: UserApiContract;
 
-  sender?: UserApiContract;
+	sender?: UserApiContract;
 
-  subject: string;
+	subject: string;
 }

@@ -1,17 +1,17 @@
 import ko from 'knockout';
 
 declare global {
-  interface KnockoutBindingHandlers {
-    stopBinding: KnockoutBindingHandler;
-  }
+	interface KnockoutBindingHandlers {
+		stopBinding: KnockoutBindingHandler;
+	}
 }
 
 // Stops automatic Knockout binding for child elements.
 // See http://www.knockmeout.net/2012/05/quick-tip-skip-binding.html
 ko.bindingHandlers.stopBinding = {
-  init: (): { controlsDescendantBindings: boolean } => {
-    return { controlsDescendantBindings: true };
-  },
+	init: (): { controlsDescendantBindings: boolean } => {
+		return { controlsDescendantBindings: true };
+	},
 };
 
 // https://knockoutjs.com/documentation/custom-bindings-for-virtual-elements.html

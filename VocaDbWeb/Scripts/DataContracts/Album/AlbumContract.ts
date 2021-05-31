@@ -4,19 +4,19 @@ import EntryThumbContract from '../EntryThumbContract';
 import OptionalDateTimeContract from '../OptionalDateTimeContract';
 
 export default interface AlbumContract
-  extends CommonEntryContract,
-    EntryWithTagUsagesContract {
-  additionalNames: string;
+	extends CommonEntryContract,
+		EntryWithTagUsagesContract {
+	additionalNames: string;
 
-  artistString: string;
+	artistString: string;
 
-  discType: string;
+	discType: string;
 
-  mainPicture: EntryThumbContract;
+	mainPicture: EntryThumbContract;
 
-  ratingAverage: number;
+	ratingAverage: number;
 
-  ratingCount: number;
+	ratingCount: number;
 
-  releaseDate: OptionalDateTimeContract;
+	releaseDate: OptionalDateTimeContract;
 }

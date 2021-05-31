@@ -8,149 +8,149 @@ import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 
 // Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
 export default class EditableCommentsViewModel {
-  constructor(
-    private repo: ICommentRepository,
-    private entryId: number,
-    private loggedUserId: number,
-    private canDeleteAllComments: boolean,
-    private canEditAllComments: boolean,
-    private ascending: boolean,
-    commentContracts?: CommentContract[],
-    hasMoreComments: boolean = false,
-  ) {
-    this.comments = ko.observableArray<CommentViewModel>(null!);
-    this.commentsLoaded = commentContracts != null && !hasMoreComments;
-    this.topComments = ko.computed(() => _.take(this.comments(), 3));
-    this.pageOfComments = ko.computed(() =>
-      this.comments().slice(
-        this.paging.firstItem(),
-        this.paging.firstItem() + this.paging.pageSize(),
-      ),
-    );
+	constructor(
+		private repo: ICommentRepository,
+		private entryId: number,
+		private loggedUserId: number,
+		private canDeleteAllComments: boolean,
+		private canEditAllComments: boolean,
+		private ascending: boolean,
+		commentContracts?: CommentContract[],
+		hasMoreComments: boolean = false,
+	) {
+		this.comments = ko.observableArray<CommentViewModel>(null!);
+		this.commentsLoaded = commentContracts != null && !hasMoreComments;
+		this.topComments = ko.computed(() => _.take(this.comments(), 3));
+		this.pageOfComments = ko.computed(() =>
+			this.comments().slice(
+				this.paging.firstItem(),
+				this.paging.firstItem() + this.paging.pageSize(),
+			),
+		);
 
-    if (commentContracts) {
-      this.setComments(commentContracts);
-    }
-  }
+		if (commentContracts) {
+			this.setComments(commentContracts);
+		}
+	}
 
-  public beginEditComment = (comment: CommentViewModel): void => {
-    comment.beginEdit();
-    this.editCommentModel(comment);
-  };
+	public beginEditComment = (comment: CommentViewModel): void => {
+		comment.beginEdit();
+		this.editCommentModel(comment);
+	};
 
-  public cancelEditComment = (): void => {
-    this.editCommentModel(null!);
-  };
+	public cancelEditComment = (): void => {
+		this.editCommentModel(null!);
+	};
 
-  private canDeleteComment = (comment: CommentContract): boolean => {
-    // If one can edit they can also delete
-    return (
-      this.canDeleteAllComments ||
-      this.canEditAllComments ||
-      (comment.author && comment.author.id === this.loggedUserId)
-    );
-  };
+	private canDeleteComment = (comment: CommentContract): boolean => {
+		// If one can edit they can also delete
+		return (
+			this.canDeleteAllComments ||
+			this.canEditAllComments ||
+			(comment.author && comment.author.id === this.loggedUserId)
+		);
+	};
 
-  private canEditComment = (comment: CommentContract): boolean => {
-    return (
-      this.canEditAllComments ||
-      (comment.author && comment.author.id === this.loggedUserId)
-    );
-  };
+	private canEditComment = (comment: CommentContract): boolean => {
+		return (
+			this.canEditAllComments ||
+			(comment.author && comment.author.id === this.loggedUserId)
+		);
+	};
 
-  public comments: ObservableArray<CommentViewModel>;
+	public comments: ObservableArray<CommentViewModel>;
 
-  // Whether all comments have been loaded
-  private commentsLoaded: boolean;
+	// Whether all comments have been loaded
+	private commentsLoaded: boolean;
 
-  public createComment = (): void => {
-    var comment = this.newComment();
+	public createComment = (): void => {
+		var comment = this.newComment();
 
-    if (!comment) return;
+		if (!comment) return;
 
-    this.newComment('');
+		this.newComment('');
 
-    var commentContract: CommentContract = {
-      author: { id: this.loggedUserId },
-      message: comment,
-    };
+		var commentContract: CommentContract = {
+			author: { id: this.loggedUserId },
+			message: comment,
+		};
 
-    this.repo.createComment(this.entryId, commentContract).then((result) => {
-      var processed = this.processComment(result);
-      this.paging.totalItems(this.paging.totalItems() + 1);
+		this.repo.createComment(this.entryId, commentContract).then((result) => {
+			var processed = this.processComment(result);
+			this.paging.totalItems(this.paging.totalItems() + 1);
 
-      if (this.ascending) {
-        this.comments.push(processed);
-        this.paging.goToLastPage();
-      } else {
-        this.comments.unshift(processed);
-        this.paging.goToFirstPage();
-      }
+			if (this.ascending) {
+				this.comments.push(processed);
+				this.paging.goToLastPage();
+			} else {
+				this.comments.unshift(processed);
+				this.paging.goToFirstPage();
+			}
 
-      if (this.onCommentCreated) this.onCommentCreated(_.clone(processed));
-    });
-  };
+			if (this.onCommentCreated) this.onCommentCreated(_.clone(processed));
+		});
+	};
 
-  public deleteComment = (comment: CommentViewModel): void => {
-    this.comments.remove(comment);
+	public deleteComment = (comment: CommentViewModel): void => {
+		this.comments.remove(comment);
 
-    this.repo.deleteComment(comment.id);
-    this.paging.totalItems(this.paging.totalItems() - 1);
-  };
+		this.repo.deleteComment(comment.id);
+		this.paging.totalItems(this.paging.totalItems() - 1);
+	};
 
-  public editCommentModel = ko.observable<CommentViewModel>(null!);
+	public editCommentModel = ko.observable<CommentViewModel>(null!);
 
-  public initComments = (): void => {
-    if (this.commentsLoaded) return;
+	public initComments = (): void => {
+		if (this.commentsLoaded) return;
 
-    this.repo.getComments(this.entryId).then((contracts) => {
-      this.setComments(contracts);
-    });
+		this.repo.getComments(this.entryId).then((contracts) => {
+			this.setComments(contracts);
+		});
 
-    this.commentsLoaded = true;
-  };
+		this.commentsLoaded = true;
+	};
 
-  public newComment = ko.observable('');
+	public newComment = ko.observable('');
 
-  public onCommentCreated!: (comment: CommentViewModel) => void;
+	public onCommentCreated!: (comment: CommentViewModel) => void;
 
-  public paging: ServerSidePagingViewModel = new ServerSidePagingViewModel();
+	public paging: ServerSidePagingViewModel = new ServerSidePagingViewModel();
 
-  public pageOfComments: Computed<CommentViewModel[]>;
+	public pageOfComments: Computed<CommentViewModel[]>;
 
-  private processComment = (contract: CommentContract): CommentViewModel => {
-    return new CommentViewModel(
-      contract,
-      this.canDeleteComment(contract),
-      this.canEditComment(contract),
-    );
-  };
+	private processComment = (contract: CommentContract): CommentViewModel => {
+		return new CommentViewModel(
+			contract,
+			this.canDeleteComment(contract),
+			this.canEditComment(contract),
+		);
+	};
 
-  public saveEditedComment = (): void => {
-    if (!this.editCommentModel()) return;
+	public saveEditedComment = (): void => {
+		if (!this.editCommentModel()) return;
 
-    this.editCommentModel()!.saveChanges();
-    var editedContract = this.editCommentModel()!.toContract();
+		this.editCommentModel()!.saveChanges();
+		var editedContract = this.editCommentModel()!.toContract();
 
-    this.repo.updateComment(editedContract.id!, editedContract);
+		this.repo.updateComment(editedContract.id!, editedContract);
 
-    this.editCommentModel(null!);
-  };
+		this.editCommentModel(null!);
+	};
 
-  private setComments = (commentContracts: CommentContract[]): void => {
-    var commentViewModels = _.sortBy(
-      _.map(commentContracts, (comment) => this.processComment(comment)),
-      (comment) => comment.created,
-    );
+	private setComments = (commentContracts: CommentContract[]): void => {
+		var commentViewModels = _.sortBy(
+			_.map(commentContracts, (comment) => this.processComment(comment)),
+			(comment) => comment.created,
+		);
 
-    this.paging.totalItems(commentContracts.length);
+		this.paging.totalItems(commentContracts.length);
 
-    if (this.ascending) this.paging.goToLastPage();
-    else commentViewModels = commentViewModels.reverse();
+		if (this.ascending) this.paging.goToLastPage();
+		else commentViewModels = commentViewModels.reverse();
 
-    this.comments(commentViewModels);
-  };
+		this.comments(commentViewModels);
+	};
 
-  // Latest N comments
-  public topComments: Computed<CommentViewModel[]>;
+	// Latest N comments
+	public topComments: Computed<CommentViewModel[]>;
 }

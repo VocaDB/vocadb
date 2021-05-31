@@ -9,48 +9,48 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const UserFavoriteSongs = (model: {
-  groupByRating: boolean;
-  sort: string;
-  user: {
-    id: number;
-  };
+	groupByRating: boolean;
+	sort: string;
+	user: {
+		id: number;
+	};
 }): void => {
-  $(function () {
-    moment.locale(vdb.values.culture);
-    var cultureCode = vdb.values.uiCulture;
-    var lang = vdb.values.languagePreference;
-    var loggedUserId = model.user.id;
-    var sort = model.sort;
-    var groupByRating = model.groupByRating;
+	$(function () {
+		moment.locale(vdb.values.culture);
+		var cultureCode = vdb.values.uiCulture;
+		var lang = vdb.values.languagePreference;
+		var loggedUserId = model.user.id;
+		var sort = model.sort;
+		var groupByRating = model.groupByRating;
 
-    const httpClient = new HttpClient();
-    var rootPath = vdb.values.baseAddress;
-    var urlMapper = new UrlMapper(rootPath);
-    var repoFactory = new RepositoryFactory(httpClient);
-    var userRepo = repoFactory.userRepository();
-    var artistRepo = repoFactory.artistRepository();
-    var songRepo = repoFactory.songRepository();
-    var resourceRepo = repoFactory.resourceRepository();
-    var tagRepo = repoFactory.tagRepository();
-    var pvPlayersFactory = new PVPlayersFactory($('#pv-player-wrapper')[0]);
+		const httpClient = new HttpClient();
+		var rootPath = vdb.values.baseAddress;
+		var urlMapper = new UrlMapper(rootPath);
+		var repoFactory = new RepositoryFactory(httpClient);
+		var userRepo = repoFactory.userRepository();
+		var artistRepo = repoFactory.artistRepository();
+		var songRepo = repoFactory.songRepository();
+		var resourceRepo = repoFactory.resourceRepository();
+		var tagRepo = repoFactory.tagRepository();
+		var pvPlayersFactory = new PVPlayersFactory($('#pv-player-wrapper')[0]);
 
-    var vm = new RatedSongsSearchViewModel(
-      urlMapper,
-      userRepo,
-      artistRepo,
-      songRepo,
-      resourceRepo,
-      tagRepo,
-      lang,
-      loggedUserId,
-      cultureCode,
-      sort,
-      groupByRating,
-      pvPlayersFactory,
-      true,
-    );
-    ko.applyBindings(vm);
-  });
+		var vm = new RatedSongsSearchViewModel(
+			urlMapper,
+			userRepo,
+			artistRepo,
+			songRepo,
+			resourceRepo,
+			tagRepo,
+			lang,
+			loggedUserId,
+			cultureCode,
+			sort,
+			groupByRating,
+			pvPlayersFactory,
+			true,
+		);
+		ko.applyBindings(vm);
+	});
 };
 
 export default UserFavoriteSongs;

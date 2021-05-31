@@ -1,7 +1,7 @@
 export default interface SongListBaseContract {
-  featuredCategory?: string;
+	featuredCategory?: string;
 
-  id: number;
+	id: number;
 
-  name: string;
+	name: string;
 }

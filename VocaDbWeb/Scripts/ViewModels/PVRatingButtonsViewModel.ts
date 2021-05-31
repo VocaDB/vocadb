@@ -5,58 +5,58 @@ import ko, { Computed, Observable } from 'knockout';
 
 // Knockout view model for PV rating buttons
 export default class PVRatingButtonsViewModel {
-  public isRated: Computed<boolean>;
+	public isRated: Computed<boolean>;
 
-  public isRatingFavorite: Computed<boolean>;
+	public isRatingFavorite: Computed<boolean>;
 
-  public isRatingLike: Computed<boolean>;
+	public isRatingLike: Computed<boolean>;
 
-  public rating: Observable<SongVoteRating>;
+	public rating: Observable<SongVoteRating>;
 
-  // Rating operation is in progress. Prevents racing conditions.
-  public ratingInProgress = ko.observable(false);
+	// Rating operation is in progress. Prevents racing conditions.
+	public ratingInProgress = ko.observable(false);
 
-  private setRating: (rating: SongVoteRating) => void;
-  public setRating_favorite = (): void =>
-    this.setRating(SongVoteRating.Favorite);
-  public setRating_like = (): void => this.setRating(SongVoteRating.Like);
-  public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
+	private setRating: (rating: SongVoteRating) => void;
+	public setRating_favorite = (): void =>
+		this.setRating(SongVoteRating.Favorite);
+	public setRating_like = (): void => this.setRating(SongVoteRating.Like);
+	public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
 
-  constructor(
-    repository: UserRepository,
-    songWithVoteContract: SongWithVoteContract,
-    ratingCallback: () => void,
-    isLoggedIn = true,
-  ) {
-    var songId = songWithVoteContract.id;
-    this.rating = ko.observable(parseSongVoteRating(songWithVoteContract.vote));
-    this.isRated = ko.computed(() => this.rating() !== SongVoteRating.Nothing);
-    this.isRatingFavorite = ko.computed(
-      () => this.rating() === SongVoteRating.Favorite,
-    );
-    this.isRatingLike = ko.computed(
-      () => this.rating() === SongVoteRating.Like,
-    );
+	constructor(
+		repository: UserRepository,
+		songWithVoteContract: SongWithVoteContract,
+		ratingCallback: () => void,
+		isLoggedIn = true,
+	) {
+		var songId = songWithVoteContract.id;
+		this.rating = ko.observable(parseSongVoteRating(songWithVoteContract.vote));
+		this.isRated = ko.computed(() => this.rating() !== SongVoteRating.Nothing);
+		this.isRatingFavorite = ko.computed(
+			() => this.rating() === SongVoteRating.Favorite,
+		);
+		this.isRatingLike = ko.computed(
+			() => this.rating() === SongVoteRating.Like,
+		);
 
-    this.setRating = (rating: SongVoteRating): void => {
-      if (this.ratingInProgress() || !isLoggedIn) return;
+		this.setRating = (rating: SongVoteRating): void => {
+			if (this.ratingInProgress() || !isLoggedIn) return;
 
-      this.ratingInProgress(true);
-      this.rating(rating);
+			this.ratingInProgress(true);
+			this.rating(rating);
 
-      repository
-        .updateSongRating(songId, rating)
-        .then(() => {
-          if (rating !== SongVoteRating.Nothing && ratingCallback)
-            ratingCallback();
-        })
-        .finally(() => this.ratingInProgress(false));
-    };
-  }
+			repository
+				.updateSongRating(songId, rating)
+				.then(() => {
+					if (rating !== SongVoteRating.Nothing && ratingCallback)
+						ratingCallback();
+				})
+				.finally(() => this.ratingInProgress(false));
+		};
+	}
 }
 
 export interface SongWithVoteContract {
-  id: number;
+	id: number;
 
-  vote: string;
+	vote: string;
 }

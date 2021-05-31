@@ -10,36 +10,36 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 function initPage(): void {
-  $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
-  $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
-  $('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
+	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
+	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
+	$('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
 const EventEditSeries = (model: {
-  defaultNameLanguage: string;
-  id: number;
-  names: LocalizedStringWithIdContract[];
-  webLinks: WebLinkContract[];
+	defaultNameLanguage: string;
+	id: number;
+	names: LocalizedStringWithIdContract[];
+	webLinks: WebLinkContract[];
 }): void => {
-  $(function () {
-    const httpClient = new HttpClient();
-    var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var eventRepo = new ReleaseEventRepository(httpClient);
-    var userRepo = new UserRepository(httpClient);
+	$(function () {
+		const httpClient = new HttpClient();
+		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var eventRepo = new ReleaseEventRepository(httpClient);
+		var userRepo = new UserRepository(httpClient);
 
-    var vm = new ReleaseEventSeriesEditViewModel(
-      eventRepo,
-      userRepo,
-      urlMapper,
-      model.id,
-      model.defaultNameLanguage,
-      model.names,
-      model.webLinks,
-    );
-    ko.applyBindings(vm);
+		var vm = new ReleaseEventSeriesEditViewModel(
+			eventRepo,
+			userRepo,
+			urlMapper,
+			model.id,
+			model.defaultNameLanguage,
+			model.names,
+			model.webLinks,
+		);
+		ko.applyBindings(vm);
 
-    initPage();
-  });
+		initPage();
+	});
 };
 
 export default EventEditSeries;

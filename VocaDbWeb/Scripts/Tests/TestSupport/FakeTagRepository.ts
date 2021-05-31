@@ -5,15 +5,15 @@ import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 
 export default class FakeTagRepository extends TagRepository {
-  constructor() {
-    super(new HttpClient());
+	constructor() {
+		super(new HttpClient());
 
-    this.getEntryTypeTag = (
-      entryType: EntryType,
-      subType: string,
-      lang: ContentLanguagePreference,
-    ): Promise<TagApiContract> => {
-      return Promise.resolve<TagApiContract>(null!);
-    };
-  }
+		this.getEntryTypeTag = (
+			entryType: EntryType,
+			subType: string,
+			lang: ContentLanguagePreference,
+		): Promise<TagApiContract> => {
+			return Promise.resolve<TagApiContract>(null!);
+		};
+	}
 }

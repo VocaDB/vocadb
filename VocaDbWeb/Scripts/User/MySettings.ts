@@ -7,28 +7,28 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const UserMySettings = (model: {
-  aboutMe: string;
-  email: string;
-  emailVerified: boolean;
-  knownLanguages: UserKnownLanguageContract[];
-  webLinks: WebLinkContract[];
+	aboutMe: string;
+	email: string;
+	emailVerified: boolean;
+	knownLanguages: UserKnownLanguageContract[];
+	webLinks: WebLinkContract[];
 }): void => {
-  $(document).ready(function () {
-    $('#tabs').tabs();
+	$(document).ready(function () {
+		$('#tabs').tabs();
 
-    const httpClient = new HttpClient();
-    var repository = new UserRepository(httpClient);
+		const httpClient = new HttpClient();
+		var repository = new UserRepository(httpClient);
 
-    var viewModel = new MySettingsViewModel(
-      repository,
-      model.aboutMe,
-      model.email,
-      model.emailVerified,
-      model.webLinks,
-      model.knownLanguages,
-    );
-    ko.applyBindings(viewModel);
-  });
+		var viewModel = new MySettingsViewModel(
+			repository,
+			model.aboutMe,
+			model.email,
+			model.emailVerified,
+			model.webLinks,
+			model.knownLanguages,
+		);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default UserMySettings;

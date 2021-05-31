@@ -28,233 +28,233 @@ import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
 import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
-  constructor(
-    urlMapper: UrlMapper,
-    private userRepo: UserRepository,
-    private artistRepo: ArtistRepository,
-    private songRepo: SongRepository,
-    private resourceRepo: ResourceRepository,
-    tagRepo: TagRepository,
-    private lang: ContentLanguagePreference,
-    private loggedUserId: number,
-    private cultureCode: string,
-    sort: string,
-    groupByRating: boolean,
-    pvPlayersFactory: PVPlayersFactory,
-    initialize = true,
-    artistId?: number,
-    childVoicebanks?: boolean,
-  ) {
-    this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
+	constructor(
+		urlMapper: UrlMapper,
+		private userRepo: UserRepository,
+		private artistRepo: ArtistRepository,
+		private songRepo: SongRepository,
+		private resourceRepo: ResourceRepository,
+		tagRepo: TagRepository,
+		private lang: ContentLanguagePreference,
+		private loggedUserId: number,
+		private cultureCode: string,
+		sort: string,
+		groupByRating: boolean,
+		pvPlayersFactory: PVPlayersFactory,
+		initialize = true,
+		artistId?: number,
+		childVoicebanks?: boolean,
+	) {
+		this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
 
-    if (artistId) this.artistFilters.selectArtist(artistId);
+		if (artistId) this.artistFilters.selectArtist(artistId);
 
-    this.pvServiceIcons = new PVServiceIcons(urlMapper);
+		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
-    if (sort) this.sort(sort);
+		if (sort) this.sort(sort);
 
-    if (groupByRating != null) this.groupByRating(groupByRating);
+		if (groupByRating != null) this.groupByRating(groupByRating);
 
-    this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(tagRepo, lang);
 
-    this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-    this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
-    this.groupByRating.subscribe(this.updateResultsWithoutTotalCount);
-    this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
-    this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
-    this.rating.subscribe(this.updateResultsWithTotalCount);
-    this.searchTerm.subscribe(this.updateResultsWithTotalCount);
-    this.showTags.subscribe(this.updateResultsWithoutTotalCount);
-    this.songListId.subscribe(this.updateResultsWithTotalCount);
-    this.sort.subscribe(this.updateResultsWithoutTotalCount);
-    this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
-    this.viewMode.subscribe(this.updateResultsWithTotalCount);
+		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
+		this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
+		this.groupByRating.subscribe(this.updateResultsWithoutTotalCount);
+		this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
+		this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
+		this.rating.subscribe(this.updateResultsWithTotalCount);
+		this.searchTerm.subscribe(this.updateResultsWithTotalCount);
+		this.showTags.subscribe(this.updateResultsWithoutTotalCount);
+		this.songListId.subscribe(this.updateResultsWithTotalCount);
+		this.sort.subscribe(this.updateResultsWithoutTotalCount);
+		this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
+		this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
-    this.pvPlayerViewModel = new PVPlayerViewModel(
-      urlMapper,
-      songRepo,
-      userRepo,
-      pvPlayersFactory,
-    );
-    var songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(
-      userRepo,
-      loggedUserId,
-      this.searchTerm,
-      this.sort,
-      this.tagFilters.tagIds,
-      this.artistFilters.artistIds,
-      this.artistFilters.childVoicebanks,
-      this.rating,
-      this.songListId,
-      this.advancedFilters.filters,
-      this.groupByRating,
-      ko.observable('AdditionalNames,ThumbUrl'),
-    );
-    this.playListViewModel = new PlayListViewModel(
-      urlMapper,
-      songsRepoAdapter,
-      songRepo,
-      userRepo,
-      this.pvPlayerViewModel,
-      lang,
-    );
+		this.pvPlayerViewModel = new PVPlayerViewModel(
+			urlMapper,
+			songRepo,
+			userRepo,
+			pvPlayersFactory,
+		);
+		var songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(
+			userRepo,
+			loggedUserId,
+			this.searchTerm,
+			this.sort,
+			this.tagFilters.tagIds,
+			this.artistFilters.artistIds,
+			this.artistFilters.childVoicebanks,
+			this.rating,
+			this.songListId,
+			this.advancedFilters.filters,
+			this.groupByRating,
+			ko.observable('AdditionalNames,ThumbUrl'),
+		);
+		this.playListViewModel = new PlayListViewModel(
+			urlMapper,
+			songsRepoAdapter,
+			songRepo,
+			userRepo,
+			this.pvPlayerViewModel,
+			lang,
+		);
 
-    if (initialize) this.init();
-  }
+		if (initialize) this.init();
+	}
 
-  public advancedFilters = new AdvancedSearchFilters();
-  public artistFilters: ArtistFilters;
-  public groupByRating = ko.observable(true);
-  public isInit = false;
-  public loading = ko.observable(true); // Currently loading for data
-  public page = ko.observableArray<IRatedSongSearchItem>([]); // Current page of items
-  public paging = new ServerSidePagingViewModel(20); // Paging view model
-  public pauseNotifications = false;
-  public playListViewModel: PlayListViewModel;
-  public pvPlayerViewModel: PVPlayerViewModel;
-  public pvServiceIcons: PVServiceIcons;
-  public rating = ko.observable('Nothing');
-  public resources = ko.observable<any>();
-  public searchTerm = ko
-    .observable('')
-    .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
+	public advancedFilters = new AdvancedSearchFilters();
+	public artistFilters: ArtistFilters;
+	public groupByRating = ko.observable(true);
+	public isInit = false;
+	public loading = ko.observable(true); // Currently loading for data
+	public page = ko.observableArray<IRatedSongSearchItem>([]); // Current page of items
+	public paging = new ServerSidePagingViewModel(20); // Paging view model
+	public pauseNotifications = false;
+	public playListViewModel: PlayListViewModel;
+	public pvPlayerViewModel: PVPlayerViewModel;
+	public pvServiceIcons: PVServiceIcons;
+	public rating = ko.observable('Nothing');
+	public resources = ko.observable<any>();
+	public searchTerm = ko
+		.observable('')
+		.extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
-  public selectTag = (tag: TagBaseContract): void => {
-    this.tagFilters.tags([TagFilter.fromContract(tag)]);
-  };
+	public selectTag = (tag: TagBaseContract): void => {
+		this.tagFilters.tags([TagFilter.fromContract(tag)]);
+	};
 
-  public showTags = ko.observable(false);
-  public songListId = ko.observable<number>(undefined!);
-  public songLists = ko.observableArray<SongListBaseContract>([]);
-  public sort = ko.observable('Name');
-  public sortName = ko.computed(() =>
-    this.resources() != null
-      ? this.resources().user_ratedSongForUserSortRuleNames[this.sort()] ||
-        this.resources().songSortRuleNames[this.sort()]
-      : '',
-  );
-  public tagFilters: TagFilters;
-  public viewMode = ko.observable('Details');
+	public showTags = ko.observable(false);
+	public songListId = ko.observable<number>(undefined!);
+	public songLists = ko.observableArray<SongListBaseContract>([]);
+	public sort = ko.observable('Name');
+	public sortName = ko.computed(() =>
+		this.resources() != null
+			? this.resources().user_ratedSongForUserSortRuleNames[this.sort()] ||
+			  this.resources().songSortRuleNames[this.sort()]
+			: '',
+	);
+	public tagFilters: TagFilters;
+	public viewMode = ko.observable('Details');
 
-  public fields = ko.computed(() => {
-    return 'AdditionalNames,ThumbUrl' + (this.showTags() ? ',Tags' : '');
-  });
+	public fields = ko.computed(() => {
+		return 'AdditionalNames,ThumbUrl' + (this.showTags() ? ',Tags' : '');
+	});
 
-  public formatDate = (dateStr: string): string => {
-    return moment(dateStr).format('l');
-  };
+	public formatDate = (dateStr: string): string => {
+		return moment(dateStr).format('l');
+	};
 
-  public getPVServiceIcons = (
-    services: string,
-  ): { service: string; url: string }[] => {
-    return this.pvServiceIcons.getIconUrls(services);
-  };
+	public getPVServiceIcons = (
+		services: string,
+	): { service: string; url: string }[] => {
+		return this.pvServiceIcons.getIconUrls(services);
+	};
 
-  public init = (): void => {
-    if (this.isInit) return;
+	public init = (): void => {
+		if (this.isInit) return;
 
-    this.userRepo
-      .getSongLists(
-        this.loggedUserId,
-        null!,
-        { start: 0, maxEntries: 50, getTotalCount: false },
-        [],
-        'Name',
-        null!,
-      )
-      .then((songLists) => this.songLists(songLists.items));
+		this.userRepo
+			.getSongLists(
+				this.loggedUserId,
+				null!,
+				{ start: 0, maxEntries: 50, getTotalCount: false },
+				[],
+				'Name',
+				null!,
+			)
+			.then((songLists) => this.songLists(songLists.items));
 
-    this.resourceRepo
-      .getList(this.cultureCode, [
-        'songSortRuleNames',
-        'user_ratedSongForUserSortRuleNames',
-        'songTypeNames',
-      ])
-      .then((resources) => {
-        this.resources(resources);
-        this.updateResultsWithTotalCount();
-        this.isInit = true;
-      });
-  };
+		this.resourceRepo
+			.getList(this.cultureCode, [
+				'songSortRuleNames',
+				'user_ratedSongForUserSortRuleNames',
+				'songTypeNames',
+			])
+			.then((resources) => {
+				this.resources(resources);
+				this.updateResultsWithTotalCount();
+				this.isInit = true;
+			});
+	};
 
-  public updateResultsWithTotalCount = (): void => this.updateResults(true);
-  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): void => this.updateResults(true);
+	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  public updateResults = (clearResults: boolean = true): void => {
-    // Disable duplicate updates
-    if (this.pauseNotifications) return;
+	public updateResults = (clearResults: boolean = true): void => {
+		// Disable duplicate updates
+		if (this.pauseNotifications) return;
 
-    this.pauseNotifications = true;
-    this.loading(true);
+		this.pauseNotifications = true;
+		this.loading(true);
 
-    if (clearResults) this.paging.page(1);
+		if (clearResults) this.paging.page(1);
 
-    var pagingProperties = this.paging.getPagingProperties(clearResults);
+		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-    if (this.viewMode() === 'PlayList') {
-      this.playListViewModel.updateResultsWithTotalCount(() => {
-        this.pauseNotifications = false;
-        this.loading(false);
-      });
-      return;
-    }
+		if (this.viewMode() === 'PlayList') {
+			this.playListViewModel.updateResultsWithTotalCount(() => {
+				this.pauseNotifications = false;
+				this.loading(false);
+			});
+			return;
+		}
 
-    this.userRepo
-      .getRatedSongsList(
-        this.loggedUserId,
-        pagingProperties,
-        this.lang,
-        this.searchTerm(),
-        this.tagFilters.tagIds(),
-        this.artistFilters.artistIds(),
-        this.artistFilters.childVoicebanks(),
-        this.rating(),
-        this.songListId()!,
-        this.advancedFilters.filters(),
-        this.groupByRating(),
-        null!,
-        this.fields(),
-        this.sort(),
-      )
-      .then(
-        (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-          var songs: IRatedSongSearchItem[] = [];
+		this.userRepo
+			.getRatedSongsList(
+				this.loggedUserId,
+				pagingProperties,
+				this.lang,
+				this.searchTerm(),
+				this.tagFilters.tagIds(),
+				this.artistFilters.artistIds(),
+				this.artistFilters.childVoicebanks(),
+				this.rating(),
+				this.songListId()!,
+				this.advancedFilters.filters(),
+				this.groupByRating(),
+				null!,
+				this.fields(),
+				this.sort(),
+			)
+			.then(
+				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
+					var songs: IRatedSongSearchItem[] = [];
 
-          _.each(result.items, (item) => {
-            var song: IRatedSongSearchItem = item.song!;
+					_.each(result.items, (item) => {
+						var song: IRatedSongSearchItem = item.song!;
 
-            song.rating = item.rating;
+						song.rating = item.rating;
 
-            if (song.pvServices && song.pvServices !== 'Nothing') {
-              song.previewViewModel = new SongWithPreviewViewModel(
-                this.songRepo,
-                this.userRepo,
-                song.id,
-                song.pvServices,
-              );
-              song.previewViewModel.ratingComplete =
-                ui.showThankYouForRatingMessage;
-            } else {
-              song.previewViewModel = null!;
-            }
+						if (song.pvServices && song.pvServices !== 'Nothing') {
+							song.previewViewModel = new SongWithPreviewViewModel(
+								this.songRepo,
+								this.userRepo,
+								song.id,
+								song.pvServices,
+							);
+							song.previewViewModel.ratingComplete =
+								ui.showThankYouForRatingMessage;
+						} else {
+							song.previewViewModel = null!;
+						}
 
-            songs.push(song);
-          });
+						songs.push(song);
+					});
 
-          this.pauseNotifications = false;
+					this.pauseNotifications = false;
 
-          if (pagingProperties.getTotalCount)
-            this.paging.totalItems(result.totalCount);
+					if (pagingProperties.getTotalCount)
+						this.paging.totalItems(result.totalCount);
 
-          this.page(songs);
-          this.loading(false);
-        },
-      );
-  };
+					this.page(songs);
+					this.loading(false);
+				},
+			);
+	};
 }
 
 export interface IRatedSongSearchItem extends SongApiContract {
-  previewViewModel?: SongWithPreviewViewModel;
+	previewViewModel?: SongWithPreviewViewModel;
 
-  rating?: string;
+	rating?: string;
 }

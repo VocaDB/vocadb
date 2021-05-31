@@ -18,132 +18,132 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import { EditTagMappingViewModel } from './ManageTagMappingsViewModel';
 
 export default class ManageEntryTagMappingsViewModel {
-  constructor(private readonly tagRepo: TagRepository) {
-    this.loadMappings();
-  }
+	constructor(private readonly tagRepo: TagRepository) {
+		this.loadMappings();
+	}
 
-  public addMapping = (): void => {
-    if (!this.newEntryType || this.newTargetTag.isEmpty()) return;
+	public addMapping = (): void => {
+		if (!this.newEntryType || this.newTargetTag.isEmpty()) return;
 
-    if (
-      _.some(
-        this.mappings(),
-        (m) =>
-          m.tag.id === this.newTargetTag.id() &&
-          m.entryType.entryType === this.newEntryType() &&
-          m.entryType.subType === this.newEntrySubType(),
-      )
-    ) {
-      ui.showErrorMessage(
-        'Mapping already exists for entry type ' +
-          this.newEntryType() +
-          ', ' +
-          this.newEntrySubType(),
-      );
-      return;
-    }
+		if (
+			_.some(
+				this.mappings(),
+				(m) =>
+					m.tag.id === this.newTargetTag.id() &&
+					m.entryType.entryType === this.newEntryType() &&
+					m.entryType.subType === this.newEntrySubType(),
+			)
+		) {
+			ui.showErrorMessage(
+				'Mapping already exists for entry type ' +
+					this.newEntryType() +
+					', ' +
+					this.newEntrySubType(),
+			);
+			return;
+		}
 
-    this.mappings.push(
-      new EditEntryTagMappingViewModel(
-        {
-          tag: this.newTargetTag.entry(),
-          entryType: {
-            entryType: this.newEntryType(),
-            subType: this.newEntrySubType(),
-          },
-        },
-        true,
-      ),
-    );
-    this.newEntrySubType('');
-    this.newEntryType('');
-    this.newTargetTag.clear();
-  };
+		this.mappings.push(
+			new EditEntryTagMappingViewModel(
+				{
+					tag: this.newTargetTag.entry(),
+					entryType: {
+						entryType: this.newEntryType(),
+						subType: this.newEntrySubType(),
+					},
+				},
+				true,
+			),
+		);
+		this.newEntrySubType('');
+		this.newEntryType('');
+		this.newTargetTag.clear();
+	};
 
-  public deleteMapping = (mapping: EditTagMappingViewModel): void => {
-    mapping.isDeleted(true);
-  };
+	public deleteMapping = (mapping: EditTagMappingViewModel): void => {
+		mapping.isDeleted(true);
+	};
 
-  public getTagUrl = (tag: EditTagMappingViewModel): string => {
-    return functions.mapAbsoluteUrl(
-      EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
-    );
-  };
+	public getTagUrl = (tag: EditTagMappingViewModel): string => {
+		return functions.mapAbsoluteUrl(
+			EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
+		);
+	};
 
-  private loadMappings = async (): Promise<void> => {
-    const result = await this.tagRepo.getEntryTagMappings();
-    this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
-  };
+	private loadMappings = async (): Promise<void> => {
+		const result = await this.tagRepo.getEntryTagMappings();
+		this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
+	};
 
-  public mappings = ko.observableArray<EditEntryTagMappingViewModel>();
+	public mappings = ko.observableArray<EditEntryTagMappingViewModel>();
 
-  public paging = new ServerSidePagingViewModel(50);
+	public paging = new ServerSidePagingViewModel(50);
 
-  public activeMappings = ko.computed(() =>
-    _.filter(this.mappings(), (m) => !m.isDeleted()),
-  );
+	public activeMappings = ko.computed(() =>
+		_.filter(this.mappings(), (m) => !m.isDeleted()),
+	);
 
-  private getEnumValues = <TEnum>(
-    Enum: any,
-    selected?: Array<TEnum>,
-  ): string[] =>
-    Object.keys(Enum).filter(
-      (k) =>
-        (!selected || _.includes(selected, Enum[k])) &&
-        typeof Enum[k as any] === 'number',
-    );
+	private getEnumValues = <TEnum>(
+		Enum: any,
+		selected?: Array<TEnum>,
+	): string[] =>
+		Object.keys(Enum).filter(
+			(k) =>
+				(!selected || _.includes(selected, Enum[k])) &&
+				typeof Enum[k as any] === 'number',
+		);
 
-  public entryTypes = this.getEnumValues<EntryType>(EntryType, [
-    EntryType.Album,
-    EntryType.Artist,
-    EntryType.Song,
-    EntryType.ReleaseEvent,
-  ]);
+	public entryTypes = this.getEnumValues<EntryType>(EntryType, [
+		EntryType.Album,
+		EntryType.Artist,
+		EntryType.Song,
+		EntryType.ReleaseEvent,
+	]);
 
-  private readonly entrySubTypesByType = [
-    { key: EntryType.Album, values: this.getEnumValues<AlbumType>(AlbumType) },
-    {
-      key: EntryType.Artist,
-      values: this.getEnumValues<ArtistType>(ArtistType),
-    },
-    { key: EntryType.Song, values: this.getEnumValues<SongType>(SongType) },
-    {
-      key: EntryType.ReleaseEvent,
-      values: this.getEnumValues<EventCategory>(EventCategory),
-    },
-  ];
+	private readonly entrySubTypesByType = [
+		{ key: EntryType.Album, values: this.getEnumValues<AlbumType>(AlbumType) },
+		{
+			key: EntryType.Artist,
+			values: this.getEnumValues<ArtistType>(ArtistType),
+		},
+		{ key: EntryType.Song, values: this.getEnumValues<SongType>(SongType) },
+		{
+			key: EntryType.ReleaseEvent,
+			values: this.getEnumValues<EventCategory>(EventCategory),
+		},
+	];
 
-  public newEntryType = ko.observable('');
-  public newEntrySubType = ko.observable('');
-  public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
+	public newEntryType = ko.observable('');
+	public newEntrySubType = ko.observable('');
+	public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
 
-  public entrySubTypes: Computed<string[]> = ko.computed(
-    () =>
-      _.find(
-        this.entrySubTypesByType,
-        (et) => EntryType[et.key] === this.newEntryType(),
-      )?.values ?? [],
-  );
+	public entrySubTypes: Computed<string[]> = ko.computed(
+		() =>
+			_.find(
+				this.entrySubTypesByType,
+				(et) => EntryType[et.key] === this.newEntryType(),
+			)?.values ?? [],
+	);
 
-  public save = async (): Promise<void> => {
-    const mappings = this.activeMappings();
-    await this.tagRepo.saveEntryMappings(mappings);
-    ui.showSuccessMessage('Saved');
-    await this.loadMappings();
-  };
+	public save = async (): Promise<void> => {
+		const mappings = this.activeMappings();
+		await this.tagRepo.saveEntryMappings(mappings);
+		ui.showSuccessMessage('Saved');
+		await this.loadMappings();
+	};
 }
 
 export class EditEntryTagMappingViewModel {
-  constructor(mapping: EntryTagMappingContract, isNew: boolean = false) {
-    this.entryType = mapping.entryType;
-    this.tag = mapping.tag;
-    this.isNew = isNew;
-  }
+	constructor(mapping: EntryTagMappingContract, isNew: boolean = false) {
+		this.entryType = mapping.entryType;
+		this.tag = mapping.tag;
+		this.isNew = isNew;
+	}
 
-  isDeleted = ko.observable(false);
-  isNew: boolean;
-  entryType: EntryTypeAndSubTypeContract;
-  tag: TagBaseContract;
+	isDeleted = ko.observable(false);
+	isNew: boolean;
+	entryType: EntryTypeAndSubTypeContract;
+	tag: TagBaseContract;
 
-  public deleteMapping = (): void => this.isDeleted(true);
+	public deleteMapping = (): void => this.isDeleted(true);
 }

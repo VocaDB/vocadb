@@ -7,26 +7,26 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const UserIndex = (model: { filter: string; groupId: string }): void => {
-  $(function () {
-    var cultureCode = vdb.values.culture;
-    var uiCultureCode = vdb.values.uiCulture;
-    moment.locale(cultureCode);
+	$(function () {
+		var cultureCode = vdb.values.culture;
+		var uiCultureCode = vdb.values.uiCulture;
+		moment.locale(cultureCode);
 
-    var filter = model.filter;
-    var groupId = model.groupId;
-    const httpClient = new HttpClient();
-    var repoFactory = new RepositoryFactory(httpClient);
-    var repo = repoFactory.userRepository();
-    var resourceRepo = repoFactory.resourceRepository();
-    var viewModel = new ListUsersViewModel(
-      repo,
-      resourceRepo,
-      uiCultureCode,
-      filter,
-      groupId,
-    );
-    ko.applyBindings(viewModel);
-  });
+		var filter = model.filter;
+		var groupId = model.groupId;
+		const httpClient = new HttpClient();
+		var repoFactory = new RepositoryFactory(httpClient);
+		var repo = repoFactory.userRepository();
+		var resourceRepo = repoFactory.resourceRepository();
+		var viewModel = new ListUsersViewModel(
+			repo,
+			resourceRepo,
+			uiCultureCode,
+			filter,
+			groupId,
+		);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default UserIndex;

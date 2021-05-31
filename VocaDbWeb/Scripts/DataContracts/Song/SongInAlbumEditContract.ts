@@ -1,21 +1,21 @@
 import ArtistContract from '../Artist/ArtistContract';
 
 export default interface SongInAlbumEditContract {
-  artists: ArtistContract[];
+	artists: ArtistContract[];
 
-  artistString: string;
+	artistString: string;
 
-  discNumber: number;
+	discNumber: number;
 
-  isCustomTrack?: boolean;
+	isCustomTrack?: boolean;
 
-  songAdditionalNames: string;
+	songAdditionalNames: string;
 
-  songId: number;
+	songId: number;
 
-  songInAlbumId: number;
+	songInAlbumId: number;
 
-  songName: string;
+	songName: string;
 
-  trackNumber: number;
+	trackNumber: number;
 }

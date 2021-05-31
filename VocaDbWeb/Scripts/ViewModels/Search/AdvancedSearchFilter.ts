@@ -1,9 +1,9 @@
 export default interface AdvancedSearchFilter {
-  description?: string;
+	description?: string;
 
-  filterType: string;
+	filterType: string;
 
-  negate?: boolean;
+	negate?: boolean;
 
-  param: string;
+	param: string;
 }

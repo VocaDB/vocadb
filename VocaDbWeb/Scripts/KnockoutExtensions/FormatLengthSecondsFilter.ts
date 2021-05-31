@@ -1,11 +1,11 @@
 import DateTimeHelper from '@Helpers/DateTimeHelper';
 
 declare global {
-  interface KnockoutPunchesFilters {
-    formatLengthSeconds: (length: number) => string;
-  }
+	interface KnockoutPunchesFilters {
+		formatLengthSeconds: (length: number) => string;
+	}
 }
 
 ko.filters.formatLengthSeconds = (length): string => {
-  return DateTimeHelper.formatFromSeconds(length);
+	return DateTimeHelper.formatFromSeconds(length);
 };

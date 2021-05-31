@@ -1,11 +1,11 @@
 export default interface DiscussionFolderContract {
-  description: string;
+	description: string;
 
-  id: number;
+	id: number;
 
-  lastTopicDate: Date;
+	lastTopicDate: Date;
 
-  name: string;
+	name: string;
 
-  topicCount: number;
+	topicCount: number;
 }

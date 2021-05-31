@@ -9,31 +9,31 @@ import EventSeriesContract from './EventSeriesContract';
 
 // Matches ReleaseEventForApiContract
 export default interface ReleaseEventContract {
-  artists: ArtistForEventContract[];
+	artists: ArtistForEventContract[];
 
-  category: string;
+	category: string;
 
-  date?: string;
+	date?: string;
 
-  defaultNameLanguage: string;
+	defaultNameLanguage: string;
 
-  endDate?: string;
+	endDate?: string;
 
-  id: number;
+	id: number;
 
-  mainPicture?: EntryThumbContract;
+	mainPicture?: EntryThumbContract;
 
-  name: string;
+	name: string;
 
-  names?: LocalizedStringWithIdContract[];
+	names?: LocalizedStringWithIdContract[];
 
-  pvs?: PVContract[];
+	pvs?: PVContract[];
 
-  series?: EventSeriesContract;
+	series?: EventSeriesContract;
 
-  songList?: SongListBaseContract;
+	songList?: SongListBaseContract;
 
-  venue?: VenueForApiContract;
+	venue?: VenueForApiContract;
 
-  webLinks: WebLinkContract[];
+	webLinks: WebLinkContract[];
 }

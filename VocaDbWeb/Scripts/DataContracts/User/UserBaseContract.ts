@@ -1,7 +1,7 @@
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 
 export default interface UserBaseContract extends IEntryWithIdAndName {
-  id: number;
+	id: number;
 
-  name?: string;
+	name?: string;
 }

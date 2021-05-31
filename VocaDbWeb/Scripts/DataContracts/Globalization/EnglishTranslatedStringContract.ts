@@ -1,5 +1,5 @@
 export default interface EnglishTranslatedStringContract {
-  english: string;
+	english: string;
 
-  original: string;
+	original: string;
 }

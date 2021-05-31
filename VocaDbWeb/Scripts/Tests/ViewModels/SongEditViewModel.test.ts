@@ -11,15 +11,15 @@ import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 
 var categories: TranslatedEnumField[] = [
-  { id: 'Official', name: 'Official' },
-  { id: 'Commercial', name: 'Commercial' },
+	{ id: 'Official', name: 'Official' },
+	{ id: 'Commercial', name: 'Commercial' },
 ];
 var webLinkData = {
-  category: 'Official',
-  description: 'Youtube Channel',
-  id: 0,
-  url: 'http://www.youtube.com/user/tripshots',
-  disabled: false,
+	category: 'Official',
+	description: 'Youtube Channel',
+	id: 0,
+	url: 'http://www.youtube.com/user/tripshots',
+	disabled: false,
 };
 var data: SongForEditContract;
 var songRepo = new FakeSongRepository();
@@ -27,178 +27,178 @@ var artistRepo = new FakeArtistRepository();
 var pvRepo: any = null;
 var userRepo = new FakeUserRepository();
 vdb.resources = {
-  album: {},
-  albumDetails: { download: '' },
-  albumEdit: { addExtraArtist: '' },
-  entryEdit: {},
-  shared: null,
-  song: { addExtraArtist: 'Add extra artist' },
+	album: {},
+	albumDetails: { download: '' },
+	albumEdit: { addExtraArtist: '' },
+	entryEdit: {},
+	shared: null,
+	song: { addExtraArtist: 'Add extra artist' },
 };
 
 beforeEach(() => {
-  data = {
-    artists: [],
-    defaultNameLanguage: 'English',
-    deleted: false,
-    id: 0,
-    lengthSeconds: 39,
-    hasAlbums: false,
-    lyrics: [],
-    names: [],
-    notes: { original: '', english: '' },
-    originalVersion: null!,
-    pvs: [],
-    songType: 'Original',
-    status: 'Draft',
-    tags: [],
-    webLinks: [webLinkData],
-  };
+	data = {
+		artists: [],
+		defaultNameLanguage: 'English',
+		deleted: false,
+		id: 0,
+		lengthSeconds: 39,
+		hasAlbums: false,
+		lyrics: [],
+		names: [],
+		notes: { original: '', english: '' },
+		originalVersion: null!,
+		pvs: [],
+		songType: 'Original',
+		status: 'Draft',
+		tags: [],
+		webLinks: [webLinkData],
+	};
 });
 
 function createViewModel(): SongEditViewModel {
-  return new SongEditViewModel(
-    songRepo,
-    artistRepo,
-    pvRepo,
-    userRepo,
-    new UrlMapper(''),
-    {},
-    categories,
-    data,
-    false,
-    null!,
-    0,
-    null,
-  );
+	return new SongEditViewModel(
+		songRepo,
+		artistRepo,
+		pvRepo,
+		userRepo,
+		new UrlMapper(''),
+		{},
+		categories,
+		data,
+		false,
+		null!,
+		0,
+		null,
+	);
 }
 
 test('constructor', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  expect(target.length(), 'length').toBe(39);
-  expect(target.lengthFormatted(), 'lengthFormatted').toBe('0:39');
-  expect(target.webLinks.items().length, 'webLinks.length').toBe(1);
-  expect(
-    target.validationError_duplicateArtist(),
-    'validationError_duplicateArtist',
-  ).toBe(false);
+	expect(target.length(), 'length').toBe(39);
+	expect(target.lengthFormatted(), 'lengthFormatted').toBe('0:39');
+	expect(target.webLinks.items().length, 'webLinks.length').toBe(1);
+	expect(
+		target.validationError_duplicateArtist(),
+		'validationError_duplicateArtist',
+	).toBe(false);
 });
 
 test('lengthFormatted only seconds', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  target.lengthFormatted('39');
+	target.lengthFormatted('39');
 
-  expect(target.length(), 'length').toBe(39);
+	expect(target.length(), 'length').toBe(39);
 });
 
 test('lengthFormatted over 1 minute', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  target.lengthFormatted('393');
+	target.lengthFormatted('393');
 
-  expect(target.length(), 'length').toBe(393);
+	expect(target.length(), 'length').toBe(393);
 });
 
 test('lengthFormatted minutes and seconds', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  target.lengthFormatted('3:39');
+	target.lengthFormatted('3:39');
 
-  expect(target.length(), 'length').toBe(219);
+	expect(target.length(), 'length').toBe(219);
 });
 
 test('firstPvDate no PV', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  expect(target.firstPvDate(), 'firstPvDate').toBeUndefined();
+	expect(target.firstPvDate(), 'firstPvDate').toBeUndefined();
 });
 
 test('firstPvDate with PVs', () => {
-  data.pvs = [
-    { pvType: 'Original', pvId: '3', service: 'YouTube' },
-    {
-      publishDate: '2039-03-08',
-      pvType: 'Reprint',
-      pvId: '39',
-      service: 'YouTube',
-    },
-    {
-      publishDate: '2039-03-09',
-      pvType: 'Original',
-      pvId: '3939',
-      service: 'YouTube',
-    },
-    {
-      publishDate: '2039-03-10',
-      pvType: 'Original',
-      pvId: '3939',
-      service: 'YouTube',
-    },
-  ];
+	data.pvs = [
+		{ pvType: 'Original', pvId: '3', service: 'YouTube' },
+		{
+			publishDate: '2039-03-08',
+			pvType: 'Reprint',
+			pvId: '39',
+			service: 'YouTube',
+		},
+		{
+			publishDate: '2039-03-09',
+			pvType: 'Original',
+			pvId: '3939',
+			service: 'YouTube',
+		},
+		{
+			publishDate: '2039-03-10',
+			pvType: 'Original',
+			pvId: '3939',
+			service: 'YouTube',
+		},
+	];
 
-  var target = createViewModel();
+	var target = createViewModel();
 
-  expect(target.firstPvDate(), 'firstPvDate').toBeTruthy();
-  expect(target.firstPvDate().toISOString(), 'firstPvDate').toBe(
-    moment('2039-03-09').toISOString(),
-  );
+	expect(target.firstPvDate(), 'firstPvDate').toBeTruthy();
+	expect(target.firstPvDate().toISOString(), 'firstPvDate').toBe(
+		moment('2039-03-09').toISOString(),
+	);
 });
 
 test('suggestedPublishDate no date', () => {
-  var target = createViewModel();
-  expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeUndefined();
+	var target = createViewModel();
+	expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeUndefined();
 });
 
 test('suggestedPublishDate with album date', () => {
-  data.albumReleaseDate = '2039-03-09';
+	data.albumReleaseDate = '2039-03-09';
 
-  var target = createViewModel();
+	var target = createViewModel();
 
-  expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeTruthy();
-  expect(
-    target.suggestedPublishDate().date.toISOString(),
-    'suggestedPublishDate',
-  ).toBe(moment('2039-03-09').toISOString());
+	expect(target.suggestedPublishDate(), 'suggestedPublishDate').toBeTruthy();
+	expect(
+		target.suggestedPublishDate().date.toISOString(),
+		'suggestedPublishDate',
+	).toBe(moment('2039-03-09').toISOString());
 });
 
 test('validationError_duplicateArtist', () => {
-  var target = createViewModel();
-  var artist = new ArtistForAlbumEditViewModel(null!, {
-    artist: { id: 1, name: '164' },
-    roles: '',
-  });
+	var target = createViewModel();
+	var artist = new ArtistForAlbumEditViewModel(null!, {
+		artist: { id: 1, name: '164' },
+		roles: '',
+	});
 
-  target.artistLinks.push(artist);
-  target.artistLinks.push(artist);
+	target.artistLinks.push(artist);
+	target.artistLinks.push(artist);
 
-  expect(
-    target.validationError_duplicateArtist(),
-    'validationError_duplicateArtist',
-  ).toBe(true);
+	expect(
+		target.validationError_duplicateArtist(),
+		'validationError_duplicateArtist',
+	).toBe(true);
 });
 
 test('validationError_duplicateArtist support', () => {
-  const target = createViewModel();
+	const target = createViewModel();
 
-  const artist = { id: 39, name: 'Clean Tears' };
-  target.artistLinks.push(
-    new ArtistForAlbumEditViewModel(null!, {
-      artist: artist,
-      isSupport: false,
-      roles: '',
-    }),
-  );
-  target.artistLinks.push(
-    new ArtistForAlbumEditViewModel(null!, {
-      artist: artist,
-      isSupport: true,
-      roles: '',
-    }),
-  );
+	const artist = { id: 39, name: 'Clean Tears' };
+	target.artistLinks.push(
+		new ArtistForAlbumEditViewModel(null!, {
+			artist: artist,
+			isSupport: false,
+			roles: '',
+		}),
+	);
+	target.artistLinks.push(
+		new ArtistForAlbumEditViewModel(null!, {
+			artist: artist,
+			isSupport: true,
+			roles: '',
+		}),
+	);
 
-  expect(
-    target.validationError_duplicateArtist(),
-    'validationError_duplicateArtist',
-  ).toBe(true);
+	expect(
+		target.validationError_duplicateArtist(),
+		'validationError_duplicateArtist',
+	).toBe(true);
 });

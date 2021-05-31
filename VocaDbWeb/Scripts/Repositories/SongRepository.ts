@@ -28,376 +28,376 @@ import ICommentRepository from './ICommentRepository';
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
 export default class SongRepository
-  extends BaseRepository
-  implements ICommentRepository {
-  constructor(private readonly httpClient: HttpClient) {
-    super();
+	extends BaseRepository
+	implements ICommentRepository {
+	constructor(private readonly httpClient: HttpClient) {
+		super();
 
-    this.get = <T>(relative: string, params: any): Promise<T> => {
-      return this.httpClient.get<T>(this.mapUrl(relative), params);
-    };
+		this.get = <T>(relative: string, params: any): Promise<T> => {
+			return this.httpClient.get<T>(this.mapUrl(relative), params);
+		};
 
-    this.getJSON = <T>(relative: string, params: any): Promise<T> => {
-      return this.httpClient.get<T>(this.mapUrl(relative), params);
-    };
+		this.getJSON = <T>(relative: string, params: any): Promise<T> => {
+			return this.httpClient.get<T>(this.mapUrl(relative), params);
+		};
 
-    this.mapUrl = (relative: string): string => {
-      return `/Song${relative}`;
-    };
+		this.mapUrl = (relative: string): string => {
+			return `/Song${relative}`;
+		};
 
-    this.post = <T>(relative: string, params: any): Promise<T> => {
-      return this.httpClient.post<T>(
-        this.mapUrl(relative),
-        AjaxHelper.stringify(params),
-        {
-          headers: {
-            [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
-          },
-        },
-      );
-    };
+		this.post = <T>(relative: string, params: any): Promise<T> => {
+			return this.httpClient.post<T>(
+				this.mapUrl(relative),
+				AjaxHelper.stringify(params),
+				{
+					headers: {
+						[HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+					},
+				},
+			);
+		};
 
-    this.pvForSongAndService = (
-      songId: number,
-      pvService: PVService,
-    ): Promise<string> => {
-      return this.get<string>('/PVForSongAndService', {
-        songId: songId,
-        service: PVService[pvService],
-      });
-    };
+		this.pvForSongAndService = (
+			songId: number,
+			pvService: PVService,
+		): Promise<string> => {
+			return this.get<string>('/PVForSongAndService', {
+				songId: songId,
+				service: PVService[pvService],
+			});
+		};
 
-    this.pvPlayerWithRating = (
-      songId,
-    ): Promise<SongWithPVPlayerAndVoteContract> => {
-      return this.getJSON<SongWithPVPlayerAndVoteContract>(
-        '/PVPlayerWithRating',
-        { songId: songId },
-      );
-    };
+		this.pvPlayerWithRating = (
+			songId,
+		): Promise<SongWithPVPlayerAndVoteContract> => {
+			return this.getJSON<SongWithPVPlayerAndVoteContract>(
+				'/PVPlayerWithRating',
+				{ songId: songId },
+			);
+		};
 
-    this.songListsForSong = (songId): Promise<string> => {
-      return this.get<string>('/SongListsForSong', { songId: songId });
-    };
+		this.songListsForSong = (songId): Promise<string> => {
+			return this.get<string>('/SongListsForSong', { songId: songId });
+		};
 
-    this.songListsForUser = (ignoreSongId): Promise<SongListBaseContract[]> => {
-      return this.post<SongListBaseContract[]>('/SongListsForUser', {
-        ignoreSongId: ignoreSongId,
-      });
-    };
-  }
+		this.songListsForUser = (ignoreSongId): Promise<SongListBaseContract[]> => {
+			return this.post<SongListBaseContract[]>('/SongListsForUser', {
+				ignoreSongId: ignoreSongId,
+			});
+		};
+	}
 
-  public addSongToList = (
-    listId: number,
-    songId: number,
-    notes: string,
-    newListName: string,
-  ): Promise<void> => {
-    return this.post<void>('/AddSongToList', {
-      listId: listId,
-      songId: songId,
-      notes: notes,
-      newListName: newListName,
-    });
-  };
+	public addSongToList = (
+		listId: number,
+		songId: number,
+		notes: string,
+		newListName: string,
+	): Promise<void> => {
+		return this.post<void>('/AddSongToList', {
+			listId: listId,
+			songId: songId,
+			notes: notes,
+			newListName: newListName,
+		});
+	};
 
-  public createComment = (
-    songId: number,
-    contract: CommentContract,
-  ): Promise<CommentContract> => {
-    return this.httpClient.post<CommentContract>(
-      `/api/songs/${songId}/comments`,
-      contract,
-    );
-  };
+	public createComment = (
+		songId: number,
+		contract: CommentContract,
+	): Promise<CommentContract> => {
+		return this.httpClient.post<CommentContract>(
+			`/api/songs/${songId}/comments`,
+			contract,
+		);
+	};
 
-  public createReport = (
-    songId: number,
-    reportType: string,
-    notes: string,
-    versionNumber: number,
-  ): Promise<void> => {
-    return this.httpClient.post<void>(
-      '/Song/CreateReport',
-      AjaxHelper.stringify({
-        reportType: reportType,
-        notes: notes,
-        songId: songId,
-        versionNumber: versionNumber,
-      }),
-      {
-        headers: {
-          [HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
-        },
-      },
-    );
-  };
+	public createReport = (
+		songId: number,
+		reportType: string,
+		notes: string,
+		versionNumber: number,
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			'/Song/CreateReport',
+			AjaxHelper.stringify({
+				reportType: reportType,
+				notes: notes,
+				songId: songId,
+				versionNumber: versionNumber,
+			}),
+			{
+				headers: {
+					[HeaderNames.ContentType]: MediaTypes.APPLICATION_FORM_URLENCODED,
+				},
+			},
+		);
+	};
 
-  public deleteComment = (commentId: number): Promise<void> => {
-    return this.httpClient.delete<void>(`/api/songs/comments/${commentId}`);
-  };
+	public deleteComment = (commentId: number): Promise<void> => {
+		return this.httpClient.delete<void>(`/api/songs/comments/${commentId}`);
+	};
 
-  public findDuplicate = (params: {
-    term: string[];
-    pv: string[];
-    artistIds: number[];
-    getPVInfo: boolean;
-  }): Promise<NewSongCheckResultContract> => {
-    return this.httpClient.get<NewSongCheckResultContract>(
-      '/api/songs/findDuplicate',
-      params,
-    );
-  };
+	public findDuplicate = (params: {
+		term: string[];
+		pv: string[];
+		artistIds: number[];
+		getPVInfo: boolean;
+	}): Promise<NewSongCheckResultContract> => {
+		return this.httpClient.get<NewSongCheckResultContract>(
+			'/api/songs/findDuplicate',
+			params,
+		);
+	};
 
-  private get: <T>(relative: string, params: any) => Promise<T>;
+	private get: <T>(relative: string, params: any) => Promise<T>;
 
-  public getByNames(
-    names: string[],
-    ignoreIds: number[],
-    lang: ContentLanguagePreference,
-    songTypes?: SongType[],
-  ): Promise<SongApiContract[]> {
-    return this.httpClient.get<SongApiContract[]>('/api/songs/by-names', {
-      names: names,
-      songTypes: songTypes,
-      lang: ContentLanguagePreference[lang],
-      ignoreIds: ignoreIds,
-    });
-  }
+	public getByNames(
+		names: string[],
+		ignoreIds: number[],
+		lang: ContentLanguagePreference,
+		songTypes?: SongType[],
+	): Promise<SongApiContract[]> {
+		return this.httpClient.get<SongApiContract[]>('/api/songs/by-names', {
+			names: names,
+			songTypes: songTypes,
+			lang: ContentLanguagePreference[lang],
+			ignoreIds: ignoreIds,
+		});
+	}
 
-  public getComments = (songId: number): Promise<CommentContract[]> => {
-    return this.httpClient.get<CommentContract[]>(
-      `/api/songs/${songId}/comments`,
-    );
-  };
+	public getComments = (songId: number): Promise<CommentContract[]> => {
+		return this.httpClient.get<CommentContract[]>(
+			`/api/songs/${songId}/comments`,
+		);
+	};
 
-  public getForEdit = (id: number): Promise<SongForEditContract> => {
-    return this.httpClient.get<SongForEditContract>(
-      `/api/songs/${id}/for-edit`,
-    );
-  };
+	public getForEdit = (id: number): Promise<SongForEditContract> => {
+		return this.httpClient.get<SongForEditContract>(
+			`/api/songs/${id}/for-edit`,
+		);
+	};
 
-  public getLyrics = (
-    lyricsId: number,
-    songVersion: number,
-  ): Promise<LyricsForSongContract> => {
-    return this.httpClient.get<LyricsForSongContract>(
-      `/api/songs/lyrics/${lyricsId}?v=${songVersion}`,
-    );
-  };
+	public getLyrics = (
+		lyricsId: number,
+		songVersion: number,
+	): Promise<LyricsForSongContract> => {
+		return this.httpClient.get<LyricsForSongContract>(
+			`/api/songs/lyrics/${lyricsId}?v=${songVersion}`,
+		);
+	};
 
-  private getJSON: <T>(relative: string, params: any) => Promise<T>;
+	private getJSON: <T>(relative: string, params: any) => Promise<T>;
 
-  public getOneWithComponents = (
-    id: number,
-    fields: string,
-    lang: ContentLanguagePreference,
-  ): Promise<SongApiContract> => {
-    return this.httpClient.get<SongApiContract>(`/api/songs/${id}`, {
-      fields: fields,
-      lang: ContentLanguagePreference[lang],
-    });
-  };
+	public getOneWithComponents = (
+		id: number,
+		fields: string,
+		lang: ContentLanguagePreference,
+	): Promise<SongApiContract> => {
+		return this.httpClient.get<SongApiContract>(`/api/songs/${id}`, {
+			fields: fields,
+			lang: ContentLanguagePreference[lang],
+		});
+	};
 
-  public getOne = (
-    id: number,
-    lang: ContentLanguagePreference,
-  ): Promise<SongContract> => {
-    return this.httpClient.get<SongContract>(`/api/songs/${id}`, {
-      fields: 'AdditionalNames',
-      lang: ContentLanguagePreference[lang],
-    });
-  };
+	public getOne = (
+		id: number,
+		lang: ContentLanguagePreference,
+	): Promise<SongContract> => {
+		return this.httpClient.get<SongContract>(`/api/songs/${id}`, {
+			fields: 'AdditionalNames',
+			lang: ContentLanguagePreference[lang],
+		});
+	};
 
-  public getListByParams(
-    params: SongQueryParams,
-  ): Promise<PartialFindResultContract<SongApiContract>> {
-    return this.httpClient.get<PartialFindResultContract<SongApiContract>>(
-      '/api/songs',
-      params,
-    );
-  }
+	public getListByParams(
+		params: SongQueryParams,
+	): Promise<PartialFindResultContract<SongApiContract>> {
+		return this.httpClient.get<PartialFindResultContract<SongApiContract>>(
+			'/api/songs',
+			params,
+		);
+	}
 
-  public getList = (
-    paging: PagingProperties,
-    lang: ContentLanguagePreference,
-    query: string,
-    sort: string,
-    songTypes: string,
-    afterDate: Date,
-    beforeDate: Date,
-    tagIds: number[],
-    childTags: boolean,
-    unifyTypesAndTags: boolean,
-    artistIds: number[],
-    artistParticipationStatus: string,
-    childVoicebanks: boolean,
-    includeMembers: boolean,
-    eventId: number,
-    onlyWithPvs: boolean,
-    pvServices: string,
-    since: number,
-    minScore: number,
-    userCollectionId: number,
-    parentSongId: number,
-    fields: string,
-    status: string,
-    advancedFilters: AdvancedSearchFilter[],
-    minMilliBpm: number,
-    maxMilliBpm: number,
-    minLength: number,
-    maxLength: number,
-  ): Promise<PartialFindResultContract<SongContract>> => {
-    var data = {
-      start: paging.start,
-      getTotalCount: paging.getTotalCount,
-      maxResults: paging.maxEntries,
-      query: query,
-      fields: fields,
-      lang: ContentLanguagePreference[lang],
-      nameMatchMode: 'Auto',
-      sort: sort,
-      songTypes: songTypes,
-      afterDate: this.getDate(afterDate),
-      beforeDate: this.getDate(beforeDate),
-      tagId: tagIds,
-      childTags: childTags,
-      unifyTypesAndTags: unifyTypesAndTags || undefined,
-      artistId: artistIds,
-      artistParticipationStatus: artistParticipationStatus || undefined,
-      childVoicebanks: childVoicebanks || undefined,
-      includeMembers: includeMembers || undefined,
-      releaseEventId: eventId,
-      onlyWithPvs: onlyWithPvs,
-      pvServices: pvServices,
-      since: since,
-      minScore: minScore,
-      userCollectionId: userCollectionId,
-      parentSongId: parentSongId || undefined,
-      status: status,
-      advancedFilters: advancedFilters,
-      minMilliBpm: minMilliBpm,
-      maxMilliBpm: maxMilliBpm,
-      minLength: minLength,
-      maxLength: maxLength,
-    };
+	public getList = (
+		paging: PagingProperties,
+		lang: ContentLanguagePreference,
+		query: string,
+		sort: string,
+		songTypes: string,
+		afterDate: Date,
+		beforeDate: Date,
+		tagIds: number[],
+		childTags: boolean,
+		unifyTypesAndTags: boolean,
+		artistIds: number[],
+		artistParticipationStatus: string,
+		childVoicebanks: boolean,
+		includeMembers: boolean,
+		eventId: number,
+		onlyWithPvs: boolean,
+		pvServices: string,
+		since: number,
+		minScore: number,
+		userCollectionId: number,
+		parentSongId: number,
+		fields: string,
+		status: string,
+		advancedFilters: AdvancedSearchFilter[],
+		minMilliBpm: number,
+		maxMilliBpm: number,
+		minLength: number,
+		maxLength: number,
+	): Promise<PartialFindResultContract<SongContract>> => {
+		var data = {
+			start: paging.start,
+			getTotalCount: paging.getTotalCount,
+			maxResults: paging.maxEntries,
+			query: query,
+			fields: fields,
+			lang: ContentLanguagePreference[lang],
+			nameMatchMode: 'Auto',
+			sort: sort,
+			songTypes: songTypes,
+			afterDate: this.getDate(afterDate),
+			beforeDate: this.getDate(beforeDate),
+			tagId: tagIds,
+			childTags: childTags,
+			unifyTypesAndTags: unifyTypesAndTags || undefined,
+			artistId: artistIds,
+			artistParticipationStatus: artistParticipationStatus || undefined,
+			childVoicebanks: childVoicebanks || undefined,
+			includeMembers: includeMembers || undefined,
+			releaseEventId: eventId,
+			onlyWithPvs: onlyWithPvs,
+			pvServices: pvServices,
+			since: since,
+			minScore: minScore,
+			userCollectionId: userCollectionId,
+			parentSongId: parentSongId || undefined,
+			status: status,
+			advancedFilters: advancedFilters,
+			minMilliBpm: minMilliBpm,
+			maxMilliBpm: maxMilliBpm,
+			minLength: minLength,
+			maxLength: maxLength,
+		};
 
-    return this.httpClient.get<PartialFindResultContract<SongContract>>(
-      '/api/songs',
-      data,
-    );
-  };
+		return this.httpClient.get<PartialFindResultContract<SongContract>>(
+			'/api/songs',
+			data,
+		);
+	};
 
-  public getOverTime = (
-    timeUnit: TimeUnit,
-    artistId: number,
-  ): Promise<CountPerDayContract[]> => {
-    return this.httpClient.get<CountPerDayContract[]>('/api/songs/over-time', {
-      timeUnit: TimeUnit[timeUnit],
-      artistId: artistId,
-    });
-  };
+	public getOverTime = (
+		timeUnit: TimeUnit,
+		artistId: number,
+	): Promise<CountPerDayContract[]> => {
+		return this.httpClient.get<CountPerDayContract[]>('/api/songs/over-time', {
+			timeUnit: TimeUnit[timeUnit],
+			artistId: artistId,
+		});
+	};
 
-  // Get PV ID by song ID and PV service.
-  public getPvId = (songId: number, pvService: PVService): Promise<string> => {
-    return this.httpClient.get<string>(`/api/songs/${songId}/pvs`, {
-      service: PVService[pvService],
-    });
-  };
+	// Get PV ID by song ID and PV service.
+	public getPvId = (songId: number, pvService: PVService): Promise<string> => {
+		return this.httpClient.get<string>(`/api/songs/${songId}/pvs`, {
+			service: PVService[pvService],
+		});
+	};
 
-  public getRatings = (
-    songId: number,
-  ): Promise<RatedSongForUserForApiContract[]> => {
-    return this.httpClient.get<RatedSongForUserForApiContract[]>(
-      `/api/songs/${songId}/ratings`,
-      { userFields: 'MainPicture' },
-    );
-  };
+	public getRatings = (
+		songId: number,
+	): Promise<RatedSongForUserForApiContract[]> => {
+		return this.httpClient.get<RatedSongForUserForApiContract[]>(
+			`/api/songs/${songId}/ratings`,
+			{ userFields: 'MainPicture' },
+		);
+	};
 
-  public getTagSuggestions = (
-    songId: number,
-  ): Promise<TagUsageForApiContract[]> => {
-    return this.httpClient.get<TagUsageForApiContract[]>(
-      `/api/songs/${songId}/tagSuggestions`,
-    );
-  };
+	public getTagSuggestions = (
+		songId: number,
+	): Promise<TagUsageForApiContract[]> => {
+		return this.httpClient.get<TagUsageForApiContract[]>(
+			`/api/songs/${songId}/tagSuggestions`,
+		);
+	};
 
-  // Maps a relative URL to an absolute one.
-  private mapUrl: (relative: string) => string;
+	// Maps a relative URL to an absolute one.
+	private mapUrl: (relative: string) => string;
 
-  private post: <T>(relative: string, params: any) => Promise<T>;
+	private post: <T>(relative: string, params: any) => Promise<T>;
 
-  public pvForSongAndService: (
-    songId: number,
-    pvService: PVService,
-  ) => Promise<string>;
+	public pvForSongAndService: (
+		songId: number,
+		pvService: PVService,
+	) => Promise<string>;
 
-  public pvPlayer = (
-    songId: number,
-    params: PVEmbedParams,
-  ): Promise<SongWithPVPlayerAndVoteContract> => {
-    return this.getJSON<SongWithPVPlayerAndVoteContract>(
-      `/PVPlayer/${songId}`,
-      params,
-    );
-  };
+	public pvPlayer = (
+		songId: number,
+		params: PVEmbedParams,
+	): Promise<SongWithPVPlayerAndVoteContract> => {
+		return this.getJSON<SongWithPVPlayerAndVoteContract>(
+			`/PVPlayer/${songId}`,
+			params,
+		);
+	};
 
-  public pvPlayerWithRating: (
-    songId: number,
-  ) => Promise<SongWithPVPlayerAndVoteContract>;
+	public pvPlayerWithRating: (
+		songId: number,
+	) => Promise<SongWithPVPlayerAndVoteContract>;
 
-  //public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
+	//public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
-  public songListsForSong: (songId: number) => Promise<string>;
+	public songListsForSong: (songId: number) => Promise<string>;
 
-  public songListsForUser: (
-    ignoreSongId: number,
-  ) => Promise<SongListBaseContract[]>;
+	public songListsForUser: (
+		ignoreSongId: number,
+	) => Promise<SongListBaseContract[]>;
 
-  public updateComment = (
-    commentId: number,
-    contract: CommentContract,
-  ): Promise<void> => {
-    return this.httpClient.post<void>(
-      `/api/songs/comments/${commentId}`,
-      contract,
-    );
-  };
+	public updateComment = (
+		commentId: number,
+		contract: CommentContract,
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			`/api/songs/comments/${commentId}`,
+			contract,
+		);
+	};
 
-  public updatePersonalDescription = (
-    songId: number,
-    text: string,
-    author: ArtistContract,
-  ): Promise<void> => {
-    return this.httpClient.post<void>(
-      `/api/songs/${songId}/personal-description/`,
-      {
-        personalDescriptionText: text,
-        personalDescriptionAuthor: author || undefined,
-      },
-    );
-  };
+	public updatePersonalDescription = (
+		songId: number,
+		text: string,
+		author: ArtistContract,
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			`/api/songs/${songId}/personal-description/`,
+			{
+				personalDescriptionText: text,
+				personalDescriptionAuthor: author || undefined,
+			},
+		);
+	};
 
-  public updateSongRating = (
-    songId: number,
-    rating: SongVoteRating,
-  ): Promise<void> => {
-    return this.httpClient.post<void>(`/api/songs/${songId}/ratings`, {
-      rating: SongVoteRating[rating],
-    });
-  };
+	public updateSongRating = (
+		songId: number,
+		rating: SongVoteRating,
+	): Promise<void> => {
+		return this.httpClient.post<void>(`/api/songs/${songId}/ratings`, {
+			rating: SongVoteRating[rating],
+		});
+	};
 }
 
 export interface PVEmbedParams {
-  enableScriptAccess?: boolean;
+	enableScriptAccess?: boolean;
 
-  elementId?: string;
+	elementId?: string;
 
-  pvServices?: string;
+	pvServices?: string;
 }
 
 export interface SongQueryParams extends CommonQueryParams {
-  sort?: string;
+	sort?: string;
 
-  songTypes?: string;
+	songTypes?: string;
 }

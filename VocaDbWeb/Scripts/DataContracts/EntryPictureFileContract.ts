@@ -1,13 +1,13 @@
 export default interface EntryPictureFileContract {
-  entryType: string;
+	entryType: string;
 
-  fileName: string;
+	fileName: string;
 
-  id: number;
+	id: number;
 
-  mime: string;
+	mime: string;
 
-  name: string;
+	name: string;
 
-  thumbUrl: string;
+	thumbUrl: string;
 }

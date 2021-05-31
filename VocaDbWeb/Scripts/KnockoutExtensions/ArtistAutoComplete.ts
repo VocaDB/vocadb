@@ -8,55 +8,55 @@ import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 declare global {
-  interface KnockoutBindingHandlers {
-    // Artist autocomplete search box.
-    artistAutoComplete: KnockoutBindingHandler;
-  }
+	interface KnockoutBindingHandlers {
+		// Artist autocomplete search box.
+		artistAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 export function artistAutoComplete(
-  element: HTMLElement,
-  valueAccessor: () => any,
+	element: HTMLElement,
+	valueAccessor: () => any,
 ): void {
-  var properties: ArtistAutoCompleteParams = ko.utils.unwrapObservable(
-    valueAccessor(),
-  );
+	var properties: ArtistAutoCompleteParams = ko.utils.unwrapObservable(
+		valueAccessor(),
+	);
 
-  var filter = properties.filter;
+	var filter = properties.filter;
 
-  if (properties.ignoreId) {
-    filter = (item): boolean => {
-      if (item.id === properties.ignoreId) {
-        return false;
-      }
+	if (properties.ignoreId) {
+		filter = (item): boolean => {
+			if (item.id === properties.ignoreId) {
+				return false;
+			}
 
-      return properties.filter != null ? properties.filter(item) : true;
-    };
-  }
+			return properties.filter != null ? properties.filter(item) : true;
+		};
+	}
 
-  var queryParams = {
-    nameMatchMode: 'Auto',
-    lang: ContentLanguagePreference[vdb.values.languagePreference],
-    fields: 'AdditionalNames',
-    preferAccurateMatches: true,
-    maxResults: 20,
-  };
-  if (properties.extraQueryParams)
-    jQuery.extend(queryParams, properties.extraQueryParams);
+	var queryParams = {
+		nameMatchMode: 'Auto',
+		lang: ContentLanguagePreference[vdb.values.languagePreference],
+		fields: 'AdditionalNames',
+		preferAccurateMatches: true,
+		maxResults: 20,
+	};
+	if (properties.extraQueryParams)
+		jQuery.extend(queryParams, properties.extraQueryParams);
 
-  var params: EntryAutoCompleteParams<ArtistContract> = {
-    acceptSelection: properties.acceptSelection!,
-    createNewItem: properties.createNewItem,
-    createOptionFirstRow: (item) => item.name + ' (' + item.artistType + ')',
-    createOptionSecondRow: (item) => item.additionalNames!,
-    extraQueryParams: queryParams,
-    filter: filter,
-    termParamName: 'query',
-  };
+	var params: EntryAutoCompleteParams<ArtistContract> = {
+		acceptSelection: properties.acceptSelection!,
+		createNewItem: properties.createNewItem,
+		createOptionFirstRow: (item) => item.name + ' (' + item.artistType + ')',
+		createOptionSecondRow: (item) => item.additionalNames!,
+		extraQueryParams: queryParams,
+		filter: filter,
+		termParamName: 'query',
+	};
 
-  initEntrySearch(element, functions.mapAbsoluteUrl('/api/artists'), params);
+	initEntrySearch(element, functions.mapAbsoluteUrl('/api/artists'), params);
 }
 
 ko.bindingHandlers.artistAutoComplete = {
-  init: artistAutoComplete,
+	init: artistAutoComplete,
 };

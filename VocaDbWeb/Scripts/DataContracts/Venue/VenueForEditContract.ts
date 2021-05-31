@@ -3,17 +3,17 @@ import OptionalGeoPointContract from '../OptionalGeoPointContract';
 import WebLinkContract from '../WebLinkContract';
 
 export default interface VenueForEditContract {
-  address: string;
+	address: string;
 
-  addressCountryCode: string;
+	addressCountryCode: string;
 
-  coordinates: OptionalGeoPointContract;
+	coordinates: OptionalGeoPointContract;
 
-  defaultNameLanguage: string;
+	defaultNameLanguage: string;
 
-  id: number;
+	id: number;
 
-  names?: LocalizedStringWithIdContract[];
+	names?: LocalizedStringWithIdContract[];
 
-  webLinks: WebLinkContract[];
+	webLinks: WebLinkContract[];
 }

@@ -34,221 +34,221 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
-  constructor(
-    urlMapper: UrlMapper,
-    private songListRepo: SongListRepository,
-    private songRepo: SongRepository,
-    private userRepo: UserRepository,
-    private artistRepo: ArtistRepository,
-    resourceRepo: ResourceRepository,
-    defaultSortRuleName: string,
-    latestComments: CommentContract[],
-    loggedUserId: number,
-    private lang: ContentLanguagePreference,
-    cultureCode: string,
-    private listId: number,
-    tagUsages: TagUsageForApiContract[],
-    pvPlayersFactory: PVPlayersFactory,
-    canDeleteAllComments: boolean,
-  ) {
-    this.artistFilters = new ArtistFilters(this.artistRepo, false);
-    this.comments = new EditableCommentsViewModel(
-      songListRepo.getComments(),
-      listId,
-      loggedUserId,
-      canDeleteAllComments,
-      canDeleteAllComments,
-      false,
-      latestComments,
-      true,
-    );
+	constructor(
+		urlMapper: UrlMapper,
+		private songListRepo: SongListRepository,
+		private songRepo: SongRepository,
+		private userRepo: UserRepository,
+		private artistRepo: ArtistRepository,
+		resourceRepo: ResourceRepository,
+		defaultSortRuleName: string,
+		latestComments: CommentContract[],
+		loggedUserId: number,
+		private lang: ContentLanguagePreference,
+		cultureCode: string,
+		private listId: number,
+		tagUsages: TagUsageForApiContract[],
+		pvPlayersFactory: PVPlayersFactory,
+		canDeleteAllComments: boolean,
+	) {
+		this.artistFilters = new ArtistFilters(this.artistRepo, false);
+		this.comments = new EditableCommentsViewModel(
+			songListRepo.getComments(),
+			listId,
+			loggedUserId,
+			canDeleteAllComments,
+			canDeleteAllComments,
+			false,
+			latestComments,
+			true,
+		);
 
-    this.resourceManager = new ResourcesManager(resourceRepo, cultureCode);
-    this.resourceManager.loadResources(null!, 'songSortRuleNames');
-    this.sortName = ko.computed(() => {
-      if (this.sort() === '') return defaultSortRuleName;
+		this.resourceManager = new ResourcesManager(resourceRepo, cultureCode);
+		this.resourceManager.loadResources(null!, 'songSortRuleNames');
+		this.sortName = ko.computed(() => {
+			if (this.sort() === '') return defaultSortRuleName;
 
-      return this.resourceManager.resources().songSortRuleNames != null
-        ? this.resourceManager.resources().songSortRuleNames![this.sort()]
-        : '';
-    });
+			return this.resourceManager.resources().songSortRuleNames != null
+				? this.resourceManager.resources().songSortRuleNames![this.sort()]
+				: '';
+		});
 
-    this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+		this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
 
-    // TODO
-    this.pvPlayerViewModel = new PVPlayerViewModel(
-      urlMapper,
-      songRepo,
-      userRepo,
-      pvPlayersFactory,
-    );
-    var playListRepoAdapter = new PlayListRepositoryForSongListAdapter(
-      songListRepo,
-      listId,
-      this.query,
-      this.songType,
-      this.tagIds,
-      this.childTags,
-      this.artistFilters.artistIds,
-      this.artistFilters.artistParticipationStatus,
-      this.artistFilters.childVoicebanks,
-      this.advancedFilters.filters,
-      this.sort,
-    );
-    this.playlistViewModel = new PlayListViewModel(
-      urlMapper,
-      playListRepoAdapter,
-      songRepo,
-      userRepo,
-      this.pvPlayerViewModel,
-      lang,
-    );
-    this.pvServiceIcons = new PVServiceIcons(urlMapper);
+		// TODO
+		this.pvPlayerViewModel = new PVPlayerViewModel(
+			urlMapper,
+			songRepo,
+			userRepo,
+			pvPlayersFactory,
+		);
+		var playListRepoAdapter = new PlayListRepositoryForSongListAdapter(
+			songListRepo,
+			listId,
+			this.query,
+			this.songType,
+			this.tagIds,
+			this.childTags,
+			this.artistFilters.artistIds,
+			this.artistFilters.artistParticipationStatus,
+			this.artistFilters.childVoicebanks,
+			this.advancedFilters.filters,
+			this.sort,
+		);
+		this.playlistViewModel = new PlayListViewModel(
+			urlMapper,
+			playListRepoAdapter,
+			songRepo,
+			userRepo,
+			this.pvPlayerViewModel,
+			lang,
+		);
+		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
-    this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-    this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
-    this.artistFilters.artistParticipationStatus.subscribe(
-      this.updateResultsWithTotalCount,
-    );
-    this.artistFilters.childVoicebanks.subscribe(
-      this.updateResultsWithTotalCount,
-    );
-    this.childTags.subscribe(this.updateResultsWithTotalCount);
-    this.showTags.subscribe(this.updateResultsWithoutTotalCount);
-    this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
-    this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
-    this.songType.subscribe(this.updateResultsWithTotalCount);
+		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
+		this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
+		this.artistFilters.artistParticipationStatus.subscribe(
+			this.updateResultsWithTotalCount,
+		);
+		this.artistFilters.childVoicebanks.subscribe(
+			this.updateResultsWithTotalCount,
+		);
+		this.childTags.subscribe(this.updateResultsWithTotalCount);
+		this.showTags.subscribe(this.updateResultsWithoutTotalCount);
+		this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
+		this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
+		this.songType.subscribe(this.updateResultsWithTotalCount);
 
-    this.tagsEditViewModel = new TagsEditViewModel(
-      {
-        getTagSelections: (callback): Promise<void> =>
-          userRepo.getSongListTagSelections(this.listId).then(callback),
-        saveTagSelections: (tags): Promise<void> =>
-          userRepo
-            .updateSongListTags(this.listId, tags)
-            .then(this.tagUsages.updateTagUsages),
-      },
-      EntryType.SongList,
-    );
+		this.tagsEditViewModel = new TagsEditViewModel(
+			{
+				getTagSelections: (callback): Promise<void> =>
+					userRepo.getSongListTagSelections(this.listId).then(callback),
+				saveTagSelections: (tags): Promise<void> =>
+					userRepo
+						.updateSongListTags(this.listId, tags)
+						.then(this.tagUsages.updateTagUsages),
+			},
+			EntryType.SongList,
+		);
 
-    this.tags.subscribe(this.updateResultsWithTotalCount);
+		this.tags.subscribe(this.updateResultsWithTotalCount);
 
-    this.tagUsages = new TagListViewModel(tagUsages);
+		this.tagUsages = new TagListViewModel(tagUsages);
 
-    this.sort.subscribe(() => this.updateCurrentMode(true));
-    this.playlistMode.subscribe(() => this.updateCurrentMode(true));
-    this.query.subscribe(() => this.updateCurrentMode(true));
+		this.sort.subscribe(() => this.updateCurrentMode(true));
+		this.playlistMode.subscribe(() => this.updateCurrentMode(true));
+		this.query.subscribe(() => this.updateCurrentMode(true));
 
-    this.updateResultsWithTotalCount();
-  }
+		this.updateResultsWithTotalCount();
+	}
 
-  public addTag = (tag: TagBaseContract): number =>
-    this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
+	public addTag = (tag: TagBaseContract): number =>
+		this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
 
-  public advancedFilters = new AdvancedSearchFilters();
-  public artistFilters: ArtistFilters;
-  public childTags = ko.observable(false);
-  public comments: EditableCommentsViewModel;
+	public advancedFilters = new AdvancedSearchFilters();
+	public artistFilters: ArtistFilters;
+	public childTags = ko.observable(false);
+	public comments: EditableCommentsViewModel;
 
-  public loading = ko.observable(true); // Currently loading for data
+	public loading = ko.observable(true); // Currently loading for data
 
-  public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
-    return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
-  };
+	public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
+		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
+	};
 
-  public page = ko.observableArray<SongInListContract>([]); // Current page of items
-  public paging = new ServerSidePagingViewModel(20); // Paging view model
-  public pauseNotifications = false;
-  public playlistMode = ko.observable(false);
-  public playlistViewModel: PlayListViewModel;
-  public pvPlayerViewModel: PVPlayerViewModel;
-  public pvServiceIcons: PVServiceIcons;
-  public query = ko.observable('');
-  private resourceManager: ResourcesManager;
-  public showAdvancedFilters = ko.observable(false);
-  public showTags = ko.observable(false);
-  public sort = ko.observable('');
-  public sortName: Computed<string>;
-  public songType = ko.observable(SongType[SongType.Unspecified]);
-  public tagsEditViewModel: TagsEditViewModel;
-  public tags = ko.observableArray<TagFilter>();
-  public tagIds: Computed<number[]>;
-  public tagUsages: TagListViewModel;
+	public page = ko.observableArray<SongInListContract>([]); // Current page of items
+	public paging = new ServerSidePagingViewModel(20); // Paging view model
+	public pauseNotifications = false;
+	public playlistMode = ko.observable(false);
+	public playlistViewModel: PlayListViewModel;
+	public pvPlayerViewModel: PVPlayerViewModel;
+	public pvServiceIcons: PVServiceIcons;
+	public query = ko.observable('');
+	private resourceManager: ResourcesManager;
+	public showAdvancedFilters = ko.observable(false);
+	public showTags = ko.observable(false);
+	public sort = ko.observable('');
+	public sortName: Computed<string>;
+	public songType = ko.observable(SongType[SongType.Unspecified]);
+	public tagsEditViewModel: TagsEditViewModel;
+	public tags = ko.observableArray<TagFilter>();
+	public tagIds: Computed<number[]>;
+	public tagUsages: TagListViewModel;
 
-  public updateResultsWithTotalCount = (): void => this.updateResults(true);
-  public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): void => this.updateResults(true);
+	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
 
-  private updateCurrentMode = (clearResults: boolean): void => {
-    if (this.playlistMode()) {
-      this.playlistViewModel.updateResultsWithTotalCount();
-    } else {
-      this.updateResults(clearResults);
-    }
-  };
+	private updateCurrentMode = (clearResults: boolean): void => {
+		if (this.playlistMode()) {
+			this.playlistViewModel.updateResultsWithTotalCount();
+		} else {
+			this.updateResults(clearResults);
+		}
+	};
 
-  public updateResults = (clearResults: boolean = true): void => {
-    // Disable duplicate updates
-    if (this.pauseNotifications) return;
+	public updateResults = (clearResults: boolean = true): void => {
+		// Disable duplicate updates
+		if (this.pauseNotifications) return;
 
-    this.pauseNotifications = true;
-    this.loading(true);
+		this.pauseNotifications = true;
+		this.loading(true);
 
-    if (clearResults) this.paging.page(1);
+		if (clearResults) this.paging.page(1);
 
-    var pagingProperties = this.paging.getPagingProperties(clearResults);
+		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-    var fields = [
-      SongOptionalField.AdditionalNames,
-      SongOptionalField.ThumbUrl,
-    ];
+		var fields = [
+			SongOptionalField.AdditionalNames,
+			SongOptionalField.ThumbUrl,
+		];
 
-    if (this.showTags()) fields.push(SongOptionalField.Tags);
+		if (this.showTags()) fields.push(SongOptionalField.Tags);
 
-    this.songListRepo
-      .getSongs(
-        this.listId,
-        this.query(),
-        this.songType() !== SongType[SongType.Unspecified]
-          ? this.songType()
-          : null!,
-        this.tagIds(),
-        this.childTags(),
-        this.artistFilters.artistIds(),
-        this.artistFilters.artistParticipationStatus(),
-        this.artistFilters.childVoicebanks(),
-        this.advancedFilters.filters(),
-        null!,
-        pagingProperties,
-        new SongOptionalFields(fields),
-        this.sort(),
-        this.lang,
-      )
-      .then((result) => {
-        _.each(result.items, (item) => {
-          var song = item.song;
-          var songAny: any = song;
+		this.songListRepo
+			.getSongs(
+				this.listId,
+				this.query(),
+				this.songType() !== SongType[SongType.Unspecified]
+					? this.songType()
+					: null!,
+				this.tagIds(),
+				this.childTags(),
+				this.artistFilters.artistIds(),
+				this.artistFilters.artistParticipationStatus(),
+				this.artistFilters.childVoicebanks(),
+				this.advancedFilters.filters(),
+				null!,
+				pagingProperties,
+				new SongOptionalFields(fields),
+				this.sort(),
+				this.lang,
+			)
+			.then((result) => {
+				_.each(result.items, (item) => {
+					var song = item.song;
+					var songAny: any = song;
 
-          if (song.pvServices && song.pvServices !== 'Nothing') {
-            songAny.previewViewModel = new SongWithPreviewViewModel(
-              this.songRepo,
-              this.userRepo,
-              song.id,
-              song.pvServices,
-            );
-            songAny.previewViewModel.ratingComplete =
-              ui.showThankYouForRatingMessage;
-          } else {
-            songAny.previewViewModel = null;
-          }
-        });
+					if (song.pvServices && song.pvServices !== 'Nothing') {
+						songAny.previewViewModel = new SongWithPreviewViewModel(
+							this.songRepo,
+							this.userRepo,
+							song.id,
+							song.pvServices,
+						);
+						songAny.previewViewModel.ratingComplete =
+							ui.showThankYouForRatingMessage;
+					} else {
+						songAny.previewViewModel = null;
+					}
+				});
 
-        this.pauseNotifications = false;
+				this.pauseNotifications = false;
 
-        if (pagingProperties.getTotalCount)
-          this.paging.totalItems(result.totalCount);
+				if (pagingProperties.getTotalCount)
+					this.paging.totalItems(result.totalCount);
 
-        this.page(result.items);
-        this.loading(false);
-      });
-  };
+				this.page(result.items);
+				this.loading(false);
+			});
+	};
 }

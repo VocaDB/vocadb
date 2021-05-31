@@ -1,52 +1,52 @@
 enum ArtistType {
-  Unknown,
+	Unknown,
 
-  /// <summary>
-  /// Doujin circle. A group of doujin producers that also releases music (acts as a label).
-  /// </summary>
-  Circle,
+	/// <summary>
+	/// Doujin circle. A group of doujin producers that also releases music (acts as a label).
+	/// </summary>
+	Circle,
 
-  /// <summary>
-  /// Commercial music label. Does not produce music by itself.
-  /// </summary>
-  Label,
+	/// <summary>
+	/// Commercial music label. Does not produce music by itself.
+	/// </summary>
+	Label,
 
-  /// <summary>
-  /// Producer is the maker or the song (usually an individual, for example doriko)
-  /// </summary>
-  Producer,
+	/// <summary>
+	/// Producer is the maker or the song (usually an individual, for example doriko)
+	/// </summary>
+	Producer,
 
-  Animator,
+	Animator,
 
-  Illustrator,
+	Illustrator,
 
-  Lyricist,
+	Lyricist,
 
-  Vocaloid,
+	Vocaloid,
 
-  UTAU,
+	UTAU,
 
-  CeVIO,
+	CeVIO,
 
-  OtherVoiceSynthesizer,
+	OtherVoiceSynthesizer,
 
-  OtherVocalist,
+	OtherVocalist,
 
-  OtherGroup,
+	OtherGroup,
 
-  OtherIndividual,
+	OtherIndividual,
 
-  Utaite,
+	Utaite,
 
-  Band,
+	Band,
 
-  Vocalist,
+	Vocalist,
 
-  Character,
+	Character,
 
-  SynthesizerV,
+	SynthesizerV,
 
-  CoverArtist,
+	CoverArtist,
 }
 
 export default ArtistType;

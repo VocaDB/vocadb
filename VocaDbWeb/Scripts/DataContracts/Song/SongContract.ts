@@ -1,20 +1,20 @@
 import CommonEntryContract from '../CommonEntryContract';
 
 export default interface SongContract extends CommonEntryContract {
-  additionalNames: string;
+	additionalNames: string;
 
-  artistString: string;
+	artistString: string;
 
-  lengthSeconds: number;
+	lengthSeconds: number;
 
-  // Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
-  publishDate?: string;
+	// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
+	publishDate?: string;
 
-  pvServices: string;
+	pvServices: string;
 
-  ratingScore: number;
+	ratingScore: number;
 
-  songType: string;
+	songType: string;
 
-  thumbUrl?: string;
+	thumbUrl?: string;
 }

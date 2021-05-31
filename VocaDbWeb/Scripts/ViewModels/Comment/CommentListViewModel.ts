@@ -12,129 +12,129 @@ import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 enum CommentSortRule {
-  CreateDateDescending,
+	CreateDateDescending,
 
-  CreateDate,
+	CreateDate,
 }
 
 export default class CommentListViewModel {
-  constructor(
-    private urlMapper: UrlMapper,
-    resourceRepo: ResourceRepository,
-    private lang: ContentLanguagePreference,
-    cultureCode: string,
-    private userId?: number,
-  ) {
-    this.entryType = ko.observable(EntryType[EntryType.Undefined]);
-    this.sort = ko.observable(
-      CommentSortRule[CommentSortRule.CreateDateDescending],
-    );
+	constructor(
+		private urlMapper: UrlMapper,
+		resourceRepo: ResourceRepository,
+		private lang: ContentLanguagePreference,
+		cultureCode: string,
+		private userId?: number,
+	) {
+		this.entryType = ko.observable(EntryType[EntryType.Undefined]);
+		this.sort = ko.observable(
+			CommentSortRule[CommentSortRule.CreateDateDescending],
+		);
 
-    this.entryType.subscribe(this.clear);
-    this.sort.subscribe(this.clear);
+		this.entryType.subscribe(this.clear);
+		this.sort.subscribe(this.clear);
 
-    this.resources = new ResourcesManager(resourceRepo, cultureCode);
-    this.resources.loadResources(
-      this.loadMore,
-      ResourceSetNames.artistTypeNames,
-      ResourceSetNames.discTypeNames,
-      ResourceSetNames.songTypeNames,
-      ResourceSetNames.userGroupNames,
-      ResourceSetNames.activityEntry.activityFeedEventNames,
-      ResourceSetNames.album.albumEditableFieldNames,
-      ResourceSetNames.artist.artistEditableFieldNames,
-      ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
-      ResourceSetNames.song.songEditableFieldNames,
-      ResourceSetNames.songList.songListEditableFieldNames,
-      ResourceSetNames.songList.songListFeaturedCategoryNames,
-      ResourceSetNames.tag.tagEditableFieldNames,
-      'commentSortRuleNames',
-    );
+		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources.loadResources(
+			this.loadMore,
+			ResourceSetNames.artistTypeNames,
+			ResourceSetNames.discTypeNames,
+			ResourceSetNames.songTypeNames,
+			ResourceSetNames.userGroupNames,
+			ResourceSetNames.activityEntry.activityFeedEventNames,
+			ResourceSetNames.album.albumEditableFieldNames,
+			ResourceSetNames.artist.artistEditableFieldNames,
+			ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
+			ResourceSetNames.song.songEditableFieldNames,
+			ResourceSetNames.songList.songListEditableFieldNames,
+			ResourceSetNames.songList.songListFeaturedCategoryNames,
+			ResourceSetNames.tag.tagEditableFieldNames,
+			'commentSortRuleNames',
+		);
 
-    this.sortName = ko.computed(() =>
-      this.resources.resources().commentSortRuleNames != null
-        ? this.resources.resources().commentSortRuleNames![this.sort()]
-        : '',
-    );
-  }
+		this.sortName = ko.computed(() =>
+			this.resources.resources().commentSortRuleNames != null
+				? this.resources.resources().commentSortRuleNames![this.sort()]
+				: '',
+		);
+	}
 
-  private clear = (): void => {
-    this.lastCommentDate = null!;
-    this.comments([]);
-    this.loadMore();
-  };
+	private clear = (): void => {
+		this.lastCommentDate = null!;
+		this.comments([]);
+		this.loadMore();
+	};
 
-  public comments = ko.observableArray<CommentContract>([]);
+	public comments = ko.observableArray<CommentContract>([]);
 
-  public entryType: Observable<string>;
+	public entryType: Observable<string>;
 
-  public getEntryTypeName = (entry: EntryContract): string | null => {
-    var sets = this.resources.resources();
+	public getEntryTypeName = (entry: EntryContract): string | null => {
+		var sets = this.resources.resources();
 
-    switch (EntryType[entry.entryType as keyof typeof EntryType]) {
-      case EntryType.Album:
-        return sets.discTypeNames![entry.discType!];
+		switch (EntryType[entry.entryType as keyof typeof EntryType]) {
+			case EntryType.Album:
+				return sets.discTypeNames![entry.discType!];
 
-      case EntryType.Artist:
-        return sets.artistTypeNames![entry.artistType!];
+			case EntryType.Artist:
+				return sets.artistTypeNames![entry.artistType!];
 
-      case EntryType.Song:
-        return sets.songTypeNames![entry.songType!];
+			case EntryType.Song:
+				return sets.songTypeNames![entry.songType!];
 
-      case EntryType.SongList:
-        return sets.songList_songListFeaturedCategoryNames![
-          entry.songListFeaturedCategory!
-        ];
+			case EntryType.SongList:
+				return sets.songList_songListFeaturedCategoryNames![
+					entry.songListFeaturedCategory!
+				];
 
-      case EntryType.Tag:
-        return entry.tagCategoryName!;
+			case EntryType.Tag:
+				return entry.tagCategoryName!;
 
-      default:
-        return null;
-    }
-  };
+			default:
+				return null;
+		}
+	};
 
-  public getEntryUrl = (entry: EntryContract): string => {
-    return EntryUrlMapper.details_entry(entry, entry.urlSlug);
-  };
+	public getEntryUrl = (entry: EntryContract): string => {
+		return EntryUrlMapper.details_entry(entry, entry.urlSlug);
+	};
 
-  private lastCommentDate!: Date;
+	private lastCommentDate!: Date;
 
-  public loadMore = (): void => {
-    var url = this.urlMapper.mapRelative('/api/comments');
-    var sortRule = CommentSortRule[this.sort() as keyof typeof CommentSortRule];
-    $.getJSON(
-      url,
-      {
-        fields: 'Entry',
-        entryFields: 'AdditionalNames,MainPicture',
-        lang: ContentLanguagePreference[this.lang],
-        before:
-          sortRule === CommentSortRule.CreateDateDescending &&
-          this.lastCommentDate
-            ? this.lastCommentDate.toISOString()
-            : null,
-        since:
-          sortRule === CommentSortRule.CreateDate && this.lastCommentDate
-            ? this.lastCommentDate.toISOString()
-            : null,
-        userId: this.userId,
-        entryType: this.entryType(),
-        sortRule: this.sort(),
-      },
-      (result: PartialFindResultContract<CommentContract>) => {
-        var entries = result.items;
+	public loadMore = (): void => {
+		var url = this.urlMapper.mapRelative('/api/comments');
+		var sortRule = CommentSortRule[this.sort() as keyof typeof CommentSortRule];
+		$.getJSON(
+			url,
+			{
+				fields: 'Entry',
+				entryFields: 'AdditionalNames,MainPicture',
+				lang: ContentLanguagePreference[this.lang],
+				before:
+					sortRule === CommentSortRule.CreateDateDescending &&
+					this.lastCommentDate
+						? this.lastCommentDate.toISOString()
+						: null,
+				since:
+					sortRule === CommentSortRule.CreateDate && this.lastCommentDate
+						? this.lastCommentDate.toISOString()
+						: null,
+				userId: this.userId,
+				entryType: this.entryType(),
+				sortRule: this.sort(),
+			},
+			(result: PartialFindResultContract<CommentContract>) => {
+				var entries = result.items;
 
-        if (!entries && entries!.length > 0) return;
+				if (!entries && entries!.length > 0) return;
 
-        ko.utils.arrayPushAll(this.comments, entries);
-        this.lastCommentDate = new Date(_.last(entries)!.created!);
-      },
-    );
-  };
+				ko.utils.arrayPushAll(this.comments, entries);
+				this.lastCommentDate = new Date(_.last(entries)!.created!);
+			},
+		);
+	};
 
-  public resources: ResourcesManager;
+	public resources: ResourcesManager;
 
-  public sort: Observable<string>;
-  public sortName: Computed<string>;
+	public sort: Observable<string>;
+	public sortName: Computed<string>;
 }

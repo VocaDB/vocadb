@@ -1,9 +1,9 @@
 export default interface OptionalDateTimeContract {
-  day?: number;
+	day?: number;
 
-  formatted?: string;
+	formatted?: string;
 
-  month?: number;
+	month?: number;
 
-  year?: number;
+	year?: number;
 }

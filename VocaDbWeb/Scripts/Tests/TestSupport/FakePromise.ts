@@ -1,10 +1,10 @@
 export default class FakePromise<T> {
-  constructor(private readonly value: T) {}
+	constructor(private readonly value: T) {}
 
-  public then = (onfulfilled: (value: T) => T): T => {
-    return onfulfilled(this.value);
-  };
+	public then = (onfulfilled: (value: T) => T): T => {
+		return onfulfilled(this.value);
+	};
 
-  public static resolve = <T>(value: T): Promise<T> =>
-    (new FakePromise<T>(value) as unknown) as Promise<T>;
+	public static resolve = <T>(value: T): Promise<T> =>
+		(new FakePromise<T>(value) as unknown) as Promise<T>;
 }

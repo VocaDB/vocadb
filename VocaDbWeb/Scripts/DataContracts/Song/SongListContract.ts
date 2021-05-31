@@ -2,13 +2,13 @@ import SongListBaseContract from '../SongListBaseContract';
 import UserBaseContract from '../User/UserBaseContract';
 
 export default interface SongListContract extends SongListBaseContract {
-  author: UserBaseContract;
+	author: UserBaseContract;
 
-  description: string;
+	description: string;
 
-  eventDate?: string;
+	eventDate?: string;
 
-  featuredCategory: string;
+	featuredCategory: string;
 
-  status: string;
+	status: string;
 }

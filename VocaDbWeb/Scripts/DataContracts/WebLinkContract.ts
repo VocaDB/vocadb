@@ -1,11 +1,11 @@
 export default interface WebLinkContract {
-  category: string;
+	category: string;
 
-  description: string;
+	description: string;
 
-  disabled: boolean;
+	disabled: boolean;
 
-  id: number;
+	id: number;
 
-  url: string;
+	url: string;
 }

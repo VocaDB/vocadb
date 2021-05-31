@@ -5,16 +5,16 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const AdminManageWebhooks = (webhookEventNames: {
-  [key: string]: string;
+	[key: string]: string;
 }): void => {
-  $(function () {
-    const httpClient = new HttpClient();
+	$(function () {
+		const httpClient = new HttpClient();
 
-    var adminRepo = new AdminRepository(httpClient);
+		var adminRepo = new AdminRepository(httpClient);
 
-    var viewModel = new ManageWebhooksViewModel(webhookEventNames, adminRepo);
-    ko.applyBindings(viewModel);
-  });
+		var viewModel = new ManageWebhooksViewModel(webhookEventNames, adminRepo);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default AdminManageWebhooks;

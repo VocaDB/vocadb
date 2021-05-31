@@ -10,59 +10,59 @@ import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 declare global {
-  interface KnockoutBindingHandlers {
-    // Song autocomplete search box.
-    songAutoComplete: KnockoutBindingHandler;
-  }
+	interface KnockoutBindingHandlers {
+		// Song autocomplete search box.
+		songAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 export function songAutoComplete(
-  element: HTMLElement,
-  valueAccessor: () => any,
+	element: HTMLElement,
+	valueAccessor: () => any,
 ): void {
-  var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(
-    valueAccessor(),
-  );
+	var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(
+		valueAccessor(),
+	);
 
-  var filter = properties.filter;
+	var filter = properties.filter;
 
-  if (properties.ignoreId) {
-    filter = (item): boolean => {
-      if (item.id === properties.ignoreId) {
-        return false;
-      }
+	if (properties.ignoreId) {
+		filter = (item): boolean => {
+			if (item.id === properties.ignoreId) {
+				return false;
+			}
 
-      return properties.filter != null ? properties.filter(item) : true;
-    };
-  }
+			return properties.filter != null ? properties.filter(item) : true;
+		};
+	}
 
-  var queryParams = {
-    nameMatchMode: NameMatchMode[NameMatchMode.Auto],
-    lang: ContentLanguagePreference[vdb.values.languagePreference],
-    preferAccurateMatches: true,
-  };
-  if (properties.extraQueryParams)
-    jQuery.extend(queryParams, properties.extraQueryParams);
+	var queryParams = {
+		nameMatchMode: NameMatchMode[NameMatchMode.Auto],
+		lang: ContentLanguagePreference[vdb.values.languagePreference],
+		preferAccurateMatches: true,
+	};
+	if (properties.extraQueryParams)
+		jQuery.extend(queryParams, properties.extraQueryParams);
 
-  initEntrySearch(element, functions.mapAbsoluteUrl('/api/songs'), {
-    acceptSelection: properties.acceptSelection!,
-    createNewItem: properties.createNewItem,
-    createCustomItem: properties.createCustomItem,
-    createOptionFirstRow: (item: SongContract) =>
-      item.name + ' (' + item.songType + ')',
-    createOptionSecondRow: (item: SongContract) => item.artistString,
-    extraQueryParams: queryParams,
-    filter: filter,
-    termParamName: 'query',
-    onQuery: (searchQueryParams: SongQueryParams, term: string) => {
-      // Increase the number of results for wildcard queries
-      searchQueryParams.maxResults = SearchTextQueryHelper.isWildcardQuery(term)
-        ? 30
-        : 15;
-    },
-  });
+	initEntrySearch(element, functions.mapAbsoluteUrl('/api/songs'), {
+		acceptSelection: properties.acceptSelection!,
+		createNewItem: properties.createNewItem,
+		createCustomItem: properties.createCustomItem,
+		createOptionFirstRow: (item: SongContract) =>
+			item.name + ' (' + item.songType + ')',
+		createOptionSecondRow: (item: SongContract) => item.artistString,
+		extraQueryParams: queryParams,
+		filter: filter,
+		termParamName: 'query',
+		onQuery: (searchQueryParams: SongQueryParams, term: string) => {
+			// Increase the number of results for wildcard queries
+			searchQueryParams.maxResults = SearchTextQueryHelper.isWildcardQuery(term)
+				? 30
+				: 15;
+		},
+	});
 }
 
 ko.bindingHandlers.songAutoComplete = {
-  init: songAutoComplete,
+	init: songAutoComplete,
 };

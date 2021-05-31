@@ -1,24 +1,24 @@
 import EntryRefContract from './EntryRefContract';
 
 export default interface DuplicateEntryResultContract {
-  entry: EntryRefWithNameContract;
+	entry: EntryRefWithNameContract;
 
-  matchProperty: string;
+	matchProperty: string;
 }
 
 export interface EntryNameContract {
-  additionalNames: string;
+	additionalNames: string;
 
-  displayName: string;
+	displayName: string;
 }
 
 export interface EntryRefWithNameContract extends EntryRefContract {
-  name: EntryNameContract;
+	name: EntryNameContract;
 }
 
 export interface EntryRefWithCommonPropertiesContract
-  extends EntryRefWithNameContract {
-  artistString: string;
+	extends EntryRefWithNameContract {
+	artistString: string;
 
-  entryTypeName: string;
+	entryTypeName: string;
 }

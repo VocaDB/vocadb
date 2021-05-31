@@ -1,9 +1,9 @@
 import SongApiContract from './SongApiContract';
 
 export default interface SongInListContract {
-  order: number;
+	order: number;
 
-  notes: string;
+	notes: string;
 
-  song: SongApiContract;
+	song: SongApiContract;
 }

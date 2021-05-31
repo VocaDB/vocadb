@@ -9,72 +9,72 @@ var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
 var tagRepository = new FakeTagRepository();
 var producer: ArtistContract = {
-  artistType: 'Producer',
-  id: 1,
-  name: 'Tripshots',
-  additionalNames: '',
+	artistType: 'Producer',
+	id: 1,
+	name: 'Tripshots',
+	additionalNames: '',
 };
 artistRepository.result = producer;
 repository.results = {
-  title: 'Nebula',
-  titleLanguage: 'English',
-  artists: [producer],
-  matches: [],
-  songType: 'Original',
+	title: 'Nebula',
+	titleLanguage: 'English',
+	artists: [producer],
+	matches: [],
+	songType: 'Original',
 };
 
 function createViewModel(): SongCreateViewModel {
-  return new SongCreateViewModel(repository, artistRepository, tagRepository);
+	return new SongCreateViewModel(repository, artistRepository, tagRepository);
 }
 
 test('constructor empty', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  expect(target.nameOriginal(), 'nameOriginal').toBe('');
-  expect(target.nameEnglish(), 'nameEnglish').toBe('');
-  expect(target.pv1(), 'pv1').toBe('');
-  expect(target.artists(), 'artists').toBeTruthy();
-  expect(target.artists().length, 'artists.length').toBe(0);
+	expect(target.nameOriginal(), 'nameOriginal').toBe('');
+	expect(target.nameEnglish(), 'nameEnglish').toBe('');
+	expect(target.pv1(), 'pv1').toBe('');
+	expect(target.artists(), 'artists').toBeTruthy();
+	expect(target.artists().length, 'artists.length').toBe(0);
 });
 
 test('constructor with data', () => {
-  var target = new SongCreateViewModel(
-    repository,
-    artistRepository,
-    tagRepository,
-    { nameEnglish: 'Nebula', artists: [producer] },
-  );
+	var target = new SongCreateViewModel(
+		repository,
+		artistRepository,
+		tagRepository,
+		{ nameEnglish: 'Nebula', artists: [producer] },
+	);
 
-  expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
-  expect(target.artists(), 'artists').toBeTruthy();
-  expect(target.artists().length, 'artists.length').toBe(1);
-  expect(target.artists()[0].id, 'artist id').toBe(1);
+	expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
+	expect(target.artists(), 'artists').toBeTruthy();
+	expect(target.artists().length, 'artists.length').toBe(1);
+	expect(target.artists()[0].id, 'artist id').toBe(1);
 });
 
 test('addArtist', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  target.addArtist(1);
+	target.addArtist(1);
 
-  expect(target.artists().length, 'artists.length').toBe(1);
-  expect(target.artists()[0].id, 'artist id').toBe(1);
+	expect(target.artists().length, 'artists.length').toBe(1);
+	expect(target.artists()[0].id, 'artist id').toBe(1);
 });
 
 test('checkDuplicatesAndPV title and artists', () => {
-  var target = createViewModel();
+	var target = createViewModel();
 
-  target.checkDuplicatesAndPV();
+	target.checkDuplicatesAndPV();
 
-  expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
-  expect(target.artists(), 'artists').toBeTruthy();
-  expect(target.artists().length, 'artists.length').toBe(1);
+	expect(target.nameEnglish(), 'nameEnglish').toBe('Nebula');
+	expect(target.artists(), 'artists').toBeTruthy();
+	expect(target.artists().length, 'artists.length').toBe(1);
 });
 
 test('checkDuplicatesAndPV does not overwrite title', () => {
-  var target = createViewModel();
-  target.nameOriginal('Overridden title');
+	var target = createViewModel();
+	target.nameOriginal('Overridden title');
 
-  target.checkDuplicatesAndPV();
+	target.checkDuplicatesAndPV();
 
-  expect(target.nameOriginal(), 'nameOriginal').toBe('Overridden title');
+	expect(target.nameOriginal(), 'nameOriginal').toBe('Overridden title');
 });

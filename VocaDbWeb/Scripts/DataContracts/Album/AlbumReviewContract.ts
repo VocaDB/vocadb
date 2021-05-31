@@ -1,15 +1,15 @@
 import UserApiContract from '../User/UserApiContract';
 
 export default interface AlbumReviewContract {
-  date: string;
+	date: string;
 
-  id?: number;
+	id?: number;
 
-  languageCode: string;
+	languageCode: string;
 
-  text: string;
+	text: string;
 
-  title: string;
+	title: string;
 
-  user: UserApiContract;
+	user: UserApiContract;
 }

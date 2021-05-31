@@ -12,50 +12,50 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const EventDetails = (
-  canDeleteAllComments: boolean,
-  eventAssociationType: UserEventRelationshipType,
-  model: {
-    id: number;
-    latestComments: CommentContract[];
-    tags: TagUsageForApiContract[];
-    usersAttending: UserBaseContract[];
-  },
-  reportTypes: IEntryReportType[],
+	canDeleteAllComments: boolean,
+	eventAssociationType: UserEventRelationshipType,
+	model: {
+		id: number;
+		latestComments: CommentContract[];
+		tags: TagUsageForApiContract[];
+		usersAttending: UserBaseContract[];
+	},
+	reportTypes: IEntryReportType[],
 ): void => {
-  $(function () {
-    $('#editEventLink').button({
-      disabled: $('#editEventLink').hasClass('disabled'),
-      icons: { primary: 'ui-icon-wrench' },
-    });
-    $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
-    $('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
-    $('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
+	$(function () {
+		$('#editEventLink').button({
+			disabled: $('#editEventLink').hasClass('disabled'),
+			icons: { primary: 'ui-icon-wrench' },
+		});
+		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
+		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
+		$('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
-    var loggedUserId = vdb.values.loggedUserId;
-    const httpClient = new HttpClient();
-    var eventRepo = new ReleaseEventRepository(httpClient);
-    var userRepo = new UserRepository(httpClient);
-    var latestComments = model.latestComments;
-    var users = model.usersAttending;
-    var tags = model.tags;
+		var loggedUserId = vdb.values.loggedUserId;
+		const httpClient = new HttpClient();
+		var eventRepo = new ReleaseEventRepository(httpClient);
+		var userRepo = new UserRepository(httpClient);
+		var latestComments = model.latestComments;
+		var users = model.usersAttending;
+		var tags = model.tags;
 
-    var vm = new ReleaseEventDetailsViewModel(
-      httpClient,
-      eventRepo,
-      userRepo,
-      latestComments,
-      reportTypes,
-      loggedUserId,
-      model.id,
-      eventAssociationType,
-      users,
-      tags,
-      canDeleteAllComments,
-    );
-    ko.applyBindings(vm);
+		var vm = new ReleaseEventDetailsViewModel(
+			httpClient,
+			eventRepo,
+			userRepo,
+			latestComments,
+			reportTypes,
+			loggedUserId,
+			model.id,
+			eventAssociationType,
+			users,
+			tags,
+			canDeleteAllComments,
+		);
+		ko.applyBindings(vm);
 
-    $('.artistLink').vdbArtistToolTip();
-  });
+		$('.artistLink').vdbArtistToolTip();
+	});
 };
 
 export default EventDetails;

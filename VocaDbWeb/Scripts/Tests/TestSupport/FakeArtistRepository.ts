@@ -5,13 +5,13 @@ import HttpClient from '@Shared/HttpClient';
 import FakePromise from './FakePromise';
 
 export default class FakeArtistRepository extends ArtistRepository {
-  result: ArtistContract = null!;
+	result: ArtistContract = null!;
 
-  constructor() {
-    super(new HttpClient());
+	constructor() {
+		super(new HttpClient());
 
-    this.getOne = (id, lang): Promise<ArtistContract> => {
-      return FakePromise.resolve(this.result);
-    };
-  }
+		this.getOne = (id, lang): Promise<ArtistContract> => {
+			return FakePromise.resolve(this.result);
+		};
+	}
 }

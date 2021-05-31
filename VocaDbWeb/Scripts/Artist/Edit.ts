@@ -10,62 +10,62 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 function initPage(): void {
-  $('#tabs').tabs();
-  $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
-  $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
-  $('#mergeLink').button();
+	$('#tabs').tabs();
+	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
+	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
+	$('#mergeLink').button();
 }
 
 const ArtistEdit = (
-  model: {
-    artist: {
-      id: number;
-    };
-    editedArtist: ArtistForEditContract;
-  },
-  saveWarning: any,
-  webLinkCategoryJson: TranslatedEnumField[],
+	model: {
+		artist: {
+			id: number;
+		};
+		editedArtist: ArtistForEditContract;
+	},
+	saveWarning: any,
+	webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
-  $(document).ready(function () {
-    vdb.resources.entryEdit = {
-      saveWarning: saveWarning,
-    };
+	$(document).ready(function () {
+		vdb.resources.entryEdit = {
+			saveWarning: saveWarning,
+		};
 
-    const httpClient = new HttpClient();
-    var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repoFactory = new RepositoryFactory(httpClient);
-    var artistRepo = repoFactory.artistRepository();
-    var userRepo = repoFactory.userRepository();
-    var editedModel = model.editedArtist;
+		const httpClient = new HttpClient();
+		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var repoFactory = new RepositoryFactory(httpClient);
+		var artistRepo = repoFactory.artistRepository();
+		var userRepo = repoFactory.userRepository();
+		var editedModel = model.editedArtist;
 
-    if (editedModel) {
-      ko.applyBindings(
-        new ArtistEditViewModel(
-          artistRepo,
-          userRepo,
-          urlMapper,
-          webLinkCategoryJson,
-          editedModel,
-          new DialogService(),
-        ),
-      );
-    } else {
-      artistRepo.getForEdit(model.artist.id).then(function (model) {
-        ko.applyBindings(
-          new ArtistEditViewModel(
-            artistRepo,
-            userRepo,
-            urlMapper,
-            webLinkCategoryJson,
-            model,
-            new DialogService(),
-          ),
-        );
-      });
-    }
+		if (editedModel) {
+			ko.applyBindings(
+				new ArtistEditViewModel(
+					artistRepo,
+					userRepo,
+					urlMapper,
+					webLinkCategoryJson,
+					editedModel,
+					new DialogService(),
+				),
+			);
+		} else {
+			artistRepo.getForEdit(model.artist.id).then(function (model) {
+				ko.applyBindings(
+					new ArtistEditViewModel(
+						artistRepo,
+						userRepo,
+						urlMapper,
+						webLinkCategoryJson,
+						model,
+						new DialogService(),
+					),
+				);
+			});
+		}
 
-    initPage();
-  });
+		initPage();
+	});
 };
 
 export default ArtistEdit;

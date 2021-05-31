@@ -30,419 +30,419 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export class RatingsViewModel {
-  constructor() {
-    const fav = SongVoteRating[SongVoteRating.Favorite];
-    const like = SongVoteRating[SongVoteRating.Like];
+	constructor() {
+		const fav = SongVoteRating[SongVoteRating.Favorite];
+		const like = SongVoteRating[SongVoteRating.Like];
 
-    this.favorites = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => !!r.user && r.rating === fav)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
+		this.favorites = ko.computed(() =>
+			_.chain(this.ratings())
+				.filter((r) => !!r.user && r.rating === fav)
+				.take(20)
+				.map((r) => r.user!)
+				.sortBy((u) => u.name)
+				.value(),
+		);
 
-    this.favoritesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === fav)
-        .size()
-        .value(),
-    );
+		this.favoritesCount = ko.computed(() =>
+			_.chain(this.ratings())
+				.filter((r) => r.rating === fav)
+				.size()
+				.value(),
+		);
 
-    this.likes = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => !!r.user && r.rating === like)
-        .take(20)
-        .map((r) => r.user!)
-        .sortBy((u) => u.name)
-        .value(),
-    );
+		this.likes = ko.computed(() =>
+			_.chain(this.ratings())
+				.filter((r) => !!r.user && r.rating === like)
+				.take(20)
+				.map((r) => r.user!)
+				.sortBy((u) => u.name)
+				.value(),
+		);
 
-    this.likesCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => r.rating === like)
-        .size()
-        .value(),
-    );
+		this.likesCount = ko.computed(() =>
+			_.chain(this.ratings())
+				.filter((r) => r.rating === like)
+				.size()
+				.value(),
+		);
 
-    this.hiddenRatingsCount = ko.computed(() =>
-      _.chain(this.ratings())
-        .filter((r) => !r.user)
-        .size()
-        .value(),
-    );
+		this.hiddenRatingsCount = ko.computed(() =>
+			_.chain(this.ratings())
+				.filter((r) => !r.user)
+				.size()
+				.value(),
+		);
 
-    this.showFavorites = ko.computed(() => !!this.favorites().length);
-    this.showLikes = ko.computed(() => !!this.likes().length);
-  }
+		this.showFavorites = ko.computed(() => !!this.favorites().length);
+		this.showLikes = ko.computed(() => !!this.likes().length);
+	}
 
-  public readonly favorites: Computed<UserApiContract[]>;
+	public readonly favorites: Computed<UserApiContract[]>;
 
-  public readonly favoritesCount: Computed<number>;
+	public readonly favoritesCount: Computed<number>;
 
-  public readonly hiddenRatingsCount: Computed<number>;
+	public readonly hiddenRatingsCount: Computed<number>;
 
-  public readonly likes: Computed<UserApiContract[]>;
+	public readonly likes: Computed<UserApiContract[]>;
 
-  public readonly likesCount: Computed<number>;
+	public readonly likesCount: Computed<number>;
 
-  public readonly popupVisible = ko.observable(false);
+	public readonly popupVisible = ko.observable(false);
 
-  public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
+	public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
 
-  public readonly showFavorites: Computed<boolean>;
+	public readonly showFavorites: Computed<boolean>;
 
-  public readonly showLikes: Computed<boolean>;
+	public readonly showLikes: Computed<boolean>;
 }
 
 // View model for the song details view.
 export default class SongDetailsViewModel {
-  public allVersionsVisible: Observable<boolean>;
+	public allVersionsVisible: Observable<boolean>;
 
-  public comments: EditableCommentsViewModel;
+	public comments: EditableCommentsViewModel;
 
-  public getMatchedSite = (page: string): { siteUrl: string; id: number } => {
-    // http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
-    const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
-    const match = regex.exec(page);
+	public getMatchedSite = (page: string): { siteUrl: string; id: number } => {
+		// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
+		const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+		const match = regex.exec(page);
 
-    if (!match || match.length < 3) return null!;
+		if (!match || match.length < 3) return null!;
 
-    const siteUrl = match[1].replace('http://', 'https://'); // either http://utaitedb.net/ or http://vocadb.net/
-    const id = parseInt(match[2]);
+		const siteUrl = match[1].replace('http://', 'https://'); // either http://utaitedb.net/ or http://vocadb.net/
+		const id = parseInt(match[2]);
 
-    return { siteUrl: siteUrl, id: id };
-  };
+		return { siteUrl: siteUrl, id: id };
+	};
 
-  private getOriginal = (linkedPages: string[]): void => {
-    if (linkedPages == null || !linkedPages.length) return;
+	private getOriginal = (linkedPages: string[]): void => {
+		if (linkedPages == null || !linkedPages.length) return;
 
-    const page = linkedPages[0];
-    const match = this.getMatchedSite(page);
+		const page = linkedPages[0];
+		const match = this.getMatchedSite(page);
 
-    if (!match) return;
+		if (!match) return;
 
-    const { siteUrl, id } = match;
+		const { siteUrl, id } = match;
 
-    const httpClient = new HttpClient();
-    httpClient.baseUrl = siteUrl;
-    const repo = new SongRepository(httpClient);
-    // TODO: this should be cached, but first we need to make sure the other instances are not cached.
-    repo
-      .getOneWithComponents(id, 'None', vdb.values.languagePreference)
-      .then((song) => {
-        if (song.songType === SongType[SongType.Original])
-          this.originalVersion({ entry: song, url: page, domain: siteUrl });
-      });
-  };
+		const httpClient = new HttpClient();
+		httpClient.baseUrl = siteUrl;
+		const repo = new SongRepository(httpClient);
+		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
+		repo
+			.getOneWithComponents(id, 'None', vdb.values.languagePreference)
+			.then((song) => {
+				if (song.songType === SongType[SongType.Original])
+					this.originalVersion({ entry: song, url: page, domain: siteUrl });
+			});
+	};
 
-  public getUsers: () => void;
+	public getUsers: () => void;
 
-  public id: number;
+	public id: number;
 
-  public initLyrics = (): void => {
-    if (!this.selectedLyrics() && this.selectedLyricsId()) {
-      this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
-    }
-  };
+	public initLyrics = (): void => {
+		if (!this.selectedLyrics() && this.selectedLyricsId()) {
+			this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
+		}
+	};
 
-  public maintenanceDialogVisible = ko.observable(false);
+	public maintenanceDialogVisible = ko.observable(false);
 
-  public originalVersion: Observable<SongLinkWithUrl>;
+	public originalVersion: Observable<SongLinkWithUrl>;
 
-  public reportViewModel: ReportEntryViewModel;
+	public reportViewModel: ReportEntryViewModel;
 
-  public selectedLyrics = ko.observable<LyricsForSongContract>();
+	public selectedLyrics = ko.observable<LyricsForSongContract>();
 
-  public selectedLyricsId: Observable<number>;
+	public selectedLyricsId: Observable<number>;
 
-  public selectedPvId: Observable<number>;
+	public selectedPvId: Observable<number>;
 
-  public personalDescription: SelfDescriptionViewModel;
+	public personalDescription: SelfDescriptionViewModel;
 
-  public showAllVersions: () => void;
+	public showAllVersions: () => void;
 
-  public description: EnglishTranslatedStringViewModel;
+	public description: EnglishTranslatedStringViewModel;
 
-  public songInListsDialog: SongInListsViewModel;
+	public songInListsDialog: SongInListsViewModel;
 
-  public songListDialog: SongListsViewModel;
+	public songListDialog: SongListsViewModel;
 
-  public tagsEditViewModel: TagsEditViewModel;
+	public tagsEditViewModel: TagsEditViewModel;
 
-  public tagUsages: TagListViewModel;
+	public tagUsages: TagListViewModel;
 
-  public ratingsDialogViewModel = new RatingsViewModel();
+	public ratingsDialogViewModel = new RatingsViewModel();
 
-  public userRating: PVRatingButtonsViewModel;
+	public userRating: PVRatingButtonsViewModel;
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private repository: SongRepository,
-    userRepository: UserRepository,
-    artistRepository: ArtistRepository,
-    resources: SongDetailsResources,
-    showTranslatedDescription: boolean,
-    data: SongDetailsAjax,
-    reportTypes: IEntryReportType[],
-    loggedUserId: number,
-    private lang: ContentLanguagePreference,
-    canDeleteAllComments: boolean,
-    ratingCallback: () => void,
-  ) {
-    this.id = data.id;
-    this.userRating = new PVRatingButtonsViewModel(
-      userRepository,
-      { id: data.id, vote: data.userRating },
-      ratingCallback,
-    );
+	constructor(
+		private readonly httpClient: HttpClient,
+		private repository: SongRepository,
+		userRepository: UserRepository,
+		artistRepository: ArtistRepository,
+		resources: SongDetailsResources,
+		showTranslatedDescription: boolean,
+		data: SongDetailsAjax,
+		reportTypes: IEntryReportType[],
+		loggedUserId: number,
+		private lang: ContentLanguagePreference,
+		canDeleteAllComments: boolean,
+		ratingCallback: () => void,
+	) {
+		this.id = data.id;
+		this.userRating = new PVRatingButtonsViewModel(
+			userRepository,
+			{ id: data.id, vote: data.userRating },
+			ratingCallback,
+		);
 
-    this.allVersionsVisible = ko.observable(false);
+		this.allVersionsVisible = ko.observable(false);
 
-    this.comments = new EditableCommentsViewModel(
-      repository,
-      this.id,
-      loggedUserId,
-      canDeleteAllComments,
-      canDeleteAllComments,
-      false,
-      data.latestComments,
-      true,
-    );
+		this.comments = new EditableCommentsViewModel(
+			repository,
+			this.id,
+			loggedUserId,
+			canDeleteAllComments,
+			canDeleteAllComments,
+			false,
+			data.latestComments,
+			true,
+		);
 
-    this.getUsers = (): void => {
-      repository.getRatings(this.id).then((result) => {
-        this.ratingsDialogViewModel.ratings(result);
-        this.ratingsDialogViewModel.popupVisible(true);
-      });
-    };
+		this.getUsers = (): void => {
+			repository.getRatings(this.id).then((result) => {
+				this.ratingsDialogViewModel.ratings(result);
+				this.ratingsDialogViewModel.popupVisible(true);
+			});
+		};
 
-    this.originalVersion = ko.observable({ entry: data.originalVersion! });
+		this.originalVersion = ko.observable({ entry: data.originalVersion! });
 
-    this.reportViewModel = new ReportEntryViewModel(
-      reportTypes,
-      (reportType, notes) => {
-        repository.createReport(this.id, reportType, notes, null!);
+		this.reportViewModel = new ReportEntryViewModel(
+			reportTypes,
+			(reportType, notes) => {
+				repository.createReport(this.id, reportType, notes, null!);
 
-        ui.showSuccessMessage(vdb.resources.shared.reportSent);
-      },
-    );
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
+			},
+		);
 
-    this.personalDescription = new SelfDescriptionViewModel(
-      data.personalDescriptionAuthor!,
-      data.personalDescriptionText!,
-      artistRepository,
-      (callback) => {
-        repository
-          .getOneWithComponents(
-            this.id,
-            'Artists',
-            vdb.values.languagePreference,
-          )
-          .then((result) => {
-            var artists = _.chain(result.artists!)
-              .filter(ArtistHelper.isValidForPersonalDescription)
-              .map((a) => a.artist)
-              .value();
-            callback(artists);
-          });
-      },
-      (vm) =>
-        repository.updatePersonalDescription(
-          this.id,
-          vm.text(),
-          vm.author.entry(),
-        ),
-    );
+		this.personalDescription = new SelfDescriptionViewModel(
+			data.personalDescriptionAuthor!,
+			data.personalDescriptionText!,
+			artistRepository,
+			(callback) => {
+				repository
+					.getOneWithComponents(
+						this.id,
+						'Artists',
+						vdb.values.languagePreference,
+					)
+					.then((result) => {
+						var artists = _.chain(result.artists!)
+							.filter(ArtistHelper.isValidForPersonalDescription)
+							.map((a) => a.artist)
+							.value();
+						callback(artists);
+					});
+			},
+			(vm) =>
+				repository.updatePersonalDescription(
+					this.id,
+					vm.text(),
+					vm.author.entry(),
+				),
+		);
 
-    this.showAllVersions = (): void => {
-      this.allVersionsVisible(true);
-    };
+		this.showAllVersions = (): void => {
+			this.allVersionsVisible(true);
+		};
 
-    this.songInListsDialog = new SongInListsViewModel(repository, this.id);
-    this.songListDialog = new SongListsViewModel(
-      repository,
-      resources,
-      this.id,
-    );
-    this.selectedLyricsId = ko.observable(data.selectedLyricsId);
-    this.selectedPvId = ko.observable(data.selectedPvId);
-    this.description = new EnglishTranslatedStringViewModel(
-      showTranslatedDescription,
-    );
+		this.songInListsDialog = new SongInListsViewModel(repository, this.id);
+		this.songListDialog = new SongListsViewModel(
+			repository,
+			resources,
+			this.id,
+		);
+		this.selectedLyricsId = ko.observable(data.selectedLyricsId);
+		this.selectedPvId = ko.observable(data.selectedPvId);
+		this.description = new EnglishTranslatedStringViewModel(
+			showTranslatedDescription,
+		);
 
-    this.tagsEditViewModel = new TagsEditViewModel(
-      {
-        getTagSelections: (callback): Promise<void> =>
-          userRepository.getSongTagSelections(this.id).then(callback),
-        saveTagSelections: (tags): Promise<void> =>
-          userRepository
-            .updateSongTags(this.id, tags)
-            .then(this.tagUsages.updateTagUsages),
-      },
-      EntryType.Song,
-      (callback) => repository.getTagSuggestions(this.id).then(callback),
-    );
+		this.tagsEditViewModel = new TagsEditViewModel(
+			{
+				getTagSelections: (callback): Promise<void> =>
+					userRepository.getSongTagSelections(this.id).then(callback),
+				saveTagSelections: (tags): Promise<void> =>
+					userRepository
+						.updateSongTags(this.id, tags)
+						.then(this.tagUsages.updateTagUsages),
+			},
+			EntryType.Song,
+			(callback) => repository.getTagSuggestions(this.id).then(callback),
+		);
 
-    this.tagUsages = new TagListViewModel(data.tagUsages);
+		this.tagUsages = new TagListViewModel(data.tagUsages);
 
-    if (
-      data.songType !== SongType[SongType.Original] &&
-      this.originalVersion().entry == null
-    ) {
-      this.getOriginal(data.linkedPages!);
-    }
+		if (
+			data.songType !== SongType[SongType.Original] &&
+			this.originalVersion().entry == null
+		) {
+			this.getOriginal(data.linkedPages!);
+		}
 
-    this.selectedLyricsId.subscribe((id) => {
-      this.selectedLyrics(null!);
-      repository
-        .getLyrics(id, data.version)
-        .then((lyrics) => this.selectedLyrics(lyrics));
-    });
-  }
+		this.selectedLyricsId.subscribe((id) => {
+			this.selectedLyrics(null!);
+			repository
+				.getLyrics(id, data.version)
+				.then((lyrics) => this.selectedLyrics(lyrics));
+		});
+	}
 }
 
 export class SongInListsViewModel {
-  public contentHtml = ko.observable<string>();
+	public contentHtml = ko.observable<string>();
 
-  public dialogVisible = ko.observable(false);
+	public dialogVisible = ko.observable(false);
 
-  public show: () => void;
+	public show: () => void;
 
-  constructor(repository: SongRepository, songId: number) {
-    this.show = (): void => {
-      repository.songListsForSong(songId).then((result) => {
-        this.contentHtml(result);
-        this.dialogVisible(true);
-      });
-    };
-  }
+	constructor(repository: SongRepository, songId: number) {
+		this.show = (): void => {
+			repository.songListsForSong(songId).then((result) => {
+				this.contentHtml(result);
+				this.dialogVisible(true);
+			});
+		};
+	}
 }
 
 export class SongListsViewModel {
-  public static readonly tabName_Personal = 'Personal';
-  public static readonly tabName_Featured = 'Featured';
-  public static readonly tabName_New = 'New';
+	public static readonly tabName_Personal = 'Personal';
+	public static readonly tabName_Featured = 'Featured';
+	public static readonly tabName_New = 'New';
 
-  public addedToList!: () => void;
+	public addedToList!: () => void;
 
-  public addSongToList: () => void;
+	public addSongToList: () => void;
 
-  public dialogVisible = ko.observable(false);
+	public dialogVisible = ko.observable(false);
 
-  private featuredLists = ko.observableArray<SongListBaseContract>();
+	private featuredLists = ko.observableArray<SongListBaseContract>();
 
-  public newListName = ko.observable('');
+	public newListName = ko.observable('');
 
-  public notes = ko.observable('');
+	public notes = ko.observable('');
 
-  private personalLists = ko.observableArray<SongListBaseContract>();
+	private personalLists = ko.observableArray<SongListBaseContract>();
 
-  public selectedListId: Observable<number | null> = ko.observable(null!);
+	public selectedListId: Observable<number | null> = ko.observable(null!);
 
-  public showSongLists: () => void;
+	public showSongLists: () => void;
 
-  public tabName = ko.observable(SongListsViewModel.tabName_Personal);
+	public tabName = ko.observable(SongListsViewModel.tabName_Personal);
 
-  public songLists = ko.computed(() =>
-    this.tabName() === SongListsViewModel.tabName_Personal
-      ? this.personalLists()
-      : this.featuredLists(),
-  );
+	public songLists = ko.computed(() =>
+		this.tabName() === SongListsViewModel.tabName_Personal
+			? this.personalLists()
+			: this.featuredLists(),
+	);
 
-  constructor(
-    repository: SongRepository,
-    resources: SongDetailsResources,
-    songId: number,
-  ) {
-    var isValid = (): boolean => {
-      return this.selectedListId() != null || this.newListName().length > 0;
-    };
+	constructor(
+		repository: SongRepository,
+		resources: SongDetailsResources,
+		songId: number,
+	) {
+		var isValid = (): boolean => {
+			return this.selectedListId() != null || this.newListName().length > 0;
+		};
 
-    this.addSongToList = (): void => {
-      if (isValid()) {
-        const listId =
-          this.tabName() !== SongListsViewModel.tabName_New
-            ? this.selectedListId() || 0
-            : 0;
-        repository
-          .addSongToList(listId, songId, this.notes(), this.newListName())
-          .then(() => {
-            this.notes('');
-            this.dialogVisible(false);
+		this.addSongToList = (): void => {
+			if (isValid()) {
+				const listId =
+					this.tabName() !== SongListsViewModel.tabName_New
+						? this.selectedListId() || 0
+						: 0;
+				repository
+					.addSongToList(listId, songId, this.notes(), this.newListName())
+					.then(() => {
+						this.notes('');
+						this.dialogVisible(false);
 
-            if (this.addedToList) this.addedToList();
-          });
-      }
-    };
+						if (this.addedToList) this.addedToList();
+					});
+			}
+		};
 
-    this.showSongLists = (): void => {
-      repository.songListsForUser(songId).then((songLists) => {
-        var personalLists = _.filter(
-          songLists,
-          (list) => list.featuredCategory === 'Nothing',
-        );
-        var featuredLists = _.filter(
-          songLists,
-          (list) => list.featuredCategory !== 'Nothing',
-        );
+		this.showSongLists = (): void => {
+			repository.songListsForUser(songId).then((songLists) => {
+				var personalLists = _.filter(
+					songLists,
+					(list) => list.featuredCategory === 'Nothing',
+				);
+				var featuredLists = _.filter(
+					songLists,
+					(list) => list.featuredCategory !== 'Nothing',
+				);
 
-        this.personalLists(personalLists);
-        this.featuredLists(featuredLists);
+				this.personalLists(personalLists);
+				this.featuredLists(featuredLists);
 
-        if (personalLists.length)
-          this.tabName(SongListsViewModel.tabName_Personal);
-        else if (featuredLists.length)
-          this.tabName(SongListsViewModel.tabName_Featured);
-        else this.tabName(SongListsViewModel.tabName_New);
+				if (personalLists.length)
+					this.tabName(SongListsViewModel.tabName_Personal);
+				else if (featuredLists.length)
+					this.tabName(SongListsViewModel.tabName_Featured);
+				else this.tabName(SongListsViewModel.tabName_New);
 
-        this.newListName('');
-        this.selectedListId(
-          this.songLists().length > 0 ? this.songLists()[0].id : null!,
-        );
-        this.dialogVisible(true);
-      });
-    };
-  }
+				this.newListName('');
+				this.selectedListId(
+					this.songLists().length > 0 ? this.songLists()[0].id : null!,
+				);
+				this.dialogVisible(true);
+			});
+		};
+	}
 }
 
 export interface SongDetailsAjax {
-  id: number;
+	id: number;
 
-  latestComments: CommentContract[];
+	latestComments: CommentContract[];
 
-  linkedPages?: string[];
+	linkedPages?: string[];
 
-  originalVersion?: SongApiContract;
+	originalVersion?: SongApiContract;
 
-  selectedLyricsId: number;
+	selectedLyricsId: number;
 
-  selectedPvId: number;
+	selectedPvId: number;
 
-  personalDescriptionText?: string;
+	personalDescriptionText?: string;
 
-  personalDescriptionAuthor?: ArtistApiContract;
+	personalDescriptionAuthor?: ArtistApiContract;
 
-  songType: string;
+	songType: string;
 
-  tagUsages: TagUsageForApiContract[];
+	tagUsages: TagUsageForApiContract[];
 
-  userRating: string;
+	userRating: string;
 
-  version: number;
+	version: number;
 }
 
 export interface SongDetailsResources {
-  addedToList?: string;
+	addedToList?: string;
 
-  createNewList: string;
+	createNewList: string;
 }
 
 export interface SongLinkWithUrl {
-  entry: SongApiContract;
+	entry: SongApiContract;
 
-  url?: string;
+	url?: string;
 
-  domain?: string;
+	domain?: string;
 }

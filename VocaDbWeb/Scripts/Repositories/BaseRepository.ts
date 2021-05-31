@@ -2,23 +2,23 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import NameMatchMode from '@Models/NameMatchMode';
 
 export default class BaseRepository {
-  protected getDate(date?: Date): string | undefined {
-    return date ? date.toISOString() : undefined;
-  }
+	protected getDate(date?: Date): string | undefined {
+		return date ? date.toISOString() : undefined;
+	}
 }
 
 // Common parameters for entry queries (listings).
 export interface CommonQueryParams {
-  getTotalCount?: boolean;
+	getTotalCount?: boolean;
 
-  // Content language preference
-  lang?: ContentLanguagePreference;
+	// Content language preference
+	lang?: ContentLanguagePreference;
 
-  maxResults?: number;
+	maxResults?: number;
 
-  nameMatchMode?: NameMatchMode;
+	nameMatchMode?: NameMatchMode;
 
-  start?: number;
+	start?: number;
 
-  query?: string;
+	query?: string;
 }

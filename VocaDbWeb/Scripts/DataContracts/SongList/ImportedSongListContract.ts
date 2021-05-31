@@ -1,13 +1,13 @@
 import PartialImportedSongs from './PartialImportedSongs';
 
 export default interface ImportedSongListContract {
-  createDate: string;
+	createDate: string;
 
-  description: string;
+	description: string;
 
-  name: string;
+	name: string;
 
-  songs: PartialImportedSongs;
+	songs: PartialImportedSongs;
 
-  wvrNumber: string;
+	wvrNumber: string;
 }

@@ -7,74 +7,74 @@ import ko, { Computed, Observable } from 'knockout';
 
 // View model for the top bar.
 export default class TopBarViewModel {
-  public ensureMessagesLoaded = (): void => {
-    if (this.isLoaded()) return;
+	public ensureMessagesLoaded = (): void => {
+		if (this.isLoaded()) return;
 
-    this.userRepository
-      .getMessageSummaries(
-        vdb.values.loggedUserId,
-        null!,
-        { maxEntries: 3, start: 0, getTotalCount: false },
-        true,
-        null!,
-        40,
-      )
-      .then(
-        (messages: PartialFindResultContract<UserMessageSummaryContract>) => {
-          this.unreadMessages(messages.items);
-          this.isLoaded(true);
-        },
-      );
-  };
+		this.userRepository
+			.getMessageSummaries(
+				vdb.values.loggedUserId,
+				null!,
+				{ maxEntries: 3, start: 0, getTotalCount: false },
+				true,
+				null!,
+				40,
+			)
+			.then(
+				(messages: PartialFindResultContract<UserMessageSummaryContract>) => {
+					this.unreadMessages(messages.items);
+					this.isLoaded(true);
+				},
+			);
+	};
 
-  public entryType: Observable<string>;
+	public entryType: Observable<string>;
 
-  public hasNotifications: Computed<boolean>;
+	public hasNotifications: Computed<boolean>;
 
-  public isLoaded = ko.observable(false);
+	public isLoaded = ko.observable(false);
 
-  public reportCount = ko.observable(0);
+	public reportCount = ko.observable(0);
 
-  public searchTerm: Observable<string>;
+	public searchTerm: Observable<string>;
 
-  public entryTypeName: Computed<string>;
+	public entryTypeName: Computed<string>;
 
-  public unreadMessages = ko.observableArray<UserMessageSummaryContract>();
+	public unreadMessages = ko.observableArray<UserMessageSummaryContract>();
 
-  public unreadMessagesCount: Observable<number>;
+	public unreadMessagesCount: Observable<number>;
 
-  // Initializes view model
-  // entryTypeTranslations: translations for entry types.
-  // entryType: currently selected entry type (for search).
-  // unreadMessagesCount: number of unread received messages (includes notifications).
-  // getNewReportsCount: whether to load new reports count (for mods only).
-  // entryReportRepository: entry reports repository.
-  // userRepository: user repository.
-  constructor(
-    entryTypeTranslations: { [x: string]: string },
-    entryType: string,
-    searchTerm: string,
-    unreadMessagesCount: number,
-    getNewReportsCount: boolean,
-    entryReportRepository: EntryReportRepository,
-    private userRepository: UserRepository,
-  ) {
-    this.entryType = ko.observable(entryType);
-    this.searchTerm = ko.observable(searchTerm);
-    this.unreadMessagesCount = ko.observable(unreadMessagesCount);
+	// Initializes view model
+	// entryTypeTranslations: translations for entry types.
+	// entryType: currently selected entry type (for search).
+	// unreadMessagesCount: number of unread received messages (includes notifications).
+	// getNewReportsCount: whether to load new reports count (for mods only).
+	// entryReportRepository: entry reports repository.
+	// userRepository: user repository.
+	constructor(
+		entryTypeTranslations: { [x: string]: string },
+		entryType: string,
+		searchTerm: string,
+		unreadMessagesCount: number,
+		getNewReportsCount: boolean,
+		entryReportRepository: EntryReportRepository,
+		private userRepository: UserRepository,
+	) {
+		this.entryType = ko.observable(entryType);
+		this.searchTerm = ko.observable(searchTerm);
+		this.unreadMessagesCount = ko.observable(unreadMessagesCount);
 
-    this.entryTypeName = ko.computed(() => {
-      return entryTypeTranslations[this.entryType()] as string;
-    });
+		this.entryTypeName = ko.computed(() => {
+			return entryTypeTranslations[this.entryType()] as string;
+		});
 
-    this.hasNotifications = ko.computed(() => {
-      return this.reportCount() > 0;
-    });
+		this.hasNotifications = ko.computed(() => {
+			return this.reportCount() > 0;
+		});
 
-    if (getNewReportsCount) {
-      entryReportRepository.getNewReportCount().then((count) => {
-        this.reportCount(count);
-      });
-    }
-  }
+		if (getNewReportsCount) {
+			entryReportRepository.getNewReportCount().then((count) => {
+				this.reportCount(count);
+			});
+		}
+	}
 }

@@ -2,9 +2,9 @@ import SongApiContract from '../Song/SongApiContract';
 import UserApiContract from './UserApiContract';
 
 export default interface RatedSongForUserForApiContract {
-  rating: string;
+	rating: string;
 
-  song?: SongApiContract;
+	song?: SongApiContract;
 
-  user?: UserApiContract;
+	user?: UserApiContract;
 }

@@ -5,29 +5,29 @@ import functions from '@Shared/GlobalFunctions';
 import ko from 'knockout';
 
 declare global {
-  interface KnockoutBindingHandlers {
-    userAutocomplete: KnockoutBindingHandler;
-  }
+	interface KnockoutBindingHandlers {
+		userAutocomplete: KnockoutBindingHandler;
+	}
 }
 
 export function userAutocomplete(
-  element: HTMLElement,
-  valueAccessor: () => any,
+	element: HTMLElement,
+	valueAccessor: () => any,
 ): void {
-  const params: EntryAutoCompleteParams<UserApiContract> = {
-    acceptSelection: (id, term, itemType, item) => {
-      valueAccessor()(item);
-    },
-    createNewItem: null!,
-    createOptionFirstRow: (item) => item.name!,
-    extraQueryParams: {},
-    termParamName: 'query',
-    singleRow: true,
-  };
+	const params: EntryAutoCompleteParams<UserApiContract> = {
+		acceptSelection: (id, term, itemType, item) => {
+			valueAccessor()(item);
+		},
+		createNewItem: null!,
+		createOptionFirstRow: (item) => item.name!,
+		extraQueryParams: {},
+		termParamName: 'query',
+		singleRow: true,
+	};
 
-  initEntrySearch(element, functions.mapAbsoluteUrl('/api/users'), params);
+	initEntrySearch(element, functions.mapAbsoluteUrl('/api/users'), params);
 }
 
 ko.bindingHandlers.userAutocomplete = {
-  init: userAutocomplete,
+	init: userAutocomplete,
 };

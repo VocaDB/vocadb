@@ -6,35 +6,35 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const UserAlbumCollection = (
-  model: {
-    user: {
-      id: number;
-    };
-  },
-  publicCollection: boolean,
+	model: {
+		user: {
+			id: number;
+		};
+	},
+	publicCollection: boolean,
 ): void => {
-  $(document).ready(function () {
-    var cultureCode = vdb.values.uiCulture;
-    var lang = vdb.values.languagePreference;
-    var loggedUserId = model.user.id;
+	$(document).ready(function () {
+		var cultureCode = vdb.values.uiCulture;
+		var lang = vdb.values.languagePreference;
+		var loggedUserId = model.user.id;
 
-    const httpClient = new HttpClient();
-    var repoFactory = new RepositoryFactory(httpClient);
-    var userRepo = repoFactory.userRepository();
-    var artistRepo = repoFactory.artistRepository();
-    var resourceRepo = repoFactory.resourceRepository();
+		const httpClient = new HttpClient();
+		var repoFactory = new RepositoryFactory(httpClient);
+		var userRepo = repoFactory.userRepository();
+		var artistRepo = repoFactory.artistRepository();
+		var resourceRepo = repoFactory.resourceRepository();
 
-    var vm = new AlbumCollectionViewModel(
-      userRepo,
-      artistRepo,
-      resourceRepo,
-      lang,
-      loggedUserId,
-      cultureCode,
-      publicCollection,
-    );
-    ko.applyBindings(vm);
-  });
+		var vm = new AlbumCollectionViewModel(
+			userRepo,
+			artistRepo,
+			resourceRepo,
+			lang,
+			loggedUserId,
+			cultureCode,
+			publicCollection,
+		);
+		ko.applyBindings(vm);
+	});
 };
 
 export default UserAlbumCollection;

@@ -3,13 +3,13 @@ import UserApiContract from '../User/UserApiContract';
 import ArchivedVersionContract from '../Versioning/ArchivedVersionContract';
 
 export default interface ActivityEntryContract {
-  archivedVersion: ArchivedVersionContract;
+	archivedVersion: ArchivedVersionContract;
 
-  author: UserApiContract;
+	author: UserApiContract;
 
-  createDate: string;
+	createDate: string;
 
-  editEvent: string;
+	editEvent: string;
 
-  entry: EntryContract;
+	entry: EntryContract;
 }

@@ -5,12 +5,12 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const AlbumDeleted = (): void => {
-  $(function () {
-    const httpClient = new HttpClient();
-    var repo = new AlbumRepository(httpClient);
-    var viewModel = new DeletedAlbumsViewModel(repo);
-    ko.applyBindings(viewModel);
-  });
+	$(function () {
+		const httpClient = new HttpClient();
+		var repo = new AlbumRepository(httpClient);
+		var viewModel = new DeletedAlbumsViewModel(repo);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default AlbumDeleted;

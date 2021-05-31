@@ -1,9 +1,9 @@
 import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
 
 export default interface EntryWithTagUsagesContract {
-  id: number;
+	id: number;
 
-  name: string;
+	name: string;
 
-  tags?: TagUsageForApiContract[];
+	tags?: TagUsageForApiContract[];
 }

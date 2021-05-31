@@ -5,12 +5,12 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const TagIndex = (): void => {
-  $(function () {
-    const httpClient = new HttpClient();
-    var tagRepo = new TagRepository(httpClient);
-    var viewModel = new TagCreateViewModel(tagRepo);
-    ko.applyBindings(viewModel);
-  });
+	$(function () {
+		const httpClient = new HttpClient();
+		var tagRepo = new TagRepository(httpClient);
+		var viewModel = new TagCreateViewModel(tagRepo);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default TagIndex;

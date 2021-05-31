@@ -1,13 +1,10 @@
-﻿
-declare module SC {
-
+﻿declare module SC {
 	export var Widget: {
 		(iframeElementId: string): SoundCloudWidget;
-		Events: SoundCloudEvents
+		Events: SoundCloudEvents;
 	};
 
 	interface SoundCloudWidget {
-
 		bind(eventName: string, listener: () => void);
 
 		load(url: string, options: SoundCloudLoadOptions);
@@ -15,15 +12,12 @@ declare module SC {
 		play();
 
 		unbind(eventName: string);
-
 	}
 
 	interface SoundCloudLoadOptions {
-
 		auto_play?: boolean;
 
 		callback?: () => void;
-
 	}
 
 	interface SoundCloudEvents {
@@ -31,5 +25,4 @@ declare module SC {
 		FINISH: string;
 		READY: string;
 	}
-
 }

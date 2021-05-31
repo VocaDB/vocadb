@@ -6,122 +6,122 @@ import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 export default class TagsEditViewModel {
-  constructor(
-    private readonly repo: ITagSelectionsRepository,
-    public readonly target?: EntryType,
-    private readonly getSuggestions?: (
-      callback: (result: TagUsageForApiContract[]) => void,
-    ) => void,
-  ) {}
+	constructor(
+		private readonly repo: ITagSelectionsRepository,
+		public readonly target?: EntryType,
+		private readonly getSuggestions?: (
+			callback: (result: TagUsageForApiContract[]) => void,
+		) => void,
+	) {}
 
-  public addTag = (): void => {
-    var tagName = this.newTagName();
+	public addTag = (): void => {
+		var tagName = this.newTagName();
 
-    if (!tagName) return;
+		if (!tagName) return;
 
-    this.newTagName('');
+		this.newTagName('');
 
-    tagName = _.trim(tagName);
+		tagName = _.trim(tagName);
 
-    // If tag is already added, select it
-    var selection = _.find(
-      this.selections(),
-      (sel) => sel.tag.name.toLowerCase() === tagName.toLowerCase(),
-    );
+		// If tag is already added, select it
+		var selection = _.find(
+			this.selections(),
+			(sel) => sel.tag.name.toLowerCase() === tagName.toLowerCase(),
+		);
 
-    if (selection) {
-      selection.selected(true);
-    } else {
-      this.selections.push(
-        new TagSelectionViewModel({
-          tag: { name: tagName, id: null! },
-          selected: true,
-        }),
-      );
-    }
-  };
+		if (selection) {
+			selection.selected(true);
+		} else {
+			this.selections.push(
+				new TagSelectionViewModel({
+					tag: { name: tagName, id: null! },
+					selected: true,
+				}),
+			);
+		}
+	};
 
-  public autoCompletedTag = (tag: TagBaseContract): void => {
-    var selection = _.find(this.selections(), (sel) => sel.tag.id === tag.id);
+	public autoCompletedTag = (tag: TagBaseContract): void => {
+		var selection = _.find(this.selections(), (sel) => sel.tag.id === tag.id);
 
-    if (selection) {
-      selection.selected(true);
-    } else {
-      this.selections.push(
-        new TagSelectionViewModel({ tag: tag, selected: true }),
-      );
-    }
-  };
+		if (selection) {
+			selection.selected(true);
+		} else {
+			this.selections.push(
+				new TagSelectionViewModel({ tag: tag, selected: true }),
+			);
+		}
+	};
 
-  public dialogVisible = ko.observable(false);
+	public dialogVisible = ko.observable(false);
 
-  public getSuggestionText = (
-    suggestion: TagUsageForApiContract,
-    countText: string,
-  ): string => {
-    var text = '';
+	public getSuggestionText = (
+		suggestion: TagUsageForApiContract,
+		countText: string,
+	): string => {
+		var text = '';
 
-    if (suggestion.tag.additionalNames) {
-      text += suggestion.tag.additionalNames + '\n';
-    }
+		if (suggestion.tag.additionalNames) {
+			text += suggestion.tag.additionalNames + '\n';
+		}
 
-    if (suggestion.count > 0) {
-      text += countText.replace('{0}', suggestion.count.toString());
-    }
+		if (suggestion.count > 0) {
+			text += countText.replace('{0}', suggestion.count.toString());
+		}
 
-    return text;
-  };
+		return text;
+	};
 
-  public newTagName = ko.observable('');
+	public newTagName = ko.observable('');
 
-  public selections = ko.observableArray<TagSelectionViewModel>();
+	public selections = ko.observableArray<TagSelectionViewModel>();
 
-  public save = (): void => {
-    var tags = _.chain(this.selections())
-      .filter((sel) => sel.selected())
-      .map((sel) => sel.tag)
-      .value();
+	public save = (): void => {
+		var tags = _.chain(this.selections())
+			.filter((sel) => sel.selected())
+			.map((sel) => sel.tag)
+			.value();
 
-    this.repo.saveTagSelections(tags);
-    this.dialogVisible(false);
-  };
+		this.repo.saveTagSelections(tags);
+		this.dialogVisible(false);
+	};
 
-  public show = (): void => {
-    this.repo.getTagSelections((selections) => {
-      this.selections(
-        _.map(selections, (selection) => new TagSelectionViewModel(selection)),
-      );
-      this.dialogVisible(true);
-    });
+	public show = (): void => {
+		this.repo.getTagSelections((selections) => {
+			this.selections(
+				_.map(selections, (selection) => new TagSelectionViewModel(selection)),
+			);
+			this.dialogVisible(true);
+		});
 
-    if (this.getSuggestions) {
-      this.suggestionsLoaded(false);
-      this.getSuggestions((result) => {
-        this.suggestions(result);
-        this.suggestionsLoaded(true);
-      });
-    }
-  };
+		if (this.getSuggestions) {
+			this.suggestionsLoaded(false);
+			this.getSuggestions((result) => {
+				this.suggestions(result);
+				this.suggestionsLoaded(true);
+			});
+		}
+	};
 
-  public suggestions = ko.observableArray<TagUsageForApiContract>();
-  public suggestionsLoaded = ko.observable(false);
+	public suggestions = ko.observableArray<TagUsageForApiContract>();
+	public suggestionsLoaded = ko.observable(false);
 }
 
 export class TagSelectionViewModel {
-  constructor(contract: TagSelectionContract) {
-    this.tag = contract.tag;
-    this.selected = ko.observable(contract.selected || false);
-  }
+	constructor(contract: TagSelectionContract) {
+		this.tag = contract.tag;
+		this.selected = ko.observable(contract.selected || false);
+	}
 
-  selected: Observable<boolean>;
+	selected: Observable<boolean>;
 
-  tag: TagBaseContract;
+	tag: TagBaseContract;
 }
 
 export interface ITagSelectionsRepository {
-  getTagSelections(
-    callback: (selections: TagSelectionContract[]) => void,
-  ): void;
+	getTagSelections(
+		callback: (selections: TagSelectionContract[]) => void,
+	): void;
 
-  saveTagSelections(tags: TagBaseContract[]): void;
+	saveTagSelections(tags: TagBaseContract[]): void;
 }

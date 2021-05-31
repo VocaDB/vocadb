@@ -1,9 +1,9 @@
 export default interface AlbumDiscPropertiesContract {
-  discNumber: number;
+	discNumber: number;
 
-  id: number;
+	id: number;
 
-  mediaType: string;
+	mediaType: string;
 
-  name: string;
+	name: string;
 }

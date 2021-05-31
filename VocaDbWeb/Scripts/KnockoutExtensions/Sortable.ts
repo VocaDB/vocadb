@@ -2,9 +2,9 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 declare global {
-  interface KnockoutBindingHandlers {
-    sortable: KnockoutBindingHandler;
-  }
+	interface KnockoutBindingHandlers {
+		sortable: KnockoutBindingHandler;
+	}
 }
 
 /* 
@@ -15,17 +15,17 @@ declare global {
     Arguments are the moved item and its new index.
 */
 ko.bindingHandlers.sortable = {
-  init: function (element, valueAccessor): void {
-    var list = valueAccessor();
-    $(element).sortable({
-      update: (event, ui) => {
-        var data = ko.dataFor(ui.item[0]);
-        var index: number = ui.item.index();
-        if (index > 0) {
-          list.remove(data);
-          list.splice(index, 0, data);
-        }
-      },
-    });
-  },
+	init: function (element, valueAccessor): void {
+		var list = valueAccessor();
+		$(element).sortable({
+			update: (event, ui) => {
+				var data = ko.dataFor(ui.item[0]);
+				var index: number = ui.item.index();
+				if (index > 0) {
+					list.remove(data);
+					list.splice(index, 0, data);
+				}
+			},
+		});
+	},
 };

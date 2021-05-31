@@ -4,21 +4,21 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare namespace YT {
-    interface EventArgs {
-        target: Player;
-        data: any;
-    }
+	interface EventArgs {
+		target: Player;
+		data: any;
+	}
 
-    interface EventHandler {
-        (event: EventArgs): void;
-    }
+	interface EventHandler {
+		(event: EventArgs): void;
+	}
 
-    export interface Events {
-        onReady?: EventHandler;
-        onPlayback?: EventHandler;
-        onStateChange?: EventHandler;
-        onError?: EventHandler;
-    }
+	export interface Events {
+		onReady?: EventHandler;
+		onPlayback?: EventHandler;
+		onStateChange?: EventHandler;
+		onError?: EventHandler;
+	}
 
 	export enum ListType {
 		search,
@@ -26,11 +26,11 @@ declare namespace YT {
 		playlist,
 	}
 
-    export interface PlayerVars {
-        autohide?: number;
-        autoplay?: number;
-        cc_load_policy?: any;
-        color?: string;
+	export interface PlayerVars {
+		autohide?: number;
+		autoplay?: number;
+		cc_load_policy?: any;
+		color?: string;
 		controls?: number;
 		disablekb?: number;
 		enablejsapi?: number;
@@ -42,124 +42,139 @@ declare namespace YT {
 		loop?: number;
 		modestbranding?: number;
 		origin?: string;
-        playerpiid?: string;
+		playerpiid?: string;
 		playlist?: string[];
-        playsinline?: number;
+		playsinline?: number;
 		rel?: number;
-        showinfo?: number;
+		showinfo?: number;
 		start?: number;
-        theme?: string;
-    }
+		theme?: string;
+	}
 
-    export interface PlayerOptions {
-        width?: string | number;
-        height?: string | number;
-        videoId?: string;
-        playerVars?: PlayerVars;
-        events?: Events;
-    }
+	export interface PlayerOptions {
+		width?: string | number;
+		height?: string | number;
+		videoId?: string;
+		playerVars?: PlayerVars;
+		events?: Events;
+	}
 
-    interface VideoByIdParams {
-        videoId: string;
-        startSeconds?: number;
-        endSeconds?: number;
-        suggestedQuality?: string;
-    }
+	interface VideoByIdParams {
+		videoId: string;
+		startSeconds?: number;
+		endSeconds?: number;
+		suggestedQuality?: string;
+	}
 
-    interface VideoByUrlParams {
-        mediaContentUrl: string;
-        startSeconds?: number;
-        endSeconds?: number;
-        suggestedQuality?: string;
-    }
+	interface VideoByUrlParams {
+		mediaContentUrl: string;
+		startSeconds?: number;
+		endSeconds?: number;
+		suggestedQuality?: string;
+	}
 
-    export interface VideoData
-    {
-        video_id: string;
-        author: string;
-        title: string;
-    }
+	export interface VideoData {
+		video_id: string;
+		author: string;
+		title: string;
+	}
 
-    export class Player {
-        // Constructor
-        constructor(id: string, playerOptions: PlayerOptions);
+	export class Player {
+		// Constructor
+		constructor(id: string, playerOptions: PlayerOptions);
 
-        // Queueing functions
-        loadVideoById(videoId: string, startSeconds?: number, suggestedQuality?: string): void;
-        loadVideoById(VideoByIdParams: Object): void;
-        cueVideoById(videoId: string, startSeconds?: number, suggestedQuality?: string): void;
-        cueVideoById(VideoByIdParams: Object): void;
+		// Queueing functions
+		loadVideoById(
+			videoId: string,
+			startSeconds?: number,
+			suggestedQuality?: string,
+		): void;
+		loadVideoById(VideoByIdParams: Object): void;
+		cueVideoById(
+			videoId: string,
+			startSeconds?: number,
+			suggestedQuality?: string,
+		): void;
+		cueVideoById(VideoByIdParams: Object): void;
 
-        loadVideoByUrl(mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string): void;
-        loadVideoByUrl(VideoByUrlParams: Object): void;
-        cueVideoByUrl(mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string): void;
-        cueVideoByUrl(VideoByUrlParams: Object): void;
+		loadVideoByUrl(
+			mediaContentUrl: string,
+			startSeconds?: number,
+			suggestedQuality?: string,
+		): void;
+		loadVideoByUrl(VideoByUrlParams: Object): void;
+		cueVideoByUrl(
+			mediaContentUrl: string,
+			startSeconds?: number,
+			suggestedQuality?: string,
+		): void;
+		cueVideoByUrl(VideoByUrlParams: Object): void;
 
-        // Properties
-        size: any;
+		// Properties
+		size: any;
 
-        // Playing
-        playVideo(): void;
-        pauseVideo(): void;
-        stopVideo(): void;
-        seekTo(seconds:number, allowSeekAhead:boolean): void;
-        clearVideo(): void;
+		// Playing
+		playVideo(): void;
+		pauseVideo(): void;
+		stopVideo(): void;
+		seekTo(seconds: number, allowSeekAhead: boolean): void;
+		clearVideo(): void;
 
-        // Playlist
-        nextVideo(): void;
-        previousVideo(): void;
-        playVideoAt(index: number): void;
+		// Playlist
+		nextVideo(): void;
+		previousVideo(): void;
+		playVideoAt(index: number): void;
 
-        // Volume
-        mute(): void;
-        unMute(): void;
-        isMuted(): boolean;
-        setVolume(volume: number): void;
-        getVolume(): number;
+		// Volume
+		mute(): void;
+		unMute(): void;
+		isMuted(): boolean;
+		setVolume(volume: number): void;
+		getVolume(): number;
 
-        // Sizing
-        setSize(width: number, height: number): any;
+		// Sizing
+		setSize(width: number, height: number): any;
 
-        // Playback
-        getPlaybackRate(): number;
-        setPlaybackRate(suggestedRate:number): void;
-        getAvailablePlaybackRates(): number[];
+		// Playback
+		getPlaybackRate(): number;
+		setPlaybackRate(suggestedRate: number): void;
+		getAvailablePlaybackRates(): number[];
 
-        // Behavior
-        setLoop(loopPlaylists: boolean): void;
-        setShuffle(shufflePlaylist: boolean): void;
+		// Behavior
+		setLoop(loopPlaylists: boolean): void;
+		setShuffle(shufflePlaylist: boolean): void;
 
-        // Status
-        getVideoLoadedFraction(): number;
-        getPlayerState(): number;
-        getCurrentTime(): number;
-        getVideoStartBytes(): number;
-        getVideoBytesLoaded(): number;
-        getVideoBytesTotal(): number;
+		// Status
+		getVideoLoadedFraction(): number;
+		getPlayerState(): number;
+		getCurrentTime(): number;
+		getVideoStartBytes(): number;
+		getVideoBytesLoaded(): number;
+		getVideoBytesTotal(): number;
 
-        // Information
-        getDuration(): number;
-        getVideoUrl(): string;
-        getVideoEmbedCode(): string;
-        getVideoData(): VideoData;
+		// Information
+		getDuration(): number;
+		getVideoUrl(): string;
+		getVideoEmbedCode(): string;
+		getVideoData(): VideoData;
 
-        // Playlist
-        getPlaylist(): any[];
-        getPlaylistIndex(): number;
+		// Playlist
+		getPlaylist(): any[];
+		getPlaylistIndex(): number;
 
-        // Event Listener
-        addEventListener(event: string, handler: EventHandler): void;
+		// Event Listener
+		addEventListener(event: string, handler: EventHandler): void;
 
-        // DOM
-        destroy(): void;
-    }
+		// DOM
+		destroy(): void;
+	}
 
-    export enum PlayerState {
-        UNSTARTED,
-        BUFFERING,
-        CUED,
-        ENDED,
-        PAUSED,
-        PLAYING
-    }
+	export enum PlayerState {
+		UNSTARTED,
+		BUFFERING,
+		CUED,
+		ENDED,
+		PAUSED,
+		PLAYING,
+	}
 }

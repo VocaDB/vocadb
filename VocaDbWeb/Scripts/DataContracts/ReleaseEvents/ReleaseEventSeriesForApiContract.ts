@@ -3,15 +3,15 @@ import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithI
 import WebLinkContract from '../WebLinkContract';
 
 export default interface ReleaseEventSeriesForApiContract {
-  category: string;
+	category: string;
 
-  id: number;
+	id: number;
 
-  mainPicture?: EntryThumbContract;
+	mainPicture?: EntryThumbContract;
 
-  name: string;
+	name: string;
 
-  names?: LocalizedStringWithIdContract[];
+	names?: LocalizedStringWithIdContract[];
 
-  webLinks: WebLinkContract[];
+	webLinks: WebLinkContract[];
 }

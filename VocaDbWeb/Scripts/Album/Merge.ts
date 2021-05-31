@@ -5,16 +5,16 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const AlbumMerge = (model: { id: number }): void => {
-  $(function () {
-    const httpClient = new HttpClient();
-    var repo = new AlbumRepository(httpClient);
-    var vm = new AlbumMergeViewModel(repo, model.id);
-    ko.applyBindings(vm);
+	$(function () {
+		const httpClient = new HttpClient();
+		var repo = new AlbumRepository(httpClient);
+		var vm = new AlbumMergeViewModel(repo, model.id);
+		ko.applyBindings(vm);
 
-    $('#mergeBtn').click(function () {
-      return window.confirm('Are you sure you want to merge the albums?');
-    });
-  });
+		$('#mergeBtn').click(function () {
+			return window.confirm('Are you sure you want to merge the albums?');
+		});
+	});
 };
 
 export default AlbumMerge;

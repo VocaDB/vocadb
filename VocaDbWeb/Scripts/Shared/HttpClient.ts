@@ -2,58 +2,58 @@ import AjaxHelper from '@Helpers/AjaxHelper';
 import axios from 'axios';
 
 export class HeaderNames {
-  public static readonly ContentType = 'Content-Type';
+	public static readonly ContentType = 'Content-Type';
 }
 
 export class MediaTypes {
-  public static readonly APPLICATION_FORM_URLENCODED =
-    'application/x-www-form-urlencoded';
-  public static readonly APPLICATION_JSON = 'application/json';
+	public static readonly APPLICATION_FORM_URLENCODED =
+		'application/x-www-form-urlencoded';
+	public static readonly APPLICATION_JSON = 'application/json';
 }
 
 export interface ErrorResponse<T = any> {
-  data: T;
-  status: number;
-  statusText: string;
-  headers: any;
+	data: T;
+	status: number;
+	statusText: string;
+	headers: any;
 }
 
 export interface HttpClientError<T = ErrorResponse> extends Error {
-  response?: T;
+	response?: T;
 }
 
 export default class HttpClient {
-  public baseUrl?: string;
+	public baseUrl?: string;
 
-  public delete = async <T>(url: string): Promise<T> => {
-    const response = await axios.delete<T>(url, { baseURL: this.baseUrl });
-    return response.data;
-  };
+	public delete = async <T>(url: string): Promise<T> => {
+		const response = await axios.delete<T>(url, { baseURL: this.baseUrl });
+		return response.data;
+	};
 
-  public get = async <T>(url: string, data?: any): Promise<T> => {
-    const response = await axios.get<T>(url, {
-      params: data,
-      // HACK: This is required for advanced search filters.
-      paramsSerializer: AjaxHelper.stringify,
-      baseURL: this.baseUrl,
-    });
-    return response.data;
-  };
+	public get = async <T>(url: string, data?: any): Promise<T> => {
+		const response = await axios.get<T>(url, {
+			params: data,
+			// HACK: This is required for advanced search filters.
+			paramsSerializer: AjaxHelper.stringify,
+			baseURL: this.baseUrl,
+		});
+		return response.data;
+	};
 
-  public post = async <T>(
-    url: string,
-    data?: any,
-    config?: { headers?: any },
-  ): Promise<T> => {
-    const response = await axios.post<T>(url, data, {
-      baseURL: this.baseUrl,
-      ...config,
-    });
-    return response.data;
-  };
+	public post = async <T>(
+		url: string,
+		data?: any,
+		config?: { headers?: any },
+	): Promise<T> => {
+		const response = await axios.post<T>(url, data, {
+			baseURL: this.baseUrl,
+			...config,
+		});
+		return response.data;
+	};
 
-  public put = async <T>(url: string, data?: any): Promise<T> => {
-    const response = await axios.put<T>(url, data, { baseURL: this.baseUrl });
-    return response.data;
-  };
+	public put = async <T>(url: string, data?: any): Promise<T> => {
+		const response = await axios.put<T>(url, data, { baseURL: this.baseUrl });
+		return response.data;
+	};
 }

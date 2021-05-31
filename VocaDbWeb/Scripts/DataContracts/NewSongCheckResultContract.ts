@@ -2,13 +2,13 @@ import ArtistContract from './Artist/ArtistContract';
 import DuplicateEntryResultContract from './DuplicateEntryResultContract';
 
 export default interface NewSongCheckResultContract {
-  artists: ArtistContract[];
+	artists: ArtistContract[];
 
-  matches: DuplicateEntryResultContract[];
+	matches: DuplicateEntryResultContract[];
 
-  songType: string;
+	songType: string;
 
-  title: string;
+	title: string;
 
-  titleLanguage: string; // TODO: content language selection
+	titleLanguage: string; // TODO: content language selection
 }

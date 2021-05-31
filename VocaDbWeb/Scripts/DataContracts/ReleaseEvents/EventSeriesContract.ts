@@ -6,15 +6,15 @@ import WebLinkContract from '../WebLinkContract';
 
 // Matches ReleaseEventForApiContract
 export default interface EventSeriesContract extends IEntryWithIdAndName {
-  category: string;
+	category: string;
 
-  id: number;
+	id: number;
 
-  mainPicture?: EntryThumbContract;
+	mainPicture?: EntryThumbContract;
 
-  name: string;
+	name: string;
 
-  names?: LocalizedStringWithIdContract[];
+	names?: LocalizedStringWithIdContract[];
 
-  webLinks: WebLinkContract[];
+	webLinks: WebLinkContract[];
 }

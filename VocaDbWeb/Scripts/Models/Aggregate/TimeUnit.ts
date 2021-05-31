@@ -1,6 +1,6 @@
 enum TimeUnit {
-  month,
-  day,
+	month,
+	day,
 }
 
 export default TimeUnit;

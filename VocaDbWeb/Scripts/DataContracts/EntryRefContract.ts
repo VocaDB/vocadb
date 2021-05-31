@@ -1,6 +1,6 @@
 // Matches .NET class EntryRefContract.
 export default interface EntryRefContract {
-  entryType: string;
+	entryType: string;
 
-  id: number;
+	id: number;
 }

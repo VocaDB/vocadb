@@ -6,14 +6,14 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const SongListImport = (): void => {
-  ko.punches.enableAll();
+	ko.punches.enableAll();
 
-  $(function () {
-    const httpClient = new HttpClient();
-    var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var viewModel = new ImportSongListViewModel(httpClient, urlMapper);
-    ko.applyBindings(viewModel);
-  });
+	$(function () {
+		const httpClient = new HttpClient();
+		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var viewModel = new ImportSongListViewModel(httpClient, urlMapper);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default SongListImport;

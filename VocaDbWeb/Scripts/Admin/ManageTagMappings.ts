@@ -5,15 +5,15 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const AdminManageTagMappings = (): void => {
-  $(function () {
-    ko.punches.enableAll();
+	$(function () {
+		ko.punches.enableAll();
 
-    const httpClient = new HttpClient();
-    var tagRepo = new TagRepository(httpClient);
+		const httpClient = new HttpClient();
+		var tagRepo = new TagRepository(httpClient);
 
-    var viewModel = new ManageTagMappingsViewModel(tagRepo);
-    ko.applyBindings(viewModel);
-  });
+		var viewModel = new ManageTagMappingsViewModel(tagRepo);
+		ko.applyBindings(viewModel);
+	});
 };
 
 export default AdminManageTagMappings;
