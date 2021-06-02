@@ -18,6 +18,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
@@ -228,5 +229,14 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{id:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
+
+		[HttpGet("artists-with-youtube-channels")]
+		[Authorize]
+		public ArtistForApiContract[] GetArtistsWithYoutubeChannels(ContentLanguagePreference languagePreference, [FromServices] IUserPermissionContext permissionContext)
+		{
+			permissionContext.VerifyPermission(PermissionToken.Admin);
+
+			return _service.GetArtistsWithYoutubeChannels(languagePreference);
+		}
 	}
 }
