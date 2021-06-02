@@ -24,55 +24,42 @@ export default class RepositoryFactory {
 	private createClient = (baseUrl?: string): HttpClient =>
 		this.httpClientFactory.createClient(baseUrl);
 
-	public adminRepository = (baseUrl?: string): AdminRepository => {
-		return new AdminRepository(this.createClient(baseUrl));
-	};
+	public adminRepository = (baseUrl?: string): AdminRepository =>
+		new AdminRepository(this.createClient(baseUrl));
 
-	public albumRepository = (baseUrl?: string): AlbumRepository => {
-		return new AlbumRepository(this.createClient(baseUrl));
-	};
+	public albumRepository = (baseUrl?: string): AlbumRepository =>
+		new AlbumRepository(this.createClient(baseUrl));
 
-	public artistRepository = (baseUrl?: string): ArtistRepository => {
-		return new ArtistRepository(this.createClient(baseUrl));
-	};
+	public artistRepository = (baseUrl?: string): ArtistRepository =>
+		new ArtistRepository(this.createClient(baseUrl));
 
-	public discussionRepository = (baseUrl?: string): DiscussionRepository => {
-		return new DiscussionRepository(this.createClient(baseUrl));
-	};
+	public discussionRepository = (baseUrl?: string): DiscussionRepository =>
+		new DiscussionRepository(this.createClient(baseUrl));
 
-	public entryRepository = (baseUrl?: string): EntryRepository => {
-		return new EntryRepository(this.createClient(baseUrl));
-	};
+	public entryRepository = (baseUrl?: string): EntryRepository =>
+		new EntryRepository(this.createClient(baseUrl));
 
-	public eventRepository = (baseUrl?: string): ReleaseEventRepository => {
-		return new ReleaseEventRepository(this.createClient(baseUrl));
-	};
+	public eventRepository = (baseUrl?: string): ReleaseEventRepository =>
+		new ReleaseEventRepository(this.createClient(baseUrl));
 
-	public pvRepository = (baseUrl?: string): PVRepository => {
-		return new PVRepository(this.createClient(baseUrl));
-	};
+	public pvRepository = (baseUrl?: string): PVRepository =>
+		new PVRepository(this.createClient(baseUrl));
 
-	public resourceRepository = (baseUrl?: string): ResourceRepository => {
-		return new ResourceRepository(this.createClient(baseUrl));
-	};
+	public resourceRepository = (baseUrl?: string): ResourceRepository =>
+		new ResourceRepository(this.createClient(baseUrl));
 
-	public songListRepository = (baseUrl?: string): SongListRepository => {
-		return new SongListRepository(this.createClient(baseUrl));
-	};
+	public songListRepository = (baseUrl?: string): SongListRepository =>
+		new SongListRepository(this.createClient(baseUrl));
 
-	public songRepository = (baseUrl?: string): SongRepository => {
-		return new SongRepository(this.createClient(baseUrl));
-	};
+	public songRepository = (baseUrl?: string): SongRepository =>
+		new SongRepository(this.createClient(baseUrl));
 
-	public tagRepository = (baseUrl?: string): TagRepository => {
-		return new TagRepository(this.createClient(baseUrl));
-	};
+	public tagRepository = (baseUrl?: string): TagRepository =>
+		new TagRepository(this.createClient(baseUrl));
 
-	public userRepository = (baseUrl?: string): UserRepository => {
-		return new UserRepository(this.createClient(baseUrl));
-	};
+	public userRepository = (baseUrl?: string): UserRepository =>
+		new UserRepository(this.createClient(baseUrl));
 
-	public venueRepository = (baseUrl?: string): VenueRepository => {
-		return new VenueRepository(this.createClient(baseUrl));
-	};
+	public venueRepository = (baseUrl?: string): VenueRepository =>
+		new VenueRepository(this.createClient(baseUrl));
 }
