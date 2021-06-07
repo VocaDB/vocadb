@@ -14,6 +14,7 @@ import './i18n';
 const ErrorNotFound = React.lazy(
 	() => import('@Components/Error/ErrorNotFound'),
 );
+const SearchIndex = React.lazy(() => import('@Components/Search/SearchIndex'));
 
 interface AppProps {
 	initialPage: VocaDbPage;
@@ -37,6 +38,7 @@ const App = ({ initialPage }: AppProps): React.ReactElement => {
 							<div className="span10 rightFrame well">
 								<React.Suspense fallback={null /* TODO */}>
 									<Routes>
+										<Route path="/Search" element={<SearchIndex />} />
 										<Route path="/*" element={<ErrorNotFound />} />
 									</Routes>
 								</React.Suspense>

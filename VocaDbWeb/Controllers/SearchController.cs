@@ -190,7 +190,7 @@ namespace VocaDb.Web.Controllers
 			_permissionContext = permissionContext;
 		}
 
-		public ActionResult Index(SearchIndexViewModel viewModel)
+		/*public ActionResult Index(SearchIndexViewModel viewModel)
 		{
 			if (viewModel == null)
 				viewModel = new SearchIndexViewModel();
@@ -221,6 +221,6 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Radio()
 		{
 			return Index(new SearchIndexViewModel(EntryType.Song) { MinScore = 1, Sort = "AdditionDate", ViewMode = "PlayList", Autoplay = true, Shuffle = true });
-		}
+		}*/
 	}
 }

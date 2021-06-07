@@ -1,6 +1,7 @@
 import useVocaDbPage from '@Components/useVocaDbPage';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
@@ -13,9 +14,9 @@ const MainNavigationItems = React.memo(
 					<a href={'/'}>{t('ViewRes:Layout.Home')}</a>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Artist'}>
+					<Link to="/Search?searchType=Artist">
 						{t('ViewRes:Shared.Artists')}
-					</a>
+					</Link>
 					<ul>
 						{login.canManageDb && (
 							<li>
@@ -25,7 +26,9 @@ const MainNavigationItems = React.memo(
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Album'}>{t('ViewRes:Shared.Albums')}</a>
+					<Link to="/Search?searchType=Album">
+						{t('ViewRes:Shared.Albums')}
+					</Link>
 					<ul>
 						{login.canManageDb && (
 							<li>
@@ -33,14 +36,14 @@ const MainNavigationItems = React.memo(
 							</li>
 						)}
 						<li>
-							<a href={'/Search?searchType=Album&sort=RatingAverage'}>
+							<Link to="/Search?searchType=Album&sort=RatingAverage">
 								{t('ViewRes:Shared.TopRatedAlbums')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href={'/Search?searchType=Album&sort=ReleaseDate'}>
+							<Link to="/Search?searchType=Album&sort=ReleaseDate">
 								{t('ViewRes:Layout.NewAlbums')}
-							</a>
+							</Link>
 						</li>
 						<li>
 							<a href={'#' /* TODO */}>{t('ViewRes:Layout.FreeAlbums')}</a>
@@ -48,7 +51,7 @@ const MainNavigationItems = React.memo(
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Song'}>{t('ViewRes:Shared.Songs')}</a>
+					<Link to="/Search?searchType=Song">{t('ViewRes:Shared.Songs')}</Link>
 					<ul>
 						{login.canManageDb && (
 							<li>
@@ -61,20 +64,16 @@ const MainNavigationItems = React.memo(
 							</a>
 						</li>
 						<li>
-							<a
-								href={
-									'/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true'
-								}
-							>
+							<Link to="/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true">
 								{t('ViewRes:Layout.NewPVs')}
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=ReleaseEvent'}>
+					<Link to="/Search?searchType=ReleaseEvent">
 						{t('ViewRes:Shared.ReleaseEvents')}
-					</a>
+					</Link>
 					<ul>
 						<li>
 							<a href={'/Event'}>{t('ViewRes:Layout.UpcomingEvents')}</a>
