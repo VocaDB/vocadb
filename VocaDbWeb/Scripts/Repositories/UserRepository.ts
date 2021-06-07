@@ -283,7 +283,7 @@ export default class UserRepository implements ICommentRepository {
 
 	public getMessageSummaries = (
 		userId: number,
-		inbox: UserInboxType,
+		inbox: UserInboxType | undefined,
 		paging: PagingProperties,
 		unread: boolean = false,
 		anotherUserId?: number,
@@ -292,7 +292,7 @@ export default class UserRepository implements ICommentRepository {
 		return this.httpClient.get<
 			PartialFindResultContract<UserMessageSummaryContract>
 		>(`/api/users/${userId}/messages`, {
-			inbox: UserInboxType[inbox],
+			inbox: inbox ? UserInboxType[inbox] : undefined,
 			start: paging.start,
 			maxResults: paging.maxEntries,
 			getTotalCount: paging.getTotalCount,

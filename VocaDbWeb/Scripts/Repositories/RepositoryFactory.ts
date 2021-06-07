@@ -7,6 +7,7 @@ import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';
 import ArtistRepository from './ArtistRepository';
 import DiscussionRepository from './DiscussionRepository';
+import EntryReportRepository from './EntryReportRepository';
 import EntryRepository from './EntryRepository';
 import PVRepository from './PVRepository';
 import ReleaseEventRepository from './ReleaseEventRepository';
@@ -38,6 +39,9 @@ export default class RepositoryFactory {
 
 	public entryRepository = (baseUrl?: string): EntryRepository =>
 		new EntryRepository(this.createClient(baseUrl));
+
+	public entryReportRepository = (baseUrl?: string): EntryReportRepository =>
+		new EntryReportRepository(this.createClient(baseUrl));
 
 	public eventRepository = (baseUrl?: string): ReleaseEventRepository =>
 		new ReleaseEventRepository(this.createClient(baseUrl));

@@ -23,7 +23,7 @@ export default class FakeUserRepository extends UserRepository {
 
 		this.getMessageSummaries = (
 			userId: number,
-			inbox: UserInboxType,
+			inbox: UserInboxType | undefined,
 			maxCount?,
 			unread?,
 			anotherUserId?,
