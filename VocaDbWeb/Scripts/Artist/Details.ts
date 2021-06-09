@@ -97,7 +97,7 @@ const ArtistDetails = (
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
 		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var artistRepo = repoFactory.artistRepository();
 		var albumRepository = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();

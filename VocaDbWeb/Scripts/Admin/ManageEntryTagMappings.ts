@@ -1,5 +1,6 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ManageEntryTagMappingsViewModel from '@ViewModels/Admin/ManageEntryTagMappingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -9,7 +10,7 @@ const AdminManageEntryTagMappings = (): void => {
 		ko.punches.enableAll();
 
 		const httpClient = new HttpClient();
-		var tagRepo = new TagRepository(httpClient);
+		var tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 		var viewModel = new ManageEntryTagMappingsViewModel(tagRepo);
 		ko.applyBindings(viewModel);

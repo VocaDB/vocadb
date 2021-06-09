@@ -1,5 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import ListUsersViewModel from '@ViewModels/User/ListUsersViewModel';
 import $ from 'jquery';
@@ -15,7 +16,8 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 		var filter = model.filter;
 		var groupId = model.groupId;
 		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(

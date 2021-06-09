@@ -20,7 +20,7 @@ export default class FakeSongRepository extends SongRepository {
 	songsInLists: SongInList[] = [];
 
 	constructor() {
-		super(new HttpClient());
+		super(new HttpClient(), '');
 
 		this.addSongToList = (
 			listId,

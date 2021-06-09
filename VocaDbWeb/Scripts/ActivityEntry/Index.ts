@@ -14,7 +14,10 @@ const ActivityEntryIndex = (): void => {
 
 		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var resourceRepo = new ResourceRepository(httpClient);
+		var resourceRepo = new ResourceRepository(
+			httpClient,
+			vdb.values.baseAddress,
+		);
 		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;
 

@@ -11,7 +11,9 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
 import BaseRepository from './BaseRepository';
@@ -26,11 +28,15 @@ export default class AlbumRepository
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 
-	constructor(private readonly httpClient: HttpClient) {
-		super();
+	private readonly urlMapper: UrlMapper;
+
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+		super(baseUrl);
+
+		this.urlMapper = new UrlMapper(baseUrl);
 
 		this.mapUrl = (relative): string => {
-			return `/Album${relative}`;
+			return `${functions.mergeUrls(baseUrl, '/Album')}${relative}`;
 		};
 	}
 
@@ -39,7 +45,7 @@ export default class AlbumRepository
 		contract: CommentContract,
 	): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
-			`/api/albums/${albumId}/comments`,
+			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
 			contract,
 		);
 	};
@@ -48,10 +54,11 @@ export default class AlbumRepository
 		albumId: number,
 		reviewContract: AlbumReviewContract,
 	): Promise<AlbumReviewContract> {
-		return this.httpClient.post<AlbumReviewContract>(
+		const url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/albums/${albumId}/reviews`,
-			reviewContract,
 		);
+		return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
 	}
 
 	public createReport = (
@@ -61,7 +68,7 @@ export default class AlbumRepository
 		versionNumber: number,
 	): Promise<void> => {
 		return this.httpClient.post<void>(
-			'/Album/CreateReport',
+			this.urlMapper.mapRelative('/Album/CreateReport'),
 			AjaxHelper.stringify({
 				reportType: reportType,
 				notes: notes,
@@ -77,11 +84,17 @@ export default class AlbumRepository
 	};
 
 	public deleteComment = (commentId: number): Promise<void> => {
-		return this.httpClient.delete<void>(`/api/albums/comments/${commentId}`);
+		return this.httpClient.delete<void>(
+			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
+		);
 	};
 
 	public deleteReview(albumId: number, reviewId: number): Promise<void> {
-		return this.httpClient.delete(`/api/albums/${albumId}/reviews/${reviewId}`);
+		const url = functions.mergeUrls(
+			this.baseUrl,
+			`/api/albums/${albumId}/reviews/${reviewId}`,
+		);
+		return this.httpClient.delete(url);
 	}
 
 	public findDuplicate = (params: {
@@ -89,29 +102,27 @@ export default class AlbumRepository
 		term2: string;
 		term3: string;
 	}): Promise<DuplicateEntryResultContract[]> => {
-		return this.httpClient.get<DuplicateEntryResultContract[]>(
-			'/Album/FindDuplicate',
-			params,
-		);
+		var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
+		return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
 	};
 
 	public getComments = (albumId: number): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
-			`/api/albums/${albumId}/comments`,
+			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
 		);
 	};
 
 	public getForEdit = (id: number): Promise<AlbumForEditContract> => {
-		return this.httpClient.get<AlbumForEditContract>(
-			`/api/albums/${id}/for-edit`,
-		);
+		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
+		return this.httpClient.get<AlbumForEditContract>(url);
 	};
 
 	public getOne = (
 		id: number,
 		lang: ContentLanguagePreference,
 	): Promise<AlbumContract> => {
-		return this.httpClient.get<AlbumContract>(`/api/albums/${id}`, {
+		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
+		return this.httpClient.get<AlbumContract>(url, {
 			fields: 'AdditionalNames',
 			lang: ContentLanguagePreference[lang],
 		});
@@ -122,7 +133,8 @@ export default class AlbumRepository
 		fields: string,
 		lang: ContentLanguagePreference,
 	): Promise<AlbumForApiContract> => {
-		return this.httpClient.get<AlbumForApiContract>(`/api/albums/${id}`, {
+		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
+		return this.httpClient.get<AlbumForApiContract>(url, {
 			fields: fields,
 			lang: ContentLanguagePreference[lang],
 		});
@@ -145,6 +157,7 @@ export default class AlbumRepository
 		deleted: boolean,
 		advancedFilters: AdvancedSearchFilter[],
 	): Promise<PartialFindResultContract<AlbumContract>> => {
+		var url = functions.mergeUrls(this.baseUrl, '/api/albums');
 		var data = {
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
@@ -167,31 +180,35 @@ export default class AlbumRepository
 		};
 
 		return this.httpClient.get<PartialFindResultContract<AlbumContract>>(
-			'/api/albums',
+			url,
 			data,
 		);
 	};
 
 	public getReviews = (albumId: number): Promise<AlbumReviewContract[]> => {
-		return this.httpClient.get<AlbumReviewContract[]>(
+		const url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/albums/${albumId}/reviews`,
 		);
+		return this.httpClient.get<AlbumReviewContract[]>(url);
 	};
 
 	public getTagSuggestions = (
 		albumId: number,
 	): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
-			`/api/albums/${albumId}/tagSuggestions`,
+			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
 		);
 	};
 
 	public async getUserCollections(
 		albumId: number,
 	): Promise<AlbumForUserForApiContract[]> {
-		return this.httpClient.get<AlbumForUserForApiContract[]>(
+		const url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/albums/${albumId}/user-collections`,
 		);
+		return this.httpClient.get<AlbumForUserForApiContract[]>(url);
 	}
 
 	public updateComment = (
@@ -199,7 +216,7 @@ export default class AlbumRepository
 		contract: CommentContract,
 	): Promise<void> => {
 		return this.httpClient.post<void>(
-			`/api/albums/comments/${commentId}`,
+			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
 			contract,
 		);
 	};
@@ -210,7 +227,9 @@ export default class AlbumRepository
 		author: ArtistContract,
 	): Promise<void> => {
 		return this.httpClient.post<void>(
-			`/api/albums/${albumId}/personal-description/`,
+			this.urlMapper.mapRelative(
+				`/api/albums/${albumId}/personal-description/`,
+			),
 			{
 				personalDescriptionText: text,
 				personalDescriptionAuthor: author || undefined,

@@ -33,7 +33,7 @@ const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		initPage(repoFactory, urlMapper, model.id);
 	});
 };

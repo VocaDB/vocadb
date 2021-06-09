@@ -17,7 +17,7 @@ const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = model;

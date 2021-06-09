@@ -8,7 +8,7 @@ export default class FakeArtistRepository extends ArtistRepository {
 	result: ArtistContract = null!;
 
 	constructor() {
-		super(new HttpClient());
+		super(new HttpClient(), '');
 
 		this.getOne = (id, lang): Promise<ArtistContract> => {
 			return FakePromise.resolve(this.result);

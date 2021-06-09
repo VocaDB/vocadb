@@ -8,6 +8,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
+import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import ko, { ObservableArray } from 'knockout';
 import _ from 'lodash';
@@ -21,6 +22,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 export default class ReleaseEventDetailsViewModel {
 	constructor(
 		httpClient: HttpClient,
+		urlMapper: UrlMapper,
 		private readonly repo: ReleaseEventRepository,
 		private readonly userRepo: UserRepository,
 		latestComments: CommentContract[],
@@ -34,6 +36,7 @@ export default class ReleaseEventDetailsViewModel {
 	) {
 		const commentRepo = new CommentRepository(
 			httpClient,
+			urlMapper,
 			EntryType.ReleaseEvent,
 		);
 		this.comments = new EditableCommentsViewModel(

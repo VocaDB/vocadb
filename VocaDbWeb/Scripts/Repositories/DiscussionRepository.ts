@@ -9,10 +9,15 @@ import UrlMapper from '@Shared/UrlMapper';
 import ICommentRepository from './ICommentRepository';
 
 export default class DiscussionRepository implements ICommentRepository {
-	constructor(private readonly httpClient: HttpClient) {}
+	constructor(
+		private readonly httpClient: HttpClient,
+		private readonly urlMapper: UrlMapper,
+	) {}
 
 	private mapUrl = (relative: string): string => {
-		return UrlMapper.mergeUrls('/api/discussions', relative);
+		return this.urlMapper.mapRelative(
+			UrlMapper.mergeUrls('/api/discussions', relative),
+		);
 	};
 
 	public createComment = (

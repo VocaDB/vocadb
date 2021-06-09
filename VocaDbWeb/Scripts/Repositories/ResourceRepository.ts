@@ -1,16 +1,21 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
 export default class ResourceRepository {
-	constructor(private readonly httpClient: HttpClient) {}
+	constructor(
+		private readonly httpClient: HttpClient,
+		private baseUrl: string,
+	) {}
 
 	public getList = (
 		cultureCode: string,
 		setNames: string[],
 	): Promise<ResourcesContract> => {
-		return this.httpClient.get<ResourcesContract>(
+		var url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/resources/${cultureCode}/`,
-			{ setNames: setNames },
 		);
+		return this.httpClient.get<ResourcesContract>(url, { setNames: setNames });
 	};
 }

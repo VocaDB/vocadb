@@ -12,9 +12,10 @@ export default class CommentRepository
 	implements ICommentRepository {
 	constructor(
 		private readonly httpClient: HttpClient,
+		private readonly urlMapper: UrlMapper,
 		private entryType: EntryType,
 	) {
-		super();
+		super(urlMapper.baseUrl);
 	}
 
 	public createComment = (
@@ -26,28 +27,29 @@ export default class CommentRepository
 			id: entryId,
 			name: null!,
 		};
-		return this.httpClient.post<CommentContract>(
+		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),
-			contract,
 		);
+		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
 	public deleteComment = (commentId: number): Promise<void> => {
-		return this.httpClient.delete<void>(
+		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,
 				commentId.toString(),
 			),
 		);
+		return this.httpClient.delete<void>(url);
 	};
 
 	public getComments = async (listId: number): Promise<CommentContract[]> => {
+		var url = this.urlMapper.mapRelative(
+			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments/`),
+		);
 		const result = await this.httpClient.get<
 			PartialFindResultContract<CommentContract>
-		>(
-			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments/`),
-			{ entryId: listId },
-		);
+		>(url, { entryId: listId });
 		return result.items;
 	};
 
@@ -55,12 +57,12 @@ export default class CommentRepository
 		commentId: number,
 		contract: CommentContract,
 	): Promise<void> => {
-		return this.httpClient.post<void>(
+		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,
 				commentId.toString(),
 			),
-			contract,
 		);
+		return this.httpClient.post<void>(url, contract);
 	};
 }

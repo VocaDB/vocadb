@@ -1,5 +1,6 @@
 import AlbumRepository from '@Repositories/AlbumRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -22,7 +23,7 @@ const AlbumViewVersion = (model: {
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
 		const httpClient = new HttpClient();
-		var rep = new AlbumRepository(httpClient);
+		var rep = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 		var viewModel = new ArchivedAlbumViewModel(
 			model.album.id,

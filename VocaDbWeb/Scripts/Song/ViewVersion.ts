@@ -1,5 +1,6 @@
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ArchivedSongViewModel from '@ViewModels/Song/ArchivedSongViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -22,7 +23,7 @@ const SongViewVersion = (model: {
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
 		const httpClient = new HttpClient();
-		var rep = new SongRepository(httpClient);
+		var rep = new SongRepository(httpClient, vdb.values.baseAddress);
 
 		var viewModel = new ArchivedSongViewModel(
 			model.song.id,

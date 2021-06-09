@@ -1,5 +1,7 @@
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -23,7 +25,10 @@ const EventViewSeriesVersion = (model: {
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
 		const httpClient = new HttpClient();
-		var rep = new ReleaseEventRepository(httpClient);
+		var rep = new ReleaseEventRepository(
+			httpClient,
+			new UrlMapper(vdb.values.baseAddress),
+		);
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.releaseEventSeries.id,
 			model.entry.archivedVersion.version,

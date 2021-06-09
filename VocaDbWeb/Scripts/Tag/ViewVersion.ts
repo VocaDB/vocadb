@@ -1,5 +1,6 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
+import vdb from '@Shared/VdbStatic';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -23,7 +24,7 @@ const TagViewVersion = (model: {
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
 		const httpClient = new HttpClient();
-		var rep = new TagRepository(httpClient);
+		var rep = new TagRepository(httpClient, vdb.values.baseAddress);
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.tag.id,
 			model.entry.archivedVersion.version,

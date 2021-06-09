@@ -125,9 +125,7 @@ export default class SongDetailsViewModel {
 
 		const { siteUrl, id } = match;
 
-		const httpClient = new HttpClient();
-		httpClient.baseUrl = siteUrl;
-		const repo = new SongRepository(httpClient);
+		const repo = new SongRepository(this.httpClient, siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo
 			.getOneWithComponents(id, 'None', vdb.values.languagePreference)

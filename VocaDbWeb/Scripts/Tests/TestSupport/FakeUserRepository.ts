@@ -5,6 +5,7 @@ import SongVoteRating from '@Models/SongVoteRating';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 
 import FakePromise from './FakePromise';
 
@@ -15,7 +16,7 @@ export default class FakeUserRepository extends UserRepository {
 	public rating!: SongVoteRating;
 
 	constructor() {
-		super(new HttpClient());
+		super(new HttpClient(), new UrlMapper(''));
 
 		this.getMessage = (messageId): Promise<UserMessageSummaryContract> => {
 			return FakePromise.resolve(this.message);

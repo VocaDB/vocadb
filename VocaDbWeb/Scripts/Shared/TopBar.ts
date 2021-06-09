@@ -57,7 +57,10 @@ export function setLanguagePreferenceCookie(
 	languagePreference: string,
 ): boolean {
 	const httpClient = new HttpClient();
-	var userRepo = new UserRepository(httpClient);
+	var userRepo = new UserRepository(
+		httpClient,
+		new UrlMapper(vdb.values.baseAddress),
+	);
 	userRepo
 		.updateUserSetting(
 			vdb.values.loggedUserId,

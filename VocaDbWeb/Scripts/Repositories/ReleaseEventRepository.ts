@@ -4,14 +4,19 @@ import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/Relea
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 
 export default class ReleaseEventRepository extends BaseRepository {
-	constructor(private readonly httpClient: HttpClient) {
-		super();
+	constructor(
+		private readonly httpClient: HttpClient,
+		private readonly urlMapper: UrlMapper,
+	) {
+		super(urlMapper.baseUrl);
 	}
 
 	public createReport = (
@@ -20,13 +25,15 @@ export default class ReleaseEventRepository extends BaseRepository {
 		notes: string,
 		versionNumber: number,
 	): Promise<void> => {
-		return this.httpClient.post<void>(
+		var url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
 				versionNumber: [versionNumber],
 			})}`,
 		);
+		return this.httpClient.post<void>(url);
 	};
 
 	public delete = (
@@ -35,9 +42,11 @@ export default class ReleaseEventRepository extends BaseRepository {
 		hardDelete: boolean,
 	): Promise<void> => {
 		return this.httpClient.delete<void>(
-			`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-				notes,
-			)}`,
+			this.urlMapper.mapRelative(
+				`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+					notes,
+				)}`,
+			),
 		);
 	};
 
@@ -47,9 +56,11 @@ export default class ReleaseEventRepository extends BaseRepository {
 		hardDelete: boolean,
 	): Promise<void> => {
 		return this.httpClient.delete<void>(
-			`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-				notes,
-			)}`,
+			this.urlMapper.mapRelative(
+				`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+					notes,
+				)}`,
+			),
 		);
 	};
 
@@ -58,6 +69,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
+		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
 		var data = {
 			start: queryParams.start,
 			getTotalCount: queryParams.getTotalCount,
@@ -82,27 +94,28 @@ export default class ReleaseEventRepository extends BaseRepository {
 		};
 
 		return this.httpClient.get<PartialFindResultContract<ReleaseEventContract>>(
-			'/api/releaseEvents',
+			url,
 			data,
 		);
 	};
 
 	public getOne = (id: number): Promise<ReleaseEventContract> => {
-		return this.httpClient.get<ReleaseEventContract>(
-			`/api/releaseEvents/${id}`,
-		);
+		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
+		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
 	public getOneByName = async (
 		name: string,
 	): Promise<ReleaseEventContract | null> => {
-		const result = await this.httpClient.get<
-			PartialFindResultContract<ReleaseEventContract>
-		>(
+		var url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/releaseEvents?query=${encodeURIComponent(
 				name,
 			)}&nameMatchMode=Exact&maxResults=1`,
 		);
+		const result = await this.httpClient.get<
+			PartialFindResultContract<ReleaseEventContract>
+		>(url);
 		return result && result.items && result.items.length
 			? result.items[0]
 			: null;
@@ -113,6 +126,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		nameMatchMode: NameMatchMode,
 		maxResults: number,
 	): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
+		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
 		var data = {
 			query: query,
 			maxResults: maxResults,
@@ -121,7 +135,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 
 		return this.httpClient.get<
 			PartialFindResultContract<ReleaseEventSeriesForApiContract>
-		>('/api/releaseEventSeries', data);
+		>(url, data);
 	};
 }
 

@@ -1,5 +1,7 @@
 import VenueRepository from '@Repositories/VenueRepository';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -23,7 +25,10 @@ const VenueViewVersion = (model: {
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
 		const httpClient = new HttpClient();
-		var rep = new VenueRepository(httpClient);
+		var rep = new VenueRepository(
+			httpClient,
+			new UrlMapper(vdb.values.baseAddress),
+		);
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.venue.id,
 			model.entry.archivedVersion.version,

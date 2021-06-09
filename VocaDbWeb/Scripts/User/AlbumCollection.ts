@@ -1,5 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
@@ -19,7 +20,9 @@ const UserAlbumCollection = (
 		var loggedUserId = model.user.id;
 
 		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		var rootPath = vdb.values.baseAddress;
+		var urlMapper = new UrlMapper(rootPath);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var resourceRepo = repoFactory.resourceRepository();

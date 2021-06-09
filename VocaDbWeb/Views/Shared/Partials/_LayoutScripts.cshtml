@@ -26,6 +26,7 @@
 	vdb.values.uiCulture = @ToJS(UICulture);
     vdb.resources = vdb.resources || {};
 	const httpClient = new app.HttpClient();
+    var urlMapper = new app.UrlMapper(baseAddress);
 
     vdb.resources.shared = {
     	reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent)
@@ -33,8 +34,8 @@
 
     app.ui.initAll(@ToJS(AjaxRes.SharedStrings.ThanksForRating));
 
-    var entryReportRepository = new app.EntryReportRepository(httpClient);
-    var userRepository = new app.UserRepository(httpClient);
+    var entryReportRepository = new app.EntryReportRepository(httpClient, urlMapper);
+    var userRepository = new app.UserRepository(httpClient, urlMapper);
 
     var entryTypeTranslations = @ResourceHelpers.ToJSON(EntryTypeNames.ResourceManager);
     var topBarData = @Html.Raw(JsonHelpers.Serialize(new {

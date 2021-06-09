@@ -2,13 +2,18 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 
 export default class VenueRepository extends BaseRepository {
-	constructor(private readonly httpClient: HttpClient) {
-		super();
+	constructor(
+		private readonly httpClient: HttpClient,
+		private readonly urlMapper: UrlMapper,
+	) {
+		super(urlMapper.baseUrl);
 	}
 
 	public createReport = (
@@ -17,13 +22,15 @@ export default class VenueRepository extends BaseRepository {
 		notes: string,
 		versionNumber: number,
 	): Promise<void> => {
-		return this.httpClient.post<void>(
+		var url = functions.mergeUrls(
+			this.baseUrl,
 			`/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
 				versionNumber: [versionNumber],
 			})}`,
 		);
+		return this.httpClient.post<void>(url);
 	};
 
 	public delete = (
@@ -32,9 +39,11 @@ export default class VenueRepository extends BaseRepository {
 		hardDelete: boolean,
 	): Promise<void> => {
 		return this.httpClient.delete<void>(
-			`/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-				notes,
-			)}`,
+			this.urlMapper.mapRelative(
+				`/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+					notes,
+				)}`,
+			),
 		);
 	};
 
@@ -43,6 +52,7 @@ export default class VenueRepository extends BaseRepository {
 		nameMatchMode: NameMatchMode,
 		maxResults: number,
 	): Promise<PartialFindResultContract<VenueForApiContract>> => {
+		var url = functions.mergeUrls(this.baseUrl, '/api/venues');
 		var data = {
 			query: query,
 			maxResults: maxResults,
@@ -50,7 +60,7 @@ export default class VenueRepository extends BaseRepository {
 		};
 
 		return this.httpClient.get<PartialFindResultContract<VenueForApiContract>>(
-			'/api/venues',
+			url,
 			data,
 		);
 	};

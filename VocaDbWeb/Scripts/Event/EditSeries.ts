@@ -24,8 +24,8 @@ const EventEditSeries = (model: {
 	$(function () {
 		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var eventRepo = new ReleaseEventRepository(httpClient);
-		var userRepo = new UserRepository(httpClient);
+		var eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
+		var userRepo = new UserRepository(httpClient, urlMapper);
 
 		var vm = new ReleaseEventSeriesEditViewModel(
 			eventRepo,

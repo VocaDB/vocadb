@@ -1,5 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
 import $ from 'jquery';
@@ -24,7 +25,9 @@ const SongListFeatured = (
 
 		var lang = vdb.values.languagePreference;
 		const httpClient = new HttpClient();
-		var repoFactory = new RepositoryFactory(httpClient);
+		var rootPath = vdb.values.baseAddress;
+		var urlMapper = new UrlMapper(rootPath);
+		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();

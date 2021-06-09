@@ -1,9 +1,14 @@
 import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
 
 export default class EntryReportRepository {
-	constructor(private readonly httpClient: HttpClient) {}
+	constructor(
+		private readonly httpClient: HttpClient,
+		private readonly urlMapper: UrlMapper,
+	) {}
 
 	public getNewReportCount = (): Promise<number> => {
-		return this.httpClient.get<number>('/entryReports/newReportsCount');
+		var url = this.urlMapper.mapRelative('/entryReports/newReportsCount');
+		return this.httpClient.get<number>(url);
 	};
 }
