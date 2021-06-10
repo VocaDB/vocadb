@@ -1,7 +1,5 @@
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import { container } from '@Shared/inversify.config';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -24,11 +22,8 @@ const EventViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		const httpClient = new HttpClient();
-		var rep = new ReleaseEventRepository(
-			httpClient,
-			new UrlMapper(vdb.values.baseAddress),
-		);
+		var repoFactory = container.get(RepositoryFactory);
+		var rep = repoFactory.eventRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.releaseEvent.id,
 			model.entry.archivedVersion.version,

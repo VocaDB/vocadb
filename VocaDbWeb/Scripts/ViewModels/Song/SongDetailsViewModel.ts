@@ -12,11 +12,13 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -125,7 +127,8 @@ export default class SongDetailsViewModel {
 
 		const { siteUrl, id } = match;
 
-		const repo = new SongRepository(this.httpClient, siteUrl);
+		var repoFactory = container.get(RepositoryFactory);
+		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo
 			.getOneWithComponents(id, 'None', vdb.values.languagePreference)

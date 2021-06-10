@@ -1,7 +1,7 @@
-import ResourceRepository from '@Repositories/ResourceRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import CommentListViewModel from '@ViewModels/Comment/CommentListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -12,12 +12,9 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var resourceRepo = new ResourceRepository(
-			httpClient,
-			vdb.values.baseAddress,
-		);
+		var repoFactory = container.get(RepositoryFactory);
+		var resourceRepo = repoFactory.resourceRepository();
 		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;

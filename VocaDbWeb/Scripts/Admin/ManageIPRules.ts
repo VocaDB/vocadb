@@ -1,7 +1,6 @@
-import AdminRepository from '@Repositories/AdminRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ManageIPRulesViewModel, {
 	IPRuleContract,
 } from '@ViewModels/Admin/ManageIPRulesViewModel';
@@ -15,9 +14,8 @@ const AdminManageIPRules = (model: IPRuleContract[]): void => {
 		ko.punches.enableAll();
 
 		var rules = model;
-		const httpClient = new HttpClient();
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repo = new AdminRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var repo = repoFactory.adminRepository();
 
 		var viewModel = new ManageIPRulesViewModel(rules, repo);
 		ko.applyBindings(viewModel);

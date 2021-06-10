@@ -1,8 +1,8 @@
-import UserRepository, { UserInboxType } from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import { UserInboxType } from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import UserMessagesViewModel from '@ViewModels/User/UserMessagesViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -18,9 +18,8 @@ const UserMessages = (
 	$(function () {
 		$('#tabs').tabs();
 
-		const httpClient = new HttpClient();
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repository = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var repository = repoFactory.userRepository();
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(
 			repository,

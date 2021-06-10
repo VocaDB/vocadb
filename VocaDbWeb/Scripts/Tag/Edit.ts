@@ -1,8 +1,7 @@
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import TagEditViewModel from '@ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -17,10 +16,10 @@ const TagEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		initPage();
 
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-		var userRepo = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var tagRepo = repoFactory.tagRepository();
+		var userRepo = repoFactory.userRepository();
 
 		tagRepo
 			.getById(

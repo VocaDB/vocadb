@@ -1,8 +1,7 @@
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import NewsListViewModel from '@ViewModels/NewsListViewModel';
 import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
 import $ from 'jquery';
@@ -16,9 +15,8 @@ declare global {
 
 function initPage(): void {
 	function initRatingButtons(): void {
-		const httpClient = new HttpClient();
-		const urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repo = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		const repo = repoFactory.userRepository();
 		const ratingBar = $('#rating-bar');
 
 		if (!ratingBar.length) {

@@ -1,7 +1,5 @@
-import AdminRepository from '@Repositories/AdminRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import { container } from '@Shared/inversify.config';
 import ManageWebhooksViewModel from '@ViewModels/Admin/ManageWebhooksViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -10,11 +8,8 @@ const AdminManageWebhooks = (webhookEventNames: {
 	[key: string]: string;
 }): void => {
 	$(function () {
-		const httpClient = new HttpClient();
-		var rootPath = vdb.values.baseAddress;
-		var urlMapper = new UrlMapper(rootPath);
-
-		var adminRepo = new AdminRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var adminRepo = repoFactory.adminRepository();
 
 		var viewModel = new ManageWebhooksViewModel(webhookEventNames, adminRepo);
 		ko.applyBindings(viewModel);

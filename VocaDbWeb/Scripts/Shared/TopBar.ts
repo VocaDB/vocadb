@@ -1,9 +1,9 @@
-import UserRepository from '@Repositories/UserRepository';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 
-import HttpClient from './HttpClient';
+import { container } from './inversify.config';
 
 $(() => {
 	$('#globalSearchTerm').autocomplete({
@@ -56,11 +56,8 @@ $(() => {
 export function setLanguagePreferenceCookie(
 	languagePreference: string,
 ): boolean {
-	const httpClient = new HttpClient();
-	var userRepo = new UserRepository(
-		httpClient,
-		new UrlMapper(vdb.values.baseAddress),
-	);
+	var repoFactory = container.get(RepositoryFactory);
+	var userRepo = repoFactory.userRepository();
 	userRepo
 		.updateUserSetting(
 			vdb.values.loggedUserId,

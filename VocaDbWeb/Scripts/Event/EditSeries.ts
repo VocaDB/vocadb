@@ -1,10 +1,9 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '@DataContracts/WebLinkContract';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import ReleaseEventSeriesEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -22,10 +21,10 @@ const EventEditSeries = (model: {
 	webLinks: WebLinkContract[];
 }): void => {
 	$(function () {
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-		var userRepo = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var eventRepo = repoFactory.eventRepository();
+		var userRepo = repoFactory.userRepository();
 
 		var vm = new ReleaseEventSeriesEditViewModel(
 			eventRepo,

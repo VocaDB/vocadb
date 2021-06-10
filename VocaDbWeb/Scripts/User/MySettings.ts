@@ -1,9 +1,7 @@
 import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageContract';
 import WebLinkContract from '@DataContracts/WebLinkContract';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import { container } from '@Shared/inversify.config';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -18,9 +16,8 @@ const UserMySettings = (model: {
 	$(document).ready(function () {
 		$('#tabs').tabs();
 
-		const httpClient = new HttpClient();
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repository = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var repository = repoFactory.userRepository();
 
 		var viewModel = new MySettingsViewModel(
 			repository,

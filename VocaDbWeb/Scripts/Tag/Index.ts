@@ -1,14 +1,13 @@
-import TagRepository from '@Repositories/TagRepository';
-import HttpClient from '@Shared/HttpClient';
-import vdb from '@Shared/VdbStatic';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
+import { container } from '@Shared/inversify.config';
 import TagCreateViewModel from '@ViewModels/Tag/TagCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
 const TagIndex = (): void => {
 	$(function () {
-		const httpClient = new HttpClient();
-		var tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
+		var repoFactory = container.get(RepositoryFactory);
+		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new TagCreateViewModel(tagRepo);
 		ko.applyBindings(viewModel);
 	});

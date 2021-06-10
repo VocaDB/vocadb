@@ -1,10 +1,9 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
+import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
 import $ from 'jquery';
@@ -270,9 +269,9 @@ const TagDetails = (
 			jsonModel.hasMoreChildren,
 		);
 
-		const httpClient = new HttpClient();
-		var repo = new TagRepository(httpClient, vdb.values.baseAddress);
-		var userRepo = new UserRepository(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
+		var repo = repoFactory.tagRepository();
+		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;
 
 		vm = new TagDetailsViewModel(
