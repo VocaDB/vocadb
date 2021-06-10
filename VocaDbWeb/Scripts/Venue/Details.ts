@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
 import $ from 'jquery';
@@ -23,10 +22,7 @@ const VenueDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 
 		var loggedUserId = vdb.values.loggedUserId;
-		const httpClient = new HttpClient();
-		var rootPath = vdb.values.baseAddress;
-		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var venueRepo = repoFactory.venueRepository();
 
 		var vm = new VenueDetailsViewModel(

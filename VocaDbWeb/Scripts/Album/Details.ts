@@ -1,8 +1,8 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import AlbumDetailsViewModel, {
 	AlbumDetailsAjax,
 } from '@ViewModels/Album/AlbumDetailsViewModel';
@@ -164,9 +164,8 @@ const AlbumDetails = (
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

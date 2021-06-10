@@ -1,9 +1,9 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
 import $ from 'jquery';
@@ -28,10 +28,9 @@ const SongListDetails = (
 		var languageSelection = vdb.values.languagePreference;
 		var listId = model.songList.id;
 
-		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

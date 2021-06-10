@@ -1,7 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import RankingsViewModel from '@ViewModels/Song/RankingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -12,9 +12,8 @@ const SongRankings = (): void => {
 	ko.punches.enableAll();
 
 	$(function () {
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var songRepo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var viewModel = new RankingsViewModel(

@@ -1,7 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import $ from 'jquery';
@@ -23,10 +23,9 @@ const UserFavoriteSongs = (model: {
 		var sort = model.sort;
 		var groupByRating = model.groupByRating;
 
-		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var songRepo = repoFactory.songRepository();

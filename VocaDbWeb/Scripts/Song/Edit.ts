@@ -2,9 +2,9 @@ import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -52,10 +52,9 @@ const SongEdit = (
 		};
 
 		var editedModel = model.editedSong;
-		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();

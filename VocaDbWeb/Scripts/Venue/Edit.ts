@@ -1,8 +1,8 @@
 import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import { container } from '@Shared/inversify.config';
 import VenueEditViewModel from '@ViewModels/Venue/VenueEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -15,9 +15,8 @@ function initPage(): void {
 
 const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
-		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
+		var repoFactory = container.get(RepositoryFactory);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = model;

@@ -1,5 +1,7 @@
 import HttpClient from '@Shared/HttpClient';
 import UrlMapperFactory from '@Shared/UrlMapperFactory';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';
@@ -15,6 +17,7 @@ import TagRepository from './TagRepository';
 import UserRepository from './UserRepository';
 import VenueRepository from './VenueRepository';
 
+@injectable()
 export default class RepositoryFactory {
 	private readonly adminRepositories: { [key: string]: AdminRepository } = {};
 	private readonly albumRepositories: { [key: string]: AlbumRepository } = {};
