@@ -165,7 +165,7 @@ const AlbumDetails = (
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

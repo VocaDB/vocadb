@@ -16,7 +16,7 @@ const UserMySettings = (model: {
 	$(document).ready(function () {
 		$('#tabs').tabs();
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repository = repoFactory.userRepository();
 
 		var viewModel = new MySettingsViewModel(

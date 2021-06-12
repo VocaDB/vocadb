@@ -269,7 +269,7 @@ const TagDetails = (
 			jsonModel.hasMoreChildren,
 		);
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.tagRepository();
 		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;

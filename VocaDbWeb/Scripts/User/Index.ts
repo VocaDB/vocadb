@@ -14,7 +14,7 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 
 		var filter = model.filter;
 		var groupId = model.groupId;
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(

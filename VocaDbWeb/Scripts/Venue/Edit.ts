@@ -16,7 +16,7 @@ function initPage(): void {
 const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = model;

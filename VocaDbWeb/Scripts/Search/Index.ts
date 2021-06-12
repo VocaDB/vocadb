@@ -60,7 +60,7 @@ const SearchIndex = (model: {
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var resourceRepo = repoFactory.resourceRepository();
 		var entryRepo = repoFactory.entryRepository();
 		var artistRepo = repoFactory.artistRepository();

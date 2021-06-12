@@ -8,7 +8,7 @@ const AdminManageTagMappings = (): void => {
 	$(function () {
 		ko.punches.enableAll();
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var tagRepo = repoFactory.tagRepository();
 
 		var viewModel = new ManageTagMappingsViewModel(tagRepo);

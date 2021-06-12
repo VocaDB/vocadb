@@ -6,7 +6,7 @@ import ko from 'knockout';
 
 const AlbumDeleted = (): void => {
 	$(function () {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.albumRepository();
 		var viewModel = new DeletedAlbumsViewModel(repo);
 		ko.applyBindings(viewModel);

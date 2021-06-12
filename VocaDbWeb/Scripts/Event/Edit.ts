@@ -22,7 +22,7 @@ const EventEdit = (
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();

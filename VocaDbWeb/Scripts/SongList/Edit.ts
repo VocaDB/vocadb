@@ -32,7 +32,7 @@ function initPage(
 const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		initPage(repoFactory, urlMapper, model.id);
 	});
 };

@@ -13,7 +13,7 @@ const SongRankings = (): void => {
 
 	$(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var songRepo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var viewModel = new RankingsViewModel(

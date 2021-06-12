@@ -8,7 +8,7 @@ const AdminManageWebhooks = (webhookEventNames: {
 	[key: string]: string;
 }): void => {
 	$(function () {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var adminRepo = repoFactory.adminRepository();
 
 		var viewModel = new ManageWebhooksViewModel(webhookEventNames, adminRepo);

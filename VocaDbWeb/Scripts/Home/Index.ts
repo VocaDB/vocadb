@@ -15,7 +15,7 @@ declare global {
 
 function initPage(): void {
 	function initRatingButtons(): void {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		const repo = repoFactory.userRepository();
 		const ratingBar = $('#rating-bar');
 

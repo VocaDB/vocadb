@@ -32,7 +32,7 @@ const ArtistEdit = (
 		};
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		var userRepo = repoFactory.userRepository();
 		var editedModel = model.editedArtist;

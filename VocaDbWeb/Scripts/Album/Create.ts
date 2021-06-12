@@ -6,7 +6,7 @@ import ko from 'knockout';
 
 const AlbumCreate = (): void => {
 	$(function () {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var artistRepo = repoFactory.artistRepository();
 

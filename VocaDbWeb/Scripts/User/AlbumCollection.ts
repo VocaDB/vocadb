@@ -18,7 +18,7 @@ const UserAlbumCollection = (
 		var lang = vdb.values.languagePreference;
 		var loggedUserId = model.user.id;
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var resourceRepo = repoFactory.resourceRepository();

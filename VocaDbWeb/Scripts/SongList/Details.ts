@@ -30,7 +30,7 @@ const SongListDetails = (
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

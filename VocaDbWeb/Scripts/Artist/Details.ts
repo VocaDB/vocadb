@@ -96,7 +96,7 @@ const ArtistDetails = (
 		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		var albumRepository = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();

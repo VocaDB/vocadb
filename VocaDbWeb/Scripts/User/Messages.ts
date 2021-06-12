@@ -18,7 +18,7 @@ const UserMessages = (
 	$(function () {
 		$('#tabs').tabs();
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repository = repoFactory.userRepository();
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(

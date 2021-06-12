@@ -7,7 +7,7 @@ import ko from 'knockout';
 const SongCreate = (model: any): void => {
 	$(document).ready(function () {
 		ko.punches.enableAll();
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();

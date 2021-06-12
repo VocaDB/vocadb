@@ -22,7 +22,7 @@ const EventViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var rep = repoFactory.eventRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.releaseEvent.id,

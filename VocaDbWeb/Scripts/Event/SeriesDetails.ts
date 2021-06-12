@@ -14,7 +14,7 @@ const EventSeriesDetails = (model: {
 		$('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var tags = model.tags;
 

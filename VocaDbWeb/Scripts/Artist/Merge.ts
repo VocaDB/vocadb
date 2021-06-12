@@ -6,7 +6,7 @@ import ko from 'knockout';
 
 const ArtistMerge = (model: { id: number }): void => {
 	$(function () {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.artistRepository();
 		var vm = new ArtistMergeViewModel(repo, model.id);
 		ko.applyBindings(vm);

@@ -46,7 +46,7 @@ const AlbumEdit = (
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

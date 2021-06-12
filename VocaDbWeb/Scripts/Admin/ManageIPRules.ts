@@ -14,7 +14,7 @@ const AdminManageIPRules = (model: IPRuleContract[]): void => {
 		ko.punches.enableAll();
 
 		var rules = model;
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.adminRepository();
 
 		var viewModel = new ManageIPRulesViewModel(rules, repo);

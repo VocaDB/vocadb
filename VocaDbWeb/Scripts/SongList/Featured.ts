@@ -23,7 +23,7 @@ const SongListFeatured = (
 		var tagIds = model.tagId;
 
 		var lang = vdb.values.languagePreference;
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();

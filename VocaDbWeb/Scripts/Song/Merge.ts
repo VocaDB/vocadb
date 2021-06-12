@@ -7,7 +7,7 @@ import ko from 'knockout';
 
 const SongMerge = (model: SongContract): void => {
 	$(function () {
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var data = model;
 		var vm = new SongMergeViewModel(repo, data);

@@ -56,7 +56,7 @@ $(() => {
 export function setLanguagePreferenceCookie(
 	languagePreference: string,
 ): boolean {
-	var repoFactory = container.get(RepositoryFactory);
+	const repoFactory = container.get(RepositoryFactory);
 	var userRepo = repoFactory.userRepository();
 	userRepo
 		.updateUserSetting(

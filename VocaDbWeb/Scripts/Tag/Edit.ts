@@ -17,7 +17,7 @@ const TagEdit = (model: { id: number }): void => {
 		initPage();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var tagRepo = repoFactory.tagRepository();
 		var userRepo = repoFactory.userRepository();
 

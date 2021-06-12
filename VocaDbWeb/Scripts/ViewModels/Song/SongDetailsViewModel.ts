@@ -127,7 +127,7 @@ export default class SongDetailsViewModel {
 
 		const { siteUrl, id } = match;
 
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo

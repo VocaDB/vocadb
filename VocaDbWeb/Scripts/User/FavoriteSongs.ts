@@ -25,7 +25,7 @@ const UserFavoriteSongs = (model: {
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repoFactory = container.get(RepositoryFactory);
+		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var songRepo = repoFactory.songRepository();
