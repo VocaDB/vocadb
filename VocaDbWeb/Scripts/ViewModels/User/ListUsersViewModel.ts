@@ -7,7 +7,7 @@ import ko, { Observable } from 'knockout';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class ListUsersViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: UserRepository,
 		resourceRepo: ResourceRepository,
 		cultureCode: string,

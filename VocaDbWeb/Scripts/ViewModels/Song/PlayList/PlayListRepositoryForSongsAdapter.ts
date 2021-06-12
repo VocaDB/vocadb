@@ -14,7 +14,7 @@ import { ISongForPlayList } from './PlayListViewModel';
 
 export default class PlayListRepositoryForSongsAdapter
 	implements IPlayListRepository {
-	constructor(
+	public constructor(
 		private songRepo: SongRepository,
 		private query: Observable<string>,
 		private sort: Observable<string>,

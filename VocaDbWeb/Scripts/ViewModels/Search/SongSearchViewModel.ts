@@ -28,7 +28,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		urlMapper: UrlMapper,
 		lang: ContentLanguagePreference,

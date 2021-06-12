@@ -9,7 +9,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		lang: ContentLanguagePreference,
 		private entryRepo: EntryRepository,

@@ -30,7 +30,7 @@ export default class AlbumRepository
 
 	private readonly urlMapper: UrlMapper;
 
-	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -140,7 +140,7 @@ export default class AlbumRepository
 		});
 	};
 
-	getList = (
+	public getList = (
 		paging: PagingProperties,
 		lang: ContentLanguagePreference,
 		query: string,

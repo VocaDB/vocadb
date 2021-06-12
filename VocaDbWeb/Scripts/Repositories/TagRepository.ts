@@ -19,7 +19,7 @@ import EntryCommentRepository from './EntryCommentRepository';
 export default class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;
 
-	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 		this.urlMapper = new UrlMapper(baseUrl);
 	}

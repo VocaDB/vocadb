@@ -7,7 +7,7 @@ import ko, { Observable } from 'knockout';
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 export default class SelfDescriptionViewModel {
-	constructor(
+	public constructor(
 		author: ArtistApiContract,
 		text: string,
 		artistRepo: ArtistRepository,

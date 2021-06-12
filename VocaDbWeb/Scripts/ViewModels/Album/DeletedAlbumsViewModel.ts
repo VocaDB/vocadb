@@ -6,7 +6,7 @@ import ko from 'knockout';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class DeletedAlbumsViewModel {
-	constructor(private albumRepo: AlbumRepository) {
+	public constructor(private albumRepo: AlbumRepository) {
 		this.updateResults(true);
 		this.paging.page.subscribe(() => this.updateResults(false));
 		this.paging.pageSize.subscribe(() => this.updateResults(true));

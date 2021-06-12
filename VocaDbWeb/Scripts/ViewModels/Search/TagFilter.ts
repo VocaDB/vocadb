@@ -6,7 +6,7 @@ export default class TagFilter {
 		return new TagFilter(tag.id, tag.name, tag.urlSlug);
 	};
 
-	constructor(public id: number, name?: string, urlSlug?: string) {
+	public constructor(public id: number, name?: string, urlSlug?: string) {
 		this.name(name!);
 		this.urlSlug(urlSlug!);
 	}

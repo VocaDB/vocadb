@@ -5,9 +5,9 @@ import HttpClient from '@Shared/HttpClient';
 import FakePromise from './FakePromise';
 
 export default class FakeArtistRepository extends ArtistRepository {
-	result: ArtistContract = null!;
+	public result: ArtistContract = null!;
 
-	constructor() {
+	public constructor() {
 		super(new HttpClient(), '');
 
 		this.getOne = (id, lang): Promise<ArtistContract> => {

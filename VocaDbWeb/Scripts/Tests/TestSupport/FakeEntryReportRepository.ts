@@ -7,7 +7,7 @@ import FakePromise from './FakePromise';
 export default class FakeEntryReportRepository extends EntryReportRepository {
 	public entryReportCount!: number;
 
-	constructor() {
+	public constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
 		this.getNewReportCount = (): Promise<number> => {

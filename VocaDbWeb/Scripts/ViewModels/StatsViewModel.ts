@@ -31,7 +31,7 @@ export default class StatsViewModel {
 		);
 	};
 
-	constructor() {
+	public constructor() {
 		this.categories = [
 			{
 				name: 'Producers',

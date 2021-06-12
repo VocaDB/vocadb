@@ -22,11 +22,11 @@ import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 // View model for song creation view
 export default class SongCreateViewModel {
-	addArtist: (artistId?: number) => void;
+	public addArtist: (artistId?: number) => void;
 
-	artistSearchParams: ArtistAutoCompleteParams;
+	public artistSearchParams: ArtistAutoCompleteParams;
 
-	artists = ko.observableArray<ArtistContract>([]);
+	public artists = ko.observableArray<ArtistContract>([]);
 
 	public artistsWithRoles: Computed<ArtistForAlbumContract[]> = ko.computed(
 		() =>
@@ -105,39 +105,39 @@ export default class SongCreateViewModel {
 		this.songTypeTag(tag);
 	};
 
-	dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
+	public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
-	isDuplicatePV: Computed<boolean>;
+	public isDuplicatePV: Computed<boolean>;
 
-	nameOriginal = ko.observable('');
-	nameRomaji = ko.observable('');
-	nameEnglish = ko.observable('');
+	public nameOriginal = ko.observable('');
+	public nameRomaji = ko.observable('');
+	public nameEnglish = ko.observable('');
 
-	originalSongSuggestions: Computed<DuplicateEntryResultContract[]>;
+	public originalSongSuggestions: Computed<DuplicateEntryResultContract[]>;
 
-	originalVersion: BasicEntryLinkViewModel<SongContract>;
-	originalVersionSearchParams: SongAutoCompleteParams;
+	public originalVersion: BasicEntryLinkViewModel<SongContract>;
+	public originalVersionSearchParams: SongAutoCompleteParams;
 
-	pv1 = ko.observable('');
-	pv2 = ko.observable('');
-	songType = ko.observable('Original');
-	songTypeTag = ko.observable<TagApiContract>(null!);
-	songTypeName = ko.computed(() => this.songTypeTag()?.name);
-	songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
-	songTypeTagUrl = ko.computed(() =>
+	public pv1 = ko.observable('');
+	public pv2 = ko.observable('');
+	public songType = ko.observable('Original');
+	public songTypeTag = ko.observable<TagApiContract>(null!);
+	public songTypeName = ko.computed(() => this.songTypeTag()?.name);
+	public songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+	public songTypeTagUrl = ko.computed(() =>
 		EntryUrlMapper.details_tag_contract(this.songTypeTag()!),
 	);
 
-	coverArtists: Computed<ArtistContract[]>;
+	public coverArtists: Computed<ArtistContract[]>;
 
-	canHaveOriginalVersion = ko.computed(
+	public canHaveOriginalVersion = ko.computed(
 		() =>
 			SongType[this.songType() as keyof typeof SongType] !== SongType.Original,
 	);
 
-	hasName: Computed<boolean>;
+	public hasName: Computed<boolean>;
 
-	selectOriginal = (dupe: DuplicateEntryResultContract): void => {
+	public selectOriginal = (dupe: DuplicateEntryResultContract): void => {
 		this.songRepository
 			.getOne(dupe.entry.id, vdb.values.languagePreference)
 			.then((song) => this.originalVersion.entry(song));
@@ -150,9 +150,9 @@ export default class SongCreateViewModel {
 
 	public submitting = ko.observable(false);
 
-	removeArtist: (artist: ArtistContract) => void;
+	public removeArtist: (artist: ArtistContract) => void;
 
-	constructor(
+	public constructor(
 		private readonly songRepository: SongRepository,
 		artistRepository: ArtistRepository,
 		private readonly tagRepository: TagRepository,

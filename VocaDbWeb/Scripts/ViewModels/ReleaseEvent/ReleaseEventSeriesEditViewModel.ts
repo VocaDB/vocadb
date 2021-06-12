@@ -14,7 +14,7 @@ import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventSeriesEditViewModel {
-	constructor(
+	public constructor(
 		private readonly eventRepository: ReleaseEventRepository,
 		userRepository: UserRepository,
 		private readonly urlMapper: UrlMapper,

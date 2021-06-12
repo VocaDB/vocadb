@@ -18,7 +18,7 @@ enum SongListSortRule {
 }
 
 export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
-	constructor(
+	public constructor(
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		lang: ContentLanguagePreference,

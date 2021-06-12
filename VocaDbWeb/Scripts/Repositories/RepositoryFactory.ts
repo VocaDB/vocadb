@@ -41,7 +41,7 @@ export default class RepositoryFactory {
 	private readonly userRepositories: { [key: string]: UserRepository } = {};
 	private readonly venueRepositories: { [key: string]: VenueRepository } = {};
 
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapperFactory: UrlMapperFactory,
 	) {}

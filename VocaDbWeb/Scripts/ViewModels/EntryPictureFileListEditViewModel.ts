@@ -5,7 +5,7 @@ import _ from 'lodash';
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
 export default class EntryPictureFileListEditViewModel {
-	constructor(pictures: EntryPictureFileContract[]) {
+	public constructor(pictures: EntryPictureFileContract[]) {
 		this.pictures = ko.observableArray(
 			_.map(pictures, (picture) => new EntryPictureFileEditViewModel(picture)),
 		);

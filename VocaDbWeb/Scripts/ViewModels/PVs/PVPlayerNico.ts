@@ -69,7 +69,7 @@ export default class PVPlayerNico implements IPVPlayer {
 	private currentPv: string = null!;
 	private loadedPv!: string;
 
-	constructor(
+	public constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: HTMLElement,
 		public songFinishedCallback: () => void = null!,

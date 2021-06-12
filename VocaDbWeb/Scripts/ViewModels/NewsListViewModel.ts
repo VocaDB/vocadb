@@ -4,7 +4,7 @@ import ko from 'knockout';
 import _ from 'lodash';
 
 export default class NewsListViewModel {
-	constructor(readonly blogUrl: string) {
+	public constructor(public readonly blogUrl: string) {
 		if (!blogUrl) {
 			this.loaded(true);
 			return;
@@ -38,9 +38,9 @@ export default class NewsListViewModel {
 			.always(() => this.loaded(true));
 	}
 
-	loaded = ko.observable(false);
+	public loaded = ko.observable(false);
 
-	posts = ko.observableArray<WordpressPost>();
+	public posts = ko.observableArray<WordpressPost>();
 }
 
 export interface WordpressResponse {

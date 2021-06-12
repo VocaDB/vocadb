@@ -34,7 +34,7 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
-	constructor(
+	public constructor(
 		urlMapper: UrlMapper,
 		private songListRepo: SongListRepository,
 		private songRepo: SongRepository,

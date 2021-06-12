@@ -51,7 +51,7 @@ export default class AlbumEditViewModel {
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
 	// customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-	addArtist = (artistId?: number, customArtistName?: string): void => {
+	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
 				.getOne(artistId, vdb.values.languagePreference)
@@ -89,7 +89,7 @@ export default class AlbumEditViewModel {
 
 	private artistsForTracks: () => ArtistContract[];
 
-	artistSearchParams: ArtistAutoCompleteParams;
+	public artistSearchParams: ArtistAutoCompleteParams;
 
 	// List of artist links for this album.
 	public artistLinks: ObservableArray<ArtistForAlbumEditViewModel>;
@@ -274,7 +274,7 @@ export default class AlbumEditViewModel {
 	public validationError_needType: Computed<boolean>;
 	public validationError_unspecifiedNames: Computed<boolean>;
 
-	constructor(
+	public constructor(
 		public repository: AlbumRepository,
 		songRepository: SongRepository,
 		private artistRepository: ArtistRepository,
@@ -636,12 +636,12 @@ export default class AlbumEditViewModel {
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionViewModel {
 	// Whether this artist has been selected.
-	selected: Observable<boolean>;
+	public selected: Observable<boolean>;
 
 	// Whether this selection is visible according to current filter.
-	visible: Computed<boolean>;
+	public visible: Computed<boolean>;
 
-	constructor(
+	public constructor(
 		public artist: ArtistContract,
 		selected: boolean,
 		filter: Observable<string>,
@@ -665,18 +665,18 @@ export class TrackArtistSelectionViewModel {
 // View model for the track properties dialog, for editing artists for one or more tracks.
 export class TrackPropertiesViewModel {
 	// Selectable artists.
-	artistSelections: TrackArtistSelectionViewModel[];
+	public artistSelections: TrackArtistSelectionViewModel[];
 
 	// Artist filter string.
-	filter: Observable<string> = ko.observable('');
+	public filter: Observable<string> = ko.observable('');
 
 	// At least one artist selected for this track.
-	somethingSelected: Computed<boolean>;
+	public somethingSelected: Computed<boolean>;
 
 	// At least one artist selectable (not selected and visible).
-	somethingSelectable: Computed<boolean>;
+	public somethingSelectable: Computed<boolean>;
 
-	constructor(
+	public constructor(
 		artists: ArtistContract[],
 		public song: SongInAlbumEditViewModel,
 	) {

@@ -7,7 +7,7 @@ import { IPVPlayer } from './PVPlayerViewModel';
 import PVPlayerYoutube from './PVPlayerYoutube';
 
 export default class PVPlayersFactory {
-	constructor(
+	public constructor(
 		private wrapperElement: HTMLElement,
 		public playerElementId: string = 'pv-player',
 	) {}

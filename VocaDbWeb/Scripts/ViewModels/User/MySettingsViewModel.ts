@@ -9,21 +9,21 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 // User my settings view model
 export default class MySettingsViewModel {
-	aboutMe: Observable<string>;
+	public aboutMe: Observable<string>;
 
-	canVerifyEmail: Computed<boolean>;
+	public canVerifyEmail: Computed<boolean>;
 
-	email: Observable<string>;
+	public email: Observable<string>;
 
-	emailVerified: Observable<boolean>;
+	public emailVerified: Observable<boolean>;
 
-	emailVerificationSent = ko.observable(false);
+	public emailVerificationSent = ko.observable(false);
 
 	public knownLanguages: ObservableArray<UserKnownLanguageEditViewModel>;
 
-	webLinksViewModel: WebLinksEditViewModel;
+	public webLinksViewModel: WebLinksEditViewModel;
 
-	constructor(
+	public constructor(
 		private userRepository: UserRepository,
 		aboutMe: string,
 		email: string,
@@ -49,7 +49,7 @@ export default class MySettingsViewModel {
 		this.knownLanguages.push(new UserKnownLanguageEditViewModel());
 	};
 
-	verifyEmail = (): void => {
+	public verifyEmail = (): void => {
 		this.emailVerificationSent(true);
 		this.userRepository.requestEmailVerification().then(() => {
 			ui.showSuccessMessage('Message sent, please check your email');
@@ -58,7 +58,7 @@ export default class MySettingsViewModel {
 }
 
 export class UserKnownLanguageEditViewModel {
-	constructor(contract?: UserKnownLanguageContract) {
+	public constructor(contract?: UserKnownLanguageContract) {
 		this.cultureCode = ko.observable(
 			contract != null ? contract.cultureCode : '',
 		);

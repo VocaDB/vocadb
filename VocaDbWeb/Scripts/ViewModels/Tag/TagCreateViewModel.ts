@@ -4,7 +4,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ko from 'knockout';
 
 export default class TagCreateViewModel {
-	constructor(private tagRepo: TagRepository) {
+	public constructor(private tagRepo: TagRepository) {
 		this.newTagName.subscribe((val) => {
 			if (!val) {
 				this.duplicateName(false);

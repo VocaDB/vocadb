@@ -3,7 +3,7 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import ko, { Observable } from 'knockout';
 
 export default class CommentViewModel {
-	constructor(
+	public constructor(
 		contract: CommentContract,
 		public canBeDeleted: boolean,
 		public canBeEdited: boolean,

@@ -5,7 +5,7 @@ import vdb from '@Shared/VdbStatic';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 
 export default class ArchivedSongViewModel {
-	constructor(
+	public constructor(
 		songId: number,
 		versionNumber: number,
 		private repository: SongRepository,

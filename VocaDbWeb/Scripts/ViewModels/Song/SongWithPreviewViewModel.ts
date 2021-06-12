@@ -31,7 +31,7 @@ export default class SongWithPreviewViewModel {
 	// Toggle preview status.
 	public togglePreview: () => void;
 
-	constructor(
+	public constructor(
 		repository: SongRepository,
 		userRepository: UserRepository,
 		public songId: number,

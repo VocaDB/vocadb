@@ -3,7 +3,7 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
 export default class ResourceRepository {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private baseUrl: string,
 	) {}

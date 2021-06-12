@@ -12,7 +12,7 @@ import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 import EntryCommentRepository from './EntryCommentRepository';
 
 export default class SongListRepository {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}

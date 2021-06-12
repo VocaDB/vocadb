@@ -26,7 +26,7 @@ export default class SongInAlbumEditViewModel {
 
 	public trackNumber: Observable<number>;
 
-	constructor(data: SongInAlbumEditContract) {
+	public constructor(data: SongInAlbumEditContract) {
 		this.artists = ko.observableArray(data.artists);
 		this.artistString = ko.observable(data.artistString);
 		this.discNumber = ko.observable(data.discNumber);

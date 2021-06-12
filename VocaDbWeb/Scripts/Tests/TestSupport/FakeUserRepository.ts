@@ -15,7 +15,7 @@ export default class FakeUserRepository extends UserRepository {
 	public songId!: number;
 	public rating!: SongVoteRating;
 
-	constructor() {
+	public constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
 		this.getMessage = (messageId): Promise<UserMessageSummaryContract> => {

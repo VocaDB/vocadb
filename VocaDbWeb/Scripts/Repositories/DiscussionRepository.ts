@@ -9,7 +9,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import ICommentRepository from './ICommentRepository';
 
 export default class DiscussionRepository implements ICommentRepository {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}

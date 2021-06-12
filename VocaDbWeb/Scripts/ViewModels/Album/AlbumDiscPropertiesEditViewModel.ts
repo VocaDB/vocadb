@@ -4,7 +4,7 @@ import ko, { Observable } from 'knockout';
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
 export default class AlbumDiscPropertiesEditViewModel {
-	constructor(contract?: AlbumDiscPropertiesContract) {
+	public constructor(contract?: AlbumDiscPropertiesContract) {
 		if (contract) {
 			this.id = contract.id;
 			this.mediaType = ko.observable(contract.mediaType);
@@ -15,18 +15,18 @@ export default class AlbumDiscPropertiesEditViewModel {
 		}
 	}
 
-	id!: number;
+	public id!: number;
 
-	mediaType: Observable<string>;
+	public mediaType: Observable<string>;
 
-	name: Observable<string>;
+	public name: Observable<string>;
 }
 
 export class AlbumDiscPropertiesListEditViewModel extends BasicListEditViewModel<
 	AlbumDiscPropertiesEditViewModel,
 	AlbumDiscPropertiesContract
 > {
-	constructor(contracts: AlbumDiscPropertiesContract[]) {
+	public constructor(contracts: AlbumDiscPropertiesContract[]) {
 		super(AlbumDiscPropertiesEditViewModel, contracts);
 	}
 }

@@ -17,7 +17,7 @@ export default class TagEditViewModel {
 	// Bitmask for all possible entry types (all bits 1)
 	public static readonly allEntryTypes = 1073741823;
 
-	constructor(
+	public constructor(
 		private readonly urlMapper: UrlMapper,
 		userRepository: UserRepository,
 		contract: TagApiContract,

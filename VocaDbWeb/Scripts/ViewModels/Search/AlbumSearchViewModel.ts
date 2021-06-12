@@ -12,7 +12,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		private unknownPictureUrl: string,
 		lang: ContentLanguagePreference,

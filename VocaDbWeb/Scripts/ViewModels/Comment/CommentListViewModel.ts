@@ -18,7 +18,7 @@ enum CommentSortRule {
 }
 
 export default class CommentListViewModel {
-	constructor(
+	public constructor(
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
 		private lang: ContentLanguagePreference,

@@ -10,7 +10,7 @@ import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
 import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 
 export default class DiscussionIndexViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: DiscussionRepository,
 		private readonly urlMapper: UrlMapper,
 		private readonly canDeleteAllComments: boolean,

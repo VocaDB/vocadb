@@ -10,7 +10,7 @@ import _ from 'lodash';
 import SongListsBaseViewModel from './SongListsBaseViewModel';
 
 export default class FeaturedSongListsViewModel {
-	constructor(
+	public constructor(
 		listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
@@ -53,7 +53,7 @@ export default class FeaturedSongListsViewModel {
 }
 
 export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
-	constructor(
+	public constructor(
 		private listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,

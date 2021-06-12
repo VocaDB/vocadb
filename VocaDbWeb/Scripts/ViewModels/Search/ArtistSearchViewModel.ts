@@ -9,7 +9,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		lang: ContentLanguagePreference,
 		private readonly artistRepo: ArtistRepository,

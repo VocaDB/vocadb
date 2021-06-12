@@ -10,7 +10,10 @@ import ko from 'knockout';
 import _ from 'lodash';
 
 export default class ImportSongListViewModel {
-	constructor(private httpClient: HttpClient, private urlMapper: UrlMapper) {}
+	public constructor(
+		private httpClient: HttpClient,
+		private urlMapper: UrlMapper,
+	) {}
 
 	public description = ko.observable('');
 

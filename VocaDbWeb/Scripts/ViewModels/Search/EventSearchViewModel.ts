@@ -9,7 +9,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		lang: ContentLanguagePreference,
 		private readonly eventRepo: ReleaseEventRepository,

@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { IPVPlayer } from './PVPlayerViewModel';
 
 export default class PVPlayerSoundCloud implements IPVPlayer {
-	constructor(
+	public constructor(
 		private playerElementId: string,
 		private wrapperElement: HTMLElement,
 		public songFinishedCallback: () => void = null!,

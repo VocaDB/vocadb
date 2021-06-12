@@ -153,7 +153,7 @@ export default class UserDetailsViewModel {
 
 	public songLists: UserSongListsViewModel;
 
-	constructor(
+	public constructor(
 		private readonly userId: number,
 		cultureCode: string,
 		private loggedUserId: number,
@@ -212,7 +212,7 @@ export default class UserDetailsViewModel {
 }
 
 export class UserSongListsViewModel extends SongListsBaseViewModel {
-	constructor(
+	public constructor(
 		private readonly userId: number,
 		private readonly userRepo: UserRepository,
 		resourceRepo: ResourceRepository,

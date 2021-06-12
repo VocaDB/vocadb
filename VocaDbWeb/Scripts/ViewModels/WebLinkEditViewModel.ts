@@ -14,7 +14,7 @@ export default class WebLinkEditViewModel {
 
 	public url: Observable<string>;
 
-	constructor(data?: WebLinkContract) {
+	public constructor(data?: WebLinkContract) {
 		if (data) {
 			this.category = ko.observable(data.category);
 			this.description = ko.observable(data.description);

@@ -9,7 +9,7 @@ import _ from 'lodash';
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
 export default class LyricsForSongEditViewModel {
-	constructor(contract?: LyricsForSongContract) {
+	public constructor(contract?: LyricsForSongContract) {
 		if (contract) {
 			this.id = ko.observable(contract.id!);
 			this.cultureCode = ko.observable(contract.cultureCode!);
@@ -88,7 +88,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
 		return vm;
 	};
 
-	constructor(contracts: LyricsForSongContract[]) {
+	public constructor(contracts: LyricsForSongContract[]) {
 		super(LyricsForSongEditViewModel, contracts);
 		this.original = this.find('Original');
 		this.romanized = this.find('Romanized');

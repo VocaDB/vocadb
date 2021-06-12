@@ -21,7 +21,7 @@ enum ActivityEntrySortRule {
 }
 
 export default class ActivityEntryListViewModel {
-	constructor(
+	public constructor(
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
 		private lang: ContentLanguagePreference,

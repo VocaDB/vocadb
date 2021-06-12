@@ -50,7 +50,7 @@ export default class TopBarViewModel {
 	// getNewReportsCount: whether to load new reports count (for mods only).
 	// entryReportRepository: entry reports repository.
 	// userRepository: user repository.
-	constructor(
+	public constructor(
 		entryTypeTranslations: { [x: string]: string },
 		entryType: string,
 		searchTerm: string,

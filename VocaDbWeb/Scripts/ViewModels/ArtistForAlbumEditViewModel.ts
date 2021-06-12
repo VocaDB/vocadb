@@ -44,7 +44,10 @@ export default class ArtistForAlbumEditViewModel
 		};
 	};
 
-	constructor(repository: AlbumRepository, data: ArtistForAlbumContract) {
+	public constructor(
+		repository: AlbumRepository,
+		data: ArtistForAlbumContract,
+	) {
 		this.artist = data.artist;
 		this.id = data.id!;
 		this.isCustomName = data.isCustomName!;

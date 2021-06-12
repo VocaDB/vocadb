@@ -80,7 +80,7 @@ export default class ArtistHelper {
 	}
 
 	// Checks whether an artist type with possible custom roles is to be considered a producer
-	static isProducerRoleType(
+	public static isProducerRoleType(
 		artistType: ArtistType,
 		roles: ArtistRoles[],
 		focus: ContentFocus,
@@ -104,7 +104,7 @@ export default class ArtistHelper {
 		return res;
 	}
 
-	static isProducerRole(
+	public static isProducerRole(
 		artist: ArtistContract,
 		roles: ArtistRoles[],
 		focus: ContentFocus,
@@ -119,7 +119,7 @@ export default class ArtistHelper {
 	}
 
 	// Whether an artist type with default roles is to be considered a producer
-	static isProducerType(
+	public static isProducerType(
 		artistType: ArtistType | string,
 		focus: ContentFocus,
 	): boolean {
@@ -138,7 +138,7 @@ export default class ArtistHelper {
 		);
 	}
 
-	static isValidForPersonalDescription(
+	public static isValidForPersonalDescription(
 		artistLink: ArtistForAlbumContract,
 	): boolean {
 		if (!artistLink.artist || artistLink.isSupport) return false;
@@ -174,7 +174,7 @@ export default class ArtistHelper {
 		return _.some(validRoles, (r) => _.includes(rolesArray, r));
 	}
 
-	static isVocalistRoleType(
+	public static isVocalistRoleType(
 		artistType: ArtistType,
 		roles: ArtistRoles[],
 	): boolean {
@@ -190,7 +190,10 @@ export default class ArtistHelper {
 		return res;
 	}
 
-	static isVocalistRole(artist: ArtistContract, roles: ArtistRoles[]): boolean {
+	public static isVocalistRole(
+		artist: ArtistContract,
+		roles: ArtistRoles[],
+	): boolean {
 		return ArtistHelper.isVocalistRoleType(
 			artist != null
 				? ArtistType[artist.artistType as keyof typeof ArtistType]
@@ -199,7 +202,7 @@ export default class ArtistHelper {
 		);
 	}
 
-	static isVocalistType(artistType: ArtistType): boolean {
+	public static isVocalistType(artistType: ArtistType): boolean {
 		return _.includes(ArtistHelper.vocalistTypes, artistType);
 	}
 

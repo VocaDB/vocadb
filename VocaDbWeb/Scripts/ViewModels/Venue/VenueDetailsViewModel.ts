@@ -6,7 +6,7 @@ import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 
 export default class VenueDetailsViewModel {
-	constructor(
+	public constructor(
 		repo: VenueRepository,
 		reportTypes: IEntryReportType[],
 		public loggedUserId: number,

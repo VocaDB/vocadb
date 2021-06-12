@@ -9,7 +9,7 @@ export default class BasicEntryLinkViewModel<
 > {
 	// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 	// entryFunc: function for loading the entry asynchronously by Id.
-	constructor(
+	public constructor(
 		entry?: TEntry,
 		entryFunc?: (entryId: number, callback: (entry: TEntry) => void) => void,
 	) {

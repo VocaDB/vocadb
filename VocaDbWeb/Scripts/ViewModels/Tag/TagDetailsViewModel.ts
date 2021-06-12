@@ -11,7 +11,7 @@ import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 
 export default class TagDetailsViewModel {
-	constructor(
+	public constructor(
 		repo: TagRepository,
 		private userRepo: UserRepository,
 		latestComments: CommentContract[],

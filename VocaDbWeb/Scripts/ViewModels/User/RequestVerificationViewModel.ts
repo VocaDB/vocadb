@@ -5,7 +5,7 @@ import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 export default class RequestVerificationViewModel {
-	constructor(private readonly artistRepository: ArtistRepository) {}
+	public constructor(private readonly artistRepository: ArtistRepository) {}
 
 	public clearArtist = (): void => {
 		this.selectedArtist(null!);

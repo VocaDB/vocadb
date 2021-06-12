@@ -9,7 +9,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import BaseRepository from './BaseRepository';
 
 export default class VenueRepository extends BaseRepository {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {

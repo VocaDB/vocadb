@@ -11,21 +11,21 @@ import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
 
 export class NewMessageViewModel {
-	constructor() {
+	public constructor() {
 		this.receiver.id.subscribe(() => this.isReceiverInvalid(false));
 	}
 
-	body = ko.observable<string>('');
+	public body = ko.observable<string>('');
 
-	highPriority = ko.observable(false);
+	public highPriority = ko.observable(false);
 
-	isReceiverInvalid = ko.observable(false);
+	public isReceiverInvalid = ko.observable(false);
 
-	isSending = ko.observable(false);
+	public isSending = ko.observable(false);
 
-	receiver = new BasicEntryLinkViewModel<UserApiContract>();
+	public receiver = new BasicEntryLinkViewModel<UserApiContract>();
 
-	subject = ko.observable<string>('');
+	public subject = ko.observable<string>('');
 
 	public clear = (): void => {
 		this.body('');
@@ -47,7 +47,7 @@ export class NewMessageViewModel {
 }
 
 export default class UserMessagesViewModel {
-	constructor(
+	public constructor(
 		private readonly userRepository: UserRepository,
 		private readonly userId: number,
 		inboxType: UserInboxType,
@@ -111,15 +111,15 @@ export default class UserMessagesViewModel {
 
 	public messageSent: () => void = null!;
 
-	newMessageViewModel = new NewMessageViewModel();
+	public newMessageViewModel = new NewMessageViewModel();
 
-	notifications: UserMessageFolderViewModel;
+	public notifications: UserMessageFolderViewModel;
 
-	receivedMessages: UserMessageFolderViewModel;
+	public receivedMessages: UserMessageFolderViewModel;
 
-	sentMessages: UserMessageFolderViewModel;
+	public sentMessages: UserMessageFolderViewModel;
 
-	reply = (): void => {
+	public reply = (): void => {
 		if (!this.selectedMessage()) throw Error('No message selected');
 
 		var msg = this.selectedMessage()!;
@@ -133,11 +133,11 @@ export default class UserMessagesViewModel {
 		this.selectTab('#composeTab');
 	};
 
-	selectedMessage = ko.observable<UserMessageViewModel>();
+	public selectedMessage = ko.observable<UserMessageViewModel>();
 
-	selectedMessageBody: Observable<string> = ko.observable('');
+	public selectedMessageBody: Observable<string> = ko.observable('');
 
-	selectMessageById = (
+	public selectMessageById = (
 		messageId: number,
 		inbox: UserMessageFolderViewModel,
 	): void => {
@@ -149,7 +149,7 @@ export default class UserMessagesViewModel {
 		}
 	};
 
-	selectMessage = (message: UserMessageViewModel): void => {
+	public selectMessage = (message: UserMessageViewModel): void => {
 		this.userRepository.getMessage(message.id).then((message) => {
 			this.selectedMessageBody(message.body!);
 		});
@@ -167,7 +167,7 @@ export default class UserMessagesViewModel {
 		this.selectTab(this.getInboxTabName(inbox)!);
 	};
 
-	selectTab = (tabName: string): void => {
+	public selectTab = (tabName: string): void => {
 		var index = $('#tabs > ul > li > a').index($(tabName));
 		$('#tabs').tabs('option', 'active', index);
 	};
@@ -193,7 +193,7 @@ export default class UserMessagesViewModel {
 }
 
 export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
-	constructor(
+	public constructor(
 		private readonly userRepo: UserRepository,
 		public readonly inbox: UserInboxType,
 		private readonly userId: number,
@@ -272,21 +272,21 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 			});
 	};
 
-	selectAll = ko.observable(false);
+	public selectAll = ko.observable(false);
 
-	selectMessage = (message: UserMessageViewModel): void => {
+	public selectMessage = (message: UserMessageViewModel): void => {
 		_.each(this.items(), (msg) => {
 			if (msg !== message) msg.selected(false);
 		});
 	};
 
-	unread: Computed<number>;
+	public unread: Computed<number>;
 
 	private unreadOnServer = ko.observable<number>(null!);
 }
 
 export class UserMessageViewModel {
-	constructor(data: UserMessageSummaryContract) {
+	public constructor(data: UserMessageSummaryContract) {
 		this.created = data.createdFormatted;
 		this.highPriority = data.highPriority;
 		this.id = data.id;
@@ -297,23 +297,23 @@ export class UserMessageViewModel {
 		this.subject = data.subject;
 	}
 
-	checked = ko.observable(false);
+	public checked = ko.observable(false);
 
-	created: string;
+	public created: string;
 
-	highPriority: boolean;
+	public highPriority: boolean;
 
-	id: number;
+	public id: number;
 
-	inbox: string;
+	public inbox: string;
 
-	read: Observable<boolean>;
+	public read: Observable<boolean>;
 
-	receiver: UserApiContract;
+	public receiver: UserApiContract;
 
-	selected = ko.observable(false);
+	public selected = ko.observable(false);
 
-	sender: UserApiContract;
+	public sender: UserApiContract;
 
-	subject: string;
+	public subject: string;
 }

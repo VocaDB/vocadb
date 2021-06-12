@@ -34,7 +34,7 @@ class SearchType {
 }
 
 export default class SearchViewModel {
-	constructor(
+	public constructor(
 		urlMapper: UrlMapper,
 		entryRepo: EntryRepository,
 		artistRepo: ArtistRepository,

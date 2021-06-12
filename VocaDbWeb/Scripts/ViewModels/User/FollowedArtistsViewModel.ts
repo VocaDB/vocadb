@@ -10,7 +10,7 @@ import TagFilters from '../Search/TagFilters';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class FollowedArtistsViewModel {
-	constructor(
+	public constructor(
 		private userRepo: UserRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,

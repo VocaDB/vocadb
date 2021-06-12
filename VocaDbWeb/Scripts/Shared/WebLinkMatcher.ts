@@ -2,7 +2,7 @@ import WebLinkCategory from '@Models/WebLinkCategory';
 import _ from 'lodash';
 
 export default class WebLinkMatcher {
-	static matchers: WebLinkMatcher[] = [
+	public static matchers: WebLinkMatcher[] = [
 		{ url: '5sing.kugou.com/', desc: '5SING', cat: WebLinkCategory.Official },
 		{ url: 'about.me/', desc: 'about.me', cat: WebLinkCategory.Official },
 		{ url: '.akbh.jp/', desc: 'Akiba Hobby', cat: WebLinkCategory.Commercial },
@@ -549,7 +549,7 @@ export default class WebLinkMatcher {
 		return _.find(WebLinkMatcher.matchers, (item) => this.isMatch(url, item))!;
 	}
 
-	constructor(
+	public constructor(
 		public url: string,
 		public desc: string,
 		public cat: WebLinkCategory,

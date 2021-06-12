@@ -7,7 +7,7 @@ import ko, { Observable } from 'knockout';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 
 export default class DiscussionTopicViewModel {
-	constructor(
+	public constructor(
 		private repo: DiscussionRepository,
 		private loggedUserId: number,
 		canDeleteAllComments: boolean,
@@ -67,7 +67,7 @@ export default class DiscussionTopicViewModel {
 }
 
 export class DiscussionTopicEditViewModel {
-	constructor(
+	public constructor(
 		userId: number,
 		public folders: DiscussionFolderContract[],
 		contract?: DiscussionTopicContract,

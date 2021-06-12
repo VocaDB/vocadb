@@ -2,7 +2,7 @@ import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
 import ko, { Observable } from 'knockout';
 
 export default class EntryPictureFileEditViewModel {
-	constructor(data?: EntryPictureFileContract) {
+	public constructor(data?: EntryPictureFileContract) {
 		if (data) {
 			this.entryType = data.entryType;
 			this.id = data.id;

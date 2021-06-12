@@ -6,7 +6,7 @@ import _ from 'lodash';
 export default class TagListViewModel {
 	private static maxDisplayedTags = 4;
 
-	constructor(tagUsages: TagUsageForApiContract[]) {
+	public constructor(tagUsages: TagUsageForApiContract[]) {
 		this.tagUsages = ko.observableArray<TagUsageForApiContract>([]);
 		this.updateTagUsages(tagUsages);
 

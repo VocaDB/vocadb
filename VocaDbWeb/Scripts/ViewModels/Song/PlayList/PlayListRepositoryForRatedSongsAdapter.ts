@@ -13,7 +13,7 @@ import { ISongForPlayList } from './PlayListViewModel';
 
 export default class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
-	constructor(
+	public constructor(
 		private userRepo: UserRepository,
 		private userId: number,
 		private query: Observable<string>,
