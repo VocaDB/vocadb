@@ -12,7 +12,6 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -26,10 +25,9 @@ import PVListEditViewModel from '../PVs/PVListEditViewModel';
 import ArtistForEventEditViewModel from '../ReleaseEvent/ArtistForEventEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class ReleaseEventEditViewModel {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly repo: ReleaseEventRepository,
 		userRepository: UserRepository,
 		pvRepository: PVRepository,
@@ -103,7 +101,7 @@ export default class ReleaseEventEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, vocaDbContext.languagePreference)
+				.getOne(artistId, this.vocaDbContext.languagePreference)
 				.then((artist) => {
 					const data: ArtistForEventContract = {
 						artist: artist,

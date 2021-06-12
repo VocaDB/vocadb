@@ -2,13 +2,13 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Observable } from 'knockout';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class RequestVerificationViewModel {
-	public constructor(private readonly artistRepository: ArtistRepository) {}
+	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
+		private readonly artistRepository: ArtistRepository,
+	) {}
 
 	public clearArtist = (): void => {
 		this.selectedArtist(null!);
@@ -22,7 +22,7 @@ export default class RequestVerificationViewModel {
 
 	public setArtist = (targetArtistId?: number): void => {
 		this.artistRepository
-			.getOne(targetArtistId!, vocaDbContext.languagePreference)
+			.getOne(targetArtistId!, this.vocaDbContext.languagePreference)
 			.then((artist) => {
 				this.selectedArtist(artist);
 			});

@@ -6,12 +6,9 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import WebLinkEditViewModel from './WebLinkEditViewModel';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 export default class ArtistCreateViewModel {
 	public artistType = ko.observable(ArtistType[ArtistType.Producer]);
@@ -30,7 +27,7 @@ export default class ArtistCreateViewModel {
 		const tag = await this.tagRepository.getEntryTypeTag(
 			EntryType.Artist,
 			artistType,
-			vocaDbContext.languagePreference,
+			this.vocaDbContext.languagePreference,
 		);
 		this.artistTypeTag(tag);
 	};
@@ -49,6 +46,7 @@ export default class ArtistCreateViewModel {
 	public webLink: WebLinkEditViewModel = new WebLinkEditViewModel();
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		artistRepository: ArtistRepository,
 		private readonly tagRepository: TagRepository,
 		data?: { nameOriginal: string; nameRomaji: string; nameEnglish: string },

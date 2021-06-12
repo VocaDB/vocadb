@@ -8,14 +8,11 @@ import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 export class SongInListEditViewModel {
 	public constructor(data: SongInListEditContract) {
@@ -36,6 +33,7 @@ export class SongInListEditViewModel {
 
 export default class SongListEditViewModel {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		private readonly urlMapper: UrlMapper,
@@ -49,7 +47,7 @@ export default class SongListEditViewModel {
 		if (!songId) return;
 
 		this.songRepo
-			.getOne(songId, vocaDbContext.languagePreference)
+			.getOne(songId, this.vocaDbContext.languagePreference)
 			.then((song: SongContract) => {
 				var songInList = new SongInListEditViewModel({
 					songInListId: 0,

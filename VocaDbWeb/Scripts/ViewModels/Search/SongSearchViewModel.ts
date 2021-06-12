@@ -13,7 +13,6 @@ import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -28,10 +27,9 @@ import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		searchViewModel: SearchViewModel,
 		urlMapper: UrlMapper,
 		lang: ContentLanguagePreference,
@@ -69,7 +67,11 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
-		this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(
+			vocaDbContext,
+			this.artistRepo,
+			childVoicebanks,
+		);
 		this.artistFilters.selectArtists(artistId);
 
 		this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
@@ -124,6 +126,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
 		this.parentVersion.subscribe(this.updateResultsWithTotalCount);
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			vocaDbContext,
 			urlMapper,
 			songRepo,
 			userRepo,

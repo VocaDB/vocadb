@@ -3,10 +3,7 @@ import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryCo
 import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 // View model for the top bar.
 export default class TopBarViewModel {
@@ -15,7 +12,7 @@ export default class TopBarViewModel {
 
 		this.userRepository
 			.getMessageSummaries(
-				vocaDbContext.loggedUserId,
+				this.vocaDbContext.loggedUserId,
 				null!,
 				{ maxEntries: 3, start: 0, getTotalCount: false },
 				true,
@@ -54,6 +51,7 @@ export default class TopBarViewModel {
 	// entryReportRepository: entry reports repository.
 	// userRepository: user repository.
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		entryTypeTranslations: { [x: string]: string },
 		entryType: string,
 		searchTerm: string,

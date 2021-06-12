@@ -19,7 +19,6 @@ import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
@@ -35,8 +34,6 @@ import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import PVListEditViewModel from '../PVs/PVListEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 import { LyricsForSongListEditViewModel } from './LyricsForSongEditViewModel';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 export default class SongEditViewModel {
 	private albumEventId: number;
@@ -85,7 +82,7 @@ export default class SongEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, vocaDbContext.languagePreference)
+				.getOne(artistId, this.vocaDbContext.languagePreference)
 				.then((artist) => {
 					var data: ArtistForAlbumContract = {
 						artist: artist,
@@ -158,12 +155,12 @@ export default class SongEditViewModel {
 			this.songRepository.getByNames(
 				names,
 				[this.id],
-				vocaDbContext.languagePreference,
+				this.vocaDbContext.languagePreference,
 			),
 			this.songRepository.getByNames(
 				names,
 				[this.id],
-				vocaDbContext.languagePreference,
+				this.vocaDbContext.languagePreference,
 				[SongType.Original, SongType.Remaster],
 			),
 		]);
@@ -247,6 +244,7 @@ export default class SongEditViewModel {
 	public validationError_unspecifiedNames: Computed<boolean>;
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private songRepository: SongRepository,
 		private artistRepository: ArtistRepository,
 		pvRepository: PVRepository,

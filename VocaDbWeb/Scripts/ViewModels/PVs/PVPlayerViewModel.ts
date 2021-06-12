@@ -5,20 +5,18 @@ import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 import PVPlayersFactory from './PVPlayersFactory';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class PVPlayerViewModel {
 	public static autoplayPVServicesString =
 		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
 
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		userRepo: UserRepository,

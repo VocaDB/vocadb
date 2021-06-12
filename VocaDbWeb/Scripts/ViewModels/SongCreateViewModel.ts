@@ -15,13 +15,10 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 // View model for song creation view
 export default class SongCreateViewModel {
@@ -103,7 +100,7 @@ export default class SongCreateViewModel {
 		const tag = await this.tagRepository.getEntryTypeTag(
 			EntryType.Song,
 			songType,
-			vocaDbContext.languagePreference,
+			this.vocaDbContext.languagePreference,
 		);
 		this.songTypeTag(tag);
 	};
@@ -142,7 +139,7 @@ export default class SongCreateViewModel {
 
 	public selectOriginal = (dupe: DuplicateEntryResultContract): void => {
 		this.songRepository
-			.getOne(dupe.entry.id, vocaDbContext.languagePreference)
+			.getOne(dupe.entry.id, this.vocaDbContext.languagePreference)
 			.then((song) => this.originalVersion.entry(song));
 	};
 
@@ -156,6 +153,7 @@ export default class SongCreateViewModel {
 	public removeArtist: (artist: ArtistContract) => void;
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly songRepository: SongRepository,
 		artistRepository: ArtistRepository,
 		private readonly tagRepository: TagRepository,

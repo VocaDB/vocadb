@@ -3,15 +3,16 @@ import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import SongRepository from '@Repositories/SongRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class SongMergeViewModel {
-	public constructor(songRepo: SongRepository, private base: SongContract) {
+	public constructor(
+		vocaDbContext: VocaDbContext,
+		songRepo: SongRepository,
+		private base: SongContract,
+	) {
 		this.target = new BasicEntryLinkViewModel<SongContract>(
 			null!,
 			(entryId, callback) =>

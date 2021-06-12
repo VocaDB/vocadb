@@ -32,7 +32,6 @@ import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 export class RatingsViewModel {
@@ -134,7 +133,7 @@ export default class SongDetailsViewModel {
 		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo
-			.getOneWithComponents(id, 'None', vocaDbContext.languagePreference)
+			.getOneWithComponents(id, 'None', this.vocaDbContext.languagePreference)
 			.then((song) => {
 				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
@@ -182,6 +181,7 @@ export default class SongDetailsViewModel {
 	public userRating: PVRatingButtonsViewModel;
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly httpClient: HttpClient,
 		private repository: SongRepository,
 		userRepository: UserRepository,
@@ -234,6 +234,7 @@ export default class SongDetailsViewModel {
 		);
 
 		this.personalDescription = new SelfDescriptionViewModel(
+			vocaDbContext,
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,

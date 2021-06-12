@@ -12,7 +12,6 @@ import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
@@ -24,8 +23,6 @@ import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewMo
 import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-const vocaDbContext = container.get(VocaDbContext);
 
 export default class ArtistEditViewModel {
 	public addAssociatedArtist = (): void => {
@@ -44,7 +41,7 @@ export default class ArtistEditViewModel {
 	private addGroup = (artistId?: number): void => {
 		if (artistId) {
 			this.artistRepo
-				.getOne(artistId, vocaDbContext.languagePreference)
+				.getOne(artistId, this.vocaDbContext.languagePreference)
 				.then((artist: ArtistContract) => {
 					this.groups.push({ id: 0, parent: artist });
 				});
@@ -183,6 +180,7 @@ export default class ArtistEditViewModel {
 	}
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private artistRepo: ArtistRepository,
 		userRepository: UserRepository,
 		private urlMapper: UrlMapper,

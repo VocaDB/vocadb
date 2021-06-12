@@ -1,15 +1,15 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class DeletedAlbumsViewModel {
-	public constructor(private albumRepo: AlbumRepository) {
+	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
+		private albumRepo: AlbumRepository,
+	) {
 		this.updateResults(true);
 		this.paging.page.subscribe(() => this.updateResults(false));
 		this.paging.pageSize.subscribe(() => this.updateResults(true));
@@ -37,7 +37,7 @@ export default class DeletedAlbumsViewModel {
 		this.albumRepo
 			.getList(
 				pagingProperties,
-				vocaDbContext.languagePreference,
+				this.vocaDbContext.languagePreference,
 				this.searchTerm(),
 				'Name',
 				undefined!,

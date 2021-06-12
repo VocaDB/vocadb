@@ -2,15 +2,13 @@ import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Observable } from 'knockout';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class SelfDescriptionViewModel {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		author: ArtistApiContract,
 		text: string,
 		artistRepo: ArtistRepository,
