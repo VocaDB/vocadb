@@ -26,7 +26,7 @@ import ArtistForEventEditViewModel from '../ReleaseEvent/ArtistForEventEditViewM
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventEditViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: ReleaseEventRepository,
 		userRepository: UserRepository,
 		pvRepository: PVRepository,
@@ -97,7 +97,7 @@ export default class ReleaseEventEditViewModel {
 		}
 	}
 
-	addArtist = (artistId?: number, customArtistName?: string): void => {
+	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
 				.getOne(artistId, vdb.values.languagePreference)
@@ -208,7 +208,7 @@ export default class ReleaseEventEditViewModel {
 }
 
 export class EventArtistRolesEditViewModel extends ArtistRolesEditViewModel {
-	constructor(roleNames: { [key: string]: string }) {
+	public constructor(roleNames: { [key: string]: string }) {
 		super(roleNames, ArtistEventRoles[ArtistEventRoles.Default]);
 	}
 }

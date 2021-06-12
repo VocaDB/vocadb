@@ -30,7 +30,7 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export class RatingsViewModel {
-	constructor() {
+	public constructor() {
 		const fav = SongVoteRating[SongVoteRating.Favorite];
 		const like = SongVoteRating[SongVoteRating.Like];
 
@@ -175,7 +175,7 @@ export default class SongDetailsViewModel {
 
 	public userRating: PVRatingButtonsViewModel;
 
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private repository: SongRepository,
 		userRepository: UserRepository,
@@ -308,7 +308,7 @@ export class SongInListsViewModel {
 
 	public show: () => void;
 
-	constructor(repository: SongRepository, songId: number) {
+	public constructor(repository: SongRepository, songId: number) {
 		this.show = (): void => {
 			repository.songListsForSong(songId).then((result) => {
 				this.contentHtml(result);
@@ -349,7 +349,7 @@ export class SongListsViewModel {
 			: this.featuredLists(),
 	);
 
-	constructor(
+	public constructor(
 		repository: SongRepository,
 		resources: SongDetailsResources,
 		songId: number,

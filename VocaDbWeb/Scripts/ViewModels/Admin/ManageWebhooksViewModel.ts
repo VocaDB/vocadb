@@ -17,7 +17,7 @@ interface WebhookEventSelection {
 class WebhookEventsEditViewModel {
 	public webhookEventSelections: WebhookEventSelection[];
 
-	constructor(
+	public constructor(
 		webhookEventNames: { [key: string]: string },
 		defaultWebhookEventName: string,
 	) {
@@ -47,7 +47,7 @@ class WebhookEditViewModel {
 	public isNew: boolean;
 	public isDeleted = ko.observable(false);
 
-	constructor(
+	public constructor(
 		webhook: WebhookContract,
 		isNew: boolean,
 		webhookEventNames: { [key: string]: string },
@@ -84,7 +84,7 @@ export default class ManageWebhooksViewModel {
 
 	public translateWebhookEvent: (webhookEvent: string) => string;
 
-	constructor(
+	public constructor(
 		private readonly webhookEventNames: { [key: string]: string },
 		private readonly adminRepo: AdminRepository,
 	) {

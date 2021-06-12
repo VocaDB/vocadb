@@ -6,7 +6,7 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class EventSeriesDetailsViewModel {
-	constructor(
+	public constructor(
 		private readonly userRepo: UserRepository,
 		private readonly seriesId: number,
 		tagUsages: TagUsageForApiContract[],

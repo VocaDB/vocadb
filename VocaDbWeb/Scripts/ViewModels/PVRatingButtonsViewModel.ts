@@ -22,7 +22,7 @@ export default class PVRatingButtonsViewModel {
 	public setRating_like = (): void => this.setRating(SongVoteRating.Like);
 	public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
 
-	constructor(
+	public constructor(
 		repository: UserRepository,
 		songWithVoteContract: SongWithVoteContract,
 		ratingCallback: () => void,

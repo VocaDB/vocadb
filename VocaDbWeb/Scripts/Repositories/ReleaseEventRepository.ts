@@ -12,7 +12,7 @@ import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 
 export default class ReleaseEventRepository extends BaseRepository {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {

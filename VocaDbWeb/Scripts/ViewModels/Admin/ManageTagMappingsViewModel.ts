@@ -11,7 +11,7 @@ import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class ManageTagMappingsViewModel {
-	constructor(private readonly tagRepo: TagRepository) {
+	public constructor(private readonly tagRepo: TagRepository) {
 		this.filter.subscribe(() => {
 			this.paging.totalItems(this.filteredMappings().length);
 			this.paging.goToFirstPage();
@@ -115,16 +115,16 @@ export default class ManageTagMappingsViewModel {
 }
 
 export class EditTagMappingViewModel {
-	constructor(mapping: TagMappingContract, isNew: boolean = false) {
+	public constructor(mapping: TagMappingContract, isNew: boolean = false) {
 		this.sourceTag = mapping.sourceTag;
 		this.tag = mapping.tag;
 		this.isNew = isNew;
 	}
 
-	isDeleted = ko.observable(false);
-	isNew: boolean;
-	sourceTag: string;
-	tag: TagBaseContract;
+	public isDeleted = ko.observable(false);
+	public isNew: boolean;
+	public sourceTag: string;
+	public tag: TagBaseContract;
 
 	public deleteMapping = (): void => this.isDeleted(true);
 }

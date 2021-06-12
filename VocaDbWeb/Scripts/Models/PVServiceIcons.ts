@@ -5,7 +5,7 @@ import _ from 'lodash';
 export default class PVServiceIcons {
 	private icons: any;
 
-	constructor(urlMapper: UrlMapper) {
+	public constructor(urlMapper: UrlMapper) {
 		this.icons = {
 			File: urlMapper.mapRelative('/Content/Icons/music.png'),
 			LocalFile: urlMapper.mapRelative('/Content/Icons/music.png'),
@@ -20,12 +20,14 @@ export default class PVServiceIcons {
 		};
 	}
 
-	getIconUrl = (service: string): string => {
+	public getIconUrl = (service: string): string => {
 		return this.icons[service];
 	};
 
 	// Gets icon URLs from a comma separated list of services
-	getIconUrls = (servicesStr: string): { service: string; url: string }[] => {
+	public getIconUrls = (
+		servicesStr: string,
+	): { service: string; url: string }[] => {
 		if (!servicesStr || servicesStr === 'Nothing') return [];
 
 		var services = servicesStr.split(',');

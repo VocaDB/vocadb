@@ -19,7 +19,7 @@ export interface ISearchCategoryBaseViewModel {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class SearchCategoryBaseViewModel<TEntry>
 	implements ISearchCategoryBaseViewModel {
-	constructor(public searchViewModel: SearchViewModel) {
+	public constructor(public searchViewModel: SearchViewModel) {
 		if (searchViewModel) {
 			this.childTags = searchViewModel.tagFilters.childTags;
 			this.draftsOnly = searchViewModel.draftsOnly;

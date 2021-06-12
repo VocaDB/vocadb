@@ -15,7 +15,7 @@ export default class PVPlayerViewModel {
 	public static autoplayPVServicesString =
 		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
 
-	constructor(
+	public constructor(
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		userRepo: UserRepository,

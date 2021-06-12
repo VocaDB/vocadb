@@ -8,7 +8,7 @@ export default class WebLinksEditViewModel extends BasicListEditViewModel<
 	WebLinkEditViewModel,
 	WebLinkContract
 > {
-	constructor(
+	public constructor(
 		webLinkContracts: WebLinkContract[],
 		public categories?: TranslatedEnumField[],
 	) {

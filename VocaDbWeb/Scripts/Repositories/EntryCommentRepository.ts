@@ -8,7 +8,7 @@ import ICommentRepository from './ICommentRepository';
 export default class EntryCommentRepository implements ICommentRepository {
 	private baseUrl: string;
 
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		resourcePath: string,

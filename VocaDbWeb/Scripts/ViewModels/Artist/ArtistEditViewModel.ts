@@ -178,7 +178,7 @@ export default class ArtistEditViewModel {
 		);
 	}
 
-	constructor(
+	public constructor(
 		private artistRepo: ArtistRepository,
 		userRepository: UserRepository,
 		private urlMapper: UrlMapper,
@@ -311,7 +311,7 @@ export default class ArtistEditViewModel {
 }
 
 export class ArtistForArtistEditViewModel {
-	constructor(link: ArtistForArtistContract) {
+	public constructor(link: ArtistForArtistContract) {
 		this.linkType = ko.observable(link.linkType!);
 		this.parent = link.parent;
 	}

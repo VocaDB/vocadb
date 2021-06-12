@@ -43,7 +43,7 @@ export default class ManageIPRulesViewModel {
 		ko.utils.postJson(window.location.href, json, null!);
 	};
 
-	constructor(data: IPRuleContract[], repo: AdminRepository) {
+	public constructor(data: IPRuleContract[], repo: AdminRepository) {
 		const rules = _.chain(data)
 			.sortBy('created')
 			.reverse()
@@ -70,15 +70,15 @@ export class IPRule {
 		return i < 10 ? '0' + i : '' + i;
 	}
 
-	address: Observable<string>;
+	public address: Observable<string>;
 
-	created: Date;
+	public created: Date;
 
-	id: number;
+	public id: number;
 
-	notes: Observable<string>;
+	public notes: Observable<string>;
 
-	constructor(data: IPRuleContract) {
+	public constructor(data: IPRuleContract) {
 		this.address = ko.observable(data.address!);
 		this.created = data.created!;
 		this.id = data.id!;

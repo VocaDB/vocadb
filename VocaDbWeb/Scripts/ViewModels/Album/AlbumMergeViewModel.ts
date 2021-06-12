@@ -8,7 +8,7 @@ import ko from 'knockout';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class AlbumMergeViewModel {
-	constructor(repo: AlbumRepository, id: number) {
+	public constructor(repo: AlbumRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<AlbumContract>(
 			null!,
 			(entryId, callback) =>

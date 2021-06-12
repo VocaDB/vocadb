@@ -7,7 +7,7 @@ import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 export default class AlbumCreateViewModel {
-	constructor(
+	public constructor(
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
 	) {}

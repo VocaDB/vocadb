@@ -26,7 +26,7 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ArtistDetailsViewModel {
-	constructor(
+	public constructor(
 		repo: ArtistRepository,
 		private artistId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -108,7 +108,7 @@ export default class ArtistDetailsViewModel {
 
 	public comments: EditableCommentsViewModel;
 
-	customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
+	public customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
 	public hasArtistSubscription: Observable<boolean>;
 
@@ -251,7 +251,7 @@ export class CustomizeArtistSubscriptionViewModel {
 
 	public notificationsMethod: Observable<string>;
 
-	constructor(
+	public constructor(
 		artistId: number,
 		emailNotifications: boolean,
 		siteNotifications: boolean,

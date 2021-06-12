@@ -28,7 +28,7 @@ import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
 import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
-	constructor(
+	public constructor(
 		urlMapper: UrlMapper,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,

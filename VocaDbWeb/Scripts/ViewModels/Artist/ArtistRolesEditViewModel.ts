@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 
 export default class ArtistRolesEditViewModel {
-	constructor(
+	public constructor(
 		roleNames: { [key: string]: string },
 		private readonly defaultRoleName: string,
 	) {
@@ -55,7 +55,7 @@ export default class ArtistRolesEditViewModel {
 }
 
 export class AlbumArtistRolesEditViewModel extends ArtistRolesEditViewModel {
-	constructor(roleNames: { [key: string]: string }) {
+	public constructor(roleNames: { [key: string]: string }) {
 		super(roleNames, ArtistRoles[ArtistRoles.Default]);
 	}
 }

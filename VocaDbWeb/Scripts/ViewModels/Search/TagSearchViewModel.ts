@@ -7,7 +7,7 @@ import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
 export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
-	constructor(
+	public constructor(
 		searchViewModel: SearchViewModel,
 		lang: ContentLanguagePreference,
 		private tagRepo: TagRepository,

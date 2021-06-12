@@ -8,7 +8,7 @@ import TagFilter from './TagFilter';
 
 // Manages tag filters for search
 export default class TagFilters {
-	constructor(
+	public constructor(
 		private tagRepo: TagRepository,
 		private lang: ContentLanguagePreference,
 		tags: ObservableArray<TagFilter> = null!,

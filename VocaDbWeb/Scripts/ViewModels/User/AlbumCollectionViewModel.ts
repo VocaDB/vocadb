@@ -19,7 +19,7 @@ import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class AlbumCollectionViewModel {
-	constructor(
+	public constructor(
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
 		private resourceRepo: ResourceRepository,

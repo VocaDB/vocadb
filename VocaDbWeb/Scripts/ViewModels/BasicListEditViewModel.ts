@@ -6,7 +6,7 @@ import _ from 'lodash';
 export default class BasicListEditViewModel<TItem, TContract> {
 	// type: item constructor, optionally receiving a data contract parameter.
 	// contracts: list of data contracts for current items.
-	constructor(
+	public constructor(
 		private type: { new (contract?: TContract): TItem },
 		contracts: TContract[],
 	) {

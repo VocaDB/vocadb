@@ -28,7 +28,7 @@ export default class ArtistForEventEditViewModel
 		};
 	};
 
-	constructor(data: ArtistForEventContract) {
+	public constructor(data: ArtistForEventContract) {
 		this.artist = data.artist!;
 		this.id = data.id!;
 

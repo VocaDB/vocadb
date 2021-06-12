@@ -14,7 +14,7 @@ import _ from 'lodash';
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';
 
 export default class RankingsViewModel {
-	constructor(
+	public constructor(
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		private userRepo: UserRepository,

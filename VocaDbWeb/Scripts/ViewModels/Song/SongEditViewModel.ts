@@ -39,7 +39,7 @@ export default class SongEditViewModel {
 	public albumReleaseDate: moment.Moment;
 	// List of artist links for this song.
 	public artistLinks: ObservableArray<ArtistForAlbumEditViewModel>;
-	artistSearchParams: ArtistAutoCompleteParams;
+	public artistSearchParams: ArtistAutoCompleteParams;
 	public canHaveOriginalVersion: Computed<boolean>;
 	public defaultNameLanguage: Observable<string>;
 	public deleted: boolean;
@@ -78,7 +78,7 @@ export default class SongEditViewModel {
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
 	// customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-	addArtist = (artistId?: number, customArtistName?: string): void => {
+	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
 				.getOne(artistId, vdb.values.languagePreference)
@@ -242,7 +242,7 @@ export default class SongEditViewModel {
 	public validationError_redundantEvent: Computed<boolean>;
 	public validationError_unspecifiedNames: Computed<boolean>;
 
-	constructor(
+	public constructor(
 		private songRepository: SongRepository,
 		private artistRepository: ArtistRepository,
 		pvRepository: PVRepository,

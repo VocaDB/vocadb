@@ -4,7 +4,7 @@ import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 export default class ResourcesManager {
-	constructor(
+	public constructor(
 		private resourcesRepo: ResourceRepository,
 		private cultureCode: string,
 	) {}

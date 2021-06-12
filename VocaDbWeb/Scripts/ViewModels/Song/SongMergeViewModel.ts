@@ -8,7 +8,7 @@ import ko from 'knockout';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class SongMergeViewModel {
-	constructor(songRepo: SongRepository, private base: SongContract) {
+	public constructor(songRepo: SongRepository, private base: SongContract) {
 		this.target = new BasicEntryLinkViewModel<SongContract>(
 			null!,
 			(entryId, callback) =>

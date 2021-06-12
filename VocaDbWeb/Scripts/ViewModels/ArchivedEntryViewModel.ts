@@ -4,7 +4,7 @@ import vdb from '@Shared/VdbStatic';
 import ReportEntryViewModel from './ReportEntryViewModel';
 
 export default class ArchivedEntryViewModel {
-	constructor(
+	public constructor(
 		entryId: number,
 		versionNumber: number,
 		private readonly repository: IEntryReportsRepository,

@@ -22,7 +22,7 @@ export default class UrlMapper {
 		return base + '/' + relative;
 	};
 
-	constructor(public baseUrl: string) {}
+	public constructor(public baseUrl: string) {}
 
 	public mapRelative(relative: string): string {
 		return functions.mergeUrls(this.baseUrl, relative);

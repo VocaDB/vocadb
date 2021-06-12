@@ -15,7 +15,7 @@ import moment from 'moment';
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 
 export class SongInListEditViewModel {
-	constructor(data: SongInListEditContract) {
+	public constructor(data: SongInListEditContract) {
 		this.songInListId = data.songInListId;
 		this.notes = ko.observable(data.notes);
 		this.order = ko.observable(data.order);
@@ -32,7 +32,7 @@ export class SongInListEditViewModel {
 }
 
 export default class SongListEditViewModel {
-	constructor(
+	public constructor(
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		private readonly urlMapper: UrlMapper,

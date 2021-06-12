@@ -11,7 +11,7 @@ import ArtistFilter from './ArtistFilter';
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page
 export default class ArtistFilters {
-	constructor(
+	public constructor(
 		private readonly artistRepo: ArtistRepository,
 		childVoicebanks?: boolean,
 	) {

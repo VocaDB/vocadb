@@ -20,7 +20,7 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ReleaseEventDetailsViewModel {
-	constructor(
+	public constructor(
 		httpClient: HttpClient,
 		urlMapper: UrlMapper,
 		private readonly repo: ReleaseEventRepository,

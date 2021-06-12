@@ -10,7 +10,7 @@ declare global {
 
 // Uses HTML5 history API to update URL query string from a set of observables
 export default class ObservableUrlParamRouter {
-	constructor(
+	public constructor(
 		routes: { [key: string]: Observable<string | number | null> },
 		private win: Window = window,
 	) {
@@ -68,7 +68,7 @@ export default class ObservableUrlParamRouter {
 }
 
 class ParamData {
-	constructor(
+	public constructor(
 		public name: string,
 		public observable: Observable<any>,
 		queryValue: string,

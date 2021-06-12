@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export class EntryOptionalFields<T> {
 	// TODO: better way for generic constraints?
-	constructor(type: (val: T) => string, fields: T[]) {
+	public constructor(type: (val: T) => string, fields: T[]) {
 		this.fields = _.map(fields, (field) => type(field)).join(',');
 	}
 
@@ -26,7 +26,7 @@ export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {
 		return new SongOptionalFields(fields);
 	}
 
-	constructor(fields: SongOptionalField[]) {
+	public constructor(fields: SongOptionalField[]) {
 		super((f) => SongOptionalField[f], fields);
 	}
 }

@@ -14,12 +14,12 @@ export interface SongInList {
 }
 
 export default class FakeSongRepository extends SongRepository {
-	results: NewSongCheckResultContract = null!;
-	song: SongApiContract = null!;
-	songLists: SongListBaseContract[] = [];
-	songsInLists: SongInList[] = [];
+	public results: NewSongCheckResultContract = null!;
+	public song: SongApiContract = null!;
+	public songLists: SongListBaseContract[] = [];
+	public songsInLists: SongInList[] = [];
 
-	constructor() {
+	public constructor() {
 		super(new HttpClient(), '');
 
 		this.addSongToList = (

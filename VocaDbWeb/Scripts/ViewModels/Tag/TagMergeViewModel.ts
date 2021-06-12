@@ -7,7 +7,7 @@ import ko from 'knockout';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class TagMergeViewModel {
-	constructor(tagRepo: TagRepository, private base: TagBaseContract) {
+	public constructor(tagRepo: TagRepository, private base: TagBaseContract) {
 		this.target = new BasicEntryLinkViewModel<TagBaseContract>(
 			null!,
 			(id, callback) => tagRepo.getById(id, null!, null!).then(callback),

@@ -59,7 +59,7 @@ export default class AlbumDetailsViewModel {
 		return false;
 	};
 
-	constructor(
+	public constructor(
 		repo: AlbumRepository,
 		userRepo: UserRepository,
 		artistRepository: ArtistRepository,
@@ -169,13 +169,13 @@ export class DownloadTagsViewModel {
 		this.dialogVisible(true);
 	};
 
-	constructor(private albumId: number, formatString: string) {
+	public constructor(private albumId: number, formatString: string) {
 		this.formatString = ko.observable(formatString);
 	}
 }
 
 export class AlbumReviewsViewModel {
-	constructor(
+	public constructor(
 		private readonly albumRepository: AlbumRepository,
 		private readonly albumId: number,
 		private readonly canDeleteAllComments: boolean,
@@ -313,7 +313,7 @@ export class AlbumReviewsViewModel {
 }
 
 export class AlbumReviewViewModel {
-	constructor(
+	public constructor(
 		contract: AlbumReviewContract,
 		public canBeDeleted: boolean,
 		public canBeEdited: boolean,

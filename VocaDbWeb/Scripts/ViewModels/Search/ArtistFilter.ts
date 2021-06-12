@@ -2,9 +2,9 @@ import ArtistType from '@Models/Artists/ArtistType';
 import ko from 'knockout';
 
 export default class ArtistFilter {
-	constructor(public id: number) {}
+	public constructor(public id: number) {}
 
-	artistType = ko.observable<ArtistType>(null!);
+	public artistType = ko.observable<ArtistType>(null!);
 
-	name = ko.observable<string>(null!);
+	public name = ko.observable<string>(null!);
 }

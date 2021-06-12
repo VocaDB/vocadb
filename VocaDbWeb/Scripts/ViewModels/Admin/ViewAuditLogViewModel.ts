@@ -25,7 +25,7 @@ export default class ViewAuditLogViewModel {
 		return this.split(term).pop()!;
 	}
 
-	constructor(data: ViewAuditLogContract) {
+	public constructor(data: ViewAuditLogContract) {
 		this.excludeUsers(data.excludeUsers);
 		this.filter(data.filter);
 		this.onlyNewUsers(data.onlyNewUsers);

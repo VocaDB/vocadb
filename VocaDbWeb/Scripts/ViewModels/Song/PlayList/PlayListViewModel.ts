@@ -18,7 +18,7 @@ import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
 import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
 
 export default class PlayListViewModel {
-	constructor(
+	public constructor(
 		private urlMapper: UrlMapper,
 		private songListRepo: IPlayListRepository,
 		private songRepo: SongRepository,

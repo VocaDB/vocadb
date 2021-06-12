@@ -16,7 +16,7 @@ import UserRepository from './UserRepository';
 import VenueRepository from './VenueRepository';
 
 export default class RepositoryFactory {
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}

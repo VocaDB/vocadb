@@ -8,7 +8,7 @@ import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 
 // Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
 export default class EditableCommentsViewModel {
-	constructor(
+	public constructor(
 		private repo: ICommentRepository,
 		private entryId: number,
 		private loggedUserId: number,

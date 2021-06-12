@@ -1,7 +1,7 @@
 import ko, { Observable } from 'knockout';
 
 export default class EnglishTranslatedStringViewModel {
-	constructor(showTranslatedDescription: boolean) {
+	public constructor(showTranslatedDescription: boolean) {
 		this.showTranslatedDescription = ko.observable(showTranslatedDescription);
 	}
 

@@ -71,7 +71,7 @@ export default class NamesEditViewModel {
 		return name || new LocalizedStringWithIdEditViewModel(lang, '');
 	}
 
-	constructor(names: LocalizedStringWithIdEditViewModel[] = []) {
+	public constructor(names: LocalizedStringWithIdEditViewModel[] = []) {
 		this.englishName = NamesEditViewModel.nameOrEmpty(
 			names,
 			ContentLanguageSelection.English,

@@ -36,7 +36,7 @@ export default class UserRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {

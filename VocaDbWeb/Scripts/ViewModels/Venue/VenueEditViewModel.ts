@@ -14,7 +14,7 @@ import NamesEditViewModel from '../Globalization/NamesEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class VenueEditViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: VenueRepository,
 		userRepository: UserRepository,
 		private readonly urlMapper: UrlMapper,

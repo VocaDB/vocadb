@@ -11,7 +11,7 @@ import _ from 'lodash';
 import PVEditViewModel from './PVEditViewModel';
 
 export default class PVListEditViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: PVRepository,
 		public urlMapper: UrlMapper, // Used from the view to map to PV listing
 		pvs: PVContract[],

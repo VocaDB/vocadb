@@ -24,7 +24,7 @@ export default class LocalizedStringWithIdEditViewModel {
 		);
 	}
 
-	constructor(
+	public constructor(
 		language: ContentLanguageSelection = ContentLanguageSelection.Unspecified,
 		value: string = null!,
 		id: number = 0,

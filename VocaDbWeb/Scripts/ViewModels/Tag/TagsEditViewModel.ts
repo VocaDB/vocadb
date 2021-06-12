@@ -6,7 +6,7 @@ import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 export default class TagsEditViewModel {
-	constructor(
+	public constructor(
 		private readonly repo: ITagSelectionsRepository,
 		public readonly target?: EntryType,
 		private readonly getSuggestions?: (
@@ -108,14 +108,14 @@ export default class TagsEditViewModel {
 }
 
 export class TagSelectionViewModel {
-	constructor(contract: TagSelectionContract) {
+	public constructor(contract: TagSelectionContract) {
 		this.tag = contract.tag;
 		this.selected = ko.observable(contract.selected || false);
 	}
 
-	selected: Observable<boolean>;
+	public selected: Observable<boolean>;
 
-	tag: TagBaseContract;
+	public tag: TagBaseContract;
 }
 
 export interface ITagSelectionsRepository {
