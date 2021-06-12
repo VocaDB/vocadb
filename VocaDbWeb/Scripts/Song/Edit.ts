@@ -67,6 +67,7 @@ const SongEdit = (
 
 		if (editedModel) {
 			vm = new SongEditViewModel(
+				vocaDbContext,
 				songRepo,
 				artistRepo,
 				pvRepo,
@@ -84,6 +85,7 @@ const SongEdit = (
 		} else {
 			songRepo.getForEdit(model.id).then(function (model) {
 				vm = new SongEditViewModel(
+					vocaDbContext,
 					songRepo,
 					artistRepo,
 					pvRepo,

@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko, { Computed, Observable } from 'knockout';
 
 import PVPlayersFactory from '../PVs/PVPlayersFactory';
@@ -35,6 +36,7 @@ class SearchType {
 
 export default class SearchViewModel {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		entryRepo: EntryRepository,
 		artistRepo: ArtistRepository,
@@ -94,6 +96,7 @@ export default class SearchViewModel {
 
 		this.albumSearchViewModel = new AlbumSearchViewModel(
 			this,
+			vocaDbContext,
 			unknownPictureUrl,
 			lang,
 			albumRepo,
@@ -109,6 +112,7 @@ export default class SearchViewModel {
 
 		this.eventSearchViewModel = new EventSearchViewModel(
 			this,
+			vocaDbContext,
 			lang,
 			eventRepo,
 			artistRepo,
@@ -120,6 +124,7 @@ export default class SearchViewModel {
 
 		this.songSearchViewModel = new SongSearchViewModel(
 			this,
+			vocaDbContext,
 			urlMapper,
 			lang,
 			songRepo,

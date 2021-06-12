@@ -46,8 +46,15 @@
 	var getNewReportCount = @ToJS(Login.CanManageEntryReports);
 
     var topBarViewModel = new app.TopBarViewModel(
-        entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount,
-	    getNewReportCount, entryReportRepository, userRepository);
+		vdb.values,
+        entryTypeTranslations,
+		topBarData.searchObjectType,
+		"",
+		unreadMessagesCount,
+	    getNewReportCount,
+		entryReportRepository,
+		userRepository
+	);
 
     var topBar = $("#topBar")[0];
 	if (topBar) {

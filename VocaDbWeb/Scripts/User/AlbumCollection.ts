@@ -26,6 +26,7 @@ const UserAlbumCollection = (
 		var resourceRepo = repoFactory.resourceRepository();
 
 		var vm = new AlbumCollectionViewModel(
+			vocaDbContext,
 			userRepo,
 			artistRepo,
 			resourceRepo,

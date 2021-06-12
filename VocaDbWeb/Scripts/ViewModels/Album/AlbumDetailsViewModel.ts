@@ -13,6 +13,7 @@ import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
@@ -60,6 +61,7 @@ export default class AlbumDetailsViewModel {
 	};
 
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		repo: AlbumRepository,
 		userRepo: UserRepository,
 		artistRepository: ArtistRepository,
@@ -88,6 +90,7 @@ export default class AlbumDetailsViewModel {
 		);
 
 		this.personalDescription = new SelfDescriptionViewModel(
+			vocaDbContext,
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,

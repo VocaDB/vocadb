@@ -17,6 +17,7 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
@@ -35,6 +36,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		private songListRepo: SongListRepository,
 		private songRepo: SongRepository,
@@ -51,7 +53,11 @@ export default class SongListViewModel {
 		pvPlayersFactory: PVPlayersFactory,
 		canDeleteAllComments: boolean,
 	) {
-		this.artistFilters = new ArtistFilters(this.artistRepo, false);
+		this.artistFilters = new ArtistFilters(
+			vocaDbContext,
+			this.artistRepo,
+			false,
+		);
 		this.comments = new EditableCommentsViewModel(
 			songListRepo.getComments(),
 			listId,
@@ -77,6 +83,7 @@ export default class SongListViewModel {
 
 		// TODO
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			vocaDbContext,
 			urlMapper,
 			songRepo,
 			userRepo,

@@ -180,6 +180,7 @@ const AlbumDetails = (
 
 		var jsonModel = model.jsonModel;
 		var viewModel = new AlbumDetailsViewModel(
+			vocaDbContext,
 			albumRepo,
 			userRepo,
 			artistRepo,

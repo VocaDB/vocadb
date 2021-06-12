@@ -12,6 +12,7 @@ import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { Options } from 'highcharts';
 import ko, { Observable } from 'knockout';
 
@@ -27,6 +28,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ArtistDetailsViewModel {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		repo: ArtistRepository,
 		private artistId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -170,6 +172,7 @@ export default class ArtistDetailsViewModel {
 		this.mainAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.vocaDbContext,
 				this.unknownPictureUrl,
 				this.lang,
 				this.albumRepo,
@@ -194,6 +197,7 @@ export default class ArtistDetailsViewModel {
 		this.collaborationAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.vocaDbContext,
 				this.unknownPictureUrl,
 				this.lang,
 				this.albumRepo,
@@ -218,6 +222,7 @@ export default class ArtistDetailsViewModel {
 		this.songsViewModel(
 			new SongSearchViewModel(
 				null!,
+				this.vocaDbContext,
 				this.urlMapper,
 				this.lang,
 				this.songRepo,

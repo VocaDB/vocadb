@@ -45,6 +45,7 @@ const SongListDetails = (
 		var tagUsages = model.songList.tags;
 
 		var vm = new SongListViewModel(
+			vocaDbContext,
 			urlMapper,
 			songListRepo,
 			songRepo,

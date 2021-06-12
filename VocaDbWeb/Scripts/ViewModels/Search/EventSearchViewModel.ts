@@ -2,6 +2,7 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko, { Computed } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';
@@ -11,6 +12,7 @@ import SearchViewModel from './SearchViewModel';
 export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		vocaDbContext: VocaDbContext,
 		lang: ContentLanguagePreference,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
@@ -21,7 +23,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 	) {
 		super(searchViewModel);
 
-		this.artistFilters = new ArtistFilters(artistRepo, false);
+		this.artistFilters = new ArtistFilters(vocaDbContext, artistRepo, false);
 		this.artistFilters.selectArtists(artistId);
 
 		if (sort) this.sort(sort);

@@ -111,6 +111,7 @@ const ArtistDetails = (
 		var latestComments = model.latestComments;
 
 		var viewModel = new ArtistDetailsViewModel(
+			vocaDbContext,
 			artistRepo,
 			model.id,
 			tagUsages,

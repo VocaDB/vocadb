@@ -83,6 +83,7 @@ const UserDetails = (
 		);
 
 		var albumCollectionViewModel = new AlbumCollectionViewModel(
+			vocaDbContext,
 			userRepo,
 			artistRepo,
 			resourceRepo,
@@ -94,6 +95,7 @@ const UserDetails = (
 		);
 
 		var ratedSongsViewModel = new RatedSongsSearchViewModel(
+			vocaDbContext,
 			urlMapper,
 			userRepo,
 			artistRepo,

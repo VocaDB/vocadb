@@ -1,9 +1,11 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const SongCreate = (model: any): void => {
@@ -13,7 +15,9 @@ const SongCreate = (model: any): void => {
 		var artistRepo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var json = model;
-		ko.applyBindings(new SongCreateViewModel(repo, artistRepo, tagRepo, json));
+		ko.applyBindings(
+			new SongCreateViewModel(vocaDbContext, repo, artistRepo, tagRepo, json),
+		);
 
 		$('#pvLoader')
 			.ajaxStart(function (this: any) {

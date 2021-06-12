@@ -4,6 +4,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -14,6 +15,7 @@ import SearchViewModel from './SearchViewModel';
 export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		vocaDbContext: VocaDbContext,
 		private unknownPictureUrl: string,
 		lang: ContentLanguagePreference,
 		private albumRepo: AlbumRepository,
@@ -40,7 +42,11 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		}
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-		this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(
+			vocaDbContext,
+			this.artistRepo,
+			childVoicebanks,
+		);
 		this.artistFilters.selectArtists(artistId);
 
 		this.albumType = ko.observable(albumType || 'Unknown');

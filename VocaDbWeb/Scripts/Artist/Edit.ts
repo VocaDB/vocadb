@@ -43,6 +43,7 @@ const ArtistEdit = (
 		if (editedModel) {
 			ko.applyBindings(
 				new ArtistEditViewModel(
+					vocaDbContext,
 					artistRepo,
 					userRepo,
 					urlMapper,
@@ -55,6 +56,7 @@ const ArtistEdit = (
 			artistRepo.getForEdit(model.artist.id).then(function (model) {
 				ko.applyBindings(
 					new ArtistEditViewModel(
+						vocaDbContext,
 						artistRepo,
 						userRepo,
 						urlMapper,

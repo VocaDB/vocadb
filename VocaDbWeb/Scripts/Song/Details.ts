@@ -109,6 +109,7 @@ const SongDetails = (
 		var artistRepo = repoFactory.artistRepository();
 
 		var viewModel = new SongDetailsViewModel(
+			vocaDbContext,
 			httpClient,
 			repo,
 			userRepo,

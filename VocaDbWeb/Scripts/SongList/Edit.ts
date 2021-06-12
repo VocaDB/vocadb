@@ -22,6 +22,7 @@ function initPage(
 	var songRepo = repoFactory.songRepository();
 
 	var viewModel = new SongListEditViewModel(
+		vocaDbContext,
 		songListRepo,
 		songRepo,
 		urlMapper,

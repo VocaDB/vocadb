@@ -32,6 +32,7 @@ const EventEdit = (
 		var contract = model;
 
 		var vm = new ReleaseEventEditViewModel(
+			vocaDbContext,
 			eventRepo,
 			userRepo,
 			pvRepo,

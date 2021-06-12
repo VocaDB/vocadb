@@ -61,6 +61,7 @@ const AlbumEdit = (
 
 		if (editedModel) {
 			viewModel = new AlbumEditViewModel(
+				vocaDbContext,
 				repo,
 				songRepo,
 				artistRepo,
@@ -80,6 +81,7 @@ const AlbumEdit = (
 		} else {
 			repo.getForEdit(model.id).then(function (model) {
 				viewModel = new AlbumEditViewModel(
+					vocaDbContext,
 					repo,
 					songRepo,
 					artistRepo,

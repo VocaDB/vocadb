@@ -29,8 +29,8 @@ import SearchViewModel from './SearchViewModel';
 
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(
-		vocaDbContext: VocaDbContext,
 		searchViewModel: SearchViewModel,
+		vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		lang: ContentLanguagePreference,
 		private songRepo: SongRepository,

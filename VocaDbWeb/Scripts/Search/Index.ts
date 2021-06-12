@@ -75,6 +75,7 @@ const SearchIndex = (model: {
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 
 		var vm = new SearchViewModel(
+			vocaDbContext,
 			urlMapper,
 			entryRepo,
 			artistRepo,

@@ -12,6 +12,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -29,6 +30,7 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
@@ -45,7 +47,11 @@ export default class RatedSongsSearchViewModel {
 		artistId?: number,
 		childVoicebanks?: boolean,
 	) {
-		this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(
+			vocaDbContext,
+			artistRepo,
+			childVoicebanks,
+		);
 
 		if (artistId) this.artistFilters.selectArtist(artistId);
 
@@ -71,6 +77,7 @@ export default class RatedSongsSearchViewModel {
 		this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			vocaDbContext,
 			urlMapper,
 			songRepo,
 			userRepo,
