@@ -2,7 +2,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
@@ -10,6 +10,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import _ from 'lodash';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initChart(
@@ -257,7 +258,7 @@ const TagDetails = (
 	showTranslatedDescription: boolean,
 ): void => {
 	$(function () {
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var jsonModel = model.jsonModel;
 		var vm;
 
@@ -280,7 +281,7 @@ const TagDetails = (
 			userRepo,
 			latestComments,
 			reportTypes,
-			vdb.values.loggedUserId,
+			vocaDbContext.loggedUserId,
 			model.id,
 			canDeleteAllComments,
 			showTranslatedDescription,

@@ -3,8 +3,11 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class AlbumCreateViewModel {
 	public constructor(
@@ -15,7 +18,7 @@ export default class AlbumCreateViewModel {
 	private addArtist = (artistId?: number): void => {
 		if (artistId) {
 			this.artistRepo
-				.getOne(artistId, vdb.values.languagePreference)
+				.getOne(artistId, vocaDbContext.languagePreference)
 				.then((artist) => this.artists.push(artist));
 		}
 	};

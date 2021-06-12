@@ -4,12 +4,14 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(): void {
@@ -42,7 +44,7 @@ const SongEdit = (
 	webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
 	$(document).ready(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 		ko.punches.enableAll();
 
 		vdb.resources.entryEdit = {
@@ -54,7 +56,7 @@ const SongEdit = (
 		};
 
 		var editedModel = model.editedSong;
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

@@ -1,7 +1,7 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SearchViewModel from '@ViewModels/Search/SearchViewModel';
@@ -9,6 +9,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const SearchIndex = (model: {
@@ -34,9 +35,9 @@ const SearchIndex = (model: {
 	viewMode: string;
 }): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
-		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
+		moment.locale(vocaDbContext.culture);
+		var cultureCode = vocaDbContext.uiCulture;
+		var lang = vocaDbContext.languagePreference;
 		var query = model.filter;
 		var tagIds = model.tagId;
 		var searchType = model.searchTypeName;
@@ -57,10 +58,10 @@ const SearchIndex = (model: {
 		var autoplay = model.autoplay;
 		var shuffle = model.shuffle;
 		var pageSize = model.pageSize;
-		var loggedUserId = vdb.values.loggedUserId;
+		var loggedUserId = vocaDbContext.loggedUserId;
 		var unknownPictureUrl = functions.mapAbsoluteUrl('/Content/unknown.png');
 
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var resourceRepo = repoFactory.resourceRepository();
 		var entryRepo = repoFactory.entryRepository();

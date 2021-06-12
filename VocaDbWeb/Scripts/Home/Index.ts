@@ -1,12 +1,14 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import NewsListViewModel from '@ViewModels/NewsListViewModel';
 import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 declare global {
@@ -32,7 +34,7 @@ function initPage(): void {
 			() => {
 				ui.showSuccessMessage(vdb.resources.song.thanksForRating);
 			},
-			vdb.values.isLoggedIn,
+			vocaDbContext.isLoggedIn,
 		);
 		ko.applyBindings(viewModel, ratingBar[0]);
 	}

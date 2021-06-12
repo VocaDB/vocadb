@@ -2,7 +2,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
@@ -13,6 +13,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(confirmDisableStr: string): void {
@@ -50,15 +51,15 @@ const UserDetails = (
 	ko.punches.enableAll();
 
 	$(function () {
-		var cultureCode = vdb.values.uiCulture;
+		var cultureCode = vocaDbContext.uiCulture;
 
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 
-		var lang = vdb.values.languagePreference;
+		var lang = vocaDbContext.languagePreference;
 		var userId = model.id;
-		var loggedUserId = vdb.values.loggedUserId;
+		var loggedUserId = vocaDbContext.loggedUserId;
 		const httpClient = new HttpClient();
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var adminRepo = repoFactory.adminRepository();
 		var userRepo = repoFactory.userRepository();

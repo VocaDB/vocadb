@@ -1,6 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
@@ -8,6 +8,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const UserFavoriteSongs = (model: {
@@ -18,14 +19,14 @@ const UserFavoriteSongs = (model: {
 	};
 }): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
-		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
+		moment.locale(vocaDbContext.culture);
+		var cultureCode = vocaDbContext.uiCulture;
+		var lang = vocaDbContext.languagePreference;
 		var loggedUserId = model.user.id;
 		var sort = model.sort;
 		var groupByRating = model.groupByRating;
 
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

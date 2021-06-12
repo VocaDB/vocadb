@@ -7,12 +7,15 @@ import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export class SongInListEditViewModel {
 	public constructor(data: SongInListEditContract) {
@@ -46,7 +49,7 @@ export default class SongListEditViewModel {
 		if (!songId) return;
 
 		this.songRepo
-			.getOne(songId, vdb.values.languagePreference)
+			.getOne(songId, vocaDbContext.languagePreference)
 			.then((song: SongContract) => {
 				var songInList = new SongInListEditViewModel({
 					songInListId: 0,

@@ -2,17 +2,20 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class ArtistMergeViewModel {
 	public constructor(repo: ArtistRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<ArtistContract>(
 			null!,
 			(entryId, callback) =>
-				repo.getOne(entryId, vdb.values.languagePreference).then(callback),
+				repo.getOne(entryId, vocaDbContext.languagePreference).then(callback),
 		);
 
 		this.targetSearchParams = {
@@ -20,7 +23,7 @@ export default class ArtistMergeViewModel {
 			ignoreId: id,
 		};
 
-		repo.getOne(id, vdb.values.languagePreference).then((base) => {
+		repo.getOne(id, vocaDbContext.languagePreference).then((base) => {
 			ko.computed(() => {
 				var result = EntryMergeValidationHelper.validateEntry(
 					base,

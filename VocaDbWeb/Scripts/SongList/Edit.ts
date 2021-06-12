@@ -1,11 +1,12 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import SongListEditViewModel from '@ViewModels/SongList/SongListEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(
@@ -33,7 +34,7 @@ function initPage(
 
 const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		initPage(repoFactory, urlMapper, model.id);
 	});
 };

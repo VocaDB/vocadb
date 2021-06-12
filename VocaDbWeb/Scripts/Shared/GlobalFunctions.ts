@@ -1,5 +1,9 @@
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
+
+import VocaDbContext from './VocaDbContext';
+import { container } from './inversify.config';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class functions {
 	public static getId(elem: HTMLElement): string | null {
@@ -16,7 +20,7 @@ export default class functions {
 	}
 
 	public static mapAbsoluteUrl(relative: string): string {
-		return functions.mergeUrls(vdb.values.baseAddress, relative);
+		return functions.mergeUrls(vocaDbContext.baseAddress, relative);
 	}
 
 	public static mergeUrls(base: string, relative: string): string {

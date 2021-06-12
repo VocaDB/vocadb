@@ -2,13 +2,14 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const SongListDetails = (
@@ -27,17 +28,17 @@ const SongListDetails = (
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#export').button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 
-		var languageSelection = vdb.values.languagePreference;
+		var languageSelection = vocaDbContext.languagePreference;
 		var listId = model.songList.id;
 
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var userRepo = repoFactory.userRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var cultureCode = vdb.values.uiCulture;
+		var cultureCode = vocaDbContext.uiCulture;
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var latestComments = model.songList.latestComments;
@@ -52,7 +53,7 @@ const SongListDetails = (
 			resourceRepo,
 			defaultSortRuleName,
 			latestComments,
-			vdb.values.loggedUserId,
+			vocaDbContext.loggedUserId,
 			languageSelection,
 			cultureCode,
 			listId,

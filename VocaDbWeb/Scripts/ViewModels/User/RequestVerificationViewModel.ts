@@ -1,8 +1,11 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko, { Observable } from 'knockout';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class RequestVerificationViewModel {
 	public constructor(private readonly artistRepository: ArtistRepository) {}
@@ -19,7 +22,7 @@ export default class RequestVerificationViewModel {
 
 	public setArtist = (targetArtistId?: number): void => {
 		this.artistRepository
-			.getOne(targetArtistId!, vdb.values.languagePreference)
+			.getOne(targetArtistId!, vocaDbContext.languagePreference)
 			.then((artist) => {
 				this.selectedArtist(artist);
 			});

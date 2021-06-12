@@ -4,6 +4,7 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
@@ -12,6 +13,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(
@@ -90,12 +92,12 @@ const ArtistDetails = (
 	saveStr: string,
 ): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 
-		var cultureCode = vdb.values.uiCulture;
-		var loggedUserId = vdb.values.loggedUserId;
+		var cultureCode = vocaDbContext.uiCulture;
+		var loggedUserId = vocaDbContext.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
 		var artistRepo = repoFactory.artistRepository();
@@ -117,7 +119,7 @@ const ArtistDetails = (
 			model.siteNotifications,
 			hasEnglishDescription,
 			unknownPictureUrl,
-			vdb.values.languagePreference,
+			vocaDbContext.languagePreference,
 			urlMapper,
 			albumRepository,
 			songRepo,

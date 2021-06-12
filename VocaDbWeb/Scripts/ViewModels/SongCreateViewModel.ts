@@ -14,11 +14,14 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 // View model for song creation view
 export default class SongCreateViewModel {
@@ -100,7 +103,7 @@ export default class SongCreateViewModel {
 		const tag = await this.tagRepository.getEntryTypeTag(
 			EntryType.Song,
 			songType,
-			vdb.values.languagePreference,
+			vocaDbContext.languagePreference,
 		);
 		this.songTypeTag(tag);
 	};
@@ -139,7 +142,7 @@ export default class SongCreateViewModel {
 
 	public selectOriginal = (dupe: DuplicateEntryResultContract): void => {
 		this.songRepository
-			.getOne(dupe.entry.id, vdb.values.languagePreference)
+			.getOne(dupe.entry.id, vocaDbContext.languagePreference)
 			.then((song) => this.originalVersion.entry(song));
 	};
 
@@ -177,7 +180,7 @@ export default class SongCreateViewModel {
 		this.addArtist = (artistId?: number): void => {
 			if (artistId) {
 				artistRepository
-					.getOne(artistId, vdb.values.languagePreference)
+					.getOne(artistId, vocaDbContext.languagePreference)
 					.then((artist) => {
 						this.artists.push(artist);
 						this.checkDuplicates();
@@ -208,7 +211,7 @@ export default class SongCreateViewModel {
 			null!,
 			(entryId, callback) =>
 				songRepository
-					.getOne(entryId, vdb.values.languagePreference)
+					.getOne(entryId, vocaDbContext.languagePreference)
 					.then(callback),
 		);
 

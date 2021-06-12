@@ -1,5 +1,6 @@
 import HttpClient from '@Shared/HttpClient';
 import UrlMapperFactory from '@Shared/UrlMapperFactory';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { injectable } from 'inversify';
 import 'reflect-metadata';
 
@@ -42,11 +43,18 @@ export default class RepositoryFactory {
 	private readonly venueRepositories: { [key: string]: VenueRepository } = {};
 
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly httpClient: HttpClient,
 		private readonly urlMapperFactory: UrlMapperFactory,
 	) {}
 
-	public adminRepository = (baseUrl: string = '/'): AdminRepository => {
+	private get baseUrl(): string {
+		return this.vocaDbContext.baseAddress;
+	}
+
+	public adminRepository = (
+		baseUrl: string = this.baseUrl,
+	): AdminRepository => {
 		if (!this.adminRepositories[baseUrl]) {
 			this.adminRepositories[baseUrl] = new AdminRepository(
 				this.httpClient,
@@ -56,7 +64,9 @@ export default class RepositoryFactory {
 		return this.adminRepositories[baseUrl];
 	};
 
-	public albumRepository = (baseUrl: string = '/'): AlbumRepository => {
+	public albumRepository = (
+		baseUrl: string = this.baseUrl,
+	): AlbumRepository => {
 		if (!this.albumRepositories[baseUrl]) {
 			this.albumRepositories[baseUrl] = new AlbumRepository(
 				this.httpClient,
@@ -66,7 +76,9 @@ export default class RepositoryFactory {
 		return this.albumRepositories[baseUrl];
 	};
 
-	public artistRepository = (baseUrl: string = '/'): ArtistRepository => {
+	public artistRepository = (
+		baseUrl: string = this.baseUrl,
+	): ArtistRepository => {
 		if (!this.artistRepositories[baseUrl]) {
 			this.artistRepositories[baseUrl] = new ArtistRepository(
 				this.httpClient,
@@ -77,7 +89,7 @@ export default class RepositoryFactory {
 	};
 
 	public discussionRepository = (
-		baseUrl: string = '/',
+		baseUrl: string = this.baseUrl,
 	): DiscussionRepository => {
 		if (!this.discussionRepositories[baseUrl]) {
 			this.discussionRepositories[baseUrl] = new DiscussionRepository(
@@ -88,7 +100,9 @@ export default class RepositoryFactory {
 		return this.discussionRepositories[baseUrl];
 	};
 
-	public entryRepository = (baseUrl: string = '/'): EntryRepository => {
+	public entryRepository = (
+		baseUrl: string = this.baseUrl,
+	): EntryRepository => {
 		if (!this.entryRepositories[baseUrl]) {
 			this.entryRepositories[baseUrl] = new EntryRepository(
 				this.httpClient,
@@ -98,7 +112,9 @@ export default class RepositoryFactory {
 		return this.entryRepositories[baseUrl];
 	};
 
-	public eventRepository = (baseUrl: string = '/'): ReleaseEventRepository => {
+	public eventRepository = (
+		baseUrl: string = this.baseUrl,
+	): ReleaseEventRepository => {
 		if (!this.eventRepositories[baseUrl]) {
 			this.eventRepositories[baseUrl] = new ReleaseEventRepository(
 				this.httpClient,
@@ -108,7 +124,7 @@ export default class RepositoryFactory {
 		return this.eventRepositories[baseUrl];
 	};
 
-	public pvRepository = (baseUrl: string = '/'): PVRepository => {
+	public pvRepository = (baseUrl: string = this.baseUrl): PVRepository => {
 		if (!this.pvRepositories[baseUrl]) {
 			this.pvRepositories[baseUrl] = new PVRepository(
 				this.httpClient,
@@ -118,7 +134,9 @@ export default class RepositoryFactory {
 		return this.pvRepositories[baseUrl];
 	};
 
-	public resourceRepository = (baseUrl: string = '/'): ResourceRepository => {
+	public resourceRepository = (
+		baseUrl: string = this.baseUrl,
+	): ResourceRepository => {
 		if (!this.resourceRepositories[baseUrl]) {
 			this.resourceRepositories[baseUrl] = new ResourceRepository(
 				this.httpClient,
@@ -128,7 +146,9 @@ export default class RepositoryFactory {
 		return this.resourceRepositories[baseUrl];
 	};
 
-	public songListRepository = (baseUrl: string = '/'): SongListRepository => {
+	public songListRepository = (
+		baseUrl: string = this.baseUrl,
+	): SongListRepository => {
 		if (!this.songListRepositories[baseUrl]) {
 			this.songListRepositories[baseUrl] = new SongListRepository(
 				this.httpClient,
@@ -138,7 +158,7 @@ export default class RepositoryFactory {
 		return this.songListRepositories[baseUrl];
 	};
 
-	public songRepository = (baseUrl: string = '/'): SongRepository => {
+	public songRepository = (baseUrl: string = this.baseUrl): SongRepository => {
 		if (!this.songRepositories[baseUrl]) {
 			this.songRepositories[baseUrl] = new SongRepository(
 				this.httpClient,
@@ -148,7 +168,7 @@ export default class RepositoryFactory {
 		return this.songRepositories[baseUrl];
 	};
 
-	public tagRepository = (baseUrl: string = '/'): TagRepository => {
+	public tagRepository = (baseUrl: string = this.baseUrl): TagRepository => {
 		if (!this.tagRepositories[baseUrl]) {
 			this.tagRepositories[baseUrl] = new TagRepository(
 				this.httpClient,
@@ -158,7 +178,7 @@ export default class RepositoryFactory {
 		return this.tagRepositories[baseUrl];
 	};
 
-	public userRepository = (baseUrl: string = '/'): UserRepository => {
+	public userRepository = (baseUrl: string = this.baseUrl): UserRepository => {
 		if (!this.userRepositories[baseUrl]) {
 			this.userRepositories[baseUrl] = new UserRepository(
 				this.httpClient,
@@ -168,7 +188,9 @@ export default class RepositoryFactory {
 		return this.userRepositories[baseUrl];
 	};
 
-	public venueRepository = (baseUrl: string = '/'): VenueRepository => {
+	public venueRepository = (
+		baseUrl: string = this.baseUrl,
+	): VenueRepository => {
 		if (!this.venueRepositories[baseUrl]) {
 			this.venueRepositories[baseUrl] = new VenueRepository(
 				this.httpClient,

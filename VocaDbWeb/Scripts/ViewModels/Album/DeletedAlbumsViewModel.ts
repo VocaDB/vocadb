@@ -1,9 +1,12 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import AlbumRepository from '@Repositories/AlbumRepository';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class DeletedAlbumsViewModel {
 	public constructor(private albumRepo: AlbumRepository) {
@@ -34,7 +37,7 @@ export default class DeletedAlbumsViewModel {
 		this.albumRepo
 			.getList(
 				pagingProperties,
-				vdb.values.languagePreference,
+				vocaDbContext.languagePreference,
 				this.searchTerm(),
 				'Name',
 				undefined!,

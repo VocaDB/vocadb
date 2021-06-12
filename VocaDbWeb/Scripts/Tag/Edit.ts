@@ -1,11 +1,12 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import TagEditViewModel from '@ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(): void {
@@ -18,7 +19,7 @@ const TagEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		initPage();
 
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var tagRepo = repoFactory.tagRepository();
 		var userRepo = repoFactory.userRepository();
 
@@ -26,7 +27,7 @@ const TagEdit = (model: { id: number }): void => {
 			.getById(
 				model.id,
 				'AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks',
-				vdb.values.languagePreference,
+				vocaDbContext.languagePreference,
 			)
 			.then(function (contract) {
 				var viewModel = new TagEditViewModel(urlMapper, userRepo, contract);

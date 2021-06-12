@@ -12,7 +12,8 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -26,6 +27,8 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(
@@ -95,7 +98,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			null!,
 			(entryId, callback) =>
 				this.songRepo
-					.getOne(entryId, vdb.values.languagePreference)
+					.getOne(entryId, vocaDbContext.languagePreference)
 					.then(callback),
 		);
 

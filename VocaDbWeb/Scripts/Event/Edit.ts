@@ -1,12 +1,13 @@
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ReleaseEventEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(): void {
@@ -23,7 +24,7 @@ const EventEdit = (
 	$(function () {
 		ko.punches.enableAll();
 
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();

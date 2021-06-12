@@ -10,13 +10,16 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class AlbumCollectionViewModel {
 	public constructor(
@@ -114,7 +117,7 @@ export default class AlbumCollectionViewModel {
 	public selectArtist = (selectedArtistId?: number): void => {
 		this.artistId(selectedArtistId!);
 		this.artistRepo
-			.getOne(selectedArtistId!, vdb.values.languagePreference)
+			.getOne(selectedArtistId!, vocaDbContext.languagePreference)
 			.then((artist) => this.artistName(artist.name));
 	};
 

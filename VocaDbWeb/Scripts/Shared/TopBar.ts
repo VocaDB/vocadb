@@ -1,10 +1,11 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 
+import VocaDbContext from './VocaDbContext';
 import { container } from './inversify.config';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 $(() => {
@@ -13,7 +14,7 @@ $(() => {
 			request: { term: string },
 			response: (items: string[]) => void,
 		) => {
-			var urlMapper = new UrlMapper(vdb.values.baseAddress);
+			var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 			var term: string = request.term;
 			var entryType = $('#globalSearchObjectType').val();
 			var endpoint: string = null!;
@@ -61,7 +62,7 @@ export function setLanguagePreferenceCookie(
 	var userRepo = repoFactory.userRepository();
 	userRepo
 		.updateUserSetting(
-			vdb.values.loggedUserId,
+			vocaDbContext.loggedUserId,
 			'languagePreference',
 			languagePreference,
 		)

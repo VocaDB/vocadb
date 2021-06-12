@@ -5,10 +5,13 @@ import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko from 'knockout';
 
 import WebLinkEditViewModel from './WebLinkEditViewModel';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class ArtistCreateViewModel {
 	public artistType = ko.observable(ArtistType[ArtistType.Producer]);
@@ -27,7 +30,7 @@ export default class ArtistCreateViewModel {
 		const tag = await this.tagRepository.getEntryTypeTag(
 			EntryType.Artist,
 			artistType,
-			vdb.values.languagePreference,
+			vocaDbContext.languagePreference,
 		);
 		this.artistTypeTag(tag);
 	};

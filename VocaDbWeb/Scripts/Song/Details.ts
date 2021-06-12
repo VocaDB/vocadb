@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import SongDetailsViewModel, {
@@ -14,6 +15,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(
@@ -94,13 +96,13 @@ const SongDetails = (
 	showTranslatedDescription: boolean,
 ): void => {
 	$(document).ready(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 
 		vdb.resources.song = resources;
 
 		var jsonModel = model.jsonModel;
 		const httpClient = new HttpClient();
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
@@ -115,8 +117,8 @@ const SongDetails = (
 			showTranslatedDescription,
 			jsonModel,
 			reportTypes,
-			vdb.values.loggedUserId,
-			vdb.values.languagePreference,
+			vocaDbContext.loggedUserId,
+			vocaDbContext.languagePreference,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

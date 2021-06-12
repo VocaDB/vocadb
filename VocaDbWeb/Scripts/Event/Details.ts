@@ -5,13 +5,14 @@ import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ReleaseEventDetailsViewModel from '@ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const EventDetails = (
@@ -34,9 +35,9 @@ const EventDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 		$('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
-		var loggedUserId = vdb.values.loggedUserId;
+		var loggedUserId = vocaDbContext.loggedUserId;
 		const httpClient = new HttpClient();
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();

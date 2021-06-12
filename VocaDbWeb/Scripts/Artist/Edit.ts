@@ -4,11 +4,13 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(): void {
@@ -33,7 +35,7 @@ const ArtistEdit = (
 			saveWarning: saveWarning,
 		};
 
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var artistRepo = repoFactory.artistRepository();
 		var userRepo = repoFactory.userRepository();
 		var editedModel = model.editedArtist;

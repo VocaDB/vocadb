@@ -2,11 +2,14 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 import ArtistFilter from './ArtistFilter';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page
@@ -68,7 +71,7 @@ export default class ArtistFilters {
 			var selectedArtistId = newArtist.id;
 
 			this.artistRepo
-				.getOne(selectedArtistId, vdb.values.languagePreference)
+				.getOne(selectedArtistId, vocaDbContext.languagePreference)
 				.then((artist) => {
 					newArtist.name(artist.name);
 					newArtist.artistType(

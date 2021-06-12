@@ -4,12 +4,15 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 import PVPlayersFactory from './PVPlayersFactory';
+
+const vocaDbContext = container.get(VocaDbContext);
 
 export default class PVPlayerViewModel {
 	public static autoplayPVServicesString =
@@ -42,7 +45,7 @@ export default class PVPlayerViewModel {
 			}
 
 			userRepo
-				.getSongRating(vdb.values.loggedUserId, song.song.id)
+				.getSongRating(vocaDbContext.loggedUserId, song.song.id)
 				.then((rating) => {
 					this.ratingButtonsViewModel(
 						new PVRatingButtonsViewModel(

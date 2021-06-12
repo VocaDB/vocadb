@@ -18,6 +18,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -31,6 +32,7 @@ import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 export class RatingsViewModel {
@@ -132,7 +134,7 @@ export default class SongDetailsViewModel {
 		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo
-			.getOneWithComponents(id, 'None', vdb.values.languagePreference)
+			.getOneWithComponents(id, 'None', vocaDbContext.languagePreference)
 			.then((song) => {
 				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
@@ -240,7 +242,7 @@ export default class SongDetailsViewModel {
 					.getOneWithComponents(
 						this.id,
 						'Artists',
-						vdb.values.languagePreference,
+						vocaDbContext.languagePreference,
 					)
 					.then((result) => {
 						var artists = _.chain(result.artists!)

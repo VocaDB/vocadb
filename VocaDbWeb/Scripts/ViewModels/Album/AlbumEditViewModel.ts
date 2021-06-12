@@ -16,6 +16,8 @@ import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
+import { container } from '@Shared/inversify.config';
 import $ from 'jquery';
 import ko, {
 	Computed,
@@ -39,6 +41,8 @@ import SongInAlbumEditViewModel from '../SongInAlbumEditViewModel';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';
 
+const vocaDbContext = container.get(VocaDbContext);
+
 // Edit view model for album.
 export default class AlbumEditViewModel {
 	// Adds a song to the album, by either id (existing song) or name (new song).
@@ -54,7 +58,7 @@ export default class AlbumEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, vdb.values.languagePreference)
+				.getOne(artistId, vocaDbContext.languagePreference)
 				.then((artist) => {
 					var data: ArtistForAlbumContract = {
 						artist: artist,
@@ -338,7 +342,7 @@ export default class AlbumEditViewModel {
 					.getOneWithComponents(
 						songId,
 						'AdditionalNames,Artists',
-						vdb.values.languagePreference,
+						vocaDbContext.languagePreference,
 					)
 					.then((song) => {
 						var artists = _.filter(

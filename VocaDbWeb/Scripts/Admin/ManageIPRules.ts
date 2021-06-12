@@ -1,5 +1,5 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ManageIPRulesViewModel, {
 	IPRuleContract,
@@ -8,11 +8,12 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const AdminManageIPRules = (model: IPRuleContract[]): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 		ko.punches.enableAll();
 
 		var rules = model;

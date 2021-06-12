@@ -4,12 +4,14 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import AlbumEditViewModel from '@ViewModels/Album/AlbumEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 function initPage(): void {
@@ -38,14 +40,14 @@ const AlbumEdit = (
 	webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 		ko.punches.enableAll();
 
 		vdb.resources.entryEdit = {
 			saveWarning: saveWarning,
 		};
 
-		var rootPath = vdb.values.baseAddress;
+		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 
 		var repo = repoFactory.albumRepository();

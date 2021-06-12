@@ -1,12 +1,13 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ActivityEntryListViewModel from '@ViewModels/ActivityEntry/ActivityEntryListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const vocaDbContext = container.get(VocaDbContext);
 const repoFactory = container.get(RepositoryFactory);
 
 const UserEntryEdits = (
@@ -16,13 +17,13 @@ const UserEntryEdits = (
 	},
 ): void => {
 	$(function () {
-		moment.locale(vdb.values.culture);
+		moment.locale(vocaDbContext.culture);
 		ko.punches.enableAll();
 
-		var urlMapper = new UrlMapper(vdb.values.baseAddress);
+		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var resourceRepo = repoFactory.resourceRepository();
-		var lang = vdb.values.languagePreference;
-		var cultureCode = vdb.values.uiCulture;
+		var lang = vocaDbContext.languagePreference;
+		var cultureCode = vocaDbContext.uiCulture;
 		var userId = model.id;
 
 		var vm = new ActivityEntryListViewModel(
