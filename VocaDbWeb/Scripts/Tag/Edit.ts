@@ -6,6 +6,8 @@ import TagEditViewModel from '@ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(): void {
 	$('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -17,7 +19,6 @@ const TagEdit = (model: { id: number }): void => {
 		initPage();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var tagRepo = repoFactory.tagRepository();
 		var userRepo = repoFactory.userRepository();
 

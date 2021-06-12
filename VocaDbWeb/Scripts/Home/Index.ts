@@ -7,6 +7,8 @@ import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 declare global {
 	interface JQuery {
 		scrollable: (params: any) => void;
@@ -15,7 +17,6 @@ declare global {
 
 function initPage(): void {
 	function initRatingButtons(): void {
-		const repoFactory = container.get(RepositoryFactory);
 		const repo = repoFactory.userRepository();
 		const ratingBar = $('#rating-bar');
 

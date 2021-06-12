@@ -8,13 +8,14 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AdminManageIPRules = (model: IPRuleContract[]): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 
 		var rules = model;
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.adminRepository();
 
 		var viewModel = new ManageIPRulesViewModel(rules, repo);

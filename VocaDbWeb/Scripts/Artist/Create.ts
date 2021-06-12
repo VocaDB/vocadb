@@ -4,10 +4,11 @@ import ArtistCreateViewModel from '@ViewModels/ArtistCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const ArtistCreate = (model: any): void => {
 	$(document).ready(function () {
 		ko.punches.enableAll();
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var json = model;

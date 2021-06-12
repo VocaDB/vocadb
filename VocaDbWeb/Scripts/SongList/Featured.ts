@@ -6,6 +6,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const SongListFeatured = (
 	categories: string[],
 	model: {
@@ -23,7 +25,6 @@ const SongListFeatured = (
 		var tagIds = model.tagId;
 
 		var lang = vdb.values.languagePreference;
-		const repoFactory = container.get(RepositoryFactory);
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();

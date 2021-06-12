@@ -12,6 +12,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(
 	artistId: number,
 	saveStr: string,
@@ -96,7 +98,6 @@ const ArtistDetails = (
 		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
-		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		var albumRepository = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();

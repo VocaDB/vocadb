@@ -6,6 +6,8 @@ import SongListEditViewModel from '@ViewModels/SongList/SongListEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(
 	repoFactory: RepositoryFactory,
 	urlMapper: UrlMapper,
@@ -32,7 +34,6 @@ function initPage(
 const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		initPage(repoFactory, urlMapper, model.id);
 	});
 };

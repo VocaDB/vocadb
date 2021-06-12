@@ -6,6 +6,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserIndex = (model: { filter: string; groupId: string }): void => {
 	$(function () {
 		var cultureCode = vdb.values.culture;
@@ -14,7 +16,6 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 
 		var filter = model.filter;
 		var groupId = model.groupId;
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(

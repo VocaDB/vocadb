@@ -9,6 +9,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const SearchIndex = (model: {
 	artistId: number[];
 	artistType: string;
@@ -60,7 +62,6 @@ const SearchIndex = (model: {
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var resourceRepo = repoFactory.resourceRepository();
 		var entryRepo = repoFactory.entryRepository();
 		var artistRepo = repoFactory.artistRepository();

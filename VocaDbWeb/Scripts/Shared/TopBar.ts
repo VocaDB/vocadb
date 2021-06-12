@@ -5,6 +5,8 @@ import $ from 'jquery';
 
 import { container } from './inversify.config';
 
+const repoFactory = container.get(RepositoryFactory);
+
 $(() => {
 	$('#globalSearchTerm').autocomplete({
 		source: (
@@ -56,7 +58,6 @@ $(() => {
 export function setLanguagePreferenceCookie(
 	languagePreference: string,
 ): boolean {
-	const repoFactory = container.get(RepositoryFactory);
 	var userRepo = repoFactory.userRepository();
 	userRepo
 		.updateUserSetting(

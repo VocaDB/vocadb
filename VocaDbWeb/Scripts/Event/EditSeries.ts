@@ -8,6 +8,8 @@ import ReleaseEventSeriesEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEve
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(): void {
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
 	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -22,7 +24,6 @@ const EventEditSeries = (model: {
 }): void => {
 	$(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 

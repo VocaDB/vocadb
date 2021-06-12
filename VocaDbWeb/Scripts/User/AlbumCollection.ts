@@ -5,6 +5,8 @@ import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel'
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserAlbumCollection = (
 	model: {
 		user: {
@@ -18,7 +20,6 @@ const UserAlbumCollection = (
 		var lang = vdb.values.languagePreference;
 		var loggedUserId = model.user.id;
 
-		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var resourceRepo = repoFactory.resourceRepository();

@@ -4,6 +4,8 @@ import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const TagViewVersion = (model: {
 	entry: {
 		archivedVersion: {
@@ -22,7 +24,6 @@ const TagViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		const repoFactory = container.get(RepositoryFactory);
 		var rep = repoFactory.tagRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.tag.id,

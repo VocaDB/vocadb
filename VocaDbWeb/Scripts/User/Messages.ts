@@ -7,6 +7,8 @@ import UserMessagesViewModel from '@ViewModels/User/UserMessagesViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserMessages = (
 	message: string,
 	model: {
@@ -18,7 +20,6 @@ const UserMessages = (
 	$(function () {
 		$('#tabs').tabs();
 
-		const repoFactory = container.get(RepositoryFactory);
 		var repository = repoFactory.userRepository();
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(

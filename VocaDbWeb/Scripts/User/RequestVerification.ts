@@ -4,9 +4,10 @@ import RequestVerificationViewModel from '@ViewModels/User/RequestVerificationVi
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserRequestVerification = (): void => {
 	$(document).ready(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var artistRepo = repoFactory.artistRepository();
 		ko.applyBindings(new RequestVerificationViewModel(artistRepo));
 	});

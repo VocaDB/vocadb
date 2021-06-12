@@ -14,6 +14,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(
 	jsonModel: SongDetailsAjax,
 	songId: number,
@@ -100,7 +102,6 @@ const SongDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

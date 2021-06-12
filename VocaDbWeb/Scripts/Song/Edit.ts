@@ -10,6 +10,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(): void {
 	$('#tabs').tabs();
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -54,7 +56,6 @@ const SongEdit = (
 		var editedModel = model.editedSong;
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();

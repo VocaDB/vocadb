@@ -4,11 +4,12 @@ import ManageTagMappingsViewModel from '@ViewModels/Admin/ManageTagMappingsViewM
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AdminManageTagMappings = (): void => {
 	$(function () {
 		ko.punches.enableAll();
 
-		const repoFactory = container.get(RepositoryFactory);
 		var tagRepo = repoFactory.tagRepository();
 
 		var viewModel = new ManageTagMappingsViewModel(tagRepo);

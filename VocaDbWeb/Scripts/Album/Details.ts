@@ -11,6 +11,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initAlbumDetailsPage(
 	albumId: number,
 	collectionRating: number,
@@ -165,7 +167,6 @@ const AlbumDetails = (
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

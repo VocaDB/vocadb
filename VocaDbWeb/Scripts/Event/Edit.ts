@@ -7,6 +7,8 @@ import ReleaseEventEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventEdit
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(): void {
 	$('#tabs').tabs();
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -22,7 +24,6 @@ const EventEdit = (
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();

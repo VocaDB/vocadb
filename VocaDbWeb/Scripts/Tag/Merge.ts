@@ -5,9 +5,10 @@ import TagMergeViewModel from '@ViewModels/Tag/TagMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const TagMerge = (model: TagBaseContract): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.tagRepository();
 		var data = model;
 		var vm = new TagMergeViewModel(repo, data);

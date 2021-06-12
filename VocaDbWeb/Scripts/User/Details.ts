@@ -13,6 +13,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(confirmDisableStr: string): void {
 	$('#mySettingsLink').button({ icons: { primary: 'ui-icon-wrench' } });
 	$('#messagesLink').button({ icons: { primary: 'ui-icon-mail-closed' } });
@@ -58,7 +60,6 @@ const UserDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var adminRepo = repoFactory.adminRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();

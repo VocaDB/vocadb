@@ -6,6 +6,8 @@ import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserMySettings = (model: {
 	aboutMe: string;
 	email: string;
@@ -16,7 +18,6 @@ const UserMySettings = (model: {
 	$(document).ready(function () {
 		$('#tabs').tabs();
 
-		const repoFactory = container.get(RepositoryFactory);
 		var repository = repoFactory.userRepository();
 
 		var viewModel = new MySettingsViewModel(

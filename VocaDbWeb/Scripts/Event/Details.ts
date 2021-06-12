@@ -12,6 +12,8 @@ import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const EventDetails = (
 	canDeleteAllComments: boolean,
 	eventAssociationType: UserEventRelationshipType,
@@ -36,7 +38,6 @@ const EventDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;

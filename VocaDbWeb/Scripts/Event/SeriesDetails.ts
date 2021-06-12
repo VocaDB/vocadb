@@ -5,6 +5,8 @@ import EventSeriesDetailsViewModel from '@ViewModels/ReleaseEvent/EventSeriesDet
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const EventSeriesDetails = (model: {
 	id: number;
 	tags: TagUsageForApiContract[];
@@ -14,7 +16,6 @@ const EventSeriesDetails = (model: {
 		$('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 
-		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var tags = model.tags;
 

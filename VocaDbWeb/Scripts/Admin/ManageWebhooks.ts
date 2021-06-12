@@ -4,11 +4,12 @@ import ManageWebhooksViewModel from '@ViewModels/Admin/ManageWebhooksViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AdminManageWebhooks = (webhookEventNames: {
 	[key: string]: string;
 }): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var adminRepo = repoFactory.adminRepository();
 
 		var viewModel = new ManageWebhooksViewModel(webhookEventNames, adminRepo);

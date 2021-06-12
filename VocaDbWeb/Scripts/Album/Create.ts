@@ -4,9 +4,10 @@ import AlbumCreateViewModel from '@ViewModels/Album/AlbumCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AlbumCreate = (): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var albumRepo = repoFactory.albumRepository();
 		var artistRepo = repoFactory.artistRepository();
 

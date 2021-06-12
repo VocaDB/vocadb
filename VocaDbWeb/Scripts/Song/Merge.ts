@@ -5,9 +5,10 @@ import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const SongMerge = (model: SongContract): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var data = model;
 		var vm = new SongMergeViewModel(repo, data);

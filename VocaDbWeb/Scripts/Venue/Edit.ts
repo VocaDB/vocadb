@@ -7,6 +7,8 @@ import VenueEditViewModel from '@ViewModels/Venue/VenueEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initPage(): void {
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
 	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -16,7 +18,6 @@ function initPage(): void {
 const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = model;

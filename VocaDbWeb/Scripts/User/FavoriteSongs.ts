@@ -8,6 +8,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const UserFavoriteSongs = (model: {
 	groupByRating: boolean;
 	sort: string;
@@ -25,7 +27,6 @@ const UserFavoriteSongs = (model: {
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var songRepo = repoFactory.songRepository();

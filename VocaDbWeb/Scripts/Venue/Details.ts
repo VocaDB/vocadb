@@ -6,6 +6,8 @@ import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const VenueDetails = (
 	model: {
 		id: number;
@@ -22,7 +24,6 @@ const VenueDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 
 		var loggedUserId = vdb.values.loggedUserId;
-		const repoFactory = container.get(RepositoryFactory);
 		var venueRepo = repoFactory.venueRepository();
 
 		var vm = new VenueDetailsViewModel(

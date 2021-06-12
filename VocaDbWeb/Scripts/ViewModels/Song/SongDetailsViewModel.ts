@@ -31,6 +31,8 @@ import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
+const repoFactory = container.get(RepositoryFactory);
+
 export class RatingsViewModel {
 	constructor() {
 		const fav = SongVoteRating[SongVoteRating.Favorite];
@@ -127,7 +129,6 @@ export default class SongDetailsViewModel {
 
 		const { siteUrl, id } = match;
 
-		const repoFactory = container.get(RepositoryFactory);
 		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo

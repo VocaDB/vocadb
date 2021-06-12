@@ -4,6 +4,8 @@ import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AlbumViewVersion = (model: {
 	album: {
 		id: number;
@@ -21,7 +23,6 @@ const AlbumViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		const repoFactory = container.get(RepositoryFactory);
 		var rep = repoFactory.albumRepository();
 
 		var viewModel = new ArchivedAlbumViewModel(

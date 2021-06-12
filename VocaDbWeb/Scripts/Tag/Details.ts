@@ -10,6 +10,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import _ from 'lodash';
 
+const repoFactory = container.get(RepositoryFactory);
+
 function initChart(
 	urlMapper: UrlMapper,
 	thisTag: string,
@@ -269,7 +271,6 @@ const TagDetails = (
 			jsonModel.hasMoreChildren,
 		);
 
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.tagRepository();
 		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;

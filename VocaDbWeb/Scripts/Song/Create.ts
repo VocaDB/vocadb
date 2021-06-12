@@ -4,10 +4,11 @@ import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const SongCreate = (model: any): void => {
 	$(document).ready(function () {
 		ko.punches.enableAll();
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();

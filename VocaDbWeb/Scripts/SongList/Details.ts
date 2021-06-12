@@ -9,6 +9,8 @@ import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const SongListDetails = (
 	canDeleteAllComments: boolean,
 	defaultSortRuleName: string,
@@ -30,7 +32,6 @@ const SongListDetails = (
 
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		const repoFactory = container.get(RepositoryFactory);
 		var userRepo = repoFactory.userRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();

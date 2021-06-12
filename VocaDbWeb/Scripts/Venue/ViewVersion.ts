@@ -4,6 +4,8 @@ import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const VenueViewVersion = (model: {
 	entry: {
 		archivedVersion: {
@@ -22,7 +24,6 @@ const VenueViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		const repoFactory = container.get(RepositoryFactory);
 		var rep = repoFactory.venueRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.venue.id,

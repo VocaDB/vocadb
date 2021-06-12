@@ -4,9 +4,10 @@ import TagCreateViewModel from '@ViewModels/Tag/TagCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const TagIndex = (): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new TagCreateViewModel(tagRepo);
 		ko.applyBindings(viewModel);

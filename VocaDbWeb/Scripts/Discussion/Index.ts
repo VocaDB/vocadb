@@ -7,6 +7,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
@@ -14,7 +16,6 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
 			new DiscussionIndexViewModel(

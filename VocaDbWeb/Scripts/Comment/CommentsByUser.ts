@@ -7,13 +7,14 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const CommentCommentsByUser = (model: { id: number }): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repoFactory = container.get(RepositoryFactory);
 		var resourceRepo = repoFactory.resourceRepository();
 		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;

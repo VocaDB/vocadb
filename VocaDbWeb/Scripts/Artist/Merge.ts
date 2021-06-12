@@ -4,9 +4,10 @@ import ArtistMergeViewModel from '@ViewModels/Artist/ArtistMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const ArtistMerge = (model: { id: number }): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.artistRepository();
 		var vm = new ArtistMergeViewModel(repo, model.id);
 		ko.applyBindings(vm);

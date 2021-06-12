@@ -4,9 +4,10 @@ import AlbumMergeViewModel from '@ViewModels/Album/AlbumMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AlbumMerge = (model: { id: number }): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.albumRepository();
 		var vm = new AlbumMergeViewModel(repo, model.id);
 		ko.applyBindings(vm);

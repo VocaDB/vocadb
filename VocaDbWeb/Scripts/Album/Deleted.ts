@@ -4,9 +4,10 @@ import DeletedAlbumsViewModel from '@ViewModels/Album/DeletedAlbumsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
+const repoFactory = container.get(RepositoryFactory);
+
 const AlbumDeleted = (): void => {
 	$(function () {
-		const repoFactory = container.get(RepositoryFactory);
 		var repo = repoFactory.albumRepository();
 		var viewModel = new DeletedAlbumsViewModel(repo);
 		ko.applyBindings(viewModel);
