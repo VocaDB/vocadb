@@ -1,6 +1,5 @@
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ResourcesManager from '@Models/ResourcesManager';
@@ -32,7 +31,6 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		searchViewModel: SearchViewModel,
 		vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
-		lang: ContentLanguagePreference,
 		private songRepo: SongRepository,
 		private artistRepo: ArtistRepository,
 		private userRepo: UserRepository,
@@ -178,12 +176,12 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		);
 
 		this.playListViewModel = new PlayListViewModel(
+			vocaDbContext,
 			urlMapper,
 			songsRepoAdapter,
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 
 		this.loadResults = (
@@ -201,7 +199,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 				this.songRepo
 					.getList(
 						pagingProperties,
-						lang,
+						vocaDbContext.languagePreference,
 						searchTerm,
 						this.sort(),
 						this.songType() !== SongType[SongType.Unspecified]

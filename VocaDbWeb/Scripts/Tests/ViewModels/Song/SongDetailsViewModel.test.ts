@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
 import HttpClient from '@Shared/HttpClient';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -48,7 +47,6 @@ beforeEach(() => {
 		data,
 		[],
 		0,
-		ContentLanguagePreference.Default,
 		false,
 		null!,
 	);

@@ -1,8 +1,8 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -11,7 +11,7 @@ import SearchViewModel from './SearchViewModel';
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
+		vocaDbContext: VocaDbContext,
 		private readonly artistRepo: ArtistRepository,
 		private readonly loggedUserId: number,
 		artistType: string,
@@ -37,7 +37,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 			this.artistRepo
 				.getList(
 					pagingProperties,
-					lang,
+					vocaDbContext.languagePreference,
 					searchTerm,
 					this.sort(),
 					this.artistType() !== ArtistType[ArtistType.Unknown]

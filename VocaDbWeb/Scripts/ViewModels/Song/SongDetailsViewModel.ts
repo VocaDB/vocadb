@@ -8,7 +8,6 @@ import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUser
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -191,7 +190,6 @@ export default class SongDetailsViewModel {
 		data: SongDetailsAjax,
 		reportTypes: IEntryReportType[],
 		loggedUserId: number,
-		private lang: ContentLanguagePreference,
 		canDeleteAllComments: boolean,
 		ratingCallback: () => void,
 	) {

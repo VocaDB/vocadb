@@ -1,9 +1,9 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko from 'knockout';
 import moment from 'moment';
 
@@ -19,9 +19,9 @@ enum SongListSortRule {
 
 export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 		tagIds: number[],
 		public showEventDateSort: boolean,
@@ -31,7 +31,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		if (!this.showEventDateSort)
 			this.sort(SongListSortRule[SongListSortRule.Name]);
 
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(vocaDbContext, tagRepo);
 
 		if (tagIds) this.tagFilters.addTags(tagIds);
 

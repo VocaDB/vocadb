@@ -3,7 +3,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import AdminRepository from '@Repositories/AdminRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -13,6 +12,7 @@ import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
+import VocaDbContext from '@Shared/VocaDbContext';
 import { Options } from 'highcharts';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -154,6 +154,7 @@ export default class UserDetailsViewModel {
 	public songLists: UserSongListsViewModel;
 
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		private readonly userId: number,
 		cultureCode: string,
 		private loggedUserId: number,
@@ -165,7 +166,6 @@ export default class UserDetailsViewModel {
 		private adminRepo: AdminRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		public followedArtistsViewModel: FollowedArtistsViewModel,
 		public albumCollectionViewModel: AlbumCollectionViewModel,
 		public ratedSongsViewModel: RatedSongsSearchViewModel,
@@ -184,11 +184,11 @@ export default class UserDetailsViewModel {
 			true,
 		);
 		this.songLists = new UserSongListsViewModel(
+			vocaDbContext,
 			userId,
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			cultureCode,
 		);
 
@@ -213,14 +213,14 @@ export default class UserDetailsViewModel {
 
 export class UserSongListsViewModel extends SongListsBaseViewModel {
 	public constructor(
+		vocaDbContext: VocaDbContext,
 		private readonly userId: number,
 		private readonly userRepo: UserRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 	) {
-		super(resourceRepo, tagRepo, lang, cultureCode, [], true);
+		super(vocaDbContext, resourceRepo, tagRepo, cultureCode, [], true);
 	}
 
 	public loadMoreItems = (

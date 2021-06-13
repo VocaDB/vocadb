@@ -6,7 +6,6 @@ import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiCo
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -68,7 +67,6 @@ export default class AlbumDetailsViewModel {
 		data: AlbumDetailsAjax,
 		reportTypes: IEntryReportType[],
 		loggedUserId: number,
-		lang: ContentLanguagePreference,
 		canDeleteAllComments: boolean,
 		formatString: string,
 		showTranslatedDescription: boolean,
@@ -95,13 +93,19 @@ export default class AlbumDetailsViewModel {
 			data.personalDescriptionText!,
 			artistRepository,
 			(callback) => {
-				repo.getOneWithComponents(this.id, 'Artists', lang).then((result) => {
-					var artists = _.chain(result.artists!)
-						.filter(ArtistHelper.isValidForPersonalDescription)
-						.map((a) => a.artist)
-						.value();
-					callback(artists);
-				});
+				repo
+					.getOneWithComponents(
+						this.id,
+						'Artists',
+						vocaDbContext.languagePreference,
+					)
+					.then((result) => {
+						var artists = _.chain(result.artists!)
+							.filter(ArtistHelper.isValidForPersonalDescription)
+							.map((a) => a.artist)
+							.value();
+						callback(artists);
+					});
 			},
 			(vm) =>
 				repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()),

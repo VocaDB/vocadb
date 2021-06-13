@@ -3,7 +3,6 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -30,14 +29,13 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
 	public constructor(
-		vocaDbContext: VocaDbContext,
+		private readonly vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
 		private songRepo: SongRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private lang: ContentLanguagePreference,
 		private loggedUserId: number,
 		private cultureCode: string,
 		sort: string,
@@ -61,7 +59,7 @@ export default class RatedSongsSearchViewModel {
 
 		if (groupByRating != null) this.groupByRating(groupByRating);
 
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(vocaDbContext, tagRepo);
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 		this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -98,12 +96,12 @@ export default class RatedSongsSearchViewModel {
 			ko.observable('AdditionalNames,ThumbUrl'),
 		);
 		this.playListViewModel = new PlayListViewModel(
+			vocaDbContext,
 			urlMapper,
 			songsRepoAdapter,
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 
 		if (initialize) this.init();
@@ -210,7 +208,7 @@ export default class RatedSongsSearchViewModel {
 			.getRatedSongsList(
 				this.loggedUserId,
 				pagingProperties,
-				this.lang,
+				this.vocaDbContext.languagePreference,
 				this.searchTerm(),
 				this.tagFilters.tagIds(),
 				this.artistFilters.artistIds(),

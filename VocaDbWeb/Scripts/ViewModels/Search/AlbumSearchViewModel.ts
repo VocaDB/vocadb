@@ -1,5 +1,4 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -17,7 +16,6 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		searchViewModel: SearchViewModel,
 		vocaDbContext: VocaDbContext,
 		private unknownPictureUrl: string,
-		lang: ContentLanguagePreference,
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
 		resourceRep: ResourceRepository,
@@ -76,7 +74,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 			this.albumRepo
 				.getList(
 					pagingProperties,
-					lang,
+					vocaDbContext.languagePreference,
 					searchTerm,
 					this.sort(),
 					this.albumType(),

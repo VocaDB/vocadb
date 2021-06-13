@@ -5,7 +5,6 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import { SongOptionalField } from '@Models/EntryOptionalFields';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ResourcesManager from '@Models/ResourcesManager';
 import SongType from '@Models/Songs/SongType';
@@ -36,7 +35,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
 	public constructor(
-		vocaDbContext: VocaDbContext,
+		private readonly vocaDbContext: VocaDbContext,
 		urlMapper: UrlMapper,
 		private songListRepo: SongListRepository,
 		private songRepo: SongRepository,
@@ -46,7 +45,6 @@ export default class SongListViewModel {
 		defaultSortRuleName: string,
 		latestComments: CommentContract[],
 		loggedUserId: number,
-		private lang: ContentLanguagePreference,
 		cultureCode: string,
 		private listId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -103,12 +101,12 @@ export default class SongListViewModel {
 			this.sort,
 		);
 		this.playlistViewModel = new PlayListViewModel(
+			vocaDbContext,
 			urlMapper,
 			playListRepoAdapter,
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
@@ -228,7 +226,7 @@ export default class SongListViewModel {
 				pagingProperties,
 				new SongOptionalFields(fields),
 				this.sort(),
-				this.lang,
+				this.vocaDbContext.languagePreference,
 			)
 			.then((result) => {
 				_.each(result.items, (item) => {

@@ -119,7 +119,6 @@ const SongDetails = (
 			jsonModel,
 			reportTypes,
 			vocaDbContext.loggedUserId,
-			vocaDbContext.languagePreference,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

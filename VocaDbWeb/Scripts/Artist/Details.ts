@@ -120,7 +120,6 @@ const ArtistDetails = (
 			model.siteNotifications,
 			hasEnglishDescription,
 			unknownPictureUrl,
-			vocaDbContext.languagePreference,
 			urlMapper,
 			albumRepository,
 			songRepo,

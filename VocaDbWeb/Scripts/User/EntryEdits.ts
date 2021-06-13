@@ -22,14 +22,13 @@ const UserEntryEdits = (
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var resourceRepo = repoFactory.resourceRepository();
-		var lang = vocaDbContext.languagePreference;
 		var cultureCode = vocaDbContext.uiCulture;
 		var userId = model.id;
 
 		var vm = new ActivityEntryListViewModel(
+			vocaDbContext,
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 			userId,
 			additionsOnly,

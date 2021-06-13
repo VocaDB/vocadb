@@ -187,7 +187,6 @@ const AlbumDetails = (
 			jsonModel,
 			reportTypes,
 			vocaDbContext.loggedUserId,
-			vocaDbContext.languagePreference,
 			canDeleteAllComments,
 			formatString,
 			showTranslatedDescription,

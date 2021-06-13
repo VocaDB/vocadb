@@ -55,7 +55,6 @@ const UserDetails = (
 
 		moment.locale(vocaDbContext.culture);
 
-		var lang = vocaDbContext.languagePreference;
 		var userId = model.id;
 		var loggedUserId = vocaDbContext.loggedUserId;
 		const httpClient = new HttpClient();
@@ -74,10 +73,10 @@ const UserDetails = (
 		var groupByRating = true;
 
 		var followedArtistsViewModel = new FollowedArtistsViewModel(
+			vocaDbContext,
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
 			cultureCode,
 		);
@@ -87,7 +86,6 @@ const UserDetails = (
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
 			userId,
 			cultureCode,
 			publicCollection,
@@ -102,7 +100,6 @@ const UserDetails = (
 			songRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
 			cultureCode,
 			sort,
@@ -114,6 +111,7 @@ const UserDetails = (
 		);
 
 		var viewModel = new UserDetailsViewModel(
+			vocaDbContext,
 			userId,
 			cultureCode,
 			loggedUserId,
@@ -125,7 +123,6 @@ const UserDetails = (
 			adminRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			followedArtistsViewModel,
 			albumCollectionViewModel,
 			ratedSongsViewModel,

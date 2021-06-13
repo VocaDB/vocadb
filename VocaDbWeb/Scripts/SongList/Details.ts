@@ -28,7 +28,6 @@ const SongListDetails = (
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#export').button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 
-		var languageSelection = vocaDbContext.languagePreference;
 		var listId = model.songList.id;
 
 		var rootPath = vocaDbContext.baseAddress;
@@ -55,7 +54,6 @@ const SongListDetails = (
 			defaultSortRuleName,
 			latestComments,
 			vocaDbContext.loggedUserId,
-			languageSelection,
 			cultureCode,
 			listId,
 			tagUsages,

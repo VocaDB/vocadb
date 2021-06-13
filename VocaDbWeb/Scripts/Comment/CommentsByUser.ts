@@ -17,14 +17,13 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var resourceRepo = repoFactory.resourceRepository();
-		var lang = vocaDbContext.languagePreference;
 		var cultureCode = vocaDbContext.uiCulture;
 		var userId = model.id;
 
 		var vm = new CommentListViewModel(
+			vocaDbContext,
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 			userId,
 		);

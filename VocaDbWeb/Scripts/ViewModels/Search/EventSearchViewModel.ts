@@ -1,5 +1,4 @@
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -13,7 +12,6 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 	public constructor(
 		searchViewModel: SearchViewModel,
 		vocaDbContext: VocaDbContext,
-		lang: ContentLanguagePreference,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
 		public loggedUserId: number,
@@ -50,7 +48,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 					start: pagingProperties.start,
 					maxResults: pagingProperties.maxEntries,
 					getTotalCount: pagingProperties.getTotalCount,
-					lang: lang,
+					lang: vocaDbContext.languagePreference,
 					query: searchTerm,
 					sort: this.sort(),
 					category: this.category() === 'Unspecified' ? null! : this.category(),

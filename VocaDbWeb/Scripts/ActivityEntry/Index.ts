@@ -17,13 +17,12 @@ const ActivityEntryIndex = (): void => {
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 		var resourceRepo = repoFactory.resourceRepository();
-		var lang = vocaDbContext.languagePreference;
 		var cultureCode = vocaDbContext.uiCulture;
 
 		var vm = new ActivityEntryListViewModel(
+			vocaDbContext,
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 		);
 		ko.applyBindings(vm);

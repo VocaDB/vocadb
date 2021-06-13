@@ -18,7 +18,6 @@ const UserAlbumCollection = (
 ): void => {
 	$(document).ready(function () {
 		var cultureCode = vocaDbContext.uiCulture;
-		var lang = vocaDbContext.languagePreference;
 		var loggedUserId = model.user.id;
 
 		var userRepo = repoFactory.userRepository();
@@ -30,7 +29,6 @@ const UserAlbumCollection = (
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
 			loggedUserId,
 			cultureCode,
 			publicCollection,

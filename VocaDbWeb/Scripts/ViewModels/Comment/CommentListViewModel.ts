@@ -7,6 +7,7 @@ import ResourcesManager, { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import VocaDbContext from '@Shared/VocaDbContext';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -19,9 +20,9 @@ enum CommentSortRule {
 
 export default class CommentListViewModel {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		private lang: ContentLanguagePreference,
 		cultureCode: string,
 		private userId?: number,
 	) {
@@ -108,7 +109,7 @@ export default class CommentListViewModel {
 			{
 				fields: 'Entry',
 				entryFields: 'AdditionalNames,MainPicture',
-				lang: ContentLanguagePreference[this.lang],
+				lang: ContentLanguagePreference[this.vocaDbContext.languagePreference],
 				before:
 					sortRule === CommentSortRule.CreateDateDescending &&
 					this.lastCommentDate

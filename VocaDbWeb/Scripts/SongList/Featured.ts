@@ -25,15 +25,14 @@ const SongListFeatured = (
 		var cultureCode = vocaDbContext.uiCulture;
 		var tagIds = model.tagId;
 
-		var lang = vocaDbContext.languagePreference;
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new FeaturedSongListsViewModel(
+			vocaDbContext,
 			songListRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			cultureCode,
 			tagIds,
 			categories,

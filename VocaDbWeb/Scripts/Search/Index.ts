@@ -37,7 +37,6 @@ const SearchIndex = (model: {
 	$(function () {
 		moment.locale(vocaDbContext.culture);
 		var cultureCode = vocaDbContext.uiCulture;
-		var lang = vocaDbContext.languagePreference;
 		var query = model.filter;
 		var tagIds = model.tagId;
 		var searchType = model.searchTypeName;
@@ -86,7 +85,6 @@ const SearchIndex = (model: {
 			resourceRepo,
 			userRepo,
 			unknownPictureUrl,
-			lang,
 			loggedUserId,
 			cultureCode,
 			searchType,
