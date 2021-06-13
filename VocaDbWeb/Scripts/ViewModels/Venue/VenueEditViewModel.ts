@@ -40,7 +40,11 @@ export default class VenueEditViewModel {
 
 		if (contract.id) {
 			window.setInterval(
-				() => userRepository.refreshEntryEdit(EntryType.Venue, contract.id),
+				() =>
+					userRepository.refreshEntryEdit({
+						entryType: EntryType.Venue,
+						entryId: contract.id,
+					}),
 				10000,
 			);
 		} else {
@@ -68,9 +72,15 @@ export default class VenueEditViewModel {
 			return;
 		}
 
-		this.repo.getList(value, NameMatchMode.Exact, 1).then((result) => {
-			this.duplicateName(result.items.length ? value : null!);
-		});
+		this.repo
+			.getList({
+				query: value,
+				nameMatchMode: NameMatchMode.Exact,
+				maxResults: 1,
+			})
+			.then((result) => {
+				this.duplicateName(result.items.length ? value : null!);
+			});
 	};
 
 	public coordinates: Computed<OptionalGeoPointContract>;
@@ -78,7 +88,9 @@ export default class VenueEditViewModel {
 	public defaultNameLanguage: Observable<string>;
 
 	public deleteViewModel = new DeleteEntryViewModel((notes) => {
-		this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
+		this.repo
+			.delete({ id: this.id, notes: notes, hardDelete: false })
+			.then(this.redirectToDetails);
 	});
 
 	public description = ko.observable<string>();
@@ -107,6 +119,8 @@ export default class VenueEditViewModel {
 	};
 
 	public trashViewModel = new DeleteEntryViewModel((notes) => {
-		this.repo.delete(this.id, notes, true).then(this.redirectToRoot);
+		this.repo
+			.delete({ id: this.id, notes: notes, hardDelete: true })
+			.then(this.redirectToRoot);
 	});
 }

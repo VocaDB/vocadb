@@ -69,7 +69,10 @@ export default class ArtistFilters {
 			var selectedArtistId = newArtist.id;
 
 			this.artistRepo
-				.getOne(selectedArtistId, this.vocaDbContext.languagePreference)
+				.getOne({
+					id: selectedArtistId,
+					lang: this.vocaDbContext.languagePreference,
+				})
 				.then((artist) => {
 					newArtist.name(artist.name);
 					newArtist.artistType(

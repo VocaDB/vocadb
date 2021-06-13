@@ -10,6 +10,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
 import EntryCommentRepository from './EntryCommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 export default class SongListRepository {
 	public constructor(
@@ -17,11 +18,16 @@ export default class SongListRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public delete = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public delete = ({
+		baseUrl,
+		id,
+		notes,
+		hardDelete,
+	}: RepositoryParams & {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/songLists/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -31,17 +37,27 @@ export default class SongListRepository {
 		);
 	};
 
-	public getComments = (): EntryCommentRepository =>
+	public getComments = ({
+		baseUrl,
+	}: RepositoryParams & {}): EntryCommentRepository =>
 		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
 
-	public getFeatured = (
-		query: string,
-		category: string,
-		paging: PagingProperties,
-		tagIds: number[],
-		fields: string,
-		sort: string,
-	): Promise<PartialFindResultContract<SongListContract>> => {
+	public getFeatured = ({
+		baseUrl,
+		query,
+		category,
+		paging,
+		tagIds,
+		fields,
+		sort,
+	}: RepositoryParams & {
+		query: string;
+		category: string;
+		paging: PagingProperties;
+		tagIds: number[];
+		fields: string;
+		sort: string;
+	}): Promise<PartialFindResultContract<SongListContract>> => {
 		var url = this.urlMapper.mapRelative('/api/songLists/featured');
 		return this.httpClient.get<PartialFindResultContract<SongListContract>>(
 			url,
@@ -58,27 +74,46 @@ export default class SongListRepository {
 		);
 	};
 
-	public getForEdit = (id: number): Promise<SongListForEditContract> => {
+	public getForEdit = ({
+		baseUrl,
+		id,
+	}: RepositoryParams & { id: number }): Promise<SongListForEditContract> => {
 		var url = this.urlMapper.mapRelative(`/api/songLists/${id}/for-edit`);
 		return this.httpClient.get<SongListForEditContract>(url);
 	};
 
-	public getSongs = (
-		listId: number,
-		query: string,
-		songTypes: string,
-		tagIds: number[],
-		childTags: boolean,
-		artistIds: number[],
-		artistParticipationStatus: string,
-		childVoicebanks: boolean,
-		advancedFilters: AdvancedSearchFilter[],
-		pvServices: string,
-		paging: PagingProperties,
-		fields: SongOptionalFields,
-		sort: string,
-		lang: ContentLanguagePreference,
-	): Promise<PartialFindResultContract<SongInListContract>> => {
+	public getSongs = ({
+		baseUrl,
+		listId,
+		query,
+		songTypes,
+		tagIds,
+		childTags,
+		artistIds,
+		artistParticipationStatus,
+		childVoicebanks,
+		advancedFilters,
+		pvServices,
+		paging,
+		fields,
+		sort,
+		lang,
+	}: RepositoryParams & {
+		listId: number;
+		query: string;
+		songTypes?: string;
+		tagIds: number[];
+		childTags: boolean;
+		artistIds: number[];
+		artistParticipationStatus: string;
+		childVoicebanks: boolean;
+		advancedFilters: AdvancedSearchFilter[];
+		pvServices?: string;
+		paging: PagingProperties;
+		fields: SongOptionalFields;
+		sort: string;
+		lang: ContentLanguagePreference;
+	}): Promise<PartialFindResultContract<SongInListContract>> => {
 		var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
 		var data = {
 			query: query,

@@ -34,22 +34,25 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 			callback,
 		): void => {
 			this.artistRepo
-				.getList(
-					pagingProperties,
-					vocaDbContext.languagePreference,
-					searchTerm,
-					this.sort(),
-					this.artistType() !== ArtistType[ArtistType.Unknown]
-						? this.artistType()
-						: null!,
-					!this.onlyRootVoicebanks(),
-					tags,
-					childTags,
-					this.onlyFollowedByMe() ? vocaDbContext.loggedUserId : null!,
-					this.fields(),
-					status,
-					this.advancedFilters.filters(),
-				)
+				.getList({
+					paging: pagingProperties,
+					lang: vocaDbContext.languagePreference,
+					query: searchTerm,
+					sort: this.sort(),
+					artistTypes:
+						this.artistType() !== ArtistType[ArtistType.Unknown]
+							? this.artistType()
+							: undefined,
+					allowBaseVoicebanks: !this.onlyRootVoicebanks(),
+					tags: tags,
+					childTags: childTags,
+					followedByUserId: this.onlyFollowedByMe()
+						? vocaDbContext.loggedUserId
+						: undefined,
+					fields: this.fields(),
+					status: status,
+					advancedFilters: this.advancedFilters.filters(),
+				})
 				.then(callback);
 		};
 	}

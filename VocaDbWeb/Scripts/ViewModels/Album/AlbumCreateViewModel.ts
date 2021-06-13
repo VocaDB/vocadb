@@ -16,7 +16,7 @@ export default class AlbumCreateViewModel {
 	private addArtist = (artistId?: number): void => {
 		if (artistId) {
 			this.artistRepo
-				.getOne(artistId, this.vocaDbContext.languagePreference)
+				.getOne({ id: artistId, lang: this.vocaDbContext.languagePreference })
 				.then((artist) => this.artists.push(artist));
 		}
 	};
@@ -33,7 +33,7 @@ export default class AlbumCreateViewModel {
 		var term3 = this.nameEnglish();
 
 		this.albumRepo
-			.findDuplicate({ term1: term1, term2: term2, term3: term3 })
+			.findDuplicate({ params: { term1: term1, term2: term2, term3: term3 } })
 			.then((result) => {
 				this.dupeEntries(result);
 			});

@@ -83,7 +83,7 @@ const SongEdit = (
 			);
 			ko.applyBindings(vm);
 		} else {
-			songRepo.getForEdit(model.id).then(function (model) {
+			songRepo.getForEdit({ id: model.id }).then(function (model) {
 				vm = new SongEditViewModel(
 					vocaDbContext,
 					songRepo,

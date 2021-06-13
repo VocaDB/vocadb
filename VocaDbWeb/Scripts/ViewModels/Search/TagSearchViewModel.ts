@@ -28,15 +28,17 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
 		): void => {
 			this.tagRepo
 				.getList({
-					start: pagingProperties.start,
-					maxResults: pagingProperties.maxEntries,
-					getTotalCount: pagingProperties.getTotalCount,
-					lang: vocaDbContext.languagePreference,
-					query: searchTerm,
-					sort: this.sort(),
-					allowAliases: this.allowAliases(),
-					categoryName: this.categoryName(),
-					fields: 'AdditionalNames,MainPicture',
+					queryParams: {
+						start: pagingProperties.start,
+						maxResults: pagingProperties.maxEntries,
+						getTotalCount: pagingProperties.getTotalCount,
+						lang: vocaDbContext.languagePreference,
+						query: searchTerm,
+						sort: this.sort(),
+						allowAliases: this.allowAliases(),
+						categoryName: this.categoryName(),
+						fields: 'AdditionalNames,MainPicture',
+					},
 				})
 				.then(callback);
 		};

@@ -132,7 +132,11 @@ export default class SongDetailsViewModel {
 		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 		repo
-			.getOneWithComponents(id, 'None', this.vocaDbContext.languagePreference)
+			.getOneWithComponents({
+				id: id,
+				fields: 'None',
+				lang: this.vocaDbContext.languagePreference,
+			})
 			.then((song) => {
 				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
@@ -213,7 +217,7 @@ export default class SongDetailsViewModel {
 		);
 
 		this.getUsers = (): void => {
-			repository.getRatings(this.id).then((result) => {
+			repository.getRatings({ songId: this.id }).then((result) => {
 				this.ratingsDialogViewModel.ratings(result);
 				this.ratingsDialogViewModel.popupVisible(true);
 			});
@@ -224,7 +228,12 @@ export default class SongDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repository.createReport(this.id, reportType, notes, null!);
+				repository.createReport({
+					songId: this.id,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
@@ -237,11 +246,11 @@ export default class SongDetailsViewModel {
 			artistRepository,
 			(callback) => {
 				repository
-					.getOneWithComponents(
-						this.id,
-						'Artists',
-						vocaDbContext.languagePreference,
-					)
+					.getOneWithComponents({
+						id: this.id,
+						fields: 'Artists',
+						lang: vocaDbContext.languagePreference,
+					})
 					.then((result) => {
 						var artists = _.chain(result.artists!)
 							.filter(ArtistHelper.isValidForPersonalDescription)
@@ -251,11 +260,11 @@ export default class SongDetailsViewModel {
 					});
 			},
 			(vm) =>
-				repository.updatePersonalDescription(
-					this.id,
-					vm.text(),
-					vm.author.entry(),
-				),
+				repository.updatePersonalDescription({
+					songId: this.id,
+					text: vm.text(),
+					author: vm.author.entry(),
+				}),
 		);
 
 		this.showAllVersions = (): void => {
@@ -277,14 +286,17 @@ export default class SongDetailsViewModel {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepository.getSongTagSelections(this.id).then(callback),
+					userRepository
+						.getSongTagSelections({ songId: this.id })
+						.then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepository
-						.updateSongTags(this.id, tags)
+						.updateSongTags({ songId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Song,
-			(callback) => repository.getTagSuggestions(this.id).then(callback),
+			(callback) =>
+				repository.getTagSuggestions({ songId: this.id }).then(callback),
 		);
 
 		this.tagUsages = new TagListViewModel(data.tagUsages);
@@ -299,7 +311,7 @@ export default class SongDetailsViewModel {
 		this.selectedLyricsId.subscribe((id) => {
 			this.selectedLyrics(null!);
 			repository
-				.getLyrics(id, data.version)
+				.getLyrics({ lyricsId: id, songVersion: data.version })
 				.then((lyrics) => this.selectedLyrics(lyrics));
 		});
 	}
@@ -314,7 +326,7 @@ export class SongInListsViewModel {
 
 	public constructor(repository: SongRepository, songId: number) {
 		this.show = (): void => {
-			repository.songListsForSong(songId).then((result) => {
+			repository.songListsForSong({ songId: songId }).then((result) => {
 				this.contentHtml(result);
 				this.dialogVisible(true);
 			});
@@ -369,7 +381,12 @@ export class SongListsViewModel {
 						? this.selectedListId() || 0
 						: 0;
 				repository
-					.addSongToList(listId, songId, this.notes(), this.newListName())
+					.addSongToList({
+						listId: listId,
+						songId: songId,
+						notes: this.notes(),
+						newListName: this.newListName(),
+					})
 					.then(() => {
 						this.notes('');
 						this.dialogVisible(false);
@@ -380,31 +397,33 @@ export class SongListsViewModel {
 		};
 
 		this.showSongLists = (): void => {
-			repository.songListsForUser(songId).then((songLists) => {
-				var personalLists = _.filter(
-					songLists,
-					(list) => list.featuredCategory === 'Nothing',
-				);
-				var featuredLists = _.filter(
-					songLists,
-					(list) => list.featuredCategory !== 'Nothing',
-				);
+			repository
+				.songListsForUser({ ignoreSongId: songId })
+				.then((songLists) => {
+					var personalLists = _.filter(
+						songLists,
+						(list) => list.featuredCategory === 'Nothing',
+					);
+					var featuredLists = _.filter(
+						songLists,
+						(list) => list.featuredCategory !== 'Nothing',
+					);
 
-				this.personalLists(personalLists);
-				this.featuredLists(featuredLists);
+					this.personalLists(personalLists);
+					this.featuredLists(featuredLists);
 
-				if (personalLists.length)
-					this.tabName(SongListsViewModel.tabName_Personal);
-				else if (featuredLists.length)
-					this.tabName(SongListsViewModel.tabName_Featured);
-				else this.tabName(SongListsViewModel.tabName_New);
+					if (personalLists.length)
+						this.tabName(SongListsViewModel.tabName_Personal);
+					else if (featuredLists.length)
+						this.tabName(SongListsViewModel.tabName_Featured);
+					else this.tabName(SongListsViewModel.tabName_New);
 
-				this.newListName('');
-				this.selectedListId(
-					this.songLists().length > 0 ? this.songLists()[0].id : null!,
-				);
-				this.dialogVisible(true);
-			});
+					this.newListName('');
+					this.selectedListId(
+						this.songLists().length > 0 ? this.songLists()[0].id : null!,
+					);
+					this.dialogVisible(true);
+				});
 		};
 	}
 }

@@ -82,7 +82,7 @@ export default class SongEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, this.vocaDbContext.languagePreference)
+				.getOne({ id: artistId, lang: this.vocaDbContext.languagePreference })
 				.then((artist) => {
 					var data: ArtistForAlbumContract = {
 						artist: artist,
@@ -152,17 +152,17 @@ export default class SongEditViewModel {
 			(n) => n.value(),
 		);
 		const [all, originals] = await Promise.all([
-			this.songRepository.getByNames(
-				names,
-				[this.id],
-				this.vocaDbContext.languagePreference,
-			),
-			this.songRepository.getByNames(
-				names,
-				[this.id],
-				this.vocaDbContext.languagePreference,
-				[SongType.Original, SongType.Remaster],
-			),
+			this.songRepository.getByNames({
+				names: names,
+				ignoreIds: [this.id],
+				lang: this.vocaDbContext.languagePreference,
+			}),
+			this.songRepository.getByNames({
+				names: names,
+				ignoreIds: [this.id],
+				lang: this.vocaDbContext.languagePreference,
+				songTypes: [SongType.Original, SongType.Remaster],
+			}),
 		]);
 
 		const suggestions = _.chain(originals)
@@ -279,7 +279,7 @@ export default class SongEditViewModel {
 			data.originalVersion,
 			(entryId, callback) =>
 				songRepository
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 		this.publishDate = ko.observable(
@@ -481,7 +481,11 @@ export default class SongEditViewModel {
 		this.maxBpm = KnockoutHelper.bpm(this.maxMilliBpm);
 
 		window.setInterval(
-			() => userRepository.refreshEntryEdit(EntryType.Song, data.id),
+			() =>
+				userRepository.refreshEntryEdit({
+					entryType: EntryType.Song,
+					entryId: data.id,
+				}),
 			10000,
 		);
 	}

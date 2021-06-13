@@ -56,7 +56,12 @@ export default class ReleaseEventDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repo.createReport(eventId, reportType, notes, null!);
+				repo.createReport({
+					entryId: eventId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
 		);
@@ -64,10 +69,12 @@ export default class ReleaseEventDetailsViewModel {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepo.getEventTagSelections(this.eventId).then(callback),
+					userRepo
+						.getEventTagSelections({ eventId: this.eventId })
+						.then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
-						.updateEventTags(this.eventId, tags)
+						.updateEventTags({ eventId: this.eventId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.ReleaseEvent,
@@ -95,7 +102,7 @@ export default class ReleaseEventDetailsViewModel {
 	);
 
 	public removeEvent = (): void => {
-		this.userRepo.deleteEventForUser(this.eventId);
+		this.userRepo.deleteEventForUser({ eventId: this.eventId });
 		this.eventAssociationType(null!);
 		var link = _.find(
 			this.usersAttending(),
@@ -107,23 +114,23 @@ export default class ReleaseEventDetailsViewModel {
 	public reportViewModel: ReportEntryViewModel;
 
 	public setEventAttending = (): void => {
-		this.userRepo.updateEventForUser(
-			this.eventId,
-			UserEventRelationshipType.Attending,
-		);
+		this.userRepo.updateEventForUser({
+			eventId: this.eventId,
+			associationType: UserEventRelationshipType.Attending,
+		});
 		this.eventAssociationType(UserEventRelationshipType.Attending);
 		this.userRepo
-			.getOne(this.vocaDbContext.loggedUserId, 'MainPicture')
+			.getOne({ id: this.vocaDbContext.loggedUserId, fields: 'MainPicture' })
 			.then((user) => {
 				this.usersAttending.push(user);
 			});
 	};
 
 	public setEventInterested = (): void => {
-		this.userRepo.updateEventForUser(
-			this.eventId,
-			UserEventRelationshipType.Interested,
-		);
+		this.userRepo.updateEventForUser({
+			eventId: this.eventId,
+			associationType: UserEventRelationshipType.Interested,
+		});
 		this.eventAssociationType(UserEventRelationshipType.Interested);
 		var link = _.find(
 			this.usersAttending(),

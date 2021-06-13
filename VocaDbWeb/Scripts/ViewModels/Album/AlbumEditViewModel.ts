@@ -55,7 +55,7 @@ export default class AlbumEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, this.vocaDbContext.languagePreference)
+				.getOne({ id: artistId, lang: this.vocaDbContext.languagePreference })
 				.then((artist) => {
 					var data: ArtistForAlbumContract = {
 						artist: artist,
@@ -337,11 +337,11 @@ export default class AlbumEditViewModel {
 		): void => {
 			if (songId) {
 				songRepository
-					.getOneWithComponents(
-						songId,
-						'AdditionalNames,Artists',
-						vocaDbContext.languagePreference,
-					)
+					.getOneWithComponents({
+						id: songId,
+						fields: 'AdditionalNames,Artists',
+						lang: vocaDbContext.languagePreference,
+					})
 					.then((song) => {
 						var artists = _.filter(
 							_.map(song.artists!, (artistLink) => artistLink.artist),
@@ -629,7 +629,11 @@ export default class AlbumEditViewModel {
 		});
 
 		window.setInterval(
-			() => userRepository.refreshEntryEdit(EntryType.Album, data.id),
+			() =>
+				userRepository.refreshEntryEdit({
+					entryType: EntryType.Album,
+					entryId: data.id,
+				}),
 			10000,
 		);
 	}

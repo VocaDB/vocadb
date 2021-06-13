@@ -44,25 +44,28 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 		): void => {
 			this.eventRepo
 				.getList({
-					start: pagingProperties.start,
-					maxResults: pagingProperties.maxEntries,
-					getTotalCount: pagingProperties.getTotalCount,
-					lang: vocaDbContext.languagePreference,
-					query: searchTerm,
-					sort: this.sort(),
-					category: this.category() === 'Unspecified' ? null! : this.category(),
-					childTags: childTags,
-					tagIds: tag,
-					userCollectionId: this.onlyMyEvents()
-						? vocaDbContext.loggedUserId
-						: null!,
-					artistId: this.artistFilters.artistIds(),
-					childVoicebanks: this.artistFilters.childVoicebanks(),
-					includeMembers: this.artistFilters.includeMembers(),
-					afterDate: this.afterDate()!,
-					beforeDate: this.beforeDate()!,
-					status: status,
-					fields: this.fields(),
+					queryParams: {
+						start: pagingProperties.start,
+						maxResults: pagingProperties.maxEntries,
+						getTotalCount: pagingProperties.getTotalCount,
+						lang: vocaDbContext.languagePreference,
+						query: searchTerm,
+						sort: this.sort(),
+						category:
+							this.category() === 'Unspecified' ? null! : this.category(),
+						childTags: childTags,
+						tagIds: tag,
+						userCollectionId: this.onlyMyEvents()
+							? vocaDbContext.loggedUserId
+							: null!,
+						artistId: this.artistFilters.artistIds(),
+						childVoicebanks: this.artistFilters.childVoicebanks(),
+						includeMembers: this.artistFilters.includeMembers(),
+						afterDate: this.afterDate()!,
+						beforeDate: this.beforeDate()!,
+						status: status,
+						fields: this.fields(),
+					},
 				})
 				.then(callback);
 		};

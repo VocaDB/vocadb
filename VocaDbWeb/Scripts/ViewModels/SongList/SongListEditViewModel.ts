@@ -47,7 +47,7 @@ export default class SongListEditViewModel {
 		if (!songId) return;
 
 		this.songRepo
-			.getOne(songId, this.vocaDbContext.languagePreference)
+			.getOne({ id: songId, lang: this.vocaDbContext.languagePreference })
 			.then((song: SongContract) => {
 				var songInList = new SongInListEditViewModel({
 					songInListId: 0,
@@ -63,7 +63,7 @@ export default class SongListEditViewModel {
 
 	public deleteViewModel = new DeleteEntryViewModel((notes) => {
 		this.songListRepo
-			.delete(this.id, notes, false)
+			.delete({ id: this.id, notes: notes, hardDelete: false })
 			.then(this.redirectToDetails);
 	});
 
@@ -81,7 +81,7 @@ export default class SongListEditViewModel {
 
 	public init = (loaded: () => void): void => {
 		if (this.id) {
-			this.songListRepo.getForEdit(this.id).then((data) => {
+			this.songListRepo.getForEdit({ id: this.id }).then((data) => {
 				this.currentName = data.name;
 				this.name = ko.observable(data.name);
 				this.description = ko.observable(data.description);
@@ -145,7 +145,9 @@ export default class SongListEditViewModel {
 	public submitting = ko.observable(false);
 
 	public trashViewModel = new DeleteEntryViewModel((notes) => {
-		this.songListRepo.delete(this.id, notes, true).then(this.redirectToRoot);
+		this.songListRepo
+			.delete({ id: this.id, notes: notes, hardDelete: true })
+			.then(this.redirectToRoot);
 	});
 
 	public updateNotes = ko.observable('');

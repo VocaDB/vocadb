@@ -60,10 +60,12 @@ export default class SongCreateViewModel {
 
 		this.songRepository
 			.findDuplicate({
-				term: [term1, term2, term3],
-				pv: [pv1, pv2],
-				artistIds: artists,
-				getPVInfo: getPVInfo,
+				params: {
+					term: [term1, term2, term3],
+					pv: [pv1, pv2],
+					artistIds: artists,
+					getPVInfo: getPVInfo,
+				},
 			})
 			.then((result) => {
 				this.dupeEntries(result.matches);
@@ -97,11 +99,11 @@ export default class SongCreateViewModel {
 	};
 
 	private getSongTypeTag = async (songType: string): Promise<void> => {
-		const tag = await this.tagRepository.getEntryTypeTag(
-			EntryType.Song,
-			songType,
-			this.vocaDbContext.languagePreference,
-		);
+		const tag = await this.tagRepository.getEntryTypeTag({
+			entryType: EntryType.Song,
+			subType: songType,
+			lang: this.vocaDbContext.languagePreference,
+		});
 		this.songTypeTag(tag);
 	};
 
@@ -139,7 +141,10 @@ export default class SongCreateViewModel {
 
 	public selectOriginal = (dupe: DuplicateEntryResultContract): void => {
 		this.songRepository
-			.getOne(dupe.entry.id, this.vocaDbContext.languagePreference)
+			.getOne({
+				id: dupe.entry.id,
+				lang: this.vocaDbContext.languagePreference,
+			})
 			.then((song) => this.originalVersion.entry(song));
 	};
 
@@ -178,7 +183,7 @@ export default class SongCreateViewModel {
 		this.addArtist = (artistId?: number): void => {
 			if (artistId) {
 				artistRepository
-					.getOne(artistId, vocaDbContext.languagePreference)
+					.getOne({ id: artistId, lang: vocaDbContext.languagePreference })
 					.then((artist) => {
 						this.artists.push(artist);
 						this.checkDuplicates();
@@ -209,7 +214,7 @@ export default class SongCreateViewModel {
 			null!,
 			(entryId, callback) =>
 				songRepository
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 

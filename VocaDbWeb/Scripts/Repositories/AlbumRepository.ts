@@ -19,6 +19,7 @@ import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
@@ -40,20 +41,28 @@ export default class AlbumRepository
 		};
 	}
 
-	public createComment = (
-		albumId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		baseUrl,
+		entryId: albumId,
+		contract,
+	}: RepositoryParams & {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
 			contract,
 		);
 	};
 
-	public createOrUpdateReview(
-		albumId: number,
-		reviewContract: AlbumReviewContract,
-	): Promise<AlbumReviewContract> {
+	public createOrUpdateReview({
+		baseUrl,
+		albumId,
+		reviewContract,
+	}: RepositoryParams & {
+		albumId: number;
+		reviewContract: AlbumReviewContract;
+	}): Promise<AlbumReviewContract> {
 		const url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/albums/${albumId}/reviews`,
@@ -61,12 +70,18 @@ export default class AlbumRepository
 		return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
 	}
 
-	public createReport = (
-		albumId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		baseUrl,
+		albumId,
+		reportType,
+		notes,
+		versionNumber,
+	}: RepositoryParams & {
+		albumId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/Album/CreateReport'),
 			AjaxHelper.stringify({
@@ -83,13 +98,25 @@ export default class AlbumRepository
 		);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		baseUrl,
+		commentId,
+	}: RepositoryParams & {
+		commentId: number;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
 		);
 	};
 
-	public deleteReview(albumId: number, reviewId: number): Promise<void> {
+	public deleteReview({
+		baseUrl,
+		albumId,
+		reviewId,
+	}: RepositoryParams & {
+		albumId: number;
+		reviewId: number;
+	}): Promise<void> {
 		const url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/albums/${albumId}/reviews/${reviewId}`,
@@ -97,30 +124,47 @@ export default class AlbumRepository
 		return this.httpClient.delete(url);
 	}
 
-	public findDuplicate = (params: {
-		term1: string;
-		term2: string;
-		term3: string;
+	public findDuplicate = ({
+		baseUrl,
+		params,
+	}: RepositoryParams & {
+		params: {
+			term1: string;
+			term2: string;
+			term3: string;
+		};
 	}): Promise<DuplicateEntryResultContract[]> => {
 		var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
 		return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
 	};
 
-	public getComments = (albumId: number): Promise<CommentContract[]> => {
+	public getComments = ({
+		baseUrl,
+		entryId: albumId,
+	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
 		);
 	};
 
-	public getForEdit = (id: number): Promise<AlbumForEditContract> => {
+	public getForEdit = ({
+		baseUrl,
+		id,
+	}: RepositoryParams & {
+		id: number;
+	}): Promise<AlbumForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
 		return this.httpClient.get<AlbumForEditContract>(url);
 	};
 
-	public getOne = (
-		id: number,
-		lang: ContentLanguagePreference,
-	): Promise<AlbumContract> => {
+	public getOne = ({
+		baseUrl,
+		id,
+		lang,
+	}: RepositoryParams & {
+		id: number;
+		lang: ContentLanguagePreference;
+	}): Promise<AlbumContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumContract>(url, {
 			fields: 'AdditionalNames',
@@ -128,11 +172,16 @@ export default class AlbumRepository
 		});
 	};
 
-	public getOneWithComponents = (
-		id: number,
-		fields: string,
-		lang: ContentLanguagePreference,
-	): Promise<AlbumForApiContract> => {
+	public getOneWithComponents = ({
+		baseUrl,
+		id,
+		fields,
+		lang,
+	}: RepositoryParams & {
+		id: number;
+		fields: string;
+		lang: ContentLanguagePreference;
+	}): Promise<AlbumForApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumForApiContract>(url, {
 			fields: fields,
@@ -140,23 +189,40 @@ export default class AlbumRepository
 		});
 	};
 
-	public getList = (
-		paging: PagingProperties,
-		lang: ContentLanguagePreference,
-		query: string,
-		sort: string,
-		discTypes: string,
-		tags: number[],
-		childTags: boolean,
-		artistIds: number[],
-		artistParticipationStatus: string,
-		childVoicebanks: boolean,
-		includeMembers: boolean,
-		fields: string,
-		status: string,
-		deleted: boolean,
-		advancedFilters: AdvancedSearchFilter[],
-	): Promise<PartialFindResultContract<AlbumContract>> => {
+	public getList = ({
+		baseUrl,
+		paging,
+		lang,
+		query,
+		sort,
+		discTypes,
+		tags,
+		childTags,
+		artistIds,
+		artistParticipationStatus,
+		childVoicebanks,
+		includeMembers,
+		fields,
+		status,
+		deleted,
+		advancedFilters,
+	}: RepositoryParams & {
+		paging: PagingProperties;
+		lang: ContentLanguagePreference;
+		query: string;
+		sort: string;
+		discTypes?: string;
+		tags?: number[];
+		childTags?: boolean;
+		artistIds?: number[];
+		artistParticipationStatus?: string;
+		childVoicebanks?: boolean;
+		includeMembers?: boolean;
+		fields: string;
+		status?: string;
+		deleted: boolean;
+		advancedFilters?: AdvancedSearchFilter[];
+	}): Promise<PartialFindResultContract<AlbumContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/albums');
 		var data = {
 			start: paging.start,
@@ -185,7 +251,12 @@ export default class AlbumRepository
 		);
 	};
 
-	public getReviews = (albumId: number): Promise<AlbumReviewContract[]> => {
+	public getReviews = ({
+		baseUrl,
+		albumId,
+	}: RepositoryParams & { albumId: number }): Promise<
+		AlbumReviewContract[]
+	> => {
 		const url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/albums/${albumId}/reviews`,
@@ -193,17 +264,23 @@ export default class AlbumRepository
 		return this.httpClient.get<AlbumReviewContract[]>(url);
 	};
 
-	public getTagSuggestions = (
-		albumId: number,
-	): Promise<TagUsageForApiContract[]> => {
+	public getTagSuggestions = ({
+		baseUrl,
+		albumId,
+	}: RepositoryParams & {
+		albumId: number;
+	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
 		);
 	};
 
-	public async getUserCollections(
-		albumId: number,
-	): Promise<AlbumForUserForApiContract[]> {
+	public async getUserCollections({
+		baseUrl,
+		albumId,
+	}: RepositoryParams & {
+		albumId: number;
+	}): Promise<AlbumForUserForApiContract[]> {
 		const url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/albums/${albumId}/user-collections`,
@@ -211,21 +288,30 @@ export default class AlbumRepository
 		return this.httpClient.get<AlbumForUserForApiContract[]>(url);
 	}
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		baseUrl,
+		commentId,
+		contract,
+	}: RepositoryParams & {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
 			contract,
 		);
 	};
 
-	public updatePersonalDescription = (
-		albumId: number,
-		text: string,
-		author: ArtistContract,
-	): Promise<void> => {
+	public updatePersonalDescription = ({
+		baseUrl,
+		albumId,
+		text,
+		author,
+	}: RepositoryParams & {
+		albumId: number;
+		text: string;
+		author: ArtistContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(
 				`/api/albums/${albumId}/personal-description/`,

@@ -22,7 +22,10 @@ export default class RequestVerificationViewModel {
 
 	public setArtist = (targetArtistId?: number): void => {
 		this.artistRepository
-			.getOne(targetArtistId!, this.vocaDbContext.languagePreference)
+			.getOne({
+				id: targetArtistId!,
+				lang: this.vocaDbContext.languagePreference,
+			})
 			.then((artist) => {
 				this.selectedArtist(artist);
 			});

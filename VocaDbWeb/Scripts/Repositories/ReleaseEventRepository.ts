@@ -10,6 +10,7 @@ import UrlMapper from '@Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
+import RepositoryParams from './RepositoryParams';
 
 export default class ReleaseEventRepository extends BaseRepository {
 	public constructor(
@@ -19,28 +20,39 @@ export default class ReleaseEventRepository extends BaseRepository {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = (
-		eventId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		baseUrl,
+		entryId: eventId,
+		reportType,
+		notes,
+		versionNumber,
+	}: RepositoryParams & {
+		entryId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
-				versionNumber: [versionNumber],
+				versionNumber: [versionNumber!],
 			})}`,
 		);
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public delete = ({
+		baseUrl,
+		id,
+		notes,
+		hardDelete,
+	}: RepositoryParams & {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -50,11 +62,16 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public deleteSeries = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public deleteSeries = ({
+		baseUrl,
+		id,
+		notes,
+		hardDelete,
+	}: RepositoryParams & {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -64,9 +81,12 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getList = (
-		queryParams: EventQueryParams,
-	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
+	public getList = ({
+		baseUrl,
+		queryParams,
+	}: RepositoryParams & {
+		queryParams: EventQueryParams;
+	}): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
 		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
@@ -99,14 +119,22 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = (id: number): Promise<ReleaseEventContract> => {
+	public getOne = ({
+		baseUrl,
+		id,
+	}: RepositoryParams & {
+		id: number;
+	}): Promise<ReleaseEventContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
 		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
-	public getOneByName = async (
-		name: string,
-	): Promise<ReleaseEventContract | null> => {
+	public getOneByName = async ({
+		baseUrl,
+		name,
+	}: RepositoryParams & {
+		name: string;
+	}): Promise<ReleaseEventContract | null> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/releaseEvents?query=${encodeURIComponent(
@@ -121,11 +149,16 @@ export default class ReleaseEventRepository extends BaseRepository {
 			: null;
 	};
 
-	public getSeriesList = (
-		query: string,
-		nameMatchMode: NameMatchMode,
-		maxResults: number,
-	): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
+	public getSeriesList = ({
+		baseUrl,
+		query,
+		nameMatchMode,
+		maxResults,
+	}: RepositoryParams & {
+		query: string;
+		nameMatchMode: NameMatchMode;
+		maxResults: number;
+	}): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
 		var data = {
 			query: query,

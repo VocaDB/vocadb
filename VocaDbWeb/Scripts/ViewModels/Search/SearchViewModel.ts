@@ -190,28 +190,31 @@ export default class SearchViewModel {
 		});
 
 		resourceRepo
-			.getList(vocaDbContext.uiCulture, [
-				'albumSortRuleNames',
-				'artistSortRuleNames',
-				'artistTypeNames',
-				'discTypeNames',
-				'eventCategoryNames',
-				'eventSortRuleNames',
-				'entryTypeNames',
-				'songSortRuleNames',
-				'songTypeNames',
-			])
+			.getList({
+				cultureCode: vocaDbContext.uiCulture,
+				setNames: [
+					'albumSortRuleNames',
+					'artistSortRuleNames',
+					'artistTypeNames',
+					'discTypeNames',
+					'eventCategoryNames',
+					'eventSortRuleNames',
+					'entryTypeNames',
+					'songSortRuleNames',
+					'songTypeNames',
+				],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResults();
 			});
 
 		tagRepo
-			.getTopTags(
-				vocaDbContext.languagePreference,
-				Tag.commonCategory_Genres,
-				null!,
-			)
+			.getTopTags({
+				lang: vocaDbContext.languagePreference,
+				categoryName: Tag.commonCategory_Genres,
+				entryType: undefined,
+			})
 			.then((result) => {
 				this.genreTags(result);
 			});

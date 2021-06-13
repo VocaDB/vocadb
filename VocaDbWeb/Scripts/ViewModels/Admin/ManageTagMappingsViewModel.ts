@@ -64,9 +64,11 @@ export default class ManageTagMappingsViewModel {
 
 	private loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getMappings({
-			start: 0,
-			maxEntries: 10000,
-			getTotalCount: false,
+			paging: {
+				start: 0,
+				maxEntries: 10000,
+				getTotalCount: false,
+			},
 		});
 		this.mappings(_.map(result.items, (t) => new EditTagMappingViewModel(t)));
 		this.paging.totalItems(this.filteredMappings().length);
@@ -97,7 +99,7 @@ export default class ManageTagMappingsViewModel {
 
 	public save = async (): Promise<void> => {
 		const mappings = this.activeMappings();
-		await this.tagRepo.saveMappings(mappings);
+		await this.tagRepo.saveMappings({ mappings: mappings });
 		ui.showSuccessMessage('Saved');
 		await this.loadMappings();
 	};

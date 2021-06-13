@@ -40,7 +40,11 @@ export default class TagFilters {
 			var selectedTagId = newTag.id;
 
 			this.tagRepo
-				.getById(selectedTagId, null!, this.vocaDbContext.languagePreference)
+				.getById({
+					id: selectedTagId,
+					fields: undefined,
+					lang: this.vocaDbContext.languagePreference,
+				})
 				.then((tag) => {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug!);

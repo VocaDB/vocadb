@@ -73,14 +73,14 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 		callback: (result: PartialFindResultContract<SongListContract>) => void,
 	): void => {
 		this.listRepo
-			.getFeatured(
-				this.query(),
-				this.category,
-				{ start: this.start, maxEntries: 50, getTotalCount: true },
-				this.tagFilters.tagIds(),
-				this.fields(),
-				this.sort(),
-			)
+			.getFeatured({
+				query: this.query(),
+				category: this.category,
+				paging: { start: this.start, maxEntries: 50, getTotalCount: true },
+				tagIds: this.tagFilters.tagIds(),
+				fields: this.fields(),
+				sort: this.sort(),
+			})
 			.then(callback);
 	};
 }

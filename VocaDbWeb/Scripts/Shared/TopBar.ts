@@ -61,11 +61,11 @@ export function setLanguagePreferenceCookie(
 ): boolean {
 	var userRepo = repoFactory.userRepository();
 	userRepo
-		.updateUserSetting(
-			vocaDbContext.loggedUserId,
-			'languagePreference',
-			languagePreference,
-		)
+		.updateUserSetting({
+			userId: vocaDbContext.loggedUserId,
+			settingName: 'languagePreference',
+			value: languagePreference,
+		})
 		.then(() => {
 			window.location.reload();
 		});

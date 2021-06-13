@@ -6,6 +6,7 @@ import UrlMapper from '@Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 export default class CommentRepository
 	extends BaseRepository
@@ -18,10 +19,14 @@ export default class CommentRepository
 		super(urlMapper.baseUrl);
 	}
 
-	public createComment = (
-		entryId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		baseUrl,
+		entryId,
+		contract,
+	}: RepositoryParams & {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		contract.entry = {
 			entryType: EntryType[this.entryType],
 			id: entryId,
@@ -33,7 +38,12 @@ export default class CommentRepository
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		baseUrl,
+		commentId,
+	}: RepositoryParams & {
+		commentId: number;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,
@@ -43,7 +53,10 @@ export default class CommentRepository
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async (listId: number): Promise<CommentContract[]> => {
+	public getComments = async ({
+		baseUrl,
+		entryId: listId,
+	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments/`),
 		);
@@ -53,10 +66,14 @@ export default class CommentRepository
 		return result.items;
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		baseUrl,
+		commentId,
+		contract,
+	}: RepositoryParams & {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,

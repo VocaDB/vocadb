@@ -19,11 +19,11 @@ export default class SelfDescriptionViewModel {
 			author,
 			(artistId, callback) => {
 				artistRepo
-					.getOneWithComponents(
-						artistId,
-						'MainPicture',
-						vocaDbContext.languagePreference,
-					)
+					.getOneWithComponents({
+						id: artistId,
+						fields: 'MainPicture',
+						lang: vocaDbContext.languagePreference,
+					})
 					.then((artist) => {
 						callback(artist);
 					});

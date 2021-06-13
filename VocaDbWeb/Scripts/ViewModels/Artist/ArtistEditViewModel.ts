@@ -41,7 +41,7 @@ export default class ArtistEditViewModel {
 	private addGroup = (artistId?: number): void => {
 		if (artistId) {
 			this.artistRepo
-				.getOne(artistId, this.vocaDbContext.languagePreference)
+				.getOne({ id: artistId, lang: this.vocaDbContext.languagePreference })
 				.then((artist: ArtistContract) => {
 					this.groups.push({ id: 0, parent: artist });
 				});
@@ -202,7 +202,7 @@ export default class ArtistEditViewModel {
 			data.baseVoicebank,
 			(entryId, callback) =>
 				artistRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 		this.description = new EnglishTranslatedStringEditViewModel(
@@ -215,7 +215,7 @@ export default class ArtistEditViewModel {
 			data.illustrator,
 			(entryId, callback) =>
 				artistRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 		this.names = NamesEditViewModel.fromContracts(data.names);
@@ -223,7 +223,7 @@ export default class ArtistEditViewModel {
 			null!,
 			(entryId, callback) =>
 				artistRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 		this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
@@ -235,7 +235,7 @@ export default class ArtistEditViewModel {
 			data.voiceProvider,
 			(entryId, callback) =>
 				artistRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 		this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
@@ -306,7 +306,11 @@ export default class ArtistEditViewModel {
 		);
 
 		window.setInterval(
-			() => userRepository.refreshEntryEdit(EntryType.Artist, data.id),
+			() =>
+				userRepository.refreshEntryEdit({
+					entryType: EntryType.Artist,
+					entryId: data.id,
+				}),
 			10000,
 		);
 	}

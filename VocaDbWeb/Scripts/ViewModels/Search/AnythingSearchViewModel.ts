@@ -25,15 +25,15 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
 			callback,
 		): Promise<void> =>
 			this.entryRepo
-				.getList(
-					pagingProperties,
-					vocaDbContext.languagePreference,
-					searchTerm,
-					tags,
-					childTags,
-					this.fields(),
-					status,
-				)
+				.getList({
+					paging: pagingProperties,
+					lang: vocaDbContext.languagePreference,
+					query: searchTerm,
+					tags: tags,
+					childTags: childTags,
+					fields: this.fields(),
+					status: status,
+				})
 				.then(callback);
 	}
 

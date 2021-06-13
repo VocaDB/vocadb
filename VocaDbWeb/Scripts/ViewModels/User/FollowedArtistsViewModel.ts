@@ -29,7 +29,10 @@ export default class FollowedArtistsViewModel {
 		if (this.isInit) return;
 
 		this.resourceRepo
-			.getList(this.vocaDbContext.uiCulture, ['artistTypeNames'])
+			.getList({
+				cultureCode: this.vocaDbContext.uiCulture,
+				setNames: ['artistTypeNames'],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
@@ -61,13 +64,13 @@ export default class FollowedArtistsViewModel {
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		this.userRepo
-			.getFollowedArtistsList(
-				this.loggedUserId,
-				pagingProperties,
-				this.vocaDbContext.languagePreference,
-				this.tagFilters.tagIds(),
-				this.artistType(),
-			)
+			.getFollowedArtistsList({
+				userId: this.loggedUserId,
+				paging: pagingProperties,
+				lang: this.vocaDbContext.languagePreference,
+				tagIds: this.tagFilters.tagIds(),
+				artistType: this.artistType(),
+			})
 			.then(
 				(result: PartialFindResultContract<ArtistForUserForApiContract>) => {
 					this.pauseNotifications = false;

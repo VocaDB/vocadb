@@ -1,3 +1,4 @@
+import RepositoryParams from '@Repositories/RepositoryParams';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
 
@@ -12,7 +13,12 @@ export default class ArchivedEntryViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			null!,
 			(reportType, notes) => {
-				repository.createReport(entryId, reportType, notes, versionNumber);
+				repository.createReport({
+					entryId: entryId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: versionNumber,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
@@ -24,10 +30,16 @@ export default class ArchivedEntryViewModel {
 }
 
 export interface IEntryReportsRepository {
-	createReport(
-		entryId: number,
-		reportType: string,
-		notes: string,
-		version?: number,
-	): void;
+	createReport({
+		baseUrl,
+		entryId,
+		reportType,
+		notes,
+		versionNumber,
+	}: RepositoryParams & {
+		entryId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): void;
 }

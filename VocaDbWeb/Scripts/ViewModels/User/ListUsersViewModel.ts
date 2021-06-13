@@ -67,17 +67,17 @@ export default class ListUsersViewModel {
 
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 		this.repo
-			.getList(
-				pagingProperties,
-				this.searchTerm(),
-				this.sort(),
-				this.group(),
-				this.disabledUsers(),
-				this.onlyVerifiedArtists(),
-				this.knowsLanguage(),
-				'Auto',
-				'MainPicture',
-			)
+			.getList({
+				paging: pagingProperties,
+				query: this.searchTerm(),
+				sort: this.sort(),
+				groups: this.group(),
+				includeDisabled: this.disabledUsers(),
+				onlyVerified: this.onlyVerifiedArtists(),
+				knowsLanguage: this.knowsLanguage(),
+				nameMatchMode: 'Auto',
+				fields: 'MainPicture',
+			})
 			.then((result) => {
 				this.pauseNotifications = false;
 

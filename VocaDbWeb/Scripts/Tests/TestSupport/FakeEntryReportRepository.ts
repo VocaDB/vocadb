@@ -1,4 +1,5 @@
 import EntryReportRepository from '@Repositories/EntryReportRepository';
+import RepositoryParams from '@Repositories/RepositoryParams';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
@@ -10,7 +11,9 @@ export default class FakeEntryReportRepository extends EntryReportRepository {
 	public constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
-		this.getNewReportCount = (): Promise<number> => {
+		this.getNewReportCount = ({
+			baseUrl,
+		}: RepositoryParams & {}): Promise<number> => {
 			return FakePromise.resolve(this.entryReportCount);
 		};
 	}

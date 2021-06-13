@@ -27,7 +27,10 @@ export default class ResourcesManager {
 	): void => {
 		var setsToLoad = this.setsToLoad(setNames);
 		this.resourcesRepo
-			.getList(this.vocaDbContext.uiCulture, setsToLoad)
+			.getList({
+				cultureCode: this.vocaDbContext.uiCulture,
+				setNames: setsToLoad,
+			})
 			.then((resources) => {
 				_.each(
 					setNames,

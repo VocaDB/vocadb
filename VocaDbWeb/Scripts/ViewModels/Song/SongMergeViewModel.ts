@@ -17,7 +17,7 @@ export default class SongMergeViewModel {
 			null!,
 			(entryId, callback) =>
 				songRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 

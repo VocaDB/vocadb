@@ -14,7 +14,12 @@ export default class VenueDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repo.createReport(venueId, reportType, notes, null!);
+				repo.createReport({
+					entryId: venueId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
 		);

@@ -48,7 +48,7 @@ export default class SongWithPreviewViewModel {
 				return;
 			}
 
-			repository.pvPlayerWithRating(songId).then((result) => {
+			repository.pvPlayerWithRating({ songId: songId }).then((result) => {
 				if (!result) return;
 
 				this.pvService(result.pvService);
@@ -67,7 +67,7 @@ export default class SongWithPreviewViewModel {
 			this.pvService(newService);
 			var service: PVService = PVService[newService as keyof typeof PVService];
 			repository
-				.pvForSongAndService(songId, service)
+				.pvForSongAndService({ songId: songId, pvService: service })
 				.then((html) => this.previewHtml(html));
 		};
 	}

@@ -5,6 +5,8 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 
+import RepositoryParams from './RepositoryParams';
+
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
 export default class EntryRepository {
@@ -21,15 +23,24 @@ export default class EntryRepository {
 		private baseUrl: string,
 	) {}
 
-	public getList = (
-		paging: PagingProperties,
-		lang: ContentLanguagePreference,
-		query: string,
-		tags: number[],
-		childTags: boolean,
-		fields: string,
-		status: string,
-	): Promise<PartialFindResultContract<EntryContract>> => {
+	public getList = ({
+		baseUrl,
+		paging,
+		lang,
+		query,
+		tags,
+		childTags,
+		fields,
+		status,
+	}: RepositoryParams & {
+		paging: PagingProperties;
+		lang: ContentLanguagePreference;
+		query: string;
+		tags: number[];
+		childTags: boolean;
+		fields: string;
+		status: string;
+	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
 		var data = {
 			start: paging.start,

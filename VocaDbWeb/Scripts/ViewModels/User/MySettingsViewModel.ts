@@ -51,7 +51,7 @@ export default class MySettingsViewModel {
 
 	public verifyEmail = (): void => {
 		this.emailVerificationSent(true);
-		this.userRepository.requestEmailVerification().then(() => {
+		this.userRepository.requestEmailVerification({}).then(() => {
 			ui.showSuccessMessage('Message sent, please check your email');
 		});
 	};

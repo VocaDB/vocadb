@@ -89,12 +89,15 @@ export default class AlbumCollectionViewModel {
 		if (this.isInit) return;
 
 		this.resourceRepo
-			.getList(this.vocaDbContext.uiCulture, [
-				'albumCollectionStatusNames',
-				'albumMediaTypeNames',
-				'albumSortRuleNames',
-				'discTypeNames',
-			])
+			.getList({
+				cultureCode: this.vocaDbContext.uiCulture,
+				setNames: [
+					'albumCollectionStatusNames',
+					'albumMediaTypeNames',
+					'albumSortRuleNames',
+					'discTypeNames',
+				],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
@@ -112,7 +115,10 @@ export default class AlbumCollectionViewModel {
 	public selectArtist = (selectedArtistId?: number): void => {
 		this.artistId(selectedArtistId!);
 		this.artistRepo
-			.getOne(selectedArtistId!, this.vocaDbContext.languagePreference)
+			.getOne({
+				id: selectedArtistId!,
+				lang: this.vocaDbContext.languagePreference,
+			})
 			.then((artist) => this.artistName(artist.name));
 	};
 
@@ -131,19 +137,19 @@ export default class AlbumCollectionViewModel {
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		this.userRepo
-			.getAlbumCollectionList(
-				this.loggedUserId,
-				pagingProperties,
-				this.vocaDbContext.languagePreference,
-				this.searchTerm(),
-				this.tagId()!,
-				this.albumType(),
-				this.artistId()!,
-				this.collectionStatus(),
-				this.releaseEvent.id(),
-				this.advancedFilters.filters(),
-				this.sort(),
-			)
+			.getAlbumCollectionList({
+				userId: this.loggedUserId,
+				paging: pagingProperties,
+				lang: this.vocaDbContext.languagePreference,
+				query: this.searchTerm(),
+				tag: this.tagId()!,
+				albumType: this.albumType(),
+				artistId: this.artistId()!,
+				purchaseStatuses: this.collectionStatus(),
+				releaseEventId: this.releaseEvent.id(),
+				advancedFilters: this.advancedFilters.filters(),
+				sort: this.sort(),
+			})
 			.then((result: PartialFindResultContract<AlbumForUserForApiContract>) => {
 				this.pauseNotifications = false;
 

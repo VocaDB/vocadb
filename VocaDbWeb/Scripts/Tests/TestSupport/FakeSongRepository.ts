@@ -1,6 +1,8 @@
 import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import RepositoryParams from '@Repositories/RepositoryParams';
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
 import _ from 'lodash';
@@ -22,12 +24,18 @@ export default class FakeSongRepository extends SongRepository {
 	public constructor() {
 		super(new HttpClient(), '');
 
-		this.addSongToList = (
+		this.addSongToList = ({
+			baseUrl,
 			listId,
 			songId,
 			notes,
 			newListName,
-		): Promise<void> => {
+		}: RepositoryParams & {
+			listId: number;
+			songId: number;
+			notes: string;
+			newListName: string;
+		}): Promise<void> => {
 			if (listId !== 0) {
 				this.songsInLists.push({
 					listId: listId,
@@ -48,23 +56,48 @@ export default class FakeSongRepository extends SongRepository {
 			return Promise.resolve();
 		};
 
-		this.findDuplicate = (params): Promise<NewSongCheckResultContract> => {
+		this.findDuplicate = ({
+			baseUrl,
+			params,
+		}: RepositoryParams & {
+			params: {
+				term: string[];
+				pv: string[];
+				artistIds: number[];
+				getPVInfo: boolean;
+			};
+		}): Promise<NewSongCheckResultContract> => {
 			return FakePromise.resolve(this.results);
 		};
 
-		this.getOneWithComponents = (
+		this.getOneWithComponents = ({
+			baseUrl,
 			id,
 			fields,
 			lang,
-		): Promise<SongApiContract> => {
+		}: RepositoryParams & {
+			id: number;
+			fields: string;
+			lang: ContentLanguagePreference;
+		}): Promise<SongApiContract> => {
 			return FakePromise.resolve(this.song);
 		};
 
-		this.songListsForSong = (songId): Promise<string> => {
+		this.songListsForSong = ({
+			baseUrl,
+			songId,
+		}: RepositoryParams & {
+			songId: number;
+		}): Promise<string> => {
 			return FakePromise.resolve('Miku!');
 		};
 
-		this.songListsForUser = (ignoreSongId): Promise<SongListBaseContract[]> => {
+		this.songListsForUser = ({
+			baseUrl,
+			ignoreSongId,
+		}: RepositoryParams & {
+			ignoreSongId: number;
+		}): Promise<SongListBaseContract[]> => {
 			return FakePromise.resolve(this.songLists);
 		};
 	}

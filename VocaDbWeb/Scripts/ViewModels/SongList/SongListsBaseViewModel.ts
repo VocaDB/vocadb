@@ -40,7 +40,10 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		this.tagFilters.tags.subscribe(this.clear);
 
 		resourceRepo
-			.getList(vocaDbContext.uiCulture, ['songListSortRuleNames'])
+			.getList({
+				cultureCode: vocaDbContext.uiCulture,
+				setNames: ['songListSortRuleNames'],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.clear();

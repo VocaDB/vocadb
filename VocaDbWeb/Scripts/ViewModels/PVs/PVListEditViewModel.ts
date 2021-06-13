@@ -31,7 +31,7 @@ export default class PVListEditViewModel {
 		var pvType = this.newPvType();
 
 		this.repo
-			.getPVByUrl(newPvUrl, this.newPvType())
+			.getPVByUrl({ pvUrl: newPvUrl, type: this.newPvType() })
 			.then((pv) => {
 				this.newPvUrl('');
 				this.isPossibleInstrumental(this.isPossibleInstrumentalPv(pv));

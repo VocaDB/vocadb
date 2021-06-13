@@ -24,11 +24,11 @@ export default class ArtistCreateViewModel {
 	public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
 	private getArtistTypeTag = async (artistType: string): Promise<void> => {
-		const tag = await this.tagRepository.getEntryTypeTag(
-			EntryType.Artist,
-			artistType,
-			this.vocaDbContext.languagePreference,
-		);
+		const tag = await this.tagRepository.getEntryTypeTag({
+			entryType: EntryType.Artist,
+			subType: artistType,
+			lang: this.vocaDbContext.languagePreference,
+		});
 		this.artistTypeTag(tag);
 	};
 
@@ -65,10 +65,12 @@ export default class ArtistCreateViewModel {
 
 			artistRepository
 				.findDuplicate({
-					term1: term1,
-					term2: term2,
-					term3: term3,
-					linkUrl: linkUrl,
+					params: {
+						term1: term1,
+						term2: term2,
+						term3: term3,
+						linkUrl: linkUrl,
+					},
 				})
 				.then((result) => {
 					this.dupeEntries(result);

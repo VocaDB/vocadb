@@ -4,6 +4,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
 import ICommentRepository from './ICommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 export default class EntryCommentRepository implements ICommentRepository {
 	private baseUrl: string;
@@ -16,24 +17,36 @@ export default class EntryCommentRepository implements ICommentRepository {
 		this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
 	}
 
-	public createComment = (
-		entryId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		baseUrl,
+		entryId,
+		contract,
+	}: RepositoryParams & {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
 		);
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		baseUrl,
+		commentId,
+	}: RepositoryParams & {
+		commentId: number;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async (listId: number): Promise<CommentContract[]> => {
+	public getComments = async ({
+		baseUrl,
+		entryId: listId,
+	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
 		);
@@ -43,10 +56,14 @@ export default class EntryCommentRepository implements ICommentRepository {
 		return result.items;
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		baseUrl,
+		commentId,
+		contract,
+	}: RepositoryParams & {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);

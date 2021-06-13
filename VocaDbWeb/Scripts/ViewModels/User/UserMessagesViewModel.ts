@@ -90,7 +90,7 @@ export default class UserMessagesViewModel {
 
 		if (receiverName) {
 			userRepository
-				.getOneByName(receiverName)
+				.getOneByName({ username: receiverName })
 				.then((result) => this.newMessageViewModel.receiver.entry(result!));
 		}
 	}
@@ -151,9 +151,11 @@ export default class UserMessagesViewModel {
 	};
 
 	public selectMessage = (message: UserMessageViewModel): void => {
-		this.userRepository.getMessage(message.id).then((message) => {
-			this.selectedMessageBody(message.body!);
-		});
+		this.userRepository
+			.getMessage({ messageId: message.id })
+			.then((message) => {
+				this.selectedMessageBody(message.body!);
+			});
 
 		this.receivedMessages.selectMessage(message);
 		this.sentMessages.selectMessage(message);
@@ -184,7 +186,10 @@ export default class UserMessagesViewModel {
 			this.vocaDbContext.loggedUserId,
 		);
 		this.userRepository
-			.createMessage(this.vocaDbContext.loggedUserId, message)
+			.createMessage({
+				userId: this.vocaDbContext.loggedUserId,
+				contract: message,
+			})
 			.then(() => {
 				this.newMessageViewModel.clear();
 				this.sentMessages.clear();
@@ -212,14 +217,14 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
 		if (getMessageCount) {
 			this.userRepo
-				.getMessageSummaries(
-					vocaDbContext.loggedUserId,
-					inbox,
-					{ start: 0, maxEntries: 0, getTotalCount: true },
-					true,
-					null!,
-					null!,
-				)
+				.getMessageSummaries({
+					userId: vocaDbContext.loggedUserId,
+					inbox: inbox,
+					paging: { start: 0, maxEntries: 0, getTotalCount: true },
+					unread: true,
+					anotherUserId: undefined,
+					iconSize: undefined,
+				})
 				.then((result) => this.unreadOnServer(result.totalCount));
 		}
 
@@ -240,7 +245,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		this.inbox === UserInboxType.Received || this.inbox === UserInboxType.Sent;
 
 	private deleteMessage = (message: UserMessageViewModel): void => {
-		this.userRepo.deleteMessage(message.id);
+		this.userRepo.deleteMessage({ messageId: message.id });
 		this.items.remove(message);
 	};
 
@@ -250,7 +255,10 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
 		if (selectedIds.length === 0) return;
 
-		this.userRepo.deleteMessages(this.vocaDbContext.loggedUserId, selectedIds);
+		this.userRepo.deleteMessages({
+			userId: this.vocaDbContext.loggedUserId,
+			messageIds: selectedIds,
+		});
 		this.items.removeAll(selected.value());
 	};
 
@@ -258,14 +266,14 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		callback: (result: PartialFindResultContract<UserMessageViewModel>) => void,
 	): void => {
 		this.userRepo
-			.getMessageSummaries(
-				this.vocaDbContext.loggedUserId,
-				this.inbox,
-				{ start: this.start, maxEntries: 100, getTotalCount: true },
-				false,
-				this.anotherUser.id(),
-				40,
-			)
+			.getMessageSummaries({
+				userId: this.vocaDbContext.loggedUserId,
+				inbox: this.inbox,
+				paging: { start: this.start, maxEntries: 100, getTotalCount: true },
+				unread: false,
+				anotherUserId: this.anotherUser.id(),
+				iconSize: 40,
+			})
 			.then((result) => {
 				var messageViewModels = _.map(
 					result.items,

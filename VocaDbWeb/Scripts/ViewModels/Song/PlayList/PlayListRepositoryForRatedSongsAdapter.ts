@@ -36,22 +36,22 @@ export default class PlayListRepositoryForRatedSongsAdapter
 		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
 	): void => {
 		this.userRepo
-			.getRatedSongsList(
-				this.userId,
-				paging,
-				lang,
-				this.query(),
-				this.tagIds(),
-				this.artistIds(),
-				this.childVoicebanks(),
-				this.rating(),
-				this.songListId()!,
-				this.advancedFilters(),
-				this.groupByRating(),
-				pvServices,
-				'ThumbUrl',
-				this.sort(),
-			)
+			.getRatedSongsList({
+				userId: this.userId,
+				paging: paging,
+				lang: lang,
+				query: this.query(),
+				tagIds: this.tagIds(),
+				artistIds: this.artistIds(),
+				childVoicebanks: this.childVoicebanks(),
+				rating: this.rating(),
+				songListId: this.songListId()!,
+				advancedFilters: this.advancedFilters(),
+				groupByRating: this.groupByRating(),
+				pvServices: pvServices,
+				fields: 'ThumbUrl',
+				sort: this.sort(),
+			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
 					var mapped = _.map(result.items, (song, idx) => {

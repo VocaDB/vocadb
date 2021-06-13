@@ -16,6 +16,7 @@ import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
@@ -36,7 +37,12 @@ export default class ArtistRepository
 			return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
 		};
 
-		this.findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {
+		this.findDuplicate = ({
+			baseUrl,
+			params,
+		}: RepositoryParams & { params: any }): Promise<
+			DuplicateEntryResultContract[]
+		> => {
 			return this.httpClient.post<DuplicateEntryResultContract[]>(
 				this.mapUrl('/FindDuplicate'),
 				AjaxHelper.stringify(params),
@@ -49,22 +55,32 @@ export default class ArtistRepository
 		};
 	}
 
-	public createComment = (
-		artistId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		baseUrl,
+		entryId: artistId,
+		contract,
+	}: RepositoryParams & {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
 			this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
 			contract,
 		);
 	};
 
-	public createReport = (
-		artistId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		baseUrl,
+		artistId,
+		reportType,
+		notes,
+		versionNumber,
+	}: RepositoryParams & {
+		artistId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/Artist/CreateReport'),
 			AjaxHelper.stringify({
@@ -81,31 +97,51 @@ export default class ArtistRepository
 		);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		baseUrl,
+		commentId,
+	}: RepositoryParams & {
+		commentId: number;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate: (
-		params: any,
-	) => Promise<DuplicateEntryResultContract[]>;
+	public findDuplicate: ({
+		baseUrl,
+		params,
+	}: RepositoryParams & { params: any }) => Promise<
+		DuplicateEntryResultContract[]
+	>;
 
-	public getComments = (artistId: number): Promise<CommentContract[]> => {
+	public getComments = ({
+		baseUrl,
+		entryId: artistId,
+	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
 			this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
 		);
 	};
 
-	public getForEdit = (id: number): Promise<ArtistForEditContract> => {
+	public getForEdit = ({
+		baseUrl,
+		id,
+	}: RepositoryParams & {
+		id: number;
+	}): Promise<ArtistForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
 		return this.httpClient.get<ArtistForEditContract>(url);
 	};
 
-	public getOne = (
-		id: number,
-		lang: ContentLanguagePreference,
-	): Promise<ArtistContract> => {
+	public getOne = ({
+		baseUrl,
+		id,
+		lang,
+	}: RepositoryParams & {
+		id: number;
+		lang: ContentLanguagePreference;
+	}): Promise<ArtistContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistContract>(url, {
 			fields: 'AdditionalNames',
@@ -113,11 +149,16 @@ export default class ArtistRepository
 		});
 	};
 
-	public getOneWithComponents = (
-		id: number,
-		fields: string,
-		lang: ContentLanguagePreference,
-	): Promise<ArtistApiContract> => {
+	public getOneWithComponents = ({
+		baseUrl,
+		id,
+		fields,
+		lang,
+	}: RepositoryParams & {
+		id: number;
+		fields: string;
+		lang: ContentLanguagePreference;
+	}): Promise<ArtistApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistApiContract>(url, {
 			fields: fields,
@@ -125,20 +166,34 @@ export default class ArtistRepository
 		});
 	};
 
-	public getList = (
-		paging: PagingProperties,
-		lang: ContentLanguagePreference,
-		query: string,
-		sort: string,
-		artistTypes: string,
-		allowBaseVoicebanks: boolean,
-		tags: number[],
-		childTags: boolean,
-		followedByUserId: number,
-		fields: string,
-		status: string,
-		advancedFilters: AdvancedSearchFilter[],
-	): Promise<PartialFindResultContract<ArtistContract>> => {
+	public getList = ({
+		baseUrl,
+		paging,
+		lang,
+		query,
+		sort,
+		artistTypes,
+		allowBaseVoicebanks,
+		tags,
+		childTags,
+		followedByUserId,
+		fields,
+		status,
+		advancedFilters,
+	}: RepositoryParams & {
+		paging: PagingProperties;
+		lang: ContentLanguagePreference;
+		query: string;
+		sort: string;
+		artistTypes?: string;
+		allowBaseVoicebanks: boolean;
+		tags: number[];
+		childTags: boolean;
+		followedByUserId?: number;
+		fields: string;
+		status: string;
+		advancedFilters: AdvancedSearchFilter[];
+	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
 		var data = {
 			start: paging.start,
@@ -164,18 +219,25 @@ export default class ArtistRepository
 		);
 	};
 
-	public getTagSuggestions = (
-		artistId: number,
-	): Promise<TagUsageForApiContract[]> => {
+	public getTagSuggestions = ({
+		baseUrl,
+		artistId,
+	}: RepositoryParams & {
+		artistId: number;
+	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/artists/${artistId}/tagSuggestions`),
 		);
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		baseUrl,
+		commentId,
+		contract,
+	}: RepositoryParams & {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
 			contract,

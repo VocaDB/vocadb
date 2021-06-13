@@ -36,12 +36,12 @@ export default class DiscussionIndexViewModel {
 			this.selectedTopic(null!);
 		});
 
-		repo.getFolders().then((folders) => {
+		repo.getFolders({}).then((folders) => {
 			this.folders(folders);
 			page.start();
 		});
 
-		repo.getTopics().then((result) => this.recentTopics(result.items));
+		repo.getTopics({}).then((result) => this.recentTopics(result.items));
 
 		this.selectedFolder.subscribe((folder) => {
 			this.showCreateNewTopic(false);
@@ -72,7 +72,10 @@ export default class DiscussionIndexViewModel {
 	public createNewTopic = (): void => {
 		var folder = this.selectedFolder();
 		this.repo
-			.createTopic(folder!.id, this.newTopic().toContract())
+			.createTopic({
+				folderId: folder!.id,
+				contract: this.newTopic().toContract(),
+			})
 			.then((topic) => {
 				topic.canBeDeleted = false;
 				this.newTopic(
@@ -85,7 +88,7 @@ export default class DiscussionIndexViewModel {
 	};
 
 	public deleteTopic = (topic: DiscussionTopicContract): void => {
-		this.repo.deleteTopic(topic.id).then(() => {
+		this.repo.deleteTopic({ topicId: topic.id }).then(() => {
 			this.selectTopic(null!);
 		});
 	};
@@ -113,13 +116,15 @@ export default class DiscussionIndexViewModel {
 		}
 
 		const paging = this.paging.getPagingProperties(true);
-		this.repo.getTopicsForFolder(folder.id, paging).then((result) => {
-			this.topics(result.items);
+		this.repo
+			.getTopicsForFolder({ folderId: folder.id, paging: paging })
+			.then((result) => {
+				this.topics(result.items);
 
-			if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
+				if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
 
-			if (callback) callback();
-		});
+				if (callback) callback();
+			});
 	};
 
 	private mapRoute = (
@@ -161,7 +166,7 @@ export default class DiscussionIndexViewModel {
 			return;
 		}
 
-		this.repo.getTopic(topicId).then((contract) => {
+		this.repo.getTopic({ topicId: topicId }).then((contract) => {
 			contract.canBeDeleted = this.canDeleteTopic(contract);
 			contract.canBeEdited = this.canEditTopic(contract);
 

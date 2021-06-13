@@ -24,11 +24,12 @@ const TagEdit = (model: { id: number }): void => {
 		var userRepo = repoFactory.userRepository();
 
 		tagRepo
-			.getById(
-				model.id,
-				'AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks',
-				vocaDbContext.languagePreference,
-			)
+			.getById({
+				id: model.id,
+				fields:
+					'AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks',
+				lang: vocaDbContext.languagePreference,
+			})
 			.then(function (contract) {
 				var viewModel = new TagEditViewModel(urlMapper, userRepo, contract);
 				ko.applyBindings(viewModel);

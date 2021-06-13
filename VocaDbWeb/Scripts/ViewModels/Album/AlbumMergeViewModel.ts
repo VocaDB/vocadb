@@ -16,7 +16,9 @@ export default class AlbumMergeViewModel {
 		this.target = new BasicEntryLinkViewModel<AlbumContract>(
 			null!,
 			(entryId, callback) =>
-				repo.getOne(entryId, vocaDbContext.languagePreference).then(callback),
+				repo
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
+					.then(callback),
 		);
 
 		this.targetSearchParams = {
@@ -24,20 +26,22 @@ export default class AlbumMergeViewModel {
 			ignoreId: id,
 		};
 
-		repo.getOne(id, vocaDbContext.languagePreference).then((base) => {
-			ko.computed(() => {
-				var result = EntryMergeValidationHelper.validateEntry(
-					base,
-					this.target.entry(),
-				);
-				this.validationError_targetIsLessComplete(
-					result.validationError_targetIsLessComplete,
-				);
-				this.validationError_targetIsNewer(
-					result.validationError_targetIsNewer,
-				);
+		repo
+			.getOne({ id: id, lang: vocaDbContext.languagePreference })
+			.then((base) => {
+				ko.computed(() => {
+					var result = EntryMergeValidationHelper.validateEntry(
+						base,
+						this.target.entry(),
+					);
+					this.validationError_targetIsLessComplete(
+						result.validationError_targetIsLessComplete,
+					);
+					this.validationError_targetIsNewer(
+						result.validationError_targetIsNewer,
+					);
+				});
 			});
-		});
 	}
 
 	public target: BasicEntryLinkViewModel<AlbumContract>;

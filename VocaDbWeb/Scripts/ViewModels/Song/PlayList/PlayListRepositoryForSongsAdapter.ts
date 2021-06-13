@@ -48,38 +48,43 @@ export default class PlayListRepositoryForSongsAdapter
 		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
 	): void => {
 		this.songRepo
-			.getList(
-				paging,
-				lang,
-				this.query(),
-				this.sort(),
-				this.songType() !== SongType[SongType.Unspecified]
-					? this.songType()
-					: null!,
-				this.afterDate(),
-				this.beforeDate(),
-				this.tagIds(),
-				this.childTags(),
-				this.unifyTypesAndTags(),
-				this.artistIds(),
-				this.artistParticipationStatus(),
-				this.childVoicebanks(),
-				this.includeMembers(),
-				this.eventId(),
-				this.onlyWithPvs(),
-				pvServices,
-				this.since(),
-				this.minScore(),
-				this.onlyRatedSongs() ? this.userCollectionId : null!,
-				this.parentVersionId(),
-				this.fields(),
-				this.draftsOnly() ? 'Draft' : null!,
-				this.advancedFilters ? this.advancedFilters() : null!,
-				null!,
-				null!,
-				null!,
-				null!,
-			)
+			.getList({
+				paging: paging,
+				lang: lang,
+				query: this.query(),
+				sort: this.sort(),
+				songTypes:
+					this.songType() !== SongType[SongType.Unspecified]
+						? this.songType()
+						: undefined,
+				afterDate: this.afterDate(),
+				beforeDate: this.beforeDate(),
+				tagIds: this.tagIds(),
+				childTags: this.childTags(),
+				unifyTypesAndTags: this.unifyTypesAndTags(),
+				artistIds: this.artistIds(),
+				artistParticipationStatus: this.artistParticipationStatus(),
+				childVoicebanks: this.childVoicebanks(),
+				includeMembers: this.includeMembers(),
+				eventId: this.eventId(),
+				onlyWithPvs: this.onlyWithPvs(),
+				pvServices: pvServices,
+				since: this.since(),
+				minScore: this.minScore(),
+				userCollectionId: this.onlyRatedSongs()
+					? this.userCollectionId
+					: undefined,
+				parentSongId: this.parentVersionId(),
+				fields: this.fields(),
+				status: this.draftsOnly() ? 'Draft' : undefined,
+				advancedFilters: this.advancedFilters
+					? this.advancedFilters()
+					: undefined,
+				minMilliBpm: undefined,
+				maxMilliBpm: undefined,
+				minLength: undefined,
+				maxLength: undefined,
+			})
 			.then((result: PartialFindResultContract<SongApiContract>) => {
 				var mapped = _.map(result.items, (song, idx) => {
 					return {

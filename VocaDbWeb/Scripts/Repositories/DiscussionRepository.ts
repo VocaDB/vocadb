@@ -7,6 +7,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
 import ICommentRepository from './ICommentRepository';
+import RepositoryParams from './RepositoryParams';
 
 export default class DiscussionRepository implements ICommentRepository {
 	public constructor(
@@ -20,40 +21,61 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public createComment = (
-		topicId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		baseUrl,
+		entryId: topicId,
+		contract,
+	}: RepositoryParams & {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
 			this.mapUrl(`topics/${topicId}/comments`),
 			contract,
 		);
 	};
 
-	public createTopic = (
-		folderId: number,
-		contract: DiscussionTopicContract,
-	): Promise<DiscussionTopicContract> => {
+	public createTopic = ({
+		baseUrl,
+		folderId,
+		contract,
+	}: RepositoryParams & {
+		folderId: number;
+		contract: DiscussionTopicContract;
+	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.post<DiscussionTopicContract>(
 			this.mapUrl(`folders/${folderId}/topics`),
 			contract,
 		);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		baseUrl,
+		commentId,
+	}: RepositoryParams & { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`comments/${commentId}`));
 	};
 
-	public deleteTopic = (topicId: number): Promise<void> => {
+	public deleteTopic = ({
+		baseUrl,
+		topicId,
+	}: RepositoryParams & {
+		topicId: number;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`topics/${topicId}`));
 	};
 
-	public getComments = (topicId: number): Promise<CommentContract[]> => {
+	public getComments = ({
+		baseUrl,
+		entryId: topicId,
+	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		// Not supported
 		return Promise.resolve<CommentContract[]>([]);
 	};
 
-	public getFolders = (): Promise<DiscussionFolderContract[]> => {
+	public getFolders = ({
+		baseUrl,
+	}: RepositoryParams & {}): Promise<DiscussionFolderContract[]> => {
 		return this.httpClient.get<DiscussionFolderContract[]>(
 			this.mapUrl('folders'),
 			{
@@ -62,14 +84,21 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public getTopic = (topicId: number): Promise<DiscussionTopicContract> => {
+	public getTopic = ({
+		baseUrl,
+		topicId,
+	}: RepositoryParams & {
+		topicId: number;
+	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.get<DiscussionTopicContract>(
 			this.mapUrl(`topics/${topicId}`),
 			{ fields: 'All' },
 		);
 	};
 
-	public getTopics = (): Promise<
+	public getTopics = ({
+		baseUrl,
+	}: RepositoryParams & {}): Promise<
 		PartialFindResultContract<DiscussionTopicContract>
 	> => {
 		return this.httpClient.get<
@@ -77,10 +106,14 @@ export default class DiscussionRepository implements ICommentRepository {
 		>(this.mapUrl('topics'), { fields: 'CommentCount', maxResults: 5 });
 	};
 
-	public getTopicsForFolder = (
-		folderId: number,
-		paging: PagingProperties,
-	): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
+	public getTopicsForFolder = ({
+		baseUrl,
+		folderId,
+		paging,
+	}: RepositoryParams & {
+		folderId: number;
+		paging: PagingProperties;
+	}): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
 		return this.httpClient.get<
 			PartialFindResultContract<DiscussionTopicContract>
 		>(this.mapUrl('topics'), {
@@ -92,20 +125,28 @@ export default class DiscussionRepository implements ICommentRepository {
 		});
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		baseUrl,
+		commentId,
+		contract,
+	}: RepositoryParams & {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.mapUrl(`comments/${commentId}`),
 			contract,
 		);
 	};
 
-	public updateTopic = (
-		topicId: number,
-		contract: DiscussionTopicContract,
-	): Promise<void> => {
+	public updateTopic = ({
+		baseUrl,
+		topicId,
+		contract,
+	}: RepositoryParams & {
+		topicId: number;
+		contract: DiscussionTopicContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.mapUrl(`topics/${topicId}`),
 			contract,

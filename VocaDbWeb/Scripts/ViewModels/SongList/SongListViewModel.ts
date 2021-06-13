@@ -56,7 +56,7 @@ export default class SongListViewModel {
 		);
 		this.comments = new EditableCommentsViewModel(
 			vocaDbContext,
-			songListRepo.getComments(),
+			songListRepo.getComments({}),
 			listId,
 			canDeleteAllComments,
 			canDeleteAllComments,
@@ -125,10 +125,12 @@ export default class SongListViewModel {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepo.getSongListTagSelections(this.listId).then(callback),
+					userRepo
+						.getSongListTagSelections({ songListId: this.listId })
+						.then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
-						.updateSongListTags(this.listId, tags)
+						.updateSongListTags({ songListId: this.listId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.SongList,
@@ -208,24 +210,25 @@ export default class SongListViewModel {
 		if (this.showTags()) fields.push(SongOptionalField.Tags);
 
 		this.songListRepo
-			.getSongs(
-				this.listId,
-				this.query(),
-				this.songType() !== SongType[SongType.Unspecified]
-					? this.songType()
-					: null!,
-				this.tagIds(),
-				this.childTags(),
-				this.artistFilters.artistIds(),
-				this.artistFilters.artistParticipationStatus(),
-				this.artistFilters.childVoicebanks(),
-				this.advancedFilters.filters(),
-				null!,
-				pagingProperties,
-				new SongOptionalFields(fields),
-				this.sort(),
-				this.vocaDbContext.languagePreference,
-			)
+			.getSongs({
+				listId: this.listId,
+				query: this.query(),
+				songTypes:
+					this.songType() !== SongType[SongType.Unspecified]
+						? this.songType()
+						: undefined,
+				tagIds: this.tagIds(),
+				childTags: this.childTags(),
+				artistIds: this.artistFilters.artistIds(),
+				artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+				childVoicebanks: this.artistFilters.childVoicebanks(),
+				advancedFilters: this.advancedFilters.filters(),
+				pvServices: undefined,
+				paging: pagingProperties,
+				fields: new SongOptionalFields(fields),
+				sort: this.sort(),
+				lang: this.vocaDbContext.languagePreference,
+			})
 			.then((result) => {
 				_.each(result.items, (item) => {
 					var song = item.song;

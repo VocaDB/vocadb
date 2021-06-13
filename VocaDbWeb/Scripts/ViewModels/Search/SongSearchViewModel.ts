@@ -73,7 +73,9 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
 			{ id: eventId, name: null! },
 			(entryId, callback) =>
-				this.eventRepo ? this.eventRepo.getOne(entryId).then(callback) : null,
+				this.eventRepo
+					? this.eventRepo.getOne({ id: entryId }).then(callback)
+					: null,
 		);
 
 		if (eventId) this.releaseEvent.id(eventId);
@@ -96,7 +98,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			null!,
 			(entryId, callback) =>
 				this.songRepo
-					.getOne(entryId, vocaDbContext.languagePreference)
+					.getOne({ id: entryId, lang: vocaDbContext.languagePreference })
 					.then(callback),
 		);
 
@@ -195,38 +197,41 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 				callback({ items: [], totalCount: 0 });
 			} else {
 				this.songRepo
-					.getList(
-						pagingProperties,
-						vocaDbContext.languagePreference,
-						searchTerm,
-						this.sort(),
-						this.songType() !== SongType[SongType.Unspecified]
-							? this.songType()
-							: null!,
-						this.afterDate(),
-						this.beforeDate(),
-						tag,
-						childTags,
-						this.unifyEntryTypesAndTags(),
-						this.artistFilters.artistIds(),
-						this.artistFilters.artistParticipationStatus(),
-						this.artistFilters.childVoicebanks(),
-						this.artistFilters.includeMembers(),
-						this.releaseEvent.id(),
-						this.pvsOnly(),
-						null!,
-						this.since(),
-						this.minScore(),
-						this.onlyRatedSongs() ? vocaDbContext.loggedUserId : null!,
-						this.parentVersion.id(),
-						this.fields(),
-						status,
-						this.advancedFilters.filters(),
-						this.minMilliBpm(),
-						this.maxMilliBpm(),
-						this.minLength() ? this.minLength() : null!,
-						this.maxLength() ? this.maxLength() : null!,
-					)
+					.getList({
+						paging: pagingProperties,
+						lang: vocaDbContext.languagePreference,
+						query: searchTerm,
+						sort: this.sort(),
+						songTypes:
+							this.songType() !== SongType[SongType.Unspecified]
+								? this.songType()
+								: undefined,
+						afterDate: this.afterDate(),
+						beforeDate: this.beforeDate(),
+						tagIds: tag,
+						childTags: childTags,
+						unifyTypesAndTags: this.unifyEntryTypesAndTags(),
+						artistIds: this.artistFilters.artistIds(),
+						artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+						childVoicebanks: this.artistFilters.childVoicebanks(),
+						includeMembers: this.artistFilters.includeMembers(),
+						eventId: this.releaseEvent.id(),
+						onlyWithPvs: this.pvsOnly(),
+						pvServices: undefined,
+						since: this.since(),
+						minScore: this.minScore(),
+						userCollectionId: this.onlyRatedSongs()
+							? vocaDbContext.loggedUserId
+							: undefined,
+						parentSongId: this.parentVersion.id(),
+						fields: this.fields(),
+						status: status,
+						advancedFilters: this.advancedFilters.filters(),
+						minMilliBpm: this.minMilliBpm(),
+						maxMilliBpm: this.maxMilliBpm(),
+						minLength: this.minLength() ? this.minLength() : undefined,
+						maxLength: this.maxLength() ? this.maxLength() : undefined,
+					})
 					.then((result) => {
 						_.each(result.items, (song: ISongSearchItem) => {
 							if (song.pvServices && song.pvServices !== 'Nothing') {
