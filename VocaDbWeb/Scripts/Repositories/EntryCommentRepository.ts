@@ -1,8 +1,8 @@
 import CommentContract from '@DataContracts/CommentContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
+import { buildUrl, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
@@ -11,10 +11,9 @@ export default class EntryCommentRepository implements ICommentRepository {
 
 	public constructor(
 		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
 		resourcePath: string,
 	) {
-		this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
+		this.baseUrl = mergeUrls('/api/', resourcePath);
 	}
 
 	public createComment = ({
@@ -25,8 +24,9 @@ export default class EntryCommentRepository implements ICommentRepository {
 		entryId: number;
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
-		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
+		var url = mergeUrls(
+			baseUrl,
+			buildUrl(this.baseUrl, entryId.toString(), '/comments'),
 		);
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
@@ -37,8 +37,9 @@ export default class EntryCommentRepository implements ICommentRepository {
 	}: RepositoryParams & {
 		commentId: number;
 	}): Promise<void> => {
-		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
+		var url = mergeUrls(
+			baseUrl,
+			buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.delete<void>(url);
 	};
@@ -47,8 +48,9 @@ export default class EntryCommentRepository implements ICommentRepository {
 		baseUrl,
 		entryId: listId,
 	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
-		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
+		var url = mergeUrls(
+			baseUrl,
+			buildUrl(this.baseUrl, listId.toString(), '/comments/'),
 		);
 		const result = await this.httpClient.get<
 			PartialFindResultContract<CommentContract>
@@ -64,8 +66,9 @@ export default class EntryCommentRepository implements ICommentRepository {
 		commentId: number;
 		contract: CommentContract;
 	}): Promise<void> => {
-		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
+		var url = mergeUrls(
+			baseUrl,
+			buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.post<void>(url, contract);
 	};

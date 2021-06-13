@@ -18,43 +18,44 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import PVService from '@Models/PVs/PVService';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
+import { CommonQueryParams, getDate, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
-export default class SongRepository
-	extends BaseRepository
-	implements ICommentRepository {
-	private readonly urlMapper: UrlMapper;
-
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
-		super(baseUrl);
-
-		this.urlMapper = new UrlMapper(baseUrl);
-
-		this.get = <T>(relative: string, params: any): Promise<T> => {
-			return this.httpClient.get<T>(this.mapUrl(relative), params);
+export default class SongRepository implements ICommentRepository {
+	public constructor(private readonly httpClient: HttpClient) {
+		this.get = <T>(
+			baseUrl: string | undefined,
+			relative: string,
+			params: any,
+		): Promise<T> => {
+			return this.httpClient.get<T>(this.mapUrl(baseUrl, relative), params);
 		};
 
-		this.getJSON = <T>(relative: string, params: any): Promise<T> => {
-			return this.httpClient.get<T>(this.mapUrl(relative), params);
+		this.getJSON = <T>(
+			baseUrl: string | undefined,
+			relative: string,
+			params: any,
+		): Promise<T> => {
+			return this.httpClient.get<T>(this.mapUrl(baseUrl, relative), params);
 		};
 
-		this.mapUrl = (relative: string): string => {
-			return `${functions.mergeUrls(baseUrl, '/Song')}${relative}`;
+		this.mapUrl = (baseUrl: string | undefined, relative: string): string => {
+			return `${mergeUrls(baseUrl, '/Song')}${relative}`;
 		};
 
-		this.post = <T>(relative: string, params: any): Promise<T> => {
+		this.post = <T>(
+			baseUrl: string | undefined,
+			relative: string,
+			params: any,
+		): Promise<T> => {
 			return this.httpClient.post<T>(
-				this.mapUrl(relative),
+				this.mapUrl(baseUrl, relative),
 				AjaxHelper.stringify(params),
 				{
 					headers: {
@@ -72,7 +73,7 @@ export default class SongRepository
 			songId: number;
 			pvService: PVService;
 		}): Promise<string> => {
-			return this.get<string>('/PVForSongAndService', {
+			return this.get<string>(baseUrl, '/PVForSongAndService', {
 				songId: songId,
 				service: PVService[pvService],
 			});
@@ -85,6 +86,7 @@ export default class SongRepository
 			songId: number;
 		}): Promise<SongWithPVPlayerAndVoteContract> => {
 			return this.getJSON<SongWithPVPlayerAndVoteContract>(
+				baseUrl,
 				'/PVPlayerWithRating',
 				{ songId: songId },
 			);
@@ -96,7 +98,7 @@ export default class SongRepository
 		}: RepositoryParams & {
 			songId: number;
 		}): Promise<string> => {
-			return this.get<string>('/SongListsForSong', { songId: songId });
+			return this.get<string>(baseUrl, '/SongListsForSong', { songId: songId });
 		};
 
 		this.songListsForUser = ({
@@ -105,7 +107,7 @@ export default class SongRepository
 		}: RepositoryParams & {
 			ignoreSongId: number;
 		}): Promise<SongListBaseContract[]> => {
-			return this.post<SongListBaseContract[]>('/SongListsForUser', {
+			return this.post<SongListBaseContract[]>(baseUrl, '/SongListsForUser', {
 				ignoreSongId: ignoreSongId,
 			});
 		};
@@ -123,7 +125,7 @@ export default class SongRepository
 		notes: string;
 		newListName: string;
 	}): Promise<void> => {
-		return this.post<void>('/AddSongToList', {
+		return this.post<void>(baseUrl, '/AddSongToList', {
 			listId: listId,
 			songId: songId,
 			notes: notes,
@@ -140,7 +142,7 @@ export default class SongRepository
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/comments`),
 			contract,
 		);
 	};
@@ -158,7 +160,7 @@ export default class SongRepository
 		versionNumber?: number;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative('/Song/CreateReport'),
+			mergeUrls(baseUrl, '/Song/CreateReport'),
 			AjaxHelper.stringify({
 				reportType: reportType,
 				notes: notes,
@@ -178,7 +180,7 @@ export default class SongRepository
 		commentId,
 	}: RepositoryParams & { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/songs/comments/${commentId}`),
 		);
 	};
 
@@ -194,12 +196,16 @@ export default class SongRepository
 		};
 	}): Promise<NewSongCheckResultContract> => {
 		return this.httpClient.get<NewSongCheckResultContract>(
-			this.urlMapper.mapRelative('/api/songs/findDuplicate'),
+			mergeUrls(baseUrl, '/api/songs/findDuplicate'),
 			params,
 		);
 	};
 
-	private get: <T>(relative: string, params: any) => Promise<T>;
+	private get: <T>(
+		baseUrl: string | undefined,
+		relative: string,
+		params: any,
+	) => Promise<T>;
 
 	public getByNames({
 		baseUrl,
@@ -213,7 +219,7 @@ export default class SongRepository
 		lang: ContentLanguagePreference;
 		songTypes?: SongType[];
 	}): Promise<SongApiContract[]> {
-		const url = functions.mergeUrls(this.baseUrl, '/api/songs/by-names');
+		const url = mergeUrls(baseUrl, '/api/songs/by-names');
 		return this.httpClient.get<SongApiContract[]>(url, {
 			names: names,
 			songTypes: songTypes,
@@ -227,7 +233,7 @@ export default class SongRepository
 		entryId: songId,
 	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/comments`),
 		);
 	};
 
@@ -237,7 +243,7 @@ export default class SongRepository
 	}: RepositoryParams & {
 		id: number;
 	}): Promise<SongForEditContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}/for-edit`);
+		var url = mergeUrls(baseUrl, `/api/songs/${id}/for-edit`);
 		return this.httpClient.get<SongForEditContract>(url);
 	};
 
@@ -250,13 +256,15 @@ export default class SongRepository
 		songVersion: number;
 	}): Promise<LyricsForSongContract> => {
 		return this.httpClient.get<LyricsForSongContract>(
-			this.urlMapper.mapRelative(
-				`/api/songs/lyrics/${lyricsId}?v=${songVersion}`,
-			),
+			mergeUrls(baseUrl, `/api/songs/lyrics/${lyricsId}?v=${songVersion}`),
 		);
 	};
 
-	private getJSON: <T>(relative: string, params: any) => Promise<T>;
+	private getJSON: <T>(
+		baseUrl: string | undefined,
+		relative: string,
+		params: any,
+	) => Promise<T>;
 
 	public getOneWithComponents = ({
 		baseUrl,
@@ -268,7 +276,7 @@ export default class SongRepository
 		fields: string;
 		lang: ContentLanguagePreference;
 	}): Promise<SongApiContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
+		var url = mergeUrls(baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
 			fields: fields,
 			lang: ContentLanguagePreference[lang],
@@ -283,7 +291,7 @@ export default class SongRepository
 		id: number;
 		lang: ContentLanguagePreference;
 	}): Promise<SongContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
+		var url = mergeUrls(baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongContract>(url, {
 			fields: 'AdditionalNames',
 			lang: ContentLanguagePreference[lang],
@@ -296,7 +304,7 @@ export default class SongRepository
 	}: RepositoryParams & {
 		params: SongQueryParams;
 	}): Promise<PartialFindResultContract<SongApiContract>> {
-		const url = functions.mergeUrls(this.baseUrl, '/api/songs');
+		const url = mergeUrls(baseUrl, '/api/songs');
 		return this.httpClient.get<PartialFindResultContract<SongApiContract>>(
 			url,
 			params,
@@ -363,7 +371,7 @@ export default class SongRepository
 		minLength?: number;
 		maxLength?: number;
 	}): Promise<PartialFindResultContract<SongContract>> => {
-		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
+		var url = mergeUrls(baseUrl, '/api/songs');
 		var data = {
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
@@ -374,8 +382,8 @@ export default class SongRepository
 			nameMatchMode: 'Auto',
 			sort: sort,
 			songTypes: songTypes,
-			afterDate: this.getDate(afterDate),
-			beforeDate: this.getDate(beforeDate),
+			afterDate: getDate(afterDate),
+			beforeDate: getDate(beforeDate),
 			tagId: tagIds,
 			childTags: childTags,
 			unifyTypesAndTags: unifyTypesAndTags || undefined,
@@ -412,7 +420,7 @@ export default class SongRepository
 		timeUnit: TimeUnit;
 		artistId: number;
 	}): Promise<CountPerDayContract[]> => {
-		var url = this.urlMapper.mapRelative('/api/songs/over-time');
+		var url = mergeUrls(baseUrl, '/api/songs/over-time');
 		return this.httpClient.get<CountPerDayContract[]>(url, {
 			timeUnit: TimeUnit[timeUnit],
 			artistId: artistId,
@@ -429,7 +437,7 @@ export default class SongRepository
 		pvService: PVService;
 	}): Promise<string> => {
 		return this.httpClient.get<string>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/pvs`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/pvs`),
 			{ service: PVService[pvService] },
 		);
 	};
@@ -441,7 +449,7 @@ export default class SongRepository
 		RatedSongForUserForApiContract[]
 	> => {
 		return this.httpClient.get<RatedSongForUserForApiContract[]>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/ratings`),
 			{ userFields: 'MainPicture' },
 		);
 	};
@@ -453,14 +461,18 @@ export default class SongRepository
 		songId: number;
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/tagSuggestions`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/tagSuggestions`),
 		);
 	};
 
 	// Maps a relative URL to an absolute one.
-	private mapUrl: (relative: string) => string;
+	private mapUrl: (baseUrl: string | undefined, relative: string) => string;
 
-	private post: <T>(relative: string, params: any) => Promise<T>;
+	private post: <T>(
+		baseUrl: string | undefined,
+		relative: string,
+		params: any,
+	) => Promise<T>;
 
 	public pvForSongAndService: ({
 		baseUrl,
@@ -480,6 +492,7 @@ export default class SongRepository
 		params: PVEmbedParams;
 	}): Promise<SongWithPVPlayerAndVoteContract> => {
 		return this.getJSON<SongWithPVPlayerAndVoteContract>(
+			baseUrl,
 			`/PVPlayer/${songId}`,
 			params,
 		);
@@ -517,7 +530,7 @@ export default class SongRepository
 		contract: CommentContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/songs/comments/${commentId}`),
 			contract,
 		);
 	};
@@ -533,7 +546,7 @@ export default class SongRepository
 		author: ArtistContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative(`/api/songs/${songId}/personal-description/`),
+			mergeUrls(baseUrl, `/api/songs/${songId}/personal-description/`),
 			{
 				personalDescriptionText: text,
 				personalDescriptionAuthor: author || undefined,
@@ -549,7 +562,7 @@ export default class SongRepository
 		songId: number;
 		rating: SongVoteRating;
 	}): Promise<void> => {
-		var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
+		var url = mergeUrls(baseUrl, `/api/songs/${songId}/ratings`);
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
 	};
 }

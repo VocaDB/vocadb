@@ -8,33 +8,22 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
+import { CommonQueryParams, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
-export default class ArtistRepository
-	extends BaseRepository
-	implements ICommentRepository {
+export default class ArtistRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
-	private mapUrl: (relative: string) => string;
+	private mapUrl: (baseUrl: string | undefined, relative: string) => string;
 
-	private readonly urlMapper: UrlMapper;
-
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
-		super(baseUrl);
-
-		this.urlMapper = new UrlMapper(baseUrl);
-
-		this.mapUrl = (relative: string): string => {
-			return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
+	public constructor(private readonly httpClient: HttpClient) {
+		this.mapUrl = (baseUrl: string | undefined, relative: string): string => {
+			return `${mergeUrls(baseUrl, '/Artist')}${relative}`;
 		};
 
 		this.findDuplicate = ({
@@ -44,7 +33,7 @@ export default class ArtistRepository
 			DuplicateEntryResultContract[]
 		> => {
 			return this.httpClient.post<DuplicateEntryResultContract[]>(
-				this.mapUrl('/FindDuplicate'),
+				this.mapUrl(baseUrl, '/FindDuplicate'),
 				AjaxHelper.stringify(params),
 				{
 					headers: {
@@ -64,7 +53,7 @@ export default class ArtistRepository
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
-			this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
+			mergeUrls(baseUrl, `/api/artists/${artistId}/comments`),
 			contract,
 		);
 	};
@@ -82,7 +71,7 @@ export default class ArtistRepository
 		versionNumber?: number;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative('/Artist/CreateReport'),
+			mergeUrls(baseUrl, '/Artist/CreateReport'),
 			AjaxHelper.stringify({
 				reportType: reportType,
 				notes: notes,
@@ -104,7 +93,7 @@ export default class ArtistRepository
 		commentId: number;
 	}): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/artists/comments/${commentId}`),
 		);
 	};
 
@@ -120,7 +109,7 @@ export default class ArtistRepository
 		entryId: artistId,
 	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
-			this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
+			mergeUrls(baseUrl, `/api/artists/${artistId}/comments`),
 		);
 	};
 
@@ -130,7 +119,7 @@ export default class ArtistRepository
 	}: RepositoryParams & {
 		id: number;
 	}): Promise<ArtistForEditContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
+		var url = mergeUrls(baseUrl, `/api/artists/${id}/for-edit`);
 		return this.httpClient.get<ArtistForEditContract>(url);
 	};
 
@@ -142,7 +131,7 @@ export default class ArtistRepository
 		id: number;
 		lang: ContentLanguagePreference;
 	}): Promise<ArtistContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
+		var url = mergeUrls(baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistContract>(url, {
 			fields: 'AdditionalNames',
 			lang: ContentLanguagePreference[lang],
@@ -159,7 +148,7 @@ export default class ArtistRepository
 		fields: string;
 		lang: ContentLanguagePreference;
 	}): Promise<ArtistApiContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
+		var url = mergeUrls(baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistApiContract>(url, {
 			fields: fields,
 			lang: ContentLanguagePreference[lang],
@@ -194,7 +183,7 @@ export default class ArtistRepository
 		status: string;
 		advancedFilters: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
-		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
+		var url = mergeUrls(baseUrl, '/api/artists');
 		var data = {
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
@@ -226,7 +215,7 @@ export default class ArtistRepository
 		artistId: number;
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
-			this.urlMapper.mapRelative(`/api/artists/${artistId}/tagSuggestions`),
+			mergeUrls(baseUrl, `/api/artists/${artistId}/tagSuggestions`),
 		);
 	};
 
@@ -239,7 +228,7 @@ export default class ArtistRepository
 		contract: CommentContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/artists/comments/${commentId}`),
 			contract,
 		);
 	};

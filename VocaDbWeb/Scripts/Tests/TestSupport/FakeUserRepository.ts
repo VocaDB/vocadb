@@ -7,7 +7,6 @@ import RepositoryParams from '@Repositories/RepositoryParams';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
 import FakePromise from './FakePromise';
 
@@ -18,7 +17,7 @@ export default class FakeUserRepository extends UserRepository {
 	public rating!: SongVoteRating;
 
 	public constructor() {
-		super(new HttpClient(), new UrlMapper(''));
+		super(new HttpClient());
 
 		this.getMessage = ({
 			baseUrl,

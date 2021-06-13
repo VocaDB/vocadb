@@ -1,14 +1,11 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
+import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
 export default class PVRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {}
+	public constructor(private readonly httpClient: HttpClient) {}
 
 	public getPVByUrl = ({
 		baseUrl,
@@ -18,7 +15,7 @@ export default class PVRepository {
 		pvUrl: string;
 		type: string;
 	}): Promise<PVContract> => {
-		var url = this.urlMapper.mapRelative('/api/pvs');
+		var url = mergeUrls(baseUrl, '/api/pvs');
 		return this.httpClient.get<PVContract>(url, { pvUrl: pvUrl, type: type });
 	};
 }

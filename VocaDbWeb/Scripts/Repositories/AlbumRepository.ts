@@ -11,33 +11,22 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
+import { CommonQueryParams, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
-export default class AlbumRepository
-	extends BaseRepository
-	implements ICommentRepository {
+export default class AlbumRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
-	private mapUrl: (relative: string) => string;
+	private mapUrl: (baseUrl: string | undefined, relative: string) => string;
 
-	private readonly urlMapper: UrlMapper;
-
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
-		super(baseUrl);
-
-		this.urlMapper = new UrlMapper(baseUrl);
-
-		this.mapUrl = (relative): string => {
-			return `${functions.mergeUrls(baseUrl, '/Album')}${relative}`;
+	public constructor(private readonly httpClient: HttpClient) {
+		this.mapUrl = (baseUrl: string | undefined, relative: string): string => {
+			return `${mergeUrls(baseUrl, '/Album')}${relative}`;
 		};
 	}
 
@@ -50,7 +39,7 @@ export default class AlbumRepository
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
-			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
+			mergeUrls(baseUrl, `/api/albums/${albumId}/comments`),
 			contract,
 		);
 	};
@@ -63,10 +52,7 @@ export default class AlbumRepository
 		albumId: number;
 		reviewContract: AlbumReviewContract;
 	}): Promise<AlbumReviewContract> {
-		const url = functions.mergeUrls(
-			this.baseUrl,
-			`/api/albums/${albumId}/reviews`,
-		);
+		const url = mergeUrls(baseUrl, `/api/albums/${albumId}/reviews`);
 		return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
 	}
 
@@ -83,7 +69,7 @@ export default class AlbumRepository
 		versionNumber?: number;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative('/Album/CreateReport'),
+			mergeUrls(baseUrl, '/Album/CreateReport'),
 			AjaxHelper.stringify({
 				reportType: reportType,
 				notes: notes,
@@ -105,7 +91,7 @@ export default class AlbumRepository
 		commentId: number;
 	}): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/albums/comments/${commentId}`),
 		);
 	};
 
@@ -117,8 +103,8 @@ export default class AlbumRepository
 		albumId: number;
 		reviewId: number;
 	}): Promise<void> {
-		const url = functions.mergeUrls(
-			this.baseUrl,
+		const url = mergeUrls(
+			baseUrl,
 			`/api/albums/${albumId}/reviews/${reviewId}`,
 		);
 		return this.httpClient.delete(url);
@@ -134,7 +120,7 @@ export default class AlbumRepository
 			term3: string;
 		};
 	}): Promise<DuplicateEntryResultContract[]> => {
-		var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
+		var url = mergeUrls(baseUrl, '/Album/FindDuplicate');
 		return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
 	};
 
@@ -143,7 +129,7 @@ export default class AlbumRepository
 		entryId: albumId,
 	}: RepositoryParams & { entryId: number }): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
-			this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
+			mergeUrls(baseUrl, `/api/albums/${albumId}/comments`),
 		);
 	};
 
@@ -153,7 +139,7 @@ export default class AlbumRepository
 	}: RepositoryParams & {
 		id: number;
 	}): Promise<AlbumForEditContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
+		var url = mergeUrls(baseUrl, `/api/albums/${id}/for-edit`);
 		return this.httpClient.get<AlbumForEditContract>(url);
 	};
 
@@ -165,7 +151,7 @@ export default class AlbumRepository
 		id: number;
 		lang: ContentLanguagePreference;
 	}): Promise<AlbumContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
+		var url = mergeUrls(baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumContract>(url, {
 			fields: 'AdditionalNames',
 			lang: ContentLanguagePreference[lang],
@@ -182,7 +168,7 @@ export default class AlbumRepository
 		fields: string;
 		lang: ContentLanguagePreference;
 	}): Promise<AlbumForApiContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
+		var url = mergeUrls(baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumForApiContract>(url, {
 			fields: fields,
 			lang: ContentLanguagePreference[lang],
@@ -223,7 +209,7 @@ export default class AlbumRepository
 		deleted: boolean;
 		advancedFilters?: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<AlbumContract>> => {
-		var url = functions.mergeUrls(this.baseUrl, '/api/albums');
+		var url = mergeUrls(baseUrl, '/api/albums');
 		var data = {
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
@@ -257,10 +243,7 @@ export default class AlbumRepository
 	}: RepositoryParams & { albumId: number }): Promise<
 		AlbumReviewContract[]
 	> => {
-		const url = functions.mergeUrls(
-			this.baseUrl,
-			`/api/albums/${albumId}/reviews`,
-		);
+		const url = mergeUrls(baseUrl, `/api/albums/${albumId}/reviews`);
 		return this.httpClient.get<AlbumReviewContract[]>(url);
 	};
 
@@ -271,7 +254,7 @@ export default class AlbumRepository
 		albumId: number;
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
-			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
+			mergeUrls(baseUrl, `/api/albums/${albumId}/tagSuggestions`),
 		);
 	};
 
@@ -281,10 +264,7 @@ export default class AlbumRepository
 	}: RepositoryParams & {
 		albumId: number;
 	}): Promise<AlbumForUserForApiContract[]> {
-		const url = functions.mergeUrls(
-			this.baseUrl,
-			`/api/albums/${albumId}/user-collections`,
-		);
+		const url = mergeUrls(baseUrl, `/api/albums/${albumId}/user-collections`);
 		return this.httpClient.get<AlbumForUserForApiContract[]>(url);
 	}
 
@@ -297,7 +277,7 @@ export default class AlbumRepository
 		contract: CommentContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
+			mergeUrls(baseUrl, `/api/albums/comments/${commentId}`),
 			contract,
 		);
 	};
@@ -313,9 +293,7 @@ export default class AlbumRepository
 		author: ArtistContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.urlMapper.mapRelative(
-				`/api/albums/${albumId}/personal-description/`,
-			),
+			mergeUrls(baseUrl, `/api/albums/${albumId}/personal-description/`),
 			{
 				personalDescriptionText: text,
 				personalDescriptionAuthor: author || undefined,

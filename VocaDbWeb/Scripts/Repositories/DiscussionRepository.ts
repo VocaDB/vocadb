@@ -4,21 +4,16 @@ import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
+import { mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
 export default class DiscussionRepository implements ICommentRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {}
+	public constructor(private readonly httpClient: HttpClient) {}
 
-	private mapUrl = (relative: string): string => {
-		return this.urlMapper.mapRelative(
-			UrlMapper.mergeUrls('/api/discussions', relative),
-		);
+	private mapUrl = (baseUrl: string | undefined, relative: string): string => {
+		return mergeUrls(baseUrl, mergeUrls('/api/discussions', relative));
 	};
 
 	public createComment = ({
@@ -30,7 +25,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
-			this.mapUrl(`topics/${topicId}/comments`),
+			this.mapUrl(baseUrl, `topics/${topicId}/comments`),
 			contract,
 		);
 	};
@@ -44,7 +39,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		contract: DiscussionTopicContract;
 	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.post<DiscussionTopicContract>(
-			this.mapUrl(`folders/${folderId}/topics`),
+			this.mapUrl(baseUrl, `folders/${folderId}/topics`),
 			contract,
 		);
 	};
@@ -53,7 +48,9 @@ export default class DiscussionRepository implements ICommentRepository {
 		baseUrl,
 		commentId,
 	}: RepositoryParams & { commentId: number }): Promise<void> => {
-		return this.httpClient.delete<void>(this.mapUrl(`comments/${commentId}`));
+		return this.httpClient.delete<void>(
+			this.mapUrl(baseUrl, `comments/${commentId}`),
+		);
 	};
 
 	public deleteTopic = ({
@@ -62,7 +59,9 @@ export default class DiscussionRepository implements ICommentRepository {
 	}: RepositoryParams & {
 		topicId: number;
 	}): Promise<void> => {
-		return this.httpClient.delete<void>(this.mapUrl(`topics/${topicId}`));
+		return this.httpClient.delete<void>(
+			this.mapUrl(baseUrl, `topics/${topicId}`),
+		);
 	};
 
 	public getComments = ({
@@ -77,7 +76,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		baseUrl,
 	}: RepositoryParams & {}): Promise<DiscussionFolderContract[]> => {
 		return this.httpClient.get<DiscussionFolderContract[]>(
-			this.mapUrl('folders'),
+			this.mapUrl(baseUrl, 'folders'),
 			{
 				fields: 'LastTopic,TopicCount',
 			},
@@ -91,7 +90,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		topicId: number;
 	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.get<DiscussionTopicContract>(
-			this.mapUrl(`topics/${topicId}`),
+			this.mapUrl(baseUrl, `topics/${topicId}`),
 			{ fields: 'All' },
 		);
 	};
@@ -103,7 +102,10 @@ export default class DiscussionRepository implements ICommentRepository {
 	> => {
 		return this.httpClient.get<
 			PartialFindResultContract<DiscussionTopicContract>
-		>(this.mapUrl('topics'), { fields: 'CommentCount', maxResults: 5 });
+		>(this.mapUrl(baseUrl, 'topics'), {
+			fields: 'CommentCount',
+			maxResults: 5,
+		});
 	};
 
 	public getTopicsForFolder = ({
@@ -116,7 +118,7 @@ export default class DiscussionRepository implements ICommentRepository {
 	}): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
 		return this.httpClient.get<
 			PartialFindResultContract<DiscussionTopicContract>
-		>(this.mapUrl('topics'), {
+		>(this.mapUrl(baseUrl, 'topics'), {
 			folderId: folderId,
 			fields: 'CommentCount,LastComment',
 			start: paging.start,
@@ -134,7 +136,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		contract: CommentContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.mapUrl(`comments/${commentId}`),
+			this.mapUrl(baseUrl, `comments/${commentId}`),
 			contract,
 		);
 	};
@@ -148,7 +150,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		contract: DiscussionTopicContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
-			this.mapUrl(`topics/${topicId}`),
+			this.mapUrl(baseUrl, `topics/${topicId}`),
 			contract,
 		);
 	};

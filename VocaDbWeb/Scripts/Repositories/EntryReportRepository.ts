@@ -1,18 +1,15 @@
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
+import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
 export default class EntryReportRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {}
+	public constructor(private readonly httpClient: HttpClient) {}
 
 	public getNewReportCount = ({
 		baseUrl,
 	}: RepositoryParams & {}): Promise<number> => {
-		var url = this.urlMapper.mapRelative('/entryReports/newReportsCount');
+		var url = mergeUrls(baseUrl, '/entryReports/newReportsCount');
 		return this.httpClient.get<number>(url);
 	};
 }

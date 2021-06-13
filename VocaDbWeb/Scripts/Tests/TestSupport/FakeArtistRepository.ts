@@ -10,7 +10,7 @@ export default class FakeArtistRepository extends ArtistRepository {
 	public result: ArtistContract = null!;
 
 	public constructor() {
-		super(new HttpClient(), '');
+		super(new HttpClient());
 
 		this.getOne = ({
 			baseUrl,

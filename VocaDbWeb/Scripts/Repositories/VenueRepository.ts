@@ -2,20 +2,13 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
+import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
-export default class VenueRepository extends BaseRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {
-		super(urlMapper.baseUrl);
-	}
+export default class VenueRepository {
+	public constructor(private readonly httpClient: HttpClient) {}
 
 	public createReport = ({
 		baseUrl,
@@ -29,8 +22,8 @@ export default class VenueRepository extends BaseRepository {
 		notes: string;
 		versionNumber?: number;
 	}): Promise<void> => {
-		var url = functions.mergeUrls(
-			this.baseUrl,
+		var url = mergeUrls(
+			baseUrl,
 			`/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
@@ -51,7 +44,8 @@ export default class VenueRepository extends BaseRepository {
 		hardDelete: boolean;
 	}): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(
+			mergeUrls(
+				baseUrl,
 				`/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
 					notes,
 				)}`,
@@ -69,7 +63,7 @@ export default class VenueRepository extends BaseRepository {
 		nameMatchMode: NameMatchMode;
 		maxResults: number;
 	}): Promise<PartialFindResultContract<VenueForApiContract>> => {
-		var url = functions.mergeUrls(this.baseUrl, '/api/venues');
+		var url = mergeUrls(baseUrl, '/api/venues');
 		var data = {
 			query: query,
 			maxResults: maxResults,

@@ -1,15 +1,12 @@
 import WebhookContract from '@DataContracts/WebhookContract';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
 
+import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
 export default class AdminRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {}
+	public constructor(private readonly httpClient: HttpClient) {}
 
 	public addIpToBanList = ({
 		baseUrl,
@@ -18,7 +15,7 @@ export default class AdminRepository {
 		rule: IPRuleContract;
 	}): Promise<boolean> => {
 		return this.httpClient.post<boolean>(
-			this.urlMapper.mapRelative('/api/ip-rules'),
+			mergeUrls(baseUrl, '/api/ip-rules'),
 			rule,
 		);
 	};
@@ -29,17 +26,16 @@ export default class AdminRepository {
 	}: RepositoryParams & {
 		ip: string;
 	}): Promise<string> => {
-		return this.httpClient.get<string>(
-			this.urlMapper.mapRelative('/Admin/CheckSFS'),
-			{ ip: ip },
-		);
+		return this.httpClient.get<string>(mergeUrls(baseUrl, '/Admin/CheckSFS'), {
+			ip: ip,
+		});
 	};
 
 	public getTempBannedIps = ({
 		baseUrl,
 	}: RepositoryParams & {}): Promise<string[]> => {
 		return this.httpClient.get<string[]>(
-			this.urlMapper.mapRelative('/api/admin/tempBannedIPs'),
+			mergeUrls(baseUrl, '/api/admin/tempBannedIPs'),
 		);
 	};
 
@@ -47,7 +43,7 @@ export default class AdminRepository {
 		baseUrl,
 	}: RepositoryParams & {}): Promise<WebhookContract[]> => {
 		return this.httpClient.get<WebhookContract[]>(
-			this.urlMapper.mapRelative('/api/webhooks'),
+			mergeUrls(baseUrl, '/api/webhooks'),
 		);
 	};
 
@@ -57,7 +53,7 @@ export default class AdminRepository {
 	}: RepositoryParams & {
 		webhooks: WebhookContract[];
 	}): Promise<void> => {
-		var url = this.urlMapper.mapRelative('/api/webhooks');
+		var url = mergeUrls(baseUrl, '/api/webhooks');
 		return this.httpClient.put<void>(url, webhooks);
 	};
 }

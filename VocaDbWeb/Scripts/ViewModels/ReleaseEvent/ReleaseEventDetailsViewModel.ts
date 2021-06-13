@@ -37,7 +37,6 @@ export default class ReleaseEventDetailsViewModel {
 	) {
 		const commentRepo = new CommentRepository(
 			httpClient,
-			urlMapper,
 			EntryType.ReleaseEvent,
 		);
 		this.comments = new EditableCommentsViewModel(

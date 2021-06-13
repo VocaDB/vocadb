@@ -4,21 +4,13 @@ import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/Relea
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
+import { CommonQueryParams, getDate, mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
-export default class ReleaseEventRepository extends BaseRepository {
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly urlMapper: UrlMapper,
-	) {
-		super(urlMapper.baseUrl);
-	}
+export default class ReleaseEventRepository {
+	public constructor(private readonly httpClient: HttpClient) {}
 
 	public createReport = ({
 		baseUrl,
@@ -32,8 +24,8 @@ export default class ReleaseEventRepository extends BaseRepository {
 		notes: string;
 		versionNumber?: number;
 	}): Promise<void> => {
-		var url = functions.mergeUrls(
-			this.baseUrl,
+		var url = mergeUrls(
+			baseUrl,
 			`/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
@@ -54,7 +46,8 @@ export default class ReleaseEventRepository extends BaseRepository {
 		hardDelete: boolean;
 	}): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(
+			mergeUrls(
+				baseUrl,
 				`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
 					notes,
 				)}`,
@@ -73,7 +66,8 @@ export default class ReleaseEventRepository extends BaseRepository {
 		hardDelete: boolean;
 	}): Promise<void> => {
 		return this.httpClient.delete<void>(
-			this.urlMapper.mapRelative(
+			mergeUrls(
+				baseUrl,
 				`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
 					notes,
 				)}`,
@@ -89,7 +83,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 	}): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
+		var url = mergeUrls(baseUrl, '/api/releaseEvents');
 		var data = {
 			start: queryParams.start,
 			getTotalCount: queryParams.getTotalCount,
@@ -104,8 +98,8 @@ export default class ReleaseEventRepository extends BaseRepository {
 			childVoicebanks: queryParams.childVoicebanks || undefined,
 			includeMembers: queryParams.includeMembers || undefined,
 			status: queryParams.status || undefined,
-			afterDate: this.getDate(queryParams.afterDate),
-			beforeDate: this.getDate(queryParams.beforeDate),
+			afterDate: getDate(queryParams.afterDate),
+			beforeDate: getDate(queryParams.beforeDate),
 			nameMatchMode: NameMatchMode[nameMatchMode],
 			lang: queryParams.lang
 				? ContentLanguagePreference[queryParams.lang]
@@ -125,7 +119,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 	}: RepositoryParams & {
 		id: number;
 	}): Promise<ReleaseEventContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
+		var url = mergeUrls(baseUrl, `/api/releaseEvents/${id}`);
 		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
@@ -135,8 +129,8 @@ export default class ReleaseEventRepository extends BaseRepository {
 	}: RepositoryParams & {
 		name: string;
 	}): Promise<ReleaseEventContract | null> => {
-		var url = functions.mergeUrls(
-			this.baseUrl,
+		var url = mergeUrls(
+			baseUrl,
 			`/api/releaseEvents?query=${encodeURIComponent(
 				name,
 			)}&nameMatchMode=Exact&maxResults=1`,
@@ -159,7 +153,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		nameMatchMode: NameMatchMode;
 		maxResults: number;
 	}): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
-		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
+		var url = mergeUrls(baseUrl, '/api/releaseEventSeries');
 		var data = {
 			query: query,
 			maxResults: maxResults,

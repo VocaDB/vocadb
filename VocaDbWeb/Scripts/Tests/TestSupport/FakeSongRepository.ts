@@ -22,7 +22,7 @@ export default class FakeSongRepository extends SongRepository {
 	public songsInLists: SongInList[] = [];
 
 	public constructor() {
-		super(new HttpClient(), '');
+		super(new HttpClient());
 
 		this.addSongToList = ({
 			baseUrl,

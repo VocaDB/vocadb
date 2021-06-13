@@ -11,14 +11,12 @@ import EntryType from '@Models/EntryType';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
 import VocaDbContext from '@Shared/VocaDbContext';
-import { container } from '@Shared/inversify.config';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -30,8 +28,6 @@ import ReportEntryViewModel from '../ReportEntryViewModel';
 import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
-
-const repoFactory = container.get(RepositoryFactory);
 
 export class RatingsViewModel {
 	public constructor() {
@@ -129,10 +125,10 @@ export default class SongDetailsViewModel {
 
 		const { siteUrl, id } = match;
 
-		const repo = repoFactory.songRepository(siteUrl);
 		// TODO: this should be cached, but first we need to make sure the other instances are not cached.
-		repo
+		this.repository
 			.getOneWithComponents({
+				baseUrl: siteUrl,
 				id: id,
 				fields: 'None',
 				lang: this.vocaDbContext.languagePreference,

@@ -1,3 +1,4 @@
+import { mergeUrls } from '@Repositories/BaseRepository';
 import $ from 'jquery';
 
 import VocaDbContext from './VocaDbContext';
@@ -23,18 +24,8 @@ export default class functions {
 		return functions.mergeUrls(vocaDbContext.baseAddress, relative);
 	}
 
-	public static mergeUrls(base: string, relative: string): string {
-		if (base.charAt(base.length - 1) === '/' && relative.charAt(0) === '/')
-			return base + relative.substr(1);
-
-		if (base.charAt(base.length - 1) === '/' && relative.charAt(0) !== '/')
-			return base + relative;
-
-		if (base.charAt(base.length - 1) !== '/' && relative.charAt(0) === '/')
-			return base + relative;
-
-		return base + '/' + relative;
-	}
+	public static mergeUrls = (base: string, relative: string): string =>
+		mergeUrls(base, relative);
 
 	public static getUrlDomain(url: string): string {
 		// http://stackoverflow.com/a/8498629
