@@ -21,15 +21,23 @@ export default class EntryRepository {
 		private baseUrl: string,
 	) {}
 
-	public getList = (
-		paging: PagingProperties,
-		lang: ContentLanguagePreference,
-		query: string,
-		tags: number[],
-		childTags: boolean,
-		fields: string,
-		status: string,
-	): Promise<PartialFindResultContract<EntryContract>> => {
+	public getList = ({
+		paging,
+		lang,
+		query,
+		tags,
+		childTags,
+		fields,
+		status,
+	}: {
+		paging: PagingProperties;
+		lang: ContentLanguagePreference;
+		query: string;
+		tags: number[];
+		childTags: boolean;
+		fields: string;
+		status: string;
+	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
 		var data = {
 			start: paging.start,

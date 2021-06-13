@@ -75,14 +75,17 @@ export default class ArtistDetailsViewModel {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepository.getArtistTagSelections(artistId).then(callback),
+					userRepository
+						.getArtistTagSelections({ artistId: artistId })
+						.then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepository
-						.updateArtistTags(artistId, tags)
+						.updateArtistTags({ artistId: artistId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Artist,
-			(callback) => repo.getTagSuggestions(this.artistId).then(callback),
+			(callback) =>
+				repo.getTagSuggestions({ artistId: this.artistId }).then(callback),
 		);
 
 		this.tagUsages = new TagListViewModel(tagUsages);
@@ -90,7 +93,12 @@ export default class ArtistDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repo.createReport(this.artistId, reportType, notes, null!);
+				repo.createReport({
+					artistId: this.artistId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
@@ -100,10 +108,12 @@ export default class ArtistDetailsViewModel {
 	}
 
 	public addFollowedArtist = (): void => {
-		this.userRepository.createArtistSubscription(this.artistId).then(() => {
-			this.hasArtistSubscription(true);
-			this.customizeSubscriptionDialog.notificationsMethod('Site');
-		});
+		this.userRepository
+			.createArtistSubscription({ artistId: this.artistId })
+			.then(() => {
+				this.hasArtistSubscription(true);
+				this.customizeSubscriptionDialog.notificationsMethod('Site');
+			});
 	};
 
 	public comments: EditableCommentsViewModel;
@@ -115,10 +125,10 @@ export default class ArtistDetailsViewModel {
 	private loadHighcharts = (): void => {
 		// Delayed load highcharts stuff
 		const highchartsPromise = import('highcharts');
-		var songsPerMonthDataPromise = this.songRepo.getOverTime(
-			TimeUnit.month,
-			this.artistId,
-		);
+		var songsPerMonthDataPromise = this.songRepo.getOverTime({
+			timeUnit: TimeUnit.month,
+			artistId: this.artistId,
+		});
 
 		Promise.all([songsPerMonthDataPromise, highchartsPromise]).then(
 			([points]) => {
@@ -138,9 +148,11 @@ export default class ArtistDetailsViewModel {
 	};
 
 	public removeFollowedArtist = (): void => {
-		this.userRepository.deleteArtistSubscription(this.artistId).then(() => {
-			this.hasArtistSubscription(false);
-		});
+		this.userRepository
+			.deleteArtistSubscription({ artistId: this.artistId })
+			.then(() => {
+				this.hasArtistSubscription(false);
+			});
 	};
 
 	public showAllMembers = ko.observable(false);
@@ -262,11 +274,11 @@ export class CustomizeArtistSubscriptionViewModel {
 		);
 
 		this.notificationsMethod.subscribe((method) => {
-			userRepository.updateArtistSubscription(
-				artistId,
-				method === 'Email',
-				method === 'Site' || method === 'Email',
-			);
+			userRepository.updateArtistSubscription({
+				artistId: artistId,
+				emailNotifications: method === 'Email',
+				siteNotifications: method === 'Site' || method === 'Email',
+			});
 		});
 	}
 

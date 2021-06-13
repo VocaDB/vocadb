@@ -23,7 +23,7 @@ export default class TagDetailsViewModel {
 		isFollowed: boolean,
 	) {
 		this.comments = new EditableCommentsViewModel(
-			repo.getComments(),
+			repo.getComments({}),
 			tagId,
 			loggedUserId,
 			canDeleteAllComments,
@@ -36,7 +36,12 @@ export default class TagDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repo.createReport(tagId, reportType, notes, null!);
+				repo.createReport({
+					entryId: tagId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
@@ -53,12 +58,12 @@ export default class TagDetailsViewModel {
 
 	public followTag = (): void => {
 		if (!this.isLoggedIn) return;
-		this.userRepo.addFollowedTag(this.tagId);
+		this.userRepo.addFollowedTag({ tagId: this.tagId });
 		this.isFollowed(true);
 	};
 
 	public unfollowTag = (): void => {
-		this.userRepo.deleteFollowedTag(this.tagId);
+		this.userRepo.deleteFollowedTag({ tagId: this.tagId });
 		this.isFollowed(false);
 	};
 

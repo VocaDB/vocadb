@@ -60,10 +60,12 @@ export default class SongCreateViewModel {
 
 		this.songRepository
 			.findDuplicate({
-				term: [term1, term2, term3],
-				pv: [pv1, pv2],
-				artistIds: artists,
-				getPVInfo: getPVInfo,
+				params: {
+					term: [term1, term2, term3],
+					pv: [pv1, pv2],
+					artistIds: artists,
+					getPVInfo: getPVInfo,
+				},
 			})
 			.then((result) => {
 				this.dupeEntries(result.matches);
@@ -97,11 +99,11 @@ export default class SongCreateViewModel {
 	};
 
 	private getSongTypeTag = async (songType: string): Promise<void> => {
-		const tag = await this.tagRepository.getEntryTypeTag(
-			EntryType.Song,
-			songType,
-			vdb.values.languagePreference,
-		);
+		const tag = await this.tagRepository.getEntryTypeTag({
+			entryType: EntryType.Song,
+			subType: songType,
+			lang: vdb.values.languagePreference,
+		});
 		this.songTypeTag(tag);
 	};
 
@@ -139,7 +141,10 @@ export default class SongCreateViewModel {
 
 	public selectOriginal = (dupe: DuplicateEntryResultContract): void => {
 		this.songRepository
-			.getOne(dupe.entry.id, vdb.values.languagePreference)
+			.getOne({
+				id: dupe.entry.id,
+				lang: vdb.values.languagePreference,
+			})
 			.then((song) => this.originalVersion.entry(song));
 	};
 
@@ -177,7 +182,7 @@ export default class SongCreateViewModel {
 		this.addArtist = (artistId?: number): void => {
 			if (artistId) {
 				artistRepository
-					.getOne(artistId, vdb.values.languagePreference)
+					.getOne({ id: artistId, lang: vdb.values.languagePreference })
 					.then((artist) => {
 						this.artists.push(artist);
 						this.checkDuplicates();
@@ -208,7 +213,7 @@ export default class SongCreateViewModel {
 			null!,
 			(entryId, callback) =>
 				songRepository
-					.getOne(entryId, vdb.values.languagePreference)
+					.getOne({ id: entryId, lang: vdb.values.languagePreference })
 					.then(callback),
 		);
 

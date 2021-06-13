@@ -29,7 +29,11 @@ export default class ReleaseEventSeriesEditViewModel {
 
 		if (!this.isNew()) {
 			window.setInterval(
-				() => userRepository.refreshEntryEdit(EntryType.ReleaseEventSeries, id),
+				() =>
+					userRepository.refreshEntryEdit({
+						entryType: EntryType.ReleaseEventSeries,
+						entryId: id,
+					}),
 				10000,
 			);
 		} else {
@@ -55,7 +59,11 @@ export default class ReleaseEventSeriesEditViewModel {
 		}
 
 		this.eventRepository
-			.getSeriesList(value, NameMatchMode.Exact, 1)
+			.getSeriesList({
+				query: value,
+				nameMatchMode: NameMatchMode.Exact,
+				maxResults: 1,
+			})
 			.then((result) => {
 				this.duplicateName(result.items.length ? value : null!);
 			});
@@ -69,11 +77,13 @@ export default class ReleaseEventSeriesEditViewModel {
 	public webLinks: WebLinksEditViewModel;
 
 	public deleteViewModel = new DeleteEntryViewModel((notes) => {
-		this.eventRepository.deleteSeries(this.id, notes, false).then(() => {
-			window.location.href = this.urlMapper.mapRelative(
-				EntryUrlMapper.details(EntryType.ReleaseEventSeries, this.id),
-			);
-		});
+		this.eventRepository
+			.deleteSeries({ id: this.id, notes: notes, hardDelete: false })
+			.then(() => {
+				window.location.href = this.urlMapper.mapRelative(
+					EntryUrlMapper.details(EntryType.ReleaseEventSeries, this.id),
+				);
+			});
 	});
 
 	private redirectToRoot = (): void => {
@@ -82,7 +92,7 @@ export default class ReleaseEventSeriesEditViewModel {
 
 	public trashViewModel = new DeleteEntryViewModel((notes) => {
 		this.eventRepository
-			.deleteSeries(this.id, notes, true)
+			.deleteSeries({ id: this.id, notes: notes, hardDelete: true })
 			.then(this.redirectToRoot);
 	});
 

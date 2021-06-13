@@ -45,7 +45,7 @@ export default class PVRatingButtonsViewModel {
 			this.rating(rating);
 
 			repository
-				.updateSongRating(songId, rating)
+				.updateSongRating({ songId: songId, rating: rating })
 				.then(() => {
 					if (rating !== SongVoteRating.Nothing && ratingCallback)
 						ratingCallback();

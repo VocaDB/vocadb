@@ -18,11 +18,11 @@ export default class SelfDescriptionViewModel {
 			author,
 			(artistId, callback) => {
 				artistRepo
-					.getOneWithComponents(
-						artistId,
-						'MainPicture',
-						vdb.values.languagePreference,
-					)
+					.getOneWithComponents({
+						id: artistId,
+						fields: 'MainPicture',
+						lang: vdb.values.languagePreference,
+					})
 					.then((artist) => {
 						callback(artist);
 					});

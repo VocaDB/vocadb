@@ -10,7 +10,8 @@ export default class FakeEntryReportRepository extends EntryReportRepository {
 	public constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
-		this.getNewReportCount = (): Promise<number> => {
+		// eslint-disable-next-line no-empty-pattern
+		this.getNewReportCount = ({}: {}): Promise<number> => {
 			return FakePromise.resolve(this.entryReportCount);
 		};
 	}

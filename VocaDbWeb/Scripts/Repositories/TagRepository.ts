@@ -24,52 +24,66 @@ export default class TagRepository extends BaseRepository {
 		this.urlMapper = new UrlMapper(baseUrl);
 	}
 
-	public create = (name: string): Promise<TagBaseContract> => {
+	public create = ({ name }: { name: string }): Promise<TagBaseContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags?name=${name}`);
 		return this.httpClient.post<TagBaseContract>(url);
 	};
 
-	public createReport = (
-		tagId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		entryId: tagId,
+		reportType,
+		notes,
+		versionNumber,
+	}: {
+		entryId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/tags/${tagId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
-				versionNumber: [versionNumber],
+				versionNumber: [versionNumber!],
 			})}`,
 		);
 		return this.httpClient.post<void>(url);
 	};
 
-	public getById = (
-		id: number,
-		fields: string,
-		lang: ContentLanguagePreference,
-	): Promise<TagApiContract> => {
+	public getById = ({
+		id,
+		fields,
+		lang,
+	}: {
+		id: number;
+		fields?: string;
+		lang?: ContentLanguagePreference;
+	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
 		return this.httpClient.get<TagApiContract>(url, {
 			fields: fields || undefined,
-			lang: ContentLanguagePreference[lang],
+			lang: lang ? ContentLanguagePreference[lang] : undefined,
 		});
 	};
 
-	public getComments = (): EntryCommentRepository =>
+	// eslint-disable-next-line no-empty-pattern
+	public getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
 			this.httpClient,
 			new UrlMapper(this.baseUrl),
 			'/tags/',
 		);
 
-	public getEntryTypeTag = (
-		entryType: EntryType,
-		subType: string,
-		lang: ContentLanguagePreference,
-	): Promise<TagApiContract> => {
+	public getEntryTypeTag = ({
+		entryType,
+		subType,
+		lang,
+	}: {
+		entryType: EntryType;
+		subType: string;
+		lang: ContentLanguagePreference;
+	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
@@ -80,9 +94,11 @@ export default class TagRepository extends BaseRepository {
 		});
 	};
 
-	public getList = (
-		queryParams: TagQueryParams,
-	): Promise<PartialFindResultContract<TagApiContract>> => {
+	public getList = ({
+		queryParams,
+	}: {
+		queryParams: TagQueryParams;
+	}): Promise<PartialFindResultContract<TagApiContract>> => {
 		var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
 		var url = functions.mergeUrls(this.baseUrl, '/api/tags');
@@ -107,26 +123,33 @@ export default class TagRepository extends BaseRepository {
 		);
 	};
 
-	public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
+	// eslint-disable-next-line no-empty-pattern
+	public getEntryTagMappings = ({}: {}): Promise<EntryTagMappingContract[]> => {
 		return this.httpClient.get<EntryTagMappingContract[]>(
 			this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
 		);
 	};
 
-	public getMappings = (
-		paging: PagingProperties,
-	): Promise<PartialFindResultContract<TagMappingContract>> => {
+	public getMappings = ({
+		paging,
+	}: {
+		paging: PagingProperties;
+	}): Promise<PartialFindResultContract<TagMappingContract>> => {
 		return this.httpClient.get<PartialFindResultContract<TagMappingContract>>(
 			this.urlMapper.mapRelative('/api/tags/mappings'),
 			paging,
 		);
 	};
 
-	public getTopTags = (
-		lang: ContentLanguagePreference,
-		categoryName?: string,
-		entryType?: EntryType,
-	): Promise<TagBaseContract[]> => {
+	public getTopTags = ({
+		lang,
+		categoryName,
+		entryType,
+	}: {
+		lang: ContentLanguagePreference;
+		categoryName?: string;
+		entryType?: EntryType;
+	}): Promise<TagBaseContract[]> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/tags/top');
 		var data = {
 			lang: ContentLanguagePreference[lang],
@@ -137,14 +160,20 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.get<TagBaseContract[]>(url, data);
 	};
 
-	public saveEntryMappings = (
-		mappings: EntryTagMappingContract[],
-	): Promise<void> => {
+	public saveEntryMappings = ({
+		mappings,
+	}: {
+		mappings: EntryTagMappingContract[];
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/api/tags/entry-type-mappings');
 		return this.httpClient.put<void>(url, mappings);
 	};
 
-	public saveMappings = (mappings: TagMappingContract[]): Promise<void> => {
+	public saveMappings = ({
+		mappings,
+	}: {
+		mappings: TagMappingContract[];
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/api/tags/mappings');
 		return this.httpClient.put<void>(url, mappings);
 	};

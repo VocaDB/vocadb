@@ -3,6 +3,7 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -35,22 +36,25 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 			callback,
 		): void => {
 			this.artistRepo
-				.getList(
-					pagingProperties,
-					lang,
-					searchTerm,
-					this.sort(),
-					this.artistType() !== ArtistType[ArtistType.Unknown]
-						? this.artistType()
-						: null!,
-					!this.onlyRootVoicebanks(),
-					tags,
-					childTags,
-					this.onlyFollowedByMe() ? this.loggedUserId : null!,
-					this.fields(),
-					status,
-					this.advancedFilters.filters(),
-				)
+				.getList({
+					paging: pagingProperties,
+					lang: vdb.values.languagePreference,
+					query: searchTerm,
+					sort: this.sort(),
+					artistTypes:
+						this.artistType() !== ArtistType[ArtistType.Unknown]
+							? this.artistType()
+							: undefined,
+					allowBaseVoicebanks: !this.onlyRootVoicebanks(),
+					tags: tags,
+					childTags: childTags,
+					followedByUserId: this.onlyFollowedByMe()
+						? vdb.values.loggedUserId
+						: undefined,
+					fields: this.fields(),
+					status: status,
+					advancedFilters: this.advancedFilters.filters(),
+				})
 				.then(callback);
 		};
 	}

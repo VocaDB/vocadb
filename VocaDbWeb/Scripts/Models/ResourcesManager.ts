@@ -1,5 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -26,7 +27,10 @@ export default class ResourcesManager {
 	): void => {
 		var setsToLoad = this.setsToLoad(setNames);
 		this.resourcesRepo
-			.getList(this.cultureCode, setsToLoad)
+			.getList({
+				cultureCode: vdb.values.uiCulture,
+				setNames: setsToLoad,
+			})
 			.then((resources) => {
 				_.each(
 					setNames,

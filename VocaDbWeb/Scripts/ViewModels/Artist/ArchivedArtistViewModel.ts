@@ -13,7 +13,12 @@ export default class ArchivedArtistViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			null!,
 			(reportType, notes) => {
-				repository.createReport(artistId, reportType, notes, versionNumber);
+				repository.createReport({
+					artistId: artistId,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: versionNumber,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},

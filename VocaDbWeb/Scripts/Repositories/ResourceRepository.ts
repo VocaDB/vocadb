@@ -8,10 +8,13 @@ export default class ResourceRepository {
 		private baseUrl: string,
 	) {}
 
-	public getList = (
-		cultureCode: string,
-		setNames: string[],
-	): Promise<ResourcesContract> => {
+	public getList = ({
+		cultureCode,
+		setNames,
+	}: {
+		cultureCode: string;
+		setNames: string[];
+	}): Promise<ResourcesContract> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/resources/${cultureCode}/`,

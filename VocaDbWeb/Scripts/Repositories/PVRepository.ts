@@ -8,7 +8,13 @@ export default class PVRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public getPVByUrl = (pvUrl: string, type: string): Promise<PVContract> => {
+	public getPVByUrl = ({
+		pvUrl,
+		type,
+	}: {
+		pvUrl: string;
+		type: string;
+	}): Promise<PVContract> => {
 		var url = this.urlMapper.mapRelative('/api/pvs');
 		return this.httpClient.get<PVContract>(url, { pvUrl: pvUrl, type: type });
 	};

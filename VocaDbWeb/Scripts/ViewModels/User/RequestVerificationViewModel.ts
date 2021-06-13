@@ -19,7 +19,10 @@ export default class RequestVerificationViewModel {
 
 	public setArtist = (targetArtistId?: number): void => {
 		this.artistRepository
-			.getOne(targetArtistId!, vdb.values.languagePreference)
+			.getOne({
+				id: targetArtistId!,
+				lang: vdb.values.languagePreference,
+			})
 			.then((artist) => {
 				this.selectedArtist(artist);
 			});

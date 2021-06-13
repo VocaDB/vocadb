@@ -4,6 +4,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import TagFilters from '../Search/TagFilters';
@@ -30,7 +31,10 @@ export default class FollowedArtistsViewModel {
 		if (this.isInit) return;
 
 		this.resourceRepo
-			.getList(this.cultureCode, ['artistTypeNames'])
+			.getList({
+				cultureCode: vdb.values.uiCulture,
+				setNames: ['artistTypeNames'],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
@@ -62,13 +66,13 @@ export default class FollowedArtistsViewModel {
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		this.userRepo
-			.getFollowedArtistsList(
-				this.loggedUserId,
-				pagingProperties,
-				this.lang,
-				this.tagFilters.tagIds(),
-				this.artistType(),
-			)
+			.getFollowedArtistsList({
+				userId: this.loggedUserId,
+				paging: pagingProperties,
+				lang: vdb.values.languagePreference,
+				tagIds: this.tagFilters.tagIds(),
+				artistType: this.artistType(),
+			})
 			.then(
 				(result: PartialFindResultContract<ArtistForUserForApiContract>) => {
 					this.pauseNotifications = false;

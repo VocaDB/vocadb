@@ -29,7 +29,9 @@ export default class UserDetailsViewModel {
 
 	public addBan = (): void => {
 		this.adminRepo
-			.addIpToBanList({ address: this.lastLoginAddress, notes: this.name })
+			.addIpToBanList({
+				rule: { address: this.lastLoginAddress, notes: this.name },
+			})
 			.then((result) => {
 				if (result) {
 					ui.showSuccessMessage('Added to ban list');
@@ -40,7 +42,7 @@ export default class UserDetailsViewModel {
 	};
 
 	public checkSFS = (): void => {
-		this.adminRepo.checkSFS(this.lastLoginAddress).then((html) => {
+		this.adminRepo.checkSFS({ ip: this.lastLoginAddress }).then((html) => {
 			$('#sfsCheckDialog').html(html);
 			$('#sfsCheckDialog').dialog('open');
 		});
@@ -93,12 +95,13 @@ export default class UserDetailsViewModel {
 
 	private loadEvents = (): void => {
 		this.userRepo
-			.getEvents(
-				this.userId,
-				UserEventRelationshipType[
-					this.eventsType() as keyof typeof UserEventRelationshipType
-				],
-			)
+			.getEvents({
+				userId: this.userId,
+				relationshipType:
+					UserEventRelationshipType[
+						this.eventsType() as keyof typeof UserEventRelationshipType
+					],
+			})
 			.then((events) => {
 				this.events(events);
 			});
@@ -197,13 +200,13 @@ export default class UserDetailsViewModel {
 				this.setView(window.location.hash.substr(1));
 		};
 
-		userRepo.getRatingsByGenre(userId).then((data) => {
+		userRepo.getRatingsByGenre({ userId: userId }).then((data) => {
 			this.ratingsByGenreChart(
 				HighchartsHelper.simplePieChart(null!, 'Songs', data),
 			);
 		});
 
-		userRepo.getOne(userId, null!).then((data) => {
+		userRepo.getOne({ id: userId, fields: undefined }).then((data) => {
 			this.name = data.name!;
 		});
 
@@ -227,14 +230,14 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
 		callback: (result: PartialFindResultContract<SongListContract>) => void,
 	): void => {
 		this.userRepo
-			.getSongLists(
-				this.userId,
-				this.query(),
-				{ start: this.start, maxEntries: 50, getTotalCount: true },
-				this.tagFilters.tagIds(),
-				this.sort(),
-				this.fields(),
-			)
+			.getSongLists({
+				userId: this.userId,
+				query: this.query(),
+				paging: { start: this.start, maxEntries: 50, getTotalCount: true },
+				tagIds: this.tagFilters.tagIds(),
+				sort: this.sort(),
+				fields: this.fields(),
+			})
 			.then(callback);
 	};
 }

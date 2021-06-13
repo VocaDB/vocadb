@@ -32,23 +32,23 @@ export default class DeletedAlbumsViewModel {
 
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 		this.albumRepo
-			.getList(
-				pagingProperties,
-				vdb.values.languagePreference,
-				this.searchTerm(),
-				'Name',
-				undefined!,
-				null!,
-				null!,
-				null!,
-				undefined!,
-				undefined!,
-				undefined!,
-				'AdditionalNames,MainPicture',
-				null!,
-				true,
-				null!,
-			)
+			.getList({
+				paging: pagingProperties,
+				lang: vdb.values.languagePreference,
+				query: this.searchTerm(),
+				sort: 'Name',
+				discTypes: undefined,
+				tags: undefined,
+				childTags: undefined,
+				artistIds: undefined,
+				artistParticipationStatus: undefined,
+				childVoicebanks: undefined,
+				includeMembers: undefined,
+				fields: 'AdditionalNames,MainPicture',
+				status: undefined,
+				deleted: true,
+				advancedFilters: undefined,
+			})
 			.then((result) => {
 				this.page(result.items);
 

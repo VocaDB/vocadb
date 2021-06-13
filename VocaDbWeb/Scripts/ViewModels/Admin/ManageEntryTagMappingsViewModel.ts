@@ -71,7 +71,7 @@ export default class ManageEntryTagMappingsViewModel {
 	};
 
 	private loadMappings = async (): Promise<void> => {
-		const result = await this.tagRepo.getEntryTagMappings();
+		const result = await this.tagRepo.getEntryTagMappings({});
 		this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
 	};
 
@@ -127,7 +127,7 @@ export default class ManageEntryTagMappingsViewModel {
 
 	public save = async (): Promise<void> => {
 		const mappings = this.activeMappings();
-		await this.tagRepo.saveEntryMappings(mappings);
+		await this.tagRepo.saveEntryMappings({ mappings: mappings });
 		ui.showSuccessMessage('Saved');
 		await this.loadMappings();
 	};

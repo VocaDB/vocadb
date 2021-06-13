@@ -76,7 +76,7 @@ const AlbumEdit = (
 
 			ko.applyBindings(viewModel);
 		} else {
-			repo.getForEdit(model.id).then(function (model) {
+			repo.getForEdit({ id: model.id }).then(function (model) {
 				viewModel = new AlbumEditViewModel(
 					repo,
 					songRepo,

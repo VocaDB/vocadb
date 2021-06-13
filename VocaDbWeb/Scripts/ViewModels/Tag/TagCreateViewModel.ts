@@ -13,12 +13,14 @@ export default class TagCreateViewModel {
 
 			tagRepo
 				.getList({
-					start: 0,
-					maxResults: 1,
-					getTotalCount: false,
-					query: val,
-					nameMatchMode: NameMatchMode.Exact,
-					allowAliases: true,
+					queryParams: {
+						start: 0,
+						maxResults: 1,
+						getTotalCount: false,
+						query: val,
+						nameMatchMode: NameMatchMode.Exact,
+						allowAliases: true,
+					},
 				})
 				.then((result) => {
 					this.duplicateName(result.items.length > 0);
@@ -28,7 +30,7 @@ export default class TagCreateViewModel {
 
 	public createTag = (): void => {
 		this.tagRepo
-			.create(this.newTagName())
+			.create({ name: this.newTagName() })
 			.then(
 				(t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)!),
 			);

@@ -4,6 +4,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -68,23 +69,23 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 			var artistIds = this.artistFilters.artistIds();
 
 			this.albumRepo
-				.getList(
-					pagingProperties,
-					lang,
-					searchTerm,
-					this.sort(),
-					this.albumType(),
-					tags,
-					childTags,
-					artistIds,
-					this.artistFilters.artistParticipationStatus(),
-					this.artistFilters.childVoicebanks(),
-					this.artistFilters.includeMembers(),
-					this.fields(),
-					status,
-					false,
-					this.advancedFilters.filters(),
-				)
+				.getList({
+					paging: pagingProperties,
+					lang: vdb.values.languagePreference,
+					query: searchTerm,
+					sort: this.sort(),
+					discTypes: this.albumType(),
+					tags: tags,
+					childTags: childTags,
+					artistIds: artistIds,
+					artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+					childVoicebanks: this.artistFilters.childVoicebanks(),
+					includeMembers: this.artistFilters.includeMembers(),
+					fields: this.fields(),
+					status: status,
+					deleted: false,
+					advancedFilters: this.advancedFilters.filters(),
+				})
 				.then(callback);
 		};
 	}

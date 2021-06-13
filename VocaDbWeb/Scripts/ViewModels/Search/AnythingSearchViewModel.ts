@@ -3,6 +3,7 @@ import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -25,15 +26,15 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
 			callback,
 		): Promise<void> =>
 			this.entryRepo
-				.getList(
-					pagingProperties,
-					lang,
-					searchTerm,
-					tags,
-					childTags,
-					this.fields(),
-					status,
-				)
+				.getList({
+					paging: pagingProperties,
+					lang: vdb.values.languagePreference,
+					query: searchTerm,
+					tags: tags,
+					childTags: childTags,
+					fields: this.fields(),
+					status: status,
+				})
 				.then(callback);
 	}
 

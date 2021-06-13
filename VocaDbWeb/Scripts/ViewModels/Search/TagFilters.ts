@@ -1,6 +1,7 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
@@ -39,10 +40,16 @@ export default class TagFilters {
 		_.forEach(filters, (newTag) => {
 			var selectedTagId = newTag.id;
 
-			this.tagRepo.getById(selectedTagId, null!, this.lang).then((tag) => {
-				newTag.name(tag.name);
-				newTag.urlSlug(tag.urlSlug!);
-			});
+			this.tagRepo
+				.getById({
+					id: selectedTagId,
+					fields: undefined,
+					lang: vdb.values.languagePreference,
+				})
+				.then((tag) => {
+					newTag.name(tag.name);
+					newTag.urlSlug(tag.urlSlug!);
+				});
 		});
 	};
 
