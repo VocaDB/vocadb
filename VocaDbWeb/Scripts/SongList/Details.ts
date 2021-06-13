@@ -52,7 +52,6 @@ const SongListDetails = (
 			resourceRepo,
 			defaultSortRuleName,
 			latestComments,
-			vocaDbContext.loggedUserId,
 			listId,
 			tagUsages,
 			pvPlayersFactory,

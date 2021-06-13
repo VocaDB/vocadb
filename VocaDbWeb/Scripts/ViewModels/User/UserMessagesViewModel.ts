@@ -3,6 +3,7 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -48,28 +49,28 @@ export class NewMessageViewModel {
 
 export default class UserMessagesViewModel {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly userRepository: UserRepository,
-		private readonly userId: number,
 		inboxType: UserInboxType,
 		selectedMessageId?: number,
 		receiverName?: string,
 	) {
 		this.notifications = new UserMessageFolderViewModel(
+			vocaDbContext,
 			userRepository,
 			UserInboxType.Notifications,
-			userId,
 			inboxType !== UserInboxType.Notifications,
 		);
 		this.receivedMessages = new UserMessageFolderViewModel(
+			vocaDbContext,
 			userRepository,
 			UserInboxType.Received,
-			userId,
 			inboxType !== UserInboxType.Received,
 		);
 		this.sentMessages = new UserMessageFolderViewModel(
+			vocaDbContext,
 			userRepository,
 			UserInboxType.Sent,
-			userId,
 			false,
 		);
 
@@ -179,9 +180,11 @@ export default class UserMessagesViewModel {
 		}
 
 		this.newMessageViewModel.isSending(true);
-		var message = this.newMessageViewModel.toContract(this.userId);
+		var message = this.newMessageViewModel.toContract(
+			this.vocaDbContext.loggedUserId,
+		);
 		this.userRepository
-			.createMessage(this.userId, message)
+			.createMessage(this.vocaDbContext.loggedUserId, message)
 			.then(() => {
 				this.newMessageViewModel.clear();
 				this.sentMessages.clear();
@@ -194,9 +197,9 @@ export default class UserMessagesViewModel {
 
 export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private readonly userRepo: UserRepository,
 		public readonly inbox: UserInboxType,
-		private readonly userId: number,
 		getMessageCount: boolean,
 	) {
 		super();
@@ -210,7 +213,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		if (getMessageCount) {
 			this.userRepo
 				.getMessageSummaries(
-					userId,
+					vocaDbContext.loggedUserId,
 					inbox,
 					{ start: 0, maxEntries: 0, getTotalCount: true },
 					true,
@@ -247,7 +250,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
 		if (selectedIds.length === 0) return;
 
-		this.userRepo.deleteMessages(this.userId, selectedIds);
+		this.userRepo.deleteMessages(this.vocaDbContext.loggedUserId, selectedIds);
 		this.items.removeAll(selected.value());
 	};
 
@@ -256,7 +259,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 	): void => {
 		this.userRepo
 			.getMessageSummaries(
-				this.userId,
+				this.vocaDbContext.loggedUserId,
 				this.inbox,
 				{ start: this.start, maxEntries: 100, getTotalCount: true },
 				false,

@@ -44,7 +44,6 @@ export default class SongListViewModel {
 		resourceRepo: ResourceRepository,
 		defaultSortRuleName: string,
 		latestComments: CommentContract[],
-		loggedUserId: number,
 		private listId: number,
 		tagUsages: TagUsageForApiContract[],
 		pvPlayersFactory: PVPlayersFactory,
@@ -56,9 +55,9 @@ export default class SongListViewModel {
 			false,
 		);
 		this.comments = new EditableCommentsViewModel(
+			vocaDbContext,
 			songListRepo.getComments(),
 			listId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,

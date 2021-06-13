@@ -277,11 +277,11 @@ const TagDetails = (
 		var latestComments = model.latestComments;
 
 		vm = new TagDetailsViewModel(
+			vocaDbContext,
 			repo,
 			userRepo,
 			latestComments,
 			reportTypes,
-			vocaDbContext.loggedUserId,
 			model.id,
 			canDeleteAllComments,
 			showTranslatedDescription,

@@ -35,7 +35,6 @@ const EventDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 		$('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
-		var loggedUserId = vocaDbContext.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -46,13 +45,13 @@ const EventDetails = (
 		var tags = model.tags;
 
 		var vm = new ReleaseEventDetailsViewModel(
+			vocaDbContext,
 			httpClient,
 			urlMapper,
 			eventRepo,
 			userRepo,
 			latestComments,
 			reportTypes,
-			loggedUserId,
 			model.id,
 			eventAssociationType,
 			users,

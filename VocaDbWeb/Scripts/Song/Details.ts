@@ -118,7 +118,6 @@ const SongDetails = (
 			showTranslatedDescription,
 			jsonModel,
 			reportTypes,
-			vocaDbContext.loggedUserId,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

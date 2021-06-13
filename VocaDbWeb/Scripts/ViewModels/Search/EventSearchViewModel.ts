@@ -11,10 +11,9 @@ import SearchViewModel from './SearchViewModel';
 export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		vocaDbContext: VocaDbContext,
+		public readonly vocaDbContext: VocaDbContext,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
-		public loggedUserId: number,
 		sort: string,
 		artistId: number[],
 		category: string,
@@ -54,7 +53,9 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 					category: this.category() === 'Unspecified' ? null! : this.category(),
 					childTags: childTags,
 					tagIds: tag,
-					userCollectionId: this.onlyMyEvents() ? loggedUserId : null!,
+					userCollectionId: this.onlyMyEvents()
+						? vocaDbContext.loggedUserId
+						: null!,
 					artistId: this.artistFilters.artistIds(),
 					childVoicebanks: this.artistFilters.childVoicebanks(),
 					includeMembers: this.artistFilters.includeMembers(),

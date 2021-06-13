@@ -11,9 +11,8 @@ import SearchViewModel from './SearchViewModel';
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		vocaDbContext: VocaDbContext,
+		public readonly vocaDbContext: VocaDbContext,
 		private readonly artistRepo: ArtistRepository,
-		private readonly loggedUserId: number,
 		artistType: string,
 	) {
 		super(searchViewModel);
@@ -46,7 +45,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 					!this.onlyRootVoicebanks(),
 					tags,
 					childTags,
-					this.onlyFollowedByMe() ? this.loggedUserId : null!,
+					this.onlyFollowedByMe() ? vocaDbContext.loggedUserId : null!,
 					this.fields(),
 					status,
 					this.advancedFilters.filters(),

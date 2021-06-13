@@ -20,10 +20,10 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
 			new DiscussionIndexViewModel(
+				vocaDbContext,
 				repo,
 				urlMapper,
 				canDeleteAllComments,
-				vocaDbContext.loggedUserId,
 			),
 		);
 	});

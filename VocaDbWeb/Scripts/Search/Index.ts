@@ -56,7 +56,6 @@ const SearchIndex = (model: {
 		var autoplay = model.autoplay;
 		var shuffle = model.shuffle;
 		var pageSize = model.pageSize;
-		var loggedUserId = vocaDbContext.loggedUserId;
 		var unknownPictureUrl = functions.mapAbsoluteUrl('/Content/unknown.png');
 
 		var rootPath = vocaDbContext.baseAddress;
@@ -84,7 +83,6 @@ const SearchIndex = (model: {
 			resourceRepo,
 			userRepo,
 			unknownPictureUrl,
-			loggedUserId,
 			searchType,
 			query,
 			tagIds,

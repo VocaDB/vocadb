@@ -24,8 +24,8 @@ const UserMessages = (
 		var repository = repoFactory.userRepository();
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(
+			vocaDbContext,
 			repository,
-			vocaDbContext.loggedUserId,
 			model.inbox,
 			model.selectedMessageId,
 			receiverName,

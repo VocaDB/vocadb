@@ -46,7 +46,6 @@ export default class SearchViewModel {
 		resourceRepo: ResourceRepository,
 		userRepo: UserRepository,
 		unknownPictureUrl: string,
-		loggedUserId: number,
 		searchType: string,
 		searchTerm: string,
 		tagIds: number[],
@@ -87,7 +86,6 @@ export default class SearchViewModel {
 			this,
 			vocaDbContext,
 			artistRepo,
-			loggedUserId,
 			artistType,
 		);
 
@@ -110,7 +108,6 @@ export default class SearchViewModel {
 			vocaDbContext,
 			eventRepo,
 			artistRepo,
-			loggedUserId,
 			sort,
 			artistId,
 			eventCategory,
@@ -125,7 +122,6 @@ export default class SearchViewModel {
 			userRepo,
 			eventRepo,
 			resourceRepo,
-			loggedUserId,
 			isSong ? sort : null!,
 			isSong ? artistId : null!,
 			isSong ? childVoicebanks : null!,

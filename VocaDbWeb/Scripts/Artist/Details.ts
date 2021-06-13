@@ -96,7 +96,6 @@ const ArtistDetails = (
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
 
-		var loggedUserId = vocaDbContext.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
 		var artistRepo = repoFactory.artistRepository();
@@ -125,7 +124,6 @@ const ArtistDetails = (
 			resourceRepo,
 			userRepository,
 			reportTypes,
-			loggedUserId,
 			canDeleteAllComments,
 			pvPlayersFactory,
 			latestComments,

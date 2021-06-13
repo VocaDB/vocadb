@@ -43,7 +43,6 @@ export default class ArtistDetailsViewModel {
 		private resourceRepo: ResourceRepository,
 		private userRepository: UserRepository,
 		reportTypes: IEntryReportType[],
-		private loggedUserId: number,
 		canDeleteAllComments: boolean,
 		private pvPlayersFactory: PVPlayersFactory,
 		latestComments: CommentContract[],
@@ -64,9 +63,9 @@ export default class ArtistDetailsViewModel {
 		);
 
 		this.comments = new EditableCommentsViewModel(
+			vocaDbContext,
 			repo,
 			artistId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -225,7 +224,6 @@ export default class ArtistDetailsViewModel {
 				this.userRepository,
 				null!,
 				this.resourceRepo,
-				this.loggedUserId,
 				null!,
 				[this.artistId],
 				null!,

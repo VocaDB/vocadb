@@ -189,7 +189,6 @@ export default class SongDetailsViewModel {
 		showTranslatedDescription: boolean,
 		data: SongDetailsAjax,
 		reportTypes: IEntryReportType[],
-		loggedUserId: number,
 		canDeleteAllComments: boolean,
 		ratingCallback: () => void,
 	) {
@@ -203,9 +202,9 @@ export default class SongDetailsViewModel {
 		this.allVersionsVisible = ko.observable(false);
 
 		this.comments = new EditableCommentsViewModel(
+			vocaDbContext,
 			repository,
 			this.id,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,

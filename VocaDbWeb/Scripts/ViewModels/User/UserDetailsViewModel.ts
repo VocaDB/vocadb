@@ -156,7 +156,6 @@ export default class UserDetailsViewModel {
 	public constructor(
 		vocaDbContext: VocaDbContext,
 		private readonly userId: number,
-		private loggedUserId: number,
 		private lastLoginAddress: string,
 		private canEditAllComments: boolean,
 		private httpClient: HttpClient,
@@ -170,12 +169,12 @@ export default class UserDetailsViewModel {
 		public ratedSongsViewModel: RatedSongsSearchViewModel,
 		latestComments: CommentContract[],
 	) {
-		var canDeleteAllComments = userId === loggedUserId;
+		var canDeleteAllComments = userId === vocaDbContext.loggedUserId;
 
 		this.comments = new EditableCommentsViewModel(
+			vocaDbContext,
 			userRepo,
 			userId,
-			loggedUserId,
 			canDeleteAllComments,
 			canEditAllComments,
 			false,

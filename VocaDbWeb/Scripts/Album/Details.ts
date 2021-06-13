@@ -186,7 +186,6 @@ const AlbumDetails = (
 			artistRepo,
 			jsonModel,
 			reportTypes,
-			vocaDbContext.loggedUserId,
 			canDeleteAllComments,
 			formatString,
 			showTranslatedDescription,

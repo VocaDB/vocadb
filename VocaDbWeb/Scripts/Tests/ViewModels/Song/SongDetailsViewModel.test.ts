@@ -46,7 +46,6 @@ beforeEach(() => {
 		false,
 		data,
 		[],
-		0,
 		false,
 		null!,
 	);

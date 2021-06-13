@@ -54,7 +54,6 @@ const UserDetails = (
 		moment.locale(vocaDbContext.culture);
 
 		var userId = model.id;
-		var loggedUserId = vocaDbContext.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -108,7 +107,6 @@ const UserDetails = (
 		var viewModel = new UserDetailsViewModel(
 			vocaDbContext,
 			userId,
-			loggedUserId,
 			lastLoginAddress,
 			canDeleteComments,
 			httpClient,
