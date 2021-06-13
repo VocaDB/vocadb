@@ -51,8 +51,6 @@ const UserDetails = (
 	ko.punches.enableAll();
 
 	$(function () {
-		var cultureCode = vocaDbContext.uiCulture;
-
 		moment.locale(vocaDbContext.culture);
 
 		var userId = model.id;
@@ -78,7 +76,6 @@ const UserDetails = (
 			resourceRepo,
 			tagRepo,
 			userId,
-			cultureCode,
 		);
 
 		var albumCollectionViewModel = new AlbumCollectionViewModel(
@@ -87,7 +84,6 @@ const UserDetails = (
 			artistRepo,
 			resourceRepo,
 			userId,
-			cultureCode,
 			publicCollection,
 			false,
 		);
@@ -101,7 +97,6 @@ const UserDetails = (
 			resourceRepo,
 			tagRepo,
 			userId,
-			cultureCode,
 			sort,
 			groupByRating,
 			pvPlayersFactory,
@@ -113,7 +108,6 @@ const UserDetails = (
 		var viewModel = new UserDetailsViewModel(
 			vocaDbContext,
 			userId,
-			cultureCode,
 			loggedUserId,
 			lastLoginAddress,
 			canDeleteComments,

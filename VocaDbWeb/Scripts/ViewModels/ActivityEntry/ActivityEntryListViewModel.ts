@@ -26,7 +26,6 @@ export default class ActivityEntryListViewModel {
 		private readonly vocaDbContext: VocaDbContext,
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		cultureCode: string,
 		private userId?: number,
 		additionsOnly?: boolean,
 	) {
@@ -40,7 +39,7 @@ export default class ActivityEntryListViewModel {
 		this.entryType.subscribe(this.clear);
 		this.sort.subscribe(this.clear);
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(vocaDbContext, resourceRepo);
 		this.resources.loadResources(
 			this.loadMore,
 			ResourceSetNames.artistTypeNames,

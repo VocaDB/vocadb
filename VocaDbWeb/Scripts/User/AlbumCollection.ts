@@ -17,7 +17,6 @@ const UserAlbumCollection = (
 	publicCollection: boolean,
 ): void => {
 	$(document).ready(function () {
-		var cultureCode = vocaDbContext.uiCulture;
 		var loggedUserId = model.user.id;
 
 		var userRepo = repoFactory.userRepository();
@@ -30,7 +29,6 @@ const UserAlbumCollection = (
 			artistRepo,
 			resourceRepo,
 			loggedUserId,
-			cultureCode,
 			publicCollection,
 		);
 		ko.applyBindings(vm);

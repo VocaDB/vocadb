@@ -47,7 +47,6 @@ export default class SearchViewModel {
 		userRepo: UserRepository,
 		unknownPictureUrl: string,
 		loggedUserId: number,
-		cultureCode: string,
 		searchType: string,
 		searchTerm: string,
 		tagIds: number[],
@@ -70,7 +69,7 @@ export default class SearchViewModel {
 		pageSize: number,
 		pvPlayersFactory: PVPlayersFactory,
 	) {
-		this.resourcesManager = new ResourcesManager(resourceRepo, cultureCode);
+		this.resourcesManager = new ResourcesManager(vocaDbContext, resourceRepo);
 		this.resources = this.resourcesManager.resources;
 		this.tagFilters = new TagFilters(vocaDbContext, tagRepo);
 
@@ -99,7 +98,6 @@ export default class SearchViewModel {
 			albumRepo,
 			artistRepo,
 			resourceRepo,
-			cultureCode,
 			isAlbum ? sort : null!,
 			isAlbum ? artistId : null!,
 			isAlbum ? childVoicebanks : null!,
@@ -127,7 +125,6 @@ export default class SearchViewModel {
 			userRepo,
 			eventRepo,
 			resourceRepo,
-			cultureCode,
 			loggedUserId,
 			isSong ? sort : null!,
 			isSong ? artistId : null!,
@@ -197,7 +194,7 @@ export default class SearchViewModel {
 		});
 
 		resourceRepo
-			.getList(cultureCode, [
+			.getList(vocaDbContext.uiCulture, [
 				'albumSortRuleNames',
 				'artistSortRuleNames',
 				'artistTypeNames',

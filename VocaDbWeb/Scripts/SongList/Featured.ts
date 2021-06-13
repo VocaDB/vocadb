@@ -22,7 +22,6 @@ const SongListFeatured = (
 		$('#createLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 		$('#importLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 
-		var cultureCode = vocaDbContext.uiCulture;
 		var tagIds = model.tagId;
 
 		var songListRepo = repoFactory.songListRepository();
@@ -33,7 +32,6 @@ const SongListFeatured = (
 			songListRepo,
 			resourceRepo,
 			tagRepo,
-			cultureCode,
 			tagIds,
 			categories,
 		);

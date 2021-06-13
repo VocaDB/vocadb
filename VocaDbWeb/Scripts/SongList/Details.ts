@@ -37,7 +37,6 @@ const SongListDetails = (
 		var artistRepo = repoFactory.artistRepository();
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var cultureCode = vocaDbContext.uiCulture;
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var latestComments = model.songList.latestComments;
@@ -54,7 +53,6 @@ const SongListDetails = (
 			defaultSortRuleName,
 			latestComments,
 			vocaDbContext.loggedUserId,
-			cultureCode,
 			listId,
 			tagUsages,
 			pvPlayersFactory,

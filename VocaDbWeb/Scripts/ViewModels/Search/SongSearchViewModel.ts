@@ -36,7 +36,6 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		private userRepo: UserRepository,
 		private eventRepo: ReleaseEventRepository,
 		resourceRep: ResourceRepository,
-		cultureCode: string,
 		private loggedUserId: number,
 		sort: string,
 		artistId: number[],
@@ -58,7 +57,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			this.resourceManager = searchViewModel.resourcesManager;
 			this.showTags = this.searchViewModel.showTags;
 		} else {
-			this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
+			this.resourceManager = new ResourcesManager(vocaDbContext, resourceRep);
 			this.resourceManager.loadResources(null!, 'songSortRuleNames');
 			this.showTags = ko.observable(false);
 		}

@@ -45,7 +45,6 @@ export default class SongListViewModel {
 		defaultSortRuleName: string,
 		latestComments: CommentContract[],
 		loggedUserId: number,
-		cultureCode: string,
 		private listId: number,
 		tagUsages: TagUsageForApiContract[],
 		pvPlayersFactory: PVPlayersFactory,
@@ -67,7 +66,7 @@ export default class SongListViewModel {
 			true,
 		);
 
-		this.resourceManager = new ResourcesManager(resourceRepo, cultureCode);
+		this.resourceManager = new ResourcesManager(vocaDbContext, resourceRepo);
 		this.resourceManager.loadResources(null!, 'songSortRuleNames');
 		this.sortName = ko.computed(() => {
 			if (this.sort() === '') return defaultSortRuleName;

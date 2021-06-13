@@ -23,7 +23,6 @@ export default class CommentListViewModel {
 		private readonly vocaDbContext: VocaDbContext,
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		cultureCode: string,
 		private userId?: number,
 	) {
 		this.entryType = ko.observable(EntryType[EntryType.Undefined]);
@@ -34,7 +33,7 @@ export default class CommentListViewModel {
 		this.entryType.subscribe(this.clear);
 		this.sort.subscribe(this.clear);
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(vocaDbContext, resourceRepo);
 		this.resources.loadResources(
 			this.loadMore,
 			ResourceSetNames.artistTypeNames,

@@ -22,7 +22,6 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		vocaDbContext: VocaDbContext,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		cultureCode: string,
 		tagIds: number[],
 		public showEventDateSort: boolean,
 	) {
@@ -41,7 +40,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		this.tagFilters.tags.subscribe(this.clear);
 
 		resourceRepo
-			.getList(cultureCode, ['songListSortRuleNames'])
+			.getList(vocaDbContext.uiCulture, ['songListSortRuleNames'])
 			.then((resources) => {
 				this.resources(resources);
 				this.clear();

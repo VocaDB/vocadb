@@ -16,7 +16,6 @@ export default class FollowedArtistsViewModel {
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 	) {
 		this.tagFilters = new TagFilters(vocaDbContext, tagRepo);
 
@@ -30,7 +29,7 @@ export default class FollowedArtistsViewModel {
 		if (this.isInit) return;
 
 		this.resourceRepo
-			.getList(this.cultureCode, ['artistTypeNames'])
+			.getList(this.vocaDbContext.uiCulture, ['artistTypeNames'])
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();

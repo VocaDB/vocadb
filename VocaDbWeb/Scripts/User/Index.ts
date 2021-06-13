@@ -11,18 +11,16 @@ const repoFactory = container.get(RepositoryFactory);
 
 const UserIndex = (model: { filter: string; groupId: string }): void => {
 	$(function () {
-		var cultureCode = vocaDbContext.culture;
-		var uiCultureCode = vocaDbContext.uiCulture;
-		moment.locale(cultureCode);
+		moment.locale(vocaDbContext.culture);
 
 		var filter = model.filter;
 		var groupId = model.groupId;
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(
+			vocaDbContext,
 			repo,
 			resourceRepo,
-			uiCultureCode,
 			filter,
 			groupId,
 		);

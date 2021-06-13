@@ -1,12 +1,13 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import VocaDbContext from '@Shared/VocaDbContext';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
 export default class ResourcesManager {
 	public constructor(
+		private readonly vocaDbContext: VocaDbContext,
 		private resourcesRepo: ResourceRepository,
-		private cultureCode: string,
 	) {}
 
 	private setsToLoad = (setNames: string[]): string[] => {
@@ -26,7 +27,7 @@ export default class ResourcesManager {
 	): void => {
 		var setsToLoad = this.setsToLoad(setNames);
 		this.resourcesRepo
-			.getList(this.cultureCode, setsToLoad)
+			.getList(this.vocaDbContext.uiCulture, setsToLoad)
 			.then((resources) => {
 				_.each(
 					setNames,

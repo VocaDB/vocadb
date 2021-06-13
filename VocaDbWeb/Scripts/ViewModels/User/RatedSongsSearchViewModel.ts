@@ -37,7 +37,6 @@ export default class RatedSongsSearchViewModel {
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 		sort: string,
 		groupByRating: boolean,
 		pvPlayersFactory: PVPlayersFactory,
@@ -170,7 +169,7 @@ export default class RatedSongsSearchViewModel {
 			.then((songLists) => this.songLists(songLists.items));
 
 		this.resourceRepo
-			.getList(this.cultureCode, [
+			.getList(this.vocaDbContext.uiCulture, [
 				'songSortRuleNames',
 				'user_ratedSongForUserSortRuleNames',
 				'songTypeNames',

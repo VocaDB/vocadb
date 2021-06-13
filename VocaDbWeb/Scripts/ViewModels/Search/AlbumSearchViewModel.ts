@@ -19,7 +19,6 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
 		resourceRep: ResourceRepository,
-		cultureCode: string,
 		sort: string,
 		artistId: number[],
 		childVoicebanks: boolean,
@@ -31,7 +30,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		if (searchViewModel) {
 			this.resourceManager = searchViewModel.resourcesManager;
 		} else {
-			this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
+			this.resourceManager = new ResourcesManager(vocaDbContext, resourceRep);
 			this.resourceManager.loadResources(
 				null!,
 				'albumSortRuleNames',

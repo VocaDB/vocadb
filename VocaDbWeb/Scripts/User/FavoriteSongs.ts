@@ -20,7 +20,6 @@ const UserFavoriteSongs = (model: {
 }): void => {
 	$(function () {
 		moment.locale(vocaDbContext.culture);
-		var cultureCode = vocaDbContext.uiCulture;
 		var loggedUserId = model.user.id;
 		var sort = model.sort;
 		var groupByRating = model.groupByRating;
@@ -43,7 +42,6 @@ const UserFavoriteSongs = (model: {
 			resourceRepo,
 			tagRepo,
 			loggedUserId,
-			cultureCode,
 			sort,
 			groupByRating,
 			pvPlayersFactory,

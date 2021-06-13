@@ -24,7 +24,6 @@ export default class AlbumCollectionViewModel {
 		private artistRepo: ArtistRepository,
 		private resourceRepo: ResourceRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 		public publicCollection: boolean,
 		initialize = true,
 	) {
@@ -90,7 +89,7 @@ export default class AlbumCollectionViewModel {
 		if (this.isInit) return;
 
 		this.resourceRepo
-			.getList(this.cultureCode, [
+			.getList(this.vocaDbContext.uiCulture, [
 				'albumCollectionStatusNames',
 				'albumMediaTypeNames',
 				'albumSortRuleNames',
