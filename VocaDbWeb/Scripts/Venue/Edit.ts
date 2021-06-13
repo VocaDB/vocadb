@@ -1,5 +1,6 @@
 import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import UserRepository from '@Repositories/UserRepository';
+import VenueRepository from '@Repositories/VenueRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -8,7 +9,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const venueRepo = container.get(VenueRepository);
+const userRepo = container.get(UserRepository);
 
 function initPage(): void {
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -19,8 +21,6 @@ function initPage(): void {
 const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var venueRepo = repoFactory.venueRepository();
-		var userRepo = repoFactory.userRepository();
 		var contract = model;
 
 		var vm = new VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);

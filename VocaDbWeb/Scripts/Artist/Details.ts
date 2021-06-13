@@ -1,7 +1,10 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -14,7 +17,11 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const artistRepo = container.get(ArtistRepository);
+const albumRepo = container.get(AlbumRepository);
+const songRepo = container.get(SongRepository);
+const resourceRepo = container.get(ResourceRepository);
+const userRepo = container.get(UserRepository);
 
 function initPage(
 	artistId: number,
@@ -98,11 +105,6 @@ const ArtistDetails = (
 
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
-		var artistRepo = repoFactory.artistRepository();
-		var albumRepository = repoFactory.albumRepository();
-		var songRepo = repoFactory.songRepository();
-		var resourceRepo = repoFactory.resourceRepository();
-		var userRepository = repoFactory.userRepository();
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var tagUsages = model.tags;
@@ -119,10 +121,10 @@ const ArtistDetails = (
 			hasEnglishDescription,
 			unknownPictureUrl,
 			urlMapper,
-			albumRepository,
+			albumRepo,
 			songRepo,
 			resourceRepo,
-			userRepository,
+			userRepo,
 			reportTypes,
 			canDeleteAllComments,
 			pvPlayersFactory,

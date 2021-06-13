@@ -1,4 +1,6 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
@@ -13,7 +15,9 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const albumRepo = container.get(AlbumRepository);
+const userRepo = container.get(UserRepository);
+const artistRepo = container.get(ArtistRepository);
 
 function initAlbumDetailsPage(
 	albumId: number,
@@ -169,9 +173,6 @@ const AlbumDetails = (
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var albumRepo = repoFactory.albumRepository();
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
 
 		vdb.resources.album = {
 			addedToCollection: addedToCollection,

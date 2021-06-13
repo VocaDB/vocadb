@@ -1,4 +1,5 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import UserRepository from '@Repositories/UserRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ListUsersViewModel from '@ViewModels/User/ListUsersViewModel';
@@ -7,7 +8,8 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
+const resourceRepo = container.get(ResourceRepository);
 
 const UserIndex = (model: { filter: string; groupId: string }): void => {
 	$(function () {
@@ -15,11 +17,9 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 
 		var filter = model.filter;
 		var groupId = model.groupId;
-		var repo = repoFactory.userRepository();
-		var resourceRepo = repoFactory.resourceRepository();
 		var viewModel = new ListUsersViewModel(
 			vocaDbContext,
-			repo,
+			userRepo,
 			resourceRepo,
 			filter,
 			groupId,

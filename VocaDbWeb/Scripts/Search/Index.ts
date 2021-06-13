@@ -1,4 +1,11 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AlbumRepository from '@Repositories/AlbumRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import EntryRepository from '@Repositories/EntryRepository';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongRepository from '@Repositories/SongRepository';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -10,7 +17,14 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const resourceRepo = container.get(ResourceRepository);
+const entryRepo = container.get(EntryRepository);
+const artistRepo = container.get(ArtistRepository);
+const albumRepo = container.get(AlbumRepository);
+const songRepo = container.get(SongRepository);
+const eventRepo = container.get(ReleaseEventRepository);
+const tagRepo = container.get(TagRepository);
+const userRepo = container.get(UserRepository);
 
 const SearchIndex = (model: {
 	artistId: number[];
@@ -60,14 +74,6 @@ const SearchIndex = (model: {
 
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var resourceRepo = repoFactory.resourceRepository();
-		var entryRepo = repoFactory.entryRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var albumRepo = repoFactory.albumRepository();
-		var songRepo = repoFactory.songRepository();
-		var eventRepo = repoFactory.eventRepository();
-		var tagRepo = repoFactory.tagRepository();
-		var userRepo = repoFactory.userRepository();
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 

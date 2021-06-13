@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AlbumRepository from '@Repositories/AlbumRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import DeletedAlbumsViewModel from '@ViewModels/Album/DeletedAlbumsViewModel';
@@ -6,12 +6,11 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const albumRepo = container.get(AlbumRepository);
 
 const AlbumDeleted = (): void => {
 	$(function () {
-		var repo = repoFactory.albumRepository();
-		var viewModel = new DeletedAlbumsViewModel(vocaDbContext, repo);
+		var viewModel = new DeletedAlbumsViewModel(vocaDbContext, albumRepo);
 		ko.applyBindings(viewModel);
 	});
 };

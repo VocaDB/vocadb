@@ -1,10 +1,10 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import SongRepository from '@Repositories/SongRepository';
 import { container } from '@Shared/inversify.config';
 import ArchivedSongViewModel from '@ViewModels/Song/ArchivedSongViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const songRepo = container.get(SongRepository);
 
 const SongViewVersion = (model: {
 	archivedVersion: {
@@ -23,12 +23,10 @@ const SongViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		var rep = repoFactory.songRepository();
-
 		var viewModel = new ArchivedSongViewModel(
 			model.song.id,
 			model.archivedVersion.version,
-			rep,
+			songRepo,
 		);
 		ko.applyBindings(viewModel);
 	});

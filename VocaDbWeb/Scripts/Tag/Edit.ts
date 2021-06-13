@@ -1,4 +1,5 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -7,7 +8,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const tagRepo = container.get(TagRepository);
+const userRepo = container.get(UserRepository);
 
 function initPage(): void {
 	$('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -20,8 +22,6 @@ const TagEdit = (model: { id: number }): void => {
 		initPage();
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var tagRepo = repoFactory.tagRepository();
-		var userRepo = repoFactory.userRepository();
 
 		tagRepo
 			.getById({

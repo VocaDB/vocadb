@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ResourceRepository from '@Repositories/ResourceRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -8,7 +8,7 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const resourceRepo = container.get(ResourceRepository);
 
 const CommentCommentsByUser = (model: { id: number }): void => {
 	$(function () {
@@ -16,7 +16,6 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var resourceRepo = repoFactory.resourceRepository();
 		var userId = model.id;
 
 		var vm = new CommentListViewModel(

@@ -1,10 +1,10 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import VenueRepository from '@Repositories/VenueRepository';
 import { container } from '@Shared/inversify.config';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const venueRepo = container.get(VenueRepository);
 
 const VenueViewVersion = (model: {
 	entry: {
@@ -24,11 +24,10 @@ const VenueViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		var rep = repoFactory.venueRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.venue.id,
 			model.entry.archivedVersion.version,
-			rep,
+			venueRepo,
 		);
 		ko.applyBindings(viewModel);
 	});

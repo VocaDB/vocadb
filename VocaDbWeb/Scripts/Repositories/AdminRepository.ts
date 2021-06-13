@@ -1,10 +1,13 @@
 import WebhookContract from '@DataContracts/WebhookContract';
 import HttpClient from '@Shared/HttpClient';
 import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
+@injectable()
 export default class AdminRepository {
 	public constructor(private readonly httpClient: HttpClient) {}
 

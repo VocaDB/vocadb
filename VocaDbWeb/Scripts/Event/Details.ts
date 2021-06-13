@@ -2,7 +2,8 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import UserBaseContract from '@DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -13,7 +14,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const eventRepo = container.get(ReleaseEventRepository);
+const userRepo = container.get(UserRepository);
 
 const EventDetails = (
 	canDeleteAllComments: boolean,
@@ -38,8 +40,6 @@ const EventDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var eventRepo = repoFactory.eventRepository();
-		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;
 		var users = model.usersAttending;
 		var tags = model.tags;

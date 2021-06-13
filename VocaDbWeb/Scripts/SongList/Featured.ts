@@ -1,4 +1,6 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongListRepository from '@Repositories/SongListRepository';
+import TagRepository from '@Repositories/TagRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
@@ -7,7 +9,9 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const songListRepo = container.get(SongListRepository);
+const resourceRepo = container.get(ResourceRepository);
+const tagRepo = container.get(TagRepository);
 
 const SongListFeatured = (
 	categories: string[],
@@ -24,9 +28,6 @@ const SongListFeatured = (
 
 		var tagIds = model.tagId;
 
-		var songListRepo = repoFactory.songListRepository();
-		var resourceRepo = repoFactory.resourceRepository();
-		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new FeaturedSongListsViewModel(
 			vocaDbContext,
 			songListRepo,

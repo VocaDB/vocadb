@@ -1,5 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import { UserInboxType } from '@Repositories/UserRepository';
+import UserRepository, { UserInboxType } from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -8,7 +7,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
 
 const UserMessages = (
 	message: string,
@@ -21,11 +20,10 @@ const UserMessages = (
 	$(function () {
 		$('#tabs').tabs();
 
-		var repository = repoFactory.userRepository();
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(
 			vocaDbContext,
-			repository,
+			userRepo,
 			model.inbox,
 			model.selectedMessageId,
 			receiverName,

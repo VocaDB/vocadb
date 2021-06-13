@@ -3,12 +3,15 @@ import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import HttpClient from '@Shared/HttpClient';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
+@injectable()
 export default class EntryRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl = (baseUrl: string | undefined, relative: string): string => {

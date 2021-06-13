@@ -4,11 +4,14 @@ import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import HttpClient from '@Shared/HttpClient';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
 import RepositoryParams from './RepositoryParams';
 
+@injectable()
 export default class DiscussionRepository implements ICommentRepository {
 	public constructor(private readonly httpClient: HttpClient) {}
 

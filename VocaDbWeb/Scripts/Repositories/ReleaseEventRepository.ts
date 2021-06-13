@@ -5,10 +5,13 @@ import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
 import HttpClient from '@Shared/HttpClient';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { CommonQueryParams, getDate, mergeUrls } from './BaseRepository';
 import RepositoryParams from './RepositoryParams';
 
+@injectable()
 export default class ReleaseEventRepository {
 	public constructor(private readonly httpClient: HttpClient) {}
 

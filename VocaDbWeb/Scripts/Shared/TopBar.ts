@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 
@@ -6,7 +6,7 @@ import VocaDbContext from './VocaDbContext';
 import { container } from './inversify.config';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
 
 $(() => {
 	$('#globalSearchTerm').autocomplete({
@@ -59,7 +59,6 @@ $(() => {
 export function setLanguagePreferenceCookie(
 	languagePreference: string,
 ): boolean {
-	var userRepo = repoFactory.userRepository();
 	userRepo
 		.updateUserSetting({
 			userId: vocaDbContext.loggedUserId,

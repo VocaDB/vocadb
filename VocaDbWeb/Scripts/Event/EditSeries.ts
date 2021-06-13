@@ -1,6 +1,7 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '@DataContracts/WebLinkContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -9,7 +10,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const eventRepo = container.get(ReleaseEventRepository);
+const userRepo = container.get(UserRepository);
 
 function initPage(): void {
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
@@ -25,8 +27,6 @@ const EventEditSeries = (model: {
 }): void => {
 	$(function () {
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var eventRepo = repoFactory.eventRepository();
-		var userRepo = repoFactory.userRepository();
 
 		var vm = new ReleaseEventSeriesEditViewModel(
 			eventRepo,

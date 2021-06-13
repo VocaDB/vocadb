@@ -1,4 +1,6 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import UserRepository from '@Repositories/UserRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
@@ -6,7 +8,9 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
+const artistRepo = container.get(ArtistRepository);
+const resourceRepo = container.get(ResourceRepository);
 
 const UserAlbumCollection = (
 	model: {
@@ -18,10 +22,6 @@ const UserAlbumCollection = (
 ): void => {
 	$(document).ready(function () {
 		var loggedUserId = model.user.id;
-
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var resourceRepo = repoFactory.resourceRepository();
 
 		var vm = new AlbumCollectionViewModel(
 			vocaDbContext,

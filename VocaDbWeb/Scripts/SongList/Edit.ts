@@ -1,4 +1,5 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import SongListRepository from '@Repositories/SongListRepository';
+import SongRepository from '@Repositories/SongRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -7,19 +8,13 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const songListRepo = container.get(SongListRepository);
+const songRepo = container.get(SongRepository);
 
-function initPage(
-	repoFactory: RepositoryFactory,
-	urlMapper: UrlMapper,
-	listId: number,
-): void {
+function initPage(urlMapper: UrlMapper, listId: number): void {
 	$('#tabs').tabs();
 	$('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
 	$('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
-
-	var songListRepo = repoFactory.songListRepository();
-	var songRepo = repoFactory.songRepository();
 
 	var viewModel = new SongListEditViewModel(
 		vocaDbContext,
@@ -36,7 +31,7 @@ function initPage(
 const SongListEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		initPage(repoFactory, urlMapper, model.id);
+		initPage(urlMapper, model.id);
 	});
 };
 

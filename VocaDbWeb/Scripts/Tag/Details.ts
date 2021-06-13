@@ -1,6 +1,7 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -11,7 +12,8 @@ import ko from 'knockout';
 import _ from 'lodash';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const tagRepo = container.get(TagRepository);
+const userRepo = container.get(UserRepository);
 
 function initChart(
 	urlMapper: UrlMapper,
@@ -272,13 +274,11 @@ const TagDetails = (
 			jsonModel.hasMoreChildren,
 		);
 
-		var repo = repoFactory.tagRepository();
-		var userRepo = repoFactory.userRepository();
 		var latestComments = model.latestComments;
 
 		vm = new TagDetailsViewModel(
 			vocaDbContext,
-			repo,
+			tagRepo,
 			userRepo,
 			latestComments,
 			reportTypes,

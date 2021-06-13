@@ -7,11 +7,14 @@ import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import HttpClient from '@Shared/HttpClient';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { mergeUrls } from './BaseRepository';
 import EntryCommentRepository from './EntryCommentRepository';
 import RepositoryParams from './RepositoryParams';
 
+@injectable()
 export default class SongListRepository {
 	public constructor(private readonly httpClient: HttpClient) {}
 

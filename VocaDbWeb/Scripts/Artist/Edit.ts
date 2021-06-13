@@ -1,6 +1,7 @@
 import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import UserRepository from '@Repositories/UserRepository';
 import DialogService from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
 import vdb from '@Shared/VdbStatic';
@@ -11,7 +12,8 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const artistRepo = container.get(ArtistRepository);
+const userRepo = container.get(UserRepository);
 
 function initPage(): void {
 	$('#tabs').tabs();
@@ -36,8 +38,6 @@ const ArtistEdit = (
 		};
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var artistRepo = repoFactory.artistRepository();
-		var userRepo = repoFactory.userRepository();
 		var editedModel = model.editedArtist;
 
 		if (editedModel) {

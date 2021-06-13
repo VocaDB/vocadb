@@ -1,12 +1,12 @@
 import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageContract';
 import WebLinkContract from '@DataContracts/WebLinkContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import UserRepository from '@Repositories/UserRepository';
 import { container } from '@Shared/inversify.config';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
 
 const UserMySettings = (model: {
 	aboutMe: string;
@@ -18,10 +18,8 @@ const UserMySettings = (model: {
 	$(document).ready(function () {
 		$('#tabs').tabs();
 
-		var repository = repoFactory.userRepository();
-
 		var viewModel = new MySettingsViewModel(
-			repository,
+			userRepo,
 			model.aboutMe,
 			model.email,
 			model.emailVerified,

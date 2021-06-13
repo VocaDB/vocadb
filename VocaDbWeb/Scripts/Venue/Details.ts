@@ -1,11 +1,11 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import VenueRepository from '@Repositories/VenueRepository';
 import { container } from '@Shared/inversify.config';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const venueRepo = container.get(VenueRepository);
 
 const VenueDetails = (
 	model: {
@@ -21,8 +21,6 @@ const VenueDetails = (
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
-
-		var venueRepo = repoFactory.venueRepository();
 
 		var vm = new VenueDetailsViewModel(venueRepo, reportTypes, model.id);
 		ko.applyBindings(vm);

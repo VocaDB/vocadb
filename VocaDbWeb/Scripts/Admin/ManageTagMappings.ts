@@ -1,16 +1,14 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import TagRepository from '@Repositories/TagRepository';
 import { container } from '@Shared/inversify.config';
 import ManageTagMappingsViewModel from '@ViewModels/Admin/ManageTagMappingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const tagRepo = container.get(TagRepository);
 
 const AdminManageTagMappings = (): void => {
 	$(function () {
 		ko.punches.enableAll();
-
-		var tagRepo = repoFactory.tagRepository();
 
 		var viewModel = new ManageTagMappingsViewModel(tagRepo);
 		ko.applyBindings(viewModel);

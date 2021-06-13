@@ -19,6 +19,8 @@ import SongVoteRating from '@Models/SongVoteRating';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
@@ -33,6 +35,7 @@ export enum UserInboxType {
 
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
+@injectable()
 export default class UserRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (baseUrl: string | undefined, relative: string) => string;

@@ -10,6 +10,8 @@ import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { CommonQueryParams, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
@@ -17,6 +19,7 @@ import RepositoryParams from './RepositoryParams';
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
+@injectable()
 export default class ArtistRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (baseUrl: string | undefined, relative: string) => string;

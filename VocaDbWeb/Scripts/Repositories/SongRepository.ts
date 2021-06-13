@@ -20,6 +20,8 @@ import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { CommonQueryParams, getDate, mergeUrls } from './BaseRepository';
 import ICommentRepository from './ICommentRepository';
@@ -27,6 +29,7 @@ import RepositoryParams from './RepositoryParams';
 
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
+@injectable()
 export default class SongRepository implements ICommentRepository {
 	public constructor(private readonly httpClient: HttpClient) {
 		this.get = <T>(

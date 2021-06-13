@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ResourceRepository from '@Repositories/ResourceRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -8,7 +8,7 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const resourceRepo = container.get(ResourceRepository);
 
 const ActivityEntryIndex = (): void => {
 	$(function () {
@@ -16,7 +16,6 @@ const ActivityEntryIndex = (): void => {
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var resourceRepo = repoFactory.resourceRepository();
 
 		var vm = new ActivityEntryListViewModel(
 			vocaDbContext,

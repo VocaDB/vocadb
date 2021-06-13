@@ -9,11 +9,14 @@ import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
 import HttpClient from '@Shared/HttpClient';
+import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import { CommonQueryParams, mergeUrls } from './BaseRepository';
 import EntryCommentRepository from './EntryCommentRepository';
 import RepositoryParams from './RepositoryParams';
 
+@injectable()
 export default class TagRepository {
 	public constructor(private readonly httpClient: HttpClient) {}
 

@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AdminRepository from '@Repositories/AdminRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import ManageIPRulesViewModel, {
@@ -9,7 +9,7 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const adminRepo = container.get(AdminRepository);
 
 const AdminManageIPRules = (model: IPRuleContract[]): void => {
 	$(function () {
@@ -17,9 +17,8 @@ const AdminManageIPRules = (model: IPRuleContract[]): void => {
 		ko.punches.enableAll();
 
 		var rules = model;
-		var repo = repoFactory.adminRepository();
 
-		var viewModel = new ManageIPRulesViewModel(rules, repo);
+		var viewModel = new ManageIPRulesViewModel(rules, adminRepo);
 		ko.applyBindings(viewModel);
 	});
 };

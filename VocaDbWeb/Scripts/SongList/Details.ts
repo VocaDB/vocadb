@@ -1,6 +1,10 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongListRepository from '@Repositories/SongListRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -10,7 +14,11 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
+const songRepo = container.get(SongRepository);
+const artistRepo = container.get(ArtistRepository);
+const songListRepo = container.get(SongListRepository);
+const resourceRepo = container.get(ResourceRepository);
 
 const SongListDetails = (
 	canDeleteAllComments: boolean,
@@ -32,11 +40,6 @@ const SongListDetails = (
 
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var userRepo = repoFactory.userRepository();
-		var songRepo = repoFactory.songRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var songListRepo = repoFactory.songListRepository();
-		var resourceRepo = repoFactory.resourceRepository();
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var latestComments = model.songList.latestComments;

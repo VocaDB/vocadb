@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import DiscussionRepository from '@Repositories/DiscussionRepository';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
@@ -8,7 +8,7 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const discussionRepo = container.get(DiscussionRepository);
 
 const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 	$(function () {
@@ -17,11 +17,10 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 		ko.punches.enableAll();
 
 		var urlMapper = new UrlMapper(vocaDbContext.baseAddress);
-		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
 			new DiscussionIndexViewModel(
 				vocaDbContext,
-				repo,
+				discussionRepo,
 				urlMapper,
 				canDeleteAllComments,
 			),

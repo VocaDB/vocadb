@@ -1,10 +1,10 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import TagRepository from '@Repositories/TagRepository';
 import { container } from '@Shared/inversify.config';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const tagRepo = container.get(TagRepository);
 
 const TagViewVersion = (model: {
 	entry: {
@@ -24,11 +24,10 @@ const TagViewVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		var rep = repoFactory.tagRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.tag.id,
 			model.entry.archivedVersion.version,
-			rep,
+			tagRepo,
 		);
 		ko.applyBindings(viewModel);
 	});

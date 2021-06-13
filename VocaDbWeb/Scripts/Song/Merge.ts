@@ -1,5 +1,5 @@
 import SongContract from '@DataContracts/Song/SongContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import SongRepository from '@Repositories/SongRepository';
 import VocaDbContext from '@Shared/VocaDbContext';
 import { container } from '@Shared/inversify.config';
 import SongMergeViewModel from '@ViewModels/Song/SongMergeViewModel';
@@ -7,13 +7,12 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const songRepo = container.get(SongRepository);
 
 const SongMerge = (model: SongContract): void => {
 	$(function () {
-		var repo = repoFactory.songRepository();
 		var data = model;
-		var vm = new SongMergeViewModel(vocaDbContext, repo, data);
+		var vm = new SongMergeViewModel(vocaDbContext, songRepo, data);
 		ko.applyBindings(vm);
 
 		$('#mergeBtn').click(function () {

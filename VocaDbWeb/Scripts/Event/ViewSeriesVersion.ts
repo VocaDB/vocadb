@@ -1,10 +1,10 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import { container } from '@Shared/inversify.config';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const repoFactory = container.get(RepositoryFactory);
+const eventRepo = container.get(ReleaseEventRepository);
 
 const EventViewSeriesVersion = (model: {
 	entry: {
@@ -24,11 +24,10 @@ const EventViewSeriesVersion = (model: {
 		$('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
 		$('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-		var rep = repoFactory.eventRepository();
 		var viewModel = new ArchivedEntryViewModel(
 			model.entry.releaseEventSeries.id,
 			model.entry.archivedVersion.version,
-			rep,
+			eventRepo,
 		);
 		ko.applyBindings(viewModel);
 	});

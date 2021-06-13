@@ -1,4 +1,6 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import SongRepository from '@Repositories/SongRepository';
+import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
@@ -16,7 +18,9 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const songRepo = container.get(SongRepository);
+const userRepo = container.get(UserRepository);
+const artistRepo = container.get(ArtistRepository);
 
 function initPage(
 	jsonModel: SongDetailsAjax,
@@ -104,14 +108,11 @@ const SongDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var repo = repoFactory.songRepository();
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
 
 		var viewModel = new SongDetailsViewModel(
 			vocaDbContext,
 			httpClient,
-			repo,
+			songRepo,
 			userRepo,
 			artistRepo,
 			resources,

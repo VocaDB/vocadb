@@ -1,4 +1,4 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import vdb from '@Shared/VdbStatic';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -9,7 +9,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const userRepo = container.get(UserRepository);
 
 declare global {
 	interface JQuery {
@@ -19,7 +19,6 @@ declare global {
 
 function initPage(): void {
 	function initRatingButtons(): void {
-		const repo = repoFactory.userRepository();
 		const ratingBar = $('#rating-bar');
 
 		if (!ratingBar.length) {
@@ -29,7 +28,7 @@ function initPage(): void {
 		const songId = ratingBar.data('song-id');
 		const rating = ratingBar.data('rating');
 		const viewModel = new PVRatingButtonsViewModel(
-			repo,
+			userRepo,
 			{ id: songId, vote: rating },
 			() => {
 				ui.showSuccessMessage(vdb.resources.song.thanksForRating);

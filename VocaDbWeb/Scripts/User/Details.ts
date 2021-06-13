@@ -1,5 +1,10 @@
 import CommentContract from '@DataContracts/CommentContract';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
+import AdminRepository from '@Repositories/AdminRepository';
+import ArtistRepository from '@Repositories/ArtistRepository';
+import ResourceRepository from '@Repositories/ResourceRepository';
+import SongRepository from '@Repositories/SongRepository';
+import TagRepository from '@Repositories/TagRepository';
+import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import VocaDbContext from '@Shared/VocaDbContext';
@@ -14,7 +19,12 @@ import ko from 'knockout';
 import moment from 'moment';
 
 const vocaDbContext = container.get(VocaDbContext);
-const repoFactory = container.get(RepositoryFactory);
+const adminRepo = container.get(AdminRepository);
+const userRepo = container.get(UserRepository);
+const artistRepo = container.get(ArtistRepository);
+const resourceRepo = container.get(ResourceRepository);
+const songRepo = container.get(SongRepository);
+const tagRepo = container.get(TagRepository);
 
 function initPage(confirmDisableStr: string): void {
 	$('#mySettingsLink').button({ icons: { primary: 'ui-icon-wrench' } });
@@ -57,12 +67,6 @@ const UserDetails = (
 		const httpClient = new HttpClient();
 		var rootPath = vocaDbContext.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
-		var adminRepo = repoFactory.adminRepository();
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var resourceRepo = repoFactory.resourceRepository();
-		var songRepo = repoFactory.songRepository();
-		var tagRepo = repoFactory.tagRepository();
 		var pvPlayersFactory = new PVPlayersFactory($('#pv-player-wrapper')[0]);
 		var latestComments = model.latestComments;
 
