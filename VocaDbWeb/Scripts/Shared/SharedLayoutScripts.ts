@@ -2,9 +2,12 @@ import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
 import TopBarViewModel from '@ViewModels/TopBarViewModel';
 
-import HttpClient from './HttpClient';
 import ui from './MessagesTyped';
 import vdb from './VdbStatic';
+import { container } from './inversify.config';
+
+var entryReportRepo = container.get(EntryReportRepository);
+var userRepo = container.get(UserRepository);
 
 const SharedLayoutScripts = (model: {
 	culture: string;
@@ -31,16 +34,12 @@ const SharedLayoutScripts = (model: {
 	vdb.values.culture = model.culture;
 	vdb.values.uiCulture = model.uiCulture;
 	vdb.resources = vdb.resources || {};
-	const httpClient = new HttpClient();
 
 	vdb.resources.shared = {
 		reportSent: model.reportSent,
 	};
 
 	ui.initAll(model.thanksForRating);
-
-	var entryReportRepository = new EntryReportRepository(httpClient);
-	var userRepository = new UserRepository(httpClient);
 
 	var entryTypeTranslations = model.entryTypeTranslations;
 	var topBarData = model.topBarData;
@@ -54,8 +53,8 @@ const SharedLayoutScripts = (model: {
 		'',
 		unreadMessagesCount,
 		getNewReportCount,
-		entryReportRepository,
-		userRepository,
+		entryReportRepo,
+		userRepo,
 	);
 
 	var topBar = $('#topBar')[0];
