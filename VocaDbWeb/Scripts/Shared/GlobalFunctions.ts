@@ -1,11 +1,6 @@
 import { mergeUrls } from '@Repositories/BaseRepository';
 import $ from 'jquery';
 
-import VocaDbContext from './VocaDbContext';
-import { container } from './inversify.config';
-
-const vocaDbContext = container.get(VocaDbContext);
-
 export default class functions {
 	public static getId(elem: HTMLElement): string | null {
 		if ($(elem) == null || $(elem).attr('id') == null) return null;
@@ -21,11 +16,13 @@ export default class functions {
 	}
 
 	public static mapAbsoluteUrl(relative: string): string {
-		return functions.mergeUrls(vocaDbContext.baseAddress, relative);
+		return functions.mergeUrls(undefined /* HACK */, relative);
 	}
 
-	public static mergeUrls = (base: string, relative: string): string =>
-		mergeUrls(base, relative);
+	public static mergeUrls = (
+		base: string | undefined,
+		relative: string,
+	): string => mergeUrls(base, relative);
 
 	public static getUrlDomain(url: string): string {
 		// http://stackoverflow.com/a/8498629
