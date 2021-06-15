@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using System.Runtime.Caching;
@@ -22,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using NHibernate;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Database.Repositories.NHibernate;
@@ -34,6 +33,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
@@ -307,6 +307,31 @@ namespace VocaDb.Web
 
 			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
 			app.UseCacheOutput();
+
+			// Code from: https://stackoverflow.com/questions/54271639/how-can-i-redirect-a-user-when-a-specific-exception-is-cought-with-asp-net-core/54275293#54275293
+			app.Use(async (context, next) =>
+			{
+				void HandleHttpError(int code, string? description = null, string? msg = null)
+				{
+					// Log error here to get request info.
+					ErrorLogger.LogHttpError(context.Request, code, msg);
+
+					context.Response.Redirect($"/Error?code={code}&redirect={true}");
+				}
+
+				try
+				{
+					await next();
+				}
+				catch (Exception ex) when (ex is ObjectNotFoundException or EntityNotFoundException)
+				{
+					HandleHttpError(ErrorLogger.Code_NotFound, "Entity not found");
+				}
+				catch (NotAllowedException ex)
+				{
+					HandleHttpError(ErrorLogger.Code_Forbidden, ex.Message);
+				}
+			});
 
 			app.UseEndpoints(endpoints =>
 			{
