@@ -133,10 +133,9 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				&& a.OriginalRelease.ReleaseDate.Day != null);
 		}
 
-		public static IQueryable<Album> WhereHasReleaseYearAndMonth(this IQueryable<Album> criteria)
+		public static IQueryable<Album> WhereHasReleaseYear(this IQueryable<Album> criteria)
 		{
-			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
-				&& a.OriginalRelease.ReleaseDate.Month != null);
+			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null);
 		}
 
 		public static IQueryable<Album> WhereHasTag(this IQueryable<Album> query, string? tagName)
@@ -231,7 +230,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// </summary>
 		public static IQueryable<Album> WhereSortBy(this IQueryable<Album> query, AlbumSortRule sort) => sort switch
 		{
-			AlbumSortRule.ReleaseDate => query.WhereHasReleaseYearAndMonth(),
+			AlbumSortRule.ReleaseDate => query.WhereHasReleaseYear(),
 			_ => query,
 		};
 #nullable disable
