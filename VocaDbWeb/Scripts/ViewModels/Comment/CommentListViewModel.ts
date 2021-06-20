@@ -34,22 +34,23 @@ export default class CommentListViewModel {
 		this.sort.subscribe(this.clear);
 
 		this.resources = new ResourcesManager(resourceRepo, cultureCode);
-		this.resources.loadResources(
-			this.loadMore,
-			ResourceSetNames.artistTypeNames,
-			ResourceSetNames.discTypeNames,
-			ResourceSetNames.songTypeNames,
-			ResourceSetNames.userGroupNames,
-			ResourceSetNames.activityEntry.activityFeedEventNames,
-			ResourceSetNames.album.albumEditableFieldNames,
-			ResourceSetNames.artist.artistEditableFieldNames,
-			ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
-			ResourceSetNames.song.songEditableFieldNames,
-			ResourceSetNames.songList.songListEditableFieldNames,
-			ResourceSetNames.songList.songListFeaturedCategoryNames,
-			ResourceSetNames.tag.tagEditableFieldNames,
-			'commentSortRuleNames',
-		);
+		this.resources
+			.loadResources(
+				ResourceSetNames.artistTypeNames,
+				ResourceSetNames.discTypeNames,
+				ResourceSetNames.songTypeNames,
+				ResourceSetNames.userGroupNames,
+				ResourceSetNames.activityEntry.activityFeedEventNames,
+				ResourceSetNames.album.albumEditableFieldNames,
+				ResourceSetNames.artist.artistEditableFieldNames,
+				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
+				ResourceSetNames.song.songEditableFieldNames,
+				ResourceSetNames.songList.songListEditableFieldNames,
+				ResourceSetNames.songList.songListFeaturedCategoryNames,
+				ResourceSetNames.tag.tagEditableFieldNames,
+				'commentSortRuleNames',
+			)
+			.then(this.loadMore);
 
 		this.sortName = ko.computed(() =>
 			this.resources.resources().commentSortRuleNames != null

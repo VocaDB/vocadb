@@ -1,6 +1,7 @@
 import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
 import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
@@ -68,8 +69,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
 		tags: number[],
 		childTags: boolean,
 		status: string,
-		callback: (result: any) => void,
-	) => void;
+	) => Promise<PartialFindResultContract<any>>;
 
 	public loading = ko.observable(true); // Currently loading for data
 
@@ -114,25 +114,24 @@ export default class SearchCategoryBaseViewModel<TEntry>
 			this.tagIds(),
 			this.childTags(),
 			this.draftsOnly() ? 'Draft' : null!,
-			(result: any) => {
-				if (this.showTags()) {
-					_.forEach(result.items, (item: EntryWithTagUsagesContract) => {
-						if (item.tags)
-							item.tags = _.take(
-								_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
-								10,
-							);
-					});
-				}
+		).then((result: PartialFindResultContract<any>) => {
+			if (this.showTags()) {
+				_.forEach(result.items, (item: EntryWithTagUsagesContract) => {
+					if (item.tags)
+						item.tags = _.take(
+							_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
+							10,
+						);
+				});
+			}
 
-				this.pauseNotifications = false;
+			this.pauseNotifications = false;
 
-				if (pagingProperties.getTotalCount)
-					this.paging.totalItems(result.totalCount);
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems(result.totalCount);
 
-				this.page(result.items);
-				this.loading(false);
-			},
-		);
+			this.page(result.items);
+			this.loading(false);
+		});
 	};
 }

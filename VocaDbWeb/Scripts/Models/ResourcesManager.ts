@@ -21,12 +21,9 @@ export default class ResourcesManager {
 
 	public resources: Observable<ResourcesContract> = ko.observable({});
 
-	public loadResources = (
-		callback?: () => void,
-		...setNames: string[]
-	): void => {
+	public loadResources = (...setNames: string[]): Promise<void> => {
 		var setsToLoad = this.setsToLoad(setNames);
-		this.resourcesRepo
+		return this.resourcesRepo
 			.getList({
 				cultureCode: vdb.values.uiCulture,
 				setNames: setsToLoad,
@@ -39,7 +36,6 @@ export default class ResourcesManager {
 							resources[setName as keyof ResourcesContract]),
 				);
 				this.resources.valueHasMutated!();
-				if (callback) callback();
 			});
 	};
 }

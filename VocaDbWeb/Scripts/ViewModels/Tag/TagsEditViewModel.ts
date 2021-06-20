@@ -9,9 +9,7 @@ export default class TagsEditViewModel {
 	public constructor(
 		private readonly repo: ITagSelectionsRepository,
 		public readonly target?: EntryType,
-		private readonly getSuggestions?: (
-			callback: (result: TagUsageForApiContract[]) => void,
-		) => void,
+		private readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {}
 
 	public addTag = (): void => {
@@ -87,7 +85,7 @@ export default class TagsEditViewModel {
 	};
 
 	public show = (): void => {
-		this.repo.getTagSelections((selections) => {
+		this.repo.getTagSelections().then((selections) => {
 			this.selections(
 				_.map(selections, (selection) => new TagSelectionViewModel(selection)),
 			);
@@ -96,7 +94,7 @@ export default class TagsEditViewModel {
 
 		if (this.getSuggestions) {
 			this.suggestionsLoaded(false);
-			this.getSuggestions((result) => {
+			this.getSuggestions().then((result) => {
 				this.suggestions(result);
 				this.suggestionsLoaded(true);
 			});
@@ -119,9 +117,7 @@ export class TagSelectionViewModel {
 }
 
 export interface ITagSelectionsRepository {
-	getTagSelections(
-		callback: (selections: TagSelectionContract[]) => void,
-	): void;
+	getTagSelections(): Promise<TagSelectionContract[]>;
 
 	saveTagSelections(tags: TagBaseContract[]): void;
 }

@@ -1,4 +1,5 @@
 import CommentContract from '@DataContracts/CommentContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
 import TimeUnit from '@Models/Aggregate/TimeUnit';
@@ -74,18 +75,15 @@ export default class ArtistDetailsViewModel {
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepository
-						.getArtistTagSelections({ artistId: artistId })
-						.then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepository.getArtistTagSelections({ artistId: artistId }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepository
 						.updateArtistTags({ artistId: artistId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Artist,
-			(callback) =>
-				repo.getTagSuggestions({ artistId: this.artistId }).then(callback),
+			() => repo.getTagSuggestions({ artistId: this.artistId }),
 		);
 
 		this.tagUsages = new TagListViewModel(tagUsages);

@@ -1,3 +1,4 @@
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -42,35 +43,30 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 			tag,
 			childTags,
 			status,
-			callback,
-		): void => {
-			this.eventRepo
-				.getList({
-					queryParams: {
-						start: pagingProperties.start,
-						maxResults: pagingProperties.maxEntries,
-						getTotalCount: pagingProperties.getTotalCount,
-						lang: vdb.values.languagePreference,
-						query: searchTerm,
-						sort: this.sort(),
-						category:
-							this.category() === 'Unspecified' ? null! : this.category(),
-						childTags: childTags,
-						tagIds: tag,
-						userCollectionId: this.onlyMyEvents()
-							? vdb.values.loggedUserId
-							: null!,
-						artistId: this.artistFilters.artistIds(),
-						childVoicebanks: this.artistFilters.childVoicebanks(),
-						includeMembers: this.artistFilters.includeMembers(),
-						afterDate: this.afterDate()!,
-						beforeDate: this.beforeDate()!,
-						status: status,
-						fields: this.fields(),
-					},
-				})
-				.then(callback);
-		};
+		): Promise<PartialFindResultContract<ReleaseEventContract>> =>
+			this.eventRepo.getList({
+				queryParams: {
+					start: pagingProperties.start,
+					maxResults: pagingProperties.maxEntries,
+					getTotalCount: pagingProperties.getTotalCount,
+					lang: vdb.values.languagePreference,
+					query: searchTerm,
+					sort: this.sort(),
+					category: this.category() === 'Unspecified' ? null! : this.category(),
+					childTags: childTags,
+					tagIds: tag,
+					userCollectionId: this.onlyMyEvents()
+						? vdb.values.loggedUserId
+						: null!,
+					artistId: this.artistFilters.artistIds(),
+					childVoicebanks: this.artistFilters.childVoicebanks(),
+					includeMembers: this.artistFilters.includeMembers(),
+					afterDate: this.afterDate()!,
+					beforeDate: this.beforeDate()!,
+					status: status,
+					fields: this.fields(),
+				},
+			});
 
 		this.sortName = ko.computed(() => {
 			return searchViewModel.resourcesManager.resources().eventSortRuleNames !=

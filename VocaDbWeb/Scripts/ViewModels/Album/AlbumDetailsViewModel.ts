@@ -1,6 +1,7 @@
 import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import CommentContract from '@DataContracts/CommentContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
@@ -91,7 +92,7 @@ export default class AlbumDetailsViewModel {
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,
-			(callback) => {
+			() =>
 				repo
 					.getOneWithComponents({
 						id: this.id,
@@ -103,9 +104,8 @@ export default class AlbumDetailsViewModel {
 							.filter(ArtistHelper.isValidForPersonalDescription)
 							.map((a) => a.artist)
 							.value();
-						callback(artists);
-					});
-			},
+						return artists;
+					}),
 			(vm) =>
 				repo.updatePersonalDescription({
 					albumId: this.id,
@@ -116,15 +116,15 @@ export default class AlbumDetailsViewModel {
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepo.getAlbumTagSelections({ albumId: this.id }).then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepo.getAlbumTagSelections({ albumId: this.id }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
 						.updateAlbumTags({ albumId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Album,
-			(callback) => repo.getTagSuggestions({ albumId: this.id }).then(callback),
+			() => repo.getTagSuggestions({ albumId: this.id }),
 		);
 
 		this.tagUsages = new TagListViewModel(data.tagUsages);

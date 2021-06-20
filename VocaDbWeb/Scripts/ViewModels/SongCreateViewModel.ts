@@ -211,10 +211,11 @@ export default class SongCreateViewModel {
 
 		this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
 			null!,
-			(entryId, callback) =>
-				songRepository
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				songRepository.getOne({
+					id: entryId,
+					lang: vdb.values.languagePreference,
+				}),
 		);
 
 		this.originalVersionSearchParams = {

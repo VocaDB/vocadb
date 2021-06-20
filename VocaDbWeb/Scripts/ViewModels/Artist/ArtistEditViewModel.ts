@@ -198,10 +198,8 @@ export default class ArtistEditViewModel {
 		);
 		this.baseVoicebank = new BasicEntryLinkViewModel(
 			data.baseVoicebank,
-			(entryId, callback) =>
-				artistRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				artistRepo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 		this.description = new EnglishTranslatedStringEditViewModel(
 			data.description,
@@ -211,18 +209,14 @@ export default class ArtistEditViewModel {
 		this.id = data.id;
 		this.illustrator = new BasicEntryLinkViewModel(
 			data.illustrator,
-			(entryId, callback) =>
-				artistRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				artistRepo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 		this.names = NamesEditViewModel.fromContracts(data.names);
 		this.newAssociatedArtist = new BasicEntryLinkViewModel<ArtistContract>(
 			null!,
-			(entryId, callback) =>
-				artistRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				artistRepo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 		this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
 		this.releaseDate = ko.observable(
@@ -231,10 +225,8 @@ export default class ArtistEditViewModel {
 		this.status = ko.observable(data.status);
 		this.voiceProvider = new BasicEntryLinkViewModel(
 			data.voiceProvider,
-			(entryId, callback) =>
-				artistRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				artistRepo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 		this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 

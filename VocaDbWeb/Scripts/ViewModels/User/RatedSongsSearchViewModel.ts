@@ -196,7 +196,7 @@ export default class RatedSongsSearchViewModel {
 		var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		if (this.viewMode() === 'PlayList') {
-			this.playListViewModel.updateResultsWithTotalCount(() => {
+			this.playListViewModel.updateResultsWithTotalCount().then(() => {
 				this.pauseNotifications = false;
 				this.loading(false);
 			});

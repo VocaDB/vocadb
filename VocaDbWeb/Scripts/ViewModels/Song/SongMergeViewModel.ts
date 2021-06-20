@@ -9,12 +9,8 @@ import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class SongMergeViewModel {
 	public constructor(songRepo: SongRepository, private base: SongContract) {
-		this.target = new BasicEntryLinkViewModel<SongContract>(
-			null!,
-			(entryId, callback) =>
-				songRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+		this.target = new BasicEntryLinkViewModel<SongContract>(null!, (entryId) =>
+			songRepo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 
 		this.targetSearchParams = {

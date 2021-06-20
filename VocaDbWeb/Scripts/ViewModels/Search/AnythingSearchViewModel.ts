@@ -1,4 +1,5 @@
 import EntryContract from '@DataContracts/EntryContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -23,19 +24,16 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
 			tags,
 			childTags,
 			status,
-			callback,
-		): Promise<void> =>
-			this.entryRepo
-				.getList({
-					paging: pagingProperties,
-					lang: vdb.values.languagePreference,
-					query: searchTerm,
-					tags: tags,
-					childTags: childTags,
-					fields: this.fields(),
-					status: status,
-				})
-				.then(callback);
+		): Promise<PartialFindResultContract<EntryContract>> =>
+			this.entryRepo.getList({
+				paging: pagingProperties,
+				lang: vdb.values.languagePreference,
+				query: searchTerm,
+				tags: tags,
+				childTags: childTags,
+				fields: this.fields(),
+				status: status,
+			});
 	}
 
 	public entryCategoryName = (entry: EntryContract): string => {

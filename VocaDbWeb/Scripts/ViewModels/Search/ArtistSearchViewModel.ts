@@ -1,4 +1,6 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
@@ -33,30 +35,26 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 			tags,
 			childTags,
 			status,
-			callback,
-		): void => {
-			this.artistRepo
-				.getList({
-					paging: pagingProperties,
-					lang: vdb.values.languagePreference,
-					query: searchTerm,
-					sort: this.sort(),
-					artistTypes:
-						this.artistType() !== ArtistType[ArtistType.Unknown]
-							? this.artistType()
-							: undefined,
-					allowBaseVoicebanks: !this.onlyRootVoicebanks(),
-					tags: tags,
-					childTags: childTags,
-					followedByUserId: this.onlyFollowedByMe()
-						? vdb.values.loggedUserId
+		): Promise<PartialFindResultContract<ArtistContract>> =>
+			this.artistRepo.getList({
+				paging: pagingProperties,
+				lang: vdb.values.languagePreference,
+				query: searchTerm,
+				sort: this.sort(),
+				artistTypes:
+					this.artistType() !== ArtistType[ArtistType.Unknown]
+						? this.artistType()
 						: undefined,
-					fields: this.fields(),
-					status: status,
-					advancedFilters: this.advancedFilters.filters(),
-				})
-				.then(callback);
-		};
+				allowBaseVoicebanks: !this.onlyRootVoicebanks(),
+				tags: tags,
+				childTags: childTags,
+				followedByUserId: this.onlyFollowedByMe()
+					? vdb.values.loggedUserId
+					: undefined,
+				fields: this.fields(),
+				status: status,
+				advancedFilters: this.advancedFilters.filters(),
+			});
 	}
 
 	public artistTypeName = (artist: ArtistApiContract): string => {
