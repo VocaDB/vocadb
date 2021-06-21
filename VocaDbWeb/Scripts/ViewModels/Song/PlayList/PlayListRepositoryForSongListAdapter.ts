@@ -35,24 +35,25 @@ export default class PlayListRepositoryForSongListAdapter
 		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
 	): void => {
 		this.songListRepo
-			.getSongs(
-				this.songListId,
-				this.query(),
-				this.songType() !== SongType[SongType.Unspecified]
-					? this.songType()
-					: null!,
-				this.tagIds(),
-				this.childTags(),
-				this.artistIds(),
-				this.artistParticipationStatus(),
-				this.childVoicebanks(),
-				this.advancedFilters(),
-				pvServices,
-				paging,
-				fields,
-				this.sort(),
-				lang,
-			)
+			.getSongs({
+				listId: this.songListId,
+				query: this.query(),
+				songTypes:
+					this.songType() !== SongType[SongType.Unspecified]
+						? this.songType()
+						: undefined,
+				tagIds: this.tagIds(),
+				childTags: this.childTags(),
+				artistIds: this.artistIds(),
+				artistParticipationStatus: this.artistParticipationStatus(),
+				childVoicebanks: this.childVoicebanks(),
+				advancedFilters: this.advancedFilters(),
+				pvServices: pvServices,
+				paging: paging,
+				fields: fields,
+				sort: this.sort(),
+				lang: lang,
+			})
 			.then((result) => {
 				var mapped = _.map(result.items, (song, idx) => {
 					return {

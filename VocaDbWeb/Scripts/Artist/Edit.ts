@@ -50,7 +50,7 @@ const ArtistEdit = (
 				),
 			);
 		} else {
-			artistRepo.getForEdit(model.artist.id).then(function (model) {
+			artistRepo.getForEdit({ id: model.artist.id }).then(function (model) {
 				ko.applyBindings(
 					new ArtistEditViewModel(
 						artistRepo,

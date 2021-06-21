@@ -1,3 +1,4 @@
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import EntryType from '@Models/EntryType';
@@ -18,18 +19,29 @@ export default class FakeUserRepository extends UserRepository {
 	public constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
-		this.getMessage = (messageId): Promise<UserMessageSummaryContract> => {
+		this.getMessage = ({
+			messageId,
+		}: {
+			messageId: number;
+		}): Promise<UserMessageSummaryContract> => {
 			return FakePromise.resolve(this.message);
 		};
 
-		this.getMessageSummaries = (
-			userId: number,
-			inbox: UserInboxType,
-			maxCount?,
-			unread?,
-			anotherUserId?,
-			iconSize?,
-		): Promise<PartialFindResultContract<UserMessageSummaryContract>> => {
+		this.getMessageSummaries = ({
+			userId,
+			inbox,
+			paging,
+			unread = false,
+			anotherUserId,
+			iconSize = 40,
+		}: {
+			userId: number;
+			inbox?: UserInboxType;
+			paging: PagingProperties;
+			unread: boolean;
+			anotherUserId?: number;
+			iconSize?: number;
+		}): Promise<PartialFindResultContract<UserMessageSummaryContract>> => {
 			return FakePromise.resolve<
 				PartialFindResultContract<UserMessageSummaryContract>
 			>({
@@ -38,17 +50,23 @@ export default class FakeUserRepository extends UserRepository {
 			});
 		};
 
-		this.refreshEntryEdit = (
-			entryType: EntryType,
-			entryId: number,
-		): Promise<void> => {
+		this.refreshEntryEdit = ({
+			entryType,
+			entryId,
+		}: {
+			entryType: EntryType;
+			entryId: number;
+		}): Promise<void> => {
 			return Promise.resolve();
 		};
 
-		this.updateSongRating = (
-			songId: number,
-			rating: SongVoteRating,
-		): Promise<void> => {
+		this.updateSongRating = ({
+			songId,
+			rating,
+		}: {
+			songId: number;
+			rating: SongVoteRating;
+		}): Promise<void> => {
 			this.songId = songId;
 			this.rating = rating;
 

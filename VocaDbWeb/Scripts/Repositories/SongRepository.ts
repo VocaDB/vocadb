@@ -63,42 +63,60 @@ export default class SongRepository
 			);
 		};
 
-		this.pvForSongAndService = (
-			songId: number,
-			pvService: PVService,
-		): Promise<string> => {
+		this.pvForSongAndService = ({
+			songId,
+			pvService,
+		}: {
+			songId: number;
+			pvService: PVService;
+		}): Promise<string> => {
 			return this.get<string>('/PVForSongAndService', {
 				songId: songId,
 				service: PVService[pvService],
 			});
 		};
 
-		this.pvPlayerWithRating = (
+		this.pvPlayerWithRating = ({
 			songId,
-		): Promise<SongWithPVPlayerAndVoteContract> => {
+		}: {
+			songId: number;
+		}): Promise<SongWithPVPlayerAndVoteContract> => {
 			return this.getJSON<SongWithPVPlayerAndVoteContract>(
 				'/PVPlayerWithRating',
 				{ songId: songId },
 			);
 		};
 
-		this.songListsForSong = (songId): Promise<string> => {
+		this.songListsForSong = ({
+			songId,
+		}: {
+			songId: number;
+		}): Promise<string> => {
 			return this.get<string>('/SongListsForSong', { songId: songId });
 		};
 
-		this.songListsForUser = (ignoreSongId): Promise<SongListBaseContract[]> => {
+		this.songListsForUser = ({
+			ignoreSongId,
+		}: {
+			ignoreSongId: number;
+		}): Promise<SongListBaseContract[]> => {
 			return this.post<SongListBaseContract[]>('/SongListsForUser', {
 				ignoreSongId: ignoreSongId,
 			});
 		};
 	}
 
-	public addSongToList = (
-		listId: number,
-		songId: number,
-		notes: string,
-		newListName: string,
-	): Promise<void> => {
+	public addSongToList = ({
+		listId,
+		songId,
+		notes,
+		newListName,
+	}: {
+		listId: number;
+		songId: number;
+		notes: string;
+		newListName: string;
+	}): Promise<void> => {
 		return this.post<void>('/AddSongToList', {
 			listId: listId,
 			songId: songId,
@@ -107,22 +125,30 @@ export default class SongRepository
 		});
 	};
 
-	public createComment = (
-		songId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		entryId: songId,
+		contract,
+	}: {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
 			contract,
 		);
 	};
 
-	public createReport = (
-		songId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		songId,
+		reportType,
+		notes,
+		versionNumber,
+	}: {
+		songId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative('/Song/CreateReport'),
 			AjaxHelper.stringify({
@@ -139,17 +165,25 @@ export default class SongRepository
 		);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		commentId,
+	}: {
+		commentId: number;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate = (params: {
-		term: string[];
-		pv: string[];
-		artistIds: number[];
-		getPVInfo: boolean;
+	public findDuplicate = ({
+		params,
+	}: {
+		params: {
+			term: string[];
+			pv: string[];
+			artistIds: number[];
+			getPVInfo: boolean;
+		};
 	}): Promise<NewSongCheckResultContract> => {
 		return this.httpClient.get<NewSongCheckResultContract>(
 			this.urlMapper.mapRelative('/api/songs/findDuplicate'),
@@ -159,12 +193,17 @@ export default class SongRepository
 
 	private get: <T>(relative: string, params: any) => Promise<T>;
 
-	public getByNames(
-		names: string[],
-		ignoreIds: number[],
-		lang: ContentLanguagePreference,
-		songTypes?: SongType[],
-	): Promise<SongApiContract[]> {
+	public getByNames({
+		names,
+		ignoreIds,
+		lang,
+		songTypes,
+	}: {
+		names: string[];
+		ignoreIds: number[];
+		lang: ContentLanguagePreference;
+		songTypes?: SongType[];
+	}): Promise<SongApiContract[]> {
 		const url = functions.mergeUrls(this.baseUrl, '/api/songs/by-names');
 		return this.httpClient.get<SongApiContract[]>(url, {
 			names: names,
@@ -174,21 +213,32 @@ export default class SongRepository
 		});
 	}
 
-	public getComments = (songId: number): Promise<CommentContract[]> => {
+	public getComments = ({
+		entryId: songId,
+	}: {
+		entryId: number;
+	}): Promise<CommentContract[]> => {
 		return this.httpClient.get<CommentContract[]>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
 		);
 	};
 
-	public getForEdit = (id: number): Promise<SongForEditContract> => {
+	public getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<SongForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}/for-edit`);
 		return this.httpClient.get<SongForEditContract>(url);
 	};
 
-	public getLyrics = (
-		lyricsId: number,
-		songVersion: number,
-	): Promise<LyricsForSongContract> => {
+	public getLyrics = ({
+		lyricsId,
+		songVersion,
+	}: {
+		lyricsId: number;
+		songVersion: number;
+	}): Promise<LyricsForSongContract> => {
 		return this.httpClient.get<LyricsForSongContract>(
 			this.urlMapper.mapRelative(
 				`/api/songs/lyrics/${lyricsId}?v=${songVersion}`,
@@ -198,11 +248,15 @@ export default class SongRepository
 
 	private getJSON: <T>(relative: string, params: any) => Promise<T>;
 
-	public getOneWithComponents = (
-		id: number,
-		fields: string,
-		lang: ContentLanguagePreference,
-	): Promise<SongApiContract> => {
+	public getOneWithComponents = ({
+		id,
+		fields,
+		lang,
+	}: {
+		id: number;
+		fields: string;
+		lang: ContentLanguagePreference;
+	}): Promise<SongApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
 			fields: fields,
@@ -210,10 +264,13 @@ export default class SongRepository
 		});
 	};
 
-	public getOne = (
-		id: number,
-		lang: ContentLanguagePreference,
-	): Promise<SongContract> => {
+	public getOne = ({
+		id,
+		lang,
+	}: {
+		id: number;
+		lang: ContentLanguagePreference;
+	}): Promise<SongContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongContract>(url, {
 			fields: 'AdditionalNames',
@@ -221,9 +278,11 @@ export default class SongRepository
 		});
 	};
 
-	public getListByParams(
-		params: SongQueryParams,
-	): Promise<PartialFindResultContract<SongApiContract>> {
+	public getListByParams({
+		params,
+	}: {
+		params: SongQueryParams;
+	}): Promise<PartialFindResultContract<SongApiContract>> {
 		const url = functions.mergeUrls(this.baseUrl, '/api/songs');
 		return this.httpClient.get<PartialFindResultContract<SongApiContract>>(
 			url,
@@ -231,36 +290,65 @@ export default class SongRepository
 		);
 	}
 
-	public getList = (
-		paging: PagingProperties,
-		lang: ContentLanguagePreference,
-		query: string,
-		sort: string,
-		songTypes: string,
-		afterDate: Date,
-		beforeDate: Date,
-		tagIds: number[],
-		childTags: boolean,
-		unifyTypesAndTags: boolean,
-		artistIds: number[],
-		artistParticipationStatus: string,
-		childVoicebanks: boolean,
-		includeMembers: boolean,
-		eventId: number,
-		onlyWithPvs: boolean,
-		pvServices: string,
-		since: number,
-		minScore: number,
-		userCollectionId: number,
-		parentSongId: number,
-		fields: string,
-		status: string,
-		advancedFilters: AdvancedSearchFilter[],
-		minMilliBpm: number,
-		maxMilliBpm: number,
-		minLength: number,
-		maxLength: number,
-	): Promise<PartialFindResultContract<SongContract>> => {
+	public getList = ({
+		paging,
+		lang,
+		query,
+		sort,
+		songTypes,
+		afterDate,
+		beforeDate,
+		tagIds,
+		childTags,
+		unifyTypesAndTags,
+		artistIds,
+		artistParticipationStatus,
+		childVoicebanks,
+		includeMembers,
+		eventId,
+		onlyWithPvs,
+		pvServices,
+		since,
+		minScore,
+		userCollectionId,
+		parentSongId,
+		fields,
+		status,
+		advancedFilters,
+		minMilliBpm,
+		maxMilliBpm,
+		minLength,
+		maxLength,
+	}: {
+		paging: PagingProperties;
+		lang: ContentLanguagePreference;
+		query: string;
+		sort: string;
+		songTypes?: string;
+		afterDate: Date;
+		beforeDate: Date;
+		tagIds: number[];
+		childTags: boolean;
+		unifyTypesAndTags: boolean;
+		artistIds: number[];
+		artistParticipationStatus: string;
+		childVoicebanks: boolean;
+		includeMembers: boolean;
+		eventId: number;
+		onlyWithPvs: boolean;
+		pvServices?: string;
+		since: number;
+		minScore: number;
+		userCollectionId?: number;
+		parentSongId: number;
+		fields: string;
+		status?: string;
+		advancedFilters?: AdvancedSearchFilter[];
+		minMilliBpm?: number;
+		maxMilliBpm?: number;
+		minLength?: number;
+		maxLength?: number;
+	}): Promise<PartialFindResultContract<SongContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
 		var data = {
 			start: paging.start,
@@ -302,10 +390,13 @@ export default class SongRepository
 		);
 	};
 
-	public getOverTime = (
-		timeUnit: TimeUnit,
-		artistId: number,
-	): Promise<CountPerDayContract[]> => {
+	public getOverTime = ({
+		timeUnit,
+		artistId,
+	}: {
+		timeUnit: TimeUnit;
+		artistId: number;
+	}): Promise<CountPerDayContract[]> => {
 		var url = this.urlMapper.mapRelative('/api/songs/over-time');
 		return this.httpClient.get<CountPerDayContract[]>(url, {
 			timeUnit: TimeUnit[timeUnit],
@@ -314,25 +405,35 @@ export default class SongRepository
 	};
 
 	// Get PV ID by song ID and PV service.
-	public getPvId = (songId: number, pvService: PVService): Promise<string> => {
+	public getPvId = ({
+		songId,
+		pvService,
+	}: {
+		songId: number;
+		pvService: PVService;
+	}): Promise<string> => {
 		return this.httpClient.get<string>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/pvs`),
 			{ service: PVService[pvService] },
 		);
 	};
 
-	public getRatings = (
-		songId: number,
-	): Promise<RatedSongForUserForApiContract[]> => {
+	public getRatings = ({
+		songId,
+	}: {
+		songId: number;
+	}): Promise<RatedSongForUserForApiContract[]> => {
 		return this.httpClient.get<RatedSongForUserForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`),
 			{ userFields: 'MainPicture' },
 		);
 	};
 
-	public getTagSuggestions = (
-		songId: number,
-	): Promise<TagUsageForApiContract[]> => {
+	public getTagSuggestions = ({
+		songId,
+	}: {
+		songId: number;
+	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/tagSuggestions`),
 		);
@@ -343,48 +444,65 @@ export default class SongRepository
 
 	private post: <T>(relative: string, params: any) => Promise<T>;
 
-	public pvForSongAndService: (
-		songId: number,
-		pvService: PVService,
-	) => Promise<string>;
+	public pvForSongAndService: ({
+		songId,
+		pvService,
+	}: {
+		songId: number;
+		pvService: PVService;
+	}) => Promise<string>;
 
-	public pvPlayer = (
-		songId: number,
-		params: PVEmbedParams,
-	): Promise<SongWithPVPlayerAndVoteContract> => {
+	public pvPlayer = ({
+		songId,
+		params,
+	}: {
+		songId: number;
+		params: PVEmbedParams;
+	}): Promise<SongWithPVPlayerAndVoteContract> => {
 		return this.getJSON<SongWithPVPlayerAndVoteContract>(
 			`/PVPlayer/${songId}`,
 			params,
 		);
 	};
 
-	public pvPlayerWithRating: (
-		songId: number,
-	) => Promise<SongWithPVPlayerAndVoteContract>;
+	public pvPlayerWithRating: ({
+		songId,
+	}: {
+		songId: number;
+	}) => Promise<SongWithPVPlayerAndVoteContract>;
 
 	//public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
-	public songListsForSong: (songId: number) => Promise<string>;
+	public songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
 
-	public songListsForUser: (
-		ignoreSongId: number,
-	) => Promise<SongListBaseContract[]>;
+	public songListsForUser: ({
+		ignoreSongId,
+	}: {
+		ignoreSongId: number;
+	}) => Promise<SongListBaseContract[]>;
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		commentId,
+		contract,
+	}: {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
 			contract,
 		);
 	};
 
-	public updatePersonalDescription = (
-		songId: number,
-		text: string,
-		author: ArtistContract,
-	): Promise<void> => {
+	public updatePersonalDescription = ({
+		songId,
+		text,
+		author,
+	}: {
+		songId: number;
+		text: string;
+		author: ArtistContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/personal-description/`),
 			{
@@ -394,10 +512,13 @@ export default class SongRepository
 		);
 	};
 
-	public updateSongRating = (
-		songId: number,
-		rating: SongVoteRating,
-	): Promise<void> => {
+	public updateSongRating = ({
+		songId,
+		rating,
+	}: {
+		songId: number;
+		rating: SongVoteRating;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
 	};

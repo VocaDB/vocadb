@@ -12,6 +12,7 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 
 import PVPlayersFactory from '../PVs/PVPlayersFactory';
@@ -193,24 +194,31 @@ export default class SearchViewModel {
 		});
 
 		resourceRepo
-			.getList(cultureCode, [
-				'albumSortRuleNames',
-				'artistSortRuleNames',
-				'artistTypeNames',
-				'discTypeNames',
-				'eventCategoryNames',
-				'eventSortRuleNames',
-				'entryTypeNames',
-				'songSortRuleNames',
-				'songTypeNames',
-			])
+			.getList({
+				cultureCode: vdb.values.uiCulture,
+				setNames: [
+					'albumSortRuleNames',
+					'artistSortRuleNames',
+					'artistTypeNames',
+					'discTypeNames',
+					'eventCategoryNames',
+					'eventSortRuleNames',
+					'entryTypeNames',
+					'songSortRuleNames',
+					'songTypeNames',
+				],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResults();
 			});
 
 		tagRepo
-			.getTopTags(lang, Tag.commonCategory_Genres, null!)
+			.getTopTags({
+				lang: vdb.values.languagePreference,
+				categoryName: Tag.commonCategory_Genres,
+				entryType: undefined,
+			})
 			.then((result) => {
 				this.genreTags(result);
 			});

@@ -11,14 +11,14 @@ export default class TopBarViewModel {
 		if (this.isLoaded()) return;
 
 		this.userRepository
-			.getMessageSummaries(
-				vdb.values.loggedUserId,
-				null!,
-				{ maxEntries: 3, start: 0, getTotalCount: false },
-				true,
-				null!,
-				40,
-			)
+			.getMessageSummaries({
+				userId: vdb.values.loggedUserId,
+				inbox: undefined,
+				paging: { maxEntries: 3, start: 0, getTotalCount: false },
+				unread: true,
+				anotherUserId: undefined,
+				iconSize: 40,
+			})
 			.then(
 				(messages: PartialFindResultContract<UserMessageSummaryContract>) => {
 					this.unreadMessages(messages.items);
@@ -72,7 +72,7 @@ export default class TopBarViewModel {
 		});
 
 		if (getNewReportsCount) {
-			entryReportRepository.getNewReportCount().then((count) => {
+			entryReportRepository.getNewReportCount({}).then((count) => {
 				this.reportCount(count);
 			});
 		}

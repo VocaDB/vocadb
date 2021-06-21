@@ -8,11 +8,15 @@ export default class FakeTagRepository extends TagRepository {
 	public constructor() {
 		super(new HttpClient(), '');
 
-		this.getEntryTypeTag = (
-			entryType: EntryType,
-			subType: string,
-			lang: ContentLanguagePreference,
-		): Promise<TagApiContract> => {
+		this.getEntryTypeTag = ({
+			entryType,
+			subType,
+			lang,
+		}: {
+			entryType: EntryType;
+			subType: string;
+			lang: ContentLanguagePreference;
+		}): Promise<TagApiContract> => {
 			return Promise.resolve<TagApiContract>(null!);
 		};
 	}

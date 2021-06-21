@@ -16,24 +16,35 @@ export default class EntryCommentRepository implements ICommentRepository {
 		this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
 	}
 
-	public createComment = (
-		entryId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		entryId,
+		contract,
+	}: {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
 		);
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		commentId,
+	}: {
+		commentId: number;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async (listId: number): Promise<CommentContract[]> => {
+	public getComments = async ({
+		entryId: listId,
+	}: {
+		entryId: number;
+	}): Promise<CommentContract[]> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
 		);
@@ -43,10 +54,13 @@ export default class EntryCommentRepository implements ICommentRepository {
 		return result.items;
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		commentId,
+		contract,
+	}: {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);

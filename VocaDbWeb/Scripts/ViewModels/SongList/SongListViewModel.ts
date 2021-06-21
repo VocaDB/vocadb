@@ -17,6 +17,7 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
@@ -53,7 +54,7 @@ export default class SongListViewModel {
 	) {
 		this.artistFilters = new ArtistFilters(this.artistRepo, false);
 		this.comments = new EditableCommentsViewModel(
-			songListRepo.getComments(),
+			songListRepo.getComments({}),
 			listId,
 			loggedUserId,
 			canDeleteAllComments,
@@ -122,10 +123,12 @@ export default class SongListViewModel {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepo.getSongListTagSelections(this.listId).then(callback),
+					userRepo
+						.getSongListTagSelections({ songListId: this.listId })
+						.then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
-						.updateSongListTags(this.listId, tags)
+						.updateSongListTags({ songListId: this.listId, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.SongList,
@@ -205,24 +208,25 @@ export default class SongListViewModel {
 		if (this.showTags()) fields.push(SongOptionalField.Tags);
 
 		this.songListRepo
-			.getSongs(
-				this.listId,
-				this.query(),
-				this.songType() !== SongType[SongType.Unspecified]
-					? this.songType()
-					: null!,
-				this.tagIds(),
-				this.childTags(),
-				this.artistFilters.artistIds(),
-				this.artistFilters.artistParticipationStatus(),
-				this.artistFilters.childVoicebanks(),
-				this.advancedFilters.filters(),
-				null!,
-				pagingProperties,
-				new SongOptionalFields(fields),
-				this.sort(),
-				this.lang,
-			)
+			.getSongs({
+				listId: this.listId,
+				query: this.query(),
+				songTypes:
+					this.songType() !== SongType[SongType.Unspecified]
+						? this.songType()
+						: undefined,
+				tagIds: this.tagIds(),
+				childTags: this.childTags(),
+				artistIds: this.artistFilters.artistIds(),
+				artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+				childVoicebanks: this.artistFilters.childVoicebanks(),
+				advancedFilters: this.advancedFilters.filters(),
+				pvServices: undefined,
+				paging: pagingProperties,
+				fields: new SongOptionalFields(fields),
+				sort: this.sort(),
+				lang: vdb.values.languagePreference,
+			})
 			.then((result) => {
 				_.each(result.items, (item) => {
 					var song = item.song;

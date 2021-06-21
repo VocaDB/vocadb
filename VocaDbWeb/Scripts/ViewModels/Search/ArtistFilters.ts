@@ -68,7 +68,10 @@ export default class ArtistFilters {
 			var selectedArtistId = newArtist.id;
 
 			this.artistRepo
-				.getOne(selectedArtistId, vdb.values.languagePreference)
+				.getOne({
+					id: selectedArtistId,
+					lang: vdb.values.languagePreference,
+				})
 				.then((artist) => {
 					newArtist.name(artist.name);
 					newArtist.artistType(

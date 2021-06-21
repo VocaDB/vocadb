@@ -12,6 +12,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -154,22 +155,25 @@ export default class RatedSongsSearchViewModel {
 		if (this.isInit) return;
 
 		this.userRepo
-			.getSongLists(
-				this.loggedUserId,
-				null!,
-				{ start: 0, maxEntries: 50, getTotalCount: false },
-				[],
-				'Name',
-				null!,
-			)
+			.getSongLists({
+				userId: this.loggedUserId,
+				query: undefined,
+				paging: { start: 0, maxEntries: 50, getTotalCount: false },
+				tagIds: [],
+				sort: 'Name',
+				fields: undefined,
+			})
 			.then((songLists) => this.songLists(songLists.items));
 
 		this.resourceRepo
-			.getList(this.cultureCode, [
-				'songSortRuleNames',
-				'user_ratedSongForUserSortRuleNames',
-				'songTypeNames',
-			])
+			.getList({
+				cultureCode: vdb.values.uiCulture,
+				setNames: [
+					'songSortRuleNames',
+					'user_ratedSongForUserSortRuleNames',
+					'songTypeNames',
+				],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
@@ -200,22 +204,22 @@ export default class RatedSongsSearchViewModel {
 		}
 
 		this.userRepo
-			.getRatedSongsList(
-				this.loggedUserId,
-				pagingProperties,
-				this.lang,
-				this.searchTerm(),
-				this.tagFilters.tagIds(),
-				this.artistFilters.artistIds(),
-				this.artistFilters.childVoicebanks(),
-				this.rating(),
-				this.songListId()!,
-				this.advancedFilters.filters(),
-				this.groupByRating(),
-				null!,
-				this.fields(),
-				this.sort(),
-			)
+			.getRatedSongsList({
+				userId: this.loggedUserId,
+				paging: pagingProperties,
+				lang: vdb.values.languagePreference,
+				query: this.searchTerm(),
+				tagIds: this.tagFilters.tagIds(),
+				artistIds: this.artistFilters.artistIds(),
+				childVoicebanks: this.artistFilters.childVoicebanks(),
+				rating: this.rating(),
+				songListId: this.songListId()!,
+				advancedFilters: this.advancedFilters.filters(),
+				groupByRating: this.groupByRating(),
+				pvServices: undefined,
+				fields: this.fields(),
+				sort: this.sort(),
+			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
 					var songs: IRatedSongSearchItem[] = [];

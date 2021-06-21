@@ -7,7 +7,8 @@ export default class EntryReportRepository {
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public getNewReportCount = (): Promise<number> => {
+	// eslint-disable-next-line no-empty-pattern
+	public getNewReportCount = ({}: {}): Promise<number> => {
 		var url = this.urlMapper.mapRelative('/entryReports/newReportsCount');
 		return this.httpClient.get<number>(url);
 	};

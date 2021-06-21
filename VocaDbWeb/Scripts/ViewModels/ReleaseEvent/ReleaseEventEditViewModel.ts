@@ -91,7 +91,10 @@ export default class ReleaseEventEditViewModel {
 		if (contract.id) {
 			window.setInterval(
 				() =>
-					userRepository.refreshEntryEdit(EntryType.ReleaseEvent, contract.id),
+					userRepository.refreshEntryEdit({
+						entryType: EntryType.ReleaseEvent,
+						entryId: contract.id,
+					}),
 				10000,
 			);
 		}
@@ -100,7 +103,7 @@ export default class ReleaseEventEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne(artistId, vdb.values.languagePreference)
+				.getOne({ id: artistId, lang: vdb.values.languagePreference })
 				.then((artist) => {
 					const data: ArtistForEventContract = {
 						artist: artist,
@@ -147,7 +150,9 @@ export default class ReleaseEventEditViewModel {
 	public defaultNameLanguage: Observable<string>;
 
 	public deleteViewModel = new DeleteEntryViewModel((notes) => {
-		this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
+		this.repo
+			.delete({ id: this.id, notes: notes, hardDelete: false })
+			.then(this.redirectToDetails);
 	});
 
 	public description = ko.observable<string>();
@@ -199,7 +204,9 @@ export default class ReleaseEventEditViewModel {
 	};
 
 	public trashViewModel = new DeleteEntryViewModel((notes) => {
-		this.repo.delete(this.id, notes, true).then(this.redirectToRoot);
+		this.repo
+			.delete({ id: this.id, notes: notes, hardDelete: true })
+			.then(this.redirectToRoot);
 	});
 
 	public venue: BasicEntryLinkViewModel<VenueForApiContract>;

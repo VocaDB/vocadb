@@ -92,29 +92,39 @@ export default class AlbumDetailsViewModel {
 			data.personalDescriptionText!,
 			artistRepository,
 			(callback) => {
-				repo.getOneWithComponents(this.id, 'Artists', lang).then((result) => {
-					var artists = _.chain(result.artists!)
-						.filter(ArtistHelper.isValidForPersonalDescription)
-						.map((a) => a.artist)
-						.value();
-					callback(artists);
-				});
+				repo
+					.getOneWithComponents({
+						id: this.id,
+						fields: 'Artists',
+						lang: vdb.values.languagePreference,
+					})
+					.then((result) => {
+						var artists = _.chain(result.artists!)
+							.filter(ArtistHelper.isValidForPersonalDescription)
+							.map((a) => a.artist)
+							.value();
+						callback(artists);
+					});
 			},
 			(vm) =>
-				repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()),
+				repo.updatePersonalDescription({
+					albumId: this.id,
+					text: vm.text(),
+					author: vm.author.entry(),
+				}),
 		);
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
 				getTagSelections: (callback): Promise<void> =>
-					userRepo.getAlbumTagSelections(this.id).then(callback),
+					userRepo.getAlbumTagSelections({ albumId: this.id }).then(callback),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
-						.updateAlbumTags(this.id, tags)
+						.updateAlbumTags({ albumId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Album,
-			(callback) => repo.getTagSuggestions(this.id).then(callback),
+			(callback) => repo.getTagSuggestions({ albumId: this.id }).then(callback),
 		);
 
 		this.tagUsages = new TagListViewModel(data.tagUsages);
@@ -122,7 +132,12 @@ export default class AlbumDetailsViewModel {
 		this.reportViewModel = new ReportEntryViewModel(
 			reportTypes,
 			(reportType, notes) => {
-				repo.createReport(this.id, reportType, notes, null!);
+				repo.createReport({
+					albumId: this.id,
+					reportType: reportType,
+					notes: notes,
+					versionNumber: undefined,
+				});
 
 				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			},
@@ -220,10 +235,10 @@ export class AlbumReviewsViewModel {
 		this.newReviewTitle('');
 		this.showCreateNewReview(false);
 		this.languageCode('');
-		const result = await this.albumRepository.createOrUpdateReview(
-			this.albumId,
-			contract,
-		);
+		const result = await this.albumRepository.createOrUpdateReview({
+			albumId: this.albumId,
+			reviewContract: contract,
+		});
 		this.reviews.push(
 			new AlbumReviewViewModel(
 				result,
@@ -236,7 +251,10 @@ export class AlbumReviewsViewModel {
 	public deleteReview = (review: AlbumReviewViewModel): void => {
 		this.reviews.remove(review);
 
-		this.albumRepository.deleteReview(this.albumId, review.id!);
+		this.albumRepository.deleteReview({
+			albumId: this.albumId,
+			reviewId: review.id!,
+		});
 	};
 
 	public getRatingForUser(userId: number): number {
@@ -263,15 +281,18 @@ export class AlbumReviewsViewModel {
 		this.editReviewModel()!.saveChanges();
 		var editedContract = this.editReviewModel()!.toContract();
 
-		this.albumRepository.createOrUpdateReview(this.albumId, editedContract);
+		this.albumRepository.createOrUpdateReview({
+			albumId: this.albumId,
+			reviewContract: editedContract,
+		});
 
 		this.editReviewModel(null!);
 	};
 
 	public async loadReviews(): Promise<void> {
 		const [reviews, ratings] = await Promise.all([
-			this.albumRepository.getReviews(this.albumId),
-			this.albumRepository.getUserCollections(this.albumId),
+			this.albumRepository.getReviews({ albumId: this.albumId }),
+			this.albumRepository.getUserCollections({ albumId: this.albumId }),
 		]);
 		const reviewViewModels = _.map(
 			reviews,

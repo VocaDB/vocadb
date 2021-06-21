@@ -19,28 +19,37 @@ export default class ReleaseEventRepository extends BaseRepository {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = (
-		eventId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		entryId: eventId,
+		reportType,
+		notes,
+		versionNumber,
+	}: {
+		entryId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
-				versionNumber: [versionNumber],
+				versionNumber: [versionNumber!],
 			})}`,
 		);
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -50,11 +59,15 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public deleteSeries = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public deleteSeries = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -64,9 +77,11 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getList = (
-		queryParams: EventQueryParams,
-	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
+	public getList = ({
+		queryParams,
+	}: {
+		queryParams: EventQueryParams;
+	}): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
 		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
@@ -99,14 +114,16 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = (id: number): Promise<ReleaseEventContract> => {
+	public getOne = ({ id }: { id: number }): Promise<ReleaseEventContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
 		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
-	public getOneByName = async (
-		name: string,
-	): Promise<ReleaseEventContract | null> => {
+	public getOneByName = async ({
+		name,
+	}: {
+		name: string;
+	}): Promise<ReleaseEventContract | null> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/releaseEvents?query=${encodeURIComponent(
@@ -121,11 +138,15 @@ export default class ReleaseEventRepository extends BaseRepository {
 			: null;
 	};
 
-	public getSeriesList = (
-		query: string,
-		nameMatchMode: NameMatchMode,
-		maxResults: number,
-	): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
+	public getSeriesList = ({
+		query,
+		nameMatchMode,
+		maxResults,
+	}: {
+		query: string;
+		nameMatchMode: NameMatchMode;
+		maxResults: number;
+	}): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
 		var data = {
 			query: query,

@@ -47,7 +47,11 @@ export default class TagEditViewModel {
 		);
 
 		window.setInterval(
-			() => userRepository.refreshEntryEdit(EntryType.Tag, contract.id),
+			() =>
+				userRepository.refreshEntryEdit({
+					entryType: EntryType.Tag,
+					entryId: contract.id,
+				}),
 			10000,
 		);
 	}

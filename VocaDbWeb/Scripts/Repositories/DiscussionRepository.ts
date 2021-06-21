@@ -20,40 +20,55 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public createComment = (
-		topicId: number,
-		contract: CommentContract,
-	): Promise<CommentContract> => {
+	public createComment = ({
+		entryId: topicId,
+		contract,
+	}: {
+		entryId: number;
+		contract: CommentContract;
+	}): Promise<CommentContract> => {
 		return this.httpClient.post<CommentContract>(
 			this.mapUrl(`topics/${topicId}/comments`),
 			contract,
 		);
 	};
 
-	public createTopic = (
-		folderId: number,
-		contract: DiscussionTopicContract,
-	): Promise<DiscussionTopicContract> => {
+	public createTopic = ({
+		folderId,
+		contract,
+	}: {
+		folderId: number;
+		contract: DiscussionTopicContract;
+	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.post<DiscussionTopicContract>(
 			this.mapUrl(`folders/${folderId}/topics`),
 			contract,
 		);
 	};
 
-	public deleteComment = (commentId: number): Promise<void> => {
+	public deleteComment = ({
+		commentId,
+	}: {
+		commentId: number;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`comments/${commentId}`));
 	};
 
-	public deleteTopic = (topicId: number): Promise<void> => {
+	public deleteTopic = ({ topicId }: { topicId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`topics/${topicId}`));
 	};
 
-	public getComments = (topicId: number): Promise<CommentContract[]> => {
+	public getComments = ({
+		entryId: topicId,
+	}: {
+		entryId: number;
+	}): Promise<CommentContract[]> => {
 		// Not supported
 		return Promise.resolve<CommentContract[]>([]);
 	};
 
-	public getFolders = (): Promise<DiscussionFolderContract[]> => {
+	// eslint-disable-next-line no-empty-pattern
+	public getFolders = ({}: {}): Promise<DiscussionFolderContract[]> => {
 		return this.httpClient.get<DiscussionFolderContract[]>(
 			this.mapUrl('folders'),
 			{
@@ -62,14 +77,19 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public getTopic = (topicId: number): Promise<DiscussionTopicContract> => {
+	public getTopic = ({
+		topicId,
+	}: {
+		topicId: number;
+	}): Promise<DiscussionTopicContract> => {
 		return this.httpClient.get<DiscussionTopicContract>(
 			this.mapUrl(`topics/${topicId}`),
 			{ fields: 'All' },
 		);
 	};
 
-	public getTopics = (): Promise<
+	// eslint-disable-next-line no-empty-pattern
+	public getTopics = ({}: {}): Promise<
 		PartialFindResultContract<DiscussionTopicContract>
 	> => {
 		return this.httpClient.get<
@@ -77,10 +97,13 @@ export default class DiscussionRepository implements ICommentRepository {
 		>(this.mapUrl('topics'), { fields: 'CommentCount', maxResults: 5 });
 	};
 
-	public getTopicsForFolder = (
-		folderId: number,
-		paging: PagingProperties,
-	): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
+	public getTopicsForFolder = ({
+		folderId,
+		paging,
+	}: {
+		folderId: number;
+		paging: PagingProperties;
+	}): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
 		return this.httpClient.get<
 			PartialFindResultContract<DiscussionTopicContract>
 		>(this.mapUrl('topics'), {
@@ -92,20 +115,26 @@ export default class DiscussionRepository implements ICommentRepository {
 		});
 	};
 
-	public updateComment = (
-		commentId: number,
-		contract: CommentContract,
-	): Promise<void> => {
+	public updateComment = ({
+		commentId,
+		contract,
+	}: {
+		commentId: number;
+		contract: CommentContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.mapUrl(`comments/${commentId}`),
 			contract,
 		);
 	};
 
-	public updateTopic = (
-		topicId: number,
-		contract: DiscussionTopicContract,
-	): Promise<void> => {
+	public updateTopic = ({
+		topicId,
+		contract,
+	}: {
+		topicId: number;
+		contract: DiscussionTopicContract;
+	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.mapUrl(`topics/${topicId}`),
 			contract,

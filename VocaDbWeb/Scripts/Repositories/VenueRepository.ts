@@ -16,28 +16,37 @@ export default class VenueRepository extends BaseRepository {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = (
-		venueId: number,
-		reportType: string,
-		notes: string,
-		versionNumber: number,
-	): Promise<void> => {
+	public createReport = ({
+		entryId: venueId,
+		reportType,
+		notes,
+		versionNumber,
+	}: {
+		entryId: number;
+		reportType: string;
+		notes: string;
+		versionNumber?: number;
+	}): Promise<void> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
 			`/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
 				reportType: [reportType],
 				notes: [notes],
-				versionNumber: [versionNumber],
+				versionNumber: [versionNumber!],
 			})}`,
 		);
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = (
-		id: number,
-		notes: string,
-		hardDelete: boolean,
-	): Promise<void> => {
+	public delete = ({
+		id,
+		notes,
+		hardDelete,
+	}: {
+		id: number;
+		notes: string;
+		hardDelete: boolean;
+	}): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
 				`/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
@@ -47,11 +56,15 @@ export default class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getList = (
-		query: string,
-		nameMatchMode: NameMatchMode,
-		maxResults: number,
-	): Promise<PartialFindResultContract<VenueForApiContract>> => {
+	public getList = ({
+		query,
+		nameMatchMode,
+		maxResults,
+	}: {
+		query: string;
+		nameMatchMode: NameMatchMode;
+		maxResults: number;
+	}): Promise<PartialFindResultContract<VenueForApiContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/venues');
 		var data = {
 			query: query,

@@ -102,7 +102,7 @@ export default class ManageWebhooksViewModel {
 		});
 
 		this.loadWebhooks = async (): Promise<void> => {
-			const result = await this.adminRepo.getWebhooks();
+			const result = await this.adminRepo.getWebhooks({});
 			this.webhooks(
 				_.map(
 					result,
@@ -147,7 +147,7 @@ export default class ManageWebhooksViewModel {
 
 	public save = async (): Promise<void> => {
 		const webhooks = this.activeWebhooks();
-		await this.adminRepo.saveWebhooks(webhooks);
+		await this.adminRepo.saveWebhooks({ webhooks: webhooks });
 		ui.showSuccessMessage('Saved');
 		await this.loadWebhooks();
 	};

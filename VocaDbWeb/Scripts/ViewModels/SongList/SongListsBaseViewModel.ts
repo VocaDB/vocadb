@@ -4,6 +4,7 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
+import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import moment from 'moment';
 
@@ -41,7 +42,10 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		this.tagFilters.tags.subscribe(this.clear);
 
 		resourceRepo
-			.getList(cultureCode, ['songListSortRuleNames'])
+			.getList({
+				cultureCode: vdb.values.uiCulture,
+				setNames: ['songListSortRuleNames'],
+			})
 			.then((resources) => {
 				this.resources(resources);
 				this.clear();

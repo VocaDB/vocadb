@@ -75,26 +75,28 @@ export default class EditableCommentsViewModel {
 			message: comment,
 		};
 
-		this.repo.createComment(this.entryId, commentContract).then((result) => {
-			var processed = this.processComment(result);
-			this.paging.totalItems(this.paging.totalItems() + 1);
+		this.repo
+			.createComment({ entryId: this.entryId, contract: commentContract })
+			.then((result) => {
+				var processed = this.processComment(result);
+				this.paging.totalItems(this.paging.totalItems() + 1);
 
-			if (this.ascending) {
-				this.comments.push(processed);
-				this.paging.goToLastPage();
-			} else {
-				this.comments.unshift(processed);
-				this.paging.goToFirstPage();
-			}
+				if (this.ascending) {
+					this.comments.push(processed);
+					this.paging.goToLastPage();
+				} else {
+					this.comments.unshift(processed);
+					this.paging.goToFirstPage();
+				}
 
-			if (this.onCommentCreated) this.onCommentCreated(_.clone(processed));
-		});
+				if (this.onCommentCreated) this.onCommentCreated(_.clone(processed));
+			});
 	};
 
 	public deleteComment = (comment: CommentViewModel): void => {
 		this.comments.remove(comment);
 
-		this.repo.deleteComment(comment.id);
+		this.repo.deleteComment({ commentId: comment.id });
 		this.paging.totalItems(this.paging.totalItems() - 1);
 	};
 
@@ -103,7 +105,7 @@ export default class EditableCommentsViewModel {
 	public initComments = (): void => {
 		if (this.commentsLoaded) return;
 
-		this.repo.getComments(this.entryId).then((contracts) => {
+		this.repo.getComments({ entryId: this.entryId }).then((contracts) => {
 			this.setComments(contracts);
 		});
 
@@ -132,7 +134,10 @@ export default class EditableCommentsViewModel {
 		this.editCommentModel()!.saveChanges();
 		var editedContract = this.editCommentModel()!.toContract();
 
-		this.repo.updateComment(editedContract.id!, editedContract);
+		this.repo.updateComment({
+			commentId: editedContract.id!,
+			contract: editedContract,
+		});
 
 		this.editCommentModel(null!);
 	};
