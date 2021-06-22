@@ -42,12 +42,18 @@ interface VdbStatic {
 	values: VdbValuesStatic;
 }
 
-const vdb = {
+const vdb: VdbStatic = {
+	functions: {} as VdbFunctionsStatic,
+	resources: {} as VdbResourcesStatic,
 	values: {
+		baseAddress: '/',
+		isLoggedIn: false,
 		loggedUserId: 0,
 		languagePreference: ContentLanguagePreference.Default,
+		culture: '',
+		uiCulture: '',
 	},
-} as VdbStatic;
+};
 
 export default vdb;
 
