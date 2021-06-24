@@ -96,7 +96,7 @@ export default class PlayListViewModel {
 				this.playSong(song);
 			} else {
 				// Song not loaded, load that one song
-				this.updateResults(false, index, () => {
+				this.updateResults(false, index).then(() => {
 					this.playSong(this.getSongWithPlayListIndex(index));
 				});
 			}
@@ -109,7 +109,7 @@ export default class PlayListViewModel {
 			} else {
 				if (this.hasMoreSongs()) {
 					this.paging.nextPage();
-					this.updateResults(false, null!, () => {
+					this.updateResults(false, null!).then(() => {
 						this.playSong(this.page()[index]);
 					});
 				} else {
@@ -139,17 +139,17 @@ export default class PlayListViewModel {
 
 	public songsLoaded = ko.computed(() => this.page().length);
 
-	public updateResultsWithTotalCount = (callback?: () => void): void =>
-		this.updateResults(true, null!, callback);
-	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): Promise<void> =>
+		this.updateResults(true, null!);
+	public updateResultsWithoutTotalCount = (): Promise<void> =>
+		this.updateResults(false);
 
 	public updateResults = (
 		clearResults: boolean = true,
 		songWithIndex?: number,
-		callback?: () => void,
-	): void => {
+	): Promise<void> => {
 		// Disable duplicate updates
-		if (this.pauseNotifications) return;
+		if (this.pauseNotifications) return Promise.resolve();
 
 		this.pauseNotifications = true;
 		this.loading(true);
@@ -170,15 +170,17 @@ export default class PlayListViewModel {
 			? PVPlayerViewModel.autoplayPVServicesString
 			: 'Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File,LocalFile';
 
-		this.songListRepo.getSongs(
-			services,
-			pagingProperties,
-			SongOptionalFields.create(
-				SongOptionalField.AdditionalNames,
-				SongOptionalField.ThumbUrl,
-			),
-			this.lang,
-			(result: PartialFindResultContract<ISongForPlayList>) => {
+		return this.songListRepo
+			.getSongs(
+				services,
+				pagingProperties,
+				SongOptionalFields.create(
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.ThumbUrl,
+				),
+				this.lang,
+			)
+			.then((result: PartialFindResultContract<ISongForPlayList>) => {
 				this.pauseNotifications = false;
 
 				if (pagingProperties.getTotalCount)
@@ -203,10 +205,7 @@ export default class PlayListViewModel {
 						: result.items[0];
 					this.playSong(song);
 				}
-
-				if (callback) callback();
-			},
-		);
+			});
 	};
 }
 
@@ -226,6 +225,5 @@ export interface IPlayListRepository {
 		paging: PagingProperties,
 		fields: SongOptionalFields,
 		lang: ContentLanguagePreference,
-		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-	): void;
+	): Promise<PartialFindResultContract<ISongForPlayList>>;
 }

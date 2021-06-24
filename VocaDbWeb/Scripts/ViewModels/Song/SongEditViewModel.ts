@@ -275,10 +275,11 @@ export default class SongEditViewModel {
 		this.notes = new EnglishTranslatedStringEditViewModel(data.notes);
 		this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
 			data.originalVersion,
-			(entryId, callback) =>
-				songRepository
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				songRepository.getOne({
+					id: entryId,
+					lang: vdb.values.languagePreference,
+				}),
 		);
 		this.publishDate = ko.observable(
 			data.publishDate ? moment(data.publishDate).toDate() : null!,

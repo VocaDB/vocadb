@@ -45,8 +45,7 @@ export default class PlayListRepositoryForSongsAdapter
 		paging: PagingProperties,
 		fields: SongOptionalFields,
 		lang: ContentLanguagePreference,
-		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-	): void => {
+	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.songRepo
 			.getList({
 				paging: paging,
@@ -94,7 +93,6 @@ export default class PlayListRepositoryForSongsAdapter
 					};
 				});
 
-				callback({ items: mapped, totalCount: result.totalCount });
+				return { items: mapped, totalCount: result.totalCount };
 			});
-	};
 }

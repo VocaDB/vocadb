@@ -9,12 +9,8 @@ import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class AlbumMergeViewModel {
 	public constructor(repo: AlbumRepository, id: number) {
-		this.target = new BasicEntryLinkViewModel<AlbumContract>(
-			null!,
-			(entryId, callback) =>
-				repo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+		this.target = new BasicEntryLinkViewModel<AlbumContract>(null!, (entryId) =>
+			repo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 
 		this.targetSearchParams = {

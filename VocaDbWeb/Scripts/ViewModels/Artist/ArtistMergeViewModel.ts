@@ -11,10 +11,8 @@ export default class ArtistMergeViewModel {
 	public constructor(repo: ArtistRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<ArtistContract>(
 			null!,
-			(entryId, callback) =>
-				repo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				repo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
 		);
 
 		this.targetSearchParams = {

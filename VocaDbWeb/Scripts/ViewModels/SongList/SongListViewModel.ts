@@ -1,6 +1,7 @@
 import CommentContract from '@DataContracts/CommentContract';
 import SongInListContract from '@DataContracts/Song/SongInListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import { SongOptionalField } from '@Models/EntryOptionalFields';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
@@ -65,7 +66,7 @@ export default class SongListViewModel {
 		);
 
 		this.resourceManager = new ResourcesManager(resourceRepo, cultureCode);
-		this.resourceManager.loadResources(null!, 'songSortRuleNames');
+		this.resourceManager.loadResources('songSortRuleNames');
 		this.sortName = ko.computed(() => {
 			if (this.sort() === '') return defaultSortRuleName;
 
@@ -122,10 +123,8 @@ export default class SongListViewModel {
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepo
-						.getSongListTagSelections({ songListId: this.listId })
-						.then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepo.getSongListTagSelections({ songListId: this.listId }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
 						.updateSongListTags({ songListId: this.listId, tags: tags })

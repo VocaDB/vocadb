@@ -1,4 +1,6 @@
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
+import SongContract from '@DataContracts/Song/SongContract';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
@@ -60,7 +62,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			this.showTags = this.searchViewModel.showTags;
 		} else {
 			this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
-			this.resourceManager.loadResources(null!, 'songSortRuleNames');
+			this.resourceManager.loadResources('songSortRuleNames');
 			this.showTags = ko.observable(false);
 		}
 
@@ -71,10 +73,10 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
 		this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
 			{ id: eventId, name: null! },
-			(entryId, callback) =>
+			(entryId) =>
 				this.eventRepo
-					? this.eventRepo.getOne({ id: entryId }).then(callback)
-					: null,
+					? this.eventRepo.getOne({ id: entryId })
+					: Promise.resolve(undefined),
 		);
 
 		if (eventId) this.releaseEvent.id(eventId);
@@ -95,10 +97,11 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
 		this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
 			null!,
-			(entryId, callback) =>
-				this.songRepo
-					.getOne({ id: entryId, lang: vdb.values.languagePreference })
-					.then(callback),
+			(entryId) =>
+				this.songRepo.getOne({
+					id: entryId,
+					lang: vdb.values.languagePreference,
+				}),
 		);
 
 		this.minMilliBpm = ko
@@ -188,13 +191,12 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			tag,
 			childTags,
 			status,
-			callback,
-		): void => {
+		): Promise<PartialFindResultContract<SongContract>> => {
 			if (this.viewMode() === 'PlayList') {
 				this.playListViewModel.updateResultsWithTotalCount();
-				callback({ items: [], totalCount: 0 });
+				return Promise.resolve({ items: [], totalCount: 0 });
 			} else {
-				this.songRepo
+				return this.songRepo
 					.getList({
 						paging: pagingProperties,
 						lang: vdb.values.languagePreference,
@@ -246,7 +248,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 							}
 						});
 
-						callback(result);
+						return result;
 					});
 			}
 		};

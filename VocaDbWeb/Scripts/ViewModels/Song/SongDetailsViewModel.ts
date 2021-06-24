@@ -3,6 +3,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
@@ -240,7 +241,7 @@ export default class SongDetailsViewModel {
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,
-			(callback) => {
+			() =>
 				repository
 					.getOneWithComponents({
 						id: this.id,
@@ -252,9 +253,8 @@ export default class SongDetailsViewModel {
 							.filter(ArtistHelper.isValidForPersonalDescription)
 							.map((a) => a.artist)
 							.value();
-						callback(artists);
-					});
-			},
+						return artists;
+					}),
 			(vm) =>
 				repository.updatePersonalDescription({
 					songId: this.id,
@@ -281,18 +281,15 @@ export default class SongDetailsViewModel {
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepository
-						.getSongTagSelections({ songId: this.id })
-						.then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepository.getSongTagSelections({ songId: this.id }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepository
 						.updateSongTags({ songId: this.id, tags: tags })
 						.then(this.tagUsages.updateTagUsages),
 			},
 			EntryType.Song,
-			(callback) =>
-				repository.getTagSuggestions({ songId: this.id }).then(callback),
+			() => repository.getTagSuggestions({ songId: this.id }),
 		);
 
 		this.tagUsages = new TagListViewModel(data.tagUsages);

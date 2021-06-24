@@ -61,10 +61,8 @@ export default class PVPlayerViewModel {
 				this.currentPlayer &&
 				this.songHasPVService(song, this.currentPlayer.service)
 			) {
-				this.loadPVId(
-					this.currentPlayer.service,
-					song.song.id,
-					this.currentPlayer.play,
+				this.loadPVId(this.currentPlayer.service, song.song.id).then((pvId) =>
+					this.currentPlayer.play(pvId),
 				);
 			} else {
 				// Detech old player
@@ -127,8 +125,7 @@ export default class PVPlayerViewModel {
 						this.loadPVId(
 							this.currentPlayer.service,
 							this.selectedSong()!.song.id,
-							this.currentPlayer.play,
-						);
+						).then((pvId) => this.currentPlayer.play(pvId));
 					});
 					return;
 				}
@@ -147,15 +144,8 @@ export default class PVPlayerViewModel {
 	];
 	private currentPlayer: IPVPlayer = null!;
 
-	private loadPVId = (
-		service: PVService,
-		songId: number,
-		callback: (pvId: string) => void,
-	): void => {
-		this.songRepo
-			.getPvId({ songId: songId, pvService: service })
-			.then(callback);
-	};
+	private loadPVId = (service: PVService, songId: number): Promise<string> =>
+		this.songRepo.getPvId({ songId: songId, pvService: service });
 
 	private players: { [index: string]: IPVPlayer };
 	public nextSong!: () => void;

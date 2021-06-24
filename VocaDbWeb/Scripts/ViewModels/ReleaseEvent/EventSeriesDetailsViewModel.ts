@@ -1,3 +1,4 @@
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import EntryType from '@Models/EntryType';
 import UserRepository from '@Repositories/UserRepository';
@@ -13,10 +14,8 @@ export default class EventSeriesDetailsViewModel {
 	) {
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepo
-						.getEventSeriesTagSelections({ seriesId: this.seriesId })
-						.then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepo.getEventSeriesTagSelections({ seriesId: this.seriesId }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
 						.updateEventSeriesTags({ seriesId: this.seriesId, tags: tags })

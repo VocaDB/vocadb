@@ -11,22 +11,17 @@ export default class SelfDescriptionViewModel {
 		author: ArtistApiContract,
 		text: string,
 		artistRepo: ArtistRepository,
-		private getArtists: (callback: (result: ArtistContract[]) => void) => void,
+		private getArtists: () => Promise<ArtistContract[]>,
 		private saveFunc: (vm: SelfDescriptionViewModel) => void,
 	) {
 		this.author = new BasicEntryLinkViewModel<ArtistApiContract>(
 			author,
-			(artistId, callback) => {
-				artistRepo
-					.getOneWithComponents({
-						id: artistId,
-						fields: 'MainPicture',
-						lang: vdb.values.languagePreference,
-					})
-					.then((artist) => {
-						callback(artist);
-					});
-			},
+			(artistId) =>
+				artistRepo.getOneWithComponents({
+					id: artistId,
+					fields: 'MainPicture',
+					lang: vdb.values.languagePreference,
+				}),
 		);
 		this.text = ko.observable(text);
 	}
@@ -40,7 +35,7 @@ export default class SelfDescriptionViewModel {
 		this.originalText = this.text();
 
 		if (!this.artists().length) {
-			this.getArtists((artists) => {
+			this.getArtists().then((artists) => {
 				this.artists(artists);
 				this.editing(true);
 			});

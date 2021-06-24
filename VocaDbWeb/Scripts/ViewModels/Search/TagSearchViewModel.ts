@@ -1,3 +1,4 @@
+import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
@@ -25,24 +26,20 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
 			tag,
 			childTags,
 			status,
-			callback,
-		): void => {
-			this.tagRepo
-				.getList({
-					queryParams: {
-						start: pagingProperties.start,
-						maxResults: pagingProperties.maxEntries,
-						getTotalCount: pagingProperties.getTotalCount,
-						lang: vdb.values.languagePreference,
-						query: searchTerm,
-						sort: this.sort(),
-						allowAliases: this.allowAliases(),
-						categoryName: this.categoryName(),
-						fields: 'AdditionalNames,MainPicture',
-					},
-				})
-				.then(callback);
-		};
+		): Promise<PartialFindResultContract<TagApiContract>> =>
+			this.tagRepo.getList({
+				queryParams: {
+					start: pagingProperties.start,
+					maxResults: pagingProperties.maxEntries,
+					getTotalCount: pagingProperties.getTotalCount,
+					lang: vdb.values.languagePreference,
+					query: searchTerm,
+					sort: this.sort(),
+					allowAliases: this.allowAliases(),
+					categoryName: this.categoryName(),
+					fields: 'AdditionalNames,MainPicture',
+				},
+			});
 	}
 
 	public allowAliases = ko.observable(false);

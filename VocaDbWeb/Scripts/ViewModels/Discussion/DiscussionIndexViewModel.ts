@@ -102,27 +102,20 @@ export default class DiscussionIndexViewModel {
 		this.loadTopics(this.selectedFolder()!);
 	};
 
-	private loadTopics = (
-		folder: DiscussionFolderContract,
-		callback?: () => void,
-	): void => {
+	private loadTopics = (folder: DiscussionFolderContract): Promise<void> => {
 		if (!folder) {
 			this.topics([]);
 
-			if (callback) callback();
-
-			return;
+			return Promise.resolve();
 		}
 
 		const paging = this.paging.getPagingProperties(true);
-		this.repo
+		return this.repo
 			.getTopicsForFolder({ folderId: folder.id, paging: paging })
 			.then((result) => {
 				this.topics(result.items);
 
 				if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
-
-				if (callback) callback();
 			});
 	};
 
@@ -161,7 +154,9 @@ export default class DiscussionIndexViewModel {
 
 	private selectTopicById = (topicId: number): void => {
 		if (!topicId) {
-			this.loadTopics(this.selectedFolder()!, () => this.selectedTopic(null!));
+			this.loadTopics(this.selectedFolder()!).then(() =>
+				this.selectedTopic(null!),
+			);
 			return;
 		}
 

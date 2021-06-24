@@ -33,8 +33,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
 		paging: PagingProperties,
 		fields: SongOptionalFields,
 		lang: ContentLanguagePreference,
-		callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
-	): void => {
+	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.userRepo
 			.getRatedSongsList({
 				userId: this.userId,
@@ -62,11 +61,10 @@ export default class PlayListRepositoryForRatedSongsAdapter
 						};
 					});
 
-					callback({
+					return {
 						items: mapped,
 						totalCount: result.totalCount,
-					});
+					};
 				},
 			);
-	};
 }

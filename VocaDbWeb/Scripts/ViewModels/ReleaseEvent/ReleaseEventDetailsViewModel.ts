@@ -1,4 +1,5 @@
 import CommentContract from '@DataContracts/CommentContract';
+import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import UserBaseContract from '@DataContracts/User/UserBaseContract';
 import EntryType from '@Models/EntryType';
@@ -67,10 +68,8 @@ export default class ReleaseEventDetailsViewModel {
 
 		this.tagsEditViewModel = new TagsEditViewModel(
 			{
-				getTagSelections: (callback): Promise<void> =>
-					userRepo
-						.getEventTagSelections({ eventId: this.eventId })
-						.then(callback),
+				getTagSelections: (): Promise<TagSelectionContract[]> =>
+					userRepo.getEventTagSelections({ eventId: this.eventId }),
 				saveTagSelections: (tags): Promise<void> =>
 					userRepo
 						.updateEventTags({ eventId: this.eventId, tags: tags })

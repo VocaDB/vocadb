@@ -11,7 +11,7 @@ export default class BasicEntryLinkViewModel<
 	// entryFunc: function for loading the entry asynchronously by Id.
 	public constructor(
 		entry?: TEntry,
-		entryFunc?: (entryId: number, callback: (entry: TEntry) => void) => void,
+		entryFunc?: (entryId: number) => Promise<TEntry | undefined>,
 	) {
 		this.entry = ko.observable(entry && entry.id ? entry : null!);
 		this.name = ko.computed(() => (this.entry() ? this.entry().name! : null!));
@@ -21,7 +21,7 @@ export default class BasicEntryLinkViewModel<
 			write: (entryId: number) => {
 				// Get entry by ID or clear.
 				if (entryId) {
-					entryFunc!(entryId, this.entry);
+					entryFunc!(entryId).then((entry) => this.entry(entry!));
 				} else {
 					this.entry(null!);
 				}
