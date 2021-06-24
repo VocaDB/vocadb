@@ -1,3 +1,5 @@
+// DEPRECATED. USE THIS SCRIPT AT YOUR OWN RISK.
+
 // Add qtip tooltip to all VocaDB album and artist links on page
 
 interface jQueryInt {
