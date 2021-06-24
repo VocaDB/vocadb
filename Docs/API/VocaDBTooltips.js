@@ -1,4 +1,5 @@
-// DEPRECATED. USE THIS SCRIPT AT YOUR OWN RISK.
+// DEPRECATED. This script is not being maintained and may be a security issue. USE IT AT YOUR OWN RISK.
+// Please post a comment at https://github.com/VocaDB/vocadb/issues/892 if you have need for an updated tooltip script.
 
 // Add qtip tooltip to all VocaDB album and artist links on page
 jQuery(document).ready(function () {
