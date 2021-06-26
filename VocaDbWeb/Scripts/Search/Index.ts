@@ -53,7 +53,6 @@ const SearchIndex = (model: {
 		var autoplay = model.autoplay;
 		var shuffle = model.shuffle;
 		var pageSize = model.pageSize;
-		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = functions.mapAbsoluteUrl('/Content/unknown.png');
 
 		const httpClient = new HttpClient();
@@ -82,7 +81,6 @@ const SearchIndex = (model: {
 			resourceRepo,
 			userRepo,
 			unknownPictureUrl,
-			loggedUserId,
 			searchType,
 			query,
 			tagIds,

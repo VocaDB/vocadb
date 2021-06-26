@@ -113,7 +113,6 @@ const SongDetails = (
 			showTranslatedDescription,
 			jsonModel,
 			reportTypes,
-			vdb.values.loggedUserId,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

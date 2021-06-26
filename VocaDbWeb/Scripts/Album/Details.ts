@@ -183,7 +183,6 @@ const AlbumDetails = (
 			artistRepo,
 			jsonModel,
 			reportTypes,
-			vdb.values.loggedUserId,
 			canDeleteAllComments,
 			formatString,
 			showTranslatedDescription,

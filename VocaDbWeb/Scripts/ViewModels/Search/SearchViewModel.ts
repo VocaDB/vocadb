@@ -45,7 +45,6 @@ export default class SearchViewModel {
 		resourceRepo: ResourceRepository,
 		userRepo: UserRepository,
 		unknownPictureUrl: string,
-		loggedUserId: number,
 		searchType: string,
 		searchTerm: string,
 		tagIds: number[],
@@ -84,7 +83,7 @@ export default class SearchViewModel {
 		this.artistSearchViewModel = new ArtistSearchViewModel(
 			this,
 			artistRepo,
-			loggedUserId,
+			vdb.values.loggedUserId,
 			artistType,
 		);
 
@@ -105,7 +104,7 @@ export default class SearchViewModel {
 			this,
 			eventRepo,
 			artistRepo,
-			loggedUserId,
+			vdb.values.loggedUserId,
 			sort,
 			artistId,
 			eventCategory,
@@ -119,7 +118,7 @@ export default class SearchViewModel {
 			userRepo,
 			eventRepo,
 			resourceRepo,
-			loggedUserId,
+			vdb.values.loggedUserId,
 			isSong ? sort : null!,
 			isSong ? artistId : null!,
 			isSong ? childVoicebanks : null!,

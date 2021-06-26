@@ -188,7 +188,6 @@ export default class SongDetailsViewModel {
 		showTranslatedDescription: boolean,
 		data: SongDetailsAjax,
 		reportTypes: IEntryReportType[],
-		loggedUserId: number,
 		canDeleteAllComments: boolean,
 		ratingCallback: () => void,
 	) {
@@ -204,7 +203,6 @@ export default class SongDetailsViewModel {
 		this.comments = new EditableCommentsViewModel(
 			repository,
 			this.id,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,

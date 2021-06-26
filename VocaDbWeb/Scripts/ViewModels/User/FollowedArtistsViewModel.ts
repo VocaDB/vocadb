@@ -14,7 +14,7 @@ export default class FollowedArtistsViewModel {
 		private userRepo: UserRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private loggedUserId: number,
+		private userId: number,
 	) {
 		this.tagFilters = new TagFilters(tagRepo);
 
@@ -64,7 +64,7 @@ export default class FollowedArtistsViewModel {
 
 		this.userRepo
 			.getFollowedArtistsList({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				paging: pagingProperties,
 				lang: vdb.values.languagePreference,
 				tagIds: this.tagFilters.tagIds(),

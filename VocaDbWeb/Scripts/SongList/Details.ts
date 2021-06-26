@@ -50,7 +50,6 @@ const SongListDetails = (
 			resourceRepo,
 			defaultSortRuleName,
 			latestComments,
-			vdb.values.loggedUserId,
 			listId,
 			tagUsages,
 			pvPlayersFactory,

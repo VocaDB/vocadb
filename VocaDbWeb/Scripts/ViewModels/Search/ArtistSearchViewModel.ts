@@ -14,7 +14,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 	public constructor(
 		searchViewModel: SearchViewModel,
 		private readonly artistRepo: ArtistRepository,
-		private readonly loggedUserId: number,
+		/* TODO: remove */ private readonly loggedUserId: number,
 		artistType: string,
 	) {
 		super(searchViewModel);

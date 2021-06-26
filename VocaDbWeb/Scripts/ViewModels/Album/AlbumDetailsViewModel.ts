@@ -65,7 +65,6 @@ export default class AlbumDetailsViewModel {
 		artistRepository: ArtistRepository,
 		data: AlbumDetailsAjax,
 		reportTypes: IEntryReportType[],
-		loggedUserId: number,
 		canDeleteAllComments: boolean,
 		formatString: string,
 		showTranslatedDescription: boolean,
@@ -78,7 +77,6 @@ export default class AlbumDetailsViewModel {
 		this.comments = new EditableCommentsViewModel(
 			repo,
 			this.id,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -146,7 +144,6 @@ export default class AlbumDetailsViewModel {
 			this.id,
 			canDeleteAllComments,
 			canDeleteAllComments,
-			loggedUserId,
 		);
 	}
 }

@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import ICommentRepository from '@Repositories/ICommentRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
@@ -11,7 +12,6 @@ export default class EditableCommentsViewModel {
 	public constructor(
 		private repo: ICommentRepository,
 		private entryId: number,
-		private loggedUserId: number,
 		private canDeleteAllComments: boolean,
 		private canEditAllComments: boolean,
 		private ascending: boolean,
@@ -47,14 +47,14 @@ export default class EditableCommentsViewModel {
 		return (
 			this.canDeleteAllComments ||
 			this.canEditAllComments ||
-			(comment.author && comment.author.id === this.loggedUserId)
+			(comment.author && comment.author.id === vdb.values.loggedUserId)
 		);
 	};
 
 	private canEditComment = (comment: CommentContract): boolean => {
 		return (
 			this.canEditAllComments ||
-			(comment.author && comment.author.id === this.loggedUserId)
+			(comment.author && comment.author.id === vdb.values.loggedUserId)
 		);
 	};
 
@@ -71,7 +71,7 @@ export default class EditableCommentsViewModel {
 		this.newComment('');
 
 		var commentContract: CommentContract = {
-			author: { id: this.loggedUserId },
+			author: { id: vdb.values.loggedUserId },
 			message: comment,
 		};
 

@@ -32,7 +32,6 @@ const EventDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 		$('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
-		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -49,7 +48,7 @@ const EventDetails = (
 			userRepo,
 			latestComments,
 			reportTypes,
-			loggedUserId,
+			vdb.values.loggedUserId,
 			model.id,
 			eventAssociationType,
 			users,

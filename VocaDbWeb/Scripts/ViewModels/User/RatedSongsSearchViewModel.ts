@@ -35,7 +35,7 @@ export default class RatedSongsSearchViewModel {
 		private songRepo: SongRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private loggedUserId: number,
+		private userId: number,
 		sort: string,
 		groupByRating: boolean,
 		pvPlayersFactory: PVPlayersFactory,
@@ -76,7 +76,7 @@ export default class RatedSongsSearchViewModel {
 		);
 		var songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(
 			userRepo,
-			loggedUserId,
+			userId,
 			this.searchTerm,
 			this.sort,
 			this.tagFilters.tagIds,
@@ -152,7 +152,7 @@ export default class RatedSongsSearchViewModel {
 
 		this.userRepo
 			.getSongLists({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				query: undefined,
 				paging: { start: 0, maxEntries: 50, getTotalCount: false },
 				tagIds: [],
@@ -201,7 +201,7 @@ export default class RatedSongsSearchViewModel {
 
 		this.userRepo
 			.getRatedSongsList({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				paging: pagingProperties,
 				lang: vdb.values.languagePreference,
 				query: this.searchTerm(),

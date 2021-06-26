@@ -44,7 +44,6 @@ export default class SongListViewModel {
 		resourceRepo: ResourceRepository,
 		defaultSortRuleName: string,
 		latestComments: CommentContract[],
-		loggedUserId: number,
 		private listId: number,
 		tagUsages: TagUsageForApiContract[],
 		pvPlayersFactory: PVPlayersFactory,
@@ -54,7 +53,6 @@ export default class SongListViewModel {
 		this.comments = new EditableCommentsViewModel(
 			songListRepo.getComments({}),
 			listId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,

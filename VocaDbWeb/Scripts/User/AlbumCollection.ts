@@ -15,8 +15,6 @@ const UserAlbumCollection = (
 	publicCollection: boolean,
 ): void => {
 	$(document).ready(function () {
-		var loggedUserId = model.user.id;
-
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -29,7 +27,7 @@ const UserAlbumCollection = (
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			loggedUserId,
+			model.user.id,
 			publicCollection,
 		);
 		ko.applyBindings(vm);

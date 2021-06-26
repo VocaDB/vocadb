@@ -157,7 +157,6 @@ export default class UserDetailsViewModel {
 
 	public constructor(
 		private readonly userId: number,
-		private loggedUserId: number,
 		private lastLoginAddress: string,
 		private canEditAllComments: boolean,
 		private httpClient: HttpClient,
@@ -171,12 +170,11 @@ export default class UserDetailsViewModel {
 		public ratedSongsViewModel: RatedSongsSearchViewModel,
 		latestComments: CommentContract[],
 	) {
-		var canDeleteAllComments = userId === loggedUserId;
+		var canDeleteAllComments = userId === vdb.values.loggedUserId;
 
 		this.comments = new EditableCommentsViewModel(
 			userRepo,
 			userId,
-			loggedUserId,
 			canDeleteAllComments,
 			canEditAllComments,
 			false,

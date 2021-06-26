@@ -92,7 +92,6 @@ const ArtistDetails = (
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
 
-		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
 		const httpClient = new HttpClient();
@@ -122,7 +121,6 @@ const ArtistDetails = (
 			resourceRepo,
 			userRepository,
 			reportTypes,
-			loggedUserId,
 			canDeleteAllComments,
 			pvPlayersFactory,
 			latestComments,

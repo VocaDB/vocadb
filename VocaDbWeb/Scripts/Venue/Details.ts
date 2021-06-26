@@ -22,19 +22,13 @@ const VenueDetails = (
 		$('#createEventLink').button({ icons: { primary: 'ui-icon-plus' } });
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 
-		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
 		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var venueRepo = repoFactory.venueRepository();
 
-		var vm = new VenueDetailsViewModel(
-			venueRepo,
-			reportTypes,
-			loggedUserId,
-			model.id,
-		);
+		var vm = new VenueDetailsViewModel(venueRepo, reportTypes, model.id);
 		ko.applyBindings(vm);
 	});
 };

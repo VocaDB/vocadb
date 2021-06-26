@@ -14,7 +14,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 		searchViewModel: SearchViewModel,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
-		public loggedUserId: number,
+		/* TODO: remove */ public loggedUserId: number,
 		sort: string,
 		artistId: number[],
 		category: string,

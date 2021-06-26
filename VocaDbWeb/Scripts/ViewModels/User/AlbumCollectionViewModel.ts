@@ -22,7 +22,7 @@ export default class AlbumCollectionViewModel {
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
 		private resourceRepo: ResourceRepository,
-		private loggedUserId: number,
+		private userId: number,
 		public publicCollection: boolean,
 		initialize = true,
 	) {
@@ -137,7 +137,7 @@ export default class AlbumCollectionViewModel {
 
 		this.userRepo
 			.getAlbumCollectionList({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				paging: pagingProperties,
 				lang: vdb.values.languagePreference,
 				query: this.searchTerm(),

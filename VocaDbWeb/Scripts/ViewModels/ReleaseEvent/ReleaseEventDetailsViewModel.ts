@@ -28,7 +28,7 @@ export default class ReleaseEventDetailsViewModel {
 		private readonly userRepo: UserRepository,
 		latestComments: CommentContract[],
 		reportTypes: IEntryReportType[],
-		public loggedUserId: number,
+		/* TODO: remove */ public loggedUserId: number,
 		private readonly eventId: number,
 		eventAssociationType: UserEventRelationshipType,
 		usersAttending: UserBaseContract[],
@@ -43,7 +43,6 @@ export default class ReleaseEventDetailsViewModel {
 		this.comments = new EditableCommentsViewModel(
 			commentRepo,
 			eventId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -104,7 +103,7 @@ export default class ReleaseEventDetailsViewModel {
 		this.eventAssociationType(null!);
 		var link = _.find(
 			this.usersAttending(),
-			(u) => u.id === this.loggedUserId,
+			(u) => u.id === vdb.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);
 	};
@@ -132,7 +131,7 @@ export default class ReleaseEventDetailsViewModel {
 		this.eventAssociationType(UserEventRelationshipType.Interested);
 		var link = _.find(
 			this.usersAttending(),
-			(u) => u.id === this.loggedUserId,
+			(u) => u.id === vdb.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);
 	};

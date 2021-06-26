@@ -50,7 +50,6 @@ const UserDetails = (
 		moment.locale(vdb.values.culture);
 
 		var userId = model.id;
-		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -101,7 +100,6 @@ const UserDetails = (
 
 		var viewModel = new UserDetailsViewModel(
 			userId,
-			loggedUserId,
 			lastLoginAddress,
 			canDeleteComments,
 			httpClient,

@@ -16,7 +16,6 @@ export default class TagDetailsViewModel {
 		private userRepo: UserRepository,
 		latestComments: CommentContract[],
 		reportTypes: IEntryReportType[],
-		loggedUserId: number,
 		private tagId: number,
 		canDeleteAllComments: boolean,
 		showTranslatedDescription: boolean,
@@ -25,7 +24,6 @@ export default class TagDetailsViewModel {
 		this.comments = new EditableCommentsViewModel(
 			repo.getComments({}),
 			tagId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -51,7 +49,7 @@ export default class TagDetailsViewModel {
 			showTranslatedDescription,
 		);
 		this.isFollowed = ko.observable(isFollowed);
-		this.isLoggedIn = !!loggedUserId;
+		this.isLoggedIn = !!vdb.values.loggedUserId;
 	}
 
 	public comments: EditableCommentsViewModel;

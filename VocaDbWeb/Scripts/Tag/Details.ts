@@ -280,7 +280,6 @@ const TagDetails = (
 			userRepo,
 			latestComments,
 			reportTypes,
-			vdb.values.loggedUserId,
 			model.id,
 			canDeleteAllComments,
 			showTranslatedDescription,

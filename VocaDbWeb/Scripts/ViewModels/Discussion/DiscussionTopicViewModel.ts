@@ -2,6 +2,7 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
+import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -9,7 +10,6 @@ import EditableCommentsViewModel from '../EditableCommentsViewModel';
 export default class DiscussionTopicViewModel {
 	public constructor(
 		private repo: DiscussionRepository,
-		private loggedUserId: number,
 		canDeleteAllComments: boolean,
 		contract: DiscussionTopicContract,
 		private folders: DiscussionFolderContract[],
@@ -19,7 +19,6 @@ export default class DiscussionTopicViewModel {
 		this.comments = new EditableCommentsViewModel(
 			repo,
 			contract.id,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			true,
@@ -30,7 +29,7 @@ export default class DiscussionTopicViewModel {
 	public beginEditTopic = (): void => {
 		this.editModel(
 			new DiscussionTopicEditViewModel(
-				this.loggedUserId,
+				vdb.values.loggedUserId,
 				this.folders,
 				this.contract(),
 			),
