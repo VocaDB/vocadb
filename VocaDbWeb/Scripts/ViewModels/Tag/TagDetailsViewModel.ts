@@ -2,7 +2,6 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
-import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

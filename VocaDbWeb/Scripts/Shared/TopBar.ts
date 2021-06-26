@@ -1,6 +1,5 @@
 import UserRepository from '@Repositories/UserRepository';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 
 import HttpClient from './HttpClient';

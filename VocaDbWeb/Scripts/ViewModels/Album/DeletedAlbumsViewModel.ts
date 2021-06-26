@@ -1,6 +1,5 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import AlbumRepository from '@Repositories/AlbumRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

@@ -15,7 +15,6 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, {
 	Computed,

@@ -11,7 +11,6 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import { Options } from 'highcharts';
 import $ from 'jquery';
 import ko from 'knockout';

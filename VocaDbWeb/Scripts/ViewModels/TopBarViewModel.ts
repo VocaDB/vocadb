@@ -2,7 +2,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import EntryReportRepository from '@Repositories/EntryReportRepository';
 import UserRepository from '@Repositories/UserRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 
 // View model for the top bar.

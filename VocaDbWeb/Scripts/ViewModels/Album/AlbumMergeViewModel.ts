@@ -2,7 +2,6 @@ import AlbumContract from '@DataContracts/Album/AlbumContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';

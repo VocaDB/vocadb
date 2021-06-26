@@ -1,6 +1,5 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 

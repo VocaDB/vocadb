@@ -3,7 +3,6 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';

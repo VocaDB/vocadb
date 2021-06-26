@@ -4,7 +4,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';

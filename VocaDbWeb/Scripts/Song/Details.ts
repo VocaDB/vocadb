@@ -3,7 +3,6 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import SongDetailsViewModel, {
 	SongDetailsAjax,

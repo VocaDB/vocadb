@@ -2,7 +2,6 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ReleaseEventEditViewModel from '@ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

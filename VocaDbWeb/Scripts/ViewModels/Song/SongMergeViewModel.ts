@@ -2,7 +2,6 @@ import SongContract from '@DataContracts/Song/SongContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import SongRepository from '@Repositories/SongRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';

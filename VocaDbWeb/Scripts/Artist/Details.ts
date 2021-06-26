@@ -4,7 +4,6 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';

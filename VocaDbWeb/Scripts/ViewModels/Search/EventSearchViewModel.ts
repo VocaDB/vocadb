@@ -2,7 +2,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';

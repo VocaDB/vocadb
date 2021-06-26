@@ -3,7 +3,6 @@ import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApi
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import TagFilters from '../Search/TagFilters';

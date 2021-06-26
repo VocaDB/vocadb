@@ -1,6 +1,5 @@
 import CommentContract from '@DataContracts/CommentContract';
 import ICommentRepository from '@Repositories/ICommentRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 

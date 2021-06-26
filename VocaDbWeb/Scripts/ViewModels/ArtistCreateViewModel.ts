@@ -5,7 +5,6 @@ import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 
 import WebLinkEditViewModel from './WebLinkEditViewModel';

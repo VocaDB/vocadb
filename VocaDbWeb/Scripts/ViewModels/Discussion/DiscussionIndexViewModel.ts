@@ -2,7 +2,6 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 

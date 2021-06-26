@@ -16,7 +16,6 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 

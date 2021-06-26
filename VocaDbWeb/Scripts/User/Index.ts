@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ListUsersViewModel from '@ViewModels/User/ListUsersViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

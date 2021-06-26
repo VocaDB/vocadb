@@ -4,7 +4,6 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import TagDetailsViewModel from '@ViewModels/Tag/TagDetailsViewModel';
 import $ from 'jquery';

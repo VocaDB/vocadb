@@ -2,7 +2,6 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import ResourcesManager from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

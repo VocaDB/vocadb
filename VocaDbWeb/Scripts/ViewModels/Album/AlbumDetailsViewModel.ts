@@ -12,7 +12,6 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';

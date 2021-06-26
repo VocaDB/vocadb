@@ -7,7 +7,6 @@ import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';

@@ -3,7 +3,6 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import moment from 'moment';
 

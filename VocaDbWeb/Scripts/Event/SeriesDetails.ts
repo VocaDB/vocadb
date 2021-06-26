@@ -2,7 +2,6 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import EventSeriesDetailsViewModel from '@ViewModels/ReleaseEvent/EventSeriesDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

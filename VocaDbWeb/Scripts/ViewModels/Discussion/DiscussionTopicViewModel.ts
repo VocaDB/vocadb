@@ -2,7 +2,6 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

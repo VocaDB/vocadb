@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import $ from 'jquery';

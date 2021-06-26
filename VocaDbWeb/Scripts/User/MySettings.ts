@@ -3,7 +3,6 @@ import WebLinkContract from '@DataContracts/WebLinkContract';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import MySettingsViewModel from '@ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

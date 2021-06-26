@@ -1,7 +1,6 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
-import vdb from '@Shared/VdbStatic';
 import TagMergeViewModel from '@ViewModels/Tag/TagMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

@@ -2,7 +2,6 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 
 function initPage(): void {

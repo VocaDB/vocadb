@@ -14,7 +14,6 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 

@@ -1,6 +1,5 @@
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
-import vdb from '@Shared/VdbStatic';
 import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

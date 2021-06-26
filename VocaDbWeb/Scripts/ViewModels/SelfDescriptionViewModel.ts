@@ -1,7 +1,6 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
 import ko, { Observable } from 'knockout';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';

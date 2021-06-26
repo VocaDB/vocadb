@@ -10,24 +10,30 @@
 <remikus path="/bundles/manifest.js" />
 <remikus path="/bundles/vendor.js" />
 <remikus path="/bundles/shared/libs.js" />
+<remikus path="/bundles/VocaDB.js" />
 <remikus path="/bundles/vdb.js" />
 
 <script type="text/javascript">
+	vdb = vdb || {};
+	vdb.values = vdb.values || {};
+	vdb.values.baseAddress = '@RootPath';
+	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
+	vdb.values.isLoggedIn = @ToJS(UserContext.IsLoggedIn);
+	vdb.values.loggedUserId = @ToJS(UserContext.LoggedUserId);
+	vdb.values.culture = @ToJS(Culture);
+	vdb.values.uiCulture = @ToJS(UICulture);
+	vdb.resources = vdb.resources || {};
+
 	var model = {
-		culture: @ToJS(Culture),
 		entryTypeTranslations: @ResourceHelpers.ToJSON(EntryTypeNames.ResourceManager),
 		getNewReportCount: @ToJS(Login.CanManageEntryReports),
 		hasUnreadMessages: @ToJS(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0),
-		isLoggedIn: @ToJS(UserContext.IsLoggedIn),
-		languagePreference: @((int)Login.Manager.LanguagePreference),
-		loggedUserId: @ToJS(UserContext.LoggedUserId),
 		reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent),
 		rootPath: '@RootPath',
 		thanksForRating: @ToJS(AjaxRes.SharedStrings.ThanksForRating),
 		topBarData: @Html.Raw(JsonHelpers.Serialize(new {
 			searchObjectType = searchObjectType.ToString()
 		})),
-		uiCulture: @ToJS(UICulture),
 		unreadMessagesCount: @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0),
 	};
 	app.SharedLayoutScripts(model);

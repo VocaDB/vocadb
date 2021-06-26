@@ -1,15 +1,12 @@
-import functions from '@Shared/GlobalFunctions';
-import vdb from '@Shared/VdbStatic';
-import $ from 'jquery';
-
+vdb = {};
 vdb.functions = vdb.functions || {};
 vdb.values = vdb.values || {};
 
-vdb.functions.disableTabReload = function (tab): void {
+vdb.functions.disableTabReload = function (tab) {
 	tab.find('a').attr('href', '#' + tab.attr('aria-controls'));
 };
 
-vdb.functions.showLoginPopup = function (): void {
+vdb.functions.showLoginPopup = function () {
 	$.get(
 		'/User/LoginForm',
 		{ returnUrl: window.location.href },
@@ -20,16 +17,16 @@ vdb.functions.showLoginPopup = function (): void {
 	);
 };
 
-(function ($): void {
-	$.fn.vdbArtistToolTip = function (): void {
-		this.each(function (this: any) {
+(function ($) {
+	$.fn.vdbArtistToolTip = function () {
+		this.each(function () {
 			var elem = this;
 
 			$(elem).qtip({
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: functions.mapAbsoluteUrl('/Artist/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Artist/PopupContent'),
 						type: 'GET',
 						data: { id: $(elem).data('entryId') },
 					},
@@ -43,18 +40,18 @@ vdb.functions.showLoginPopup = function (): void {
 			});
 		});
 	};
-})($);
+})(jQuery);
 
-(function ($): void {
-	$.fn.vdbAlbumToolTip = function (): void {
-		this.each(function (this: any) {
+(function ($) {
+	$.fn.vdbAlbumToolTip = function () {
+		this.each(function () {
 			var elem = this;
 
 			$(elem).qtip({
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: functions.mapAbsoluteUrl('/Album/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupContent'),
 						type: 'GET',
 						data: { id: $(elem).data('entryId') },
 					},
@@ -65,18 +62,18 @@ vdb.functions.showLoginPopup = function (): void {
 			});
 		});
 	};
-})($);
+})(jQuery);
 
-(function ($): void {
-	$.fn.vdbAlbumWithCoverToolTip = function (): void {
-		this.each(function (this: any) {
+(function ($) {
+	$.fn.vdbAlbumWithCoverToolTip = function () {
+		this.each(function () {
 			var elem = this;
 
 			$(elem).qtip({
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data('entryId') },
 					},
@@ -87,7 +84,7 @@ vdb.functions.showLoginPopup = function (): void {
 			});
 		});
 	};
-})($);
+})(jQuery);
 
 $(document).ready(function () {
 	$('#loginPopup').dialog({ autoOpen: false, width: 400, modal: true });

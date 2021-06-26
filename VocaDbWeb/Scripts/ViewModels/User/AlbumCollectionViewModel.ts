@@ -9,7 +9,6 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import _ from 'lodash';
 
