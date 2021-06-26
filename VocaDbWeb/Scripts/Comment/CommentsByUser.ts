@@ -18,14 +18,12 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;
 
 		var vm = new CommentListViewModel(
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 			userId,
 		);

@@ -1,7 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import vdb from '@Shared/VdbStatic';
@@ -22,7 +21,6 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 	public constructor(
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 		tagIds: number[],
 		public showEventDateSort: boolean,
@@ -32,7 +30,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		if (!this.showEventDateSort)
 			this.sort(SongListSortRule[SongListSortRule.Name]);
 
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(tagRepo);
 
 		if (tagIds) this.tagFilters.addTags(tagIds);
 

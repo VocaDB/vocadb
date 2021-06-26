@@ -1,6 +1,5 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import vdb from '@Shared/VdbStatic';
@@ -13,7 +12,6 @@ import SearchViewModel from './SearchViewModel';
 export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
 		public loggedUserId: number,

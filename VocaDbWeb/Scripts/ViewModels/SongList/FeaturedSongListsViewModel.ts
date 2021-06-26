@@ -1,6 +1,5 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
@@ -14,7 +13,6 @@ export default class FeaturedSongListsViewModel {
 		listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 		tagIds: number[],
 		categoryNames: string[],
@@ -24,7 +22,6 @@ export default class FeaturedSongListsViewModel {
 				listRepo,
 				resourceRepo,
 				tagRepo,
-				lang,
 				cultureCode,
 				tagIds,
 				categoryName,
@@ -57,7 +54,6 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 		private listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 		tagIds: number[],
 		private category: string,
@@ -66,7 +62,6 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 		super(
 			resourceRepo,
 			tagRepo,
-			lang,
 			cultureCode,
 			tagIds,
 			category === 'Concerts' || category === 'VocaloidRanking',

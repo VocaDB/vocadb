@@ -117,7 +117,6 @@ const ArtistDetails = (
 			model.siteNotifications,
 			hasEnglishDescription,
 			unknownPictureUrl,
-			vdb.values.languagePreference,
 			urlMapper,
 			albumRepository,
 			songRepo,

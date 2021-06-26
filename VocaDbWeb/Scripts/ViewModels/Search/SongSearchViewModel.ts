@@ -2,7 +2,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongContract from '@DataContracts/Song/SongContract';
 import KnockoutHelper from '@Helpers/KnockoutHelper';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ResourcesManager from '@Models/ResourcesManager';
@@ -33,7 +32,6 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 	public constructor(
 		searchViewModel: SearchViewModel,
 		urlMapper: UrlMapper,
-		lang: ContentLanguagePreference,
 		private songRepo: SongRepository,
 		private artistRepo: ArtistRepository,
 		private userRepo: UserRepository,
@@ -182,7 +180,6 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 
 		this.loadResults = (

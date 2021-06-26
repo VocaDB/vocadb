@@ -25,7 +25,6 @@ const SongListDetails = (
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#export').button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 
-		var languageSelection = vdb.values.languagePreference;
 		var listId = model.songList.id;
 
 		const httpClient = new HttpClient();
@@ -53,7 +52,6 @@ const SongListDetails = (
 			defaultSortRuleName,
 			latestComments,
 			vdb.values.loggedUserId,
-			languageSelection,
 			cultureCode,
 			listId,
 			tagUsages,

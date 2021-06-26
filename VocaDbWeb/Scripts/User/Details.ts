@@ -51,7 +51,6 @@ const UserDetails = (
 
 		moment.locale(vdb.values.culture);
 
-		var lang = vdb.values.languagePreference;
 		var userId = model.id;
 		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
@@ -74,7 +73,6 @@ const UserDetails = (
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
 			cultureCode,
 		);
@@ -83,7 +81,6 @@ const UserDetails = (
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
 			userId,
 			cultureCode,
 			publicCollection,
@@ -97,7 +94,6 @@ const UserDetails = (
 			songRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
 			cultureCode,
 			sort,
@@ -120,7 +116,6 @@ const UserDetails = (
 			adminRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			followedArtistsViewModel,
 			albumCollectionViewModel,
 			ratedSongsViewModel,

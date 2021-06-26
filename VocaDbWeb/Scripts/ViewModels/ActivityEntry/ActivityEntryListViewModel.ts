@@ -10,6 +10,7 @@ import { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
+import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -24,7 +25,6 @@ export default class ActivityEntryListViewModel {
 	public constructor(
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		private lang: ContentLanguagePreference,
 		cultureCode: string,
 		private userId?: number,
 		additionsOnly?: boolean,
@@ -194,7 +194,7 @@ export default class ActivityEntryListViewModel {
 			{
 				fields: 'Entry,ArchivedVersion',
 				entryFields: 'AdditionalNames,MainPicture',
-				lang: ContentLanguagePreference[this.lang],
+				lang: ContentLanguagePreference[vdb.values.languagePreference],
 				before:
 					sortRule === ActivityEntrySortRule.CreateDateDescending &&
 					this.lastEntryDate

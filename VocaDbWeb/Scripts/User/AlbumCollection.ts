@@ -16,7 +16,6 @@ const UserAlbumCollection = (
 ): void => {
 	$(document).ready(function () {
 		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
 		var loggedUserId = model.user.id;
 
 		const httpClient = new HttpClient();
@@ -31,7 +30,6 @@ const UserAlbumCollection = (
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
 			loggedUserId,
 			cultureCode,
 			publicCollection,

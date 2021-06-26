@@ -18,13 +18,11 @@ const ActivityEntryIndex = (): void => {
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;
 
 		var vm = new ActivityEntryListViewModel(
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 		);
 		ko.applyBindings(vm);

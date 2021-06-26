@@ -1,6 +1,5 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -17,7 +16,6 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 	public constructor(
 		searchViewModel: SearchViewModel,
 		private unknownPictureUrl: string,
-		lang: ContentLanguagePreference,
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
 		resourceRep: ResourceRepository,

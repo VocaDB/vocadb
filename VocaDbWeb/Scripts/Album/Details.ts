@@ -184,7 +184,6 @@ const AlbumDetails = (
 			jsonModel,
 			reportTypes,
 			vdb.values.loggedUserId,
-			vdb.values.languagePreference,
 			canDeleteAllComments,
 			formatString,
 			showTranslatedDescription,

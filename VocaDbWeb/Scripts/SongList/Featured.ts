@@ -23,7 +23,6 @@ const SongListFeatured = (
 		var cultureCode = vdb.values.uiCulture;
 		var tagIds = model.tagId;
 
-		var lang = vdb.values.languagePreference;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -35,7 +34,6 @@ const SongListFeatured = (
 			songListRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			cultureCode,
 			tagIds,
 			categories,

@@ -34,7 +34,6 @@ const SearchIndex = (model: {
 	$(function () {
 		moment.locale(vdb.values.culture);
 		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
 		var query = model.filter;
 		var tagIds = model.tagId;
 		var searchType = model.searchTypeName;
@@ -84,7 +83,6 @@ const SearchIndex = (model: {
 			resourceRepo,
 			userRepo,
 			unknownPictureUrl,
-			lang,
 			loggedUserId,
 			cultureCode,
 			searchType,

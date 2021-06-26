@@ -36,7 +36,6 @@ export default class ArtistDetailsViewModel {
 		siteNotifications: boolean,
 		hasEnglishDescription: boolean,
 		private unknownPictureUrl: string,
-		private lang: ContentLanguagePreference,
 		private urlMapper: UrlMapper,
 		private albumRepo: AlbumRepository,
 		private songRepo: SongRepository,
@@ -58,8 +57,8 @@ export default class ArtistDetailsViewModel {
 		);
 		this.description = new EnglishTranslatedStringViewModel(
 			hasEnglishDescription &&
-				(lang === ContentLanguagePreference.English ||
-					lang === ContentLanguagePreference.Romaji),
+				(vdb.values.languagePreference === ContentLanguagePreference.English ||
+					vdb.values.languagePreference === ContentLanguagePreference.Romaji),
 		);
 
 		this.comments = new EditableCommentsViewModel(
@@ -181,7 +180,6 @@ export default class ArtistDetailsViewModel {
 			new AlbumSearchViewModel(
 				null!,
 				this.unknownPictureUrl,
-				this.lang,
 				this.albumRepo,
 				null!,
 				this.resourceRepo,
@@ -205,7 +203,6 @@ export default class ArtistDetailsViewModel {
 			new AlbumSearchViewModel(
 				null!,
 				this.unknownPictureUrl,
-				this.lang,
 				this.albumRepo,
 				null!,
 				this.resourceRepo,
@@ -229,7 +226,6 @@ export default class ArtistDetailsViewModel {
 			new SongSearchViewModel(
 				null!,
 				this.urlMapper,
-				this.lang,
 				this.songRepo,
 				null!,
 				this.userRepository,

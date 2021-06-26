@@ -1,5 +1,4 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
 import vdb from '@Shared/VdbStatic';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
@@ -11,7 +10,6 @@ import TagFilter from './TagFilter';
 export default class TagFilters {
 	public constructor(
 		private tagRepo: TagRepository,
-		private lang: ContentLanguagePreference,
 		tags: ObservableArray<TagFilter> = null!,
 	) {
 		this.tags = tags || ko.observableArray<TagFilter>();

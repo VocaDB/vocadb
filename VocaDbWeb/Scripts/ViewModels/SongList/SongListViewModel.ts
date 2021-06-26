@@ -6,7 +6,6 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import { SongOptionalField } from '@Models/EntryOptionalFields';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ResourcesManager from '@Models/ResourcesManager';
 import SongType from '@Models/Songs/SongType';
@@ -46,7 +45,6 @@ export default class SongListViewModel {
 		defaultSortRuleName: string,
 		latestComments: CommentContract[],
 		loggedUserId: number,
-		private lang: ContentLanguagePreference,
 		cultureCode: string,
 		private listId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -103,7 +101,6 @@ export default class SongListViewModel {
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 

@@ -1,6 +1,5 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
 import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
@@ -11,7 +10,6 @@ import SearchViewModel from './SearchViewModel';
 export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
 		private tagRepo: TagRepository,
 	) {
 		super(searchViewModel);

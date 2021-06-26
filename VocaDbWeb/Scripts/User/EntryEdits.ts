@@ -23,14 +23,12 @@ const UserEntryEdits = (
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var lang = vdb.values.languagePreference;
 		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;
 
 		var vm = new ActivityEntryListViewModel(
 			urlMapper,
 			resourceRepo,
-			lang,
 			cultureCode,
 			userId,
 			additionsOnly,

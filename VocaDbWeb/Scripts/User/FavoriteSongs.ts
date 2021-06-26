@@ -18,7 +18,6 @@ const UserFavoriteSongs = (model: {
 	$(function () {
 		moment.locale(vdb.values.culture);
 		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
 		var loggedUserId = model.user.id;
 		var sort = model.sort;
 		var groupByRating = model.groupByRating;
@@ -41,7 +40,6 @@ const UserFavoriteSongs = (model: {
 			songRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			loggedUserId,
 			cultureCode,
 			sort,

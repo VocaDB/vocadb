@@ -1,7 +1,6 @@
 import EntryContract from '@DataContracts/EntryContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import vdb from '@Shared/VdbStatic';
@@ -13,7 +12,6 @@ import SearchViewModel from './SearchViewModel';
 export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
 		private entryRepo: EntryRepository,
 	) {
 		super(searchViewModel);

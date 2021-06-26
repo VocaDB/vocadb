@@ -114,7 +114,6 @@ const SongDetails = (
 			jsonModel,
 			reportTypes,
 			vdb.values.loggedUserId,
-			vdb.values.languagePreference,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

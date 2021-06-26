@@ -3,7 +3,6 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import AdminRepository from '@Repositories/AdminRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -168,7 +167,6 @@ export default class UserDetailsViewModel {
 		private adminRepo: AdminRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		public followedArtistsViewModel: FollowedArtistsViewModel,
 		public albumCollectionViewModel: AlbumCollectionViewModel,
 		public ratedSongsViewModel: RatedSongsSearchViewModel,
@@ -191,7 +189,6 @@ export default class UserDetailsViewModel {
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			cultureCode,
 		);
 
@@ -220,10 +217,9 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
 		private readonly userRepo: UserRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		lang: ContentLanguagePreference,
 		cultureCode: string,
 	) {
-		super(resourceRepo, tagRepo, lang, cultureCode, [], true);
+		super(resourceRepo, tagRepo, cultureCode, [], true);
 	}
 
 	public loadMoreItems = (

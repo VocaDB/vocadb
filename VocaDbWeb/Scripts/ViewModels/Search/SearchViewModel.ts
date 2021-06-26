@@ -1,6 +1,5 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourcesManager from '@Models/ResourcesManager';
 import Tag from '@Models/Tags/Tag';
 import AlbumRepository from '@Repositories/AlbumRepository';
@@ -46,7 +45,6 @@ export default class SearchViewModel {
 		resourceRepo: ResourceRepository,
 		userRepo: UserRepository,
 		unknownPictureUrl: string,
-		private lang: ContentLanguagePreference,
 		loggedUserId: number,
 		cultureCode: string,
 		searchType: string,
@@ -73,21 +71,16 @@ export default class SearchViewModel {
 	) {
 		this.resourcesManager = new ResourcesManager(resourceRepo, cultureCode);
 		this.resources = this.resourcesManager.resources;
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(tagRepo);
 
 		if (searchTerm) this.searchTerm(searchTerm);
 
 		var isAlbum = searchType === SearchType.Album;
 		var isSong = searchType === SearchType.Song;
 
-		this.anythingSearchViewModel = new AnythingSearchViewModel(
-			this,
-			lang,
-			entryRepo,
-		);
+		this.anythingSearchViewModel = new AnythingSearchViewModel(this, entryRepo);
 		this.artistSearchViewModel = new ArtistSearchViewModel(
 			this,
-			lang,
 			artistRepo,
 			loggedUserId,
 			artistType,
@@ -96,7 +89,6 @@ export default class SearchViewModel {
 		this.albumSearchViewModel = new AlbumSearchViewModel(
 			this,
 			unknownPictureUrl,
-			lang,
 			albumRepo,
 			artistRepo,
 			resourceRepo,
@@ -110,7 +102,6 @@ export default class SearchViewModel {
 
 		this.eventSearchViewModel = new EventSearchViewModel(
 			this,
-			lang,
 			eventRepo,
 			artistRepo,
 			loggedUserId,
@@ -122,7 +113,6 @@ export default class SearchViewModel {
 		this.songSearchViewModel = new SongSearchViewModel(
 			this,
 			urlMapper,
-			lang,
 			songRepo,
 			artistRepo,
 			userRepo,
@@ -145,7 +135,7 @@ export default class SearchViewModel {
 			pvPlayersFactory,
 		);
 
-		this.tagSearchViewModel = new TagSearchViewModel(this, lang, tagRepo);
+		this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
 		if (
 			tagIds != null ||

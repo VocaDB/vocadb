@@ -3,7 +3,6 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -36,7 +35,6 @@ export default class RatedSongsSearchViewModel {
 		private songRepo: SongRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private lang: ContentLanguagePreference,
 		private loggedUserId: number,
 		private cultureCode: string,
 		sort: string,
@@ -56,7 +54,7 @@ export default class RatedSongsSearchViewModel {
 
 		if (groupByRating != null) this.groupByRating(groupByRating);
 
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(tagRepo);
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 		this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -97,7 +95,6 @@ export default class RatedSongsSearchViewModel {
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 
 		if (initialize) this.init();

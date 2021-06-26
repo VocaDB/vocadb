@@ -3,7 +3,6 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
@@ -14,7 +13,6 @@ import SearchViewModel from './SearchViewModel';
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
 		private readonly artistRepo: ArtistRepository,
 		private readonly loggedUserId: number,
 		artistType: string,
