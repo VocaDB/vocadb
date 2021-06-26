@@ -36,7 +36,6 @@ export default class RatedSongsSearchViewModel {
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 		sort: string,
 		groupByRating: boolean,
 		pvPlayersFactory: PVPlayersFactory,

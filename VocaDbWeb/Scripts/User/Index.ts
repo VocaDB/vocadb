@@ -10,7 +10,6 @@ import moment from 'moment';
 const UserIndex = (model: { filter: string; groupId: string }): void => {
 	$(function () {
 		var cultureCode = vdb.values.culture;
-		var uiCultureCode = vdb.values.uiCulture;
 		moment.locale(cultureCode);
 
 		var filter = model.filter;
@@ -20,13 +19,7 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var viewModel = new ListUsersViewModel(
-			repo,
-			resourceRepo,
-			uiCultureCode,
-			filter,
-			groupId,
-		);
+		var viewModel = new ListUsersViewModel(repo, resourceRepo, filter, groupId);
 		ko.applyBindings(viewModel);
 	});
 };

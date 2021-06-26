@@ -25,7 +25,6 @@ export default class ActivityEntryListViewModel {
 	public constructor(
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		cultureCode: string,
 		private userId?: number,
 		additionsOnly?: boolean,
 	) {
@@ -39,7 +38,7 @@ export default class ActivityEntryListViewModel {
 		this.entryType.subscribe(this.clear);
 		this.sort.subscribe(this.clear);
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(resourceRepo, vdb.values.uiCulture);
 		this.resources
 			.loadResources(
 				ResourceSetNames.artistTypeNames,

@@ -92,7 +92,6 @@ const ArtistDetails = (
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
 
-		var cultureCode = vdb.values.uiCulture;
 		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
@@ -122,7 +121,6 @@ const ArtistDetails = (
 			songRepo,
 			resourceRepo,
 			userRepository,
-			cultureCode,
 			reportTypes,
 			loggedUserId,
 			canDeleteAllComments,

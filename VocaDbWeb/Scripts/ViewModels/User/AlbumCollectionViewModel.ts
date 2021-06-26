@@ -23,7 +23,6 @@ export default class AlbumCollectionViewModel {
 		private artistRepo: ArtistRepository,
 		private resourceRepo: ResourceRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 		public publicCollection: boolean,
 		initialize = true,
 	) {

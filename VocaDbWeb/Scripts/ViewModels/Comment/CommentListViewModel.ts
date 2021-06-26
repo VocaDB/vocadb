@@ -22,7 +22,6 @@ export default class CommentListViewModel {
 	public constructor(
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		cultureCode: string,
 		private userId?: number,
 	) {
 		this.entryType = ko.observable(EntryType[EntryType.Undefined]);
@@ -33,7 +32,7 @@ export default class CommentListViewModel {
 		this.entryType.subscribe(this.clear);
 		this.sort.subscribe(this.clear);
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(resourceRepo, vdb.values.uiCulture);
 		this.resources
 			.loadResources(
 				ResourceSetNames.artistTypeNames,

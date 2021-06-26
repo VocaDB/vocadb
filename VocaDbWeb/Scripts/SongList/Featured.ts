@@ -20,7 +20,6 @@ const SongListFeatured = (
 		$('#createLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 		$('#importLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 
-		var cultureCode = vdb.values.uiCulture;
 		var tagIds = model.tagId;
 
 		const httpClient = new HttpClient();
@@ -34,7 +33,6 @@ const SongListFeatured = (
 			songListRepo,
 			resourceRepo,
 			tagRepo,
-			cultureCode,
 			tagIds,
 			categories,
 		);

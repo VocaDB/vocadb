@@ -18,15 +18,9 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;
 
-		var vm = new CommentListViewModel(
-			urlMapper,
-			resourceRepo,
-			cultureCode,
-			userId,
-		);
+		var vm = new CommentListViewModel(urlMapper, resourceRepo, userId);
 		ko.applyBindings(vm);
 	});
 };

@@ -36,7 +36,6 @@ const SongListDetails = (
 		var artistRepo = repoFactory.artistRepository();
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var cultureCode = vdb.values.uiCulture;
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var latestComments = model.songList.latestComments;
@@ -52,7 +51,6 @@ const SongListDetails = (
 			defaultSortRuleName,
 			latestComments,
 			vdb.values.loggedUserId,
-			cultureCode,
 			listId,
 			tagUsages,
 			pvPlayersFactory,

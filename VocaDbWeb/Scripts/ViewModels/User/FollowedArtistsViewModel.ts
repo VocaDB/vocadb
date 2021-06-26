@@ -15,7 +15,6 @@ export default class FollowedArtistsViewModel {
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		private loggedUserId: number,
-		private cultureCode: string,
 	) {
 		this.tagFilters = new TagFilters(tagRepo);
 

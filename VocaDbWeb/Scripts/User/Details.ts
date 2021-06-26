@@ -47,8 +47,6 @@ const UserDetails = (
 	ko.punches.enableAll();
 
 	$(function () {
-		var cultureCode = vdb.values.uiCulture;
-
 		moment.locale(vdb.values.culture);
 
 		var userId = model.id;
@@ -74,7 +72,6 @@ const UserDetails = (
 			resourceRepo,
 			tagRepo,
 			userId,
-			cultureCode,
 		);
 
 		var albumCollectionViewModel = new AlbumCollectionViewModel(
@@ -82,7 +79,6 @@ const UserDetails = (
 			artistRepo,
 			resourceRepo,
 			userId,
-			cultureCode,
 			publicCollection,
 			false,
 		);
@@ -95,7 +91,6 @@ const UserDetails = (
 			resourceRepo,
 			tagRepo,
 			userId,
-			cultureCode,
 			sort,
 			groupByRating,
 			pvPlayersFactory,
@@ -106,7 +101,6 @@ const UserDetails = (
 
 		var viewModel = new UserDetailsViewModel(
 			userId,
-			cultureCode,
 			loggedUserId,
 			lastLoginAddress,
 			canDeleteComments,

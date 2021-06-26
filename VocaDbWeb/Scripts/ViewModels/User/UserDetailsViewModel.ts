@@ -157,7 +157,6 @@ export default class UserDetailsViewModel {
 
 	public constructor(
 		private readonly userId: number,
-		cultureCode: string,
 		private loggedUserId: number,
 		private lastLoginAddress: string,
 		private canEditAllComments: boolean,
@@ -189,7 +188,6 @@ export default class UserDetailsViewModel {
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			cultureCode,
 		);
 
 		window.onhashchange = (): void => {
@@ -217,9 +215,8 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
 		private readonly userRepo: UserRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		cultureCode: string,
 	) {
-		super(resourceRepo, tagRepo, cultureCode, [], true);
+		super(resourceRepo, tagRepo, [], true);
 	}
 
 	public loadMoreItems = (

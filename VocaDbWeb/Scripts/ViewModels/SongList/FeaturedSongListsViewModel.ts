@@ -13,7 +13,6 @@ export default class FeaturedSongListsViewModel {
 		listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		cultureCode: string,
 		tagIds: number[],
 		categoryNames: string[],
 	) {
@@ -22,7 +21,6 @@ export default class FeaturedSongListsViewModel {
 				listRepo,
 				resourceRepo,
 				tagRepo,
-				cultureCode,
 				tagIds,
 				categoryName,
 			);
@@ -54,7 +52,6 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 		private listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		cultureCode: string,
 		tagIds: number[],
 		private category: string,
 	) {
@@ -62,7 +59,6 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 		super(
 			resourceRepo,
 			tagRepo,
-			cultureCode,
 			tagIds,
 			category === 'Concerts' || category === 'VocaloidRanking',
 		);

@@ -21,7 +21,6 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 	public constructor(
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		cultureCode: string,
 		tagIds: number[],
 		public showEventDateSort: boolean,
 	) {

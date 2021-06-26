@@ -15,7 +15,6 @@ const UserAlbumCollection = (
 	publicCollection: boolean,
 ): void => {
 	$(document).ready(function () {
-		var cultureCode = vdb.values.uiCulture;
 		var loggedUserId = model.user.id;
 
 		const httpClient = new HttpClient();
@@ -31,7 +30,6 @@ const UserAlbumCollection = (
 			artistRepo,
 			resourceRepo,
 			loggedUserId,
-			cultureCode,
 			publicCollection,
 		);
 		ko.applyBindings(vm);
