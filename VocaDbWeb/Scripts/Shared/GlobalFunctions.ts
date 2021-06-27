@@ -62,6 +62,21 @@ export default class functions {
 			dimension1: domain,
 		});
 	}
+
+	public static disableTabReload = function (tab: any): void {
+		tab.find('a').attr('href', '#' + tab.attr('aria-controls'));
+	};
+
+	public static showLoginPopup = function (): void {
+		$.get(
+			'/User/LoginForm',
+			{ returnUrl: window.location.href },
+			function (result) {
+				$('#loginPopup').html(result);
+				$('#loginPopup').dialog('open');
+			},
+		);
+	};
 }
 
 declare global {

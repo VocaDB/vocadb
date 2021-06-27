@@ -2,6 +2,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
@@ -45,7 +46,7 @@ function initPage(
 
 	$('#tabs').tabs({
 		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
+			functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
 			if (ui.newTab.data('tab') === 'Discussion') {

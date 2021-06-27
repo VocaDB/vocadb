@@ -42,7 +42,7 @@ function initPage(
 
 	$('#tabs').tabs({
 		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
+			functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
 			if (ui.newTab.data('tab') === 'Discussion') {

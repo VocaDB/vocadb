@@ -1,4 +1,5 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
@@ -63,7 +64,7 @@ function initAlbumDetailsPage(
 
 	$('#tabs').tabs({
 		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
+			functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
 			switch (ui.newTab.data('tab')) {

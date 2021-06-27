@@ -1,21 +1,5 @@
 vdb = {};
-vdb.functions = vdb.functions || {};
 vdb.values = vdb.values || {};
-
-vdb.functions.disableTabReload = function (tab) {
-	tab.find('a').attr('href', '#' + tab.attr('aria-controls'));
-};
-
-vdb.functions.showLoginPopup = function () {
-	$.get(
-		'/User/LoginForm',
-		{ returnUrl: window.location.href },
-		function (result) {
-			$('#loginPopup').html(result);
-			$('#loginPopup').dialog('open');
-		},
-	);
-};
 
 (function ($) {
 	$.fn.vdbArtistToolTip = function () {

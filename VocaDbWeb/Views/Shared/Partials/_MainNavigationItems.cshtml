@@ -55,7 +55,7 @@
 		<li><a asp-action="Index" asp-controller="Admin">@(ViewRes._LayoutStrings.Manage)</a></li>
 	}
 	@if (!Login.Manager.IsLoggedIn) {
-		<li><a href="@Url.Action("Login", "User")" onclick="vdb.functions.showLoginPopup(); return false;">@ViewRes._LayoutStrings.LogIn</a></li>
+		<li><a href="@Url.Action("Login", "User")" onclick="app.functions.showLoginPopup(); return false;">@ViewRes._LayoutStrings.LogIn</a></li>
 		<li><a asp-action="Create" asp-controller="User">@(ViewRes._LayoutStrings.Register)</a></li>
 	}
 </ul>
