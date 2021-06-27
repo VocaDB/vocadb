@@ -2,7 +2,6 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SearchViewModel from '@ViewModels/Search/SearchViewModel';
 import $ from 'jquery';
@@ -33,8 +32,6 @@ const SearchIndex = (model: {
 }): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
-		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
 		var query = model.filter;
 		var tagIds = model.tagId;
 		var searchType = model.searchTypeName;
@@ -55,7 +52,6 @@ const SearchIndex = (model: {
 		var autoplay = model.autoplay;
 		var shuffle = model.shuffle;
 		var pageSize = model.pageSize;
-		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = functions.mapAbsoluteUrl('/Content/unknown.png');
 
 		const httpClient = new HttpClient();
@@ -74,6 +70,7 @@ const SearchIndex = (model: {
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 
 		var vm = new SearchViewModel(
+			vdb.values,
 			urlMapper,
 			entryRepo,
 			artistRepo,
@@ -84,9 +81,6 @@ const SearchIndex = (model: {
 			resourceRepo,
 			userRepo,
 			unknownPictureUrl,
-			lang,
-			loggedUserId,
-			cultureCode,
 			searchType,
 			query,
 			tagIds,

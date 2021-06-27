@@ -10,48 +10,31 @@
 <remikus path="/bundles/manifest.js" />
 <remikus path="/bundles/vendor.js" />
 <remikus path="/bundles/shared/libs.js" />
+<remikus path="/bundles/VocaDB.js" />
 <remikus path="/bundles/vdb.js" />
 
 <script type="text/javascript">
-
-    var baseAddress = '@RootPath';
-
-    vdb = vdb || {};
-    vdb.values = vdb.values || {};
-	vdb.values.baseAddress = baseAddress;
+	vdb = vdb || {};
+	vdb.values = vdb.values || {};
+	vdb.values.baseAddress = '@RootPath';
 	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
 	vdb.values.isLoggedIn = @ToJS(UserContext.IsLoggedIn);
 	vdb.values.loggedUserId = @ToJS(UserContext.LoggedUserId);
 	vdb.values.culture = @ToJS(Culture);
 	vdb.values.uiCulture = @ToJS(UICulture);
-    vdb.resources = vdb.resources || {};
-	const httpClient = new app.HttpClient();
-    var urlMapper = new app.UrlMapper(baseAddress);
+	vdb.resources = vdb.resources || {};
 
-    vdb.resources.shared = {
-    	reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent)
+	var model = {
+		entryTypeTranslations: @ResourceHelpers.ToJSON(EntryTypeNames.ResourceManager),
+		getNewReportCount: @ToJS(Login.CanManageEntryReports),
+		hasUnreadMessages: @ToJS(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0),
+		reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent),
+		rootPath: '@RootPath',
+		thanksForRating: @ToJS(AjaxRes.SharedStrings.ThanksForRating),
+		topBarData: @Html.Raw(JsonHelpers.Serialize(new {
+			searchObjectType = searchObjectType.ToString()
+		})),
+		unreadMessagesCount: @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0),
 	};
-
-    app.ui.initAll(@ToJS(AjaxRes.SharedStrings.ThanksForRating));
-
-    var entryReportRepository = new app.EntryReportRepository(httpClient, urlMapper);
-    var userRepository = new app.UserRepository(httpClient, urlMapper);
-
-    var entryTypeTranslations = @ResourceHelpers.ToJSON(EntryTypeNames.ResourceManager);
-    var topBarData = @Html.Raw(JsonHelpers.Serialize(new {
-		searchObjectType = searchObjectType.ToString()
-	}));
-	var hasUnreadMessages = @ToJS(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0);
-	var unreadMessagesCount = @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0);
-	var getNewReportCount = @ToJS(Login.CanManageEntryReports);
-
-    var topBarViewModel = new app.TopBarViewModel(
-        entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount,
-	    getNewReportCount, entryReportRepository, userRepository);
-
-    var topBar = $("#topBar")[0];
-	if (topBar) {
-		ko.applyBindings(topBarViewModel, $("#topBar")[0]);
-	}
-
+	app.SharedLayoutScripts(model);
 </script>

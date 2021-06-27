@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import DiscussionIndexViewModel from '@ViewModels/Discussion/DiscussionIndexViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -19,10 +18,10 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
 			new DiscussionIndexViewModel(
+				vdb.values,
 				repo,
 				urlMapper,
 				canDeleteAllComments,
-				vdb.values.loggedUserId,
 			),
 		);
 	});

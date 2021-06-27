@@ -9,6 +9,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import { ResourceSetNames } from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
@@ -22,10 +23,9 @@ enum ActivityEntrySortRule {
 
 export default class ActivityEntryListViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
-		private lang: ContentLanguagePreference,
-		cultureCode: string,
 		private userId?: number,
 		additionsOnly?: boolean,
 	) {
@@ -39,7 +39,7 @@ export default class ActivityEntryListViewModel {
 		this.entryType.subscribe(this.clear);
 		this.sort.subscribe(this.clear);
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(resourceRepo, values.uiCulture);
 		this.resources
 			.loadResources(
 				ResourceSetNames.artistTypeNames,
@@ -194,7 +194,7 @@ export default class ActivityEntryListViewModel {
 			{
 				fields: 'Entry,ArchivedVersion',
 				entryFields: 'AdditionalNames,MainPicture',
-				lang: ContentLanguagePreference[this.lang],
+				lang: ContentLanguagePreference[this.values.languagePreference],
 				before:
 					sortRule === ActivityEntrySortRule.CreateDateDescending &&
 					this.lastEntryDate

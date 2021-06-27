@@ -2,7 +2,6 @@ import CommentContract from '@DataContracts/CommentContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import FollowedArtistsViewModel from '@ViewModels/User/FollowedArtistsViewModel';
@@ -47,13 +46,9 @@ const UserDetails = (
 	ko.punches.enableAll();
 
 	$(function () {
-		var cultureCode = vdb.values.uiCulture;
-
 		moment.locale(vdb.values.culture);
 
-		var lang = vdb.values.languagePreference;
 		var userId = model.id;
-		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -71,35 +66,32 @@ const UserDetails = (
 		var groupByRating = true;
 
 		var followedArtistsViewModel = new FollowedArtistsViewModel(
+			vdb.values,
 			userRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
-			cultureCode,
 		);
 
 		var albumCollectionViewModel = new AlbumCollectionViewModel(
+			vdb.values,
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
 			userId,
-			cultureCode,
 			publicCollection,
 			false,
 		);
 
 		var ratedSongsViewModel = new RatedSongsSearchViewModel(
+			vdb.values,
 			urlMapper,
 			userRepo,
 			artistRepo,
 			songRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			userId,
-			cultureCode,
 			sort,
 			groupByRating,
 			pvPlayersFactory,
@@ -109,9 +101,8 @@ const UserDetails = (
 		);
 
 		var viewModel = new UserDetailsViewModel(
+			vdb.values,
 			userId,
-			cultureCode,
-			loggedUserId,
 			lastLoginAddress,
 			canDeleteComments,
 			httpClient,
@@ -120,7 +111,6 @@ const UserDetails = (
 			adminRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
 			followedArtistsViewModel,
 			albumCollectionViewModel,
 			ratedSongsViewModel,

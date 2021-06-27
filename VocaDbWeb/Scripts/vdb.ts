@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable import/first */
 
-import './VocaDb'
-
 // ~/bundles/shared/common
 export { setLanguagePreferenceCookie } from '@Shared/TopBar';
 export { default as ui } from '@Shared/MessagesTyped';
@@ -14,6 +12,7 @@ import '@KnockoutExtensions/Show';
 export { default as EntryReportRepository } from '@Repositories/EntryReportRepository';
 export { default as UserRepository } from '@Repositories/UserRepository';
 export { default as TopBarViewModel } from '@ViewModels/TopBarViewModel';
+export { default as SharedLayoutScripts } from '@Shared/LayoutScripts';
 
 // ~/bundles/shared/main
 export { default as EntryUrlMapper } from '@Shared/EntryUrlMapper';

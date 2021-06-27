@@ -2,17 +2,17 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import vdb from '@Shared/VdbStatic';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class ArtistMergeViewModel {
-	public constructor(repo: ArtistRepository, id: number) {
+	public constructor(values: GlobalValues, repo: ArtistRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<ArtistContract>(
 			null!,
 			(entryId) =>
-				repo.getOne({ id: entryId, lang: vdb.values.languagePreference }),
+				repo.getOne({ id: entryId, lang: values.languagePreference }),
 		);
 
 		this.targetSearchParams = {
@@ -20,22 +20,20 @@ export default class ArtistMergeViewModel {
 			ignoreId: id,
 		};
 
-		repo
-			.getOne({ id: id, lang: vdb.values.languagePreference })
-			.then((base) => {
-				ko.computed(() => {
-					var result = EntryMergeValidationHelper.validateEntry(
-						base,
-						this.target.entry(),
-					);
-					this.validationError_targetIsLessComplete(
-						result.validationError_targetIsLessComplete,
-					);
-					this.validationError_targetIsNewer(
-						result.validationError_targetIsNewer,
-					);
-				});
+		repo.getOne({ id: id, lang: values.languagePreference }).then((base) => {
+			ko.computed(() => {
+				var result = EntryMergeValidationHelper.validateEntry(
+					base,
+					this.target.entry(),
+				);
+				this.validationError_targetIsLessComplete(
+					result.validationError_targetIsLessComplete,
+				);
+				this.validationError_targetIsNewer(
+					result.validationError_targetIsNewer,
+				);
 			});
+		});
 	}
 
 	public target: BasicEntryLinkViewModel<ArtistContract>;

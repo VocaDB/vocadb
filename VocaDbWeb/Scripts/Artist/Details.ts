@@ -2,9 +2,9 @@ import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
@@ -46,7 +46,7 @@ function initPage(
 
 	$('#tabs').tabs({
 		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
+			functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
 			if (ui.newTab.data('tab') === 'Discussion') {
@@ -92,8 +92,6 @@ const ArtistDetails = (
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
 
-		var cultureCode = vdb.values.uiCulture;
-		var loggedUserId = vdb.values.loggedUserId;
 		var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
 		const httpClient = new HttpClient();
@@ -109,6 +107,7 @@ const ArtistDetails = (
 		var latestComments = model.latestComments;
 
 		var viewModel = new ArtistDetailsViewModel(
+			vdb.values,
 			artistRepo,
 			model.id,
 			tagUsages,
@@ -117,15 +116,12 @@ const ArtistDetails = (
 			model.siteNotifications,
 			hasEnglishDescription,
 			unknownPictureUrl,
-			vdb.values.languagePreference,
 			urlMapper,
 			albumRepository,
 			songRepo,
 			resourceRepo,
 			userRepository,
-			cultureCode,
 			reportTypes,
-			loggedUserId,
 			canDeleteAllComments,
 			pvPlayersFactory,
 			latestComments,

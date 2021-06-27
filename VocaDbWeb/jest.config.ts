@@ -12,6 +12,7 @@ const config: Config.InitialOptions = {
 	moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
 		prefix: '<rootDir>/',
 	}),
+	setupFiles: ['./Scripts/Tests/setup.js'],
 	setupFilesAfterEnv: ['jest-expect-message'],
 };
 export default config;

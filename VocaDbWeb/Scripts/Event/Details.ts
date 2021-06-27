@@ -6,7 +6,6 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ReleaseEventDetailsViewModel from '@ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
@@ -32,7 +31,6 @@ const EventDetails = (
 		$('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
 		$('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
-		var loggedUserId = vdb.values.loggedUserId;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -43,13 +41,14 @@ const EventDetails = (
 		var tags = model.tags;
 
 		var vm = new ReleaseEventDetailsViewModel(
+			vdb.values,
 			httpClient,
 			urlMapper,
 			eventRepo,
 			userRepo,
 			latestComments,
 			reportTypes,
-			loggedUserId,
+			vdb.values.loggedUserId,
 			model.id,
 			eventAssociationType,
 			users,

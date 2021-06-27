@@ -1,6 +1,7 @@
 import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
@@ -11,13 +12,13 @@ import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 
 export default class DiscussionIndexViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly repo: DiscussionRepository,
 		private readonly urlMapper: UrlMapper,
 		private readonly canDeleteAllComments: boolean,
-		private readonly loggedUserId: number,
 	) {
 		this.newTopic = ko.observable(
-			new DiscussionTopicEditViewModel(loggedUserId, this.folders()),
+			new DiscussionTopicEditViewModel(values.loggedUserId, this.folders()),
 		);
 
 		this.mapRoute('folders/:folderId?', (context) => {
@@ -57,14 +58,14 @@ export default class DiscussionIndexViewModel {
 	private canDeleteTopic = (topic: DiscussionTopicContract): boolean => {
 		return (
 			this.canDeleteAllComments ||
-			(topic.author && topic.author.id === this.loggedUserId)
+			(topic.author && topic.author.id === this.values.loggedUserId)
 		);
 	};
 
 	private canEditTopic = (topic: DiscussionTopicContract): boolean => {
 		return (
 			this.canDeleteAllComments ||
-			(topic.author && topic.author.id === this.loggedUserId)
+			(topic.author && topic.author.id === this.values.loggedUserId)
 		);
 	};
 
@@ -78,7 +79,10 @@ export default class DiscussionIndexViewModel {
 			.then((topic) => {
 				topic.canBeDeleted = false;
 				this.newTopic(
-					new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
+					new DiscussionTopicEditViewModel(
+						this.values.loggedUserId,
+						this.folders(),
+					),
 				);
 				this.showCreateNewTopic(false);
 				this.topics.unshift(topic);
@@ -167,8 +171,8 @@ export default class DiscussionIndexViewModel {
 			this.selectFolderById(contract.folderId);
 			this.selectedTopic(
 				new DiscussionTopicViewModel(
+					this.values,
 					this.repo,
-					this.loggedUserId,
 					this.canDeleteAllComments,
 					contract,
 					this.folders(),

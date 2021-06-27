@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ArtistCreateViewModel from '@ViewModels/ArtistCreateViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -17,7 +16,9 @@ const ArtistCreate = (model: any): void => {
 		var repo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var json = model;
-		ko.applyBindings(new ArtistCreateViewModel(repo, tagRepo, json));
+		ko.applyBindings(
+			new ArtistCreateViewModel(vdb.values, repo, tagRepo, json),
+		);
 	});
 };
 

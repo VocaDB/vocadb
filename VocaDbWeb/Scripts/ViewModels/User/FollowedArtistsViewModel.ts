@@ -1,10 +1,9 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
-import vdb from '@Shared/VdbStatic';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import TagFilters from '../Search/TagFilters';
@@ -12,14 +11,13 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class FollowedArtistsViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private userRepo: UserRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private lang: ContentLanguagePreference,
-		private loggedUserId: number,
-		private cultureCode: string,
+		private userId: number,
 	) {
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(values, tagRepo);
 
 		this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 		this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
@@ -32,7 +30,7 @@ export default class FollowedArtistsViewModel {
 
 		this.resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: this.values.uiCulture,
 				setNames: ['artistTypeNames'],
 			})
 			.then((resources) => {
@@ -67,9 +65,9 @@ export default class FollowedArtistsViewModel {
 
 		this.userRepo
 			.getFollowedArtistsList({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 				tagIds: this.tagFilters.tagIds(),
 				artistType: this.artistType(),
 			})

@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import RatedSongsSearchViewModel from '@ViewModels/User/RatedSongsSearchViewModel';
 import $ from 'jquery';
@@ -17,9 +16,6 @@ const UserFavoriteSongs = (model: {
 }): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
-		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
-		var loggedUserId = model.user.id;
 		var sort = model.sort;
 		var groupByRating = model.groupByRating;
 
@@ -35,15 +31,14 @@ const UserFavoriteSongs = (model: {
 		var pvPlayersFactory = new PVPlayersFactory($('#pv-player-wrapper')[0]);
 
 		var vm = new RatedSongsSearchViewModel(
+			vdb.values,
 			urlMapper,
 			userRepo,
 			artistRepo,
 			songRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
-			loggedUserId,
-			cultureCode,
+			model.user.id,
 			sort,
 			groupByRating,
 			pvPlayersFactory,

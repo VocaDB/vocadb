@@ -3,16 +3,15 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ko from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -30,15 +29,14 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
 		private songRepo: SongRepository,
 		private resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
-		private lang: ContentLanguagePreference,
-		private loggedUserId: number,
-		private cultureCode: string,
+		private userId: number,
 		sort: string,
 		groupByRating: boolean,
 		pvPlayersFactory: PVPlayersFactory,
@@ -46,7 +44,7 @@ export default class RatedSongsSearchViewModel {
 		artistId?: number,
 		childVoicebanks?: boolean,
 	) {
-		this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(values, artistRepo, childVoicebanks);
 
 		if (artistId) this.artistFilters.selectArtist(artistId);
 
@@ -56,7 +54,7 @@ export default class RatedSongsSearchViewModel {
 
 		if (groupByRating != null) this.groupByRating(groupByRating);
 
-		this.tagFilters = new TagFilters(tagRepo, lang);
+		this.tagFilters = new TagFilters(values, tagRepo);
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 		this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -72,6 +70,7 @@ export default class RatedSongsSearchViewModel {
 		this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			values,
 			urlMapper,
 			songRepo,
 			userRepo,
@@ -79,7 +78,7 @@ export default class RatedSongsSearchViewModel {
 		);
 		var songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(
 			userRepo,
-			loggedUserId,
+			userId,
 			this.searchTerm,
 			this.sort,
 			this.tagFilters.tagIds,
@@ -92,12 +91,12 @@ export default class RatedSongsSearchViewModel {
 			ko.observable('AdditionalNames,ThumbUrl'),
 		);
 		this.playListViewModel = new PlayListViewModel(
+			values,
 			urlMapper,
 			songsRepoAdapter,
 			songRepo,
 			userRepo,
 			this.pvPlayerViewModel,
-			lang,
 		);
 
 		if (initialize) this.init();
@@ -156,7 +155,7 @@ export default class RatedSongsSearchViewModel {
 
 		this.userRepo
 			.getSongLists({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				query: undefined,
 				paging: { start: 0, maxEntries: 50, getTotalCount: false },
 				tagIds: [],
@@ -167,7 +166,7 @@ export default class RatedSongsSearchViewModel {
 
 		this.resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: this.values.uiCulture,
 				setNames: [
 					'songSortRuleNames',
 					'user_ratedSongForUserSortRuleNames',
@@ -205,9 +204,9 @@ export default class RatedSongsSearchViewModel {
 
 		this.userRepo
 			.getRatedSongsList({
-				userId: this.loggedUserId,
+				userId: this.userId,
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 				query: this.searchTerm(),
 				tagIds: this.tagFilters.tagIds(),
 				artistIds: this.artistFilters.artistIds(),

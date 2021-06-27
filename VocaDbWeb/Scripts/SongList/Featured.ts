@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import FeaturedSongListsViewModel from '@ViewModels/SongList/FeaturedSongListsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -20,10 +19,8 @@ const SongListFeatured = (
 		$('#createLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 		$('#importLink').button({ icons: { primary: 'ui-icon-plusthick' } });
 
-		var cultureCode = vdb.values.uiCulture;
 		var tagIds = model.tagId;
 
-		var lang = vdb.values.languagePreference;
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -32,11 +29,10 @@ const SongListFeatured = (
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new FeaturedSongListsViewModel(
+			vdb.values,
 			songListRepo,
 			resourceRepo,
 			tagRepo,
-			lang,
-			cultureCode,
 			tagIds,
 			categories,
 		);

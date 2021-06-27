@@ -7,13 +7,12 @@ import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiCo
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
-import vdb from '@Shared/VdbStatic';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
@@ -61,13 +60,12 @@ export default class AlbumDetailsViewModel {
 	};
 
 	public constructor(
+		values: GlobalValues,
 		repo: AlbumRepository,
 		userRepo: UserRepository,
 		artistRepository: ArtistRepository,
 		data: AlbumDetailsAjax,
 		reportTypes: IEntryReportType[],
-		loggedUserId: number,
-		lang: ContentLanguagePreference,
 		canDeleteAllComments: boolean,
 		formatString: string,
 		showTranslatedDescription: boolean,
@@ -78,9 +76,9 @@ export default class AlbumDetailsViewModel {
 			showTranslatedDescription,
 		);
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repo,
 			this.id,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -89,6 +87,7 @@ export default class AlbumDetailsViewModel {
 		);
 
 		this.personalDescription = new SelfDescriptionViewModel(
+			values,
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,
@@ -97,7 +96,7 @@ export default class AlbumDetailsViewModel {
 					.getOneWithComponents({
 						id: this.id,
 						fields: 'Artists',
-						lang: vdb.values.languagePreference,
+						lang: values.languagePreference,
 					})
 					.then((result) => {
 						var artists = _.chain(result.artists!)
@@ -148,7 +147,6 @@ export default class AlbumDetailsViewModel {
 			this.id,
 			canDeleteAllComments,
 			canDeleteAllComments,
-			loggedUserId,
 		);
 	}
 }

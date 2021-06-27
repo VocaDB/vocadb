@@ -1,7 +1,6 @@
 import ResourceRepository from '@Repositories/ResourceRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ActivityEntryListViewModel from '@ViewModels/ActivityEntry/ActivityEntryListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -23,15 +22,12 @@ const UserEntryEdits = (
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var lang = vdb.values.languagePreference;
-		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;
 
 		var vm = new ActivityEntryListViewModel(
+			vdb.values,
 			urlMapper,
 			resourceRepo,
-			lang,
-			cultureCode,
 			userId,
 			additionsOnly,
 		);

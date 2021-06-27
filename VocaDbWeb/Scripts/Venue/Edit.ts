@@ -2,7 +2,6 @@ import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import VenueEditViewModel from '@ViewModels/Venue/VenueEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';

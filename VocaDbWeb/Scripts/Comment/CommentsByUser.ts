@@ -1,7 +1,6 @@
 import ResourceRepository from '@Repositories/ResourceRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import CommentListViewModel from '@ViewModels/Comment/CommentListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -18,15 +17,12 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 			httpClient,
 			vdb.values.baseAddress,
 		);
-		var lang = vdb.values.languagePreference;
-		var cultureCode = vdb.values.uiCulture;
 		var userId = model.id;
 
 		var vm = new CommentListViewModel(
+			vdb.values,
 			urlMapper,
 			resourceRepo,
-			lang,
-			cultureCode,
 			userId,
 		);
 		ko.applyBindings(vm);

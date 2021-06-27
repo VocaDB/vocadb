@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import SongListEditViewModel from '@ViewModels/SongList/SongListEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -19,6 +18,7 @@ function initPage(
 	var songRepo = repoFactory.songRepository();
 
 	var viewModel = new SongListEditViewModel(
+		vdb.values,
 		songListRepo,
 		songRepo,
 		urlMapper,

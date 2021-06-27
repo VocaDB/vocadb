@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
 import HttpClient from '@Shared/HttpClient';
 import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
@@ -34,6 +33,7 @@ beforeEach(() => {
 		{ id: 3, name: 'Mikupa 2013', featuredCategory: 'Concerts' },
 	];
 	target = new SongDetailsViewModel(
+		vdb.values,
 		new HttpClient(),
 		rep,
 		userRep,
@@ -42,8 +42,6 @@ beforeEach(() => {
 		false,
 		data,
 		[],
-		0,
-		ContentLanguagePreference.Default,
 		false,
 		null!,
 	);

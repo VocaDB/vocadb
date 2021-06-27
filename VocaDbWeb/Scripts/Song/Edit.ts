@@ -4,7 +4,6 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -65,6 +64,7 @@ const SongEdit = (
 
 		if (editedModel) {
 			vm = new SongEditViewModel(
+				vdb.values,
 				songRepo,
 				artistRepo,
 				pvRepo,
@@ -82,6 +82,7 @@ const SongEdit = (
 		} else {
 			songRepo.getForEdit({ id: model.id }).then(function (model) {
 				vm = new SongEditViewModel(
+					vdb.values,
 					songRepo,
 					artistRepo,
 					pvRepo,

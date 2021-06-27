@@ -2,15 +2,16 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import ResourcesManager from '@Models/ResourcesManager';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Observable } from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class ListUsersViewModel {
 	public constructor(
+		values: GlobalValues,
 		private readonly repo: UserRepository,
 		resourceRepo: ResourceRepository,
-		cultureCode: string,
 		searchTerm: string,
 		group: string,
 	) {
@@ -20,7 +21,7 @@ export default class ListUsersViewModel {
 			.observable(searchTerm || '')
 			.extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
 
-		this.resources = new ResourcesManager(resourceRepo, cultureCode);
+		this.resources = new ResourcesManager(resourceRepo, values.uiCulture);
 		this.resources.loadResources('userGroupNames');
 
 		this.disabledUsers.subscribe(this.updateResultsWithTotalCount);

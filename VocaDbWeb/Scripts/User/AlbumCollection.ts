@@ -1,7 +1,6 @@
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -15,10 +14,6 @@ const UserAlbumCollection = (
 	publicCollection: boolean,
 ): void => {
 	$(document).ready(function () {
-		var cultureCode = vdb.values.uiCulture;
-		var lang = vdb.values.languagePreference;
-		var loggedUserId = model.user.id;
-
 		const httpClient = new HttpClient();
 		var rootPath = vdb.values.baseAddress;
 		var urlMapper = new UrlMapper(rootPath);
@@ -28,12 +23,11 @@ const UserAlbumCollection = (
 		var resourceRepo = repoFactory.resourceRepository();
 
 		var vm = new AlbumCollectionViewModel(
+			vdb.values,
 			userRepo,
 			artistRepo,
 			resourceRepo,
-			lang,
-			loggedUserId,
-			cultureCode,
+			model.user.id,
 			publicCollection,
 		);
 		ko.applyBindings(vm);

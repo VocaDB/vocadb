@@ -3,7 +3,6 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
 import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
 import $ from 'jquery';
@@ -25,7 +24,6 @@ const SongListDetails = (
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#export').button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 
-		var languageSelection = vdb.values.languagePreference;
 		var listId = model.songList.id;
 
 		const httpClient = new HttpClient();
@@ -37,13 +35,13 @@ const SongListDetails = (
 		var artistRepo = repoFactory.artistRepository();
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var cultureCode = vdb.values.uiCulture;
 		var pvPlayerElem = $('#pv-player-wrapper')[0];
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 		var latestComments = model.songList.latestComments;
 		var tagUsages = model.songList.tags;
 
 		var vm = new SongListViewModel(
+			vdb.values,
 			urlMapper,
 			songListRepo,
 			songRepo,
@@ -52,9 +50,6 @@ const SongListDetails = (
 			resourceRepo,
 			defaultSortRuleName,
 			latestComments,
-			vdb.values.loggedUserId,
-			languageSelection,
-			cultureCode,
 			listId,
 			tagUsages,
 			pvPlayersFactory,

@@ -3,7 +3,6 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
 import SongDetailsViewModel, {
 	SongDetailsAjax,
@@ -43,7 +42,7 @@ function initPage(
 
 	$('#tabs').tabs({
 		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
+			functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
 			if (ui.newTab.data('tab') === 'Discussion') {
@@ -105,6 +104,7 @@ const SongDetails = (
 		var artistRepo = repoFactory.artistRepository();
 
 		var viewModel = new SongDetailsViewModel(
+			vdb.values,
 			httpClient,
 			repo,
 			userRepo,
@@ -113,8 +113,6 @@ const SongDetails = (
 			showTranslatedDescription,
 			jsonModel,
 			reportTypes,
-			vdb.values.loggedUserId,
-			vdb.values.languagePreference,
 			canDeleteAllComments,
 			ui.showThankYouForRatingMessage,
 		);

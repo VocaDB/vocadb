@@ -36,6 +36,7 @@ beforeEach(() => {
 
 var create = (getNewReportsCount: boolean = false): TopBarViewModel => {
 	return new TopBarViewModel(
+		vdb.values,
 		entryTypeTranslations,
 		'Album',
 		'',

@@ -4,7 +4,6 @@ import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -41,6 +40,7 @@ const ArtistEdit = (
 		if (editedModel) {
 			ko.applyBindings(
 				new ArtistEditViewModel(
+					vdb.values,
 					artistRepo,
 					userRepo,
 					urlMapper,
@@ -53,6 +53,7 @@ const ArtistEdit = (
 			artistRepo.getForEdit({ id: model.artist.id }).then(function (model) {
 				ko.applyBindings(
 					new ArtistEditViewModel(
+						vdb.values,
 						artistRepo,
 						userRepo,
 						urlMapper,

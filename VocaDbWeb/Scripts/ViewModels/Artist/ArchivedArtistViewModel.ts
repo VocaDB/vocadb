@@ -1,6 +1,5 @@
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ui from '@Shared/MessagesTyped';
-import vdb from '@Shared/VdbStatic';
 
 import ReportEntryViewModel from '../ReportEntryViewModel';
 

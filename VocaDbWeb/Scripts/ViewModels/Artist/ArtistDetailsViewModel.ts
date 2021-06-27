@@ -10,9 +10,9 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
-import vdb from '@Shared/VdbStatic';
 import { Options } from 'highcharts';
 import ko, { Observable } from 'knockout';
 
@@ -28,6 +28,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ArtistDetailsViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		repo: ArtistRepository,
 		private artistId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -36,15 +37,12 @@ export default class ArtistDetailsViewModel {
 		siteNotifications: boolean,
 		hasEnglishDescription: boolean,
 		private unknownPictureUrl: string,
-		private lang: ContentLanguagePreference,
 		private urlMapper: UrlMapper,
 		private albumRepo: AlbumRepository,
 		private songRepo: SongRepository,
 		private resourceRepo: ResourceRepository,
 		private userRepository: UserRepository,
-		private cultureCode: string,
 		reportTypes: IEntryReportType[],
-		private loggedUserId: number,
 		canDeleteAllComments: boolean,
 		private pvPlayersFactory: PVPlayersFactory,
 		latestComments: CommentContract[],
@@ -58,14 +56,14 @@ export default class ArtistDetailsViewModel {
 		);
 		this.description = new EnglishTranslatedStringViewModel(
 			hasEnglishDescription &&
-				(lang === ContentLanguagePreference.English ||
-					lang === ContentLanguagePreference.Romaji),
+				(values.languagePreference === ContentLanguagePreference.English ||
+					values.languagePreference === ContentLanguagePreference.Romaji),
 		);
 
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repo,
 			artistId,
-			loggedUserId,
 			canDeleteAllComments,
 			canDeleteAllComments,
 			false,
@@ -180,12 +178,11 @@ export default class ArtistDetailsViewModel {
 		this.mainAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.values,
 				this.unknownPictureUrl,
-				this.lang,
 				this.albumRepo,
 				null!,
 				this.resourceRepo,
-				this.cultureCode,
 				null!,
 				[this.artistId],
 				null!,
@@ -204,12 +201,11 @@ export default class ArtistDetailsViewModel {
 		this.collaborationAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.values,
 				this.unknownPictureUrl,
-				this.lang,
 				this.albumRepo,
 				null!,
 				this.resourceRepo,
-				this.cultureCode,
 				null!,
 				[this.artistId],
 				null!,
@@ -228,15 +224,14 @@ export default class ArtistDetailsViewModel {
 		this.songsViewModel(
 			new SongSearchViewModel(
 				null!,
+				this.values,
 				this.urlMapper,
-				this.lang,
 				this.songRepo,
 				null!,
 				this.userRepository,
 				null!,
 				this.resourceRepo,
-				this.cultureCode,
-				this.loggedUserId,
+				this.values.loggedUserId,
 				null!,
 				[this.artistId],
 				null!,

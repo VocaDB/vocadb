@@ -1,8 +1,7 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import TagRepository from '@Repositories/TagRepository';
-import vdb from '@Shared/VdbStatic';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -11,7 +10,7 @@ import SearchViewModel from './SearchViewModel';
 export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
-		lang: ContentLanguagePreference,
+		values: GlobalValues,
 		private tagRepo: TagRepository,
 	) {
 		super(searchViewModel);
@@ -32,7 +31,7 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
 					start: pagingProperties.start,
 					maxResults: pagingProperties.maxEntries,
 					getTotalCount: pagingProperties.getTotalCount,
-					lang: vdb.values.languagePreference,
+					lang: values.languagePreference,
 					query: searchTerm,
 					sort: this.sort(),
 					allowAliases: this.allowAliases(),
