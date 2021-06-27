@@ -49,7 +49,7 @@ namespace VocaDb.Web.Helpers
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public ServerOnlyUserWithPermissionsContract User => Manager.LoggedUser;
+		public ServerOnlyUserWithPermissionsContract? User => Manager.LoggedUser;
 
 		public bool CanDeleteComment(CommentForApiContract comment)
 		{

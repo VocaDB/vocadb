@@ -1,4 +1,6 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers
 @using VocaDb.Web.Resources.Domain
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -15,13 +17,23 @@
 
 <script type="text/javascript">
 	vdb = vdb || {};
-	vdb.values = vdb.values || {};
-	vdb.values.baseAddress = '@RootPath';
-	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
-	vdb.values.isLoggedIn = @ToJS(UserContext.IsLoggedIn);
-	vdb.values.loggedUserId = @ToJS(UserContext.LoggedUserId);
-	vdb.values.culture = @ToJS(Culture);
-	vdb.values.uiCulture = @ToJS(UICulture);
+	vdb.values = @ToJS(new
+	{
+		LockdownMessage = AppConfig.LockdownMessage,
+		BaseAddress = RootPath,
+		LanguagePreference = (int)Login.Manager.LanguagePreference,
+		IsLoggedIn = UserContext.IsLoggedIn,
+		LoggedUserId = UserContext.LoggedUserId,
+		Culture = Culture,
+		UICulture = UICulture,
+		LoggedUser = Login.User is ServerOnlyUserWithPermissionsContract loggedUser ? new
+		{
+			Id = loggedUser.Id,
+			Name = loggedUser.Name,
+			Active = loggedUser.Active,
+			EffectivePermissions = loggedUser.EffectivePermissions.Select(p => p.Id).ToArray(),
+		} : null,
+	});
 	vdb.resources = vdb.resources || {};
 
 	var model = {
