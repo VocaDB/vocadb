@@ -1,16 +1,18 @@
-module vdb.values {
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+
+export default interface GlobalValues {
 	/** URL of the site path, for example "/" */
-	export var baseAddress: string;
+	baseAddress: string;
 
 	/** Whether the user is logged in. */
-	export var isLoggedIn: boolean;
+	isLoggedIn: boolean;
 
-	export var loggedUserId: number;
+	loggedUserId: number;
 
-	export var languagePreference: number;
+	languagePreference: ContentLanguagePreference;
 
-	export var culture: string;
+	culture: string;
 
 	/** UI language code, for example "en" */
-	export var uiCulture: string;
+	uiCulture: string;
 }
