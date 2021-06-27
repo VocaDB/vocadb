@@ -41,6 +41,7 @@ const SongListDetails = (
 		var tagUsages = model.songList.tags;
 
 		var vm = new SongListViewModel(
+			vdb.values,
 			urlMapper,
 			songListRepo,
 			songRepo,

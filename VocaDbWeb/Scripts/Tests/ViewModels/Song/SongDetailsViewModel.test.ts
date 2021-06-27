@@ -33,6 +33,7 @@ beforeEach(() => {
 		{ id: 3, name: 'Mikupa 2013', featuredCategory: 'Concerts' },
 	];
 	target = new SongDetailsViewModel(
+		vdb.values,
 		new HttpClient(),
 		rep,
 		userRep,

@@ -18,6 +18,7 @@ function initPage(
 	var songRepo = repoFactory.songRepository();
 
 	var viewModel = new SongListEditViewModel(
+		vdb.values,
 		songListRepo,
 		songRepo,
 		urlMapper,

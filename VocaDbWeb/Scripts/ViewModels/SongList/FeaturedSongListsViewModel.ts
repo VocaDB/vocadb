@@ -3,6 +3,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 import _ from 'lodash';
 
@@ -10,6 +11,7 @@ import SongListsBaseViewModel from './SongListsBaseViewModel';
 
 export default class FeaturedSongListsViewModel {
 	public constructor(
+		values: GlobalValues,
 		listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
@@ -18,6 +20,7 @@ export default class FeaturedSongListsViewModel {
 	) {
 		_.forEach(categoryNames, (categoryName) => {
 			this.categories[categoryName] = new FeaturedSongListCategoryViewModel(
+				values,
 				listRepo,
 				resourceRepo,
 				tagRepo,
@@ -49,6 +52,7 @@ export default class FeaturedSongListsViewModel {
 
 export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 	public constructor(
+		values: GlobalValues,
 		private listRepo: SongListRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
@@ -57,6 +61,7 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 	) {
 		// Should figure out a better way for this.
 		super(
+			values,
 			resourceRepo,
 			tagRepo,
 			tagIds,

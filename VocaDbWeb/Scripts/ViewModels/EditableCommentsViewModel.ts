@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import ICommentRepository from '@Repositories/ICommentRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
@@ -9,6 +10,7 @@ import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 // Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
 export default class EditableCommentsViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private repo: ICommentRepository,
 		private entryId: number,
 		private canDeleteAllComments: boolean,
@@ -46,14 +48,14 @@ export default class EditableCommentsViewModel {
 		return (
 			this.canDeleteAllComments ||
 			this.canEditAllComments ||
-			(comment.author && comment.author.id === vdb.values.loggedUserId)
+			(comment.author && comment.author.id === this.values.loggedUserId)
 		);
 	};
 
 	private canEditComment = (comment: CommentContract): boolean => {
 		return (
 			this.canEditAllComments ||
-			(comment.author && comment.author.id === vdb.values.loggedUserId)
+			(comment.author && comment.author.id === this.values.loggedUserId)
 		);
 	};
 
@@ -70,7 +72,7 @@ export default class EditableCommentsViewModel {
 		this.newComment('');
 
 		var commentContract: CommentContract = {
-			author: { id: vdb.values.loggedUserId },
+			author: { id: this.values.loggedUserId },
 			message: comment,
 		};
 

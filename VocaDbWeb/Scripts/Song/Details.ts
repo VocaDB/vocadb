@@ -104,6 +104,7 @@ const SongDetails = (
 		var artistRepo = repoFactory.artistRepository();
 
 		var viewModel = new SongDetailsViewModel(
+			vdb.values,
 			httpClient,
 			repo,
 			userRepo,

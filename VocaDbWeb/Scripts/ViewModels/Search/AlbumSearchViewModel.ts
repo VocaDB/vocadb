@@ -4,6 +4,7 @@ import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -14,6 +15,7 @@ import SearchViewModel from './SearchViewModel';
 export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		values: GlobalValues,
 		private unknownPictureUrl: string,
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
@@ -31,13 +33,17 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		} else {
 			this.resourceManager = new ResourcesManager(
 				resourceRep,
-				vdb.values.uiCulture,
+				values.uiCulture,
 			);
 			this.resourceManager.loadResources('albumSortRuleNames', 'discTypeNames');
 		}
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-		this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(
+			values,
+			this.artistRepo,
+			childVoicebanks,
+		);
 		this.artistFilters.selectArtists(artistId);
 
 		this.albumType = ko.observable(albumType || 'Unknown');
@@ -65,7 +71,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 
 			return this.albumRepo.getList({
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: values.languagePreference,
 				query: searchTerm,
 				sort: this.sort(),
 				discTypes: this.albumType(),

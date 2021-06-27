@@ -1,6 +1,7 @@
 import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
@@ -11,12 +12,13 @@ import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 
 export default class DiscussionIndexViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly repo: DiscussionRepository,
 		private readonly urlMapper: UrlMapper,
 		private readonly canDeleteAllComments: boolean,
 	) {
 		this.newTopic = ko.observable(
-			new DiscussionTopicEditViewModel(vdb.values.loggedUserId, this.folders()),
+			new DiscussionTopicEditViewModel(values.loggedUserId, this.folders()),
 		);
 
 		this.mapRoute('folders/:folderId?', (context) => {
@@ -56,14 +58,14 @@ export default class DiscussionIndexViewModel {
 	private canDeleteTopic = (topic: DiscussionTopicContract): boolean => {
 		return (
 			this.canDeleteAllComments ||
-			(topic.author && topic.author.id === vdb.values.loggedUserId)
+			(topic.author && topic.author.id === this.values.loggedUserId)
 		);
 	};
 
 	private canEditTopic = (topic: DiscussionTopicContract): boolean => {
 		return (
 			this.canDeleteAllComments ||
-			(topic.author && topic.author.id === vdb.values.loggedUserId)
+			(topic.author && topic.author.id === this.values.loggedUserId)
 		);
 	};
 
@@ -78,7 +80,7 @@ export default class DiscussionIndexViewModel {
 				topic.canBeDeleted = false;
 				this.newTopic(
 					new DiscussionTopicEditViewModel(
-						vdb.values.loggedUserId,
+						this.values.loggedUserId,
 						this.folders(),
 					),
 				);
@@ -169,6 +171,7 @@ export default class DiscussionIndexViewModel {
 			this.selectFolderById(contract.folderId);
 			this.selectedTopic(
 				new DiscussionTopicViewModel(
+					this.values,
 					this.repo,
 					this.canDeleteAllComments,
 					contract,

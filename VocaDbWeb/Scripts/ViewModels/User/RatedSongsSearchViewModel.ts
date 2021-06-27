@@ -9,6 +9,7 @@ import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko from 'knockout';
@@ -28,6 +29,7 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
@@ -42,7 +44,7 @@ export default class RatedSongsSearchViewModel {
 		artistId?: number,
 		childVoicebanks?: boolean,
 	) {
-		this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(values, artistRepo, childVoicebanks);
 
 		if (artistId) this.artistFilters.selectArtist(artistId);
 
@@ -52,7 +54,7 @@ export default class RatedSongsSearchViewModel {
 
 		if (groupByRating != null) this.groupByRating(groupByRating);
 
-		this.tagFilters = new TagFilters(tagRepo);
+		this.tagFilters = new TagFilters(values, tagRepo);
 
 		this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 		this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -68,6 +70,7 @@ export default class RatedSongsSearchViewModel {
 		this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			values,
 			urlMapper,
 			songRepo,
 			userRepo,
@@ -88,6 +91,7 @@ export default class RatedSongsSearchViewModel {
 			ko.observable('AdditionalNames,ThumbUrl'),
 		);
 		this.playListViewModel = new PlayListViewModel(
+			values,
 			urlMapper,
 			songsRepoAdapter,
 			songRepo,
@@ -162,7 +166,7 @@ export default class RatedSongsSearchViewModel {
 
 		this.resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: this.values.uiCulture,
 				setNames: [
 					'songSortRuleNames',
 					'user_ratedSongForUserSortRuleNames',
@@ -202,7 +206,7 @@ export default class RatedSongsSearchViewModel {
 			.getRatedSongsList({
 				userId: this.userId,
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 				query: this.searchTerm(),
 				tagIds: this.tagFilters.tagIds(),
 				artistIds: this.artistFilters.artistIds(),

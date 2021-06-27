@@ -8,6 +8,7 @@ import AdminRepository from '@Repositories/AdminRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
@@ -155,6 +156,7 @@ export default class UserDetailsViewModel {
 	public songLists: UserSongListsViewModel;
 
 	public constructor(
+		values: GlobalValues,
 		private readonly userId: number,
 		private lastLoginAddress: string,
 		private canEditAllComments: boolean,
@@ -169,9 +171,10 @@ export default class UserDetailsViewModel {
 		public ratedSongsViewModel: RatedSongsSearchViewModel,
 		latestComments: CommentContract[],
 	) {
-		var canDeleteAllComments = userId === vdb.values.loggedUserId;
+		var canDeleteAllComments = userId === values.loggedUserId;
 
 		this.comments = new EditableCommentsViewModel(
+			values,
 			userRepo,
 			userId,
 			canDeleteAllComments,
@@ -181,6 +184,7 @@ export default class UserDetailsViewModel {
 			true,
 		);
 		this.songLists = new UserSongListsViewModel(
+			values,
 			userId,
 			userRepo,
 			resourceRepo,
@@ -208,12 +212,13 @@ export default class UserDetailsViewModel {
 
 export class UserSongListsViewModel extends SongListsBaseViewModel {
 	public constructor(
+		values: GlobalValues,
 		private readonly userId: number,
 		private readonly userRepo: UserRepository,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 	) {
-		super(resourceRepo, tagRepo, [], true);
+		super(values, resourceRepo, tagRepo, [], true);
 	}
 
 	public loadMoreItems = (

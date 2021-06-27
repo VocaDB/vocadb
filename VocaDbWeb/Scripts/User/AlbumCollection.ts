@@ -23,6 +23,7 @@ const UserAlbumCollection = (
 		var resourceRepo = repoFactory.resourceRepository();
 
 		var vm = new AlbumCollectionViewModel(
+			vdb.values,
 			userRepo,
 			artistRepo,
 			resourceRepo,

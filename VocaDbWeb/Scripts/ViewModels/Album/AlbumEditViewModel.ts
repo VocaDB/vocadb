@@ -14,6 +14,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import { IDialogService } from '@Shared/DialogService';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko, {
@@ -53,7 +54,7 @@ export default class AlbumEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne({ id: artistId, lang: vdb.values.languagePreference })
+				.getOne({ id: artistId, lang: this.values.languagePreference })
 				.then((artist) => {
 					var data: ArtistForAlbumContract = {
 						artist: artist,
@@ -274,6 +275,7 @@ export default class AlbumEditViewModel {
 	public validationError_unspecifiedNames: Computed<boolean>;
 
 	public constructor(
+		private readonly values: GlobalValues,
 		public repository: AlbumRepository,
 		songRepository: SongRepository,
 		private artistRepository: ArtistRepository,
@@ -337,7 +339,7 @@ export default class AlbumEditViewModel {
 					.getOneWithComponents({
 						id: songId,
 						fields: 'AdditionalNames,Artists',
-						lang: vdb.values.languagePreference,
+						lang: values.languagePreference,
 					})
 					.then((song) => {
 						var artists = _.filter(

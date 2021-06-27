@@ -66,6 +66,7 @@ const UserDetails = (
 		var groupByRating = true;
 
 		var followedArtistsViewModel = new FollowedArtistsViewModel(
+			vdb.values,
 			userRepo,
 			resourceRepo,
 			tagRepo,
@@ -73,6 +74,7 @@ const UserDetails = (
 		);
 
 		var albumCollectionViewModel = new AlbumCollectionViewModel(
+			vdb.values,
 			userRepo,
 			artistRepo,
 			resourceRepo,
@@ -82,6 +84,7 @@ const UserDetails = (
 		);
 
 		var ratedSongsViewModel = new RatedSongsSearchViewModel(
+			vdb.values,
 			urlMapper,
 			userRepo,
 			artistRepo,
@@ -98,6 +101,7 @@ const UserDetails = (
 		);
 
 		var viewModel = new UserDetailsViewModel(
+			vdb.values,
 			userId,
 			lastLoginAddress,
 			canDeleteComments,

@@ -56,6 +56,7 @@ beforeEach(() => {
 
 function createViewModel(): SongEditViewModel {
 	return new SongEditViewModel(
+		vdb.values,
 		songRepo,
 		artistRepo,
 		pvRepo,

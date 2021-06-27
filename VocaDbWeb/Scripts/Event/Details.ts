@@ -41,6 +41,7 @@ const EventDetails = (
 		var tags = model.tags;
 
 		var vm = new ReleaseEventDetailsViewModel(
+			vdb.values,
 			httpClient,
 			urlMapper,
 			eventRepo,

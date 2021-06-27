@@ -29,7 +29,12 @@ var createMessage = (
 };
 
 var createViewModel = (): UserMessagesViewModel => {
-	return new UserMessagesViewModel(repository, null!, UserInboxType.Received);
+	return new UserMessagesViewModel(
+		vdb.values,
+		repository,
+		null!,
+		UserInboxType.Received,
+	);
 };
 
 beforeEach(() => {

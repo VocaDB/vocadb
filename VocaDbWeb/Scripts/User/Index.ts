@@ -18,7 +18,13 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var repo = repoFactory.userRepository();
 		var resourceRepo = repoFactory.resourceRepository();
-		var viewModel = new ListUsersViewModel(repo, resourceRepo, filter, groupId);
+		var viewModel = new ListUsersViewModel(
+			vdb.values,
+			repo,
+			resourceRepo,
+			filter,
+			groupId,
+		);
 		ko.applyBindings(viewModel);
 	});
 };

@@ -9,6 +9,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 import _ from 'lodash';
 
@@ -18,6 +19,7 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class AlbumCollectionViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private userRepo: UserRepository,
 		private artistRepo: ArtistRepository,
 		private resourceRepo: ResourceRepository,
@@ -88,7 +90,7 @@ export default class AlbumCollectionViewModel {
 
 		this.resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: this.values.uiCulture,
 				setNames: [
 					'albumCollectionStatusNames',
 					'albumMediaTypeNames',
@@ -115,7 +117,7 @@ export default class AlbumCollectionViewModel {
 		this.artistRepo
 			.getOne({
 				id: selectedArtistId!,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 			})
 			.then((artist) => this.artistName(artist.name));
 	};
@@ -138,7 +140,7 @@ export default class AlbumCollectionViewModel {
 			.getAlbumCollectionList({
 				userId: this.userId,
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 				query: this.searchTerm(),
 				tag: this.tagId()!,
 				albumType: this.albumType(),

@@ -31,6 +31,7 @@ const UserFavoriteSongs = (model: {
 		var pvPlayersFactory = new PVPlayersFactory($('#pv-player-wrapper')[0]);
 
 		var vm = new RatedSongsSearchViewModel(
+			vdb.values,
 			urlMapper,
 			userRepo,
 			artistRepo,

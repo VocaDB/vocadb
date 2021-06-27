@@ -1,10 +1,14 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Observable } from 'knockout';
 
 export default class RequestVerificationViewModel {
-	public constructor(private readonly artistRepository: ArtistRepository) {}
+	public constructor(
+		private readonly values: GlobalValues,
+		private readonly artistRepository: ArtistRepository,
+	) {}
 
 	public clearArtist = (): void => {
 		this.selectedArtist(null!);
@@ -20,7 +24,7 @@ export default class RequestVerificationViewModel {
 		this.artistRepository
 			.getOne({
 				id: targetArtistId!,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 			})
 			.then((artist) => {
 				this.selectedArtist(artist);

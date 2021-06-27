@@ -6,6 +6,7 @@ import EntryType from '@Models/EntryType';
 import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
@@ -32,6 +33,7 @@ export class SongInListEditViewModel {
 
 export default class SongListEditViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		private readonly urlMapper: UrlMapper,
@@ -45,7 +47,7 @@ export default class SongListEditViewModel {
 		if (!songId) return;
 
 		this.songRepo
-			.getOne({ id: songId, lang: vdb.values.languagePreference })
+			.getOne({ id: songId, lang: this.values.languagePreference })
 			.then((song: SongContract) => {
 				var songInList = new SongInListEditViewModel({
 					songInListId: 0,

@@ -24,7 +24,12 @@ repository.results = {
 };
 
 function createViewModel(): SongCreateViewModel {
-	return new SongCreateViewModel(repository, artistRepository, tagRepository);
+	return new SongCreateViewModel(
+		vdb.values,
+		repository,
+		artistRepository,
+		tagRepository,
+	);
 }
 
 test('constructor empty', () => {
@@ -39,6 +44,7 @@ test('constructor empty', () => {
 
 test('constructor with data', () => {
 	var target = new SongCreateViewModel(
+		vdb.values,
 		repository,
 		artistRepository,
 		tagRepository,

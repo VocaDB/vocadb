@@ -19,7 +19,12 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 		);
 		var userId = model.id;
 
-		var vm = new CommentListViewModel(urlMapper, resourceRepo, userId);
+		var vm = new CommentListViewModel(
+			vdb.values,
+			urlMapper,
+			resourceRepo,
+			userId,
+		);
 		ko.applyBindings(vm);
 	});
 };

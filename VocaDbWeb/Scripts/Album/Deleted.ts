@@ -8,7 +8,7 @@ const AlbumDeleted = (): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var repo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-		var viewModel = new DeletedAlbumsViewModel(repo);
+		var viewModel = new DeletedAlbumsViewModel(vdb.values, repo);
 		ko.applyBindings(viewModel);
 	});
 };

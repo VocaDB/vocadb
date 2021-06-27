@@ -70,6 +70,7 @@ const SearchIndex = (model: {
 		var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
 
 		var vm = new SearchViewModel(
+			vdb.values,
 			urlMapper,
 			entryRepo,
 			artistRepo,

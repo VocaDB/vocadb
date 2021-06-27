@@ -13,7 +13,7 @@ const UserRequestVerification = (): void => {
 			new UrlMapper(vdb.values.baseAddress),
 		);
 		var artistRepo = repoFactory.artistRepository();
-		ko.applyBindings(new RequestVerificationViewModel(artistRepo));
+		ko.applyBindings(new RequestVerificationViewModel(vdb.values, artistRepo));
 	});
 };
 

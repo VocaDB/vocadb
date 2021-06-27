@@ -10,7 +10,7 @@ const SongMerge = (model: SongContract): void => {
 		const httpClient = new HttpClient();
 		var repo = new SongRepository(httpClient, vdb.values.baseAddress);
 		var data = model;
-		var vm = new SongMergeViewModel(repo, data);
+		var vm = new SongMergeViewModel(vdb.values, repo, data);
 		ko.applyBindings(vm);
 
 		$('#mergeBtn').click(function () {

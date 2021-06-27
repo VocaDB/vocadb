@@ -17,7 +17,9 @@ const SongCreate = (model: any): void => {
 		var artistRepo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var json = model;
-		ko.applyBindings(new SongCreateViewModel(repo, artistRepo, tagRepo, json));
+		ko.applyBindings(
+			new SongCreateViewModel(vdb.values, repo, artistRepo, tagRepo, json),
+		);
 
 		$('#pvLoader')
 			.ajaxStart(function (this: any) {

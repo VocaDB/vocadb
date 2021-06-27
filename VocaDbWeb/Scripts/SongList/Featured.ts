@@ -29,6 +29,7 @@ const SongListFeatured = (
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var viewModel = new FeaturedSongListsViewModel(
+			vdb.values,
 			songListRepo,
 			resourceRepo,
 			tagRepo,

@@ -11,6 +11,7 @@ import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import UserRepository from '@Repositories/UserRepository';
 import functions from '@Shared/GlobalFunctions';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
@@ -59,6 +60,7 @@ export default class AlbumDetailsViewModel {
 	};
 
 	public constructor(
+		values: GlobalValues,
 		repo: AlbumRepository,
 		userRepo: UserRepository,
 		artistRepository: ArtistRepository,
@@ -74,6 +76,7 @@ export default class AlbumDetailsViewModel {
 			showTranslatedDescription,
 		);
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repo,
 			this.id,
 			canDeleteAllComments,
@@ -84,6 +87,7 @@ export default class AlbumDetailsViewModel {
 		);
 
 		this.personalDescription = new SelfDescriptionViewModel(
+			values,
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,
@@ -92,7 +96,7 @@ export default class AlbumDetailsViewModel {
 					.getOneWithComponents({
 						id: this.id,
 						fields: 'Artists',
-						lang: vdb.values.languagePreference,
+						lang: values.languagePreference,
 					})
 					.then((result) => {
 						var artists = _.chain(result.artists!)

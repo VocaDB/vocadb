@@ -22,6 +22,7 @@ const UserMessages = (
 		var repository = new UserRepository(httpClient, urlMapper);
 		var receiverName = model.receiverName;
 		var viewModel = new UserMessagesViewModel(
+			vdb.values,
 			repository,
 			vdb.values.loggedUserId,
 			model.inbox,

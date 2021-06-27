@@ -1,5 +1,6 @@
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
@@ -8,6 +9,7 @@ import TagFilter from './TagFilter';
 // Manages tag filters for search
 export default class TagFilters {
 	public constructor(
+		private readonly values: GlobalValues,
 		private tagRepo: TagRepository,
 		tags: ObservableArray<TagFilter> = null!,
 	) {
@@ -41,7 +43,7 @@ export default class TagFilters {
 				.getById({
 					id: selectedTagId,
 					fields: undefined,
-					lang: vdb.values.languagePreference,
+					lang: this.values.languagePreference,
 				})
 				.then((tag) => {
 					newTag.name(tag.name);

@@ -4,6 +4,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -12,6 +13,7 @@ import SearchViewModel from './SearchViewModel';
 export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 		/* TODO: remove */ private readonly loggedUserId: number,
 		artistType: string,
@@ -35,7 +37,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 		): Promise<PartialFindResultContract<ArtistContract>> =>
 			this.artistRepo.getList({
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: values.languagePreference,
 				query: searchTerm,
 				sort: this.sort(),
 				artistTypes:
@@ -46,7 +48,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 				tags: tags,
 				childTags: childTags,
 				followedByUserId: this.onlyFollowedByMe()
-					? vdb.values.loggedUserId
+					? values.loggedUserId
 					: undefined,
 				fields: this.fields(),
 				status: status,

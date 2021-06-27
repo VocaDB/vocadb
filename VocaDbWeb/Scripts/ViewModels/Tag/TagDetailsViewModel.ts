@@ -1,6 +1,7 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import ko, { Observable } from 'knockout';
 
@@ -11,6 +12,7 @@ import ReportEntryViewModel from '../ReportEntryViewModel';
 
 export default class TagDetailsViewModel {
 	public constructor(
+		values: GlobalValues,
 		repo: TagRepository,
 		private userRepo: UserRepository,
 		latestComments: CommentContract[],
@@ -21,6 +23,7 @@ export default class TagDetailsViewModel {
 		isFollowed: boolean,
 	) {
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repo.getComments({}),
 			tagId,
 			canDeleteAllComments,
@@ -48,7 +51,7 @@ export default class TagDetailsViewModel {
 			showTranslatedDescription,
 		);
 		this.isFollowed = ko.observable(isFollowed);
-		this.isLoggedIn = !!vdb.values.loggedUserId;
+		this.isLoggedIn = !!values.loggedUserId;
 	}
 
 	public comments: EditableCommentsViewModel;

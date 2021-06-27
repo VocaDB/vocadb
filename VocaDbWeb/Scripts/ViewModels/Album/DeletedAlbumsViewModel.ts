@@ -1,11 +1,15 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import AlbumRepository from '@Repositories/AlbumRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class DeletedAlbumsViewModel {
-	public constructor(private albumRepo: AlbumRepository) {
+	public constructor(
+		private readonly values: GlobalValues,
+		private albumRepo: AlbumRepository,
+	) {
 		this.updateResults(true);
 		this.paging.page.subscribe(() => this.updateResults(false));
 		this.paging.pageSize.subscribe(() => this.updateResults(true));
@@ -33,7 +37,7 @@ export default class DeletedAlbumsViewModel {
 		this.albumRepo
 			.getList({
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 				query: this.searchTerm(),
 				sort: 'Name',
 				discTypes: undefined,

@@ -14,6 +14,7 @@ import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import ko, { Computed, Observable } from 'knockout';
@@ -130,7 +131,7 @@ export default class SongDetailsViewModel {
 			.getOneWithComponents({
 				id: id,
 				fields: 'None',
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 			})
 			.then((song) => {
 				if (song.songType === SongType[SongType.Original])
@@ -179,6 +180,7 @@ export default class SongDetailsViewModel {
 	public userRating: PVRatingButtonsViewModel;
 
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly httpClient: HttpClient,
 		private repository: SongRepository,
 		userRepository: UserRepository,
@@ -200,6 +202,7 @@ export default class SongDetailsViewModel {
 		this.allVersionsVisible = ko.observable(false);
 
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repository,
 			this.id,
 			canDeleteAllComments,
@@ -233,6 +236,7 @@ export default class SongDetailsViewModel {
 		);
 
 		this.personalDescription = new SelfDescriptionViewModel(
+			values,
 			data.personalDescriptionAuthor!,
 			data.personalDescriptionText!,
 			artistRepository,
@@ -241,7 +245,7 @@ export default class SongDetailsViewModel {
 					.getOneWithComponents({
 						id: this.id,
 						fields: 'Artists',
-						lang: vdb.values.languagePreference,
+						lang: values.languagePreference,
 					})
 					.then((result) => {
 						var artists = _.chain(result.artists!)

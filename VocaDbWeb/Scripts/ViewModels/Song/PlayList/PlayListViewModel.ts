@@ -9,6 +9,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import PVServiceIcons from '@Models/PVServiceIcons';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
@@ -19,6 +20,7 @@ import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
 
 export default class PlayListViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private urlMapper: UrlMapper,
 		private songListRepo: IPlayListRepository,
 		private songRepo: SongRepository,
@@ -177,7 +179,7 @@ export default class PlayListViewModel {
 					SongOptionalField.AdditionalNames,
 					SongOptionalField.ThumbUrl,
 				),
-				vdb.values.languagePreference,
+				this.values.languagePreference,
 			)
 			.then((result: PartialFindResultContract<ISongForPlayList>) => {
 				this.pauseNotifications = false;

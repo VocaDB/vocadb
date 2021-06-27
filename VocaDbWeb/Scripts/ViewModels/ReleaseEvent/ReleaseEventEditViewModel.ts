@@ -10,6 +10,7 @@ import PVRepository from '@Repositories/PVRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
@@ -26,6 +27,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventEditViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly repo: ReleaseEventRepository,
 		userRepository: UserRepository,
 		pvRepository: PVRepository,
@@ -102,7 +104,7 @@ export default class ReleaseEventEditViewModel {
 	public addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepository
-				.getOne({ id: artistId, lang: vdb.values.languagePreference })
+				.getOne({ id: artistId, lang: this.values.languagePreference })
 				.then((artist) => {
 					const data: ArtistForEventContract = {
 						artist: artist,

@@ -178,6 +178,7 @@ const AlbumDetails = (
 
 		var jsonModel = model.jsonModel;
 		var viewModel = new AlbumDetailsViewModel(
+			vdb.values,
 			albumRepo,
 			userRepo,
 			artistRepo,

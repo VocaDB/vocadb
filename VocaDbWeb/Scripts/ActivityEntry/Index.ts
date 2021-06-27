@@ -18,7 +18,11 @@ const ActivityEntryIndex = (): void => {
 			vdb.values.baseAddress,
 		);
 
-		var vm = new ActivityEntryListViewModel(urlMapper, resourceRepo);
+		var vm = new ActivityEntryListViewModel(
+			vdb.values,
+			urlMapper,
+			resourceRepo,
+		);
 		ko.applyBindings(vm);
 	});
 };

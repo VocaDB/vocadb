@@ -25,6 +25,7 @@ const UserEntryEdits = (
 		var userId = model.id;
 
 		var vm = new ActivityEntryListViewModel(
+			vdb.values,
 			urlMapper,
 			resourceRepo,
 			userId,

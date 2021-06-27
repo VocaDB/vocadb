@@ -58,6 +58,7 @@ const AlbumEdit = (
 
 		if (editedModel) {
 			viewModel = new AlbumEditViewModel(
+				vdb.values,
 				repo,
 				songRepo,
 				artistRepo,
@@ -77,6 +78,7 @@ const AlbumEdit = (
 		} else {
 			repo.getForEdit({ id: model.id }).then(function (model) {
 				viewModel = new AlbumEditViewModel(
+					vdb.values,
 					repo,
 					songRepo,
 					artistRepo,

@@ -34,6 +34,7 @@ const SharedLayoutScripts = (model: {
 	var getNewReportCount = model.getNewReportCount;
 
 	var topBarViewModel = new TopBarViewModel(
+		vdb.values,
 		entryTypeTranslations,
 		topBarData.searchObjectType,
 		'',

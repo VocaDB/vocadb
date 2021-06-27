@@ -3,10 +3,12 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 export default class AlbumCreateViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private albumRepo: AlbumRepository,
 		private artistRepo: ArtistRepository,
 	) {}
@@ -14,7 +16,7 @@ export default class AlbumCreateViewModel {
 	private addArtist = (artistId?: number): void => {
 		if (artistId) {
 			this.artistRepo
-				.getOne({ id: artistId, lang: vdb.values.languagePreference })
+				.getOne({ id: artistId, lang: this.values.languagePreference })
 				.then((artist) => this.artists.push(artist));
 		}
 	};

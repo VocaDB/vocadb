@@ -10,6 +10,7 @@ import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable } from 'knockout';
 
@@ -34,6 +35,7 @@ class SearchType {
 
 export default class SearchViewModel {
 	public constructor(
+		values: GlobalValues,
 		urlMapper: UrlMapper,
 		entryRepo: EntryRepository,
 		artistRepo: ArtistRepository,
@@ -68,26 +70,32 @@ export default class SearchViewModel {
 	) {
 		this.resourcesManager = new ResourcesManager(
 			resourceRepo,
-			vdb.values.uiCulture,
+			values.uiCulture,
 		);
 		this.resources = this.resourcesManager.resources;
-		this.tagFilters = new TagFilters(tagRepo);
+		this.tagFilters = new TagFilters(values, tagRepo);
 
 		if (searchTerm) this.searchTerm(searchTerm);
 
 		var isAlbum = searchType === SearchType.Album;
 		var isSong = searchType === SearchType.Song;
 
-		this.anythingSearchViewModel = new AnythingSearchViewModel(this, entryRepo);
+		this.anythingSearchViewModel = new AnythingSearchViewModel(
+			this,
+			values,
+			entryRepo,
+		);
 		this.artistSearchViewModel = new ArtistSearchViewModel(
 			this,
+			values,
 			artistRepo,
-			vdb.values.loggedUserId,
+			values.loggedUserId,
 			artistType,
 		);
 
 		this.albumSearchViewModel = new AlbumSearchViewModel(
 			this,
+			values,
 			unknownPictureUrl,
 			albumRepo,
 			artistRepo,
@@ -101,9 +109,10 @@ export default class SearchViewModel {
 
 		this.eventSearchViewModel = new EventSearchViewModel(
 			this,
+			values,
 			eventRepo,
 			artistRepo,
-			vdb.values.loggedUserId,
+			values.loggedUserId,
 			sort,
 			artistId,
 			eventCategory,
@@ -111,13 +120,14 @@ export default class SearchViewModel {
 
 		this.songSearchViewModel = new SongSearchViewModel(
 			this,
+			values,
 			urlMapper,
 			songRepo,
 			artistRepo,
 			userRepo,
 			eventRepo,
 			resourceRepo,
-			vdb.values.loggedUserId,
+			values.loggedUserId,
 			isSong ? sort : null!,
 			isSong ? artistId : null!,
 			isSong ? childVoicebanks : null!,
@@ -133,7 +143,7 @@ export default class SearchViewModel {
 			pvPlayersFactory,
 		);
 
-		this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
+		this.tagSearchViewModel = new TagSearchViewModel(this, values, tagRepo);
 
 		if (
 			tagIds != null ||
@@ -183,7 +193,7 @@ export default class SearchViewModel {
 
 		resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: values.uiCulture,
 				setNames: [
 					'albumSortRuleNames',
 					'artistSortRuleNames',
@@ -203,7 +213,7 @@ export default class SearchViewModel {
 
 		tagRepo
 			.getTopTags({
-				lang: vdb.values.languagePreference,
+				lang: values.languagePreference,
 				categoryName: Tag.commonCategory_Genres,
 				entryType: undefined,
 			})

@@ -17,7 +17,12 @@ const DiscussionIndex = (canDeleteAllComments: boolean): void => {
 		var repoFactory = new RepositoryFactory(httpClient, urlMapper);
 		var repo = repoFactory.discussionRepository();
 		ko.applyBindings(
-			new DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments),
+			new DiscussionIndexViewModel(
+				vdb.values,
+				repo,
+				urlMapper,
+				canDeleteAllComments,
+			),
 		);
 	});
 };

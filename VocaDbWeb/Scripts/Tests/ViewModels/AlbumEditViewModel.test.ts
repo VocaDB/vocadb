@@ -183,6 +183,7 @@ beforeEach(() => {
 
 function createViewModel(): AlbumEditViewModel {
 	return new AlbumEditViewModel(
+		vdb.values,
 		rep,
 		songRep,
 		artistRep,

@@ -30,6 +30,7 @@ const EventEdit = (
 		var contract = model;
 
 		var vm = new ReleaseEventEditViewModel(
+			vdb.values,
 			eventRepo,
 			userRepo,
 			pvRepo,

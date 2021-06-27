@@ -3,6 +3,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 import moment from 'moment';
 
@@ -18,6 +19,7 @@ enum SongListSortRule {
 
 export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
 	public constructor(
+		values: GlobalValues,
 		resourceRepo: ResourceRepository,
 		tagRepo: TagRepository,
 		tagIds: number[],
@@ -28,7 +30,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 		if (!this.showEventDateSort)
 			this.sort(SongListSortRule[SongListSortRule.Name]);
 
-		this.tagFilters = new TagFilters(tagRepo);
+		this.tagFilters = new TagFilters(values, tagRepo);
 
 		if (tagIds) this.tagFilters.addTags(tagIds);
 
@@ -39,7 +41,7 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
 
 		resourceRepo
 			.getList({
-				cultureCode: vdb.values.uiCulture,
+				cultureCode: values.uiCulture,
 				setNames: ['songListSortRuleNames'],
 			})
 			.then((resources) => {

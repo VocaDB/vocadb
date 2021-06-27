@@ -11,6 +11,7 @@ import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable } from 'knockout';
@@ -30,6 +31,7 @@ import SearchViewModel from './SearchViewModel';
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		values: GlobalValues,
 		urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		private artistRepo: ArtistRepository,
@@ -59,7 +61,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		} else {
 			this.resourceManager = new ResourcesManager(
 				resourceRep,
-				vdb.values.uiCulture,
+				values.uiCulture,
 			);
 			this.resourceManager.loadResources('songSortRuleNames');
 			this.showTags = ko.observable(false);
@@ -67,7 +69,11 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
-		this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
+		this.artistFilters = new ArtistFilters(
+			values,
+			this.artistRepo,
+			childVoicebanks,
+		);
 		this.artistFilters.selectArtists(artistId);
 
 		this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
@@ -99,7 +105,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			(entryId) =>
 				this.songRepo.getOne({
 					id: entryId,
-					lang: vdb.values.languagePreference,
+					lang: values.languagePreference,
 				}),
 		);
 
@@ -125,6 +131,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
 		this.parentVersion.subscribe(this.updateResultsWithTotalCount);
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			values,
 			urlMapper,
 			songRepo,
 			userRepo,
@@ -168,7 +175,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 			this.since,
 			this.minScore,
 			this.onlyRatedSongs,
-			vdb.values.loggedUserId,
+			values.loggedUserId,
 			this.parentVersion.id,
 			this.fields,
 			this.draftsOnly,
@@ -176,6 +183,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		);
 
 		this.playListViewModel = new PlayListViewModel(
+			values,
 			urlMapper,
 			songsRepoAdapter,
 			songRepo,
@@ -197,7 +205,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 				return this.songRepo
 					.getList({
 						paging: pagingProperties,
-						lang: vdb.values.languagePreference,
+						lang: values.languagePreference,
 						query: searchTerm,
 						sort: this.sort(),
 						songTypes:
@@ -219,7 +227,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 						since: this.since(),
 						minScore: this.minScore(),
 						userCollectionId: this.onlyRatedSongs()
-							? vdb.values.loggedUserId
+							? values.loggedUserId
 							: undefined,
 						parentSongId: this.parentVersion.id(),
 						fields: this.fields(),

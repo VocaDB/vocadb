@@ -275,6 +275,7 @@ const TagDetails = (
 		var latestComments = model.latestComments;
 
 		vm = new TagDetailsViewModel(
+			vdb.values,
 			repo,
 			userRepo,
 			latestComments,

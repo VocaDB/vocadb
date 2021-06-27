@@ -2,6 +2,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';
@@ -11,6 +12,7 @@ import SearchViewModel from './SearchViewModel';
 export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		values: GlobalValues,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
 		/* TODO: remove */ public loggedUserId: number,
@@ -20,7 +22,7 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 	) {
 		super(searchViewModel);
 
-		this.artistFilters = new ArtistFilters(artistRepo, false);
+		this.artistFilters = new ArtistFilters(values, artistRepo, false);
 		this.artistFilters.selectArtists(artistId);
 
 		if (sort) this.sort(sort);
@@ -46,15 +48,13 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
 					start: pagingProperties.start,
 					maxResults: pagingProperties.maxEntries,
 					getTotalCount: pagingProperties.getTotalCount,
-					lang: vdb.values.languagePreference,
+					lang: values.languagePreference,
 					query: searchTerm,
 					sort: this.sort(),
 					category: this.category() === 'Unspecified' ? null! : this.category(),
 					childTags: childTags,
 					tagIds: tag,
-					userCollectionId: this.onlyMyEvents()
-						? vdb.values.loggedUserId
-						: null!,
+					userCollectionId: this.onlyMyEvents() ? values.loggedUserId : null!,
 					artistId: this.artistFilters.artistIds(),
 					childVoicebanks: this.artistFilters.childVoicebanks(),
 					includeMembers: this.artistFilters.includeMembers(),

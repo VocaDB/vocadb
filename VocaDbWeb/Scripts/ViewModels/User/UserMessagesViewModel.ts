@@ -3,6 +3,7 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@Repositories/UserRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -48,6 +49,7 @@ export class NewMessageViewModel {
 
 export default class UserMessagesViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly userRepository: UserRepository,
 		private readonly userId: number,
 		inboxType: UserInboxType,
@@ -55,18 +57,21 @@ export default class UserMessagesViewModel {
 		receiverName?: string,
 	) {
 		this.notifications = new UserMessageFolderViewModel(
+			values,
 			userRepository,
 			UserInboxType.Notifications,
 			userId,
 			inboxType !== UserInboxType.Notifications,
 		);
 		this.receivedMessages = new UserMessageFolderViewModel(
+			values,
 			userRepository,
 			UserInboxType.Received,
 			userId,
 			inboxType !== UserInboxType.Received,
 		);
 		this.sentMessages = new UserMessageFolderViewModel(
+			values,
 			userRepository,
 			UserInboxType.Sent,
 			userId,
@@ -184,7 +189,7 @@ export default class UserMessagesViewModel {
 		var message = this.newMessageViewModel.toContract(this.userId);
 		this.userRepository
 			.createMessage({
-				userId: vdb.values.loggedUserId,
+				userId: this.values.loggedUserId,
 				contract: message,
 			})
 			.then(() => {
@@ -199,6 +204,7 @@ export default class UserMessagesViewModel {
 
 export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 	public constructor(
+		private readonly values: GlobalValues,
 		private readonly userRepo: UserRepository,
 		public readonly inbox: UserInboxType,
 		private readonly userId: number,
@@ -215,7 +221,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		if (getMessageCount) {
 			this.userRepo
 				.getMessageSummaries({
-					userId: vdb.values.loggedUserId,
+					userId: values.loggedUserId,
 					inbox: inbox,
 					paging: { start: 0, maxEntries: 0, getTotalCount: true },
 					unread: true,
@@ -253,7 +259,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		if (selectedIds.length === 0) return;
 
 		this.userRepo.deleteMessages({
-			userId: vdb.values.loggedUserId,
+			userId: this.values.loggedUserId,
 			messageIds: selectedIds,
 		});
 		this.items.removeAll(selected.value());
@@ -264,7 +270,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 	): void => {
 		this.userRepo
 			.getMessageSummaries({
-				userId: vdb.values.loggedUserId,
+				userId: this.values.loggedUserId,
 				inbox: this.inbox,
 				paging: { start: this.start, maxEntries: 100, getTotalCount: true },
 				unread: false,

@@ -3,6 +3,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import EntryType from '@Models/EntryType';
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -11,6 +12,7 @@ import SearchViewModel from './SearchViewModel';
 export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
+		values: GlobalValues,
 		private entryRepo: EntryRepository,
 	) {
 		super(searchViewModel);
@@ -24,7 +26,7 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
 		): Promise<PartialFindResultContract<EntryContract>> =>
 			this.entryRepo.getList({
 				paging: pagingProperties,
-				lang: vdb.values.languagePreference,
+				lang: values.languagePreference,
 				query: searchTerm,
 				tags: tags,
 				childTags: childTags,

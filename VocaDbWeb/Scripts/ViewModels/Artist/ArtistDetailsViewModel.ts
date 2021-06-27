@@ -10,6 +10,7 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import { Options } from 'highcharts';
@@ -27,6 +28,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ArtistDetailsViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		repo: ArtistRepository,
 		private artistId: number,
 		tagUsages: TagUsageForApiContract[],
@@ -54,11 +56,12 @@ export default class ArtistDetailsViewModel {
 		);
 		this.description = new EnglishTranslatedStringViewModel(
 			hasEnglishDescription &&
-				(vdb.values.languagePreference === ContentLanguagePreference.English ||
-					vdb.values.languagePreference === ContentLanguagePreference.Romaji),
+				(values.languagePreference === ContentLanguagePreference.English ||
+					values.languagePreference === ContentLanguagePreference.Romaji),
 		);
 
 		this.comments = new EditableCommentsViewModel(
+			values,
 			repo,
 			artistId,
 			canDeleteAllComments,
@@ -175,6 +178,7 @@ export default class ArtistDetailsViewModel {
 		this.mainAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.values,
 				this.unknownPictureUrl,
 				this.albumRepo,
 				null!,
@@ -197,6 +201,7 @@ export default class ArtistDetailsViewModel {
 		this.collaborationAlbumsViewModel(
 			new AlbumSearchViewModel(
 				null!,
+				this.values,
 				this.unknownPictureUrl,
 				this.albumRepo,
 				null!,
@@ -219,13 +224,14 @@ export default class ArtistDetailsViewModel {
 		this.songsViewModel(
 			new SongSearchViewModel(
 				null!,
+				this.values,
 				this.urlMapper,
 				this.songRepo,
 				null!,
 				this.userRepository,
 				null!,
 				this.resourceRepo,
-				vdb.values.loggedUserId,
+				this.values.loggedUserId,
 				null!,
 				[this.artistId],
 				null!,

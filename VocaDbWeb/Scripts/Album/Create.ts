@@ -13,7 +13,9 @@ const AlbumCreate = (): void => {
 		var albumRepo = repoFactory.albumRepository();
 		var artistRepo = repoFactory.artistRepository();
 
-		ko.applyBindings(new AlbumCreateViewModel(albumRepo, artistRepo));
+		ko.applyBindings(
+			new AlbumCreateViewModel(vdb.values, albumRepo, artistRepo),
+		);
 	});
 };
 

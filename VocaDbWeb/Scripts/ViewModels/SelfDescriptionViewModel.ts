@@ -1,12 +1,14 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ko, { Observable } from 'knockout';
 
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 export default class SelfDescriptionViewModel {
 	public constructor(
+		values: GlobalValues,
 		author: ArtistApiContract,
 		text: string,
 		artistRepo: ArtistRepository,
@@ -19,7 +21,7 @@ export default class SelfDescriptionViewModel {
 				artistRepo.getOneWithComponents({
 					id: artistId,
 					fields: 'MainPicture',
-					lang: vdb.values.languagePreference,
+					lang: values.languagePreference,
 				}),
 		);
 		this.text = ko.observable(text);

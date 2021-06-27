@@ -16,7 +16,9 @@ const ArtistCreate = (model: any): void => {
 		var repo = repoFactory.artistRepository();
 		var tagRepo = repoFactory.tagRepository();
 		var json = model;
-		ko.applyBindings(new ArtistCreateViewModel(repo, tagRepo, json));
+		ko.applyBindings(
+			new ArtistCreateViewModel(vdb.values, repo, tagRepo, json),
+		);
 	});
 };
 

@@ -107,6 +107,7 @@ const ArtistDetails = (
 		var latestComments = model.latestComments;
 
 		var viewModel = new ArtistDetailsViewModel(
+			vdb.values,
 			artistRepo,
 			model.id,
 			tagUsages,

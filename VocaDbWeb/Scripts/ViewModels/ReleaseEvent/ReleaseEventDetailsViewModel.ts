@@ -7,6 +7,7 @@ import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import CommentRepository from '@Repositories/CommentRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
@@ -21,6 +22,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ReleaseEventDetailsViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		httpClient: HttpClient,
 		urlMapper: UrlMapper,
 		private readonly repo: ReleaseEventRepository,
@@ -40,6 +42,7 @@ export default class ReleaseEventDetailsViewModel {
 			EntryType.ReleaseEvent,
 		);
 		this.comments = new EditableCommentsViewModel(
+			values,
 			commentRepo,
 			eventId,
 			canDeleteAllComments,
@@ -102,7 +105,7 @@ export default class ReleaseEventDetailsViewModel {
 		this.eventAssociationType(null!);
 		var link = _.find(
 			this.usersAttending(),
-			(u) => u.id === vdb.values.loggedUserId,
+			(u) => u.id === this.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);
 	};
@@ -116,7 +119,7 @@ export default class ReleaseEventDetailsViewModel {
 		});
 		this.eventAssociationType(UserEventRelationshipType.Attending);
 		this.userRepo
-			.getOne({ id: vdb.values.loggedUserId, fields: 'MainPicture' })
+			.getOne({ id: this.values.loggedUserId, fields: 'MainPicture' })
 			.then((user) => {
 				this.usersAttending.push(user);
 			});
@@ -130,7 +133,7 @@ export default class ReleaseEventDetailsViewModel {
 		this.eventAssociationType(UserEventRelationshipType.Interested);
 		var link = _.find(
 			this.usersAttending(),
-			(u) => u.id === vdb.values.loggedUserId,
+			(u) => u.id === this.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);
 	};

@@ -2,6 +2,7 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import PVService from '@Models/PVs/PVService';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
@@ -15,6 +16,7 @@ export default class PVPlayerViewModel {
 		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
 
 	public constructor(
+		values: GlobalValues,
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		userRepo: UserRepository,
@@ -42,7 +44,7 @@ export default class PVPlayerViewModel {
 
 			userRepo
 				.getSongRating({
-					userId: vdb.values.loggedUserId,
+					userId: values.loggedUserId,
 					songId: song.song.id,
 				})
 				.then((rating) => {

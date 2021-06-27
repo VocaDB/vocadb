@@ -13,7 +13,7 @@ const ArtistMerge = (model: { id: number }): void => {
 			new UrlMapper(vdb.values.baseAddress),
 		);
 		var repo = repoFactory.artistRepository();
-		var vm = new ArtistMergeViewModel(repo, model.id);
+		var vm = new ArtistMergeViewModel(vdb.values, repo, model.id);
 		ko.applyBindings(vm);
 
 		$('#mergeBtn').click(function () {

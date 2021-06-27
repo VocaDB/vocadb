@@ -15,6 +15,7 @@ import SongListRepository from '@Repositories/SongListRepository';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed } from 'knockout';
@@ -35,6 +36,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
 	public constructor(
+		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private songListRepo: SongListRepository,
 		private songRepo: SongRepository,
@@ -48,8 +50,9 @@ export default class SongListViewModel {
 		pvPlayersFactory: PVPlayersFactory,
 		canDeleteAllComments: boolean,
 	) {
-		this.artistFilters = new ArtistFilters(this.artistRepo, false);
+		this.artistFilters = new ArtistFilters(values, this.artistRepo, false);
 		this.comments = new EditableCommentsViewModel(
+			values,
 			songListRepo.getComments({}),
 			listId,
 			canDeleteAllComments,
@@ -59,10 +62,7 @@ export default class SongListViewModel {
 			true,
 		);
 
-		this.resourceManager = new ResourcesManager(
-			resourceRepo,
-			vdb.values.uiCulture,
-		);
+		this.resourceManager = new ResourcesManager(resourceRepo, values.uiCulture);
 		this.resourceManager.loadResources('songSortRuleNames');
 		this.sortName = ko.computed(() => {
 			if (this.sort() === '') return defaultSortRuleName;
@@ -76,6 +76,7 @@ export default class SongListViewModel {
 
 		// TODO
 		this.pvPlayerViewModel = new PVPlayerViewModel(
+			values,
 			urlMapper,
 			songRepo,
 			userRepo,
@@ -95,6 +96,7 @@ export default class SongListViewModel {
 			this.sort,
 		);
 		this.playlistViewModel = new PlayListViewModel(
+			values,
 			urlMapper,
 			playListRepoAdapter,
 			songRepo,
@@ -220,7 +222,7 @@ export default class SongListViewModel {
 				paging: pagingProperties,
 				fields: new SongOptionalFields(fields),
 				sort: this.sort(),
-				lang: vdb.values.languagePreference,
+				lang: this.values.languagePreference,
 			})
 			.then((result) => {
 				_.each(result.items, (item) => {
