@@ -1,3 +1,4 @@
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -149,7 +150,6 @@ function initAlbumDetailsPage(
 const AlbumDetails = (
 	addedToCollection: string,
 	albumDetails: typeof vdb.resources.albumDetails,
-	canDeleteAllComments: boolean,
 	formatString: string,
 	model: {
 		collectionRating: number;
@@ -161,6 +161,9 @@ const AlbumDetails = (
 	showTranslatedDescription: boolean,
 ): void => {
 	$(document).ready(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 

@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import LoginManager from '@Models/LoginManager';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
@@ -244,7 +245,6 @@ function initTagsPage(vm: TagDetailsViewModel): void {
 }
 
 const TagDetails = (
-	canDeleteAllComments: boolean,
 	model: {
 		id: number;
 		isFollowing: boolean;
@@ -255,6 +255,9 @@ const TagDetails = (
 	showTranslatedDescription: boolean,
 ): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
 		var jsonModel = model.jsonModel;
 		var vm;

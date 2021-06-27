@@ -1,3 +1,4 @@
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -79,7 +80,6 @@ function initPage(
 }
 
 const SongDetails = (
-	canDeleteAllComments: boolean,
 	model: {
 		id: number;
 		jsonModel: SongDetailsAjax;
@@ -90,6 +90,9 @@ const SongDetails = (
 	showTranslatedDescription: boolean,
 ): void => {
 	$(document).ready(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		moment.locale(vdb.values.culture);
 
 		vdb.resources.song = resources;

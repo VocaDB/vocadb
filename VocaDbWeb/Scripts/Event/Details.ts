@@ -1,6 +1,7 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import UserBaseContract from '@DataContracts/User/UserBaseContract';
+import LoginManager from '@Models/LoginManager';
 import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -12,7 +13,6 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const EventDetails = (
-	canDeleteAllComments: boolean,
 	eventAssociationType: UserEventRelationshipType,
 	model: {
 		id: number;
@@ -23,6 +23,9 @@ const EventDetails = (
 	reportTypes: IEntryReportType[],
 ): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		$('#editEventLink').button({
 			disabled: $('#editEventLink').hasClass('disabled'),
 			icons: { primary: 'ui-icon-wrench' },

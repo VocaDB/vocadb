@@ -69,4 +69,12 @@ export default class LoginManager {
 
 		return this.loggedUser.effectivePermissions.includes(token);
 	};
+
+	public get canBulkDeletePVs(): boolean {
+		return this.hasPermission(PermissionToken.BulkDeletePVs);
+	}
+
+	public get canDeleteComments(): boolean {
+		return this.hasPermission(PermissionToken.DeleteComments);
+	}
 }

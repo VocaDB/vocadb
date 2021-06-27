@@ -49,7 +49,6 @@
 
 @section BodyScripts {
 	<script type="text/javascript">
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var model = {
 			id: @Model.Id,
 			isFollowing: @ToJS(Model.IsFollowing),
@@ -59,7 +58,6 @@
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
 		var showTranslatedDescription = @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference));
 		app.TagDetails(
-			canDeleteAllComments,
 			model,
 			reportTypes,
 			showTranslatedDescription,

@@ -1,3 +1,4 @@
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -6,8 +7,11 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const DiscussionIndex = (canDeleteAllComments: boolean): void => {
+const DiscussionIndex = (): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		moment.locale(vdb.values.culture);
 
 		ko.punches.enableAll();

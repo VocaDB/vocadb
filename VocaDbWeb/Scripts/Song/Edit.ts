@@ -1,5 +1,6 @@
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
@@ -28,7 +29,6 @@ function initPage(): void {
 const SongEdit = (
 	addExtraArtist: string,
 	artistRoleJson: { [key: string]: string },
-	canBulkDeletePVs: boolean,
 	languageNames: any,
 	model: {
 		editedSong: SongForEditContract;
@@ -39,6 +39,9 @@ const SongEdit = (
 	webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
 	$(document).ready(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canBulkDeletePVs = loginManager.canBulkDeletePVs;
+
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 

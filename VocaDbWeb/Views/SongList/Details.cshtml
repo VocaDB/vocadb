@@ -263,7 +263,6 @@
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script src="@Url.Content("~/Scripts/soundcloud-api.js")" type="text/javascript"></script>
 	<script type="text/javascript">
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
 		var model = {
 			songList: {
@@ -273,7 +272,6 @@
 			},
 		};
 		app.SongListDetails(
-			canDeleteAllComments,
 			defaultSortRuleName,
 			model,
 		);

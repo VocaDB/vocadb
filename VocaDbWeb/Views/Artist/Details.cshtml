@@ -443,7 +443,6 @@
 	<script src="@Url.Content("~/Scripts/soundcloud-api.js")" type="text/javascript"></script>
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var hasEnglishDescription = @ToJS(Model.Description.HasEnglish);
 		var model = {
 			emailNotifications: @ToJS(Model.EmailNotifications),
@@ -460,7 +459,6 @@
 		}));
 		var saveStr = "@ViewRes.SharedStrings.Save";
 		app.ArtistDetails(
-			canDeleteAllComments,
 			hasEnglishDescription,
 			model,
 			reportTypes,

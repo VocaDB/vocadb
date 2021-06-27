@@ -373,7 +373,6 @@
 <script type="text/javascript">
 	var addExtraArtist = @ToJS(AjaxRes.SharedStrings.AddExtraArtist);
 	var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
-	var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
 	var languageNames = @ToJS(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown"));
 	var model = {
 		editedSong: @ToJS(Model.EditedSong),
@@ -385,7 +384,6 @@
 	app.SongEdit(
 		addExtraArtist,
 		artistRoleJson,
-		canBulkDeletePVs,
 		languageNames,
 		model,
 		saveWarning,

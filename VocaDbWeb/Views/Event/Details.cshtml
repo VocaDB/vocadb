@@ -255,7 +255,6 @@
 
 @section BodyScripts {
 <script type="text/javascript">
-	var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 	var eventAssociationType = @ToJS((int?)Model.EventAssociationType);
 	var model = {
 		id: @Model.Id,
@@ -265,7 +264,6 @@
 	};
 	var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.EventReportTypeNames, EventReport.ReportTypesWithRequiredNotes));
 	app.EventDetails(
-		canDeleteAllComments,
 		eventAssociationType,
 		model,
 		reportTypes,
