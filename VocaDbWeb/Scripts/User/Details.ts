@@ -1,4 +1,5 @@
 import CommentContract from '@DataContracts/CommentContract';
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -33,7 +34,6 @@ function initPage(confirmDisableStr: string): void {
 
 const UserDetails = (
 	artistId: number,
-	canDeleteComments: boolean,
 	childVoicebanks: boolean,
 	confirmDisableStr: string,
 	lastLoginAddress: string,
@@ -43,6 +43,9 @@ const UserDetails = (
 	},
 	publicCollection: boolean,
 ): void => {
+	const loginManager = new LoginManager(vdb.values);
+	const canDeleteComments = loginManager.canDeleteComments;
+
 	ko.punches.enableAll();
 
 	$(function () {

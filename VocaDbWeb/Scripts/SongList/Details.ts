@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -9,7 +10,6 @@ import $ from 'jquery';
 import ko from 'knockout';
 
 const SongListDetails = (
-	canDeleteAllComments: boolean,
 	defaultSortRuleName: string,
 	model: {
 		songList: {
@@ -20,6 +20,9 @@ const SongListDetails = (
 	},
 ): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		$('#editListLink').button({ icons: { primary: 'ui-icon-wrench' } });
 		$('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
 		$('#export').button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });

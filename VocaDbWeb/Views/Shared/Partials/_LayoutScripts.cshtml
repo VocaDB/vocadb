@@ -1,4 +1,7 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Resources.Domain
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -15,13 +18,7 @@
 
 <script type="text/javascript">
 	vdb = vdb || {};
-	vdb.values = vdb.values || {};
-	vdb.values.baseAddress = '@RootPath';
-	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
-	vdb.values.isLoggedIn = @ToJS(UserContext.IsLoggedIn);
-	vdb.values.loggedUserId = @ToJS(UserContext.LoggedUserId);
-	vdb.values.culture = @ToJS(Culture);
-	vdb.values.uiCulture = @ToJS(UICulture);
+	vdb.values = @ToJS(new GlobalValues(this));
 	vdb.resources = vdb.resources || {};
 
 	var model = {

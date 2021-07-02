@@ -457,7 +457,6 @@
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 		var artistId = @ToJS((int?)ViewBag.ArtistId);
-		var canDeleteComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
 		var confirmDisableStr = '@R.ConfirmDisable';
 		var lastLoginAddress = '@(UserContext.HasPermission(PermissionToken.ManageIPRules) ? Model.LastLoginAddress : "")';
@@ -468,7 +467,6 @@
 		var publicCollection = @ToJS(Model.PublicAlbumCollection || Model.Id == UserContext.LoggedUserId);
 		app.UserDetails(
 			artistId,
-			canDeleteComments,
 			childVoicebanks,
 			confirmDisableStr,
 			lastLoginAddress,

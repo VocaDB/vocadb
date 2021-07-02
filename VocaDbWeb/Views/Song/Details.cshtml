@@ -561,7 +561,6 @@
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/MediaElement/mediaelement-and-player.min.js")" type="text/javascript"></script>
 	<script type="text/javascript">
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var model = {
 			id: @Model.Id,
 			jsonModel: @ToJS(Model.JsonModel),
@@ -571,7 +570,6 @@
 		var saveStr = '@ViewRes.SharedStrings.Save';
 		var showTranslatedDescription = @ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference));
 		app.SongDetails(
-			canDeleteAllComments,
 			model,
 			reportTypes,
 			resources,

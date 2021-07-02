@@ -549,7 +549,6 @@
 	<script type="text/javascript">
 		var addedToCollection = @ToJS(AjaxRes.AlbumStrings.AddedToCollection);
 		var albumDetails = @ToJS(new { download = AjaxRes.AlbumStrings.Download });
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 		var model = {
 			collectionRating: @Model.CollectionRating,
@@ -566,7 +565,6 @@
 		app.AlbumDetails(
 			addedToCollection,
 			albumDetails,
-			canDeleteAllComments,
 			formatString,
 			model,
 			reportTypes,

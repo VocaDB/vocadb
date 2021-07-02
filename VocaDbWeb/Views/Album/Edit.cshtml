@@ -69,7 +69,6 @@
 <script type="text/javascript">
 	var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
 	var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
-	var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
 	var model = {
 		editedAlbum: @ToJS(Model.EditedAlbum),
 		id: @Model.Id,
@@ -79,7 +78,6 @@
 	app.AlbumEdit(
 		allowCustomTracks,
 		artistRoleJson,
-		canBulkDeletePVs,
 		model,
 		saveWarning,
 		webLinkCategoryJson,

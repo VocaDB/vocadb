@@ -1,5 +1,6 @@
 import CommentContract from '@DataContracts/CommentContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import SongRepository from '@Repositories/SongRepository';
 import functions from '@Shared/GlobalFunctions';
@@ -74,7 +75,6 @@ function initPage(
 }
 
 const ArtistDetails = (
-	canDeleteAllComments: boolean,
 	hasEnglishDescription: boolean,
 	model: {
 		emailNotifications: boolean;
@@ -88,6 +88,9 @@ const ArtistDetails = (
 	saveStr: string,
 ): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canDeleteAllComments = loginManager.canDeleteComments;
+
 		moment.locale(vdb.values.culture);
 
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);

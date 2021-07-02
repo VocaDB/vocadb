@@ -1,5 +1,6 @@
 import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import LoginManager from '@Models/LoginManager';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import DialogService from '@Shared/DialogService';
 import HttpClient from '@Shared/HttpClient';
@@ -26,7 +27,6 @@ function initPage(): void {
 const AlbumEdit = (
 	allowCustomTracks: boolean,
 	artistRoleJson: { [key: string]: string },
-	canBulkDeletePVs: boolean,
 	model: {
 		editedAlbum: AlbumForEditContract;
 		id: number;
@@ -35,6 +35,9 @@ const AlbumEdit = (
 	webLinkCategoryJson: TranslatedEnumField[],
 ): void => {
 	$(function () {
+		const loginManager = new LoginManager(vdb.values);
+		const canBulkDeletePVs = loginManager.canBulkDeletePVs;
+
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
 
