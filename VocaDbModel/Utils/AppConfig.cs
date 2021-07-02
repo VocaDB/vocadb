@@ -65,10 +65,12 @@ namespace VocaDb.Model.Utils
 			SongType.Other
 		};
 
-		private static string Val(string key)
+#nullable enable
+		private static string? Val(string key)
 		{
 			return ConfigurationManager.AppSettings[key];
 		}
+#nullable disable
 
 		private static bool Val(string key, bool def)
 		{
@@ -185,9 +187,9 @@ namespace VocaDb.Model.Utils
 		/// For example https://vocadb.net
 		/// </summary>
 		public static string HostAddress => Val("HostAddress");
-#nullable disable
 
-		public static string LockdownMessage => Val("LockdownMessage");
+		public static string? LockdownMessage => Val("LockdownMessage");
+#nullable disable
 
 		/// <summary>
 		/// Preferred artist types when parsing Nico PVs.

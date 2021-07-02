@@ -4,17 +4,13 @@ import GlobalValues from '@Shared/GlobalValues';
 // Corresponds to the PermissionToken struct in C#.
 export enum PermissionToken {
 	Nothing = '00000000-0000-0000-0000-000000000000',
-
 	AccessManageMenu = 'b54de61d-9341-4435-8cb1-31e5e295d577',
-
 	AddRawFileMedia = '9c1992d8-3fca-4008-b248-7d7f2a7f15dc',
 	Admin = '1c98077f-f36f-4ef2-8cf3-cd9e347d389a',
 	ApplyAnyTag = '100e81ce-6bc9-4083-bff4-2a47fcfb37d3',
 	ApproveEntries = 'e3b4b909-5128-4a0e-9f26-2bf1d5e497ab',
 	BulkDeletePVs = 'caa8f4d7-322e-44f7-ad79-7de767ef1128',
-
 	CreateComments = 'be2deee9-ee12-48b4-a9a5-e369915fc156',
-
 	DeleteComments = '1b1dfcfa-6b96-4a8a-8aca-d76465439ffb',
 	DeleteEntries = 'cc51c6b6-be93-4942-a6e4-fdf88f4520b9',
 	DesignatedStaff = 'b995a14b-49b4-4f1e-8fac-36a34967ddb0',
