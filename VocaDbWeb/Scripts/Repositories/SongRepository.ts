@@ -208,7 +208,7 @@ export default class SongRepository
 		return this.httpClient.get<SongApiContract[]>(url, {
 			names: names,
 			songTypes: songTypes,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			ignoreIds: ignoreIds,
 		});
 	}
@@ -260,7 +260,7 @@ export default class SongRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -274,7 +274,7 @@ export default class SongRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongContract>(url, {
 			fields: 'AdditionalNames',
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -356,7 +356,7 @@ export default class SongRepository
 			maxResults: paging.maxEntries,
 			query: query,
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
 			songTypes: songTypes,

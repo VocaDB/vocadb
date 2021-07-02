@@ -1,11 +1,11 @@
 enum ContentLanguagePreference {
-	Default = 0,
+	Default = 'Default',
 
-	Japanese = 1,
+	Japanese = 'Japanese',
 
-	Romaji = 2,
+	Romaji = 'Romaji',
 
-	English = 4,
+	English = 'English',
 }
 
 export default ContentLanguagePreference;

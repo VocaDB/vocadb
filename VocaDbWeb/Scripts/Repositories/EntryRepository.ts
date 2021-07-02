@@ -45,7 +45,7 @@ export default class EntryRepository {
 			maxResults: paging.maxEntries,
 			query: query,
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			tagId: tags,
 			childTags: childTags,

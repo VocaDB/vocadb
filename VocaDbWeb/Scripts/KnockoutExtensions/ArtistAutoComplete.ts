@@ -1,6 +1,5 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
@@ -35,7 +34,7 @@ export function artistAutoComplete(
 
 	var queryParams = {
 		nameMatchMode: 'Auto',
-		lang: ContentLanguagePreference[vdb.values.languagePreference],
+		lang: vdb.values.languagePreference,
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,

@@ -1,5 +1,4 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
@@ -31,7 +30,7 @@ function initPage(): void {
 		createOptionSecondRow: (item: ArtistContract) => item.additionalNames!,
 		extraQueryParams: {
 			nameMatchMode: 'Auto',
-			lang: ContentLanguagePreference[vdb.values.languagePreference],
+			lang: vdb.values.languagePreference,
 			fields: 'AdditionalNames',
 		},
 		termParamName: 'query',

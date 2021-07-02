@@ -160,7 +160,7 @@ export default class AlbumRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumContract>(url, {
 			fields: 'AdditionalNames',
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -176,7 +176,7 @@ export default class AlbumRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumForApiContract>(url, {
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -220,7 +220,7 @@ export default class AlbumRepository
 			maxResults: paging.maxEntries,
 			query: query,
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
 			discTypes: discTypes,

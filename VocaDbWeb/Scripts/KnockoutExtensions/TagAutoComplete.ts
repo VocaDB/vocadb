@@ -1,5 +1,4 @@
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
@@ -27,7 +26,7 @@ ko.bindingHandlers.tagAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			fields: 'AdditionalNames',
-			lang: ContentLanguagePreference[vdb.values.languagePreference],
+			lang: vdb.values.languagePreference,
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name',

@@ -125,7 +125,7 @@ export default class SongListRepository {
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			fields: fields.fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			sort: sort,
 		};
 

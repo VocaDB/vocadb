@@ -1,5 +1,6 @@
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -18,7 +19,7 @@ export default class RankingsViewModel {
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,
 		private userRepo: UserRepository,
-		private languagePreference: number,
+		private languagePreference: ContentLanguagePreference,
 	) {
 		this.router = new ObservableUrlParamRouter({
 			dateFilterType: this.dateFilterType,

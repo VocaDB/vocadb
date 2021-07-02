@@ -1,5 +1,4 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import functions from '@Shared/GlobalFunctions';
 import ko from 'knockout';
@@ -35,7 +34,7 @@ export function albumAutoComplete(
 
 	var queryParams = {
 		nameMatchMode: 'Auto',
-		lang: ContentLanguagePreference[vdb.values.languagePreference],
+		lang: vdb.values.languagePreference,
 		preferAccurateMatches: true,
 		maxResults: 15,
 	};
