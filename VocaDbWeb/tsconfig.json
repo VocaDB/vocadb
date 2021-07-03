@@ -25,7 +25,8 @@
 		},
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
+		"emitDecoratorMetadata": true,
+		"useDefineForClassFields": true
 	},
 	"include": ["Scripts/**/*"]
 }
