@@ -138,7 +138,7 @@ export default class ArtistRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistContract>(url, {
 			fields: 'AdditionalNames',
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -154,7 +154,7 @@ export default class ArtistRepository
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistApiContract>(url, {
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	};
 
@@ -192,7 +192,7 @@ export default class ArtistRepository
 			maxResults: paging.maxEntries,
 			query: query,
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
 			artistTypes: artistTypes,

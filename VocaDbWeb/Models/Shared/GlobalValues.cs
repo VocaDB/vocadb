@@ -1,4 +1,7 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 
@@ -9,7 +12,8 @@ namespace VocaDb.Web.Models.Shared
 		public string? LockdownMessage { get; init; }
 
 		public string? BaseAddress { get; init; }
-		public int LanguagePreference { get; init; }
+		[JsonConverter(typeof(StringEnumConverter))]
+		public ContentLanguagePreference LanguagePreference { get; init; }
 		public bool IsLoggedIn { get; init; }
 		public int LoggedUserId { get; init; }
 		public SanitizedUserWithPermissionsContract? LoggedUser { get; init; }
@@ -21,7 +25,7 @@ namespace VocaDb.Web.Models.Shared
 			LockdownMessage = AppConfig.LockdownMessage;
 
 			BaseAddress = model.RootPath;
-			LanguagePreference = model.LanguagePreferenceInt;
+			LanguagePreference = model.UserContext.LanguagePreference;
 			IsLoggedIn = model.UserContext.IsLoggedIn;
 			LoggedUserId = model.UserContext.LoggedUserId;
 			LoggedUser = model.UserContext.LoggedUser is ServerOnlyUserWithPermissionsContract loggedUser ? new SanitizedUserWithPermissionsContract(loggedUser) : null;

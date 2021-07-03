@@ -210,7 +210,7 @@ export default class UserRepository implements ICommentRepository {
 			purchaseStatuses: purchaseStatuses,
 			releaseEventId: releaseEventId || undefined,
 			fields: 'AdditionalNames,MainPicture',
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
 			advancedFilters: advancedFilters,
@@ -277,7 +277,7 @@ export default class UserRepository implements ICommentRepository {
 			maxResults: paging.maxEntries,
 			tagId: tagIds,
 			fields: 'AdditionalNames,MainPicture',
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			artistType: artistType,
 		};
@@ -444,7 +444,7 @@ export default class UserRepository implements ICommentRepository {
 			groupByRating: groupByRating,
 			pvServices: pvServices,
 			fields: fields,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
 		};

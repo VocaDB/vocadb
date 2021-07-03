@@ -1,5 +1,4 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
 import $ from 'jquery';
 
@@ -7,7 +6,7 @@ function initPage(): void {
 	function acceptArtistSelection(albumId?: number): void {
 		$.get(
 			'../../api/albums/' + albumId,
-			{ lang: ContentLanguagePreference[vdb.values.languagePreference] },
+			{ lang: vdb.values.languagePreference },
 			function (album) {
 				$('#mergedAlbumId').append(
 					"<option value='" + albumId + "'>" + album.name + '</option>',
@@ -26,7 +25,7 @@ function initPage(): void {
 		createOptionSecondRow: (item: AlbumContract) => item.additionalNames,
 		extraQueryParams: {
 			nameMatchMode: 'Auto',
-			lang: ContentLanguagePreference[vdb.values.languagePreference],
+			lang: vdb.values.languagePreference,
 		},
 		termParamName: 'query',
 	});

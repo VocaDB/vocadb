@@ -1,7 +1,6 @@
 import SongContract from '@DataContracts/Song/SongContract';
 import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@Models/NameMatchMode';
 import { SongQueryParams } from '@Repositories/SongRepository';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
@@ -37,7 +36,7 @@ export function songAutoComplete(
 
 	var queryParams = {
 		nameMatchMode: NameMatchMode[NameMatchMode.Auto],
-		lang: ContentLanguagePreference[vdb.values.languagePreference],
+		lang: vdb.values.languagePreference,
 		preferAccurateMatches: true,
 	};
 	if (properties.extraQueryParams)

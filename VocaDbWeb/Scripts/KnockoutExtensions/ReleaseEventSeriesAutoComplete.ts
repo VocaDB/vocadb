@@ -1,4 +1,3 @@
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
 import { initEntrySearch } from '@Shared/EntryAutoComplete';
@@ -26,7 +25,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			preferAccurateMatches: true,
-			lang: ContentLanguagePreference[vdb.values.languagePreference],
+			lang: vdb.values.languagePreference,
 			maxResults: 20,
 			sort: 'Name',
 		};

@@ -1,5 +1,4 @@
 import EntryRefContract from '@DataContracts/EntryRefContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
@@ -138,7 +137,7 @@ ko.bindingHandlers.tagToolTip = {
 		var lang = vdb.values.languagePreference;
 		initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), {
 			culture: culture,
-			lang: ContentLanguagePreference[lang],
+			lang: lang,
 		});
 	},
 };
