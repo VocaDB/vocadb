@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,13 +11,13 @@ namespace VocaDb.Model.DataContracts.Users
 	{
 		public UserForApiContract() { }
 
-		public UserForApiContract(User user)
+		public UserForApiContract(User? user)
 			: this(user, null, null, UserOptionalFields.None) { }
 
-		public UserForApiContract(User user, IUserIconFactory iconFactory, UserOptionalFields optionalFields)
+		public UserForApiContract(User? user, IUserIconFactory? iconFactory, UserOptionalFields optionalFields)
 			: this(user, null, iconFactory, optionalFields) { }
 
-		public UserForApiContract(User user, string fallbackName, IUserIconFactory iconFactory, UserOptionalFields optionalFields)
+		public UserForApiContract(User? user, string? fallbackName, IUserIconFactory? iconFactory, UserOptionalFields optionalFields)
 			: base(user, fallbackName)
 		{
 			if (user == null)
@@ -53,19 +51,19 @@ namespace VocaDb.Model.DataContracts.Users
 		public UserGroupId GroupId { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public UserKnownLanguageContract[] KnownLanguages { get; init; }
+		public UserKnownLanguageContract[]? KnownLanguages { get; init; }
 
 		/// <summary>
 		/// Can be null.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
 
 		[DataMember]
 		public DateTime MemberSince { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public OldUsernameContract[] OldUsernames { get; init; }
+		public OldUsernameContract[]? OldUsernames { get; init; }
 
 		[DataMember]
 		public bool VerifiedArtist { get; init; }
