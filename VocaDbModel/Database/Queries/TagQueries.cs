@@ -914,8 +914,9 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Sync(diff);
 
-				ctx.AuditLogger.AuditLog($"updated entry type / tag mappings ({diff.Added.Length} additions, {diff.Removed.Length} deletions)");
-				ctx.AuditLogger.SysLog($"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]");
+				var diffMessage = $"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]";
+				ctx.AuditLogger.AuditLog($"updated entry type / tag mappings ({diffMessage})");
+				ctx.AuditLogger.SysLog(diffMessage);
 			});
 		}
 
@@ -938,8 +939,9 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Sync(diff);
 
-				ctx.AuditLogger.AuditLog($"updated tag mappings ({diff.Added.Length} additions, {diff.Removed.Length} deletions)");
-				ctx.AuditLogger.SysLog($"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]");
+				var diffMessage = $"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]";
+				ctx.AuditLogger.AuditLog($"updated tag mappings ({diffMessage})");
+				ctx.AuditLogger.SysLog(diffMessage);
 			});
 		}
 
