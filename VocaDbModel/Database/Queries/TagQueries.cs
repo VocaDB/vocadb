@@ -939,7 +939,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Sync(diff);
 
-				var diffMessage = $"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]";
+				var diffMessage = $"added [{string.Join(", ", diff.Added.Select(t => t.ToString()))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.ToString()))}]";
 				ctx.AuditLogger.AuditLog($"updated tag mappings ({diffMessage})");
 				ctx.AuditLogger.SysLog(diffMessage);
 			});

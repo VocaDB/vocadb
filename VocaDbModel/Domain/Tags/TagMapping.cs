@@ -68,7 +68,7 @@ namespace VocaDb.Model.Domain.Tags
 		}
 
 #nullable enable
-		public override string ToString() => $"Mapping from '{SourceTag}' to {Tag}";
+		public override string ToString() => $"'{SourceTag}' => '{Tag.DefaultName}'";
 #nullable disable
 	}
 
