@@ -89,7 +89,7 @@ export default class EntryUrlMapper {
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
 	}
 
-	public static details_user_byName(name: string): string {
+	public static details_user_byName(name?: string): string {
 		return functions.mapAbsoluteUrl('/Profile/' + name);
 	}
 }
