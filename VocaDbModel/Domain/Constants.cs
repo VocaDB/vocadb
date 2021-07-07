@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain
 
 		public const int AbsoluteMinBpm = 20;
 
-		public const int AbsoluteMaxBpm = 400;
+		public const int AbsoluteMaxBpm = 1015;
 
 		public const decimal BpmStep = 0.01M;
 	}
