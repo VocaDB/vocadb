@@ -11,12 +11,17 @@
         "test": "jest"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.14.5",
         "@trivago/prettier-plugin-sort-imports": "^2.0.2",
+        "@types/classnames": "^2.3.1",
         "@types/jest": "^26.0.23",
         "@types/jest-expect-message": "^1.0.3",
         "@types/jquery": "^1.10.8-alpha",
         "@types/jqueryui": "^1.9.14-alpha",
         "@types/knockout.punches": "^0.5.33",
+        "@types/react": "^17.0.13",
+        "@types/react-dom": "^17.0.8",
+        "@types/react-transition-group": "^4.4.1",
         "@typescript-eslint/eslint-plugin": "^4.22.1",
         "@typescript-eslint/parser": "^4.22.1",
         "cross-env": "^5.1",
@@ -47,8 +52,12 @@
     "dependencies": {
         "axios": "^0.21.1",
         "bootstrap-sass": "^2.3.2",
+        "classnames": "^2.3.1",
         "decimal.js-light": "^2.5.1",
         "highcharts": "^9.1.0",
+        "i18next": "^20.3.2",
+        "i18next-browser-languagedetector": "^6.1.2",
+        "i18next-http-backend": "^1.2.6",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
         "knockout": "^3.5.1",
@@ -56,6 +65,13 @@
         "lodash": "^4.17.19",
         "marked": "^0.3.18",
         "moment": "^2.17.0",
-        "qtip2": "^3.0.3"
+        "qtip2": "^3.0.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-i18next": "^11.11.0",
+        "react-overlays": "^5.1.0",
+        "react-router-dom": "^6.0.0-beta.0",
+        "react-transition-group": "^4.4.2",
+        "react-use": "^17.2.4"
     }
 }
