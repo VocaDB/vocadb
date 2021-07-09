@@ -1,3 +1,4 @@
+import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -60,7 +61,7 @@ export default class ServerSidePagingStore {
 
 	public getPagingProperties = (
 		clearResults: boolean = false,
-	): { start: number; maxEntries: number; getTotalCount: boolean } => {
+	): PagingProperties => {
 		return {
 			start: this.firstItem,
 			maxEntries: this.pageSize,
