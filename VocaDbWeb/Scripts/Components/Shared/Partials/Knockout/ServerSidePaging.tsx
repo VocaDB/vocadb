@@ -13,7 +13,7 @@ const ServerSidePaging = observer(
 		const { t } = useTranslation(['VocaDb.Web.Resources.Other']);
 
 		return (
-			<Pagination /* TODO */>
+			<Pagination>
 				<Pagination.First
 					disabled={pagingStore.isFirstPage}
 					onClick={pagingStore.goToFirstPage}

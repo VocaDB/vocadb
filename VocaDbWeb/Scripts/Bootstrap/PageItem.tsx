@@ -33,7 +33,7 @@ const PageItem: BsPrefixRefForwardingComponent<
 		}: PageItemProps,
 		ref,
 	) => {
-		const Component = active || disabled ? 'span' : SafeAnchor;
+		const Component = SafeAnchor;
 		return (
 			<li
 				ref={ref}
