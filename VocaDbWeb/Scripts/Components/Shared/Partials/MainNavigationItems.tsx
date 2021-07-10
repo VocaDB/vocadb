@@ -1,6 +1,7 @@
 import LoginManager from '@Models/LoginManager';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -93,7 +94,7 @@ const MainNavigationItems = React.memo(
 					<a href={'/Tag'}>{t('ViewRes:Layout.Tags')}</a>
 				</li>
 				<li>
-					<a href={'/User'}>{t('ViewRes:Shared.Users')}</a>
+					<Link to="/User">{t('ViewRes:Shared.Users')}</Link>
 				</li>
 				<li>
 					<a href={'/Help'}>{t('ViewRes:Layout.Help')}</a>

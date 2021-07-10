@@ -219,33 +219,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		//
-		// GET: /User/
-
-		public ActionResult Index(string filter = null, UserGroupId? groupId = null)
-		{
-			var vm = new Models.User.Index { Filter = filter, GroupId = groupId };
-
-			if (!string.IsNullOrEmpty(filter))
-			{
-				var queryParams = new UserQueryParams
-				{
-					Common = new CommonSearchParams(SearchTextQuery.Create(filter), false, false),
-					Paging = new PagingProperties(0, 1, true),
-					Group = groupId ?? UserGroupId.Nothing
-				};
-
-				var result = Data.GetUsers(queryParams, u => u.Name);
-
-				if (result.TotalCount == 1 && result.Items.Length == 1)
-				{
-					return RedirectToAction("Profile", new { id = result.Items[0] });
-				}
-			}
-
-			return View(vm);
-		}
-
-		//
 		// GET: /User/Details/5
 
 		public ActionResult Details(int id = InvalidId)

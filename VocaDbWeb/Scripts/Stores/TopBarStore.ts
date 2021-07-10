@@ -8,7 +8,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 // Store for the top bar.
 export default class TopBarStore {
-	@action public ensureMessagesLoaded = (): void => {
+	public ensureMessagesLoaded = (): void => {
 		if (this.isLoaded) return;
 
 		this.userRepo

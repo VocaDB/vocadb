@@ -17,6 +17,7 @@ import './i18n';
 const ErrorNotFound = React.lazy(
 	() => import('@Components/Error/ErrorNotFound'),
 );
+const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -43,6 +44,7 @@ const App = (): React.ReactElement => {
 					<div className="span10 rightFrame well">
 						<React.Suspense fallback={null /* TODO */}>
 							<Routes>
+								<Route path="/User/*" element={<UserRoutes />} />
 								<Route path="/*" element={<ErrorNotFound />} />
 							</Routes>
 						</React.Suspense>
