@@ -1,7 +1,12 @@
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
+import {
+	UserGroupDropdownList,
+	UserLanguageCultureDropdownList,
+} from '@Components/Shared/Partials/Knockout/DropdownList';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
+import UserGroup from '@Models/Users/UserGroup';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ListUsersStore from '@Stores/User/ListUsersStore';
 import classNames from 'classnames';
@@ -50,14 +55,29 @@ const ListUsers = observer(
 
 					<div className="control-group">
 						<div className="control-label">{t('ViewRes.User:Index.Group')}</div>
-						<div className="controls">{/* TODO */}</div>
+						<div className="controls">
+							<UserGroupDropdownList
+								value={listUsersStore.group}
+								onChange={(e): void =>
+									listUsersStore.setGroup(e.target.value as UserGroup)
+								}
+							/>
+						</div>
 					</div>
 
 					<div className="control-group">
 						<div className="control-label">
 							{t('ViewRes.User:Index.KnowsLanguage')}
 						</div>
-						<div className="controls">{/* TODO */}</div>
+						<div className="controls">
+							<UserLanguageCultureDropdownList
+								value={listUsersStore.knowsLanguage}
+								onChange={(e): void =>
+									listUsersStore.setKnowsLanguage(e.target.value)
+								}
+								placeholder=""
+							/>
+						</div>
 					</div>
 
 					<div className="control-group">

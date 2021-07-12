@@ -46,16 +46,8 @@ export default class ListUsersStore {
 		this.sort = value;
 	};
 
-	public constructor(
-		private readonly userRepo: UserRepository,
-		searchTerm?: string,
-		group?: UserGroup,
-	) {
+	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
-
-		if (group) this.group = group;
-
-		this.searchTerm = searchTerm || '';
 
 		reaction(() => this.disabledUsers, this.updateResultsWithTotalCount);
 		reaction(() => this.group, this.updateResultsWithTotalCount);
