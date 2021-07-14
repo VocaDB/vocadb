@@ -55,6 +55,7 @@
         "classnames": "^2.3.1",
         "decimal.js-light": "^2.5.1",
         "highcharts": "^9.1.0",
+        "highcharts-react-official": "^3.0.0",
         "i18next": "^20.3.2",
         "i18next-browser-languagedetector": "^6.1.2",
         "i18next-http-backend": "^1.2.6",
