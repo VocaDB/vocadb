@@ -14,6 +14,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './i18n';
 
+const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
 );
@@ -48,6 +49,7 @@ const App = (): React.ReactElement => {
 					<div className="span10 rightFrame well">
 						<React.Suspense fallback={null /* TODO */}>
 							<Routes>
+								<Route path="/Admin/*" element={<AdminRoutes />} />
 								<Route path="/discussion/*" element={<DiscussionRoutes />} />
 								<Route path="/Stats/*" element={<StatsRoutes />} />
 								<Route path="/User/*" element={<UserRoutes />} />
