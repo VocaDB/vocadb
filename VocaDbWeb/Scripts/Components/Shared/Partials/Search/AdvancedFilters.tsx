@@ -37,22 +37,24 @@ const AdvancedFilters = observer(
 					</Dropdown.Menu>
 				</Dropdown>
 
-				<div className="search-advanced-filters-list">
-					{advancedFilters.filters.map((filter, index) => (
-						<React.Fragment key={filter.description}>
-							{index > 0 && ' '}
-							<div
-								className="label label-info"
-								onClick={(): void => advancedFilters.remove(filter)}
-							>
-								<button type="button" className="close">
-									×
-								</button>
-								<span>{filter.description}</span>
-							</div>
-						</React.Fragment>
-					))}
-				</div>
+				{advancedFilters.filters.length > 0 && (
+					<div className="search-advanced-filters-list">
+						{advancedFilters.filters.map((filter, index) => (
+							<React.Fragment key={filter.description}>
+								{index > 0 && ' '}
+								<div
+									className="label label-info"
+									onClick={(): void => advancedFilters.remove(filter)}
+								>
+									<button type="button" className="close">
+										×
+									</button>
+									<span>{filter.description}</span>
+								</div>
+							</React.Fragment>
+						))}
+					</div>
+				)}
 			</>
 		);
 	},
@@ -114,13 +116,16 @@ interface AlbumAdvancedFiltersProps {
 	advancedFilters: AdvancedSearchFilters;
 }
 
-export const AlbumAdvancedFilters = ({
-	advancedFilters,
-}: AlbumAdvancedFiltersProps): React.ReactElement => {
-	return (
-		<AdvancedFilters advancedFilters={advancedFilters} filters={albumFilters} />
-	);
-};
+export const AlbumAdvancedFilters = React.memo(
+	({ advancedFilters }: AlbumAdvancedFiltersProps): React.ReactElement => {
+		return (
+			<AdvancedFilters
+				advancedFilters={advancedFilters}
+				filters={albumFilters}
+			/>
+		);
+	},
+);
 
 // Corresponds to AdvancedSearchFilters.ArtistFilters in C#.
 const artistFilters: AdvancedSearchFilter[] = [
@@ -185,16 +190,16 @@ interface ArtistAdvancedFiltersProps {
 	advancedFilters: AdvancedSearchFilters;
 }
 
-export const ArtistAdvancedFilters = ({
-	advancedFilters,
-}: ArtistAdvancedFiltersProps): React.ReactElement => {
-	return (
-		<AdvancedFilters
-			advancedFilters={advancedFilters}
-			filters={artistFilters}
-		/>
-	);
-};
+export const ArtistAdvancedFilters = React.memo(
+	({ advancedFilters }: ArtistAdvancedFiltersProps): React.ReactElement => {
+		return (
+			<AdvancedFilters
+				advancedFilters={advancedFilters}
+				filters={artistFilters}
+			/>
+		);
+	},
+);
 
 // Corresponds to AdvancedSearchFilters.SongFilters in C#.
 const songFilters: AdvancedSearchFilter[] = [
@@ -300,10 +305,13 @@ interface SongAdvancedFiltersProps {
 	advancedFilters: AdvancedSearchFilters;
 }
 
-export const SongAdvancedFilters = ({
-	advancedFilters,
-}: SongAdvancedFiltersProps): React.ReactElement => {
-	return (
-		<AdvancedFilters advancedFilters={advancedFilters} filters={songFilters} />
-	);
-};
+export const SongAdvancedFilters = React.memo(
+	({ advancedFilters }: SongAdvancedFiltersProps): React.ReactElement => {
+		return (
+			<AdvancedFilters
+				advancedFilters={advancedFilters}
+				filters={songFilters}
+			/>
+		);
+	},
+);

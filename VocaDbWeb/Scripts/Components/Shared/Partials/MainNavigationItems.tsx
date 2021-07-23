@@ -15,9 +15,9 @@ const MainNavigationItems = React.memo(
 					<a href={'/'}>{t('ViewRes:Layout.Home')}</a>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Artist'}>
+					<Link to="/Search?searchType=Artist">
 						{t('ViewRes:Shared.Artists')}
-					</a>
+					</Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
@@ -27,7 +27,9 @@ const MainNavigationItems = React.memo(
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Album'}>{t('ViewRes:Shared.Albums')}</a>
+					<Link to="/Search?searchType=Album">
+						{t('ViewRes:Shared.Albums')}
+					</Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
@@ -35,24 +37,24 @@ const MainNavigationItems = React.memo(
 							</li>
 						)}
 						<li>
-							<a href={'/Search?searchType=Album&sort=RatingAverage'}>
+							<Link to="/Search?searchType=Album&sort=RatingAverage">
 								{t('ViewRes:Shared.TopRatedAlbums')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href={'/Search?searchType=Album&sort=ReleaseDate'}>
+							<Link to="/Search?searchType=Album&sort=ReleaseDate">
 								{t('ViewRes:Layout.NewAlbums')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href={'/Search?searchType=Album&tag=free&childTags=True'}>
+							<Link to="/Search?searchType=Album&tag=free&childTags=True">
 								{t('ViewRes:Layout.FreeAlbums')}
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=Song'}>{t('ViewRes:Shared.Songs')}</a>
+					<Link to="/Search?searchType=Song">{t('ViewRes:Shared.Songs')}</Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
@@ -65,20 +67,16 @@ const MainNavigationItems = React.memo(
 							</a>
 						</li>
 						<li>
-							<a
-								href={
-									'/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true'
-								}
-							>
+							<Link to="/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true">
 								{t('ViewRes:Layout.NewPVs')}
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</li>
 				<li>
-					<a href={'/Search?searchType=ReleaseEvent'}>
+					<Link to="/Search?searchType=ReleaseEvent">
 						{t('ViewRes:Shared.ReleaseEvents')}
-					</a>
+					</Link>
 					<ul>
 						<li>
 							<a href={'/Event'}>{t('ViewRes:Layout.UpcomingEvents')}</a>
