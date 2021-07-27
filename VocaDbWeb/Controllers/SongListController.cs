@@ -119,11 +119,6 @@ namespace VocaDb.Web.Controllers
 			return File(data, "text/csv", songList.Name + ".csv");
 		}
 
-		public ActionResult Featured(FeaturedViewModel viewModel)
-		{
-			return View(viewModel);
-		}
-
 		[Authorize]
 		public ActionResult Import()
 		{

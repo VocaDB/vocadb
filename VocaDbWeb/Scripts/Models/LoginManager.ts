@@ -90,6 +90,14 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
+	public get canEditFeaturedLists(): boolean {
+		return this.hasPermission(PermissionToken.EditFeaturedLists);
+	}
+
+	public get canEditProfile(): boolean {
+		return this.hasPermission(PermissionToken.EditProfile);
+	}
+
 	public get canManageDatabase(): boolean {
 		return this.hasPermission(PermissionToken.ManageDatabase);
 	}
