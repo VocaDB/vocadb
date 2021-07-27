@@ -116,13 +116,15 @@ const LeftMenu = React.memo(
 					{vdb.values.appLinks && vdb.values.appLinks.length > 0 && (
 						<div id="appLinks">
 							{vdb.values.appLinks.map((link, i) => (
-								<SmallBanner
-									title={link.title}
-									url={link.url}
-									img={link.bannerImg}
-									key={i}
-								/>
+								<React.Fragment key={i}>
+									<SmallBanner
+										title={link.title}
+										url={link.url}
+										img={link.bannerImg}
+									/>{' '}
+								</React.Fragment>
 							))}
+							<br />
 						</div>
 					)}
 
@@ -130,12 +132,13 @@ const LeftMenu = React.memo(
 					<div id="socialSites">
 						{vdb.values.socialLinks &&
 							vdb.values.socialLinks.map((link, i) => (
-								<SocialLink
-									title={link.title}
-									url={link.url}
-									img={link.bannerImg}
-									key={i}
-								/>
+								<React.Fragment key={i}>
+									<SocialLink
+										title={link.title}
+										url={link.url}
+										img={link.bannerImg}
+									/>{' '}
+								</React.Fragment>
 							))}
 					</div>
 
@@ -144,23 +147,25 @@ const LeftMenu = React.memo(
 					<ul id="banners">
 						{vdb.values.bigBanners &&
 							vdb.values.bigBanners.map((link, i) => (
-								<Banner
-									title={link.title}
-									url={link.url}
-									img={link.bannerImg}
-									key={i}
-								/>
+								<React.Fragment key={i}>
+									<Banner
+										title={link.title}
+										url={link.url}
+										img={link.bannerImg}
+									/>{' '}
+								</React.Fragment>
 							))}
 					</ul>
 					<div id="banners-small">
 						{vdb.values.smallBanners &&
 							vdb.values.smallBanners.map((link, i) => (
-								<SmallBanner
-									title={link.title}
-									url={link.url}
-									img={link.bannerImg}
-									key={i}
-								/>
+								<React.Fragment key={i}>
+									<SmallBanner
+										title={link.title}
+										url={link.url}
+										img={link.bannerImg}
+									/>{' '}
+								</React.Fragment>
 							))}
 					</div>
 					{vdb.values.patreonLink && (
