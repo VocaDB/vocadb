@@ -2,7 +2,7 @@ import Button from '@Bootstrap/Button';
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
 import Navbar from '@Bootstrap/Navbar';
-import Autocomplete from '@JQueryUI/Autocomplete';
+import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
 import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import ImageSize from '@Models/Images/ImageSize';
@@ -152,7 +152,7 @@ const GlobalSearchBox = observer(
 							))}
 						</Dropdown.Menu>
 					</Dropdown>
-					<Autocomplete
+					<JQueryUIAutocomplete
 						type="text"
 						name="globalSearchTerm"
 						className="globalSearchBox search-query"
