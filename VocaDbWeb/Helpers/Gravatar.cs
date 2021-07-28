@@ -42,6 +42,6 @@ namespace VocaDb.Web.Helpers
 		}
 
 		public static string GetUrl(string email, int imageSize = 80, string? defaultImage = null, GravatarRating rating = GravatarRating.Default, string? imageExtension = null)
-			=> Microsoft.Web.Helpers.Gravatar.GetUrl(email, imageSize, defaultImage, rating, imageExtension);
+			=> Microsoft.Web.Helpers.Gravatar.GetUrl(email, imageSize, defaultImage, rating, imageExtension).Replace("http://", "https://");
 	}
 }
