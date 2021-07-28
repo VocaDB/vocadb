@@ -8,12 +8,12 @@ import { Link, useParams } from 'react-router-dom';
 import { DiscussionLayout } from './DiscussionRoutes';
 import ViewTopic from './Partials/ViewTopic';
 
-interface DiscussionTopicProps {
+interface DiscussionTopicsProps {
 	discussionIndexStore: DiscussionIndexStore;
 }
 
-const DiscussionTopic = observer(
-	({ discussionIndexStore }: DiscussionTopicProps): React.ReactElement => {
+const DiscussionTopics = observer(
+	({ discussionIndexStore }: DiscussionTopicsProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes.Discussion']);
 		const { topicId } = useParams();
 
@@ -52,4 +52,4 @@ const DiscussionTopic = observer(
 	},
 );
 
-export default DiscussionTopic;
+export default DiscussionTopics;

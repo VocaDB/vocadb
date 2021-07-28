@@ -8,12 +8,12 @@ import { Link, useParams } from 'react-router-dom';
 import { DiscussionLayout } from './DiscussionRoutes';
 import ViewFolder from './Partials/ViewFolder';
 
-interface DiscussionFolderProps {
+interface DiscussionFoldersProps {
 	discussionIndexStore: DiscussionIndexStore;
 }
 
-const DiscussionFolder = observer(
-	({ discussionIndexStore }: DiscussionFolderProps): React.ReactElement => {
+const DiscussionFolders = observer(
+	({ discussionIndexStore }: DiscussionFoldersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes.Discussion']);
 		const { folderId } = useParams();
 
@@ -35,4 +35,4 @@ const DiscussionFolder = observer(
 	},
 );
 
-export default DiscussionFolder;
+export default DiscussionFolders;

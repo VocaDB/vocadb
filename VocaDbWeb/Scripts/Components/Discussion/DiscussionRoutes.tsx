@@ -10,9 +10,9 @@ import { Route, Routes } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/discussions.css';
 
-const DiscussionFolder = React.lazy(() => import('./DiscussionFolder'));
+const DiscussionFolders = React.lazy(() => import('./DiscussionFolders'));
 const DiscussionIndex = React.lazy(() => import('./DiscussionIndex'));
-const DiscussionTopic = React.lazy(() => import('./DiscussionTopic'));
+const DiscussionTopics = React.lazy(() => import('./DiscussionTopics'));
 
 interface DiscussionLayoutProps {
 	children?: React.ReactNode;
@@ -54,13 +54,13 @@ const DiscussionRoutes = (): React.ReactElement => {
 			<Route
 				path="folders/:folderId"
 				element={
-					<DiscussionFolder discussionIndexStore={discussionIndexStore} />
+					<DiscussionFolders discussionIndexStore={discussionIndexStore} />
 				}
 			/>
 			<Route
 				path="topics/:topicId"
 				element={
-					<DiscussionTopic discussionIndexStore={discussionIndexStore} />
+					<DiscussionTopics discussionIndexStore={discussionIndexStore} />
 				}
 			/>
 		</Routes>
