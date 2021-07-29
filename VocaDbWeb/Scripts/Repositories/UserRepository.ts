@@ -355,7 +355,7 @@ export default class UserRepository implements ICommentRepository {
 		username,
 	}: {
 		username: string;
-	}): Promise<UserApiContract | null> => {
+	}): Promise<UserApiContract | undefined> => {
 		const result = await this.getList({
 			paging: {},
 			query: username,
@@ -367,7 +367,7 @@ export default class UserRepository implements ICommentRepository {
 			nameMatchMode: 'Exact',
 			fields: undefined,
 		});
-		return result.items.length === 1 ? result.items[0] : null;
+		return result.items.length === 1 ? result.items[0] : undefined;
 	};
 
 	public getMessage = ({
