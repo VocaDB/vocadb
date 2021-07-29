@@ -20,7 +20,6 @@ export default class EditableCommentsStore {
 	@observable public commentsLoaded = false;
 	@observable public editCommentStore?: CommentStore = undefined;
 	@observable public newComment = '';
-
 	public readonly paging = new ServerSidePagingStore();
 
 	public constructor(
@@ -123,7 +122,7 @@ export default class EditableCommentsStore {
 	};
 
 	@action public deleteComment = (comment: CommentStore): void => {
-		_.remove(this.comments, comment);
+		_.pull(this.comments, comment);
 
 		this.commentRepo.deleteComment({ commentId: comment.id! });
 		this.paging.totalItems = this.paging.totalItems - 1;

@@ -5,29 +5,33 @@ import React, { useImperativeHandle } from 'react';
 const useJQueryUIAutocomplete = (
 	el: React.RefObject<any>,
 	options: JQueryUI.AutocompleteOptions,
+	renderItem?: (ul: HTMLElement, item: any) => JQuery,
 ): void => {
 	React.useEffect(() => {
 		const $el = $(el.current);
-		$el.autocomplete(options);
+		const autocomplete = $el.autocomplete(options).data('ui-autocomplete');
+		if (renderItem) autocomplete._renderItem = renderItem;
 		return (): void => $el.autocomplete('destroy');
 	});
 };
 
-type AutocompleteProps = JQueryUI.AutocompleteOptions &
+type JQueryUIAutocompleteProps = {
+	renderItem?: (ul: HTMLElement, item: any) => JQuery;
+} & JQueryUI.AutocompleteOptions &
 	React.InputHTMLAttributes<HTMLInputElement>;
 
-const Autocomplete = React.forwardRef<
+const JQueryUIAutocomplete = React.forwardRef<
 	HTMLInputElement,
-	React.PropsWithChildren<AutocompleteProps>
->(({ select, source, ...props }, ref) => {
+	React.PropsWithChildren<JQueryUIAutocompleteProps>
+>(({ select, source, renderItem, ...props }, ref) => {
 	const el = React.useRef<HTMLInputElement>(undefined!);
 	useImperativeHandle<HTMLInputElement, HTMLInputElement>(
 		ref,
 		() => el.current,
 	);
-	useJQueryUIAutocomplete(el, { select, source });
+	useJQueryUIAutocomplete(el, { select, source }, renderItem);
 
 	return <input ref={el} {...props} />;
 });
 
-export default Autocomplete;
+export default JQueryUIAutocomplete;
