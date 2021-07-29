@@ -5,12 +5,14 @@ interface LayoutProps {
 	children?: React.ReactNode;
 	subtitle?: string;
 	title?: string;
+	toolbar?: React.ReactNode;
 }
 
 const Layout = ({
 	children,
 	subtitle,
 	title,
+	toolbar,
 }: LayoutProps): React.ReactElement => {
 	return (
 		<>
@@ -30,6 +32,8 @@ const Layout = ({
 			{vdb.values.sitewideAnnouncement && (
 				<Alert>{vdb.values.sitewideAnnouncement}</Alert>
 			)}
+
+			<p>{toolbar}</p>
 
 			{/* TODO */}
 
