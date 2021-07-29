@@ -16,16 +16,10 @@ import ServerSidePagingStore from './ServerSidePagingStore';
 // Store for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
 export default class EditableCommentsStore {
 	@observable public comments: CommentStore[] = [];
-
 	// Whether all comments have been loaded
 	@observable public commentsLoaded = false;
-
 	@observable public editCommentStore?: CommentStore = undefined;
-
 	@observable public newComment = '';
-	@action public setNewComment = (value: string): void => {
-		this.newComment = value;
-	};
 
 	public readonly paging = new ServerSidePagingStore();
 
@@ -112,19 +106,17 @@ export default class EditableCommentsStore {
 			})
 			.then((result) => {
 				const processed = this.processComment(result);
-				this.paging.setTotalItems(this.paging.totalItems + 1);
+				runInAction(() => {
+					this.paging.totalItems = this.paging.totalItems + 1;
 
-				if (this.ascending) {
-					runInAction(() => {
+					if (this.ascending) {
 						this.comments.push(processed);
-					});
-					this.paging.goToLastPage();
-				} else {
-					runInAction(() => {
+						this.paging.goToLastPage();
+					} else {
 						this.comments.unshift(processed);
-					});
-					this.paging.goToFirstPage();
-				}
+						this.paging.goToFirstPage();
+					}
+				});
 
 				return _.clone(processed);
 			});
@@ -134,7 +126,7 @@ export default class EditableCommentsStore {
 		_.remove(this.comments, comment);
 
 		this.commentRepo.deleteComment({ commentId: comment.id! });
-		this.paging.setTotalItems(this.paging.totalItems - 1);
+		this.paging.totalItems = this.paging.totalItems - 1;
 	};
 
 	@action private setComments = (commentContracts: CommentContract[]): void => {
@@ -143,7 +135,7 @@ export default class EditableCommentsStore {
 			(comment) => comment.created,
 		);
 
-		this.paging.setTotalItems(commentContracts.length);
+		this.paging.totalItems = commentContracts.length;
 
 		if (this.ascending) this.paging.goToLastPage();
 		else commentStores = commentStores.reverse();

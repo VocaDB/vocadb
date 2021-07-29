@@ -1,5 +1,11 @@
 import HttpClient from '@Shared/HttpClient';
-import { action, computed, makeObservable, observable, reaction } from 'mobx';
+import {
+	computed,
+	makeObservable,
+	observable,
+	reaction,
+	runInAction,
+} from 'mobx';
 import moment from 'moment';
 
 interface IReportCategory {
@@ -140,26 +146,17 @@ export default class StatsStore {
 	];
 
 	@observable public chartData?: any = undefined;
-	@action public setChartData = (value?: any): void => {
-		this.chartData = value;
-	};
-
 	@observable public selectedReport?: IReport = undefined;
-	@action public setSelectedReport = (value?: IReport): void => {
-		this.selectedReport = value;
-	};
-
 	@observable public timespan?: string = undefined;
-	@action public setTimespan = (value?: string): void => {
-		this.timespan = value;
-	};
 
 	public constructor(private readonly httpClient: HttpClient) {
 		makeObservable(this);
 
 		reaction(() => this.selectedReport, this.updateReport);
 		reaction(() => this.timespan, this.updateReport);
-		this.setSelectedReport(this.categories[0].reports[0]);
+		runInAction(() => {
+			this.selectedReport = this.categories[0].reports[0];
+		});
 	}
 
 	@computed public get showTimespanFilter(): boolean {
@@ -174,6 +171,10 @@ export default class StatsStore {
 
 		this.httpClient
 			.get(`/stats/${this.selectedReport?.url}`, { cutoff: cutoff })
-			.then((data) => this.setChartData(data));
+			.then((data) =>
+				runInAction(() => {
+					this.chartData = data;
+				}),
+			);
 	};
 }

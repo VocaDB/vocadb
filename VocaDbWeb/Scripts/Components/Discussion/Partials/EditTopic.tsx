@@ -1,6 +1,7 @@
 import Markdown from '@Components/KnockoutExtensions/Markdown';
 import LoginManager from '@Models/LoginManager';
 import DiscussionTopicEditStore from '@Stores/Discussion/DiscussionTopicEditStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,9 @@ const EditTopic = observer(
 				<input
 					value={discussionTopicEditStore.name}
 					onChange={(e): void =>
-						discussionTopicEditStore.setName(e.target.value)
+						runInAction(() => {
+							discussionTopicEditStore.name = e.target.value;
+						})
 					}
 					type="text"
 					className="input-xlarge"
@@ -35,7 +38,9 @@ const EditTopic = observer(
 						<textarea
 							value={discussionTopicEditStore.content}
 							onChange={(e): void =>
-								discussionTopicEditStore.setContent(e.target.value)
+								runInAction(() => {
+									discussionTopicEditStore.content = e.target.value;
+								})
 							}
 							cols={60}
 							rows={6}
@@ -58,9 +63,11 @@ const EditTopic = observer(
 									<select
 										value={discussionTopicEditStore.folderId}
 										onChange={(e): void =>
-											discussionTopicEditStore.setFolderId(
-												Number(e.target.value),
-											)
+											runInAction(() => {
+												discussionTopicEditStore.folderId = Number(
+													e.target.value,
+												);
+											})
 										}
 									>
 										{discussionTopicEditStore.folders.map((folder) => (
@@ -77,7 +84,9 @@ const EditTopic = observer(
 										type="checkbox"
 										checked={discussionTopicEditStore.locked}
 										onChange={(e): void =>
-											discussionTopicEditStore.setLocked(e.target.checked)
+											runInAction(() => {
+												discussionTopicEditStore.locked = e.target.checked;
+											})
 										}
 									/>{' '}
 									Locked{/* TODO: localize */}

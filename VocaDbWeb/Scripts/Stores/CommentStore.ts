@@ -6,12 +6,7 @@ export default class CommentStore {
 	public readonly author: UserApiContract;
 	public readonly authorName?: string;
 	public readonly created?: Date;
-
 	@observable public editedMessage?: string = undefined;
-	@action public setEditedMessage = (value?: string): void => {
-		this.editedMessage = value;
-	};
-
 	public id?: number;
 	@observable public message: string;
 

@@ -1,4 +1,5 @@
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
@@ -12,8 +13,10 @@ interface DiscussionIndexProps {
 const DiscussionIndex = observer(
 	({ discussionIndexStore }: DiscussionIndexProps): React.ReactElement => {
 		React.useEffect(() => {
-			discussionIndexStore.setSelectedFolder(undefined);
-			discussionIndexStore.setSelectedTopic(undefined);
+			runInAction(() => {
+				discussionIndexStore.selectedFolder = undefined;
+				discussionIndexStore.selectedTopic = undefined;
+			});
 		}, [discussionIndexStore]);
 
 		return (

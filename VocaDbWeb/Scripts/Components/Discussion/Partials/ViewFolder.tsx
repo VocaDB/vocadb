@@ -5,6 +5,7 @@ import ImageSize from '@Models/Images/ImageSize';
 import LoginManager from '@Models/LoginManager';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
 import classNames from 'classnames';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';
@@ -74,7 +75,9 @@ const ViewFolder = observer(
 						) : (
 							<Button
 								onClick={(): void =>
-									discussionIndexStore.setShowCreateNewTopic(true)
+									runInAction(() => {
+										discussionIndexStore.showCreateNewTopic = true;
+									})
 								}
 								className="create-topic"
 							>

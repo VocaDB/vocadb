@@ -4,19 +4,8 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 export default class ServerSidePagingStore {
 	@observable public page = 1;
-	@action public setPage = (value: number): void => {
-		this.page = value;
-	};
-
 	@observable public totalItems = 0;
-	@action public setTotalItems = (value: number): void => {
-		this.totalItems = value;
-	};
-
 	@observable public pageSize = 10;
-	@action public setPageSize = (value: number): void => {
-		this.pageSize = value;
-	};
 
 	public constructor(pageSize: number = 10) {
 		makeObservable(this);

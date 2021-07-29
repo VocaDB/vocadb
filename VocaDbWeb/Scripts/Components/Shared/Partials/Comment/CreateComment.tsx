@@ -1,6 +1,7 @@
 import Button from '@Bootstrap/Button';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
 import classNames from 'classnames';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +31,9 @@ const CreateComment = observer(
 					<textarea
 						value={editableCommentsStore.newComment}
 						onChange={(e): void =>
-							editableCommentsStore.setNewComment(e.target.value)
+							runInAction(() => {
+								editableCommentsStore.newComment = e.target.value;
+							})
 						}
 						rows={newCommentRows}
 						cols={60}

@@ -2,30 +2,14 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import LoginManager from '@Models/LoginManager';
-import { action, makeObservable, observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 
 export default class DiscussionTopicEditStore {
 	public readonly author: UserApiContract;
-
 	@observable public content = '';
-	@action public setContent = (value: string): void => {
-		this.content = value;
-	};
-
 	@observable public folderId?: number = undefined;
-	@action public setFolderId = (value?: number): void => {
-		this.folderId = value;
-	};
-
 	@observable public locked = false;
-	@action public setLocked = (value: boolean): void => {
-		this.locked = value;
-	};
-
 	@observable public name = '';
-	@action public setName = (value: string): void => {
-		this.name = value;
-	};
 
 	public constructor(
 		loginManager: LoginManager,

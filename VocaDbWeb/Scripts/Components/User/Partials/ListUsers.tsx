@@ -10,6 +10,7 @@ import UserGroup from '@Models/Users/UserGroup';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ListUsersStore from '@Stores/User/ListUsersStore';
 import classNames from 'classnames';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';
@@ -36,7 +37,9 @@ const ListUsers = observer(
 									type="text"
 									value={listUsersStore.searchTerm}
 									onChange={(e): void =>
-										listUsersStore.setSearchTerm(e.target.value)
+										runInAction(() => {
+											listUsersStore.searchTerm = e.target.value;
+										})
 									}
 									className="input-xlarge"
 									placeholder="Type something..." /* TODO: localize */
@@ -44,7 +47,11 @@ const ListUsers = observer(
 								{listUsersStore.searchTerm && (
 									<Button
 										variant="danger"
-										onClick={(): void => listUsersStore.setSearchTerm('')}
+										onClick={(): void =>
+											runInAction(() => {
+												listUsersStore.searchTerm = '';
+											})
+										}
 									>
 										{t('ViewRes:Shared.Clear')}
 									</Button>
@@ -59,7 +66,9 @@ const ListUsers = observer(
 							<UserGroupDropdownList
 								value={listUsersStore.group}
 								onChange={(e): void =>
-									listUsersStore.setGroup(e.target.value as UserGroup)
+									runInAction(() => {
+										listUsersStore.group = e.target.value as UserGroup;
+									})
 								}
 							/>
 						</div>
@@ -73,7 +82,9 @@ const ListUsers = observer(
 							<UserLanguageCultureDropdownList
 								value={listUsersStore.knowsLanguage}
 								onChange={(e): void =>
-									listUsersStore.setKnowsLanguage(e.target.value)
+									runInAction(() => {
+										listUsersStore.knowsLanguage = e.target.value;
+									})
 								}
 								placeholder=""
 							/>
@@ -87,7 +98,9 @@ const ListUsers = observer(
 									type="checkbox"
 									checked={listUsersStore.onlyVerifiedArtists}
 									onChange={(e): void =>
-										listUsersStore.setOnlyVerifiedArtists(e.target.checked)
+										runInAction(() => {
+											listUsersStore.onlyVerifiedArtists = e.target.checked;
+										})
 									}
 								/>
 								{t('ViewRes.User:Index.VerifiedArtists')}
@@ -97,7 +110,9 @@ const ListUsers = observer(
 									type="checkbox"
 									checked={listUsersStore.disabledUsers}
 									onChange={(e): void =>
-										listUsersStore.setDisabledUsers(e.target.checked)
+										runInAction(() => {
+											listUsersStore.disabledUsers = e.target.checked;
+										})
 									}
 								/>
 								{t('ViewRes.User:Index.ShowDisabledUsers')}
@@ -116,7 +131,11 @@ const ListUsers = observer(
 							<tr>
 								<th colSpan={2}>
 									<SafeAnchor
-										onClick={(): void => listUsersStore.setSort('Name')}
+										onClick={(): void =>
+											runInAction(() => {
+												listUsersStore.sort = 'Name';
+											})
+										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.UserName')}{' '}
@@ -127,7 +146,11 @@ const ListUsers = observer(
 								</th>
 								<th>
 									<SafeAnchor
-										onClick={(): void => listUsersStore.setSort('RegisterDate')}
+										onClick={(): void =>
+											runInAction(() => {
+												listUsersStore.sort = 'RegisterDate';
+											})
+										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.MemberSince')}{' '}
@@ -138,7 +161,11 @@ const ListUsers = observer(
 								</th>
 								<th>
 									<SafeAnchor
-										onClick={(): void => listUsersStore.setSort('Group')}
+										onClick={(): void =>
+											runInAction(() => {
+												listUsersStore.sort = 'Group';
+											})
+										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.UserGroup')}{' '}

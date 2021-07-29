@@ -1,5 +1,6 @@
 import Pagination from '@Bootstrap/Pagination';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +33,11 @@ const ServerSidePaging = observer(
 				{pagingStore.pages.map((page) => (
 					<Pagination.Item
 						active={page === pagingStore.page}
-						onClick={(): void => pagingStore.setPage(page)}
+						onClick={(): void =>
+							runInAction(() => {
+								pagingStore.page = page;
+							})
+						}
 						key={page}
 					>
 						{page}

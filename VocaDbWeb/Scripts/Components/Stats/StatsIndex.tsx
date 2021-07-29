@@ -3,6 +3,7 @@ import HttpClient from '@Shared/HttpClient';
 import StatsStore from '@Stores/StatsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
@@ -17,7 +18,9 @@ const StatsIndex = observer(
 				<select
 					value={JSON.stringify(statsStore.selectedReport)}
 					onChange={(e): void =>
-						statsStore.setSelectedReport(JSON.parse(e.target.value))
+						runInAction(() => {
+							statsStore.selectedReport = JSON.parse(e.target.value);
+						})
 					}
 					className="input-large"
 				>
@@ -34,7 +37,11 @@ const StatsIndex = observer(
 				{statsStore.showTimespanFilter && (
 					<select
 						value={statsStore.timespan}
-						onChange={(e): void => statsStore.setTimespan(e.target.value)}
+						onChange={(e): void =>
+							runInAction(() => {
+								statsStore.timespan = e.target.value;
+							})
+						}
 					>
 						<option value="">Overall{/* TODO: localize */}</option>
 						<option value="24">Last day{/* TODO: localize */}</option>

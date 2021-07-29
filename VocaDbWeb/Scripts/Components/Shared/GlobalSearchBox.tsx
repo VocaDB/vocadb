@@ -11,6 +11,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -118,9 +119,10 @@ const GlobalSearchBox = observer(
 					name="objectType"
 					value={topBarStore.entryType}
 					onChange={(event): void => {
-						topBarStore.setEntryType(
-							EntryType[event.target.value as keyof typeof EntryType],
-						);
+						runInAction(() => {
+							topBarStore.entryType =
+								EntryType[event.target.value as keyof typeof EntryType];
+						});
 					}}
 				/>
 
@@ -136,7 +138,11 @@ const GlobalSearchBox = observer(
 						<Dropdown.Menu>
 							{allObjectTypes.map((entryType) => (
 								<Dropdown.Item
-									onClick={(): void => topBarStore.setEntryType(entryType)}
+									onClick={(): void =>
+										runInAction(() => {
+											topBarStore.entryType = entryType;
+										})
+									}
 									key={entryType}
 								>
 									{t(

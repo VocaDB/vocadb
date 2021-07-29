@@ -1,6 +1,7 @@
 import Dropdown from '@Bootstrap/Dropdown';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +29,11 @@ const EntryCount = observer(
 				<Dropdown.Menu>
 					{selections.map((selection) => (
 						<Dropdown.Item
-							onClick={(): void => pagingStore.setPageSize(selection)}
+							onClick={(): void =>
+								runInAction(() => {
+									pagingStore.pageSize = selection;
+								})
+							}
 							key={selection}
 						>
 							{t('ViewRes.Search:Index.ItemsPerPage', { 0: selection })}

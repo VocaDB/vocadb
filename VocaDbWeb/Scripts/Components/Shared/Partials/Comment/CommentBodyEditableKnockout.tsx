@@ -1,6 +1,7 @@
 import Button from '@Bootstrap/Button';
 import CommentStore from '@Stores/CommentStore';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +34,9 @@ const CommentBodyEditableKnockout = observer(
 						<textarea
 							value={commentStore.editedMessage}
 							onChange={(e): void =>
-								commentStore.setEditedMessage(e.target.value)
+								runInAction(() => {
+									commentStore.editedMessage = e.target.value;
+								})
 							}
 							rows={6}
 							cols={60}

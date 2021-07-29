@@ -17,43 +17,13 @@ import DiscussionTopicStore from './DiscussionTopicStore';
 
 export default class DiscussionIndexStore {
 	@observable public folders: DiscussionFolderContract[] = [];
-	@action public setFolders = (value: DiscussionFolderContract[]): void => {
-		this.folders = value;
-	};
-
 	@observable public newTopic: DiscussionTopicEditStore;
-	@action public setNewTopic = (value: DiscussionTopicEditStore): void => {
-		this.newTopic = value;
-	};
-
 	public readonly paging = new ServerSidePagingStore(30); // Paging store
-
 	@observable public recentTopics: DiscussionTopicContract[] = [];
-	@action public setRecentTopics = (value: DiscussionTopicContract[]): void => {
-		this.recentTopics = value;
-	};
-
 	@observable public selectedFolder?: DiscussionFolderContract = undefined;
-	@action public setSelectedFolder = (
-		value?: DiscussionFolderContract,
-	): void => {
-		this.selectedFolder = value;
-	};
-
 	@observable public selectedTopic?: DiscussionTopicStore = undefined;
-	@action public setSelectedTopic = (value?: DiscussionTopicStore): void => {
-		this.selectedTopic = value;
-	};
-
 	@observable public showCreateNewTopic: boolean = false;
-	@action public setShowCreateNewTopic = (value: boolean): void => {
-		this.showCreateNewTopic = value;
-	};
-
 	@observable public topics: DiscussionTopicContract[] = [];
-	@action public setTopics = (value: DiscussionTopicContract[]): void => {
-		this.topics = value;
-	};
 
 	public constructor(
 		public readonly loginManager: LoginManager,
@@ -65,11 +35,15 @@ export default class DiscussionIndexStore {
 		this.newTopic = new DiscussionTopicEditStore(loginManager, this.folders);
 
 		discussionRepo.getFolders({}).then((folders) => {
-			this.setFolders(folders);
+			runInAction(() => {
+				this.folders = folders;
+			});
 		});
 
 		discussionRepo.getTopics({}).then((result) => {
-			this.setRecentTopics(result.items);
+			runInAction(() => {
+				this.recentTopics = result.items;
+			});
 		});
 
 		reaction(
@@ -110,9 +84,11 @@ export default class DiscussionIndexStore {
 		return this.discussionRepo
 			.getTopicsForFolder({ folderId: folder.id, paging: paging })
 			.then((result) => {
-				this.setTopics(result.items);
+				runInAction(() => {
+					this.topics = result.items;
 
-				if (paging.getTotalCount) this.paging.setTotalItems(result.totalCount);
+					if (paging.getTotalCount) this.paging.totalItems = result.totalCount;
+				});
 			});
 	};
 
@@ -137,7 +113,9 @@ export default class DiscussionIndexStore {
 	public selectTopicById = (topicId?: number): void => {
 		if (!topicId) {
 			this.loadTopics(this.selectedFolder).then(() => {
-				this.setSelectedTopic(undefined);
+				runInAction(() => {
+					this.selectedTopic = undefined;
+				});
 			});
 			return;
 		}
@@ -147,15 +125,15 @@ export default class DiscussionIndexStore {
 			contract.canBeEdited = this.canEditTopic(contract);
 
 			this.selectFolderById(contract.folderId);
-			this.setSelectedTopic(
-				new DiscussionTopicStore(
+			runInAction(() => {
+				this.selectedTopic = new DiscussionTopicStore(
 					this.loginManager,
 					this.discussionRepo,
 					this.canDeleteAllComments,
 					contract,
 					this.folders,
-				),
-			);
+				);
+			});
 		});
 	};
 
@@ -168,11 +146,12 @@ export default class DiscussionIndexStore {
 			})
 			.then((topic) => {
 				topic.canBeDeleted = false;
-				this.setNewTopic(
-					new DiscussionTopicEditStore(this.loginManager, this.folders),
-				);
-				this.setShowCreateNewTopic(false);
 				runInAction(() => {
+					this.newTopic = new DiscussionTopicEditStore(
+						this.loginManager,
+						this.folders,
+					);
+					this.showCreateNewTopic = false;
 					this.topics.unshift(topic);
 				});
 				return topic;

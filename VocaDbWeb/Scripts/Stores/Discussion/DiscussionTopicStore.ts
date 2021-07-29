@@ -3,22 +3,20 @@ import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicCo
 import LoginManager from '@Models/LoginManager';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+	action,
+	computed,
+	makeObservable,
+	observable,
+	runInAction,
+} from 'mobx';
 
 import DiscussionTopicEditStore from './DiscussionTopicEditStore';
 
 export default class DiscussionTopicStore {
 	@observable public comments: EditableCommentsStore;
-
 	@observable public contract: DiscussionTopicContract;
-	@action public setContract = (value: DiscussionTopicContract): void => {
-		this.contract = value;
-	};
-
 	@observable public editStore?: DiscussionTopicEditStore = undefined;
-	@action public setEditStore = (value?: DiscussionTopicEditStore): void => {
-		this.editStore = value;
-	};
 
 	public constructor(
 		private readonly loginManager: LoginManager,
@@ -74,8 +72,10 @@ export default class DiscussionTopicStore {
 				editedContract.canBeDeleted = this.contract.canBeDeleted;
 				editedContract.canBeEdited = this.contract.canBeEdited;
 
-				this.setContract(editedContract);
-				this.setEditStore(undefined);
+				runInAction(() => {
+					this.contract = editedContract;
+					this.editStore = undefined;
+				});
 			});
 	};
 }
