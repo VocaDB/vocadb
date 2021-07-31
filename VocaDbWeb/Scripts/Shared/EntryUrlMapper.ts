@@ -60,7 +60,7 @@ export class EntryUrlMapper {
 				break;
 		}
 
-		var urlFriendlyPart = urlFriendlyName ? '/' + urlFriendlyName : '';
+		var urlFriendlyPart = urlFriendlyName ? `/${urlFriendlyName}` : '';
 
 		return prefix + urlFriendlyPart;
 	}
@@ -86,13 +86,13 @@ export class EntryUrlMapper {
 	): string | undefined {
 		if (!tag) return undefined;
 
-		if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
+		if (!tag.id) return `/Tag/Details/${tag.name}`; // Legacy URL, this will be removed
 
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
 	}
 
 	public static details_user_byName(name?: string): string {
-		return functions.mapAbsoluteUrl('/Profile/' + name);
+		return functions.mapAbsoluteUrl(`/Profile/${name}`);
 	}
 
 	public static index = (

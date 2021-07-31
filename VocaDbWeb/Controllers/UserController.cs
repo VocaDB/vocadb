@@ -634,6 +634,7 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
+#nullable enable
 		[Authorize]
 		public ActionResult Messages(int? messageId, string receiverName)
 		{
@@ -652,10 +653,9 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
-			return View(model);
+			return View("React/Index");
 		}
 
-#nullable enable
 		[Authorize]
 		public ActionResult MySettings()
 		{
