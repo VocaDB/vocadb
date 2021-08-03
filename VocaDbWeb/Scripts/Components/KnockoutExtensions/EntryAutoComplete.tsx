@@ -136,11 +136,11 @@ const EntryAutoComplete = <TContract extends { id: number; name: string }>({
 		// namebox value is cleared when using keyboard
 		acceptSelection(
 			item.value,
-			inputRef.current.value || item.term,
+			inputRef.current?.value || item.term,
 			item.itemType,
 			item.data,
 		);
-		inputRef.current.value = '';
+		if (inputRef.current) inputRef.current.value = '';
 
 		return false;
 	};
