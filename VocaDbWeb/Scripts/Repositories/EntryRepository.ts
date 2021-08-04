@@ -36,7 +36,7 @@ export default class EntryRepository {
 		tags: number[];
 		childTags: boolean;
 		fields: string;
-		status: string;
+		status?: string;
 	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
 		var data = {
