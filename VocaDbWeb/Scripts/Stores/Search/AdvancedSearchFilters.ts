@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
-import AdvancedSearchFilter from './AdvancedSearchFilter';
+import AdvancedSearchFilter, {
+	AdvancedFilterType,
+} from './AdvancedSearchFilter';
 
 export default class AdvancedSearchFilters {
 	@observable public filters: AdvancedSearchFilter[] = [];
@@ -11,9 +13,9 @@ export default class AdvancedSearchFilters {
 	}
 
 	@action public add = (
-		filter: string,
+		filter: AdvancedFilterType,
 		param: string,
-		description: string,
+		description?: string,
 		negate?: boolean,
 	): void => {
 		this.filters.push({
@@ -24,11 +26,18 @@ export default class AdvancedSearchFilters {
 		});
 	};
 
-	public hasFilter = (filterType: string, param: string): boolean => {
+	public hasFilter = (
+		filterType: AdvancedFilterType,
+		param: string,
+	): boolean => {
 		const result = _.some(
 			this.filters,
 			(f) => f.filterType === filterType && f.param === param,
 		);
 		return result;
+	};
+
+	@action public remove = (filter: AdvancedSearchFilter): void => {
+		_.pull(this.filters, filter);
 	};
 }
