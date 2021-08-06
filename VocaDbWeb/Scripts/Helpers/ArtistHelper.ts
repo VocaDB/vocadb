@@ -43,8 +43,8 @@ export default class ArtistHelper {
 		ArtistType.SynthesizerV,
 	];
 
-	public static canHaveChildVoicebanks(at: ArtistType): boolean {
-		if (at === null) return false;
+	public static canHaveChildVoicebanks(at?: ArtistType): boolean {
+		if (at == null) return false;
 
 		return (
 			(ArtistHelper.isVocalistType(at) || at === ArtistType.Unknown) &&
