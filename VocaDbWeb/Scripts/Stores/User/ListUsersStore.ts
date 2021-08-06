@@ -5,6 +5,13 @@ import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import debounceEffect from '@Stores/debounceEffect';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
+// Corresponds to the UserSortRule enum in C#.
+export enum UserSortRule {
+	RegisterDate = 'RegisterDate',
+	Name = 'Name',
+	Group = 'Group',
+}
+
 export default class ListUsersStore {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
@@ -15,7 +22,7 @@ export default class ListUsersStore {
 	@observable public paging = new ServerSidePagingStore(20); // Paging view model
 	public pauseNotifications = false;
 	@observable public searchTerm = '';
-	@observable public sort = 'RegisterDate' /* TODO: enum */;
+	@observable public sort = UserSortRule.RegisterDate;
 
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);

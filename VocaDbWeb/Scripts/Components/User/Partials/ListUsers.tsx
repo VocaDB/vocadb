@@ -8,7 +8,7 @@ import {
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import UserGroup from '@Models/Users/UserGroup';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import ListUsersStore from '@Stores/User/ListUsersStore';
+import ListUsersStore, { UserSortRule } from '@Stores/User/ListUsersStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -133,13 +133,13 @@ const ListUsers = observer(
 									<SafeAnchor
 										onClick={(): void =>
 											runInAction(() => {
-												listUsersStore.sort = 'Name';
+												listUsersStore.sort = UserSortRule.Name;
 											})
 										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.UserName')}{' '}
-										{listUsersStore.sort === 'Name' && (
+										{listUsersStore.sort === UserSortRule.Name && (
 											<span className="sortDirection_down"></span>
 										)}
 									</SafeAnchor>
@@ -148,13 +148,13 @@ const ListUsers = observer(
 									<SafeAnchor
 										onClick={(): void =>
 											runInAction(() => {
-												listUsersStore.sort = 'RegisterDate';
+												listUsersStore.sort = UserSortRule.RegisterDate;
 											})
 										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.MemberSince')}{' '}
-										{listUsersStore.sort === 'RegisterDate' && (
+										{listUsersStore.sort === UserSortRule.RegisterDate && (
 											<span className="sortDirection_down"></span>
 										)}
 									</SafeAnchor>
@@ -163,13 +163,13 @@ const ListUsers = observer(
 									<SafeAnchor
 										onClick={(): void =>
 											runInAction(() => {
-												listUsersStore.sort = 'Group';
+												listUsersStore.sort = UserSortRule.Group;
 											})
 										}
 										href="#"
 									>
 										{t('ViewRes.User:Details.UserGroup')}{' '}
-										{listUsersStore.sort === 'Group' && (
+										{listUsersStore.sort === UserSortRule.Group && (
 											<span className="sortDirection_down"></span>
 										)}
 									</SafeAnchor>

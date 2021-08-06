@@ -9,6 +9,7 @@ import debounceEffect from '@Stores/debounceEffect';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import moment from 'moment';
 
+// Corresponds to the SongListSortRule enum in C#.
 export enum SongListSortRule {
 	Name = 'Name',
 	Date = 'Date',
