@@ -182,7 +182,7 @@ export default class ArtistRepository
 		childTags: boolean;
 		followedByUserId?: number;
 		fields: string;
-		status: string;
+		status?: string;
 		advancedFilters: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
