@@ -228,6 +228,8 @@ namespace VocaDb.Model.Utils
 
 		public static string SoundCloudClientId => Val("SoundCloudClientId");
 
+		public static string SoundCloudClientSecret = Val("SoundCloudClientSecret");
+
 #nullable enable
 		public static string StaticContentPath => Val("StaticContentPath");
 
