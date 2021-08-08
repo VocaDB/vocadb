@@ -4,9 +4,9 @@ import { IReactionPublic } from 'mobx';
 export default function debounceEffect<T>(
 	effect: (arg: T, r: IReactionPublic) => void,
 	debounceMs: number,
-): (arg: T, prev: string, r: IReactionPublic) => void {
+): (arg: T, prev: T, r: IReactionPublic) => void {
 	let timer: NodeJS.Timeout;
-	return (arg: T, prev: string, r: IReactionPublic): void => {
+	return (arg: T, prev: T, r: IReactionPublic): void => {
 		clearTimeout(timer);
 		timer = setTimeout(() => effect(arg, r), debounceMs);
 	};
