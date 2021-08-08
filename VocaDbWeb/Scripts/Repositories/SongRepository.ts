@@ -325,8 +325,8 @@ export default class SongRepository
 		query: string;
 		sort: string;
 		songTypes?: string;
-		afterDate: Date;
-		beforeDate: Date;
+		afterDate?: Date;
+		beforeDate?: Date;
 		tagIds: number[];
 		childTags: boolean;
 		unifyTypesAndTags: boolean;
@@ -334,13 +334,13 @@ export default class SongRepository
 		artistParticipationStatus: string;
 		childVoicebanks: boolean;
 		includeMembers: boolean;
-		eventId: number;
+		eventId?: number;
 		onlyWithPvs: boolean;
 		pvServices?: string;
-		since: number;
-		minScore: number;
+		since?: number;
+		minScore?: number;
 		userCollectionId?: number;
-		parentSongId: number;
+		parentSongId?: number;
 		fields: string;
 		status?: string;
 		advancedFilters?: AdvancedSearchFilter[];
