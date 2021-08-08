@@ -25,12 +25,18 @@ export default class TagFilters {
 		makeObservable(this);
 
 		this.tags = tags || [];
-
-		// TODO: filters
 	}
 
 	@computed public get tagIds(): number[] {
 		return _.map(this.tags, (t) => t.id);
+	}
+
+	// Fired when any of the tag filters is changed
+	@computed public get filters(): any {
+		return {
+			tagIds: this.tagIds,
+			childTags: this.childTags,
+		};
 	}
 
 	@action public addTag = (tag: TagBaseContract): number =>
