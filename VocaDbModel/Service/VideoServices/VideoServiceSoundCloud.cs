@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
@@ -15,6 +16,11 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceSoundCloud : VideoService
 	{
+		private sealed record SoundCloudTokenResponse
+		{
+			public string Access_token { get; init; } = default!;
+		}
+
 		private sealed record SoundCloudUser
 		{
 			public string Avatar_url { get; init; } = default!;
@@ -56,7 +62,7 @@ namespace VocaDb.Model.Service.VideoServices
 			SslHelper.ForceStrongTLS();
 
 			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}&client_id={apikey}";
+			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}?client_id={apikey}";
 
 			SoundCloudResult? result;
 
@@ -71,7 +77,25 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10));
+				// Code from: https://github.com/TerribleDev/OwinOAuthProviders/blob/8b382b0429aeb656f54149ab6f3472dd559ae12f/src/Owin.Security.Providers.SoundCloud/SoundCloudAuthenticationHandler.cs#L74
+				// TODO: use IHttpClientFactory
+				using var httpClient = new HttpClient();
+				var tokenResponse = await httpClient.PostAsync("https://api.soundcloud.com/oauth2/token", new FormUrlEncodedContent(new List<KeyValuePair<string?, string?>>
+				{
+					new("client_id", apikey),
+					new("client_secret", AppConfig.SoundCloudClientSecret),
+					new("grant_type", "client_credentials"),
+				}));
+				tokenResponse.EnsureSuccessStatusCode();
+				var text = await tokenResponse.Content.ReadAsStringAsync();
+
+				var response = JsonConvert.DeserializeObject<SoundCloudTokenResponse>(text);
+				var accessToken = response.Access_token;
+
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10), headers: headers =>
+				{
+					headers.Authorization = new AuthenticationHeaderValue("OAuth", accessToken);
+				});
 			}
 			catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
 			{
