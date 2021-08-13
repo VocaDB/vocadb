@@ -229,7 +229,7 @@ export default class SearchStore implements ICommonSearchStore {
 		return this.searchType === SearchType.Anything;
 	}
 
-	@computed public get currentCategoryViewModel():
+	@computed public get currentCategoryStore():
 		| ISearchCategoryBaseStore
 		| undefined {
 		switch (this.searchType) {
@@ -251,7 +251,7 @@ export default class SearchStore implements ICommonSearchStore {
 	}
 
 	public updateResults = (): void => {
-		const store = this.currentCategoryViewModel;
+		const store = this.currentCategoryStore;
 
 		store?.updateResultsWithTotalCount();
 	};

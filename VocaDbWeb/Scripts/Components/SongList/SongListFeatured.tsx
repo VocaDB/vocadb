@@ -66,17 +66,20 @@ const SongListFeatured = observer(
 							>
 								{t('ViewRes.User:Details.CreateNewList')}
 							</JQueryUIButton>
-						)}{' '}
+						)}
 						{loginManager.canEditProfile && (
-							<JQueryUIButton
-								as="a"
-								href="/SongList/Import"
-								icons={{
-									primary: 'ui-icon-plusthick',
-								}}
-							>
-								{t('ViewRes.SongList:Featured.Import')}
-							</JQueryUIButton>
+							<>
+								{' '}
+								<JQueryUIButton
+									as="a"
+									href="/SongList/Import"
+									icons={{
+										primary: 'ui-icon-plusthick',
+									}}
+								>
+									{t('ViewRes.SongList:Featured.Import')}
+								</JQueryUIButton>
+							</>
 						)}
 					</>
 				}

@@ -12,6 +12,7 @@ const StarsMeta = React.memo(
 			<>
 				{_.range(1, max + 1).map((i) => (
 					<React.Fragment key={i}>
+						{i > 0 && ' '}
 						{current >= i ? (
 							<img
 								className="rating"
@@ -24,7 +25,7 @@ const StarsMeta = React.memo(
 								src="/Content/star_disabled.png"
 								alt={`${current}`}
 							/>
-						)}{' '}
+						)}
 					</React.Fragment>
 				))}
 			</>

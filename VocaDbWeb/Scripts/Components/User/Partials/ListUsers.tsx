@@ -138,9 +138,12 @@ const ListUsers = observer(
 										}
 										href="#"
 									>
-										{t('ViewRes.User:Details.UserName')}{' '}
+										{t('ViewRes.User:Details.UserName')}
 										{listUsersStore.sort === UserSortRule.Name && (
-											<span className="sortDirection_down"></span>
+											<>
+												{' '}
+												<span className="sortDirection_down"></span>
+											</>
 										)}
 									</SafeAnchor>
 								</th>
@@ -153,9 +156,12 @@ const ListUsers = observer(
 										}
 										href="#"
 									>
-										{t('ViewRes.User:Details.MemberSince')}{' '}
+										{t('ViewRes.User:Details.MemberSince')}
 										{listUsersStore.sort === UserSortRule.RegisterDate && (
-											<span className="sortDirection_down"></span>
+											<>
+												{' '}
+												<span className="sortDirection_down"></span>
+											</>
 										)}
 									</SafeAnchor>
 								</th>
@@ -168,9 +174,12 @@ const ListUsers = observer(
 										}
 										href="#"
 									>
-										{t('ViewRes.User:Details.UserGroup')}{' '}
+										{t('ViewRes.User:Details.UserGroup')}
 										{listUsersStore.sort === UserSortRule.Group && (
-											<span className="sortDirection_down"></span>
+											<>
+												{' '}
+												<span className="sortDirection_down"></span>
+											</>
 										)}
 									</SafeAnchor>
 								</th>

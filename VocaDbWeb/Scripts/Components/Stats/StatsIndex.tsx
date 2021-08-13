@@ -33,26 +33,29 @@ const StatsIndex = observer(
 							))}
 						</optgroup>
 					))}
-				</select>{' '}
+				</select>
 				{statsStore.showTimespanFilter && (
-					<select
-						value={statsStore.timespan}
-						onChange={(e): void =>
-							runInAction(() => {
-								statsStore.timespan = e.target.value;
-							})
-						}
-					>
-						<option value="">Overall{/* TODO: localize */}</option>
-						<option value="24">Last day{/* TODO: localize */}</option>
-						<option value="48">Last two days{/* TODO: localize */}</option>
-						<option value="168">Last week{/* TODO: localize */}</option>
-						<option value="720">Last month{/* TODO: localize */}</option>
-						<option value="8760">Last year{/* TODO: localize */}</option>
-						<option value="17520">Last 2 years{/* TODO: localize */}</option>
-						<option value="26280">Last 3 years{/* TODO: localize */}</option>
-						<option value="43800">Last 5 years{/* TODO: localize */}</option>
-					</select>
+					<>
+						{' '}
+						<select
+							value={statsStore.timespan}
+							onChange={(e): void =>
+								runInAction(() => {
+									statsStore.timespan = e.target.value;
+								})
+							}
+						>
+							<option value="">Overall{/* TODO: localize */}</option>
+							<option value="24">Last day{/* TODO: localize */}</option>
+							<option value="48">Last two days{/* TODO: localize */}</option>
+							<option value="168">Last week{/* TODO: localize */}</option>
+							<option value="720">Last month{/* TODO: localize */}</option>
+							<option value="8760">Last year{/* TODO: localize */}</option>
+							<option value="17520">Last 2 years{/* TODO: localize */}</option>
+							<option value="26280">Last 3 years{/* TODO: localize */}</option>
+							<option value="43800">Last 5 years{/* TODO: localize */}</option>
+						</select>
+					</>
 				)}
 				{statsStore.chartData && (
 					<HighchartsReact
