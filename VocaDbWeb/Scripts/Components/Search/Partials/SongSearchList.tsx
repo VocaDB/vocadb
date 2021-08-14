@@ -2,6 +2,7 @@ import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
+import PlayList from '@Components/Shared/Partials/PlayList';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
 import PVPreviewKnockout from '@Components/Shared/Partials/Song/PVPreviewKnockout';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
@@ -213,7 +214,12 @@ const SongSearchList = observer(
 				)}
 
 				{songSearchStore.viewMode === 'PlayList' && (
-					<>{/* TODO: _PlayList */}</>
+					<div className="well well-transparent songlist-playlist">
+						<PlayList
+							playListStore={songSearchStore.playListStore}
+							pvPlayerStore={songSearchStore.pvPlayerStore}
+						/>
+					</div>
 				)}
 			</>
 		);

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
+import EmbedPV from '../PV/EmbedPV';
 import PVRatingButtonsForIndex from '../PVRatingButtonsForIndex';
 
 interface PVPreviewKnockoutProps {
@@ -54,7 +55,11 @@ const PVPreviewKnockout = observer(
 						</ButtonGroup>
 					</div>
 				</div>
-				<div>{previewStore.previewHtml /* TODO */}</div>
+				<div>
+					{previewStore.previewHtml && (
+						<EmbedPV html={previewStore.previewHtml} />
+					)}
+				</div>
 			</div>
 		) : (
 			<></>

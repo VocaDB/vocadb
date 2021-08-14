@@ -12,6 +12,12 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
+import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
+import PlayListRepositoryForSongsAdapter, {
+	ISongSearchStore,
+} from '@Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
+import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import _ from 'lodash';
 import { computed, makeObservable, observable, reaction } from 'mobx';
@@ -38,7 +44,9 @@ interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;
 }
 
-export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearchItem> {
+export default class SongSearchStore
+	extends SearchCategoryBaseStore<ISongSearchItem>
+	implements ISongSearchStore {
 	public readonly artistFilters: ArtistFilters;
 	@observable public dateDay?: number = undefined;
 	@observable public dateMonth?: number = undefined;
@@ -47,8 +55,8 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	@observable public minScore?: number;
 	@observable public onlyRatedSongs = false;
 	public readonly parentVersion: BasicEntryLinkStore<SongContract>;
-	// TODO: public readonly playListStore: PlayListStore;
-	// TODO: public readonly pvPlayerStore: PVPlayerStore;
+	public readonly playListStore: PlayListStore;
+	public readonly pvPlayerStore: PVPlayerStore;
 	@observable public pvsOnly = false;
 	private readonly pvServiceIcons: PVServiceIcons;
 	@observable public since?: number;
@@ -69,7 +77,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		private readonly userRepo: UserRepository,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
-		// TODO: pvPlayersFactory
+		pvPlayersFactory: PVPlayersFactory,
 	) {
 		super(commonSearchStore);
 
@@ -106,7 +114,12 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		reaction(() => this.minScore, this.updateResultsWithTotalCount);
 		reaction(() => this.onlyRatedSongs, this.updateResultsWithTotalCount);
 		reaction(() => this.parentVersion.id, this.updateResultsWithTotalCount);
-		// TODO: this.pvPlayerStore = new PVPlayerStore();
+		this.pvPlayerStore = new PVPlayerStore(
+			values,
+			songRepo,
+			userRepo,
+			pvPlayersFactory,
+		);
 		reaction(() => this.pvsOnly, this.updateResultsWithTotalCount);
 		reaction(() => this.since, this.updateResultsWithTotalCount);
 		reaction(() => this.songType, this.updateResultsWithTotalCount);
@@ -133,7 +146,18 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 			this.updateResultsWithTotalCount,
 		);
 
-		// TODO: this.playListStore = ;
+		const songsRepoAdapter = new PlayListRepositoryForSongsAdapter(
+			values,
+			songRepo,
+			this,
+		);
+
+		this.playListStore = new PlayListStore(
+			values,
+			urlMapper,
+			songsRepoAdapter,
+			this.pvPlayerStore,
+		);
 	}
 
 	// Remember, JavaScript months start from 0 (who came up with that??)
@@ -141,7 +165,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	private toDateOrUndefined = (mom: moment.Moment): Date | undefined =>
 		mom.isValid() ? mom.toDate() : undefined;
 
-	@computed private get afterDate(): Date | undefined {
+	@computed public get afterDate(): Date | undefined {
 		return this.dateYear
 			? this.toDateOrUndefined(
 					moment.utc([
@@ -153,7 +177,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 			: undefined;
 	}
 
-	@computed private get beforeDate(): Date | undefined {
+	@computed public get beforeDate(): Date | undefined {
 		if (!this.dateYear) return undefined;
 
 		const mom = moment.utc([
@@ -188,7 +212,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		status?: string,
 	): Promise<PartialFindResultContract<ISongSearchItem>> => {
 		if (this.viewMode === 'PlayList') {
-			// TODO: this.playListStore.updateResultsWithTotalCount();
+			this.playListStore.updateResultsWithTotalCount();
 			return Promise.resolve({ items: [], totalCount: 0 });
 		} else {
 			return this.songRepo
