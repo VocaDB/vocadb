@@ -16,5 +16,7 @@ export default interface EventSeriesContract extends IEntryWithIdAndName {
 
 	names?: LocalizedStringWithIdContract[];
 
+	urlSlug?: string;
+
 	webLinks: WebLinkContract[];
 }

@@ -1,3 +1,5 @@
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';
@@ -19,4 +21,6 @@ export default interface AlbumContract
 	ratingCount: number;
 
 	releaseDate: OptionalDateTimeContract;
+
+	releaseEvent?: ReleaseEventContract;
 }

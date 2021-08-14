@@ -6,6 +6,8 @@ import EntryThumbContract from './EntryThumbContract';
 export default interface EntryContract extends EntryWithTagUsagesContract {
 	additionalNames?: string;
 
+	artistString?: string;
+
 	artistType?: string;
 
 	discType?: string;
@@ -25,6 +27,8 @@ export default interface EntryContract extends EntryWithTagUsagesContract {
 	songListFeaturedCategory?: string;
 
 	songType?: string;
+
+	status?: string;
 
 	tagCategoryName?: string;
 

@@ -117,11 +117,12 @@ const LeftMenu = React.memo(
 						<div id="appLinks">
 							{vdb.values.appLinks.map((link, i) => (
 								<React.Fragment key={i}>
+									{i > 0 && ' '}
 									<SmallBanner
 										title={link.title}
 										url={link.url}
 										img={link.bannerImg}
-									/>{' '}
+									/>
 								</React.Fragment>
 							))}
 							<br />
@@ -133,11 +134,12 @@ const LeftMenu = React.memo(
 						{vdb.values.socialLinks &&
 							vdb.values.socialLinks.map((link, i) => (
 								<React.Fragment key={i}>
+									{i > 0 && ' '}
 									<SocialLink
 										title={link.title}
 										url={link.url}
 										img={link.bannerImg}
-									/>{' '}
+									/>
 								</React.Fragment>
 							))}
 					</div>
@@ -148,11 +150,12 @@ const LeftMenu = React.memo(
 						{vdb.values.bigBanners &&
 							vdb.values.bigBanners.map((link, i) => (
 								<React.Fragment key={i}>
+									{i > 0 && ' '}
 									<Banner
 										title={link.title}
 										url={link.url}
 										img={link.bannerImg}
-									/>{' '}
+									/>
 								</React.Fragment>
 							))}
 					</ul>
@@ -160,11 +163,12 @@ const LeftMenu = React.memo(
 						{vdb.values.smallBanners &&
 							vdb.values.smallBanners.map((link, i) => (
 								<React.Fragment key={i}>
+									{i > 0 && ' '}
 									<SmallBanner
 										title={link.title}
 										url={link.url}
 										img={link.bannerImg}
-									/>{' '}
+									/>
 								</React.Fragment>
 							))}
 					</div>

@@ -1,4 +1,5 @@
 import SafeAnchor from '@Bootstrap/SafeAnchor';
+import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import SongListsBaseStore from '@Stores/SongList/SongListsBaseStore';
 import { observer } from 'mobx-react-lite';
@@ -32,7 +33,9 @@ const SongListsKnockout = observer(
 							<tr>
 								<td style={{ width: '75px' }}>
 									{item.mainPicture && item.mainPicture.urlSmallThumb && (
-										<a href={EntryUrlMapper.details('SongList', item.id)}>
+										<a
+											href={EntryUrlMapper.details(EntryType.SongList, item.id)}
+										>
 											<img
 												className="coverPicThumb"
 												alt="Picture" /* TODO: localize */
@@ -42,7 +45,7 @@ const SongListsKnockout = observer(
 									)}
 								</td>
 								<td>
-									<a href={EntryUrlMapper.details('SongList', item.id)}>
+									<a href={EntryUrlMapper.details(EntryType.SongList, item.id)}>
 										{item.name}
 									</a>
 									{item.eventDate && (
