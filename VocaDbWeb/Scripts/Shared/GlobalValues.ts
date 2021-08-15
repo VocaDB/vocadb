@@ -9,7 +9,10 @@ interface MenuPageLink {
 
 // Corresponds to the GlobalValues record class in C#.
 export default interface GlobalValues {
+	albumTypes: string /* TODO: enum AlbumType */[];
+	artistTypes: string /* TODO: enum ArtistType */[];
 	lockdownMessage?: string;
+	songTypes: string /* TODO: enum SongType */[];
 	staticContentHost: string;
 
 	paypalDonateTitle?: string;

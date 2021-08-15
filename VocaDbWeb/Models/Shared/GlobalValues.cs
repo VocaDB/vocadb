@@ -2,7 +2,10 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -25,7 +28,13 @@ namespace VocaDb.Web.Models.Shared
 			}
 		}
 
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public DiscType[] AlbumTypes { get; init; }
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public ArtistType[] ArtistTypes { get; init; }
 		public string? LockdownMessage { get; init; }
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public SongType[] SongTypes { get; init; }
 		public string StaticContentHost { get; init; }
 
 		public string? PaypalDonateTitle { get; init; }
@@ -52,7 +61,10 @@ namespace VocaDb.Web.Models.Shared
 
 		public GlobalValues(VocaDbPage model)
 		{
+			AlbumTypes = AppConfig.AlbumTypes;
+			ArtistTypes = AppConfig.ArtistTypes;
 			LockdownMessage = AppConfig.LockdownMessage;
+			SongTypes = AppConfig.SongTypes;
 			StaticContentHost = AppConfig.StaticContentHost;
 
 			PaypalDonateTitle = model.BrandableStrings.Layout.PaypalDonateTitle;
