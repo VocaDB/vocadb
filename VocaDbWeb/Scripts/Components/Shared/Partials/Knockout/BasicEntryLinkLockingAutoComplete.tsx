@@ -1,7 +1,6 @@
 import Button from '@Bootstrap/Button';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,28 +8,19 @@ import { useTranslation } from 'react-i18next';
 interface BasicEntryLinkLockingAutoCompleteProps<
 	T extends IEntryWithIdAndName
 > {
-	as: React.ElementType;
+	children: React.ReactNode;
 	basicEntryLinkStore: BasicEntryLinkStore<T>;
 }
 
 const BasicEntryLinkLockingAutoComplete = observer(
 	<T extends IEntryWithIdAndName>({
-		as: Component,
+		children,
 		basicEntryLinkStore,
 	}: BasicEntryLinkLockingAutoCompleteProps<T>): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
 		return basicEntryLinkStore.isEmpty ? (
-			<Component
-				type="text"
-				className="input-large"
-				onAcceptSelection={(entry: T): void =>
-					runInAction(() => {
-						basicEntryLinkStore.entry = entry;
-					})
-				}
-				placeholder={t('ViewRes:Shared.Search')}
-			/>
+			<>{children}</>
 		) : (
 			<div className="input-append">
 				<input

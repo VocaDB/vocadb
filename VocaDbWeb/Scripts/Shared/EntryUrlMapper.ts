@@ -24,37 +24,37 @@ export default class EntryUrlMapper {
 
 		switch (typeName) {
 			case EntryType.Album:
-				prefix = functions.mapAbsoluteUrl('/Al/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Al/${id}`);
 				break;
 			case EntryType.Artist:
-				prefix = functions.mapAbsoluteUrl('/Ar/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Ar/${id}`);
 				break;
 			case EntryType.DiscussionTopic:
-				prefix = functions.mapAbsoluteUrl('/discussion/topics/' + id);
+				prefix = functions.mapAbsoluteUrl(`/discussion/topics/${id}`);
 				break;
 			case EntryType.ReleaseEvent:
-				prefix = functions.mapAbsoluteUrl('/E/' + id);
+				prefix = functions.mapAbsoluteUrl(`/E/${id}`);
 				break;
 			case EntryType.ReleaseEventSeries:
-				prefix = functions.mapAbsoluteUrl('/Es/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Es/${id}`);
 				break;
 			case EntryType.Song:
-				prefix = functions.mapAbsoluteUrl('/S/' + id);
+				prefix = functions.mapAbsoluteUrl(`/S/${id}`);
 				break;
 			case EntryType.SongList:
-				prefix = functions.mapAbsoluteUrl('/L/' + id);
+				prefix = functions.mapAbsoluteUrl(`/L/${id}`);
 				break;
 			case EntryType.Tag:
-				prefix = functions.mapAbsoluteUrl('/T/' + id);
+				prefix = functions.mapAbsoluteUrl(`/T/${id}`);
 				break;
 			case EntryType.User:
-				prefix = functions.mapAbsoluteUrl('/User/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/User/Details/${id}`);
 				break;
 			case EntryType.Venue:
-				prefix = functions.mapAbsoluteUrl('/Venue/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Venue/Details/${id}`);
 				break;
 			default:
-				prefix = functions.mapAbsoluteUrl('/' + typeName + '/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/${typeName}/Details/${id}`);
 				break;
 		}
 
@@ -81,8 +81,8 @@ export default class EntryUrlMapper {
 
 	public static details_tag_contract(
 		tag: TagBaseContract | TagApiContract,
-	): string | null {
-		if (!tag) return null;
+	): string | undefined {
+		if (!tag) return undefined;
 
 		if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
 

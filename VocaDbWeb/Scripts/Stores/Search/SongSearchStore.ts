@@ -57,10 +57,10 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	@observable public sort = SongSortRule.Name;
 	@observable public unifyEntryTypesAndTags = false;
 	@observable public viewMode: string /* TODO: enum */;
-	public readonly minLengthFilter = new SongLengthFilter();
-	public readonly maxLengthFilter = new SongLengthFilter();
 	public readonly minBpmFilter = new SongBpmFilter();
 	public readonly maxBpmFilter = new SongBpmFilter();
+	public readonly minLengthFilter = new SongLengthFilter();
+	public readonly maxLengthFilter = new SongLengthFilter();
 
 	public constructor(
 		commonSearchStore: ICommonSearchStore,
@@ -151,19 +151,19 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		);
 		reaction(() => this.viewMode, this.updateResultsWithTotalCount);
 		reaction(
-			() => this.minLengthFilter.length,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
-		);
-		reaction(
-			() => this.maxLengthFilter.length,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
-		);
-		reaction(
 			() => this.minBpmFilter.milliBpm,
 			debounceEffect(this.updateResultsWithTotalCount, 300),
 		);
 		reaction(
 			() => this.maxBpmFilter.milliBpm,
+			debounceEffect(this.updateResultsWithTotalCount, 300),
+		);
+		reaction(
+			() => this.minLengthFilter.length,
+			debounceEffect(this.updateResultsWithTotalCount, 300),
+		);
+		reaction(
+			() => this.maxLengthFilter.length,
 			debounceEffect(this.updateResultsWithTotalCount, 300),
 		);
 
@@ -257,14 +257,14 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 					fields: this.fields,
 					status: status,
 					advancedFilters: this.advancedFilters.filters,
+					minMilliBpm: this.minBpmFilter.milliBpm,
+					maxMilliBpm: this.maxBpmFilter.milliBpm,
 					minLength: this.minLengthFilter.length
 						? this.minLengthFilter.length
 						: undefined,
 					maxLength: this.maxLengthFilter.length
 						? this.maxLengthFilter.length
 						: undefined,
-					minMilliBpm: this.minBpmFilter.milliBpm,
-					maxMilliBpm: this.maxBpmFilter.milliBpm,
 				})
 				.then((result) => {
 					_.each(result.items, (song: ISongSearchItem) => {
