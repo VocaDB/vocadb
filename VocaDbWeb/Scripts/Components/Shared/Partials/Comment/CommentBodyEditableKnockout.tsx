@@ -22,43 +22,37 @@ const CommentBodyEditableKnockout = observer(
 	}: CommentBodyEditableKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation();
 
-		return (
-			<>
-				{editableCommentsStore.editCommentStore === commentStore ? (
-					<form
-						onSubmit={(e): void => {
-							e.preventDefault();
-							editableCommentsStore.saveEditedComment();
-						}}
-					>
-						<textarea
-							value={commentStore.editedMessage}
-							onChange={(e): void =>
-								runInAction(() => {
-									commentStore.editedMessage = e.target.value;
-								})
-							}
-							rows={6}
-							cols={60}
-							maxLength={3000}
-							className="comment-text-edit"
-							required
-						/>
-						<Button type="submit" variant="primary">
-							{t('ViewRes:Shared.Save')}
-						</Button>{' '}
-						<Button
-							onClick={(): void => editableCommentsStore.cancelEditComment()}
-						>
-							{t('ViewRes:Shared.Cancel')}
-						</Button>
-					</form>
-				) : (
-					<div>
-						<CommentBodyKnockout message={message} />
-					</div>
-				)}
-			</>
+		return editableCommentsStore.editCommentStore === commentStore ? (
+			<form
+				onSubmit={(e): void => {
+					e.preventDefault();
+					editableCommentsStore.saveEditedComment();
+				}}
+			>
+				<textarea
+					value={commentStore.editedMessage}
+					onChange={(e): void =>
+						runInAction(() => {
+							commentStore.editedMessage = e.target.value;
+						})
+					}
+					rows={6}
+					cols={60}
+					maxLength={3000}
+					className="comment-text-edit"
+					required
+				/>
+				<Button type="submit" variant="primary">
+					{t('ViewRes:Shared.Save')}
+				</Button>{' '}
+				<Button onClick={(): void => editableCommentsStore.cancelEditComment()}>
+					{t('ViewRes:Shared.Cancel')}
+				</Button>
+			</form>
+		) : (
+			<div>
+				<CommentBodyKnockout message={message} />
+			</div>
 		);
 	},
 );
