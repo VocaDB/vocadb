@@ -20,31 +20,29 @@ const BasicEntryLinkLockingAutoComplete = observer(
 	}: BasicEntryLinkLockingAutoCompleteProps<T>): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		return (
-			<>
-				{basicEntryLinkStore.isEmpty ? (
-					<Component
-						type="text"
-						className="input-large"
-						onAcceptSelection={(entry: T): void => {
-							runInAction(() => (basicEntryLinkStore.entry = entry));
-						}}
-						placeholder={t('ViewRes:Shared.Search')}
-					/>
-				) : (
-					<div className="input-append">
-						<input
-							type="text"
-							className="input-large"
-							readOnly
-							value={basicEntryLinkStore.name}
-						/>
-						<Button variant="danger" onClick={basicEntryLinkStore.clear}>
-							{t('ViewRes:Shared.Clear')}
-						</Button>
-					</div>
-				)}
-			</>
+		return basicEntryLinkStore.isEmpty ? (
+			<Component
+				type="text"
+				className="input-large"
+				onAcceptSelection={(entry: T): void =>
+					runInAction(() => {
+						basicEntryLinkStore.entry = entry;
+					})
+				}
+				placeholder={t('ViewRes:Shared.Search')}
+			/>
+		) : (
+			<div className="input-append">
+				<input
+					type="text"
+					className="input-large"
+					readOnly
+					value={basicEntryLinkStore.name}
+				/>
+				<Button variant="danger" onClick={basicEntryLinkStore.clear}>
+					{t('ViewRes:Shared.Clear')}
+				</Button>
+			</div>
 		);
 	},
 );
