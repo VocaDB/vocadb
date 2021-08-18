@@ -175,18 +175,18 @@ export default class PlayListStore {
 					});
 
 					this.loading = false;
-
-					if (
-						result.items &&
-						result.items.length &&
-						!this.pvPlayerStore.selectedSong
-					) {
-						const song = this.pvPlayerStore.shuffle
-							? result.items[Math.floor(Math.random() * result.items.length)]
-							: result.items[0];
-						this.playSong(song);
-					}
 				});
+
+				if (
+					result.items &&
+					result.items.length &&
+					!this.pvPlayerStore.selectedSong
+				) {
+					const song = this.pvPlayerStore.shuffle
+						? result.items[Math.floor(Math.random() * result.items.length)]
+						: result.items[0];
+					this.playSong(song);
+				}
 			});
 	};
 

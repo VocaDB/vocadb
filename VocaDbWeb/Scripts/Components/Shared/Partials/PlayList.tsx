@@ -26,6 +26,8 @@ const PlayList = observer(
 			'VocaDb.Web.Resources.Views.Shared.Partials',
 		]);
 
+		const tableElement = React.useRef<HTMLTableElement>(undefined!);
+
 		return (
 			<>
 				<div className="songlist-playlist-player">
@@ -52,7 +54,10 @@ const PlayList = observer(
 								)}
 
 								{pvPlayerStore.playerHtml && (
-									<EmbedPV html={pvPlayerStore.playerHtml} />
+									<EmbedPV
+										id="pv-player-wrapper"
+										html={pvPlayerStore.playerHtml}
+									/>
 								)}
 							</div>
 						)}
@@ -117,7 +122,17 @@ const PlayList = observer(
 
 				<div className="songlist-playlist-songs-wrapper">
 					<table
-						className="table table-condensed songlist-playlist-songs" /* TODO: scrollEnd */
+						className="table table-condensed songlist-playlist-songs"
+						ref={tableElement}
+						onScroll={(): void => {
+							if (
+								tableElement.current.scrollHeight -
+									tableElement.current.scrollTop ===
+								tableElement.current.clientHeight
+							) {
+								playListStore.scrollEnd();
+							}
+						}}
 					>
 						<tbody>
 							{playListStore.page.map((song) => (
@@ -144,6 +159,7 @@ const PlayList = observer(
 												title={song.song.additionalNames}
 												onClick={(e): void => e.preventDefault()}
 											>
+												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
 													src={song.song.thumbUrl}
 													title="Cover picture" /* TODO: localize */

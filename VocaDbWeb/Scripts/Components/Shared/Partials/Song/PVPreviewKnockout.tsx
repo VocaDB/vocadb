@@ -46,6 +46,7 @@ const PVPreviewKnockout = observer(
 													)}
 													key={icon.service}
 												>
+													{/* eslint-disable-next-line jsx-a11y/alt-text */}
 													<img src={icon.url} />
 												</Button>
 											),

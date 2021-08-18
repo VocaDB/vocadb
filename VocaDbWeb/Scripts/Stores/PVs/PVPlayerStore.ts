@@ -54,7 +54,7 @@ export default class PVPlayerStore {
 		values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		userRepo: UserRepository,
-		pvPlayersFactory: PVPlayersFactory,
+		public readonly pvPlayersFactory: PVPlayersFactory,
 		autoplay?: boolean,
 		shuffle?: boolean,
 	) {
@@ -145,7 +145,7 @@ export default class PVPlayerStore {
 
 		reaction(
 			() => this.autoplay,
-			() => {
+			(autoplay) => {
 				if (autoplay) {
 					/* 
 						3 cases: 
