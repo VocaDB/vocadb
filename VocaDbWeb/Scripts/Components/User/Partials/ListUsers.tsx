@@ -193,6 +193,7 @@ const ListUsers = observer(
 											<SafeAnchor
 												href={EntryUrlMapper.details_user_byName(user.name)}
 											>
+												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
 													src={user.mainPicture.urlThumb}
 													title="Picture"

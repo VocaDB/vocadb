@@ -108,6 +108,7 @@ const AlbumSearchList = observer(
 											title={album.additionalNames}
 											className="coverPicThumb"
 										>
+											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
 												src={
 													album.mainPicture?.urlTinyThumb ??
@@ -184,6 +185,7 @@ const AlbumSearchList = observer(
 												.map((ratingStar, index) => (
 													<React.Fragment key={index}>
 														{index > 0 && ' '}
+														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img
 															src={
 																ratingStar.enabled

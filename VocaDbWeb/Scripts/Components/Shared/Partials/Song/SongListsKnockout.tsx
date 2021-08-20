@@ -36,6 +36,7 @@ const SongListsKnockout = observer(
 										<a
 											href={EntryUrlMapper.details(EntryType.SongList, item.id)}
 										>
+											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
 												className="coverPicThumb"
 												alt="Picture" /* TODO: localize */

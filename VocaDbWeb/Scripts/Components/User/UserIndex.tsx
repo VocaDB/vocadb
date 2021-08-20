@@ -15,6 +15,7 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 const listUsersStore = new ListUsersStore(userRepo);
 
 // TODO: use this
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface UserIndexQueryParams {
 	filter?: string;
 	groupId?: UserGroup;

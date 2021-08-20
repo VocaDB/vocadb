@@ -113,6 +113,7 @@ const ViewFolder = observer(
 								</td>
 								<td>
 									<span>
+										{/* eslint-disable-next-line react/jsx-pascal-case */}
 										<ProfileIconKnockout_ImageSize
 											imageSize={ImageSize.TinyThumb}
 											user={topic.author}

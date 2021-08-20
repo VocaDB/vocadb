@@ -77,6 +77,7 @@ const ArtistSearchList = observer(
 											title={artist.additionalNames}
 											className="coverPicThumb"
 										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={artist.mainPicture.urlTinyThumb}
 												title="Cover picture" /* TODO: localize */

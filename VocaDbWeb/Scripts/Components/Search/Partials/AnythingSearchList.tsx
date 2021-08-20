@@ -89,6 +89,7 @@ const AnythingSearchList = observer(
 											title={entry.additionalNames}
 											className="coverPicThumb"
 										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={entry.mainPicture.urlTinyThumb}
 												title="Cover picture" /* TODO: localize */

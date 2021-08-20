@@ -88,6 +88,7 @@ const SongSearchList = observer(
 													href={EntryUrlMapper.details_song(song)}
 													title={song.additionalNames}
 												>
+													{/* eslint-disable-next-line jsx-a11y/alt-text */}
 													<img
 														src={song.thumbUrl}
 														title="Cover picture" /* TODO: localize */
@@ -125,6 +126,7 @@ const SongSearchList = observer(
 												.map((icon, index) => (
 													<React.Fragment key={icon.service}>
 														{index > 0 && ' '}
+														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img src={icon.url} title={icon.service} />
 													</React.Fragment>
 												))}

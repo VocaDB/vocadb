@@ -80,6 +80,7 @@ const TagSearchList = observer(
 											href={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}
 											title={tag.additionalNames}
 										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={tag.mainPicture.urlSmallThumb}
 												title="Cover picture" /* TODO: localize */

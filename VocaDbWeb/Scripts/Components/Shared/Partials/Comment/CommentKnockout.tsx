@@ -54,6 +54,7 @@ const CommentKnockout = observer(
 					)}
 					className="pull-left"
 				>
+					{/* eslint-disable-next-line react/jsx-pascal-case */}
 					<ProfileIconKnockout_ImageSize
 						imageSize={ImageSize.Thumb}
 						user={commentKnockoutStore.author}

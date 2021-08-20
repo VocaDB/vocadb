@@ -139,6 +139,7 @@ const EventSearchList = observer(
 											)}
 											title={event.additionalNames}
 										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={event.mainPicture.urlSmallThumb}
 												title="Cover picture" /* TODO: localize */

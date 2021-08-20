@@ -309,6 +309,7 @@ const GlobalSearchBox = observer(
 									<div className="media">
 										<div className="pull-left media-image-usermessage">
 											{unreadMessage.sender ? (
+												// eslint-disable-next-line react/jsx-pascal-case
 												<ProfileIconKnockout_ImageSize
 													imageSize={ImageSize.SmallThumb}
 													user={unreadMessage.sender}
