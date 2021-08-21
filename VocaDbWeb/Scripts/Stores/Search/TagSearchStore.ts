@@ -3,10 +3,12 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { makeObservable, observable, reaction } from 'mobx';
+import _ from 'lodash';
+import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -15,6 +17,23 @@ export enum TagSortRule {
 	AdditionDate = 'AdditionDate',
 	UsageCount = 'UsageCount',
 }
+
+export interface TagSearchRouteParams {
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Tag;
+	sort?: TagSortRule;
+}
+
+const membersWithTotalCount: (keyof TagSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+
+	// TODO: allowAliases
+	// TODO: categoryName
+	'sort',
+];
 
 export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContract> {
 	@observable public allowAliases = false;
@@ -29,10 +48,6 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		super(commonSearchStore);
 
 		makeObservable(this);
-
-		reaction(() => this.allowAliases, this.updateResultsWithTotalCount);
-		reaction(() => this.categoryName, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
 	}
 
 	public loadResults = (
@@ -55,5 +70,30 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 				fields: 'AdditionalNames,MainPicture',
 			},
 		});
+	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Tag,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Tag) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? TagSortRule.Name;
+	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		return !_.isEqual(
+			_.pick(value, membersWithTotalCount),
+			_.pick(this.routeParams, membersWithTotalCount),
+		);
 	};
 }

@@ -13,17 +13,20 @@ export interface IStoreWithRouteParams<T> {
 export const useSwitchboard = <T>(
 	validate: ValidateFunction<T>,
 	store: IStoreWithRouteParams<T>,
+	onValidate?: (routeParams: T) => void,
 ): void => {
 	const { search } = useLocation();
 
 	React.useEffect(() => {
 		const routeParams: any = qs.parse(search.slice(1));
 		if (validate(routeParams)) {
+			onValidate?.(routeParams);
+
 			const oldRouteParams = store.routeParams;
 			store.routeParams = routeParams;
 			store.updateResults(store.shouldClearResults(oldRouteParams));
 		}
-	}, [search, validate, store]);
+	}, [search, validate, onValidate, store]);
 };
 
 const createPath = <T>(pathname: string, from: T, to: T): string =>

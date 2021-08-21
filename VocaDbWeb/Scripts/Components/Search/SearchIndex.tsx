@@ -9,6 +9,7 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
+import { useRedial, useSwitchboard } from '@Components/redial';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -18,7 +19,11 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+import SearchStore, {
+	SearchRouteParams,
+	SearchType,
+} from '@Stores/Search/SearchStore';
+import Ajv, { JSONSchemaType } from 'ajv';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -67,16 +72,16 @@ interface SearchCategoryProps {
 
 const SearchCategory = observer(
 	({ entryType, title }: SearchCategoryProps): React.ReactElement => {
+		const redial = useRedial(
+			searchStore.getCategoryStore(entryType).routeParams,
+		);
+
 		return (
 			<li
 				className={classNames(searchStore.searchType === entryType && 'active')}
 			>
 				<SafeAnchor
-					onClick={(): void =>
-						runInAction(() => {
-							searchStore.searchType = entryType;
-						})
-					}
+					onClick={(): void => redial({ searchType: entryType, page: 1 })}
 				>
 					{title}
 				</SafeAnchor>
@@ -85,6 +90,13 @@ const SearchCategory = observer(
 	},
 );
 
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema.json');
+const validate = ajv.compile(schema);
+
 const SearchIndex = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation([
@@ -92,11 +104,18 @@ const SearchIndex = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+		const redial = useRedial(searchStore.currentCategoryStore.routeParams);
 
-		// TODO: extract a custom hook
-		React.useEffect(() => {
-			searchStore.updateResults();
-		}, []);
+		useSwitchboard(
+			validate,
+			searchStore.currentCategoryStore,
+			React.useCallback((routeParams) => {
+				runInAction(() => {
+					searchStore.searchType =
+						routeParams.searchType ?? SearchType.Anything;
+				});
+			}, []),
+		);
 
 		return (
 			<Layout>
@@ -164,11 +183,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Details';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Details' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumDetails')}
 										>
@@ -180,11 +195,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Tiles';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Tiles' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumTiles')}
 										>
@@ -206,11 +217,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'Details';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Details' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumDetails')}
 										>
@@ -222,11 +229,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'PlayList';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'PlayList' })}
 											href="#"
 											title={t('ViewRes.Search:Index.Playlist')}
 										>
@@ -270,9 +273,7 @@ const SearchIndex = observer(
 									type="text"
 									value={searchStore.searchTerm}
 									onChange={(e): void =>
-										runInAction(() => {
-											searchStore.searchTerm = e.target.value;
-										})
+										redial({ filter: e.target.value, page: 1 })
 									}
 									className="input-xlarge"
 									placeholder={t('ViewRes.Search:Index.TypeSomething')}
@@ -281,11 +282,7 @@ const SearchIndex = observer(
 								{searchStore.searchTerm && (
 									<Button
 										variant="danger"
-										onClick={(e): void =>
-											runInAction(() => {
-												searchStore.searchTerm = '';
-											})
-										}
+										onClick={(): void => redial({ filter: undefined, page: 1 })}
 									>
 										{t('ViewRes:Shared.Clear')}
 									</Button>
@@ -380,10 +377,7 @@ const SearchIndex = observer(
 													type="checkbox"
 													checked={searchStore.songSearchStore.pvsOnly}
 													onChange={(e): void =>
-														runInAction(() => {
-															searchStore.songSearchStore.pvsOnly =
-																e.target.checked;
-														})
+														redial({ onlyWithPVs: e.target.checked, page: 1 })
 													}
 												/>
 												{t('ViewRes.Search:Index.OnlyWithPVs')}
@@ -395,9 +389,9 @@ const SearchIndex = observer(
 														type="checkbox"
 														checked={searchStore.songSearchStore.onlyRatedSongs}
 														onChange={(e): void =>
-															runInAction(() => {
-																searchStore.songSearchStore.onlyRatedSongs =
-																	e.target.checked;
+															redial({
+																onlyRatedSongs: e.target.checked,
+																page: 1,
 															})
 														}
 													/>
@@ -433,9 +427,7 @@ const SearchIndex = observer(
 												type="checkbox"
 												checked={searchStore.draftsOnly}
 												onChange={(e): void =>
-													runInAction(() => {
-														searchStore.draftsOnly = e.target.checked;
-													})
+													redial({ draftsOnly: e.target.checked, page: 1 })
 												}
 											/>
 											{t('ViewRes:EntryIndex.OnlyDrafts')}

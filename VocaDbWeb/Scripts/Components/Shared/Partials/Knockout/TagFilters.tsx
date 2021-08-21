@@ -2,10 +2,11 @@ import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
 import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
 import TagFiltersCore from '@Components/Shared/Partials/TagFilters';
+import { useRedial } from '@Components/redial';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import SearchStore from '@Stores/Search/SearchStore';
 import TagFiltersStore from '@Stores/Search/TagFilters';
-import { runInAction } from 'mobx';
+import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,10 +24,19 @@ const TagFilters = observer(
 		topGenres,
 	}: TagFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
+		const redial = useRedial(searchStore.currentCategoryStore.routeParams);
 
 		return (
 			<>
-				<TagFiltersCore tagFilters={tagFilters} />
+				<TagFiltersCore
+					tagFilters={tagFilters}
+					onClear={(tag): void =>
+						redial({
+							tagId: _.difference(tagFilters.tags, [tag]).map((t) => t.id),
+							page: 1,
+						})
+					}
+				/>
 
 				{tagFilters.tags.length > 0 && (
 					<div>
@@ -35,9 +45,7 @@ const TagFilters = observer(
 								type="checkbox"
 								checked={tagFilters.childTags}
 								onChange={(e): void =>
-									runInAction(() => {
-										tagFilters.childTags = e.target.checked;
-									})
+									redial({ childTags: e.target.checked, page: 1 })
 								}
 							/>
 							{t('ViewRes.Search:Index.ChildTags')}
@@ -49,7 +57,9 @@ const TagFilters = observer(
 					<TagAutoComplete
 						type="text"
 						className="input-large"
-						onAcceptSelection={tagFilters.addTag}
+						onAcceptSelection={(entry): void =>
+							redial({ tagId: tagFilters.tagIds.concat(entry.id), page: 1 })
+						}
 						placeholder={t('ViewRes:Shared.Search')}
 					/>
 
@@ -67,7 +77,10 @@ const TagFilters = observer(
 											href={EntryUrlMapper.details_tag_contract(tag)}
 											onClick={(e): void => {
 												e.preventDefault();
-												tagFilters.addTag(tag);
+												redial({
+													tagId: tagFilters.tagIds.concat(tag.id),
+													page: 1,
+												});
 											}}
 											key={tag.id}
 										>

@@ -5,11 +5,12 @@ import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import _ from 'lodash';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the AlbumSortRule enum in C#.
 export enum AlbumSortRule {
@@ -23,6 +24,34 @@ export enum AlbumSortRule {
 	NameThenReleaseDate = 'NameThenReleaseDate',
 	CollectionCount = 'CollectionCount',
 }
+
+export interface AlbumSearchRouteParams {
+	artistId?: number[];
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	discType?: string /* TODO: enum */;
+	draftsOnly?: boolean;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Album;
+	sort?: AlbumSortRule;
+	tag?: string;
+	tagId?: number[];
+	viewMode?: string /* TODO: enum */;
+}
+
+const membersWithTotalCount: (keyof AlbumSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'draftsOnly',
+
+	// TODO: advancedFilters
+	'sort',
+	'discType',
+	'artistId',
+];
 
 export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContract> {
 	@observable public albumType = 'Unknown' /* TODO: enum */;
@@ -40,18 +69,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 
 		makeObservable(this);
 
-		reaction(
-			() => this.advancedFilters.filters.map((filter) => filter.description),
-			this.updateResultsWithTotalCount,
-		);
 		this.artistFilters = new ArtistFilters(values, artistRepo);
-
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
-		reaction(() => this.albumType, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
 	}
 
 	@computed public get fields(): string {
@@ -97,5 +115,44 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			};
 		});
 		return ratings;
+	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Album,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags || undefined,
+			childVoicebanks: this.artistFilters.childVoicebanks || undefined,
+			discType: this.albumType,
+			draftsOnly: this.draftsOnly || undefined,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+			viewMode: this.viewMode,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Album) return;
+
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.albumType = value.discType ?? 'Unknown';
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? AlbumSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+		this.viewMode = value.viewMode ?? 'Details';
+	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		return !_.isEqual(
+			_.pick(value, membersWithTotalCount),
+			_.pick(this.routeParams, membersWithTotalCount),
+		);
 	};
 }

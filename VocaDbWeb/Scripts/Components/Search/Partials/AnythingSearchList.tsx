@@ -4,6 +4,7 @@ import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
+import { useRedial } from '@Components/redial';
 import EntryContract from '@DataContracts/EntryContract';
 import ArtistType from '@Models/Artists/ArtistType';
 import EntryStatus from '@Models/EntryStatus';
@@ -12,7 +13,6 @@ import SongType from '@Models/Songs/SongType';
 import AnythingSearchStore from '@Stores/Search/AnythingSearchStore';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
@@ -56,27 +56,20 @@ const AnythingSearchList = observer(
 			'VocaDb.Web.Resources.Domain',
 			'VocaDb.Web.Resources.Domain.ReleaseEvents',
 		]);
+		const redial = useRedial(searchStore.currentCategoryStore.routeParams);
 
 		return (
 			<div>
 				<EntryCountBox
 					pagingStore={anythingSearchStore.paging}
 					onPageSizeChange={(pageSize): void =>
-						runInAction(() => {
-							// TODO: use redial
-							anythingSearchStore.paging.pageSize = pageSize;
-						})
+						redial({ pageSize: pageSize, page: 1 })
 					}
 				/>
 
 				<ServerSidePaging
 					pagingStore={anythingSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							anythingSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 
 				<table
@@ -159,11 +152,12 @@ const AnythingSearchList = observer(
 								<td>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												searchStore.searchType =
+											redial({
+												searchType:
 													SearchType[
 														entry.entryType as keyof typeof SearchType
-													];
+													],
+												page: 1,
 											})
 										}
 									>
@@ -193,7 +187,7 @@ const AnythingSearchList = observer(
 														{index > 0 && ', '}
 														<SafeAnchor
 															onClick={(): void =>
-																anythingSearchStore.selectTag(tag.tag)
+																redial({ tagId: [tag.tag.id], page: 1 })
 															}
 														>
 															{tag.tag.name}
@@ -211,12 +205,7 @@ const AnythingSearchList = observer(
 
 				<ServerSidePaging
 					pagingStore={anythingSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							anythingSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 			</div>
 		);

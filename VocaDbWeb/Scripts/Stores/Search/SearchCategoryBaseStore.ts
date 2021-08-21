@@ -1,3 +1,4 @@
+import { IStoreWithRouteParams } from '@Components/redial';
 import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
@@ -16,9 +17,11 @@ import moment from 'moment';
 
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
+import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
-export interface ISearchCategoryBaseStore {
+export interface ISearchCategoryBaseStore
+	extends IStoreWithRouteParams<SearchRouteParams> {
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -50,23 +53,34 @@ export default abstract class SearchCategoryBaseStore<
 				commonSearchStore.pageSize = pageSize;
 			},
 		);
-		reaction(() => this.paging.page, this.updateResultsWithoutTotalCount);
 	}
 
 	@computed public get childTags(): boolean {
 		return this.commonSearchStore.tagFilters.childTags;
 	}
+	public set childTags(value: boolean) {
+		this.commonSearchStore.tagFilters.childTags = value;
+	}
 
 	@computed public get draftsOnly(): boolean {
 		return this.commonSearchStore.draftsOnly;
+	}
+	public set draftsOnly(value: boolean) {
+		this.commonSearchStore.draftsOnly = value;
 	}
 
 	@computed public get pageSize(): number {
 		return this.commonSearchStore.pageSize;
 	}
+	public set pageSize(value: number) {
+		this.commonSearchStore.pageSize = value;
+	}
 
 	@computed public get searchTerm(): string {
 		return this.commonSearchStore.searchTerm;
+	}
+	public set searchTerm(value: string) {
+		this.commonSearchStore.searchTerm = value;
 	}
 
 	@computed public get showTags(): boolean {
@@ -86,6 +100,10 @@ export default abstract class SearchCategoryBaseStore<
 	@computed public get tagIds(): number[] {
 		return _.map(this.tags, (t) => t.id);
 	}
+	public set tagIds(value: number[]) {
+		this.commonSearchStore.tagFilters.tags = [];
+		this.commonSearchStore.tagFilters.addTags(value);
+	}
 
 	public formatDate = (dateStr: string): string => {
 		return moment(dateStr).utc().format('l');
@@ -104,14 +122,14 @@ export default abstract class SearchCategoryBaseStore<
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
+	public abstract routeParams: SearchRouteParams;
+
 	@action public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 		this.loading = true;
-
-		if (clearResults) this.paging.goToFirstPage();
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
@@ -150,4 +168,6 @@ export default abstract class SearchCategoryBaseStore<
 	public updateResultsWithTotalCount = (): void => this.updateResults(true);
 
 	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+
+	public abstract shouldClearResults: (value: SearchRouteParams) => boolean;
 }

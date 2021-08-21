@@ -3,6 +3,7 @@ import { AlbumToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import { useRedial } from '@Components/redial';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
@@ -11,7 +12,6 @@ import AlbumSearchStore, {
 } from '@Stores/Search/AlbumSearchStore';
 import classNames from 'classnames';
 import _ from 'lodash';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,27 +27,20 @@ const AlbumSearchList = observer(
 			'ViewRes.Search',
 			'VocaDb.Model.Resources.Albums',
 		]);
+		const redial = useRedial(albumSearchStore.routeParams);
 
 		return (
 			<>
 				<EntryCountBox
 					pagingStore={albumSearchStore.paging}
 					onPageSizeChange={(pageSize): void =>
-						runInAction(() => {
-							// TODO: use redial
-							albumSearchStore.paging.pageSize = pageSize;
-						})
+						redial({ pageSize: pageSize, page: 1 })
 					}
 				/>
 
 				<ServerSidePaging
 					pagingStore={albumSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							albumSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 
 				{albumSearchStore.viewMode === 'Details' && (
@@ -63,9 +56,7 @@ const AlbumSearchList = observer(
 								<th colSpan={2}>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												albumSearchStore.sort = AlbumSortRule.Name;
-											})
+											redial({ sort: AlbumSortRule.Name, page: 1 })
 										}
 									>
 										{t('ViewRes:Shared.Name')}
@@ -83,9 +74,7 @@ const AlbumSearchList = observer(
 								<th>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												albumSearchStore.sort = AlbumSortRule.ReleaseDate;
-											})
+											redial({ sort: AlbumSortRule.ReleaseDate, page: 1 })
 										}
 									>
 										{t('ViewRes.Search:Index.ReleaseDate')}
@@ -100,9 +89,7 @@ const AlbumSearchList = observer(
 								<th>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												albumSearchStore.sort = AlbumSortRule.RatingAverage;
-											})
+											redial({ sort: AlbumSortRule.RatingAverage, page: 1 })
 										}
 									>
 										{t('ViewRes.Search:Index.Rating')}
@@ -168,7 +155,7 @@ const AlbumSearchList = observer(
 															{index > 0 && ', '}
 															<SafeAnchor
 																onClick={(): void =>
-																	albumSearchStore.selectTag(tag.tag)
+																	redial({ tagId: [tag.tag.id], page: 1 })
 																}
 															>
 																{tag.tag.name}
@@ -252,12 +239,7 @@ const AlbumSearchList = observer(
 
 				<ServerSidePaging
 					pagingStore={albumSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							albumSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 			</>
 		);

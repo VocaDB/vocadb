@@ -3,6 +3,7 @@ import ReleaseEventLockingAutoComplete from '@Components/Shared/Partials/Knockou
 import SongLockingAutoComplete from '@Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { SongAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
 import SongTypesDropdownKnockout from '@Components/Shared/Partials/Song/SongTypesDropdownKnockout';
+import { useRedial } from '@Components/redial';
 import SongSearchStore from '@Stores/Search/SongSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -24,6 +25,7 @@ const SongSearchOptions = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain:EntryTypeNames',
 		]);
+		const redial = useRedial(songSearchStore.routeParams);
 
 		return (
 			<div>
@@ -36,9 +38,7 @@ const SongSearchOptions = observer(
 							<SongTypesDropdownKnockout
 								activeKey={songSearchStore.songType}
 								onSelect={(eventKey): void =>
-									runInAction(() => {
-										songSearchStore.songType = eventKey;
-									})
+									redial({ songType: eventKey, page: 1 })
 								}
 							/>
 						</div>

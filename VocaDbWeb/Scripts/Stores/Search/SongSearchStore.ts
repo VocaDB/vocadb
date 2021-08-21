@@ -14,12 +14,13 @@ import UrlMapper from '@Shared/UrlMapper';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import _ from 'lodash';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -33,6 +34,54 @@ export enum SongSortRule {
 	RatingScore = 'RatingScore',
 	TagUsageCount = 'TagUsageCount',
 }
+
+export interface SongSearchRouteParams {
+	artistId?: number[];
+	autoplay?: boolean;
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	draftsOnly?: boolean;
+	eventId?: number;
+	filter?: string;
+	minScore?: number;
+	onlyWithPVs?: boolean;
+	onlyRatedSongs?: boolean;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Song;
+	shuffle?: boolean;
+	since?: number;
+	songType?: string /* TODO: enum */;
+	sort?: SongSortRule;
+	tag?: string;
+	tagId?: number[];
+	viewMode?: string /* TODO: enum */;
+}
+
+const membersWithTotalCount: (keyof SongSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'draftsOnly',
+
+	// TODO: advancedFilters
+	'artistId',
+	// TODO: afterDate
+	'eventId',
+	'minScore',
+	'onlyRatedSongs',
+	// TODO: parentVersion
+	'onlyWithPVs',
+	'since',
+	'songType',
+	'sort',
+	// TODO: unifyEntryTypesAndTags
+	'viewMode',
+	// TODO: minBpm
+	// TODO: maxBpm
+	// TODO: minLength
+	// TODO: maxLength
+];
 
 interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;
@@ -93,46 +142,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 				songRepo.getOne({ id: entryId, lang: values.languagePreference }),
 		);
 
-		reaction(
-			() => this.advancedFilters.filters.map((filter) => filter.description),
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
-		reaction(() => this.releaseEvent.id, this.updateResultsWithTotalCount);
-		reaction(() => this.minScore, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyRatedSongs, this.updateResultsWithTotalCount);
-		reaction(() => this.parentVersion.id, this.updateResultsWithTotalCount);
 		// TODO: this.pvPlayerStore = new PVPlayerStore();
-		reaction(() => this.pvsOnly, this.updateResultsWithTotalCount);
-		reaction(() => this.since, this.updateResultsWithTotalCount);
-		reaction(() => this.songType, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.unifyEntryTypesAndTags,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.viewMode, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.minBpmFilter.milliBpm,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.maxBpmFilter.milliBpm,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.minLengthFilter.length,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.maxLengthFilter.length,
-			this.updateResultsWithTotalCount,
-		);
-
 		// TODO: this.playListStore = ;
 	}
 
@@ -256,5 +266,58 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		services: string,
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
+	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Song,
+			artistId: this.artistFilters.artistIds,
+			// TODO: autoplay
+			childTags: this.childTags || undefined,
+			childVoicebanks: this.artistFilters.childVoicebanks || undefined,
+			draftsOnly: this.draftsOnly || undefined,
+			eventId: this.releaseEvent.id,
+			filter: this.searchTerm || undefined,
+			minScore: this.minScore,
+			onlyRatedSongs: this.onlyRatedSongs || undefined,
+			onlyWithPVs: this.pvsOnly || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			// TODO: shuffle
+			since: this.since,
+			songType: this.songType,
+			sort: this.sort,
+			tagId: this.tagIds,
+			viewMode: this.viewMode,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Song) return;
+
+		this.artistFilters.artistIds = value.artistId ?? [];
+		// TODO: autoplay
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.releaseEvent.id = value.eventId;
+		this.searchTerm = value.filter ?? '';
+		this.minScore = value.minScore;
+		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
+		this.pvsOnly = value.onlyWithPVs ?? false;
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		// TODO: shuffle
+		this.since = value.since;
+		this.songType = value.songType ?? 'Unspecified';
+		this.sort = value.sort ?? SongSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+		this.viewMode = value.viewMode ?? 'Details';
+	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		return !_.isEqual(
+			_.pick(value, membersWithTotalCount),
+			_.pick(this.routeParams, membersWithTotalCount),
+		);
 	};
 }

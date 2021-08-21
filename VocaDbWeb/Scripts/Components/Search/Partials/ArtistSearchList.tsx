@@ -3,6 +3,7 @@ import ArtistTypeLabel from '@Components/Shared/Partials/Artist/ArtistTypeLabel'
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import { useRedial } from '@Components/redial';
 import ArtistType from '@Models/Artists/ArtistType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
@@ -11,7 +12,6 @@ import ArtistSearchStore, {
 	ArtistSortRule,
 } from '@Stores/Search/ArtistSearchStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,27 +27,20 @@ const ArtistSearchList = observer(
 			'ViewRes.Search',
 			'VocaDb.Model.Resources',
 		]);
+		const redial = useRedial(artistSearchStore.routeParams);
 
 		return (
 			<div>
 				<EntryCountBox
 					pagingStore={artistSearchStore.paging}
 					onPageSizeChange={(pageSize): void =>
-						runInAction(() => {
-							// TODO: use redial
-							artistSearchStore.paging.pageSize = pageSize;
-						})
+						redial({ pageSize: pageSize, page: 1 })
 					}
 				/>
 
 				<ServerSidePaging
 					pagingStore={artistSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							artistSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 
 				<table
@@ -62,9 +55,7 @@ const ArtistSearchList = observer(
 							<th colSpan={2}>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											artistSearchStore.sort = ArtistSortRule.Name;
-										})
+										redial({ sort: ArtistSortRule.Name, page: 1 })
 									}
 								>
 									{t('ViewRes:Shared.ArtistName')}
@@ -149,7 +140,7 @@ const ArtistSearchList = observer(
 														{index > 0 && ', '}
 														<SafeAnchor
 															onClick={(): void =>
-																artistSearchStore.selectTag(tag.tag)
+																redial({ tagId: [tag.tag.id], page: 1 })
 															}
 														>
 															{tag.tag.name}
@@ -167,12 +158,7 @@ const ArtistSearchList = observer(
 
 				<ServerSidePaging
 					pagingStore={artistSearchStore.paging}
-					onPageChange={(page): void =>
-						runInAction(() => {
-							// TODO: use redial
-							artistSearchStore.paging.page = page;
-						})
-					}
+					onPageChange={(page): void => redial({ page: page })}
 				/>
 			</div>
 		);

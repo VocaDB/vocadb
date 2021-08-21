@@ -1,6 +1,7 @@
 import Button from '@Bootstrap/Button';
 import ArtistFilters from '@Components/Shared/Partials/Knockout/ArtistFilters';
 import { ReleaseEventCategoryDropdownList } from '@Components/Shared/Partials/Knockout/DropdownList';
+import { useRedial } from '@Components/redial';
 import JQueryUIDatepicker from '@JQueryUI/JQueryUIDatepicker';
 import EventSearchStore from '@Stores/Search/EventSearchStore';
 import { runInAction } from 'mobx';
@@ -19,6 +20,7 @@ const EventSearchOptions = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+		const redial = useRedial(eventSearchStore.routeParams);
 
 		return (
 			<div>
@@ -31,9 +33,7 @@ const EventSearchOptions = observer(
 							<ReleaseEventCategoryDropdownList
 								value={eventSearchStore.category}
 								onChange={(e): void =>
-									runInAction(() => {
-										eventSearchStore.category = e.target.value;
-									})
+									redial({ eventCategory: e.target.value, page: 1 })
 								}
 							/>
 						</div>
