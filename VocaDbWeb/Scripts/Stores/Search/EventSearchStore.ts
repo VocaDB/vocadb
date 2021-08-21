@@ -9,6 +9,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -18,6 +19,25 @@ export enum EventSortRule {
 	AdditionDate = 'AdditionDate',
 	SeriesName = 'SeriesName',
 	VenueName = 'VenueName',
+}
+
+export interface EventSearchRouteParams {
+	afterDate?: string /* TODO: use Date */;
+	artistId?: number[];
+	beforeDate?: string /* TODO: use Date */;
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	draftsOnly?: boolean;
+	eventCategory?: string;
+	filter?: string;
+	includeMembers?: boolean;
+	onlyMyEvents?: boolean;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.ReleaseEvent;
+	sort?: EventSortRule;
+	tag?: string;
+	tagId?: number[];
 }
 
 export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEventContract> {
@@ -89,4 +109,40 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 			},
 		});
 	};
+
+	@computed.struct public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.ReleaseEvent,
+			afterDate: this.afterDate?.toISOString(),
+			artistId: this.artistFilters.artistIds,
+			beforeDate: this.beforeDate?.toISOString(),
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			draftsOnly: this.draftsOnly,
+			eventCategory: this.category,
+			filter: this.searchTerm,
+			onlyMyEvents: this.onlyMyEvents,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.ReleaseEvent) return;
+
+		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.beforeDate = value.beforeDate ? new Date(value.beforeDate) : undefined;
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.category = value.eventCategory ?? '';
+		this.searchTerm = value.filter ?? '';
+		this.onlyMyEvents = value.onlyMyEvents ?? false;
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? EventSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+	}
 }

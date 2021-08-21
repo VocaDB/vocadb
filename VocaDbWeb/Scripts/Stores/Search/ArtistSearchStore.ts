@@ -7,8 +7,10 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import { computed, makeObservable, observable, reaction } from 'mobx';
 
+import AdvancedSearchFilter from './AdvancedSearchFilter';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -20,6 +22,21 @@ export enum ArtistSortRule {
 	SongCount = 'SongCount',
 	SongRating = 'SongRating',
 	FollowerCount = 'FollowerCount',
+}
+
+export interface ArtistSearchRouteParams {
+	advancedFilters?: AdvancedSearchFilter[];
+	artistType?: string /* TODO: enum */;
+	childTags?: boolean;
+	draftsOnly?: boolean;
+	filter?: string;
+	onlyFollowedByMe?: boolean;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Artist;
+	sort?: ArtistSortRule;
+	tag?: string;
+	tagId?: number[];
 }
 
 export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistContract> {
@@ -85,5 +102,40 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		return ArtistHelper.canHaveChildVoicebanks(
 			ArtistType[this.artistType as keyof typeof ArtistType],
 		);
+	}
+
+	@computed.struct public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Artist,
+			advancedFilters: this.advancedFilters.filters.map((filter) => ({
+				description: filter.description,
+				filterType: filter.filterType,
+				negate: filter.negate,
+				param: filter.param,
+			})),
+			artistType: this.artistType,
+			childTags: this.childTags,
+			draftsOnly: this.draftsOnly,
+			filter: this.searchTerm,
+			onlyFollowedByMe: this.onlyFollowedByMe,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Artist) return;
+
+		this.advancedFilters.filters = value.advancedFilters ?? [];
+		this.artistType = value.artistType ?? 'Unknown';
+		this.childTags = value.childTags ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.onlyFollowedByMe = value.onlyFollowedByMe ?? false;
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? ArtistSortRule.Name;
+		this.tagIds = value.tagId ?? [];
 	}
 }

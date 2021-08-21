@@ -3,10 +3,11 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -14,6 +15,15 @@ export enum TagSortRule {
 	Name = 'Name',
 	AdditionDate = 'AdditionDate',
 	UsageCount = 'UsageCount',
+}
+
+export interface TagSearchRouteParams {
+	categoryName?: string;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Tag;
+	sort?: TagSortRule;
 }
 
 export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContract> {
@@ -56,4 +66,24 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 			},
 		});
 	};
+
+	@computed.struct public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Tag,
+			categoryName: this.categoryName,
+			filter: this.searchTerm,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Tag) return;
+
+		this.categoryName = value.categoryName;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? TagSortRule.Name;
+	}
 }

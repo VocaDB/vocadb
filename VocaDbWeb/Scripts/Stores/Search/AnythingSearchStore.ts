@@ -8,6 +8,18 @@ import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
+
+export interface AnythingSearchRouteParams {
+	childTags?: boolean;
+	draftsOnly?: boolean;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Anything;
+	tag?: string;
+	tagId?: number[];
+}
 
 export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryContract> {
 	public constructor(
@@ -47,4 +59,26 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 	public entryUrl = (entry: EntryContract): string => {
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
+
+	@computed.struct public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Anything,
+			childTags: this.childTags,
+			draftsOnly: this.draftsOnly,
+			filter: this.searchTerm,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			tagId: this.tagIds,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Anything) return;
+
+		this.childTags = value.childTags ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.tagIds = value.tagId ?? [];
+	}
 }

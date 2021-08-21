@@ -18,15 +18,19 @@ import {
 	runInAction,
 } from 'mobx';
 
-import AlbumSearchStore from './AlbumSearchStore';
-import AnythingSearchStore from './AnythingSearchStore';
-import ArtistSearchStore from './ArtistSearchStore';
+import AlbumSearchStore, { AlbumSearchRouteParams } from './AlbumSearchStore';
+import AnythingSearchStore, {
+	AnythingSearchRouteParams,
+} from './AnythingSearchStore';
+import ArtistSearchStore, {
+	ArtistSearchRouteParams,
+} from './ArtistSearchStore';
 import { ICommonSearchStore } from './CommonSearchStore';
-import EventSearchStore from './EventSearchStore';
+import EventSearchStore, { EventSearchRouteParams } from './EventSearchStore';
 import { ISearchCategoryBaseStore } from './SearchCategoryBaseStore';
-import SongSearchStore from './SongSearchStore';
+import SongSearchStore, { SongSearchRouteParams } from './SongSearchStore';
 import TagFilters from './TagFilters';
-import TagSearchStore from './TagSearchStore';
+import TagSearchStore, { TagSearchRouteParams } from './TagSearchStore';
 
 export enum SearchType {
 	Anything = 'Anything',
@@ -36,6 +40,14 @@ export enum SearchType {
 	Song = 'Song',
 	Tag = 'Tag',
 }
+
+export type SearchRouteParams =
+	| AnythingSearchRouteParams
+	| AlbumSearchRouteParams
+	| ArtistSearchRouteParams
+	| EventSearchRouteParams
+	| SongSearchRouteParams
+	| TagSearchRouteParams;
 
 export default class SearchStore implements ICommonSearchStore {
 	public readonly albumSearchStore: AlbumSearchStore;

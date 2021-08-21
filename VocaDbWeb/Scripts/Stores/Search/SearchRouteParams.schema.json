@@ -1,0 +1,443 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"anyOf": [
+		{
+			"$ref": "#/definitions/AnythingSearchRouteParams"
+		},
+		{
+			"$ref": "#/definitions/ArtistSearchRouteParams"
+		},
+		{
+			"$ref": "#/definitions/EventSearchRouteParams"
+		},
+		{
+			"$ref": "#/definitions/SongSearchRouteParams"
+		},
+		{
+			"$ref": "#/definitions/TagSearchRouteParams"
+		},
+		{
+			"$ref": "#/definitions/AlbumSearchRouteParams"
+		}
+	],
+	"definitions": {
+		"AdvancedFilterType": {
+			"enum": [
+				"ArtistType",
+				"HasAlbum",
+				"HasMedia",
+				"HasMultipleVoicebanks",
+				"HasOriginalMedia",
+				"HasPublishDate",
+				"HasStoreLink",
+				"HasTracks",
+				"HasUserAccount",
+				"Lyrics",
+				"LyricsContent",
+				"NoCoverPicture",
+				"Nothing",
+				"RootVoicebank",
+				"VoiceProvider",
+				"WebLink"
+			],
+			"type": "string"
+		},
+		"AlbumSearchRouteParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/default"
+					},
+					"type": "array"
+				},
+				"artistId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"artistParticipationStatus": {
+					"type": "string"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"discType": {
+					"type": "string"
+				},
+				"draftsOnly": {
+					"type": "boolean"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"includeMembers": {
+					"type": "boolean"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["Album"],
+					"type": "string"
+				},
+				"sort": {
+					"enum": [
+						"AdditionDate",
+						"CollectionCount",
+						"Name",
+						"NameThenReleaseDate",
+						"None",
+						"RatingAverage",
+						"RatingTotal",
+						"ReleaseDate",
+						"ReleaseDateWithNulls"
+					],
+					"type": "string"
+				},
+				"tag": {
+					"type": "string"
+				},
+				"tagId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"viewMode": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"AnythingSearchRouteParams": {
+			"properties": {
+				"childTags": {
+					"type": "boolean"
+				},
+				"draftsOnly": {
+					"type": "boolean"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["Anything"],
+					"type": "string"
+				},
+				"tag": {
+					"type": "string"
+				},
+				"tagId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"ArtistSearchRouteParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/default"
+					},
+					"type": "array"
+				},
+				"artistType": {
+					"type": "string"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"draftsOnly": {
+					"type": "boolean"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"onlyFollowedByMe": {
+					"type": "boolean"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["Artist"],
+					"type": "string"
+				},
+				"sort": {
+					"enum": [
+						"AdditionDate",
+						"AdditionDateAsc",
+						"FollowerCount",
+						"Name",
+						"None",
+						"ReleaseDate",
+						"SongCount",
+						"SongRating"
+					],
+					"type": "string"
+				},
+				"tag": {
+					"type": "string"
+				},
+				"tagId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"EventSearchRouteParams": {
+			"properties": {
+				"afterDate": {
+					"format": "date-time",
+					"type": "string"
+				},
+				"artistId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"beforeDate": {
+					"format": "date-time",
+					"type": "string"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"draftsOnly": {
+					"type": "boolean"
+				},
+				"eventCategory": {
+					"type": "string"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"includeMembers": {
+					"type": "boolean"
+				},
+				"onlyMyEvents": {
+					"type": "boolean"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["ReleaseEvent"],
+					"type": "string"
+				},
+				"sort": {
+					"enum": [
+						"AdditionDate",
+						"Date",
+						"Name",
+						"None",
+						"SeriesName",
+						"VenueName"
+					],
+					"type": "string"
+				},
+				"tag": {
+					"type": "string"
+				},
+				"tagId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"SongSearchRouteParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/default"
+					},
+					"type": "array"
+				},
+				"artistId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"artistParticipationStatus": {
+					"type": "string"
+				},
+				"autoplay": {
+					"type": "boolean"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"dateDay": {
+					"type": "number"
+				},
+				"dateMonth": {
+					"type": "number"
+				},
+				"dateYear": {
+					"type": "number"
+				},
+				"draftsOnly": {
+					"type": "boolean"
+				},
+				"eventId": {
+					"type": "number"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"includeMembers": {
+					"type": "boolean"
+				},
+				"maxLength": {
+					"type": "number"
+				},
+				"maxMilliBpm": {
+					"type": "number"
+				},
+				"minLength": {
+					"type": "number"
+				},
+				"minMilliBpm": {
+					"type": "number"
+				},
+				"minScore": {
+					"type": "number"
+				},
+				"onlyRatedSongs": {
+					"type": "boolean"
+				},
+				"onlyWithPVs": {
+					"type": "boolean"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"parentVersionId": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["Song"],
+					"type": "string"
+				},
+				"shuffle": {
+					"type": "boolean"
+				},
+				"since": {
+					"type": "number"
+				},
+				"songType": {
+					"type": "string"
+				},
+				"sort": {
+					"enum": [
+						"AdditionDate",
+						"FavoritedTimes",
+						"Name",
+						"None",
+						"PublishDate",
+						"RatingScore",
+						"TagUsageCount"
+					],
+					"type": "string"
+				},
+				"tag": {
+					"type": "string"
+				},
+				"tagId": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"unifyEntryTypesAndTags": {
+					"type": "boolean"
+				},
+				"viewMode": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"TagSearchRouteParams": {
+			"properties": {
+				"categoryName": {
+					"type": "string"
+				},
+				"filter": {
+					"type": "string"
+				},
+				"page": {
+					"type": "number"
+				},
+				"pageSize": {
+					"type": "number"
+				},
+				"searchType": {
+					"enum": ["Tag"],
+					"type": "string"
+				},
+				"sort": {
+					"enum": ["AdditionDate", "Name", "Nothing", "UsageCount"],
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"default": {
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"filterType": {
+					"$ref": "#/definitions/AdvancedFilterType"
+				},
+				"negate": {
+					"type": "boolean"
+				},
+				"param": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	}
+}

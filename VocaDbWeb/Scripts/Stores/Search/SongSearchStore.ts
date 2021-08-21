@@ -23,9 +23,11 @@ import _ from 'lodash';
 import { computed, makeObservable, observable, reaction } from 'mobx';
 import moment from 'moment';
 
+import AdvancedSearchFilter from './AdvancedSearchFilter';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -38,6 +40,41 @@ export enum SongSortRule {
 	FavoritedTimes = 'FavoritedTimes',
 	RatingScore = 'RatingScore',
 	TagUsageCount = 'TagUsageCount',
+}
+
+export interface SongSearchRouteParams {
+	advancedFilters?: AdvancedSearchFilter[];
+	artistId?: number[];
+	artistParticipationStatus?: string /* TODO: enum */;
+	autoplay?: boolean;
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	dateYear?: number;
+	dateMonth?: number;
+	dateDay?: number;
+	draftsOnly?: boolean;
+	eventId?: number;
+	filter?: string;
+	includeMembers?: boolean;
+	maxLength?: number;
+	maxMilliBpm?: number;
+	minLength?: number;
+	minMilliBpm?: number;
+	minScore?: number;
+	onlyWithPVs?: boolean;
+	onlyRatedSongs?: boolean;
+	page?: number;
+	pageSize?: number;
+	parentVersionId?: number;
+	searchType?: SearchType.Song;
+	shuffle?: boolean;
+	since?: number;
+	songType?: string /* TODO: enum */;
+	sort?: SongSortRule;
+	tag?: string;
+	tagId?: number[];
+	unifyEntryTypesAndTags?: boolean;
+	viewMode?: string /* TODO: enum */;
 }
 
 interface ISongSearchItem extends SongApiContract {
@@ -281,4 +318,78 @@ export default class SongSearchStore
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
+
+	@computed.struct public get routeParams(): SearchRouteParams {
+		return {
+			searchType: SearchType.Song,
+			advancedFilters: this.advancedFilters.filters.map((filter) => ({
+				description: filter.description,
+				filterType: filter.filterType,
+				negate: filter.negate,
+				param: filter.param,
+			})),
+			artistId: this.artistFilters.artistIds,
+			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
+			// TODO: autoplay
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			dateDay: this.dateDay,
+			dateMonth: this.dateMonth,
+			dateYear: this.dateYear,
+			draftsOnly: this.draftsOnly,
+			eventId: this.releaseEvent.id,
+			filter: this.searchTerm,
+			maxLength: this.maxLengthFilter.length,
+			maxMilliBpm: this.maxBpmFilter.milliBpm,
+			minLength: this.minLengthFilter.length,
+			minMilliBpm: this.minBpmFilter.milliBpm,
+			minScore: this.minScore,
+			onlyRatedSongs: this.onlyRatedSongs,
+			onlyWithPVs: this.pvsOnly,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			parentVersionId: this.parentVersion.id,
+			// TODO: shuffle
+			since: this.since,
+			songType: this.songType,
+			sort: this.sort,
+			tagId: this.tagIds,
+			unifyEntryTypesAndTags: this.unifyEntryTypesAndTags,
+			viewMode: this.viewMode,
+		};
+	}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Song) return;
+
+		this.advancedFilters.filters = value.advancedFilters ?? [];
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.artistFilters.artistParticipationStatus =
+			value.artistParticipationStatus ?? 'Everything';
+		// TODO: autoplay
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.dateDay = value.dateDay;
+		this.dateMonth = value.dateMonth;
+		this.dateYear = value.dateYear;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.releaseEvent.id = value.eventId;
+		this.searchTerm = value.filter ?? '';
+		this.maxLengthFilter.length = value.maxLength ?? 0;
+		this.maxBpmFilter.milliBpm = value.maxMilliBpm;
+		this.minLengthFilter.length = value.minLength ?? 0;
+		this.minBpmFilter.milliBpm = value.minMilliBpm;
+		this.minScore = value.minScore;
+		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
+		this.pvsOnly = value.onlyWithPVs ?? false;
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.parentVersion.id = value.parentVersionId;
+		// TODO: shuffle
+		this.since = value.since;
+		this.songType = value.songType ?? 'Unspecified';
+		this.sort = value.sort ?? SongSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
+		this.viewMode = value.viewMode ?? 'Details';
+	}
 }
