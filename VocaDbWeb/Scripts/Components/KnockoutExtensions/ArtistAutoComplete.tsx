@@ -1,6 +1,7 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import functions from '@Shared/GlobalFunctions';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ArtistAutoCompleteParams } from './AutoCompleteParams';
 import EntryAutoComplete, {
@@ -16,6 +17,8 @@ const ArtistAutoComplete = ({
 	properties,
 	...props
 }: ArtistAutoCompleteProps): React.ReactElement => {
+	const { t } = useTranslation(['VocaDb.Model.Resources']);
+
 	var filter = properties.filter;
 
 	if (properties.ignoreId) {
@@ -39,7 +42,10 @@ const ArtistAutoComplete = ({
 	const params: EntryAutoCompleteParams<ArtistContract> = {
 		acceptSelection: properties.acceptSelection!,
 		createNewItem: properties.createNewItem,
-		createOptionFirstRow: (item) => `${item.name} (${item.artistType})`,
+		createOptionFirstRow: (item) =>
+			`${item.name} (${t(
+				`VocaDb.Model.Resources:ArtistTypeNames:${item.artistType}`,
+			)})`,
 		createOptionSecondRow: (item) => item.additionalNames!,
 		extraQueryParams: queryParams,
 		filter: filter,

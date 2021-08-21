@@ -5,6 +5,7 @@ import { SongQueryParams } from '@Repositories/SongRepository';
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { SongAutoCompleteParams } from './AutoCompleteParams';
 import EntryAutoComplete, {
@@ -20,6 +21,8 @@ const SongAutoComplete = ({
 	properties,
 	...props
 }: SongAutoCompleteProps): React.ReactElement => {
+	const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
+
 	var filter = properties.filter;
 
 	if (properties.ignoreId) {
@@ -49,7 +52,9 @@ const SongAutoComplete = ({
 					createNewItem: properties.createNewItem,
 					createCustomItem: properties.createCustomItem,
 					createOptionFirstRow: (item: SongContract) =>
-						item.name + ' (' + item.songType + ')',
+						`${item.name} (${t(
+							`VocaDb.Model.Resources.Songs:SongTypeNames.${item.songType}`,
+						)})`,
 					createOptionSecondRow: (item: SongContract) => item.artistString,
 					extraQueryParams: queryParams,
 					filter: filter,
