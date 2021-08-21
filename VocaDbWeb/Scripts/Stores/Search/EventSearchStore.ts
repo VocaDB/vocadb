@@ -9,6 +9,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -18,6 +19,21 @@ export enum EventSortRule {
 	AdditionDate = 'AdditionDate',
 	SeriesName = 'SeriesName',
 	VenueName = 'VenueName',
+}
+
+export interface EventSearchRouteParams {
+	artistId?: number[];
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	draftsOnly?: boolean;
+	eventCategory?: string;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType: SearchType.ReleaseEvent;
+	sort?: EventSortRule;
+	tag?: string;
+	tagId?: number[];
 }
 
 export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEventContract> {

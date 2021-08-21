@@ -10,6 +10,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the AlbumSortRule enum in C#.
 export enum AlbumSortRule {
@@ -22,6 +23,22 @@ export enum AlbumSortRule {
 	RatingTotal = 'RatingTotal',
 	NameThenReleaseDate = 'NameThenReleaseDate',
 	CollectionCount = 'CollectionCount',
+}
+
+export interface AlbumSearchRouteParams {
+	artistId?: number[];
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	discType?: string /* TODO: enum */;
+	draftsOnly?: boolean;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType: SearchType.Album;
+	sort?: AlbumSortRule;
+	tag?: string;
+	tagId?: number[];
+	viewMode?: string /* TODO: enum */;
 }
 
 export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContract> {

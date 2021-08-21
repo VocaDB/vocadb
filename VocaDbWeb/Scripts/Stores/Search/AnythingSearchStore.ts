@@ -8,6 +8,18 @@ import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
+
+export interface AnythingSearchRouteParams {
+	childTags?: boolean;
+	draftsOnly?: boolean;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Anything;
+	tag?: string;
+	tagId?: number[];
+}
 
 export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryContract> {
 	public constructor(

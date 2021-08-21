@@ -9,6 +9,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -20,6 +21,19 @@ export enum ArtistSortRule {
 	SongCount = 'SongCount',
 	SongRating = 'SongRating',
 	FollowerCount = 'FollowerCount',
+}
+
+export interface ArtistSearchRouteParams {
+	artistType?: string /* TODO: enum */;
+	childTags?: boolean;
+	draftsOnly?: boolean;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType: SearchType.Artist;
+	sort?: ArtistSortRule;
+	tag?: string;
+	tagId?: number[];
 }
 
 export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistContract> {

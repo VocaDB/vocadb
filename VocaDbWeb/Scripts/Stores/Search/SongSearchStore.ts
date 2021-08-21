@@ -20,6 +20,7 @@ import moment from 'moment';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -32,6 +33,29 @@ export enum SongSortRule {
 	FavoritedTimes = 'FavoritedTimes',
 	RatingScore = 'RatingScore',
 	TagUsageCount = 'TagUsageCount',
+}
+
+export interface SongSearchRouteParams {
+	artistId?: number[];
+	autoplay?: boolean;
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	draftsOnly?: boolean;
+	eventId?: number;
+	filter?: string;
+	minScore?: number;
+	onlyWithPVs?: boolean;
+	onlyRatedSongs?: boolean;
+	page?: number;
+	pageSize?: number;
+	searchType: SearchType.Song;
+	shuffle?: boolean;
+	since?: number;
+	songType?: string /* TODO: enum */;
+	sort?: SongSortRule;
+	tag?: string;
+	tagId?: number[];
+	viewMode?: string /* TODO: enum */;
 }
 
 interface ISongSearchItem extends SongApiContract {

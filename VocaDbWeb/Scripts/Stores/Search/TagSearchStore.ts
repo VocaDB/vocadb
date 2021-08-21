@@ -7,6 +7,7 @@ import { makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -14,6 +15,14 @@ export enum TagSortRule {
 	Name = 'Name',
 	AdditionDate = 'AdditionDate',
 	UsageCount = 'UsageCount',
+}
+
+export interface TagSearchRouteParams {
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType: SearchType.Tag;
+	sort?: TagSortRule;
 }
 
 export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContract> {
