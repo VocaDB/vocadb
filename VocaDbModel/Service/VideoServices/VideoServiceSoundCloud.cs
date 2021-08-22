@@ -17,28 +17,28 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceSoundCloud : VideoService
 	{
-		class SoundCloudResult
+		private sealed record SoundCloudUser
 		{
-			public string Artwork_url { get; set; }
+			public string Avatar_url { get; init; }
 
-			public DateTime Created_at { get; set; }
+			public string Permalink { get; init; }
 
-			public int Duration { get; set; }
-
-			public string Id { get; set; }
-
-			public string Title { get; set; }
-
-			public SoundCloudUser User { get; set; }
+			public string Username { get; init; }
 		}
 
-		class SoundCloudUser
+		private sealed record SoundCloudResult
 		{
-			public string Avatar_url { get; set; }
+			public string Artwork_url { get; init; }
 
-			public string Permalink { get; set; }
+			public DateTime Created_at { get; init; }
 
-			public string Username { get; set; }
+			public int Duration { get; init; }
+
+			public string Id { get; init; }
+
+			public string Title { get; init; }
+
+			public SoundCloudUser User { get; init; }
 		}
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
