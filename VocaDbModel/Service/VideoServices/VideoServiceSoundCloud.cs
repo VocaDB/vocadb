@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,26 +17,26 @@ namespace VocaDb.Model.Service.VideoServices
 	{
 		private sealed record SoundCloudUser
 		{
-			public string Avatar_url { get; init; }
+			public string Avatar_url { get; init; } = default!;
 
-			public string Permalink { get; init; }
+			public string Permalink { get; init; } = default!;
 
-			public string Username { get; init; }
+			public string Username { get; init; } = default!;
 		}
 
 		private sealed record SoundCloudResult
 		{
-			public string Artwork_url { get; init; }
+			public string Artwork_url { get; init; } = default!;
 
 			public DateTime Created_at { get; init; }
 
 			public int Duration { get; init; }
 
-			public string Id { get; init; }
+			public string Id { get; init; } = default!;
 
-			public string Title { get; init; }
+			public string Title { get; init; } = default!;
 
-			public SoundCloudUser User { get; init; }
+			public SoundCloudUser User { get; init; } = default!;
 		}
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -46,7 +44,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
 
-		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
+		public override string GetUrlById(string id, PVExtendedMetadata? extendedMetadata = null)
 		{
 			var compositeId = new SoundCloudId(id);
 			var matcher = _linkMatchers.First();
@@ -60,11 +58,11 @@ namespace VocaDb.Model.Service.VideoServices
 			var apikey = AppConfig.SoundCloudClientId;
 			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}&client_id={apikey}";
 
-			SoundCloudResult result;
+			SoundCloudResult? result;
 
 			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
 
-			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
+			VideoUrlParseResult ReturnError(Exception x, string? additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
 				s_log.Warn(x, msg);
@@ -149,7 +147,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private string CleanUrl(string url) => url.Split('?')[0];
 
-#nullable enable
 		public SoundCloudId(string trackId, string soundCloudUrl)
 		{
 			ParamIs.NotNullOrEmpty(() => trackId);
@@ -173,7 +170,6 @@ namespace VocaDb.Model.Service.VideoServices
 			TrackId = parts[0];
 			SoundCloudUrl = parts[1];
 		}
-#nullable disable
 
 		/// <summary>
 		/// Relative URL, for example tamagotaso/nightcruise
@@ -185,7 +181,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		public string TrackId { get; set; }
 
-#nullable enable
 		/// <summary>
 		/// Gets the composite ID string with both the relative URL and track Id.
 		/// </summary>
@@ -194,6 +189,5 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return $"{TrackId} {SoundCloudUrl}";
 		}
-#nullable disable
 	}
 }

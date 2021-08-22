@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.IO;
 using System.Net;
@@ -11,7 +9,7 @@ namespace VocaDb.Model.Helpers
 {
 	public static class JsonRequest
 	{
-		public static Task<T> ReadObjectAsync<T>(string url) => ReadObjectAsync<T>(url, TimeSpan.FromSeconds(100));
+		public static Task<T?> ReadObjectAsync<T>(string url) => ReadObjectAsync<T>(url, TimeSpan.FromSeconds(100));
 
 		/// <summary>
 		/// Reads JSON object from URL.
@@ -24,8 +22,8 @@ namespace VocaDb.Model.Helpers
 		/// <exception cref="WebException">If a web request error occurred.</exception>
 		/// <exception cref="JsonSerializationException">If the response wasn't valid JSON.</exception>
 		/// <exception cref="HttpRequestException">If the request failed.</exception>
-		public static async Task<T> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders> headers = null)
+		public static async Task<T?> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
+			Action<HttpRequestHeaders>? headers = null)
 		{
 			return await HtmlRequestHelper.GetStreamAsync(url, stream =>
 			{
