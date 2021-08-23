@@ -171,9 +171,7 @@ export default class SearchStore implements ICommonSearchStore {
 		return this.searchType === SearchType.Anything;
 	}
 
-	@computed public get currentCategoryStore():
-		| ISearchCategoryBaseStore
-		| undefined {
+	@computed public get currentCategoryStore(): ISearchCategoryBaseStore {
 		switch (this.searchType) {
 			case SearchType.Anything:
 				return this.anythingSearchStore;
@@ -188,13 +186,11 @@ export default class SearchStore implements ICommonSearchStore {
 			case SearchType.Tag:
 				return this.tagSearchStore;
 			default:
-				return undefined;
+				throw new Error(`Invalid searchType: ${this.searchType}`);
 		}
 	}
 
 	public updateResults = (): void => {
-		const store = this.currentCategoryStore;
-
-		store?.updateResultsWithTotalCount();
+		this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 }

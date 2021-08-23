@@ -18,13 +18,19 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+import SearchStore, {
+	SearchRouteParams,
+	SearchType,
+} from '@Stores/Search/SearchStore';
+import Ajv, { JSONSchemaType } from 'ajv';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import AlbumSearchList from './Partials/AlbumSearchList';
 import AlbumSearchOptions from './Partials/AlbumSearchOptions';
@@ -85,6 +91,13 @@ const SearchCategory = observer(
 	},
 );
 
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema.json');
+const validate = ajv.compile(schema);
+
 const SearchIndex = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation([
@@ -92,10 +105,23 @@ const SearchIndex = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+		const location = useLocation();
 
 		React.useEffect(() => {
 			searchStore.updateResults();
 		}, []);
+
+		React.useEffect(() => {
+			const routeParams: any = qs.parse(location.search.slice(1));
+			if (validate(routeParams)) {
+				runInAction(() => {
+					searchStore.searchType =
+						routeParams.searchType ?? SearchType.Anything;
+
+					searchStore.currentCategoryStore.routeParams = routeParams;
+				});
+			}
+		}, [location.search]);
 
 		return (
 			<Layout>
