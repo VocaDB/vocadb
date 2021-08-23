@@ -22,12 +22,12 @@ import SearchQueryParams from '@Stores/Search/SearchQueryParams';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import Ajv, { JSONSchemaType } from 'ajv';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
+import { comparer, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import AlbumSearchList from './Partials/AlbumSearchList';
 import AlbumSearchOptions from './Partials/AlbumSearchOptions';
@@ -100,6 +100,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 		const location = useLocation();
+		const navigate = useNavigate();
 
 		React.useEffect(() => {
 			searchStore.updateResults();
@@ -117,6 +118,16 @@ const SearchIndex = observer(
 				});
 			}
 		}, [location.search]);
+
+		React.useEffect(() => {
+			reaction(
+				() => searchStore.currentCategoryStore?.queryParams,
+				(queryParams) => {
+					navigate(`/Search?${qs.stringify(queryParams)}`);
+				},
+				{ equals: comparer.structural },
+			);
+		}, [navigate]);
 
 		return (
 			<Layout>
