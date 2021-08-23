@@ -106,7 +106,17 @@ const SearchIndex = observer(
 			searchStore.updateResults();
 		}, []);
 
+		// Ensure that only one callback (either `runInAction` or `reaction` callbacks) is executed at a time.
+		// If we update states through UI, callbacks are called in the following order:
+		//   `reaction` -> `runInAction` which should be skipped.
+		// If we update states through URL (e.g. by clicking the back and forward buttons), callbacks are called in the following order:
+		//   `runInAction` -> `reaction` which should be skipped.
+		const pauseNotifications = React.useRef(false);
+
 		React.useEffect(() => {
+			if (pauseNotifications.current) return;
+			pauseNotifications.current = true;
+
 			const queryParams: any = qs.parse(location.search.slice(1));
 			if (validate(queryParams)) {
 				runInAction(() => {
@@ -123,11 +133,18 @@ const SearchIndex = observer(
 			reaction(
 				() => searchStore.currentCategoryStore?.queryParams,
 				(queryParams) => {
+					if (pauseNotifications.current) return;
+					pauseNotifications.current = true;
+
 					navigate(`/Search?${qs.stringify(queryParams)}`);
 				},
 				{ equals: comparer.structural },
 			);
 		}, [navigate]);
+
+		React.useEffect(() => {
+			pauseNotifications.current = false;
+		});
 
 		return (
 			<Layout>
