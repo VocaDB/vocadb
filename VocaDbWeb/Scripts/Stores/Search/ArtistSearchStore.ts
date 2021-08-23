@@ -9,7 +9,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -100,4 +100,9 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 			ArtistType[this.artistType as keyof typeof ArtistType],
 		);
 	}
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {};
+	}
+	public set routeParams(value: SearchRouteParams) {}
 }

@@ -3,11 +3,11 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -65,4 +65,9 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 			},
 		});
 	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {};
+	}
+	public set routeParams(value: SearchRouteParams) {}
 }

@@ -9,7 +9,7 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -105,4 +105,9 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 			},
 		});
 	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {};
+	}
+	public set routeParams(value: SearchRouteParams) {}
 }

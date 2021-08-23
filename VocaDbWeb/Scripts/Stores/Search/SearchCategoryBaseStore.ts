@@ -16,9 +16,12 @@ import moment from 'moment';
 
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
+import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseStore {
+	routeParams: SearchRouteParams;
+
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -32,6 +35,7 @@ export default abstract class SearchCategoryBaseStore<
 	@observable public page: TEntry[] = []; // Current page of items
 	public readonly paging = new ServerSidePagingStore(); // Paging store
 	public pauseNotifications = false;
+	public abstract routeParams: SearchRouteParams;
 
 	public constructor(commonSearchStore: ICommonSearchStore) {
 		makeObservable(this);

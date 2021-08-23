@@ -8,7 +8,7 @@ import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 
 export interface AnythingSearchRouteParams {
 	childTags?: boolean;
@@ -59,4 +59,9 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 	public entryUrl = (entry: EntryContract): string => {
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {};
+	}
+	public set routeParams(value: SearchRouteParams) {}
 }

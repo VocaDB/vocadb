@@ -20,7 +20,7 @@ import moment from 'moment';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
+import { SearchRouteParams, SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -281,4 +281,9 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
+
+	@computed public get routeParams(): SearchRouteParams {
+		return {};
+	}
+	public set routeParams(value: SearchRouteParams) {}
 }
