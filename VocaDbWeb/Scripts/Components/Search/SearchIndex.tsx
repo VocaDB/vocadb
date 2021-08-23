@@ -18,12 +18,16 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import SearchQueryParams from '@Stores/Search/SearchQueryParams';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+import Ajv, { JSONSchemaType } from 'ajv';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import AlbumSearchList from './Partials/AlbumSearchList';
 import AlbumSearchOptions from './Partials/AlbumSearchOptions';
@@ -84,6 +88,10 @@ const SearchCategory = observer(
 	},
 );
 
+const ajv = new Ajv({ coerceTypes: true });
+const schema: JSONSchemaType<SearchQueryParams> = require('@Stores/Search/SearchQueryParams.schema');
+const validate = ajv.compile(schema);
+
 const SearchIndex = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation([
@@ -91,10 +99,24 @@ const SearchIndex = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+		const location = useLocation();
 
 		React.useEffect(() => {
 			searchStore.updateResults();
 		}, []);
+
+		React.useEffect(() => {
+			const queryParams: any = qs.parse(location.search.slice(1));
+			if (validate(queryParams)) {
+				runInAction(() => {
+					searchStore.searchType =
+						queryParams.searchType ?? SearchType.Anything;
+
+					if (searchStore.currentCategoryStore)
+						searchStore.currentCategoryStore.queryParams = queryParams;
+				});
+			}
+		}, [location.search]);
 
 		return (
 			<Layout>
