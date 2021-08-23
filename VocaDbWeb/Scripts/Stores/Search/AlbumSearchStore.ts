@@ -10,6 +10,8 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the AlbumSortRule enum in C#.
 export enum AlbumSortRule {
@@ -62,6 +64,34 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			() => this.artistFilters.filters,
 			this.updateResultsWithTotalCount,
 		);
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.Album,
+			filter: this.searchTerm,
+			tagId: this.tagIds,
+			sort: this.sort,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			discType: this.albumType,
+			viewMode: this.viewMode,
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.Album) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.tagIds = value.tagId ?? [];
+		this.sort = value.sort ?? AlbumSortRule.Name;
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.albumType = value.discType ?? 'Unknown';
+		this.viewMode = value.viewMode ?? 'Details';
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	@computed public get fields(): string {

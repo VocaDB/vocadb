@@ -9,6 +9,8 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -58,6 +60,32 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		reaction(() => this.category, this.updateResultsWithTotalCount);
 		reaction(() => this.onlyMyEvents, this.updateResultsWithTotalCount);
 		reaction(() => this.sort, this.updateResultsWithTotalCount);
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.ReleaseEvent,
+			filter: this.searchTerm,
+			tagId: this.tagIds,
+			sort: this.sort,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			eventCategory: this.category,
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.ReleaseEvent) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.tagIds = value.tagId ?? [];
+		this.sort = value.sort ?? EventSortRule.Name;
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.category = value.eventCategory ?? '';
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	@computed public get fields(): string {

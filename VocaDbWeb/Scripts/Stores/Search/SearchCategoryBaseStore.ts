@@ -16,9 +16,12 @@ import moment from 'moment';
 
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
+import SearchQueryParams from './SearchQueryParams';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseStore {
+	queryParams: SearchQueryParams;
+
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -32,6 +35,7 @@ export default abstract class SearchCategoryBaseStore<
 	@observable public page: TEntry[] = []; // Current page of items
 	public readonly paging = new ServerSidePagingStore(); // Paging store
 	public pauseNotifications = false;
+	public abstract queryParams: SearchQueryParams;
 
 	public constructor(commonSearchStore: ICommonSearchStore) {
 		makeObservable(this);
@@ -56,6 +60,9 @@ export default abstract class SearchCategoryBaseStore<
 	@computed public get childTags(): boolean {
 		return this.commonSearchStore.tagFilters.childTags;
 	}
+	public set childTags(value: boolean) {
+		this.commonSearchStore.tagFilters.childTags = value;
+	}
 
 	@computed public get draftsOnly(): boolean {
 		return this.commonSearchStore.draftsOnly;
@@ -64,9 +71,15 @@ export default abstract class SearchCategoryBaseStore<
 	@computed public get pageSize(): number {
 		return this.commonSearchStore.pageSize;
 	}
+	public set pageSize(value: number) {
+		this.commonSearchStore.pageSize = value;
+	}
 
 	@computed public get searchTerm(): string {
 		return this.commonSearchStore.searchTerm;
+	}
+	public set searchTerm(value: string) {
+		this.commonSearchStore.searchTerm = value;
 	}
 
 	@computed public get showTags(): boolean {
@@ -85,6 +98,9 @@ export default abstract class SearchCategoryBaseStore<
 
 	@computed public get tagIds(): number[] {
 		return _.map(this.tags, (t) => t.id);
+	}
+	public set tagIds(value: number[]) {
+		// TODO: implement
 	}
 
 	public formatDate = (dateStr: string): string => {

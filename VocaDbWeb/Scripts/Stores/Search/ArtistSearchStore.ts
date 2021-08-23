@@ -9,6 +9,8 @@ import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -48,6 +50,28 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		reaction(() => this.artistType, this.updateResultsWithTotalCount);
 		reaction(() => this.onlyFollowedByMe, this.updateResultsWithTotalCount);
 		reaction(() => this.onlyRootVoicebanks, this.updateResultsWithTotalCount);
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.Artist,
+			filter: this.searchTerm,
+			tagId: this.tagIds,
+			sort: this.sort,
+			childTags: this.childTags,
+			artistType: this.artistType,
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.Artist) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.tagIds = value.tagId ?? [];
+		this.sort = value.sort ?? ArtistSortRule.Name;
+		this.childTags = value.childTags ?? false;
+		this.artistType = value.artistType ?? 'Unknown';
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	@computed public get fields(): string {

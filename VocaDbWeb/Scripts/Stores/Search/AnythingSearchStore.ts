@@ -8,6 +8,8 @@ import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 
 export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryContract> {
 	public constructor(
@@ -18,6 +20,24 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		super(commonSearchStore);
 
 		makeObservable(this);
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.Anything,
+			filter: this.searchTerm,
+			tagId: this.tagIds,
+			childTags: this.childTags,
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.Anything) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.tagIds = value.tagId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	@computed public get fields(): string {

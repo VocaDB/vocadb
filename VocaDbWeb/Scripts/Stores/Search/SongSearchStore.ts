@@ -21,6 +21,8 @@ import moment from 'moment';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -168,6 +170,48 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		);
 
 		// TODO: this.playListStore = ;
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.Song,
+			filter: this.searchTerm,
+			tagId: this.tagIds,
+			sort: this.sort,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			eventId: this.releaseEvent.id,
+			songType: this.songType,
+			onlyWithPVs: this.pvsOnly,
+			onlyRatedSongs: this.onlyRatedSongs,
+			since: this.since,
+			minScore: this.minScore,
+			viewMode: this.viewMode,
+			// TODO: autoplay
+			// TODO: shuffle
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.Song) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.tagIds = value.tagId ?? [];
+		this.sort = value.sort ?? SongSortRule.Name;
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.releaseEvent.id = value.eventId;
+		this.songType = value.songType ?? 'Unspecified';
+		this.pvsOnly = value.onlyWithPVs ?? false;
+		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
+		this.since = value.since;
+		this.minScore = value.minScore;
+		this.viewMode = value.viewMode ?? 'Details';
+		// TODO: autoplay
+		// TODO: shuffle
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	// Remember, JavaScript months start from 0 (who came up with that??)

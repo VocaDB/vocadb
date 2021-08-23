@@ -3,10 +3,12 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable, reaction } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import SearchQueryParams from './SearchQueryParams';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -33,6 +35,22 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		reaction(() => this.allowAliases, this.updateResultsWithTotalCount);
 		reaction(() => this.categoryName, this.updateResultsWithTotalCount);
 		reaction(() => this.sort, this.updateResultsWithTotalCount);
+	}
+
+	@computed public get queryParams(): SearchQueryParams {
+		return {
+			searchType: SearchType.Tag,
+			filter: this.searchTerm,
+			sort: this.sort,
+			pageSize: this.pageSize,
+		};
+	}
+	public set queryParams(value: SearchQueryParams) {
+		if (value.searchType !== SearchType.Tag) return;
+
+		this.searchTerm = value.filter ?? '';
+		this.sort = value.sort ?? TagSortRule.Name;
+		this.pageSize = value.pageSize ?? 10;
 	}
 
 	public loadResults = (
