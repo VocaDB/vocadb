@@ -13,7 +13,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
-import debounceEffect from '@Stores/debounceEffect';
 import _ from 'lodash';
 import { computed, makeObservable, observable, reaction } from 'mobx';
 import moment from 'moment';
@@ -102,15 +101,9 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 			() => this.artistFilters.filters,
 			this.updateResultsWithTotalCount,
 		);
-		reaction(
-			() => this.afterDate,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
-		);
+		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
 		reaction(() => this.releaseEvent.id, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.minScore,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
-		);
+		reaction(() => this.minScore, this.updateResultsWithTotalCount);
 		reaction(() => this.onlyRatedSongs, this.updateResultsWithTotalCount);
 		reaction(() => this.parentVersion.id, this.updateResultsWithTotalCount);
 		// TODO: this.pvPlayerStore = new PVPlayerStore();
@@ -125,19 +118,19 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		reaction(() => this.viewMode, this.updateResultsWithTotalCount);
 		reaction(
 			() => this.minBpmFilter.milliBpm,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
+			this.updateResultsWithTotalCount,
 		);
 		reaction(
 			() => this.maxBpmFilter.milliBpm,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
+			this.updateResultsWithTotalCount,
 		);
 		reaction(
 			() => this.minLengthFilter.length,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
+			this.updateResultsWithTotalCount,
 		);
 		reaction(
 			() => this.maxLengthFilter.length,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
+			this.updateResultsWithTotalCount,
 		);
 
 		// TODO: this.playListStore = ;

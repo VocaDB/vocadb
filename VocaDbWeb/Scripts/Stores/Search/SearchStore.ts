@@ -9,7 +9,6 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
-import debounceEffect from '@Stores/debounceEffect';
 import {
 	computed,
 	makeObservable,
@@ -98,7 +97,7 @@ export default class SearchStore implements ICommonSearchStore {
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
 		reaction(() => this.pageSize, this.updateResults);
-		reaction(() => this.searchTerm, debounceEffect(this.updateResults, 300));
+		reaction(() => this.searchTerm, this.updateResults);
 		reaction(() => this.tagFilters.filters, this.updateResults);
 		reaction(() => this.draftsOnly, this.updateResults);
 		reaction(() => this.showTags, this.updateResults);

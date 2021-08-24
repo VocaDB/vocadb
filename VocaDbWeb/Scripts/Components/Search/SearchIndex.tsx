@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 import AlbumSearchList from './Partials/AlbumSearchList';
@@ -264,7 +265,7 @@ const SearchIndex = observer(
 					<div className="control-group">
 						<div className="controls">
 							<div className="input-append">
-								<input
+								<DebounceInput
 									type="text"
 									value={searchStore.searchTerm}
 									onChange={(e): void =>
@@ -274,6 +275,7 @@ const SearchIndex = observer(
 									}
 									className="input-xlarge"
 									placeholder={t('ViewRes.Search:Index.TypeSomething')}
+									debounceTimeout={300}
 								/>
 								{searchStore.searchTerm && (
 									<Button

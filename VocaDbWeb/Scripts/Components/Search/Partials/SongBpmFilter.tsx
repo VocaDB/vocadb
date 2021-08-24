@@ -2,6 +2,7 @@ import SongBpmFilterStore from '@Stores/Search/SongBpmFilter';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 
 const absoluteMinBpm = 20;
 const absoluteMaxBpm = 1015;
@@ -16,7 +17,7 @@ const SongBpmFilter = observer(
 		const [value, setValue] = React.useState(songBpmFilter.bpmAsString ?? '');
 
 		return (
-			<input
+			<DebounceInput
 				type="number"
 				value={value}
 				onChange={(e): void => {
@@ -43,6 +44,7 @@ const SongBpmFilter = observer(
 				min={absoluteMinBpm}
 				max={absoluteMaxBpm}
 				step={bpmStep}
+				debounceTimeout={300}
 			/>
 		);
 	},

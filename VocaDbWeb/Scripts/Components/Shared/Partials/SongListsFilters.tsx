@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 import TagFilters from './TagFilters';
@@ -104,7 +105,7 @@ const SongListsFilters = observer(
 				<div className="control-group">
 					<div className="controls">
 						<div className="input-append">
-							<input
+							<DebounceInput
 								type="text"
 								value={featuredSongListCategoryStore.query}
 								onChange={(e): void =>
@@ -114,6 +115,7 @@ const SongListsFilters = observer(
 								}
 								className="input-xlarge"
 								placeholder={t('ViewRes.Search:Index.TypeSomething')}
+								debounceTimeout={300}
 							/>
 							{featuredSongListCategoryStore.query && (
 								<Button

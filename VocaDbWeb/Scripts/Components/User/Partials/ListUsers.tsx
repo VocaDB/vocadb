@@ -14,6 +14,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 interface ListUsersProps {
@@ -33,7 +34,7 @@ const ListUsers = observer(
 					<div className="control-group">
 						<div className="controls">
 							<div className="input-append">
-								<input
+								<DebounceInput
 									type="text"
 									value={listUsersStore.searchTerm}
 									onChange={(e): void =>
@@ -43,6 +44,7 @@ const ListUsers = observer(
 									}
 									className="input-xlarge"
 									placeholder="Type something..." /* TODO: localize */
+									debounceTimeout={300}
 								/>
 								{listUsersStore.searchTerm && (
 									<Button

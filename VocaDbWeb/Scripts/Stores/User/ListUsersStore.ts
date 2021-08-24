@@ -2,7 +2,6 @@ import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import debounceEffect from '@Stores/debounceEffect';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 // Corresponds to the UserSortRule enum in C#.
@@ -33,10 +32,7 @@ export default class ListUsersStore {
 		reaction(() => this.onlyVerifiedArtists, this.updateResultsWithTotalCount);
 		reaction(() => this.paging.page, this.updateResultsWithoutTotalCount);
 		reaction(() => this.paging.pageSize, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.searchTerm,
-			debounceEffect(this.updateResultsWithTotalCount, 300),
-		);
+		reaction(() => this.searchTerm, this.updateResultsWithTotalCount);
 		reaction(() => this.sort, this.updateResultsWithoutTotalCount);
 
 		this.updateResults(true);

@@ -7,6 +7,7 @@ import SongSearchStore from '@Stores/Search/SongSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 import SongBpmFilter from './SongBpmFilter';
@@ -105,7 +106,7 @@ const SongSearchOptions = observer(
 						{t('ViewRes.Search:Index.MinScore')}
 					</div>
 					<div className="controls">
-						<input
+						<DebounceInput
 							type="number"
 							value={songSearchStore.minScore ?? ''}
 							onChange={(e): void =>
@@ -118,6 +119,7 @@ const SongSearchOptions = observer(
 							maxLength={10}
 							min={0}
 							className="input-small"
+							debounceTimeout={300}
 						/>
 					</div>
 				</div>
@@ -138,7 +140,7 @@ const SongSearchOptions = observer(
 						{t('ViewRes.Search:Index.ReleaseDate')}
 					</div>
 					<div className="controls">
-						<input
+						<DebounceInput
 							type="number"
 							value={songSearchStore.dateYear ?? ''}
 							onChange={(e): void =>
@@ -153,11 +155,12 @@ const SongSearchOptions = observer(
 							max={2100}
 							min={1900}
 							placeholder="Year" /* TODO: localize */
+							debounceTimeout={300}
 						/>
 						{songSearchStore.dateYear && (
 							<>
 								{' '}
-								<input
+								<DebounceInput
 									type="number"
 									value={songSearchStore.dateMonth ?? ''}
 									onChange={(e): void =>
@@ -172,13 +175,14 @@ const SongSearchOptions = observer(
 									max={12}
 									min={1}
 									placeholder="Month" /* TODO: localize */
+									debounceTimeout={300}
 								/>
 							</>
 						)}
 						{songSearchStore.dateMonth && (
 							<>
 								{' '}
-								<input
+								<DebounceInput
 									type="number"
 									value={songSearchStore.dateDay ?? ''}
 									onChange={(e): void => {
@@ -193,6 +197,7 @@ const SongSearchOptions = observer(
 									max={31}
 									min={1}
 									placeholder="Day" /* TODO: localize */
+									debounceTimeout={300}
 								/>
 							</>
 						)}
