@@ -102,7 +102,28 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 	}
 
 	@computed public get routeParams(): SearchRouteParams {
-		return {};
+		return {
+			searchType: SearchType.Artist,
+			artistType: this.artistType,
+			childTags: this.childTags || undefined,
+			draftsOnly: this.draftsOnly || undefined,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+		};
 	}
-	public set routeParams(value: SearchRouteParams) {}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Artist) return;
+
+		this.artistType = value.artistType ?? 'Unknown';
+		this.childTags = value.childTags ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? ArtistSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+	}
 }

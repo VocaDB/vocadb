@@ -61,7 +61,24 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 	};
 
 	@computed public get routeParams(): SearchRouteParams {
-		return {};
+		return {
+			searchType: SearchType.Anything,
+			childTags: this.childTags || undefined,
+			draftsOnly: this.draftsOnly || undefined,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			tagId: this.tagIds,
+		};
 	}
-	public set routeParams(value: SearchRouteParams) {}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Anything) return;
+
+		this.childTags = value.childTags ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.tagIds = value.tagId ?? [];
+	}
 }

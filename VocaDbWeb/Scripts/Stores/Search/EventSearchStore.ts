@@ -107,7 +107,32 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 	};
 
 	@computed public get routeParams(): SearchRouteParams {
-		return {};
+		return {
+			searchType: SearchType.ReleaseEvent,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags || undefined,
+			childVoicebanks: this.artistFilters.childVoicebanks || undefined,
+			draftsOnly: this.draftsOnly || undefined,
+			eventCategory: this.category || undefined,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+		};
 	}
-	public set routeParams(value: SearchRouteParams) {}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.ReleaseEvent) return;
+
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.category = value.eventCategory ?? '';
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? EventSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+	}
 }

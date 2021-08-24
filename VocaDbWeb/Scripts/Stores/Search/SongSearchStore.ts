@@ -283,7 +283,48 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	};
 
 	@computed public get routeParams(): SearchRouteParams {
-		return {};
+		return {
+			searchType: SearchType.Song,
+			artistId: this.artistFilters.artistIds,
+			// TODO: autoplay
+			childTags: this.childTags || undefined,
+			childVoicebanks: this.artistFilters.childVoicebanks || undefined,
+			draftsOnly: this.draftsOnly || undefined,
+			eventId: this.releaseEvent.id,
+			filter: this.searchTerm || undefined,
+			minScore: this.minScore,
+			onlyRatedSongs: this.onlyRatedSongs || undefined,
+			onlyWithPVs: this.pvsOnly || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			// TODO: shuffle
+			since: this.since,
+			songType: this.songType,
+			sort: this.sort,
+			tagId: this.tagIds,
+			viewMode: this.viewMode,
+		};
 	}
-	public set routeParams(value: SearchRouteParams) {}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Song) return;
+
+		this.artistFilters.artistIds = value.artistId ?? [];
+		// TODO: autoplay
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.releaseEvent.id = value.eventId;
+		this.searchTerm = value.filter ?? '';
+		this.minScore = value.minScore;
+		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
+		this.pvsOnly = value.onlyWithPVs ?? false;
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		// TODO: shuffle
+		this.since = value.since;
+		this.songType = value.songType ?? 'Unspecified';
+		this.sort = value.sort ?? SongSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+		this.viewMode = value.viewMode ?? 'Details';
+	}
 }

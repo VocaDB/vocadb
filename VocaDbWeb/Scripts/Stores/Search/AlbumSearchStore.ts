@@ -117,7 +117,34 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 	};
 
 	@computed public get routeParams(): SearchRouteParams {
-		return {};
+		return {
+			searchType: SearchType.Album,
+			artistId: this.artistFilters.artistIds,
+			childTags: this.childTags || undefined,
+			childVoicebanks: this.artistFilters.childVoicebanks || undefined,
+			discType: this.albumType,
+			draftsOnly: this.draftsOnly || undefined,
+			filter: this.searchTerm || undefined,
+			page: this.paging.page,
+			pageSize: this.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+			viewMode: this.viewMode,
+		};
 	}
-	public set routeParams(value: SearchRouteParams) {}
+	public set routeParams(value: SearchRouteParams) {
+		if (value.searchType !== SearchType.Album) return;
+
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.albumType = value.discType ?? 'Unknown';
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? AlbumSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+		this.viewMode = value.viewMode ?? 'Details';
+	}
 }
