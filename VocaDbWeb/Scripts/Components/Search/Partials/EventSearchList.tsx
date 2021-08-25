@@ -2,6 +2,7 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import useRedial from '@Components/useRedial';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
@@ -10,7 +11,6 @@ import EventSearchStore, {
 	EventSortRule,
 } from '@Stores/Search/EventSearchStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
@@ -39,12 +39,21 @@ const EventSearchList = observer(
 			'ViewRes.Event',
 			'VocaDb.Web.Resources.Domain.ReleaseEvents',
 		]);
+		const redial = useRedial(eventSearchStore.routeParams);
 
 		return (
 			<>
-				<EntryCountBox pagingStore={eventSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={eventSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						redial({ pageSize: pageSize, page: 1 })
+					}
+				/>
 
-				<ServerSidePaging pagingStore={eventSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={eventSearchStore.paging}
+					onPageChange={(page): void => redial({ page: page })}
+				/>
 
 				<table
 					className={classNames(
@@ -58,9 +67,7 @@ const EventSearchList = observer(
 							<th colSpan={2}>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											eventSearchStore.sort = EventSortRule.Name;
-										})
+										redial({ sort: EventSortRule.Name, page: 1 })
 									}
 								>
 									{t('ViewRes:Shared.Name')}
@@ -76,9 +83,7 @@ const EventSearchList = observer(
 							<th>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											eventSearchStore.sort = EventSortRule.Date;
-										})
+										redial({ sort: EventSortRule.Date, page: 1 })
 									}
 								>
 									{t('ViewRes.Event:Details.OccurrenceDate')}
@@ -93,9 +98,7 @@ const EventSearchList = observer(
 							<th>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											eventSearchStore.sort = EventSortRule.SeriesName;
-										})
+										redial({ sort: EventSortRule.SeriesName, page: 1 })
 									}
 								>
 									{t('ViewRes.Event:Details.Series')}
@@ -110,9 +113,7 @@ const EventSearchList = observer(
 							<th>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											eventSearchStore.sort = EventSortRule.VenueName;
-										})
+										redial({ sort: EventSortRule.VenueName, page: 1 })
 									}
 								>
 									{t('ViewRes.Event:Details.Venue')}
@@ -180,7 +181,7 @@ const EventSearchList = observer(
 														{index > 0 && ', '}
 														<SafeAnchor
 															onClick={(): void =>
-																eventSearchStore.selectTag(tag.tag)
+																redial({ tagId: [tag.tag.id], page: 1 })
 															}
 														>
 															{tag.tag.name}
@@ -228,7 +229,10 @@ const EventSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={eventSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={eventSearchStore.paging}
+					onPageChange={(page): void => redial({ page: page })}
+				/>
 			</>
 		);
 	},

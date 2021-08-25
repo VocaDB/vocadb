@@ -4,6 +4,7 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
 import { computed, makeObservable, observable } from 'mobx';
 
 import ArtistFilters from './ArtistFilters';
@@ -30,7 +31,7 @@ export interface EventSearchRouteParams {
 	filter?: string;
 	page?: number;
 	pageSize?: number;
-	searchType: SearchType.ReleaseEvent;
+	searchType?: SearchType.ReleaseEvent;
 	sort?: EventSortRule;
 	tag?: string;
 	tagId?: number[];
@@ -125,4 +126,23 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		this.sort = value.sort ?? EventSortRule.Name;
 		this.tagIds = value.tagId ?? [];
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.ReleaseEvent) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.ReleaseEvent) return true;
+
+		if (!_.isEqual(value.tagId, routeParams.tagId)) return true;
+		if (value.draftsOnly !== routeParams.draftsOnly) return true;
+
+		// TODO: afterDate
+		// TODO: beforeDate
+		if (!_.isEqual(value.artistId, routeParams.artistId)) return true;
+		if (value.eventCategory !== routeParams.eventCategory) return true;
+		// TODO: onlyMyEvents
+		if (value.sort !== routeParams.sort) return true;
+
+		return false;
+	};
 }

@@ -23,6 +23,8 @@ export interface ISearchCategoryBaseStore {
 	routeParams: SearchRouteParams;
 
 	updateResultsWithTotalCount: () => void;
+
+	setRouteParams: (value: SearchRouteParams) => void;
 }
 
 // Base class for different types of searches.
@@ -130,8 +132,6 @@ export default abstract class SearchCategoryBaseStore<
 		this.pauseNotifications = true;
 		this.loading = true;
 
-		if (clearResults) this.paging.goToFirstPage();
-
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		this.loadResults(
@@ -169,4 +169,22 @@ export default abstract class SearchCategoryBaseStore<
 	public updateResultsWithTotalCount = (): void => this.updateResults(true);
 
 	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+
+	public abstract shouldClearResults: (value: SearchRouteParams) => boolean;
+
+	public setRouteParams = (value: SearchRouteParams): void => {
+		const shouldClearResults = (value: SearchRouteParams): boolean => {
+			const routeParams = this.routeParams;
+
+			if (value.pageSize !== routeParams.pageSize) return true;
+			if (value.filter !== routeParams.filter) return true;
+
+			return this.shouldClearResults(value);
+		};
+
+		const prevRouteParams = this.routeParams;
+		this.routeParams = value;
+		const clearResults = shouldClearResults(prevRouteParams);
+		this.updateResults(clearResults);
+	};
 }

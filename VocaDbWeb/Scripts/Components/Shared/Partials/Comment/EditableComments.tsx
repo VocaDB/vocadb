@@ -42,7 +42,12 @@ const EditableComments = observer(
 				)}
 
 				{pagination && editableCommentsStore.paging.hasMultiplePages && (
-					<ServerSidePaging pagingStore={editableCommentsStore.paging} />
+					<ServerSidePaging
+						pagingStore={editableCommentsStore.paging}
+						onPageChange={(page): void => {
+							// TODO: implement
+						}}
+					/>
 				)}
 
 				<div>
@@ -74,7 +79,12 @@ const EditableComments = observer(
 				</div>
 
 				{pagination && editableCommentsStore.paging.hasMultiplePages && (
-					<ServerSidePaging pagingStore={editableCommentsStore.paging} />
+					<ServerSidePaging
+						pagingStore={editableCommentsStore.paging}
+						onPageChange={(page): void => {
+							// TODO: implement
+						}}
+					/>
 				)}
 
 				{allowCreateComment && commentBoxEnd && (

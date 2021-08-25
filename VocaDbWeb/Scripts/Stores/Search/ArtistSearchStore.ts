@@ -5,6 +5,7 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
 import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
@@ -30,7 +31,7 @@ export interface ArtistSearchRouteParams {
 	filter?: string;
 	page?: number;
 	pageSize?: number;
-	searchType: SearchType.Artist;
+	searchType?: SearchType.Artist;
 	sort?: ArtistSortRule;
 	tag?: string;
 	tagId?: number[];
@@ -117,4 +118,22 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		this.sort = value.sort ?? ArtistSortRule.Name;
 		this.tagIds = value.tagId ?? [];
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.Artist) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.Artist) return true;
+
+		if (!_.isEqual(value.tagId, routeParams.tagId)) return true;
+		if (value.draftsOnly !== routeParams.draftsOnly) return true;
+
+		// TODO: advancedFilters
+		if (value.sort !== routeParams.sort) return true;
+		if (value.artistType !== routeParams.artistType) return true;
+		// TODO: onlyFollowedByMe
+		// TODO: onlyRootVoicebanks
+
+		return false;
+	};
 }

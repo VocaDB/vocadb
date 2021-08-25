@@ -21,7 +21,7 @@ export interface TagSearchRouteParams {
 	filter?: string;
 	page?: number;
 	pageSize?: number;
-	searchType: SearchType.Tag;
+	searchType?: SearchType.Tag;
 	sort?: TagSortRule;
 }
 
@@ -79,4 +79,17 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		this.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.Tag) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.Tag) return true;
+
+		// TODO: allowAliases
+		// TODO: categoryName
+		if (value.sort !== routeParams.sort) return true;
+
+		return false;
+	};
 }

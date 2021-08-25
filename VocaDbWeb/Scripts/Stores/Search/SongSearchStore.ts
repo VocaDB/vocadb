@@ -48,7 +48,7 @@ export interface SongSearchRouteParams {
 	onlyRatedSongs?: boolean;
 	page?: number;
 	pageSize?: number;
-	searchType: SearchType.Song;
+	searchType?: SearchType.Song;
 	shuffle?: boolean;
 	since?: number;
 	songType?: string /* TODO: enum */;
@@ -288,4 +288,34 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		this.tagIds = value.tagId ?? [];
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.Song) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.Song) return true;
+
+		if (!_.isEqual(value.tagId, routeParams.tagId)) return true;
+		if (value.draftsOnly !== routeParams.draftsOnly) return true;
+
+		// TODO: advancedFilters
+		if (!_.isEqual(value.artistId, routeParams.artistId)) return true;
+		// TODO: afterDate
+		if (value.eventId !== routeParams.eventId) return true;
+		if (value.minScore !== routeParams.minScore) return true;
+		if (value.onlyRatedSongs !== routeParams.onlyRatedSongs) return true;
+		// TODO: parentVersion
+		if (value.onlyWithPVs !== routeParams.onlyWithPVs) return true;
+		if (value.since !== routeParams.since) return true;
+		if (value.songType !== routeParams.songType) return true;
+		if (value.sort !== routeParams.sort) return true;
+		// TODO: unifyEntryTypesAndTags
+		if (value.viewMode !== routeParams.viewMode) return true;
+		// TODO: minBpm
+		// TODO: maxBpm
+		// TODO: minLength
+		// TODO: maxLength
+
+		return false;
+	};
 }

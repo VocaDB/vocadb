@@ -1,5 +1,6 @@
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
+import useRedial from '@Components/useRedial';
 import AlbumSearchStore, {
 	AlbumSortRule,
 } from '@Stores/Search/AlbumSearchStore';
@@ -10,7 +11,6 @@ import EventSearchStore, {
 	EventSortRule,
 } from '@Stores/Search/EventSearchStore';
 import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -32,6 +32,7 @@ interface AlbumSearchDropdownProps {
 export const AlbumSearchDropdown = observer(
 	({ albumSearchStore }: AlbumSearchDropdownProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
+		const redial = useRedial(albumSearchStore.routeParams);
 
 		return (
 			<div className="inline-block search-sort-menu">
@@ -46,11 +47,7 @@ export const AlbumSearchDropdown = observer(
 					<Dropdown.Menu>
 						{albumSortRules.map((sortRule) => (
 							<Dropdown.Item
-								onClick={(): void =>
-									runInAction(() => {
-										albumSearchStore.sort = sortRule;
-									})
-								}
+								onClick={(): void => redial({ sort: sortRule, page: 1 })}
 								key={sortRule}
 							>
 								{t(`Resources:AlbumSortRuleNames.${sortRule}`)}
@@ -81,6 +78,7 @@ interface ArtistSearchDropdownProps {
 export const ArtistSearchDropdown = observer(
 	({ artistSearchStore }: ArtistSearchDropdownProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
+		const redial = useRedial(artistSearchStore.routeParams);
 
 		return (
 			<div className="inline-block search-sort-menu">
@@ -95,11 +93,7 @@ export const ArtistSearchDropdown = observer(
 					<Dropdown.Menu>
 						{artistSortRules.map((sortRule) => (
 							<Dropdown.Item
-								onClick={(): void =>
-									runInAction(() => {
-										artistSearchStore.sort = sortRule;
-									})
-								}
+								onClick={(): void => redial({ sort: sortRule, page: 1 })}
 								key={sortRule}
 							>
 								{t(`Resources:ArtistSortRuleNames.${sortRule}`)}
@@ -127,6 +121,7 @@ export const EventSearchDropdown = observer(
 			'ViewRes',
 			'VocaDb.Web.Resources.Domain.ReleaseEvents',
 		]);
+		const redial = useRedial(eventSearchStore.routeParams);
 
 		return (
 			<div className="inline-block search-sort-menu">
@@ -143,11 +138,7 @@ export const EventSearchDropdown = observer(
 					<Dropdown.Menu>
 						{eventSortRules.map((sortRule) => (
 							<Dropdown.Item
-								onClick={(): void =>
-									runInAction(() => {
-										eventSearchStore.sort = sortRule;
-									})
-								}
+								onClick={(): void => redial({ sort: sortRule, page: 1 })}
 								key={sortRule}
 							>
 								{t(
@@ -179,6 +170,7 @@ interface SongSearchDropdownProps {
 export const SongSearchDropdown = observer(
 	({ songSearchStore }: SongSearchDropdownProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
+		const redial = useRedial(songSearchStore.routeParams);
 
 		return (
 			<div className="inline-block search-sort-menu">
@@ -193,11 +185,7 @@ export const SongSearchDropdown = observer(
 					<Dropdown.Menu>
 						{songSortRules.map((sortRule) => (
 							<Dropdown.Item
-								onClick={(): void =>
-									runInAction(() => {
-										songSearchStore.sort = sortRule;
-									})
-								}
+								onClick={(): void => redial({ sort: sortRule, page: 1 })}
 								key={sortRule}
 							>
 								{t(`Resources:SongSortRuleNames.${sortRule}`)}

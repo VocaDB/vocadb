@@ -9,6 +9,7 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
+import useRedial from '@Components/useRedial';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -73,17 +74,15 @@ interface SearchCategoryProps {
 
 const SearchCategory = observer(
 	({ entryType, title }: SearchCategoryProps): React.ReactElement => {
+		const redial = useRedial(
+			searchStore.getCategoryStore(entryType).routeParams,
+		);
+
 		return (
 			<li
 				className={classNames(searchStore.searchType === entryType && 'active')}
 			>
-				<SafeAnchor
-					onClick={(): void =>
-						runInAction(() => {
-							searchStore.searchType = entryType;
-						})
-					}
-				>
+				<SafeAnchor onClick={(): void => redial({ searchType: entryType })}>
 					{title}
 				</SafeAnchor>
 			</li>
@@ -106,6 +105,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 		const location = useLocation();
+		const redial = useRedial(searchStore.currentCategoryStore.routeParams);
 
 		React.useEffect(() => {
 			const routeParams: any = qs.parse(location.search.slice(1));
@@ -113,9 +113,9 @@ const SearchIndex = observer(
 				runInAction(() => {
 					searchStore.searchType =
 						routeParams.searchType ?? SearchType.Anything;
-
-					searchStore.currentCategoryStore.routeParams = routeParams;
 				});
+
+				searchStore.currentCategoryStore.setRouteParams(routeParams);
 			}
 		}, [location.search]);
 
@@ -185,11 +185,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Details';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Details' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumDetails')}
 										>
@@ -201,11 +197,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.albumSearchStore.viewMode = 'Tiles';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Tiles' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumTiles')}
 										>
@@ -227,11 +219,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'Details';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'Details' })}
 											href="#"
 											title={t('ViewRes.Search:Index.AlbumDetails')}
 										>
@@ -243,11 +231,7 @@ const SearchIndex = observer(
 													'active',
 												'btn-nomargin',
 											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'PlayList';
-												})
-											}
+											onClick={(): void => redial({ viewMode: 'PlayList' })}
 											href="#"
 											title={t('ViewRes.Search:Index.Playlist')}
 										>
@@ -291,9 +275,7 @@ const SearchIndex = observer(
 									type="text"
 									value={searchStore.searchTerm}
 									onChange={(e): void =>
-										runInAction(() => {
-											searchStore.searchTerm = e.target.value;
-										})
+										redial({ filter: e.target.value, page: 1 })
 									}
 									className="input-xlarge"
 									placeholder={t('ViewRes.Search:Index.TypeSomething')}
@@ -302,11 +284,7 @@ const SearchIndex = observer(
 								{searchStore.searchTerm && (
 									<Button
 										variant="danger"
-										onClick={(e): void =>
-											runInAction(() => {
-												searchStore.searchTerm = '';
-											})
-										}
+										onClick={(): void => redial({ filter: undefined, page: 1 })}
 									>
 										{t('ViewRes:Shared.Clear')}
 									</Button>
@@ -401,10 +379,7 @@ const SearchIndex = observer(
 													type="checkbox"
 													checked={searchStore.songSearchStore.pvsOnly}
 													onChange={(e): void =>
-														runInAction(() => {
-															searchStore.songSearchStore.pvsOnly =
-																e.target.checked;
-														})
+														redial({ onlyWithPVs: e.target.checked, page: 1 })
 													}
 												/>
 												{t('ViewRes.Search:Index.OnlyWithPVs')}
@@ -416,9 +391,9 @@ const SearchIndex = observer(
 														type="checkbox"
 														checked={searchStore.songSearchStore.onlyRatedSongs}
 														onChange={(e): void =>
-															runInAction(() => {
-																searchStore.songSearchStore.onlyRatedSongs =
-																	e.target.checked;
+															redial({
+																onlyRatedSongs: e.target.checked,
+																page: 1,
 															})
 														}
 													/>
@@ -454,9 +429,7 @@ const SearchIndex = observer(
 												type="checkbox"
 												checked={searchStore.draftsOnly}
 												onChange={(e): void =>
-													runInAction(() => {
-														searchStore.draftsOnly = e.target.checked;
-													})
+													redial({ draftsOnly: e.target.checked, page: 1 })
 												}
 											/>
 											{t('ViewRes:EntryIndex.OnlyDrafts')}

@@ -1,7 +1,7 @@
 import ArtistTypesDropdownKnockout from '@Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
 import { ArtistAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
+import useRedial from '@Components/useRedial';
 import ArtistSearchStore from '@Stores/Search/ArtistSearchStore';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ interface ArtistSearchOptionsProps {
 const ArtistSearchOptions = observer(
 	({ artistSearchStore }: ArtistSearchOptionsProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes.Search']);
+		const redial = useRedial(artistSearchStore.routeParams);
 
 		return (
 			<div>
@@ -24,9 +25,7 @@ const ArtistSearchOptions = observer(
 						<ArtistTypesDropdownKnockout
 							value={artistSearchStore.artistType}
 							onChange={(e): void =>
-								runInAction(() => {
-									artistSearchStore.artistType = e.target.value;
-								})
+								redial({ artistType: e.target.value, page: 1 })
 							}
 						/>
 					</div>

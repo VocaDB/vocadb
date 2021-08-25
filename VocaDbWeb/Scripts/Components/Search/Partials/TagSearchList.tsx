@@ -2,11 +2,11 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import useRedial from '@Components/useRedial';
 import EntryStatus from '@Models/EntryStatus';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import TagSearchStore, { TagSortRule } from '@Stores/Search/TagSearchStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,12 +18,21 @@ interface TagSearchListProps {
 const TagSearchList = observer(
 	({ tagSearchStore }: TagSearchListProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
+		const redial = useRedial(tagSearchStore.routeParams);
 
 		return (
 			<>
-				<EntryCountBox pagingStore={tagSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={tagSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						redial({ pageSize: pageSize, page: 1 })
+					}
+				/>
 
-				<ServerSidePaging pagingStore={tagSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={tagSearchStore.paging}
+					onPageChange={(page): void => redial({ page: page })}
+				/>
 
 				<table
 					className={classNames(
@@ -37,9 +46,7 @@ const TagSearchList = observer(
 							<th colSpan={2}>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											tagSearchStore.sort = TagSortRule.Name;
-										})
+										redial({ sort: TagSortRule.Name, page: 1 })
 									}
 								>
 									{t('ViewRes:Shared.Name')}
@@ -55,9 +62,7 @@ const TagSearchList = observer(
 							<th>
 								<SafeAnchor
 									onClick={(): void =>
-										runInAction(() => {
-											tagSearchStore.sort = TagSortRule.UsageCount;
-										})
+										redial({ sort: TagSortRule.UsageCount, page: 1 })
 									}
 								>
 									{t('ViewRes.Search:Index.TagUsages')}
@@ -110,7 +115,10 @@ const TagSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={tagSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={tagSearchStore.paging}
+					onPageChange={(page): void => redial({ page: page })}
+				/>
 			</>
 		);
 	},

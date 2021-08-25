@@ -88,7 +88,12 @@ const ViewFolder = observer(
 					</>
 				)}
 
-				<ServerSidePaging pagingStore={discussionIndexStore.paging} />
+				<ServerSidePaging
+					pagingStore={discussionIndexStore.paging}
+					onPageChange={(page): void => {
+						// TODO: implement
+					}}
+				/>
 
 				<table className="table">
 					<thead>
@@ -141,7 +146,12 @@ const ViewFolder = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={discussionIndexStore.paging} />
+				<ServerSidePaging
+					pagingStore={discussionIndexStore.paging}
+					onPageChange={(page): void => {
+						// TODO: implement
+					}}
+				/>
 			</div>
 		);
 	},

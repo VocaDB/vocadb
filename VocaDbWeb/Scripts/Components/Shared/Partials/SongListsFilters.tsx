@@ -136,7 +136,12 @@ const SongListsFilters = observer(
 				<div className="control-group">
 					<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 					<div className="controls">
-						<TagFilters tagFilters={featuredSongListCategoryStore.tagFilters} />
+						<TagFilters
+							tagFilters={featuredSongListCategoryStore.tagFilters}
+							onClear={(): void => {
+								// TODO: implement
+							}}
+						/>
 						<div>
 							<TagAutoComplete
 								type="text"

@@ -1,15 +1,17 @@
 import Button from '@Bootstrap/Button';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import TagFilterStore from '@Stores/Search/TagFilter';
 import TagFiltersStore from '@Stores/Search/TagFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 interface TagFiltersProps {
 	tagFilters: TagFiltersStore;
+	onClear: (tag: TagFilterStore) => void;
 }
 
 const TagFilters = observer(
-	({ tagFilters }: TagFiltersProps): React.ReactElement => {
+	({ tagFilters, onClear }: TagFiltersProps): React.ReactElement => {
 		return (
 			<>
 				{tagFilters.tags.map((tag, index) => (
@@ -29,12 +31,9 @@ const TagFilters = observer(
 									type="text"
 									className="input-large"
 									readOnly
-									value={tag.name}
+									value={tag.name ?? ''}
 								/>
-								<Button
-									variant="danger"
-									onClick={(): void => tagFilters.removeTag(tag)}
-								>
+								<Button variant="danger" onClick={(): void => onClear(tag)}>
 									Clear{/* TODO: localize */}
 								</Button>
 							</div>

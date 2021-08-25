@@ -34,7 +34,7 @@ export interface AlbumSearchRouteParams {
 	filter?: string;
 	page?: number;
 	pageSize?: number;
-	searchType: SearchType.Album;
+	searchType?: SearchType.Album;
 	sort?: AlbumSortRule;
 	tag?: string;
 	tagId?: number[];
@@ -136,4 +136,21 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 		this.tagIds = value.tagId ?? [];
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.Album) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.Album) return true;
+
+		if (!_.isEqual(value.tagId, routeParams.tagId)) return true;
+		if (value.draftsOnly !== routeParams.draftsOnly) return true;
+
+		// TODO: advancedFilters
+		if (value.sort !== routeParams.sort) return true;
+		if (value.discType !== routeParams.discType) return true;
+		if (!_.isEqual(value.artistId, routeParams.artistId)) return true;
+
+		return false;
+	};
 }

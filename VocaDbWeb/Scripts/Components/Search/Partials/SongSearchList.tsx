@@ -4,13 +4,13 @@ import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
+import useRedial from '@Components/useRedial';
 import EntryStatus from '@Models/EntryStatus';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,14 +22,23 @@ interface SongSearchListProps {
 const SongSearchList = observer(
 	({ songSearchStore }: SongSearchListProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Search']);
+		const redial = useRedial(songSearchStore.routeParams);
 
 		return (
 			<>
 				{songSearchStore.viewMode === 'Details' && (
 					<>
-						<EntryCountBox pagingStore={songSearchStore.paging} />
+						<EntryCountBox
+							pagingStore={songSearchStore.paging}
+							onPageSizeChange={(pageSize): void =>
+								redial({ pageSize: pageSize, page: 1 })
+							}
+						/>
 
-						<ServerSidePaging pagingStore={songSearchStore.paging} />
+						<ServerSidePaging
+							pagingStore={songSearchStore.paging}
+							onPageChange={(page): void => redial({ page: page })}
+						/>
 
 						<table
 							className={classNames(
@@ -43,9 +52,7 @@ const SongSearchList = observer(
 									<th colSpan={2}>
 										<SafeAnchor
 											onClick={(): void =>
-												runInAction(() => {
-													songSearchStore.sort = SongSortRule.Name;
-												})
+												redial({ sort: SongSortRule.Name, page: 1 })
 											}
 										>
 											{t('ViewRes:Shared.Name')}
@@ -63,9 +70,7 @@ const SongSearchList = observer(
 									<th>
 										<SafeAnchor
 											onClick={(): void =>
-												runInAction(() => {
-													songSearchStore.sort = SongSortRule.RatingScore;
-												})
+												redial({ sort: SongSortRule.RatingScore, page: 1 })
 											}
 										>
 											{t('ViewRes.Search:Index.Rating')}
@@ -176,7 +181,7 @@ const SongSearchList = observer(
 																{index > 0 && ', '}
 																<SafeAnchor
 																	onClick={(): void =>
-																		songSearchStore.selectTag(tag.tag)
+																		redial({ tagId: [tag.tag.id], page: 1 })
 																	}
 																>
 																	{tag.tag.name}
@@ -196,7 +201,10 @@ const SongSearchList = observer(
 							</tbody>
 						</table>
 
-						<ServerSidePaging pagingStore={songSearchStore.paging} />
+						<ServerSidePaging
+							pagingStore={songSearchStore.paging}
+							onPageChange={(page): void => redial({ page: page })}
+						/>
 					</>
 				)}
 

@@ -124,9 +124,19 @@ const ListUsers = observer(
 				</div>
 
 				<div className={classNames(listUsersStore.loading && 'loading')}>
-					<EntryCountBox pagingStore={listUsersStore.paging} />
+					<EntryCountBox
+						pagingStore={listUsersStore.paging}
+						onPageSizeChange={(pageSize): void => {
+							// TODO: implement
+						}}
+					/>
 
-					<ServerSidePaging pagingStore={listUsersStore.paging} />
+					<ServerSidePaging
+						pagingStore={listUsersStore.paging}
+						onPageChange={(page): void => {
+							// TODO: implement
+						}}
+					/>
 
 					<table className="table table-striped">
 						<thead>
@@ -219,7 +229,12 @@ const ListUsers = observer(
 						</tbody>
 					</table>
 
-					<ServerSidePaging pagingStore={listUsersStore.paging} />
+					<ServerSidePaging
+						pagingStore={listUsersStore.paging}
+						onPageChange={(page): void => {
+							// TODO: implement
+						}}
+					/>
 				</div>
 			</>
 		);

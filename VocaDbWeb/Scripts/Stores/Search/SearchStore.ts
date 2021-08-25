@@ -159,8 +159,8 @@ export default class SearchStore implements ICommonSearchStore {
 		return this.searchType === SearchType.Anything;
 	}
 
-	@computed public get currentCategoryStore(): ISearchCategoryBaseStore {
-		switch (this.searchType) {
+	public getCategoryStore(searchType: SearchType): ISearchCategoryBaseStore {
+		switch (searchType) {
 			case SearchType.Anything:
 				return this.anythingSearchStore;
 			case SearchType.Artist:
@@ -176,6 +176,11 @@ export default class SearchStore implements ICommonSearchStore {
 			default:
 				throw new Error(`Invalid searchType: ${this.searchType}`);
 		}
+	}
+
+	@computed
+	public get currentCategoryStore(): ISearchCategoryBaseStore {
+		return this.getCategoryStore(this.searchType);
 	}
 
 	public updateResults = (): void => {

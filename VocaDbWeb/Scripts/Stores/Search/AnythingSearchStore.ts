@@ -4,6 +4,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import EntryRepository from '@Repositories/EntryRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
 import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
@@ -81,4 +82,16 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		this.pageSize = value.pageSize ?? 10;
 		this.tagIds = value.tagId ?? [];
 	}
+
+	public shouldClearResults = (value: SearchRouteParams): boolean => {
+		if (value.searchType !== SearchType.Anything) return true;
+
+		const routeParams = this.routeParams;
+		if (routeParams.searchType !== SearchType.Anything) return true;
+
+		if (!_.isEqual(value.tagId, routeParams.tagId)) return true;
+		if (value.draftsOnly !== routeParams.draftsOnly) return true;
+
+		return false;
+	};
 }
