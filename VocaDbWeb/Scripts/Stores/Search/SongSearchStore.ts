@@ -56,7 +56,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 	@observable public songType = SongType[SongType.Unspecified] /* TODO: enum */;
 	@observable public sort = SongSortRule.Name;
 	@observable public unifyEntryTypesAndTags = false;
-	@observable public viewMode: string /* TODO: enum */;
+	@observable public viewMode = 'Details' /* TODO: enum */;
 	public readonly minBpmFilter = new SongBpmFilter();
 	public readonly maxBpmFilter = new SongBpmFilter();
 	public readonly minLengthFilter = new SongLengthFilter();
@@ -71,18 +71,6 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
 		// TODO: pvPlayersFactory
-		sort?: SongSortRule,
-		artistId?: number[],
-		childVoicebanks?: boolean,
-		songType?: string,
-		eventId?: number,
-		onlyWithPVs?: boolean,
-		onlyRatedSongs?: boolean,
-		since?: number,
-		minScore?: number,
-		viewMode?: string,
-		autoplay?: boolean,
-		shuffle?: boolean,
 	) {
 		super(commonSearchStore);
 
@@ -90,30 +78,15 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
-		this.artistFilters = new ArtistFilters(values, artistRepo, childVoicebanks);
-		this.artistFilters.selectArtists(artistId);
+		this.artistFilters = new ArtistFilters(values, artistRepo);
 
 		this.releaseEvent = new BasicEntryLinkStore<IEntryWithIdAndName>(
-			{ id: eventId!, name: undefined },
+			{ id: undefined!, name: undefined },
 			(entryId) =>
 				this.eventRepo
 					? eventRepo.getOne({ id: entryId })
 					: Promise.resolve(undefined),
 		);
-
-		if (eventId) this.releaseEvent.id = eventId;
-
-		if (sort) this.sort = sort;
-
-		if (songType) this.songType = songType;
-
-		if (onlyWithPVs) this.pvsOnly = onlyWithPVs;
-
-		if (onlyRatedSongs) this.onlyRatedSongs = onlyRatedSongs;
-
-		this.minScore = minScore || undefined;
-		this.since = since;
-		this.viewMode = viewMode || 'Details';
 
 		this.parentVersion = new BasicEntryLinkStore<SongContract>(
 			undefined,

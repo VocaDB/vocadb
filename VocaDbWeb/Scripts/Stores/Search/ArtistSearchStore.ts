@@ -32,13 +32,10 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
-		artistType?: string,
 	) {
 		super(commonSearchStore);
 
 		makeObservable(this);
-
-		if (artistType) this.artistType = artistType;
 
 		reaction(
 			() => this.advancedFilters.filters.map((filter) => filter.description),

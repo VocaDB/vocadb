@@ -18,13 +18,13 @@ import {
 	runInAction,
 } from 'mobx';
 
-import AlbumSearchStore, { AlbumSortRule } from './AlbumSearchStore';
+import AlbumSearchStore from './AlbumSearchStore';
 import AnythingSearchStore from './AnythingSearchStore';
 import ArtistSearchStore from './ArtistSearchStore';
 import { ICommonSearchStore } from './CommonSearchStore';
-import EventSearchStore, { EventSortRule } from './EventSearchStore';
+import EventSearchStore from './EventSearchStore';
 import { ISearchCategoryBaseStore } from './SearchCategoryBaseStore';
-import SongSearchStore, { SongSortRule } from './SongSearchStore';
+import SongSearchStore from './SongSearchStore';
 import TagFilters from './TagFilters';
 import TagSearchStore from './TagSearchStore';
 
@@ -66,62 +66,24 @@ export default class SearchStore implements ICommonSearchStore {
 		tagRepo: TagRepository,
 		userRepo: UserRepository,
 		// TODO: pvPlayersFactory: PVPlayersFactory,
-		searchType?: SearchType,
-		searchTerm?: string,
-		tagIds?: number[],
-		sort?: string,
-		artistId?: number[],
-		childTags?: boolean,
-		childVoicebanks?: boolean,
-		eventId?: number,
-		artistType?: string,
-		albumType?: string,
-		songType?: string,
-		eventCategory?: string,
-		onlyWithPVs?: boolean,
-		onlyRatedSongs?: boolean,
-		since?: number,
-		minScore?: number,
-		viewMode?: string,
-		autoplay?: boolean,
-		shuffle?: boolean,
-		pageSize?: number,
 	) {
 		makeObservable(this);
 
 		this.tagFilters = new TagFilters(values, tagRepo);
 
-		if (searchTerm) this.searchTerm = searchTerm;
-
-		const isAlbum = searchType === SearchType.Album;
-		const isSong = searchType === SearchType.Song;
-
 		this.anythingSearchStore = new AnythingSearchStore(this, values, entryRepo);
-		this.artistSearchStore = new ArtistSearchStore(
-			this,
-			values,
-			artistRepo,
-			artistType,
-		);
+		this.artistSearchStore = new ArtistSearchStore(this, values, artistRepo);
 		this.albumSearchStore = new AlbumSearchStore(
 			this,
 			values,
 			albumRepo,
 			artistRepo,
-			isAlbum ? AlbumSortRule[sort as keyof typeof AlbumSortRule] : undefined,
-			isAlbum ? artistId : undefined,
-			isAlbum ? childVoicebanks : undefined,
-			albumType,
-			isAlbum ? viewMode : undefined,
 		);
 		this.eventSearchStore = new EventSearchStore(
 			this,
 			values,
 			eventRepo,
 			artistRepo,
-			EventSortRule[sort as keyof typeof EventSortRule],
-			artistId,
-			eventCategory,
 		);
 		this.songSearchStore = new SongSearchStore(
 			this,
@@ -132,39 +94,8 @@ export default class SearchStore implements ICommonSearchStore {
 			eventRepo,
 			artistRepo,
 			// TODO: pvPlayersFactory,
-			isSong ? SongSortRule[sort as keyof typeof SongSortRule] : undefined,
-			isSong ? artistId : undefined,
-			isSong ? childVoicebanks : undefined,
-			songType,
-			eventId,
-			onlyWithPVs,
-			onlyRatedSongs,
-			since,
-			isSong ? minScore : undefined,
-			isSong ? viewMode : undefined,
-			autoplay,
-			shuffle,
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
-
-		if (
-			tagIds != null ||
-			!!artistId ||
-			!!eventId ||
-			artistType ||
-			albumType ||
-			songType ||
-			eventCategory ||
-			onlyWithPVs != null ||
-			since ||
-			minScore
-		)
-			this.showAdvancedFilters = true;
-
-		if (searchType) this.searchType = searchType;
-		if (tagIds) this.tagFilters.addTags(tagIds);
-		if (tagIds && childTags) this.tagFilters.childTags = childTags;
-		if (pageSize) this.pageSize = pageSize;
 
 		reaction(() => this.pageSize, this.updateResults);
 		reaction(() => this.searchTerm, debounceEffect(this.updateResults, 300));

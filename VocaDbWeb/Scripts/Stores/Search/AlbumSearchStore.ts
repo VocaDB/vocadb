@@ -25,21 +25,16 @@ export enum AlbumSortRule {
 }
 
 export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContract> {
-	@observable public albumType: string /* TODO: enum */;
+	@observable public albumType = 'Unknown' /* TODO: enum */;
 	public readonly artistFilters: ArtistFilters;
-	@observable public sort: AlbumSortRule;
-	@observable public viewMode: string /* TODO: enum */;
+	@observable public sort = AlbumSortRule.Name;
+	@observable public viewMode = 'Details' /* TODO: enum */;
 
 	public constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 		artistRepo: ArtistRepository,
-		sort?: AlbumSortRule,
-		artistId?: number[],
-		childVoicebanks?: boolean,
-		albumType?: string,
-		viewMode?: string,
 	) {
 		super(commonSearchStore);
 
@@ -49,12 +44,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			() => this.advancedFilters.filters.map((filter) => filter.description),
 			this.updateResultsWithTotalCount,
 		);
-		this.artistFilters = new ArtistFilters(values, artistRepo, childVoicebanks);
-		this.artistFilters.selectArtists(artistId);
-
-		this.albumType = albumType || 'Unknown';
-		this.sort = sort || AlbumSortRule.Name;
-		this.viewMode = viewMode || 'Details';
+		this.artistFilters = new ArtistFilters(values, artistRepo);
 
 		reaction(() => this.sort, this.updateResultsWithTotalCount);
 		reaction(() => this.albumType, this.updateResultsWithTotalCount);

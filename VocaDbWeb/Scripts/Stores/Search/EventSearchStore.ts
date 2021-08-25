@@ -34,20 +34,12 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		private readonly values: GlobalValues,
 		private readonly eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
-		sort?: EventSortRule,
-		artistId?: number[],
-		category?: string,
 	) {
 		super(commonSearchStore);
 
 		makeObservable(this);
 
-		this.artistFilters = new ArtistFilters(values, artistRepo, false);
-		this.artistFilters.selectArtists(artistId);
-
-		if (sort) this.sort = sort;
-
-		if (category) this.category = category;
+		this.artistFilters = new ArtistFilters(values, artistRepo);
 
 		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
 		reaction(

@@ -20,19 +20,16 @@ export default class ArtistFilters {
 	@observable public artists: ArtistFilter[] = [];
 	@observable public artistParticipationStatus = 'Everything' /* TODO: enum */;
 	public readonly artistSearchParams: ArtistAutoCompleteParams;
-	@observable public childVoicebanks: boolean;
+	@observable public childVoicebanks = false;
 	@observable public includeMembers = false;
 
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
-		childVoicebanks?: boolean,
 	) {
 		makeObservable(this);
 
 		this.artistSearchParams = { acceptSelection: this.selectArtist };
-
-		this.childVoicebanks = childVoicebanks || false;
 	}
 
 	@computed public get artistIds(): number[] {
