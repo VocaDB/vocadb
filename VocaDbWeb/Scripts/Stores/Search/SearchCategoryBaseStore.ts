@@ -54,7 +54,6 @@ export default abstract class SearchCategoryBaseStore<
 				commonSearchStore.pageSize = pageSize;
 			},
 		);
-		reaction(() => this.paging.page, this.updateResultsWithoutTotalCount);
 	}
 
 	@computed public get childTags(): boolean {

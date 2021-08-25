@@ -108,19 +108,7 @@ export default class SearchStore implements ICommonSearchStore {
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
-		reaction(() => this.pageSize, this.updateResults);
-		reaction(() => this.searchTerm, this.updateResults);
-		reaction(() => this.tagFilters.filters, this.updateResults);
-		reaction(() => this.draftsOnly, this.updateResults);
 		reaction(() => this.showTags, this.updateResults);
-
-		reaction(
-			() => this.searchType,
-			(val) => {
-				this.updateResults();
-				this.currentSearchType = val;
-			},
-		);
 
 		tagRepo
 			.getTopTags({

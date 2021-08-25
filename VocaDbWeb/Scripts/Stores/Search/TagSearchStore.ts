@@ -3,7 +3,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
@@ -38,10 +38,6 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		super(commonSearchStore);
 
 		makeObservable(this);
-
-		reaction(() => this.allowAliases, this.updateResultsWithTotalCount);
-		reaction(() => this.categoryName, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
 	}
 
 	public loadResults = (

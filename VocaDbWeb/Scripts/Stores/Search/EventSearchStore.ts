@@ -4,7 +4,7 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
@@ -56,16 +56,6 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		makeObservable(this);
 
 		this.artistFilters = new ArtistFilters(values, artistRepo);
-
-		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.beforeDate, this.updateResultsWithTotalCount);
-		reaction(() => this.category, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyMyEvents, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
 	}
 
 	@computed public get fields(): string {

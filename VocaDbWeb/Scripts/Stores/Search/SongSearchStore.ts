@@ -14,7 +14,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import _ from 'lodash';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
 import ArtistFilters from './ArtistFilters';
@@ -117,46 +117,7 @@ export default class SongSearchStore extends SearchCategoryBaseStore<ISongSearch
 				songRepo.getOne({ id: entryId, lang: values.languagePreference }),
 		);
 
-		reaction(
-			() => this.advancedFilters.filters.map((filter) => filter.description),
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
-		reaction(() => this.releaseEvent.id, this.updateResultsWithTotalCount);
-		reaction(() => this.minScore, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyRatedSongs, this.updateResultsWithTotalCount);
-		reaction(() => this.parentVersion.id, this.updateResultsWithTotalCount);
 		// TODO: this.pvPlayerStore = new PVPlayerStore();
-		reaction(() => this.pvsOnly, this.updateResultsWithTotalCount);
-		reaction(() => this.since, this.updateResultsWithTotalCount);
-		reaction(() => this.songType, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.unifyEntryTypesAndTags,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.viewMode, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.minBpmFilter.milliBpm,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.maxBpmFilter.milliBpm,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.minLengthFilter.length,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(
-			() => this.maxLengthFilter.length,
-			this.updateResultsWithTotalCount,
-		);
-
 		// TODO: this.playListStore = ;
 	}
 

@@ -5,7 +5,7 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
@@ -50,15 +50,6 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		super(commonSearchStore);
 
 		makeObservable(this);
-
-		reaction(
-			() => this.advancedFilters.filters.map((filter) => filter.description),
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
-		reaction(() => this.artistType, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyFollowedByMe, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyRootVoicebanks, this.updateResultsWithTotalCount);
 	}
 
 	@computed public get fields(): string {

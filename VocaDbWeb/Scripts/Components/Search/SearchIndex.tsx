@@ -108,10 +108,6 @@ const SearchIndex = observer(
 		const location = useLocation();
 
 		React.useEffect(() => {
-			searchStore.updateResults();
-		}, []);
-
-		React.useEffect(() => {
 			const routeParams: any = qs.parse(location.search.slice(1));
 			if (validate(routeParams)) {
 				runInAction(() => {
