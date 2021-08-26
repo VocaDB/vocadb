@@ -37,7 +37,7 @@ export default class ServerSidePagingStore {
 		const start = Math.max(this.page - 4, 1);
 		const end = Math.min(this.page + 4, this.totalPages);
 
-		return _.range(start, end + 1);
+		return end >= start ? _.range(start, end + 1) : [];
 	}
 
 	@computed public get showMoreBegin(): boolean {
