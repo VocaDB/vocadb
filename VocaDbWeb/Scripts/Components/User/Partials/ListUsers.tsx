@@ -6,11 +6,11 @@ import {
 	UserLanguageCultureDropdownList,
 } from '@Components/Shared/Partials/Knockout/DropdownList';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
+import { useRedial } from '@Components/redial';
 import UserGroup from '@Models/Users/UserGroup';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ListUsersStore, { UserSortRule } from '@Stores/User/ListUsersStore';
 import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';
@@ -24,6 +24,7 @@ interface ListUsersProps {
 const ListUsers = observer(
 	({ listUsersStore }: ListUsersProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.User']);
+		const redial = useRedial(listUsersStore.routeParams);
 
 		return (
 			<>
@@ -38,9 +39,7 @@ const ListUsers = observer(
 									type="text"
 									value={listUsersStore.searchTerm}
 									onChange={(e): void =>
-										runInAction(() => {
-											listUsersStore.searchTerm = e.target.value;
-										})
+										redial({ filter: e.target.value, page: 1 })
 									}
 									className="input-xlarge"
 									placeholder="Type something..." /* TODO: localize */
@@ -49,11 +48,7 @@ const ListUsers = observer(
 								{listUsersStore.searchTerm && (
 									<Button
 										variant="danger"
-										onClick={(): void =>
-											runInAction(() => {
-												listUsersStore.searchTerm = '';
-											})
-										}
+										onClick={(): void => redial({ filter: '', page: 1 })}
 									>
 										{t('ViewRes:Shared.Clear')}
 									</Button>
@@ -68,9 +63,7 @@ const ListUsers = observer(
 							<UserGroupDropdownList
 								value={listUsersStore.group}
 								onChange={(e): void =>
-									runInAction(() => {
-										listUsersStore.group = e.target.value as UserGroup;
-									})
+									redial({ groupId: e.target.value as UserGroup, page: 1 })
 								}
 							/>
 						</div>
@@ -84,9 +77,7 @@ const ListUsers = observer(
 							<UserLanguageCultureDropdownList
 								value={listUsersStore.knowsLanguage}
 								onChange={(e): void =>
-									runInAction(() => {
-										listUsersStore.knowsLanguage = e.target.value;
-									})
+									redial({ knowsLanguage: e.target.value, page: 1 })
 								}
 								placeholder=""
 							/>
@@ -100,9 +91,7 @@ const ListUsers = observer(
 									type="checkbox"
 									checked={listUsersStore.onlyVerifiedArtists}
 									onChange={(e): void =>
-										runInAction(() => {
-											listUsersStore.onlyVerifiedArtists = e.target.checked;
-										})
+										redial({ onlyVerifiedArtists: e.target.checked, page: 1 })
 									}
 								/>
 								{t('ViewRes.User:Index.VerifiedArtists')}
@@ -112,9 +101,7 @@ const ListUsers = observer(
 									type="checkbox"
 									checked={listUsersStore.disabledUsers}
 									onChange={(e): void =>
-										runInAction(() => {
-											listUsersStore.disabledUsers = e.target.checked;
-										})
+										redial({ disabledUsers: e.target.checked, page: 1 })
 									}
 								/>
 								{t('ViewRes.User:Index.ShowDisabledUsers')}
@@ -124,9 +111,17 @@ const ListUsers = observer(
 				</div>
 
 				<div className={classNames(listUsersStore.loading && 'loading')}>
-					<EntryCountBox pagingStore={listUsersStore.paging} />
+					<EntryCountBox
+						pagingStore={listUsersStore.paging}
+						onPageSizeChange={(pageSize): void =>
+							redial({ pageSize: pageSize, page: 1 })
+						}
+					/>
 
-					<ServerSidePaging pagingStore={listUsersStore.paging} />
+					<ServerSidePaging
+						pagingStore={listUsersStore.paging}
+						onPageChange={(page): void => redial({ page: page })}
+					/>
 
 					<table className="table table-striped">
 						<thead>
@@ -134,9 +129,7 @@ const ListUsers = observer(
 								<th colSpan={2}>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												listUsersStore.sort = UserSortRule.Name;
-											})
+											redial({ sort: UserSortRule.Name, page: 1 })
 										}
 										href="#"
 									>
@@ -152,9 +145,7 @@ const ListUsers = observer(
 								<th>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												listUsersStore.sort = UserSortRule.RegisterDate;
-											})
+											redial({ sort: UserSortRule.RegisterDate, page: 1 })
 										}
 										href="#"
 									>
@@ -170,9 +161,7 @@ const ListUsers = observer(
 								<th>
 									<SafeAnchor
 										onClick={(): void =>
-											runInAction(() => {
-												listUsersStore.sort = UserSortRule.Group;
-											})
+											redial({ sort: UserSortRule.Group, page: 1 })
 										}
 										href="#"
 									>
@@ -219,7 +208,10 @@ const ListUsers = observer(
 						</tbody>
 					</table>
 
-					<ServerSidePaging pagingStore={listUsersStore.paging} />
+					<ServerSidePaging
+						pagingStore={listUsersStore.paging}
+						onPageChange={(page): void => redial({ page: page })}
+					/>
 				</div>
 			</>
 		);

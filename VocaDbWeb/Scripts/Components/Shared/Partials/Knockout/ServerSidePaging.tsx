@@ -1,29 +1,32 @@
 import Pagination from '@Bootstrap/Pagination';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ServerSidePagingProps {
 	pagingStore: ServerSidePagingStore;
+	onPageChange: (page: number) => void;
 }
 
 const ServerSidePaging = observer(
-	({ pagingStore }: ServerSidePagingProps): React.ReactElement => {
+	({
+		pagingStore,
+		onPageChange,
+	}: ServerSidePagingProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Other']);
 
 		return (
 			<Pagination>
 				<Pagination.First
 					disabled={pagingStore.isFirstPage}
-					onClick={pagingStore.goToFirstPage}
+					onClick={(): void => onPageChange(1)}
 				>
 					&laquo;&laquo; {t('VocaDb.Web.Resources.Other:PagedList.First')}
 				</Pagination.First>
 				<Pagination.Prev
 					disabled={pagingStore.isFirstPage}
-					onClick={pagingStore.previousPage}
+					onClick={(): void => onPageChange(pagingStore.page - 1)}
 				>
 					&laquo; {t('VocaDb.Web.Resources.Other:PagedList.Previous')}
 				</Pagination.Prev>
@@ -33,11 +36,7 @@ const ServerSidePaging = observer(
 				{pagingStore.pages.map((page) => (
 					<Pagination.Item
 						active={page === pagingStore.page}
-						onClick={(): void =>
-							runInAction(() => {
-								pagingStore.page = page;
-							})
-						}
+						onClick={(): void => onPageChange(page)}
 						key={page}
 					>
 						{page}
@@ -48,13 +47,13 @@ const ServerSidePaging = observer(
 
 				<Pagination.Next
 					disabled={pagingStore.isLastPage}
-					onClick={pagingStore.nextPage}
+					onClick={(): void => onPageChange(pagingStore.page + 1)}
 				>
 					{t('VocaDb.Web.Resources.Other:PagedList.Next')} &raquo;
 				</Pagination.Next>
 				<Pagination.Last
 					disabled={pagingStore.isLastPage}
-					onClick={pagingStore.goToLastPage}
+					onClick={(): void => onPageChange(pagingStore.totalPages)}
 				>
 					{t('VocaDb.Web.Resources.Other:PagedList.Last')} &raquo;&raquo;
 				</Pagination.Last>

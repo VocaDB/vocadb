@@ -42,9 +42,25 @@ const EventSearchList = observer(
 
 		return (
 			<>
-				<EntryCountBox pagingStore={eventSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={eventSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						runInAction(() => {
+							// TODO: use redial
+							eventSearchStore.paging.pageSize = pageSize;
+						})
+					}
+				/>
 
-				<ServerSidePaging pagingStore={eventSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={eventSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							eventSearchStore.paging.page = page;
+						})
+					}
+				/>
 
 				<table
 					className={classNames(
@@ -228,7 +244,15 @@ const EventSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={eventSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={eventSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							eventSearchStore.paging.page = page;
+						})
+					}
+				/>
 			</>
 		);
 	},

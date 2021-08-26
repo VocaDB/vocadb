@@ -1,8 +1,10 @@
+import { IStoreWithRouteParams } from '@Components/redial';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { makeObservable, observable, reaction, runInAction } from 'mobx';
+import _ from 'lodash';
+import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Corresponds to the UserSortRule enum in C#.
 export enum UserSortRule {
@@ -11,7 +13,28 @@ export enum UserSortRule {
 	Group = 'Group',
 }
 
-export default class ListUsersStore {
+export interface ListUsersRouteParams {
+	disabledUsers?: boolean;
+	filter?: string;
+	groupId?: UserGroup;
+	knowsLanguage?: string;
+	onlyVerifiedArtists?: boolean;
+	page?: number;
+	pageSize?: number;
+	sort?: UserSortRule;
+}
+
+const membersWithTotalCount: (keyof ListUsersRouteParams)[] = [
+	'disabledUsers',
+	'groupId',
+	'knowsLanguage',
+	'onlyVerifiedArtists',
+	'pageSize',
+	'filter',
+];
+
+export default class ListUsersStore
+	implements IStoreWithRouteParams<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -25,26 +48,43 @@ export default class ListUsersStore {
 
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
-
-		reaction(() => this.disabledUsers, this.updateResultsWithTotalCount);
-		reaction(() => this.group, this.updateResultsWithTotalCount);
-		reaction(() => this.knowsLanguage, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyVerifiedArtists, this.updateResultsWithTotalCount);
-		reaction(() => this.paging.page, this.updateResultsWithoutTotalCount);
-		reaction(() => this.paging.pageSize, this.updateResultsWithTotalCount);
-		reaction(() => this.searchTerm, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithoutTotalCount);
-
-		this.updateResults(true);
 	}
 
-	private updateResults = (clearResults: boolean): void => {
+	@computed public get routeParams(): ListUsersRouteParams {
+		return {
+			disabledUsers: this.disabledUsers || undefined,
+			filter: this.searchTerm || undefined,
+			groupId: this.group,
+			knowsLanguage: this.knowsLanguage || undefined,
+			onlyVerifiedArtists: this.onlyVerifiedArtists || undefined,
+			page: this.paging.page,
+			pageSize: this.paging.pageSize,
+			sort: this.sort,
+		};
+	}
+	public set routeParams(value: ListUsersRouteParams) {
+		this.disabledUsers = value.disabledUsers ?? false;
+		this.searchTerm = value.filter ?? '';
+		this.group = value.groupId ?? UserGroup.Nothing;
+		this.knowsLanguage = value.knowsLanguage ?? '';
+		this.onlyVerifiedArtists = value.onlyVerifiedArtists ?? false;
+		this.paging.page = value.page ?? 1;
+		this.paging.pageSize = value.pageSize ?? 20;
+		this.sort = value.sort ?? UserSortRule.RegisterDate;
+	}
+
+	public shouldClearResults(value: ListUsersRouteParams): boolean {
+		return !_.isEqual(
+			_.pick(value, membersWithTotalCount),
+			_.pick(this.routeParams, membersWithTotalCount),
+		);
+	}
+
+	public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
-
-		if (clearResults) this.paging.goToFirstPage();
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 		this.userRepo

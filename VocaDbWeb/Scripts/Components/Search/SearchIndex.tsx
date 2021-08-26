@@ -93,6 +93,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
+		// TODO: extract a custom hook
 		React.useEffect(() => {
 			searchStore.updateResults();
 		}, []);

@@ -88,7 +88,15 @@ const ViewFolder = observer(
 					</>
 				)}
 
-				<ServerSidePaging pagingStore={discussionIndexStore.paging} />
+				<ServerSidePaging
+					pagingStore={discussionIndexStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							discussionIndexStore.paging.page = page;
+						})
+					}
+				/>
 
 				<table className="table">
 					<thead>
@@ -141,7 +149,15 @@ const ViewFolder = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={discussionIndexStore.paging} />
+				<ServerSidePaging
+					pagingStore={discussionIndexStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							discussionIndexStore.paging.page = page;
+						})
+					}
+				/>
 			</div>
 		);
 	},

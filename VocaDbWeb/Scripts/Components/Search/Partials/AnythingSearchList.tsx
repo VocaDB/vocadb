@@ -59,9 +59,25 @@ const AnythingSearchList = observer(
 
 		return (
 			<div>
-				<EntryCountBox pagingStore={anythingSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={anythingSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						runInAction(() => {
+							// TODO: use redial
+							anythingSearchStore.paging.pageSize = pageSize;
+						})
+					}
+				/>
 
-				<ServerSidePaging pagingStore={anythingSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={anythingSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							anythingSearchStore.paging.page = page;
+						})
+					}
+				/>
 
 				<table
 					className={classNames(
@@ -193,7 +209,15 @@ const AnythingSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={anythingSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={anythingSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							anythingSearchStore.paging.page = page;
+						})
+					}
+				/>
 			</div>
 		);
 	},

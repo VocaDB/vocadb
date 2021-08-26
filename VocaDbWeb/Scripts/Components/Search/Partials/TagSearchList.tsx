@@ -21,9 +21,25 @@ const TagSearchList = observer(
 
 		return (
 			<>
-				<EntryCountBox pagingStore={tagSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={tagSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						runInAction(() => {
+							// TODO: use redial
+							tagSearchStore.paging.pageSize = pageSize;
+						})
+					}
+				/>
 
-				<ServerSidePaging pagingStore={tagSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={tagSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							tagSearchStore.paging.page = page;
+						})
+					}
+				/>
 
 				<table
 					className={classNames(
@@ -110,7 +126,15 @@ const TagSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={tagSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={tagSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							tagSearchStore.paging.page = page;
+						})
+					}
+				/>
 			</>
 		);
 	},

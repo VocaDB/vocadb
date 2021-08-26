@@ -30,9 +30,25 @@ const AlbumSearchList = observer(
 
 		return (
 			<>
-				<EntryCountBox pagingStore={albumSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={albumSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						runInAction(() => {
+							// TODO: use redial
+							albumSearchStore.paging.pageSize = pageSize;
+						})
+					}
+				/>
 
-				<ServerSidePaging pagingStore={albumSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={albumSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							albumSearchStore.paging.page = page;
+						})
+					}
+				/>
 
 				{albumSearchStore.viewMode === 'Details' && (
 					<table
@@ -234,7 +250,15 @@ const AlbumSearchList = observer(
 					</ul>
 				)}
 
-				<ServerSidePaging pagingStore={albumSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={albumSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							albumSearchStore.paging.page = page;
+						})
+					}
+				/>
 			</>
 		);
 	},

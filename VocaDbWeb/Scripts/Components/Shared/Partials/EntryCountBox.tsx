@@ -7,16 +7,22 @@ import EntryCount from './Knockout/EntryCount';
 interface EntryCountBoxProps {
 	pagingStore: ServerSidePagingStore;
 	selections?: number[];
+	onPageSizeChange: (pageSize: number) => void;
 }
 
 const EntryCountBox = observer(
 	({
 		pagingStore,
 		selections = [10, 20, 40, 100],
+		onPageSizeChange,
 	}: EntryCountBoxProps): React.ReactElement => {
 		return (
 			<div className="pull-right">
-				<EntryCount pagingStore={pagingStore} selections={selections} />
+				<EntryCount
+					pagingStore={pagingStore}
+					selections={selections}
+					onPageSizeChange={onPageSizeChange}
+				/>
 			</div>
 		);
 	},

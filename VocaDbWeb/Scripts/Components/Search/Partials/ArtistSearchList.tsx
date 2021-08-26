@@ -30,9 +30,25 @@ const ArtistSearchList = observer(
 
 		return (
 			<div>
-				<EntryCountBox pagingStore={artistSearchStore.paging} />
+				<EntryCountBox
+					pagingStore={artistSearchStore.paging}
+					onPageSizeChange={(pageSize): void =>
+						runInAction(() => {
+							// TODO: use redial
+							artistSearchStore.paging.pageSize = pageSize;
+						})
+					}
+				/>
 
-				<ServerSidePaging pagingStore={artistSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={artistSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							artistSearchStore.paging.page = page;
+						})
+					}
+				/>
 
 				<table
 					className={classNames(
@@ -149,7 +165,15 @@ const ArtistSearchList = observer(
 					</tbody>
 				</table>
 
-				<ServerSidePaging pagingStore={artistSearchStore.paging} />
+				<ServerSidePaging
+					pagingStore={artistSearchStore.paging}
+					onPageChange={(page): void =>
+						runInAction(() => {
+							// TODO: use redial
+							artistSearchStore.paging.page = page;
+						})
+					}
+				/>
 			</div>
 		);
 	},

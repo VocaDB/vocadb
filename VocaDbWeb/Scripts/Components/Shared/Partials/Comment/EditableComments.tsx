@@ -1,6 +1,7 @@
 import CommentStore from '@Stores/CommentStore';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
 import classNames from 'classnames';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
@@ -42,7 +43,15 @@ const EditableComments = observer(
 				)}
 
 				{pagination && editableCommentsStore.paging.hasMultiplePages && (
-					<ServerSidePaging pagingStore={editableCommentsStore.paging} />
+					<ServerSidePaging
+						pagingStore={editableCommentsStore.paging}
+						onPageChange={(page): void =>
+							runInAction(() => {
+								// TODO: use redial
+								editableCommentsStore.paging.page = page;
+							})
+						}
+					/>
 				)}
 
 				<div>
@@ -74,7 +83,15 @@ const EditableComments = observer(
 				</div>
 
 				{pagination && editableCommentsStore.paging.hasMultiplePages && (
-					<ServerSidePaging pagingStore={editableCommentsStore.paging} />
+					<ServerSidePaging
+						pagingStore={editableCommentsStore.paging}
+						onPageChange={(page): void =>
+							runInAction(() => {
+								// TODO: use redial
+								editableCommentsStore.paging.page = page;
+							})
+						}
+					/>
 				)}
 
 				{allowCreateComment && commentBoxEnd && (

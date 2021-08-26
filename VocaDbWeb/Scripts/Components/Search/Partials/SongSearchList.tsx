@@ -27,9 +27,25 @@ const SongSearchList = observer(
 			<>
 				{songSearchStore.viewMode === 'Details' && (
 					<>
-						<EntryCountBox pagingStore={songSearchStore.paging} />
+						<EntryCountBox
+							pagingStore={songSearchStore.paging}
+							onPageSizeChange={(pageSize): void =>
+								runInAction(() => {
+									// TODO: use redial
+									songSearchStore.paging.pageSize = pageSize;
+								})
+							}
+						/>
 
-						<ServerSidePaging pagingStore={songSearchStore.paging} />
+						<ServerSidePaging
+							pagingStore={songSearchStore.paging}
+							onPageChange={(page): void =>
+								runInAction(() => {
+									// TODO: use redial
+									songSearchStore.paging.page = page;
+								})
+							}
+						/>
 
 						<table
 							className={classNames(
@@ -196,7 +212,15 @@ const SongSearchList = observer(
 							</tbody>
 						</table>
 
-						<ServerSidePaging pagingStore={songSearchStore.paging} />
+						<ServerSidePaging
+							pagingStore={songSearchStore.paging}
+							onPageChange={(page): void =>
+								runInAction(() => {
+									// TODO: use redial
+									songSearchStore.paging.page = page;
+								})
+							}
+						/>
 					</>
 				)}
 
