@@ -5,7 +5,7 @@ import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import _ from 'lodash';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 import ArtistFilters from './ArtistFilters';
@@ -61,18 +61,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 
 		makeObservable(this);
 
-		reaction(
-			() => this.advancedFilters.filters.map((filter) => filter.description),
-			this.updateResultsWithTotalCount,
-		);
 		this.artistFilters = new ArtistFilters(values, artistRepo);
-
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
-		reaction(() => this.albumType, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
 	}
 
 	@computed public get fields(): string {

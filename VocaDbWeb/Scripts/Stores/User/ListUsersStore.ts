@@ -3,13 +3,7 @@ import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
 import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import {
-	computed,
-	makeObservable,
-	observable,
-	reaction,
-	runInAction,
-} from 'mobx';
+import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Corresponds to the UserSortRule enum in C#.
 export enum UserSortRule {
@@ -44,17 +38,6 @@ export default class ListUsersStore
 
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
-
-		reaction(() => this.disabledUsers, this.updateResultsWithTotalCount);
-		reaction(() => this.group, this.updateResultsWithTotalCount);
-		reaction(() => this.knowsLanguage, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyVerifiedArtists, this.updateResultsWithTotalCount);
-		reaction(() => this.paging.page, this.updateResultsWithoutTotalCount);
-		reaction(() => this.paging.pageSize, this.updateResultsWithTotalCount);
-		reaction(() => this.searchTerm, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithoutTotalCount);
-
-		this.updateResults(true);
 	}
 
 	@computed.struct public get routeParams(): ListUsersRouteParams {

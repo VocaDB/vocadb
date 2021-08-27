@@ -59,7 +59,6 @@ export default class SearchStore
 	public readonly songSearchStore: SongSearchStore;
 	public readonly tagSearchStore: TagSearchStore;
 
-	@observable public currentSearchType = SearchType.Anything;
 	@observable public draftsOnly = false;
 	@observable public genreTags: TagBaseContract[] = [];
 	@observable public pageSize = 10;
@@ -111,19 +110,7 @@ export default class SearchStore
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
-		reaction(() => this.pageSize, this.updateResults);
-		reaction(() => this.searchTerm, this.updateResults);
-		reaction(() => this.tagFilters.filters, this.updateResults);
-		reaction(() => this.draftsOnly, this.updateResults);
 		reaction(() => this.showTags, this.updateResults);
-
-		reaction(
-			() => this.searchType,
-			(val) => {
-				this.updateResults();
-				this.currentSearchType = val;
-			},
-		);
 
 		tagRepo
 			.getTopTags({
