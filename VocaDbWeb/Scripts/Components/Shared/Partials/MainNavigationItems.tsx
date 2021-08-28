@@ -47,7 +47,7 @@ const MainNavigationItems = React.memo(
 							</Link>
 						</li>
 						<li>
-							<Link to="/Search?searchType=Album&tag=free&childTags=True">
+							<Link to="/Search?searchType=Album&tag=free&childTags=true">
 								{t('ViewRes:Layout.FreeAlbums')}
 							</Link>
 						</li>
