@@ -9,6 +9,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
+import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import {
 	computed,
@@ -49,7 +50,8 @@ export type SearchRouteParams =
 	| SongSearchRouteParams
 	| TagSearchRouteParams;
 
-export default class SearchStore implements ICommonSearchStore {
+export default class SearchStore
+	implements ICommonSearchStore, IStoreWithRouteParams<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -195,6 +197,15 @@ export default class SearchStore implements ICommonSearchStore {
 
 	public get currentCategoryStore(): ISearchCategoryBaseStore {
 		return this.getCategoryStore(this.searchType);
+	}
+
+	@computed public get routeParams(): SearchRouteParams {
+		return this.currentCategoryStore.routeParams;
+	}
+	public set routeParams(value: SearchRouteParams) {
+		value.searchType ??= SearchType.Anything;
+		this.searchType = value.searchType;
+		this.currentCategoryStore.routeParams = value;
 	}
 
 	public updateResults = (): void => {

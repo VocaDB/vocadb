@@ -36,7 +36,9 @@ export default class ArtistFilters {
 		return _.map(this.artists, (a) => a.id);
 	}
 	public set artistIds(value: number[]) {
-		// TODO: implement
+		// OPTIMIZE
+		this.artists = [];
+		this.selectArtists(value);
 	}
 
 	@computed public get hasMultipleArtists(): boolean {

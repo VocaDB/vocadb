@@ -1,6 +1,7 @@
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
+import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import {
 	computed,
@@ -28,7 +29,8 @@ export interface ListUsersRouteParams {
 	sort?: UserSortRule;
 }
 
-export default class ListUsersStore {
+export default class ListUsersStore
+	implements IStoreWithRouteParams<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;

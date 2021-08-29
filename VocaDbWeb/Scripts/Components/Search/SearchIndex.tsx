@@ -10,6 +10,7 @@ import {
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
 import useScript from '@Components/useScript';
+import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -20,7 +21,12 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+import SearchStore, {
+	SearchRouteParams,
+	SearchType,
+} from '@Stores/Search/SearchStore';
+import Ajv, { JSONSchemaType } from 'ajv';
+import addFormats from 'ajv-formats';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -91,6 +97,14 @@ const SearchCategory = observer(
 	},
 );
 
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+addFormats(ajv);
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema');
+const validate = ajv.compile(schema);
+
 const SearchIndex = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation([
@@ -98,6 +112,8 @@ const SearchIndex = observer(
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
+
+		useStoreWithRouteParams(validate, searchStore);
 
 		React.useEffect(() => {
 			searchStore.updateResults();

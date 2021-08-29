@@ -2,6 +2,7 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import _ from 'lodash';
 import {
@@ -16,9 +17,11 @@ import moment from 'moment';
 
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
+import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
-export interface ISearchCategoryBaseStore {
+export interface ISearchCategoryBaseStore
+	extends IStoreWithRouteParams<SearchRouteParams> {
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -99,7 +102,9 @@ export default abstract class SearchCategoryBaseStore<
 		return _.map(this.tags, (t) => t.id);
 	}
 	public set tagIds(value: number[]) {
-		// TODO: implement
+		// OPTIMIZE
+		this.commonSearchStore.tagFilters.tags = [];
+		this.commonSearchStore.tagFilters.addTags(value);
 	}
 
 	public formatDate = (dateStr: string): string => {
@@ -118,6 +123,8 @@ export default abstract class SearchCategoryBaseStore<
 	@action public selectTag = (tag: TagBaseContract): void => {
 		this.tags = [TagFilter.fromContract(tag)];
 	};
+
+	public abstract routeParams: SearchRouteParams;
 
 	@action public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates
