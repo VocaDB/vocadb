@@ -17,6 +17,7 @@ export default interface GlobalValues {
 	staticContentHost: string;
 
 	paypalDonateTitle?: string;
+	rankingsTitle?: string;
 	siteName: string;
 	siteTitle: string;
 

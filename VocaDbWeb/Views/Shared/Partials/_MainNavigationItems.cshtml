@@ -31,7 +31,7 @@
 			@if (Login.CanManageDb) {
 				<li><a asp-action="Create" asp-controller="Song">@(ViewRes._LayoutStrings.AddSong)</a></li>
 			}
-			<li><a asp-action="Rankings" asp-controller="Song">@(ViewRes.SharedStrings.TopFavoritedSongs)</a></li>
+			<li><a asp-action="Rankings" asp-controller="Song" asp-route-durationHours="168">@(ViewRes.SharedStrings.TopFavoritedSongs)</a></li>
 			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@SearchType.Song" asp-route-sort="@VocaDb.Model.Service.SongSortRule.AdditionDate" asp-route-onlyWithPVs="@true.ToString().ToLowerInvariant()">@ViewRes._LayoutStrings.NewPVs</a></li>
 		</ul>
 	</li>
