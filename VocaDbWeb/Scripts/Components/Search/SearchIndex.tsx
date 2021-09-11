@@ -11,6 +11,7 @@ import {
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
 import useScript from '@Components/useScript';
 import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
+import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -115,9 +116,7 @@ const SearchIndex = observer(
 
 		useStoreWithRouteParams(validate, searchStore);
 
-		React.useEffect(() => {
-			searchStore.updateResults();
-		}, []);
+		useStoreWithUpdateResults(searchStore);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');

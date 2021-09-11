@@ -109,6 +109,23 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 		return ratings;
 	};
 
+	public readonly clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'childTags',
+		'draftsOnly',
+		'searchType',
+
+		'advancedFilters',
+		'sort',
+		'discType',
+		'artistId',
+		'artistParticipationStatus',
+		'childVoicebanks',
+		'includeMembers',
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.Album,

@@ -1,5 +1,6 @@
 import Layout from '@Components/Shared/Layout';
 import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
+import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -28,6 +29,8 @@ const UserIndex = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 
 	useStoreWithRouteParams(validate, listUsersStore);
+
+	useStoreWithUpdateResults(listUsersStore);
 
 	return (
 		<Layout title={t('ViewRes:Shared.Users')}>

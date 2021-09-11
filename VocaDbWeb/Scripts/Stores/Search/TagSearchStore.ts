@@ -63,6 +63,16 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		});
 	};
 
+	public readonly clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'searchType',
+
+		// TODO: allowAliases
+		'categoryName',
+		'sort',
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.Tag,

@@ -1,7 +1,7 @@
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
-import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
+import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -24,7 +24,7 @@ export interface ListUsersRouteParams {
 }
 
 export default class ListUsersStore
-	implements IStoreWithRouteParams<ListUsersRouteParams> {
+	implements IStoreWithUpdateResults<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -39,6 +39,15 @@ export default class ListUsersStore
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
+
+	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
+		'disabledUsers',
+		'groupId',
+		'knowsLanguage',
+		'onlyVerifiedArtists',
+		'pageSize',
+		'filter',
+	];
 
 	@computed.struct public get routeParams(): ListUsersRouteParams {
 		return {
@@ -63,7 +72,7 @@ export default class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	private updateResults = (clearResults: boolean): void => {
+	public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 

@@ -2,7 +2,7 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
+import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import _ from 'lodash';
 import {
@@ -21,7 +21,7 @@ import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseStore
-	extends IStoreWithRouteParams<SearchRouteParams> {
+	extends IStoreWithUpdateResults<SearchRouteParams> {
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -123,6 +123,7 @@ export default abstract class SearchCategoryBaseStore<
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
+	public abstract clearResultsByQueryKeys: string[];
 	public abstract routeParams: SearchRouteParams;
 
 	@action public updateResults = (clearResults: boolean): void => {

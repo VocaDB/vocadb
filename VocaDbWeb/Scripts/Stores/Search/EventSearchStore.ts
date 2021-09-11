@@ -100,6 +100,24 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		});
 	};
 
+	public readonly clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'childTags',
+		'draftsOnly',
+		'searchType',
+
+		'afterDate',
+		'beforeDate',
+		'artistId',
+		'childVoicebanks',
+		'includeMembers',
+		'eventCategory',
+		'onlyMyEvents',
+		'sort',
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,

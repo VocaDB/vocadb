@@ -281,6 +281,38 @@ export default class SongSearchStore
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
+	public readonly clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'childTags',
+		'draftsOnly',
+		'searchType',
+
+		'advancedFilters',
+		'artistId',
+		'artistParticipationStatus',
+		'childVoicebanks',
+		'includeMembers',
+		'dateYear',
+		'dateMonth',
+		'dateDay',
+		'eventId',
+		'minScore',
+		'onlyRatedSongs',
+		'parentVersionId',
+		'onlyWithPVs',
+		'since',
+		'songType',
+		'sort',
+		'unifyEntryTypesAndTags',
+		'viewMode',
+		'minMilliBpm',
+		'maxMilliBpm',
+		'minLength',
+		'maxLength',
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.Song,

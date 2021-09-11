@@ -95,6 +95,21 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		);
 	}
 
+	public readonly clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'childTags',
+		'draftsOnly',
+		'searchType',
+
+		'advancedFilters',
+		'sort',
+		'artistType',
+		'onlyFollowedByMe',
+		// TODO: onlyRootVoicebanks
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.Artist,

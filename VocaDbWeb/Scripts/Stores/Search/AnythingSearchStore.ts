@@ -60,6 +60,14 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
 
+	public readonly clearResultsByQueryKeys: (keyof AnythingSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'draftsOnly',
+		'searchType',
+	];
+
 	@computed.struct public get routeParams(): SearchRouteParams {
 		return {
 			searchType: SearchType.Anything,

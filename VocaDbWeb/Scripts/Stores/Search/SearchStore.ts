@@ -9,7 +9,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
-import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
+import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import {
 	computed,
@@ -51,7 +51,7 @@ export type SearchRouteParams =
 	| TagSearchRouteParams;
 
 export default class SearchStore
-	implements ICommonSearchStore, IStoreWithRouteParams<SearchRouteParams> {
+	implements ICommonSearchStore, IStoreWithUpdateResults<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -110,7 +110,10 @@ export default class SearchStore
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
-		reaction(() => this.showTags, this.updateResults);
+		reaction(
+			() => this.showTags,
+			this.currentCategoryStore.updateResultsWithTotalCount,
+		);
 
 		tagRepo
 			.getTopTags({
@@ -186,6 +189,10 @@ export default class SearchStore
 		return this.getCategoryStore(this.searchType);
 	}
 
+	public get clearResultsByQueryKeys(): string[] {
+		return this.currentCategoryStore.clearResultsByQueryKeys;
+	}
+
 	@computed public get routeParams(): SearchRouteParams {
 		return this.currentCategoryStore.routeParams;
 	}
@@ -195,7 +202,7 @@ export default class SearchStore
 		this.currentCategoryStore.routeParams = value;
 	}
 
-	public updateResults = (): void => {
-		this.currentCategoryStore.updateResultsWithTotalCount();
+	public updateResults = (clearResults: boolean): void => {
+		this.currentCategoryStore.updateResults(clearResults);
 	};
 }
