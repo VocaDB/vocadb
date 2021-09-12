@@ -9,6 +9,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import {
 	computed,
 	makeObservable,
@@ -64,7 +65,7 @@ export default class SearchStore implements ICommonSearchStore {
 		eventRepo: ReleaseEventRepository,
 		tagRepo: TagRepository,
 		userRepo: UserRepository,
-		// TODO: pvPlayersFactory: PVPlayersFactory,
+		pvPlayersFactory: PVPlayersFactory,
 	) {
 		makeObservable(this);
 
@@ -92,7 +93,7 @@ export default class SearchStore implements ICommonSearchStore {
 			userRepo,
 			eventRepo,
 			artistRepo,
-			// TODO: pvPlayersFactory,
+			pvPlayersFactory,
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 

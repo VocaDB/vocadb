@@ -62,4 +62,11 @@ export default class PVRatingButtonsStore {
 				}),
 			);
 	};
+
+	public setRating_favorite = (): void =>
+		this.setRating(SongVoteRating.Favorite);
+
+	public setRating_like = (): void => this.setRating(SongVoteRating.Like);
+
+	public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
 }

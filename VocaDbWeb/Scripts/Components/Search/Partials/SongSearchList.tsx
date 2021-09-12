@@ -2,7 +2,9 @@ import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
 import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
+import PlayList from '@Components/Shared/Partials/PlayList';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import PVPreviewKnockout from '@Components/Shared/Partials/Song/PVPreviewKnockout';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import EntryStatus from '@Models/EntryStatus';
 import SongVoteRating from '@Models/SongVoteRating';
@@ -102,7 +104,13 @@ const SongSearchList = observer(
 											{song.previewStore && song.previewStore.pvServices && (
 												<div className="pull-right">
 													<Button
-														/* TODO: togglePreview */ className="previewSong"
+														onClick={(): void =>
+															song.previewStore?.togglePreview()
+														}
+														className={classNames(
+															'previewSong',
+															song.previewStore.preview && 'active',
+														)}
 														href="#"
 													>
 														<i className="icon-film" />{' '}
@@ -164,7 +172,12 @@ const SongSearchList = observer(
 											{/* TODO: icon-calendar */}
 											<br />
 											<small className="extraInfo">{song.artistString}</small>
-											{/* TODO: PVPreviewKnockout */}
+											{song.previewStore && song.previewStore.pvServices && (
+												<PVPreviewKnockout
+													previewStore={song.previewStore}
+													getPvServiceIcons={songSearchStore.getPVServiceIcons}
+												/>
+											)}
 										</td>
 										{songSearchStore.showTags && (
 											<td className="search-tags-column">
@@ -201,7 +214,12 @@ const SongSearchList = observer(
 				)}
 
 				{songSearchStore.viewMode === 'PlayList' && (
-					<>{/* TODO: _PlayList */}</>
+					<div className="well well-transparent songlist-playlist">
+						<PlayList
+							playListStore={songSearchStore.playListStore}
+							pvPlayerStore={songSearchStore.pvPlayerStore}
+						/>
+					</div>
 				)}
 			</>
 		);

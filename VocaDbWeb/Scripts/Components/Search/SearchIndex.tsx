@@ -9,6 +9,7 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
+import useScript from '@Components/useScript';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -18,6 +19,7 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -26,6 +28,7 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
+import '../../../wwwroot/Content/Styles/songlist.css';
 import AlbumSearchList from './Partials/AlbumSearchList';
 import AlbumSearchOptions from './Partials/AlbumSearchOptions';
 import AnythingSearchList from './Partials/AnythingSearchList';
@@ -48,6 +51,8 @@ const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 
+const pvPlayersFactory = new PVPlayersFactory();
+
 const searchStore = new SearchStore(
 	vdb.values,
 	urlMapper,
@@ -58,6 +63,7 @@ const searchStore = new SearchStore(
 	eventRepo,
 	tagRepo,
 	userRepo,
+	pvPlayersFactory,
 );
 
 interface SearchCategoryProps {
@@ -96,6 +102,9 @@ const SearchIndex = observer(
 		React.useEffect(() => {
 			searchStore.updateResults();
 		}, []);
+
+		useScript('/Scripts/soundcloud-api.js');
+		useScript('https://www.youtube.com/iframe_api');
 
 		return (
 			<Layout>
