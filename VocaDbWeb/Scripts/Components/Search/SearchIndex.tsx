@@ -114,9 +114,14 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useStoreWithRouteParams(validate, searchStore);
+		const { popState } = useStoreWithRouteParams(validate, searchStore);
 
-		useStoreWithUpdateResults(searchStore);
+		useStoreWithUpdateResults(
+			searchStore,
+			React.useCallback(() => {
+				if (!popState.current) searchStore.paging.goToFirstPage();
+			}, [popState]),
+		);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');

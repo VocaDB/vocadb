@@ -28,9 +28,14 @@ const validate = ajv.compile(schema);
 const UserIndex = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 
-	useStoreWithRouteParams(validate, listUsersStore);
+	const { popState } = useStoreWithRouteParams(validate, listUsersStore);
 
-	useStoreWithUpdateResults(listUsersStore);
+	useStoreWithUpdateResults(
+		listUsersStore,
+		React.useCallback(() => {
+			if (!popState.current) listUsersStore.paging.goToFirstPage();
+		}, [popState]),
+	);
 
 	return (
 		<Layout title={t('ViewRes:Shared.Users')}>

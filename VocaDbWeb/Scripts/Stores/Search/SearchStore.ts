@@ -11,6 +11,7 @@ import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
+import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import {
 	computed,
 	makeObservable,
@@ -187,6 +188,10 @@ export default class SearchStore
 
 	public get currentCategoryStore(): ISearchCategoryBaseStore {
 		return this.getCategoryStore(this.searchType);
+	}
+
+	public get paging(): ServerSidePagingStore {
+		return this.currentCategoryStore.paging;
 	}
 
 	public get clearResultsByQueryKeys(): string[] {

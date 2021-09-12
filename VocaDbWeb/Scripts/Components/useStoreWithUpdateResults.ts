@@ -5,6 +5,7 @@ import React from 'react';
 
 const useStoreWithUpdateResults = <T extends Object>(
 	store: IStoreWithUpdateResults<T>,
+	onClearResults: () => void,
 ): void => {
 	React.useEffect(() => {
 		store.updateResults(true);
@@ -24,10 +25,12 @@ const useStoreWithUpdateResults = <T extends Object>(
 					.some((k) => store.clearResultsByQueryKeys.includes(k))
 					.value();
 
+				if (clearResults) onClearResults();
+
 				store.updateResults(clearResults);
 			},
 		);
-	}, [store]);
+	}, [store, onClearResults]);
 };
 
 export default useStoreWithUpdateResults;

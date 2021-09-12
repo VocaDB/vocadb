@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router';
 const useStoreWithRouteParams = <T>(
 	validate: ValidateFunction<T>,
 	store: IStoreWithRouteParams<T>,
-): void => {
+): { popState: React.MutableRefObject<boolean> } => {
 	// Whether currently processing popstate. This is to prevent adding the previous state to history.
 	const popState = React.useRef(false);
 
@@ -41,6 +41,8 @@ const useStoreWithRouteParams = <T>(
 			},
 		);
 	}, [location.pathname, store, navigate]);
+
+	return { popState: popState };
 };
 
 export default useStoreWithRouteParams;

@@ -78,8 +78,6 @@ export default class ListUsersStore
 
 		this.pauseNotifications = true;
 
-		if (clearResults) this.paging.goToFirstPage();
-
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 		this.userRepo
 			.getList({

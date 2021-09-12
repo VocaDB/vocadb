@@ -22,6 +22,8 @@ import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseStore
 	extends IStoreWithUpdateResults<SearchRouteParams> {
+	paging: ServerSidePagingStore;
+
 	updateResultsWithTotalCount: () => void;
 }
 
@@ -132,8 +134,6 @@ export default abstract class SearchCategoryBaseStore<
 
 		this.pauseNotifications = true;
 		this.loading = true;
-
-		if (clearResults) this.paging.goToFirstPage();
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
