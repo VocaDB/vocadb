@@ -3,17 +3,23 @@ import _ from 'lodash';
 import { reaction } from 'mobx';
 import React from 'react';
 
+// Updates search results whenever the `routeParams` property changes.
 const useStoreWithUpdateResults = <T extends Object>(
 	store: IStoreWithUpdateResults<T>,
-	onClearResults: () => void,
+	// Called when search results should be cleared.
+	onClearResults: (popState: boolean) => void,
 ): void => {
 	React.useEffect(() => {
+		// This is called when the page is first loaded.
 		store.updateResults(true);
 
 		// Returns the disposer.
 		return reaction(
 			() => store.routeParams,
 			(routeParams, previousRouteParams) => {
+				// Determines if search results should be cleared by comparing the current and previous values.
+				// Assuming that the current value is `{ filter: 'Miku', page: 3939, searchType: 'Artist' }`, and the previous one is `{ filter: 'Miku', page: 1 }`,
+				// then the diff will be `{ page: 3939, searchType: 'Artist' }`, which results in `['page', 'searchType']`.
 				const clearResults = _.chain(routeParams)
 					.omitBy((v, k) =>
 						_.isEqual(
@@ -25,7 +31,7 @@ const useStoreWithUpdateResults = <T extends Object>(
 					.some((k) => store.clearResultsByQueryKeys.includes(k))
 					.value();
 
-				if (clearResults) onClearResults();
+				if (clearResults) onClearResults(store.popState);
 
 				store.updateResults(clearResults);
 			},

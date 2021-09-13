@@ -1,8 +1,9 @@
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
-import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Corresponds to the UserSortRule enum in C#.
@@ -23,8 +24,15 @@ export interface ListUsersRouteParams {
 	sort?: UserSortRule;
 }
 
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<ListUsersRouteParams> = require('@Stores/User/ListUsersRouteParams.schema');
+const validate = ajv.compile(schema);
+
 export default class ListUsersStore
-	implements IStoreWithUpdateResults<ListUsersRouteParams> {
+	implements IStoreWithPaging<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -39,6 +47,8 @@ export default class ListUsersStore
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
+
+	public popState = false;
 
 	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
 		'disabledUsers',
@@ -71,6 +81,11 @@ export default class ListUsersStore
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
+
+	public validateRouteParams = (data: any): data is ListUsersRouteParams => {
+		if (validate(data)) return true;
+		return false;
+	};
 
 	public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates

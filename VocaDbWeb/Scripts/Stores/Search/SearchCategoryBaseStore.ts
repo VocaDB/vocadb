@@ -2,7 +2,7 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import _ from 'lodash';
 import {
@@ -21,9 +21,10 @@ import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseStore
-	extends IStoreWithUpdateResults<SearchRouteParams> {
-	paging: ServerSidePagingStore;
-
+	extends Omit<
+		IStoreWithPaging<SearchRouteParams>,
+		'popState' | 'validateRouteParams'
+	> {
 	updateResultsWithTotalCount: () => void;
 }
 

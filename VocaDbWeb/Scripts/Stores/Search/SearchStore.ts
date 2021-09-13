@@ -9,9 +9,11 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
-import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Ajv, { JSONSchemaType } from 'ajv';
+import addFormats from 'ajv-formats';
 import {
 	computed,
 	makeObservable,
@@ -51,8 +53,16 @@ export type SearchRouteParams =
 	| SongSearchRouteParams
 	| TagSearchRouteParams;
 
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+addFormats(ajv);
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema');
+const validate = ajv.compile(schema);
+
 export default class SearchStore
-	implements ICommonSearchStore, IStoreWithUpdateResults<SearchRouteParams> {
+	implements ICommonSearchStore, IStoreWithPaging<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -190,6 +200,8 @@ export default class SearchStore
 		return this.getCategoryStore(this.searchType);
 	}
 
+	public popState = false;
+
 	public get paging(): ServerSidePagingStore {
 		return this.currentCategoryStore.paging;
 	}
@@ -206,6 +218,11 @@ export default class SearchStore
 		this.searchType = value.searchType;
 		this.currentCategoryStore.routeParams = value;
 	}
+
+	public validateRouteParams = (data: any): data is SearchRouteParams => {
+		if (validate(data)) return true;
+		return false;
+	};
 
 	public updateResults = (clearResults: boolean): void => {
 		this.currentCategoryStore.updateResults(clearResults);

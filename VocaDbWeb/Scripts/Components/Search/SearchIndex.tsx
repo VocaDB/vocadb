@@ -10,8 +10,7 @@ import {
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
 import useScript from '@Components/useScript';
-import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
-import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
+import useStoreWithPaging from '@Components/useStoreWithPaging';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -22,12 +21,7 @@ import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import SearchStore, {
-	SearchRouteParams,
-	SearchType,
-} from '@Stores/Search/SearchStore';
-import Ajv, { JSONSchemaType } from 'ajv';
-import addFormats from 'ajv-formats';
+import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -98,14 +92,6 @@ const SearchCategory = observer(
 	},
 );
 
-// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
-const ajv = new Ajv({ coerceTypes: true });
-addFormats(ajv);
-
-// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema');
-const validate = ajv.compile(schema);
-
 const SearchIndex = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation([
@@ -114,14 +100,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		const { popState } = useStoreWithRouteParams(validate, searchStore);
-
-		useStoreWithUpdateResults(
-			searchStore,
-			React.useCallback(() => {
-				if (!popState.current) searchStore.paging.goToFirstPage();
-			}, [popState]),
-		);
+		useStoreWithPaging(searchStore);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');
