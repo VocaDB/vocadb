@@ -2,7 +2,7 @@ import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import { reaction } from 'mobx';
 import qs from 'qs';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 
 // Updates a store that implements the `IStoreWithRouteParams` interface when a route changes, and vice versa.
 const useStoreWithRouteParams = <T>(store: IStoreWithRouteParams<T>): void => {
@@ -21,20 +21,24 @@ const useStoreWithRouteParams = <T>(store: IStoreWithRouteParams<T>): void => {
 		}
 	}, [location, store]);
 
-	const navigate = useNavigate();
-
 	React.useEffect(() => {
 		// Returns the disposer.
 		return reaction(
 			() => store.routeParams,
 			(routeParams) => {
 				if (!store.popState) {
-					// TODO: is there any way to push changes to url without re-rendering?
-					navigate(`${location.pathname}?${qs.stringify(routeParams)}`);
+					// Use `window.history.pushState` instead of `useNavigate` so that we can push changes to URL without re-rendering.
+					// Code from: https://github.com/vercel/next.js/discussions/18072#discussioncomment-109059
+					const newUrl = `?${qs.stringify(routeParams)}`;
+					window.history.pushState(
+						{ ...window.history.state, as: newUrl, url: newUrl },
+						'',
+						newUrl,
+					);
 				}
 			},
 		);
-	}, [location.pathname, store, navigate]);
+	}, [store]);
 };
 
 export default useStoreWithRouteParams;
