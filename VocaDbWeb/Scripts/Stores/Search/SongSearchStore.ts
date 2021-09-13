@@ -125,17 +125,14 @@ export default class SongSearchStore
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 
 		this.releaseEvent = new BasicEntryLinkStore<IEntryWithIdAndName>(
-			{ id: undefined!, name: undefined },
 			(entryId) =>
 				this.eventRepo
 					? eventRepo.getOne({ id: entryId })
 					: Promise.resolve(undefined),
 		);
 
-		this.parentVersion = new BasicEntryLinkStore<SongContract>(
-			undefined,
-			(entryId) =>
-				songRepo.getOne({ id: entryId, lang: values.languagePreference }),
+		this.parentVersion = new BasicEntryLinkStore<SongContract>((entryId) =>
+			songRepo.getOne({ id: entryId, lang: values.languagePreference }),
 		);
 
 		this.pvPlayerStore = new PVPlayerStore(
@@ -366,7 +363,7 @@ export default class SongSearchStore
 		this.dateMonth = value.dateMonth;
 		this.dateYear = value.dateYear;
 		this.draftsOnly = value.draftsOnly ?? false;
-		this.releaseEvent.id = value.eventId;
+		this.releaseEvent.selectEntry(value.eventId);
 		this.searchTerm = value.filter ?? '';
 		this.maxLengthFilter.length = value.maxLength ?? 0;
 		this.maxBpmFilter.milliBpm = value.maxMilliBpm;
@@ -377,7 +374,7 @@ export default class SongSearchStore
 		this.pvsOnly = value.onlyWithPVs ?? false;
 		this.paging.page = value.page ?? 1;
 		this.pageSize = value.pageSize ?? 10;
-		this.parentVersion.id = value.parentVersionId;
+		this.parentVersion.selectEntry(value.parentVersionId);
 		// TODO: shuffle
 		this.since = value.since;
 		this.songType = value.songType ?? 'Unspecified';

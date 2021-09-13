@@ -2,7 +2,6 @@ import SongAutoComplete from '@Components/KnockoutExtensions/SongAutoComplete';
 import SongContract from '@DataContracts/Song/SongContract';
 import EntryType from '@Models/EntryType';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,20 +28,13 @@ const SongLockingAutoComplete = observer(
 				text={basicEntryLinkStore.name}
 				value={basicEntryLinkStore.id}
 				entryType={EntryType.Song}
-				onClear={(): void =>
-					runInAction(() => {
-						basicEntryLinkStore.entry = undefined;
-					})
-				}
+				onClear={(): void => basicEntryLinkStore.selectEntry(undefined)}
 			>
 				<SongAutoComplete
 					type="text"
 					className="input-large"
 					properties={{
-						acceptSelection: (id): void =>
-							runInAction(() => {
-								basicEntryLinkStore.id = id;
-							}),
+						acceptSelection: (id): void => basicEntryLinkStore.selectEntry(id),
 						extraQueryParams: { songTypes: songTypes.join(',') },
 						ignoreId: ignoreId,
 					}}
