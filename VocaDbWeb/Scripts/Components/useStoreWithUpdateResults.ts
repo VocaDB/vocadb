@@ -10,9 +10,6 @@ const useStoreWithUpdateResults = <T extends Object>(
 	onClearResults: (popState: boolean) => void,
 ): void => {
 	React.useEffect(() => {
-		// This is called when the page is first loaded.
-		store.updateResults(true);
-
 		// Returns the disposer.
 		return reaction(
 			() => store.routeParams,
