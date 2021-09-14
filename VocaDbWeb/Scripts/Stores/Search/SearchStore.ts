@@ -121,10 +121,7 @@ export default class SearchStore
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
-		reaction(
-			() => this.showTags,
-			this.currentCategoryStore.updateResultsWithTotalCount,
-		);
+		reaction(() => this.showTags, this.updateResultsWithTotalCount);
 
 		tagRepo
 			.getTopTags({
@@ -226,5 +223,9 @@ export default class SearchStore
 
 	public updateResults = (clearResults: boolean): void => {
 		this.currentCategoryStore.updateResults(clearResults);
+	};
+
+	public updateResultsWithTotalCount = (): void => {
+		this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 }

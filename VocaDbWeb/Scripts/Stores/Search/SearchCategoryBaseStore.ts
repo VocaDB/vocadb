@@ -90,7 +90,7 @@ export default abstract class SearchCategoryBaseStore<
 		return this.commonSearchStore.showTags;
 	}
 	public set showTags(value: boolean) {
-		this.showTags = value;
+		this.commonSearchStore.showTags = value;
 	}
 
 	@computed public get tags(): TagFilter[] {
