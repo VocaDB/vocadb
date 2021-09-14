@@ -143,7 +143,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			draftsOnly: this.draftsOnly,
 			filter: this.searchTerm,
 			page: this.paging.page,
-			pageSize: this.pageSize,
+			pageSize: this.paging.pageSize,
 			sort: this.sort,
 			tagId: this.tagIds,
 			viewMode: this.viewMode,
@@ -162,7 +162,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
-		this.pageSize = value.pageSize ?? 10;
+		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? AlbumSortRule.Name;
 		this.tagIds = value.tagId ?? [];
 		this.viewMode = value.viewMode ?? 'Details';

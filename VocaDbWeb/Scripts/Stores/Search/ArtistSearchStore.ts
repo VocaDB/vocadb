@@ -125,7 +125,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 			filter: this.searchTerm,
 			onlyFollowedByMe: this.onlyFollowedByMe,
 			page: this.paging.page,
-			pageSize: this.pageSize,
+			pageSize: this.paging.pageSize,
 			sort: this.sort,
 			tagId: this.tagIds,
 		};
@@ -140,7 +140,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		this.searchTerm = value.filter ?? '';
 		this.onlyFollowedByMe = value.onlyFollowedByMe ?? false;
 		this.paging.page = value.page ?? 1;
-		this.pageSize = value.pageSize ?? 10;
+		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? ArtistSortRule.Name;
 		this.tagIds = value.tagId ?? [];
 	}

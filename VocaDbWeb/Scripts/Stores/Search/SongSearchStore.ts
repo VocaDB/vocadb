@@ -338,7 +338,7 @@ export default class SongSearchStore
 			onlyRatedSongs: this.onlyRatedSongs,
 			onlyWithPVs: this.pvsOnly,
 			page: this.paging.page,
-			pageSize: this.pageSize,
+			pageSize: this.paging.pageSize,
 			parentVersionId: this.parentVersion.id,
 			// TODO: shuffle
 			since: this.since,
@@ -373,7 +373,7 @@ export default class SongSearchStore
 		this.onlyRatedSongs = value.onlyRatedSongs ?? false;
 		this.pvsOnly = value.onlyWithPVs ?? false;
 		this.paging.page = value.page ?? 1;
-		this.pageSize = value.pageSize ?? 10;
+		this.paging.pageSize = value.pageSize ?? 10;
 		this.parentVersion.selectEntry(value.parentVersionId);
 		// TODO: shuffle
 		this.since = value.since;

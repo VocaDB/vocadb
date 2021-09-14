@@ -79,7 +79,7 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 			categoryName: this.categoryName,
 			filter: this.searchTerm,
 			page: this.paging.page,
-			pageSize: this.pageSize,
+			pageSize: this.paging.pageSize,
 			sort: this.sort,
 		};
 	}
@@ -89,7 +89,7 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		this.categoryName = value.categoryName;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
-		this.pageSize = value.pageSize ?? 10;
+		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
 }
