@@ -137,13 +137,13 @@ namespace VocaDb.Web.Controllers
 			prop.Title = model.Name;
 			prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
 			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
-			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
+			//prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		public ActionResult Picture(int id = InvalidId)

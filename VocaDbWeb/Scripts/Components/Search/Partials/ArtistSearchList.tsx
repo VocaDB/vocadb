@@ -15,6 +15,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface ArtistSearchListProps {
 	artistSearchStore: ArtistSearchStore;
@@ -72,8 +73,8 @@ const ArtistSearchList = observer(
 							<tr key={artist.id}>
 								<td style={{ width: '80px' }}>
 									{artist.mainPicture && artist.mainPicture.urlTinyThumb && (
-										<a
-											href={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+										<Link
+											to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
 											title={artist.additionalNames}
 											className="coverPicThumb"
 										>
@@ -84,13 +85,15 @@ const ArtistSearchList = observer(
 												className="coverPicThumb img-rounded"
 												referrerPolicy="same-origin"
 											/>
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>
-									<a href={EntryUrlMapper.details(EntryType.Artist, artist.id)}>
+									<Link
+										to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+									>
 										{artist.name}
-									</a>{' '}
+									</Link>{' '}
 									<ArtistTypeLabel
 										artistType={
 											ArtistType[artist.artistType as keyof typeof ArtistType]

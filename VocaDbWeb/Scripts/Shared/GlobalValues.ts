@@ -17,8 +17,6 @@ export default interface GlobalValues {
 	songTypes: string /* TODO: enum SongType */[];
 	staticContentHost: string;
 
-	paypalDonateTitle?: string;
-	rankingsTitle?: string;
 	siteName: string;
 	siteTitle: string;
 

@@ -1,0 +1,656 @@
+import SafeAnchor from '@Bootstrap/SafeAnchor';
+import AlbumThumbs from '@Components/Shared/Partials/Album/AlbumThumbs';
+import ArtistGrid from '@Components/Shared/Partials/Artist/ArtistGrid';
+import ArtistLink from '@Components/Shared/Partials/Artist/ArtistLink';
+import ArtistTypeLabel from '@Components/Shared/Partials/Artist/ArtistTypeLabel';
+import EventThumbs from '@Components/Shared/Partials/Shared/EventThumbs';
+import UniversalTimeLabel from '@Components/Shared/Partials/Shared/UniversalTimeLabel';
+import SongGrid from '@Components/Shared/Partials/Song/SongGrid';
+import TagList from '@Components/Shared/Partials/TagList';
+import TagsEdit from '@Components/Shared/Partials/TagsEdit';
+import UserIconLink_UserForApiContract from '@Components/Shared/Partials/User/UserIconLink_UserForApiContract';
+import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
+import UrlHelper from '@Helpers/UrlHelper';
+import JQueryUIButton from '@JQueryUI/JQueryUIButton';
+import ArtistType from '@Models/Artists/ArtistType';
+import EntryType from '@Models/EntryType';
+import ImageSize from '@Models/Images/ImageSize';
+import LoginManager from '@Models/LoginManager';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
+import { EventSortRule } from '@Stores/Search/EventSearchStore';
+import { SearchType } from '@Stores/Search/SearchStore';
+import { SongSortRule } from '@Stores/Search/SongSearchStore';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import _ from 'lodash';
+import { runInAction } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import moment from 'moment';
+import qs from 'qs';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+import { TagToolTip } from '../KnockoutExtensions/EntryToolTip';
+import ArtistLinkList from '../Shared/Partials/Artist/ArtistLinkList';
+import LatestCommentsKnockout from '../Shared/Partials/Comment/LatestCommentsKnockout';
+import EnglishTranslatedString from '../Shared/Partials/EnglishTranslatedString';
+import ExternalLinksRows from '../Shared/Partials/EntryDetails/ExternalLinksRows';
+import { ArtistDetailsTabs } from './ArtistDetailsRoutes';
+
+const loginManager = new LoginManager(vdb.values);
+
+interface DataRowProps {
+	label: string;
+	content?: React.ReactNode;
+}
+
+const DataRow = React.memo(
+	({ label, content }: DataRowProps): React.ReactElement => {
+		return content ? (
+			<tr>
+				<td>{label}</td>
+				<td>{content}</td>
+			</tr>
+		) : (
+			<></>
+		);
+	},
+);
+
+interface ArtistListRowProps {
+	label: string;
+	artists: ArtistApiContract[];
+	typeLabel: boolean;
+	releaseYear?: boolean;
+}
+
+const ArtistListRow = React.memo(
+	({
+		label,
+		artists,
+		typeLabel,
+		releaseYear = false,
+	}: ArtistListRowProps): React.ReactElement => {
+		return (
+			<DataRow
+				label={label}
+				content={
+					artists.length > 0 ? (
+						<ArtistLinkList
+							artists={artists}
+							typeLabel={typeLabel}
+							releaseYear={releaseYear}
+							tooltip={true}
+						/>
+					) : undefined
+				}
+			/>
+		);
+	},
+);
+
+interface ArtistRowProps {
+	label: string;
+	artist?: ArtistApiContract;
+	typeLabel: boolean;
+}
+
+const ArtistRow = React.memo(
+	({ label, artist, typeLabel }: ArtistRowProps): React.ReactElement => {
+		return (
+			<DataRow
+				label={label}
+				content={
+					artist ? (
+						<ArtistLink artist={artist} typeLabel={typeLabel} tooltip={true} />
+					) : undefined
+				}
+			/>
+		);
+	},
+);
+
+interface ArtistBasicInfoProps {
+	artist: ArtistDetailsContract;
+	artistDetailsStore: ArtistDetailsStore;
+}
+
+const ArtistBasicInfo = observer(
+	({
+		artist,
+		artistDetailsStore,
+	}: ArtistBasicInfoProps): React.ReactElement => {
+		const { t } = useTranslation([
+			'ViewRes',
+			'ViewRes.Artist',
+			'VocaDb.Model.Resources',
+		]);
+
+		React.useEffect(() => {
+			artistDetailsStore.loadHighcharts();
+		}, [artistDetailsStore]);
+
+		return (
+			<ArtistDetailsTabs
+				artist={artist}
+				artistDetailsStore={artistDetailsStore}
+				tab="basicInfo"
+			>
+				<div className="clearfix">
+					{/* Artist picture */}
+					<div className="pull-left entry-main-picture">
+						<a href={`/Artist/Picture/${artist.id}?v=${artist.version}`}>
+							<img
+								src={UrlHelper.imageThumb(artist.mainPicture, ImageSize.Thumb)}
+								alt={t('ViewRes.Artist:Details.ArtistPicture')}
+								className="coverPic"
+							/>
+						</a>
+					</div>
+
+					<table className="properties">
+						<tbody>
+							<tr>
+								<td className="entry-field-label-col">
+									{t('ViewRes:Shared.ArtistName')}
+								</td>
+								<td>
+									{artist.name}
+									<br />
+									<span className="extraInfo">{artist.additionalNames}</span>
+								</td>
+							</tr>
+							{artist.description.original && (
+								<tr>
+									<td>{t('ViewRes:Shared.Description')}</td>
+									<td className="entry-description">
+										<EnglishTranslatedString
+											englishTranslatedStringStore={
+												artistDetailsStore.description
+											}
+											string={artist.description}
+										/>
+									</td>
+								</tr>
+							)}
+
+							{artist.releaseDate && (
+								<tr>
+									<td>{t('ViewRes.Artist:Details.ReleaseDate')}</td>
+									<td>{moment(artist.releaseDate).format('l') /* REVIEW */}</td>
+								</tr>
+							)}
+
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.Illustrator')}
+								artists={artist.illustrators}
+								typeLabel={false}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.IllustratorOf')}
+								artists={artist.illustratorOf}
+								typeLabel={true}
+								releaseYear={true}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.VoiceProvider')}
+								artists={artist.voiceProviders}
+								typeLabel={false}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.VoiceProviderOf')}
+								artists={artist.voicebanks}
+								typeLabel={true}
+								releaseYear={true}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.ManagedBy')}
+								artists={artist.managers}
+								typeLabel={false}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.ManagerOf')}
+								artists={artist.managerOf}
+								typeLabel={true}
+								releaseYear={true}
+							/>
+							<ArtistRow
+								label={t('ViewRes.Artist:Details.CharacterDesigner')}
+								artist={artist.characterDesigner}
+								typeLabel={false}
+							/>
+							<ArtistListRow
+								label={t('ViewRes.Artist:Details.CharacterDesignerOf')}
+								artists={artist.characterDesignerOf}
+								typeLabel={true}
+							/>
+
+							<tr>
+								<td>{t('ViewRes:Shared.Type')}</td>
+								<td>
+									<ArtistTypeLabel
+										artistType={
+											ArtistType[artist.artistType as keyof typeof ArtistType]
+										}
+									/>{' '}
+									{artist.artistTypeTag ? (
+										<TagToolTip
+											as={Link}
+											to={
+												EntryUrlMapper.details_tag_contract(
+													artist.artistTypeTag,
+												)!
+											}
+											id={artist.artistTypeTag.id}
+										>
+											{t(
+												`VocaDb.Model.Resources:ArtistTypeNames.${artist.artistType}`,
+											)}
+										</TagToolTip>
+									) : (
+										<a
+											href={`/Tag/DetailsByEntryType?${qs.stringify({
+												entryType: EntryType[EntryType.Artist],
+												subType: artist.artistType,
+											})}`}
+										>
+											{t(
+												`VocaDb.Model.Resources:ArtistTypeNames.${artist.artistType}`,
+											)}
+										</a>
+									)}
+								</td>
+							</tr>
+
+							<tr>
+								<td>{t('ViewRes:Shared.Tags')}</td>
+								<td>
+									{artistDetailsStore.tagUsages.tagUsages.length > 0 && (
+										<div className="entry-tag-usages">
+											<TagList tagListStore={artistDetailsStore.tagUsages} />
+										</div>
+									)}
+									<div>
+										<JQueryUIButton
+											as={SafeAnchor}
+											disabled={!loginManager.canEditTags}
+											icons={{ primary: 'ui-icon-tag' }}
+											onClick={artistDetailsStore.tagsEditStore.show}
+											href="#"
+										>
+											{t('ViewRes:EntryDetails.EditTags')}
+										</JQueryUIButton>
+										{artist.canRemoveTagUsages /* TODO: Use LoginManager. */ && (
+											<>
+												{' '}
+												<JQueryUIButton
+													as="a"
+													href={`/Artist/ManageTagUsages/${artist.id}`}
+													icons={{ primary: 'ui-icon-wrench' }}
+												>
+													{t('ViewRes:EntryDetails.ManageTags')}
+												</JQueryUIButton>
+											</>
+										)}
+									</div>
+								</td>
+							</tr>
+
+							<ExternalLinksRows webLinks={artist.webLinks} />
+
+							{artist.ownerUsers.length > 0 && (
+								<tr>
+									<td>{vdb.resources.artist.authoredBy}</td>
+									<td>
+										{artist.ownerUsers.map((user) => (
+											<React.Fragment key={user.id}>
+												{/* eslint-disable-next-line react/jsx-pascal-case */}
+												<UserIconLink_UserForApiContract
+													user={user}
+													tooltip={true}
+												/>
+												<br />
+											</React.Fragment>
+										))}
+									</td>
+								</tr>
+							)}
+
+							{artist.baseVoicebank && (
+								<tr>
+									<td>
+										<span>{t('ViewRes.Artist:Details.BaseVoicebank')}</span>
+									</td>
+									<td id="baseVoicebank">
+										<ArtistLink
+											artist={artist.baseVoicebank}
+											releaseYear={true}
+											tooltip={true}
+										/>
+									</td>
+								</tr>
+							)}
+
+							{artist.childVoicebanks.length > 0 && (
+								<tr>
+									<td>
+										<span>{t('ViewRes.Artist:Details.ChildVoicebanks')}</span>
+									</td>
+									<td id="childVoicebanks">
+										{artist.childVoicebanks.map((artist, index) => (
+											<React.Fragment key={artist.id}>
+												{index > 0 && ', '}
+												<ArtistLink
+													artist={artist}
+													releaseYear={true}
+													tooltip={true}
+												/>
+											</React.Fragment>
+										))}
+									</td>
+								</tr>
+							)}
+
+							{artist.groups.length > 0 && (
+								<tr>
+									<td>
+										<span title={t('ViewRes.Artist:Details.GroupsHelp')}>
+											{t('ViewRes.Artist:Details.Groups')}
+										</span>
+									</td>
+									<td id="groups">
+										{artist.groups.map((group, index) => (
+											<React.Fragment key={group.id}>
+												{index > 0 && ', '}
+												<ArtistLink artist={group} tooltip={true} />
+											</React.Fragment>
+										))}
+									</td>
+								</tr>
+							)}
+
+							<tr>
+								<td>{t('ViewRes:EntryDetails.Stats')}</td>
+								<td>
+									{t('ViewRes.Artist:Details.FollowCount', {
+										0: artist.sharedStats.followerCount,
+									})}
+									{artist.sharedStats.ratedSongCount > 0 && (
+										<>
+											{' '}
+											{t('ViewRes.Artist:Details.RatedSongs', {
+												0: artist.sharedStats.ratedSongCount,
+											})}
+										</>
+									)}
+									{artist.sharedStats.ratedAlbumCount > 0 && (
+										<>
+											{' '}
+											{t('ViewRes.Artist:Details.RatedAlbums', {
+												0: artist.sharedStats.ratedAlbumCount,
+											})}{' '}
+											{t('ViewRes.Artist:Details.AverageAlbumRating', {
+												0: artist.sharedStats.albumRatingAverage,
+											})}
+										</>
+									)}
+									{artist.personalStats &&
+										artist.personalStats.songRatingCount > 0 && (
+											<>
+												{' '}
+												<a
+													href={`${EntryUrlMapper.details_user_byName(
+														loginManager.loggedUser?.name,
+													)}?${qs.stringify({ artistId: artist.id })}#Songs`}
+												>
+													{t('ViewRes.Artist:Details.YouHaveRatedSongs', {
+														0: artist.personalStats.songRatingCount,
+													})}
+												</a>
+											</>
+										)}
+									{artist.advancedStats &&
+										artist.advancedStats.topVocaloids.length > 0 && (
+											<p>
+												{t('ViewRes.Artist:Details.MostlyUses')}{' '}
+												<ArtistLinkList
+													artists={artist.advancedStats.topVocaloids.map(
+														(a) => a.data,
+													)}
+													typeLabel={true}
+													tooltip={true}
+												/>
+											</p>
+										)}
+								</td>
+							</tr>
+
+							<tr>
+								<td>{t('ViewRes:EntryDetails.AdditionDate')}</td>
+								<td>
+									<UniversalTimeLabel dateTime={artist.createDate} />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				{artist.members.length > 0 && (
+					<>
+						<h3>{t('ViewRes.Artist:Details.Members')}</h3>
+						{!artistDetailsStore.showAllMembers && (
+							<div>
+								<ArtistGrid
+									artists={_.take(artist.members, 6)}
+									columns={3}
+									displayType={true}
+								/>
+							</div>
+						)}
+						{artist.members.length > 6 && (
+							<>
+								{artistDetailsStore.showAllMembers ? (
+									<div>
+										<ArtistGrid
+											artists={artist.members}
+											columns={3}
+											displayType={true}
+										/>
+									</div>
+								) : (
+									<SafeAnchor
+										href="#"
+										onClick={(): void =>
+											runInAction(() => {
+												artistDetailsStore.showAllMembers = true;
+											})
+										}
+									>
+										{t('ViewRes:Shared.ShowMore')}
+									</SafeAnchor>
+								)}
+							</>
+						)}
+					</>
+				)}
+
+				{artist.latestAlbums.length > 0 && (
+					<>
+						<h3 className="withMargin">
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Album,
+									artistId: artist.id,
+									sort: AlbumSortRule.AdditionDate,
+								})}`}
+							>
+								{t('ViewRes.Artist:Details.RecentAlbums')}
+							</Link>{' '}
+							<small>
+								{t('ViewRes:EntryDetails.NumTotalParenthesis', {
+									0: artist.sharedStats.albumCount,
+								})}
+							</small>
+						</h3>
+						<div id="newAlbums">
+							<AlbumThumbs albums={artist.latestAlbums} />
+						</div>
+					</>
+				)}
+
+				{artist.topAlbums.length > 0 && (
+					<>
+						<h3 className="withMargin">
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Album,
+									artistId: artist.id,
+									sort: AlbumSortRule.RatingTotal,
+								})}`}
+							>
+								{t('ViewRes.Artist:Details.TopAlbums')}
+							</Link>{' '}
+							<small>
+								(
+								{t('ViewRes.Artist:Details.RatedAlbums', {
+									0: artist.sharedStats.ratedAlbumCount,
+								})}
+								)
+							</small>
+						</h3>
+						<div id="topAlbums">
+							<AlbumThumbs albums={artist.topAlbums} />
+						</div>
+					</>
+				)}
+
+				{artist.latestSongs.length > 0 && (
+					<>
+						<br />
+						<h3>
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Song,
+									artistId: artist.id,
+									sort: SongSortRule.PublishDate,
+								})}`}
+							>
+								{t('ViewRes.Artist:Details.RecentSongs')}
+							</Link>{' '}
+							<small>
+								(
+								{t('ViewRes:EntryDetails.NumTotal', {
+									0: artist.sharedStats.songCount,
+								})}
+								)
+							</small>
+						</h3>
+						<SongGrid
+							songs={artist.latestSongs}
+							columns={2}
+							displayType={true}
+							displayPublishDate={true}
+						/>
+					</>
+				)}
+
+				{artist.topSongs.length > 0 && (
+					<>
+						<br />
+						<h3>
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Song,
+									artistId: artist.id,
+									sort: SongSortRule.RatingScore,
+								})}`}
+							>
+								{t('ViewRes.Artist:Details.TopSongs')}
+							</Link>{' '}
+							<small>
+								(
+								{t('ViewRes.Artist:Details.RatedSongsTotal', {
+									0: artist.sharedStats.ratedSongCount,
+								})}
+								)
+							</small>
+						</h3>
+						<SongGrid
+							songs={artist.topSongs}
+							columns={2}
+							displayType={true}
+							displayPublishDate={true}
+						/>
+					</>
+				)}
+
+				{artist.latestEvents.length > 0 && (
+					<>
+						<h3 className="withMargin">
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.ReleaseEvent,
+									artistId: artist.id,
+									sort: EventSortRule.Date,
+								})}`}
+							>
+								{t('ViewRes.Artist:Details.RecentEvents')}
+							</Link>{' '}
+							<small>
+								(
+								{t('ViewRes:EntryDetails.NumTotal', {
+									0: artist.sharedStats.eventCount,
+								})}
+								)
+							</small>
+						</h3>
+						<EventThumbs events={artist.latestEvents} />
+					</>
+				)}
+
+				{artistDetailsStore.songsOverTimeChart && (
+					<div>
+						<h3 className="withMargin">
+							{t('ViewRes.Artist:Details.SongsPerMonth')}
+						</h3>
+						<HighchartsReact
+							highcharts={Highcharts}
+							options={artistDetailsStore.songsOverTimeChart}
+							immutable={true}
+							containerProps={{
+								style: {
+									width: '100%',
+									maxWidth: '800px',
+									height: '300px',
+								},
+							}}
+						/>
+					</div>
+				)}
+
+				<LatestCommentsKnockout
+					editableCommentsStore={artistDetailsStore.comments}
+				/>
+
+				<p>
+					<Link
+						to={`${EntryUrlMapper.details(
+							EntryType.Artist,
+							artist.id,
+						)}/discussion`}
+					>
+						{t('ViewRes:EntryDetails.ViewAllComments')}
+					</Link>
+				</p>
+
+				<TagsEdit tagsEditStore={artistDetailsStore.tagsEditStore} />
+			</ArtistDetailsTabs>
+		);
+	},
+);
+
+export default ArtistBasicInfo;

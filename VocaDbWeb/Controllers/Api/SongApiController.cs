@@ -467,14 +467,18 @@ namespace VocaDb.Web.Controllers.Api
 #nullable enable
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongDetailsForApiContract GetDetails(int id, int albumId = 0) =>
-			_queries.GetSongDetailsForApi(
+		public SongDetailsForApiContract GetDetails(int id, int albumId = 0)
+		{
+			WebHelper.VerifyUserAgent(Request);
+
+			return _queries.GetSongDetailsForApi(
 				songId: id,
 				albumId: albumId,
 				hostname: WebHelper.GetHostnameForValidHit(Request),
 				languagePreference: null,
 				userLanguages: WebHelper.GetUserLanguageCodes(Request)
 			);
+		}
 #nullable disable
 	}
 }

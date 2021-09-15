@@ -43,8 +43,6 @@ namespace VocaDb.Web.Models.Shared
 
 		public string StaticContentHost { get; init; }
 
-		public string? PaypalDonateTitle { get; init; }
-		public string? RankingsTitle { get; init; }
 		public string SiteName { get; init; }
 		public string SiteTitle { get; init; }
 
@@ -86,8 +84,6 @@ namespace VocaDb.Web.Models.Shared
 			SongTypes = AppConfig.SongTypes;
 			StaticContentHost = AppConfig.StaticContentHost;
 
-			PaypalDonateTitle = model.BrandableStrings.Layout.PaypalDonateTitle;
-			RankingsTitle = model.BrandableStrings.Song.RankingsTitle;
 			SiteName = model.BrandableStrings.SiteName;
 			SiteTitle = model.BrandableStrings.SiteTitle;
 
