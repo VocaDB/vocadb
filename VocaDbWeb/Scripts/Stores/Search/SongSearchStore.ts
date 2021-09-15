@@ -27,7 +27,7 @@ import AdvancedSearchFilter from './AdvancedSearchFilter';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
 
@@ -310,7 +310,7 @@ export default class SongSearchStore
 		'maxLength',
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -349,9 +349,7 @@ export default class SongSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.Song) return;
-
+	public set routeParams(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = value.artistId ?? [];
 		this.artistFilters.artistParticipationStatus =

@@ -9,7 +9,7 @@ import { computed, makeObservable, observable } from 'mobx';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -118,7 +118,7 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		'sort',
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): EventSearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,
 			afterDate: this.afterDate?.toISOString(),
@@ -136,9 +136,7 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.ReleaseEvent) return;
-
+	public set routeParams(value: EventSearchRouteParams) {
 		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
 		this.artistFilters.artistIds = value.artistId ?? [];
 		this.beforeDate = value.beforeDate ? new Date(value.beforeDate) : undefined;

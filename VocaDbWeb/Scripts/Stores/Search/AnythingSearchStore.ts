@@ -8,7 +8,7 @@ import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 
 export interface AnythingSearchRouteParams {
 	childTags?: boolean;
@@ -68,7 +68,7 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		'searchType',
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): AnythingSearchRouteParams {
 		return {
 			searchType: SearchType.Anything,
 			childTags: this.childTags,
@@ -79,9 +79,7 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.Anything) return;
-
+	public set routeParams(value: AnythingSearchRouteParams) {
 		this.childTags = value.childTags ?? false;
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';

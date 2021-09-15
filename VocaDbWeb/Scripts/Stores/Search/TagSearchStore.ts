@@ -7,7 +7,7 @@ import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -73,7 +73,7 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		'sort',
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): TagSearchRouteParams {
 		return {
 			searchType: SearchType.Tag,
 			categoryName: this.categoryName,
@@ -83,9 +83,7 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 			sort: this.sort,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.Tag) return;
-
+	public set routeParams(value: TagSearchRouteParams) {
 		this.categoryName = value.categoryName;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;

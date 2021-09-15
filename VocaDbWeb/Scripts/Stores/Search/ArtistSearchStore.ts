@@ -10,7 +10,7 @@ import { computed, makeObservable, observable } from 'mobx';
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -110,7 +110,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		// TODO: onlyRootVoicebanks
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): ArtistSearchRouteParams {
 		return {
 			searchType: SearchType.Artist,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -130,9 +130,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.Artist) return;
-
+	public set routeParams(value: ArtistSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistType = value.artistType ?? 'Unknown';
 		this.childTags = value.childTags ?? false;

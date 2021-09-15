@@ -11,7 +11,7 @@ import AdvancedSearchFilter from './AdvancedSearchFilter';
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchRouteParams, SearchType } from './SearchStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the AlbumSortRule enum in C#.
 export enum AlbumSortRule {
@@ -126,7 +126,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 		'includeMembers',
 	];
 
-	@computed.struct public get routeParams(): SearchRouteParams {
+	@computed.struct public get routeParams(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -149,9 +149,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: SearchRouteParams) {
-		if (value.searchType !== SearchType.Album) return;
-
+	public set routeParams(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = value.artistId ?? [];
 		this.artistFilters.artistParticipationStatus =
