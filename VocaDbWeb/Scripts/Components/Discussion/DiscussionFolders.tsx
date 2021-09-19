@@ -19,7 +19,7 @@ const DiscussionFolders = observer(
 
 		React.useEffect(() => {
 			discussionIndexStore.selectFolderById(Number(folderId));
-		}, [discussionIndexStore, folderId]);
+		}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
 
 		return (
 			<DiscussionLayout>
