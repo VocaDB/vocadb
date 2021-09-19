@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,7 +40,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 			var requestUrl = "https://api.bilibili.com/x/web-interface/view?" + (id.StartsWith("BV") ? $"bvid={id}" : $"aid={id}");
 
-			BilibiliResponse response;
+			BilibiliResponse? response;
 
 			try
 			{
@@ -101,34 +99,34 @@ namespace VocaDb.Model.Service.VideoServices
 	public class BiliMetadata
 	{
 		[DataMember]
-		public int Aid { get; set; }
+		public int Aid { get; init; }
 		[DataMember]
-		public string Bvid { get; set; }
+		public string Bvid { get; init; } = default!;
 		[DataMember]
-		public int Cid { get; set; }
+		public int Cid { get; init; }
 	}
 
 	class BilibiliResponse
 	{
-		public BilibiliResponseData Data { get; set; }
+		public BilibiliResponseData Data { get; init; } = default!;
 	}
 
 	class BilibiliResponseData
 	{
-		public int Aid { get; set; }
-		public string Bvid { get; set; }
-		public int Cid { get; set; }
+		public int Aid { get; init; }
+		public string Bvid { get; init; } = default!;
+		public int Cid { get; init; }
 		[JsonConverter(typeof(UnixDateTimeConverter))]
-		public DateTime? PubDate { get; set; }
-		public int Duration { get; set; }
-		public BilibiliResponseDataOwner Owner { get; set; }
-		public string Pic { get; set; }
-		public string Title { get; set; }
+		public DateTime? PubDate { get; init; }
+		public int Duration { get; init; }
+		public BilibiliResponseDataOwner Owner { get; init; } = default!;
+		public string Pic { get; init; } = default!;
+		public string Title { get; init; } = default!;
 	}
 
 	class BilibiliResponseDataOwner
 	{
-		public int Mid { get; set; }
-		public string Name { get; set; }
+		public int Mid { get; init; }
+		public string Name { get; init; } = default!;
 	}
 }
