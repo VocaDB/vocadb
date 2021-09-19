@@ -54,6 +54,8 @@ namespace VocaDb.Web.Models.Shared
 		public string Culture { get; init; }
 		public string UICulture { get; init; }
 
+		public string Slogan { get; init; }
+
 		public MenuPageLink[] AppLinks { get; init; }
 		public MenuPageLink[] BigBanners { get; init; }
 		public MenuPageLink[] SmallBanners { get; init; }
@@ -82,6 +84,8 @@ namespace VocaDb.Web.Models.Shared
 			LoggedUser = model.UserContext.LoggedUser is ServerOnlyUserWithPermissionsContract loggedUser ? new SanitizedUserWithPermissionsContract(loggedUser) : null;
 			Culture = model.Culture;
 			UICulture = model.UICulture;
+
+			Slogan = SloganGenerator.Generate();
 
 			AppLinks = MenuPage.AppLinks.Select(l => new MenuPageLink(l)).ToArray();
 			BigBanners = MenuPage.BigBanners.Select(l => new MenuPageLink(l)).ToArray();
