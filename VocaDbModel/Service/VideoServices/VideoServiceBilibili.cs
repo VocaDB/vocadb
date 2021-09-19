@@ -46,9 +46,10 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
+				s_log.Info("Loading Bilibili URL {0}", url);
 				response = await JsonRequest.ReadObjectAsync<BilibiliResponse>(requestUrl, timeout: TimeSpan.FromSeconds(10), userAgent: "VocaDB/1.0 (admin@vocadb.net)");
 			}
-			catch (Exception x) when (x is HttpRequestException || x is WebException || x is JsonSerializationException || x is IOException)
+			catch (Exception x) when (x is HttpRequestException or WebException or JsonSerializationException or IOException)
 			{
 				s_log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException($"Unable to load Bilibili URL: {x.Message}", x));
