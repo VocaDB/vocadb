@@ -2,6 +2,7 @@ import Alert from '@Bootstrap/Alert';
 import Button from '@Bootstrap/Button';
 import CommentKnockout from '@Components/Shared/Partials/Comment/CommentKnockout';
 import EditableComments from '@Components/Shared/Partials/Comment/EditableComments';
+import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
 import LoginManager from '@Models/LoginManager';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
 import DiscussionTopicStore from '@Stores/Discussion/DiscussionTopicStore';
@@ -26,6 +27,8 @@ const ViewTopic = observer(
 	}: ViewTopicProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 		const navigate = useNavigate();
+
+		useStoreWithRouteParams(discussionTopicStore);
 
 		return (
 			<div>

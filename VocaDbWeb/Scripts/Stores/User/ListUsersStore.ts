@@ -82,10 +82,8 @@ export default class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	public validateRouteParams = (data: any): data is ListUsersRouteParams => {
-		if (validate(data)) return true;
-		return false;
-	};
+	public validateRouteParams = (data: any): data is ListUsersRouteParams =>
+		validate(data);
 
 	public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates

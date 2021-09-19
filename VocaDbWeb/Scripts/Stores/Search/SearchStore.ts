@@ -216,16 +216,12 @@ export default class SearchStore
 		this.currentCategoryStore.routeParams = value;
 	}
 
-	public validateRouteParams = (data: any): data is SearchRouteParams => {
-		if (validate(data)) return true;
-		return false;
-	};
+	public validateRouteParams = (data: any): data is SearchRouteParams =>
+		validate(data);
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = (clearResults: boolean): void =>
 		this.currentCategoryStore.updateResults(clearResults);
-	};
 
-	public updateResultsWithTotalCount = (): void => {
+	public updateResultsWithTotalCount = (): void =>
 		this.currentCategoryStore.updateResultsWithTotalCount();
-	};
 }
