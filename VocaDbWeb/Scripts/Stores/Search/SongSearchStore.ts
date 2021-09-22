@@ -77,7 +77,7 @@ export interface SongSearchRouteParams {
 	viewMode?: string /* TODO: enum */;
 }
 
-interface ISongSearchItem extends SongApiContract {
+export interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;
 }
 
