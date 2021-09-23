@@ -1,3 +1,4 @@
+import ErrorNotFound from '@Components/Error/ErrorNotFound';
 import Layout from '@Components/Shared/Layout';
 import LoginManager from '@Models/LoginManager';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
@@ -46,7 +47,7 @@ const DiscussionRoutes = (): React.ReactElement => {
 	return (
 		<Routes>
 			<Route
-				path="/"
+				path=""
 				element={
 					<DiscussionIndex discussionIndexStore={discussionIndexStore} />
 				}
@@ -63,6 +64,7 @@ const DiscussionRoutes = (): React.ReactElement => {
 					<DiscussionTopics discussionIndexStore={discussionIndexStore} />
 				}
 			/>
+			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);
 };

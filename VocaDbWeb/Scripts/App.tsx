@@ -1,5 +1,6 @@
 import Container from '@Bootstrap/Container';
 import Navbar from '@Bootstrap/Navbar';
+import ErrorNotFound from '@Components/Error/ErrorNotFound';
 import GlobalSearchBox from '@Components/Shared/GlobalSearchBox';
 import Footer from '@Components/Shared/Partials/Footer';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
@@ -17,9 +18,6 @@ import './i18n';
 const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
-);
-const ErrorNotFound = React.lazy(
-	() => import('@Components/Error/ErrorNotFound'),
 );
 const SearchRoutes = React.lazy(
 	() => import('@Components/Search/SearchRoutes'),
@@ -55,13 +53,13 @@ const App = (): React.ReactElement => {
 					<div className="span10 rightFrame well">
 						<React.Suspense fallback={null /* TODO */}>
 							<Routes>
-								<Route path="/Admin/*" element={<AdminRoutes />} />
-								<Route path="/discussion/*" element={<DiscussionRoutes />} />
-								<Route path="/Search/*" element={<SearchRoutes />} />
-								<Route path="/SongList/*" element={<SongListRoutes />} />
-								<Route path="/Stats/*" element={<StatsRoutes />} />
-								<Route path="/User/*" element={<UserRoutes />} />
-								<Route path="/*" element={<ErrorNotFound />} />
+								<Route path="Admin/*" element={<AdminRoutes />} />
+								<Route path="discussion/*" element={<DiscussionRoutes />} />
+								<Route path="Search/*" element={<SearchRoutes />} />
+								<Route path="SongList/*" element={<SongListRoutes />} />
+								<Route path="Stats/*" element={<StatsRoutes />} />
+								<Route path="User/*" element={<UserRoutes />} />
+								<Route path="*" element={<ErrorNotFound />} />
 							</Routes>
 						</React.Suspense>
 					</div>

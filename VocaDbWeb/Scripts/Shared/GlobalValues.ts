@@ -34,6 +34,8 @@ export default interface GlobalValues {
 	/** UI language code, for example "en" */
 	uiCulture: string;
 
+	slogan: string;
+
 	appLinks: MenuPageLink[];
 	bigBanners: MenuPageLink[];
 	smallBanners: MenuPageLink[];

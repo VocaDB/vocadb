@@ -22,7 +22,7 @@ const SongSearchOptions = observer(
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Search',
-			'VocaDb.Web.Resources.Domain:EntryTypeNames',
+			'VocaDb.Web.Resources.Domain',
 		]);
 
 		return (

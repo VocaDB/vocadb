@@ -94,7 +94,7 @@ const LeftMenu = React.memo(
 							title={vdb.values.siteName}
 						/>
 					</a>
-					<p className="slogan">{/* TODO: slogan */}</p>
+					<p className="slogan">{vdb.values.slogan}</p>
 				</div>
 
 				<div className="well sidebar-nav">
