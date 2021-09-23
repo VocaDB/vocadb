@@ -31,10 +31,10 @@ export default abstract class PagedItemsStore<TModel> {
 		});
 	};
 
-	@action public clear = (): void => {
+	@action public clear = (): Promise<PartialFindResultContract<TModel>> => {
 		this.items = [];
 		this.start = 0;
-		this.loadMore();
+		return this.loadMore();
 	};
 
 	public init = (

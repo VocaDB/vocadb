@@ -3,6 +3,8 @@ import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicCo
 import LoginManager from '@Models/LoginManager';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
+import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
 	computed,
@@ -13,7 +15,19 @@ import {
 
 import DiscussionTopicEditStore from './DiscussionTopicEditStore';
 
-export default class DiscussionTopicStore {
+interface DiscussionTopicRouteParams {
+	page?: number;
+}
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('@Stores/Discussion/DiscussionTopicRouteParams.schema');
+const validate = ajv.compile(schema);
+
+export default class DiscussionTopicStore
+	implements IStoreWithRouteParams<DiscussionTopicRouteParams> {
 	@observable public comments: EditableCommentsStore;
 	@observable public contract: DiscussionTopicContract;
 	@observable public editStore?: DiscussionTopicEditStore = undefined;
@@ -78,4 +92,19 @@ export default class DiscussionTopicStore {
 				});
 			});
 	};
+
+	public popState = false;
+
+	@computed.struct public get routeParams(): DiscussionTopicRouteParams {
+		return {
+			page: this.comments.paging.page,
+		};
+	}
+	public set routeParams(value: DiscussionTopicRouteParams) {
+		this.comments.paging.page = value.page ?? 1;
+	}
+
+	public validateRouteParams = (
+		data: any,
+	): data is DiscussionTopicRouteParams => validate(data);
 }

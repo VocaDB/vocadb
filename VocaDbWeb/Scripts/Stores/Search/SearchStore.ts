@@ -9,7 +9,11 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
+import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
+import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Ajv, { JSONSchemaType } from 'ajv';
+import addFormats from 'ajv-formats';
 import {
 	computed,
 	makeObservable,
@@ -18,15 +22,19 @@ import {
 	runInAction,
 } from 'mobx';
 
-import AlbumSearchStore from './AlbumSearchStore';
-import AnythingSearchStore from './AnythingSearchStore';
-import ArtistSearchStore from './ArtistSearchStore';
+import AlbumSearchStore, { AlbumSearchRouteParams } from './AlbumSearchStore';
+import AnythingSearchStore, {
+	AnythingSearchRouteParams,
+} from './AnythingSearchStore';
+import ArtistSearchStore, {
+	ArtistSearchRouteParams,
+} from './ArtistSearchStore';
 import { ICommonSearchStore } from './CommonSearchStore';
-import EventSearchStore from './EventSearchStore';
+import EventSearchStore, { EventSearchRouteParams } from './EventSearchStore';
 import { ISearchCategoryBaseStore } from './SearchCategoryBaseStore';
-import SongSearchStore from './SongSearchStore';
+import SongSearchStore, { SongSearchRouteParams } from './SongSearchStore';
 import TagFilters from './TagFilters';
-import TagSearchStore from './TagSearchStore';
+import TagSearchStore, { TagSearchRouteParams } from './TagSearchStore';
 
 export enum SearchType {
 	Anything = 'Anything',
@@ -37,7 +45,24 @@ export enum SearchType {
 	Tag = 'Tag',
 }
 
-export default class SearchStore implements ICommonSearchStore {
+export type SearchRouteParams =
+	| AnythingSearchRouteParams
+	| AlbumSearchRouteParams
+	| ArtistSearchRouteParams
+	| EventSearchRouteParams
+	| SongSearchRouteParams
+	| TagSearchRouteParams;
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+addFormats(ajv);
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema');
+const validate = ajv.compile(schema);
+
+export default class SearchStore
+	implements ICommonSearchStore, IStoreWithPaging<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -45,7 +70,6 @@ export default class SearchStore implements ICommonSearchStore {
 	public readonly songSearchStore: SongSearchStore;
 	public readonly tagSearchStore: TagSearchStore;
 
-	@observable public currentSearchType = SearchType.Anything;
 	@observable public draftsOnly = false;
 	@observable public genreTags: TagBaseContract[] = [];
 	@observable public pageSize = 10;
@@ -97,19 +121,7 @@ export default class SearchStore implements ICommonSearchStore {
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 
-		reaction(() => this.pageSize, this.updateResults);
-		reaction(() => this.searchTerm, this.updateResults);
-		reaction(() => this.tagFilters.filters, this.updateResults);
-		reaction(() => this.draftsOnly, this.updateResults);
-		reaction(() => this.showTags, this.updateResults);
-
-		reaction(
-			() => this.searchType,
-			(val) => {
-				this.updateResults();
-				this.currentSearchType = val;
-			},
-		);
+		reaction(() => this.showTags, this.updateResultsWithTotalCount);
 
 		tagRepo
 			.getTopTags({
@@ -185,7 +197,31 @@ export default class SearchStore implements ICommonSearchStore {
 		return this.getCategoryStore(this.searchType);
 	}
 
-	public updateResults = (): void => {
+	public popState = false;
+
+	public get paging(): ServerSidePagingStore {
+		return this.currentCategoryStore.paging;
+	}
+
+	public get clearResultsByQueryKeys(): string[] {
+		return this.currentCategoryStore.clearResultsByQueryKeys;
+	}
+
+	@computed public get routeParams(): SearchRouteParams {
+		return this.currentCategoryStore.routeParams;
+	}
+	public set routeParams(value: SearchRouteParams) {
+		value.searchType ??= SearchType.Anything;
+		this.searchType = value.searchType;
+		this.currentCategoryStore.routeParams = value;
+	}
+
+	public validateRouteParams = (data: any): data is SearchRouteParams =>
+		validate(data);
+
+	public updateResults = (clearResults: boolean): void =>
+		this.currentCategoryStore.updateResults(clearResults);
+
+	public updateResultsWithTotalCount = (): void =>
 		this.currentCategoryStore.updateResultsWithTotalCount();
-	};
 }

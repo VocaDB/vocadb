@@ -10,6 +10,7 @@ import {
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
 import useScript from '@Components/useScript';
+import useStoreWithPaging from '@Components/useStoreWithPaging';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -99,9 +100,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		React.useEffect(() => {
-			searchStore.updateResults();
-		}, []);
+		useStoreWithPaging(searchStore);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');

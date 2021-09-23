@@ -1,5 +1,5 @@
 import Layout from '@Components/Shared/Layout';
-import UserGroup from '@Models/Users/UserGroup';
+import useStoreWithPaging from '@Components/useStoreWithPaging';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -14,15 +14,10 @@ const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 const listUsersStore = new ListUsersStore(userRepo);
 
-// TODO: use this
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface UserIndexQueryParams {
-	filter?: string;
-	groupId?: UserGroup;
-}
-
 const UserIndex = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
+
+	useStoreWithPaging(listUsersStore);
 
 	return (
 		<Layout title={t('ViewRes:Shared.Users')}>

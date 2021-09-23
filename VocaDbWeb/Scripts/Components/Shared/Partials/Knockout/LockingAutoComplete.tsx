@@ -33,7 +33,12 @@ const LockingAutoComplete = React.memo(
 						<i className="icon icon-info-sign" />
 					</Button>
 				)}
-				<input type="text" className="input-large" readOnly value={text} />
+				<input
+					type="text"
+					className="input-large"
+					readOnly
+					value={text ?? ''}
+				/>
 				<Button variant="danger" onClick={onClear}>
 					{t('ViewRes:Shared.Clear')}
 				</Button>

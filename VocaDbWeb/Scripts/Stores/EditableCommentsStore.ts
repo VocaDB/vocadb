@@ -136,8 +136,11 @@ export default class EditableCommentsStore {
 
 		this.paging.totalItems = commentContracts.length;
 
-		if (this.ascending) this.paging.goToLastPage();
-		else commentStores = commentStores.reverse();
+		if (this.ascending) {
+			//this.paging.goToLastPage();
+		} else {
+			commentStores = commentStores.reverse();
+		}
 
 		this.comments = commentStores;
 	};

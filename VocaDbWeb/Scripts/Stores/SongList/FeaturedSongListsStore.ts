@@ -3,10 +3,12 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
+import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
-import SongListsBaseStore from './SongListsBaseStore';
+import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
 
 export enum SongListFeaturedCategory {
 	Nothing = 'Nothing',
@@ -50,7 +52,22 @@ export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 	};
 }
 
-export default class FeaturedSongListsStore {
+interface FeaturedSongListsRouteParams {
+	categoryName?: SongListFeaturedCategory;
+	filter?: string;
+	sort?: SongListSortRule;
+	tagId?: number[];
+}
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('@Stores/SongList/FeaturedSongListsRouteParams.schema');
+const validate = ajv.compile(schema);
+
+export default class FeaturedSongListsStore
+	implements IStoreWithUpdateResults<FeaturedSongListsRouteParams> {
 	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
 	@observable public category = SongListFeaturedCategory.Concerts;
 
@@ -82,5 +99,48 @@ export default class FeaturedSongListsStore {
 		if (!categoryName) categoryName = SongListFeaturedCategory.Concerts;
 
 		this.category = categoryName;
+	};
+
+	public popState = false;
+
+	public clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
+		'filter',
+		'sort',
+		'tagId',
+	];
+
+	private get currentCategoryStore(): FeaturedSongListCategoryStore {
+		return this.categories[this.category];
+	}
+
+	@computed.struct public get routeParams(): FeaturedSongListsRouteParams {
+		return {
+			categoryName: this.category,
+			filter: this.currentCategoryStore.query,
+			sort: this.currentCategoryStore.sort,
+			tagId: this.currentCategoryStore.tagIds,
+		};
+	}
+	public set routeParams(value: FeaturedSongListsRouteParams) {
+		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
+		this.currentCategoryStore.query = value.filter ?? '';
+		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
+		this.currentCategoryStore.tagIds = value.tagId ?? [];
+	}
+
+	public validateRouteParams = (
+		data: any,
+	): data is FeaturedSongListsRouteParams => validate(data);
+
+	private pauseNotifications = false;
+
+	public updateResults = (clearResults: boolean): void => {
+		if (this.pauseNotifications) return;
+
+		this.pauseNotifications = true;
+
+		this.currentCategoryStore.clear().then(() => {
+			this.pauseNotifications = false;
+		});
 	};
 }

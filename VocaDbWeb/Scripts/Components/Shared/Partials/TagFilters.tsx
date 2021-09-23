@@ -29,7 +29,7 @@ const TagFilters = observer(
 									type="text"
 									className="input-large"
 									readOnly
-									value={tag.name}
+									value={tag.name ?? ''}
 								/>
 								<Button
 									variant="danger"

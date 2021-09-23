@@ -3,10 +3,11 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the TagSortRule enum in C#.
 export enum TagSortRule {
@@ -14,6 +15,15 @@ export enum TagSortRule {
 	Name = 'Name',
 	AdditionDate = 'AdditionDate',
 	UsageCount = 'UsageCount',
+}
+
+export interface TagSearchRouteParams {
+	categoryName?: string;
+	filter?: string;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.Tag;
+	sort?: TagSortRule;
 }
 
 export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContract> {
@@ -29,10 +39,6 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 		super(commonSearchStore);
 
 		makeObservable(this);
-
-		reaction(() => this.allowAliases, this.updateResultsWithTotalCount);
-		reaction(() => this.categoryName, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
 	}
 
 	public loadResults = (
@@ -56,4 +62,32 @@ export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContra
 			},
 		});
 	};
+
+	public readonly clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'searchType',
+
+		// TODO: allowAliases
+		'categoryName',
+		'sort',
+	];
+
+	@computed.struct public get routeParams(): TagSearchRouteParams {
+		return {
+			searchType: SearchType.Tag,
+			categoryName: this.categoryName,
+			filter: this.searchTerm,
+			page: this.paging.page,
+			pageSize: this.paging.pageSize,
+			sort: this.sort,
+		};
+	}
+	public set routeParams(value: TagSearchRouteParams) {
+		this.categoryName = value.categoryName;
+		this.searchTerm = value.filter ?? '';
+		this.paging.page = value.page ?? 1;
+		this.paging.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? TagSortRule.Name;
+	}
 }

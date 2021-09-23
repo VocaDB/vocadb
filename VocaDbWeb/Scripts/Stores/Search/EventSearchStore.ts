@@ -4,11 +4,12 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import { computed, makeObservable, observable, reaction } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 import ArtistFilters from './ArtistFilters';
 import { ICommonSearchStore } from './CommonSearchStore';
 import SearchCategoryBaseStore from './SearchCategoryBaseStore';
+import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -18,6 +19,25 @@ export enum EventSortRule {
 	AdditionDate = 'AdditionDate',
 	SeriesName = 'SeriesName',
 	VenueName = 'VenueName',
+}
+
+export interface EventSearchRouteParams {
+	afterDate?: string /* TODO: use Date */;
+	artistId?: number[];
+	beforeDate?: string /* TODO: use Date */;
+	childTags?: boolean;
+	childVoicebanks?: boolean;
+	draftsOnly?: boolean;
+	eventCategory?: string;
+	filter?: string;
+	includeMembers?: boolean;
+	onlyMyEvents?: boolean;
+	page?: number;
+	pageSize?: number;
+	searchType?: SearchType.ReleaseEvent;
+	sort?: EventSortRule;
+	tag?: string;
+	tagId?: number[];
 }
 
 export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEventContract> {
@@ -40,16 +60,6 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		makeObservable(this);
 
 		this.artistFilters = new ArtistFilters(values, artistRepo);
-
-		reaction(() => this.afterDate, this.updateResultsWithTotalCount);
-		reaction(
-			() => this.artistFilters.filters,
-			this.updateResultsWithTotalCount,
-		);
-		reaction(() => this.beforeDate, this.updateResultsWithTotalCount);
-		reaction(() => this.category, this.updateResultsWithTotalCount);
-		reaction(() => this.onlyMyEvents, this.updateResultsWithTotalCount);
-		reaction(() => this.sort, this.updateResultsWithTotalCount);
 	}
 
 	@computed public get fields(): string {
@@ -89,4 +99,56 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 			},
 		});
 	};
+
+	public readonly clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
+		'pageSize',
+		'filter',
+		'tagId',
+		'childTags',
+		'draftsOnly',
+		'searchType',
+
+		'afterDate',
+		'beforeDate',
+		'artistId',
+		'childVoicebanks',
+		'includeMembers',
+		'eventCategory',
+		'onlyMyEvents',
+		'sort',
+	];
+
+	@computed.struct public get routeParams(): EventSearchRouteParams {
+		return {
+			searchType: SearchType.ReleaseEvent,
+			afterDate: this.afterDate?.toISOString(),
+			artistId: this.artistFilters.artistIds,
+			beforeDate: this.beforeDate?.toISOString(),
+			childTags: this.childTags,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			draftsOnly: this.draftsOnly,
+			eventCategory: this.category,
+			filter: this.searchTerm,
+			onlyMyEvents: this.onlyMyEvents,
+			page: this.paging.page,
+			pageSize: this.paging.pageSize,
+			sort: this.sort,
+			tagId: this.tagIds,
+		};
+	}
+	public set routeParams(value: EventSearchRouteParams) {
+		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
+		this.artistFilters.artistIds = value.artistId ?? [];
+		this.beforeDate = value.beforeDate ? new Date(value.beforeDate) : undefined;
+		this.childTags = value.childTags ?? false;
+		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
+		this.draftsOnly = value.draftsOnly ?? false;
+		this.category = value.eventCategory ?? '';
+		this.searchTerm = value.filter ?? '';
+		this.onlyMyEvents = value.onlyMyEvents ?? false;
+		this.paging.page = value.page ?? 1;
+		this.paging.pageSize = value.pageSize ?? 10;
+		this.sort = value.sort ?? EventSortRule.Name;
+		this.tagIds = value.tagId ?? [];
+	}
 }
