@@ -18,7 +18,7 @@ export interface AnythingSearchRouteParams {
 	pageSize?: number;
 	searchType?: SearchType.Anything;
 	tag?: string;
-	tagId?: number[];
+	tagId?: number | number[];
 }
 
 export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryContract> {
@@ -85,6 +85,6 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 	}
 }

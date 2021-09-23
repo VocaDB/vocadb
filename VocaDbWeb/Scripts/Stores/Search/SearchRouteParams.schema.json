@@ -51,10 +51,17 @@
 					"type": "array"
 				},
 				"artistId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				},
 				"artistParticipationStatus": {
 					"type": "string"
@@ -105,10 +112,17 @@
 					"type": "string"
 				},
 				"tagId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				},
 				"viewMode": {
 					"type": "string"
@@ -141,10 +155,17 @@
 					"type": "string"
 				},
 				"tagId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				}
 			},
 			"type": "object"
@@ -199,10 +220,17 @@
 					"type": "string"
 				},
 				"tagId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				}
 			},
 			"type": "object"
@@ -210,17 +238,22 @@
 		"EventSearchRouteParams": {
 			"properties": {
 				"afterDate": {
-					"format": "date-time",
 					"type": "string"
 				},
 				"artistId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				},
 				"beforeDate": {
-					"format": "date-time",
 					"type": "string"
 				},
 				"childTags": {
@@ -269,10 +302,17 @@
 					"type": "string"
 				},
 				"tagId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				}
 			},
 			"type": "object"
@@ -286,10 +326,17 @@
 					"type": "array"
 				},
 				"artistId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				},
 				"artistParticipationStatus": {
 					"type": "string"
@@ -383,10 +430,17 @@
 					"type": "string"
 				},
 				"tagId": {
-					"items": {
-						"type": "number"
-					},
-					"type": "array"
+					"anyOf": [
+						{
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						},
+						{
+							"type": "number"
+						}
+					]
 				},
 				"unifyEntryTypesAndTags": {
 					"type": "boolean"

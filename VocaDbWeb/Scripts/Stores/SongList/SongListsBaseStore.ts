@@ -19,7 +19,7 @@ export enum SongListSortRule {
 interface SongListsBaseRouteParams {
 	filter?: string;
 	sort?: SongListSortRule;
-	tagId?: number[];
+	tagId?: number | number[];
 }
 
 export default abstract class SongListsBaseStore extends PagedItemsStore<SongListContract> {
@@ -101,6 +101,6 @@ export default abstract class SongListsBaseStore extends PagedItemsStore<SongLis
 	public set routeParams(value: SongListsBaseRouteParams) {
 		this.query = value.filter ?? '';
 		this.sort = value.sort || SongListSortRule.Date;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 	}
 }

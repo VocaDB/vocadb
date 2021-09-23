@@ -56,7 +56,7 @@ interface FeaturedSongListsRouteParams {
 	categoryName?: SongListFeaturedCategory;
 	filter?: string;
 	sort?: SongListSortRule;
-	tagId?: number[];
+	tagId?: number | number[];
 }
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
@@ -125,7 +125,9 @@ export default class FeaturedSongListsStore
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
 		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
-		this.currentCategoryStore.tagIds = value.tagId ?? [];
+		this.currentCategoryStore.tagIds = value.tagId
+			? ([] as number[]).concat(value.tagId)
+			: [];
 	}
 
 	public validateRouteParams = (

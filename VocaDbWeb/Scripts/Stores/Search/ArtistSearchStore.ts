@@ -36,7 +36,7 @@ export interface ArtistSearchRouteParams {
 	searchType?: SearchType.Artist;
 	sort?: ArtistSortRule;
 	tag?: string;
-	tagId?: number[];
+	tagId?: number | number[];
 }
 
 export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistContract> {
@@ -140,6 +140,6 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? ArtistSortRule.Name;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 	}
 }

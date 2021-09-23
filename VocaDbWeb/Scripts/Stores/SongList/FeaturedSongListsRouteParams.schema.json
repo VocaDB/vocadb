@@ -13,10 +13,17 @@
 			"type": "string"
 		},
 		"tagId": {
-			"items": {
-				"type": "number"
-			},
-			"type": "array"
+			"anyOf": [
+				{
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				{
+					"type": "number"
+				}
+			]
 		}
 	},
 	"type": "object"

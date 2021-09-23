@@ -28,7 +28,7 @@ export enum AlbumSortRule {
 
 export interface AlbumSearchRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
-	artistId?: number[];
+	artistId?: number | number[];
 	artistParticipationStatus?: string /* TODO: enum */;
 	childTags?: boolean;
 	childVoicebanks?: boolean;
@@ -41,7 +41,7 @@ export interface AlbumSearchRouteParams {
 	searchType?: SearchType.Album;
 	sort?: AlbumSortRule;
 	tag?: string;
-	tagId?: number[];
+	tagId?: number | number[];
 	viewMode?: string /* TODO: enum */;
 }
 
@@ -151,7 +151,9 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 	}
 	public set routeParams(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
-		this.artistFilters.artistIds = value.artistId ?? [];
+		this.artistFilters.artistIds = value.artistId
+			? ([] as number[]).concat(value.artistId)
+			: [];
 		this.artistFilters.artistParticipationStatus =
 			value.artistParticipationStatus ?? 'Everything';
 		this.childTags = value.childTags ?? false;
@@ -162,7 +164,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? AlbumSortRule.Name;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 }

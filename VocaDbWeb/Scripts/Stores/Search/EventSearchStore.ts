@@ -23,7 +23,7 @@ export enum EventSortRule {
 
 export interface EventSearchRouteParams {
 	afterDate?: string /* TODO: use Date */;
-	artistId?: number[];
+	artistId?: number | number[];
 	beforeDate?: string /* TODO: use Date */;
 	childTags?: boolean;
 	childVoicebanks?: boolean;
@@ -37,7 +37,7 @@ export interface EventSearchRouteParams {
 	searchType?: SearchType.ReleaseEvent;
 	sort?: EventSortRule;
 	tag?: string;
-	tagId?: number[];
+	tagId?: number | number[];
 }
 
 export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEventContract> {
@@ -138,7 +138,9 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 	}
 	public set routeParams(value: EventSearchRouteParams) {
 		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
-		this.artistFilters.artistIds = value.artistId ?? [];
+		this.artistFilters.artistIds = value.artistId
+			? ([] as number[]).concat(value.artistId)
+			: [];
 		this.beforeDate = value.beforeDate ? new Date(value.beforeDate) : undefined;
 		this.childTags = value.childTags ?? false;
 		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
@@ -149,6 +151,6 @@ export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEve
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? EventSortRule.Name;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 	}
 }

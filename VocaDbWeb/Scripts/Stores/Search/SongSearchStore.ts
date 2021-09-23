@@ -44,7 +44,7 @@ export enum SongSortRule {
 
 export interface SongSearchRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
-	artistId?: number[];
+	artistId?: number | number[];
 	artistParticipationStatus?: string /* TODO: enum */;
 	autoplay?: boolean;
 	childTags?: boolean;
@@ -72,7 +72,7 @@ export interface SongSearchRouteParams {
 	songType?: string /* TODO: enum */;
 	sort?: SongSortRule;
 	tag?: string;
-	tagId?: number[];
+	tagId?: number | number[];
 	unifyEntryTypesAndTags?: boolean;
 	viewMode?: string /* TODO: enum */;
 }
@@ -351,7 +351,9 @@ export default class SongSearchStore
 	}
 	public set routeParams(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
-		this.artistFilters.artistIds = value.artistId ?? [];
+		this.artistFilters.artistIds = value.artistId
+			? ([] as number[]).concat(value.artistId)
+			: [];
 		this.artistFilters.artistParticipationStatus =
 			value.artistParticipationStatus ?? 'Everything';
 		// TODO: autoplay
@@ -377,7 +379,7 @@ export default class SongSearchStore
 		this.since = value.since;
 		this.songType = value.songType ?? 'Unspecified';
 		this.sort = value.sort ?? SongSortRule.Name;
-		this.tagIds = value.tagId ?? [];
+		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
