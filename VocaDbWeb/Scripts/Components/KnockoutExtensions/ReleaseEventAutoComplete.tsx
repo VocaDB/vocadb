@@ -1,6 +1,7 @@
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import functions from '@Shared/GlobalFunctions';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import EntryAutoComplete, {
 	EntryAutoCompleteParams,
@@ -17,6 +18,8 @@ const ReleaseEventAutoComplete = ({
 	createNewItem,
 	...props
 }: ReleaseEventAutoCompleteProps): React.ReactElement => {
+	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
+
 	const queryParams = {
 		nameMatchMode: 'Auto',
 		lang: vdb.values.languagePreference,
@@ -38,7 +41,10 @@ const ReleaseEventAutoComplete = ({
 				},
 			);
 		},
-		createOptionFirstRow: (item) => item.name,
+		createOptionFirstRow: (item) =>
+			`${item.name} (${t(
+				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${item.category}`,
+			)})`,
 		createNewItem: createNewItem,
 		extraQueryParams: queryParams,
 	};
