@@ -39,6 +39,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public string? PaypalDonateTitle { get; init; }
 		public string SiteName { get; init; }
+		public string SiteTitle { get; init; }
 
 		public string? BannerUrl { get; init; }
 		public string? BlogUrl { get; init; }
@@ -71,6 +72,7 @@ namespace VocaDb.Web.Models.Shared
 
 			PaypalDonateTitle = model.BrandableStrings.Layout.PaypalDonateTitle;
 			SiteName = model.BrandableStrings.SiteName;
+			SiteTitle = model.BrandableStrings.SiteTitle;
 
 			BannerUrl = model.Config.SiteSettings.BannerUrl.EmptyToNull();
 			BlogUrl = model.Config.SiteSettings.BlogUrl.EmptyToNull();

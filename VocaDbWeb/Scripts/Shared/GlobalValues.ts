@@ -17,6 +17,7 @@ export default interface GlobalValues {
 
 	paypalDonateTitle?: string;
 	siteName: string;
+	siteTitle: string;
 
 	bannerUrl?: string;
 	blogUrl?: string;

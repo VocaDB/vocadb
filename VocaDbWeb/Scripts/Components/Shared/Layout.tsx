@@ -1,5 +1,6 @@
 import Alert from '@Bootstrap/Alert';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -16,6 +17,12 @@ const Layout = ({
 }: LayoutProps): React.ReactElement => {
 	return (
 		<>
+			<Helmet>
+				<title>
+					{title ? `${title} - ${vdb.values.siteTitle}` : vdb.values.siteTitle}
+				</title>
+			</Helmet>
+
 			{/* TODO */}
 
 			{title && (
