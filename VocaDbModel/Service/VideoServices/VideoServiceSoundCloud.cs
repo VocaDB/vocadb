@@ -1,10 +1,9 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
@@ -17,28 +16,33 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceSoundCloud : VideoService
 	{
-		class SoundCloudResult
+		private sealed record SoundCloudTokenResponse
 		{
-			public string Artwork_url { get; set; }
-
-			public DateTime Created_at { get; set; }
-
-			public int Duration { get; set; }
-
-			public string Id { get; set; }
-
-			public string Title { get; set; }
-
-			public SoundCloudUser User { get; set; }
+			public string Access_token { get; init; } = default!;
 		}
 
-		class SoundCloudUser
+		private sealed record SoundCloudUser
 		{
-			public string Avatar_url { get; set; }
+			public string Avatar_url { get; init; } = default!;
 
-			public string Permalink { get; set; }
+			public string Permalink { get; init; } = default!;
 
-			public string Username { get; set; }
+			public string Username { get; init; } = default!;
+		}
+
+		private sealed record SoundCloudResult
+		{
+			public string Artwork_url { get; init; } = default!;
+
+			public DateTime Created_at { get; init; }
+
+			public int Duration { get; init; }
+
+			public string Id { get; init; } = default!;
+
+			public string Title { get; init; } = default!;
+
+			public SoundCloudUser User { get; init; } = default!;
 		}
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -46,7 +50,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
 
-		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
+		public override string GetUrlById(string id, PVExtendedMetadata? extendedMetadata = null)
 		{
 			var compositeId = new SoundCloudId(id);
 			var matcher = _linkMatchers.First();
@@ -58,13 +62,13 @@ namespace VocaDb.Model.Service.VideoServices
 			SslHelper.ForceStrongTLS();
 
 			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}&client_id={apikey}";
+			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}?client_id={apikey}";
 
-			SoundCloudResult result;
+			SoundCloudResult? result;
 
 			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
 
-			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
+			VideoUrlParseResult ReturnError(Exception x, string? additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
 				s_log.Warn(x, msg);
@@ -73,7 +77,25 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10));
+				// Code from: https://github.com/TerribleDev/OwinOAuthProviders/blob/8b382b0429aeb656f54149ab6f3472dd559ae12f/src/Owin.Security.Providers.SoundCloud/SoundCloudAuthenticationHandler.cs#L74
+				// TODO: use IHttpClientFactory
+				using var httpClient = new HttpClient();
+				var tokenResponse = await httpClient.PostAsync("https://api.soundcloud.com/oauth2/token", new FormUrlEncodedContent(new List<KeyValuePair<string?, string?>>
+				{
+					new("client_id", apikey),
+					new("client_secret", AppConfig.SoundCloudClientSecret),
+					new("grant_type", "client_credentials"),
+				}));
+				tokenResponse.EnsureSuccessStatusCode();
+				var text = await tokenResponse.Content.ReadAsStringAsync();
+
+				var response = JsonConvert.DeserializeObject<SoundCloudTokenResponse>(text);
+				var accessToken = response.Access_token;
+
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10), headers: headers =>
+				{
+					headers.Authorization = new AuthenticationHeaderValue("OAuth", accessToken);
+				});
 			}
 			catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
 			{
@@ -149,7 +171,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private string CleanUrl(string url) => url.Split('?')[0];
 
-#nullable enable
 		public SoundCloudId(string trackId, string soundCloudUrl)
 		{
 			ParamIs.NotNullOrEmpty(() => trackId);
@@ -173,7 +194,6 @@ namespace VocaDb.Model.Service.VideoServices
 			TrackId = parts[0];
 			SoundCloudUrl = parts[1];
 		}
-#nullable disable
 
 		/// <summary>
 		/// Relative URL, for example tamagotaso/nightcruise
@@ -185,7 +205,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		public string TrackId { get; set; }
 
-#nullable enable
 		/// <summary>
 		/// Gets the composite ID string with both the relative URL and track Id.
 		/// </summary>
@@ -194,6 +213,5 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return $"{TrackId} {SoundCloudUrl}";
 		}
-#nullable disable
 	}
 }

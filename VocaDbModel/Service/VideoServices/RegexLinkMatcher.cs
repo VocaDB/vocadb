@@ -27,6 +27,7 @@ namespace VocaDb.Model.Service.VideoServices
 			_template = template;
 		}
 
+#nullable enable
 		public string GetId(string url)
 		{
 			var match = _regex.Match(url);
@@ -38,7 +39,6 @@ namespace VocaDb.Model.Service.VideoServices
 			return group.Value;
 		}
 
-#nullable enable
 		public bool IsMatch(string url) => _regex.IsMatch(url);
 #nullable disable
 

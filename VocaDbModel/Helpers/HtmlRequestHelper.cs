@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.IO;
 using System.Net;
@@ -13,7 +11,6 @@ namespace VocaDb.Model.Helpers
 {
 	public static class HtmlRequestHelper
 	{
-#nullable enable
 		public static HtmlDocument Download(string url, string? acceptLanguage = null)
 		{
 			var request = WebRequest.Create(url);
@@ -41,13 +38,12 @@ namespace VocaDb.Model.Helpers
 				response.Close();
 			}
 		}
-#nullable disable
 
 		public static Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func) => GetStreamAsync(url, func, TimeSpan.FromSeconds(30));
 
 		/// <exception cref="HttpRequestException">If the request failed</exception>
 		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders> headers = null)
+			Action<HttpRequestHeaders>? headers = null)
 		{
 			var uri = new Uri(url);
 
