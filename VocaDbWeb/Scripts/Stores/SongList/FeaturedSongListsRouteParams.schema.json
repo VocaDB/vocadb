@@ -1,0 +1,23 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"properties": {
+		"categoryName": {
+			"enum": ["Concerts", "Nothing", "Other", "Pools", "VocaloidRanking"],
+			"type": "string"
+		},
+		"filter": {
+			"type": "string"
+		},
+		"sort": {
+			"enum": ["CreateDate", "Date", "Name"],
+			"type": "string"
+		},
+		"tagId": {
+			"items": {
+				"type": "number"
+			},
+			"type": "array"
+		}
+	},
+	"type": "object"
+}

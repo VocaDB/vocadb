@@ -3,11 +3,13 @@ import _ from 'lodash';
 import { reaction } from 'mobx';
 import React from 'react';
 
+import useStoreWithRouteParams from './useStoreWithRouteParams';
+
 // Updates search results whenever the `routeParams` property changes.
 const useStoreWithUpdateResults = <T extends Object>(
 	store: IStoreWithUpdateResults<T>,
 	// Called when search results should be cleared.
-	onClearResults: (popState: boolean) => void,
+	onClearResults?: (popState: boolean) => void,
 ): void => {
 	React.useEffect(() => {
 		// Returns the disposer.
@@ -28,12 +30,19 @@ const useStoreWithUpdateResults = <T extends Object>(
 					.some((k) => store.clearResultsByQueryKeys.includes(k))
 					.value();
 
-				if (clearResults) onClearResults(store.popState);
+				if (clearResults) onClearResults?.(store.popState);
 
 				store.updateResults(clearResults);
 			},
 		);
 	}, [store, onClearResults]);
+
+	useStoreWithRouteParams(store);
+
+	React.useEffect(() => {
+		// This is called when the page is first loaded.
+		store.updateResults(true);
+	}, [store]);
 };
 
 export default useStoreWithUpdateResults;

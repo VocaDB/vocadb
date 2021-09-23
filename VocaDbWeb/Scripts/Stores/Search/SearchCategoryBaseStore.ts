@@ -37,7 +37,6 @@ export default abstract class SearchCategoryBaseStore<
 	@observable public loading = true; // Currently loading for data
 	@observable public page: TEntry[] = []; // Current page of items
 	public readonly paging = new ServerSidePagingStore(); // Paging store
-	public pauseNotifications = false;
 
 	public constructor(commonSearchStore: ICommonSearchStore) {
 		makeObservable(this);
@@ -128,6 +127,8 @@ export default abstract class SearchCategoryBaseStore<
 
 	public abstract clearResultsByQueryKeys: string[];
 	public abstract routeParams: SearchRouteParams;
+
+	private pauseNotifications = false;
 
 	@action public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates

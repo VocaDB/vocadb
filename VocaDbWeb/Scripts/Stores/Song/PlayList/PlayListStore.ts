@@ -47,7 +47,6 @@ export default class PlayListStore {
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ISongForPlayList[] = []; // Current page of items
 	public readonly paging = new ServerSidePagingStore(30); // Paging view model
-	public pauseNotifications = false;
 	public pvServiceIcons: PVServiceIcons;
 
 	public constructor(
@@ -123,6 +122,8 @@ export default class PlayListStore {
 			this.updateResultsWithoutTotalCount();
 		}
 	};
+
+	private pauseNotifications = false;
 
 	@action public updateResults = (
 		clearResults: boolean = true,

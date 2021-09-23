@@ -39,7 +39,6 @@ export default class DiscussionIndexStore
 	@observable public selectedTopic?: DiscussionTopicStore = undefined;
 	@observable public showCreateNewTopic: boolean = false;
 	@observable public topics: DiscussionTopicContract[] = [];
-	private pauseNotifications = false;
 
 	public constructor(
 		public readonly loginManager: LoginManager,
@@ -188,6 +187,8 @@ export default class DiscussionIndexStore
 	public validateRouteParams = (
 		data: any,
 	): data is DiscussionIndexRouteParams => validate(data);
+
+	private pauseNotifications = false;
 
 	public updateResults = (clearResults: boolean): void => {
 		if (this.pauseNotifications) return;

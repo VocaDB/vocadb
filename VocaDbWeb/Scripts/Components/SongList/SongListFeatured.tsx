@@ -2,6 +2,7 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import Layout from '@Components/Shared/Layout';
 import SongListsKnockout from '@Components/Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
+import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import LoginManager from '@Models/LoginManager';
 import SongListRepository from '@Repositories/SongListRepository';
@@ -43,13 +44,7 @@ const SongListFeatured = observer(
 			'ViewRes.User',
 		]);
 
-		React.useEffect(() => {
-			Object.values(SongListFeaturedCategory)
-				.filter((category) => category !== SongListFeaturedCategory.Nothing)
-				.forEach((category) => {
-					featuredSongListsStore.categories[category].clear();
-				});
-		}, []);
+		useStoreWithUpdateResults(featuredSongListsStore);
 
 		return (
 			<Layout

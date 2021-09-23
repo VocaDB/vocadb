@@ -39,8 +39,7 @@ export default class ListUsersStore
 	@observable public knowsLanguage = '';
 	@observable public onlyVerifiedArtists = false;
 	@observable public page: UserApiContract[] = []; // Current page of items
-	@observable public paging = new ServerSidePagingStore(20); // Paging view model
-	public pauseNotifications = false;
+	public readonly paging = new ServerSidePagingStore(20); // Paging view model
 	@observable public searchTerm = '';
 	@observable public sort = UserSortRule.RegisterDate;
 
@@ -84,6 +83,8 @@ export default class ListUsersStore
 
 	public validateRouteParams = (data: any): data is ListUsersRouteParams =>
 		validate(data);
+
+	private pauseNotifications = false;
 
 	public updateResults = (clearResults: boolean): void => {
 		// Disable duplicate updates
