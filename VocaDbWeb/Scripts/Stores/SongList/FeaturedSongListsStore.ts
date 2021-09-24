@@ -89,8 +89,6 @@ export default class FeaturedSongListsStore
 				categoryName,
 			);
 		});
-
-		// TODO: find a replacement for window.onhashchange.
 	}
 
 	@action public setCategory = (
