@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -13,57 +11,57 @@ namespace VocaDb.Web.Models.Search
 		public SearchIndexViewModel()
 			: this(EntryType.Undefined) { }
 
-		public SearchIndexViewModel(EntryType searchType, string filter = null)
+		public SearchIndexViewModel(EntryType searchType, string? filter = null)
 		{
-			AllowRedirect = true;
-			SearchType = searchType;
-			Filter = filter;
+			allowRedirect = true;
+			this.searchType = searchType;
+			this.filter = filter;
 		}
 
-		public bool AllowRedirect { get; set; }
+		public bool allowRedirect { get; set; }
 
-		public int[] ArtistId { get; set; }
+		public int[]? artistId { get; set; }
 
-		public ArtistType? ArtistType { get; set; }
+		public ArtistType? artistType { get; set; }
 
-		public bool? Autoplay { get; set; }
+		public bool? autoplay { get; set; }
 
-		public bool? ChildTags { get; set; }
+		public bool? childTags { get; set; }
 
-		public bool? ChildVoicebanks { get; set; }
+		public bool? childVoicebanks { get; set; }
 
-		public DiscType? DiscType { get; set; }
+		public DiscType? discType { get; set; }
 
-		public EventCategory? EventCategory { get; set; }
+		public EventCategory? eventCategory { get; set; }
 
-		public int? EventId { get; set; }
+		public int? eventId { get; set; }
 
-		public string Filter { get; set; }
+		public string? filter { get; set; }
 
-		public int? MinScore { get; set; }
+		public int? minScore { get; set; }
 
-		public bool? OnlyRatedSongs { get; set; }
+		public bool? onlyRatedSongs { get; set; }
 
-		public bool? OnlyWithPVs { get; set; }
+		public bool? onlyWithPVs { get; set; }
 
-		public int? PageSize { get; set; }
+		public int? pageSize { get; set; }
 
-		public EntryType SearchType { get; set; }
+		public EntryType searchType { get; set; }
 
-		public string SearchTypeName => SearchType != EntryType.Undefined ? SearchType.ToString() : "Anything";
+		public string searchTypeName => searchType != EntryType.Undefined ? searchType.ToString() : "Anything";
 
-		public bool? Shuffle { get; set; }
+		public bool? shuffle { get; set; }
 
-		public int? Since { get; set; }
+		public int? since { get; set; }
 
-		public string Tag { get; set; }
+		public string? tag { get; set; }
 
-		public int[] TagId { get; set; }
+		public int[]? tagId { get; set; }
 
-		public SongType? SongType { get; set; }
+		public SongType? songType { get; set; }
 
-		public string Sort { get; set; }
+		public string? sort { get; set; }
 
-		public string ViewMode { get; set; }
+		public string? viewMode { get; set; }
 	}
 }
