@@ -22,7 +22,7 @@
 			}
 			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
-			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@("Album")" asp-route-tagId="@(Config.SpecialTags.Free)" asp-route-childTags="@(true)">@(ViewRes._LayoutStrings.FreeAlbums)</a></li>
+			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@("Album")" asp-route-tagId="@(Config.SpecialTags.Free)" asp-route-childTags="@(true.ToString().ToLowerInvariant())">@(ViewRes._LayoutStrings.FreeAlbums)</a></li>
 		</ul>
 	</li>
 	<li>
@@ -32,7 +32,7 @@
 				<li><a asp-action="Create" asp-controller="Song">@(ViewRes._LayoutStrings.AddSong)</a></li>
 			}
 			<li><a asp-action="Rankings" asp-controller="Song">@(ViewRes.SharedStrings.TopFavoritedSongs)</a></li>
-			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
+			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@EntryType.Song" asp-route-sort="@VocaDb.Model.Service.SongSortRule.AdditionDate" asp-route-onlyWithPVs="@true.ToString().ToLowerInvariant()">@ViewRes._LayoutStrings.NewPVs</a></li>
 		</ul>
 	</li>
 	<li>
