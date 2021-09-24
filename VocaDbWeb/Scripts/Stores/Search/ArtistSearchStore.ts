@@ -140,6 +140,6 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? ArtistSortRule.Name;
-		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
+		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 }

@@ -101,6 +101,6 @@ export default abstract class SongListsBaseStore extends PagedItemsStore<SongLis
 	public set routeParams(value: SongListsBaseRouteParams) {
 		this.query = value.filter ?? '';
 		this.sort = value.sort || SongListSortRule.Date;
-		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
+		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 }

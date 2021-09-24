@@ -85,6 +85,6 @@ export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryCo
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
-		this.tagIds = value.tagId ? ([] as number[]).concat(value.tagId) : [];
+		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 }

@@ -125,9 +125,9 @@ export default class FeaturedSongListsStore
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
 		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
-		this.currentCategoryStore.tagIds = value.tagId
-			? ([] as number[]).concat(value.tagId)
-			: [];
+		this.currentCategoryStore.tagIds = ([] as number[]).concat(
+			value.tagId ?? [],
+		);
 	}
 
 	public validateRouteParams = (
