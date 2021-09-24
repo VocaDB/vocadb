@@ -24,6 +24,8 @@ export default interface GlobalValues {
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
 
+	freeTagId: number;
+
 	/** URL of the site path, for example "/" */
 	baseAddress: string;
 	languagePreference: ContentLanguagePreference;

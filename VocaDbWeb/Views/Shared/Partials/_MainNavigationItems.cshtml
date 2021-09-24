@@ -22,7 +22,7 @@
 			}
 			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
-			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@("Album")" asp-route-tag="@("free")" asp-route-childTags="@(true)">@(ViewRes._LayoutStrings.FreeAlbums)</a></li>
+			<li><a asp-action="Index" asp-controller="Search" asp-route-searchType="@("Album")" asp-route-tagId="@(Config.SpecialTags.Free)" asp-route-childTags="@(true)">@(ViewRes._LayoutStrings.FreeAlbums)</a></li>
 		</ul>
 	</li>
 	<li>

@@ -1,4 +1,6 @@
 import LoginManager from '@Models/LoginManager';
+import { SearchType } from '@Stores/Search/SearchStore';
+import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -47,7 +49,13 @@ const MainNavigationItems = React.memo(
 							</Link>
 						</li>
 						<li>
-							<Link to="/Search?searchType=Album&tag=free&childTags=true">
+							<Link
+								to={`/Search?${qs.stringify({
+									searchType: SearchType.Album,
+									tagId: vdb.values.freeTagId,
+									childTags: true,
+								})}`}
+							>
 								{t('ViewRes:Layout.FreeAlbums')}
 							</Link>
 						</li>

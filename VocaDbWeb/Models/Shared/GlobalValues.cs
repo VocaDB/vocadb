@@ -46,6 +46,8 @@ namespace VocaDb.Web.Models.Shared
 		public string? PatreonLink { get; init; }
 		public string? SitewideAnnouncement { get; init; }
 
+		public int FreeTagId { get; init; }
+
 		public string? BaseAddress { get; init; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguagePreference LanguagePreference { get; init; }
@@ -78,6 +80,8 @@ namespace VocaDb.Web.Models.Shared
 			BlogUrl = model.Config.SiteSettings.BlogUrl.EmptyToNull();
 			PatreonLink = model.Config.SiteSettings.PatreonLink.EmptyToNull();
 			SitewideAnnouncement = model.Config.SiteSettings.SitewideAnnouncement.EmptyToNull();
+
+			FreeTagId = model.Config.SpecialTags.Free;
 
 			BaseAddress = model.RootPath;
 			LanguagePreference = model.UserContext.LanguagePreference;
