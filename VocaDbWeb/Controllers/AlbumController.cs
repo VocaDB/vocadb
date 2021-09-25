@@ -97,7 +97,7 @@ namespace VocaDb.Web.Controllers
 		{
 			return RedirectToAction("Index", "Search", new SearchRouteParams
 			{
-				searchType = EntryType.Album,
+				searchType = SearchType.Album,
 				filter = routeParams.filter,
 				sort = routeParams.sort,
 				discType = routeParams.discType

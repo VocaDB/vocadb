@@ -44,19 +44,19 @@ namespace VocaDb.Web.Helpers
 			switch (fullEntryType.EntryType)
 			{
 				case EntryType.Artist:
-					searchRouteParams = new SearchRouteParams(EntryType.Artist) { artistType = EnumVal<ArtistType>.ParseSafe(fullEntryType.SubType) };
+					searchRouteParams = new SearchRouteParams(SearchType.Artist) { artistType = EnumVal<ArtistType>.ParseSafe(fullEntryType.SubType) };
 					break;
 				case EntryType.Album:
-					searchRouteParams = new SearchRouteParams(EntryType.Album) { discType = EnumVal<DiscType>.ParseSafe(fullEntryType.SubType) };
+					searchRouteParams = new SearchRouteParams(SearchType.Album) { discType = EnumVal<DiscType>.ParseSafe(fullEntryType.SubType) };
 					break;
 				case EntryType.Song:
-					searchRouteParams = new SearchRouteParams(EntryType.Song) { songType = EnumVal<SongType>.ParseSafe(fullEntryType.SubType) };
+					searchRouteParams = new SearchRouteParams(SearchType.Song) { songType = EnumVal<SongType>.ParseSafe(fullEntryType.SubType) };
 					break;
 				case EntryType.ReleaseEvent:
-					searchRouteParams = new SearchRouteParams(EntryType.ReleaseEvent);
+					searchRouteParams = new SearchRouteParams(SearchType.ReleaseEvent);
 					break;
 				case EntryType.Tag:
-					searchRouteParams = new SearchRouteParams(EntryType.Tag);
+					searchRouteParams = new SearchRouteParams(SearchType.Tag);
 					break;
 			}
 

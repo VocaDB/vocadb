@@ -1,3 +1,4 @@
+using System;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -6,6 +7,7 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Web.Models.Search
 {
+	[Obsolete]
 	public class SearchIndexViewModel
 	{
 		public SearchIndexViewModel()
