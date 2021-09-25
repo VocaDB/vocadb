@@ -6,7 +6,6 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/discussions.css';
@@ -17,18 +16,14 @@ const DiscussionTopics = React.lazy(() => import('./DiscussionTopics'));
 
 interface DiscussionLayoutProps {
 	children?: React.ReactNode;
+	title?: string;
 }
 
 export const DiscussionLayout = ({
 	children,
+	title,
 }: DiscussionLayoutProps): React.ReactElement => {
-	const { t } = useTranslation(['ViewRes.Discussion']);
-
-	return (
-		<Layout title={t('ViewRes.Discussion:Index.Discussions')}>
-			{children}
-		</Layout>
-	);
+	return <Layout title={title}>{children}</Layout>;
 };
 
 const loginManager = new LoginManager(vdb.values);

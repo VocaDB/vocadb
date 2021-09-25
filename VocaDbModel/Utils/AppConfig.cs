@@ -162,9 +162,11 @@ namespace VocaDb.Model.Utils
 
 		public static int FilteredArtistId => Val("FilteredArtistId", 0);
 
-		public static string GAAccountId => Val(nameof(GAAccountId));
+#nullable enable
+		public static string? GAAccountId => Val(nameof(GAAccountId));
 
-		public static string GADomain => Val(nameof(GADomain));
+		public static string? GADomain => Val(nameof(GADomain));
+#nullable disable
 
 		public static GlobalLinksSection GetGlobalLinksSection()
 		{

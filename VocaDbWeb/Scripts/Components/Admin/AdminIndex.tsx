@@ -1,4 +1,5 @@
 import Layout from '@Components/Shared/Layout';
+import useVocaDbTitle from '@Components/useVocaDbTitle';
 import LoginManager from '@Models/LoginManager';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -6,8 +7,12 @@ import { Link } from 'react-router-dom';
 const loginManager = new LoginManager(vdb.values);
 
 const AdminIndex = (): React.ReactElement => {
+	const title = 'Site management'; /* TODO: localize */
+
+	useVocaDbTitle(title, true);
+
 	return (
-		<Layout title="Site management" /* TODO: localize */>
+		<Layout title={title}>
 			<h3>Common tasks{/* TODO: localize */}</h3>
 
 			<p>
