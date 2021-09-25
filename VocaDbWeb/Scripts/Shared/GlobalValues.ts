@@ -11,6 +11,7 @@ interface MenuPageLink {
 export default interface GlobalValues {
 	albumTypes: string /* TODO: enum AlbumType */[];
 	artistTypes: string /* TODO: enum ArtistType */[];
+	gaAccountId: string;
 	lockdownMessage?: string;
 	songTypes: string /* TODO: enum SongType */[];
 	staticContentHost: string;

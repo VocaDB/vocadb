@@ -1,4 +1,5 @@
 import Breadcrumb from '@Bootstrap/Breadcrumb';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
 import { observer } from 'mobx-react-lite';
@@ -23,6 +24,8 @@ const useDiscussionIndexStore = (
 	React.useEffect(() => {
 		discussionIndexStore.updateResults(true);
 	}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
+
+	useRouteParamsTracking(discussionIndexStore);
 };
 
 interface DiscussionFoldersProps {

@@ -9,6 +9,7 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useScript from '@Components/useScript';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import AlbumRepository from '@Repositories/AlbumRepository';
@@ -101,6 +102,8 @@ const SearchIndex = observer(
 		]);
 
 		useStoreWithPaging(searchStore);
+
+		useRouteParamsTracking(searchStore);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');

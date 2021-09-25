@@ -2,6 +2,7 @@ import Alert from '@Bootstrap/Alert';
 import Button from '@Bootstrap/Button';
 import CommentKnockout from '@Components/Shared/Partials/Comment/CommentKnockout';
 import EditableComments from '@Components/Shared/Partials/Comment/EditableComments';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithRouteParams from '@Components/useStoreWithRouteParams';
 import LoginManager from '@Models/LoginManager';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
@@ -29,6 +30,8 @@ const ViewTopic = observer(
 		const navigate = useNavigate();
 
 		useStoreWithRouteParams(discussionTopicStore);
+
+		useRouteParamsTracking(discussionTopicStore);
 
 		return (
 			<div>

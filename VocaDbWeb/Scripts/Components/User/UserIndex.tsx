@@ -1,4 +1,5 @@
 import Layout from '@Components/Shared/Layout';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import UserRepository from '@Repositories/UserRepository';
 import HttpClient from '@Shared/HttpClient';
@@ -18,6 +19,8 @@ const UserIndex = (): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes']);
 
 	useStoreWithPaging(listUsersStore);
+
+	useRouteParamsTracking(listUsersStore);
 
 	return (
 		<Layout title={t('ViewRes:Shared.Users')}>

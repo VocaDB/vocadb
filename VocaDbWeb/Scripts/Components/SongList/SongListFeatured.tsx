@@ -2,6 +2,7 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import Layout from '@Components/Shared/Layout';
 import SongListsKnockout from '@Components/Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import LoginManager from '@Models/LoginManager';
@@ -45,6 +46,8 @@ const SongListFeatured = observer(
 		]);
 
 		useStoreWithUpdateResults(featuredSongListsStore);
+
+		useRouteParamsTracking(featuredSongListsStore);
 
 		return (
 			<Layout

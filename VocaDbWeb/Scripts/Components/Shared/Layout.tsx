@@ -1,6 +1,7 @@
 import Alert from '@Bootstrap/Alert';
+import usePageTracking from '@Components/usePageTracking';
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useTitle } from 'react-use';
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -15,14 +16,12 @@ const Layout = ({
 	title,
 	toolbar,
 }: LayoutProps): React.ReactElement => {
+	useTitle(title ? `${title} - ${vdb.values.siteTitle}` : vdb.values.siteTitle);
+
+	usePageTracking();
+
 	return (
 		<>
-			<Helmet>
-				<title>
-					{title ? `${title} - ${vdb.values.siteTitle}` : vdb.values.siteTitle}
-				</title>
-			</Helmet>
-
 			{/* TODO */}
 
 			{title && (
