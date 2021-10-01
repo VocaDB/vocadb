@@ -533,7 +533,6 @@ namespace VocaDb.Model.Domain.Songs
 			ParamIs.NotNull(() => lyrics);
 			return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode);
 		}
-#nullable disable
 
 		public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string cultureCode)
 		{
@@ -547,7 +546,6 @@ namespace VocaDb.Model.Domain.Songs
 			return entry;
 		}
 
-#nullable enable
 		public virtual SongName CreateName(string val, ContentLanguageSelection language)
 		{
 			ParamIs.NotNullOrEmpty(() => val);

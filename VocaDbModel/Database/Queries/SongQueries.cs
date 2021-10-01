@@ -1046,6 +1046,7 @@ namespace VocaDb.Model.Database.Queries
 			return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
 		}
 
+#nullable enable
 		public EntryRevertedContract RevertToVersion(int archivedSongVersionId)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
@@ -1155,6 +1156,7 @@ namespace VocaDb.Model.Database.Queries
 				return new EntryRevertedContract(song, warnings);
 			});
 		}
+#nullable disable
 
 		public async Task<CollectionDiffWithValue<PVForSong, PVForSong>> UpdatePVs(IDatabaseContext<Song> ctx, Song song, SongDiff diff, IList<PVContract> pvs)
 		{

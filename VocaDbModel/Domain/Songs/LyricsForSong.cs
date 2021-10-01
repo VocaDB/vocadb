@@ -1,21 +1,21 @@
-#nullable disable
-
 using System;
-using VocaDb.Model.Domain.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Songs
 {
 	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 	{
-		private OptionalCultureCode _cultureCode;
-		private string _notes;
+		private OptionalCultureCode? _cultureCode;
 		private Song _song;
 		private string _source;
 		private string _value;
 		private string _url;
 
+#nullable disable
 		public LyricsForSong() { }
+#nullable enable
 
 		public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string cultureCode)
 		{
@@ -38,19 +38,10 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual int Id { get; protected set; }
 
-		public virtual string Notes
-		{
-			get => _notes;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_notes = value;
-			}
-		}
-
 		public virtual Song Song
 		{
 			get => _song;
+			[MemberNotNull(nameof(_song))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -61,6 +52,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual string Source
 		{
 			get => _source;
+			[MemberNotNull(nameof(_source))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -73,6 +65,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual string URL
 		{
 			get => _url;
+			[MemberNotNull(nameof(_url))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -83,6 +76,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual string Value
 		{
 			get => _value;
+			[MemberNotNull(nameof(_value))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -90,7 +84,6 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-#nullable enable
 		public virtual bool ContentEquals(LyricsForSongContract? contract)
 		{
 			if (contract == null)
@@ -126,6 +119,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Id.GetHashCode();
 		}
-#nullable disable
 	}
 }

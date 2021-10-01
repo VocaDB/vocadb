@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -14,7 +12,6 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public LyricsForSongContract() { }
 
-#nullable enable
 		public LyricsForSongContract(LyricsForSong lyrics, bool includeValue = true)
 		{
 			ParamIs.NotNull(() => lyrics);
@@ -30,12 +27,11 @@ namespace VocaDb.Model.DataContracts.Songs
 				Value = lyrics.Value;
 			}
 		}
-#nullable disable
 
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string CultureCode { get; init; }
+		public string CultureCode { get; init; } = string.Empty;
 
 		[DataMember]
 		public int Id { get; init; }
@@ -43,7 +39,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string Source { get; init; }
+		public string Source { get; init; } = string.Empty;
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -52,9 +48,9 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string URL { get; init; }
+		public string URL { get; init; } = string.Empty;
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Value { get; init; }
+		public string Value { get; init; } = string.Empty;
 	}
 }

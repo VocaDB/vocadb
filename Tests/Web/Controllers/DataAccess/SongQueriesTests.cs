@@ -815,6 +815,56 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
+		public async Task Revert_Lyrics()
+		{
+			_user.GroupId = UserGroupId.Moderator;
+			_permissionContext.RefreshLoggedUser(_repository);
+			SongForEditContract Contract()
+			{
+				return new SongForEditContract(_song, ContentLanguagePreference.English)
+				{
+					Lyrics = new[]
+					{
+						new LyricsForSongContract
+						{
+							TranslationType = TranslationType.Original,
+							Value = "始まりの光　私を包む",
+						},
+						new LyricsForSongContract
+						{
+							TranslationType = TranslationType.Translation,
+							Value = "The light of beginning envelops me",
+						},
+					}
+				};
+			}
+
+			await _queries.UpdateBasicProperties(Contract());
+
+			_song.Lyrics.Count().Should().Be(2);
+
+			// Remove all lyrics
+			var contract = Contract();
+			contract.Lyrics = Array.Empty<LyricsForSongContract>();
+			await _queries.UpdateBasicProperties(contract);
+
+			var latestVersionBeforeRevert = _song.ArchivedVersionsManager.GetLatestVersion();
+			latestVersionBeforeRevert.Should().NotBeNull("latestVersion");
+			_song.Version.Should().Be(2, "Version number before revert");
+			_song.Lyrics.Count().Should().Be(0);
+
+			_queries.RevertToVersion(latestVersionBeforeRevert.Id);
+
+			_song.Version.Should().Be(3, "Version was incremented");
+			_song.Lyrics.Count().Should().Be(2, "Lyrics were restored");
+			string.Empty.Should().NotBe(_song.ArtistString?.Default, "Artist string was restored");
+
+			var latestVersion = _song.ArchivedVersionsManager.GetLatestVersion();
+			latestVersion.Reason.Should().Be(SongArchiveReason.Reverted, "Reason");
+			latestVersion.IsIncluded(SongEditableFields.Artists).Should().BeTrue("Artists are included in diff");
+		}
+
+		[TestMethod]
 		public async Task Update_Names()
 		{
 			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
