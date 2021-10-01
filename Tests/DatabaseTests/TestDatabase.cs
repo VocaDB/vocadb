@@ -3,6 +3,7 @@
 using System;
 using NHibernate;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -21,6 +22,10 @@ namespace VocaDb.Tests.DatabaseTests
 		public const int SongId = 121;
 		public const int Song2Id = 122;
 		public const int SongWithArtistId = 7787;
+
+		public Album Album { get; private set; }
+		public Album Album2 { get; private set; }
+		public Album Album3 { get; private set; }
 
 		public Artist Producer { get; private set; }
 		public Artist Producer2 { get; private set; }
@@ -158,7 +163,19 @@ namespace VocaDb.Tests.DatabaseTests
 				ReleaseEvent2 = CreateEntry.SeriesEvent(ReleaseEventSeries, 39);
 				session.Save(ReleaseEvent2);
 
+				Album = new Album(TranslatedString.Create("Re:package")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2008) } };
+				session.Save(Album);
+
+				Album2 = new Album(TranslatedString.Create("Re:MIKUS")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2009) } };
+				session.Save(Album2);
+
+				Album3 = new Album(TranslatedString.Create("Re:Dial"));
+				session.Save(Album3);
+
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
+				UserWithEditPermissions.AddAlbum(Album, PurchaseStatus.Nothing, MediaType.Other, 0);
+				UserWithEditPermissions.AddAlbum(Album2, PurchaseStatus.Nothing, MediaType.Other, 0);
+				UserWithEditPermissions.AddAlbum(Album3, PurchaseStatus.Nothing, MediaType.Other, 0);
 				session.Save(UserWithEditPermissions);
 
 				Webhook = new Webhook("https://discord.com/api/webhooks/39", WebhookEvents.User);

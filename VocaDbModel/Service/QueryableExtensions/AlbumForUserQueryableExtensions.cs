@@ -154,7 +154,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				&& a.Album.OriginalRelease.ReleaseDate.Month != null
 				&& a.Album.OriginalRelease.ReleaseDate.Day != null);
 		}
-		
+
 		public static IQueryable<AlbumForUser> WhereHasReleaseYear(this IQueryable<AlbumForUser> criteria)
 		{
 			return criteria.Where(a => a.Album.OriginalRelease.ReleaseDate.Year != null);
