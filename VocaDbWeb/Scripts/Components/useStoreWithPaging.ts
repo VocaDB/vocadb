@@ -12,7 +12,6 @@ const useStoreWithPaging = <T>(store: IStoreWithPaging<T>): void => {
 		[store],
 	);
 
-	// `useStoreWithUpdateResults` must be called before `useStoreWithRouteParams` because the former may change `routeParams` based on `clearResultsByQueryKeys`.
 	useStoreWithUpdateResults(store, handleClearResults);
 };
 

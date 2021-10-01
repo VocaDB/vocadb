@@ -1,4 +1,5 @@
 import Breadcrumb from '@Bootstrap/Breadcrumb';
+import useVocaDbTitle from '@Components/useVocaDbTitle';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -14,7 +15,12 @@ interface DiscussionTopicsProps {
 
 const DiscussionTopics = observer(
 	({ discussionIndexStore }: DiscussionTopicsProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Discussion']);
+		const { t, ready } = useTranslation(['ViewRes.Discussion']);
+
+		const title = t('ViewRes.Discussion:Index.Discussions');
+
+		useVocaDbTitle(title, ready);
+
 		const { topicId } = useParams();
 
 		React.useEffect(() => {
@@ -22,7 +28,7 @@ const DiscussionTopics = observer(
 		}, [discussionIndexStore, topicId]);
 
 		return (
-			<DiscussionLayout>
+			<DiscussionLayout title={title}>
 				<Breadcrumb>
 					<Breadcrumb.Item
 						linkAs={Link}

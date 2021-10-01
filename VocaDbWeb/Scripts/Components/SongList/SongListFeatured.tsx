@@ -2,7 +2,9 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import Layout from '@Components/Shared/Layout';
 import SongListsKnockout from '@Components/Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
+import useVocaDbTitle from '@Components/useVocaDbTitle';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import LoginManager from '@Models/LoginManager';
 import SongListRepository from '@Repositories/SongListRepository';
@@ -37,18 +39,23 @@ const featuredSongListsStore = new FeaturedSongListsStore(
 
 const SongListFeatured = observer(
 	(): React.ReactElement => {
-		const { t } = useTranslation([
+		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',
 			'ViewRes.SongList',
 			'ViewRes.User',
 		]);
 
+		const title = t('ViewRes:Shared.FeaturedSongLists');
+
+		useVocaDbTitle(title, ready);
+
 		useStoreWithUpdateResults(featuredSongListsStore);
+		useRouteParamsTracking(featuredSongListsStore, ready);
 
 		return (
 			<Layout
-				title={t('ViewRes:Shared.FeaturedSongLists')}
+				title={title}
 				toolbar={
 					<>
 						{loginManager.canEditFeaturedLists && (

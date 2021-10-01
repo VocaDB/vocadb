@@ -32,6 +32,7 @@ namespace VocaDb.Web.Models.Shared
 		public DiscType[] AlbumTypes { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public ArtistType[] ArtistTypes { get; init; }
+		public string? GAAccountId { get; init; }
 		public string? LockdownMessage { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public SongType[] SongTypes { get; init; }
@@ -68,6 +69,7 @@ namespace VocaDb.Web.Models.Shared
 		{
 			AlbumTypes = AppConfig.AlbumTypes;
 			ArtistTypes = AppConfig.ArtistTypes;
+			GAAccountId = AppConfig.GAAccountId;
 			LockdownMessage = AppConfig.LockdownMessage;
 			SongTypes = AppConfig.SongTypes;
 			StaticContentHost = AppConfig.StaticContentHost;

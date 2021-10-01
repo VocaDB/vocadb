@@ -11,6 +11,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
+import ReactGA from 'react-ga';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './i18n';
@@ -38,6 +39,10 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 const topBarStore = new TopBarStore(loginManager, entryReportRepo, userRepo);
 
 const App = (): React.ReactElement => {
+	React.useEffect(() => {
+		ReactGA.initialize(vdb.values.gaAccountId);
+	}, []);
+
 	return (
 		<BrowserRouter>
 			<Navbar className="navbar-inverse" fixed="top">

@@ -11,6 +11,7 @@ const useStoreWithUpdateResults = <T extends Object>(
 	// Called when search results should be cleared.
 	onClearResults?: (popState: boolean) => void,
 ): void => {
+	// This must be called before `useStoreWithRouteParams` because this may change `routeParams` based on `clearResultsByQueryKeys`.
 	React.useEffect(() => {
 		// Returns the disposer.
 		return reaction(

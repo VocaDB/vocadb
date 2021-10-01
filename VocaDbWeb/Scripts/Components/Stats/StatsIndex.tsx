@@ -1,4 +1,5 @@
 import Layout from '@Components/Shared/Layout';
+import useVocaDbTitle from '@Components/useVocaDbTitle';
 import HttpClient from '@Shared/HttpClient';
 import StatsStore from '@Stores/StatsStore';
 import Highcharts from 'highcharts';
@@ -13,8 +14,12 @@ const statsStore = new StatsStore(httpClient);
 
 const StatsIndex = observer(
 	(): React.ReactElement => {
+		const title = 'Statistics / Reports'; /* TODO: localize */
+
+		useVocaDbTitle(title, true);
+
 		return (
-			<Layout title="Statistics / Reports" /* TODO: localize */>
+			<Layout title={title}>
 				<select
 					value={JSON.stringify(statsStore.selectedReport)}
 					onChange={(e): void =>

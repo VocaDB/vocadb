@@ -1,6 +1,5 @@
 import Alert from '@Bootstrap/Alert';
 import React from 'react';
-import { useTitle } from 'react-use';
 
 interface LayoutProps {
 	children?: React.ReactNode;
@@ -15,8 +14,6 @@ const Layout = ({
 	title,
 	toolbar,
 }: LayoutProps): React.ReactElement => {
-	useTitle(title ? `${title} - ${vdb.values.siteTitle}` : vdb.values.siteTitle);
-
 	return (
 		<>
 			{/* TODO */}

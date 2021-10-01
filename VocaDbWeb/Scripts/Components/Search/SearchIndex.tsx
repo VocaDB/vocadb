@@ -9,8 +9,10 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
+import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useScript from '@Components/useScript';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
+import useVocaDbTitle from '@Components/useVocaDbTitle';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import EntryRepository from '@Repositories/EntryRepository';
@@ -100,7 +102,10 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
+		useVocaDbTitle(undefined, true);
+
 		useStoreWithPaging(searchStore);
+		useRouteParamsTracking(searchStore, true);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');
