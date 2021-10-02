@@ -1,8 +1,10 @@
 import Alert from '@Bootstrap/Alert';
+import Breadcrumb from '@Bootstrap/Breadcrumb';
 import React from 'react';
 
 interface LayoutProps {
 	children?: React.ReactNode;
+	parents?: React.ReactNode;
 	subtitle?: string;
 	title?: string;
 	toolbar?: React.ReactNode;
@@ -10,13 +12,14 @@ interface LayoutProps {
 
 const Layout = ({
 	children,
+	parents,
 	subtitle,
 	title,
 	toolbar,
 }: LayoutProps): React.ReactElement => {
 	return (
 		<>
-			{/* TODO */}
+			{parents && <Breadcrumb>{parents}</Breadcrumb>}
 
 			{title && (
 				<h1 className="page-title">

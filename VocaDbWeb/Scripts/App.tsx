@@ -26,6 +26,7 @@ const SearchRoutes = React.lazy(
 const SongListRoutes = React.lazy(
 	() => import('@Components/SongList/SongListRoutes'),
 );
+const SongRoutes = React.lazy(() => import('@Components/Song/SongRoutes'));
 const StatsRoutes = React.lazy(() => import('@Components/Stats/StatsRoutes'));
 const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 
@@ -62,6 +63,7 @@ const App = (): React.ReactElement => {
 								<Route path="discussion/*" element={<DiscussionRoutes />} />
 								<Route path="Search/*" element={<SearchRoutes />} />
 								<Route path="SongList/*" element={<SongListRoutes />} />
+								<Route path="Song/*" element={<SongRoutes />} />
 								<Route path="Stats/*" element={<StatsRoutes />} />
 								<Route path="User/*" element={<UserRoutes />} />
 								<Route path="*" element={<ErrorNotFound />} />

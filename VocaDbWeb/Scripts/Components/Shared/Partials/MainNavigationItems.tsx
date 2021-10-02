@@ -70,9 +70,11 @@ const MainNavigationItems = React.memo(
 							</li>
 						)}
 						<li>
-							<a href={'/Song/Rankings'}>
+							<Link
+								to={`/Song/Rankings?${qs.stringify({ durationHours: 168 })}`}
+							>
 								{t('ViewRes:Shared.TopFavoritedSongs')}
-							</a>
+							</Link>
 						</li>
 						<li>
 							<Link to="/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true">
