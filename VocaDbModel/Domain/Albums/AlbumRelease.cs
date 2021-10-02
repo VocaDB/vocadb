@@ -11,7 +11,8 @@ namespace VocaDb.Model.Domain.Albums
 
 		public AlbumRelease() { }
 
-		public AlbumRelease(IAlbumRelease contract, ReleaseEvent releaseEvent)
+#nullable enable
+		public AlbumRelease(IAlbumRelease contract, ReleaseEvent? releaseEvent)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -19,6 +20,7 @@ namespace VocaDb.Model.Domain.Albums
 			ReleaseDate = (contract.ReleaseDate != null ? OptionalDateTime.Create(contract.ReleaseDate) : null);
 			ReleaseEvent = releaseEvent;
 		}
+#nullable disable
 
 		public virtual string CatNum
 		{
