@@ -222,4 +222,7 @@
   <data name="ManageWebhooks" xml:space="preserve">
     <value>Manage webhooks</value>
   </data>
+  <data name="CreateXmlDump" xml:space="preserve">
+    <value>Create XML dump</value>
+  </data>
 </root>
