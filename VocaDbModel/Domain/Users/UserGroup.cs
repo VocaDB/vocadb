@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Security;
@@ -61,7 +59,9 @@ namespace VocaDb.Model.Domain.Users
 		private static readonly UserGroup s_admin = new(UserGroupId.Admin,
 			s_mod,
 			PermissionToken.Admin,
-			PermissionToken.ManageWebhooks);
+			PermissionToken.ManageWebhooks,
+			PermissionToken.CreateXmlDump
+		);
 
 		private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {
 			s_limited, s_regular, s_trusted, s_mod, s_admin

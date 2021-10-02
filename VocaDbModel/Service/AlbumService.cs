@@ -42,22 +42,6 @@ namespace VocaDb.Model.Service
 			return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference).Find(queryParams);
 		}
 
-		private PartialFindResult<Album> FindAdvanced(
-			ISession session, string query, PagingProperties paging, AlbumSortRule sortRule)
-		{
-			var queryPlan = new AlbumQueryBuilder().BuildPlan(query);
-			return FindAdvanced(session, queryPlan, paging, sortRule);
-		}
-
-		private PartialFindResult<Album> FindAdvanced(
-			ISession session, QueryPlan<Album> queryPlan, PagingProperties paging, AlbumSortRule sortRule)
-		{
-			var querySource = new NHibernateDatabaseContext(session, PermissionContext);
-			var processor = new QueryProcessor<Album>(querySource);
-
-			return processor.Query(queryPlan, paging, q => AlbumSearchSort.AddOrder(q, sortRule, LanguagePreference));
-		}
-
 		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
@@ -119,19 +103,6 @@ namespace VocaDb.Model.Service
 		{
 			var queryParams = new AlbumQueryParams(textQuery, discType, start, maxResults, getTotalCount, sortRule, moveExactToTop);
 			return Find(queryParams);
-		}
-
-		public PartialFindResult<AlbumContract> FindAdvanced(
-			string query, PagingProperties paging, AlbumSortRule sortRule)
-		{
-			return HandleQuery(session =>
-			{
-				var results = FindAdvanced(session, query, paging, sortRule);
-
-				return new PartialFindResult<AlbumContract>(
-					results.Items.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference)).ToArray(),
-					results.TotalCount, results.Term);
-			});
 		}
 
 		public int? FindByMikuDbId(int mikuDbId)
