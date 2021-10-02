@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -145,7 +143,6 @@ namespace VocaDb.Model.Domain.Security
 			set => _name = value;
 		}
 
-#nullable enable
 		public bool Equals(PermissionToken token)
 		{
 			return (token.Id == Id);
@@ -168,7 +165,6 @@ namespace VocaDb.Model.Domain.Security
 		{
 			return Name;
 		}
-#nullable disable
 	}
 
 	public interface IPermissionToken
