@@ -180,21 +180,21 @@ namespace VocaDb.Model.Service
 			});
 		}
 
+#nullable enable
 		public void CreateXmlDump()
 		{
-			VerifyAdmin();
-
-			SysLog("creating XML dump");
+			PermissionContext.VerifyPermission(PermissionToken.CreateXmlDump);
 
 			HandleQuery(session =>
 			{
+				AuditLog("creating XML dump", session);
+
 				var dumper = new XmlDumper();
 				var path = Path.Combine(AppConfig.DbDumpFolder, "dump.zip");
 				dumper.Create(path, session);
 			});
 		}
 
-#nullable enable
 		public void DeleteEntryReports(int[] reportIds)
 		{
 			ParamIs.NotNull(() => reportIds);
