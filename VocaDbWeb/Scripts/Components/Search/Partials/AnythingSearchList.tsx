@@ -15,26 +15,43 @@ import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-const entryCategoryName = (
-	t: TFunction<string[]>,
+const useEntryCategoryName = (): ((
 	entry: EntryContract,
-): string | undefined => {
-	switch (EntryType[entry.entryType as keyof typeof EntryType]) {
-		case EntryType.Artist:
-			return t(`VocaDb.Model.Resources:ArtistTypeNames.${entry.artistType}`);
-		case EntryType.Album:
-			return t(`VocaDb.Model.Resources.Albums:DiscTypeNames.${entry.discType}`);
-		case EntryType.ReleaseEvent:
-			return t(
-				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${entry.eventCategory}`,
-			);
-		case EntryType.Song:
-			return t(`VocaDb.Model.Resources.Songs:SongTypeNames.${entry.songType}`);
-	}
+) => string | undefined) => {
+	const { t } = useTranslation([
+		'VocaDb.Model.Resources',
+		'VocaDb.Model.Resources.Albums',
+		'VocaDb.Model.Resources.Songs',
+		'VocaDb.Web.Resources.Domain.ReleaseEvents',
+	]);
 
-	return undefined;
+	return React.useCallback(
+		(entry: EntryContract): string | undefined => {
+			switch (EntryType[entry.entryType as keyof typeof EntryType]) {
+				case EntryType.Artist:
+					return t(
+						`VocaDb.Model.Resources:ArtistTypeNames.${entry.artistType}`,
+					);
+				case EntryType.Album:
+					return t(
+						`VocaDb.Model.Resources.Albums:DiscTypeNames.${entry.discType}`,
+					);
+				case EntryType.ReleaseEvent:
+					return t(
+						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${entry.eventCategory}`,
+					);
+				case EntryType.Song:
+					return t(
+						`VocaDb.Model.Resources.Songs:SongTypeNames.${entry.songType}`,
+					);
+				default:
+					return undefined;
+			}
+		},
+		[t],
+	);
 };
 
 interface AnythingSearchListProps {
@@ -50,12 +67,10 @@ const AnythingSearchList = observer(
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Search',
-			'VocaDb.Model.Resources',
-			'VocaDb.Model.Resources.Albums',
-			'VocaDb.Model.Resources.Songs',
 			'VocaDb.Web.Resources.Domain',
-			'VocaDb.Web.Resources.Domain.ReleaseEvents',
 		]);
+
+		const entryCategoryName = useEntryCategoryName();
 
 		return (
 			<div>
@@ -162,7 +177,7 @@ const AnythingSearchList = observer(
 										<>
 											{' '}
 											<small className="extraInfo">
-												({entryCategoryName(t, entry)})
+												({entryCategoryName(entry)})
 											</small>
 										</>
 									)}

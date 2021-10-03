@@ -8,13 +8,13 @@ import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconNameAndTypeLinkKnockoutProps {
 	user: UserApiContract;
-	iconSize: number;
+	iconSize?: number;
 }
 
 const IconNameAndTypeLinkKnockout = React.memo(
 	({
 		user,
-		iconSize,
+		iconSize = 20,
 	}: IconNameAndTypeLinkKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources']);
 
