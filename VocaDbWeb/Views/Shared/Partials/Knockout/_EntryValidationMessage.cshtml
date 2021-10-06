@@ -46,7 +46,7 @@ else
 	</ul>
 	@if (Model.HelpSection != null)
 	{
-		<span>See the <a href="@(Url.Action("Index", "Help") + "?guidelines+" + Model.HelpSection)">guide</a> for more information.</span>
+		<span>See the <a href="@(Url.Action("Index", "Help") + "/guidelines#" + Model.HelpSection)">guide</a> for more information.</span>
 	}
 	<!-- /ko -->
 </div>

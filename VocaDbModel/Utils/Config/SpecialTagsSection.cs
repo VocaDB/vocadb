@@ -32,6 +32,13 @@ namespace VocaDb.Model.Utils.Config
 			get => TagId("shortVersion");
 			set => this["shortVersion"] = value;
 		}
+
+		[ConfigurationProperty("instrumental")]
+		public int Instrumental
+		{
+			get => TagId("instrumental");
+			set => this["instrumental"] = value;
+		}
 	}
 
 	public interface ISpecialTags

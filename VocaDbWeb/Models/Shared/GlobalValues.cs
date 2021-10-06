@@ -34,6 +34,7 @@ namespace VocaDb.Web.Models.Shared
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public ArtistType[] ArtistTypes { get; init; }
 
+		public string? ExternalHelpPath { get; init; }
 		public string? GAAccountId { get; init; }
 		public string? HostAddress { get; init; }
 		public string? LockdownMessage { get; init; }
@@ -55,6 +56,7 @@ namespace VocaDb.Web.Models.Shared
 		public string AmazonJpAffiliateId { get; init; }
 		public string PlayAsiaAffiliateId { get; init; }
 		public int FreeTagId { get; init; }
+		public int InstrumentalTagId { get; init; }
 
 		public string? BaseAddress { get; init; }
 
@@ -78,6 +80,7 @@ namespace VocaDb.Web.Models.Shared
 		{
 			AlbumTypes = AppConfig.AlbumTypes;
 			ArtistTypes = AppConfig.ArtistTypes;
+			ExternalHelpPath = AppConfig.ExternalHelpPath;
 			GAAccountId = AppConfig.GAAccountId;
 			HostAddress = AppConfig.HostAddress;
 			LockdownMessage = AppConfig.LockdownMessage;
@@ -96,6 +99,7 @@ namespace VocaDb.Web.Models.Shared
 			AmazonJpAffiliateId = model.Config.Affiliates.amazonJpAffiliateId;
 			PlayAsiaAffiliateId = model.Config.Affiliates.PlayAsiaAffiliateId;
 			FreeTagId = model.Config.SpecialTags.Free;
+			InstrumentalTagId = model.Config.SpecialTags.Instrumental;
 
 			BaseAddress = model.RootPath;
 			LanguagePreference = model.UserContext.LanguagePreference;

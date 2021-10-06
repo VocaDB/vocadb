@@ -11,6 +11,7 @@ interface MenuPageLink {
 export default interface GlobalValues {
 	albumTypes: string /* TODO: enum AlbumType */[];
 	artistTypes: string /* TODO: enum ArtistType */[];
+	externalHelpPath?: string;
 	gaAccountId: string;
 	hostAddress: string;
 	lockdownMessage?: string;
@@ -29,6 +30,7 @@ export default interface GlobalValues {
 	amazonJpAffiliateId: string;
 	playAsiaAffiliateId: string;
 	freeTagId: number;
+	instrumentalTagId: number;
 
 	/** URL of the site path, for example "/" */
 	baseAddress: string;

@@ -1,6 +1,7 @@
 import Alert from '@Bootstrap/Alert';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import NotificationIcon from './NotificationIcon';
 
@@ -18,9 +19,9 @@ const DraftMessage = React.memo(
 				<span>{t('HelperRes:Helper.DraftMessage')}</span>
 				<span>
 					{t('HelperRes:Helper.SeeGuidePre')}{' '}
-					<a href={`/Help?guidelines+${section}`}>
+					<Link to={`/Help/guidelines#${section}`}>
 						{t('HelperRes:Helper.SeeGuide')}
-					</a>{' '}
+					</Link>{' '}
 					{t('HelperRes:Helper.SeeGuidePost')}
 				</span>
 			</Alert>
