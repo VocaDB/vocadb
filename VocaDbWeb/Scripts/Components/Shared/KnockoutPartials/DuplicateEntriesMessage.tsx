@@ -4,6 +4,7 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import NotificationIcon from '../Partials/Shared/NotificationIcon';
 
@@ -24,9 +25,10 @@ const DuplicateEntriesMessage = React.memo(
 					{dupeEntries.map((entry, index) => (
 						<li key={index}>
 							<EntryToolTip
-								as="a"
+								as={Link}
 								value={entry.entry}
-								href={EntryUrlMapper.details_entry(entry.entry)}
+								to={EntryUrlMapper.details_entry(entry.entry)}
+								/* TODO: target="_blank" */
 							>
 								{entry.entry.name.displayName}
 							</EntryToolTip>{' '}

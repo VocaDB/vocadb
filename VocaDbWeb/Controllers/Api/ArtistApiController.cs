@@ -274,6 +274,42 @@ namespace VocaDb.Web.Controllers.Api
 		public EntryWithArchivedVersionsForApiContract<ArtistForApiContract> GetArtistWithArchivedVersions(int id) =>
 			_queries.GetArtistWithArchivedVersionsForApi(id);
 
+		[HttpPost("")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Create(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateArtistForApiContract contract
+		)
+		{
+			if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
+
+			if (string.IsNullOrWhiteSpace(contract.Description) && string.IsNullOrWhiteSpace(contract.WebLink?.Url))
+				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
+
+			var coverPicUpload = Request.Form.Files["pictureUpload"];
+			var pictureData = ControllerBase.ParsePicture(this, coverPicUpload, "Picture", ImagePurpose.Main);
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			contract.PictureData = pictureData;
+
+			try
+			{
+				var artist = await _queries.Create(contract);
+
+				return artist.Id;
+			}
+			catch (InvalidPictureException)
+			{
+				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return ValidationProblem(ModelState);
+			}
+		}
+
 		[HttpPost("{id:int}")]
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

@@ -204,7 +204,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<ArtistContract> Create(CreateArtistContract contract)
+		public async Task<ArtistContract> Create(CreateArtistForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 

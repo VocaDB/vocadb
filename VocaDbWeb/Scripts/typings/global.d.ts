@@ -9,7 +9,7 @@ declare global {
 			song: any | /* TODO: Remove. */ { rankingsTitle?: string };
 			album: { addedToCollection?: string };
 			albumDetails: { download: string };
-			artist: { authoredBy?: string };
+			artist: { authoredBy?: string; newArtistExternalLink?: string };
 			layout: { paypalDonateTitle?: string };
 			home: { welcome?: string; welcomeSubtitle?: string };
 		};
