@@ -124,7 +124,7 @@
     <value>Títulos</value>
   </data>
   <data name="AlbumType" xml:space="preserve">
-    <value>Tipo de album</value>
+    <value>Tipo de álbum</value>
   </data>
   <data name="ArtistType" xml:space="preserve">
     <value>Tipo de artista</value>
@@ -142,7 +142,7 @@
     <value>{0} objetos por página</value>
   </data>
   <data name="MoreFilters" xml:space="preserve">
-    <value>mas filtros</value>
+    <value>Más filtros</value>
   </data>
   <data name="MoreRecentThan" xml:space="preserve">
     <value>Mas reciente que</value>
@@ -184,7 +184,7 @@
     <value>Incluir bancos de voz derivados</value>
   </data>
   <data name="MinScore" xml:space="preserve">
-    <value>puntuación de rating minima</value>
+    <value>puntuación de rating mínima</value>
   </data>
   <data name="OnlyMyFollowedArtists" xml:space="preserve">
     <value>Solo los artistas que sigo</value>

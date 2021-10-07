@@ -121,6 +121,6 @@
     <value>Producers and vocalists associated with this album.</value>
   </data>
   <data name="NewAlbumInfo" xml:space="preserve">
-    <value>Please note that VocaDB is not UtaiteDB. &lt;strong&gt;The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthsizers such as UTAU are also allowed, but human-sung covers are not)&lt;/strong&gt;. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines.</value>
+    <value>Please note that VocaDB is not UtaiteDB. &lt;strong&gt;The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not)&lt;/strong&gt;. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines.</value>
   </data>
 </root>

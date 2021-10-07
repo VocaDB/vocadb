@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BrokenPV" xml:space="preserve">
-    <value>Link del PV roto o volcado</value>
+    <value>Link del PV roto</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Entrada duplicada</value>
@@ -127,15 +127,21 @@
     <value>Contenido inapropiado</value>
   </data>
   <data name="InvalidInfo" xml:space="preserve">
-    <value>Información invalida o sin sustento</value>
+    <value>Información no válida o faltante</value>
   </data>
   <data name="MaliciousIP" xml:space="preserve">
     <value>IP maliciosa</value>
   </data>
   <data name="Other" xml:space="preserve">
-    <value>Otro (especifiquése en las notas)</value>
+    <value>Otro (especifique en las notas)</value>
   </data>
   <data name="OwnershipClaim" xml:space="preserve">
     <value>Reclamo de propiedad</value>
+  </data>
+  <data name="RemovePermissions" xml:space="preserve">
+    <value>Edición restringida</value>
+  </data>
+  <data name="Spamming" xml:space="preserve">
+    <value>Enviando spam</value>
   </data>
 </root>

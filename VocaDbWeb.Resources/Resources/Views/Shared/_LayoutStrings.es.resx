@@ -121,10 +121,13 @@
     <value>Mi cuenta</value>
   </data>
   <data name="AddAlbum" xml:space="preserve">
-    <value>Subir un album</value>
+    <value>Subir un álbum</value>
   </data>
   <data name="AddArtist" xml:space="preserve">
     <value>Añadir un artista</value>
+  </data>
+  <data name="AddEvent" xml:space="preserve">
+    <value>Añadir un evento</value>
   </data>
   <data name="AddSong" xml:space="preserve">
     <value>Subir una canción</value>
@@ -154,7 +157,7 @@
     <value>canal IRC en Rizon</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>Contenido bajo licencia de Creative Commons.</value>
+    <value>Contenido bajo licencia de Creative Commons</value>
   </data>
   <data name="LogIn" xml:space="preserve">
     <value>Iniciar sesión</value>
@@ -166,16 +169,19 @@
     <value>Gestionar</value>
   </data>
   <data name="MikuDbAlbum" xml:space="preserve">
-    <value>Importación de album</value>
+    <value>Importación de álbum</value>
   </data>
   <data name="NewAlbums" xml:space="preserve">
-    <value>Nuevos albumes</value>
+    <value>Nuevos álbumes</value>
   </data>
   <data name="NewPVs" xml:space="preserve">
     <value>PVs recientes</value>
   </data>
   <data name="OtherCredit" xml:space="preserve">
     <value>Otros créditos y código fuente</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Política de privacidad y cookies</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Registrarse</value>
@@ -194,6 +200,9 @@
   </data>
   <data name="UnreadMessages" xml:space="preserve">
     <value>Tienes mensajes no leídos</value>
+  </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>Próximos eventos</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Bienvenido</value>
