@@ -13,18 +13,22 @@ import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-const getCategoryName = (
-	t: TFunction<string[]>,
-	event: ReleaseEventContract,
-): string => {
-	var inherited = event.series ? event.series.category : event.category;
+const useCategoryName = (): ((event: ReleaseEventContract) => string) => {
+	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
 
-	if (!inherited || inherited === 'Unspecified') return '';
+	return React.useCallback(
+		(event: ReleaseEventContract): string => {
+			var inherited = event.series ? event.series.category : event.category;
 
-	return t(
-		`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${inherited}`,
+			if (!inherited || inherited === 'Unspecified') return '';
+
+			return t(
+				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${inherited}`,
+			);
+		},
+		[t],
 	);
 };
 
@@ -34,11 +38,9 @@ interface EventSearchListProps {
 
 const EventSearchList = observer(
 	({ eventSearchStore }: EventSearchListProps): React.ReactElement => {
-		const { t } = useTranslation([
-			'ViewRes',
-			'ViewRes.Event',
-			'VocaDb.Web.Resources.Domain.ReleaseEvents',
-		]);
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Event']);
+
+		const categoryName = useCategoryName();
 
 		return (
 			<>
@@ -166,9 +168,7 @@ const EventSearchList = observer(
 										}
 									/>
 									<br />
-									<small className="extraInfo">
-										{getCategoryName(t, event)}
-									</small>
+									<small className="extraInfo">{categoryName(event)}</small>
 								</td>
 								{eventSearchStore.showTags && (
 									<td className="search-tags-column">

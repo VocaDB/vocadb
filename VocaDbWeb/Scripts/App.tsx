@@ -16,6 +16,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './i18n';
 
+const ActivityEntryRoutes = React.lazy(
+	() => import('@Components/ActivityEntry/ActivityEntryRoutes'),
+);
 const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
@@ -59,6 +62,10 @@ const App = (): React.ReactElement => {
 					<div className="span10 rightFrame well">
 						<React.Suspense fallback={null /* TODO */}>
 							<Routes>
+								<Route
+									path="ActivityEntry/*"
+									element={<ActivityEntryRoutes />}
+								/>
 								<Route path="Admin/*" element={<AdminRoutes />} />
 								<Route path="discussion/*" element={<DiscussionRoutes />} />
 								<Route path="Search/*" element={<SearchRoutes />} />
