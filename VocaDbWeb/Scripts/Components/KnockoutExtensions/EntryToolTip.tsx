@@ -1,3 +1,4 @@
+import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import functions from '@Shared/GlobalFunctions';
 import $ from 'jquery';
@@ -14,6 +15,7 @@ const whitelistedDomains = [
 ];
 
 interface ToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	relativeUrl: string;
 	id: number;
@@ -21,200 +23,324 @@ interface ToolTipProps {
 	foreignDomain?: string;
 }
 
-const ToolTip = ({
-	children,
-	relativeUrl,
-	id,
-	params,
-	foreignDomain,
-}: ToolTipProps): React.ReactElement => {
-	const ref = React.useRef<HTMLDivElement>(undefined!);
+const ToolTip = React.forwardRef<HTMLElement, ToolTipProps>(
+	(
+		{
+			as: Component = 'div',
+			children,
+			relativeUrl,
+			id,
+			params,
+			foreignDomain,
+			...props
+		}: ToolTipProps,
+		ref,
+	): React.ReactElement => {
+		const el = React.useRef<HTMLElement>(undefined!);
+		React.useImperativeHandle<HTMLElement, HTMLElement>(ref, () => el.current);
 
-	React.useEffect(() => {
-		const url =
-			foreignDomain &&
-			_.some(whitelistedDomains, (domain) =>
-				_.includes(foreignDomain.toLocaleLowerCase(), domain),
-			)
-				? functions.mergeUrls(foreignDomain, relativeUrl)
-				: functions.mapAbsoluteUrl(relativeUrl);
-		const data = _.assign({ id: id }, params);
+		React.useEffect(() => {
+			const url =
+				foreignDomain &&
+				_.some(whitelistedDomains, (domain) =>
+					_.includes(foreignDomain.toLocaleLowerCase(), domain),
+				)
+					? functions.mergeUrls(foreignDomain, relativeUrl)
+					: functions.mapAbsoluteUrl(relativeUrl);
+			const data = _.assign({ id: id }, params);
 
-		$(ref.current).qtip({
-			content: {
-				text: 'Loading...' /* TODO: localize */,
-				ajax: {
-					url: url,
-					type: 'GET',
-					data: data,
-					dataType: foreignDomain ? 'jsonp' : undefined,
+			$(el.current).qtip({
+				content: {
+					text: 'Loading...' /* TODO: localize */,
+					ajax: {
+						url: url,
+						type: 'GET',
+						data: data,
+						dataType: foreignDomain ? 'jsonp' : undefined,
+					},
 				},
-			},
-			position: {
-				viewport: $(window),
-			},
-			style: {
-				classes: 'tooltip-wide',
-			},
+				position: {
+					viewport: $(window),
+				},
+				style: {
+					classes: 'tooltip-wide',
+				},
+			});
 		});
-	});
 
-	return <div ref={ref}>{children}</div>;
-};
+		return (
+			<Component {...props} ref={el}>
+				{children}
+			</Component>
+		);
+	},
+);
 
 interface AlbumToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 }
 
-export const AlbumToolTip = ({
-	children,
-	id,
-}: AlbumToolTipProps): React.ReactElement => {
-	return (
-		<ToolTip relativeUrl="/Album/PopupContent" id={id}>
-			{children}
-		</ToolTip>
-	);
-};
+export const AlbumToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	AlbumToolTipProps
+> = React.forwardRef<HTMLElement, AlbumToolTipProps>(
+	(
+		{ as, children, id, ...props }: AlbumToolTipProps,
+		ref,
+	): React.ReactElement => {
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/Album/PopupContent"
+				id={id}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface ArtistToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 }
 
-export const ArtistToolTip = ({
-	children,
-	id,
-}: ArtistToolTipProps): React.ReactElement => {
-	return (
-		<ToolTip relativeUrl="/Artist/PopupContent" id={id}>
-			{children}
-		</ToolTip>
-	);
-};
+export const ArtistToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	ArtistToolTipProps
+> = React.forwardRef<HTMLElement, ArtistToolTipProps>(
+	(
+		{ as, children, id, ...props }: ArtistToolTipProps,
+		ref,
+	): React.ReactElement => {
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/Artist/PopupContent"
+				id={id}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface EventToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 }
 
-export const EventToolTip = ({
-	children,
-	id,
-}: EventToolTipProps): React.ReactElement => {
-	const culture = vdb.values.uiCulture || undefined;
+export const EventToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	EventToolTipProps
+> = React.forwardRef<HTMLElement, EventToolTipProps>(
+	(
+		{ as, children, id, ...props }: EventToolTipProps,
+		ref,
+	): React.ReactElement => {
+		const culture = vdb.values.uiCulture || undefined;
 
-	return (
-		<ToolTip
-			relativeUrl="/Event/PopupContent"
-			id={id}
-			params={{ culture: culture }}
-		>
-			{children}
-		</ToolTip>
-	);
-};
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/Event/PopupContent"
+				id={id}
+				params={{ culture: culture }}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface SongToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 	toolTipDomain?: string;
 	version?: number;
 }
 
-export const SongToolTip = ({
-	children,
-	id,
-	toolTipDomain,
-	version,
-}: SongToolTipProps): React.ReactElement => {
-	return (
-		<ToolTip
-			relativeUrl="/Song/PopupContentWithVote"
-			id={id}
-			params={{ version: version }}
-			foreignDomain={toolTipDomain}
-		>
-			{children}
-		</ToolTip>
-	);
-};
+export const SongToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	SongToolTipProps
+> = React.forwardRef<HTMLElement, SongToolTipProps>(
+	(
+		{ as, children, id, toolTipDomain, version, ...props }: SongToolTipProps,
+		ref,
+	): React.ReactElement => {
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/Song/PopupContentWithVote"
+				id={id}
+				params={{ version: version }}
+				foreignDomain={toolTipDomain}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface TagToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 }
 
-export const TagToolTip = ({
-	children,
-	id,
-}: TagToolTipProps): React.ReactElement => {
-	const culture = vdb.values.uiCulture || undefined;
-	const lang = vdb.values.languagePreference;
+export const TagToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	TagToolTipProps
+> = React.forwardRef<HTMLElement, TagToolTipProps>(
+	(
+		{ as, children, id, ...props }: TagToolTipProps,
+		ref,
+	): React.ReactElement => {
+		const culture = vdb.values.uiCulture || undefined;
+		const lang = vdb.values.languagePreference;
 
-	return (
-		<ToolTip
-			relativeUrl="/Tag/PopupContent"
-			id={id}
-			params={{ culture: culture, lang: lang }}
-		>
-			{children}
-		</ToolTip>
-	);
-};
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/Tag/PopupContent"
+				id={id}
+				params={{ culture: culture, lang: lang }}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface UserToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	id: number;
 }
 
-export const UserToolTip = ({
-	children,
-	id,
-}: UserToolTipProps): React.ReactElement => {
-	var culture = vdb.values.uiCulture || undefined;
+export const UserToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	UserToolTipProps
+> = React.forwardRef<HTMLElement, UserToolTipProps>(
+	(
+		{ as, children, id, ...props }: UserToolTipProps,
+		ref,
+	): React.ReactElement => {
+		var culture = vdb.values.uiCulture || undefined;
 
-	return (
-		<ToolTip
-			relativeUrl="/User/PopupContent"
-			id={id}
-			params={{ culture: culture }}
-		>
-			{children}
-		</ToolTip>
-	);
-};
+		return (
+			<ToolTip
+				{...props}
+				as={as}
+				relativeUrl="/User/PopupContent"
+				id={id}
+				params={{ culture: culture }}
+				ref={ref}
+			>
+				{children}
+			</ToolTip>
+		);
+	},
+);
 
 interface EntryToolTipProps {
+	as?: React.ElementType;
 	children?: React.ReactNode;
 	value: EntryRefContract;
 }
 
-export const EntryToolTip = ({
-	children,
-	value,
-}: EntryToolTipProps): React.ReactElement => {
-	switch (value.entryType) {
-		case 'Album' /* TODO: enum */:
-			return <AlbumToolTip children={children} id={value.id} />;
+export const EntryToolTip: BsPrefixRefForwardingComponent<
+	'div',
+	EntryToolTipProps
+> = React.forwardRef<HTMLElement, EntryToolTipProps>(
+	(
+		{ as, children, value, ...props }: EntryToolTipProps,
+		ref,
+	): React.ReactElement => {
+		switch (value.entryType) {
+			case 'Album' /* TODO: enum */:
+				return (
+					<AlbumToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		case 'Artist' /* TODO: enum */:
-			return <ArtistToolTip children={children} id={value.id} />;
+			case 'Artist' /* TODO: enum */:
+				return (
+					<ArtistToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		case 'ReleaseEvent' /* TODO: enum */:
-			return <EventToolTip children={children} id={value.id} />;
+			case 'ReleaseEvent' /* TODO: enum */:
+				return (
+					<EventToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		case 'Song' /* TODO: enum */:
-			return <SongToolTip children={children} id={value.id} />;
+			case 'Song' /* TODO: enum */:
+				return (
+					<SongToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		case 'Tag' /* TODO: enum */:
-			return <TagToolTip children={children} id={value.id} />;
+			case 'Tag' /* TODO: enum */:
+				return (
+					<TagToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		case 'User' /* TODO: enum */:
-			return <UserToolTip children={children} id={value.id} />;
+			case 'User' /* TODO: enum */:
+				return (
+					<UserToolTip
+						{...props}
+						as={as}
+						children={children}
+						id={value.id}
+						ref={ref}
+					/>
+				);
 
-		default:
-			return <></>;
-	}
-};
+			default:
+				return <></>;
+		}
+	},
+);

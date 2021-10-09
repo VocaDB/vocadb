@@ -1,7 +1,11 @@
 import EntryRefContract from './EntryRefContract';
 
 export default interface DuplicateEntryResultContract {
-	entry: EntryRefWithNameContract;
+	entry: EntryRefWithNameContract & {
+		artistString?: string;
+
+		entryTypeName: string;
+	};
 
 	matchProperty: string;
 }
