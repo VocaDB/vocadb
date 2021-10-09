@@ -216,16 +216,16 @@ const AlbumSearchList = observer(
 									title={album.additionalNames}
 								>
 									<div className="pictureFrame img-rounded">
-										<AlbumToolTip id={album.id}>
-											<img
-												src={
-													album.mainPicture?.urlSmallThumb ??
-													'/Content/unknown.png'
-												}
-												alt="Preview" /* TODO: localize */
-												className="coverPic img-rounded"
-											/>
-										</AlbumToolTip>
+										<AlbumToolTip
+											as="img"
+											id={album.id}
+											src={
+												album.mainPicture?.urlSmallThumb ??
+												'/Content/unknown.png'
+											}
+											alt="Preview" /* TODO: localize */
+											className="coverPic img-rounded"
+										/>
 									</div>
 								</a>
 								<p>{album.name}</p>
