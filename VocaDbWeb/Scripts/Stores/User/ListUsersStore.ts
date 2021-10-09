@@ -28,7 +28,7 @@ export interface ListUsersRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ListUsersRouteParams> = require('@Stores/User/ListUsersRouteParams.schema');
+const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRouteParams.schema');
 const validate = ajv.compile(schema);
 
 export default class ListUsersStore

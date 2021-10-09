@@ -63,7 +63,7 @@ interface FeaturedSongListsRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('@Stores/SongList/FeaturedSongListsRouteParams.schema');
+const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./FeaturedSongListsRouteParams.schema');
 const validate = ajv.compile(schema);
 
 export default class FeaturedSongListsStore

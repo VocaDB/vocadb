@@ -58,7 +58,7 @@ const ajv = new Ajv({ coerceTypes: true });
 addFormats(ajv);
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SearchRouteParams> = require('@Stores/Search/SearchRouteParams.schema');
+const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.schema');
 const validate = ajv.compile(schema);
 
 export default class SearchStore

@@ -26,7 +26,7 @@ interface DiscussionIndexRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('@Stores/Discussion/DiscussionIndexRouteParams.schema');
+const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./DiscussionIndexRouteParams.schema');
 const validate = ajv.compile(schema);
 
 export default class DiscussionIndexStore
