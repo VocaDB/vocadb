@@ -2,6 +2,8 @@ import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithI
 import WebLinkContract from '../WebLinkContract';
 
 export default interface VenueForApiContract {
+	additionalNames?: string;
+
 	id: number;
 
 	name: string;
