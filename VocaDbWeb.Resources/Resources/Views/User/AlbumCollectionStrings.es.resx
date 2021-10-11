@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value>Album</value>
+    <value>Álbum</value>
   </data>
   <data name="CollectionStatusAnything" xml:space="preserve">
     <value>Cualquiera</value>
   </data>
   <data name="CollectionWishedOrOrdered" xml:space="preserve">
-    <value>Deseado o ordenado</value>
+    <value>Deseado o pedido</value>
   </data>
   <data name="MediaType" xml:space="preserve">
     <value>Tipo de multimedia</value>
@@ -136,7 +136,7 @@
     <value>Fecha de lanzamiento</value>
   </data>
   <data name="ReleaseEvent" xml:space="preserve">
-    <value>Salida de evento</value>
+    <value>Evento de lanzamiento</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Estado de la colección</value>
