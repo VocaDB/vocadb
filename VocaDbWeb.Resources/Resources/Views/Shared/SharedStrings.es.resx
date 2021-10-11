@@ -124,7 +124,7 @@
     <value>Añadir</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value>Albumes</value>
+    <value>Álbumes</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
@@ -185,7 +185,7 @@
     <value>Eventos</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value>Remover</value>
+    <value>Borrar</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
@@ -197,7 +197,7 @@
     <value>Remover permisos de edición de la base de datos</value>
   </data>
   <data name="ShowMore" xml:space="preserve">
-    <value>Mostrar mas</value>
+    <value>Mostrar más</value>
   </data>
   <data name="Songs" xml:space="preserve">
     <value>Canciones</value>
@@ -209,10 +209,10 @@
     <value>Etiquetas</value>
   </data>
   <data name="TopFavoritedSongs" xml:space="preserve">
-    <value>Top de canciones mas valoradas</value>
+    <value>Top de canciones más valoradas</value>
   </data>
   <data name="TopRatedAlbums" xml:space="preserve">
-    <value>Top de albumes mas valorados</value>
+    <value>Top de álbumes más valorados</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>total</value>

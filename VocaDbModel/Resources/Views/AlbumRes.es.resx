@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewAlbumArtistDesc" xml:space="preserve">
-    <value>Productores y vocalistas asociados con este album.</value>
+    <value>Productores y vocalistas asociados con este álbum.</value>
   </data>
   <data name="NewAlbumInfo" xml:space="preserve">
-    <value>Notesé que VocaDB y UtaiteDB son dos bases de datos distintas. &lt;strong&gt;El Album necesita al menos una pista con vocales Vocaloid para ser admitido en VocaDB (tambien se admiten vocales de otros tipos de banco de voz, tales como UTAU o CeVio, mas no albumes que íntegramente esten interpetados por vocalistas humanos)&lt;/strong&gt;. Tampoco se admiten compliaciones fan-made (bootlegs). Para mas información, vease la página de Ayuda e Indicaciones.</value>
+    <value>Tenga en cuenta que VocaDB no es UtaiteDB. &lt;strong&gt;El álbum debe tener al menos una pista con voces Vocaloid para que se permita en VocaDB (también se permiten otros sintetizadores de voz como UTAU, pero no versiones cantadas por humanos)&lt;/strong&gt;. Tampoco se permiten compilaciones no oficiales hechas por fans (bootlegs). Para más información, ver Ayuda e Indicaciones.</value>
   </data>
 </root>

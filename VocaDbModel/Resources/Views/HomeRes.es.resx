@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SiteDescription" xml:space="preserve">
-    <value>VocaDB es una base de datos para musica Vocaloid con información de artistas, albumes y canciones.</value>
+    <value>VocaDB es una base de datos de música Vocaloid con artistas, álbumes y canciones.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>¡Bienvenido a la base de datos de Vocaloid!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>La base de datos colaborativa sobre artistas de la escena Vocaloid, discografías, PVs y mas.</value>
+    <value>La base de datos colaborativa para Vocaloid, UTAU y otros sintetizadores de canto, con artistas, discografías, PVs y más.</value>
   </data>
 </root>
