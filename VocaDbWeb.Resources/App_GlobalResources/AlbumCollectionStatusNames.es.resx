@@ -124,9 +124,9 @@
     <value>Ordenado</value>
   </data>
   <data name="Owned" xml:space="preserve">
-    <value>Adquirido por</value>
+    <value>Adquirido</value>
   </data>
   <data name="Wishlisted" xml:space="preserve">
-    <value>Aprobado</value>
+    <value>Deseado</value>
   </data>
 </root>
