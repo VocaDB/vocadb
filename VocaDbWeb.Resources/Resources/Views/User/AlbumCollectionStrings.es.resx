@@ -130,7 +130,7 @@
     <value>Tipo de multimedia</value>
   </data>
   <data name="Rating" xml:space="preserve">
-    <value>Rating</value>
+    <value>Calificación</value>
   </data>
   <data name="ReleaseDate" xml:space="preserve">
     <value>Fecha de lanzamiento</value>
