@@ -118,8 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewSongInfo" xml:space="preserve">
-    <value>Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Porcura incluir un link al PV ORIGINAL (NO REPRINTS SIN AUTORIZACIÓN).&lt;br /&gt;&lt;br /&gt;
-Las canciones que no son interpretadas por uno o mas Vocaloids (Es decir, canciones de vocalistas humanos) solo son admitidas si están incluidas en albumes que sí tienen pistas interpretadas por al menos un vocaloid. Interpretes de UTAU o cualquier otro tipo de plataformas de sintesís de voz tambien se admiten, mas no las interpretadas por humanos originalmente (a menos la especificación inicial).</value>
+    <value>Asegúrese de que la canción que está a punto de enviar no se haya agregado antes. Debes ingresar al menos un nombre y artista. El enlace al PV original es muy deseable.
+
+Tenga en cuenta que una canción sin voz Vocaloid solo está permitida si se publica en un álbum junto con canciones Vocaloid, o si hay varias versiones Vocaloid de esa canción. También se permiten UTAU y otros sintetizadores de voz, pero no las versiones cantadas por humanos.</value>
   </data>
   <data name="RankingsTitle" xml:space="preserve">
     <value>Ranking de canciones en VocaDB</value>

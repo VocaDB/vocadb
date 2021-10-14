@@ -121,7 +121,7 @@
     <value>Añadir a mi colección</value>
   </data>
   <data name="AlbumDetails" xml:space="preserve">
-    <value>Album</value>
+    <value>Álbum</value>
   </data>
   <data name="CatalogNumber" xml:space="preserve">
     <value>Número de catalogo</value>
@@ -136,7 +136,7 @@
     <value>Descargar esta información en un archivo CSV</value>
   </data>
   <data name="EditAlbumInCollection" xml:space="preserve">
-    <value>Editar album en la colección</value>
+    <value>Editar álbum en la colección</value>
   </data>
   <data name="Labels" xml:space="preserve">
     <value>Sello(s) discográfico(s)</value>
@@ -145,7 +145,7 @@
     <value>Formato multimedia</value>
   </data>
   <data name="MyRating" xml:space="preserve">
-    <value>Rating</value>
+    <value>Calificación</value>
   </data>
   <data name="NoTracklist" xml:space="preserve">
     <value>No se ha especificado una lista de canciones. Cualquier usuario registrado tiene la facultad de añadir una.</value>
@@ -157,7 +157,7 @@
     <value>Productores</value>
   </data>
   <data name="PVs" xml:space="preserve">
-    <value>Crossfade(s) y </value>
+    <value>Anuncios / crossfades</value>
   </data>
   <data name="Ratings" xml:space="preserve">
     <value>calificaciones</value>
@@ -166,7 +166,7 @@
     <value>Fecha de lanzamiento</value>
   </data>
   <data name="ReleaseEvent" xml:space="preserve">
-    <value>Evento de salida</value>
+    <value>Evento de lanzamiento</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Estado</value>
@@ -184,31 +184,31 @@
     <value>Disco</value>
   </data>
   <data name="OwnedBy" xml:space="preserve">
-    <value>{0} usuarios tienen este album</value>
+    <value>Adquirido por {0}</value>
   </data>
   <data name="WishlistedBy" xml:space="preserve">
-    <value>Aprobado por {0}</value>
+    <value>Deseado por {0}</value>
   </data>
   <data name="AlbumInCollections" xml:space="preserve">
-    <value>Album en colecciones</value>
+    <value>Álbum en colecciones</value>
   </data>
   <data name="OwnedByTitle" xml:space="preserve">
-    <value>Propiedad de </value>
+    <value>Adquiridos por</value>
   </data>
   <data name="WishlistedByTitle" xml:space="preserve">
-    <value>Aprobados (en orden) por</value>
+    <value>Deseados por</value>
   </data>
   <data name="RelatedAlbums" xml:space="preserve">
-    <value>Albumes relacionados</value>
+    <value>Álbumes relacionados</value>
   </data>
   <data name="CustomFormatStringLabel" xml:space="preserve">
-    <value>Cadena de formato personalizado (déjalo en blanco para usar propiedades por defecto)</value>
+    <value>Cadena de formato personalizado (deja en blanco para usar propiedades por defecto)</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>Personalizar</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Resetear</value>
+    <value>Reiniciar</value>
   </data>
   <data name="MatchingArtists" xml:space="preserve">
     <value>Artistas relacionados</value>
@@ -229,12 +229,18 @@
     <value>(No ha sido lanzado)</value>
   </data>
   <data name="ReleaseDateIsInTheNearFuture" xml:space="preserve">
-    <value>(Proximamente)</value>
+    <value>(Próximamente)</value>
   </data>
   <data name="ReleaseDateIsInThePast" xml:space="preserve">
     <value>(Ya lanzado)</value>
   </data>
   <data name="TotalLength" xml:space="preserve">
-    <value>Duración total {0}</value>
+    <value>duración total {0}</value>
+  </data>
+ <data name="HiddenCollections" xml:space="preserve">
+    <value>+ {0} escondidas</value>
+  </data>
+  <data name="Illustrators" xml:space="preserve">
+    <value>Ilustradores</value>
   </data>
 </root>
