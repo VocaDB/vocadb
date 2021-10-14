@@ -60,7 +60,6 @@
         "highcharts": "^9.1.0",
         "highcharts-react-official": "^3.0.0",
         "i18next": "^20.3.2",
-        "i18next-browser-languagedetector": "^6.1.2",
         "i18next-http-backend": "^1.2.6",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
