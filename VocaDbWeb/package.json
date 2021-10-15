@@ -62,7 +62,7 @@
         "i18next": "^20.3.2",
         "i18next-http-backend": "^1.2.6",
         "jquery": "^2.2.1",
-        "jquery-ui": "^1.10.4",
+        "jquery-ui": "^1.12.0",
         "knockout": "^3.5.1",
         "knockout-punches": "^0.5.1",
         "lodash": "^4.17.19",
