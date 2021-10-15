@@ -1,0 +1,91 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"AdvancedFilterType": {
+			"enum": [
+				"ArtistType",
+				"HasAlbum",
+				"HasMedia",
+				"HasMultipleVoicebanks",
+				"HasOriginalMedia",
+				"HasPublishDate",
+				"HasStoreLink",
+				"HasTracks",
+				"HasUserAccount",
+				"Lyrics",
+				"LyricsContent",
+				"NoCoverPicture",
+				"Nothing",
+				"RootVoicebank",
+				"VoiceProvider",
+				"WebLink"
+			],
+			"type": "string"
+		},
+		"default": {
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"filterType": {
+					"$ref": "#/definitions/AdvancedFilterType"
+				},
+				"negate": {
+					"type": "boolean"
+				},
+				"param": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"properties": {
+		"advancedFilters": {
+			"items": {
+				"$ref": "#/definitions/default"
+			},
+			"type": "array"
+		},
+		"artistId": {
+			"items": {
+				"type": "number"
+			},
+			"type": "array"
+		},
+		"artistParticipationStatus": {
+			"type": "string"
+		},
+		"childTags": {
+			"type": "boolean"
+		},
+		"childVoicebanks": {
+			"type": "boolean"
+		},
+		"page": {
+			"type": "number"
+		},
+		"pageSize": {
+			"type": "number"
+		},
+		"playlistMode": {
+			"type": "boolean"
+		},
+		"query": {
+			"type": "string"
+		},
+		"songType": {
+			"type": "string"
+		},
+		"sort": {
+			"type": "string"
+		},
+		"tagId": {
+			"items": {
+				"type": "number"
+			},
+			"type": "array"
+		}
+	},
+	"type": "object"
+}

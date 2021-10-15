@@ -328,9 +328,8 @@ const SearchIndex = observer(
 									<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 									<div className="controls">
 										<TagFilters
-											searchStore={searchStore}
 											tagFilters={searchStore.tagFilters}
-											topGenres={true}
+											genreTags={searchStore.genreTags}
 										/>
 									</div>
 								</div>

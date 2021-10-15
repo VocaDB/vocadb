@@ -8,6 +8,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import { ISongSearchItem } from '@Stores/Search/SongSearchStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
@@ -31,9 +32,7 @@ export default class RankingsStore
 	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
 	@observable public durationHours?: number;
 	private readonly pvServiceIcons: PVServiceIcons;
-	@observable public songs: (SongApiContract & {
-		previewStore?: SongWithPreviewStore;
-	})[] = [];
+	@observable public songs: ISongSearchItem[] = [];
 	@observable public vocalistSelection?: string;
 
 	public constructor(

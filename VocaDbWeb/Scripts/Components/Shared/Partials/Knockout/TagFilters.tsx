@@ -2,8 +2,8 @@ import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
 import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
 import TagFiltersCore from '@Components/Shared/Partials/TagFilters';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SearchStore from '@Stores/Search/SearchStore';
 import TagFiltersStore from '@Stores/Search/TagFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -11,17 +11,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface TagFiltersProps {
-	searchStore: SearchStore;
 	tagFilters: TagFiltersStore;
-	topGenres: boolean;
+	genreTags?: TagBaseContract[];
 }
 
 const TagFilters = observer(
-	({
-		searchStore,
-		tagFilters,
-		topGenres,
-	}: TagFiltersProps): React.ReactElement => {
+	({ tagFilters, genreTags }: TagFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
 		return (
@@ -53,7 +48,7 @@ const TagFilters = observer(
 						placeholder={t('ViewRes:Shared.Search')}
 					/>
 
-					{topGenres && (
+					{genreTags && (
 						<>
 							{' '}
 							<Dropdown as={ButtonGroup}>
@@ -62,7 +57,7 @@ const TagFilters = observer(
 									<span className="caret" />
 								</Dropdown.Toggle>
 								<Dropdown.Menu>
-									{searchStore.genreTags.map((tag) => (
+									{genreTags.map((tag) => (
 										<Dropdown.Item
 											href={EntryUrlMapper.details_tag_contract(tag)}
 											onClick={(e): void => {
