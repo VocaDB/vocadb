@@ -3,6 +3,8 @@ import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';
 
+import useCloak from './useCloak';
+
 const useJQueryUIButton = (
 	el: React.RefObject<any>,
 	options: JQueryUI.ButtonOptions,
@@ -23,12 +25,14 @@ const JQueryUIButton: BsPrefixRefForwardingComponent<
 	'button',
 	JQueryUIButtonProps
 > = React.forwardRef<HTMLButtonElement, JQueryUIButtonProps>(
-	({ as: Component, icons, ...props }, ref) => {
+	({ as: Component, disabled, icons, ...props }, ref) => {
 		const el = React.useRef<HTMLElement>(undefined!);
 		useImperativeHandle<HTMLElement, HTMLElement>(ref, () => el.current);
-		useJQueryUIButton(el, { icons: icons });
+		useJQueryUIButton(el, { disabled: disabled, icons: icons });
 
-		return <Component ref={el} {...props} />;
+		const cloak = useCloak();
+
+		return <Component {...props} ref={el} style={cloak} />;
 	},
 );
 
