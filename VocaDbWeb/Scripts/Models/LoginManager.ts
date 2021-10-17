@@ -1,3 +1,4 @@
+import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import GlobalValues from '@Shared/GlobalValues';
 
@@ -90,6 +91,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
+	public get canEditAllSongLists(): boolean {
+		return this.hasPermission(PermissionToken.EditAllSongLists);
+	}
+
 	public get canEditFeaturedLists(): boolean {
 		return this.hasPermission(PermissionToken.EditFeaturedLists);
 	}
@@ -100,6 +105,10 @@ export default class LoginManager {
 
 	public get canManageDatabase(): boolean {
 		return this.hasPermission(PermissionToken.ManageDatabase);
+	}
+
+	public get canEditTags(): boolean {
+		return this.hasPermission(PermissionToken.EditTags);
 	}
 
 	public get canManageEntryReports(): boolean {
@@ -129,4 +138,13 @@ export default class LoginManager {
 	public get canManageWebhooks(): boolean {
 		return this.hasPermission(PermissionToken.ManageWebhooks);
 	}
+
+	public canEditSongList = (songList: SongListContract): boolean => {
+		if (songList.featuredCategory !== 'Nothing' && this.canEditFeaturedLists)
+			return true;
+
+		if (this.canEditAllSongLists) return true;
+
+		return songList.author.id === this.loggedUserId;
+	};
 }
