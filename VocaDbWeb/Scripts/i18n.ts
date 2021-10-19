@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import Backend from 'i18next-http-backend';
+import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 
 i18n
@@ -18,3 +19,5 @@ i18n
 			useSuspense: false,
 		},
 	});
+
+moment.locale(vdb.values.culture);
