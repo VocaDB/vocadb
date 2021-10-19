@@ -3,13 +3,11 @@ import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';
 
-import useCloak from './useCloak';
-
 const useJQueryUICheckbox = (
 	el: React.RefObject<any>,
 	options: JQueryUI.ButtonOptions,
 ): void => {
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		const $el = $(el.current);
 		$el.button(options);
 		return (): void => $el.button('destroy');
@@ -31,8 +29,6 @@ const JQueryUICheckbox: BsPrefixRefForwardingComponent<
 		);
 		useJQueryUICheckbox(el, { disabled: disabled, icons: icons });
 
-		const cloak = useCloak();
-
 		return (
 			<>
 				<input
@@ -42,11 +38,8 @@ const JQueryUICheckbox: BsPrefixRefForwardingComponent<
 					checked={checked}
 					onChange={onChange}
 					ref={el}
-					style={cloak}
 				/>
-				<label htmlFor={id} style={cloak}>
-					{children}
-				</label>
+				<label htmlFor={id}>{children}</label>
 			</>
 		);
 	},

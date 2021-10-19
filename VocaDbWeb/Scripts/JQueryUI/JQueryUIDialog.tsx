@@ -5,7 +5,7 @@ import JQueryUIButton from './JQueryUIButton';
 
 type JQueryUIDialogProps = {
 	autoOpen?: boolean;
-	buttons: { text: string; click: () => void }[];
+	buttons: { text: string; click: () => void; disabled?: boolean }[];
 	children?: React.ReactNode;
 	close?: () => void;
 	modal?: boolean;
@@ -83,7 +83,12 @@ const JQueryUIDialog = ({
 					<div className="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 						<div className="ui-dialog-buttonset">
 							{buttons.map((button, index) => (
-								<JQueryUIButton as="button" onClick={button.click} key={index}>
+								<JQueryUIButton
+									as="button"
+									onClick={button.click}
+									disabled={button.disabled}
+									key={index}
+								>
 									{button.text}
 								</JQueryUIButton>
 							))}

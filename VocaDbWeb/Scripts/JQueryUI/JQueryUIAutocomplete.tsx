@@ -7,7 +7,7 @@ const useJQueryUIAutocomplete = (
 	options: JQueryUI.AutocompleteOptions,
 	renderItem?: (ul: HTMLElement, item: any) => JQuery,
 ): void => {
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		const $el = $(el.current);
 		const autocomplete = $el.autocomplete(options).data('ui-autocomplete');
 		if (renderItem) autocomplete._renderItem = renderItem;

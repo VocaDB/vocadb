@@ -9,7 +9,7 @@ const useJQueryUIDatepicker = (
 	value?: Date,
 	onSelect?: (date?: Date) => void,
 ): void => {
-	React.useEffect(() => {
+	React.useLayoutEffect(() => {
 		const $el = $(el.current);
 		$el.datepicker(options);
 
