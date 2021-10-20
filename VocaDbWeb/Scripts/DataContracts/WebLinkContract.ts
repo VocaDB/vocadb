@@ -3,6 +3,8 @@ export default interface WebLinkContract {
 
 	description: string;
 
+	descriptionOrUrl?: string;
+
 	disabled: boolean;
 
 	id: number;
