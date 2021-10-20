@@ -26,6 +26,9 @@ export default interface GlobalValues {
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
 
+	amazonComAffiliateId: string;
+	amazonJpAffiliateId: string;
+	playAsiaAffiliateId: string;
 	freeTagId: number;
 
 	/** URL of the site path, for example "/" */

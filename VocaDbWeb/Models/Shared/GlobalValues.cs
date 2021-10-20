@@ -48,6 +48,9 @@ namespace VocaDb.Web.Models.Shared
 		public string? PatreonLink { get; init; }
 		public string? SitewideAnnouncement { get; init; }
 
+		public string AmazonComAffiliateId { get; init; }
+		public string AmazonJpAffiliateId { get; init; }
+		public string PlayAsiaAffiliateId { get; init; }
 		public int FreeTagId { get; init; }
 
 		public string? BaseAddress { get; init; }
@@ -85,6 +88,9 @@ namespace VocaDb.Web.Models.Shared
 			PatreonLink = model.Config.SiteSettings.PatreonLink.EmptyToNull();
 			SitewideAnnouncement = model.Config.SiteSettings.SitewideAnnouncement.EmptyToNull();
 
+			AmazonComAffiliateId = model.Config.Affiliates.AmazonComAffiliateId;
+			AmazonJpAffiliateId = model.Config.Affiliates.amazonJpAffiliateId;
+			PlayAsiaAffiliateId = model.Config.Affiliates.PlayAsiaAffiliateId;
 			FreeTagId = model.Config.SpecialTags.Free;
 
 			BaseAddress = model.RootPath;
