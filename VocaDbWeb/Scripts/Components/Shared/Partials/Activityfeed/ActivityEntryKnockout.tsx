@@ -186,7 +186,7 @@ const ActivityEntryKnockout = ({
 								<span>
 									(
 									<a
-										href={`/${entry.entry.entryType}/ViewVersion/${entry.entry.id}`}
+										href={`/${entry.entry.entryType}/ViewVersion/${entry.archivedVersion.id}`}
 									>
 										{t('ViewRes:Misc.Details')}
 									</a>
