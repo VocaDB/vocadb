@@ -56,6 +56,8 @@ test('hasPermission disabled user', () => {
 			active: false,
 			effectivePermissions,
 			unreadMessagesCount: 0,
+			verifiedArtist: false,
+			ownedArtistEntries: [],
 		}),
 	);
 	testHasPermission(loginManager, [PermissionToken.Nothing]);
@@ -69,6 +71,8 @@ test('hasPermission regular user', () => {
 			active: true,
 			effectivePermissions,
 			unreadMessagesCount: 0,
+			verifiedArtist: false,
+			ownedArtistEntries: [],
 		}),
 	);
 	testHasPermission(loginManager, [
@@ -86,6 +90,8 @@ test('hasPermission regular user with lockdown message', () => {
 				active: true,
 				effectivePermissions,
 				unreadMessagesCount: 0,
+				verifiedArtist: false,
+				ownedArtistEntries: [],
 			},
 			'lockdown!',
 		),

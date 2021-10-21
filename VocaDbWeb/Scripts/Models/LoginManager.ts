@@ -1,6 +1,12 @@
+import EntryRefContract from '@DataContracts/EntryRefContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
+
+import EntryStatus from './EntryStatus';
+import EntryType from './EntryType';
+import IEntryWithStatus from './IEntryWithStatus';
 
 // Corresponds to the PermissionToken struct in C#.
 export enum PermissionToken {
@@ -41,6 +47,7 @@ export enum PermissionToken {
 	ManageWebhooks = '838dde1d-51ba-423b-ad8e-c1e2c2024a37',
 }
 
+// Corresponds to the LoginManager and EntryPermissionManager classes in C#.
 export default class LoginManager {
 	public constructor(private readonly values: GlobalValues) {}
 
@@ -79,6 +86,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.Admin);
 	}
 
+	public get canApproveEntries(): boolean {
+		return this.hasPermission(PermissionToken.ApproveEntries);
+	}
+
 	public get canBulkDeletePVs(): boolean {
 		return this.hasPermission(PermissionToken.BulkDeletePVs);
 	}
@@ -101,6 +112,10 @@ export default class LoginManager {
 
 	public get canEditProfile(): boolean {
 		return this.hasPermission(PermissionToken.EditProfile);
+	}
+
+	public get canLockEntries(): boolean {
+		return this.hasPermission(PermissionToken.LockEntries);
 	}
 
 	public get canManageDatabase(): boolean {
@@ -138,6 +153,84 @@ export default class LoginManager {
 	public get canManageWebhooks(): boolean {
 		return this.hasPermission(PermissionToken.ManageWebhooks);
 	}
+
+	private static readonly allPermissions: EntryStatus[] = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+		EntryStatus.Approved,
+		EntryStatus.Locked,
+	] /* TODO: use Object.values */;
+
+	// Entry statuses allowed for normal users
+	private static readonly normalStatusPermissions = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+	];
+
+	// Entry statuses allowed for trusted users
+	private static readonly trustedStatusPermissions = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+		EntryStatus.Approved,
+	];
+
+	private isDirectlyVerifiedFor = (entry?: EntryRefContract): boolean => {
+		return (
+			!!entry &&
+			entry.entryType === EntryType[EntryType.Artist] &&
+			!!this.loggedUser &&
+			this.loggedUser.verifiedArtist &&
+			_.some(
+				this.loggedUser.ownedArtistEntries,
+				(a) => a.artist.id === entry.id,
+			)
+		);
+	};
+
+	/// <summary>
+	/// Gets a list of entry statuses that the user can edit or set.
+	/// This means, the user is allowed to edit entries with any of these statuses,
+	/// and the user is able to change the entry status to any of these.
+	/// </summary>
+	/// <remarks>
+	/// Most of the time the allowed entry statuses are global, but associating a user account with an artist entry
+	/// gives special entry-specific permissions for the user editing that entry.
+	/// </remarks>
+	/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
+	/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
+	/// <returns>A list of permissions that can be set by the user.</returns>
+	private allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
+		// Check for basic edit permissions, without these the user is limited or disabled
+		if (!this.canManageDatabase) return [];
+
+		// Moderators with lock permissions can edit everything
+		if (this.canLockEntries) return LoginManager.allPermissions;
+
+		// Trusted users can edit approved entries
+		if (this.canApproveEntries) return LoginManager.trustedStatusPermissions;
+
+		// Verified artists get trusted permissions for their own entry
+		if (this.isDirectlyVerifiedFor(entry))
+			return LoginManager.trustedStatusPermissions;
+
+		// Normal user permissions
+		if (this.canManageDatabase) return LoginManager.normalStatusPermissions;
+
+		return [];
+	};
+
+	/// <summary>
+	/// Tests whether the user can edit a specific entry.
+	/// The permission depends on both the user's global permissions and entry status.
+	/// </summary>
+	/// <param name="permissionContext">User permission context. Cannot be null.</param>
+	/// <param name="entry">Entry to be checked. Cannot be null.</param>
+	/// <returns>True if the user can edit the entry, otherwise false.</returns>
+	public canEdit = (entry: IEntryWithStatus): boolean => {
+		return this.allowedEntryStatuses(entry).includes(
+			EntryStatus[entry.status as keyof typeof EntryStatus],
+		);
+	};
 
 	public canEditSongList = (songList: SongListContract): boolean => {
 		if (songList.featuredCategory !== 'Nothing' && this.canEditFeaturedLists)
