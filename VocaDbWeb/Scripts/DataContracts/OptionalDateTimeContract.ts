@@ -3,6 +3,8 @@ export default interface OptionalDateTimeContract {
 
 	formatted?: string;
 
+	isEmpty?: boolean;
+
 	month?: number;
 
 	year?: number;

@@ -23,3 +23,22 @@ test('MakeLink_Mailto', () => {
 
 	expect(result, 'result').toBe('mailto:miku@vocadb.net');
 });
+
+test('UpgradeToHttps', () => {
+	expect(
+		UrlHelper.upgradeToHttps('http://tn.smilevideo.jp/smile?i=6888548'),
+		'http://tn.smilevideo.jp was upgraded',
+	).toBe('https://tn.smilevideo.jp/smile?i=6888548');
+	expect(
+		UrlHelper.upgradeToHttps('http://tn-skr1.smilevideo.jp/smile?i=6888548'),
+		'http://tn-skr1.smilevideo.jp was upgraded',
+	).toBe('https://tn.smilevideo.jp/smile?i=6888548');
+	expect(
+		UrlHelper.upgradeToHttps('https://tn.smilevideo.jp/smile?i=6888548'),
+		'https://tn.smilevideo.jp already HTTPS',
+	).toBe('https://tn.smilevideo.jp/smile?i=6888548');
+	expect(
+		UrlHelper.upgradeToHttps('http://tn.smilevideo.jp/smile?i=34172016.39165'),
+		'URL with dot was upgraded',
+	).toBe('https://tn.smilevideo.jp/smile?i=34172016.39165');
+});

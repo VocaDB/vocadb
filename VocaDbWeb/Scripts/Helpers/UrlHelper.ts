@@ -1,4 +1,9 @@
+import EntryThumbContract from '@DataContracts/EntryThumbContract';
+import ImageSize from '@Models/Images/ImageSize';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
+
+import RegexLinkMatcher from './RegexLinkMatcher';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
 /// <summary>
@@ -64,7 +69,7 @@ export class AffiliateLinkGenerator {
 	};
 }
 
-// Corresponds to the UrlHelper class in C#.
+// Corresponds to the UrlHelper and UrlHelperExtensionsForImages classes in C#.
 export default class UrlHelper {
 	private static isFullLink = (str: string): boolean => {
 		return (
@@ -100,5 +105,89 @@ export default class UrlHelper {
 		const link = UrlHelper.makeLink(partialLink);
 
 		return new AffiliateLinkGenerator(vdb.values).generateAffiliateLink(link);
+	};
+
+	/// <summary>
+	/// List of domains/URL prefixes that can be upgraded from HTTP to HTTPS as is, for example "http://i1.sndcdn.com" -> "https://i1.sndcdn.com"
+	/// </summary>
+	private static readonly httpUpgradeDomains = [
+		'http://i1.sndcdn.com',
+		'http://nicovideo.cdn.nimg.jp/thumbnails/',
+	];
+
+	/// <summary>
+	/// List of URLs that can be upgraded from HTTP to HTTPS, but require URL manipulation.
+	/// </summary>
+	private static readonly httpUpgradeMatchers = [
+		new RegexLinkMatcher(
+			'https://tn.smilevideo.jp/smile?i={0}',
+			'^http://tn(?:-skr\\d)?\\.smilevideo\\.jp/smile\\?i=([\\d\\.]+)$',
+		),
+	];
+
+	public static upgradeToHttps = (url?: string): string | undefined => {
+		if (!url || url.startsWith('https://')) return url;
+
+		if (_.some(UrlHelper.httpUpgradeDomains, (m) => url!.startsWith(m)))
+			return url.replace('http://', 'https://');
+
+		const httpUpgradeMatch = _.chain(UrlHelper.httpUpgradeMatchers)
+			.map((m) => m.getLinkFromUrl(url!))
+			.filter((m) => m.success)
+			.first()
+			.value();
+
+		if (httpUpgradeMatch) url = httpUpgradeMatch.formattedUrl;
+
+		return url;
+	};
+
+	public static getSmallestThumb = (
+		imageInfo: EntryThumbContract,
+		preferLargerThan: ImageSize,
+	): string | undefined => {
+		switch (preferLargerThan) {
+			case ImageSize.TinyThumb:
+				return (
+					imageInfo.urlTinyThumb ??
+					imageInfo.urlSmallThumb ??
+					imageInfo.urlThumb ??
+					imageInfo.urlOriginal
+				);
+
+			case ImageSize.SmallThumb:
+				return (
+					imageInfo.urlSmallThumb ??
+					imageInfo.urlThumb ??
+					imageInfo.urlTinyThumb ??
+					imageInfo.urlOriginal
+				);
+
+			case ImageSize.Thumb:
+				return (
+					imageInfo.urlThumb ??
+					imageInfo.urlSmallThumb ??
+					imageInfo.urlTinyThumb ??
+					imageInfo.urlOriginal
+				);
+
+			default:
+				return (
+					imageInfo.urlOriginal ??
+					imageInfo.urlThumb ??
+					imageInfo.urlSmallThumb ??
+					imageInfo.urlTinyThumb
+				);
+		}
+	};
+
+	public static imageThumb = (
+		imageInfo: EntryThumbContract | undefined,
+		size: ImageSize,
+	): string => {
+		return (
+			(imageInfo && UrlHelper.getSmallestThumb(imageInfo, size)) ||
+			'/Content/unknown.png'
+		);
 	};
 }
