@@ -1,5 +1,7 @@
 import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
+import CommentContract from '@DataContracts/CommentContract';
 import EntryThumbContract from '@DataContracts/EntryThumbContract';
+import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 
 import SongListBaseContract from '../SongListBaseContract';
@@ -14,7 +16,11 @@ export default interface SongListContract
 
 	eventDate?: string;
 
+	events?: ReleaseEventContract[];
+
 	featuredCategory: string;
+
+	latestComments?: CommentContract[];
 
 	mainPicture?: EntryThumbContract;
 
