@@ -13,6 +13,8 @@ namespace VocaDb.Model.DataContracts.Users
 		public bool Active { get; init; }
 		public Guid[] EffectivePermissions { get; init; } = Array.Empty<Guid>();
 		public int UnreadMessagesCount { get; init; }
+		public bool VerifiedArtist { get; init; }
+		public ArtistForUserContract[] OwnedArtistEntries { get; init; } = Array.Empty<ArtistForUserContract>();
 
 		public SanitizedUserWithPermissionsContract() { }
 
@@ -23,6 +25,8 @@ namespace VocaDb.Model.DataContracts.Users
 			Active = user.Active;
 			EffectivePermissions = user.EffectivePermissions.Select(p => p.Id).ToArray();
 			UnreadMessagesCount = user.UnreadMessagesCount;
+			VerifiedArtist = user.VerifiedArtist;
+			OwnedArtistEntries = user.OwnedArtistEntries;
 		}
 	}
 }
