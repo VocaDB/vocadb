@@ -35,50 +35,6 @@ namespace VocaDb.Web.Controllers
 			_markdownParser = markdownParser;
 		}
 
-		public ActionResult Details(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
-
-			var contract = _queries.GetDetails(id);
-
-			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
-			PageProperties.Description = contract.Description;
-
-			if (contract.FeaturedCategory == SongListFeaturedCategory.Nothing)
-			{
-				PageProperties.PageTitle = $"{ViewRes.SongList.DetailsStrings.SongList} - {contract.Name}";
-				PageProperties.Title = contract.Name;
-				PageProperties.Subtitle = ViewRes.SongList.DetailsStrings.SongList;
-			}
-			else
-			{
-				var categoryName = Translate.SongListFeaturedCategoryNames[contract.FeaturedCategory];
-
-				PageProperties.PageTitle = $"{categoryName} - {contract.Name}";
-				PageProperties.Title = contract.Name;
-				PageProperties.Subtitle = categoryName;
-			}
-
-			var viewModel = new SongListDetailsViewModel(contract, PermissionContext);
-
-			viewModel.SmallThumbUrl = Url.ImageThumb(contract.MainPicture, ImageSize.SmallThumb);
-			var thumbUrl = viewModel.ThumbUrl = Url.ImageThumb(contract.MainPicture, ImageSize.Original) ?? Url.ImageThumb(contract.MainPicture, ImageSize.Thumb);
-			if (!string.IsNullOrEmpty(thumbUrl))
-			{
-				PageProperties.OpenGraph.Image = thumbUrl;
-			}
-
-			PageProperties.OpenGraph.ShowTwitterCard = true;
-
-			var descriptionStripped = _markdownParser.GetPlainText(viewModel.SongList.Description);
-
-			PageProperties.Description = descriptionStripped;
-			PageProperties.Robots = viewModel.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
-
-			return View(viewModel);
-		}
-
 		//
 		// GET: /SongList/Edit/
 		[Authorize]

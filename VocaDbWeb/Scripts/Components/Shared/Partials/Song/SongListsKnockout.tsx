@@ -5,6 +5,7 @@ import SongListsBaseStore from '@Stores/SongList/SongListsBaseStore';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface SongListsKnockoutProps {
 	songListsBaseStore: SongListsBaseStore;
@@ -33,8 +34,8 @@ const SongListsKnockout = observer(
 							<tr>
 								<td style={{ width: '75px' }}>
 									{item.mainPicture && item.mainPicture.urlSmallThumb && (
-										<a
-											href={EntryUrlMapper.details(EntryType.SongList, item.id)}
+										<Link
+											to={EntryUrlMapper.details(EntryType.SongList, item.id)}
 										>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
@@ -42,13 +43,15 @@ const SongListsKnockout = observer(
 												alt="Picture" /* TODO: localize */
 												src={item.mainPicture.urlSmallThumb}
 											/>
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>
-									<a href={EntryUrlMapper.details(EntryType.SongList, item.id)}>
+									<Link
+										to={EntryUrlMapper.details(EntryType.SongList, item.id)}
+									>
 										{item.name}
-									</a>
+									</Link>
 									{item.eventDate && (
 										<div>
 											<small>{moment(item.eventDate).format('l')}</small>

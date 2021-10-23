@@ -35,6 +35,10 @@ const SongRoutes = React.lazy(() => import('@Components/Song/SongRoutes'));
 const StatsRoutes = React.lazy(() => import('@Components/Stats/StatsRoutes'));
 const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 
+const SongListDetails = React.lazy(
+	() => import('@Components/SongList/SongListDetails'),
+);
+
 const loginManager = new LoginManager(vdb.values);
 
 const httpClient = new HttpClient();
@@ -78,6 +82,9 @@ const App = (): React.ReactElement => {
 									<Route path="Song/*" element={<SongRoutes />} />
 									<Route path="Stats/*" element={<StatsRoutes />} />
 									<Route path="User/*" element={<UserRoutes />} />
+
+									<Route path="L/:id" element={<SongListDetails />} />
+
 									<Route path="*" element={<ErrorNotFound />} />
 								</Routes>
 							</React.Suspense>
