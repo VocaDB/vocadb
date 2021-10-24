@@ -66,6 +66,10 @@ const ToolTip = React.forwardRef<HTMLElement, ToolTipProps>(
 					classes: 'tooltip-wide',
 				},
 			});
+
+			return (): void => {
+				$('.qtip').remove();
+			};
 		});
 
 		return (

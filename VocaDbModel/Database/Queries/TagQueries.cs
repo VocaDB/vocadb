@@ -381,7 +381,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => Comments(ctx).GetAll(tagId));
 		}
 
-		private async Task<TagStatsContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
+		private async Task<TagStatsForApiContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
 		{
 			var key = $"TagQueries.GetStats.{tagId}.{LanguagePreference}";
 			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
@@ -398,20 +398,29 @@ namespace VocaDb.Model.Database.Queries
 					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var followerCount = await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId).VdbCountAsync();
 
-				var stats = new TagStatsContract(LanguagePreference, _thumbStore,
-					artists.TopUsages, artists.TotalCount,
-					albums.TopUsages, albums.TotalCount,
-					songLists.TopUsages, songLists.TotalCount,
-					songs.TopUsages, songs.TotalCount,
-					eventSeries.TopUsages, eventSeries.TotalCount,
-					events.TopUsages, events.TotalCount,
-					followerCount);
+				var stats = new TagStatsForApiContract(
+					languagePreference: LanguagePreference,
+					thumbStore: _thumbStore,
+					artists: artists.TopUsages,
+					artistCount: artists.TotalCount,
+					albums: albums.TopUsages,
+					albumCount: albums.TotalCount,
+					songLists: songLists.TopUsages,
+					songListCount: songLists.TotalCount,
+					songs: songs.TopUsages,
+					songCount: songs.TotalCount,
+					eventSeries: eventSeries.TopUsages,
+					eventSeriesCount: eventSeries.TotalCount,
+					events: events.TopUsages,
+					eventCount: events.TotalCount,
+					followerCount: followerCount
+				);
 
 				return stats;
 			});
 		}
 
-		public async Task<TagDetailsContract> GetDetailsAsync(int tagId)
+		public async Task<TagDetailsForApiContract> GetDetailsAsync(int tagId)
 		{
 			return await _repository.HandleQueryAsync(async ctx =>
 			{
@@ -424,15 +433,16 @@ namespace VocaDb.Model.Database.Queries
 				var commentCount = await Comments(ctx).GetCountAsync(tag.Id);
 				var isFollowing = _permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId && t.User.Id == _permissionContext.LoggedUserId).VdbAnyAsync());
 
-				return new TagDetailsContract(tag,
-					stats,
-					LanguagePreference)
-				{
-					CommentCount = commentCount,
-					LatestComments = latestComments,
-					IsFollowing = isFollowing,
-					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
-				};
+				return new TagDetailsForApiContract(
+					tag: tag,
+					stats: stats,
+					languagePreference: LanguagePreference,
+					commentCount: commentCount,
+					latestComments: latestComments,
+					isFollowing: isFollowing,
+					relatedEntryType: entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType(),
+					thumbPersister: _thumbStore
+				);
 			});
 		}
 

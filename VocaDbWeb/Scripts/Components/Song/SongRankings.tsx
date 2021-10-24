@@ -334,12 +334,12 @@ const SongRankings = observer(
 												{song.tags.map((tag, index) => (
 													<React.Fragment key={tag.tag.id}>
 														{index > 0 && <span>, </span>}
-														<a
-															href={rankingsStore.getTagUrl(tag)}
+														<Link
+															to={rankingsStore.getTagUrl(tag)}
 															title={tag.tag.additionalNames}
 														>
 															{tag.tag.name}
-														</a>
+														</Link>
 													</React.Fragment>
 												))}
 											</>

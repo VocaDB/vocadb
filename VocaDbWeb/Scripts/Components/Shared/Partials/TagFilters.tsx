@@ -3,6 +3,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import TagFiltersStore from '@Stores/Search/TagFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface TagFiltersProps {
 	tagFilters: TagFiltersStore;
@@ -19,8 +20,9 @@ const TagFilters = observer(
 							className="input-append input-prepend"
 						>
 							<Button
+								as={Link}
 								className="btn-nomargin"
-								href={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}
+								to={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}
 							>
 								<i className="icon icon-info-sign" />
 							</Button>

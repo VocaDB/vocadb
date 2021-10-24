@@ -286,7 +286,9 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual PictureData Picture { get; set; }
 
-		public virtual string PictureMime { get; set; }
+#nullable enable
+		public virtual string? PictureMime { get; set; }
+#nullable disable
 
 		public virtual EntryPictureFileManager<ArtistPictureFile> Pictures
 		{

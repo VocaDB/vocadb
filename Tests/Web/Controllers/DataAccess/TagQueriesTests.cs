@@ -117,7 +117,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task GetDetails_RecentEvents()
 		{
-			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent)
+			void AssertContainsEvent(TagDetailsForApiContract details, ReleaseEvent releaseEvent)
 			{
 				details.Stats.Events.Any(e => e.Id == releaseEvent.Id).Should().BeTrue("Contains " + releaseEvent);
 			}

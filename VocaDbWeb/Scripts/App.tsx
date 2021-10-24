@@ -37,6 +37,7 @@ const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 const SongListDetails = React.lazy(
 	() => import('@Components/SongList/SongListDetails'),
 );
+const TagDetails = React.lazy(() => import('@Components/Tag/TagDetails'));
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -83,6 +84,7 @@ const App = (): React.ReactElement => {
 								<Route path="User/*" element={<UserRoutes />} />
 
 								<Route path="L/:id" element={<SongListDetails />} />
+								<Route path="T/:id/*" element={<TagDetails />} />
 
 								<Route path="*" element={<ErrorNotFound />} />
 							</Routes>

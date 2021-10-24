@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -43,6 +44,8 @@ const TagIndexLayout = observer(
 		const tagCount = _.sumBy(model, (m) => m.tags.length);
 		const avgUsageCount =
 			_.sumBy(model, (m) => _.sumBy(m.tags, (t) => t.usageCount)) / tagCount;
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout
@@ -82,13 +85,13 @@ const TagIndexLayout = observer(
 									}}
 									key={tag.id}
 								>
-									<a
-										href={EntryUrlMapper.details_tag_contract(tag)}
+									<Link
+										to={EntryUrlMapper.details_tag_contract(tag)!}
 										title={tag.additionalNames}
 										style={{ fontSize: '' }}
 									>
 										{tag.name}
-									</a>
+									</Link>
 								</span>
 							</React.Fragment>
 						))}
@@ -110,10 +113,7 @@ const TagIndexLayout = observer(
 							text: 'Create' /* TODO: localize */,
 							click: (): void => {
 								tagCreateStore.createTag().then((t) => {
-									// TODO: use navigate
-									window.location.href = EntryUrlMapper.details_tag_contract(
-										t,
-									)!;
+									navigate(EntryUrlMapper.details_tag_contract(t)!);
 								});
 							},
 							disabled: !tagCreateStore.isValid,

@@ -18,32 +18,46 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public sealed record TagStatsForApiContract
 	{
+		[DataMember]
 		public int AlbumCount { get; init; }
 
+		[DataMember]
 		public int ArtistCount { get; init; }
 
+		[DataMember]
 		public AlbumForApiContract[] Albums { get; init; }
 
+		[DataMember]
 		public ArtistForApiContract[] Artists { get; init; }
 
+		[DataMember]
 		public int EventCount { get; init; }
 
+		[DataMember]
 		public int EventSeriesCount { get; init; }
 
+		[DataMember]
 		public ReleaseEventForApiContract[] Events { get; init; }
 
+		[DataMember]
 		public ReleaseEventSeriesForApiContract[] EventSeries { get; init; }
 
+		[DataMember]
 		public int FollowerCount { get; init; }
 
+		[DataMember]
 		public int SongListCount { get; init; }
 
+		[DataMember]
 		public SongListBaseContract[] SongLists { get; init; }
 
+		[DataMember]
 		public SongForApiContract[] Songs { get; init; }
 
+		[DataMember]
 		public int SongCount { get; init; }
 
 		public TagStatsForApiContract(
@@ -122,6 +136,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		}
 	}
 
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public sealed record TagDetailsForApiContract
 	{
 		/// <summary>
@@ -133,8 +148,10 @@ namespace VocaDb.Model.DataContracts.Tags
 		[DataMember(EmitDefaultValue = false)]
 		public string CategoryName { get; init; }
 
+		[DataMember]
 		public TagBaseContract[] Children { get; init; }
 
+		[DataMember]
 		public int CommentCount { get; init; }
 
 		/// <summary>
@@ -143,20 +160,25 @@ namespace VocaDb.Model.DataContracts.Tags
 		[DataMember]
 		public DateTime CreateDate { get; init; }
 
+		[DataMember]
 		public bool Deleted { get; init; }
 
+		[DataMember]
 		public EnglishTranslatedStringContract Description { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
+		[DataMember]
 		public bool IsFollowing { get; init; }
 
+		[DataMember]
 		public CommentForApiContract[] LatestComments { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract? MainPicture { get; init; }
 
+		[DataMember]
 		public string[] MappedNicoTags { get; init; }
 
 		[DataMember]
@@ -165,12 +187,16 @@ namespace VocaDb.Model.DataContracts.Tags
 		[DataMember]
 		public TagBaseContract? Parent { get; set; }
 
+		[DataMember]
 		public EntryTypeAndSubType RelatedEntryType { get; init; }
 
+		[DataMember]
 		public TagBaseContract[] RelatedTags { get; init; }
 
+		[DataMember]
 		public TagBaseContract[] Siblings { get; init; }
 
+		[DataMember]
 		public TagStatsForApiContract Stats { get; init; }
 
 		[DataMember]
@@ -179,11 +205,13 @@ namespace VocaDb.Model.DataContracts.Tags
 		[DataMember]
 		public int Targets { get; init; }
 
+		[DataMember]
 		public string Translations { get; init; }
 
 		[DataMember]
 		public string UrlSlug { get; init; }
 
+		[DataMember]
 		public WebLinkForApiContract[] WebLinks { get; init; }
 
 		public TagDetailsForApiContract(
@@ -235,6 +263,7 @@ namespace VocaDb.Model.DataContracts.Tags
 				.ToArray();
 		}
 
+		[DataMember]
 		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
 	}
 }

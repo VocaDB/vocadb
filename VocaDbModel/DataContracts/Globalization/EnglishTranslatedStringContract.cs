@@ -1,19 +1,22 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Globalization
 {
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EnglishTranslatedStringContract
+	public sealed record EnglishTranslatedStringContract
 	{
+		[DataMember]
+		public string English { get; set; }
+
+		[DataMember]
+		public string Original { get; init; }
+
 		public EnglishTranslatedStringContract()
 		{
 			English = Original = string.Empty;
 		}
 
-#nullable enable
 		public EnglishTranslatedStringContract(EnglishTranslatedString str)
 		{
 			ParamIs.NotNull(() => str);
@@ -21,12 +24,18 @@ namespace VocaDb.Model.DataContracts.Globalization
 			English = str.English;
 			Original = str.Original;
 		}
-#nullable disable
 
-		[DataMember]
-		public string English { get; set; }
+		public bool HasEnglish => !string.IsNullOrEmpty(English);
 
-		[DataMember]
-		public string Original { get; init; }
+		public bool ShowEnglish(ContentLanguagePreference languagePreference) =>
+			(languagePreference == ContentLanguagePreference.English || languagePreference == ContentLanguagePreference.Romaji) && HasEnglish;
+
+		public string GetBestMatch(ContentLanguagePreference languagePreference) =>
+			ShowEnglish(languagePreference) ? English : Original;
+
+		/// <summary>
+		/// Primarily gets English name, Original if English is not specified.
+		/// </summary>
+		public string EnglishOrOriginal => GetBestMatch(ContentLanguagePreference.English);
 	}
 }

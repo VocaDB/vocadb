@@ -49,7 +49,14 @@ export default class TagCreateStore {
 		return !!this.newTagName && !this.duplicateName;
 	}
 
-	public createTag = (): Promise<TagBaseContract> => {
-		return this.tagRepo.create({ name: this.newTagName });
+	public createTag = async (): Promise<TagBaseContract> => {
+		const tag = await this.tagRepo.create({ name: this.newTagName });
+
+		runInAction(() => {
+			this.newTagName = '';
+			this.dialogVisible = false;
+		});
+
+		return tag;
 	};
 }

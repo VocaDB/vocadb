@@ -65,8 +65,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public string Name { get; init; }
 
+#nullable enable
 		[DataMember]
-		public string PictureMime { get; init; }
+		public string? PictureMime { get; init; }
+#nullable disable
 
 		[DataMember]
 		public EntryStatus Status { get; init; }
