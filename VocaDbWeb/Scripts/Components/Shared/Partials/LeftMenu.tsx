@@ -1,3 +1,4 @@
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -104,7 +105,11 @@ const LeftMenu = React.memo(
 							<br />
 							<p className="user">
 								{t('ViewRes:Layout.Welcome')}{' '}
-								<a href={`/User/Profile/${vdb.values.loggedUser.name}`}>
+								<a
+									href={EntryUrlMapper.details_user_byName(
+										vdb.values.loggedUser.name,
+									)}
+								>
 									{vdb.values.loggedUser.name}
 								</a>
 							</p>
