@@ -8,6 +8,7 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import ImageSize from '@Models/Images/ImageSize';
 import LoginManager from '@Models/LoginManager';
 import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
@@ -214,17 +215,23 @@ const GlobalSearchBox = observer(
 						) : (
 							<>
 								<Dropdown.Item
-									href={`/User/Profile/${vdb.values.loggedUser.name}`}
+									href={EntryUrlMapper.details_user_byName(
+										vdb.values.loggedUser.name,
+									)}
 								>
 									{t('ViewRes.User:MySettings.Profile')}
 								</Dropdown.Item>
 								<Dropdown.Item
-									href={`/User/Profile/${vdb.values.loggedUser.name}#Albums`}
+									href={`${EntryUrlMapper.details_user_byName(
+										vdb.values.loggedUser.name,
+									)}#Albums`}
 								>
 									{t('ViewRes:TopBar.MyAlbums')}
 								</Dropdown.Item>
 								<Dropdown.Item
-									href={`/User/Profile/${vdb.values.loggedUser.name}#Songs`}
+									href={`${EntryUrlMapper.details_user_byName(
+										vdb.values.loggedUser.name,
+									)}#Songs`}
 								>
 									{t('ViewRes:TopBar.MySongs')}
 								</Dropdown.Item>

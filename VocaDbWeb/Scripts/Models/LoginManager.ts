@@ -1,3 +1,4 @@
+import CommentContract from '@DataContracts/CommentContract';
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
@@ -173,6 +174,15 @@ export default class LoginManager {
 		EntryStatus.Finished,
 		EntryStatus.Approved,
 	];
+
+	public canDeleteComment = (comment: CommentContract): boolean => {
+		return (
+			this.canDeleteComments ||
+			(!!comment.author &&
+				!!this.loggedUser &&
+				comment.author.id === this.loggedUser.id)
+		);
+	};
 
 	private isDirectlyVerifiedFor = (entry?: EntryRefContract): boolean => {
 		return (
