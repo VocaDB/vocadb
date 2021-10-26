@@ -3,6 +3,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
 import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import EntryType from '@Models/EntryType';
@@ -174,6 +175,12 @@ export default class TagRepository extends BaseRepository {
 	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/api/tags/mappings');
 		return this.httpClient.put<void>(url, mappings);
+	};
+
+	public getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
+		return this.httpClient.get<TagDetailsContract>(
+			this.urlMapper.mapRelative(`/api/tags/${id}/details`),
+		);
 	};
 }
 

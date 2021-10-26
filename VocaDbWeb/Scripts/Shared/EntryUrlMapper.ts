@@ -1,8 +1,11 @@
 import EntryRefContract from '@DataContracts/EntryRefContract';
+import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryType from '@Models/EntryType';
+import { SearchType } from '@Stores/Search/SearchStore';
+import qs from 'qs';
 
 import functions from './GlobalFunctions';
 
@@ -81,9 +84,7 @@ export default class EntryUrlMapper {
 
 	public static details_tag_contract(
 		tag: TagBaseContract | TagApiContract,
-	): string | undefined {
-		if (!tag) return undefined;
-
+	): string {
 		if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
 
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
@@ -92,4 +93,41 @@ export default class EntryUrlMapper {
 	public static details_user_byName(name?: string): string {
 		return functions.mapAbsoluteUrl('/Profile/' + name);
 	}
+
+	public static index = (
+		fullEntryType: EntryTypeAndSubTypeContract,
+	): string => {
+		switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+			case EntryType.Artist:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Artist,
+					artistType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.Album:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Album,
+					discType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.Song:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Song,
+					songType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.ReleaseEvent:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.ReleaseEvent,
+				})}`;
+
+			case EntryType.Tag:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Tag,
+				})}`;
+
+			default:
+				return '';
+		}
+	};
 }
