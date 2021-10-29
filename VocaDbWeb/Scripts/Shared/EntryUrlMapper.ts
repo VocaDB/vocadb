@@ -83,8 +83,10 @@ export default class EntryUrlMapper {
 	}
 
 	public static details_tag_contract(
-		tag: TagBaseContract | TagApiContract,
-	): string {
+		tag: TagBaseContract | TagApiContract | undefined,
+	): string | undefined {
+		if (!tag) return undefined;
+
 		if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
 
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
