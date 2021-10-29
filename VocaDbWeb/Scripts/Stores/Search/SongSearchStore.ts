@@ -363,7 +363,7 @@ export default class SongSearchStore
 		this.dateMonth = value.dateMonth;
 		this.dateYear = value.dateYear;
 		this.draftsOnly = value.draftsOnly ?? false;
-		this.releaseEvent.selectEntry(value.eventId);
+		this.releaseEvent.id = value.eventId;
 		this.searchTerm = value.filter ?? '';
 		this.maxLengthFilter.length = value.maxLength ?? 0;
 		this.maxBpmFilter.milliBpm = value.maxMilliBpm;
@@ -374,7 +374,7 @@ export default class SongSearchStore
 		this.pvsOnly = value.onlyWithPVs ?? false;
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
-		this.parentVersion.selectEntry(value.parentVersionId);
+		this.parentVersion.id = value.parentVersionId;
 		// TODO: shuffle
 		this.since = value.since;
 		this.songType = value.songType ?? 'Unspecified';

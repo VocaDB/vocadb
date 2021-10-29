@@ -265,10 +265,10 @@
     <value>View all lists ({0})</value>
   </data>
   <data name="TrackOnAlbum" xml:space="preserve">
-    <value>Track #{0} on album {1}</value>
+    <value>Track #{0} on album &lt;1&gt;</value>
   </data>
   <data name="TrackOnAlbumDisc" xml:space="preserve">
-    <value>Track #{0} on disc {1} on album {2}</value>
+    <value>Track #{0} on disc {1} on album &lt;2&gt;</value>
   </data>
   <data name="SeeRelatedSongs" xml:space="preserve">
     <value>See more related songs</value>

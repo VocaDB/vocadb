@@ -176,13 +176,13 @@ namespace VocaDb.Web.Controllers
 				prop.OpenGraph.Image = model.ThumbUrlMaxSize;
 			}
 
-			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			//prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.OpenGraph.Title = hasDescription ? $"{titleAndArtist} ({Translate.SongTypeNames[model.SongType]})" : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		[Authorize]

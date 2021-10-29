@@ -243,8 +243,8 @@ const SongRankings = observer(
 									</td>
 									<td style={{ width: '80px' }}>
 										{song.thumbUrl && (
-											<a
-												href={EntryUrlMapper.details_song(song)}
+											<Link
+												to={EntryUrlMapper.details_song(song)}
 												title={song.additionalNames}
 											>
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -254,7 +254,7 @@ const SongRankings = observer(
 													className="coverPicThumb img-rounded"
 													referrerPolicy="same-origin"
 												/>
-											</a>
+											</Link>
 										)}
 									</td>
 									<td>
@@ -275,12 +275,12 @@ const SongRankings = observer(
 												</Button>
 											</div>
 										)}
-										<a
-											href={EntryUrlMapper.details_song(song)}
+										<Link
+											to={EntryUrlMapper.details_song(song)}
 											title={song.additionalNames}
 										>
 											{song.name}
-										</a>{' '}
+										</Link>{' '}
 										<SongTypeLabel
 											songType={
 												SongType[song.songType as keyof typeof SongType]

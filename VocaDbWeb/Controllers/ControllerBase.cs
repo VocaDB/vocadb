@@ -59,10 +59,9 @@ namespace VocaDb.Web.Controllers
 
 		protected Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
 
-		protected string GetHostnameForValidHit()
-		{
-			return WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty;
-		}
+#nullable enable
+		protected string GetHostnameForValidHit() => WebHelper.GetHostnameForValidHit(Request);
+#nullable disable
 
 		protected ActionResult NoId()
 		{

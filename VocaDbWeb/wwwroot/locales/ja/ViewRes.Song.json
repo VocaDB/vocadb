@@ -67,7 +67,7 @@
     "ListsTabFeatured": "注目",
     "ListsTabNew": "新しいリスト",
     "ListsTabPersonal": "個人リスト",
-    "TrackOnAlbum": "アルバム「{{1}}」{{0}}曲目",
+    "TrackOnAlbum": "アルバム「<1>」{{0}}曲目",
     "SeeRelatedSongs": "関連曲をもっと見る",
     "SuggestionsTitle": "この曲を「いいね」した人はこんな曲も「いいね」しました"
   },

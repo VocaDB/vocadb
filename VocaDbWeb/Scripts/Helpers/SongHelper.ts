@@ -19,9 +19,17 @@ export default class SongHelper {
 
 	// Checks whether a song type is to be considered animation where animators are considered as the main role
 	public static getContentFocus(songType: SongType): ContentFocus {
-		return songType === SongType.MusicPV || songType === SongType.DramaPV
-			? ContentFocus.Video
-			: ContentFocus.Music;
+		switch (songType) {
+			case SongType.DramaPV:
+			case SongType.MusicPV:
+				return ContentFocus.Video;
+
+			case SongType.Illustration:
+				return ContentFocus.Illustration;
+
+			default:
+				return ContentFocus.Music;
+		}
 	}
 
 	// Checks whether a song type is to be considered instrumental where the song is allowed to have no vocalists

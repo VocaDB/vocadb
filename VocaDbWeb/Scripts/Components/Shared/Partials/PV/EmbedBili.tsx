@@ -33,6 +33,7 @@ const EmbedBili = React.memo(
 						width: `${width}px`,
 						height: `${height + 67}px`,
 					}}
+					key={pv.pvId}
 				/>
 			</div>
 		) : (
@@ -47,6 +48,7 @@ const EmbedBili = React.memo(
 				allowFullScreen
 				width={width}
 				height={height}
+				key={pv.pvId}
 			/>
 		);
 	},

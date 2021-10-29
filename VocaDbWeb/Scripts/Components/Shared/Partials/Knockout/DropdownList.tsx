@@ -46,7 +46,7 @@ export const UserGroupDropdownList = React.memo(
 	},
 );
 
-const userLanguageCultures: Record<
+export const userLanguageCultures: Record<
 	string,
 	{ nativeName: string; englishName: string }
 > = _.chain({

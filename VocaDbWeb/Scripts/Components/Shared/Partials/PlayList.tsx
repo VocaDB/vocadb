@@ -9,6 +9,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import PVRatingButtonsForIndex from './PVRatingButtonsForIndex';
 import SongTypeLabel from './Song/SongTypeLabel';
@@ -34,13 +35,13 @@ const PlayList = observer(
 						{pvPlayerStore.selectedSong && pvPlayerStore.selectedSong.song && (
 							<div>
 								<h4 className="pull-left">
-									<a
-										href={EntryUrlMapper.details_song(
+									<Link
+										to={EntryUrlMapper.details_song(
 											pvPlayerStore.selectedSong.song,
 										)}
 									>
 										{pvPlayerStore.selectedSong.song.name}
-									</a>{' '}
+									</Link>{' '}
 									<span className="songlist-playlist-player-artists">
 										{pvPlayerStore.selectedSong.song.artistString}
 									</span>

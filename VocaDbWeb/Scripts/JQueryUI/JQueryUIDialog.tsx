@@ -5,7 +5,7 @@ import JQueryUIButton from './JQueryUIButton';
 
 type JQueryUIDialogProps = {
 	autoOpen?: boolean;
-	buttons: { text: string; click: () => void; disabled?: boolean }[];
+	buttons?: { text: string; click: () => void; disabled?: boolean }[];
 	children?: React.ReactNode;
 	close?: () => void;
 	modal?: boolean;
@@ -80,20 +80,22 @@ const JQueryUIDialog = ({
 					>
 						{children}
 					</div>
-					<div className="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-						<div className="ui-dialog-buttonset">
-							{buttons.map((button, index) => (
-								<JQueryUIButton
-									as="button"
-									onClick={button.click}
-									disabled={button.disabled}
-									key={index}
-								>
-									{button.text}
-								</JQueryUIButton>
-							))}
+					{buttons && (
+						<div className="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+							<div className="ui-dialog-buttonset">
+								{buttons.map((button, index) => (
+									<JQueryUIButton
+										as="button"
+										onClick={button.click}
+										disabled={button.disabled}
+										key={index}
+									>
+										{button.text}
+									</JQueryUIButton>
+								))}
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			</>
 		</Modal>

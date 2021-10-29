@@ -135,13 +135,6 @@ namespace VocaDb.Model.Service
 
 		private IEntryTypeTagRepository GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
 
-		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery)
-		{
-			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0],
-				_config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null),
-				new[] { textQuery.Query }, textQuery.MatchMode);
-		}
-
 		public PartialFindResult<T> Find<T>(Func<Song, T> fac, SongQueryParams queryParams)
 			where T : class
 		{
@@ -393,65 +386,6 @@ namespace VocaDb.Model.Service
 				Archive(session, song, new SongDiff(false), SongArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(song), session);
-			});
-		}
-
-		public SongDetailsContract XGetSongByNameArtistAndAlbum(string name, string artist, string album)
-		{
-			return HandleQuery(session =>
-			{
-				var matches = session.Query<SongName>().Where(n => n.Value == name)
-					.Select(n => n.Song)
-					.ToArray();
-
-				Artist[] artists = null;
-
-				if (!string.IsNullOrEmpty(artist))
-				{
-					artists = session.Query<ArtistName>()
-						.WhereArtistNameIs(ArtistSearchTextQuery.Create(artist))
-						.Select(n => n.Artist)
-						.Take(10)
-						.ToArray();
-				}
-
-				if (artists != null && artists.Any())
-					matches = matches.Where(s => s.ArtistList.Any(a => artists.Contains(a))).ToArray();
-
-				Album[] albums = null;
-
-				if (!string.IsNullOrEmpty(album))
-				{
-					albums = session.Query<Album>()
-						.WhereHasName(SearchTextQuery.Create(album))
-						.Take(10)
-						.ToArray();
-				}
-
-				if (albums != null && albums.Any())
-					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
-
-				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null, null, PermissionContext, null);
-
-				if (matches.Length == 0)
-					return null;
-
-				matches = session.Query<SongName>()
-					.WhereEntryNameIs(SearchTextQuery.Create(name))
-					.Select(n => n.Song)
-					.ToArray();
-
-				if (artists != null && artists.Any())
-					matches = matches.Where(s => s.ArtistList.Any(a => artists.Contains(a))).ToArray();
-
-				if (albums != null && albums.Any())
-					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
-
-				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null, null, PermissionContext, null);
-
-				return null;
 			});
 		}
 	}

@@ -20,10 +20,10 @@ interface RankingsRouteParams {
 	vocalistSelection?: string;
 }
 
-// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.^M
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
-// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.^M
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
 const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRouteParams.schema');
 const validate = ajv.compile(schema);
 

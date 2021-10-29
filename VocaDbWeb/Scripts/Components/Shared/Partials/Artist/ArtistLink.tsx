@@ -28,7 +28,8 @@ const ArtistLink = ({
 				<ArtistTypeLabel
 					artistType={ArtistType[artist.artistType as keyof typeof ArtistType]}
 				/>
-			)}{' '}
+			)}
+			{typeLabel && ' '}
 			{tooltip ? (
 				<ArtistToolTip
 					as="a"
