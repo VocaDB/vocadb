@@ -14,7 +14,7 @@ const TagLink = React.memo(
 		return tooltip ? (
 			<TagToolTip
 				as={Link}
-				to={EntryUrlMapper.details_tag_contract(tag)}
+				to={EntryUrlMapper.details_tag_contract(tag)!}
 				title={tag.additionalNames}
 				id={tag.id}
 			>
@@ -22,7 +22,7 @@ const TagLink = React.memo(
 			</TagToolTip>
 		) : (
 			<Link
-				to={EntryUrlMapper.details_tag_contract(tag)}
+				to={EntryUrlMapper.details_tag_contract(tag)!}
 				title={tag.additionalNames}
 			>
 				{tag.name}
