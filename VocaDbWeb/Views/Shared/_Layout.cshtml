@@ -99,10 +99,8 @@
                             }
 							
 							@if (!string.IsNullOrEmpty(Config.SiteSettings.SitewideAnnouncement)) {
-								<div class="alert alert-success">
-									<h4>
-										@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
-									</h4>
+								<div class="alert">
+									@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
 								</div>
 							}								
 
