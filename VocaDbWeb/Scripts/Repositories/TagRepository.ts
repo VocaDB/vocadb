@@ -3,6 +3,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagCategoryContract from '@DataContracts/Tag/TagCategoryContract';
 import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
 import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
@@ -180,6 +181,12 @@ export default class TagRepository extends BaseRepository {
 	public getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
 		return this.httpClient.get<TagDetailsContract>(
 			this.urlMapper.mapRelative(`/api/tags/${id}/details`),
+		);
+	};
+
+	public getTagsByCategories = (): Promise<TagCategoryContract[]> => {
+		return this.httpClient.get<TagCategoryContract[]>(
+			this.urlMapper.mapRelative('/api/tags/by-categories'),
 		);
 	};
 }

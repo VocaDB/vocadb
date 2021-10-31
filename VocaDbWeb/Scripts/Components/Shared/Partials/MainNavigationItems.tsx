@@ -99,7 +99,7 @@ const MainNavigationItems = React.memo(
 					</Link>
 				</li>
 				<li>
-					<a href={'/Tag'}>{t('ViewRes:Layout.Tags')}</a>
+					<Link to="/Tag">{t('ViewRes:Layout.Tags')}</Link>
 				</li>
 				<li>
 					<Link to="/User">{t('ViewRes:Shared.Users')}</Link>

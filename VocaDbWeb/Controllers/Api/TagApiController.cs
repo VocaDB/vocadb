@@ -311,5 +311,9 @@ namespace VocaDb.Web.Controllers.Api
 			_queries.UpdateMappings(mappings.ToArray());
 			return NoContent();
 		}
+
+		[HttpGet("by-categories")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagCategoryForApiContract[] GetTagsByCategories() => _queries.GetTagsByCategories();
 	}
 }

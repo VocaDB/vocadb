@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = ViewRes.SharedStrings.Tags;
 
-			return View(tags);
+			return View("React/Index");
 		}
 
 		public ActionResult Merge(int id)

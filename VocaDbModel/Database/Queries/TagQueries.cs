@@ -489,9 +489,8 @@ namespace VocaDb.Model.Database.Queries
 				return fac(tag);
 			});
 		}
-#nullable disable
 
-		public TagCategoryContract[] GetTagsByCategories()
+		public TagCategoryForApiContract[] GetTagsByCategories()
 		{
 			return HandleQuery(ctx =>
 			{
@@ -509,13 +508,14 @@ namespace VocaDb.Model.Database.Queries
 					new[] { genres }
 					.Concat(tags.Except(new[] { genres, empty }))
 					.Concat(new[] { empty })
-					.Where(t => t != null)
-					.Select(t => new TagCategoryContract(t.Key, LanguagePreference, t))
+					.WhereNotNull()
+					.Select(t => new TagCategoryForApiContract(t.Key, LanguagePreference, t))
 					.ToArray();
 
 				return tagsByCategories;
 			});
 		}
+#nullable disable
 
 		/// <summary>
 		/// Loads a tag which might not exist.
