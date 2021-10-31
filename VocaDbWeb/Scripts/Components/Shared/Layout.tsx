@@ -33,7 +33,9 @@ const Layout = ({
 			)}
 
 			{vdb.values.sitewideAnnouncement && (
-				<Alert>{vdb.values.sitewideAnnouncement}</Alert>
+				<Alert variant="success">
+					<h4>{vdb.values.sitewideAnnouncement}</h4>
+				</Alert>
 			)}
 
 			{toolbar && <p>{toolbar}</p>}

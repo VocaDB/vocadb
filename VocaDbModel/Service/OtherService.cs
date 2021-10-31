@@ -197,64 +197,16 @@ namespace VocaDb.Model.Service
 				return cachedSongs.OrderByIds(cachedSongIds).WhereNotNull().ToArray();
 			}
 
-			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
-			var maxSongs = 1000;
 			var songCount = 20;
 
-			// Load at most maxSongs songs for cutoff date
-			var recentSongIdAndScore =
-				session.Query<Song>()
+			var songs = session.Query<Song>()
+				.WhereHasName(SearchTextQuery.Create("Birthday", NameMatchMode.Partial))
 				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.WhereNotDeleted()
 				.WhereHasPV()
-				.Where(s => s.CreateDate >= cutoffDate)
-				.OrderByDescending(s => s.CreateDate)
-				.Take(maxSongs)
-				.Select(s => new
-				{
-					s.Id,
-					s.RatingScore
-				})
-				.ToArray();
-
-			// Get song Ids
-			var songIds = recentSongIdAndScore
-				.OrderByDescending(s => s.RatingScore)
+				.RandomSort()
 				.Take(songCount)
-				.Select(s => s.Id)
 				.ToArray();
-
-			// Load the songs
-			var recentSongs = session.Query<Song>()
-				.Where(s => songIds.Contains(s.Id))
-				.OrderBy(SongSortRule.RatingScore)
-				.ToArray();
-
-			Song[] songs;
-
-			// If there's enough songs for cutoff date, return them, otherwise load more songs.
-			if (recentSongs.Length >= songCount)
-			{
-				songs = recentSongs;
-			}
-			else
-			{
-				var moreSongs =
-					session.Query<Song>()
-					.WhereHasArtist(AppConfig.FilteredArtistId)
-					.WhereNotDeleted()
-					.WhereHasPV()
-					.Where(s => s.CreateDate < cutoffDate)
-					.OrderByDescending(s => s.CreateDate)
-					.Take(songCount - recentSongs.Length)
-					.ToArray();
-
-				songs =
-					recentSongs
-					.Concat(moreSongs)
-					.OrderByDescending(s => s.RatingScore)
-					.ToArray();
-			}
 
 			var allSongIds = songs.Select(s => s.Id).ToArray();
 			_cache.Add(cacheKey, allSongIds, DateTime.Now + TimeSpan.FromMinutes(15));
