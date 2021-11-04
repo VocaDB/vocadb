@@ -42,32 +42,36 @@ namespace VocaDb.Model.Helpers
 		public static Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func) => GetStreamAsync(url, func, TimeSpan.FromSeconds(30));
 
 		/// <exception cref="HttpRequestException">If the request failed</exception>
-		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders>? headers = null)
+		public static async Task<T> GetStreamAsync<T>(
+			string url,
+			Func<Stream, T> func,
+			TimeSpan timeout,
+			string userAgent = "",
+			Action<HttpRequestHeaders>? headers = null
+		)
 		{
 			var uri = new Uri(url);
 
-			using (var client = new HttpClient())
+			using var client = new HttpClient();
+
+			if (string.IsNullOrEmpty(userAgent))
 			{
-				if (string.IsNullOrEmpty(userAgent))
-				{
-					client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
-				}
-				else
-				{
-					client.DefaultRequestHeaders.Add("User-Agent", userAgent);
-				}
-				client.Timeout = timeout;
-
-				headers?.Invoke(client.DefaultRequestHeaders);
-
-				using (var response = await client.GetAsync(uri))
-				{
-					response.EnsureSuccessStatusCode();
-					var stream = await response.Content.ReadAsStreamAsync();
-					return func(stream);
-				}
+				client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
 			}
+			else
+			{
+				client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+			}
+			client.Timeout = timeout;
+
+			headers?.Invoke(client.DefaultRequestHeaders);
+
+			using var response = await client.GetAsync(uri);
+
+			response.EnsureSuccessStatusCode();
+			var stream = await response.Content.ReadAsStreamAsync();
+
+			return func(stream);
 		}
 	}
 }

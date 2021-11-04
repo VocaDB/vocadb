@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
@@ -27,7 +25,7 @@ namespace VocaDb.Model.Domain.Caching
 		/// <remarks>
 		/// This method is not thread safe in the sense that the data factory method may be called multiple times from different threads.
 		/// </remarks>
-		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func, Func<T, bool> allowCaching = null)
+		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func, Func<T, bool>? allowCaching = null)
 		{
 			// Note: not thread safe
 			if (cache.Contains(key))
@@ -45,7 +43,7 @@ namespace VocaDb.Model.Domain.Caching
 			return item;
 		}
 
-		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool> allowCaching = null)
+		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool>? allowCaching = null)
 		{
 			if (cache.Contains(key))
 				return (T)cache.Get(key);
