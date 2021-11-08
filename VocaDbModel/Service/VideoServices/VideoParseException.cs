@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 
 namespace VocaDb.Model.Service.VideoServices
@@ -8,10 +6,10 @@ namespace VocaDb.Model.Service.VideoServices
 	{
 		public VideoParseException() { }
 
-		public VideoParseException(string message)
+		public VideoParseException(string? message)
 			: base(message) { }
 
-		public VideoParseException(string message, Exception inner)
-			: base(message, inner) { }
+		public VideoParseException(string? message, Exception? innerException)
+			: base(message, innerException) { }
 	}
 }

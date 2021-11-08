@@ -94,11 +94,11 @@ namespace VocaDb.Model.Service.VideoServices
 
 			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
 
-			VideoUrlParseResult ReturnError(Exception x, string? additionalInfo = null)
+			VideoUrlParseResult ReturnError(Exception? innerException, string? additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
-				s_log.Warn(x, msg);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
+				s_log.Warn(innerException, msg);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, innerException));
 			}
 
 			try
@@ -115,6 +115,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 				var authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
+				// For security reasons, `Authorization` request headers are removed during redirects, so we need to handle redirects manually.
 				// TODO: Use IHttpClientFactory.
 				using var httpClient = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
 				{
@@ -127,8 +128,17 @@ namespace VocaDb.Model.Service.VideoServices
 
 				var response = await httpClient.GetAsync($"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}");
 
-				if (response.StatusCode != HttpStatusCode.Redirect || response.Headers.Location?.ToString() is not string location)
-					throw new Exception();
+				if (response.StatusCode != HttpStatusCode.Redirect)
+				{
+					s_log.Warn($"Unexpected status code: expected {HttpStatusCode.Redirect}, actual {response.StatusCode}");
+					return ReturnError(innerException: null);
+				}
+
+				if (response.Headers.Location?.ToString() is not string location)
+				{
+					s_log.Warn("Location was null");
+					return ReturnError(innerException: null);
+				}
 
 				s_log.Info($"Redirecting to {location}");
 
