@@ -22,17 +22,21 @@ namespace VocaDb.Model.Helpers
 		/// <exception cref="WebException">If a web request error occurred.</exception>
 		/// <exception cref="JsonSerializationException">If the response wasn't valid JSON.</exception>
 		/// <exception cref="HttpRequestException">If the request failed.</exception>
-		public static async Task<T?> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders>? headers = null)
+		public static async Task<T?> ReadObjectAsync<T>(
+			string url,
+			TimeSpan timeout,
+			string userAgent = "",
+			Action<HttpRequestHeaders>? headers = null
+		)
 		{
 			return await HtmlRequestHelper.GetStreamAsync(url, stream =>
 			{
-				using (var streamReader = new StreamReader(stream))
-				using (var jsonReader = new JsonTextReader(streamReader))
-				{
-					var serializer = new JsonSerializer();
-					return serializer.Deserialize<T>(jsonReader);
-				}
+				using var streamReader = new StreamReader(stream);
+				using var jsonReader = new JsonTextReader(streamReader);
+
+				var serializer = new JsonSerializer();
+
+				return serializer.Deserialize<T>(jsonReader);
 			}, timeout: timeout, userAgent: userAgent, headers: headers);
 		}
 	}

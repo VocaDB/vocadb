@@ -4,9 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
@@ -57,45 +59,97 @@ namespace VocaDb.Model.Service.VideoServices
 			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
 		}
 
+		private static async Task<string> GetAccessToken()
+		{
+			s_log.Info("Requesting a new SoundCloud token");
+
+			// Code from: https://github.com/TerribleDev/OwinOAuthProviders/blob/8b382b0429aeb656f54149ab6f3472dd559ae12f/src/Owin.Security.Providers.SoundCloud/SoundCloudAuthenticationHandler.cs#L74
+			// TODO: Use IHttpClientFactory.
+			using var httpClient = new HttpClient();
+
+			var tokenResponse = await httpClient.PostAsync(
+				requestUri: "https://api.soundcloud.com/oauth2/token",
+				content: new FormUrlEncodedContent(new List<KeyValuePair<string?, string?>>
+				{
+					new("client_id", AppConfig.SoundCloudClientId),
+					new("client_secret", AppConfig.SoundCloudClientSecret),
+					new("grant_type", "client_credentials"),
+				})
+			);
+			tokenResponse.EnsureSuccessStatusCode();
+
+			var text = await tokenResponse.Content.ReadAsStringAsync();
+
+			var response = JsonConvert.DeserializeObject<SoundCloudTokenResponse>(text);
+			var accessToken = response.Access_token;
+
+			return accessToken;
+		}
+
 		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url)
 		{
 			SslHelper.ForceStrongTLS();
-
-			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}?client_id={apikey}";
 
 			SoundCloudResult? result;
 
 			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
 
-			VideoUrlParseResult ReturnError(Exception x, string? additionalInfo = null)
+			VideoUrlParseResult ReturnError(Exception? innerException, string? additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
-				s_log.Warn(x, msg);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
+				s_log.Warn(innerException, msg);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, innerException));
 			}
 
 			try
 			{
-				// Code from: https://github.com/TerribleDev/OwinOAuthProviders/blob/8b382b0429aeb656f54149ab6f3472dd559ae12f/src/Owin.Security.Providers.SoundCloud/SoundCloudAuthenticationHandler.cs#L74
-				// TODO: use IHttpClientFactory
-				using var httpClient = new HttpClient();
-				var tokenResponse = await httpClient.PostAsync("https://api.soundcloud.com/oauth2/token", new FormUrlEncodedContent(new List<KeyValuePair<string?, string?>>
-				{
-					new("client_id", apikey),
-					new("client_secret", AppConfig.SoundCloudClientSecret),
-					new("grant_type", "client_credentials"),
-				}));
-				tokenResponse.EnsureSuccessStatusCode();
-				var text = await tokenResponse.Content.ReadAsStringAsync();
+				// TODO: Use dependenciy injection.
+				var accessToken = await ((ObjectCache)MemoryCache.Default)
+					.GetOrInsertAsync(
+						key: $"{nameof(VideoServiceSoundCloud)}.accessToken",
+						policy: CachePolicy.AbsoluteExpiration(hours: 1),
+						GetAccessToken
+					);
 
-				var response = JsonConvert.DeserializeObject<SoundCloudTokenResponse>(text);
-				var accessToken = response.Access_token;
+				s_log.Info($"Loading SoundCloud URL {url}");
 
-				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10), headers: headers =>
+				var authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+				// For security reasons, `Authorization` request headers are removed during redirects, so we need to handle redirects manually.
+				// TODO: Use IHttpClientFactory.
+				using var httpClient = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
 				{
-					headers.Authorization = new AuthenticationHeaderValue("OAuth", accessToken);
-				});
+					Timeout = TimeSpan.FromSeconds(10),
+				};
+
+				httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
+
+				httpClient.DefaultRequestHeaders.Authorization = authorization;
+
+				var response = await httpClient.GetAsync($"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}");
+
+				if (response.StatusCode != HttpStatusCode.Redirect)
+				{
+					s_log.Warn($"Unexpected status code: expected {HttpStatusCode.Redirect}, actual {response.StatusCode}");
+					return ReturnError(innerException: null);
+				}
+
+				if (response.Headers.Location?.ToString() is not string location)
+				{
+					s_log.Warn("Location was null");
+					return ReturnError(innerException: null);
+				}
+
+				s_log.Info($"Redirecting to {location}");
+
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(
+					location,
+					timeout: TimeSpan.FromSeconds(10),
+					headers: headers =>
+					{
+						headers.Authorization = authorization;
+					}
+				);
 			}
 			catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
 			{
