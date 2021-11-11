@@ -181,6 +181,9 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public string Translations { get; init; }
 
+		[DataMember]
+		public string UrlSlug { get; init; }
+
 		public WebLinkForApiContract[] WebLinks { get; init; }
 
 		public TagDetailsForApiContract(
@@ -225,6 +228,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			Status = tag.Status;
 			Targets = (int)tag.Targets;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
+			UrlSlug = tag.UrlSlug;
 			WebLinks = tag.WebLinks.Links
 				.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
 				.OrderBy(w => w.DescriptionOrUrl)

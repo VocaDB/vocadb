@@ -494,7 +494,9 @@ namespace VocaDb.Model.Domain.Tags
 			}
 		}
 
+#nullable enable
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
+#nullable disable
 
 		/// <summary>
 		/// Number of tag usages.
