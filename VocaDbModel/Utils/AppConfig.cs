@@ -188,7 +188,7 @@ namespace VocaDb.Model.Utils
 		/// Host address of the main site, contains full path to the web application's root, including hostname.
 		/// For example https://vocadb.net
 		/// </summary>
-		public static string HostAddress => Val("HostAddress");
+		public static string? HostAddress => Val("HostAddress");
 
 		public static string? LockdownMessage => Val("LockdownMessage");
 #nullable disable

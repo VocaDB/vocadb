@@ -38,6 +38,7 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
@@ -51,6 +52,7 @@ import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -207,6 +209,16 @@ const SongListDetailsLayout = observer(
 					</>
 				}
 			>
+				<Helmet>
+					<link
+						rel="canonical"
+						href={functions.mergeUrls(
+							vdb.values.hostAddress,
+							EntryUrlMapper.details(EntryType.SongList, songList.id),
+						)}
+					/>
+				</Helmet>
+
 				<div className="media">
 					{smallThumbUrl && (
 						<a className="pull-left" href={thumbUrl}>
@@ -590,8 +602,6 @@ const SongListDetails = (): React.ReactElement => {
 	const navigate = useNavigate();
 
 	React.useEffect(() => {
-		setModel(undefined);
-
 		songListRepo
 			.getDetails({ id: Number(id) })
 			.then((songList) =>

@@ -12,6 +12,7 @@ export default interface GlobalValues {
 	albumTypes: string /* TODO: enum AlbumType */[];
 	artistTypes: string /* TODO: enum ArtistType */[];
 	gaAccountId: string;
+	hostAddress: string;
 	lockdownMessage?: string;
 	songTypes: string /* TODO: enum SongType */[];
 	staticContentHost: string;

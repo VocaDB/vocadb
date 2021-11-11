@@ -30,12 +30,17 @@ namespace VocaDb.Web.Models.Shared
 
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public DiscType[] AlbumTypes { get; init; }
+
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public ArtistType[] ArtistTypes { get; init; }
+
 		public string? GAAccountId { get; init; }
+		public string? HostAddress { get; init; }
 		public string? LockdownMessage { get; init; }
+
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public SongType[] SongTypes { get; init; }
+
 		public string StaticContentHost { get; init; }
 
 		public string? PaypalDonateTitle { get; init; }
@@ -54,8 +59,10 @@ namespace VocaDb.Web.Models.Shared
 		public int FreeTagId { get; init; }
 
 		public string? BaseAddress { get; init; }
+
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguagePreference LanguagePreference { get; init; }
+
 		public bool IsLoggedIn { get; init; }
 		public int LoggedUserId { get; init; }
 		public SanitizedUserWithPermissionsContract? LoggedUser { get; init; }
@@ -74,6 +81,7 @@ namespace VocaDb.Web.Models.Shared
 			AlbumTypes = AppConfig.AlbumTypes;
 			ArtistTypes = AppConfig.ArtistTypes;
 			GAAccountId = AppConfig.GAAccountId;
+			HostAddress = AppConfig.HostAddress;
 			LockdownMessage = AppConfig.LockdownMessage;
 			SongTypes = AppConfig.SongTypes;
 			StaticContentHost = AppConfig.StaticContentHost;
