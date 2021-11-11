@@ -52,7 +52,7 @@ import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.css';
 
@@ -587,30 +587,36 @@ const SongListDetails = (): React.ReactElement => {
 	>();
 
 	const { id } = useParams();
+	const navigate = useNavigate();
 
 	React.useEffect(() => {
 		setModel(undefined);
 
-		songListRepo.getDetails({ id: Number(id) }).then((songList) =>
-			setModel({
-				songList: songList,
-				songListStore: new SongListStore(
-					vdb.values,
-					urlMapper,
-					songListRepo,
-					songRepo,
-					tagRepo,
-					userRepo,
-					artistRepo,
-					songList.latestComments ?? [],
-					songList.id,
-					songList.tags ?? [],
-					pvPlayersFactory,
-					loginManager.canDeleteComments,
-				),
-			}),
-		);
-	}, [id]);
+		songListRepo
+			.getDetails({ id: Number(id) })
+			.then((songList) =>
+				setModel({
+					songList: songList,
+					songListStore: new SongListStore(
+						vdb.values,
+						urlMapper,
+						songListRepo,
+						songRepo,
+						tagRepo,
+						userRepo,
+						artistRepo,
+						songList.latestComments ?? [],
+						songList.id,
+						songList.tags ?? [],
+						pvPlayersFactory,
+						loginManager.canDeleteComments,
+					),
+				}),
+			)
+			.catch((error) => {
+				if (error.response.status === 404) navigate('/Error/NotFound');
+			});
+	}, [id, navigate]);
 
 	return model ? (
 		<SongListDetailsLayout

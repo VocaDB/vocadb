@@ -46,7 +46,7 @@ import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -869,35 +869,41 @@ const TagDetailsLayout = observer(
 );
 
 const TagDetails = (): React.ReactElement => {
-	const { id } = useParams();
-
 	const [model, setModel] = React.useState<
 		{ tag: TagDetailsContract; tagDetailsStore: TagDetailsStore } | undefined
 	>();
 
+	const { id } = useParams();
+	const navigate = useNavigate();
+
 	React.useEffect(() => {
 		setModel(undefined);
 
-		tagRepo.getDetails({ id: Number(id) }).then((tag) => {
-			setModel({
-				tag: tag,
-				tagDetailsStore: new TagDetailsStore(
-					loginManager,
-					tagRepo,
-					userRepo,
-					tag.latestComments,
-					tag.id,
-					loginManager.canDeleteComments,
-					(vdb.values.languagePreference ===
-						ContentLanguagePreference.English ||
-						vdb.values.languagePreference ===
-							ContentLanguagePreference.Romaji) &&
-						!!tag.description.english,
-					tag.isFollowing,
-				),
+		tagRepo
+			.getDetails({ id: Number(id) })
+			.then((tag) => {
+				setModel({
+					tag: tag,
+					tagDetailsStore: new TagDetailsStore(
+						loginManager,
+						tagRepo,
+						userRepo,
+						tag.latestComments,
+						tag.id,
+						loginManager.canDeleteComments,
+						(vdb.values.languagePreference ===
+							ContentLanguagePreference.English ||
+							vdb.values.languagePreference ===
+								ContentLanguagePreference.Romaji) &&
+							!!tag.description.english,
+						tag.isFollowing,
+					),
+				});
+			})
+			.catch((error) => {
+				if (error.response.status === 404) navigate('/Error/NotFound');
 			});
-		});
-	}, [id]);
+	}, [id, navigate]);
 
 	return model ? (
 		<TagDetailsLayout tag={model.tag} tagDetailsStore={model.tagDetailsStore} />
