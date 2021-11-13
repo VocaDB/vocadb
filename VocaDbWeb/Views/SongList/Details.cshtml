@@ -35,10 +35,6 @@
 
 }
 
-@section Head {
-	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
-}
-
 @section Toolbar {
 	@if (Model.CanEdit) {
 		<a asp-action="Edit" asp-route-id="@(Model.SongList.Id)" id="@("editListLink")">@(ViewRes.SharedStrings.Edit)</a>

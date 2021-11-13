@@ -5,6 +5,7 @@
 @using VocaDb.Web.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.Html
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @model object
 
@@ -47,6 +48,8 @@
 			.js-cloak { visibility: visible; }
 		</style>		
 	</noscript>
+
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 
 	@if (!string.IsNullOrEmpty(PageProperties.CanonicalUrl)) {
 		<link rel="canonical" href="@PageProperties.CanonicalUrl" />

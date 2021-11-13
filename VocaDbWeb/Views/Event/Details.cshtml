@@ -40,10 +40,6 @@
 
 }
 
-@section Head {
-	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
-}
-
 @section Toolbar {
 	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editEventLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
 	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
