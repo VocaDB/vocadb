@@ -108,7 +108,8 @@ namespace VocaDb.Web.Controllers
 			VdbConfigManager config,
 			MarkdownParser markdownParser,
 			ActivityEntryQueries activityEntryQueries,
-			LoginManager loginManager)
+			LoginManager loginManager
+		)
 		{
 			Service = service;
 			Data = data;
@@ -227,6 +228,12 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var model = Data.GetUserDetails(id);
+
+			PageProperties.Title = model.Name;
+			PageProperties.Subtitle = Translate.UserGroups[model.GroupId];
+			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
+			PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
 			return View(model);
 		}
 

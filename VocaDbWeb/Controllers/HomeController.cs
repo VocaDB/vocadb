@@ -46,6 +46,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
+			PageProperties.CanonicalUrl = UrlMapper.HostAddress;
 
 			var contract = await _otherService.GetFrontPageContent();
 

@@ -31,10 +31,6 @@
 	}
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
-	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
-
-	PageProperties.Description = descriptionStripped;
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var pictureData = !string.IsNullOrEmpty(Model.PictureMime) ? (IEntryImageInformation)Model: Model.Series;
 	var smallThumbUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
@@ -42,11 +38,6 @@
 
 	var primaryPV = PVHelper.PrimaryPV(Model.PVs);
 
-}
-
-@section Head {
-	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
-	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 }
 
 @section Toolbar {

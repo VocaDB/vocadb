@@ -59,7 +59,8 @@ namespace VocaDb.Web.Controllers
 			EventQueries eventQueries,
 			SongQueries songService,
 			TagQueries tagQueries,
-			PVHelper pvHelper)
+			PVHelper pvHelper
+		)
 		{
 			_entryUrlParser = entryUrlParser;
 			_entryThumbPersister = entryThumbPersister;

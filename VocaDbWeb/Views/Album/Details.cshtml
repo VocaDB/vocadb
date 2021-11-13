@@ -25,13 +25,9 @@
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
 	var url = PageProperties.CanonicalUrl;
-
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 }
 
 @section Head {
-	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
-	<link rel="canonical" href="@url" />
 	<remikus path="/Scripts/jqwidgets27/styles/css.css" />
 }
 

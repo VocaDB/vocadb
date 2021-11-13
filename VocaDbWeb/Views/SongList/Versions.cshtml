@@ -7,8 +7,6 @@
 @model VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract
 
 @{
-	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};

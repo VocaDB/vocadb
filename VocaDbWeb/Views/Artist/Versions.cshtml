@@ -4,8 +4,6 @@
 @model VocaDb.Web.Models.Artist.Versions
 
 @{
-	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Artist.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index"), 
 		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 

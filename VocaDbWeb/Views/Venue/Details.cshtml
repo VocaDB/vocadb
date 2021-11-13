@@ -13,10 +13,6 @@
 	};
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
-	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
-
-	PageProperties.Description = descriptionStripped;
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 }
 

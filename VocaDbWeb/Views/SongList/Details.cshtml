@@ -30,18 +30,9 @@
 	}
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.SongList.Description);
-	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
-
-	PageProperties.Description = descriptionStripped;
-	PageProperties.Robots = Model.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var url = PageProperties.CanonicalUrl;
 
-}
-
-@section Head {
-	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
-	<link rel="canonical" href="@url" />
 }
 
 @section Toolbar {

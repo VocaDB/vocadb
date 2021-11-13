@@ -20,6 +20,8 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
@@ -33,17 +35,25 @@ namespace VocaDb.Web.Controllers
 		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 		private readonly EventQueries _queries;
 		private readonly ReleaseEventService _service;
+		private readonly MarkdownParser _markdownParser;
 
 		private ReleaseEventService Service => _service;
 
-		public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
-			IAggregatedEntryImageUrlFactory thumbPersister)
+		public EventController(
+			EventQueries queries,
+			ReleaseEventService service,
+			IEnumTranslations enumTranslations,
+			IEntryLinkFactory entryLinkFactory,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			MarkdownParser markdownParser
+		)
 		{
 			_queries = queries;
 			_service = service;
 			_enumTranslations = enumTranslations;
 			_entryLinkFactory = entryLinkFactory;
 			_thumbPersister = thumbPersister;
+			_markdownParser = markdownParser;
 		}
 
 		public ActionResult ArchivedSeriesVersionXml(int id)
@@ -95,7 +105,11 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Subtitle = subtitle;
 			PageProperties.CanonicalUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
 			PageProperties.OpenGraph.Image = Url.ImageThumb(pictureData, ImageSize.Original);
-			// Note: description is set in view
+
+			var descriptionStripped = _markdownParser.GetPlainText(ev.Description);
+
+			PageProperties.Description = descriptionStripped;
+			PageProperties.Robots = ev.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View(ev);
 		}
@@ -332,6 +346,11 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Subtitle = subtitle;
 			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);
 
+			var descriptionStripped = _markdownParser.GetPlainText(series.Description);
+
+			PageProperties.Description = descriptionStripped;
+			PageProperties.Robots = series.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
 			return View(series);
 		}
 
@@ -341,6 +360,9 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
+
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Entry.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(new Versions<ReleaseEventSeriesContract>(contract, _enumTranslations));
 		}
@@ -363,6 +385,9 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = _queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
 
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 
@@ -373,12 +398,18 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetReleaseEventWithArchivedVersions(id);
 
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new Versions(contract, _enumTranslations));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
 			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}

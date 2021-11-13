@@ -13,6 +13,8 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.SongLists;
 
@@ -21,13 +23,16 @@ namespace VocaDb.Web.Controllers
 	public class SongListController : ControllerBase
 	{
 		public const int SongsPerPage = 50;
+
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly SongListQueries _queries;
+		private readonly MarkdownParser _markdownParser;
 
-		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory)
+		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory, MarkdownParser markdownParser)
 		{
 			_queries = queries;
 			_entryLinkFactory = entryLinkFactory;
+			_markdownParser = markdownParser;
 		}
 
 		public ActionResult Details(int id = InvalidId)
@@ -65,6 +70,11 @@ namespace VocaDb.Web.Controllers
 			}
 
 			PageProperties.OpenGraph.ShowTwitterCard = true;
+
+			var descriptionStripped = _markdownParser.GetPlainText(viewModel.SongList.Description);
+
+			PageProperties.Description = descriptionStripped;
+			PageProperties.Robots = viewModel.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View(viewModel);
 		}
@@ -134,6 +144,9 @@ namespace VocaDb.Web.Controllers
 
 			if (contract == null)
 				return NotFound();
+
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(contract);
 		}

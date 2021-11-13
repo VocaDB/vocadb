@@ -175,8 +175,17 @@ namespace VocaDb.Web.Controllers
 		}
 #nullable disable
 
-		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries,
-			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext)
+		public SearchController(
+			OtherService services,
+			ArtistService artistService,
+			AlbumService albumService,
+			SongService songService,
+			SongListQueries songListQueries,
+			TagQueries tagQueries,
+			EventQueries eventQueries,
+			EntryQueries entryQueries,
+			IUserPermissionContext permissionContext
+		)
 		{
 			_services = services;
 			_artistService = artistService;

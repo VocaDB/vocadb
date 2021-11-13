@@ -7,9 +7,6 @@
 
 @{
 
-	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
-
 	if (Model.Entry.ReleaseEventSeries != null) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink("Events", "Index"),
