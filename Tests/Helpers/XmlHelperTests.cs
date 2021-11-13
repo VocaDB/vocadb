@@ -79,9 +79,7 @@ namespace VocaDb.Tests.Helpers
 
 			album.Description.IsNormalized().Should().BeTrue();
 
-			var res = SerializeToObjectAndBack(album);
-
-			res.Description.Should().Be(name, "string is intact");
+			this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
 		}
 
 		[TestMethod]
@@ -92,9 +90,7 @@ namespace VocaDb.Tests.Helpers
 
 			album.Description.IsNormalized().Should().BeTrue();
 
-			var res = SerializeToObjectAndBack(album);
-
-			res.Description.Should().Be(name, "string is intact");
+			this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
 		}
 	}
 }
