@@ -6,6 +6,7 @@ import Markdown from '@Components/KnockoutExtensions/Markdown';
 import Layout from '@Components/Shared/Layout';
 import LatestCommentsKnockout from '@Components/Shared/Partials/Comment/LatestCommentsKnockout';
 import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
+import DeletedBanner from '@Components/Shared/Partials/EntryDetails/DeletedBanner';
 import VenueLinkOrVenueName from '@Components/Shared/Partials/Event/VenueLinkOrVenueName';
 import ArtistFilters from '@Components/Shared/Partials/Knockout/ArtistFilters';
 import Dropdown from '@Components/Shared/Partials/Knockout/Dropdown';
@@ -14,6 +15,7 @@ import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
 import PlayList from '@Components/Shared/Partials/PlayList';
 import { SongAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
+import DraftMessage from '@Components/Shared/Partials/Shared/DraftMessage';
 import EntryStatusMessage from '@Components/Shared/Partials/Shared/EntryStatusMessage';
 import PVPreviewKnockout from '@Components/Shared/Partials/Song/PVPreviewKnockout';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
@@ -218,6 +220,12 @@ const SongListDetailsLayout = observer(
 						)}
 					/>
 				</Helmet>
+
+				{songList.featuredCategory !== 'Nothing' &&
+					songList.status === EntryStatus[EntryStatus.Draft] &&
+					!songList.deleted && <DraftMessage section="" />}
+
+				{songList.deleted && <DeletedBanner />}
 
 				<div className="media">
 					{smallThumbUrl && (

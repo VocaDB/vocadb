@@ -12,6 +12,8 @@ export default interface SongListContract
 		EntryWithTagUsagesContract {
 	author: UserBaseContract;
 
+	deleted?: boolean;
+
 	description: string;
 
 	eventDate?: string;
