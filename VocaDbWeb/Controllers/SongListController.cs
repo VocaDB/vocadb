@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = viewModel.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(viewModel);
+			return View("React/Index");
 		}
 
 		//
@@ -133,7 +133,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Featured"));
 
-			return View(viewModel);
+			return View("React/Index");
 		}
 
 		[Authorize]

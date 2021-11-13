@@ -153,7 +153,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult GeneratePictureThumbs()

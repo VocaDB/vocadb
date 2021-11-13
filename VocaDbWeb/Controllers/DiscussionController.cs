@@ -8,7 +8,7 @@ namespace VocaDb.Web.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View();
+			return View("React/Index");
 		}
 	}
 }

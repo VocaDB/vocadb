@@ -32,7 +32,7 @@ namespace VocaDb.Web.Controllers
 		{
 			ViewBag.Before = before;
 
-			return View("Index");
+			return View("React/Index");
 		}
 	}
 

@@ -243,7 +243,7 @@ namespace VocaDb.Web.Controllers
 				}
 			}
 
-			return View(vm);
+			return View("React/Index");
 		}
 
 		//

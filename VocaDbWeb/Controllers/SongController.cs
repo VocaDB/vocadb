@@ -488,7 +488,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Rankings()
 		{
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult Related(int id = InvalidId)

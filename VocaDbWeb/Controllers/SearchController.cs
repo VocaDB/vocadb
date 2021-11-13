@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 
 			SetSearchEntryType(viewModel.searchType);
 
-			return View("Index", viewModel);
+			return View("React/Index");
 		}
 
 		public ActionResult Radio()
