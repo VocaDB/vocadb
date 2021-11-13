@@ -15,6 +15,7 @@ import ReactGA from 'react-ga';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import ScrollToTop from './ScrollToTop';
 import './i18n';
 
 const ActivityEntryRoutes = React.lazy(
@@ -51,6 +52,8 @@ const App = (): React.ReactElement => {
 	return (
 		<BrowserRouter>
 			<HelmetProvider>
+				<ScrollToTop />
+
 				<Navbar className="navbar-inverse" fixed="top">
 					<Container id="topBar">
 						<GlobalSearchBox topBarStore={topBarStore} />
