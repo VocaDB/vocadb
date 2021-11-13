@@ -11,6 +11,7 @@ declare global {
 			albumDetails: { download: string };
 			artist: { authoredBy?: string };
 			layout: { paypalDonateTitle?: string };
+			home: { welcome?: string; welcomeSubtitle?: string };
 		};
 		values: GlobalValues;
 	};

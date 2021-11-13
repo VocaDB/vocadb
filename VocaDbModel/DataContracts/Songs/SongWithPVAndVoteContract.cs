@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
+	[Obsolete]
 	[DataContract]
 	public class SongWithPVAndVoteContract : SongContract
 	{
@@ -23,7 +25,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Vote = vote;
 		}
 
-		[DataMember]
+		[DataMember(Name = "pvs")]
 		public PVContract[] PVs { get; init; }
 
 		[DataMember]

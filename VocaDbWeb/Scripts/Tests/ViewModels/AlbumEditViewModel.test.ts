@@ -99,6 +99,7 @@ vdb.resources = {
 	shared: null,
 	song: null,
 	artist: {},
+	home: {},
 	layout: {},
 };
 

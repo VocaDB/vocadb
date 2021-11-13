@@ -15,7 +15,9 @@ const MainNavigationItems = React.memo(
 		return (
 			<Nav className="nav-list">
 				<Nav.Item>
-					<Nav.Link href={'/'}>{t('ViewRes:Layout.Home')}</Nav.Link>
+					<Nav.Link as={Link} to="/">
+						{t('ViewRes:Layout.Home')}
+					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
 					<Nav.Link as={Link} to="/Search?searchType=Artist">

@@ -33,6 +33,7 @@ vdb.resources = {
 	shared: null,
 	song: { addExtraArtist: 'Add extra artist' },
 	artist: {},
+	home: {},
 	layout: {},
 };
 

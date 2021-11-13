@@ -1,5 +1,4 @@
 import Container from '@Bootstrap/Container';
-import ErrorNotFound from '@Components/Error/ErrorNotFound';
 import Footer from '@Components/Shared/Partials/Footer';
 import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
@@ -22,6 +21,7 @@ const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
 );
 const EventRoutes = React.lazy(() => import('@Components/Event/EventRoutes'));
+const HomeRoutes = React.lazy(() => import('@Components/Home/HomeRoutes'));
 const SearchRoutes = React.lazy(
 	() => import('@Components/Search/SearchRoutes'),
 );
@@ -93,7 +93,7 @@ const App = (): React.ReactElement => {
 								<Route path="T/:id/*" element={<TagDetails />} />
 								<Route path="Profile/:name/*" element={<UserDetails />} />
 
-								<Route path="*" element={<ErrorNotFound />} />
+								<Route path="*" element={<HomeRoutes />} />
 							</Routes>
 						</React.Suspense>
 					</div>
