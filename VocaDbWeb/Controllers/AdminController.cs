@@ -146,6 +146,16 @@ namespace VocaDb.Web.Controllers
 			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, new PVForSongContract[] { }));
 		}
 
+		//
+		// GET: /Admin/
+		[Authorize]
+		public ActionResult Index()
+		{
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			return View("React/Index");
+		}
+
 		public ActionResult GeneratePictureThumbs()
 		{
 			var count = Service.GeneratePictureThumbs();

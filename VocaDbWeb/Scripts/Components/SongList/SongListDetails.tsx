@@ -40,7 +40,6 @@ import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
@@ -54,7 +53,6 @@ import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -211,16 +209,6 @@ const SongListDetailsLayout = observer(
 					</>
 				}
 			>
-				<Helmet>
-					<link
-						rel="canonical"
-						href={functions.mergeUrls(
-							vdb.values.hostAddress,
-							EntryUrlMapper.details(EntryType.SongList, songList.id),
-						)}
-					/>
-				</Helmet>
-
 				{songList.featuredCategory !== 'Nothing' &&
 					songList.status === EntryStatus[EntryStatus.Draft] &&
 					!songList.deleted && <DraftMessage section="" />}

@@ -16,6 +16,7 @@ using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers
 {
@@ -196,6 +197,39 @@ namespace VocaDb.Web.Controllers
 			_eventQueries = eventQueries;
 			_entryQueries = entryQueries;
 			_permissionContext = permissionContext;
+		}
+
+		public ActionResult Index(SearchIndexViewModel viewModel)
+		{
+			if (viewModel == null)
+				viewModel = new SearchIndexViewModel();
+
+			var filter = viewModel.filter;
+			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
+
+			if (viewModel.allowRedirect && !string.IsNullOrEmpty(filter))
+			{
+				var redirectResult = TryRedirect(filter, viewModel.searchType);
+
+				if (redirectResult != null)
+					return redirectResult;
+			}
+
+			if (!string.IsNullOrEmpty(viewModel.tag))
+			{
+				viewModel.tagId = new[] { _tagQueries.GetTagIdByName(viewModel.tag) };
+			}
+
+			viewModel.filter = filter;
+
+			SetSearchEntryType(viewModel.searchType);
+
+			return View("React/Index");
+		}
+
+		public ActionResult Radio()
+		{
+			return Index(new SearchIndexViewModel(EntryType.Song) { minScore = 1, sort = "AdditionDate", viewMode = "PlayList", autoplay = true, shuffle = true });
 		}
 	}
 }

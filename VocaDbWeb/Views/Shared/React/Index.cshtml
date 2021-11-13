@@ -4,6 +4,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Html
 @inherits VocaDbPage
 @addTagHelper *, VocaDb.ReMikus
 
@@ -17,8 +18,17 @@
 <html lang="@InterfaceLanguage.GetAvailableLanguageCode(CultureInfo.CurrentUICulture)">
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@BrandableStrings.SiteTitle</title>
+	<title>@(!string.IsNullOrEmpty(PageProperties.PageTitle) ? PageProperties.PageTitle + " - " : "")@BrandableStrings.SiteTitle</title>
+	<meta name="description" content="@PageProperties.SummarizedDescription" />
+	<meta name="keywords" content="@BrandableStrings.Layout.Keywords" />
+	<meta name="og:image" content="@PageProperties.OpenGraph.Image"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	@if (!string.IsNullOrEmpty(PageProperties.Robots)) {
+		<meta name="robots" content="@PageProperties.Robots"/>
+	}
+
+	<partial name="LayoutPartials/_TwitterCard" model="@(this)" />
 
 	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />
 	<remikus path="/Content/css.css" />
@@ -30,6 +40,12 @@
 	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
 	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
+
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
+
+	@if (!string.IsNullOrEmpty(PageProperties.CanonicalUrl)) {
+		<link rel="canonical" href="@PageProperties.CanonicalUrl" />
+	}
 </head>
 <body class="vdb">
 	<div id="app"></div>
