@@ -3,8 +3,6 @@
 @model VocaDb.Web.Models.Album.Versions
 
 @{
-	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Album.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index"), 
 		Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }) 

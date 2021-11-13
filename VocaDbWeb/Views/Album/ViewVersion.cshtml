@@ -8,9 +8,6 @@
 
 @{
 	
-    PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
-	
 	if (Model.Album != null) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink("Albums", "Index"),

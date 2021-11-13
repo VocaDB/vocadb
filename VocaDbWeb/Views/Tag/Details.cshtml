@@ -38,8 +38,6 @@
 	related.AddRange(Model.Children.Select(t => Tuple.Create(t, "child")));
 	related.AddRange(Model.Siblings.Select(t => Tuple.Create(t, "sibling")));
 
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
-
 }
 
 @section Head {

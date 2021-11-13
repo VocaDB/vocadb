@@ -257,7 +257,8 @@ namespace VocaDb.Web.Controllers
 			VdbConfigManager config,
 			ActivityEntryQueries activityEntryQueries,
 			StatsQueries queries,
-			ObjectCache cache)
+			ObjectCache cache
+		)
 		{
 			_userRepository = userRepository;
 			_permissionContext = permissionContext;

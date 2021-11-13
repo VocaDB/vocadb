@@ -52,7 +52,8 @@ namespace VocaDb.Web.Controllers
 			SongQueries queries,
 			SongListQueries songListQueries,
 			MarkdownParser markdownParser,
-			PVHelper pvHelper)
+			PVHelper pvHelper
+		)
 		{
 			_service = service;
 			_queries = queries;
@@ -174,6 +175,8 @@ namespace VocaDb.Web.Controllers
 			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.OpenGraph.Title = hasDescription ? $"{titleAndArtist} ({Translate.SongTypeNames[model.SongType]})" : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
+
+			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View(model);
 		}
@@ -579,12 +582,18 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetSongWithArchivedVersions(id);
 
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new Versions(contract));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(contract);
 		}

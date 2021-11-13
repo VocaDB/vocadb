@@ -3,8 +3,6 @@
 @model VocaDb.Web.Models.Venue.Versions
 
 @{
-	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
-	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"), 
 		Html.ActionLink(Model.Entry.Name, "Details", new { id = Model.Entry.Id }) 

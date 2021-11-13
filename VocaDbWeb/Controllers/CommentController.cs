@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Controllers
 {
@@ -25,6 +26,10 @@ namespace VocaDb.Web.Controllers
 			if (userId.HasValue)
 			{
 				var user = _userService.GetUser(userId.Value);
+
+				PageProperties.Title = "Comments - " + user.Name;
+				PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 				return View("CommentsByUser", user);
 			}
 			else

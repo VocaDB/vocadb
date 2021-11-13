@@ -18,6 +18,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
@@ -36,8 +37,13 @@ namespace VocaDb.Web.Controllers
 		private readonly TagQueries _queries;
 		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 
-		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
-			IAggregatedEntryImageUrlFactory entryThumbPersister)
+		public TagController(
+			TagQueries queries,
+			IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations,
+			MarkdownParser markdownParser,
+			IAggregatedEntryImageUrlFactory entryThumbPersister
+		)
 		{
 			_queries = queries;
 			_entryLinkFactory = entryLinkFactory;
@@ -72,6 +78,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Subtitle = DetailsStrings.Tag;
 			PageProperties.CanonicalUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.UrlSlug);
 			PageProperties.OpenGraph.ShowTwitterCard = true;
+			PageProperties.Robots = contract.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View("Details", contract);
 		}
@@ -264,12 +271,19 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = _queries.GetTagWithArchivedVersions(id);
+
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new Versions(contract, _enumTranslations));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
 			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}

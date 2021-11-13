@@ -30,10 +30,6 @@
 	}
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.SongList.Description);
-	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
-
-	PageProperties.Description = descriptionStripped;
-	PageProperties.Robots = Model.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var url = PageProperties.CanonicalUrl;
 

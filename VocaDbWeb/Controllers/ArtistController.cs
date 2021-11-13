@@ -18,6 +18,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Utils.Search;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
@@ -140,6 +141,7 @@ namespace VocaDb.Web.Controllers
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
+			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View(model);
 		}
@@ -318,6 +320,9 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = Service.GetArtistWithArchivedVersions(id);
 
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new Versions(contract));
 		}
 
@@ -327,6 +332,9 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(contract);
 		}

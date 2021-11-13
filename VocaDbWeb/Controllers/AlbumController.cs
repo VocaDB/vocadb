@@ -55,7 +55,8 @@ namespace VocaDb.Web.Controllers
 			UserQueries userQueries,
 			AlbumDescriptionGenerator albumDescriptionGenerator,
 			MarkdownParser markdownParser,
-			PVHelper pvHelper)
+			PVHelper pvHelper
+		)
 		{
 			Service = service;
 			_queries = queries;
@@ -168,6 +169,8 @@ namespace VocaDb.Web.Controllers
 			prop.Description = !model.Description.IsEmpty ?
 				_markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 				_albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
+
+			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 			return View(new AlbumDetails(model, PermissionContext, _pvHelper));
 		}
@@ -412,6 +415,9 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetAlbumWithArchivedVersions(id);
 
+			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
 			return View(new Versions(contract));
 		}
 
@@ -421,6 +427,9 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 			return View(contract);
 		}

@@ -25,8 +25,6 @@
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };
 	var url = PageProperties.CanonicalUrl;
-
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 }
 
 @section Head {

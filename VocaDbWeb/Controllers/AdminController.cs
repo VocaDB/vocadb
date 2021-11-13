@@ -32,8 +32,12 @@ namespace VocaDb.Web.Controllers
 		private AdminService Service { get; set; }
 		private readonly OtherService _otherService;
 
-		public AdminController(AdminService service, OtherService otherService,
-			IPRuleManager ipRuleManager, ISessionFactory sessionFactory)
+		public AdminController(
+			AdminService service,
+			OtherService otherService,
+			IPRuleManager ipRuleManager,
+			ISessionFactory sessionFactory
+		)
 		{
 			Service = service;
 			_otherService = otherService;

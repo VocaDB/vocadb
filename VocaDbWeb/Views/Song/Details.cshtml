@@ -45,8 +45,6 @@
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
 	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
 
-	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
-
 }
 
 @{
