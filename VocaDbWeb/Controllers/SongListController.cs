@@ -131,6 +131,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Featured(FeaturedViewModel viewModel)
 		{
+			PageProperties.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Featured"));
+
 			return View(viewModel);
 		}
 

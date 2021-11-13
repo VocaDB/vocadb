@@ -48,6 +48,10 @@
 		</style>		
 	</noscript>
 
+	@if (!string.IsNullOrEmpty(PageProperties.CanonicalUrl)) {
+		<link rel="canonical" href="@PageProperties.CanonicalUrl" />
+	}
+
 	@RenderSection("Head", false)
 	
 	<partial name="Partials/_GoogleAnalytics" />
