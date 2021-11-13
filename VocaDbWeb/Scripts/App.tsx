@@ -12,7 +12,6 @@ import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
 import ReactGA from 'react-ga';
-import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ScrollToTop from './ScrollToTop';
@@ -55,45 +54,43 @@ const App = (): React.ReactElement => {
 
 	return (
 		<BrowserRouter>
-			<HelmetProvider>
-				<ScrollToTop />
+			<ScrollToTop />
 
-				<Navbar className="navbar-inverse" fixed="top">
-					<Container id="topBar">
-						<GlobalSearchBox topBarStore={topBarStore} />
-					</Container>
-				</Navbar>
-
-				<Container fluid={true}>
-					<div className="row-fluid">
-						<LeftMenu />
-
-						<div className="span10 rightFrame well">
-							<React.Suspense fallback={null /* TODO */}>
-								<Routes>
-									<Route
-										path="ActivityEntry/*"
-										element={<ActivityEntryRoutes />}
-									/>
-									<Route path="Admin/*" element={<AdminRoutes />} />
-									<Route path="discussion/*" element={<DiscussionRoutes />} />
-									<Route path="Search/*" element={<SearchRoutes />} />
-									<Route path="SongList/*" element={<SongListRoutes />} />
-									<Route path="Song/*" element={<SongRoutes />} />
-									<Route path="Stats/*" element={<StatsRoutes />} />
-									<Route path="User/*" element={<UserRoutes />} />
-
-									<Route path="L/:id" element={<SongListDetails />} />
-
-									<Route path="*" element={<ErrorNotFound />} />
-								</Routes>
-							</React.Suspense>
-						</div>
-					</div>
+			<Navbar className="navbar-inverse" fixed="top">
+				<Container id="topBar">
+					<GlobalSearchBox topBarStore={topBarStore} />
 				</Container>
+			</Navbar>
 
-				<Footer />
-			</HelmetProvider>
+			<Container fluid={true}>
+				<div className="row-fluid">
+					<LeftMenu />
+
+					<div className="span10 rightFrame well">
+						<React.Suspense fallback={null /* TODO */}>
+							<Routes>
+								<Route
+									path="ActivityEntry/*"
+									element={<ActivityEntryRoutes />}
+								/>
+								<Route path="Admin/*" element={<AdminRoutes />} />
+								<Route path="discussion/*" element={<DiscussionRoutes />} />
+								<Route path="Search/*" element={<SearchRoutes />} />
+								<Route path="SongList/*" element={<SongListRoutes />} />
+								<Route path="Song/*" element={<SongRoutes />} />
+								<Route path="Stats/*" element={<StatsRoutes />} />
+								<Route path="User/*" element={<UserRoutes />} />
+
+								<Route path="L/:id" element={<SongListDetails />} />
+
+								<Route path="*" element={<ErrorNotFound />} />
+							</Routes>
+						</React.Suspense>
+					</div>
+				</div>
+			</Container>
+
+			<Footer />
 		</BrowserRouter>
 	);
 };

@@ -35,7 +35,6 @@ import TagTargetTypes from '@Models/Tags/TagTargetTypes';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { SearchType } from '@Stores/Search/SearchStore';
@@ -46,7 +45,6 @@ import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -438,16 +436,6 @@ const TagDetailsLayout = observer(
 					</>
 				}
 			>
-				<Helmet>
-					<link
-						rel="canonical"
-						href={functions.mergeUrls(
-							vdb.values.hostAddress,
-							EntryUrlMapper.details_tag_contract(tag)!,
-						)}
-					/>
-				</Helmet>
-
 				{tag.deleted && <DeletedBanner />}
 
 				<div className="well well-transparent">
