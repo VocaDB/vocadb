@@ -782,5 +782,10 @@ namespace VocaDb.Web.Controllers
 					}).AsQueryable(),
 				"Users per language", "Users");
 		}
+
+		public ActionResult Index()
+		{
+			return View();
+		}
 	}
 }

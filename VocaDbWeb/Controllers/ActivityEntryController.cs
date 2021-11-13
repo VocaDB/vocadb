@@ -24,6 +24,16 @@ namespace VocaDb.Web.Controllers
 			var result = Service.GetFollowedArtistActivity(EntriesPerPage);
 			return View(result.Items);
 		}
+
+		//
+		// GET: /ActivityEntry/
+
+		public ActionResult Index(DateTime? before)
+		{
+			ViewBag.Before = before;
+
+			return View("Index");
+		}
 	}
 
 	public class DetailedPageResult

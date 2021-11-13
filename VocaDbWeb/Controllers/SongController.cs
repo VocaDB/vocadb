@@ -486,6 +486,11 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
+		public ActionResult Rankings()
+		{
+			return View();
+		}
+
 		public ActionResult Related(int id = InvalidId)
 		{
 			if (id == InvalidId)
