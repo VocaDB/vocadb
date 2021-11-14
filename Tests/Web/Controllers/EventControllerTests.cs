@@ -19,7 +19,14 @@ namespace VocaDb.Tests.Web.Controllers
 		[TestInitialize]
 		public void SetUp()
 		{
-			_controller = new EventController(null, null, null, new FakeEntryLinkFactory(), null);
+			_controller = new EventController(
+				queries: null,
+				service: null,
+				enumTranslations: null,
+				entryLinkFactory: new FakeEntryLinkFactory(),
+				thumbPersister: null,
+				markdownParser: null
+			);
 		}
 
 		[TestMethod]

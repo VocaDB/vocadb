@@ -19,7 +19,7 @@ namespace VocaDb.Tests.Web.Controllers
 		[TestInitialize]
 		public void SetUp()
 		{
-			_controller = new SongListController(null, new FakeEntryLinkFactory());
+			_controller = new SongListController(queries: null, entryLinkFactory: new FakeEntryLinkFactory(), markdownParser: null);
 		}
 
 		[TestMethod]
