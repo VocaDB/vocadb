@@ -23,7 +23,7 @@ export default class PVRatingButtonsStore {
 	public constructor(
 		private readonly userRepo: UserRepository,
 		songWithVoteContract: SongWithVoteContract,
-		private readonly ratingCallback: () => void,
+		private readonly ratingCallback?: () => void,
 		private readonly isLoggedIn = true,
 	) {
 		makeObservable(this);
@@ -44,17 +44,16 @@ export default class PVRatingButtonsStore {
 		return this.rating === SongVoteRating.Like;
 	}
 
-	@action public setRating = (rating: SongVoteRating): void => {
-		if (this.ratingInProgress || !this.isLoggedIn) return;
+	@action public setRating = (rating: SongVoteRating): Promise<void> => {
+		if (this.ratingInProgress || !this.isLoggedIn) return Promise.resolve();
 
 		this.ratingInProgress = true;
 		this.rating = rating;
 
-		this.userRepo
+		return this.userRepo
 			.updateSongRating({ songId: this.songId, rating: rating })
 			.then(() => {
-				if (rating !== SongVoteRating.Nothing && this.ratingCallback)
-					this.ratingCallback();
+				if (rating !== SongVoteRating.Nothing) this.ratingCallback?.();
 			})
 			.finally(() =>
 				runInAction(() => {
@@ -63,10 +62,12 @@ export default class PVRatingButtonsStore {
 			);
 	};
 
-	public setRating_favorite = (): void =>
+	public setRating_favorite = (): Promise<void> =>
 		this.setRating(SongVoteRating.Favorite);
 
-	public setRating_like = (): void => this.setRating(SongVoteRating.Like);
+	public setRating_like = (): Promise<void> =>
+		this.setRating(SongVoteRating.Like);
 
-	public setRating_nothing = (): void => this.setRating(SongVoteRating.Nothing);
+	public setRating_nothing = (): Promise<void> =>
+		this.setRating(SongVoteRating.Nothing);
 }

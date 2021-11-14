@@ -1,4 +1,10 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+	action,
+	computed,
+	makeObservable,
+	observable,
+	runInAction,
+} from 'mobx';
 
 export interface IEntryReportType {
 	// Report type ID
@@ -17,7 +23,10 @@ export default class ReportEntryStore {
 	@observable public reportType?: IEntryReportType;
 
 	public constructor(
-		private readonly sendFunc: (reportType: string, notes: string) => void,
+		private readonly sendFunc: (
+			reportType: string,
+			notes: string,
+		) => Promise<void>,
 		reportType?: IEntryReportType,
 	) {
 		makeObservable(this);
@@ -32,10 +41,13 @@ export default class ReportEntryStore {
 		);
 	}
 
-	@action public send = (): void => {
-		this.sendFunc(this.reportType!.id, this.notes);
-		this.notes = '';
-		this.dialogVisible = false;
+	public send = async (): Promise<void> => {
+		await this.sendFunc(this.reportType!.id, this.notes);
+
+		runInAction(() => {
+			this.notes = '';
+			this.dialogVisible = false;
+		});
 	};
 
 	@action public show = (): void => {

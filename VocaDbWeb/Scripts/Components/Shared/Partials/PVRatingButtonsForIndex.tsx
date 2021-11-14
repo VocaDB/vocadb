@@ -57,7 +57,11 @@ const PVRatingButtonsForIndex = observer(
 				) : (
 					<span className="pull-right">
 						<Button
-							onClick={pvRatingButtonsStore.setRating_like}
+							onClick={async (): Promise<void> => {
+								await pvRatingButtonsStore.setRating_like();
+
+								// TODO: showThankYouForRatingMessage
+							}}
 							href="#"
 							className={classNames(
 								'btn-rateSong-like',
@@ -67,7 +71,11 @@ const PVRatingButtonsForIndex = observer(
 							{t('ViewRes.Song:Details.Like')}
 						</Button>{' '}
 						<Button
-							onClick={pvRatingButtonsStore.setRating_favorite}
+							onClick={async (): Promise<void> => {
+								await pvRatingButtonsStore.setRating_favorite();
+
+								// TODO: showThankYouForRatingMessage
+							}}
 							href="#"
 							className={classNames(
 								'btn-rateSong-favorite',

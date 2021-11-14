@@ -31,7 +31,11 @@ const ReportEntryPopupKnockout = observer(
 				buttons={[
 					{
 						text: t('ViewRes:Shared.Save'),
-						click: reportEntryStore.send,
+						click: async (): Promise<void> => {
+							await reportEntryStore.send();
+
+							// TODO: showSuccessMessage
+						},
 						disabled: !reportEntryStore.isValid,
 					},
 				]}
