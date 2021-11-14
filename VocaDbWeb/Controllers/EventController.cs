@@ -238,18 +238,26 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult EventsByDate()
 		{
+			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+
 			return View(_queries.List(EventSortRule.Date, SortDirection.Descending));
 		}
 
 		public ActionResult EventsBySeries()
 		{
 			var events = Service.GetReleaseEventsBySeries();
+
+			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+
 			return View(events);
 		}
 
 		public ActionResult EventsByVenue()
 		{
 			var events = _queries.GetReleaseEventsByVenue();
+
+			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+
 			return View(events);
 		}
 
@@ -271,6 +279,8 @@ namespace VocaDb.Web.Controllers
 					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, _thumbPersister),
 				queryParams);
 
+			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+
 			return View(events.Items);
 		}
 
@@ -278,6 +288,9 @@ namespace VocaDb.Web.Controllers
 		public ActionResult ManageTagUsages(int id)
 		{
 			var releaseEvent = _queries.GetEntryWithTagUsages(id);
+
+			PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
+
 			return View(releaseEvent);
 		}
 

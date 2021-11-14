@@ -22,6 +22,9 @@ namespace VocaDb.Web.Controllers
 		public ActionResult FollowedArtistActivity()
 		{
 			var result = Service.GetFollowedArtistActivity(EntriesPerPage);
+
+			PageProperties.Title = "New activity by followed artists";
+
 			return View(result.Items);
 		}
 
@@ -31,6 +34,8 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Index(DateTime? before)
 		{
 			ViewBag.Before = before;
+
+			PageProperties.Title = Resources.Views.ActivityEntry.IndexStrings.RecentActivity;
 
 			return View("React/Index");
 		}

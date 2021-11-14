@@ -3,7 +3,6 @@
 @model VocaDb.Model.DataContracts.UseCases.EntryWithTagUsagesContract
 
 @{
-    PageProperties.Title = "Manage tag usages - " + Model.DefaultName;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index"), 
 		Html.ActionLink(Model.DefaultName, "Details", new { id = Model.Id }) 

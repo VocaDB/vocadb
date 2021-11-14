@@ -5,10 +5,6 @@
 @model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract[]
 
 @{
-	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
-}
-
-@{
 	void SortDirection(rule rule) {
 		if (ViewBag.SortRule == rule) {
 			<span class="sortDirection_down"></span>

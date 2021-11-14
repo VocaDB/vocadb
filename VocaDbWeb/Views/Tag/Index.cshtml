@@ -2,7 +2,6 @@
 @model VocaDb.Model.DataContracts.Tags.TagCategoryContract[]
 
 @{
-	PageProperties.Title = ViewRes.SharedStrings.Tags;
 	var tagCount = Model.Sum(m => m.Tags.Length);
 	var avgUsageCount = Model.Sum(m => m.Tags.Sum(t => t.UsageCount)) / tagCount;
 }

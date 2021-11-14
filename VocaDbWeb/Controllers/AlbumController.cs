@@ -358,6 +358,8 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Deleted()
 		{
+			PageProperties.Title = "Deleted albums";
+
 			return View();
 		}
 
@@ -365,6 +367,9 @@ namespace VocaDb.Web.Controllers
 		public ActionResult ManageTagUsages(int id)
 		{
 			var album = Service.GetEntryWithTagUsages(id);
+
+			PageProperties.Title = "Manage tag usages - " + album.DefaultName;
+
 			return View(album);
 		}
 

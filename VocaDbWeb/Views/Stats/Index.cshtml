@@ -1,9 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage
 
-@{
-	PageProperties.Title = "Statistics / Reports";
-}
-
 <select data-bind="foreach: categories, value: selectedReport" class="input-large">
 	<optgroup label="NA" data-bind="attr: { label: name }, foreach: reports">
 		<option data-bind="text: name, value: $data"></option>

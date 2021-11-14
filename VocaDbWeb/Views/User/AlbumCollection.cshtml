@@ -3,7 +3,6 @@
 @model VocaDb.Web.Models.User.AlbumCollection
 
 @{
-    PageProperties.Title = "Album collection for " + Model.User.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
 	};	

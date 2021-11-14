@@ -44,6 +44,8 @@ namespace VocaDb.Web.Controllers
 			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, EntriesPerPage, false));
 			var model = new Index(albums, titleFilter, s);
 
+			PageProperties.Title = "Imported albums";
+
 			return View(model);
 		}
 

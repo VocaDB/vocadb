@@ -35,6 +35,9 @@ namespace VocaDb.Web.Controllers
 			else
 			{
 				var comments = await _otherService.GetRecentComments();
+
+				PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
+
 				return View(comments);
 			}
 		}

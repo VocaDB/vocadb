@@ -138,7 +138,11 @@ namespace VocaDb.Web.Controllers
 			if (id == InvalidId)
 				return NoId();
 
-			return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
+			var model = new AlbumCollection(Service.GetUser(id, true), routeParams);
+
+			PageProperties.Title = "Album collection for " + model.User.Name;
+
+			return View(model);
 		}
 
 		public ActionResult ConnectTwitter()
@@ -177,6 +181,8 @@ namespace VocaDb.Web.Controllers
 			var user = Service.GetUser(id);
 			ViewBag.AdditionsOnly = onlySubmissions ? (bool?)true : null;
 
+			PageProperties.Title = "Entry edits - " + user.Name;
+
 			return View(user);
 		}
 
@@ -185,7 +191,11 @@ namespace VocaDb.Web.Controllers
 			if (id == InvalidId)
 				return NoId();
 
-			return View(new FavoriteSongs(Service.GetUser(id), rating ?? SongVoteRating.Nothing, sort, groupByRating));
+			var model = new FavoriteSongs(Service.GetUser(id), rating ?? SongVoteRating.Nothing, sort, groupByRating);
+
+			PageProperties.Title = "Songs rated by " + model.User.Name;
+
+			return View(model);
 		}
 
 		public ActionResult ForgotPassword()
@@ -242,6 +252,8 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Profile", new { id = result.Items[0] });
 				}
 			}
+
+			PageProperties.Title = ViewRes.SharedStrings.Users;
 
 			return View("React/Index");
 		}
@@ -621,7 +633,12 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Stats(int id, string type)
 		{
 			ViewBag.StatType = type;
-			return View(Service.GetUser(id));
+
+			var model = Service.GetUser(id);
+
+			PageProperties.Title = "Stats for " + model.Name;
+
+			return View(model);
 		}
 
 		[Authorize]
@@ -639,6 +656,8 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var model = new Messages(user, messageId, receiverName, inbox);
+
+			PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
 			return View(model);
 		}

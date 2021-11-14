@@ -27,6 +27,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Chat()
 		{
+			PageProperties.Title = "IRC chat";
+
 			return View();
 		}
 

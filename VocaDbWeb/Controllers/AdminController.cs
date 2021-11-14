@@ -51,6 +51,9 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
 			var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
+
+			PageProperties.Title = "Active editors";
+
 			return View(items);
 		}
 
@@ -153,6 +156,8 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
+			PageProperties.Title = "Site management";
+
 			return View("React/Index");
 		}
 
@@ -171,6 +176,9 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			var rules = _otherService.GetIPRules();
+
+			PageProperties.Title = "Manage blocked IPs";
+
 			return View(rules);
 		}
 
@@ -189,10 +197,20 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ManageEntryTagMappings() => View();
+		public ActionResult ManageEntryTagMappings()
+		{
+			PageProperties.Title = "Manage entry type to tag mappings";
+
+			return View();
+		}
 
 		[Authorize]
-		public ActionResult ManageTagMappings() => View();
+		public ActionResult ManageTagMappings()
+		{
+			PageProperties.Title = "Manage NicoNicoDouga tag mappings";
+
+			return View();
+		}
 
 		public ActionResult PVAuthorNames(string term)
 		{
@@ -207,6 +225,8 @@ namespace VocaDb.Web.Controllers
 			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
 			var model = new PVsByAuthor(author ?? string.Empty, songs);
+
+			PageProperties.Title = "PVs by author";
 
 			return View(model);
 		}
@@ -300,6 +320,8 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
+			PageProperties.Title = "View audit log";
+
 			return View(model ?? new ViewAuditLogModel());
 		}
 
@@ -311,6 +333,8 @@ namespace VocaDb.Web.Controllers
 
 			var reports = Service.GetEntryReports(status);
 
+			PageProperties.Title = "View entry reports";
+
 			return View(reports);
 		}
 
@@ -321,6 +345,8 @@ namespace VocaDb.Web.Controllers
 
 			var logContents = new LogFileReader().GetLatestLogFileContents();
 
+			PageProperties.Title = "View system log";
+
 			return Content(logContents, "text/plain");
 
 			//return View(new ViewSysLog(logContents));
@@ -330,6 +356,8 @@ namespace VocaDb.Web.Controllers
 		public IActionResult ManageWebhooks()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageWebhooks);
+
+			PageProperties.Title = "Manage webhooks";
 
 			return View();
 		}

@@ -7,7 +7,6 @@
 @model VocaDb.Web.Models.User.Messages
 
 @{
-	PageProperties.Title = Res.Messages;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),
 		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id })
