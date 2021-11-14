@@ -785,6 +785,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index()
 		{
+			PageProperties.Title = "Statistics / Reports";
+
 			return View();
 		}
 	}

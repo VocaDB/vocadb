@@ -2,10 +2,6 @@
 @using VocaDb.Web.Models.Shared.Partials.Comment
 @model IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>
 
-@{
-    PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;    
-}
-
 <ul class="nav nav-pills">
 	<li>
 		<a asp-action="Index" asp-controller="ActivityEntry">@("All activity")</a>

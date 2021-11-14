@@ -221,6 +221,9 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var tags = _queries.GetTagsByCategories();
+
+			PageProperties.Title = ViewRes.SharedStrings.Tags;
+
 			return View(tags);
 		}
 

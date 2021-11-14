@@ -7,7 +7,6 @@
 @model FeaturedViewModel
 
 @{
-    PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;	
 	var categories = Translate.SongListFeaturedCategoryNames.AllFields.Where(f => f.Id != SongListFeaturedCategory.Nothing).ToArray();
 }
 

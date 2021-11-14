@@ -286,6 +286,9 @@ namespace VocaDb.Web.Controllers
 		public ActionResult ManageTagUsages(int id)
 		{
 			var artist = Service.GetEntryWithTagUsages(id);
+
+			PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
+
 			return View(artist);
 		}
 

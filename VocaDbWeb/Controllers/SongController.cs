@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
@@ -44,6 +45,7 @@ namespace VocaDb.Web.Controllers
 		private readonly SongService _service;
 		private readonly SongListQueries _songListQueries;
 		private readonly PVHelper _pvHelper;
+		private readonly BrandableStringsManager _brandableStringsManager;
 
 		private SongService Service => _service;
 
@@ -52,7 +54,8 @@ namespace VocaDb.Web.Controllers
 			SongQueries queries,
 			SongListQueries songListQueries,
 			MarkdownParser markdownParser,
-			PVHelper pvHelper
+			PVHelper pvHelper,
+			BrandableStringsManager brandableStringsManager
 		)
 		{
 			_service = service;
@@ -60,6 +63,7 @@ namespace VocaDb.Web.Controllers
 			_songListQueries = songListQueries;
 			_markdownParser = markdownParser;
 			_pvHelper = pvHelper;
+			_brandableStringsManager = brandableStringsManager;
 		}
 
 		// Used from the song page
@@ -376,6 +380,9 @@ namespace VocaDb.Web.Controllers
 		public ActionResult ManageTagUsages(int id)
 		{
 			var song = Service.GetEntryWithTagUsages(id);
+
+			PageProperties.Title = "Manage tag usages - " + song.DefaultName;
+
 			return View(song);
 		}
 
@@ -488,6 +495,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Rankings()
 		{
+			PageProperties.Title = _brandableStringsManager.Song.RankingsTitle;
+
 			return View();
 		}
 

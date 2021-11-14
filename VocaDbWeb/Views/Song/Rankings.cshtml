@@ -5,7 +5,6 @@
 @using Res = ViewRes.Song.RankingsStrings
 
 @{
-	PageProperties.Title = BrandableStrings.Song.RankingsTitle;
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
 }
 

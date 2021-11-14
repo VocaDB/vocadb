@@ -133,12 +133,16 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Featured"));
 
+			PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;
+
 			return View(viewModel);
 		}
 
 		[Authorize]
 		public ActionResult Import()
 		{
+			PageProperties.Title = Resources.Views.SongList.ImportStrings.Title;
+
 			return View();
 		}
 

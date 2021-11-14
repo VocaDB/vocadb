@@ -4,7 +4,6 @@
 @model VocaDb.Model.DataContracts.Users.UserBaseContract
 
 @{
-	PageProperties.Title = "Entry edits - " + Model.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Users", "Index"),
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })

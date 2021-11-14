@@ -4,7 +4,6 @@
 @model VocaDb.Web.Models.User.FavoriteSongs
 
 @{
-	PageProperties.Title = "Songs rated by " + Model.User.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
 	};

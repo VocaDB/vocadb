@@ -30,12 +30,23 @@ namespace VocaDb.Web.Controllers
 			ViewBag.FreeTagId = _config.SpecialTags.Free;
 			ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
 
-			return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
+			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
 			{
-				"ja" => View("Index.ja"),
-				"zh" => View("Index.zh-Hans"),
-				_ => View(),
-			};
+				case "ja":
+					PageProperties.Title = "サポート / DBについて";
+
+					return View("Index.ja");
+
+				case "zh":
+					PageProperties.Title = "Help / About";
+
+					return View("Index.zh-Hans");
+
+				default:
+					PageProperties.Title = "Help / About";
+
+					return View();
+			}
 		}
 	}
 }

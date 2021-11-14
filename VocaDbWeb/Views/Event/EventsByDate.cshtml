@@ -2,8 +2,6 @@
 @model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]
 
 @{
-	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
-
 	var byYear = Model.Where(e => e.Date != null).GroupBy(e => e.Date.Value.Year).ToArray();
 
 }
