@@ -170,10 +170,10 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, string title, string seriesName)
+		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, string title, string seriesName, DateTime? cutoff)
 			where T : class, IDatabaseObject
 		{
-			var values = GetTopValues(func);
+			var values = GetTopValues(func, cutoff);
 
 			var categories = values.Select(p => p.Name[_permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
@@ -231,10 +231,11 @@ namespace VocaDb.Web.Controllers
 		}
 
 #nullable enable
-		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func)
+		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, DateTime? cutoff)
 			where T : class, IDatabaseObject
 		{
-			var name = $"{ControllerContext.RouteData.Values["action"]}_{ControllerContext.RouteData.Values["cutoff"]}";
+			// Clients are supposed to send UTC time, so we don't need to consider time zones.
+			var name = $"{ControllerContext.RouteData.Values["action"]}_{cutoff?.Date}";
 			return _cache.GetOrInsert(
 				key: $"report_{name}",
 				cacheItemPolicy: new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default },
@@ -342,7 +343,8 @@ namespace VocaDb.Web.Controllers
 						EntryId = a.Id
 					}),
 				title: "Albums by producer",
-				seriesName: "Songs"
+				seriesName: "Songs",
+				cutoff: null
 			);
 		}
 
@@ -372,7 +374,8 @@ namespace VocaDb.Web.Controllers
 							.Count(s => !s.IsSupport && !s.Album.Deleted)
 					}),
 				title: "Albums by Vocaloid/UTAU",
-				seriesName: "Songs"
+				seriesName: "Songs",
+				cutoff: cutoff
 			);
 		}
 
@@ -464,7 +467,8 @@ namespace VocaDb.Web.Controllers
 						Value = a.Count(),
 					}),
 				title: "Edits per user",
-				seriesName: "User"
+				seriesName: "User",
+				cutoff: cutoff
 			);
 		}
 
@@ -583,7 +587,8 @@ namespace VocaDb.Web.Controllers
 							(s.Roles == ArtistRoles.Default || (s.Roles & producerRoles) != ArtistRoles.Default))
 					}),
 				title: "Original composed/arranged songs by producer",
-				seriesName: "Songs"
+				seriesName: "Songs",
+				cutoff: null
 			);
 		}
 
@@ -607,7 +612,8 @@ namespace VocaDb.Web.Controllers
 							.Count(s => !s.IsSupport && !s.Song.Deleted)
 					}),
 				title: "Songs by Vocaloid/UTAU",
-				seriesName: "Songs"
+				seriesName: "Songs",
+				cutoff: cutoff
 			);
 		}
 
@@ -674,7 +680,8 @@ namespace VocaDb.Web.Controllers
 						Value = a.Users.Count
 					}),
 				title: "Followers by producer",
-				seriesName: "Followers"
+				seriesName: "Followers",
+				cutoff: null
 			);
 		}
 
@@ -811,7 +818,8 @@ namespace VocaDb.Web.Controllers
 						Value = u.Count(),
 					}).AsQueryable(),
 				title: "Users per language",
-				seriesName: "Users"
+				seriesName: "Users",
+				cutoff: null
 			);
 		}
 
