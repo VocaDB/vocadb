@@ -111,6 +111,7 @@ namespace VocaDb.Web.Controllers
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage(title, pointsTitle, yAxisTitle, points, average));
 		}
 
+#nullable enable
 		private ActionResult SimpleBarChart(string title, string seriesName, IList<string> categories, IList<int> data)
 		{
 			Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
@@ -136,7 +137,7 @@ namespace VocaDb.Web.Controllers
 					categories,
 					title = new
 					{
-						text = (string)null
+						text = (string?)null
 					}
 				},
 				yAxis = new
@@ -179,6 +180,7 @@ namespace VocaDb.Web.Controllers
 
 			return SimpleBarChart(title, seriesName, categories, data);
 		}
+#nullable disable
 
 		private ActionResult SimplePieChart(string title, string seriesName, ICollection<Tuple<string, int>> points)
 		{
@@ -228,6 +230,7 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
+#nullable enable
 		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func)
 			where T : class, IDatabaseObject
 		{
@@ -248,6 +251,7 @@ namespace VocaDb.Web.Controllers
 				}
 			);
 		}
+#nullable disable
 
 		private readonly IUserPermissionContext _permissionContext;
 		private readonly IUserRepository _userRepository;
