@@ -111,6 +111,7 @@ namespace VocaDb.Web.Controllers
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage(title, pointsTitle, yAxisTitle, points, average));
 		}
 
+#nullable enable
 		private ActionResult SimpleBarChart(string title, string seriesName, IList<string> categories, IList<int> data)
 		{
 			Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
@@ -136,7 +137,7 @@ namespace VocaDb.Web.Controllers
 					categories,
 					title = new
 					{
-						text = (string)null
+						text = (string?)null
 					}
 				},
 				yAxis = new
@@ -169,16 +170,17 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, string title, string seriesName)
+		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, string title, string seriesName, DateTime? cutoff)
 			where T : class, IDatabaseObject
 		{
-			var values = GetTopValues(func);
+			var values = GetTopValues(func, cutoff);
 
 			var categories = values.Select(p => p.Name[_permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
 
 			return SimpleBarChart(title, seriesName, categories, data);
 		}
+#nullable disable
 
 		private ActionResult SimplePieChart(string title, string seriesName, ICollection<Tuple<string, int>> points)
 		{
@@ -228,22 +230,29 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func)
+#nullable enable
+		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func, DateTime? cutoff)
 			where T : class, IDatabaseObject
 		{
-			var name = $"{ControllerContext.RouteData.Values["action"]}_{ControllerContext.RouteData.Values["cutoff"]}";
-			return _cache.GetOrInsert($"report_{name}", new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default }, () =>
-			{
-				var data = _userRepository.HandleQuery(ctx =>
+			// Clients are supposed to send UTC time, so we don't need to consider time zones.
+			var name = $"{ControllerContext.RouteData.Values["action"]}_{cutoff?.Date}";
+			return _cache.GetOrInsert(
+				key: $"report_{name}",
+				cacheItemPolicy: new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default },
+				() =>
 				{
-					return func(ctx.OfType<T>().Query())
-						.OrderByDescending(a => a.Value)
-						.Take(25)
-						.ToArray();
-				});
-				return data;
-			});
+					var data = _userRepository.HandleQuery(ctx =>
+					{
+						return func(ctx.OfType<T>().Query())
+							.OrderByDescending(a => a.Value)
+							.Take(25)
+							.ToArray();
+					});
+					return data;
+				}
+			);
 		}
+#nullable disable
 
 		private readonly IUserPermissionContext _permissionContext;
 		private readonly IUserRepository _userRepository;
@@ -318,7 +327,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult AlbumsPerProducer()
 		{
-			return SimpleBarChart<Artist>(q => q
+			return SimpleBarChart<Artist>(
+				q => q
 					.Where(a => a.ArtistType == ArtistType.Producer)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
@@ -331,14 +341,19 @@ namespace VocaDb.Web.Controllers
 						},
 						Value = a.AllAlbums.Count(s => !s.IsSupport && !s.Album.Deleted && s.Album.DiscType != DiscType.Compilation),
 						EntryId = a.Id
-					}), "Albums by producer", "Songs");
+					}),
+				title: "Albums by producer",
+				seriesName: "Songs",
+				cutoff: null
+			);
 		}
 
 		public ActionResult AlbumsPerVocaloid(DateTime? cutoff)
 		{
 			Expression<Func<ArtistForAlbum, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Album.CreateDate >= cutoff : true);
 
-			return SimpleBarChart<Artist>(q => q
+			return SimpleBarChart<Artist>(
+				q => q
 					.Where(a =>
 						a.ArtistType == ArtistType.Vocaloid ||
 						a.ArtistType == ArtistType.UTAU ||
@@ -357,7 +372,11 @@ namespace VocaDb.Web.Controllers
 						Value = a.AllAlbums
 							.AsQueryable().Where(dateFilter)
 							.Count(s => !s.IsSupport && !s.Album.Deleted)
-					}), "Albums by Vocaloid/UTAU", "Songs");
+					}),
+				title: "Albums by Vocaloid/UTAU",
+				seriesName: "Songs",
+				cutoff: cutoff
+			);
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec)]
@@ -434,9 +453,8 @@ namespace VocaDb.Web.Controllers
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
 		public ActionResult EditsPerUser(DateTime? cutoff)
 		{
-			return SimpleBarChart<ActivityEntry>(q =>
-			{
-				return q
+			return SimpleBarChart<ActivityEntry>(
+				q => q
 					.FilterIfNotNull(cutoff, a => a.CreateDate >= cutoff.Value)
 					.GroupBy(a => a.Author.Name)
 					.Select(a => new StatsQueries.LocalizedValue
@@ -447,8 +465,11 @@ namespace VocaDb.Web.Controllers
 							Japanese = a.Key
 						},
 						Value = a.Count(),
-					});
-			}, "Edits per user", "User");
+					}),
+				title: "Edits per user",
+				seriesName: "User",
+				cutoff: cutoff
+			);
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
@@ -547,7 +568,8 @@ namespace VocaDb.Web.Controllers
 		{
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 
-			return SimpleBarChart<Artist>(q => q
+			return SimpleBarChart<Artist>(
+				q => q
 					.Where(a => a.ArtistType == ArtistType.Producer)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
@@ -563,14 +585,19 @@ namespace VocaDb.Web.Controllers
 							!s.Song.Deleted &&
 							s.Song.SongType == SongType.Original &&
 							(s.Roles == ArtistRoles.Default || (s.Roles & producerRoles) != ArtistRoles.Default))
-					}), "Original composed/arranged songs by producer", "Songs");
+					}),
+				title: "Original composed/arranged songs by producer",
+				seriesName: "Songs",
+				cutoff: null
+			);
 		}
 
 		public ActionResult SongsPerVocaloid(DateTime? cutoff)
 		{
 			Expression<Func<ArtistForSong, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Song.CreateDate >= cutoff : true);
 
-			return SimpleBarChart<Artist>(q => q
+			return SimpleBarChart<Artist>(
+				q => q
 					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite || a.ArtistType == ArtistType.SynthesizerV)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
@@ -583,7 +610,11 @@ namespace VocaDb.Web.Controllers
 						},
 						Value = a.AllSongs.AsQueryable().Where(dateFilter)
 							.Count(s => !s.IsSupport && !s.Song.Deleted)
-					}), "Songs by Vocaloid/UTAU", "Songs");
+					}),
+				title: "Songs by Vocaloid/UTAU",
+				seriesName: "Songs",
+				cutoff: cutoff
+			);
 		}
 
 		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
@@ -634,7 +665,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult FollowersPerProducer()
 		{
-			return SimpleBarChart<Artist>(q => q
+			return SimpleBarChart<Artist>(
+				q => q
 					.Where(a => a.ArtistType == ArtistType.Producer)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
@@ -646,7 +678,11 @@ namespace VocaDb.Web.Controllers
 							Japanese = a.Names.SortNames.Japanese,
 						},
 						Value = a.Users.Count
-					}), "Followers by producer", "Followers");
+					}),
+				title: "Followers by producer",
+				seriesName: "Followers",
+				cutoff: null
+			);
 		}
 
 		public ActionResult HitsPerAlbum(DateTime? cutoff)
@@ -771,7 +807,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UsersPerLanguage()
 		{
-			return SimpleBarChart<UserKnownLanguage>(q => q
+			return SimpleBarChart<UserKnownLanguage>(
+				q => q
 					.Where(u => u.CultureCode.CultureCode != null && u.CultureCode.CultureCode != string.Empty)
 					.GroupBy(u => u.CultureCode)
 					.ToArray()
@@ -780,7 +817,10 @@ namespace VocaDb.Web.Controllers
 						Name = TranslatedString.Create(u.Key.CultureInfo.Name),
 						Value = u.Count(),
 					}).AsQueryable(),
-				"Users per language", "Users");
+				title: "Users per language",
+				seriesName: "Users",
+				cutoff: null
+			);
 		}
 
 		public ActionResult Index()
