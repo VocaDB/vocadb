@@ -48,7 +48,14 @@ namespace VocaDb.Tests.Web.Controllers
 				new EntrySubTypeNameFactory(),
 				new FakeFollowedArtistNotifier(),
 				new FakeDiscordWebhookNotifier());
-			_controller = new SongController(null, queries, null, null, null);
+			_controller = new SongController(
+				service: null,
+				queries: queries,
+				songListQueries: null,
+				markdownParser: null,
+				pvHelper: null,
+				brandableStringsManager: null
+			);
 		}
 
 		[TestMethod]
