@@ -12,10 +12,9 @@ import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
 import ReactGA from 'react-ga';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import ScrollToTop from './ScrollToTop';
-import './i18n';
 
 const ActivityEntryRoutes = React.lazy(
 	() => import('@Components/ActivityEntry/ActivityEntryRoutes'),
@@ -53,7 +52,7 @@ const App = (): React.ReactElement => {
 	}, []);
 
 	return (
-		<BrowserRouter>
+		<>
 			<ScrollToTop />
 
 			<Navbar className="navbar-inverse" fixed="top">
@@ -91,7 +90,7 @@ const App = (): React.ReactElement => {
 			</Container>
 
 			<Footer />
-		</BrowserRouter>
+		</>
 	);
 };
 
