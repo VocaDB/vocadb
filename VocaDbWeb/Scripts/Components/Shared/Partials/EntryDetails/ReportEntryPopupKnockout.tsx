@@ -1,3 +1,4 @@
+import { showSuccessMessage } from '@Components/ui';
 import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
 import ReportEntryStore, { IEntryReportType } from '@Stores/ReportEntryStore';
 import { runInAction } from 'mobx';
@@ -15,7 +16,7 @@ const ReportEntryPopupKnockout = observer(
 		reportEntryStore,
 		reportTypes,
 	}: ReportEntryPopupKnockoutProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes']);
+		const { t } = useTranslation(['AjaxRes', 'ViewRes']);
 
 		React.useEffect(() => {
 			runInAction(() => {
@@ -34,7 +35,7 @@ const ReportEntryPopupKnockout = observer(
 						click: async (): Promise<void> => {
 							await reportEntryStore.send();
 
-							// TODO: showSuccessMessage
+							showSuccessMessage(t('AjaxRes:Shared.ReportSent'));
 						},
 						disabled: !reportEntryStore.isValid,
 					},

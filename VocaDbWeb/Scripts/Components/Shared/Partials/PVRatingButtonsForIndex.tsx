@@ -1,4 +1,5 @@
 import Button from '@Bootstrap/Button';
+import { showSuccessMessage } from '@Components/ui';
 import LoginManager from '@Models/LoginManager';
 import SongVoteRating from '@Models/SongVoteRating';
 import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
@@ -17,7 +18,7 @@ const PVRatingButtonsForIndex = observer(
 	({
 		pvRatingButtonsStore,
 	}: PVRatingButtonsForIndexProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+		const { t } = useTranslation(['AjaxRes', 'Resources', 'ViewRes.Song']);
 
 		return loginManager.isLoggedIn ? (
 			<div className="pull-right">
@@ -60,7 +61,7 @@ const PVRatingButtonsForIndex = observer(
 							onClick={async (): Promise<void> => {
 								await pvRatingButtonsStore.setRating_like();
 
-								// TODO: showThankYouForRatingMessage
+								showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 							}}
 							href="#"
 							className={classNames(
@@ -74,7 +75,7 @@ const PVRatingButtonsForIndex = observer(
 							onClick={async (): Promise<void> => {
 								await pvRatingButtonsStore.setRating_favorite();
 
-								// TODO: showThankYouForRatingMessage
+								showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 							}}
 							href="#"
 							className={classNames(

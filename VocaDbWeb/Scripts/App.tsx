@@ -12,6 +12,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
 import ReactGA from 'react-ga';
+import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 
 import ScrollToTop from './ScrollToTop';
@@ -94,6 +95,8 @@ const App = (): React.ReactElement => {
 			</Container>
 
 			<Footer />
+
+			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 		</>
 	);
 };
