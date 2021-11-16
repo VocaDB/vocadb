@@ -67,7 +67,8 @@ namespace VocaDb.Model.Database.Queries
 			Expression<Func<TUsage, bool>> whereExpression,
 			Expression<Func<TUsage, TSort>> createDateExpression,
 			Expression<Func<TUsage, TEntry>> selectExpression,
-			int maxCount = 12)
+			int maxCount = 12
+		)
 			where TUsage : TagUsage
 		{
 			var q = TagUsagesQuery<TUsage>(ctx, tagId)
@@ -93,7 +94,8 @@ namespace VocaDb.Model.Database.Queries
 			IDatabaseContext<Tag> ctx, int tagId,
 			EntryType entryType,
 			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression,
-			int maxCount = 12)
+			int maxCount = 12
+		)
 			where TEntry : class, IEntryBase, IEntryWithTags<TUsage>
 			where TUsage : TagUsage
 			where TSubType : struct, Enum
@@ -178,7 +180,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations,
 			ObjectCache cache,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -307,8 +310,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields,
-			ContentLanguagePreference lang)
+		public PartialFindResult<TagForApiContract> Find(
+			TagQueryParams queryParams,
+			TagOptionalFields optionalFields,
+			ContentLanguagePreference lang
+		)
 		{
 			return Find(tag => new TagForApiContract(
 				tag, _thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
@@ -384,7 +390,7 @@ namespace VocaDb.Model.Database.Queries
 		private async Task<TagStatsForApiContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
 		{
 			var key = $"TagQueries.GetStats.{tagId}.{LanguagePreference}";
-			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
+			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(hours: 1), async () =>
 			{
 				var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
