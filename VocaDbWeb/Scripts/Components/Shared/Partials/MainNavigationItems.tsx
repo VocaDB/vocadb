@@ -89,7 +89,7 @@ const MainNavigationItems = React.memo(
 					</Link>
 					<ul>
 						<li>
-							<a href={'/Event'}>{t('ViewRes:Layout.UpcomingEvents')}</a>
+							<Link to="/Event">{t('ViewRes:Layout.UpcomingEvents')}</Link>
 						</li>
 					</ul>
 				</li>

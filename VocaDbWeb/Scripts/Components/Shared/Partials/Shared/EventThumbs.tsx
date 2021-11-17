@@ -17,12 +17,12 @@ const getCategory = (event: ReleaseEventContract): string => {
 
 interface EventThumbsProps {
 	events: ReleaseEventContract[];
-	imageSize: ImageSize;
+	imageSize?: ImageSize;
 }
 
 const EventThumbs = ({
 	events,
-	imageSize,
+	imageSize = ImageSize.SmallThumb,
 }: EventThumbsProps): React.ReactElement => {
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
 

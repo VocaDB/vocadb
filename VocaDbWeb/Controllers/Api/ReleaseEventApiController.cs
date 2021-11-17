@@ -141,8 +141,9 @@ namespace VocaDb.Web.Controllers.Api
 			bool getTotalCount = false,
 			EventSortRule sort = EventSortRule.Name,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			SortDirection? sortDirection = null
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new EventQueryParams
@@ -160,7 +161,8 @@ namespace VocaDb.Web.Controllers.Api
 				TagIds = tagId,
 				EntryStatus = status,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
-				SortRule = sort
+				SortRule = sort,
+				SortDirection = sortDirection,
 			};
 
 			return _queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, _thumbPersister), queryParams);

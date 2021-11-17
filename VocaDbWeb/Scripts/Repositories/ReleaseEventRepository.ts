@@ -103,6 +103,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 			nameMatchMode: NameMatchMode[nameMatchMode],
 			lang: queryParams.lang,
 			sort: queryParams.sort,
+			sortDirection: queryParams.sortDirection,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<ReleaseEventContract>>(
@@ -176,6 +177,8 @@ export interface EventQueryParams extends CommonQueryParams {
 	includeMembers?: boolean;
 
 	sort?: string;
+
+	sortDirection?: 'Ascending' | 'Descending';
 
 	status?: string;
 

@@ -24,6 +24,7 @@ const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
 );
+const EventRoutes = React.lazy(() => import('@Components/Event/EventRoutes'));
 const SearchRoutes = React.lazy(
 	() => import('@Components/Search/SearchRoutes'),
 );
@@ -77,6 +78,7 @@ const App = (): React.ReactElement => {
 								/>
 								<Route path="Admin/*" element={<AdminRoutes />} />
 								<Route path="discussion/*" element={<DiscussionRoutes />} />
+								<Route path="Event/*" element={<EventRoutes />} />
 								<Route path="Search/*" element={<SearchRoutes />} />
 								<Route path="SongList/*" element={<SongListRoutes />} />
 								<Route path="Song/*" element={<SongRoutes />} />
