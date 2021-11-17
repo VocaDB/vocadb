@@ -7,8 +7,13 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public sealed record TagCategoryForApiContract
 	{
+		/// <summary>
+		/// PERF: This is a subset of the <see cref="Tags.TagForApiContract" /> class with minimal properties.
+		/// </summary>
+		[DataContract(Namespace = Schemas.VocaDb)]
 		public sealed record TagForApiContract
 		{
 			/// <summary>
@@ -35,8 +40,10 @@ namespace VocaDb.Model.DataContracts.Tags
 			}
 		}
 
+		[DataMember]
 		public string Name { get; init; }
 
+		[DataMember]
 		public TagForApiContract[] Tags { get; init; }
 
 		public TagCategoryForApiContract(string name, ContentLanguagePreference languagePreference, IEnumerable<Tag> tags)
