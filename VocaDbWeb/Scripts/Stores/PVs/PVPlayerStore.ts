@@ -83,16 +83,10 @@ export default class PVPlayerStore {
 					.getSongRating({ userId: values.loggedUserId, songId: song.song.id })
 					.then((rating) => {
 						runInAction(() => {
-							this.ratingButtonsStore = new PVRatingButtonsStore(
-								userRepo,
-								{
-									id: song.song.id,
-									vote: rating,
-								},
-								() => {
-									/* TODO: showThankYouForRatingMessage */
-								},
-							);
+							this.ratingButtonsStore = new PVRatingButtonsStore(userRepo, {
+								id: song.song.id,
+								vote: rating,
+							});
 						});
 					});
 

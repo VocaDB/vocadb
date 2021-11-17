@@ -1,4 +1,5 @@
 import Button from '@Bootstrap/Button';
+import { showSuccessMessage } from '@Components/ui';
 import LoginManager from '@Models/LoginManager';
 import SongVoteRating from '@Models/SongVoteRating';
 import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
@@ -17,7 +18,7 @@ const PVRatingButtonsForIndex = observer(
 	({
 		pvRatingButtonsStore,
 	}: PVRatingButtonsForIndexProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+		const { t } = useTranslation(['AjaxRes', 'Resources', 'ViewRes.Song']);
 
 		return loginManager.isLoggedIn ? (
 			<div className="pull-right">
@@ -57,7 +58,11 @@ const PVRatingButtonsForIndex = observer(
 				) : (
 					<span className="pull-right">
 						<Button
-							onClick={pvRatingButtonsStore.setRating_like}
+							onClick={async (): Promise<void> => {
+								await pvRatingButtonsStore.setRating_like();
+
+								showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
+							}}
 							href="#"
 							className={classNames(
 								'btn-rateSong-like',
@@ -67,7 +72,11 @@ const PVRatingButtonsForIndex = observer(
 							{t('ViewRes.Song:Details.Like')}
 						</Button>{' '}
 						<Button
-							onClick={pvRatingButtonsStore.setRating_favorite}
+							onClick={async (): Promise<void> => {
+								await pvRatingButtonsStore.setRating_favorite();
+
+								showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
+							}}
 							href="#"
 							className={classNames(
 								'btn-rateSong-favorite',

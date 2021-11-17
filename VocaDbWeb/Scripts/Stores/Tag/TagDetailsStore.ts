@@ -37,14 +37,12 @@ export default class TagDetailsStore {
 		);
 
 		this.reportStore = new ReportEntryStore((reportType, notes) => {
-			tagRepo.createReport({
+			return tagRepo.createReport({
 				entryId: tagId,
 				reportType: reportType,
 				notes: notes,
 				versionNumber: undefined,
 			});
-
-			// TODO: showSuccessMessage
 		});
 
 		this.description = new EnglishTranslatedStringStore(

@@ -558,12 +558,12 @@ const SongListDetailsLayout = observer(
 														{item.song.tags.map((tag, index) => (
 															<React.Fragment key={tag.tag.id}>
 																{index > 0 && ', '}
-																<a
-																	href={songListStore.mapTagUrl(tag)}
+																<Link
+																	to={songListStore.mapTagUrl(tag)}
 																	title={tag.tag.additionalNames}
 																>
 																	{tag.tag.name}
-																</a>
+																</Link>
 															</React.Fragment>
 														))}
 													</div>

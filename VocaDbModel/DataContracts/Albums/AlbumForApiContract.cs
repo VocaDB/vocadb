@@ -28,7 +28,8 @@ namespace VocaDb.Model.DataContracts.Albums
 			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
-			SongOptionalFields songFields = SongOptionalFields.None) :
+			SongOptionalFields songFields = SongOptionalFields.None
+		) :
 			this(album, null, languagePreference, thumbPersister, fields, songFields)
 		{ }
 
@@ -37,7 +38,8 @@ namespace VocaDb.Model.DataContracts.Albums
 			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
-			SongOptionalFields songFields)
+			SongOptionalFields songFields
+		)
 		{
 			ArtistString = album.ArtistString[languagePreference];
 			CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
@@ -181,8 +183,10 @@ namespace VocaDb.Model.DataContracts.Albums
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumIdentifierContract[] Identifiers { get; init; }
 
+#nullable enable
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// Id of the entry this entry was merged to, if any.

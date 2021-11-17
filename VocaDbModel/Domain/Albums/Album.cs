@@ -176,11 +176,13 @@ namespace VocaDb.Model.Domain.Albums
 		/// </summary>
 		public virtual PictureData CoverPictureData { get; set; }
 
+#nullable enable
 		/// <summary>
 		/// Album cover picture (main picture) MIME.
 		/// Can be null if there is no picture.
 		/// </summary>
-		public virtual string CoverPictureMime { get; set; }
+		public virtual string? CoverPictureMime { get; set; }
+#nullable disable
 
 		public virtual DateTime CreateDate { get; set; }
 

@@ -67,7 +67,8 @@ namespace VocaDb.Model.Database.Queries
 			Expression<Func<TUsage, bool>> whereExpression,
 			Expression<Func<TUsage, TSort>> createDateExpression,
 			Expression<Func<TUsage, TEntry>> selectExpression,
-			int maxCount = 12)
+			int maxCount = 12
+		)
 			where TUsage : TagUsage
 		{
 			var q = TagUsagesQuery<TUsage>(ctx, tagId)
@@ -93,7 +94,8 @@ namespace VocaDb.Model.Database.Queries
 			IDatabaseContext<Tag> ctx, int tagId,
 			EntryType entryType,
 			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression,
-			int maxCount = 12)
+			int maxCount = 12
+		)
 			where TEntry : class, IEntryBase, IEntryWithTags<TUsage>
 			where TUsage : TagUsage
 			where TSubType : struct, Enum
@@ -178,7 +180,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations,
 			ObjectCache cache,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -307,8 +310,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields,
-			ContentLanguagePreference lang)
+		public PartialFindResult<TagForApiContract> Find(
+			TagQueryParams queryParams,
+			TagOptionalFields optionalFields,
+			ContentLanguagePreference lang
+		)
 		{
 			return Find(tag => new TagForApiContract(
 				tag, _thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
@@ -381,10 +387,10 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => Comments(ctx).GetAll(tagId));
 		}
 
-		private async Task<TagStatsContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
+		private async Task<TagStatsForApiContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
 		{
 			var key = $"TagQueries.GetStats.{tagId}.{LanguagePreference}";
-			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
+			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(hours: 1), async () =>
 			{
 				var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
@@ -398,20 +404,29 @@ namespace VocaDb.Model.Database.Queries
 					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var followerCount = await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId).VdbCountAsync();
 
-				var stats = new TagStatsContract(LanguagePreference, _thumbStore,
-					artists.TopUsages, artists.TotalCount,
-					albums.TopUsages, albums.TotalCount,
-					songLists.TopUsages, songLists.TotalCount,
-					songs.TopUsages, songs.TotalCount,
-					eventSeries.TopUsages, eventSeries.TotalCount,
-					events.TopUsages, events.TotalCount,
-					followerCount);
+				var stats = new TagStatsForApiContract(
+					languagePreference: LanguagePreference,
+					thumbStore: _thumbStore,
+					artists: artists.TopUsages,
+					artistCount: artists.TotalCount,
+					albums: albums.TopUsages,
+					albumCount: albums.TotalCount,
+					songLists: songLists.TopUsages,
+					songListCount: songLists.TotalCount,
+					songs: songs.TopUsages,
+					songCount: songs.TotalCount,
+					eventSeries: eventSeries.TopUsages,
+					eventSeriesCount: eventSeries.TotalCount,
+					events: events.TopUsages,
+					eventCount: events.TotalCount,
+					followerCount: followerCount
+				);
 
 				return stats;
 			});
 		}
 
-		public async Task<TagDetailsContract> GetDetailsAsync(int tagId)
+		public async Task<TagDetailsForApiContract> GetDetailsAsync(int tagId)
 		{
 			return await _repository.HandleQueryAsync(async ctx =>
 			{
@@ -424,15 +439,16 @@ namespace VocaDb.Model.Database.Queries
 				var commentCount = await Comments(ctx).GetCountAsync(tag.Id);
 				var isFollowing = _permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId && t.User.Id == _permissionContext.LoggedUserId).VdbAnyAsync());
 
-				return new TagDetailsContract(tag,
-					stats,
-					LanguagePreference)
-				{
-					CommentCount = commentCount,
-					LatestComments = latestComments,
-					IsFollowing = isFollowing,
-					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
-				};
+				return new TagDetailsForApiContract(
+					tag: tag,
+					stats: stats,
+					languagePreference: LanguagePreference,
+					commentCount: commentCount,
+					latestComments: latestComments,
+					isFollowing: isFollowing,
+					relatedEntryType: entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType(),
+					thumbPersister: _thumbStore
+				);
 			});
 		}
 
@@ -489,9 +505,8 @@ namespace VocaDb.Model.Database.Queries
 				return fac(tag);
 			});
 		}
-#nullable disable
 
-		public TagCategoryContract[] GetTagsByCategories()
+		public TagCategoryForApiContract[] GetTagsByCategories()
 		{
 			return HandleQuery(ctx =>
 			{
@@ -509,13 +524,14 @@ namespace VocaDb.Model.Database.Queries
 					new[] { genres }
 					.Concat(tags.Except(new[] { genres, empty }))
 					.Concat(new[] { empty })
-					.Where(t => t != null)
-					.Select(t => new TagCategoryContract(t.Key, LanguagePreference, t))
+					.WhereNotNull()
+					.Select(t => new TagCategoryForApiContract(t.Key, LanguagePreference, t))
 					.ToArray();
 
 				return tagsByCategories;
 			});
 		}
+#nullable disable
 
 		/// <summary>
 		/// Loads a tag which might not exist.

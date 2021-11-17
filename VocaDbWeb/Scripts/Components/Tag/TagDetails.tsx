@@ -374,7 +374,7 @@ const TagDetailsLayout = observer(
 				// TODO: canonicalUrl
 				parents={
 					<>
-						<Breadcrumb.Item linkAs="a" href="/Tag">
+						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Tag' }}>
 							{t('ViewRes:Shared.Tags')}
 						</Breadcrumb.Item>
 					</>

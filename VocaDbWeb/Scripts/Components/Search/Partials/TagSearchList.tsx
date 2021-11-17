@@ -10,6 +10,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface TagSearchListProps {
 	tagSearchStore: TagSearchStore;
@@ -76,8 +77,8 @@ const TagSearchList = observer(
 							<tr key={tag.id}>
 								<td style={{ width: '80px' }}>
 									{tag.mainPicture && tag.mainPicture.urlSmallThumb && (
-										<a
-											href={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}
+										<Link
+											to={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}
 											title={tag.additionalNames}
 										>
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -86,13 +87,13 @@ const TagSearchList = observer(
 												title="Cover picture" /* TODO: localize */
 												className="coverPicThumb img-rounded"
 											/>
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>
-									<a href={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}>
+									<Link to={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}>
 										{tag.name}
-									</a>{' '}
+									</Link>{' '}
 									<DraftIcon
 										status={EntryStatus[tag.status as keyof typeof EntryStatus]}
 									/>

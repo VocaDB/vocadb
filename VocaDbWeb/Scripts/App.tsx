@@ -12,6 +12,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
 import ReactGA from 'react-ga';
+import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 
 import ScrollToTop from './ScrollToTop';
@@ -31,11 +32,13 @@ const SongListRoutes = React.lazy(
 );
 const SongRoutes = React.lazy(() => import('@Components/Song/SongRoutes'));
 const StatsRoutes = React.lazy(() => import('@Components/Stats/StatsRoutes'));
+const TagRoutes = React.lazy(() => import('@Components/Tag/TagRoutes'));
 const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 
 const SongListDetails = React.lazy(
 	() => import('@Components/SongList/SongListDetails'),
 );
+const TagDetails = React.lazy(() => import('@Components/Tag/TagDetails'));
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -78,9 +81,11 @@ const App = (): React.ReactElement => {
 								<Route path="SongList/*" element={<SongListRoutes />} />
 								<Route path="Song/*" element={<SongRoutes />} />
 								<Route path="Stats/*" element={<StatsRoutes />} />
+								<Route path="Tag/*" element={<TagRoutes />} />
 								<Route path="User/*" element={<UserRoutes />} />
 
 								<Route path="L/:id" element={<SongListDetails />} />
+								<Route path="T/:id/*" element={<TagDetails />} />
 
 								<Route path="*" element={<ErrorNotFound />} />
 							</Routes>
@@ -90,6 +95,8 @@ const App = (): React.ReactElement => {
 			</Container>
 
 			<Footer />
+
+			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 		</>
 	);
 };

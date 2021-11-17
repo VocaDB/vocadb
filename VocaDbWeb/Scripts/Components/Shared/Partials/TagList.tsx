@@ -7,6 +7,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface LinkListProps {
 	tagUsages: TagUsageForApiContract[];
@@ -22,8 +23,8 @@ const LinkList = React.memo(
 						<li className="link-item">
 							<span>
 								<TagToolTip
-									as="a"
-									href={EntryUrlMapper.details_tag(
+									as={Link}
+									to={EntryUrlMapper.details_tag(
 										tagUsage.tag.id,
 										tagUsage.tag.urlSlug,
 									)}
