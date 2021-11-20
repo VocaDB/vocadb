@@ -266,22 +266,9 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index()
 		{
-			var queryParams = new EventQueryParams
-			{
-				AfterDate = DateTime.Now.AddDays(-2),
-				Paging = new PagingProperties(0, 15, false),
-				SortRule = EventSortRule.Date,
-				SortDirection = SortDirection.Ascending
-			};
-
-			var events = _queries.Find(e =>
-				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference,
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, _thumbPersister),
-				queryParams);
-
 			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-			return View(events.Items);
+			return View("React/Index");
 		}
 
 		[Authorize]
