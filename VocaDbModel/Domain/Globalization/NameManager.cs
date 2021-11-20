@@ -154,6 +154,7 @@ namespace VocaDb.Model.Domain.Globalization
 			return name != null ? name.Value : null;
 		}
 
+#nullable enable
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference)
 		{
 			var display = SortNames[languagePreference];
@@ -164,6 +165,7 @@ namespace VocaDb.Model.Domain.Globalization
 			else
 				return string.Join(", ", different);
 		}
+#nullable disable
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{

@@ -131,10 +131,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
+#nullable enable
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
 		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
+#nullable disable
 
 		public virtual int Version { get; set; }
 

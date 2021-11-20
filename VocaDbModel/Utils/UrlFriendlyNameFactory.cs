@@ -38,6 +38,7 @@ namespace VocaDb.Model.Utils
 			return GetUrlFriendlyName(raw);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Gets an URL-friendly name from translated name.
 		/// The processed name can be used as user-friendly part of an URL.
@@ -46,7 +47,7 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		public static string GetUrlFriendlyName(TranslatedString translatedString)
 		{
-			string raw = null;
+			string? raw = null;
 
 			// Try English if English is the default language selection
 			if (translatedString.DefaultLanguage == ContentLanguageSelection.English)
@@ -67,7 +68,6 @@ namespace VocaDb.Model.Utils
 			return GetUrlFriendlyName(raw);
 		}
 
-#nullable enable
 		/// <summary>
 		/// Gets an URL-friendly name from any entry name.
 		/// The processed name can be used as user-friendly part of an URL.

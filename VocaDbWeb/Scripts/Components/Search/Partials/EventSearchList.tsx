@@ -14,6 +14,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const useCategoryName = (): ((event: ReleaseEventContract) => string) => {
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
@@ -198,15 +199,15 @@ const EventSearchList = observer(
 								</td>
 								<td>
 									{event.series && (
-										<a
-											href={EntryUrlMapper.details(
+										<Link
+											to={EntryUrlMapper.details(
 												EntryType.ReleaseEventSeries,
 												event.series.id,
 												event.series.urlSlug,
 											)}
 										>
 											{event.series.name}
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>

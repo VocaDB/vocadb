@@ -6,6 +6,7 @@ import ImageSize from '@Models/Images/ImageSize';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface EventSeriesThumbsProps {
 	events: EventSeriesContract[];
@@ -21,8 +22,8 @@ const EventSeriesThumbs = ({
 			{events.map((event) => (
 				<div className="well well-transparent event-teaser-tiny" key={event.id}>
 					{event.mainPicture && (
-						<a
-							href={EntryUrlMapper.details(
+						<Link
+							to={EntryUrlMapper.details(
 								EntryType.ReleaseEventSeries,
 								event.id,
 								event.urlSlug,
@@ -38,11 +39,11 @@ const EventSeriesThumbs = ({
 								)}
 								alt="Thumb" /* TODO: localize */
 							/>
-						</a>
+						</Link>
 					)}
 					<div>
-						<a
-							href={EntryUrlMapper.details(
+						<Link
+							to={EntryUrlMapper.details(
 								EntryType.ReleaseEventSeries,
 								event.id,
 								event.urlSlug,
@@ -50,7 +51,7 @@ const EventSeriesThumbs = ({
 							title={event.additionalNames}
 						>
 							{event.name}
-						</a>
+						</Link>
 						{event.category !== EventCategory[EventCategory.Unspecified] &&
 							event.category !== EventCategory[EventCategory.Other] && (
 								<>
