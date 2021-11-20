@@ -88,7 +88,7 @@ namespace VocaDb.Web.Controllers.Api
 #nullable enable
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public ReleaseEventSeriesDetailsForApiContract GetReleaseEventSeriesDetails(int id) => _queries.GetReleaseEventSeriesDetails(id);
+		public ReleaseEventSeriesDetailsForApiContract GetDetails(int id) => _queries.GetSeriesDetails(id);
 #nullable disable
 	}
 }

@@ -22,6 +22,7 @@ namespace VocaDb.Web.Helpers
 			return new VocaDbUrl(urlHelper.Content("~/Content/unknown.png"), UrlDomain.Main, System.UriKind.Relative);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Returns an URL to entry thumbnail image, or placeholder if no image if specified.
 		/// </summary>
@@ -29,10 +30,11 @@ namespace VocaDb.Web.Helpers
 		/// <param name="imageInfo">Image information. Cannot be null.</param>
 		/// <param name="size">Requested image size.</param>
 		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
-		public static string ImageThumb(this IUrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size)
+		public static string ImageThumb(this IUrlHelper urlHelper, EntryThumbForApiContract? imageInfo, ImageSize size)
 		{
 			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper).Url;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Returns an URL to entry thumbnail image.

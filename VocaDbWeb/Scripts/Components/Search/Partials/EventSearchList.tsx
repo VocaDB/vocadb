@@ -134,8 +134,8 @@ const EventSearchList = observer(
 							<tr key={event.id}>
 								<td style={{ width: '80px' }}>
 									{event.mainPicture && event.mainPicture.urlSmallThumb && (
-										<a
-											href={EntryUrlMapper.details(
+										<Link
+											to={EntryUrlMapper.details(
 												EntryType.ReleaseEvent,
 												event.id,
 												event.urlSlug,
@@ -149,12 +149,12 @@ const EventSearchList = observer(
 												className="coverPicThumb img-rounded"
 												referrerPolicy="same-origin"
 											/>
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>
-									<a
-										href={EntryUrlMapper.details(
+									<Link
+										to={EntryUrlMapper.details(
 											EntryType.ReleaseEvent,
 											event.id,
 											event.urlSlug,
@@ -162,7 +162,7 @@ const EventSearchList = observer(
 										title={event.additionalNames}
 									>
 										{event.name}
-									</a>{' '}
+									</Link>{' '}
 									<DraftIcon
 										status={
 											EntryStatus[event.status as keyof typeof EntryStatus]

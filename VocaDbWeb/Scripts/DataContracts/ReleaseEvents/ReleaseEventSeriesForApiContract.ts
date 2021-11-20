@@ -3,7 +3,11 @@ import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithI
 import WebLinkContract from '../WebLinkContract';
 
 export default interface ReleaseEventSeriesForApiContract {
+	additionalNames: string;
+
 	category: string;
+
+	description: string;
 
 	id: number;
 
@@ -12,6 +16,8 @@ export default interface ReleaseEventSeriesForApiContract {
 	name: string;
 
 	names?: LocalizedStringWithIdContract[];
+
+	urlSlug: string;
 
 	webLinks: WebLinkContract[];
 }

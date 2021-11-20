@@ -14,11 +14,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ReleaseEventSeriesForApiContract() { }
 
+#nullable enable
 		public ReleaseEventSeriesForApiContract(
 			ReleaseEventSeries series,
 			ContentLanguagePreference languagePreference,
 			ReleaseEventSeriesOptionalFields fields,
-			IAggregatedEntryImageUrlFactory thumbPersister
+			IAggregatedEntryImageUrlFactory? thumbPersister
 		)
 		{
 			Category = series.Category;
@@ -58,6 +59,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				WebLinks = series.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.

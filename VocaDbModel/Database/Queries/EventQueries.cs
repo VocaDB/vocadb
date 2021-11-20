@@ -211,7 +211,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public ReleaseEventDetailsContract GetDetails(int id)
+		public ReleaseEventDetailsForApiContract GetDetails(int id)
 		{
 			return HandleQuery(ctx =>
 			{
@@ -225,13 +225,21 @@ namespace VocaDb.Model.Database.Queries
 						.FirstOrDefault();
 				}
 
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, _userIconFactory,
-					new EntryTypeTags(ctx))
-				{
-					EventAssociationType = eventAssociation,
-					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
-						ctx, PermissionContext, _userIconFactory, _entryLinkFactory).GetList(id, 3)
-				};
+				return new ReleaseEventDetailsForApiContract(
+					releaseEvent: ctx.Load<ReleaseEvent>(id),
+					languagePreference: PermissionContext.LanguagePreference,
+					userContext: PermissionContext,
+					userIconFactory: _userIconFactory,
+					entryTypeTags: new EntryTypeTags(ctx),
+					eventAssociationType: eventAssociation,
+					latestComments: new CommentQueries<ReleaseEventComment, ReleaseEvent>(
+						ctx: ctx,
+						permissionContext: PermissionContext,
+						userIconFactory: _userIconFactory,
+						entryLinkFactory: _entryLinkFactory
+					).GetList(id, 3),
+					thumbPersister: _imageUrlFactory
+				);
 			});
 		}
 
@@ -855,7 +863,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public ReleaseEventSeriesDetailsForApiContract GetReleaseEventSeriesDetails(int id)
+		public ReleaseEventSeriesDetailsForApiContract GetSeriesDetails(int id)
 		{
 			return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(session.Load<ReleaseEventSeries>(id), LanguagePreference, _imageUrlFactory));
 		}

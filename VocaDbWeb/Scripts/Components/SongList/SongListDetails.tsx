@@ -267,15 +267,15 @@ const SongListDetailsLayout = observer(
 								<ul>
 									{songList.events.map((event) => (
 										<li key={event.id}>
-											<a
-												href={EntryUrlMapper.details(
+											<Link
+												to={EntryUrlMapper.details(
 													EntryType.ReleaseEvent,
 													event.id,
 													event.urlSlug,
 												)}
 											>
 												{event.name}
-											</a>{' '}
+											</Link>{' '}
 											<small>
 												(
 												{event.date ? (

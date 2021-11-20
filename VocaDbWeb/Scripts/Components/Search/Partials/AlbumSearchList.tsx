@@ -15,6 +15,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface AlbumSearchListProps {
 	albumSearchStore: AlbumSearchStore;
@@ -168,14 +169,14 @@ const AlbumSearchList = observer(
 										{album.releaseEvent && (
 											<span>
 												<br />
-												<a
-													href={EntryUrlMapper.details(
+												<Link
+													to={EntryUrlMapper.details(
 														EntryType.ReleaseEvent,
 														album.releaseEvent.id,
 													)}
 												>
 													{album.releaseEvent.name}
-												</a>
+												</Link>
 											</span>
 										)}
 									</td>

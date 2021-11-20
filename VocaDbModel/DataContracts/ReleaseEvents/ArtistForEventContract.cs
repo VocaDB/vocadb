@@ -25,10 +25,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Roles = artistForEvent.Roles;
 			EffectiveRoles = artistForEvent.Roles;
 		}
-#nullable disable
 
 		[DataMember]
-		public ArtistContract Artist { get; init; }
+		public ArtistContract? Artist { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -36,6 +35,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		[DataMember]
 		public int Id { get; init; }
+#nullable disable
 
 		[DataMember]
 		public string Name { get; init; }

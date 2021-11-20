@@ -7,14 +7,14 @@ import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconAndNameLinkKnockoutProps {
 	user: UserApiContract;
-	iconSize: number;
+	iconSize?: number;
 	className?: string;
 }
 
 const IconAndNameLinkKnockout = React.memo(
 	({
 		user,
-		iconSize,
+		iconSize = 20,
 		className,
 	}: IconAndNameLinkKnockoutProps): React.ReactElement => {
 		return (

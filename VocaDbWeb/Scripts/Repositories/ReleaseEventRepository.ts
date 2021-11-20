@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
@@ -158,7 +159,17 @@ export default class ReleaseEventRepository extends BaseRepository {
 		>(url, data);
 	};
 
-	public getReleaseEventSeriesDetails = ({
+	public getDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventDetailsContract> => {
+		return this.httpClient.get<ReleaseEventDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${id}/details`),
+		);
+	};
+
+	public getSeriesDetails = ({
 		id,
 	}: {
 		id: number;
