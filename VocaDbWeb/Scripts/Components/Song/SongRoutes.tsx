@@ -1,6 +1,6 @@
 import ErrorNotFound from '@Components/Error/ErrorNotFound';
 import React from 'react';
-import { Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
 
 const SongRankings = React.lazy(() => import('./SongRankings'));
 

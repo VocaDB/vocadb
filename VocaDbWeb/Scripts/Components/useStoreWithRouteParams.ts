@@ -2,7 +2,7 @@ import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
 import { reaction } from 'mobx';
 import qs from 'qs';
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 // Updates a store that implements the `IStoreWithRouteParams` interface when a route changes, and vice versa.
 const useStoreWithRouteParams = <T>(store: IStoreWithRouteParams<T>): void => {
