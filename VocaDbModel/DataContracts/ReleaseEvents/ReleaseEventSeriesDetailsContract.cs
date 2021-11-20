@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Linq;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
@@ -7,6 +8,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventSeriesDetailsContract : ReleaseEventSeriesWithEventsContract
 	{
 		public ReleaseEventSeriesDetailsContract() { }

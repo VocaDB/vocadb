@@ -68,13 +68,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 #nullable enable
 		[DataMember]
 		public string? PictureMime { get; init; }
-#nullable disable
 
 		[DataMember]
 		public EntryStatus Status { get; init; }
 
 		[DataMember]
 		public string UrlSlug { get; init; }
+#nullable disable
 
 		[DataMember]
 		public int Version { get; init; }

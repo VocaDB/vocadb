@@ -75,7 +75,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserMessageMailer mailer,
 			IFollowedArtistNotifier followedArtistNotifier,
 			IAggregatedEntryImageUrlFactory imageUrlFactory,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(eventRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -852,5 +853,12 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray();
 			});
 		}
+
+#nullable enable
+		public ReleaseEventSeriesDetailsForApiContract GetReleaseEventSeriesDetails(int id)
+		{
+			return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(session.Load<ReleaseEventSeries>(id), LanguagePreference, _imageUrlFactory));
+		}
+#nullable disable
 	}
 }

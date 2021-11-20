@@ -323,7 +323,7 @@ namespace VocaDb.Web.Controllers
 
 			slug ??= string.Empty;
 
-			var series = Service.GetReleaseEventSeriesDetails(id);
+			var series = _queries.GetReleaseEventSeriesDetails(id);
 
 			if (slug != series.UrlSlug)
 			{
@@ -344,14 +344,14 @@ namespace VocaDb.Web.Controllers
 			PageProperties.PageTitle = $"{series.Name} ({subtitle})";
 			PageProperties.Title = series.Name;
 			PageProperties.Subtitle = subtitle;
-			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);
+			PageProperties.OpenGraph.Image = Url.ImageThumb(series.MainPicture, ImageSize.Original);
 
 			var descriptionStripped = _markdownParser.GetPlainText(series.Description);
 
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = series.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(series);
+			return View("React/Index");
 		}
 
 		public ActionResult SeriesVersions(int id = InvalidId)
