@@ -1,5 +1,8 @@
 using System;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.DataContracts.Users
 {
@@ -16,6 +19,9 @@ namespace VocaDb.Model.DataContracts.Users
 		public bool VerifiedArtist { get; init; }
 		public ArtistForUserContract[] OwnedArtistEntries { get; init; } = Array.Empty<ArtistForUserContract>();
 
+		[JsonConverter(typeof(StringEnumConverter))]
+		public PVService PreferredVideoService { get; init; }
+
 		public SanitizedUserWithPermissionsContract() { }
 
 		public SanitizedUserWithPermissionsContract(ServerOnlyUserWithPermissionsContract user)
@@ -27,6 +33,7 @@ namespace VocaDb.Model.DataContracts.Users
 			UnreadMessagesCount = user.UnreadMessagesCount;
 			VerifiedArtist = user.VerifiedArtist;
 			OwnedArtistEntries = user.OwnedArtistEntries;
+			PreferredVideoService = user.PreferredVideoService;
 		}
 	}
 }

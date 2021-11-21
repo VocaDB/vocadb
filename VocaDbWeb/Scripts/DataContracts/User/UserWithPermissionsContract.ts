@@ -14,4 +14,5 @@ export default interface UserWithPermissionsContract {
 	unreadMessagesCount: number;
 	verifiedArtist: boolean;
 	ownedArtistEntries: ArtistForUserContract[];
+	preferredVideoService: string /* TODO: enum */;
 }

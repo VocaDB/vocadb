@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import EmbedPV from '../PV/EmbedPV';
 import PVRatingButtonsForIndex from '../PVRatingButtonsForIndex';
 
 interface PVPreviewKnockoutProps {
@@ -58,7 +57,11 @@ const PVPreviewKnockout = observer(
 				</div>
 				<div>
 					{previewStore.previewHtml && (
-						<EmbedPV html={previewStore.previewHtml} />
+						// HACK
+						// TODO: Replace this with React
+						<div
+							dangerouslySetInnerHTML={{ __html: previewStore.previewHtml }}
+						/>
 					)}
 				</div>
 			</div>

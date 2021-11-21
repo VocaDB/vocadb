@@ -10,7 +10,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import EmbedPV from './PV/EmbedPV';
 import PVRatingButtonsForIndex from './PVRatingButtonsForIndex';
 import SongTypeLabel from './Song/SongTypeLabel';
 
@@ -54,9 +53,13 @@ const PlayList = observer(
 								)}
 
 								{pvPlayerStore.playerHtml && (
-									<EmbedPV
+									// HACK
+									// TODO: Replace this with React
+									<div
 										id="pv-player-wrapper"
-										html={pvPlayerStore.playerHtml}
+										dangerouslySetInnerHTML={{
+											__html: pvPlayerStore.playerHtml,
+										}}
 									/>
 								)}
 							</div>
