@@ -44,9 +44,11 @@ namespace VocaDb.Model.Domain.Venues
 				CreateName(a);
 		}
 
+#nullable enable
 		public virtual string Address { get; set; } = string.Empty;
 
 		public virtual string AddressCountryCode { get; set; } = string.Empty;
+#nullable disable
 
 		public virtual ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> ArchivedVersionsManager
 		{

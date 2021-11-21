@@ -212,14 +212,14 @@ const EventSearchList = observer(
 								</td>
 								<td>
 									{event.venue ? (
-										<a
-											href={EntryUrlMapper.details(
+										<Link
+											to={EntryUrlMapper.details(
 												EntryType.Venue,
 												event.venue.id,
 											)}
 										>
 											{event.venue.name}
-										</a>
+										</Link>
 									) : (
 										event.venueName && <span>{event.venueName}</span>
 									)}

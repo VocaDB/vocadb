@@ -433,12 +433,12 @@ const EventDetailsLayout = observer(
 					<>
 						<h3 className="withMargin">
 							{t('ViewRes.Event:Details.Venue')}:{' '}
-							<a
-								href={EntryUrlMapper.details(EntryType.Venue, event.venue.id)}
+							<Link
+								to={EntryUrlMapper.details(EntryType.Venue, event.venue.id)}
 								title={event.venue.additionalNames}
 							>
 								{event.venue.name}
-							</a>
+							</Link>
 						</h3>
 
 						{event.venue.coordinates.hasValue && (

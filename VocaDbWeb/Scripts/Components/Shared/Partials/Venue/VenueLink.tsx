@@ -2,6 +2,7 @@ import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface VenueLinkProps {
 	venue: VenueForApiContract;
@@ -10,12 +11,12 @@ interface VenueLinkProps {
 const VenueLink = React.memo(
 	({ venue }: VenueLinkProps): React.ReactElement => {
 		return (
-			<a
-				href={EntryUrlMapper.details(EntryType.Venue, venue.id)}
+			<Link
+				to={EntryUrlMapper.details(EntryType.Venue, venue.id)}
 				title={venue.additionalNames}
 			>
 				{venue.name}
-			</a>
+			</Link>
 		);
 	},
 );

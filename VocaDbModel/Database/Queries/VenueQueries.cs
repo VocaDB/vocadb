@@ -124,13 +124,21 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		public VenueForApiContract GetDetails(int id)
 		{
 			return HandleQuery(ctx => new VenueForApiContract(
-				ctx.Load(id),
-				LanguagePreference,
-				VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
+				venue: ctx.Load(id),
+				languagePreference: LanguagePreference,
+				fields:
+					VenueOptionalFields.AdditionalNames |
+					VenueOptionalFields.Description |
+					VenueOptionalFields.Events |
+					VenueOptionalFields.Names |
+					VenueOptionalFields.WebLinks
+			));
 		}
+#nullable disable
 
 		public VenueForEditContract GetForEdit(int id)
 		{
