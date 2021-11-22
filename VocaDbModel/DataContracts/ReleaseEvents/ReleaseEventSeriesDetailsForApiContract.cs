@@ -27,7 +27,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public ReleaseEventForApiContract[] Events { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract? MainPicture { get; init; }
@@ -82,7 +82,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			UrlSlug = series.UrlSlug;
 
 			WebLinks = series.WebLinks
-				.Select(w => new WebLinkForApiContract(webLink: w, fields: WebLinkOptionalFields.DescriptionOrUrl))
+				.Select(w => new WebLinkForApiContract(webLink: w))
 				.OrderBy(w => w.DescriptionOrUrl)
 				.ToArray();
 		}

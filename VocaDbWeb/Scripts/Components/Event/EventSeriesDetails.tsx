@@ -160,13 +160,13 @@ const EventSeriesDetailsLayout = ({
 				</p>
 
 				{series.webLinks.length > 0 && (
-					<p>
+					<>
 						<ExternalLinksList
 							webLinks={series.webLinks}
 							showCategory={false}
 						/>
 						<br />
-					</p>
+					</>
 				)}
 
 				{series.additionalNames && (
@@ -205,15 +205,15 @@ const EventSeriesDetailsLayout = ({
 			<ul>
 				{series.events.map((event) => (
 					<li key={event.id}>
-						<a
-							href={EntryUrlMapper.details(
+						<Link
+							to={EntryUrlMapper.details(
 								EntryType.ReleaseEvent,
 								event.id,
 								event.urlSlug,
 							)}
 						>
 							{event.name}
-						</a>
+						</Link>
 						{event.date && (
 							<>
 								{' '}
@@ -243,7 +243,7 @@ const EventSeriesDetails = (): React.ReactElement => {
 
 	React.useEffect(() => {
 		eventRepo
-			.getReleaseEventSeriesDetails({ id: Number(id) })
+			.getSeriesDetails({ id: Number(id) })
 			.then((series) =>
 				setModel({
 					series: series,

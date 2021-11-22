@@ -9,6 +9,7 @@ const EmbedGoogleMaps = React.memo(
 	({ coordinates }: EmbedGoogleMapsProps): React.ReactElement => {
 		return (
 			<div>
+				{/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
 				<iframe
 					src={`https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&output=embed`}
 					frameBorder={0}

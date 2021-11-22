@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import VenueLinkOrVenueName from '../Event/VenueLinkOrVenueName';
 
@@ -40,8 +41,8 @@ const EventThumbs = ({
 					key={event.id}
 				>
 					{event.mainPicture && (
-						<a
-							href={EntryUrlMapper.details(
+						<Link
+							to={EntryUrlMapper.details(
 								EntryType.ReleaseEvent,
 								event.id,
 								event.urlSlug,
@@ -54,11 +55,11 @@ const EventThumbs = ({
 								src={UrlHelper.getSmallestThumb(event.mainPicture, imageSize)}
 								alt="Thumb" /* TODO: localize */
 							/>
-						</a>
+						</Link>
 					)}
 					<div>
-						<a
-							href={EntryUrlMapper.details(
+						<Link
+							to={EntryUrlMapper.details(
 								EntryType.ReleaseEvent,
 								event.id,
 								event.urlSlug,
@@ -66,7 +67,7 @@ const EventThumbs = ({
 							title={event.additionalNames}
 						>
 							{event.name}
-						</a>
+						</Link>
 						<br />
 						{getCategory(event) !== EventCategory[EventCategory.Unspecified] &&
 							getCategory(event) !== EventCategory[EventCategory.Other] && (

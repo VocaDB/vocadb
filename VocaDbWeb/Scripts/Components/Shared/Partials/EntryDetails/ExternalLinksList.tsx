@@ -30,7 +30,7 @@ const ExternalLinksList = React.memo(
 								title="See this page archived on the Wayback Machine" /* TODO: localize */
 								style={{ textDecoration: 'line-through' }}
 							>
-								{webLink.descriptionOrUrl}
+								{webLink.description || webLink.url}
 							</a>
 						) : (
 							<a
@@ -40,7 +40,7 @@ const ExternalLinksList = React.memo(
 									functions.trackOutboundLink(e.nativeEvent)
 								}
 							>
-								{webLink.descriptionOrUrl}
+								{webLink.description || webLink.url}
 							</a>
 						)}
 						{showCategory && (

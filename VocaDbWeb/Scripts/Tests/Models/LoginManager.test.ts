@@ -1,5 +1,6 @@
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import LoginManager, { PermissionToken } from '@Models/LoginManager';
+import PVService from '@Models/PVs/PVService';
 import GlobalValues from '@Shared/GlobalValues';
 import _ from 'lodash';
 
@@ -58,6 +59,7 @@ test('hasPermission disabled user', () => {
 			unreadMessagesCount: 0,
 			verifiedArtist: false,
 			ownedArtistEntries: [],
+			preferredVideoService: PVService[PVService.NicoNicoDouga],
 		}),
 	);
 	testHasPermission(loginManager, [PermissionToken.Nothing]);
@@ -73,6 +75,7 @@ test('hasPermission regular user', () => {
 			unreadMessagesCount: 0,
 			verifiedArtist: false,
 			ownedArtistEntries: [],
+			preferredVideoService: PVService[PVService.NicoNicoDouga],
 		}),
 	);
 	testHasPermission(loginManager, [
@@ -92,6 +95,7 @@ test('hasPermission regular user with lockdown message', () => {
 				unreadMessagesCount: 0,
 				verifiedArtist: false,
 				ownedArtistEntries: [],
+				preferredVideoService: PVService[PVService.NicoNicoDouga],
 			},
 			'lockdown!',
 		),

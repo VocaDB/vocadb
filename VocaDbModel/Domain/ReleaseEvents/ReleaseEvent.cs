@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -43,7 +44,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		private string _description;
 		private NameManager<EventName> _names = new();
 		private PVManager<PVForEvent> _pvs = new();
-		private ReleaseEventSeries _series;
+#nullable enable
+		private ReleaseEventSeries? _series;
+#nullable disable
 		private string _seriesSuffix;
 		private IList<Song> _songs = new List<Song>();
 		private TagManager<EventTagUsage> _tags = new();
@@ -180,7 +183,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
+#nullable enable
+		[MemberNotNullWhen(true, nameof(Series))]
 		public virtual bool HasSeries => Series != null;
+#nullable disable
 
 		public virtual int Id { get; set; }
 
@@ -211,11 +217,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual ReleaseEventSeries Series
+#nullable enable
+		public virtual ReleaseEventSeries? Series
 		{
 			get => _series;
 			set => _series = value;
 		}
+#nullable disable
 
 		public virtual int SeriesNumber { get; set; }
 
@@ -229,7 +237,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual SongList SongList { get; set; }
+#nullable enable
+		public virtual SongList? SongList { get; set; }
+#nullable disable
 
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
@@ -249,10 +259,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
+#nullable enable
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
 		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
+#nullable disable
 
 		public virtual IList<EventForUser> Users
 		{

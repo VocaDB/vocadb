@@ -2,7 +2,6 @@
 
 using System;
 using System.Linq;
-using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
@@ -16,6 +15,7 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventDetailsContract : ReleaseEventContract
 	{
 		public ReleaseEventDetailsContract()
