@@ -125,7 +125,7 @@ export default class CommentListViewModel {
 			(result: PartialFindResultContract<CommentContract>) => {
 				var entries = result.items;
 
-				if (!entries && entries!.length > 0) return;
+				if (!entries) return;
 
 				ko.utils.arrayPushAll(this.comments, entries);
 				this.lastCommentDate = new Date(_.last(entries)!.created!);

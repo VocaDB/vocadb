@@ -77,4 +77,14 @@ export default class VenueRepository extends BaseRepository {
 			data,
 		);
 	};
+
+	public getDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<VenueForApiContract> => {
+		return this.httpClient.get<VenueForApiContract>(
+			this.urlMapper.mapRelative(`/api/venues/${id}/details`),
+		);
+	};
 }

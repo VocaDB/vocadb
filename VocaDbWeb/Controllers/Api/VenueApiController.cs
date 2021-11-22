@@ -110,5 +110,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{id:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public VenueForApiContract GetDetails(int id) => _queries.GetDetails(id);
+#nullable disable
 	}
 }
