@@ -202,7 +202,9 @@ const VenueDetails = (): React.ReactElement => {
 				}),
 			)
 			.catch((error) => {
-				if (error.response.status === 404) navigate('/Error/NotFound');
+				if (error.response) {
+					if (error.response.status === 404) navigate('/Error/NotFound');
+				}
 			});
 	}, [id, navigate]);
 
