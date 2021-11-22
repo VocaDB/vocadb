@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Users
 	{
 		public ServerOnlyUserDetailsContract() { }
 
+#nullable enable
 		public ServerOnlyUserDetailsContract(User user, IUserPermissionContext permissionContext)
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true)
 		{
@@ -35,6 +36,7 @@ namespace VocaDb.Model.DataContracts.Users
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 		}
+#nullable disable
 
 		public string AboutMe { get; init; }
 

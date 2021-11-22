@@ -117,6 +117,7 @@ namespace VocaDb.Model.Database.Queries
 			return report;
 		}
 
+#nullable enable
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user)
 		{
 			/* 
@@ -206,7 +207,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private async Task SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message)
+		private async Task SendPrivateMessageNotification(string? mySettingsUrl, string? messagesUrl, UserMessage message)
 		{
 			ParamIs.NotNull(() => message);
 
@@ -303,6 +304,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return details;
 		}
+#nullable disable
 
 		private bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
 		{
@@ -1215,7 +1217,8 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), _userIconFactory, fields));
 		}
 
-		public ServerOnlyUserDetailsContract GetUserByNameNonSensitive(string name)
+#nullable enable
+		public ServerOnlyUserDetailsContract? GetUserByNameNonSensitive(string? name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return null;
@@ -1237,6 +1240,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return HandleQuery(ctx => GetUserDetails(ctx, ctx.Load(id)));
 		}
+#nullable disable
 
 		public PartialFindResult<T> GetUsers<T>(UserQueryParams queryParams,
 			Func<User, T> fac)

@@ -258,6 +258,17 @@ namespace VocaDb.Web.Controllers
 			return View("React/Index");
 		}
 
+#nullable enable
+		private ActionResult RenderDetails(ServerOnlyUserDetailsContract model)
+		{
+			PageProperties.Title = model.Name;
+			PageProperties.Subtitle = Translate.UserGroups[model.GroupId];
+			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
+			PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
+			return View("Details", model);
+		}
+
 		//
 		// GET: /User/Details/5
 
@@ -268,13 +279,9 @@ namespace VocaDb.Web.Controllers
 
 			var model = Data.GetUserDetails(id);
 
-			PageProperties.Title = model.Name;
-			PageProperties.Subtitle = Translate.UserGroups[model.GroupId];
-			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
-			PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
-
-			return View(model);
+			return RenderDetails(model);
 		}
+#nullable disable
 
 		[Authorize]
 		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
@@ -292,6 +299,7 @@ namespace VocaDb.Web.Controllers
 			return PartialView("_UserPopupContent", user);
 		}
 
+#nullable enable
 		public ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{
 			var model = Data.GetUserByNameNonSensitive(id);
@@ -302,8 +310,9 @@ namespace VocaDb.Web.Controllers
 			ViewBag.ArtistId = artistId;
 			ViewBag.ChildVoicebanks = childVoicebanks;
 
-			return View("Details", model);
+			return RenderDetails(model);
 		}
+#nullable disable
 
 		[RestrictBannedIP]
 		public new ActionResult Login(string returnUrl = null)
