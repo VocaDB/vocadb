@@ -26,7 +26,8 @@
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"useDefineForClassFields": true
+		"useDefineForClassFields": true,
+		"lib": ["dom", "esnext"]
 	},
 	"include": ["Scripts/**/*"]
 }

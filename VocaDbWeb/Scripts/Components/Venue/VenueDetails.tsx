@@ -34,6 +34,10 @@ const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const venueRepo = new VenueRepository(httpClient, urlMapper);
 
+const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
+	type: 'region',
+});
+
 interface VenueDetailsLayoutProps {
 	venue: VenueForApiContract;
 	venueDetailsStore: VenueDetailsStore;
@@ -139,7 +143,7 @@ const VenueDetailsLayout = ({
 				{venue.addressCountryCode && (
 					<p>
 						{t('ViewRes.Venue:Details.Country')}:{' '}
-						{venue.addressCountryCode /* TODO */}
+						{regionNames.of(venue.addressCountryCode)}
 					</p>
 				)}
 
