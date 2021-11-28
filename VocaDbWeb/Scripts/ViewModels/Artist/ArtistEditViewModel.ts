@@ -235,7 +235,7 @@ export default class ArtistEditViewModel {
 			acceptSelection: this.baseVoicebank.id,
 			extraQueryParams: {
 				artistTypes:
-					'Vocaloid,UTAU,CeVIO,OtherVocalist,OtherVoiceSynthesizer,Unknown',
+					'Vocaloid,UTAU,CeVIO,SynthesizerV,OtherVocalist,OtherVoiceSynthesizer,Unknown',
 			},
 			ignoreId: this.id,
 		};
