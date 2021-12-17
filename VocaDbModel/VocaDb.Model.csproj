@@ -18,6 +18,7 @@
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,7 +66,7 @@
     <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.2" />
     <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.1" />
     <PackageReference Include="VocaDb.PiaproClient" Version="3.0.1" />
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.4">
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="2.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

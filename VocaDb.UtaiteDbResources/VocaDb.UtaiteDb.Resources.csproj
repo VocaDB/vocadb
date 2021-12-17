@@ -14,6 +14,7 @@
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +40,7 @@
     <None Include="Styles\UtaiteDB.less" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.4">
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="2.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
