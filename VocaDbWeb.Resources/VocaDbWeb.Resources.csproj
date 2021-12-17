@@ -5,6 +5,7 @@
     <RootNamespace>VocaDb.Web</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.4">
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="2.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
