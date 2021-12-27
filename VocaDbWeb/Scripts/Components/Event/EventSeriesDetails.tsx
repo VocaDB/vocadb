@@ -39,13 +39,15 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface EventSeriesDetailsLayoutProps {
 	series: ReleaseEventSeriesDetailsContract;
-	eventSeriesDetailsStore: EventSeriesDetailsStore;
 }
 
 const EventSeriesDetailsLayout = ({
 	series,
-	eventSeriesDetailsStore,
 }: EventSeriesDetailsLayoutProps): React.ReactElement => {
+	const [eventSeriesDetailsStore] = React.useState(
+		() => new EventSeriesDetailsStore(userRepo, series.id, series.tags),
+	);
+
 	const { t, ready } = useTranslation([
 		'ViewRes',
 		'ViewRes.Event',
@@ -230,12 +232,8 @@ const EventSeriesDetailsLayout = ({
 };
 
 const EventSeriesDetails = (): React.ReactElement => {
-	const [model, setModel] = React.useState<
-		| {
-				series: ReleaseEventSeriesDetailsContract;
-				eventSeriesDetailsStore: EventSeriesDetailsStore;
-		  }
-		| undefined
+	const [series, setSeries] = React.useState<
+		ReleaseEventSeriesDetailsContract | undefined
 	>();
 
 	const { id } = useParams();
@@ -244,16 +242,7 @@ const EventSeriesDetails = (): React.ReactElement => {
 	React.useEffect(() => {
 		eventRepo
 			.getSeriesDetails({ id: Number(id) })
-			.then((series) =>
-				setModel({
-					series: series,
-					eventSeriesDetailsStore: new EventSeriesDetailsStore(
-						userRepo,
-						series.id,
-						series.tags,
-					),
-				}),
-			)
+			.then((series) => setSeries(series))
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404) navigate('/Error/NotFound');
@@ -261,14 +250,7 @@ const EventSeriesDetails = (): React.ReactElement => {
 			});
 	}, [id, navigate]);
 
-	return model ? (
-		<EventSeriesDetailsLayout
-			series={model.series}
-			eventSeriesDetailsStore={model.eventSeriesDetailsStore}
-		/>
-	) : (
-		<></>
-	);
+	return series ? <EventSeriesDetailsLayout series={series} /> : <></>;
 };
 
 export default EventSeriesDetails;

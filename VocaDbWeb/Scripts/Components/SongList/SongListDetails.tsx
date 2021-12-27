@@ -104,14 +104,28 @@ const usePageProperties = (
 
 interface SongListDetailsLayoutProps {
 	songList: SongListContract;
-	songListStore: SongListStore;
 }
 
 const SongListDetailsLayout = observer(
-	({
-		songList,
-		songListStore,
-	}: SongListDetailsLayoutProps): React.ReactElement => {
+	({ songList }: SongListDetailsLayoutProps): React.ReactElement => {
+		const [songListStore] = React.useState(
+			() =>
+				new SongListStore(
+					vdb.values,
+					urlMapper,
+					songListRepo,
+					songRepo,
+					tagRepo,
+					userRepo,
+					artistRepo,
+					songList.latestComments ?? [],
+					songList.id,
+					songList.tags ?? [],
+					pvPlayersFactory,
+					loginManager.canDeleteComments,
+				),
+		);
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -590,8 +604,8 @@ const SongListDetailsLayout = observer(
 );
 
 const SongListDetails = (): React.ReactElement => {
-	const [model, setModel] = React.useState<
-		{ songList: SongListContract; songListStore: SongListStore } | undefined
+	const [songList, setSongList] = React.useState<
+		SongListContract | undefined
 	>();
 
 	const { id } = useParams();
@@ -600,25 +614,7 @@ const SongListDetails = (): React.ReactElement => {
 	React.useEffect(() => {
 		songListRepo
 			.getDetails({ id: Number(id) })
-			.then((songList) =>
-				setModel({
-					songList: songList,
-					songListStore: new SongListStore(
-						vdb.values,
-						urlMapper,
-						songListRepo,
-						songRepo,
-						tagRepo,
-						userRepo,
-						artistRepo,
-						songList.latestComments ?? [],
-						songList.id,
-						songList.tags ?? [],
-						pvPlayersFactory,
-						loginManager.canDeleteComments,
-					),
-				}),
-			)
+			.then((songList) => setSongList(songList))
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404) navigate('/Error/NotFound');
@@ -626,14 +622,7 @@ const SongListDetails = (): React.ReactElement => {
 			});
 	}, [id, navigate]);
 
-	return model ? (
-		<SongListDetailsLayout
-			songList={model.songList}
-			songListStore={model.songListStore}
-		/>
-	) : (
-		<></>
-	);
+	return songList ? <SongListDetailsLayout songList={songList} /> : <></>;
 };
 
 export default SongListDetails;
