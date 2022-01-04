@@ -770,7 +770,7 @@ export default class UserRepository implements ICommentRepository {
 		var url = this.urlMapper.mapRelative(
 			`/api/users/${userId}/settings/${settingName}`,
 		);
-		return this.httpClient.post<void>(url, `"${value}"`, {
+		return this.httpClient.post<void>(url, `${value}`, {
 			headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
 		});
 	};
