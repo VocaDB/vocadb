@@ -40,15 +40,13 @@ const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
 
 interface VenueDetailsLayoutProps {
 	venue: VenueForApiContract;
+	venueDetailsStore: VenueDetailsStore;
 }
 
 const VenueDetailsLayout = ({
 	venue,
+	venueDetailsStore,
 }: VenueDetailsLayoutProps): React.ReactElement => {
-	const [venueDetailsStore] = React.useState(
-		() => new VenueDetailsStore(venueRepo, venue.id),
-	);
-
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Event', 'ViewRes.Venue']);
 
 	const title = venue.name;
@@ -186,7 +184,10 @@ const VenueDetailsLayout = ({
 };
 
 const VenueDetails = (): React.ReactElement => {
-	const [venue, setVenue] = React.useState<VenueForApiContract | undefined>();
+	const [model, setModel] = React.useState<
+		| { venue: VenueForApiContract; venueDetailsStore: VenueDetailsStore }
+		| undefined
+	>();
 
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -194,7 +195,12 @@ const VenueDetails = (): React.ReactElement => {
 	React.useEffect(() => {
 		venueRepo
 			.getDetails({ id: Number(id) })
-			.then((venue) => setVenue(venue))
+			.then((venue) =>
+				setModel({
+					venue: venue,
+					venueDetailsStore: new VenueDetailsStore(venueRepo, venue.id),
+				}),
+			)
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404) navigate('/Error/NotFound');
@@ -202,7 +208,14 @@ const VenueDetails = (): React.ReactElement => {
 			});
 	}, [id, navigate]);
 
-	return venue ? <VenueDetailsLayout venue={venue} /> : <></>;
+	return model ? (
+		<VenueDetailsLayout
+			venue={model.venue}
+			venueDetailsStore={model.venueDetailsStore}
+		/>
+	) : (
+		<></>
+	);
 };
 
 export default VenueDetails;

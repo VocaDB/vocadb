@@ -117,29 +117,14 @@ const ArtistList = React.memo(
 
 interface EventDetailsLayoutProps {
 	event: ReleaseEventDetailsContract;
+	releaseEventDetailsStore: ReleaseEventDetailsStore;
 }
 
 const EventDetailsLayout = observer(
-	({ event }: EventDetailsLayoutProps): React.ReactElement => {
-		const [releaseEventDetailsStore] = React.useState(
-			() =>
-				new ReleaseEventDetailsStore(
-					loginManager,
-					httpClient,
-					urlMapper,
-					eventRepo,
-					userRepo,
-					event.latestComments,
-					event.id,
-					UserEventRelationshipType[
-						event.eventAssociationType as keyof typeof UserEventRelationshipType
-					],
-					event.usersAttending,
-					event.tags,
-					loginManager.canDeleteComments,
-				),
-		);
-
+	({
+		event,
+		releaseEventDetailsStore,
+	}: EventDetailsLayoutProps): React.ReactElement => {
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Event',
@@ -614,8 +599,12 @@ const EventDetailsLayout = observer(
 );
 
 const EventDetails = (): React.ReactElement => {
-	const [event, setEvent] = React.useState<
-		ReleaseEventDetailsContract | undefined
+	const [model, setModel] = React.useState<
+		| {
+				event: ReleaseEventDetailsContract;
+				releaseEventDetailsStore: ReleaseEventDetailsStore;
+		  }
+		| undefined
 	>();
 
 	const { id } = useParams();
@@ -624,7 +613,26 @@ const EventDetails = (): React.ReactElement => {
 	React.useEffect(() => {
 		eventRepo
 			.getDetails({ id: Number(id) })
-			.then((event) => setEvent(event))
+			.then((event) =>
+				setModel({
+					event: event,
+					releaseEventDetailsStore: new ReleaseEventDetailsStore(
+						loginManager,
+						httpClient,
+						urlMapper,
+						eventRepo,
+						userRepo,
+						event.latestComments,
+						event.id,
+						UserEventRelationshipType[
+							event.eventAssociationType as keyof typeof UserEventRelationshipType
+						],
+						event.usersAttending,
+						event.tags,
+						loginManager.canDeleteComments,
+					),
+				}),
+			)
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404) navigate('/Error/NotFound');
@@ -632,7 +640,14 @@ const EventDetails = (): React.ReactElement => {
 			});
 	}, [id, navigate]);
 
-	return event ? <EventDetailsLayout event={event} /> : <></>;
+	return model ? (
+		<EventDetailsLayout
+			event={model.event}
+			releaseEventDetailsStore={model.releaseEventDetailsStore}
+		/>
+	) : (
+		<></>
+	);
 };
 
 export default EventDetails;

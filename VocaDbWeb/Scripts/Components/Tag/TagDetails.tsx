@@ -345,28 +345,11 @@ const HierarchyContainer = React.memo(
 
 interface TagDetailsLayoutProps {
 	tag: TagDetailsContract;
+	tagDetailsStore: TagDetailsStore;
 }
 
 const TagDetailsLayout = observer(
-	({ tag }: TagDetailsLayoutProps): React.ReactElement => {
-		const [tagDetailsStore] = React.useState(
-			() =>
-				new TagDetailsStore(
-					loginManager,
-					tagRepo,
-					userRepo,
-					tag.latestComments,
-					tag.id,
-					loginManager.canDeleteComments,
-					(vdb.values.languagePreference ===
-						ContentLanguagePreference.English ||
-						vdb.values.languagePreference ===
-							ContentLanguagePreference.Romaji) &&
-						!!tag.description.english,
-					tag.isFollowing,
-				),
-		);
-
+	({ tag, tagDetailsStore }: TagDetailsLayoutProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Tag',
@@ -886,7 +869,9 @@ const TagDetailsLayout = observer(
 );
 
 const TagDetails = (): React.ReactElement => {
-	const [tag, setTag] = React.useState<TagDetailsContract | undefined>();
+	const [model, setModel] = React.useState<
+		{ tag: TagDetailsContract; tagDetailsStore: TagDetailsStore } | undefined
+	>();
 
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -895,7 +880,23 @@ const TagDetails = (): React.ReactElement => {
 		tagRepo
 			.getDetails({ id: Number(id) })
 			.then((tag) => {
-				setTag(tag);
+				setModel({
+					tag: tag,
+					tagDetailsStore: new TagDetailsStore(
+						loginManager,
+						tagRepo,
+						userRepo,
+						tag.latestComments,
+						tag.id,
+						loginManager.canDeleteComments,
+						(vdb.values.languagePreference ===
+							ContentLanguagePreference.English ||
+							vdb.values.languagePreference ===
+								ContentLanguagePreference.Romaji) &&
+							!!tag.description.english,
+						tag.isFollowing,
+					),
+				});
 			})
 			.catch((error) => {
 				if (error.response) {
@@ -904,7 +905,11 @@ const TagDetails = (): React.ReactElement => {
 			});
 	}, [id, navigate]);
 
-	return tag ? <TagDetailsLayout tag={tag} /> : <></>;
+	return model ? (
+		<TagDetailsLayout tag={model.tag} tagDetailsStore={model.tagDetailsStore} />
+	) : (
+		<></>
+	);
 };
 
 export default TagDetails;
