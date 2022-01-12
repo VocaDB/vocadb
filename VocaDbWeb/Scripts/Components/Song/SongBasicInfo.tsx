@@ -7,16 +7,19 @@ import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
 import BpmHelper from '@Helpers/BpmHelper';
 import DateTimeHelper from '@Helpers/DateTimeHelper';
+import VideoServiceHelper from '@Helpers/VideoServiceHelper';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
 import EntryType from '@Models/EntryType';
 import LoginManager from '@Models/LoginManager';
 import PVService from '@Models/PVs/PVService';
 import SongType from '@Models/Songs/SongType';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import SongDetailsStore from '@Stores/Song/SongDetailsStore';
 import classNames from 'classnames';
+import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -219,6 +222,38 @@ interface SongBasicInfoProps {
 const SongBasicInfo = observer(
 	({ model, songDetailsStore }: SongBasicInfoProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
+
+		const webLinks = React.useMemo(() => {
+			if (
+				_.every(
+					model.contract.pvs,
+					(p) => p.service !== PVService[PVService.Youtube],
+				)
+			) {
+				const nicoPV = VideoServiceHelper.primaryPV(
+					model.contract.pvs,
+					PVService[PVService.NicoNicoDouga],
+				);
+				const query = encodeURIComponent(
+					nicoPV && nicoPV.name
+						? nicoPV.name
+						: `${model.artistString} ${model.name}`,
+				);
+
+				return [
+					...model.webLinks,
+					{
+						id: 0,
+						url: `https://www.youtube.com/results?search_query=${query}`,
+						description: t('ViewRes.Song:Details.SearchYoutube'),
+						category: WebLinkCategory[WebLinkCategory.Other],
+						disabled: false,
+					},
+				];
+			}
+
+			return model.webLinks;
+		}, [model, t]);
 
 		return (
 			<SongDetailsTabs
@@ -462,7 +497,7 @@ const SongBasicInfo = observer(
 							</tr>
 						)}
 
-						<ExternalLinksRows webLinks={model.webLinks} />
+						<ExternalLinksRows webLinks={webLinks} />
 
 						{songDetailsStore.originalVersion.entry && (
 							<tr>

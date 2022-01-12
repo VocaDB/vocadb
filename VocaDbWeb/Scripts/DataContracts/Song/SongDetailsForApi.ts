@@ -1,6 +1,6 @@
-import PVHelper from '@Helpers/PVHelper';
 import RelatedSitesHelper from '@Helpers/RelatedSitesHelper';
 import SongHelper from '@Helpers/SongHelper';
+import VideoServiceHelper from '@Helpers/VideoServiceHelper';
 import ArtistCategories from '@Models/Artists/ArtistCategories';
 import ContentFocus from '@Models/ContentFocus';
 import EntryStatus from '@Models/EntryStatus';
@@ -202,7 +202,7 @@ export default class SongDetailsForApi {
 			(pv) => pv.pvType !== PVType[PVType.Original],
 		);
 
-		this.primaryPV = PVHelper.primaryPV(contract.pvs);
+		this.primaryPV = VideoServiceHelper.primaryPV(contract.pvs);
 
 		this.jsonModel = new SongDetailsAjax(
 			this,
