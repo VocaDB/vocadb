@@ -5,7 +5,7 @@ export default class BpmHelper {
 		minMilliBpm?: number,
 		maxMilliBpm?: number,
 	): string => {
-		if (minMilliBpm && maxMilliBpm) {
+		if (minMilliBpm && maxMilliBpm && maxMilliBpm > minMilliBpm) {
 			return `${new Decimal(minMilliBpm).div(1000)} - ${new Decimal(
 				maxMilliBpm,
 			).div(1000)}`;
