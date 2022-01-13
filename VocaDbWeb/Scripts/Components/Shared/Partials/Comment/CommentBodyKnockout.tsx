@@ -7,7 +7,11 @@ interface CommentBodyKnockoutProps {
 
 const CommentBodyKnockout = React.memo(
 	({ message }: CommentBodyKnockoutProps): React.ReactElement => {
-		return <Markdown>{message}</Markdown>;
+		return (
+			<p>
+				<Markdown>{message}</Markdown>
+			</p>
+		);
 	},
 );
 
