@@ -7,6 +7,7 @@ import PartialFindResultContract from '@DataContracts/PartialFindResultContract'
 import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongContract from '@DataContracts/Song/SongContract';
+import SongDetailsContract from '@DataContracts/Song/SongDetailsContract';
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import SongWithPVPlayerAndVoteContract from '@DataContracts/Song/SongWithPVPlayerAndVoteContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
@@ -500,8 +501,8 @@ export default class SongRepository
 		author,
 	}: {
 		songId: number;
-		text: string;
-		author: ArtistContract;
+		text?: string;
+		author?: ArtistContract;
 	}): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/songs/${songId}/personal-description/`),
@@ -521,6 +522,19 @@ export default class SongRepository
 	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
+	};
+
+	public getDetails = ({
+		id,
+		albumId,
+	}: {
+		id: number;
+		albumId?: number;
+	}): Promise<SongDetailsContract> => {
+		return this.httpClient.get<SongDetailsContract>(
+			this.urlMapper.mapRelative(`/api/songs/${id}/details`),
+			{ albumId: albumId },
+		);
 	};
 }
 

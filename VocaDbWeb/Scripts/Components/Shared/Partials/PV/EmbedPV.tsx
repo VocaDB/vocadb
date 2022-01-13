@@ -60,6 +60,7 @@ const EmbedPV = React.memo(
 						style={{ border: 0, width: '100%', height: '120px' }}
 						src={`https://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=${pv.pvId}/transparent=true/`}
 						seamless
+						key={pv.pvId}
 					/>
 				);
 
@@ -108,6 +109,7 @@ const EmbedPV = React.memo(
 						src={`https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${
 							pv.pvId.split(' ')[0]
 						}&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700`}
+						key={pv.pvId}
 					/>
 				);
 
@@ -127,6 +129,7 @@ const EmbedPV = React.memo(
 						// @ts-ignore
 						wmode="Opaque"
 						allowFullScreen
+						key={pv.pvId}
 					/>
 				);
 
@@ -142,6 +145,7 @@ const EmbedPV = React.memo(
 						webkitAllowFullScreen
 						mozallowfullscreen
 						allowFullScreen
+						key={pv.pvId}
 					/>
 				);
 
@@ -154,6 +158,7 @@ const EmbedPV = React.memo(
 						scrolling="no"
 						frameBorder="no"
 						src={`https://creofuga.net/audios/player?color=black&id=${pv.pvId}`}
+						key={pv.pvId}
 					/>
 				);
 

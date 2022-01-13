@@ -5,6 +5,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import SongTypeLabel from './SongTypeLabel';
 
@@ -14,14 +15,14 @@ interface SongIconLinkProps {
 
 const SongIconLink = ({ song }: SongIconLinkProps): React.ReactElement => {
 	return (
-		<a href={EntryUrlMapper.details_song(song)}>
+		<Link to={EntryUrlMapper.details_song(song)}>
 			<img
 				src={UrlHelper.upgradeToHttps(song.thumbUrl)}
 				alt="Cover" /* TODO: localize */
 				className="coverPicThumb"
 				referrerPolicy="same-origin"
 			/>
-		</a>
+		</Link>
 	);
 };
 
@@ -30,7 +31,7 @@ interface SongLinkProps {
 }
 
 const SongLink = ({ song }: SongLinkProps): React.ReactElement => {
-	return <a href={`${EntryUrlMapper.details_song(song)}`}>{song.name}</a>;
+	return <Link to={`${EntryUrlMapper.details_song(song)}`}>{song.name}</Link>;
 };
 
 interface SongGridProps {

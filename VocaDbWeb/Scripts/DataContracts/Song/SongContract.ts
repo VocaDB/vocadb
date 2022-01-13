@@ -5,6 +5,8 @@ export default interface SongContract extends CommonEntryContract {
 
 	artistString: string;
 
+	favoritedTimes?: number;
+
 	lengthSeconds: number;
 
 	// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
@@ -15,6 +17,8 @@ export default interface SongContract extends CommonEntryContract {
 	ratingScore: number;
 
 	songType: string;
+
+	status: string;
 
 	thumbUrl?: string;
 }

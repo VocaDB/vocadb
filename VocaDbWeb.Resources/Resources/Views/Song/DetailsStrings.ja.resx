@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -269,7 +269,7 @@
     <value>個人リスト</value>
   </data>
   <data name="TrackOnAlbum" xml:space="preserve">
-    <value>アルバム「{1}」{0}曲目</value>
+    <value>アルバム「&lt;1&gt;」{0}曲目</value>
   </data>
   <data name="SeeRelatedSongs" xml:space="preserve">
     <value>関連曲をもっと見る</value>

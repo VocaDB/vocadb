@@ -28,6 +28,7 @@ const EmbedNico = React.memo(
 						enableApi ? 1 : 0
 					}&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0`}
 					allow="autoplay; fullscreen"
+					key={pvId}
 				/>
 			</div>
 		);

@@ -3,6 +3,7 @@ import UrlHelper from '@Helpers/UrlHelper';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface SongIconLinkProps {
 	song: SongApiContract;
@@ -12,8 +13,8 @@ interface SongIconLinkProps {
 const SongIconLink = React.memo(
 	({ song, albumId }: SongIconLinkProps): React.ReactElement => {
 		return (
-			<a
-				href={`${EntryUrlMapper.details_song(song)}?${qs.stringify({
+			<Link
+				to={`${EntryUrlMapper.details_song(song)}?${qs.stringify({
 					albumId: albumId,
 				})}`}
 			>
@@ -23,7 +24,7 @@ const SongIconLink = React.memo(
 					className="coverPicThumb"
 					referrerPolicy="same-origin"
 				/>
-			</a>
+			</Link>
 		);
 	},
 );

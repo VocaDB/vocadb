@@ -34,7 +34,8 @@ namespace VocaDb.Model.DataContracts.Albums
 		{ }
 
 		public AlbumForApiContract(
-			Album album, AlbumMergeRecord mergeRecord,
+			Album album,
+			AlbumMergeRecord mergeRecord,
 			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,

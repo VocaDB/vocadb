@@ -2,7 +2,7 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import React from 'react';
 
 interface PiaproMetadata {
-	timestamp?: string;
+	Timestamp?: string;
 }
 
 interface EmbedPiaproProps {
@@ -12,15 +12,15 @@ interface EmbedPiaproProps {
 const EmbedPiapro = React.memo(
 	({ pv }: EmbedPiaproProps): React.ReactElement => {
 		const meta = pv.extendedMetadata
-			? (pv.extendedMetadata as PiaproMetadata)
+			? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
 			: undefined;
 
-		return meta && meta.timestamp ? (
+		return meta && meta.Timestamp ? (
 			<audio
 				controls
 				controlsList="nodownload"
 				src={`https://cdn.piapro.jp/mp3_a/${pv.pvId.slice(0, 2)}/${pv.pvId}_${
-					meta.timestamp
+					meta.Timestamp
 				}_audition.mp3`}
 			/>
 		) : (

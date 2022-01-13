@@ -51,7 +51,7 @@ import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -608,7 +608,6 @@ const EventDetails = (): React.ReactElement => {
 	>();
 
 	const { id } = useParams();
-	const navigate = useNavigate();
 
 	React.useEffect(() => {
 		eventRepo
@@ -635,10 +634,11 @@ const EventDetails = (): React.ReactElement => {
 			)
 			.catch((error) => {
 				if (error.response) {
-					if (error.response.status === 404) navigate('/Error/NotFound');
+					if (error.response.status === 404)
+						window.location.href = '/Error/NotFound';
 				}
 			});
-	}, [id, navigate]);
+	}, [id]);
 
 	return model ? (
 		<EventDetailsLayout

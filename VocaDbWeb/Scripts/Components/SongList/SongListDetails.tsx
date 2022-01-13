@@ -54,7 +54,7 @@ import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.css';
 
@@ -462,11 +462,8 @@ const SongListDetailsLayout = observer(
 									<tr key={index}>
 										<td style={{ width: '75px' }}>
 											{item.song.thumbUrl && (
-												<a
-													href={EntryUrlMapper.details(
-														EntryType.Song,
-														item.song.id,
-													)}
+												<Link
+													to={EntryUrlMapper.details_song(item.song)}
 													title={item.song.additionalNames}
 												>
 													{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -476,7 +473,7 @@ const SongListDetailsLayout = observer(
 														className="coverPicThumb img-rounded"
 														referrerPolicy="same-origin"
 													/>
-												</a>
+												</Link>
 											)}
 										</td>
 										<td>
@@ -498,15 +495,12 @@ const SongListDetailsLayout = observer(
 													</div>
 												)}
 											<span>{item.order}</span>.{' '}
-											<a
-												href={EntryUrlMapper.details(
-													EntryType.Song,
-													item.song.id,
-												)}
+											<Link
+												to={EntryUrlMapper.details_song(item.song)}
 												title={item.song.additionalNames}
 											>
 												{item.song.name}
-											</a>
+											</Link>
 											{item.notes && (
 												<>
 													{' '}
@@ -595,7 +589,6 @@ const SongListDetails = (): React.ReactElement => {
 	>();
 
 	const { id } = useParams();
-	const navigate = useNavigate();
 
 	React.useEffect(() => {
 		songListRepo
@@ -621,10 +614,11 @@ const SongListDetails = (): React.ReactElement => {
 			)
 			.catch((error) => {
 				if (error.response) {
-					if (error.response.status === 404) navigate('/Error/NotFound');
+					if (error.response.status === 404)
+						window.location.href = '/Error/NotFound';
 				}
 			});
-	}, [id, navigate]);
+	}, [id]);
 
 	return model ? (
 		<SongListDetailsLayout

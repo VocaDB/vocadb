@@ -16,6 +16,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface SongSearchListProps {
 	songSearchStore: SongSearchStore;
@@ -86,8 +87,8 @@ const SongSearchList = observer(
 									<tr key={song.id}>
 										<td style={{ width: '80px' }}>
 											{song.thumbUrl && (
-												<a
-													href={EntryUrlMapper.details_song(song)}
+												<Link
+													to={EntryUrlMapper.details_song(song)}
 													title={song.additionalNames}
 												>
 													{/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -97,7 +98,7 @@ const SongSearchList = observer(
 														className="coverPicThumb img-rounded"
 														referrerPolicy="same-origin"
 													/>
-												</a>
+												</Link>
 											)}
 										</td>
 										<td>
@@ -118,12 +119,12 @@ const SongSearchList = observer(
 													</Button>
 												</div>
 											)}
-											<a
-												href={EntryUrlMapper.details_song(song)}
+											<Link
+												to={EntryUrlMapper.details_song(song)}
 												title={song.additionalNames}
 											>
 												{song.name}
-											</a>{' '}
+											</Link>{' '}
 											<SongTypeLabel
 												songType={
 													SongType[song.songType as keyof typeof SongType]

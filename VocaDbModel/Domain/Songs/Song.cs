@@ -389,7 +389,9 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual ReleaseEvent ReleaseEvent { get; set; }
 
-		public virtual string PersonalDescriptionText { get; set; }
+#nullable enable
+		public virtual string? PersonalDescriptionText { get; set; }
+#nullable disable
 
 		public virtual Artist PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
 

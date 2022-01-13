@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Data;
 using System.Linq;
@@ -16,8 +14,15 @@ namespace VocaDb.Model.Database.Queries.Partial
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		public void CreateHit<TEntry, THit>(IDatabaseContext ctx, TEntry entry, string hostname, IUserPermissionContext userContext, Func<TEntry, int, THit> factory)
-			where TEntry : class, IEntryBase where THit : GenericEntryHit<TEntry>
+		public void CreateHit<TEntry, THit>(
+			IDatabaseContext ctx,
+			TEntry entry,
+			string hostname,
+			IUserPermissionContext userContext,
+			Func<TEntry, int, THit> factory
+		)
+			where TEntry : class, IEntryBase
+			where THit : GenericEntryHit<TEntry>
 		{
 			if (!userContext.IsLoggedIn && string.IsNullOrEmpty(hostname))
 				return;

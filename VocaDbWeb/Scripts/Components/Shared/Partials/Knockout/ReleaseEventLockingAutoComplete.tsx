@@ -1,6 +1,7 @@
 import ReleaseEventAutoComplete from '@Components/KnockoutExtensions/ReleaseEventAutoComplete';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,13 +22,19 @@ const ReleaseEventLockingAutoComplete = observer(
 			<LockingAutoComplete
 				text={basicEntryLinkStore.name}
 				value={basicEntryLinkStore.id}
-				onClear={(): void => basicEntryLinkStore.selectEntry(undefined)}
+				onClear={(): void =>
+					runInAction(() => {
+						basicEntryLinkStore.id = undefined;
+					})
+				}
 			>
 				<ReleaseEventAutoComplete
 					type="text"
 					className="input-large"
 					onAcceptSelection={(entry): void =>
-						basicEntryLinkStore.selectEntry(entry.id)
+						runInAction(() => {
+							basicEntryLinkStore.id = entry.id;
+						})
 					}
 					placeholder={t('ViewRes:Shared.Search')}
 				/>

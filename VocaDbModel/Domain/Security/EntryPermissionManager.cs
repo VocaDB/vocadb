@@ -55,6 +55,7 @@ namespace VocaDb.Model.Domain.Security
 				&& userContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Tests that the logged in user is a (transitive) verified owner of an entry.
 		/// </summary>
@@ -65,7 +66,7 @@ namespace VocaDb.Model.Domain.Security
 		/// The user is considered to be the owner of the entry if the entry is an artist entry and the user is directly connected to that artist entry
 		/// or if the entry is a song or album and the user is the owner of one of the artists for that song/album.
 		/// </remarks>
-		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry)
+		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase? entry)
 		{
 			if (entry == null || !userContext.IsLoggedIn || !userContext.LoggedUser.VerifiedArtist || !userContext.LoggedUser.Active)
 				return false;
@@ -77,7 +78,6 @@ namespace VocaDb.Model.Domain.Security
 			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => !ArtistHelper.IsVoiceSynthesizer(a.ArtistType) && IsDirectlyVerifiedFor(userContext, a));
 		}
 
-#nullable enable
 		/// <summary>
 		/// Gets a list of entry statuses that the user can edit or set.
 		/// This means, the user is allowed to edit entries with any of these statuses, 
@@ -209,16 +209,14 @@ namespace VocaDb.Model.Domain.Security
 
 			return permissionContext.UserGroupId == UserGroupId.Admin || permissionContext.UserGroupId > groupId;
 		}
-#nullable disable
 
-		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase entry)
+		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase? entry)
 		{
 			ParamIs.NotNull(() => userContext);
 
 			return userContext.UserGroupId >= UserGroupId.Moderator || IsVerifiedFor(userContext, entry);
 		}
 
-#nullable enable
 		public static bool CanEditUser(IUserPermissionContext permissionContext, UserGroupId groupId)
 		{
 			ParamIs.NotNull(() => permissionContext);

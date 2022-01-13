@@ -1,18 +1,12 @@
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import {
-	action,
-	computed,
-	makeObservable,
-	observable,
-	runInAction,
-} from 'mobx';
+import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.
 // Works well with LockingAutoComplete.
 export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
-	@observable public id?: number;
-	@observable public name?: string;
+	@observable private _id?: number;
+	@observable public entry?: TEntry;
 
 	// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 	// entryFunc: function for loading the entry asynchronously by Id.
@@ -24,29 +18,32 @@ export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 		makeObservable(this);
 	}
 
-	@computed public get entry(): TEntry | undefined {
-		return this.id ? ({ id: this.id, name: this.name } as TEntry) : undefined;
+	@computed public get id(): number | undefined {
+		return this._id;
+	}
+	public set id(value: number | undefined) {
+		this._id = value;
+
+		if (value) {
+			this.entryFunc?.(value).then((entry) =>
+				runInAction(() => {
+					this.entry = entry;
+				}),
+			);
+		} else {
+			this.entry = undefined;
+		}
+	}
+
+	@computed public get name(): string | undefined {
+		return this.entry?.name;
 	}
 
 	@computed public get isEmpty(): boolean {
 		return !this.entry;
 	}
 
-	@action public selectEntry = (entryId?: number): void => {
-		this.id = entryId;
-
-		if (entryId) {
-			this.entryFunc?.(entryId).then((entry) =>
-				runInAction(() => {
-					this.name = entry?.name;
-				}),
-			);
-		} else {
-			this.name = undefined;
-		}
-	};
-
 	public clear = (): void => {
-		this.selectEntry(undefined);
+		this.id = undefined;
 	};
 }

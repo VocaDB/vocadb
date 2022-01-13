@@ -42,7 +42,9 @@ namespace VocaDb.Web.Helpers
 				.FirstOrDefault() ?? string.Empty;
 		}
 
+#nullable enable
 		public static string GetRealHost(HttpRequest request) => request.HttpContext.Connection.RemoteIpAddress.ToString();
+#nullable disable
 
 		public static bool IsLocalhost(string hostname)
 		{
@@ -53,6 +55,7 @@ namespace VocaDb.Web.Helpers
 			return localhosts.Contains(hostname);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Checks whether the request should be counted as a valid hit (view) 
 		/// for an entry.
@@ -73,6 +76,7 @@ namespace VocaDb.Web.Helpers
 
 			return !s_forbiddenUserAgents.Any(ua.Contains);
 		}
+#nullable disable
 
 		public static void VerifyUserAgent(HttpRequest request)
 		{
@@ -83,5 +87,9 @@ namespace VocaDb.Web.Helpers
 				//throw new NotAllowedException();
 			}
 		}
+
+#nullable enable
+		public static string GetHostnameForValidHit(HttpRequest request) => IsValidHit(request) ? GetRealHost(request) : string.Empty;
+#nullable disable
 	}
 }

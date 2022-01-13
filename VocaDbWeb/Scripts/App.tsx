@@ -41,6 +41,7 @@ const EventDetails = React.lazy(() => import('@Components/Event/EventDetails'));
 const EventSeriesDetails = React.lazy(
 	() => import('@Components/Event/EventSeriesDetails'),
 );
+const SongDetails = React.lazy(() => import('@Components/Song/SongDetails'));
 const SongListDetails = React.lazy(
 	() => import('@Components/SongList/SongListDetails'),
 );
@@ -94,7 +95,8 @@ const App = (): React.ReactElement => {
 
 								<Route path="E/:id/*" element={<EventDetails />} />
 								<Route path="Es/:id/*" element={<EventSeriesDetails />} />
-								<Route path="L/:id" element={<SongListDetails />} />
+								<Route path="L/:id/*" element={<SongListDetails />} />
+								<Route path="S/:id/*" element={<SongDetails />} />
 								<Route path="T/:id/*" element={<TagDetails />} />
 
 								<Route path="*" element={<ErrorNotFound />} />
