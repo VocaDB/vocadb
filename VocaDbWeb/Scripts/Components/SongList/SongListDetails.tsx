@@ -22,7 +22,6 @@ import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import SongTypesDropdownKnockout from '@Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import TagList from '@Components/Shared/Partials/TagList';
 import TagsEdit from '@Components/Shared/Partials/TagsEdit';
-import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useScript from '@Components/useScript';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
@@ -125,7 +124,6 @@ const SongListDetailsLayout = observer(
 		useVocaDbTitle(pageTitle, ready);
 
 		useStoreWithPaging(songListStore);
-		useRouteParamsTracking(songListStore, ready);
 
 		useScript('/Scripts/soundcloud-api.js');
 		useScript('https://www.youtube.com/iframe_api');

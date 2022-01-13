@@ -1,5 +1,4 @@
 import Breadcrumb from '@Bootstrap/Breadcrumb';
-import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
@@ -30,7 +29,6 @@ const DiscussionFolders = observer(
 		}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
 
 		useStoreWithPaging(discussionIndexStore);
-		useRouteParamsTracking(discussionIndexStore, ready);
 
 		React.useEffect(() => {
 			discussionIndexStore.updateResults(true);

@@ -1,5 +1,4 @@
 import Layout from '@Components/Shared/Layout';
-import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import UserRepository from '@Repositories/UserRepository';
@@ -24,7 +23,6 @@ const UserIndex = (): React.ReactElement => {
 	useVocaDbTitle(title, ready);
 
 	useStoreWithPaging(listUsersStore);
-	useRouteParamsTracking(listUsersStore, ready);
 
 	return (
 		<Layout title={title}>

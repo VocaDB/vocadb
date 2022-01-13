@@ -2,7 +2,6 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import Layout from '@Components/Shared/Layout';
 import SongListsKnockout from '@Components/Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
-import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
@@ -51,7 +50,6 @@ const SongListFeatured = observer(
 		useVocaDbTitle(title, ready);
 
 		useStoreWithUpdateResults(featuredSongListsStore);
-		useRouteParamsTracking(featuredSongListsStore, ready);
 
 		return (
 			<Layout

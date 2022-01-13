@@ -5,7 +5,6 @@ import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Layout from '@Components/Shared/Layout';
 import PVPreviewKnockout from '@Components/Shared/Partials/Song/PVPreviewKnockout';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
-import useRouteParamsTracking from '@Components/useRouteParamsTracking';
 import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import SongVoteRating from '@Models/SongVoteRating';
@@ -47,7 +46,6 @@ const SongRankings = observer(
 		useVocaDbTitle(vdb.values.rankingsTitle, true);
 
 		useStoreWithUpdateResults(rankingsStore);
-		useRouteParamsTracking(rankingsStore, true);
 
 		return (
 			<Layout
