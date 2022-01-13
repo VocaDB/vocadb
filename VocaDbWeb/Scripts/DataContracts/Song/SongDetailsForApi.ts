@@ -32,6 +32,7 @@ export default class SongDetailsForApi {
 	public readonly bands: ArtistForSongContract[];
 	public readonly browsedAlbumId?: number;
 	public readonly canEditPersonalDescription: boolean;
+	public readonly canRemoveTagUsages: boolean;
 	public readonly commentCount: number;
 	public readonly createDate: Date;
 	public readonly deleted: boolean;
@@ -82,6 +83,7 @@ export default class SongDetailsForApi {
 		this.artistString = contract.artistString;
 		this.browsedAlbumId = contract.album?.id;
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
+		this.canRemoveTagUsages = contract.canRemoveTagUsages;
 		this.commentCount = contract.commentCount;
 		this.createDate = contract.createDate;
 		this.deleted = contract.deleted;

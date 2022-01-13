@@ -29,6 +29,7 @@ export default interface SongDetailsContract {
 	artists: ArtistForSongContract[];
 	artistString?: string;
 	canEditPersonalDescription: boolean;
+	canRemoveTagUsages: boolean;
 	commentCount: number;
 	createDate: Date;
 	deleted: boolean;

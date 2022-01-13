@@ -49,6 +49,9 @@ namespace VocaDb.Model.DataContracts.Songs
 		public bool CanEditPersonalDescription { get; init; }
 
 		[DataMember]
+		public bool CanRemoveTagUsages { get; init; }
+
+		[DataMember]
 		public int CommentCount { get; set; }
 
 		[DataMember]
@@ -180,6 +183,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			ArtistString = song.ArtistString[languagePreference];
 			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
+			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);

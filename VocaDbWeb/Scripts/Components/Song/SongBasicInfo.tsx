@@ -439,6 +439,18 @@ const SongBasicInfo = observer(
 									>
 										{t('ViewRes:EntryDetails.EditTags')}
 									</JQueryUIButton>
+									{model.canRemoveTagUsages /* TODO: Use LoginManager. */ && (
+										<>
+											{' '}
+											<JQueryUIButton
+												as="a"
+												href={`/Song/ManageTagUsages/${model.id}`}
+												icons={{ primary: 'ui-icon-wrench' }}
+											>
+												{t('ViewRes:EntryDetails.ManageTags')}
+											</JQueryUIButton>
+										</>
+									)}
 								</div>
 							</td>
 						</tr>
