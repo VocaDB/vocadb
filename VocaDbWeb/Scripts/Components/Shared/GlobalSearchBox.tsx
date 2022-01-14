@@ -126,11 +126,8 @@ const GlobalSearchBox = observer(
 						});
 					}}
 				/>
-
 				<Navbar.Toggle />
-
 				<Navbar.Brand href={'/'}>{vdb.values.siteName}</Navbar.Brand>
-
 				<div className="input-prepend input-append navbar-searchBox">
 					<Dropdown as={ButtonGroup}>
 						<Dropdown.Toggle variant="info" href="#">
@@ -181,8 +178,7 @@ const GlobalSearchBox = observer(
 					>
 						<i className="icon-search"></i>
 					</Button>
-				</div>
-
+				</div>{' '}
 				<Dropdown className="navbar-languageBar" as={ButtonGroup}>
 					<Dropdown.Toggle
 						variant="info"
@@ -277,82 +273,86 @@ const GlobalSearchBox = observer(
 						))}
 					</Dropdown.Menu>
 				</Dropdown>
-
 				{vdb.values.loggedUser && (
-					<Dropdown
-						className="navbar-languageBar"
-						onToggle={topBarStore.ensureMessagesLoaded}
-						as={ButtonGroup}
-					>
-						<Dropdown.Toggle
-							variant="info"
-							href="#"
-							className="navbar-languageBtn"
+					<>
+						{' '}
+						<Dropdown
+							className="navbar-languageBar"
+							onToggle={topBarStore.ensureMessagesLoaded}
+							as={ButtonGroup}
 						>
-							<i className="icon-envelope"></i>
-							{vdb.values.loggedUser.unreadMessagesCount > 0 && (
-								<>
-									{' '}
-									<span className="badge badge-small badge-important">
-										{vdb.values.loggedUser.unreadMessagesCount}
-									</span>
-								</>
-							)}{' '}
-							<span className="caret"></span>
-						</Dropdown.Toggle>
+							<Dropdown.Toggle
+								variant="info"
+								href="#"
+								className="navbar-languageBtn"
+							>
+								<i className="icon-envelope"></i>
+								{vdb.values.loggedUser.unreadMessagesCount > 0 && (
+									<>
+										{' '}
+										<span className="badge badge-small badge-important">
+											{vdb.values.loggedUser.unreadMessagesCount}
+										</span>
+									</>
+								)}{' '}
+								<span className="caret"></span>
+							</Dropdown.Toggle>
 
-						<Dropdown.Menu>
-							{vdb.values.loggedUser.unreadMessagesCount > 0 &&
-								!topBarStore.isLoaded && (
-									<Dropdown.ItemText>
-										{t('ViewRes:Shared.Loading')}
-									</Dropdown.ItemText>
-								)}
-							{topBarStore.unreadMessages.map((unreadMessage) => (
-								<Dropdown.Item
-									href={`/User/Messages?messageId=${unreadMessage.id}`}
-									key={unreadMessage.id}
-								>
-									<div className="media">
-										<div className="pull-left media-image-usermessage">
-											{unreadMessage.sender ? (
-												// eslint-disable-next-line react/jsx-pascal-case
-												<ProfileIconKnockout_ImageSize
-													imageSize={ImageSize.SmallThumb}
-													user={unreadMessage.sender}
-													size={40}
-												/>
-											) : (
-												<img src="/Content/vocadb_40.png" alt="Notification" />
-											)}
+							<Dropdown.Menu>
+								{vdb.values.loggedUser.unreadMessagesCount > 0 &&
+									!topBarStore.isLoaded && (
+										<Dropdown.ItemText>
+											{t('ViewRes:Shared.Loading')}
+										</Dropdown.ItemText>
+									)}
+								{topBarStore.unreadMessages.map((unreadMessage) => (
+									<Dropdown.Item
+										href={`/User/Messages?messageId=${unreadMessage.id}`}
+										key={unreadMessage.id}
+									>
+										<div className="media">
+											<div className="pull-left media-image-usermessage">
+												{unreadMessage.sender ? (
+													// eslint-disable-next-line react/jsx-pascal-case
+													<ProfileIconKnockout_ImageSize
+														imageSize={ImageSize.SmallThumb}
+														user={unreadMessage.sender}
+														size={40}
+													/>
+												) : (
+													<img
+														src="/Content/vocadb_40.png"
+														alt="Notification"
+													/>
+												)}
+											</div>
+											<div className="media-body media-body-usermessage">
+												<span>
+													{unreadMessage.sender
+														? `${unreadMessage.sender?.name} -`
+														: ''}
+												</span>{' '}
+												<small>{unreadMessage.createdFormatted}</small>
+												<br />
+												<span>{unreadMessage.subject}</span>
+											</div>
 										</div>
-										<div className="media-body media-body-usermessage">
-											<span>
-												{unreadMessage.sender
-													? `${unreadMessage.sender?.name} -`
-													: ''}
-											</span>{' '}
-											<small>{unreadMessage.createdFormatted}</small>
-											<br />
-											<span>{unreadMessage.subject}</span>
-										</div>
-									</div>
+									</Dropdown.Item>
+								))}
+								{topBarStore.isLoaded &&
+									topBarStore.unreadMessages.length === 0 && (
+										<Dropdown.ItemText>
+											{t('ViewRes:TopBar.NoUnreadMessages')}
+										</Dropdown.ItemText>
+									)}
+								<Dropdown.Divider />
+								<Dropdown.Item href={'/User/Messages'}>
+									{t('ViewRes:TopBar.ViewAllMessages')}
 								</Dropdown.Item>
-							))}
-							{topBarStore.isLoaded &&
-								topBarStore.unreadMessages.length === 0 && (
-									<Dropdown.ItemText>
-										{t('ViewRes:TopBar.NoUnreadMessages')}
-									</Dropdown.ItemText>
-								)}
-							<Dropdown.Divider />
-							<Dropdown.Item href={'/User/Messages'}>
-								{t('ViewRes:TopBar.ViewAllMessages')}
-							</Dropdown.Item>
-						</Dropdown.Menu>
-					</Dropdown>
+							</Dropdown.Menu>
+						</Dropdown>
+					</>
 				)}
-
 				<Navbar.Collapse>
 					<MainNavigationItems />
 				</Navbar.Collapse>
