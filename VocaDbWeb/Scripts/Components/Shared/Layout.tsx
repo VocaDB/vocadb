@@ -24,7 +24,12 @@ const Layout = ({
 			{title && (
 				<h1 className="page-title">
 					{title}
-					{subtitle && <small>&nbsp;{subtitle}</small>}
+					{subtitle && (
+						<>
+							{' '}
+							<small>&nbsp;{subtitle}</small>
+						</>
+					)}
 				</h1>
 			)}
 
