@@ -144,9 +144,9 @@ const PVList = observer(
 						<Button
 							className={classNames(
 								'pvLink',
-								pv.disabled && 'disabled',
 								songDetailsStore.selectedPvId === pv.id && 'active',
 							)}
+							disabled={pv.disabled}
 							href="#"
 							id={`pv_${pv.id}`}
 							onClick={(): void =>
