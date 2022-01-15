@@ -42,6 +42,39 @@ const JQueryUINav = (uncontrolledProps: any): React.ReactElement => {
 	);
 };
 
+interface JQueryUINavItemComponentProps {
+	active: boolean;
+	as?: React.ElementType;
+	children?: React.ReactNode;
+}
+
+export const JQueryUINavItemComponent = React.memo(
+	({
+		active,
+		as: Component = 'li',
+		children,
+		...props
+	}: JQueryUINavItemComponentProps): React.ReactElement => {
+		const [hover, setHover] = React.useState(false);
+
+		return (
+			<Component
+				{...props}
+				className={classNames(
+					'ui-state-default',
+					'ui-corner-top',
+					active && ['ui-tabs-active', 'ui-state-active'],
+					hover && 'ui-state-hover',
+				)}
+				onMouseEnter={(): void => setHover(true)}
+				onMouseLeave={(): void => setHover(false)}
+			>
+				{children}
+			</Component>
+		);
+	},
+);
+
 const JQueryUINavItem = ({
 	active,
 	as: Component,
@@ -55,23 +88,14 @@ const JQueryUINavItem = ({
 		...props,
 	});
 
-	const [hover, setHover] = React.useState(false);
-
 	return (
-		<Component
+		<JQueryUINavItemComponent
 			{...props}
 			{...navItemProps}
-			className={classNames(
-				'ui-state-default',
-				'ui-corner-top',
-				meta.isActive && ['ui-tabs-active', 'ui-state-active'],
-				hover && 'ui-state-hover',
-			)}
-			onMouseEnter={(): void => setHover(true)}
-			onMouseLeave={(): void => setHover(false)}
+			active={meta.isActive}
 		>
 			{children}
-		</Component>
+		</JQueryUINavItemComponent>
 	);
 };
 

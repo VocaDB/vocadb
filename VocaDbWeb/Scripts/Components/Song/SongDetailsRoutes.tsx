@@ -1,7 +1,7 @@
 import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
+import { JQueryUINavItemComponent } from '@JQueryUI/JQueryUITabs';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import SongDetailsStore from '@Stores/Song/SongDetailsStore';
-import classNames from 'classnames';
 import _ from 'lodash';
 import qs from 'qs';
 import React from 'react';
@@ -14,35 +14,6 @@ import SongDiscussion from './SongDiscussion';
 import SongLyrics from './SongLyrics';
 import SongRelated from './SongRelated';
 import SongShare from './SongShare';
-
-interface SongDetailsNavItemProps {
-	active: boolean;
-	href: string;
-	children?: React.ReactNode;
-}
-
-const SongDetailsNavItem = React.memo(
-	({ active, href, children }: SongDetailsNavItemProps): React.ReactElement => {
-		const [hover, setHover] = React.useState(false);
-
-		return (
-			<li
-				className={classNames(
-					'ui-state-default',
-					'ui-corner-top',
-					active && ['ui-tabs-active', 'ui-state-active'],
-					hover && 'ui-state-hover',
-				)}
-				onMouseEnter={(): void => setHover(true)}
-				onMouseLeave={(): void => setHover(false)}
-			>
-				<Link to={href} className="ui-tabs-anchor" role="presentation">
-					{children}
-				</Link>
-			</li>
-		);
-	},
-);
 
 interface SongDetailsTabsProps {
 	model: SongDetailsForApi;
@@ -99,44 +70,47 @@ export const SongDetailsTabs = React.memo(
 					className="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"
 					role="tablist"
 				>
-					<SongDetailsNavItem
-						active={tab === 'basicInfo'}
-						href={`${EntryUrlMapper.details_song(model.contract.song)}`}
-					>
-						{t('ViewRes:EntryDetails.BasicInfoTab')}
-					</SongDetailsNavItem>
+					<JQueryUINavItemComponent active={tab === 'basicInfo'}>
+						<Link to={`${EntryUrlMapper.details_song(model.contract.song)}`}>
+							{t('ViewRes:EntryDetails.BasicInfoTab')}
+						</Link>
+					</JQueryUINavItemComponent>
 					{model.lyrics.length > 0 && (
-						<SongDetailsNavItem
-							active={tab === 'lyrics'}
-							href={`${EntryUrlMapper.details_song(
-								model.contract.song,
-							)}/lyrics?${qs.stringify({
-								lyricsId: songDetailsStore.selectedLyricsId,
-							})}`}
-						>
-							{t('ViewRes.Song:Details.Lyrics')} {lyricsLanguages}
-						</SongDetailsNavItem>
+						<JQueryUINavItemComponent active={tab === 'lyrics'}>
+							<Link
+								to={`${EntryUrlMapper.details_song(
+									model.contract.song,
+								)}/lyrics?${qs.stringify({
+									lyricsId: songDetailsStore.selectedLyricsId,
+								})}`}
+							>
+								{t('ViewRes.Song:Details.Lyrics')} {lyricsLanguages}
+							</Link>
+						</JQueryUINavItemComponent>
 					)}
-					<SongDetailsNavItem
-						active={tab === 'discussion'}
-						href={`${EntryUrlMapper.details_song(
-							model.contract.song,
-						)}/discussion`}
-					>
-						{t('ViewRes:EntryDetails.DiscussionTab')} ({model.commentCount})
-					</SongDetailsNavItem>
-					<SongDetailsNavItem
-						active={tab === 'related'}
-						href={`${EntryUrlMapper.details_song(model.contract.song)}/related`}
-					>
-						{t('ViewRes.Song:Details.RelatedSongs')}
-					</SongDetailsNavItem>
-					<SongDetailsNavItem
-						active={tab === 'share'}
-						href={`${EntryUrlMapper.details_song(model.contract.song)}/share`}
-					>
-						{t('ViewRes.Song:Details.Share')}
-					</SongDetailsNavItem>
+					<JQueryUINavItemComponent active={tab === 'discussion'}>
+						<Link
+							to={`${EntryUrlMapper.details_song(
+								model.contract.song,
+							)}/discussion`}
+						>
+							{t('ViewRes:EntryDetails.DiscussionTab')} ({model.commentCount})
+						</Link>
+					</JQueryUINavItemComponent>
+					<JQueryUINavItemComponent active={tab === 'related'}>
+						<Link
+							to={`${EntryUrlMapper.details_song(model.contract.song)}/related`}
+						>
+							{t('ViewRes.Song:Details.RelatedSongs')}
+						</Link>
+					</JQueryUINavItemComponent>
+					<JQueryUINavItemComponent active={tab === 'share'}>
+						<Link
+							to={`${EntryUrlMapper.details_song(model.contract.song)}/share`}
+						>
+							{t('ViewRes.Song:Details.Share')}
+						</Link>
+					</JQueryUINavItemComponent>
 				</ul>
 
 				<div
