@@ -19,6 +19,7 @@ mix
 	.webpackConfig({
 		output: {
 			library: 'app',
+			chunkFilename: 'bundles/[name].[chunkhash].js',
 		},
 	})
 	.options({
