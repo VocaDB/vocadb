@@ -55,7 +55,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import '../../../wwwroot/Content/Styles/songlist.css';
+import '../../../wwwroot/Content/Styles/songlist.less';
 
 const loginManager = new LoginManager(vdb.values);
 

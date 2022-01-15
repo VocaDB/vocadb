@@ -30,7 +30,7 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
-import '../../../wwwroot/Content/Styles/songlist.css';
+import '../../../wwwroot/Content/Styles/songlist.less';
 import AlbumSearchList from './Partials/AlbumSearchList';
 import AlbumSearchOptions from './Partials/AlbumSearchOptions';
 import AnythingSearchList from './Partials/AnythingSearchList';
