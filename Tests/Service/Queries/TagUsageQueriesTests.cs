@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
@@ -28,16 +29,32 @@ namespace VocaDb.Tests.Service.Queries
 		private TagUsageQueries _queries;
 		private User _user;
 
-		private void AddSongTags(int entryId, params TagBaseContract[] tags)
+		private Task AddSongTags(int entryId, params TagBaseContract[] tags)
 		{
-			_queries.AddTags<Song, SongTagUsage>(entryId, tags, false, _repository, new FakeEntryLinkFactory(), new EnumTranslations(),
-				song => song.Tags, (song, ctx) => new SongTagUsageFactory(ctx, song));
+			return _queries.AddTags<Song, SongTagUsage>(
+				entryId: entryId,
+				tags: tags,
+				onlyAdd: false,
+				repository: _repository,
+				entryLinkFactory: new FakeEntryLinkFactory(),
+				enumTranslations: new EnumTranslations(),
+				tagFunc: song => song.Tags,
+				tagUsageFactoryFactory: (song, ctx) => new SongTagUsageFactory(ctx, song)
+			);
 		}
 
-		private void AddSongListTags(int entryId, params TagBaseContract[] tags)
+		private Task AddSongListTags(int entryId, params TagBaseContract[] tags)
 		{
-			_queries.AddTags<SongList, SongListTagUsage>(entryId, tags, false, _repository, new FakeEntryLinkFactory(), new EnumTranslations(),
-				songList => songList.Tags, (songList, ctx) => new SongListTagUsageFactory(ctx, songList));
+			return _queries.AddTags<SongList, SongListTagUsage>(
+				entryId: entryId,
+				tags: tags,
+				onlyAdd: false,
+				repository: _repository,
+				entryLinkFactory: new FakeEntryLinkFactory(),
+				enumTranslations: new EnumTranslations(),
+				tagFunc: songList => songList.Tags,
+				tagUsageFactoryFactory: (songList, ctx) => new SongListTagUsageFactory(ctx, songList)
+			);
 		}
 
 		private TagBaseContract Contract(int id)
@@ -60,11 +77,11 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddNewTagByName()
+		public async Task AddNewTagByName()
 		{
 			var tags = new[] { Contract("vocarock") };
 
-			AddSongTags(_entry.Id, tags);
+			await AddSongTags(_entry.Id, tags);
 
 			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
@@ -77,11 +94,11 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddExistingTagByName()
+		public async Task AddExistingTagByName()
 		{
 			_repository.Save(CreateEntry.Tag("vocarock", 39));
 
-			AddSongTags(_entry.Id, Contract("vocarock"));
+			await AddSongTags(_entry.Id, Contract("vocarock"));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
 			entryTags.Length.Should().Be(1, "Number of tags");
@@ -89,11 +106,11 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddTagById()
+		public async Task AddTagById()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("vocarock"));
 
-			AddSongTags(_entry.Id, Contract(tag.Id));
+			await AddSongTags(_entry.Id, Contract(tag.Id));
 
 			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
@@ -106,12 +123,12 @@ namespace VocaDb.Tests.Service.Queries
 		/// Add tag based on translated name
 		/// </summary>
 		[TestMethod]
-		public void AddTagByTranslation()
+		public async Task AddTagByTranslation()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
 
-			AddSongTags(_entry.Id, Contract("ロック"));
+			await AddSongTags(_entry.Id, Contract("ロック"));
 
 			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
@@ -123,14 +140,14 @@ namespace VocaDb.Tests.Service.Queries
 		/// Add renamed tag by name
 		/// </summary>
 		[TestMethod]
-		public void AddNewTag_TagIsRenamed()
+		public async Task AddNewTag_TagIsRenamed()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("vocarock", 39));
 			tag.Names.First().Value = "rock";
 			tag.Names.UpdateSortNames();
 
 			// Attempting to add tag "vocarock". The "vocarock" tag was renamed as "rock" so this is a new tag.
-			AddSongTags(_entry.Id, Contract("vocarock"));
+			await AddSongTags(_entry.Id, Contract("vocarock"));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
 			entryTags.Length.Should().Be(1, "Number of tags");
@@ -139,7 +156,7 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void SkipDuplicates()
+		public async Task SkipDuplicates()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
@@ -150,7 +167,7 @@ namespace VocaDb.Tests.Service.Queries
 				Contract("ロック")
 			};
 
-			AddSongTags(_entry.Id, tags);
+			await AddSongTags(_entry.Id, tags);
 
 			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
@@ -159,7 +176,7 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddMultiple()
+		public async Task AddMultiple()
 		{
 			var tag1 = _repository.Save(CreateEntry.Tag("vocarock"));
 
@@ -168,7 +185,7 @@ namespace VocaDb.Tests.Service.Queries
 				new TagBaseContract { Name = "power metal" }
 			};
 
-			AddSongTags(_entry.Id, tags);
+			await AddSongTags(_entry.Id, tags);
 
 			var entryTags = _entry.Tags.Tags.ToArray();
 			entryTags.Length.Should().Be(2, "Number of applied tags");
@@ -178,17 +195,17 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddAndRemoveMultiple()
+		public async Task AddAndRemoveMultiple()
 		{
 			var tag1 = _repository.Save(CreateEntry.Tag("vocarock"));
 
-			AddSongTags(_entry.Id, new TagBaseContract { Id = tag1.Id });
+			await AddSongTags(_entry.Id, new TagBaseContract { Id = tag1.Id });
 
 			var tags = new[] {
 				new TagBaseContract { Name = "power metal" }
 			};
 
-			AddSongTags(_entry.Id, tags);
+			await AddSongTags(_entry.Id, tags);
 
 			var entryTags = _entry.Tags.Tags.ToArray();
 			entryTags.Length.Should().Be(1, "Number of tags");
@@ -213,13 +230,13 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications()
+		public async Task AddTag_SendNotifications()
 		{
 			var followingUser = _repository.Save(CreateEntry.User(name: "Rin"));
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			_repository.Save(followingUser.AddTag(tag));
 
-			AddSongTags(_entry.Id, Contract(tag.Id));
+			await AddSongTags(_entry.Id, Contract(tag.Id));
 
 			var message = _repository.List<UserMessage>().FirstOrDefault();
 			message.Should().NotBeNull("Message was sent");
@@ -227,36 +244,36 @@ namespace VocaDb.Tests.Service.Queries
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications_IgnoreSelf()
+		public async Task AddTag_SendNotifications_IgnoreSelf()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			_repository.Save(_user.AddTag(tag));
 
-			AddSongTags(_entry.Id, Contract(tag.Id));
+			await AddSongTags(_entry.Id, Contract(tag.Id));
 
 			_repository.List<UserMessage>().Count.Should().Be(0, "No message was sent");
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications_IgnorePersonalSongList()
+		public async Task AddTag_SendNotifications_IgnorePersonalSongList()
 		{
 			var followingUser = _repository.Save(CreateEntry.User(name: "Rin"));
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			_repository.Save(followingUser.AddTag(tag));
 
 			var list = _repository.Save(new SongList("Mikulist", _user));
-			AddSongListTags(list.Id, Contract(tag.Id));
+			await AddSongListTags(list.Id, Contract(tag.Id));
 
 			_repository.List<UserMessage>().Count.Should().Be(0, "No message was sent");
 		}
 
 		[TestMethod]
-		public void SkipInvalidTarget()
+		public async Task SkipInvalidTarget()
 		{
 			_existingTag.Targets = TagTargetTypes.Album;
 			var tag = _repository.Save(CreateEntry.Tag("vocarock", 39));
 
-			AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id));
+			await AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
 			entryTags.Length.Should().Be(1, "Number of tags");
