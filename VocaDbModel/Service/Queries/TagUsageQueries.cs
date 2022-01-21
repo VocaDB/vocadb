@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +20,7 @@ namespace VocaDb.Model.Service.Queries
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext _permissionContext;
 
-		private bool IsValid(TagBaseContract contract)
+		private bool IsValid(TagBaseContract? contract)
 		{
 			if (contract == null)
 				return false;
@@ -43,14 +41,16 @@ namespace VocaDb.Model.Service.Queries
 			_permissionContext = permissionContext;
 		}
 
-		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId,
+		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(
+			int entryId,
 			TagBaseContract[] tags,
 			bool onlyAdd,
 			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations,
 			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory)
+			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory
+		)
 			where TEntry : class, IEntryWithNames, IEntryWithTags
 			where TTag : TagUsage
 		{
@@ -61,7 +61,7 @@ namespace VocaDb.Model.Service.Queries
 			tags = tags.Where(IsValid).ToArray();
 
 			if (onlyAdd && !tags.Any())
-				return new TagUsageForApiContract[0];
+				return Array.Empty<TagUsageForApiContract>();
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
