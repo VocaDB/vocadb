@@ -276,5 +276,11 @@ namespace VocaDb.Model.Domain.Security
 		{
 			VerifyAccess(permissionContext, entry, CanEdit);
 		}
+
+		private static bool CanEditTagsForEntry(IUserPermissionContext permissionContext, IEntryWithStatus entry) =>
+			permissionContext.HasPermission(PermissionToken.EditTags) && CanEdit(permissionContext, entry);
+
+		public static void VerifyEditTagsForEntry(IUserPermissionContext permissionContext, IEntryWithStatus entry) =>
+			VerifyAccess(permissionContext, entry, CanEditTagsForEntry);
 	}
 }
