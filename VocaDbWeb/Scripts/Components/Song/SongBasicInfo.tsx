@@ -432,7 +432,12 @@ const SongBasicInfo = observer(
 								<div>
 									<JQueryUIButton
 										as={SafeAnchor}
-										disabled={!loginManager.canEditTags}
+										disabled={
+											!loginManager.canEditTagsForEntry({
+												...model.contract.song,
+												entryType: EntryType[EntryType.Song],
+											})
+										}
 										icons={{ primary: 'ui-icon-tag' }}
 										onClick={songDetailsStore.tagsEditStore.show}
 										href="#"
