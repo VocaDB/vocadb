@@ -70,8 +70,10 @@ namespace VocaDb.Model.Domain.Security
 			if (IsDirectlyVerifiedFor(userContext, entry))
 				return true;
 
-			var entryWithArtists = entry as IEntryWithArtists;
-			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => !ArtistHelper.IsVoiceSynthesizer(a.ArtistType) && IsDirectlyVerifiedFor(userContext, a));
+			return
+				entry is IEntryWithArtists entryWithArtists &&
+				entryWithArtists.ArtistList.Any(a => !ArtistHelper.IsVoiceSynthesizer(a.ArtistType) &&
+				IsDirectlyVerifiedFor(userContext, a));
 		}
 
 		/// <summary>
