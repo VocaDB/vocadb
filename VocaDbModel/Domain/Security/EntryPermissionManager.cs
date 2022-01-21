@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -45,17 +43,15 @@ namespace VocaDb.Model.Domain.Security
 		/// <param name="userContext">User context. Cannot be null.</param>
 		/// <param name="entry">Entry to be checked. Can be null.</param>
 		/// <returns>True if <paramref name="entry"/> is an artist entry and <paramref name="userContext"/> is a verified owner of that entry.</returns>
-		private static bool IsDirectlyVerifiedFor(IUserPermissionContext userContext, IEntryBase entry)
+		private static bool IsDirectlyVerifiedFor(IUserPermissionContext userContext, IEntryBase? entry)
 		{
 			return
-				entry != null
-				&& entry.EntryType == EntryType.Artist
-				&& userContext.IsLoggedIn
-				&& userContext.LoggedUser.VerifiedArtist
-				&& userContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+				entry != null &&
+				entry.EntryType == EntryType.Artist && userContext.IsLoggedIn &&
+				userContext.LoggedUser.VerifiedArtist &&
+				userContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 		}
 
-#nullable enable
 		/// <summary>
 		/// Tests that the logged in user is a (transitive) verified owner of an entry.
 		/// </summary>
@@ -118,7 +114,6 @@ namespace VocaDb.Model.Domain.Security
 
 			return StatusSet.Empty;
 		}
-#nullable disable
 
 		public static bool CanDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
 			where TEntry : IEntryWithVersions, IEntryWithStatus
@@ -181,7 +176,6 @@ namespace VocaDb.Model.Domain.Security
 		///	}
 
 
-#nullable enable
 		/// <summary>
 		/// Tests whether the user can edit a specific entry.
 		/// The permission depends on both the user's global permissions and entry status.
@@ -223,14 +217,13 @@ namespace VocaDb.Model.Domain.Security
 
 			return CanEditGroupTo(permissionContext, groupId);
 		}
-#nullable disable
 
 		public static bool CanManageFeaturedLists(IUserPermissionContext permissionContext)
 		{
 			return permissionContext.HasPermission(PermissionToken.EditFeaturedLists);
 		}
 
-		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase entry)
+		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase? entry)
 		{
 			if (!permissionContext.IsLoggedIn)
 				return false;
@@ -241,7 +234,6 @@ namespace VocaDb.Model.Domain.Security
 			return IsVerifiedFor(permissionContext, entry);
 		}
 
-#nullable enable
 		/// <summary>
 		/// Verifies that user passes an access check for an entry.
 		/// </summary>
@@ -257,7 +249,6 @@ namespace VocaDb.Model.Domain.Security
 			if (!accessCheck(permissionContext, entry))
 				throw new NotAllowedException();
 		}
-#nullable disable
 
 		/// <summary>
 		/// Verifies that user is allowed to delete an entry.
