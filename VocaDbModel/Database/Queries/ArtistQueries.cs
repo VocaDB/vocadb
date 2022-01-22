@@ -58,11 +58,12 @@ namespace VocaDb.Model.Database.Queries
 			public TopStatContract<TranslatedArtistContract>[] TopVocaloids { get; set; }
 		}
 
+#nullable enable
 		/// <summary>
 		/// Advanced/less important statistics.
 		/// These are cached for 24 hours.
 		/// </summary>
-		private AdvancedArtistStatsContract GetAdvancedStats(IDatabaseContext<Artist> ctx, Artist artist)
+		private AdvancedArtistStatsContract? GetAdvancedStats(IDatabaseContext<Artist> ctx, Artist artist)
 		{
 			if (artist.ArtistType != ArtistType.Producer && artist.ArtistType != ArtistType.CoverArtist)
 				return null;
@@ -93,7 +94,7 @@ namespace VocaDb.Model.Database.Queries
 		/// Stats related to logged in user.
 		/// These stats are cached for 1 hour.
 		/// </summary>
-		private PersonalArtistStatsContract GetPersonalArtistStats(IDatabaseContext<Artist> ctx, Artist artist)
+		private PersonalArtistStatsContract? GetPersonalArtistStats(IDatabaseContext<Artist> ctx, Artist artist)
 		{
 			if (!PermissionContext.IsLoggedIn)
 				return null;
@@ -155,6 +156,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 			});
 		}
+#nullable disable
 
 		private ArtistMergeRecord GetMergeRecord(IDatabaseContext<Artist> session, int sourceId)
 		{
@@ -171,7 +173,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations,
 			IAggregatedEntryImageUrlFactory imageUrlFactory,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -341,6 +344,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, _userIconFactory, true)).ToArray());
 		}
 
+#nullable enable
 		public ArtistDetailsContract GetDetails(int id, string hostname)
 		{
 			return HandleQuery(session =>
@@ -394,6 +398,74 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
+
+		public ArtistDetailsForApiContract GetDetailsForApi(int id, string hostname)
+		{
+			return HandleQuery(session =>
+			{
+				var artist = session.Load(id);
+
+				var contract = new ArtistDetailsForApiContract(
+					artist: artist,
+					languagePreference: LanguagePreference,
+					userIconFactory: _userIconFactory,
+					userContext: PermissionContext,
+					imageStore: _imageUrlFactory,
+					artistTypeTag: new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType)
+				)
+				{
+					CommentCount = Comments(session).GetCount(id),
+					SharedStats = GetSharedArtistStats(session, artist),
+					PersonalStats = GetPersonalArtistStats(session, artist),
+					AdvancedStats = GetAdvancedStats(session, artist),
+				};
+
+				if (PermissionContext.IsLoggedIn)
+				{
+					var subscription = session.OfType<ArtistForUser>()
+						.Query()
+						.FirstOrDefault(s => s.Artist.Id == id && s.User.Id == PermissionContext.LoggedUserId);
+
+					if (subscription is not null)
+					{
+						contract.IsAdded = true;
+						contract.EmailNotifications = subscription.EmailNotifications;
+						contract.SiteNotifications = subscription.SiteNotifications;
+					}
+				}
+
+				var relations = new ArtistRelationsQuery(session, LanguagePreference, _cache, _imageUrlFactory).GetRelations(artist, ArtistRelationsFields.All);
+				contract.LatestAlbums = relations.LatestAlbums;
+				contract.TopAlbums = relations.PopularAlbums;
+				contract.LatestSongs = relations.LatestSongs;
+				contract.TopSongs = relations.PopularSongs;
+				contract.LatestEvents = relations.LatestEvents;
+
+				// If song and album counts are out of date and we know there's more albums/songs than that, update counts.
+				contract.SharedStats.AlbumCount = Math.Max(contract.SharedStats.AlbumCount, contract.LatestAlbums.Length + contract.TopAlbums.Length);
+				contract.SharedStats.SongCount = Math.Max(contract.SharedStats.SongCount, contract.LatestSongs.Length + contract.TopSongs.Length);
+
+				contract.LatestComments = Comments(session).GetList(entryId: id, count: 3);
+
+				if (artist.Deleted)
+				{
+					var mergeEntry = GetMergeRecord(session, id);
+					contract.MergedTo = mergeEntry is not null
+						? new ArtistForApiContract(
+							artist: mergeEntry.Target,
+							languagePreference: LanguagePreference,
+							thumbPersister: null,
+							includedFields: ArtistOptionalFields.None
+						)
+						: null;
+				}
+
+				new CreateEntryHitQuery().CreateHit(session, artist, hostname, PermissionContext, (a, agent) => new ArtistHit(a, agent));
+
+				return contract;
+			});
+		}
+#nullable disable
 
 		public T GetWithMergeRecord<T>(int id, Func<Artist, ArtistMergeRecord, IDatabaseContext<Artist>, T> fac)
 		{

@@ -20,6 +20,7 @@ const JQueryUIDialog = ({
 	modal,
 	title,
 	width,
+	height,
 	...props
 }: JQueryUIDialogProps): React.ReactElement => {
 	React.useEffect(() => {
@@ -49,6 +50,7 @@ const JQueryUIDialog = ({
 					role="dialog"
 					style={{
 						width: width,
+						height: height,
 						margin: '10vh auto',
 						top: 0,
 						left: '50%',

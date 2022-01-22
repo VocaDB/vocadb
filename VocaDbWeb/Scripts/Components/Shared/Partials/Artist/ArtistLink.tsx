@@ -4,6 +4,7 @@ import ArtistType from '@Models/Artists/ArtistType';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ArtistTypeLabel from './ArtistTypeLabel';
 
@@ -32,8 +33,8 @@ const ArtistLink = ({
 			{typeLabel && ' '}
 			{tooltip ? (
 				<ArtistToolTip
-					as="a"
-					href={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+					as={Link}
+					to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
 					title={artist.additionalNames}
 					id={artist.id}
 					className="artistLink"
@@ -41,13 +42,13 @@ const ArtistLink = ({
 					{name ?? artist.name}
 				</ArtistToolTip>
 			) : (
-				<a
-					href={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+				<Link
+					to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
 					title={artist.additionalNames}
 					className="artistLink"
 				>
 					{name ?? artist.name}
-				</a>
+				</Link>
 			)}
 			{releaseYear && artist.releaseDate && (
 				<>

@@ -23,10 +23,10 @@ const JQueryUIButton: BsPrefixRefForwardingComponent<
 	'button',
 	JQueryUIButtonProps
 > = React.forwardRef<HTMLButtonElement, JQueryUIButtonProps>(
-	({ as: Component, disabled, icons, ...props }, ref) => {
+	({ as: Component, disabled, icons, text, ...props }, ref) => {
 		const el = React.useRef<HTMLElement>(undefined!);
 		useImperativeHandle<HTMLElement, HTMLElement>(ref, () => el.current);
-		useJQueryUIButton(el, { disabled: disabled, icons: icons });
+		useJQueryUIButton(el, { disabled: disabled, icons: icons, text: text });
 
 		return <Component {...props} disabled={disabled} ref={el} />;
 	},

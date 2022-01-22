@@ -116,8 +116,10 @@ namespace VocaDb.Model.Service.Queries
 		public CommentForApiContract[] GetList(int entryId, int count)
 		{
 			return GetComments(entryId)
-				.OrderByDescending(c => c.Created).Take(count).ToArray()
-				.Select(c => new CommentForApiContract(c, _userIconFactory))
+				.OrderByDescending(c => c.Created)
+				.Take(count)
+				.ToArray()
+				.Select(c => new CommentForApiContract(comment: c, iconFactory: _userIconFactory))
 				.ToArray();
 		}
 

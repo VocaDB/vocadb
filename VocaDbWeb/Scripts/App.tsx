@@ -21,6 +21,9 @@ const ActivityEntryRoutes = React.lazy(
 	() => import('@Components/ActivityEntry/ActivityEntryRoutes'),
 );
 const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
+const ArtistRoutes = React.lazy(
+	() => import('@Components/Artist/ArtistRoutes'),
+);
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
 );
@@ -37,6 +40,9 @@ const TagRoutes = React.lazy(() => import('@Components/Tag/TagRoutes'));
 const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
 const VenueRoutes = React.lazy(() => import('@Components/Venue/VenueRoutes'));
 
+const ArtistDetails = React.lazy(
+	() => import('@Components/Artist/ArtistDetails'),
+);
 const EventDetails = React.lazy(() => import('@Components/Event/EventDetails'));
 const EventSeriesDetails = React.lazy(
 	() => import('@Components/Event/EventSeriesDetails'),
@@ -83,6 +89,7 @@ const App = (): React.ReactElement => {
 									element={<ActivityEntryRoutes />}
 								/>
 								<Route path="Admin/*" element={<AdminRoutes />} />
+								<Route path="Artist/*" element={<ArtistRoutes />} />
 								<Route path="discussion/*" element={<DiscussionRoutes />} />
 								<Route path="Event/*" element={<EventRoutes />} />
 								<Route path="Search/*" element={<SearchRoutes />} />
@@ -93,6 +100,7 @@ const App = (): React.ReactElement => {
 								<Route path="User/*" element={<UserRoutes />} />
 								<Route path="Venue/*" element={<VenueRoutes />} />
 
+								<Route path="Ar/:id/*" element={<ArtistDetails />} />
 								<Route path="E/:id/*" element={<EventDetails />} />
 								<Route path="Es/:id/*" element={<EventSeriesDetails />} />
 								<Route path="L/:id/*" element={<SongListDetails />} />

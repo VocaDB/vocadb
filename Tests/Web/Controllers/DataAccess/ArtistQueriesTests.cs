@@ -247,6 +247,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			result.EntryId.Should().Be(contract.Id, "EntryId");
 		}
 
+#nullable enable
 		[TestMethod]
 		public void GetDetails()
 		{
@@ -258,6 +259,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			hit.Should().NotBeNull("Hit was created");
 			hit.Agent.Should().Be(_user.Id, "Hit creator");
 		}
+
+		[TestMethod]
+		public void GetDetailsForApi()
+		{
+			var result = _queries.GetDetailsForApi(_artist.Id, "39.39.39.39");
+
+			result.Name.Should().Be("Tripshots", "Name");
+
+			var hit = _repository.List<ArtistHit>().FirstOrDefault(a => a.Entry.Equals(_artist));
+			hit.Should().NotBeNull("Hit was created");
+			hit.Agent.Should().Be(_user.Id, "Hit creator");
+		}
+#nullable disable
 
 		[TestMethod]
 		public void GetTagSuggestions()

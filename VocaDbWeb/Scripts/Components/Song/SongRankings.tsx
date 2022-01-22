@@ -43,13 +43,13 @@ const SongRankings = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Song']);
 
-		useVocaDbTitle(vdb.values.rankingsTitle, true);
+		useVocaDbTitle(vdb.resources.song.rankingsTitle, true);
 
 		useStoreWithUpdateResults(rankingsStore);
 
 		return (
 			<Layout
-				title={vdb.values.rankingsTitle}
+				title={vdb.resources.song.rankingsTitle}
 				parents={
 					<>
 						<Breadcrumb.Item
