@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Discussions;
@@ -15,7 +14,9 @@ namespace VocaDb.Model.Domain.Comments
 	{
 		private T _entry;
 
+#nullable disable
 		public GenericComment() { }
+#nullable enable
 
 		public GenericComment(T entry, string message, AgentLoginData loginData)
 			: base(message, loginData)
@@ -28,6 +29,7 @@ namespace VocaDb.Model.Domain.Comments
 		public virtual T EntryForComment
 		{
 			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -37,7 +39,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override CommentType CommentType { get; }
 
-#nullable enable
 		public virtual bool Equals(GenericComment<T>? another)
 		{
 			if (another == null)
@@ -66,7 +67,6 @@ namespace VocaDb.Model.Domain.Comments
 		{
 			return string.Format("comment [{0}] for " + Entry, Id);
 		}
-#nullable disable
 	}
 
 	public class AlbumComment : GenericComment<Album>
@@ -138,9 +138,11 @@ namespace VocaDb.Model.Domain.Comments
 
 	public class AlbumReview : GenericComment<Album>, IAlbumLink, IEntryWithIntId
 	{
+#nullable disable
 		public AlbumReview() { }
+#nullable enable
 
-		public AlbumReview(Album entry, string message, AgentLoginData loginData, string title, string languageCode)
+		public AlbumReview(Album entry, string message, AgentLoginData loginData, string? title, string? languageCode)
 			: base(entry, message, loginData)
 		{
 			Title = title ?? string.Empty;

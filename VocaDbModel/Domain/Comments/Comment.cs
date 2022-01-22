@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
@@ -29,10 +28,12 @@ namespace VocaDb.Model.Domain.Comments
 		private string _authorName;
 		private string _message;
 
+#nullable disable
 		protected Comment()
 		{
 			Created = DateTime.Now;
 		}
+#nullable enable
 
 		protected Comment(string message, AgentLoginData loginData)
 			: this()
@@ -49,6 +50,7 @@ namespace VocaDb.Model.Domain.Comments
 		public virtual string AuthorName
 		{
 			get => _authorName;
+			[MemberNotNull(nameof(_authorName))]
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
@@ -67,13 +69,14 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual EntryType EntryType => Entry.EntryType;
 
-		public virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType, Id);
+		public virtual GlobalEntryId GlobalId => new(EntryType, Id);
 
 		public virtual int Id { get; set; }
 
 		public virtual string Message
 		{
 			get => _message;
+			[MemberNotNull(nameof(_message))]
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
@@ -85,9 +88,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual void Delete() => Deleted = true;
 
-#nullable enable
 		public override string ToString() => $"comment [{Id}] for {Entry}";
-#nullable disable
 	}
 
 	public interface IComment : IEntryWithIntId
