@@ -123,6 +123,28 @@ namespace VocaDb.Model.Domain.Comments
 
 		public TagComment(Tag entry, string message, AgentLoginData loginData)
 			: base(entry, message, loginData) { }
+
+		public virtual TagComment Move(Tag target)
+		{
+			if (target.Equals(EntryForComment))
+				return this;
+
+			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
+			EntryForComment.AllComments.Remove(this);
+
+			var newComment = new TagComment(
+				entry: target,
+				message: Message,
+				loginData: new AgentLoginData(user: Author, name: Author.Name)
+			)
+			{
+				Created = Created,
+				Deleted = Deleted,
+			};
+			target.AllComments.Add(newComment);
+
+			return newComment;
+		}
 	}
 
 	/// <summary>
