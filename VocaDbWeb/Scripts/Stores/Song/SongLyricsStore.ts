@@ -6,6 +6,7 @@ import { computed, makeObservable, observable, runInAction } from 'mobx';
 import IStoreWithUpdateResults from '../IStoreWithUpdateResults';
 
 interface SongLyricsRouteParams {
+	albumId?: number;
 	lyricsId?: number;
 }
 
@@ -18,6 +19,7 @@ const validate = ajv.compile(schema);
 
 export default class SongLyricsStore
 	implements IStoreWithUpdateResults<SongLyricsRouteParams> {
+	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;
 	@observable public selectedLyricsId: number;
 
@@ -35,10 +37,12 @@ export default class SongLyricsStore
 
 	@computed.struct public get routeParams(): SongLyricsRouteParams {
 		return {
+			albumId: this.albumId,
 			lyricsId: this.selectedLyricsId,
 		};
 	}
 	public set routeParams(value: SongLyricsRouteParams) {
+		this.albumId = value.albumId;
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 

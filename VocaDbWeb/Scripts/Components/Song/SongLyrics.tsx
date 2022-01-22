@@ -49,7 +49,10 @@ const SongLyrics = observer(
 								<SafeAnchor
 									href={`${EntryUrlMapper.details_song(
 										model.contract.song,
-									)}/lyrics?${qs.stringify({ lyricsId: lyrics.id })}`}
+									)}/lyrics?${qs.stringify({
+										albumId: model.browsedAlbumId,
+										lyricsId: lyrics.id,
+									})}`}
 									onClick={(e): void => {
 										e.preventDefault();
 
