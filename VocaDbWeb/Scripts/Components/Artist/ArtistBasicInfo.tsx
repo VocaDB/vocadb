@@ -277,7 +277,12 @@ const ArtistBasicInfo = observer(
 									<div>
 										<JQueryUIButton
 											as={SafeAnchor}
-											disabled={!loginManager.canEditTags}
+											disabled={
+												!loginManager.canEditTagsForEntry({
+													...artist,
+													entryType: EntryType[EntryType.Artist],
+												})
+											}
 											icons={{ primary: 'ui-icon-tag' }}
 											onClick={artistDetailsStore.tagsEditStore.show}
 											href="#"
