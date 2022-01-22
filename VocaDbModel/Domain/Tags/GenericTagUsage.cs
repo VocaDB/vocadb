@@ -1,6 +1,5 @@
-#nullable disable
-
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 
@@ -13,7 +12,9 @@ namespace VocaDb.Model.Domain.Tags
 		private TEntry _entry;
 		private IList<TVote> _votes = new List<TVote>();
 
+#nullable disable
 		public GenericTagUsage() { }
+#nullable enable
 
 		public GenericTagUsage(TEntry entry, Tag tag)
 			: base(tag)
@@ -24,6 +25,7 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual TEntry Entry
 		{
 			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -51,12 +53,12 @@ namespace VocaDb.Model.Domain.Tags
 			Votes.Clear();
 		}
 
-		public virtual TVote FindVote(User user)
+		public virtual TVote? FindVote(User? user)
 		{
 			return Votes.FirstOrDefault(v => v.User.Equals(user));
 		}
 
-		public override TagVote RemoveVote(User user)
+		public override TagVote? RemoveVote(User? user)
 		{
 			var vote = FindVote(user);
 
