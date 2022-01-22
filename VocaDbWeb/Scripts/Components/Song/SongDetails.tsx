@@ -41,6 +41,7 @@ const loginManager = new LoginManager(vdb.values);
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
@@ -65,6 +66,7 @@ const SongDetailsLayout = observer(
 		useVocaDbTitle(titleAndArtist, true);
 
 		React.useEffect(() => {
+			// Returns the disposer.
 			return reaction(
 				() => songDetailsStore.selectedPvId,
 				(id) => {

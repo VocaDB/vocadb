@@ -170,7 +170,18 @@ const SongSearchList = observer(
 													EntryStatus[song.status as keyof typeof EntryStatus]
 												}
 											/>
-											{/* TODO: icon-calendar */}
+											{song.publishDate && (
+												<>
+													{' '}
+													<i
+														className="icon-calendar"
+														title={`Published: ${songSearchStore.formatDate(
+															song.publishDate,
+														)}`} /* TODO: localize */
+														/* TODO: tooltip */
+													/>
+												</>
+											)}
 											<br />
 											<small className="extraInfo">{song.artistString}</small>
 											{song.previewStore && song.previewStore.pvServices && (

@@ -98,6 +98,8 @@ vdb.resources = {
 	entryEdit: {},
 	shared: null,
 	song: null,
+	artist: {},
+	layout: {},
 };
 
 beforeEach(() => {

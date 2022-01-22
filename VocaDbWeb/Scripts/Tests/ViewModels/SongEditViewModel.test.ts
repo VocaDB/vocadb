@@ -32,6 +32,8 @@ vdb.resources = {
 	entryEdit: {},
 	shared: null,
 	song: { addExtraArtist: 'Add extra artist' },
+	artist: {},
+	layout: {},
 };
 
 beforeEach(() => {

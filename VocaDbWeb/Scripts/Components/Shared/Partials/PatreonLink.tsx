@@ -5,7 +5,7 @@ const PatreonLink = React.memo(
 		return (
 			<>
 				<p>
-					<small>{vdb.values.paypalDonateTitle}</small>
+					<small>{vdb.resources.layout.paypalDonateTitle}</small>
 				</p>
 
 				<a href={vdb.values.patreonLink} target="_blank" rel="noreferrer">

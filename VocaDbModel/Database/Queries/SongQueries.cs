@@ -599,16 +599,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				contract.CommentCount = Comments(session).GetCount(songId);
-
-				contract.LatestComments = session.Query<SongComment>()
-					.WhereNotDeleted()
-					.Where(c => c.EntryForComment.Id == songId)
-					.OrderByDescending(c => c.Created)
-					.Take(3)
-					.ToArray()
-					.Select(c => new CommentForApiContract(c, _userIconFactory))
-					.ToArray();
-
+				contract.LatestComments = Comments(session).GetList(entryId: songId, count: 3);
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 
