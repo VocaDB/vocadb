@@ -67,7 +67,7 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 		[TestInitialize]
 		public void SetUp()
 		{
-			_user = _repository.Save(CreateEntry.User(group: UserGroupId.Regular));
+			_user = _repository.Save(CreateEntry.User(group: UserGroupId.Trusted));
 			_queries = new TagUsageQueries(new FakePermissionContext(_user));
 			var song = CreateEntry.Song(name: "Puppet");
 			song.Status = EntryStatus.Locked;
