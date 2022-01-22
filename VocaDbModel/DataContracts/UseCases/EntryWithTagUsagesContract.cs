@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public EntryWithTagUsagesContract() { }
 
 		public EntryWithTagUsagesContract(
-			IEntryBase entry,
+			IEntryWithStatus entry,
 			IEnumerable<TagUsage> tagUsages,
 			ContentLanguagePreference languagePreference,
 			IUserPermissionContext userContext,

@@ -6,7 +6,9 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags
 {
-	public abstract class GenericTagUsage<TEntry, TVote> : TagUsage where TEntry : class, IEntryBase where TVote : TagVote
+	public abstract class GenericTagUsage<TEntry, TVote> : TagUsage
+		where TEntry : class, IEntryWithStatus
+		where TVote : TagVote
 	{
 		private TEntry _entry;
 		private IList<TVote> _votes = new List<TVote>();
@@ -29,7 +31,7 @@ namespace VocaDb.Model.Domain.Tags
 			}
 		}
 
-		public override IEntryBase EntryBase => Entry;
+		public override IEntryWithStatus EntryBase => Entry;
 
 		public virtual IList<TVote> Votes
 		{
