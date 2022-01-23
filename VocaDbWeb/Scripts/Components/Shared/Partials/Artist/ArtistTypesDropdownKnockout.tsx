@@ -1,30 +1,31 @@
 import ArtistCategories from '@Models/Artists/ArtistCategories';
+import ArtistType from '@Models/Artists/ArtistType';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Corresponds to ArtistHelper.CategoriesForTypes in C#.
 const categoriesForTypes: Record<string, ArtistCategories> = {
-	Animator: ArtistCategories.Animator,
-	Character: ArtistCategories.Subject,
-	Circle: ArtistCategories.Circle,
-	Band: ArtistCategories.Band,
-	Illustrator: ArtistCategories.Illustrator,
-	Label: ArtistCategories.Label,
-	Lyricist: ArtistCategories.Other,
-	OtherGroup: ArtistCategories.Circle,
-	OtherIndividual: ArtistCategories.Other,
-	OtherVocalist: ArtistCategories.Vocalist,
-	OtherVoiceSynthesizer: ArtistCategories.Vocalist,
-	Producer: ArtistCategories.Producer,
-	Unknown: ArtistCategories.Other,
-	Utaite: ArtistCategories.Vocalist,
-	UTAU: ArtistCategories.Vocalist,
-	CeVIO: ArtistCategories.Vocalist,
-	Vocaloid: ArtistCategories.Vocalist,
-	Vocalist: ArtistCategories.Vocalist,
-	SynthesizerV: ArtistCategories.Vocalist,
-	CoverArtist: ArtistCategories.Producer,
+	[ArtistType[ArtistType.Animator]]: ArtistCategories.Animator,
+	[ArtistType[ArtistType.Character]]: ArtistCategories.Subject,
+	[ArtistType[ArtistType.Circle]]: ArtistCategories.Circle,
+	[ArtistType[ArtistType.Band]]: ArtistCategories.Band,
+	[ArtistType[ArtistType.Illustrator]]: ArtistCategories.Illustrator,
+	[ArtistType[ArtistType.Label]]: ArtistCategories.Label,
+	[ArtistType[ArtistType.Lyricist]]: ArtistCategories.Other,
+	[ArtistType[ArtistType.OtherGroup]]: ArtistCategories.Circle,
+	[ArtistType[ArtistType.OtherIndividual]]: ArtistCategories.Other,
+	[ArtistType[ArtistType.OtherVocalist]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.OtherVoiceSynthesizer]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.Producer]]: ArtistCategories.Producer,
+	[ArtistType[ArtistType.Unknown]]: ArtistCategories.Other,
+	[ArtistType[ArtistType.Utaite]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.UTAU]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.CeVIO]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.Vocaloid]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.Vocalist]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.SynthesizerV]]: ArtistCategories.Vocalist,
+	[ArtistType[ArtistType.CoverArtist]]: ArtistCategories.Producer,
 };
 
 const artistTypeGroups = _.chain(vdb.values.artistTypes)
