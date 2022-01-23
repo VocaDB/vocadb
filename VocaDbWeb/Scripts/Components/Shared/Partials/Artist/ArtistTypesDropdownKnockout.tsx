@@ -11,8 +11,7 @@ enum ArtistTypeGroup {
 	Other = 'Other',
 }
 
-// Corresponds to ArtistHelper.CategoriesForTypes in C#.
-const categoriesForTypes: Record<string, ArtistTypeGroup> = {
+const groupsForTypes: Record<string, ArtistTypeGroup> = {
 	[ArtistType[ArtistType.Animator]]: ArtistTypeGroup.Producer,
 	[ArtistType[ArtistType.Character]]: ArtistTypeGroup.Other,
 	[ArtistType[ArtistType.Circle]]: ArtistTypeGroup.Group,
@@ -37,9 +36,9 @@ const categoriesForTypes: Record<string, ArtistTypeGroup> = {
 
 const artistTypeGroups = _.chain(vdb.values.artistTypes)
 	.orderBy((artistType) =>
-		Object.values(ArtistTypeGroup).indexOf(categoriesForTypes[artistType]),
+		Object.values(ArtistTypeGroup).indexOf(groupsForTypes[artistType]),
 	)
-	.groupBy((artistType) => categoriesForTypes[artistType])
+	.groupBy((artistType) => groupsForTypes[artistType])
 	.value();
 
 interface ArtistTypesDropdownKnockoutProps
@@ -64,7 +63,7 @@ const ArtistTypesDropdownKnockout = React.memo(
 							))}
 						</>
 					) : (
-						<optgroup label={key} key={key}>
+						<optgroup label={key /* TODO: localize */} key={key}>
 							{value.map((artistType) => (
 								<option value={artistType} key={artistType}>
 									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
