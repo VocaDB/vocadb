@@ -145,7 +145,7 @@ namespace VocaDb.Web.Controllers
 
 			var prop = PageProperties;
 			prop.Title = model.Name;
-			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			//prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.GlobalSearchType = EntryType.Album;
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Type = OpenGraphTypes.Album;
@@ -172,7 +172,7 @@ namespace VocaDb.Web.Controllers
 
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(new AlbumDetails(model, PermissionContext, _pvHelper));
+			return View("React/Index");
 		}
 
 		public ActionResult DownloadTags(int id = InvalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)

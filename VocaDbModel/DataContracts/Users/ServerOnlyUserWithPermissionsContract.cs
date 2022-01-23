@@ -33,8 +33,10 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public HashSet<PermissionToken> AdditionalPermissions { get; set; }
 
+#nullable enable
 		[DataMember]
 		public string AlbumFormatString { get; init; }
+#nullable disable
 
 		[DataMember]
 		public HashSet<PermissionToken> EffectivePermissions { get; init; }

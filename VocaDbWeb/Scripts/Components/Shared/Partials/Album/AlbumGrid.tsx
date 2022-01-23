@@ -4,6 +4,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import AlbumIconLink from './AlbumIconLink';
 
@@ -38,12 +39,12 @@ const AlbumGrid = ({
 										<AlbumIconLink album={album} />
 									</td>
 									<td>
-										<a
-											href={EntryUrlMapper.details(EntryType.Album, album.id)}
+										<Link
+											to={EntryUrlMapper.details(EntryType.Album, album.id)}
 											title={album.additionalNames}
 										>
 											{album.name}
-										</a>
+										</Link>
 										{displayType && (
 											<>
 												{' '}

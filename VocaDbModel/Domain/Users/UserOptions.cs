@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Users
@@ -11,7 +12,9 @@ namespace VocaDb.Model.Domain.Users
 	public class UserOptions : IDatabaseObject
 	{
 		private string _aboutMe;
+#nullable enable
 		private string _albumFormatString;
+#nullable disable
 		private string _lastLoginAddress;
 		private string _location;
 		private string _oauthToken;
@@ -21,6 +24,7 @@ namespace VocaDb.Model.Domain.Users
 		private User _user;
 		private OptionalCultureCode _lastLoginCulture;
 
+#nullable enable
 		public UserOptions()
 		{
 			LastLoginAddress
@@ -45,6 +49,7 @@ namespace VocaDb.Model.Domain.Users
 		{
 			User = user;
 		}
+#nullable disable
 
 		public virtual string AboutMe
 		{
@@ -56,15 +61,18 @@ namespace VocaDb.Model.Domain.Users
 			}
 		}
 
+#nullable enable
 		public virtual string AlbumFormatString
 		{
 			get => _albumFormatString;
+			[MemberNotNull(nameof(_albumFormatString))]
 			set
 			{
 				ParamIs.NotNull(() => value);
 				_albumFormatString = value;
 			}
 		}
+#nullable disable
 
 		public virtual string CustomTitle { get; set; }
 

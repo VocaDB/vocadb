@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -9,10 +7,16 @@ namespace VocaDb.Model.DataContracts.Songs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongInAlbumForApiContract
 	{
+#nullable disable
 		public SongInAlbumForApiContract() { }
-
 #nullable enable
-		public SongInAlbumForApiContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+
+		public SongInAlbumForApiContract(
+			SongInAlbum songInAlbum,
+			ContentLanguagePreference languagePreference,
+			SongOptionalFields fields,
+			SongVoteRating? rating = null
+		)
 		{
 			ParamIs.NotNull(() => songInAlbum);
 
@@ -21,10 +25,22 @@ namespace VocaDb.Model.DataContracts.Songs
 			TrackNumber = songInAlbum.TrackNumber;
 
 			var song = songInAlbum.Song;
-			Song = song != null ? new SongForApiContract(song, null, languagePreference, fields) : null;
-			Name = Song != null ? Song.Name : songInAlbum.Name;
+
+			Song = song is not null
+				? new SongForApiContract(
+					song: song,
+					mergeRecord: null,
+					languagePreference: languagePreference,
+					fields: fields
+				)
+				: null;
+
+			Name = Song is not null
+				? Song.Name
+				: songInAlbum.Name;
+
+			Rating = rating;
 		}
-#nullable disable
 
 		[DataMember]
 		public int DiscNumber { get; init; }
@@ -35,8 +51,11 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		public string Name { get; init; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public SongVoteRating? Rating { get; init; }
+
 		[DataMember]
-		public SongForApiContract Song { get; init; }
+		public SongForApiContract? Song { get; init; }
 
 		[DataMember]
 		public int TrackNumber { get; init; }

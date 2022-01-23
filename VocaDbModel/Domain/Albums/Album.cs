@@ -314,9 +314,11 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual string PersonalDescriptionText { get; set; }
-		public virtual Artist PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
+#nullable enable
+		public virtual string? PersonalDescriptionText { get; set; }
+		public virtual Artist? PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
 		public virtual int? PersonalDescriptionAuthorId { get; set; }
+#nullable disable
 
 		public virtual EntryPictureFileManager<AlbumPictureFile> Pictures
 		{
