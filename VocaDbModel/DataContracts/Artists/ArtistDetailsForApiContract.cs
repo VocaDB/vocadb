@@ -319,8 +319,8 @@ namespace VocaDb.Model.DataContracts.Artists
 				.Select(g => new ArtistForApiContract(
 					artist: g,
 					languagePreference: languagePreference,
-					thumbPersister: null,
-					includedFields: ArtistOptionalFields.None
+					thumbPersister: imageStore,
+					includedFields: ArtistOptionalFields.MainPicture
 				))
 				.OrderBy(g => g.Name)
 				.ToArray();
