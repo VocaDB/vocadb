@@ -112,8 +112,8 @@ namespace VocaDb.Model.Mapping
 		{
 			DiscriminatorValue(nameof(AlbumReview));
 
-			Map(m => m.LanguageCode).Not.Nullable();
-			Map(m => m.Title).Not.Nullable();
+			Map(m => m.LanguageCode).Nullable();
+			Map(m => m.Title).Nullable();
 
 			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
 		}

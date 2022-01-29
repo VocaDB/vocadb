@@ -1,5 +1,3 @@
-#nullable disable
-
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
@@ -21,7 +19,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 	{
 		private readonly DatabaseTestContext<ITagRepository> _context = new();
 		private readonly FakePermissionContext _userContext;
-		private TestDatabase Db => TestContainerManager.TestDatabase;
+
+		private static TestDatabase Db => TestContainerManager.TestDatabase;
 
 		public TagQueriesDatabaseTests()
 		{
@@ -43,7 +42,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 					new FakeUserIconFactory(),
 					new EnumTranslations(),
 					new FakeObjectCache(),
-					new FakeDiscordWebhookNotifier());
+					new FakeDiscordWebhookNotifier()
+				);
 
 				queries.Merge(sourceId, targetId);
 
@@ -68,7 +68,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 					new FakeUserIconFactory(),
 					new EnumTranslations(),
 					new FakeObjectCache(),
-					new FakeDiscordWebhookNotifier());
+					new FakeDiscordWebhookNotifier()
+				);
 
 				var updated = queries.Update(contract, null);
 
