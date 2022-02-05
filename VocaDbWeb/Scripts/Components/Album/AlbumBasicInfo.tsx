@@ -73,40 +73,25 @@ const AlbumBasicInfo = observer(
 				<div className="clearfix">
 					{/* Album cover picture */}
 					<div className="pull-left">
-						<Carousel>
-							<div className="carousel-inner">
-								<div className="active item thumbItem">
-									<CoverLink imageInfo={model.mainPicture} />
-								</div>
-								{model.pictures.map((picture, index) => (
-									<div className="item thumbItem" itemProp="image" key={index}>
-										<EntryPictureFileLink imageInfo={picture} />
-										{picture.name && (
-											<div className="carousel-caption">
-												<h4>{picture.name}</h4>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-							{model.pictures.length > 0 && (
-								<>
-									<a
-										className="carousel-control left"
-										href="#carousel"
-										data-slide="prev"
-									>
-										&lsaquo;
-									</a>
-									<a
-										className="carousel-control right"
-										href="#carousel"
-										data-slide="next"
-									>
-										&rsaquo;
-									</a>
-								</>
-							)}
+						<Carousel
+							indicators={false}
+							interval={null}
+							slide={false}
+							fade={false}
+						>
+							<Carousel.Item className="thumbItem">
+								<CoverLink imageInfo={model.mainPicture} />
+							</Carousel.Item>
+							{model.pictures.map((picture, index) => (
+								<Carousel.Item className="thumbItem" key={index}>
+									<EntryPictureFileLink imageInfo={picture} />
+									{picture.name && (
+										<Carousel.Caption>
+											<h4>{picture.name}</h4>
+										</Carousel.Caption>
+									)}
+								</Carousel.Item>
+							))}
 						</Carousel>
 
 						{model.ratingCount > 0 && (
