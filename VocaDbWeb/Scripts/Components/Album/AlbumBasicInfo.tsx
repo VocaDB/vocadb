@@ -78,6 +78,7 @@ const AlbumBasicInfo = observer(
 							interval={null}
 							slide={false}
 							fade={false}
+							controls={model.pictures.length > 0}
 						>
 							<Carousel.Item className="thumbItem">
 								<CoverLink imageInfo={model.mainPicture} />
