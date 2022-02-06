@@ -15,4 +15,5 @@ export default interface UserWithPermissionsContract {
 	verifiedArtist: boolean;
 	ownedArtistEntries: ArtistForUserContract[];
 	preferredVideoService: string /* TODO: enum */;
+	albumFormatString: string;
 }

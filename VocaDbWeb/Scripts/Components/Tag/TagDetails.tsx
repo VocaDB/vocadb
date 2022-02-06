@@ -902,6 +902,8 @@ const TagDetails = (): React.ReactElement => {
 					if (error.response.status === 404)
 						window.location.href = '/Error/NotFound';
 				}
+
+				throw error;
 			});
 	}, [id]);
 

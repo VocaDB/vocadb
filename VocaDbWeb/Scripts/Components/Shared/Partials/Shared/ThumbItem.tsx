@@ -1,22 +1,27 @@
+import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import React from 'react';
 
 interface ThumbItemProps {
-	url: string;
+	as?: React.ElementType;
 	thumbUrl: string;
 	caption?: string;
 	entry?: EntryRefContract;
 }
 
-const ThumbItem = ({
-	url,
+const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
+	'a',
+	ThumbItemProps
+> = ({
+	as: Component = 'a',
 	thumbUrl,
 	caption,
 	entry,
+	...props
 }: ThumbItemProps): React.ReactElement => {
 	return (
 		<li>
-			<a href={url}>
+			<Component {...props}>
 				<div className="pictureFrame">
 					{entry ? (
 						<img
@@ -34,7 +39,7 @@ const ThumbItem = ({
 						/>
 					)}
 				</div>
-			</a>
+			</Component>
 			{caption && <p>{caption}</p>}
 		</li>
 	);

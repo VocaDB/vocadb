@@ -3,6 +3,7 @@ import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface AlbumLinkProps {
 	album: AlbumForApiContract;
@@ -15,8 +16,8 @@ const AlbumLink = ({
 }: AlbumLinkProps): React.ReactElement => {
 	return tooltip ? (
 		<AlbumToolTip
-			as={'a'}
-			href={EntryUrlMapper.details(EntryType.Album, album.id)}
+			as={Link}
+			to={EntryUrlMapper.details(EntryType.Album, album.id)}
 			title={album.additionalNames}
 			id={album.id}
 			className="albumLink"
@@ -24,13 +25,13 @@ const AlbumLink = ({
 			{album.name}
 		</AlbumToolTip>
 	) : (
-		<a
-			href={`${EntryUrlMapper.details(EntryType.Album, album.id)}`}
+		<Link
+			to={`${EntryUrlMapper.details(EntryType.Album, album.id)}`}
 			title={album.additionalNames}
 			className="albumLink"
 		>
 			{album.name}
-		</a>
+		</Link>
 	);
 };
 

@@ -105,8 +105,8 @@ const AlbumSearchList = observer(
 							{albumSearchStore.page.map((album) => (
 								<tr key={album.id}>
 									<td style={{ width: '80px' }}>
-										<a
-											href={EntryUrlMapper.details(EntryType.Album, album.id)}
+										<Link
+											to={EntryUrlMapper.details(EntryType.Album, album.id)}
 											title={album.additionalNames}
 											className="coverPicThumb"
 										>
@@ -120,15 +120,15 @@ const AlbumSearchList = observer(
 												alt="Cover picture" /* TODO: localize */
 												className="coverPicThumb img-rounded"
 											/>
-										</a>
+										</Link>
 									</td>
 									<td>
-										<a
-											href={EntryUrlMapper.details(EntryType.Album, album.id)}
+										<Link
+											to={EntryUrlMapper.details(EntryType.Album, album.id)}
 											title={album.additionalNames}
 										>
 											{_.truncate(album.name, { length: 150 })}
-										</a>{' '}
+										</Link>{' '}
 										<DraftIcon
 											status={
 												EntryStatus[album.status as keyof typeof EntryStatus]
@@ -212,8 +212,8 @@ const AlbumSearchList = observer(
 					<ul className="smallThumbs">
 						{albumSearchStore.page.map((album) => (
 							<li key={album.id}>
-								<a
-									href={EntryUrlMapper.details(EntryType.Album, album.id)}
+								<Link
+									to={EntryUrlMapper.details(EntryType.Album, album.id)}
 									title={album.additionalNames}
 								>
 									<div className="pictureFrame img-rounded">
@@ -228,7 +228,7 @@ const AlbumSearchList = observer(
 											className="coverPic img-rounded"
 										/>
 									</div>
-								</a>
+								</Link>
 								<p>{album.name}</p>
 							</li>
 						))}

@@ -18,6 +18,7 @@ const IconAndLinkKnockout = React.memo(
 				href={EntryUrlMapper.details_user_byName(user.name)}
 				className="pull-left"
 			>
+				{/* eslint-disable-next-line react/jsx-pascal-case */}
 				<ProfileIconKnockout_ImageSize
 					imageSize={ImageSize.Thumb}
 					user={user}
