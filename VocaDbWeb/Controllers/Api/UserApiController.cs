@@ -841,5 +841,14 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public AlbumForUserForApiContract GetAlbumForUser(int albumId) => GetAlbumForUser(_permissionContext.LoggedUserId, albumId);
+
+#nullable enable
+		[HttpGet("~/api/profiles/{name}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public UserDetailsForApiContract GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
+		{
+			return _queries.GetUserDetailsForApi(name);
+		}
+#nullable disable
 	}
 }

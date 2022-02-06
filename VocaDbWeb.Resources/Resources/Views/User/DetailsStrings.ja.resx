@@ -247,7 +247,7 @@
     <value>アーティスト証明ページ</value>
   </data>
   <data name="PossibleProducerMessage" xml:space="preserve">
-    <value>ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{0}をご覧下さい。</value>
+    <value>ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、&lt;a&gt;アーティスト証明ページ&lt;/a&gt;をご覧下さい。</value>
   </data>
   <data name="ImportSongList" xml:space="preserve">
     <value>ニコニコ動画やYouTubeから輸入</value>
@@ -262,6 +262,6 @@
     <value>話せる言語</value>
   </data>
   <data name="KnownLanguagesMessage" xml:space="preserve">
-    <value>&lt;a href="{0}"&gt;アカウント設定 、プロフィール&lt;/a&gt;の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。</value>
+    <value>&lt;a&gt;アカウント設定 、プロフィール&lt;/a&gt;の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。</value>
   </data>
 </root>

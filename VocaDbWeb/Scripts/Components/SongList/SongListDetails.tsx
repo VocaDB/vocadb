@@ -144,7 +144,10 @@ const SongListDetailsLayout = observer(
 				parents={
 					songList.featuredCategory === 'Nothing' ? (
 						<Breadcrumb.Item
-							href={EntryUrlMapper.details_user_byName(songList.author.name)}
+							linkAs={Link}
+							linkProps={{
+								to: EntryUrlMapper.details_user_byName(songList.author.name),
+							}}
 						>
 							{songList.author.name}
 						</Breadcrumb.Item>

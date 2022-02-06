@@ -10,6 +10,7 @@ import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiCo
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
+import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import { Tuple2 } from '@Helpers/HighchartsHelper';
@@ -190,11 +191,11 @@ export default class UserRepository implements ICommentRepository {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
 		query: string;
-		tag: number;
+		tag?: number;
 		albumType: string;
-		artistId: number;
+		artistId?: number;
 		purchaseStatuses: string;
-		releaseEventId: number;
+		releaseEventId?: number;
 		advancedFilters: AdvancedSearchFilter[];
 		sort: string;
 	}): Promise<PartialFindResultContract<AlbumForUserForApiContract>> => {
@@ -209,7 +210,7 @@ export default class UserRepository implements ICommentRepository {
 			artistId: artistId,
 			purchaseStatuses: purchaseStatuses,
 			releaseEventId: releaseEventId || undefined,
-			fields: 'AdditionalNames,MainPicture',
+			fields: 'AdditionalNames,MainPicture,ReleaseEvent',
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -422,7 +423,7 @@ export default class UserRepository implements ICommentRepository {
 		artistIds: number[];
 		childVoicebanks: boolean;
 		rating: string;
-		songListId: number;
+		songListId?: number;
 		advancedFilters: AdvancedSearchFilter[];
 		groupByRating: boolean;
 		pvServices?: string;
@@ -773,5 +774,15 @@ export default class UserRepository implements ICommentRepository {
 		return this.httpClient.post<void>(url, `${value}`, {
 			headers: { [HeaderNames.ContentType]: MediaTypes.APPLICATION_JSON },
 		});
+	};
+
+	public getDetails = ({
+		name,
+	}: {
+		name: string;
+	}): Promise<UserDetailsContract> => {
+		return this.httpClient.get<UserDetailsContract>(
+			this.urlMapper.mapRelative(`/api/profiles/${name}`),
+		);
 	};
 }

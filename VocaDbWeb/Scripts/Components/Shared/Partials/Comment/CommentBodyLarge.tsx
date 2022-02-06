@@ -3,6 +3,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import LoginManager from '@Models/LoginManager';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import FormatMarkdown from '../Html/FormatMarkdown';
 import ProfileIcon from '../User/ProfileIcon';
@@ -24,12 +25,12 @@ const CommentBodyLarge = React.memo(
 	}: CommentBodyLargeProps): React.ReactElement => {
 		return (
 			<div className="comment media comment-large">
-				<a
+				<Link
 					className="pull-left"
-					href={EntryUrlMapper.details_user_byName(contract.author.name)}
+					to={EntryUrlMapper.details_user_byName(contract.author.name)}
 				>
 					<ProfileIcon url={contract.author.mainPicture?.urlThumb} size={70} />
-				</a>
+				</Link>
 
 				<div className="media-body">
 					<div className="pull-right">

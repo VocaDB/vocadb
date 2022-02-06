@@ -1,4 +1,5 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import UserGroup from '@Models/Users/UserGroup';
 
 // Corresponds to the ArtistForUserContract class in C#.
 interface ArtistForUserContract {
@@ -16,4 +17,5 @@ export default interface UserWithPermissionsContract {
 	ownedArtistEntries: ArtistForUserContract[];
 	preferredVideoService: string /* TODO: enum */;
 	albumFormatString: string;
+	groupId: UserGroup;
 }

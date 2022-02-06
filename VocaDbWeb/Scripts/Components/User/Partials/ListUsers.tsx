@@ -16,6 +16,7 @@ import moment from 'moment';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface ListUsersProps {
 	listUsersStore: ListUsersStore;
@@ -192,25 +193,23 @@ const ListUsers = observer(
 								<tr key={user.id}>
 									<td style={{ width: '85px' }}>
 										{user.mainPicture && user.mainPicture.urlThumb && (
-											<SafeAnchor
-												href={EntryUrlMapper.details_user_byName(user.name)}
-											>
+											<Link to={EntryUrlMapper.details_user_byName(user.name)}>
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
 													src={user.mainPicture.urlThumb}
 													title="Picture"
 													className="img-rounded"
 												/>
-											</SafeAnchor>
+											</Link>
 										)}
 									</td>
 									<td>
-										<SafeAnchor
-											href={EntryUrlMapper.details_user_byName(user.name)}
+										<Link
+											to={EntryUrlMapper.details_user_byName(user.name)}
 											className={classNames(!user.active && 'muted')}
 										>
 											{user.name}
-										</SafeAnchor>
+										</Link>
 									</td>
 									<td>{moment(user.memberSince).format('L')}</td>
 									<td>{t(`Resources:UserGroupNames.${user.groupId}`)}</td>

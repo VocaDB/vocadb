@@ -196,7 +196,7 @@
     <value>Visão global</value>
   </data>
   <data name="PossibleProducerMessage" xml:space="preserve">
-    <value>É um artista (produtor, animador, ilustrador) de Vocaloid/UTAU? Se sim, por favor leia {0}.</value>
+    <value>É um artista (produtor, animador, ilustrador) de Vocaloid/UTAU? Se sim, por favor leia &lt;a&gt;página de verificação de artista&lt;/a&gt;.</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>Nível</value>

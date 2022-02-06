@@ -3,6 +3,7 @@ import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface LockingAutoCompleteProps {
 	children: React.ReactNode;
@@ -27,8 +28,9 @@ const LockingAutoComplete = React.memo(
 			<div className="input-append">
 				{entryType !== EntryType.Undefined && (
 					<Button
+						as={Link}
 						className="btn-nomargin"
-						href={EntryUrlMapper.details(entryType, value)}
+						to={EntryUrlMapper.details(entryType, value)}
 					>
 						<i className="icon icon-info-sign" />
 					</Button>

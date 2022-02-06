@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import ProfileIconKnockout from './ProfileIconKnockout';
 
@@ -19,8 +19,8 @@ const IconNameAndTypeLinkKnockout = React.memo(
 		const { t } = useTranslation(['Resources']);
 
 		return (
-			<SafeAnchor
-				href={EntryUrlMapper.details_user_byName(user.name)}
+			<Link
+				to={EntryUrlMapper.details_user_byName(user.name)}
 				title={`${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 					user.memberSince
 				}`} /* TODO: localize */
@@ -30,7 +30,7 @@ const IconNameAndTypeLinkKnockout = React.memo(
 					size={iconSize}
 				/>{' '}
 				<span>{user.name}</span>
-			</SafeAnchor>
+			</Link>
 		);
 	},
 );

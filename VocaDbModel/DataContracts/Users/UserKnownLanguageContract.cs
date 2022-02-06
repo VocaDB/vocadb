@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -10,9 +8,10 @@ namespace VocaDb.Model.DataContracts.Users
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class UserKnownLanguageContract
 	{
+#nullable disable
 		public UserKnownLanguageContract() { }
-
 #nullable enable
+
 		public UserKnownLanguageContract(UserKnownLanguage userKnownLanguage)
 		{
 			ParamIs.NotNull(() => userKnownLanguage);
@@ -20,7 +19,6 @@ namespace VocaDb.Model.DataContracts.Users
 			CultureCode = userKnownLanguage.CultureCode.CultureCode;
 			Proficiency = userKnownLanguage.Proficiency;
 		}
-#nullable disable
 
 		[DataMember]
 		public string CultureCode { get; init; }

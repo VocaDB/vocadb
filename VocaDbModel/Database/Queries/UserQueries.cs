@@ -75,8 +75,10 @@ namespace VocaDb.Model.Database.Queries
 
 			public int FavoriteSongCount { get; set; }
 
+#nullable enable
 			// Statistical information, not essential
-			public int[] FavoriteTags { get; set; }
+			public int[]? FavoriteTags { get; set; }
+#nullable disable
 
 			// Only used for "power"
 			public int OwnedAlbumCount { get; set; }
@@ -304,6 +306,147 @@ namespace VocaDb.Model.Database.Queries
 
 			return details;
 		}
+
+		public UserDetailsForApiContract? GetUserDetailsForApi(string? name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return null;
+
+			return HandleQuery(ctx =>
+			{
+				var user = ctx.Query().FirstOrDefault(u => u.Name == name);
+
+				if (user is null)
+					return null;
+
+				var contract = new UserDetailsForApiContract(
+					user: user,
+					iconFactory: _userIconFactory,
+					languagePreference: LanguagePreference,
+					thumbPersister: _entryImagePersister,
+					permissionContext: PermissionContext
+				);
+
+				var cachedStats = GetCachedUserStats(ctx, user);
+				contract.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
+				contract.ArtistCount = cachedStats.ArtistCount;
+				contract.FavoriteSongCount = cachedStats.FavoriteSongCount;
+
+				contract.FavoriteTags = cachedStats.FavoriteTags is not null
+					? ctx.Query<Tag>()
+						.Where(t => cachedStats.FavoriteTags.Contains(t.Id))
+						.ToArray()
+						.Select(t => new TagBaseContract(
+							tag: t,
+							languagePreference: LanguagePreference,
+							includeAdditionalNames: true
+						))
+						.ToArray()
+					: Array.Empty<TagBaseContract>();
+
+				contract.CommentCount = cachedStats.CommentCount;
+				contract.EditCount = cachedStats.EditCount;
+				contract.SubmitCount = cachedStats.SubmitCount;
+				contract.TagVotes = cachedStats.TagVotes;
+
+				contract.FavoriteAlbums = ctx.Query<AlbumForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Album.Deleted && c.Rating > 3)
+					.OrderByDescending(c => c.Rating)
+					.ThenByDescending(c => c.Id)
+					.Select(a => a.Album)
+					.Take(7)
+					.ToArray()
+					.Select(c => new AlbumForApiContract(
+						album: c,
+						languagePreference: LanguagePreference,
+						thumbPersister: _entryImagePersister,
+						fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture
+					))
+					.ToArray();
+
+				contract.FollowedArtists = ctx.Query<ArtistForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Artist.Deleted)
+					.OrderByDescending(a => a.Id)
+					.Select(c => c.Artist)
+					.Take(6)
+					.ToArray()
+					.Select(c => new ArtistForApiContract(
+						artist: c,
+						languagePreference: LanguagePreference,
+						thumbPersister: _entryImagePersister,
+						includedFields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture
+					))
+					.ToArray();
+
+				contract.LatestComments = ctx.Query<UserComment>()
+					.WhereNotDeleted()
+					.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
+					.ToArray()
+					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
+
+				contract.LatestRatedSongs = ctx.Query<FavoriteSongForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
+					.OrderByDescending(c => c.Date)
+					.Select(c => c.Song)
+					.Take(6)
+					.ToArray()
+					.Select(c => new SongForApiContract(
+						song: c,
+						languagePreference: LanguagePreference,
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					))
+					.ToArray();
+
+				// Correct cached stats if we can determine they're out of date
+				contract.AlbumCollectionCount = Math.Max(contract.AlbumCollectionCount, contract.FavoriteAlbums.Length);
+				contract.ArtistCount = Math.Max(contract.ArtistCount, contract.FollowedArtists.Length);
+				contract.FavoriteSongCount = Math.Max(contract.FavoriteSongCount, contract.LatestRatedSongs.Length);
+				var songListCount = ctx.Query<SongList>().Count(l => l.Author.Id == user.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing);
+
+				contract.Power = UserHelper.GetPower(contract, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount, songListCount);
+				contract.Level = UserHelper.GetLevel(contract.Power);
+				contract.IsVeteran = UserHelper.IsVeteran(contract);
+
+				// If the user is viewing their own profile, check for possible producer account.
+				// Skip users who are not active, limited or are already verified artists.
+				if (
+					user.Active &&
+					user.GroupId >= UserGroupId.Regular &&
+					user.GroupId <= UserGroupId.Trusted &&
+					user.Equals(PermissionContext.LoggedUser) &&
+					!user.VerifiedArtist
+				)
+				{
+					// Scan by Twitter account name and entry name.
+					var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName)
+						? $"https://twitter.com/{user.Options.TwitterName}"
+						: null;
+
+					var producerTypes = new[]
+					{
+						ArtistType.Producer,
+						ArtistType.Animator,
+						ArtistType.Illustrator
+					};
+
+					contract.PossibleProducerAccount = ctx.Query<Artist>()
+						.Any(a =>
+							!a.Deleted &&
+							producerTypes.Contains(a.ArtistType) &&
+							(
+								a.Names.Names.Any(n => n.Value == user.Name) ||
+								(twitterUrl != null && a.WebLinks.Any(l => l.Url == twitterUrl))
+							) &&
+							!a.OwnerUsers.Any()
+						);
+
+					if (contract.PossibleProducerAccount)
+						ctx.AuditLogger.SysLog("possible producer account");
+				}
+
+				return contract;
+			});
+		}
 #nullable disable
 
 		private bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
@@ -376,7 +519,8 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache,
 			BrandableStringsManager brandableStringsManager,
 			IEnumTranslations enumTranslations,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			ParamIs.NotNull(() => repository);

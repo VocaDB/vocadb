@@ -1,0 +1,94 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"AdvancedFilterType": {
+			"enum": [
+				"ArtistType",
+				"HasAlbum",
+				"HasMedia",
+				"HasMultipleVoicebanks",
+				"HasOriginalMedia",
+				"HasPublishDate",
+				"HasStoreLink",
+				"HasTracks",
+				"HasUserAccount",
+				"Lyrics",
+				"LyricsContent",
+				"NoCoverPicture",
+				"Nothing",
+				"RootVoicebank",
+				"VoiceProvider",
+				"WebLink"
+			],
+			"type": "string"
+		},
+		"default": {
+			"properties": {
+				"description": {
+					"type": "string"
+				},
+				"filterType": {
+					"$ref": "#/definitions/AdvancedFilterType"
+				},
+				"negate": {
+					"type": "boolean"
+				},
+				"param": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"properties": {
+		"advancedFilters": {
+			"items": {
+				"$ref": "#/definitions/default"
+			},
+			"type": "array"
+		},
+		"artistId": {
+			"type": "number"
+		},
+		"collectionStatus": {
+			"type": "string"
+		},
+		"discType": {
+			"type": "string"
+		},
+		"eventId": {
+			"type": "number"
+		},
+		"filter": {
+			"type": "string"
+		},
+		"page": {
+			"type": "number"
+		},
+		"pageSize": {
+			"type": "number"
+		},
+		"sort": {
+			"enum": [
+				"AdditionDate",
+				"CollectionCount",
+				"Name",
+				"NameThenReleaseDate",
+				"None",
+				"RatingAverage",
+				"RatingTotal",
+				"ReleaseDate",
+				"ReleaseDateWithNulls"
+			],
+			"type": "string"
+		},
+		"tagId": {
+			"type": "number"
+		},
+		"viewMode": {
+			"enum": ["Details", "Tiles"],
+			"type": "string"
+		}
+	},
+	"type": "object"
+}

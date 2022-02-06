@@ -8,7 +8,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
 
-import { userLanguageCultures } from '../Shared/Partials/Knockout/DropdownList';
+import { userLanguageCultures } from '../userLanguageCultures';
 import SongBasicInfo from './SongBasicInfo';
 import SongDiscussion from './SongDiscussion';
 import SongLyrics from './SongLyrics';

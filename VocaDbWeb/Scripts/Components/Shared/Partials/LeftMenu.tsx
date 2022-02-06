@@ -2,6 +2,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import MainNavigationItems from './MainNavigationItems';
 import PatreonLink from './PatreonLink';
@@ -105,13 +106,13 @@ const LeftMenu = React.memo(
 							<br />
 							<p className="user">
 								{t('ViewRes:Layout.Welcome')}{' '}
-								<a
-									href={EntryUrlMapper.details_user_byName(
+								<Link
+									to={EntryUrlMapper.details_user_byName(
 										vdb.values.loggedUser.name,
 									)}
 								>
 									{vdb.values.loggedUser.name}
-								</a>
+								</Link>
 							</p>
 						</>
 					)}

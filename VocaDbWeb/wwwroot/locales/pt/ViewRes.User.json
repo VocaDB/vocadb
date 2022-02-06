@@ -54,7 +54,7 @@
     "Messages": "Mensagens",
     "MySettings": "Minhas definições",
     "Overview": "Visão global",
-    "PossibleProducerMessage": "É um artista (produtor, animador, ilustrador) de Vocaloid/UTAU? Se sim, por favor leia {{0}}.",
+    "PossibleProducerMessage": "É um artista (produtor, animador, ilustrador) de Vocaloid/UTAU? Se sim, por favor leia <a>página de verificação de artista</a>.",
     "Power": "Nível",
     "SetAvatar": "Escolha o seu avatar em gravatar.com",
     "SomeAlbumsILike": "Alguns álbuns que gosto",

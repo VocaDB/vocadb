@@ -1,7 +1,7 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ProfileIconKnockout from './ProfileIconKnockout';
 
@@ -18,16 +18,16 @@ const IconAndNameLinkKnockout = React.memo(
 		className,
 	}: IconAndNameLinkKnockoutProps): React.ReactElement => {
 		return (
-			<SafeAnchor
+			<Link
 				className={className}
-				href={EntryUrlMapper.details_user_byName(user.name)}
+				to={EntryUrlMapper.details_user_byName(user.name)}
 			>
 				<ProfileIconKnockout
 					icon={user.mainPicture?.urlThumb}
 					size={iconSize}
 				/>{' '}
 				<span>{user.name}</span>
-			</SafeAnchor>
+			</Link>
 		);
 	},
 );

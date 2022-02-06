@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
@@ -22,7 +20,7 @@ namespace VocaDb.Model.Domain.Security
 
 		private ISet<PermissionToken> _permissions;
 
-		private void AddAll(IEnumerable<PermissionToken> flags)
+		public void AddAll(IEnumerable<PermissionToken> flags)
 		{
 			foreach (var flag in flags)
 				_permissions.Add(flag);
@@ -73,10 +71,9 @@ namespace VocaDb.Model.Domain.Security
 
 		public bool Has(PermissionToken flag)
 		{
-			return (flag == PermissionToken.Nothing || _permissions.Contains(flag));
+			return flag == PermissionToken.Nothing || _permissions.Contains(flag);
 		}
 
-#nullable enable
 		public PermissionCollection Merge(PermissionCollection collection)
 		{
 			ParamIs.NotNull(() => collection);
@@ -92,6 +89,5 @@ namespace VocaDb.Model.Domain.Security
 			ParamIs.NotNull(() => collection);
 			return new PermissionCollection(this.Concat(collection));
 		}
-#nullable disable
 	}
 }

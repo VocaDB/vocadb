@@ -407,15 +407,17 @@ const ArtistBasicInfo = observer(
 										artist.personalStats.songRatingCount > 0 && (
 											<>
 												{' '}
-												<a
-													href={`${EntryUrlMapper.details_user_byName(
+												<Link
+													to={`${EntryUrlMapper.details_user_byName(
 														loginManager.loggedUser?.name,
-													)}?${qs.stringify({ artistId: artist.id })}#Songs`}
+													)}/songs?${qs.stringify({
+														artistId: artist.id,
+													})}`}
 												>
 													{t('ViewRes.Artist:Details.YouHaveRatedSongs', {
 														0: artist.personalStats.songRatingCount,
 													})}
-												</a>
+												</Link>
 											</>
 										)}
 									{artist.advancedStats &&
@@ -502,7 +504,7 @@ const ArtistBasicInfo = observer(
 							</small>
 						</h3>
 						<div id="newAlbums">
-							<AlbumThumbs albums={artist.latestAlbums} />
+							<AlbumThumbs albums={artist.latestAlbums} tooltip={true} />
 						</div>
 					</>
 				)}
@@ -528,7 +530,7 @@ const ArtistBasicInfo = observer(
 							</small>
 						</h3>
 						<div id="topAlbums">
-							<AlbumThumbs albums={artist.topAlbums} />
+							<AlbumThumbs albums={artist.topAlbums} tooltip={true} />
 						</div>
 					</>
 				)}

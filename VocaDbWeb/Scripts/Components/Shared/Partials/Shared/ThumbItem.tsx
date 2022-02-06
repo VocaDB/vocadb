@@ -2,11 +2,14 @@ import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
 import EntryRefContract from '@DataContracts/EntryRefContract';
 import React from 'react';
 
+import { EntryToolTip } from '../../../KnockoutExtensions/EntryToolTip';
+
 interface ThumbItemProps {
 	as?: React.ElementType;
 	thumbUrl: string;
 	caption?: string;
 	entry?: EntryRefContract;
+	tooltip?: boolean;
 }
 
 const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
@@ -17,6 +20,7 @@ const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	thumbUrl,
 	caption,
 	entry,
+	tooltip,
 	...props
 }: ThumbItemProps): React.ReactElement => {
 	return (
@@ -24,13 +28,21 @@ const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 			<Component {...props}>
 				<div className="pictureFrame">
 					{entry ? (
-						<img
-							src={thumbUrl}
-							alt="Preview" /* TODO: localize */
-							className="coverPic"
-							data-entry-type={entry.entryType}
-							data-entry-id={entry.id}
-						/>
+						tooltip ? (
+							<EntryToolTip
+								as="img"
+								src={thumbUrl}
+								alt="Preview" /* TODO: localize */
+								className="coverPic"
+								value={entry}
+							/>
+						) : (
+							<img
+								src={thumbUrl}
+								alt="Preview" /* TODO: localize */
+								className="coverPic"
+							/>
+						)
 					) : (
 						<img
 							src={thumbUrl}

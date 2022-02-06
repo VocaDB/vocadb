@@ -12,7 +12,7 @@ export interface ArtistSongsRouteParams {
 	page?: number;
 	pageSize?: number;
 	sort?: SongSortRule;
-	viewMode?: string /* TODO: enum */;
+	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
