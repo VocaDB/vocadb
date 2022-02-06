@@ -1,4 +1,5 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
+import AlbumDetailsContract from '@DataContracts/Album/AlbumDetailsContract';
 import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
 import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
 import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
@@ -305,6 +306,16 @@ export default class AlbumRepository
 				personalDescriptionText: text,
 				personalDescriptionAuthor: author || undefined,
 			},
+		);
+	};
+
+	public getDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<AlbumDetailsContract> => {
+		return this.httpClient.get<AlbumDetailsContract>(
+			this.urlMapper.mapRelative(`/api/albums/${id}/details`),
 		);
 	};
 }

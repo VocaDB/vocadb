@@ -703,6 +703,11 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Save(link);
 				}
 
+				// Tag comments
+				// See: https://github.com/VocaDB/vocadb/issues/1035.
+				foreach (var comment in source.AllComments.ToArray())
+					comment.Move(target);
+
 				// Create merge record
 				new CreateMergeEntryQuery().CreateMergeEntry<Tag, TagMergeRecord>(ctx, sourceId, target);
 

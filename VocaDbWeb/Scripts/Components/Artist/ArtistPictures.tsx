@@ -27,14 +27,14 @@ const ArtistPictures = ({
 		>
 			<ul className="thumbs">
 				<ThumbItem
-					url={`/Artist/Picture/${artist.id}`}
+					href={`/Artist/Picture/${artist.id}`}
 					thumbUrl={`/Artist/PictureThumb/${artist.id}`}
 					caption={t('ViewRes.Album:Details.CoverPicture')}
 				/>
 				{artist.pictures.map((picture, index) => (
 					<React.Fragment key={index}>
 						<ThumbItem
-							url={UrlHelper.imageThumb(picture, ImageSize.Original)}
+							href={UrlHelper.imageThumb(picture, ImageSize.Original)}
 							thumbUrl={UrlHelper.imageThumb(picture, ImageSize.Thumb)}
 							caption={picture.name}
 						/>

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.PVs;
@@ -9,15 +10,32 @@ namespace VocaDb.Model.DataContracts.Users
 	/// <summary>
 	/// Contains no sensitive information.
 	/// </summary>
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public sealed record SanitizedUserWithPermissionsContract
 	{
+		[DataMember]
 		public int Id { get; init; }
+
+		[DataMember]
 		public string Name { get; init; } = string.Empty;
+
+		[DataMember]
 		public bool Active { get; init; }
+
+		[DataMember]
 		public Guid[] EffectivePermissions { get; init; } = Array.Empty<Guid>();
+
+		[DataMember]
 		public int UnreadMessagesCount { get; init; }
+
+		[DataMember]
 		public bool VerifiedArtist { get; init; }
+
+		[DataMember]
 		public ArtistForUserContract[] OwnedArtistEntries { get; init; } = Array.Empty<ArtistForUserContract>();
+
+		[DataMember]
+		public string AlbumFormatString { get; init; } = string.Empty;
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PVService PreferredVideoService { get; init; }
@@ -34,6 +52,7 @@ namespace VocaDb.Model.DataContracts.Users
 			VerifiedArtist = user.VerifiedArtist;
 			OwnedArtistEntries = user.OwnedArtistEntries;
 			PreferredVideoService = user.PreferredVideoService;
+			AlbumFormatString = user.AlbumFormatString;
 		}
 	}
 }

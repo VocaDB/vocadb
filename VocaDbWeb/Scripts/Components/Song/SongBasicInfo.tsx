@@ -1,6 +1,5 @@
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
-import Markdown from '@Components/KnockoutExtensions/Markdown';
 import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
 import PVContract from '@DataContracts/PVs/PVContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
@@ -36,6 +35,7 @@ import ArtistList, {
 import LatestCommentsKnockout from '../Shared/Partials/Comment/LatestCommentsKnockout';
 import EnglishTranslatedString from '../Shared/Partials/EnglishTranslatedString';
 import ExternalLinksRows from '../Shared/Partials/EntryDetails/ExternalLinksRows';
+import PersonalDescriptionMedia from '../Shared/Partials/EntryDetails/PersonalDescriptionMedia';
 import PVServiceIcon from '../Shared/Partials/Shared/PVServiceIcon';
 import UniversalTimeLabel from '../Shared/Partials/Shared/UniversalTimeLabel';
 import SongGrid from '../Shared/Partials/Song/SongGrid';
@@ -720,7 +720,7 @@ const SongBasicInfo = observer(
 					</>
 				)}
 
-				{(model.canEditPersonalDescription ||
+				{(model.canEditPersonalDescription /* TODO: Use LoginManager. */ ||
 					model.personalDescriptionText) && (
 					<>
 						<h3
@@ -729,117 +729,10 @@ const SongBasicInfo = observer(
 						>
 							{t('ViewRes:EntryDetails.PersonalDescription')}
 						</h3>
-						<div className="media">
-							{!songDetailsStore.personalDescription.author.isEmpty &&
-								songDetailsStore.personalDescription.author.entry
-									?.mainPicture && (
-									<a
-										href={EntryUrlMapper.details(
-											EntryType.Artist,
-											songDetailsStore.personalDescription.author.id!,
-										)}
-										className="pull-left"
-									>
-										<img
-											className="coverPicThumb"
-											alt="Thumb" /* TODO: localize */
-											src={
-												songDetailsStore.personalDescription.author.entry
-													.mainPicture.urlSmallThumb
-											}
-											referrerPolicy="same-origin"
-										/>
-									</a>
-								)}
-
-							<div className="media-body">
-								{model.canEditPersonalDescription && (
-									<div className="pull-right">
-										<SafeAnchor
-											onClick={songDetailsStore.personalDescription.beginEdit}
-											href="#"
-											className="textLink editLink"
-										>
-											{t('ViewRes:Shared.Edit')}
-										</SafeAnchor>
-									</div>
-								)}
-								{!songDetailsStore.personalDescription.author.isEmpty && (
-									<h3 className="media-heading">
-										<a
-											href={EntryUrlMapper.details(
-												EntryType.Artist,
-												songDetailsStore.personalDescription.author.id!,
-											)}
-										>
-											{songDetailsStore.personalDescription.author.name}
-										</a>
-									</h3>
-								)}
-								{songDetailsStore.personalDescription.editing ? (
-									<div>
-										<select
-											value={songDetailsStore.personalDescription.author.id}
-											onChange={(e): void =>
-												runInAction(() => {
-													songDetailsStore.personalDescription.author.id = Number(
-														e.target.value,
-													);
-												})
-											}
-										>
-											<option>
-												{t(
-													'ViewRes:EntryDetails.PersonalDescriptionSelectAuthor',
-												)}
-											</option>
-											{songDetailsStore.personalDescription.artists.map(
-												(artist) => (
-													<option value={artist.id} key={artist.id}>
-														{artist.name}
-													</option>
-												),
-											)}
-										</select>
-										<br />
-										<textarea
-											value={songDetailsStore.personalDescription.text}
-											onChange={(e): void =>
-												runInAction(() => {
-													songDetailsStore.personalDescription.text =
-														e.target.value;
-												})
-											}
-											rows={5}
-											cols={100}
-											maxLength={2000}
-											className="input-xxlarge"
-										/>
-										<br />
-										<Button
-											type="button"
-											onClick={songDetailsStore.personalDescription.save}
-											variant="primary"
-										>
-											{t('ViewRes:Shared.Save')}
-										</Button>{' '}
-										<Button
-											onClick={songDetailsStore.personalDescription.cancelEdit}
-										>
-											{t('ViewRes:Shared.Cancel')}
-										</Button>
-									</div>
-								) : (
-									<div>
-										<p>
-											<Markdown>
-												{songDetailsStore.personalDescription.text!}
-											</Markdown>
-										</p>
-									</div>
-								)}
-							</div>
-						</div>
+						<PersonalDescriptionMedia
+							personalDescription={songDetailsStore.personalDescription}
+							canEditPersonalDescription={model.canEditPersonalDescription}
+						/>
 					</>
 				)}
 

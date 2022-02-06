@@ -5,9 +5,11 @@ using NHibernate;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -68,6 +70,21 @@ namespace VocaDb.Tests.DatabaseTests
 			using (var session = sessionFactory.OpenSession())
 			using (var tx = session.BeginTransaction())
 			{
+				Album = new Album(TranslatedString.Create("Re:package")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2008) } };
+				session.Save(Album);
+
+				Album2 = new Album(TranslatedString.Create("Re:MIKUS")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2009) } };
+				session.Save(Album2);
+
+				Album3 = new Album(TranslatedString.Create("Re:Dial"));
+				session.Save(Album3);
+
+				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
+				UserWithEditPermissions.AddAlbum(Album, PurchaseStatus.Nothing, MediaType.Other, 0);
+				UserWithEditPermissions.AddAlbum(Album2, PurchaseStatus.Nothing, MediaType.Other, 0);
+				UserWithEditPermissions.AddAlbum(Album3, PurchaseStatus.Nothing, MediaType.Other, 0);
+				session.Save(UserWithEditPermissions);
+
 				Producer = new Artist(TranslatedString.Create("Junk")) { Id = ProducerId };
 				session.Save(Producer);
 
@@ -77,11 +94,28 @@ namespace VocaDb.Tests.DatabaseTests
 				Producer3 = new Artist(TranslatedString.Create("Keeno"));
 				session.Save(Producer3);
 
+				void CreateTagComment(Tag tag, string message, DateTime created, bool deleted)
+				{
+					var comment = new TagComment(entry: tag, message: message, loginData: new AgentLoginData(user: UserWithEditPermissions, name: UserWithEditPermissions.Name))
+					{
+						Created = created,
+						Deleted = deleted,
+					};
+
+					tag.AllComments.Add(comment);
+				}
+
 				Tag = new Tag("electronic");
+				CreateTagComment(tag: Tag, message: "1", created: new DateTime(2022, 1, 1), deleted: false);
+				CreateTagComment(tag: Tag, message: "3", created: new DateTime(2022, 1, 3), deleted: true);
+				CreateTagComment(tag: Tag, message: "5", created: new DateTime(2022, 1, 5), deleted: false);
 				session.Save(Tag);
 
 				Tag2 = new Tag("rock");
 				Tag2.CreateName("ロック", ContentLanguageSelection.Japanese);
+				CreateTagComment(tag: Tag2, message: "2", created: new DateTime(2022, 1, 2), deleted: false);
+				CreateTagComment(tag: Tag2, message: "4", created: new DateTime(2022, 1, 4), deleted: true);
+				CreateTagComment(tag: Tag2, message: "6", created: new DateTime(2022, 1, 6), deleted: false);
 				session.Save(Tag2);
 
 				Tag3 = new Tag("alternative rock");
@@ -162,21 +196,6 @@ namespace VocaDb.Tests.DatabaseTests
 
 				ReleaseEvent2 = CreateEntry.SeriesEvent(ReleaseEventSeries, 39);
 				session.Save(ReleaseEvent2);
-
-				Album = new Album(TranslatedString.Create("Re:package")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2008) } };
-				session.Save(Album);
-
-				Album2 = new Album(TranslatedString.Create("Re:MIKUS")) { OriginalRelease = new AlbumRelease() { ReleaseDate = new OptionalDateTime(2009) } };
-				session.Save(Album2);
-
-				Album3 = new Album(TranslatedString.Create("Re:Dial"));
-				session.Save(Album3);
-
-				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
-				UserWithEditPermissions.AddAlbum(Album, PurchaseStatus.Nothing, MediaType.Other, 0);
-				UserWithEditPermissions.AddAlbum(Album2, PurchaseStatus.Nothing, MediaType.Other, 0);
-				UserWithEditPermissions.AddAlbum(Album3, PurchaseStatus.Nothing, MediaType.Other, 0);
-				session.Save(UserWithEditPermissions);
 
 				Webhook = new Webhook("https://discord.com/api/webhooks/39", WebhookEvents.User);
 				session.Save(Webhook);

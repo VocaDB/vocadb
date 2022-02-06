@@ -5,6 +5,7 @@ import EntryType from '@Models/EntryType';
 import ImageSize from '@Models/Images/ImageSize';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface AlbumThumbsProps {
 	albums: AlbumForApiContract[];
@@ -15,7 +16,8 @@ const AlbumThumbs = ({ albums }: AlbumThumbsProps): React.ReactElement => {
 		<ul className="smallThumbs">
 			{albums.map((album) => (
 				<ThumbItem
-					url={EntryUrlMapper.details(EntryType.Album, album.id)}
+					as={Link}
+					to={EntryUrlMapper.details(EntryType.Album, album.id)}
 					thumbUrl={
 						UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
 						'/Content/unknown.png'

@@ -3,7 +3,7 @@ import React from 'react';
 
 interface MomentJsTimeAgoProps {
 	as: React.ElementType;
-	className: string;
+	className?: string;
 	children?: Date;
 }
 

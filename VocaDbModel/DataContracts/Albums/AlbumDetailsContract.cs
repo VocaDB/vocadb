@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumDetailsContract : AlbumContract
 	{

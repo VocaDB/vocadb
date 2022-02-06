@@ -60,6 +60,7 @@ test('hasPermission disabled user', () => {
 			verifiedArtist: false,
 			ownedArtistEntries: [],
 			preferredVideoService: PVService[PVService.NicoNicoDouga],
+			albumFormatString: '',
 		}),
 	);
 	testHasPermission(loginManager, [PermissionToken.Nothing]);
@@ -76,6 +77,7 @@ test('hasPermission regular user', () => {
 			verifiedArtist: false,
 			ownedArtistEntries: [],
 			preferredVideoService: PVService[PVService.NicoNicoDouga],
+			albumFormatString: '',
 		}),
 	);
 	testHasPermission(loginManager, [
@@ -96,6 +98,7 @@ test('hasPermission regular user with lockdown message', () => {
 				verifiedArtist: false,
 				ownedArtistEntries: [],
 				preferredVideoService: PVService[PVService.NicoNicoDouga],
+				albumFormatString: '',
 			},
 			'lockdown!',
 		),

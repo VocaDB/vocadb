@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Discussions;
@@ -15,7 +14,9 @@ namespace VocaDb.Model.Domain.Comments
 	{
 		private T _entry;
 
+#nullable disable
 		public GenericComment() { }
+#nullable enable
 
 		public GenericComment(T entry, string message, AgentLoginData loginData)
 			: base(message, loginData)
@@ -28,6 +29,7 @@ namespace VocaDb.Model.Domain.Comments
 		public virtual T EntryForComment
 		{
 			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -37,7 +39,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override CommentType CommentType { get; }
 
-#nullable enable
 		public virtual bool Equals(GenericComment<T>? another)
 		{
 			if (another == null)
@@ -66,7 +67,6 @@ namespace VocaDb.Model.Domain.Comments
 		{
 			return string.Format("comment [{0}] for " + Entry, Id);
 		}
-#nullable disable
 	}
 
 	public class AlbumComment : GenericComment<Album>
@@ -123,6 +123,28 @@ namespace VocaDb.Model.Domain.Comments
 
 		public TagComment(Tag entry, string message, AgentLoginData loginData)
 			: base(entry, message, loginData) { }
+
+		public virtual TagComment Move(Tag target)
+		{
+			if (target.Equals(EntryForComment))
+				return this;
+
+			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
+			EntryForComment.AllComments.Remove(this);
+
+			var newComment = new TagComment(
+				entry: target,
+				message: Message,
+				loginData: new AgentLoginData(user: Author, name: Author.Name)
+			)
+			{
+				Created = Created,
+				Deleted = Deleted,
+			};
+			target.AllComments.Add(newComment);
+
+			return newComment;
+		}
 	}
 
 	/// <summary>
@@ -138,9 +160,11 @@ namespace VocaDb.Model.Domain.Comments
 
 	public class AlbumReview : GenericComment<Album>, IAlbumLink, IEntryWithIntId
 	{
+#nullable disable
 		public AlbumReview() { }
+#nullable enable
 
-		public AlbumReview(Album entry, string message, AgentLoginData loginData, string title, string languageCode)
+		public AlbumReview(Album entry, string message, AgentLoginData loginData, string? title, string? languageCode)
 			: base(entry, message, loginData)
 		{
 			Title = title ?? string.Empty;

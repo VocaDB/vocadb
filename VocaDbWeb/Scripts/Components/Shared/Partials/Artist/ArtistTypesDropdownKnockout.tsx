@@ -1,37 +1,44 @@
-import ArtistCategories from '@Models/Artists/ArtistCategories';
+import ArtistType from '@Models/Artists/ArtistType';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-// Corresponds to ArtistHelper.CategoriesForTypes in C#.
-const categoriesForTypes: Record<string, ArtistCategories> = {
-	Animator: ArtistCategories.Animator,
-	Character: ArtistCategories.Subject,
-	Circle: ArtistCategories.Circle,
-	Band: ArtistCategories.Band,
-	Illustrator: ArtistCategories.Illustrator,
-	Label: ArtistCategories.Label,
-	Lyricist: ArtistCategories.Other,
-	OtherGroup: ArtistCategories.Circle,
-	OtherIndividual: ArtistCategories.Other,
-	OtherVocalist: ArtistCategories.Vocalist,
-	OtherVoiceSynthesizer: ArtistCategories.Vocalist,
-	Producer: ArtistCategories.Producer,
-	Unknown: ArtistCategories.Other,
-	Utaite: ArtistCategories.Vocalist,
-	UTAU: ArtistCategories.Vocalist,
-	CeVIO: ArtistCategories.Vocalist,
-	Vocaloid: ArtistCategories.Vocalist,
-	Vocalist: ArtistCategories.Vocalist,
-	SynthesizerV: ArtistCategories.Vocalist,
-	CoverArtist: ArtistCategories.Producer,
+enum ArtistTypeGroup {
+	Nothing = 'Nothing',
+	Vocalist = 'Vocalist',
+	Producer = 'Producer',
+	Group = 'Group',
+	Other = 'Other',
+}
+
+const groupsForTypes: Record<string, ArtistTypeGroup> = {
+	[ArtistType[ArtistType.Animator]]: ArtistTypeGroup.Producer,
+	[ArtistType[ArtistType.Character]]: ArtistTypeGroup.Other,
+	[ArtistType[ArtistType.Circle]]: ArtistTypeGroup.Group,
+	[ArtistType[ArtistType.Band]]: ArtistTypeGroup.Group,
+	[ArtistType[ArtistType.Illustrator]]: ArtistTypeGroup.Producer,
+	[ArtistType[ArtistType.Label]]: ArtistTypeGroup.Group,
+	[ArtistType[ArtistType.Lyricist]]: ArtistTypeGroup.Other,
+	[ArtistType[ArtistType.OtherGroup]]: ArtistTypeGroup.Group,
+	[ArtistType[ArtistType.OtherIndividual]]: ArtistTypeGroup.Other,
+	[ArtistType[ArtistType.OtherVocalist]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.OtherVoiceSynthesizer]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.Producer]]: ArtistTypeGroup.Producer,
+	[ArtistType[ArtistType.Unknown]]: ArtistTypeGroup.Nothing,
+	[ArtistType[ArtistType.Utaite]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.UTAU]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.CeVIO]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.Vocaloid]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.Vocalist]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.SynthesizerV]]: ArtistTypeGroup.Vocalist,
+	[ArtistType[ArtistType.CoverArtist]]: ArtistTypeGroup.Producer,
 };
 
 const artistTypeGroups = _.chain(vdb.values.artistTypes)
 	.orderBy((artistType) =>
-		Object.values(ArtistCategories).indexOf(categoriesForTypes[artistType]),
+		Object.values(ArtistTypeGroup).indexOf(groupsForTypes[artistType]),
 	)
-	.groupBy((artistType) => categoriesForTypes[artistType])
+	.groupBy((artistType) => groupsForTypes[artistType])
 	.value();
 
 interface ArtistTypesDropdownKnockoutProps
@@ -46,15 +53,25 @@ const ArtistTypesDropdownKnockout = React.memo(
 
 		return (
 			<select {...props}>
-				{Object.entries(artistTypeGroups).map(([key, value]) => (
-					<optgroup label={key} key={key}>
-						{value.map((artistType) => (
-							<option value={artistType} key={artistType}>
-								{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
-							</option>
-						))}
-					</optgroup>
-				))}
+				{Object.entries(artistTypeGroups).map(([key, value]) =>
+					key === ArtistTypeGroup.Nothing ? (
+						<>
+							{value.map((artistType) => (
+								<option value={artistType} key={artistType}>
+									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
+								</option>
+							))}
+						</>
+					) : (
+						<optgroup label={key /* TODO: localize */} key={key}>
+							{value.map((artistType) => (
+								<option value={artistType} key={artistType}>
+									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
+								</option>
+							))}
+						</optgroup>
+					),
+				)}
 			</select>
 		);
 	},

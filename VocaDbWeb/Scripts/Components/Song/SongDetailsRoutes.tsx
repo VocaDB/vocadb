@@ -71,7 +71,11 @@ export const SongDetailsTabs = React.memo(
 					role="tablist"
 				>
 					<JQueryUINavItemComponent active={tab === 'basicInfo'}>
-						<Link to={`${EntryUrlMapper.details_song(model.contract.song)}`}>
+						<Link
+							to={`${EntryUrlMapper.details_song(
+								model.contract.song,
+							)}?${qs.stringify({ albumId: model.browsedAlbumId })}`}
+						>
 							{t('ViewRes:EntryDetails.BasicInfoTab')}
 						</Link>
 					</JQueryUINavItemComponent>
@@ -81,6 +85,7 @@ export const SongDetailsTabs = React.memo(
 								to={`${EntryUrlMapper.details_song(
 									model.contract.song,
 								)}/lyrics?${qs.stringify({
+									albumId: model.browsedAlbumId,
 									lyricsId: songDetailsStore.selectedLyricsId,
 								})}`}
 							>
@@ -92,21 +97,25 @@ export const SongDetailsTabs = React.memo(
 						<Link
 							to={`${EntryUrlMapper.details_song(
 								model.contract.song,
-							)}/discussion`}
+							)}/discussion?${qs.stringify({ albumId: model.browsedAlbumId })}`}
 						>
 							{t('ViewRes:EntryDetails.DiscussionTab')} ({model.commentCount})
 						</Link>
 					</JQueryUINavItemComponent>
 					<JQueryUINavItemComponent active={tab === 'related'}>
 						<Link
-							to={`${EntryUrlMapper.details_song(model.contract.song)}/related`}
+							to={`${EntryUrlMapper.details_song(
+								model.contract.song,
+							)}/related?${qs.stringify({ albumId: model.browsedAlbumId })}`}
 						>
 							{t('ViewRes.Song:Details.RelatedSongs')}
 						</Link>
 					</JQueryUINavItemComponent>
 					<JQueryUINavItemComponent active={tab === 'share'}>
 						<Link
-							to={`${EntryUrlMapper.details_song(model.contract.song)}/share`}
+							to={`${EntryUrlMapper.details_song(
+								model.contract.song,
+							)}/share?${qs.stringify({ albumId: model.browsedAlbumId })}`}
 						>
 							{t('ViewRes.Song:Details.Share')}
 						</Link>
