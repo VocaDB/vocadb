@@ -285,7 +285,12 @@ const AlbumBasicInfo = observer(
 									<div>
 										<JQueryUIButton
 											as={SafeAnchor}
-											disabled={!loginManager.canEditTags}
+											disabled={
+												!loginManager.canEditTagsForEntry({
+													...model,
+													entryType: EntryType[EntryType.Album],
+												})
+											}
 											icons={{ primary: 'ui-icon-tag' }}
 											onClick={albumDetailsStore.tagsEditStore.show}
 											href="#"
