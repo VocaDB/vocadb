@@ -1141,7 +1141,10 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private TagSelectionContract[] GetTagSelections<TEntry, TUsage, TVote>(int entryId, int userId) where TEntry : class, IEntryWithNames where TUsage : GenericTagUsage<TEntry, TVote> where TVote : GenericTagVote<TUsage>
+		private TagSelectionContract[] GetTagSelections<TEntry, TUsage, TVote>(int entryId, int userId)
+			where TEntry : class, IEntryWithNames, IEntryWithStatus
+			where TUsage : GenericTagUsage<TEntry, TVote>
+			where TVote : GenericTagVote<TUsage>
 		{
 			return HandleQuery(session =>
 			{

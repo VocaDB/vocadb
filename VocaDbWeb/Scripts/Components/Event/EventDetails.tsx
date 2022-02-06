@@ -342,7 +342,12 @@ const EventDetailsLayout = observer(
 									<JQueryUIButton
 										as={SafeAnchor}
 										className="inline-block"
-										disabled={!loginManager.canEditTags}
+										disabled={
+											!loginManager.canEditTagsForEntry({
+												...event,
+												entryType: EntryType[EntryType.ReleaseEvent],
+											})
+										}
 										icons={{ primary: 'ui-icon-tag' }}
 										onClick={releaseEventDetailsStore.tagsEditStore.show}
 										href="#"

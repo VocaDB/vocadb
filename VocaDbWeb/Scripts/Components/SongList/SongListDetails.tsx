@@ -249,7 +249,12 @@ const SongListDetailsLayout = observer(
 								<JQueryUIButton
 									as={SafeAnchor}
 									className="inline-block"
-									disabled={!loginManager.canEditTags}
+									disabled={
+										!loginManager.canEditTagsForEntry({
+											...songList,
+											entryType: EntryType[EntryType.SongList],
+										})
+									}
 									icons={{ primary: 'ui-icon-tag' }}
 									onClick={songListStore.tagsEditStore.show}
 									href="#"

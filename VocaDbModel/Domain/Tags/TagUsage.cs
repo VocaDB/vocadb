@@ -38,7 +38,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// <summary>
 		/// Attached entry. Cannot be null.
 		/// </summary>
-		public abstract IEntryBase EntryBase { get; }
+		public abstract IEntryWithStatus EntryBase { get; }
 
 		public virtual bool HasVotes => Count > 0;
 

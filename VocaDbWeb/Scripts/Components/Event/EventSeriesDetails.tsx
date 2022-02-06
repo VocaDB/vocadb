@@ -190,7 +190,12 @@ const EventSeriesDetailsLayout = ({
 						<JQueryUIButton
 							as={SafeAnchor}
 							className="inline-block"
-							disabled={!loginManager.canEditTags}
+							disabled={
+								!loginManager.canEditTagsForEntry({
+									...series,
+									entryType: EntryType[EntryType.ReleaseEventSeries],
+								})
+							}
 							icons={{ primary: 'ui-icon-tag' }}
 							onClick={eventSeriesDetailsStore.tagsEditStore.show}
 							href="#"

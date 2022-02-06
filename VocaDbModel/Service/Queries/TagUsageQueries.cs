@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.Queries
 			Func<TEntry, TagManager<TTag>> tagFunc,
 			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory
 		)
-			where TEntry : class, IEntryWithNames, IEntryWithTags
+			where TEntry : class, IEntryWithNames, IEntryWithTags, IEntryWithStatus
 			where TTag : TagUsage
 		{
 			ParamIs.NotNull(() => tags);
@@ -65,6 +65,10 @@ namespace VocaDb.Model.Service.Queries
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
+				var entry = await ctx.LoadAsync<TEntry>(entryId);
+
+				EntryPermissionManager.VerifyEditTagsForEntry(_permissionContext, entry);
+
 				// Tags are primarily added by Id, secondarily by translated name.
 				// First separate given tags for tag IDs and tag names
 				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
@@ -81,8 +85,6 @@ namespace VocaDb.Model.Service.Queries
 				var user = await ctx.OfType<User>().GetLoggedUserAsync(_permissionContext);
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
 				var newTags = await tagFactory.CreateTagsAsync(newTagNames);
-
-				var entry = await ctx.LoadAsync<TEntry>(entryId);
 
 				// Get the final list of tag names with translations
 				var appliedTags = tagsFromNames

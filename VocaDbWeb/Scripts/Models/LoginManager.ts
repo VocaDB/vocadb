@@ -250,4 +250,8 @@ export default class LoginManager {
 
 		return songList.author.id === this.loggedUserId;
 	};
+
+	public canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {
+		return this.canEditTags && this.canEdit(entry);
+	};
 }

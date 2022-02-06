@@ -225,9 +225,15 @@ namespace VocaDb.Model.Domain.Security
 			return permissionContext.HasPermission(PermissionToken.EditFeaturedLists);
 		}
 
-		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase? entry)
+		private static bool CanEditTagsForEntry(IUserPermissionContext permissionContext, IEntryWithStatus entry) =>
+			permissionContext.HasPermission(PermissionToken.EditTags) && CanEdit(permissionContext, entry);
+
+		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryWithStatus entry)
 		{
 			if (!permissionContext.IsLoggedIn)
+				return false;
+
+			if (!CanEditTagsForEntry(permissionContext, entry))
 				return false;
 
 			if (permissionContext.HasPermission(PermissionToken.RemoveTagUsages))
@@ -276,5 +282,8 @@ namespace VocaDb.Model.Domain.Security
 		{
 			VerifyAccess(permissionContext, entry, CanEdit);
 		}
+
+		public static void VerifyEditTagsForEntry(IUserPermissionContext permissionContext, IEntryWithStatus entry) =>
+			VerifyAccess(permissionContext, entry, CanEditTagsForEntry);
 	}
 }
