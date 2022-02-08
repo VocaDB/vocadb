@@ -1,15 +1,5 @@
-#nullable disable
-
 namespace VocaDb.Model.Domain.Users
 {
-	public class UserReport : GenericEntryReport<User, UserReportType>
-	{
-		public UserReport() { }
-
-		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
-			: base(reportedUser, reportType, user, hostname, notes, null) { }
-	}
-
 	public enum UserReportType
 	{
 		/// <summary>
@@ -28,5 +18,13 @@ namespace VocaDb.Model.Domain.Users
 		RemovePermissions = 1 << 2,
 
 		Other = 1 << 3,
+	}
+
+	public class UserReport : GenericEntryReport<User, UserReportType>
+	{
+		public UserReport() { }
+
+		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
+			: base(reportedUser, reportType, user, hostname, notes, null) { }
 	}
 }

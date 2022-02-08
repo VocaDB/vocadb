@@ -59,7 +59,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+				return new Service.Queries.EntryReportQueries().CreateReport(
 					ctx,
 					PermissionContext,
 					_entryLinkFactory,
@@ -69,7 +69,8 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier);
+					_discordWebhookNotifier
+				);
 			});
 		}
 #nullable disable
