@@ -15,6 +15,7 @@
   },
   "Shared": {
     "AddExtraArtist": "Add custom artist named '{{0}}'",
+    "ReportCannotBeSent": "Report cannot be sent.",
     "ReportSent": "Report sent. Thank you!",
     "Save": "Save",
     "ThanksForRating": "Thank you for rating!"
