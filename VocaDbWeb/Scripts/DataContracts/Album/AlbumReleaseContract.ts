@@ -4,7 +4,7 @@ import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
 export default interface AlbumReleaseContract {
 	catNum: string;
 
-	releaseDate: OptionalDateTimeContract;
+	releaseDate?: OptionalDateTimeContract;
 
 	releaseEvent?: ReleaseEventContract;
 }

@@ -175,7 +175,10 @@ export default class AlbumDetailsForApi {
 			this.releaseEvent = contract.originalRelease.releaseEvent;
 			this.releaseDate = contract.originalRelease.releaseDate;
 			this.fullReleaseDate =
-				this.releaseDate.year && this.releaseDate.month && this.releaseDate.day
+				this.releaseDate &&
+				this.releaseDate.year &&
+				this.releaseDate.month &&
+				this.releaseDate.day
 					? moment
 							.utc([
 								this.releaseDate.year,

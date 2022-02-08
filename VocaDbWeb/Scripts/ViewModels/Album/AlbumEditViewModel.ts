@@ -309,13 +309,13 @@ export default class AlbumEditViewModel {
 			false,
 		);
 		this.releaseDay = ko
-			.observable(data.originalRelease.releaseDate.day!)
+			.observable(data.originalRelease.releaseDate!.day!)
 			.extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
 		this.releaseMonth = ko
-			.observable(data.originalRelease.releaseDate.month!)
+			.observable(data.originalRelease.releaseDate!.month!)
 			.extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
 		this.releaseYear = ko
-			.observable(data.originalRelease.releaseDate.year!)
+			.observable(data.originalRelease.releaseDate!.year!)
 			.extend({ parseInteger: {} } as ObservableExtenderOptions<number>);
 		this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
 			data.originalRelease.releaseEvent,
