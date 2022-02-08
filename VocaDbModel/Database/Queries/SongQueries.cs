@@ -289,7 +289,8 @@ namespace VocaDb.Model.Database.Queries
 			VdbConfigManager config,
 			IEntrySubTypeNameFactory entrySubTypeNameFactory,
 			IFollowedArtistNotifier followedArtistNotifier,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -462,7 +463,8 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier
+					_discordWebhookNotifier,
+					SongReport.ReportTypesWithRequiredNotes
 				);
 			});
 		}

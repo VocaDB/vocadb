@@ -244,7 +244,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[HttpPost("{tagId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public async Task<IActionResult> PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber)
+		{
+			var (created, _) = await _queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
+		}
 
 		/// <summary>
 		/// Creates a new tag.

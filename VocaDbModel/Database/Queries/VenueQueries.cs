@@ -34,7 +34,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserPermissionContext permissionContext,
 			IEnumTranslations enumTranslations,
 			IUserIconFactory userIconFactory,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(venueRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -69,7 +70,8 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier
+					_discordWebhookNotifier,
+					VenueReport.ReportTypesWithRequiredNotes
 				);
 			});
 		}

@@ -107,7 +107,8 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier
+					_discordWebhookNotifier,
+					EventReport.ReportTypesWithRequiredNotes
 				);
 			});
 		}

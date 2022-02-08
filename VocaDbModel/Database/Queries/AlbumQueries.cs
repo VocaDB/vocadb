@@ -167,7 +167,8 @@ namespace VocaDb.Model.Database.Queries
 			IFollowedArtistNotifier followedArtistNotifier,
 			IAggregatedEntryImageUrlFactory entryThumbPersister,
 			ObjectCache cache,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -368,7 +369,8 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier
+					_discordWebhookNotifier,
+					AlbumReport.ReportTypesWithRequiredNotes
 				);
 			});
 		}
