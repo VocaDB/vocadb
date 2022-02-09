@@ -290,6 +290,7 @@ namespace VocaDb.Model.Database.Queries
 					hostname,
 					notes,
 					_discordWebhookNotifier,
+					ArtistReport.ReportTypesWithRequiredNotes,
 					reportType != ArtistReportType.OwnershipClaim
 				);
 			});

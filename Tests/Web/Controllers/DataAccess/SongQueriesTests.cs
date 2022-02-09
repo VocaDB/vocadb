@@ -167,7 +167,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new Model.Utils.Config.VdbConfigManager(),
 				new EntrySubTypeNameFactory(),
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), _mailer, new EnumTranslations(), new EntrySubTypeNameFactory()),
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier()
+			);
 		}
 
 		[TestMethod]

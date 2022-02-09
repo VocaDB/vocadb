@@ -9,6 +9,7 @@ enum SongReportType {
 export default SongReportType;
 
 export const reportTypesWithRequiredNotes = [
+	SongReportType.BrokenPV,
 	SongReportType.InvalidInfo,
 	SongReportType.Other,
 ];

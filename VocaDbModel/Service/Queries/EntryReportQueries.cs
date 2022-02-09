@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Service.Queries
 			string hostname,
 			string notes,
 			IDiscordWebhookNotifier discordWebhookNotifier,
+			HashSet<TReportType> reportTypesWithRequiredNotes,
 			bool allowNotification = true
 		)
 			where TEntry : class, IEntryWithVersions, IEntryWithNames
@@ -58,6 +60,9 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
+
+			if (reportTypesWithRequiredNotes.Contains(reportType) && string.IsNullOrWhiteSpace(notes))
+				return (created: false, reportId: 0);
 
 			var msg = $"creating report for {typeof(TEntry).Name} [{entryId}] as {reportType}";
 			ctx.AuditLogger.SysLog(msg, hostname);
@@ -74,7 +79,7 @@ namespace VocaDb.Model.Service.Queries
 			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open))
 			{
 				s_log.Info("Report already exists: {0}", existing);
-				return (false, existing.Id);
+				return (created: false, reportId: existing.Id);
 			}
 
 			var entry = ctx.Load(entryId);
@@ -127,7 +132,7 @@ namespace VocaDb.Model.Service.Queries
 			);
 
 			ctx.Save(report);
-			return (true, report.Id);
+			return (created: true, reportId: report.Id);
 		}
 	}
 }

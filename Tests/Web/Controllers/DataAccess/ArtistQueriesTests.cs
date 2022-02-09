@@ -88,7 +88,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FakeUserIconFactory(),
 				new EnumTranslations(),
 				_imagePersister,
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier()
+			);
 
 			_newArtistContract = new CreateArtistContract
 			{

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,6 +119,9 @@
   </resheader>
   <data name="AddExtraArtist" xml:space="preserve">
     <value>Add custom artist named '{0}'</value>
+  </data>
+  <data name="ReportCannotBeSent" xml:space="preserve">
+    <value>Report cannot be sent.</value>
   </data>
   <data name="ReportSent" xml:space="preserve">
     <value>Report sent. Thank you!</value>

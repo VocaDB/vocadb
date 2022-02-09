@@ -17,6 +17,7 @@ namespace VocaDb.Model.Domain.Songs
 	{
 		public static readonly HashSet<SongReportType> ReportTypesWithRequiredNotes = new()
 		{
+			SongReportType.BrokenPV,
 			SongReportType.InvalidInfo,
 			SongReportType.Other,
 		};

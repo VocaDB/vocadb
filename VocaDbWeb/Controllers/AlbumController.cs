@@ -86,9 +86,11 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public void CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber)
+		public async Task<IActionResult> CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber)
 		{
-			_queries.CreateReport(albumId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			var (created, _) = await _queries.CreateReport(albumId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
 		}
 
 		//

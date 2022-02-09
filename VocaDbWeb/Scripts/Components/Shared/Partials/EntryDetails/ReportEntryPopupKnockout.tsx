@@ -1,4 +1,4 @@
-import { showSuccessMessage } from '@Components/ui';
+import { showErrorMessage, showSuccessMessage } from '@Components/ui';
 import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
 import ReportEntryStore, { IEntryReportType } from '@Stores/ReportEntryStore';
 import { runInAction } from 'mobx';
@@ -33,9 +33,13 @@ const ReportEntryPopupKnockout = observer(
 					{
 						text: t('ViewRes:Shared.Save'),
 						click: async (): Promise<void> => {
-							await reportEntryStore.send();
+							try {
+								await reportEntryStore.send();
 
-							showSuccessMessage(t('AjaxRes:Shared.ReportSent'));
+								showSuccessMessage(t('AjaxRes:Shared.ReportSent'));
+							} catch {
+								showErrorMessage(t('AjaxRes:Shared.ReportCannotBeSent'));
+							}
 						},
 						disabled: !reportEntryStore.isValid,
 					},
