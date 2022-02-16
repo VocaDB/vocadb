@@ -40,7 +40,7 @@
     <None Include="Styles\UtaiteDB.less" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="2.0.1">
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
