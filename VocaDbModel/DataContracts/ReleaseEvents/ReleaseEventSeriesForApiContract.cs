@@ -56,7 +56,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.WebLinks))
 			{
-				WebLinks = series.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
+				WebLinks = series.WebLinks
+					.OrderBy(w => w.DescriptionOrUrl)
+					.Select(w => new WebLinkForApiContract(w))
+					.ToArray();
 			}
 		}
 #nullable disable

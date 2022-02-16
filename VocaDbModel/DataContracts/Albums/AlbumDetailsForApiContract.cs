@@ -209,8 +209,8 @@ namespace VocaDb.Model.DataContracts.Albums
 			Version = album.Version;
 
 			WebLinks = album.WebLinks
-				.Select(w => new WebLinkForApiContract(webLink: w))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(webLink: w))
 				.ToArray();
 		}
 	}

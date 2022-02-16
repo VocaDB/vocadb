@@ -221,8 +221,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			VenueName = releaseEvent.VenueName;
 
 			WebLinks = releaseEvent.WebLinks
-				.Select(w => new WebLinkForApiContract(webLink: w))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(webLink: w))
 				.ToArray();
 		}
 	}

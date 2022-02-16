@@ -213,8 +213,8 @@ namespace VocaDb.Model.DataContracts.Artists
 			Version = artist.Version;
 
 			WebLinks = artist.WebLinks
-				.Select(w => new WebLinkForApiContract(webLink: w))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(webLink: w))
 				.ToArray();
 
 			CharacterDesigner = artist

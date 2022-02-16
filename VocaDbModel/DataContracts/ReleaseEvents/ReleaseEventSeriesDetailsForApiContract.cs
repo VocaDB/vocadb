@@ -82,8 +82,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			UrlSlug = series.UrlSlug;
 
 			WebLinks = series.WebLinks
-				.Select(w => new WebLinkForApiContract(webLink: w))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(webLink: w))
 				.ToArray();
 		}
 	}

@@ -241,8 +241,8 @@ namespace VocaDb.Model.DataContracts.Songs
 				.ToArray();
 
 			WebLinks = song.WebLinks
-				.Select(w => new WebLinkForApiContract(w))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(w))
 				.ToArray();
 		}
 	}
