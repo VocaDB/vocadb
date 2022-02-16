@@ -187,7 +187,9 @@ const RatedSongs = observer(
 									value={ratedSongsStore.songListId}
 									onChange={(e): void =>
 										runInAction(() => {
-											ratedSongsStore.songListId = Number(e.target.value);
+											ratedSongsStore.songListId = e.target.value
+												? Number(e.target.value)
+												: undefined;
 										})
 									}
 								>
