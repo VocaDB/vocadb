@@ -147,8 +147,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			Song song,
 			ContentLanguagePreference languagePreference,
 			SongListBaseContract[] pools,
-			ISpecialTags specialTags,
-			IEntryTypeTagRepository entryTypeTags,
+			ISpecialTags? specialTags,
+			IEntryTypeTagRepository? entryTypeTags,
 			IUserPermissionContext userContext,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			Tag? songTypeTag = null
