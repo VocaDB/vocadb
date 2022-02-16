@@ -387,17 +387,19 @@ const UserOverview = observer(
 								<h4>{t('ViewRes.User:Details.FavoriteTags')}</h4>
 								<TagList tagNames={user.favoriteTags} />
 								<br />
-								<HighchartsReact
-									highcharts={Highcharts}
-									options={userDetailsStore.ratingsByGenreChart}
-									immutable={true}
-									containerProps={{
-										style: {
-											width: '400px',
-											height: '200px',
-										},
-									}}
-								/>
+								{userDetailsStore.ratingsByGenreChart && (
+									<HighchartsReact
+										highcharts={Highcharts}
+										options={userDetailsStore.ratingsByGenreChart}
+										immutable={true}
+										containerProps={{
+											style: {
+												width: '400px',
+												height: '200px',
+											},
+										}}
+									/>
+								)}
 								<br />
 							</>
 						)}
