@@ -5,7 +5,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // Updates a store that implements the `IStoreWithRouteParams` interface when a route changes, and vice versa.
-const useStoreWithRouteParams = <T>(store: IStoreWithRouteParams<T>): void => {
+const useStoreWithRouteParams = <T,>(store: IStoreWithRouteParams<T>): void => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
