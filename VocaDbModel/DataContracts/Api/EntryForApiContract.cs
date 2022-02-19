@@ -288,7 +288,7 @@ namespace VocaDb.Model.DataContracts.Api
 		/// <summary>
 		/// List of PVs, for songs and albums. Optional field.
 		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
+		[DataMember(EmitDefaultValue = false, Name = "pvs")]
 		public PVContract[]? PVs { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
