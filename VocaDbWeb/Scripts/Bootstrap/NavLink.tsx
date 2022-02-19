@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 
 import AbstractNavItem, { AbstractNavItemProps } from './AbstractNavItem';
+import SafeAnchor from './SafeAnchor';
 import { useBootstrapPrefix } from './ThemeProvider';
 import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
@@ -14,7 +15,7 @@ const NavLink: BsPrefixRefForwardingComponent<
 	'a',
 	NavLinkProps
 > = React.forwardRef<HTMLElement, NavLinkProps>(
-	({ bsPrefix, disabled, className, as, ...props }, ref) => {
+	({ bsPrefix, disabled, className, as = SafeAnchor, ...props }, ref) => {
 		bsPrefix = useBootstrapPrefix(bsPrefix, 'nav-link');
 		return (
 			<AbstractNavItem

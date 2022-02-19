@@ -1,5 +1,4 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/3d4c57374646949e6fedfef00236c99f4d1b4e71/src/AbstractNav.tsx
-import useForceUpdate from '@restart/hooks/useForceUpdate';
 import * as React from 'react';
 import { useContext } from 'react';
 
@@ -64,7 +63,7 @@ const AbstractNav: BsPrefixRefForwardingComponent<
 						getControllerId: getControllerId || noop,
 					}}
 				>
-					<Component {...props} role={role} />
+					<Component {...props} ref={ref} role={role} />
 				</NavContext.Provider>
 			</SelectableContext.Provider>
 		);

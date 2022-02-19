@@ -66,9 +66,7 @@ const Nav: BsPrefixRefForwardingComponent<'ul', NavProps> = React.forwardRef<
 			as={as}
 			ref={ref}
 			activeKey={activeKey}
-			className={classNames(className, {
-				[bsPrefix]: !isNavbar,
-				[`${navbarBsPrefix}-nav`]: isNavbar,
+			className={classNames(className, bsPrefix, {
 				[`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
 				[`${cardHeaderBsPrefix}-${variant}`]: !!cardHeaderBsPrefix,
 				[`${bsPrefix}-${variant}`]: !!variant,

@@ -1,3 +1,4 @@
+import Nav from '@Bootstrap/Nav';
 import LoginManager from '@Models/LoginManager';
 import { SearchType } from '@Stores/Search/SearchStore';
 import qs from 'qs';
@@ -12,44 +13,55 @@ const MainNavigationItems = React.memo(
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
-			<ul className="nav nav-list">
-				<li>
-					<a href={'/'}>{t('ViewRes:Layout.Home')}</a>
-				</li>
-				<li>
-					<Link to="/Search?searchType=Artist">
+			<Nav className="nav-list">
+				<Nav.Item>
+					<Nav.Link href={'/'}>{t('ViewRes:Layout.Home')}</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/Search?searchType=Artist">
 						{t('ViewRes:Shared.Artists')}
-					</Link>
+					</Nav.Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<a href={'/Artist/Create'}>{t('ViewRes:Layout.AddArtist')}</a>
+								<Nav.Link href={'/Artist/Create'}>
+									{t('ViewRes:Layout.AddArtist')}
+								</Nav.Link>
 							</li>
 						)}
 					</ul>
-				</li>
-				<li>
-					<Link to="/Search?searchType=Album">
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/Search?searchType=Album">
 						{t('ViewRes:Shared.Albums')}
-					</Link>
+					</Nav.Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<a href={'/Album/Create'}>{t('ViewRes:Layout.AddAlbum')}</a>
+								<Nav.Link href={'/Album/Create'}>
+									{t('ViewRes:Layout.AddAlbum')}
+								</Nav.Link>
 							</li>
 						)}
 						<li>
-							<Link to="/Search?searchType=Album&sort=RatingAverage">
+							<Nav.Link
+								as={Link}
+								to="/Search?searchType=Album&sort=RatingAverage"
+							>
 								{t('ViewRes:Shared.TopRatedAlbums')}
-							</Link>
+							</Nav.Link>
 						</li>
 						<li>
-							<Link to="/Search?searchType=Album&sort=ReleaseDate">
+							<Nav.Link
+								as={Link}
+								to="/Search?searchType=Album&sort=ReleaseDate"
+							>
 								{t('ViewRes:Layout.NewAlbums')}
-							</Link>
+							</Nav.Link>
 						</li>
 						<li>
-							<Link
+							<Nav.Link
+								as={Link}
 								to={`/Search?${qs.stringify({
 									searchType: SearchType.Album,
 									tagId: vdb.values.freeTagId,
@@ -57,91 +69,117 @@ const MainNavigationItems = React.memo(
 								})}`}
 							>
 								{t('ViewRes:Layout.FreeAlbums')}
-							</Link>
+							</Nav.Link>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<Link to="/Search?searchType=Song">{t('ViewRes:Shared.Songs')}</Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/Search?searchType=Song">
+						{t('ViewRes:Shared.Songs')}
+					</Nav.Link>
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<a href={'/Song/Create'}>{t('ViewRes:Layout.AddSong')}</a>
+								<Nav.Link href={'/Song/Create'}>
+									{t('ViewRes:Layout.AddSong')}
+								</Nav.Link>
 							</li>
 						)}
 						<li>
-							<Link
+							<Nav.Link
+								as={Link}
 								to={`/Song/Rankings?${qs.stringify({ durationHours: 168 })}`}
 							>
 								{t('ViewRes:Shared.TopFavoritedSongs')}
-							</Link>
+							</Nav.Link>
 						</li>
 						<li>
-							<Link to="/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true">
+							<Nav.Link
+								as={Link}
+								to="/Search?searchType=Song&sort=AdditionDate&onlyWithPVs=true"
+							>
 								{t('ViewRes:Layout.NewPVs')}
-							</Link>
+							</Nav.Link>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<Link to="/Search?searchType=ReleaseEvent">
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/Search?searchType=ReleaseEvent">
 						{t('ViewRes:Shared.ReleaseEvents')}
-					</Link>
+					</Nav.Link>
 					<ul>
 						<li>
-							<Link to="/Event">{t('ViewRes:Layout.UpcomingEvents')}</Link>
+							<Nav.Link as={Link} to="/Event">
+								{t('ViewRes:Layout.UpcomingEvents')}
+							</Nav.Link>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<Link to="/SongList/Featured">
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/SongList/Featured">
 						{t('ViewRes:Shared.FeaturedSongLists')}
-					</Link>
-				</li>
-				<li>
-					<Link to="/Tag">{t('ViewRes:Layout.Tags')}</Link>
-				</li>
-				<li>
-					<Link to="/User">{t('ViewRes:Shared.Users')}</Link>
-				</li>
-				<li>
-					<a href={'/Help'}>{t('ViewRes:Layout.Help')}</a>
-				</li>
-				<li>
-					<Link to="/discussion">{t('ViewRes:Layout.Discussions')}</Link>
-				</li>
-				<li>
-					<a href="https://wiki.vocadb.net/">{t('ViewRes:Layout.Wiki')}</a>
-				</li>
-				<li>
-					<a href={vdb.values.blogUrl}>{t('ViewRes:Layout.Blog')}</a>
-				</li>
+					</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/Tag">
+						{t('ViewRes:Layout.Tags')}
+					</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/User">
+						{t('ViewRes:Shared.Users')}
+					</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link href={'/Help'}>{t('ViewRes:Layout.Help')}</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link as={Link} to="/discussion">
+						{t('ViewRes:Layout.Discussions')}
+					</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link href="https://wiki.vocadb.net/">
+						{t('ViewRes:Layout.Wiki')}
+					</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link href={vdb.values.blogUrl}>
+						{t('ViewRes:Layout.Blog')}
+					</Nav.Link>
+				</Nav.Item>
 				{loginManager.canMikuDbImport && (
-					<li>
-						<a href={'/MikuDbAlbum'}>{t('ViewRes:Layout.MikuDbAlbum')}</a>
-					</li>
+					<Nav.Item>
+						<Nav.Link href={'/MikuDbAlbum'}>
+							{t('ViewRes:Layout.MikuDbAlbum')}
+						</Nav.Link>
+					</Nav.Item>
 				)}
 				{loginManager.canAccessManageMenu && (
-					<li>
-						<Link to="/Admin">{t('ViewRes:Layout.Manage')}</Link>
-					</li>
+					<Nav.Item>
+						<Nav.Link as={Link} to="/Admin">
+							{t('ViewRes:Layout.Manage')}
+						</Nav.Link>
+					</Nav.Item>
 				)}
 				{!vdb.values.isLoggedIn && (
 					<>
-						<li>
-							<a
+						<Nav.Item>
+							<Nav.Link
 								href={'/User/Login'}
 								onClick={(): void => {} /* TODO: showLoginPopup */}
 							>
 								{t('ViewRes:Layout.LogIn')}
-							</a>
-						</li>
-						<li>
-							<a href={'/User/Create'}>{t('ViewRes:Layout.Register')}</a>
-						</li>
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link href={'/User/Create'}>
+								{t('ViewRes:Layout.Register')}
+							</Nav.Link>
+						</Nav.Item>
 					</>
 				)}
-			</ul>
+			</Nav>
 		);
 	},
 );
