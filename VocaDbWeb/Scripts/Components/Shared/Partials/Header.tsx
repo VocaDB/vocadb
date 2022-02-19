@@ -20,7 +20,7 @@ const topBarStore = new TopBarStore(loginManager, entryReportRepo, userRepo);
 
 const AppHeader = (): React.ReactElement => {
 	return (
-		<Navbar className="navbar-inverse" fixed="top">
+		<Navbar className="navbar-inverse" fixed="top" collapseOnSelect>
 			<Container id="topBar">
 				<GlobalSearchBox topBarStore={topBarStore} />
 			</Container>

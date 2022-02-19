@@ -48,7 +48,7 @@ const AbstractNav: BsPrefixRefForwardingComponent<
 		}
 
 		const handleSelect = (key: any, event: any): void => {
-			if (key == null) return;
+			//if (key == null) return;
 			onSelect?.(key, event);
 			parentOnSelect?.(key, event);
 		};

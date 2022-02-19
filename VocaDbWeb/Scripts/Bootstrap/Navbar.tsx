@@ -7,8 +7,13 @@ import NavbarBrand from './NavbarBrand';
 import NavbarCollapse from './NavbarCollapse';
 import NavbarContext, { NavbarContextType } from './NavbarContext';
 import NavbarToggle from './NavbarToggle';
+import SelectableContext from './SelectableContext';
 import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+	SelectCallback,
+} from './helpers';
 
 export interface NavbarProps
 	extends BsPrefixProps,
@@ -16,6 +21,7 @@ export interface NavbarProps
 	expand?: boolean;
 	fixed?: 'top' | 'bottom';
 	onToggle?: (expanded: boolean) => void;
+	collapseOnSelect?: boolean;
 	expanded?: boolean;
 }
 
@@ -31,12 +37,22 @@ const NavbarOuter: BsPrefixRefForwardingComponent<
 		as: Component = 'nav',
 		expanded,
 		onToggle,
+		collapseOnSelect = false,
 		...controlledProps
 	} = useUncontrolled(props, {
 		expanded: 'onToggle',
 	});
 
 	const bsPrefix = useBootstrapPrefix(initialBsPrefix, 'navbar');
+
+	const handleCollapse = React.useCallback<SelectCallback>(
+		(...args) => {
+			if (collapseOnSelect && expanded) {
+				onToggle?.(false);
+			}
+		},
+		[collapseOnSelect, expanded, onToggle],
+	);
 
 	// will result in some false positives but that seems better
 	// than false negatives. strict `undefined` check allows explicit
@@ -58,16 +74,18 @@ const NavbarOuter: BsPrefixRefForwardingComponent<
 
 	return (
 		<NavbarContext.Provider value={navbarContext}>
-			<Component
-				ref={ref}
-				{...controlledProps}
-				className={classNames(
-					className,
-					bsPrefix,
-					expand && expandClass,
-					fixed && `navbar-fixed-${fixed}`,
-				)}
-			></Component>
+			<SelectableContext.Provider value={handleCollapse}>
+				<Component
+					ref={ref}
+					{...controlledProps}
+					className={classNames(
+						className,
+						bsPrefix,
+						expand && expandClass,
+						fixed && `navbar-fixed-${fixed}`,
+					)}
+				/>
+			</SelectableContext.Provider>
 		</NavbarContext.Provider>
 	);
 });
