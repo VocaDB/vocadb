@@ -273,7 +273,8 @@ export default class LoginManager {
 		return (
 			!!this.loggedUser &&
 			(this.loggedUser.groupId === UserGroup.Admin ||
-				this.loggedUser.groupId > groupId)
+				Object.values(UserGroup).indexOf(this.loggedUser.groupId) >
+					Object.values(UserGroup).indexOf(groupId))
 		);
 	};
 

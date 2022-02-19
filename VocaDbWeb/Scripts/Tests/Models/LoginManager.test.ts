@@ -113,3 +113,76 @@ describe('hasPermission', () => {
 		]);
 	});
 });
+
+describe('canEditUser', () => {
+	test('not logged in', () => {
+		const values = createValues();
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(false);
+	});
+
+	test('limited user', () => {
+		const user = createUser({ groupId: UserGroup.Limited });
+		const values = createValues(user);
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(false);
+	});
+
+	test('regular user', () => {
+		const user = createUser({ groupId: UserGroup.Regular });
+		const values = createValues(user);
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(false);
+	});
+
+	test('trusted user', () => {
+		const user = createUser({ groupId: UserGroup.Trusted });
+		const values = createValues(user);
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(false);
+	});
+
+	test('moderator', () => {
+		const user = createUser({ groupId: UserGroup.Moderator });
+		const values = createValues(user);
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(false);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(false);
+	});
+
+	test('admin', () => {
+		const user = createUser({ groupId: UserGroup.Admin });
+		const values = createValues(user);
+		const loginManager = new LoginManager(values);
+
+		expect(loginManager.canEditUser(UserGroup.Limited)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Regular)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Trusted)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Moderator)).toBe(true);
+		expect(loginManager.canEditUser(UserGroup.Admin)).toBe(true);
+	});
+});
