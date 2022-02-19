@@ -6,11 +6,18 @@ import PlayList from '@Components/Shared/Partials/PlayList';
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
 import PVPreviewKnockout from '@Components/Shared/Partials/Song/PVPreviewKnockout';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
+import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryStatus from '@Models/EntryStatus';
 import SongVoteRating from '@Models/SongVoteRating';
 import SongType from '@Models/Songs/SongType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
+import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
+import {
+	IRatedSongSearchItem,
+	SongSortRule,
+} from '@Stores/Search/SongSearchStore';
+import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -18,8 +25,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+export interface ISongSearchStore {
+	loading: boolean;
+	page: IRatedSongSearchItem[];
+	paging: ServerSidePagingStore;
+	playListStore: PlayListStore;
+	pvPlayerStore: PVPlayerStore;
+	showTags: boolean;
+	sort: string;
+	viewMode: 'Details' | 'PlayList' /* TODO: enum */;
+
+	formatDate: (dateStr: string) => string;
+	getPVServiceIcons: (services: string) => { service: string; url: string }[];
+	selectTag: (tag: TagBaseContract) => void;
+}
+
 interface SongSearchListProps {
-	songSearchStore: SongSearchStore;
+	songSearchStore: ISongSearchStore;
 }
 
 const SongSearchList = observer(
@@ -139,7 +161,7 @@ const SongSearchList = observer(
 														<img src={icon.url} title={icon.service} />
 													</React.Fragment>
 												))}
-											{false /* TODO */ && (
+											{song.rating === 'Favorite' && (
 												<>
 													{' '}
 													<span
@@ -152,7 +174,7 @@ const SongSearchList = observer(
 													/>
 												</>
 											)}
-											{false /* TODO */ && (
+											{song.rating === 'Like' && (
 												<>
 													{' '}
 													<span

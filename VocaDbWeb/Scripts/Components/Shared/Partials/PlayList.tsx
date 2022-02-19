@@ -110,9 +110,10 @@ const PlayList = observer(
 						</Button>
 						{pvPlayerStore.selectedSong && pvPlayerStore.selectedSong.song && (
 							<Button
+								as={Link}
 								variant="info"
 								className="song-info pull-right"
-								href={EntryUrlMapper.details(
+								to={EntryUrlMapper.details(
 									EntryType.Song,
 									pvPlayerStore.selectedSong?.song.id,
 								)}

@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
@@ -40,6 +41,10 @@ namespace VocaDb.Model.DataContracts.Users
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PVService PreferredVideoService { get; init; }
 
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public UserGroupId GroupId { get; init; }
+
 		public SanitizedUserWithPermissionsContract() { }
 
 		public SanitizedUserWithPermissionsContract(ServerOnlyUserWithPermissionsContract user)
@@ -53,6 +58,7 @@ namespace VocaDb.Model.DataContracts.Users
 			OwnedArtistEntries = user.OwnedArtistEntries;
 			PreferredVideoService = user.PreferredVideoService;
 			AlbumFormatString = user.AlbumFormatString;
+			GroupId = user.GroupId;
 		}
 	}
 }

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import ProfileIconKnockout_ImageSize from '../User/ProfileIconKnockout_ImageSize';
 import CommentBodyKnockout from './CommentBodyKnockout';
@@ -48,8 +49,8 @@ const CommentKnockout = observer(
 					standalone && 'comment-large',
 				)}
 			>
-				<a
-					href={EntryUrlMapper.details_user_byName(
+				<Link
+					to={EntryUrlMapper.details_user_byName(
 						commentKnockoutStore.author.name,
 					)}
 					className="pull-left"
@@ -60,7 +61,7 @@ const CommentKnockout = observer(
 						user={commentKnockoutStore.author}
 						size={70}
 					/>
-				</a>
+				</Link>
 
 				<div className="media-body">
 					<div className="pull-right">
@@ -70,7 +71,8 @@ const CommentKnockout = observer(
 
 						{onEdit && commentKnockoutStore.canBeEdited && (
 							<>
-								&nbsp;&nbsp;
+								{' '}
+								&nbsp;&nbsp;{' '}
 								<SafeAnchor onClick={onEdit} className="textLink editLink">
 									{t('ViewRes:Shared.Edit')}
 								</SafeAnchor>
@@ -79,7 +81,8 @@ const CommentKnockout = observer(
 
 						{onDelete && commentKnockoutStore.canBeDeleted && (
 							<>
-								&nbsp;&nbsp;
+								{' '}
+								&nbsp;&nbsp;{' '}
 								<SafeAnchor
 									// TODO: confirmClick
 									onClick={(): void => {
@@ -99,13 +102,13 @@ const CommentKnockout = observer(
 						)}
 					</div>
 					<h3 className="media-heading comment-large-header">
-						<a
-							href={EntryUrlMapper.details_user_byName(
+						<Link
+							to={EntryUrlMapper.details_user_byName(
 								commentKnockoutStore.author.name,
 							)}
 						>
 							{commentKnockoutStore.author.name}
-						</a>
+						</Link>
 					</h3>
 					{children ?? <CommentBodyKnockout message={message} />}
 				</div>

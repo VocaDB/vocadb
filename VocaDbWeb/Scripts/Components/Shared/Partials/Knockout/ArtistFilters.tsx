@@ -1,10 +1,13 @@
 import Button from '@Bootstrap/Button';
 import ArtistAutoComplete from '@Components/KnockoutExtensions/ArtistAutoComplete';
+import EntryType from '@Models/EntryType';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import ArtistFiltersStore from '@Stores/Search/ArtistFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import ArtistParticipationStatusOptionsKnockout from '../Song/ArtistParticipationStatusOptionsKnockout';
 
@@ -28,7 +31,11 @@ const ArtistFilters = observer(
 							style={{ display: 'inline-block' }}
 							className="input-append input-prepend"
 						>
-							<Button className="btn-nomargin" href={`/Ar/${artist.id}`}>
+							<Button
+								as={Link}
+								className="btn-nomargin"
+								to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+							>
 								<i className="icon icon-info-sign" />
 							</Button>
 							<div className="input-append">

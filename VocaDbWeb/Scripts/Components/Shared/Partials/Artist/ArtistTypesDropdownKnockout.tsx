@@ -55,13 +55,13 @@ const ArtistTypesDropdownKnockout = React.memo(
 			<select {...props}>
 				{Object.entries(artistTypeGroups).map(([key, value]) =>
 					key === ArtistTypeGroup.Nothing ? (
-						<>
+						<React.Fragment key={key}>
 							{value.map((artistType) => (
 								<option value={artistType} key={artistType}>
 									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
 								</option>
 							))}
-						</>
+						</React.Fragment>
 					) : (
 						<optgroup label={key /* TODO: localize */} key={key}>
 							{value.map((artistType) => (

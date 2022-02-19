@@ -4,6 +4,7 @@ import ImageSize from '@Models/Images/ImageSize';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { UserToolTip } from '../../../KnockoutExtensions/EntryToolTip';
 import ProfileIcon from './ProfileIcon';
@@ -25,8 +26,8 @@ const UserIconLink_UserForApiContract = ({
 
 	return tooltip ? (
 		<UserToolTip
-			as="a"
-			href={EntryUrlMapper.details_user_byName(user.name)}
+			as={Link}
+			to={EntryUrlMapper.details_user_byName(user.name)}
 			title={
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
@@ -47,8 +48,8 @@ const UserIconLink_UserForApiContract = ({
 			<span>{user.name}</span>
 		</UserToolTip>
 	) : (
-		<a
-			href={EntryUrlMapper.details_user_byName(user.name)}
+		<Link
+			to={EntryUrlMapper.details_user_byName(user.name)}
 			title={
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
@@ -66,7 +67,7 @@ const UserIconLink_UserForApiContract = ({
 				size={size}
 			/>{' '}
 			<span>{user.name}</span>
-		</a>
+		</Link>
 	);
 };
 

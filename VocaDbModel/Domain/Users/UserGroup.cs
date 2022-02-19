@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Users
 
 		private static readonly UserGroup s_limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
 
-		private static readonly UserGroup s_regular = new(UserGroupId.Regular,
+		public static readonly UserGroup s_regular = new(UserGroupId.Regular,
 			s_limited,
 			PermissionToken.CreateComments,
 			PermissionToken.ManageDatabase,

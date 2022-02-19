@@ -16,6 +16,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const useEntryCategoryName = (): ((
 	entry: EntryContract,
@@ -99,8 +100,8 @@ const AnythingSearchList = observer(
 							<tr key={`${entry.entryType}.${entry.id}`}>
 								<td style={{ width: '80px' }}>
 									{entry.mainPicture && entry.mainPicture.urlTinyThumb && (
-										<a
-											href={anythingSearchStore.entryUrl(entry)}
+										<Link
+											to={anythingSearchStore.entryUrl(entry)}
 											title={entry.additionalNames}
 											className="coverPicThumb"
 										>
@@ -111,16 +112,16 @@ const AnythingSearchList = observer(
 												className="coverPicThumb img-rounded"
 												referrerPolicy="same-origin"
 											/>
-										</a>
+										</Link>
 									)}
 								</td>
 								<td>
-									<a
-										href={anythingSearchStore.entryUrl(entry)}
+									<Link
+										to={anythingSearchStore.entryUrl(entry)}
 										title={entry.additionalNames}
 									>
 										{entry.name}
-									</a>
+									</Link>
 									{entry.artistType && (
 										<>
 											{' '}

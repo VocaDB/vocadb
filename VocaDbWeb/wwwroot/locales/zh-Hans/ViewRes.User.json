@@ -55,7 +55,7 @@
     "Messages": "信息",
     "MySettings": "用户设置",
     "Overview": "概览",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the {{0}}.",
+    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
     "Power": "经验值",
     "SetAvatar": "Set your avatar at gravatar.com",
     "SomeAlbumsILike": "我喜欢的专辑",

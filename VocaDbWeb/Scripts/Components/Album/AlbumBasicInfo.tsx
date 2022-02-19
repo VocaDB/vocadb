@@ -588,9 +588,9 @@ const AlbumBasicInfo = observer(
 						<h3>{t('ViewRes.Album:Details.LatestReview')}</h3>
 
 						<div className="media">
-							<a
+							<Link
 								className="pull-left"
-								href={EntryUrlMapper.details_user_byName(
+								to={EntryUrlMapper.details_user_byName(
 									model.latestReview.user.name,
 								)}
 							>
@@ -598,7 +598,7 @@ const AlbumBasicInfo = observer(
 									url={model.latestReview.user.mainPicture?.urlThumb}
 									size={70}
 								/>
-							</a>
+							</Link>
 
 							<div className="media-body">
 								<div className="pull-right">

@@ -15,7 +15,7 @@ import _ from 'lodash';
 
 import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
 
-export interface ISongSearchStore {
+export interface ISongsAdapterStore {
 	searchTerm: string;
 	sort: string;
 	songType: string;
@@ -41,7 +41,7 @@ export default class PlayListRepositoryForSongsAdapter
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly songRepo: SongRepository,
-		private readonly songSearchStore: ISongSearchStore,
+		private readonly songsAdapterStore: ISongsAdapterStore,
 	) {}
 
 	public getSongs = (
@@ -54,34 +54,34 @@ export default class PlayListRepositoryForSongsAdapter
 			.getList({
 				paging: paging,
 				lang: lang,
-				query: this.songSearchStore.searchTerm,
-				sort: this.songSearchStore.sort,
+				query: this.songsAdapterStore.searchTerm,
+				sort: this.songsAdapterStore.sort,
 				songTypes:
-					this.songSearchStore.songType !== SongType[SongType.Unspecified]
-						? this.songSearchStore.songType
+					this.songsAdapterStore.songType !== SongType[SongType.Unspecified]
+						? this.songsAdapterStore.songType
 						: undefined,
-				afterDate: this.songSearchStore.afterDate,
-				beforeDate: this.songSearchStore.beforeDate,
-				tagIds: this.songSearchStore.tagIds,
-				childTags: this.songSearchStore.childTags,
-				unifyTypesAndTags: this.songSearchStore.unifyEntryTypesAndTags,
-				artistIds: this.songSearchStore.artistFilters.artistIds,
-				artistParticipationStatus: this.songSearchStore.artistFilters
+				afterDate: this.songsAdapterStore.afterDate,
+				beforeDate: this.songsAdapterStore.beforeDate,
+				tagIds: this.songsAdapterStore.tagIds,
+				childTags: this.songsAdapterStore.childTags,
+				unifyTypesAndTags: this.songsAdapterStore.unifyEntryTypesAndTags,
+				artistIds: this.songsAdapterStore.artistFilters.artistIds,
+				artistParticipationStatus: this.songsAdapterStore.artistFilters
 					.artistParticipationStatus,
-				childVoicebanks: this.songSearchStore.artistFilters.childVoicebanks,
-				includeMembers: this.songSearchStore.artistFilters.includeMembers,
-				eventId: this.songSearchStore.releaseEvent.id,
-				onlyWithPvs: this.songSearchStore.pvsOnly,
+				childVoicebanks: this.songsAdapterStore.artistFilters.childVoicebanks,
+				includeMembers: this.songsAdapterStore.artistFilters.includeMembers,
+				eventId: this.songsAdapterStore.releaseEvent.id,
+				onlyWithPvs: this.songsAdapterStore.pvsOnly,
 				pvServices: pvServices,
-				since: this.songSearchStore.since,
-				minScore: this.songSearchStore.minScore,
-				userCollectionId: this.songSearchStore.onlyRatedSongs
+				since: this.songsAdapterStore.since,
+				minScore: this.songsAdapterStore.minScore,
+				userCollectionId: this.songsAdapterStore.onlyRatedSongs
 					? this.values.loggedUserId
 					: undefined,
-				parentSongId: this.songSearchStore.parentVersion.id,
-				fields: this.songSearchStore.fields,
-				status: this.songSearchStore.draftsOnly ? 'Draft' : undefined,
-				advancedFilters: this.songSearchStore.advancedFilters.filters,
+				parentSongId: this.songsAdapterStore.parentVersion.id,
+				fields: this.songsAdapterStore.fields,
+				status: this.songsAdapterStore.draftsOnly ? 'Draft' : undefined,
+				advancedFilters: this.songsAdapterStore.advancedFilters.filters,
 				minMilliBpm: undefined,
 				maxMilliBpm: undefined,
 				minLength: undefined,

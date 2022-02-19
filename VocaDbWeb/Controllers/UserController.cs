@@ -263,10 +263,10 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = model.Name;
 			PageProperties.Subtitle = Translate.UserGroups[model.GroupId];
-			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
+			//PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = model.Name })).ToString();
 			PageProperties.Robots = !model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View("Details", model);
+			return View("React/Index");
 		}
 
 		//

@@ -2,8 +2,9 @@ import Button from '@Bootstrap/Button';
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
 import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import { FeaturedSongListCategoryStore } from '@Stores/SongList/FeaturedSongListsStore';
-import { SongListSortRule } from '@Stores/SongList/SongListsBaseStore';
+import SongListsBaseStore, {
+	SongListSortRule,
+} from '@Stores/SongList/SongListsBaseStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -14,13 +15,11 @@ import { useTranslation } from 'react-i18next';
 import TagFilters from './TagFilters';
 
 interface SongListsFiltersProps {
-	featuredSongListCategoryStore: FeaturedSongListCategoryStore;
+	songListsBaseStore: SongListsBaseStore;
 }
 
 const SongListsFilters = observer(
-	({
-		featuredSongListCategoryStore,
-	}: SongListsFiltersProps): React.ReactElement => {
+	({ songListsBaseStore }: SongListsFiltersProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Search',
@@ -36,17 +35,16 @@ const SongListsFilters = observer(
 						<Dropdown as={ButtonGroup}>
 							<Dropdown.Toggle>
 								{t(
-									`VocaDb.Web.Resources.Views.SongList:SongListSortRuleNames.${featuredSongListCategoryStore.sort}`,
+									`VocaDb.Web.Resources.Views.SongList:SongListSortRuleNames.${songListsBaseStore.sort}`,
 								)}{' '}
 								<span className="caret" />
 							</Dropdown.Toggle>
 							<Dropdown.Menu>
-								{featuredSongListCategoryStore.showEventDateSort && (
+								{songListsBaseStore.showEventDateSort && (
 									<Dropdown.Item
 										onClick={(): void =>
 											runInAction(() => {
-												featuredSongListCategoryStore.sort =
-													SongListSortRule.Date;
+												songListsBaseStore.sort = SongListSortRule.Date;
 											})
 										}
 									>
@@ -58,8 +56,7 @@ const SongListsFilters = observer(
 								<Dropdown.Item
 									onClick={(): void =>
 										runInAction(() => {
-											featuredSongListCategoryStore.sort =
-												SongListSortRule.CreateDate;
+											songListsBaseStore.sort = SongListSortRule.CreateDate;
 										})
 									}
 								>
@@ -70,8 +67,7 @@ const SongListsFilters = observer(
 								<Dropdown.Item
 									onClick={(): void =>
 										runInAction(() => {
-											featuredSongListCategoryStore.sort =
-												SongListSortRule.Name;
+											songListsBaseStore.sort = SongListSortRule.Name;
 										})
 									}
 								>
@@ -84,12 +80,12 @@ const SongListsFilters = observer(
 					</div>{' '}
 					<Button
 						className={classNames(
-							featuredSongListCategoryStore.showTags && 'active',
+							songListsBaseStore.showTags && 'active',
 							'btn-nomargin',
 						)}
 						onClick={(): void =>
 							runInAction(() => {
-								featuredSongListCategoryStore.showTags = !featuredSongListCategoryStore.showTags;
+								songListsBaseStore.showTags = !songListsBaseStore.showTags;
 							})
 						}
 						href="#"
@@ -107,22 +103,22 @@ const SongListsFilters = observer(
 						<div className="input-append">
 							<DebounceInput
 								type="text"
-								value={featuredSongListCategoryStore.query}
+								value={songListsBaseStore.query}
 								onChange={(e): void =>
 									runInAction(() => {
-										featuredSongListCategoryStore.query = e.target.value;
+										songListsBaseStore.query = e.target.value;
 									})
 								}
 								className="input-xlarge"
 								placeholder={t('ViewRes.Search:Index.TypeSomething')}
 								debounceTimeout={300}
 							/>
-							{featuredSongListCategoryStore.query && (
+							{songListsBaseStore.query && (
 								<Button
 									variant="danger"
 									onClick={(): void =>
 										runInAction(() => {
-											featuredSongListCategoryStore.query = '';
+											songListsBaseStore.query = '';
 										})
 									}
 								>
@@ -136,14 +132,12 @@ const SongListsFilters = observer(
 				<div className="control-group">
 					<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 					<div className="controls">
-						<TagFilters tagFilters={featuredSongListCategoryStore.tagFilters} />
+						<TagFilters tagFilters={songListsBaseStore.tagFilters} />
 						<div>
 							<TagAutoComplete
 								type="text"
 								className="input-large"
-								onAcceptSelection={
-									featuredSongListCategoryStore.tagFilters.addTag
-								}
+								onAcceptSelection={songListsBaseStore.tagFilters.addTag}
 								placeholder={t('ViewRes:Shared.Search')}
 							/>
 						</div>

@@ -21,7 +21,8 @@ namespace VocaDb.Model.DataContracts.Artists
 	{
 		public ArtistForApiContract() { }
 
-		public ArtistForApiContract(Artist artist,
+		public ArtistForApiContract(
+			Artist artist,
 			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ArtistOptionalFields includedFields

@@ -11,8 +11,8 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { userLanguageCultures } from '../Shared/Partials/Knockout/DropdownList';
 import useStoreWithUpdateResults from '../useStoreWithUpdateResults';
+import { userLanguageCultures } from '../userLanguageCultures';
 import { SongDetailsTabs } from './SongDetailsRoutes';
 
 interface SongLyricsProps {

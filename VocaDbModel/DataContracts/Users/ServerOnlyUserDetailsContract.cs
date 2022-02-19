@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Users
 	/// Data contract for <see cref="User"/>, for details view.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
+	[Obsolete]
 	public class ServerOnlyUserDetailsContract : ServerOnlyUserWithPermissionsContract
 	{
 		public ServerOnlyUserDetailsContract() { }

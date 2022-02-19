@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import ImageSize from '@Models/Images/ImageSize';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ProfileIconKnockout_ImageSize from './ProfileIconKnockout_ImageSize';
 
@@ -14,8 +14,8 @@ interface IconAndLinkKnockoutProps {
 const IconAndLinkKnockout = React.memo(
 	({ user }: IconAndLinkKnockoutProps): React.ReactElement => {
 		return (
-			<SafeAnchor
-				href={EntryUrlMapper.details_user_byName(user.name)}
+			<Link
+				to={EntryUrlMapper.details_user_byName(user.name)}
 				className="pull-left"
 			>
 				{/* eslint-disable-next-line react/jsx-pascal-case */}
@@ -24,7 +24,7 @@ const IconAndLinkKnockout = React.memo(
 					user={user}
 					size={70}
 				/>
-			</SafeAnchor>
+			</Link>
 		);
 	},
 );

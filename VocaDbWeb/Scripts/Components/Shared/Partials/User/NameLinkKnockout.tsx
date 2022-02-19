@@ -1,6 +1,7 @@
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface NameLinkKnockoutProps {
 	user: UserApiContract;
@@ -11,9 +12,9 @@ const NameLinkKnockout = ({
 }: NameLinkKnockoutProps): React.ReactElement => {
 	return (
 		// User name inside anchor
-		<a href={EntryUrlMapper.details_user_byName(user.name)}>
+		<Link to={EntryUrlMapper.details_user_byName(user.name)}>
 			<span>{user.name}</span>
-		</a>
+		</Link>
 	);
 };
 

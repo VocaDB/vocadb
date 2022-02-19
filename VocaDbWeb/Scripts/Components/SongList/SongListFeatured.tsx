@@ -108,7 +108,7 @@ const SongListFeatured = observer(
 						{featuredSongListsStore.category === category ? (
 							<div>
 								<SongListsFilters
-									featuredSongListCategoryStore={
+									songListsBaseStore={
 										featuredSongListsStore.categories[category]
 									}
 								/>

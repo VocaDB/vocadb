@@ -33,6 +33,25 @@ namespace VocaDb.Model.Helpers
 			return power;
 		}
 
+		public static int GetPower(UserDetailsForApiContract contract, int ownedAlbumCount, int albumRatingCount, int songListCount)
+		{
+			ParamIs.NotNull(() => contract);
+
+			var power =
+				contract.EditCount / 2
+				+ contract.SubmitCount / 2
+				+ contract.TagVotes * 2
+				+ contract.AlbumCollectionCount * 2
+				+ ownedAlbumCount * 2
+				+ albumRatingCount * 3
+				+ contract.FavoriteSongCount
+				+ contract.CommentCount * 5
+				+ songListCount * 5
+				+ (contract.EmailVerified ? 100 : 0);
+
+			return power;
+		}
+
 		public static bool IsVeteran(ServerOnlyUserDetailsContract details)
 		{
 			var timeOnSite = DateTime.Now - details.CreateDate;
@@ -41,6 +60,16 @@ namespace VocaDb.Model.Helpers
 				details.GroupId >= UserGroupId.Regular &&
 				timeOnSite.TotalDays > 365 &&
 				details.EditCount > 1000;
+		}
+
+		public static bool IsVeteran(UserDetailsForApiContract contract)
+		{
+			var timeOnSite = DateTime.Now - contract.CreateDate;
+			return
+				contract.Active &&
+				contract.GroupId >= UserGroupId.Regular &&
+				timeOnSite.TotalDays > 365 &&
+				contract.EditCount > 1000;
 		}
 	}
 }

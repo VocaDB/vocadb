@@ -58,7 +58,7 @@
     "OldNameUntil": "(hasta {{0}})",
     "OldUsernames": "Nombres de usuario antiguos",
     "Overview": "Vista previa",
-    "PossibleProducerMessage": "¿A caso eres un artista (por ejemplo un productor, animador, ilustrador, etc...) trabajando con Vocaloid/UTAU?\nSi es así, por favor ve el {{0}}.",
+    "PossibleProducerMessage": "¿A caso eres un artista (por ejemplo un productor, animador, ilustrador, etc...) trabajando con Vocaloid/UTAU?\nSi es así, por favor ve el <a>Página de verificación del artista</a>.",
     "Power": "Poder",
     "SetAvatar": "Cambia tu avatar via gravatar.com",
     "SomeAlbumsILike": "Algunos albumes que me han gustado",

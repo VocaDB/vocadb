@@ -1,3 +1,4 @@
+import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
@@ -15,7 +16,7 @@ import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import PlayListRepositoryForSongsAdapter, {
-	ISongSearchStore,
+	ISongsAdapterStore,
 } from '@Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
@@ -30,6 +31,16 @@ import SearchCategoryBaseStore from './SearchCategoryBaseStore';
 import { SearchType } from './SearchStore';
 import SongBpmFilter from './SongBpmFilter';
 import SongLengthFilter from './SongLengthFilter';
+
+export interface ISongSearchItem extends SongApiContract {
+	previewStore?: SongWithPreviewStore;
+}
+
+export type SongVoteRating = 'Nothing' | 'Like' | 'Favorite';
+
+export interface IRatedSongSearchItem extends ISongSearchItem {
+	rating?: SongVoteRating;
+}
 
 // Corresponds to the SongSortRule enum in C#.
 export enum SongSortRule {
@@ -74,16 +85,12 @@ export interface SongSearchRouteParams {
 	tag?: string;
 	tagId?: number | number[];
 	unifyEntryTypesAndTags?: boolean;
-	viewMode?: string /* TODO: enum */;
-}
-
-export interface ISongSearchItem extends SongApiContract {
-	previewStore?: SongWithPreviewStore;
+	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
 export default class SongSearchStore
 	extends SearchCategoryBaseStore<ISongSearchItem>
-	implements ISongSearchStore {
+	implements ISongSearchStore, ISongsAdapterStore {
 	public readonly artistFilters: ArtistFilters;
 	@observable public dateDay?: number = undefined;
 	@observable public dateMonth?: number = undefined;
@@ -100,7 +107,8 @@ export default class SongSearchStore
 	@observable public songType = SongType[SongType.Unspecified] /* TODO: enum */;
 	@observable public sort = SongSortRule.Name;
 	@observable public unifyEntryTypesAndTags = false;
-	@observable public viewMode = 'Details' /* TODO: enum */;
+	@observable public viewMode: 'Details' | 'PlayList' =
+		'Details' /* TODO: enum */;
 	public readonly minBpmFilter = new SongBpmFilter();
 	public readonly maxBpmFilter = new SongBpmFilter();
 	public readonly minLengthFilter = new SongLengthFilter();
@@ -112,7 +120,7 @@ export default class SongSearchStore
 		urlMapper: UrlMapper,
 		private readonly songRepo: SongRepository,
 		private readonly userRepo: UserRepository,
-		private readonly eventRepo: ReleaseEventRepository,
+		eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
 		pvPlayersFactory: PVPlayersFactory,
 	) {
@@ -126,7 +134,7 @@ export default class SongSearchStore
 
 		this.releaseEvent = new BasicEntryLinkStore<IEntryWithIdAndName>(
 			(entryId) =>
-				this.eventRepo
+				eventRepo
 					? eventRepo.getOne({ id: entryId })
 					: Promise.resolve(undefined),
 		);
@@ -330,6 +338,7 @@ export default class SongSearchStore
 			draftsOnly: this.draftsOnly,
 			eventId: this.releaseEvent.id,
 			filter: this.searchTerm,
+			// TODO: includeMembers
 			maxLength: this.maxLengthFilter.length,
 			maxMilliBpm: this.maxBpmFilter.milliBpm,
 			minLength: this.minLengthFilter.length,
@@ -365,6 +374,7 @@ export default class SongSearchStore
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.releaseEvent.id = value.eventId;
 		this.searchTerm = value.filter ?? '';
+		// TODO: includeMembers
 		this.maxLengthFilter.length = value.maxLength ?? 0;
 		this.maxBpmFilter.milliBpm = value.maxMilliBpm;
 		this.minLengthFilter.length = value.minLength ?? 0;

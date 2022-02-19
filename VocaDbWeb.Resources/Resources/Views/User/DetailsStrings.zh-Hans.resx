@@ -197,7 +197,7 @@
   </data>
   <data name="PossibleProducerMessage" xml:space="preserve">
     <value>Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
-If so, please see the {0}.</value>
+If so, please see the &lt;a&gt;artist verification page&lt;/a&gt;.</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>经验值</value>

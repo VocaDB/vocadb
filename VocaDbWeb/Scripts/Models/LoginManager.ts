@@ -8,6 +8,7 @@ import _ from 'lodash';
 import EntryStatus from './EntryStatus';
 import EntryType from './EntryType';
 import IEntryWithStatus from './IEntryWithStatus';
+import UserGroup from './Users/UserGroup';
 
 // Corresponds to the PermissionToken struct in C#.
 export enum PermissionToken {
@@ -46,6 +47,7 @@ export enum PermissionToken {
 	ViewHiddenRatings = '47bcc523-5667-403d-bd20-d2728e1f9c5f',
 	ViewHiddenRevisions = 'c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d',
 	ManageWebhooks = '838dde1d-51ba-423b-ad8e-c1e2c2024a37',
+	CreateXmlDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
 }
 
 // Corresponds to the LoginManager and EntryPermissionManager classes in C#.
@@ -103,6 +105,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
+	public get canDisableUsers(): boolean {
+		return this.hasPermission(PermissionToken.DisableUsers);
+	}
+
 	public get canEditAllSongLists(): boolean {
 		return this.hasPermission(PermissionToken.EditAllSongLists);
 	}
@@ -127,6 +133,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.EditTags);
 	}
 
+	public get canManageUserPermissions(): boolean {
+		return this.hasPermission(PermissionToken.ManageUserPermissions);
+	}
+
 	public get canManageEntryReports(): boolean {
 		return this.hasPermission(PermissionToken.ManageEntryReports);
 	}
@@ -145,6 +155,14 @@ export default class LoginManager {
 
 	public get canMoveToTrash(): boolean {
 		return this.hasPermission(PermissionToken.MoveToTrash);
+	}
+
+	public get canReportUser(): boolean {
+		return this.hasPermission(PermissionToken.ReportUser);
+	}
+
+	public get canRemoveEditPermission(): boolean {
+		return this.hasPermission(PermissionToken.RemoveEditPermission);
 	}
 
 	public get canViewAuditLog(): boolean {
@@ -249,6 +267,19 @@ export default class LoginManager {
 		if (this.canEditAllSongLists) return true;
 
 		return songList.author.id === this.loggedUserId;
+	};
+
+	private canEditGroupTo = (groupId: UserGroup): boolean => {
+		return (
+			!!this.loggedUser &&
+			(this.loggedUser.groupId === UserGroup.Admin ||
+				Object.values(UserGroup).indexOf(this.loggedUser.groupId) >
+					Object.values(UserGroup).indexOf(groupId))
+		);
+	};
+
+	public canEditUser = (groupId: UserGroup): boolean => {
+		return this.canEditGroupTo(groupId);
 	};
 
 	public canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {

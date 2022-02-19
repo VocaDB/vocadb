@@ -13,6 +13,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.VideoServices;
 
@@ -151,6 +152,14 @@ namespace VocaDb.Tests.TestData
 		public static Artist Vocalist(int id = 0, string name = null, ArtistType artistType = ArtistType.Vocaloid)
 		{
 			return new Artist(TranslatedString.Create(name ?? "Hatsune Miku")) { Id = id, ArtistType = artistType };
+		}
+
+		public static Venue Venue(int id = 0, string englishName = "Makuhari Messe")
+		{
+			var venue = new Venue { Id = id };
+			venue.CreateName(new LocalizedString(englishName, ContentLanguageSelection.English));
+
+			return venue;
 		}
 	}
 }

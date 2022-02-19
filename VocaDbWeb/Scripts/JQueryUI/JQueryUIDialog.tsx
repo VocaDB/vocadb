@@ -5,7 +5,12 @@ import JQueryUIButton from './JQueryUIButton';
 
 type JQueryUIDialogProps = {
 	autoOpen?: boolean;
-	buttons?: { text: string; click: () => void; disabled?: boolean }[];
+	buttons?: {
+		text: string;
+		click: () => void;
+		disabled?: boolean;
+		icons?: any;
+	}[];
 	children?: React.ReactNode;
 	close?: () => void;
 	modal?: boolean;
@@ -91,6 +96,7 @@ const JQueryUIDialog = ({
 										onClick={button.click}
 										disabled={button.disabled}
 										key={index}
+										icons={button.icons}
 									>
 										{button.text}
 									</JQueryUIButton>

@@ -1,15 +1,10 @@
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
-import AlbumSearchStore, {
-	AlbumSortRule,
-} from '@Stores/Search/AlbumSearchStore';
-import ArtistSearchStore, {
-	ArtistSortRule,
-} from '@Stores/Search/ArtistSearchStore';
-import EventSearchStore, {
-	EventSortRule,
-} from '@Stores/Search/EventSearchStore';
-import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
+import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
+import { ArtistSortRule } from '@Stores/Search/ArtistSearchStore';
+import { EventSortRule } from '@Stores/Search/EventSearchStore';
+import { SongSortRule } from '@Stores/Search/SongSearchStore';
+import { RatedSongForUserSortRule } from '@Stores/User/RatedSongsSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -26,7 +21,7 @@ const albumSortRules = [
 ];
 
 interface AlbumSearchDropdownProps {
-	albumSearchStore: AlbumSearchStore;
+	albumSearchStore: { sort: AlbumSortRule };
 }
 
 export const AlbumSearchDropdown = observer(
@@ -75,7 +70,7 @@ const artistSortRules = [
 ];
 
 interface ArtistSearchDropdownProps {
-	artistSearchStore: ArtistSearchStore;
+	artistSearchStore: { sort: ArtistSortRule };
 }
 
 export const ArtistSearchDropdown = observer(
@@ -118,7 +113,7 @@ const eventSortRules = Object.values(EventSortRule).filter(
 );
 
 interface EventSearchDropdownProps {
-	eventSearchStore: EventSearchStore;
+	eventSearchStore: { sort: EventSortRule };
 }
 
 export const EventSearchDropdown = observer(
@@ -173,7 +168,7 @@ const songSortRules = [
 ];
 
 interface SongSearchDropdownProps {
-	songSearchStore: SongSearchStore;
+	songSearchStore: { sort: SongSortRule };
 }
 
 export const SongSearchDropdown = observer(
@@ -201,6 +196,60 @@ export const SongSearchDropdown = observer(
 								key={sortRule}
 							>
 								{t(`Resources:SongSortRuleNames.${sortRule}`)}
+							</Dropdown.Item>
+						))}
+					</Dropdown.Menu>
+				</Dropdown>
+			</div>
+		);
+	},
+);
+
+// Corresponds to Translate.RatedSongForUserSortRuleNames in C#.
+const ratedSongForUserSortRules = [
+	RatedSongForUserSortRule.Name,
+	RatedSongForUserSortRule.AdditionDate,
+	RatedSongForUserSortRule.PublishDate,
+	RatedSongForUserSortRule.RatingScore,
+	RatedSongForUserSortRule.FavoritedTimes,
+	RatedSongForUserSortRule.RatingDate,
+];
+
+interface RatedSongsSearchDropdownProps {
+	ratedSongsStore: { sort: RatedSongForUserSortRule };
+}
+
+export const RatedSongsSearchDropdown = observer(
+	({ ratedSongsStore }: RatedSongsSearchDropdownProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources', 'ViewRes']);
+
+		return (
+			<div className="inline-block search-sort-menu">
+				{t('ViewRes:EntryIndex.SortBy')}{' '}
+				<Dropdown as={ButtonGroup}>
+					<Dropdown.Toggle>
+						<span>
+							{t([
+								`Resources:RatedSongForUserSortRuleNames.${ratedSongsStore.sort}`,
+								`Resources:SongSortRuleNames.${ratedSongsStore.sort}`,
+							])}
+						</span>{' '}
+						<span className="caret" />
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						{ratedSongForUserSortRules.map((sortRule) => (
+							<Dropdown.Item
+								onClick={(): void =>
+									runInAction(() => {
+										ratedSongsStore.sort = sortRule;
+									})
+								}
+								key={sortRule}
+							>
+								{t([
+									`Resources:RatedSongForUserSortRuleNames.${sortRule}`,
+									`Resources:SongSortRuleNames.${sortRule}`,
+								])}
 							</Dropdown.Item>
 						))}
 					</Dropdown.Menu>

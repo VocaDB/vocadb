@@ -363,13 +363,14 @@ namespace VocaDb.Web
 				endpoints.MapControllerRoute("Tag", "T/{id}/{slug?}", new { controller = "Tag", action = "DetailsById" }, new { id = Numeric });
 
 				// User profile route, for example /Profile/riipah
-				endpoints.MapControllerRoute("User", "Profile/{id}", new { controller = "User", action = "Profile" });
+				endpoints.MapControllerRoute("User", "Profile/{id}/{**clientPath}", new { controller = "User", action = "Profile" });
 
 				endpoints.MapControllerRoute("Discussion", "discussion/{**clientPath}", new { controller = "Discussion", action = "Index" });
 
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+					pattern: "{controller=Home}/{action=Index}/{id?}"
+				);
 			});
 		}
 	}

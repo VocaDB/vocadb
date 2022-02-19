@@ -258,8 +258,8 @@ namespace VocaDb.Model.DataContracts.Tags
 			Translations = tag.Names.GetTranslationsString(languagePreference);
 			UrlSlug = tag.UrlSlug;
 			WebLinks = tag.WebLinks.Links
-				.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
 				.OrderBy(w => w.DescriptionOrUrl)
+				.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
 				.ToArray();
 		}
 

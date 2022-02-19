@@ -16,6 +16,7 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import MainNavigationItems from './Partials/MainNavigationItems';
 import ProfileIconKnockout_ImageSize from './Partials/User/ProfileIconKnockout_ImageSize';
@@ -211,23 +212,26 @@ const GlobalSearchBox = observer(
 						) : (
 							<>
 								<Dropdown.Item
-									href={EntryUrlMapper.details_user_byName(
+									as={Link}
+									to={EntryUrlMapper.details_user_byName(
 										vdb.values.loggedUser.name,
 									)}
 								>
 									{t('ViewRes.User:MySettings.Profile')}
 								</Dropdown.Item>
 								<Dropdown.Item
-									href={`${EntryUrlMapper.details_user_byName(
+									as={Link}
+									to={`${EntryUrlMapper.details_user_byName(
 										vdb.values.loggedUser.name,
-									)}#Albums`}
+									)}/albums`}
 								>
 									{t('ViewRes:TopBar.MyAlbums')}
 								</Dropdown.Item>
 								<Dropdown.Item
-									href={`${EntryUrlMapper.details_user_byName(
+									as={Link}
+									to={`${EntryUrlMapper.details_user_byName(
 										vdb.values.loggedUser.name,
-									)}#Songs`}
+									)}/songs`}
 								>
 									{t('ViewRes:TopBar.MySongs')}
 								</Dropdown.Item>

@@ -9,9 +9,13 @@ import { Link } from 'react-router-dom';
 
 interface AlbumThumbsProps {
 	albums: AlbumForApiContract[];
+	tooltip?: boolean;
 }
 
-const AlbumThumbs = ({ albums }: AlbumThumbsProps): React.ReactElement => {
+const AlbumThumbs = ({
+	albums,
+	tooltip,
+}: AlbumThumbsProps): React.ReactElement => {
 	return (
 		<ul className="smallThumbs">
 			{albums.map((album) => (
@@ -24,6 +28,7 @@ const AlbumThumbs = ({ albums }: AlbumThumbsProps): React.ReactElement => {
 					}
 					caption={album.name}
 					entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
+					tooltip={tooltip}
 					key={album.id}
 				/>
 			))}
