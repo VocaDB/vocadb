@@ -1,15 +1,8 @@
 import Container from '@Bootstrap/Container';
-import Navbar from '@Bootstrap/Navbar';
 import ErrorNotFound from '@Components/Error/ErrorNotFound';
-import GlobalSearchBox from '@Components/Shared/GlobalSearchBox';
 import Footer from '@Components/Shared/Partials/Footer';
+import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
-import LoginManager from '@Models/LoginManager';
-import EntryReportRepository from '@Repositories/EntryReportRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import TopBarStore from '@Stores/TopBarStore';
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Toaster } from 'react-hot-toast';
@@ -55,15 +48,6 @@ const SongListDetails = React.lazy(
 );
 const TagDetails = React.lazy(() => import('@Components/Tag/TagDetails'));
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const entryReportRepo = new EntryReportRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const topBarStore = new TopBarStore(loginManager, entryReportRepo, userRepo);
-
 const App = (): React.ReactElement => {
 	React.useEffect(() => {
 		ReactGA.initialize(vdb.values.gaAccountId);
@@ -73,11 +57,7 @@ const App = (): React.ReactElement => {
 		<>
 			<ScrollToTop />
 
-			<Navbar className="navbar-inverse" fixed="top">
-				<Container id="topBar">
-					<GlobalSearchBox topBarStore={topBarStore} />
-				</Container>
-			</Navbar>
+			<Header />
 
 			<Container fluid={true}>
 				<div className="row-fluid">
