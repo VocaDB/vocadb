@@ -18,9 +18,12 @@ namespace VocaDb.Model.DataContracts.Api
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryForApiContract : IEntryWithIntId
 	{
-		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference,
+		public static EntryForApiContract Create(
+			IEntryWithNames entry,
+			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+			EntryOptionalFields includedFields
+		)
 		{
 			ParamIs.NotNull(() => entry);
 
@@ -55,8 +58,12 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 		}
 
-		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+		public EntryForApiContract(
+			Artist artist,
+			ContentLanguagePreference languagePreference,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			EntryOptionalFields includedFields
+		)
 			: this(artist, languagePreference, includedFields)
 		{
 			ActivityDate = artist.ReleaseDate;
@@ -85,8 +92,12 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 		}
 
-		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+		public EntryForApiContract(
+			Album album,
+			ContentLanguagePreference languagePreference,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			EntryOptionalFields includedFields
+		)
 			: this(album, languagePreference, includedFields)
 		{
 			ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
@@ -121,8 +132,12 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 		}
 
-		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+		public EntryForApiContract(
+			ReleaseEvent releaseEvent,
+			ContentLanguagePreference languagePreference,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			EntryOptionalFields includedFields
+		)
 			: this(releaseEvent, languagePreference, includedFields)
 		{
 			ActivityDate = releaseEvent.Date.DateTime;
@@ -189,8 +204,11 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 		}
 
-		public EntryForApiContract(SongList songList, IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+		public EntryForApiContract(
+			SongList songList,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			EntryOptionalFields includedFields
+		)
 			: this(songList, ContentLanguagePreference.Default, includedFields)
 		{
 			ActivityDate = songList.EventDate;
@@ -203,8 +221,12 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 		}
 
-		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields)
+		public EntryForApiContract(
+			Tag tag,
+			ContentLanguagePreference languagePreference,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			EntryOptionalFields includedFields
+		)
 			: this(tag, languagePreference, includedFields)
 		{
 			CreateDate = tag.CreateDate;
