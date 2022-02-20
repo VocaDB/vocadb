@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -27,7 +26,6 @@ namespace VocaDb.Model.Service.VideoServices
 			_template = template;
 		}
 
-#nullable enable
 		public string GetId(string url)
 		{
 			var match = _regex.Match(url);
@@ -40,19 +38,18 @@ namespace VocaDb.Model.Service.VideoServices
 		}
 
 		public bool IsMatch(string url) => _regex.IsMatch(url);
-#nullable disable
 
 		public string MakeLinkFromUrl(string url) => MakeLinkFromId(GetId(url));
 
-		public string MakeLinkFromId(string id) => string.Format(_template, id);
+		public string MakeLinkFromId(string? id) => string.Format(_template, id);
 
-		public (bool success, string formattedUrl) GetLinkFromUrl(string url)
+		public (bool success, string? formattedUrl) GetLinkFromUrl(string url)
 		{
 			var success = TryGetLinkFromUrl(url, out var formattedUrl);
 			return (success, formattedUrl);
 		}
 
-		public bool TryGetLinkFromUrl(string url, out string formattedUrl)
+		public bool TryGetLinkFromUrl(string url, [NotNullWhen(true)] out string? formattedUrl)
 		{
 			var match = _regex.Match(url);
 

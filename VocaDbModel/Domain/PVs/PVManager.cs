@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,7 +50,6 @@ namespace VocaDb.Model.Domain.PVs
 			PVs.Remove(pv);
 		}
 
-#nullable enable
 		public virtual CollectionDiffWithValue<T, T> Sync(IList<PVContract> newPVs, Func<PVContract, T> fac)
 		{
 			ParamIs.NotNull(() => newPVs);
@@ -90,6 +87,5 @@ namespace VocaDb.Model.Domain.PVs
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
 		}
-#nullable disable
 	}
 }

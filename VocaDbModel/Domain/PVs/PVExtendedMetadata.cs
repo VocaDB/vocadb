@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using VocaDb.Model.DataContracts;
@@ -13,7 +11,7 @@ namespace VocaDb.Model.Domain.PVs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PVExtendedMetadata
 	{
-		public virtual T GetExtendedMetadata<T>() where T : class
+		public virtual T? GetExtendedMetadata<T>() where T : class
 		{
 			if (string.IsNullOrEmpty(Json))
 				return null;
@@ -24,12 +22,12 @@ namespace VocaDb.Model.Domain.PVs
 
 		public PVExtendedMetadata() { }
 
-		public PVExtendedMetadata(object data)
+		public PVExtendedMetadata(object? data)
 		{
 			Json = data != null ? JsonConvert.SerializeObject(data) : null;
 		}
 
 		[DataMember]
-		public string Json { get; set; }
+		public string? Json { get; set; }
 	}
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 

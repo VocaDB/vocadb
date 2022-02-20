@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 
@@ -9,7 +8,9 @@ namespace VocaDb.Model.Domain.Albums
 	{
 		private Album _album;
 
+#nullable disable
 		public PVForAlbum() { }
+#nullable enable
 
 		public PVForAlbum(Album album, PVContract contract)
 			: base(contract)
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Domain.Albums
 		public virtual Album Album
 		{
 			get => _album;
+			[MemberNotNull(nameof(_album))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -27,7 +29,6 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-#nullable enable
 		public virtual bool Equals(PVForAlbum? another)
 		{
 			if (another == null)
@@ -51,18 +52,15 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return base.GetHashCode();
 		}
-#nullable disable
 
 		public override void OnDelete()
 		{
 			Album.PVs.Remove(this);
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' [{Id}] for {Album}";
 		}
-#nullable disable
 	}
 }

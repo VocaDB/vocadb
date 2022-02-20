@@ -1,6 +1,3 @@
-#nullable disable
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,48 +13,78 @@ namespace VocaDb.Model.Service.VideoServices
 		public static readonly VideoService Bilibili = new VideoServiceBilibili();
 
 		public static readonly VideoService NicoNicoDouga =
-			new VideoServiceNND(PVService.NicoNicoDouga, new NicoParser(), new[] {
-				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/([a-z]{2}\d{4,10})"),
-				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/(\d{6,12})"),
-				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/([a-z]{2}\d{4,10})"),
-				new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/(\d{6,12})")
-			});
+			new VideoServiceNND(
+				service: PVService.NicoNicoDouga,
+				parser: new NicoParser(),
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/([a-z]{2}\d{4,10})"),
+					new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nicovideo.jp/watch/(\d{6,12})"),
+					new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/([a-z]{2}\d{4,10})"),
+					new RegexLinkMatcher("www.nicovideo.jp/watch/{0}", @"nico.ms/(\d{6,12})")
+				}
+			);
 
 		public static readonly VideoService Piapro =
-			new VideoServicePiapro(PVService.Piapro, null, new[] {
-				new RegexLinkMatcher("piapro.jp/content/{0}", @"piapro.jp/t/([\w\-]+)"),
-				new RegexLinkMatcher("piapro.jp/content/{0}", @"piapro.jp/content/([\w\-]+)"),
-			});
+			new VideoServicePiapro(
+				service: PVService.Piapro,
+				parser: null,
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("piapro.jp/content/{0}", @"piapro.jp/t/([\w\-]+)"),
+					new RegexLinkMatcher("piapro.jp/content/{0}", @"piapro.jp/content/([\w\-]+)"),
+				}
+			);
 
 		public static readonly VideoService SoundCloud =
-			new VideoServiceSoundCloud(PVService.SoundCloud, null, new[] {
-				new RegexLinkMatcher("soundcloud.com/{0}", @"soundcloud.com/(\S+)"),
-			});
+			new VideoServiceSoundCloud(
+				service: PVService.SoundCloud,
+				parser: null,
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("soundcloud.com/{0}", @"soundcloud.com/(\S+)"),
+				}
+			);
 
 		public static readonly VideoService Youtube =
-			new VideoServiceYoutube(PVService.Youtube, new YoutubeParser(), new[] {
-				new RegexLinkMatcher("youtu.be/{0}", @"youtu.be/(\S{11})"),
-				new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/watch?\S*v=(\S{11})"),
-			});
+			new VideoServiceYoutube(
+				service: PVService.Youtube,
+				parser: new YoutubeParser(),
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("youtu.be/{0}", @"youtu.be/(\S{11})"),
+					new RegexLinkMatcher("www.youtube.com/watch?v={0}", @"youtube.com/watch?\S*v=(\S{11})"),
+				}
+			);
 
 		public static readonly VideoService Vimeo =
-			new(PVService.Vimeo, new VimeoParser(), new[] {
-				new RegexLinkMatcher("vimeo.com/{0}", @"vimeo.com/(\d+)"),
-			});
+			new(
+				service: PVService.Vimeo,
+				parser: new VimeoParser(),
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("vimeo.com/{0}", @"vimeo.com/(\d+)"),
+				}
+			);
 
 		public static readonly VideoService Creofuga =
-			new(PVService.Creofuga, new CreofugaParser(), new[] {
-				new RegexLinkMatcher("creofuga.net/audios/{0}", @"creofuga.net/audios/(\d+)"),
-			});
+			new(
+				service: PVService.Creofuga,
+				parser: new CreofugaParser(),
+				linkMatchers: new[]
+				{
+					new RegexLinkMatcher("creofuga.net/audios/{0}", @"creofuga.net/audios/(\d+)"),
+				}
+			);
 
 		public static readonly VideoServiceFile File = new();
 
 		public static readonly VideoServiceLocalFile LocalFile = new();
 
 		protected readonly RegexLinkMatcher[] _linkMatchers;
-		private readonly IVideoServiceParser _parser;
+		private readonly IVideoServiceParser? _parser;
 
-		protected VideoService(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+		protected VideoService(PVService service, IVideoServiceParser? parser, RegexLinkMatcher[] linkMatchers)
 		{
 			Service = service;
 			_parser = parser;
@@ -66,7 +93,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public PVService Service { get; private set; }
 
-		public virtual string GetIdByUrl(string url)
+		public virtual string? GetIdByUrl(string url)
 		{
 			var matcher = _linkMatchers.FirstOrDefault(m => m.IsMatch(url));
 
@@ -76,14 +103,14 @@ namespace VocaDb.Model.Service.VideoServices
 			return matcher.GetId(url);
 		}
 
-		public virtual string GetThumbUrlById(string id)
+		public virtual string? GetThumbUrlById(string id)
 		{
 			return null;
 		}
 
-		public virtual string GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
+		public virtual string? GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
 
-		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata)
+		public virtual string GetUrlById(string id, PVExtendedMetadata? extendedMetadata)
 		{
 			var matcher = _linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(id)}";
@@ -91,14 +118,14 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
 
-		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (_parser != null ? _parser.GetTitleAsync(id) : null);
+		public virtual Task<VideoTitleParseResult>? GetVideoTitleAsync(string id) => _parser != null ? _parser.GetTitleAsync(id) : null;
 
 		/// <summary>
 		/// Tests whether the user has the required permissions to add PVs for this service.
 		/// </summary>
 		/// <param name="permissionContext">Permission context. Can be null (when no user is logged in).</param>
 		/// <returns>True if the user authorized to add PVs for this service, otherwise false.</returns>
-		public virtual bool IsAuthorized(IUserPermissionContext permissionContext)
+		public virtual bool IsAuthorized(IUserPermissionContext? permissionContext)
 		{
 			return true;
 		}

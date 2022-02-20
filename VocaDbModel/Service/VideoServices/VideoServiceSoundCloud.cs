@@ -49,8 +49,10 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+#nullable enable
+		public VideoServiceSoundCloud(PVService service, IVideoServiceParser? parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
+#nullable disable
 
 		public override string GetUrlById(string id, PVExtendedMetadata? extendedMetadata = null)
 		{

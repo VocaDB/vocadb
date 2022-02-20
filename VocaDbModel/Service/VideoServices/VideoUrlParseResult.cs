@@ -1,13 +1,15 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoUrlParseResult
 	{
-		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url) => resultType switch
+#nullable enable
+		public static VideoParseException? GetException(VideoUrlParseResultType resultType, string url) => resultType switch
 		{
 			VideoUrlParseResultType.NoMatcher => new VideoParseException($"No matcher defined (url {url})"),
 			VideoUrlParseResultType.LoadError => new VideoParseException($"Unable to load metadata (url {url})"),
@@ -15,6 +17,7 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoUrlParseResultType.OtherError => new VideoParseException($"Unable to process PV link (url {url})"),
 			_ => null,
 		};
+#nullable disable
 
 		private VideoUrlParseResult(VideoUrlParseResultType resultType, string url, VideoParseException exception)
 		{
@@ -40,12 +43,13 @@ namespace VocaDb.Model.Service.VideoServices
 			ResultType = VideoUrlParseResultType.Ok;
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, VideoParseException exception = null)
+#nullable enable
+		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, VideoParseException? exception = null)
 		{
 			return new VideoUrlParseResult(resultType, url, exception);
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, string message)
+		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, string? message)
 		{
 			return CreateError(url, resultType, new VideoParseException(message));
 		}
@@ -54,20 +58,25 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return new VideoUrlParseResult(url, service, id, meta);
 		}
+#nullable disable
 
 		public string Author { get; set; }
 
 		public string AuthorId { get; set; }
 
+#nullable enable
 		/// <summary>
 		/// Exception. Cannot be null if result type is anything but Ok.
 		/// </summary>
-		public VideoParseException Exception { get; set; }
+		public VideoParseException? Exception { get; set; }
 
-		public PVExtendedMetadata ExtendedMetadata { get; set; }
+		public PVExtendedMetadata? ExtendedMetadata { get; set; }
+#nullable disable
 
 		public string Id { get; set; }
 
+#nullable enable
+		[MemberNotNullWhen(false, nameof(Exception))]
 		public bool IsOk => ResultType == VideoUrlParseResultType.Ok;
 
 		public int? LengthSeconds { get; set; }
@@ -75,6 +84,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public VideoUrlParseResultType ResultType { get; set; }
 
 		public PVService Service { get; set; }
+#nullable disable
 
 		public string[] Tags { get; set; }
 
@@ -82,9 +92,11 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public string ThumbUrl { get; set; }
 
+#nullable enable
 		public string Url { get; set; }
 
 		public DateTime? UploadDate { get; set; }
+#nullable disable
 	}
 
 	public enum VideoUrlParseResultType

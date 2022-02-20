@@ -78,8 +78,10 @@ namespace VocaDb.Model.DataContracts.PVs
 		[DataMember]
 		public bool Disabled { get; init; }
 
+#nullable enable
 		[DataMember]
-		public PVExtendedMetadata ExtendedMetadata { get; init; }
+		public PVExtendedMetadata? ExtendedMetadata { get; init; }
+#nullable disable
 
 		[DataMember]
 		public int Id { get; init; }
