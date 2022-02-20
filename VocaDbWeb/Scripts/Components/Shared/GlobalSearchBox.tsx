@@ -9,6 +9,7 @@ import ImageSize from '@Models/Images/ImageSize';
 import LoginManager from '@Models/LoginManager';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import TopBarStore from '@Stores/TopBarStore';
@@ -38,34 +39,26 @@ const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 
+export const apiEndpointsForEntryType: Record<EntryType, string> = {
+	[EntryType.Undefined]: '/api/entries',
+	[EntryType.Album]: '/api/albums',
+	[EntryType.Artist]: '/api/artists',
+	[EntryType.ReleaseEvent]: '/api/releaseEvents',
+	[EntryType.Song]: '/api/songs',
+	[EntryType.SongList]: '/api/songLists/featured',
+	[EntryType.Tag]: '/api/tags',
+	[EntryType.User]: '/api/users',
+};
+
 const globalSearchBoxSource = (
 	entryType: EntryType,
 	query: string,
 ): Promise<string[]> => {
-	const endpoint = ((): string | undefined => {
-		switch (entryType) {
-			case EntryType.Undefined:
-				return '/api/entries/names';
-			case EntryType.Album:
-				return '/api/albums/names';
-			case EntryType.Artist:
-				return '/api/artists/names';
-			case EntryType.ReleaseEvent:
-				return '/api/releaseEvents/names';
-			case EntryType.Song:
-				return '/api/songs/names';
-			case EntryType.SongList:
-				return '/api/songLists/featured/names';
-			case EntryType.Tag:
-				return '/api/tags/names';
-			case EntryType.User:
-				return '/api/users/names';
-			default:
-				return undefined;
-		}
-	})();
+	const apiEndpoint = apiEndpointsForEntryType[entryType];
 
-	if (!endpoint) return Promise.reject();
+	if (!apiEndpoint) return Promise.reject();
+
+	const endpoint = functions.mergeUrls(apiEndpoint, '/names');
 
 	return httpClient.get<string[]>(endpoint, { query: query });
 };
