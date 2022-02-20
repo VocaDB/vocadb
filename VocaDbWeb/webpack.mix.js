@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 require('laravel-mix-eslint');
 
@@ -21,6 +22,11 @@ mix
 			library: 'app',
 			chunkFilename: 'bundles/[name].[chunkhash].js',
 		},
+		plugins: [
+			new CleanWebpackPlugin({
+				cleanOnceBeforeBuildPatterns: ['bundles/**/*'],
+			}),
+		],
 	})
 	.options({
 		processCssUrls: false,
