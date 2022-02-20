@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 
 import MainNavigationItems from './Partials/MainNavigationItems';
 import ProfileIconKnockout_ImageSize from './Partials/User/ProfileIconKnockout_ImageSize';
+import ShowRandomPageButton from './ShowRandomPageButton';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -173,6 +174,9 @@ const GlobalSearchBox = observer(
 						<i className="icon-search"></i>
 					</Button>
 				</div>{' '}
+				<ButtonGroup className="navbar-languageBar">
+					<ShowRandomPageButton entryType={topBarStore.entryType} />
+				</ButtonGroup>{' '}
 				<Dropdown className="navbar-languageBar" as={ButtonGroup}>
 					<Dropdown.Toggle
 						variant="info"
