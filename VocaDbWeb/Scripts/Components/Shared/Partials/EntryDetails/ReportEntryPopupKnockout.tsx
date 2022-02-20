@@ -38,7 +38,7 @@ const ReportEntryPopupKnockout = observer(
 
 								showSuccessMessage(t('AjaxRes:Shared.ReportSent'));
 							} catch {
-								showErrorMessage(t('AjaxRes:Shared.ReportCannotBeSent'));
+								showErrorMessage(t('AjaxRes:Shared.UnableToSendReport'));
 							}
 						},
 						disabled: !reportEntryStore.isValid,

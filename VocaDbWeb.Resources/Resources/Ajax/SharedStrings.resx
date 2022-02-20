@@ -120,9 +120,6 @@
   <data name="AddExtraArtist" xml:space="preserve">
     <value>Add custom artist named '{0}'</value>
   </data>
-  <data name="ReportCannotBeSent" xml:space="preserve">
-    <value>Report cannot be sent.</value>
-  </data>
   <data name="ReportSent" xml:space="preserve">
     <value>Report sent. Thank you!</value>
   </data>
@@ -131,5 +128,8 @@
   </data>
   <data name="ThanksForRating" xml:space="preserve">
     <value>Thank you for rating!</value>
+  </data>
+  <data name="UnableToSendReport" xml:space="preserve">
+    <value>Unable to send report.</value>
   </data>
 </root>
