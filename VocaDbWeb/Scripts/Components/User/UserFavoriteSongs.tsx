@@ -4,12 +4,12 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import RatedSongsSearchStore from '@Stores/User/RatedSongsSearchStore';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
@@ -38,8 +38,6 @@ const UserFavoriteSongsLayout = ({
 	user,
 	ratedSongsStore,
 }: UserFavoriteSongsLayoutProps): React.ReactElement => {
-	const { t } = useTranslation(['ViewRes']);
-
 	const title = `Songs rated by ${user.name}`; /* TODO: localize */
 
 	useVocaDbTitle(title, true);
@@ -54,8 +52,11 @@ const UserFavoriteSongsLayout = ({
 			title={title}
 			parents={
 				<>
-					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }}>
-						{t('ViewRes:Shared.Users')}
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{ to: EntryUrlMapper.details_user_byName(user.name) }}
+					>
+						{user.name}
 					</Breadcrumb.Item>
 				</>
 			}
