@@ -4,6 +4,7 @@ import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,11 +30,15 @@ const ShowRandomPageButton = React.memo(
 				setClicked(true);
 
 				const apiEndpoint = apiEndpointsForEntryType[entryType];
+				const params = { maxResults: 1 };
 
 				const entry = await httpClient
 					.get<{ totalCount: number }>(
 						urlMapper.mapRelative(
-							`${apiEndpoint}?maxResults=1&getTotalCount=true`,
+							`${apiEndpoint}?${qs.stringify({
+								...params,
+								getTotalCount: true,
+							})}`,
 						),
 					)
 					.then(async (result) => {
@@ -43,7 +48,7 @@ const ShowRandomPageButton = React.memo(
 							PartialFindResultContract<{ id: number; entryType: string }>
 						>(
 							urlMapper.mapRelative(
-								`${apiEndpoint}?maxResults=1&start=${index}`,
+								`${apiEndpoint}?${qs.stringify({ ...params, start: index })}`,
 							),
 						);
 					})
