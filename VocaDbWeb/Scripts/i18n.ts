@@ -10,7 +10,7 @@ i18n
 	.use(initReactI18next)
 	.init({
 		lng: vdb.values.uiCulture,
-		load: 'currentOnly',
+		load: 'all',
 		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,

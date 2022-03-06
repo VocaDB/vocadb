@@ -195,7 +195,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Songs rated by " + model.User.Name;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		public ActionResult ForgotPassword()

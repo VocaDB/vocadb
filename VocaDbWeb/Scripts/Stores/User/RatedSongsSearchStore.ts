@@ -96,7 +96,7 @@ export default class RatedSongsSearchStore
 	@observable public showTags = false;
 	@observable public songListId?: number;
 	@observable public songLists: SongListBaseContract[] = [];
-	@observable public sort = RatedSongForUserSortRule.Name;
+	@observable public sort = RatedSongForUserSortRule.RatingDate;
 	public readonly tagFilters: TagFilters;
 	@observable public viewMode: 'Details' | 'PlayList' =
 		'Details' /* TODO: enum */;
@@ -328,7 +328,7 @@ export default class RatedSongsSearchStore
 		this.rating = value.rating ?? 'Nothing';
 		// TODO: shuffle
 		this.songListId = value.songListId;
-		this.sort = value.sort ?? RatedSongForUserSortRule.Name;
+		this.sort = value.sort ?? RatedSongForUserSortRule.RatingDate;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.viewMode = value.viewMode ?? 'Details';
 	}

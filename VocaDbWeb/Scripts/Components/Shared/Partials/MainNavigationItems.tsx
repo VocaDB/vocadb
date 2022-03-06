@@ -133,7 +133,9 @@ const MainNavigationItems = React.memo(
 					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
-					<Nav.Link href={'/Help'}>{t('ViewRes:Layout.Help')}</Nav.Link>
+					<Nav.Link as={Link} to="/Help">
+						{t('ViewRes:Layout.Help')}
+					</Nav.Link>
 				</Nav.Item>
 				<Nav.Item>
 					<Nav.Link as={Link} to="/discussion">
