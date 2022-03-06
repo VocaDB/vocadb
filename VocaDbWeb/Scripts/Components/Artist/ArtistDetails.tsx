@@ -30,7 +30,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import '../../../wwwroot/Content/Styles/songlist.css';
+import '../../../wwwroot/Content/Styles/songlist.less';
 import DeletedBanner from '../Shared/Partials/EntryDetails/DeletedBanner';
 import DraftMessage from '../Shared/Partials/Shared/DraftMessage';
 import EntryStatusMessage from '../Shared/Partials/Shared/EntryStatusMessage';
