@@ -3,6 +3,7 @@ import UrlHelper from '@Helpers/UrlHelper';
 import ImageSize from '@Models/Images/ImageSize';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface CommentEntryItemProps {
 	entry: EntryContract;
@@ -19,9 +20,9 @@ const CommentEntryItem = React.memo(
 		return (
 			<div className="media">
 				{thumbUrl && (
-					<a
+					<Link
 						className="pull-left"
-						href={EntryUrlMapper.details_entry(entry)}
+						to={EntryUrlMapper.details_entry(entry)}
 						title={entry.additionalNames}
 					>
 						<img
@@ -30,17 +31,17 @@ const CommentEntryItem = React.memo(
 							className="coverPicThumb"
 							referrerPolicy="same-origin"
 						/>
-					</a>
+					</Link>
 				)}
 
 				<div className="media-body">
 					<h4 className="media-heading">
-						<a
-							href={EntryUrlMapper.details_entry(entry)}
+						<Link
+							to={EntryUrlMapper.details_entry(entry)}
 							title={entry.additionalNames}
 						>
 							{entry.name}
-						</a>
+						</Link>
 					</h4>
 					{entry.artistString && <span>{entry.artistString}</span>}
 				</div>

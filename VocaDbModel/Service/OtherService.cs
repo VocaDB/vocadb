@@ -372,7 +372,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public async Task<FrontPageContract> GetFrontPageContent()
+		public async Task<FrontPageForApiContract> GetFrontPageForApiContent()
 		{
 			const int maxActivityEntries = 15;
 
@@ -386,22 +386,45 @@ namespace VocaDb.Model.Service
 					.ToListAsync())
 					.Where(a => !a.EntryBase.Deleted);
 
-				var newAlbums = GetRecentAlbums(session, LanguagePreference, AlbumOptionalFields.MainPicture);
+				var newAlbums = GetRecentAlbums(
+					session: session,
+					languagePreference: LanguagePreference,
+					fields: AlbumOptionalFields.MainPicture
+				);
 
 				var recentIds = newAlbums.Select(a => a.Id).ToArray();
-				var topAlbums = GetTopAlbumsCached(session, recentIds, LanguagePreference, AlbumOptionalFields.MainPicture);
+				var topAlbums = GetTopAlbumsCached(
+					session: session,
+					recentIds: recentIds,
+					languagePreference: LanguagePreference,
+					fields: AlbumOptionalFields.MainPicture
+				);
 
 				var newSongs = await GetHighlightedSongs(session);
 
-				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
+				var firstSongVote = newSongs.Any()
+					? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId)
+					: null;
 
 				var recentComments = await GetRecentCommentsAsync(session, 9);
 
 				var recentEvents = GetRecentEvents(session);
 
-				return new FrontPageContract(activityEntries, newAlbums, recentEvents, recentComments, topAlbums, newSongs,
-					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference,
-					_userIconFactory, PermissionContext, _entryForApiContractFactory);
+				return new FrontPageForApiContract(
+					activityEntries: activityEntries,
+					newAlbums: newAlbums,
+					newEvents: recentEvents,
+					recentComments: recentComments,
+					topAlbums: topAlbums,
+					newSongs: newSongs,
+					firstSongRating: firstSongVote is not null
+						? firstSongVote.Rating
+						: SongVoteRating.Nothing,
+					languagePreference: PermissionContext.LanguagePreference,
+					userIconFactory: _userIconFactory,
+					permissionContext: PermissionContext,
+					entryForApiContractFactory: _entryForApiContractFactory
+				);
 			});
 		}
 

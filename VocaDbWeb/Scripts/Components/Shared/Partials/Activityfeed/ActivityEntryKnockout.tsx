@@ -7,6 +7,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import IconNameAndTypeLinkKnockout from '../User/IconNameAndTypeLinkKnockout';
 
@@ -207,9 +208,9 @@ const ActivityEntryKnockout = ({
 				{entry.entry.mainPicture &&
 					(entry.entry.mainPicture.urlTinyThumb ||
 						entry.entry.mainPicture.urlSmallThumb) && (
-						<a
+						<Link
 							className="pull-left"
-							href={getEntryUrl(entry.entry)}
+							to={getEntryUrl(entry.entry)}
 							title={entry.entry.additionalNames}
 						>
 							<img
@@ -221,16 +222,16 @@ const ActivityEntryKnockout = ({
 								className="media-object coverPicThumb"
 								referrerPolicy="same-origin"
 							/>
-						</a>
+						</Link>
 					)}
 				<div className="media-body">
 					<h4 className="media-heading">
-						<a
-							href={getEntryUrl(entry.entry)}
+						<Link
+							to={getEntryUrl(entry.entry)}
 							title={entry.entry.additionalNames}
 						>
 							<strong>{entry.entry.name}</strong>
-						</a>
+						</Link>
 						{entryTypeName(entry.entry) && (
 							<>
 								{' '}

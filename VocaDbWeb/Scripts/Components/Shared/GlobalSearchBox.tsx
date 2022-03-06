@@ -121,7 +121,9 @@ const GlobalSearchBox = observer(
 					}}
 				/>
 				<Navbar.Toggle />
-				<Navbar.Brand href={'/'}>{vdb.values.siteName}</Navbar.Brand>
+				<Navbar.Brand as={Link} to={'/'}>
+					{vdb.values.siteName}
+				</Navbar.Brand>
 				<div className="input-prepend input-append navbar-searchBox">
 					<Dropdown as={ButtonGroup}>
 						<Dropdown.Toggle variant="info" href="#">

@@ -44,15 +44,13 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Home/
 
-		public async Task<ActionResult> Index()
+		public ActionResult Index()
 		{
 			PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
 			PageProperties.CanonicalUrl = UrlMapper.HostAddress;
 
-			var contract = await _otherService.GetFrontPageContent();
-
-			return View(contract);
+			return View("React/Index");
 		}
 
 		[HttpPost]

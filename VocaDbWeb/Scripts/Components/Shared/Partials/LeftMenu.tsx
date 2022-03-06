@@ -82,7 +82,7 @@ const LeftMenu = React.memo(
 		return (
 			<div className="span2 menu">
 				<div className="well">
-					<a href={'/'}>
+					<Link to="/">
 						<img
 							src={
 								vdb.values.bannerUrl ??
@@ -95,7 +95,7 @@ const LeftMenu = React.memo(
 							alt={vdb.values.siteName}
 							title={vdb.values.siteName}
 						/>
-					</a>
+					</Link>
 					<p className="slogan">{vdb.values.slogan}</p>
 				</div>
 

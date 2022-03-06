@@ -15,6 +15,18 @@ namespace VocaDb.Web.Models.Shared
 			}
 		}
 
+		public sealed record HomeResources
+		{
+			public string? Welcome { get; }
+			public string? WelcomeSubtitle { get; }
+
+			public HomeResources(HomeStrings model)
+			{
+				Welcome = model.Welcome;
+				WelcomeSubtitle = model.WelcomeSubtitle;
+			}
+		}
+
 		public sealed record LayoutResources
 		{
 			public string? PaypalDonateTitle { get; }
@@ -36,12 +48,14 @@ namespace VocaDb.Web.Models.Shared
 		}
 
 		public ArtistResources Artist { get; }
+		public HomeResources Home { get; }
 		public LayoutResources Layout { get; }
 		public SongResources Song { get; }
 
 		public GlobalResources(VocaDbPage model)
 		{
 			Artist = new ArtistResources(model.BrandableStrings.Artist);
+			Home = new HomeResources(model.BrandableStrings.Home);
 			Layout = new LayoutResources(model.BrandableStrings.Layout);
 			Song = new SongResources(model.BrandableStrings.Song);
 		}
