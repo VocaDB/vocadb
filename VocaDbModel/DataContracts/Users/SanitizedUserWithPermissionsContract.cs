@@ -38,6 +38,7 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public string AlbumFormatString { get; init; } = string.Empty;
 
+		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PVService PreferredVideoService { get; init; }
 
