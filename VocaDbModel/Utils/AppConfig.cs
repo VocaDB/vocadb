@@ -158,7 +158,9 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
-		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
+#nullable enable
+		public static string? ExternalHelpPath => Val(nameof(ExternalHelpPath));
+#nullable disable
 
 		public static int FilteredArtistId => Val("FilteredArtistId", 0);
 
