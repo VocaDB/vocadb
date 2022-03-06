@@ -8,6 +8,7 @@ import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const UserIndex = React.lazy(() => import('./UserIndex'));
+const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -48,6 +49,7 @@ const UserRoutes = (): React.ReactElement => {
 		<Routes>
 			<Route path="" element={<UserIndex />} />
 			<Route path="Details/:id" element={<UserDetailsNavigate />} />
+			<Route path="FavoriteSongs/:id" element={<UserFavoriteSongs />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);
