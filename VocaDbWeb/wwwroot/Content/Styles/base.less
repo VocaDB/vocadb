@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 /* Validation
 -----------------------------------------------------------*/
@@ -16,19 +16,16 @@
 }
 
 .validation-summary-errors {
-
-	margin-top: 4px;	
+	margin-top: 4px;
 
 	ul {
 		margin-bottom: 0;
 	}
-
 }
 
 .validation-summary-valid {
 	display: none;
 }
-
 
 // Global
 .chatbox-hide {
@@ -36,31 +33,26 @@
 	right: 20px;
 	bottom: 100px;
 	color: white;
-	&:hover { color: white; }
+	&:hover {
+		color: white;
+	}
 }
 
-
 .link-list {
-	
 	margin: 0;
 	display: inline-block;
 
 	.link-item {
-
 		display: inline-block;
 
 		&:not(:last-child) > ::after {
-			content: ", "
+			content: ', ';
 		}
-
 	}
-
 }
-
 
 // Layout and Navigation
 body {
-
 	padding-top: 50px;
 
 	@media (max-width: @mobile-breakpoint) {
@@ -71,7 +63,6 @@ body {
 	@media (max-width: @topbar-two-rows-breakpoint) {
 		padding-top: 80px;
 	}
-
 }
 
 body .container-fluid {
@@ -100,11 +91,10 @@ body .container-fluid {
 .vdb .menu {
 	@media (max-width: @left-menu-breakpoint) {
 		display: none;
-	}		
+	}
 }
 
 .vdb .navbar-searchBox {
-
 	max-width: 402px;
 	width: calc(100% - 60px);
 
@@ -130,7 +120,8 @@ body .container-fluid {
 	width: 100%;
 }
 
-.navbar-fixed-top, .navbar-fixed-bottom {
+.navbar-fixed-top,
+.navbar-fixed-bottom {
 	@media (max-width: @left-menu-breakpoint) {
 		margin-right: 0;
 		margin-left: 0;
@@ -143,21 +134,41 @@ body .container-fluid {
 @navbar-collapse-hover-dark: lighten(@navbar-color-dark, 30%);
 
 .vdb .navbar-inverse .btn-navbar {
-
 	margin-top: 1px;
 	margin-left: 10px;
 
 	background-color: @navbar-color-dark;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@navbar-collapse-light), to(@navbar-collapse-dark));	
-	background-image: -webkit-linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: -o-linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: -moz-linear-gradient(center top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(@navbar-collapse-light),
+		to(@navbar-collapse-dark)
+	);
+	background-image: -webkit-linear-gradient(
+		top,
+		@navbar-collapse-light,
+		@navbar-collapse-dark
+	);
+	background-image: -o-linear-gradient(
+		top,
+		@navbar-collapse-light,
+		@navbar-collapse-dark
+	);
+	background-image: -moz-linear-gradient(
+		center top,
+		@navbar-collapse-light,
+		@navbar-collapse-dark
+	);
+	background-image: linear-gradient(
+		top,
+		@navbar-collapse-light,
+		@navbar-collapse-dark
+	);
 
 	&:hover {
 		background-color: @navbar-collapse-dark;
 	}
-
 }
 
 .nav-collapse {
@@ -168,7 +179,7 @@ body .container-fluid {
 
 .vdb .page-title {
 	margin-bottom: 10px;
-    font-size: 24px;
+	font-size: 24px;
 }
 
 .home-title small {
@@ -178,7 +189,6 @@ body .container-fluid {
 .pre-line {
 	white-space: pre-line;
 }
-
 
 // Entries
 .entry-field-label-col {
@@ -194,18 +204,17 @@ body .container-fluid {
 }
 
 .entry-edit-description {
-
 	.edit-text {
 		width: 40%;
 		margin-right: 10px;
 	}
 
-	.edit-text, .edit-preview {
+	.edit-text,
+	.edit-preview {
 		display: inline-block;
 		vertical-align: top;
 		min-width: 400px;
 	}
-
 }
 
 .entry-tag-usages {
@@ -226,12 +235,10 @@ body .container-fluid {
 	text-decoration: line-through;
 }
 
-
 // Artists
 .artist-details-page .entry-main-picture {
 	padding-right: 7px;
 }
-
 
 // Songs
 .song-pv-player {
@@ -242,13 +249,11 @@ body .container-fluid {
 	margin: 0;
 }
 
-
 // Tags
 .tag-cloud {
 	font-size: 20px;
 	margin-bottom: 20px;
 }
-
 
 // Users
 .user-known-languages {
@@ -256,15 +261,13 @@ body .container-fluid {
 	margin-left: 0;
 }
 
-
-
 // Comments
 .comment-with-entry {
 	width: auto;
 }
 
-.create-comment, .editable-comment {
-
+.create-comment,
+.editable-comment {
 	&.standalone:not(:last-child) {
 		margin-bottom: 30px;
 	}
@@ -272,13 +275,12 @@ body .container-fluid {
 	&.well form {
 		margin-bottom: 0;
 	}
-
-} 
+}
 
 .comment-text-edit {
 	max-width: 900px;
 	width: 90%;
-	width: ~"calc(100% - 20px)";
+	width: ~'calc(100% - 20px)';
 	display: block;
 }
 
@@ -298,7 +300,8 @@ body .container-fluid {
 }
 
 // Views
-.event-teaser, .event-teaser-tiny {
+.event-teaser,
+.event-teaser-tiny {
 	width: 21%;
 	margin-right: 1%;
 	float: left;
@@ -326,7 +329,6 @@ body .container-fluid {
 	input {
 		margin-bottom: 0;
 	}
-
 }
 
 .song-lyrics {
@@ -344,7 +346,6 @@ body .container-fluid {
 		margin-left: 0;
 	}
 }
-
 
 // Workarounds
 // Razor sometimes adds extra space which seems to be impossible to fix
