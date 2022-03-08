@@ -157,7 +157,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View(contract);
+			return View("React/Index");
 		}
 	}
 }

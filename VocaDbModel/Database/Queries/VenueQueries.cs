@@ -1,8 +1,10 @@
 #nullable disable
 
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ExtLinks;
@@ -162,10 +164,25 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+		[Obsolete]
 		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
 			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference, _userIconFactory));
 		}
+
+#nullable enable
+		public EntryWithArchivedVersionsForApiContract<VenueForApiContract> GetVenueWithArchivedVersionsForApi(int id)
+		{
+			return HandleQuery(ctx =>
+			{
+				var venue = ctx.Load(id);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new VenueForApiContract(venue, LanguagePreference, fields: VenueOptionalFields.None),
+					versions: venue.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+				);
+			});
+		}
+#nullable disable
 
 		public void MoveToTrash(int id, string notes)
 		{

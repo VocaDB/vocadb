@@ -416,8 +416,8 @@ const TagDetailsLayout = observer(
 							{t('ViewRes:Shared.Edit')}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Tag/Versions/${tag.id}`}
+							as={Link}
+							to={`/Tag/Versions/${tag.id}`}
 							icons={{ primary: 'ui-icon-clock' }}
 						>
 							{t('ViewRes:EntryDetails.ViewModifications')}

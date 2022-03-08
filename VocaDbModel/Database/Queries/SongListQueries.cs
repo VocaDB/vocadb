@@ -6,7 +6,9 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Comments;
@@ -245,10 +247,25 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
 		}
 
+		[Obsolete]
 		public SongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id)
 		{
 			return _repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext, _userIconFactory));
 		}
+
+#nullable enable
+		public EntryWithArchivedVersionsForApiContract<SongListForApiContract> GetSongListWithArchivedVersionsForApi(int id)
+		{
+			return _repository.HandleQuery(session =>
+			{
+				var songList = session.Load(id);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new SongListForApiContract(songList, PermissionContext.LanguagePreference, _userIconFactory, imagePersister: null, fields: SongListOptionalFields.None),
+					versions: songList.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+				);
+			});
+		}
+#nullable disable
 
 		public async Task<ImportedSongListContract> Import(string url, bool parseAll)
 		{

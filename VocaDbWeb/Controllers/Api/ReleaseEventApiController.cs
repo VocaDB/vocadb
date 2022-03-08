@@ -7,6 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -74,9 +75,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of albums.</returns>
 		[HttpGet("{eventId:int}/albums")]
-		public AlbumForApiContract[] GetAlbums(int eventId,
+		public AlbumForApiContract[] GetAlbums(
+			int eventId,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetAlbums(eventId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetAlbums(eventId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of songs for a specific event.
@@ -86,9 +89,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of songs.</returns>
 		[HttpGet("{eventId:int}/published-songs")]
-		public SongForApiContract[] GetPublishedSongs(int eventId,
+		public SongForApiContract[] GetPublishedSongs(
+			int eventId,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetPublishedSongs(eventId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetPublishedSongs(eventId, fields, lang);
 
 #nullable enable
 		/// <summary>
@@ -184,9 +189,11 @@ namespace VocaDb.Web.Controllers.Api
 			int maxResults = 10) => _queries.GetNames(query, maxResults);
 
 		[HttpGet("{id:int}")]
-		public ReleaseEventForApiContract GetOne(int id,
+		public ReleaseEventForApiContract GetOne(
+			int id,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetOne(id, lang, fields);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetOne(id, lang, fields);
 
 		/// <summary>
 		/// Creates a new report.
@@ -208,6 +215,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public ReleaseEventDetailsForApiContract GetDetails(int id) => _queries.GetDetails(id);
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<ReleaseEventForApiContract> GetReleaseEventWithArchivedVersions(int id) =>
+			_queries.GetReleaseEventWithArchivedVersionsForApi(id);
 #nullable disable
 	}
 }

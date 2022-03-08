@@ -132,6 +132,7 @@ namespace VocaDb.Model.Service
 				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference));
 		}
 
+		[Obsolete]
 		public ArtistWithArchivedVersionsContract GetArtistWithArchivedVersions(int artistId)
 		{
 			return HandleQuery(session => new ArtistWithArchivedVersionsContract(

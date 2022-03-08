@@ -37,5 +37,7 @@ export default interface TagApiContract {
 
 	usageCount: number;
 
+	version?: number;
+
 	webLinks: WebLinkContract[];
 }

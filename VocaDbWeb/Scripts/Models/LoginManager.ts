@@ -169,6 +169,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.ViewAuditLog);
 	}
 
+	public get canViewHiddenRevisions(): boolean {
+		return this.hasPermission(PermissionToken.ViewHiddenRevisions);
+	}
+
 	public get canManageWebhooks(): boolean {
 		return this.hasPermission(PermissionToken.ManageWebhooks);
 	}

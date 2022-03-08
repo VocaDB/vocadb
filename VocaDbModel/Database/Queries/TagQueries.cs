@@ -9,7 +9,9 @@ using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -578,10 +580,21 @@ namespace VocaDb.Model.Database.Queries
 			return GetTagByName(name, t => t.Id);
 		}
 
+		[Obsolete]
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id)
 		{
 			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag, LanguagePreference, _userIconFactory));
 		}
+
+#nullable enable
+		public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersionsForApi(int id)
+		{
+			return LoadTag(id, tag => EntryWithArchivedVersionsForApiContract.Create(
+				entry: new TagForApiContract(tag, thumbPersister: null, LanguagePreference, optionalFields: TagOptionalFields.None),
+				versions: tag.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+			));
+		}
+#nullable disable
 
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{

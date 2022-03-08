@@ -15,6 +15,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -1519,6 +1520,18 @@ namespace VocaDb.Model.Database.Queries
 					.Distinct()
 					.Select(l => new SongListContract(l, PermissionContext))
 					.ToArray();
+			});
+		}
+
+		public EntryWithArchivedVersionsForApiContract<SongForApiContract> GetSongWithArchivedVersionsForApi(int songId)
+		{
+			return HandleQuery(session =>
+			{
+				var song = session.Load<Song>(songId);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
+					versions: song.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).OrderByDescending(v => v.Version).ToArray()
+				);
 			});
 		}
 #nullable disable

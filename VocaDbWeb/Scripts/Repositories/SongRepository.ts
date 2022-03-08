@@ -13,6 +13,7 @@ import SongWithPVPlayerAndVoteContract from '@DataContracts/Song/SongWithPVPlaye
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import TimeUnit from '@Models/Aggregate/TimeUnit';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
@@ -535,6 +536,16 @@ export default class SongRepository
 			this.urlMapper.mapRelative(`/api/songs/${id}/details`),
 			{ albumId: albumId },
 		);
+	};
+
+	public getSongWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<SongApiContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<SongApiContract>
+		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
 	};
 }
 

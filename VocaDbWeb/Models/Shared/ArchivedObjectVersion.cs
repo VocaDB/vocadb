@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
@@ -11,13 +9,19 @@ namespace VocaDb.Web.Models.Shared
 	{
 		public static ArchivedObjectVersion Create(ArchivedObjectVersionContract contract, IEnumTranslations translator)
 		{
-			return new ArchivedObjectVersion(contract, contract.TranslateReason(translator),
-				contract.TranslateChangedFields(translator), contract.IsAnythingChanged());
+			return new ArchivedObjectVersion(
+				contract: contract,
+				reasonName: contract.TranslateReason(translator),
+				changeMessage: contract.TranslateChangedFields(translator),
+				anythingChanged: contract.IsAnythingChanged()
+			);
 		}
 
+#nullable disable
 		public ArchivedObjectVersion() { }
+#nullable enable
 
-		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true)
+		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string? reasonName, string changeMessage, bool anythingChanged = true)
 		{
 			Contract = contract;
 			Hidden = contract.Hidden;
@@ -53,7 +57,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public string Notes { get; set; }
 
-		public string Reason { get; set; }
+		public string? Reason { get; set; }
 
 		public EntryStatus Status { get; set; }
 	}

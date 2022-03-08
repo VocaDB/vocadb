@@ -41,12 +41,14 @@ namespace VocaDb.Model.Service
 			});
 		}
 
+		[Obsolete]
 		public ReleaseEventWithArchivedVersionsContract GetReleaseEventWithArchivedVersions(int id)
 		{
 			return HandleQuery(session =>
 				new ReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id), LanguagePreference, _userIconFactory));
 		}
 
+		[Obsolete]
 		public EntryWithArchivedVersionsContract<ReleaseEventSeriesContract, ArchivedEventSeriesVersionContract> GetReleaseEventSeriesWithArchivedVersions(int id)
 		{
 			return HandleQuery(session =>

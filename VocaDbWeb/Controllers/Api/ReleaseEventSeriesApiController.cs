@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -89,6 +90,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public ReleaseEventSeriesDetailsForApiContract GetDetails(int id) => _queries.GetSeriesDetails(id);
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<ReleaseEventSeriesForApiContract> GetReleaseEventSeriesWithArchivedVersions(int id) =>
+			_queries.GetReleaseEventSeriesWithArchivedVersionsForApi(id);
 #nullable disable
 	}
 }

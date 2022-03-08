@@ -29,4 +29,6 @@ export default interface SongListContract
 	status: string;
 
 	tags?: TagUsageForApiContract[];
+
+	version?: number;
 }
