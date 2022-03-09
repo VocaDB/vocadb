@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 
 import MainNavigationItems from './Partials/MainNavigationItems';
 import ProfileIconKnockout_ImageSize from './Partials/User/ProfileIconKnockout_ImageSize';
+import ShowRandomPageButton from './ShowRandomPageButton';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -99,6 +100,7 @@ const GlobalSearchBox = observer(
 		);
 
 		const formRef = React.useRef<HTMLFormElement>(undefined!);
+		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
 		return (
@@ -175,6 +177,12 @@ const GlobalSearchBox = observer(
 						<i className="icon-search"></i>
 					</Button>
 				</div>{' '}
+				<ButtonGroup className="navbar-languageBar">
+					<ShowRandomPageButton
+						entryType={topBarStore.entryType}
+						globalSearchTermRef={globalSearchTermRef}
+					/>
+				</ButtonGroup>{' '}
 				<Dropdown className="navbar-languageBar" as={ButtonGroup}>
 					<Dropdown.Toggle
 						variant="info"
