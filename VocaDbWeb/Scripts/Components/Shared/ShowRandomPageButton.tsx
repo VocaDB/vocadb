@@ -1,6 +1,7 @@
 import Button from '@Bootstrap/Button';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import EntryType from '@Models/EntryType';
+import NameMatchMode from '@Models/NameMatchMode';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
@@ -17,10 +18,16 @@ const random = (max: number): number => Math.floor(Math.random() * max);
 
 interface ShowRandomPageButtonProps {
 	entryType: EntryType;
+
+	// HACK: Replace this with a normal property after removing jQuery UI's Autocomplete.
+	globalSearchTermRef: React.MutableRefObject<HTMLInputElement>;
 }
 
 const ShowRandomPageButton = React.memo(
-	({ entryType }: ShowRandomPageButtonProps): React.ReactElement => {
+	({
+		entryType,
+		globalSearchTermRef,
+	}: ShowRandomPageButtonProps): React.ReactElement => {
 		const [clicked, setClicked] = React.useState(false);
 
 		const navigate = useNavigate();
@@ -30,7 +37,11 @@ const ShowRandomPageButton = React.memo(
 				setClicked(true);
 
 				const apiEndpoint = apiEndpointsForEntryType[entryType];
-				const params = { maxResults: 1 };
+				const params = {
+					maxResults: 1,
+					nameMatchMode: NameMatchMode[NameMatchMode.Auto],
+					query: globalSearchTermRef.current.value,
+				};
 
 				const entry = await httpClient
 					.get<{ totalCount: number }>(
@@ -65,7 +76,7 @@ const ShowRandomPageButton = React.memo(
 			} finally {
 				setClicked(false);
 			}
-		}, [entryType, navigate]);
+		}, [entryType, globalSearchTermRef, navigate]);
 
 		return (
 			<Button

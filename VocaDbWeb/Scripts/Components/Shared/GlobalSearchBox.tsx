@@ -100,6 +100,7 @@ const GlobalSearchBox = observer(
 		);
 
 		const formRef = React.useRef<HTMLFormElement>(undefined!);
+		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
 		return (
@@ -175,7 +176,10 @@ const GlobalSearchBox = observer(
 					</Button>
 				</div>{' '}
 				<ButtonGroup className="navbar-languageBar">
-					<ShowRandomPageButton entryType={topBarStore.entryType} />
+					<ShowRandomPageButton
+						entryType={topBarStore.entryType}
+						globalSearchTermRef={globalSearchTermRef}
+					/>
 				</ButtonGroup>{' '}
 				<Dropdown className="navbar-languageBar" as={ButtonGroup}>
 					<Dropdown.Toggle
