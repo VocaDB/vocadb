@@ -38,29 +38,7 @@ export default class functions {
 	}
 
 	public static trackOutboundLink(event: MouseEvent): void {
-		// Skip tracking if ga not present, sendBeacon is not supported, or mouse button is right-click
-		const mright = 2;
-		if (
-			typeof ga !== 'function' ||
-			!event ||
-			!event.target ||
-			!navigator.sendBeacon ||
-			event.button === mright
-		)
-			return;
-
-		const href = (event.target as HTMLAnchorElement).href;
-
-		if (!href) return;
-
-		const domain = functions.getUrlDomain(href);
-
-		// Beacon transport doesn't require waiting for response
-		// https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#specifying_different_transport_mechanisms
-		ga('send', 'event', 'outbound', 'click', href, {
-			transport: 'beacon',
-			dimension1: domain,
-		});
+		// Do nothing.
 	}
 
 	public static disableTabReload = function (tab: any): void {
