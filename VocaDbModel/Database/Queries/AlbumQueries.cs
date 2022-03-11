@@ -879,21 +879,31 @@ namespace VocaDb.Model.Database.Queries
 				diff.Cover.Set(!Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic));
 
 				// Original release
-				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent)) : null);
+				album.OriginalRelease = fullProperties.OriginalRelease != null
+					? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent))
+					: null;
 
 				// Artists
-				DatabaseContextHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
-					session.OfType<Artist>(), warnings, album.AllArtists, fullProperties.Artists,
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
-					albumForArtist => albumForArtist.Delete());
+				DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Artist>(),
+					warnings: warnings,
+					existing: album.AllArtists,
+					objRefs: fullProperties.Artists,
+					equality: (a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					createEntryFunc: (artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
+					deleteFunc: albumForArtist => albumForArtist.Delete()
+				);
 
 				// Songs
-				DatabaseContextHelper.RestoreObjectRefs<SongInAlbum, Song, SongInAlbumRefContract>(
-					session.OfType<Song>(), warnings, album.AllSongs, fullProperties.Songs,
-					(a1, a2) => ((a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(song, songRef) => RestoreTrackRef(album, song, songRef),
-					songInAlbum => songInAlbum.Delete());
+				DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Song>(),
+					warnings: warnings,
+					existing: album.AllSongs,
+					objRefs: fullProperties.Songs,
+					equality: (a1, a2) => (a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint,
+					createEntryFunc: (song, songRef) => RestoreTrackRef(album, song, songRef),
+					deleteFunc: songInAlbum => songInAlbum.Delete()
+				);
 
 				// Names
 				if (fullProperties.Names != null)
@@ -905,14 +915,18 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				if (fullProperties.WebLinks != null)
 				{
-					var webLinkDiff = WebLink.SyncByValue(album.WebLinks, fullProperties.WebLinks, album);
+					var webLinkDiff = WebLink.SyncByValue(
+						oldLinks: album.WebLinks,
+						newLinks: fullProperties.WebLinks,
+						webLinkFactory: album
+					);
 					session.Sync(webLinkDiff);
 				}
 
 				// PVs
 				if (fullProperties.PVs != null)
 				{
-					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
+					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => p1.PVId == p2.PVId && p1.Service == p2.Service);
 
 					foreach (var pv in pvDiff.Added)
 					{

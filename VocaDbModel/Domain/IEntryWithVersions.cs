@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using VocaDb.Model.Domain.Versioning;
 

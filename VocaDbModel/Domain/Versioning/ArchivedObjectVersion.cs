@@ -5,12 +5,15 @@ using System.Xml.Linq;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Activityfeed;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Domain.Versioning
 {
 	public abstract class ArchivedObjectVersion : IDatabaseObject
 	{
+#nullable enable
 		private string _notes;
+#nullable disable
 
 		protected ArchivedObjectVersion()
 		{
@@ -37,7 +40,9 @@ namespace VocaDb.Model.Domain.Versioning
 		/// </summary>
 		public virtual User Author { get; protected set; }
 
+#nullable enable
 		public virtual DateTime Created { get; protected set; }
+#nullable disable
 
 		/// <summary>
 		/// Archived data serialized as XML.
@@ -47,6 +52,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public abstract IEntryDiff DiffBase { get; }
 
+#nullable enable
 		public abstract EntryEditEvent EditEvent { get; }
 
 		public abstract IEntryWithNames EntryBase { get; }
@@ -58,6 +64,7 @@ namespace VocaDb.Model.Domain.Versioning
 		public virtual string Notes
 		{
 			get => _notes;
+			[MemberNotNull(nameof(_notes))]
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -75,7 +82,6 @@ namespace VocaDb.Model.Domain.Versioning
 		/// </remarks>
 		public virtual int Version { get; protected set; }
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"archived version {Version} for {EntryBase}";

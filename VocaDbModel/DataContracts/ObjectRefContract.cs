@@ -13,10 +13,12 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ObjectRefContract : IEntryWithIntId
 	{
-		public static ObjectRefContract Create(IEntryBase entry)
+#nullable enable
+		public static ObjectRefContract? Create(IEntryBase? entry)
 		{
 			return entry != null ? new ObjectRefContract(entry) : null;
 		}
+#nullable disable
 
 		public ObjectRefContract() { }
 
@@ -34,13 +36,13 @@ namespace VocaDb.Model.DataContracts
 			Id = entry.Id;
 			NameHint = entry.DefaultName;
 		}
-#nullable disable
 
 		/// <summary>
 		/// Id of the referred object.
 		/// </summary>
 		[DataMember]
 		public int Id { get; set; }
+#nullable disable
 
 		[DataMember]
 		public string NameHint { get; init; }

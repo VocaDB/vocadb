@@ -13,14 +13,23 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Venues
 {
-	public class Venue : IEntryWithNames<VenueName>, IEntryWithVersions<ArchivedVenueVersion, VenueEditableFields>,
-		IEntryBase, IWebLinkFactory<VenueWebLink>, IEntryWithStatus, INameFactory<VenueName>
+	public class Venue :
+		IEntryWithNames<VenueName>,
+		IEntryWithVersions<ArchivedVenueVersion, VenueEditableFields>,
+		IEntryBase,
+		IWebLinkFactory<VenueWebLink>,
+		IEntryWithStatus,
+		INameFactory<VenueName>
 	{
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<VenueName> IEntryWithNames<VenueName>.Names => Names;
 
+#nullable enable
 		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> _archivedVersions = new();
+#nullable disable
 		private OptionalGeoPoint _coordinates;
 		private IList<ReleaseEvent> _events = new List<ReleaseEvent>();
 		private NameManager<VenueName> _names = new();
@@ -48,7 +57,6 @@ namespace VocaDb.Model.Domain.Venues
 		public virtual string Address { get; set; } = string.Empty;
 
 		public virtual string AddressCountryCode { get; set; } = string.Empty;
-#nullable disable
 
 		public virtual ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> ArchivedVersionsManager
 		{
@@ -59,6 +67,7 @@ namespace VocaDb.Model.Domain.Venues
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual OptionalGeoPoint Coordinates
 		{

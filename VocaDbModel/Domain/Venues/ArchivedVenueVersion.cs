@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Activityfeed;
@@ -22,13 +21,21 @@ namespace VocaDb.Model.Domain.Venues
 		private VenueDiff _diff;
 		private Venue _venue;
 
+#nullable disable
 		public ArchivedVenueVersion()
 		{
 			Status = EntryStatus.Finished;
 		}
+#nullable enable
 
-		public ArchivedVenueVersion(Venue venue, XDocument data, VenueDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent, string notes)
+		public ArchivedVenueVersion(
+			Venue venue,
+			XDocument data,
+			VenueDiff diff,
+			AgentLoginData author,
+			EntryEditEvent commonEditEvent,
+			string notes
+		)
 			: base(data, author, venue.Version, venue.Status, notes)
 		{
 			ParamIs.NotNull(() => diff);
@@ -45,6 +52,7 @@ namespace VocaDb.Model.Domain.Venues
 		public virtual VenueDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,6 +67,7 @@ namespace VocaDb.Model.Domain.Venues
 		public virtual Venue Entry
 		{
 			get => _venue;
+			[MemberNotNull(nameof(_venue))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -66,7 +75,7 @@ namespace VocaDb.Model.Domain.Venues
 			}
 		}
 
-		public virtual ArchivedVenueVersion GetLatestVersionWithField(VenueEditableFields field)
+		public virtual ArchivedVenueVersion? GetLatestVersionWithField(VenueEditableFields field)
 		{
 			if (IsIncluded(field))
 				return this;

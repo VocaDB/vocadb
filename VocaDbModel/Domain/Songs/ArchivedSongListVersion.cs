@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
@@ -11,14 +10,21 @@ namespace VocaDb.Model.Domain.Songs
 		private SongListDiff _diff;
 		private SongList _songList;
 
+#nullable disable
 		public ArchivedSongListVersion()
 		{
 			Status = EntryStatus.Finished;
 		}
+#nullable enable
 
-		public ArchivedSongListVersion(SongList songList, SongListDiff diff, AgentLoginData author,
+		public ArchivedSongListVersion(
+			SongList songList,
+			SongListDiff diff,
+			AgentLoginData author,
 			EntryStatus status,
-			EntryEditEvent commonEditEvent, string notes)
+			EntryEditEvent commonEditEvent,
+			string notes
+		)
 			: base(null, author, songList.Version, status, notes)
 		{
 			ParamIs.NotNull(() => diff);
@@ -35,6 +41,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual SongListDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -49,6 +56,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual SongList SongList
 		{
 			get => _songList;
+			[MemberNotNull(nameof(_songList))]
 			set
 			{
 				ParamIs.NotNull(() => value);

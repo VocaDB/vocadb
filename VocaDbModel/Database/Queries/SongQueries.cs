@@ -263,17 +263,19 @@ namespace VocaDb.Model.Database.Queries
 			return pvResult;
 		}
 
-		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef)
+#nullable enable
+		private static ArtistForSong? RestoreArtistRef(Song song, Artist? artist, ArchivedArtistForSongContract albumRef)
 		{
 			if (artist != null)
 			{
-				return (!artist.HasSong(song) ? artist.AddSong(song, albumRef.IsSupport, albumRef.Roles) : null);
+				return !artist.HasSong(song) ? artist.AddSong(song, albumRef.IsSupport, albumRef.Roles) : null;
 			}
 			else
 			{
 				return song.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
 			}
 		}
+#nullable disable
 
 		public SongQueries(
 			ISongRepository repository,
@@ -1178,11 +1180,15 @@ namespace VocaDb.Model.Database.Queries
 				song.MaxMilliBpm = fullProperties.MaxMilliBpm;
 
 				// Artists
-				var artistDiff = DatabaseContextHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
-					session.OfType<Artist>(), warnings, song.AllArtists, fullProperties.Artists,
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
-					artistForSong => artistForSong.Delete());
+				var artistDiff = DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Artist>(),
+					warnings: warnings,
+					existing: song.AllArtists,
+					objRefs: fullProperties.Artists,
+					equality: (a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					createEntryFunc: (artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
+					deleteFunc: artistForSong => artistForSong.Delete()
+				);
 
 				if (artistDiff.Changed)
 				{
@@ -1199,7 +1205,11 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				if (fullProperties.WebLinks != null)
 				{
-					var webLinkDiff = WebLink.SyncByValue(song.WebLinks, fullProperties.WebLinks, song);
+					var webLinkDiff = WebLink.SyncByValue(
+						oldLinks: song.WebLinks,
+						newLinks: fullProperties.WebLinks,
+						webLinkFactory: song
+					);
 					session.Sync(webLinkDiff);
 				}
 

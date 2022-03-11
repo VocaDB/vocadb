@@ -1,12 +1,9 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security
 {
 	public class AgentLoginData
 	{
-#nullable enable
 		public AgentLoginData(string name)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
@@ -21,9 +18,8 @@ namespace VocaDb.Model.Domain.Security
 			Name = user.Name;
 			User = user;
 		}
-#nullable disable
 
-		public AgentLoginData(User user, string name)
+		public AgentLoginData(User? user, string name)
 		{
 			User = user;
 			Name = name;
@@ -31,15 +27,13 @@ namespace VocaDb.Model.Domain.Security
 
 		public string Name { get; private set; }
 
-		public User User { get; private set; }
+		public User? User { get; private set; }
 
 		public string UserNameOrFallback => User != null ? User.Name : Name;
 
-#nullable enable
 		public override string ToString()
 		{
-			return (User != null ? User.ToString() : Name);
+			return User != null ? User.ToString() : Name;
 		}
-#nullable disable
 	}
 }

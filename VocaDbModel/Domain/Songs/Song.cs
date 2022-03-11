@@ -2,44 +2,57 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Globalization;
-using System.Xml.Linq;
-using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.Helpers;
-using VocaDb.Model.Domain.Users;
-using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
-using VocaDb.Model.Service;
-using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Songs
 {
-	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtistLinks<ArtistForSong>,
+	public class Song :
+		IEntryBase,
+		IEntryWithNames<SongName>,
+		IEntryWithArtistLinks<ArtistForSong>,
 		IEntryWithTags<SongTagUsage>,
-		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments<SongComment>,
-		IEntryWithLinks<SongWebLink>, IEntryWithArtists
+		IEntryWithVersions,
+		IEntryWithStatus,
+		IDeletableEntry,
+		INameFactory<SongName>,
+		IWebLinkFactory<SongWebLink>,
+		IEquatable<Song>,
+		IEntryWithComments<SongComment>,
+		IEntryWithLinks<SongWebLink>,
+		IEntryWithArtists
 	{
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		private IList<SongInAlbum> _albums = new List<SongInAlbum>();
 		private IList<Song> _alternateVersions = new List<Song>();
+#nullable enable
 		private ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> _archivedVersions = new();
+#nullable disable
 		private TranslatedStringWithDefault _artistString;
 		private IList<ArtistForSong> _artists = new List<ArtistForSong>();
 		private IList<SongComment> _comments = new List<SongComment>();
@@ -136,6 +149,7 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public virtual IEnumerable<Song> AlternateVersions => AllAlternateVersions.Where(a => !a.Deleted);
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -145,6 +159,7 @@ namespace VocaDb.Model.Domain.Songs
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// List of artists for this song. Does not include deleted artists.

@@ -583,7 +583,11 @@ namespace VocaDb.Model.Database.Queries
 				artist.Description.Original = fullProperties.Description;
 				artist.Description.English = fullProperties.DescriptionEng ?? string.Empty;
 				artist.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
-				artist.BaseVoicebank = DatabaseContextHelper.RestoreWeakRootEntityRef(session, warnings, fullProperties.BaseVoicebank);
+				artist.BaseVoicebank = DatabaseContextHelper.RestoreWeakRootEntityRef(
+					session: session,
+					warnings: warnings,
+					objRef: fullProperties.BaseVoicebank
+				);
 
 				// Picture
 				var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
@@ -614,9 +618,14 @@ namespace VocaDb.Model.Database.Queries
 
 				// Groups
 				DatabaseContextHelper.RestoreObjectRefs(
-					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Parent.Id == a2.Id),
-					(grp, grpRef) => (!artist.HasGroup(grp) ? artist.AddGroup(grp, grpRef.LinkType) : null),
-					groupForArtist => groupForArtist.Delete());
+					session: session,
+					warnings: warnings,
+					existing: artist.AllGroups,
+					objRefs: fullProperties.Groups,
+					equality: (a1, a2) => a1.Parent.Id == a2.Id,
+					createEntryFunc: (grp, grpRef) => !artist.HasGroup(grp) ? artist.AddGroup(grp, grpRef.LinkType) : null,
+					deleteFunc: groupForArtist => groupForArtist.Delete()
+				);
 
 				// Names
 				if (fullProperties.Names != null)
@@ -628,7 +637,11 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				if (fullProperties.WebLinks != null)
 				{
-					var webLinkDiff = WebLink.SyncByValue(artist.WebLinks, fullProperties.WebLinks, artist);
+					var webLinkDiff = WebLink.SyncByValue(
+						oldLinks: artist.WebLinks,
+						newLinks: fullProperties.WebLinks,
+						webLinkFactory: artist
+					);
 					await session.SyncAsync(webLinkDiff);
 				}
 

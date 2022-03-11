@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -27,10 +26,21 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent,
-		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent>
+	public class ReleaseEvent :
+		IEntryWithNames<EventName>,
+		IEntryWithVersions,
+		IWebLinkFactory<ReleaseEventWebLink>,
+		IReleaseEvent,
+		IEntryImageInformation,
+		IEntryWithComments<ReleaseEventComment>,
+		IEntryWithStatus,
+		INameFactory<EventName>,
+		IEntryWithTags<EventTagUsage>,
+		IEntryWithArtistLinks<ArtistForEvent>
 	{
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 		string IReleaseEvent.Name => DefaultName;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
@@ -38,7 +48,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		private IList<Album> _albums = new List<Album>();
+#nullable enable
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> _archivedVersions = new();
+#nullable disable
 		private IList<ArtistForEvent> _artists = new List<ArtistForEvent>();
 		private IList<ReleaseEventComment> _comments = new List<ReleaseEventComment>();
 		private string _description;
@@ -131,6 +143,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual bool AllowNotifications => true;
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -140,6 +153,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual IEnumerable<ArtistForEvent> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 

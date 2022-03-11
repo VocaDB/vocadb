@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts;
@@ -33,7 +31,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public CollectionDiff<T, T> SyncByValue(IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 		{
-			return WebLink.SyncByValue(Links, newLinks, webLinkFactory);
+			return WebLink.SyncByValue(oldLinks: Links, newLinks, webLinkFactory);
 		}
 	}
 }

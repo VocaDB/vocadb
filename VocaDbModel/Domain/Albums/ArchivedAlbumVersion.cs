@@ -1,18 +1,16 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.DataContracts.Albums;
 using System.Xml.Linq;
-using VocaDb.Model.Helpers;
-using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Albums
 {
 	public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<AlbumEditableFields>
 	{
-#nullable enable
 		/// <summary>
 		/// Creates an archived version of an album.
 		/// </summary>
@@ -35,19 +33,28 @@ namespace VocaDb.Model.Domain.Albums
 
 			return album.CreateArchivedVersion(data, diff, author, reason, notes);
 		}
-#nullable disable
 
 		private Album _album;
 		private AlbumDiff _diff;
 
+#nullable disable
 		public ArchivedAlbumVersion()
 		{
 			Diff = new AlbumDiff();
 			Reason = AlbumArchiveReason.Unknown;
 		}
+#nullable enable
 
-		public ArchivedAlbumVersion(Album album, XDocument data, AlbumDiff diff, AgentLoginData author, int version, EntryStatus status,
-			AlbumArchiveReason reason, string notes)
+		public ArchivedAlbumVersion(
+			Album album,
+			XDocument data,
+			AlbumDiff diff,
+			AgentLoginData author,
+			int version,
+			EntryStatus status,
+			AlbumArchiveReason reason,
+			string notes
+		)
 			: base(data, author, version, status, notes)
 		{
 			ParamIs.NotNull(() => data);
@@ -70,6 +77,7 @@ namespace VocaDb.Model.Domain.Albums
 		public virtual Album Album
 		{
 			get => _album;
+			[MemberNotNull(nameof(_album))]
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -77,13 +85,16 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
+#nullable disable
 		public virtual PictureData CoverPicture { get; set; }
+#nullable enable
 
-		public virtual string CoverPictureMime { get; set; }
+		public virtual string? CoverPictureMime { get; set; }
 
 		public virtual AlbumDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			protected set => _diff = value;
 		}
 
@@ -93,8 +104,9 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			get
 			{
-				return (Reason == AlbumArchiveReason.Created || Reason == AlbumArchiveReason.AutoImportedFromMikuDb
-					? EntryEditEvent.Created : EntryEditEvent.Updated);
+				return Reason == AlbumArchiveReason.Created || Reason == AlbumArchiveReason.AutoImportedFromMikuDb
+					? EntryEditEvent.Created
+					: EntryEditEvent.Updated;
 			}
 		}
 
@@ -102,7 +114,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual AlbumArchiveReason Reason { get; set; }
 
-		public virtual ArchivedAlbumVersion GetLatestVersionWithField(AlbumEditableFields field)
+		public virtual ArchivedAlbumVersion? GetLatestVersionWithField(AlbumEditableFields field)
 		{
 			if (IsIncluded(field))
 				return this;
@@ -112,7 +124,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool IsIncluded(AlbumEditableFields field)
 		{
-			return (Diff != null && Data != null && Diff.IsIncluded(field));
+			return Diff != null && Data != null && Diff.IsIncluded(field);
 		}
 	}
 }

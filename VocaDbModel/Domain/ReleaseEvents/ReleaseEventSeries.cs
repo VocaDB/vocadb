@@ -15,9 +15,15 @@ using VocaDb.Model.Domain.Versioning;
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
 	public class ReleaseEventSeries :
-		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>,
-		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus,
-		IEntryWithTags<EventSeriesTagUsage>, INameFactory<EventSeriesName>
+		IEntryWithNames<EventSeriesName>,
+		IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>,
+		IEntryBase,
+		IEquatable<ReleaseEventSeries>,
+		IWebLinkFactory<ReleaseEventSeriesWebLink>,
+		IEntryImageInformation,
+		IEntryWithStatus,
+		IEntryWithTags<EventSeriesTagUsage>,
+		INameFactory<EventSeriesName>
 	{
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
@@ -27,7 +33,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 
+#nullable enable
 		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> _archivedVersions = new();
+#nullable disable
 		private string _description;
 		private IList<ReleaseEvent> _events = new List<ReleaseEvent>();
 		private NameManager<EventSeriesName> _names = new();
@@ -71,6 +79,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual bool AllowNotifications => true;
 
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager
@@ -82,6 +91,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual EventCategory Category { get; set; }
 

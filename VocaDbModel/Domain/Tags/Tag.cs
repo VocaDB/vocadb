@@ -21,8 +21,15 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.Tags
 {
 	public class Tag :
-		IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink>,
-		IEntryWithVersions, IDeletableEntry
+		IEquatable<Tag>,
+		IEntryWithNames<TagName>,
+		IEntryWithStatus,
+		IEntryWithComments,
+		ITag,
+		INameFactory<TagName>,
+		IWebLinkFactory<TagWebLink>,
+		IEntryWithVersions,
+		IDeletableEntry
 	{
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -41,7 +48,9 @@ namespace VocaDb.Model.Domain.Tags
 #nullable disable
 
 		private ISet<AlbumTagUsage> _albumTagUsages = new HashSet<AlbumTagUsage>();
+#nullable enable
 		private ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> _archivedVersions = new();
+#nullable disable
 		private ISet<ArtistTagUsage> _artistTagUsages = new HashSet<ArtistTagUsage>();
 		private string _categoryName;
 		private ISet<Tag> _children = new HashSet<Tag>();
@@ -133,6 +142,7 @@ namespace VocaDb.Model.Domain.Tags
 			.Concat(AllSongListTagUsages)
 			.Concat(AllSongTagUsages);
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -144,6 +154,7 @@ namespace VocaDb.Model.Domain.Tags
 		}
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 
 		/// <summary>
 		/// List of all artist tag usages (not including deleted artists) for this tag.

@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Artists
@@ -31,7 +29,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public override bool IsIncluded(ArtistEditableFields field)
 		{
-			return (field != ArtistEditableFields.Picture ? base.IsIncluded(field) : IncludePicture);
+			return field != ArtistEditableFields.Picture ? base.IsIncluded(field) : IncludePicture;
 		}
 	}
 }
