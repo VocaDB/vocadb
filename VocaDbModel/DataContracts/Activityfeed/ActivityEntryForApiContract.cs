@@ -11,9 +11,9 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ActivityEntryForApiContract
 	{
-#nullable enable
-		public ActivityEntryForApiContract() { }
 #nullable disable
+		public ActivityEntryForApiContract() { }
+#nullable enable
 
 		public ActivityEntryForApiContract(
 			ActivityEntry activityEntry,
