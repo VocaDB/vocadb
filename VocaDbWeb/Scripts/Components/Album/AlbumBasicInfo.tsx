@@ -224,6 +224,7 @@ const AlbumBasicInfo = observer(
 									<td className="artistList">
 										<ArtistList
 											artists={model.otherArtists as ArtistLinkContract[]}
+											showRoles={ShowRolesMode.IfNotDefault}
 											tooltip={true}
 										/>
 									</td>
