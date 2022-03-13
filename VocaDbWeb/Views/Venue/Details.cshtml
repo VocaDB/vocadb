@@ -31,7 +31,7 @@
 }
 
 @if (Model.Coordinates.HasValue) {
-	<partial name="Partials/Shared/_EmbedGoogleMaps" model="@(new EmbedGoogleMapsViewModel(Model.Coordinates))" />
+	<partial name="Partials/Shared/_EmbedOpenStreetMap" model="@(new EmbedOpenStreetMapViewModel(Model.Coordinates))" />
 }
 
 <div class="media">

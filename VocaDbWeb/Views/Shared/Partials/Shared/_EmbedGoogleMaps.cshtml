@@ -1,7 +1,0 @@
-﻿@using VocaDb.Model.Helpers
-@using VocaDb.Web.Models.Shared.Partials.Shared
-@model EmbedGoogleMapsViewModel
-
-<div>
-	<iframe src="https://maps.google.com/maps?q=@(Model.Coordinates.Latitude.Value.ToString(CultureHelper.EnUS)),@(Model.Coordinates.Longitude.Value.ToString(CultureHelper.EnUS))&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="600" height="450"></iframe>
-</div>
