@@ -87,17 +87,13 @@ const SongDetailsLayout = observer(
 					<>
 						{(model.originalPVs.length > 0 || model.otherPVs.length > 0) && (
 							<div id="pvPlayer" className="song-pv-player">
-								{/* TODO: songDetailsStore.previewHtml ? (
-									// HACK
-									// TODO: Replace this with React
-									<div
-										dangerouslySetInnerHTML={{
-											__html: songDetailsStore.previewHtml,
-										}}
-									/>
-								) : (
-									model.primaryPV && <EmbedPV pv={model.primaryPV} />
-								)*/}
+								<EmbedPV
+									pv={
+										model.contract.pvs.filter(
+											(pv) => pv.id === songDetailsStore.selectedPvId,
+										)[0]
+									}
+								/>
 							</div>
 						)}
 						{loginManager.isLoggedIn ? (
