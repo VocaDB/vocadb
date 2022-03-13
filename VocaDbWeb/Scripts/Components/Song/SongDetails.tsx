@@ -87,7 +87,7 @@ const SongDetailsLayout = observer(
 					<>
 						{(model.originalPVs.length > 0 || model.otherPVs.length > 0) && (
 							<div id="pvPlayer" className="song-pv-player">
-								{songDetailsStore.previewHtml ? (
+								{/* TODO: songDetailsStore.previewHtml ? (
 									// HACK
 									// TODO: Replace this with React
 									<div
@@ -97,7 +97,7 @@ const SongDetailsLayout = observer(
 									/>
 								) : (
 									model.primaryPV && <EmbedPV pv={model.primaryPV} />
-								)}
+								)*/}
 							</div>
 						)}
 						{loginManager.isLoggedIn ? (

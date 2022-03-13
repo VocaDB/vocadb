@@ -56,13 +56,13 @@ const PVPreviewKnockout = observer(
 					</div>
 				</div>
 				<div>
-					{previewStore.previewHtml && (
+					{/* TODO: previewStore.previewHtml && (
 						// HACK
 						// TODO: Replace this with React
 						<div
 							dangerouslySetInnerHTML={{ __html: previewStore.previewHtml }}
 						/>
-					)}
+					)*/}
 				</div>
 			</div>
 		) : (

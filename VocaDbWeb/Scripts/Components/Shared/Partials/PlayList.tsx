@@ -53,7 +53,7 @@ const PlayList = observer(
 									/>
 								)}
 
-								{pvPlayerStore.playerHtml && (
+								{/* TODO: pvPlayerStore.playerHtml && (
 									// HACK
 									// TODO: Replace this with React
 									<div
@@ -62,7 +62,7 @@ const PlayList = observer(
 											__html: pvPlayerStore.playerHtml,
 										}}
 									/>
-								)}
+								)*/}
 							</div>
 						)}
 						<Button
