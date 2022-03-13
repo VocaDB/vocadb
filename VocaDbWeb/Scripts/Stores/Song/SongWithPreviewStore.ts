@@ -1,4 +1,3 @@
-import PVService from '@Models/PVs/PVService';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
@@ -8,8 +7,6 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 export default class SongWithPreviewStore {
 	// Whether preview mode is active.
 	@observable public preview = false;
-	// PV player HTML.
-	@observable public previewHtml?: string = undefined;
 	@observable public pvService?: string = undefined /* TODO: enum */;
 	// View model for rating buttons.
 	@observable public ratingButtons?: PVRatingButtonsStore = undefined;
@@ -27,9 +24,7 @@ export default class SongWithPreviewStore {
 	}
 
 	// Destroy PV player (clears HTML)
-	@action public destroyPV = (): void => {
-		this.previewHtml = undefined;
-	};
+	@action public destroyPV = (): void => {};
 
 	// Toggle preview status.
 	@action public togglePreview = (): void => {
@@ -44,7 +39,6 @@ export default class SongWithPreviewStore {
 
 			runInAction(() => {
 				this.pvService = result.pvService;
-				this.previewHtml = result.playerHtml;
 				const ratingButtonsStore = new PVRatingButtonsStore(
 					this.userRepo,
 					result.song,
@@ -58,13 +52,5 @@ export default class SongWithPreviewStore {
 
 	@action public switchPV = (newService: string): void => {
 		this.pvService = newService;
-		const service = PVService[newService as keyof typeof PVService];
-		this.songRepo
-			.pvForSongAndService({ songId: this.songId, pvService: service })
-			.then((html) =>
-				runInAction(() => {
-					this.previewHtml = html;
-				}),
-			);
 	};
 }

@@ -43,7 +43,6 @@ export default class PVPlayerStore {
 	private currentPlayer?: IPVPlayer;
 	private readonly players: { [index: string]: IPVPlayer };
 	public nextSong?: () => void;
-	@observable public playerHtml?: string;
 	public playerService?: PVService;
 	@observable public ratingButtonsStore?: PVRatingButtonsStore;
 	public resetSong?: () => void;
@@ -74,7 +73,6 @@ export default class PVPlayerStore {
 						this.currentPlayer = undefined;
 					}
 
-					this.playerHtml = '';
 					this.ratingButtonsStore = undefined;
 					return;
 				}
@@ -121,7 +119,6 @@ export default class PVPlayerStore {
 						})
 						.then((result) => {
 							runInAction(() => {
-								this.playerHtml = result.playerHtml;
 								this.playerService =
 									PVService[result.pvService as keyof typeof PVService];
 								this.currentPlayer = this.players[result.pvService];

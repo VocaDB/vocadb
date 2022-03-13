@@ -18,8 +18,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import { SearchType } from '@Stores/Search/SearchStore';
 import SongDetailsStore from '@Stores/Song/SongDetailsStore';
-import $ from 'jquery';
-import { reaction, runInAction } from 'mobx';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
@@ -64,25 +63,6 @@ const SongDetailsLayout = observer(
 		const titleAndArtist = `${model.name} - ${model.artistString}`;
 
 		useVocaDbTitle(titleAndArtist, true);
-
-		React.useEffect(() => {
-			// Returns the disposer.
-			return reaction(
-				() => songDetailsStore.selectedPvId,
-				(id) => {
-					$.post(
-						urlMapper.mapRelative('/Song/PVForSong'),
-						{
-							pvId: id,
-						},
-						(content) =>
-							runInAction(() => {
-								songDetailsStore.previewHtml = content;
-							}),
-					);
-				},
-			);
-		}, [songDetailsStore]);
 
 		return (
 			<Layout
