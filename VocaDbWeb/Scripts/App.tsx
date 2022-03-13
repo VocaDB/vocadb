@@ -3,7 +3,6 @@ import Footer from '@Components/Shared/Partials/Footer';
 import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
 import React from 'react';
-import ReactGA from 'react-ga';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 
@@ -51,10 +50,6 @@ const TagDetails = React.lazy(() => import('@Components/Tag/TagDetails'));
 const UserDetails = React.lazy(() => import('@Components/User/UserDetails'));
 
 const App = (): React.ReactElement => {
-	React.useEffect(() => {
-		ReactGA.initialize(vdb.values.gaAccountId);
-	}, []);
-
 	return (
 		<>
 			<ScrollToTop />

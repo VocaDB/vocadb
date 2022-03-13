@@ -35,7 +35,6 @@ namespace VocaDb.Web.Models.Shared
 		public ArtistType[] ArtistTypes { get; init; }
 
 		public string? ExternalHelpPath { get; init; }
-		public string? GAAccountId { get; init; }
 		public string? HostAddress { get; init; }
 		public string? LockdownMessage { get; init; }
 
@@ -81,7 +80,6 @@ namespace VocaDb.Web.Models.Shared
 			AlbumTypes = AppConfig.AlbumTypes;
 			ArtistTypes = AppConfig.ArtistTypes;
 			ExternalHelpPath = AppConfig.ExternalHelpPath;
-			GAAccountId = AppConfig.GAAccountId;
 			HostAddress = AppConfig.HostAddress;
 			LockdownMessage = AppConfig.LockdownMessage;
 			SongTypes = AppConfig.SongTypes;
