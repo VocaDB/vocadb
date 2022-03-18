@@ -1,40 +1,57 @@
-@import "variables";
+@import 'variables';
 
 /* jQuery UI overrides */
 ul.ui-autocomplete {
-    max-height: 400px;
-    overflow-y: auto;
-    /* prevent horizontal scrollbar */
-    overflow-x: hidden;
+	max-height: 400px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
 	z-index: 1050;
 }
 
 .ui-autocomplete-loading {
-    background: white url('/Content/ajax-loader.gif') right center no-repeat;
+	background: white url('/Content/ajax-loader.gif') right center no-repeat;
 }
 
 /* Override retarded widget link colors */
-.rightFrame .ui-widget-header, .rightFrame .ui-widget-content, .ui-dialog.ui-widget-content {
-    a { color: #003399; }
-    a:visited { color: #001155; }
-    a:hover { color: #0065B2; }
-	.btn-info, .btn-info:hover, .btn-info:visited {
+.rightFrame .ui-widget-header,
+.rightFrame .ui-widget-content,
+.ui-dialog.ui-widget-content {
+	a {
+		color: #003399;
+	}
+	a:visited {
+		color: #001155;
+	}
+	a:hover {
+		color: #0065b2;
+	}
+	.btn-info,
+	.btn-info:hover,
+	.btn-info:visited {
 		color: white;
 	}
 }
 
 .ui-dialog.ui-widget-content .ui-menu-item {
-    a, a:hover, a:visited { color: black; }
+	a,
+	a:hover,
+	a:visited {
+		color: black;
+	}
 }
 
 body .ui-widget {
-	font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
 
 	// Fix font size for buttons (conflicts for Bootstrap vs. jQuery UI)
-    input, select, textarea, button { 
+	input,
+	select,
+	textarea,
+	button {
 		font-family: arial, sans-serif;
 		font-size: 14px;
-    }
+	}
 }
 
 .ui-widget.ui-draggable {
@@ -51,7 +68,6 @@ body .ui-widget {
 	margin-top: 0;
 }
 
-
 /* Bootstrap overrides and additions */
 .withMargin {
 	margin-top: 20px;
@@ -62,36 +78,43 @@ body .ui-widget {
 }
 
 .navbar .nav-radio {
-	color: #0DC69B;	
+	color: #0dc69b;
 	padding-left: 8px;
 	padding-right: 8px;
 }
 
-.navbar div.brand a:visited {	
-	color: #08C;
+.navbar div.brand a:visited {
+	color: #08c;
 }
 
 .navbar-search {
-	margin-top: 4px;	
+	margin-top: 4px;
 }
 
 .navbar-inverse .navbar-search .search-query {
-	background-color: #005B5B;
-	color: -webkit-input-placeholder(#0DC69B);
-    border-radius: 3px;
+	background-color: #005b5b;
+	color: -webkit-input-placeholder(#0dc69b);
+	border-radius: 3px;
 }
 
 .navbar-inverse .navbar-search .search-query::-webkit-input-placeholder {
-    color: #0DC69B;
+	color: #0dc69b;
 }
 
-.navbar .navbar-inner, .navbar-inverse .navbar-inner {
-	background-color: #0D2B35;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#133D4C), to(#081A21));
-	background-image: -webkit-linear-gradient(to bottom, #133D4C, #081A21);
-	background-image: -o-linear-gradient(to bottom, #133D4C, #081A21);
-	background-image: -moz-linear-gradient(center top, #133D4C, #081A21);
-	background-image: linear-gradient(to bottom, #133D4C, #081A21);
+.navbar .navbar-inner,
+.navbar-inverse .navbar-inner {
+	background-color: #0d2b35;
+	background-image: -webkit-gradient(
+		linear,
+		0 0,
+		0 100%,
+		from(#133d4c),
+		to(#081a21)
+	);
+	background-image: -webkit-linear-gradient(to bottom, #133d4c, #081a21);
+	background-image: -o-linear-gradient(to bottom, #133d4c, #081a21);
+	background-image: -moz-linear-gradient(center top, #133d4c, #081a21);
+	background-image: linear-gradient(to bottom, #133d4c, #081a21);
 }
 
 .navbar-form .navbar-searchBox {
@@ -102,8 +125,12 @@ body .ui-widget {
 	//margin-top: 4px;
 }
 
-.navbar .btn-group .btn, .navbar .input-prepend .btn, .navbar .input-append .btn, .navbar .input-prepend .btn-group, .navbar .input-append .btn-group {
-    //margin-top: 4px;
+.navbar .btn-group .btn,
+.navbar .input-prepend .btn,
+.navbar .input-append .btn,
+.navbar .input-prepend .btn-group,
+.navbar .input-append .btn-group {
+	//margin-top: 4px;
 }
 
 .navbar-searchBox .btn {
@@ -114,7 +141,7 @@ body .ui-widget {
 	padding: 0;
 	padding-left: 15px;
 	margin-top: 1px;
-    margin-left: 0;
+	margin-left: 0;
 }
 
 .navbar .navbar-languageBtn {
@@ -137,7 +164,7 @@ div.comment p {
 }
 
 .row-fluid {
-	max-width: 1600px;	
+	max-width: 1600px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -163,7 +190,6 @@ ol {
 	margin-left: 22px; // To fix lists with over 10 items
 }
 
-
 // DROPDOWN MENUS
 .dropdown-menu li > a:hover {
 	color: white !important;
@@ -175,7 +201,9 @@ ol {
 	cursor: default;
 }
 
-.btn > [class^="icon-"], .btn > [class*=" icon-"], .menuIcon {
+.btn > [class^='icon-'],
+.btn > [class*=' icon-'],
+.menuIcon {
 	margin-top: 2px;
 	&.noMargin {
 		margin-top: 0px;
@@ -184,11 +212,11 @@ ol {
 
 // Opens the menu on hover
 div:hover > ul.dropdown-menu-hover {
-    display: block;    
+	display: block;
 }
 
 .dropdown-menu {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .menuIcon {
@@ -196,11 +224,11 @@ div:hover > ul.dropdown-menu-hover {
 }
 
 .badge-small {
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-bottom: 0;
-    padding-top: 0;
-    margin-left: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 0;
+	padding-top: 0;
+	margin-left: 2px;
 }
 
 .dropdown-menu > li > p {
@@ -235,5 +263,5 @@ ul.nav.nav-pills {
 }
 
 .vdb .qtip-default {
-	background-color: #FFFFCC;
+	background-color: #ffffcc;
 }
