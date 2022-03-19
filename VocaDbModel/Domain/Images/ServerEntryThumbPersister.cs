@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.IO;
 using VocaDb.Model.Helpers;
@@ -24,7 +22,7 @@ namespace VocaDb.Model.Domain.Images
 			_ => throw new NotSupportedException(),
 		};
 
-		private string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0)
+		private static string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0)
 			? $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}?v={picture.Version}"
 			: $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
 
@@ -43,8 +41,20 @@ namespace VocaDb.Model.Domain.Images
 
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries || picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
-			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) && picture.PurposeMainOrUnspecified() && size != ImageSize.Original)
-			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) && picture.Purpose == ImagePurpose.Additional);
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) =>
+			picture.EntryType == EntryType.ReleaseEvent ||
+			picture.EntryType == EntryType.ReleaseEventSeries ||
+			picture.EntryType == EntryType.SongList ||
+			picture.EntryType == EntryType.Tag ||
+			(
+				(picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) &&
+				picture.PurposeMainOrUnspecified() &&
+				size != ImageSize.Original
+			) ||
+			(
+				(picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) &&
+				picture.Purpose == ImagePurpose.Additional
+			) ||
+			picture.EntryType == EntryType.User;
 	}
 }
