@@ -39,7 +39,9 @@ const AvatarImg = React.memo(
 	({ user }: AvatarImgProps): React.ReactElement => {
 		return (
 			<ProfileIconKnockout
-				icon={`${user.mainPicture.urlThumb?.split('?')[0]}?s=120`}
+				icon={`${
+					user.mainPicture?.urlThumb?.split('?')[0] ?? '/Content/unknown.png'
+				}?s=120`}
 				size={120}
 			/>
 		);
