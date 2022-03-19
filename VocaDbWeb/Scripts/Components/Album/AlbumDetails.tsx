@@ -117,7 +117,12 @@ const AlbumDetailsLayout = observer(
 						<JQueryUIButton
 							as="a"
 							href={`/Album/Edit/${model.id}`}
-							disabled={!loginManager.isLoggedIn}
+							disabled={
+								!loginManager.canEdit({
+									...model.contract,
+									entryType: EntryType[EntryType.Album],
+								})
+							}
 							icons={{ primary: 'ui-icon-wrench' }}
 						>
 							{t('ViewRes:Shared.Edit')}

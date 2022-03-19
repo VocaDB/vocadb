@@ -114,7 +114,7 @@ export default class AlbumDetailsForApi {
 	public readonly webLinks: WebLinkContract[];
 	public readonly wishlistedBy: number;
 
-	public constructor(contract: AlbumDetailsContract) {
+	public constructor(public readonly contract: AlbumDetailsContract) {
 		this.additionalNames = contract.additionalNames;
 		this.artistString = contract.artistString;
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
