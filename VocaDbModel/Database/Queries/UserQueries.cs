@@ -1923,7 +1923,7 @@ namespace VocaDb.Model.Database.Queries
 			thumbGenerator.GenerateThumbsAndMoveImage(
 				input: pictureData.UploadedFile,
 				imageInfo: pictureData,
-				imageSizes: ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb,
+				imageSizes: ImageSizes.AllThumbs,
 				originalSize: Constants.RestrictedImageOriginalSize
 			);
 			return parsed;
