@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Models
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Models
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Shared
@@ -228,6 +229,23 @@
 				@Html.TextBoxFor(m => m.Location, new { @class = "input-xlarge" })
 			</div>
  
+			<div class="editor-label">
+				<label>Picture</label>
+			</div>
+			<div class="editor-field">
+				<table>
+					<tr>
+						<td>
+							
+						</td>
+						<td>
+							<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+							<input type="file" id="pictureUpload" name="pictureUpload" />
+						</td>
+					</tr>
+				</table>
+			</div>
+
 			<div class="editor-label">
 				@R.MySettingsStrings.ExternalLinks
 			</div>
