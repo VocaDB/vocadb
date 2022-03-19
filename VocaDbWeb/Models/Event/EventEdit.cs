@@ -21,9 +21,11 @@ namespace VocaDb.Web.Models.Event
 {
 	public class EventEdit : IEntryImageInformation
 	{
+#nullable enable
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
-		string IEntryImageInformation.Mime => PictureMime;
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		public EventEdit()
 		{
@@ -101,7 +103,9 @@ namespace VocaDb.Web.Models.Event
 
 		public string OldName { get; set; }
 
-		public string PictureMime { get; set; }
+#nullable enable
+		public string? PictureMime { get; set; }
+#nullable disable
 
 		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public PVContract[] PVs { get; set; }

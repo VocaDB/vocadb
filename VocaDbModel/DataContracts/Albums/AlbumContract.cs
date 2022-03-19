@@ -21,9 +21,11 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		EntryType IEntryBase.EntryType => EntryType.Album;
 
+#nullable enable
 		EntryType IEntryImageInformation.EntryType => EntryType.Album;
-		string IEntryImageInformation.Mime => CoverPictureMime;
+		string? IEntryImageInformation.Mime => CoverPictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		public AlbumContract() { }
 

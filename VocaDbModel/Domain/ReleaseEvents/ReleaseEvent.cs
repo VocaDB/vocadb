@@ -44,8 +44,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		string IReleaseEvent.Name => DefaultName;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
-		string IEntryImageInformation.Mime => PictureMime;
+#nullable enable
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		private IList<Album> _albums = new List<Album>();
 #nullable enable
@@ -219,7 +221,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual string PictureMime { get; set; }
+#nullable enable
+		public virtual string? PictureMime { get; set; }
+#nullable disable
 
 		public virtual PVManager<PVForEvent> PVs
 		{
