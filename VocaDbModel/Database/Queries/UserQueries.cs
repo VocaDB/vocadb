@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
@@ -101,6 +102,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IStopForumSpamClient _sfsClient;
 		private readonly IUserIconFactory _userIconFactory;
 		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
+		private readonly IEntryThumbPersister _imagePersister;
 
 		public IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
@@ -519,7 +521,8 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache,
 			BrandableStringsManager brandableStringsManager,
 			IEnumTranslations enumTranslations,
-			IDiscordWebhookNotifier discordWebhookNotifier
+			IDiscordWebhookNotifier discordWebhookNotifier,
+			IEntryThumbPersister imagePersister
 		)
 			: base(repository, permissionContext)
 		{
@@ -538,6 +541,7 @@ namespace VocaDb.Model.Database.Queries
 			_brandableStringsManager = brandableStringsManager;
 			_enumTranslations = enumTranslations;
 			_discordWebhookNotifier = discordWebhookNotifier;
+			_imagePersister = imagePersister;
 		}
 
 		public void AddFollowedTag(int userId, int tagId)
@@ -1905,6 +1909,32 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
+		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
+		{
+			if (pictureData == null) return null;
+
+			var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+
+			pictureData.Id = entry.Id;
+			pictureData.EntryType = entry.EntryType;
+			var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+			thumbGenerator.GenerateThumbsAndMoveImage(
+				input: pictureData.UploadedFile,
+				imageInfo: pictureData,
+				imageSizes: ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb,
+				originalSize: Constants.RestrictedImageOriginalSize
+			);
+			return parsed;
+		}
+
+		private void SaveImage(User user, EntryPictureFileContract pictureData)
+		{
+			var parsed = SaveImage((IEntryImageInformation)user, pictureData);
+			user.PictureMime = parsed.Mime;
+		}
+
 		/// <summary>
 		/// Updates user's settings (usually by the user themselves from my settings page).
 		/// </summary>
@@ -1916,7 +1946,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract)
+		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -1987,6 +2017,9 @@ namespace VocaDb.Model.Database.Queries
 				var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages.Distinct(l => l.CultureCode), (l, l2) => l.CultureCode.Equals(l2.CultureCode) && l.Proficiency == l2.Proficiency, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
 				ctx.Sync(knownLanguagesDiff);
 
+				if (pictureData != null)
+					SaveImage(user, pictureData);
+
 				ctx.Update(user);
 
 				ctx.AuditLogger.AuditLog("updated settings");
@@ -1994,6 +2027,7 @@ namespace VocaDb.Model.Database.Queries
 				return new ServerOnlyUserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 			});
 		}
+#nullable disable
 
 		public void UpdateUserSetting(IUserSetting setting)
 		{

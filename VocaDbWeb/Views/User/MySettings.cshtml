@@ -18,7 +18,7 @@
 
 <partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave))" />
 
-@using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
+<form action="/User/MySettings" method="POST" enctype="multipart/form-data">
     
 	@Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.HasPassword)
@@ -293,7 +293,7 @@
 	<br />
 	<partial name="Partials/Shared/_SaveBtn" />
 	
-}
+</form>
 
 @section BodyScripts {
 	<remikus path="/bundles/shared/edit.js" />
