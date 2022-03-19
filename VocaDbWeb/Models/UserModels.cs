@@ -137,6 +137,7 @@ namespace VocaDb.Web.Models
 			InterfaceLanguageSelection = user.Language;
 			Location = user.Location;
 			KnownLanguages = user.KnownLanguages;
+			PictureMime = user.PictureMime;
 			PreferredVideoService = user.PreferredVideoService;
 			PublicAlbumCollection = user.PublicAlbumCollection;
 			PublicRatings = user.PublicRatings;
