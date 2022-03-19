@@ -122,7 +122,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FakeObjectCache(),
 				new Model.Service.BrandableStrings.BrandableStringsManager(new VdbConfigManager()),
 				new EnumTranslations(),
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier(),
+				imagePersister: null
+			);
 
 			_request = new PasswordResetRequest(_userWithEmail) { Id = Guid.NewGuid() };
 			_repository.Add(_request);
@@ -771,7 +773,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Email = "new_email@vocadb.net" };
 			_userWithEmail.Options.EmailVerified = true;
-			var result = _data.UpdateUserSettings(contract);
+			var result = _data.UpdateUserSettings(contract, pictureData: null);
 
 			result.Should().NotBeNull("Result");
 			var user = GetUserFromRepo(_userWithEmail.Name);
@@ -791,7 +793,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = "3939"
 			};
 
-			_data.UpdateUserSettings(contract);
+			_data.UpdateUserSettings(contract, pictureData: null);
 
 			_userWithEmail.Password.Should().Be(algo.HashPassword("3939", _userWithEmail.Salt), "Password was updated");
 		}
@@ -805,13 +807,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = "3939"
 			};
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidPasswordException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidPasswordException>();
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_NoPermission()
 		{
-			_data.Invoking(subject => subject.UpdateUserSettings(new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail))).Should().Throw<NotAllowedException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail), pictureData: null)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -820,7 +822,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext.LoggedUser = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserEmailAlreadyExistsException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -830,7 +832,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext.LoggedUser = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.UpdateUserSettings(contract);
+			_data.UpdateUserSettings(contract, pictureData: null);
 
 			var user = GetUserFromRepo(_userWithoutEmail.Name);
 			user.Should().NotBeNull("User was found in repository");
@@ -842,7 +844,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Email = "mikumiku" };
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidEmailFormatException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -851,7 +853,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "mikumiku" };
 
-			_data.UpdateUserSettings(contract);
+			_data.UpdateUserSettings(contract, pictureData: null);
 
 			_userWithEmail.Name.Should().Be("mikumiku", "Name was changed");
 			_userWithEmail.OldUsernames.Count.Should().Be(1, "Old username was added");
@@ -863,7 +865,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "miku miku" };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidUserNameException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidUserNameException>();
 		}
 
 		[TestMethod]
@@ -871,7 +873,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = _userWithoutEmail.Name };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserNameAlreadyExistsException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -879,7 +881,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
 			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "mikumiku" };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserNameTooSoonException>();
+			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameTooSoonException>();
 		}
 
 		[TestMethod]
