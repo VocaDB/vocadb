@@ -367,6 +367,8 @@ namespace VocaDb.Web
 
 				endpoints.MapControllerRoute("Discussion", "discussion/{**clientPath}", new { controller = "Discussion", action = "Index" });
 
+				endpoints.MapControllerRoute("Help", "Help/{**clientPath}", new { controller = "Help", action = "Index" });
+
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}"
