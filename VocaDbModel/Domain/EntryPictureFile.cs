@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -35,10 +34,12 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		protected string Extension => ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
 
+#nullable disable
 		protected EntryPictureFile()
 		{
 			Created = DateTime.Now;
 		}
+#nullable enable
 
 		protected EntryPictureFile(string name, string mime, User author)
 			: this()
@@ -54,6 +55,7 @@ namespace VocaDb.Model.Domain
 		public virtual User Author
 		{
 			get => _author;
+			[MemberNotNull(nameof(_author))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -81,6 +83,7 @@ namespace VocaDb.Model.Domain
 		public virtual string Mime
 		{
 			get => _mime;
+			[MemberNotNull(nameof(_mime))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -94,6 +97,7 @@ namespace VocaDb.Model.Domain
 		public virtual string Name
 		{
 			get => _name;
+			[MemberNotNull(nameof(_name))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -109,14 +113,12 @@ namespace VocaDb.Model.Domain
 		/// Uploaded file. This field is not mapped, only used for uploading.
 		/// Null for files loaded from the DB.
 		/// </summary>
-		public virtual Stream UploadedFile { get; set; }
+		public virtual Stream? UploadedFile { get; set; }
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"Picture file {Name} [{Id}]";
 		}
-#nullable disable
 	}
 
 	public interface IEntryPictureFile : IEntryImageInformation

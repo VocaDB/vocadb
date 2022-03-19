@@ -24,7 +24,7 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="text">String to be processed. Can be null or empty.</param>
 		/// <returns>String without control characters.</returns>
-		[return:NotNullIfNotNull("text"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("text"/* TODO: use nameof */)]
 		public static string? RemoveControlChars(string? text)
 		{
 			if (string.IsNullOrEmpty(text))
@@ -41,7 +41,7 @@ namespace VocaDb.Model.Helpers
 		/// There are songs and albums where the name is completely whitespace, so this must be supported.
 		/// However, whitespace in the beginning or end is assumed to be an error.
 		/// </remarks>
-		[return:NotNullIfNotNull("text"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("text"/* TODO: use nameof */)]
 		public static string? TrimIfNotWhitespace(string? text)
 		{
 			return string.IsNullOrWhiteSpace(text) ? text : text.Trim();

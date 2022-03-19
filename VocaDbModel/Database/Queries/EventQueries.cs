@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Database.Queries.Partial;
@@ -679,9 +680,9 @@ namespace VocaDb.Model.Database.Queries
 				return new ReleaseEventContract(ev, LanguagePreference);
 			});
 		}
-#nullable disable
 
-		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData)
+		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
 		{
 			if (pictureData == null) return null;
 
@@ -706,7 +707,6 @@ namespace VocaDb.Model.Database.Queries
 			ev.PictureMime = parsed.Mime;
 		}
 
-#nullable enable
 		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);

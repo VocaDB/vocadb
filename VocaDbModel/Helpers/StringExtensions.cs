@@ -33,7 +33,7 @@ namespace VocaDb.Model.Helpers
 		/// and more than <paramref name="minLength"/>, 
 		/// assuming <paramref name="str"/> is longer than <paramref name="minLength"/>.
 		/// </returns>
-		[return:NotNullIfNotNull("str"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("str"/* TODO: use nameof */)]
 		public static string? Summarize(this string? str, int minLength, int maxLength)
 		{
 			if (string.IsNullOrEmpty(str))

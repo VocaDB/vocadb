@@ -16,7 +16,7 @@ namespace VocaDb.Web.Code.Markdown
 		// Match "&gt;" at the beginning of each line, to fix markdown blockquotes
 		private static readonly Regex s_quoteRegex = new("^&gt;", RegexOptions.Multiline);
 
-		[return:NotNullIfNotNull("text"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("text"/* TODO: use nameof */)]
 		private static string? TranformMarkdown(string? text)
 		{
 			if (string.IsNullOrEmpty(text))
@@ -46,7 +46,7 @@ namespace VocaDb.Web.Code.Markdown
 		/// Markdown-transformed text. This will include HTML. 
 		/// The block is usually surrounded by "p" tags.
 		/// </returns>
-		[return:NotNullIfNotNull("markdownText"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("markdownText"/* TODO: use nameof */)]
 		public string? GetHtml(string? markdownText)
 		{
 			if (string.IsNullOrEmpty(markdownText))
@@ -61,7 +61,7 @@ namespace VocaDb.Web.Code.Markdown
 		/// </summary>
 		/// <param name="markdownText">Markdown-formatted text, for example "**Miku**".</param>
 		/// <returns>Text without markdown formatting, for example "Miku".</returns>
-		[return:NotNullIfNotNull("markdownText"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("markdownText"/* TODO: use nameof */)]
 		public string? GetPlainText(string? markdownText)
 		{
 			if (string.IsNullOrEmpty(markdownText))
