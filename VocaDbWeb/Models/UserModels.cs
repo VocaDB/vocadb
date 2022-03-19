@@ -240,13 +240,15 @@ namespace VocaDb.Web.Models
 		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
-		public string PictureMime { get; init; }
+#nullable enable
+		public string? PictureMime { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		EntryType IEntryImageInformation.EntryType => EntryType.User;
-		string IEntryImageInformation.Mime => PictureMime;
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		public ServerOnlyUpdateUserSettingsContract ToContract()
 		{

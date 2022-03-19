@@ -28,8 +28,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
 		string IEntryBase.DefaultName => TranslatedName.Default;
-		string IEntryImageInformation.Mime => PictureMime;
+#nullable enable
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 
