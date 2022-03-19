@@ -66,7 +66,7 @@ namespace VocaDb.Model.Service.ExtSites
 			_paAffId = configManager.Affiliates.PlayAsiaAffiliateId;
 		}
 
-		[return:NotNullIfNotNull("url"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("url"/* TODO: use nameof */)]
 		public string? GenerateAffiliateLink(string? url)
 		{
 			if (string.IsNullOrEmpty(url))

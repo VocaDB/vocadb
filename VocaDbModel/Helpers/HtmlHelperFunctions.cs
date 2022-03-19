@@ -11,7 +11,7 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="html">Input HTML. Can be null or empty.</param>
 		/// <returns>String with all HTML tags stripped. Can be null or empty.</returns>
-		[return:NotNullIfNotNull("html"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("html"/* TODO: use nameof */)]
 		public static string? StripHtml(string? html)
 		{
 			if (string.IsNullOrEmpty(html))

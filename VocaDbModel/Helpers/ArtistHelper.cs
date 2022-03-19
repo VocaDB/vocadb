@@ -152,7 +152,7 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="name">Artist name that may be canonized or not. Can be null or empty, in which case nothing is done.</param>
 		/// <returns>Canonized artist name.</returns>
-		[return:NotNullIfNotNull("name"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("name"/* TODO: use nameof */)]
 		public static string? GetCanonizedName(string? name)
 		{
 			if (string.IsNullOrEmpty(name))

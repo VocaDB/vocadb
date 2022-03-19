@@ -112,7 +112,8 @@ namespace VocaDb.Model.Database.Queries
 			return newList;
 		}
 
-		private void SetThumb(SongList list, UploadedFileContract uploadedFile)
+#nullable enable
+		private void SetThumb(SongList list, UploadedFileContract? uploadedFile)
 		{
 			if (uploadedFile != null)
 			{
@@ -122,6 +123,7 @@ namespace VocaDb.Model.Database.Queries
 				thumbGenerator.GenerateThumbsAndMoveImage(uploadedFile.Stream, thumb, SongList.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 			}
 		}
+#nullable disable
 
 		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)

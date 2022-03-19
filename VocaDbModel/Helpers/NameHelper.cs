@@ -27,7 +27,7 @@ namespace VocaDb.Model.Helpers
 			return new EntryNameContract(primary, GetAdditionalNames(nameManager.AllValues, primary));
 		}
 
-		[return:NotNullIfNotNull("names"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("names"/* TODO: use nameof */)]
 		public static string[]? MoveExactNamesToTop(string[]? names, string term)
 		{
 			if (names == null || !names.Any())
