@@ -243,11 +243,10 @@ namespace VocaDb.Web.Models
 #nullable enable
 		public string? PictureMime { get; init; }
 
-		public int Version { get; init; }
-
 		EntryType IEntryImageInformation.EntryType => EntryType.User;
 		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+		int IEntryImageInformation.Version => 0;
 #nullable disable
 
 		public ServerOnlyUpdateUserSettingsContract ToContract()

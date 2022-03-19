@@ -1,5 +1,3 @@
-#nullable disable
-
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -28,6 +26,7 @@ namespace VocaDb.Model.Mapping.Users
 			Map(m => m.NormalizedEmail).Length(50).Not.Nullable();
 			Map(m => m.Password).Length(50).Not.Nullable();
 			Map(m => m.PasswordHashAlgorithm).Not.Nullable();
+			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.PreferredVideoService).Not.Nullable();
 			Map(m => m.Salt).Length(100).Not.Nullable();
 			Map(m => m.VerifiedArtist).Not.Nullable();
