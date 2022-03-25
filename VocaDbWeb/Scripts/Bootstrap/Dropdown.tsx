@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useContext } from 'react';
 import BaseDropdown from 'react-overlays/Dropdown';
+import { DropDirection } from 'react-overlays/DropdownContext';
 import { useUncontrolled } from 'uncontrollable';
 
 import DropdownItem from './DropdownItem';
@@ -44,6 +45,7 @@ const DropdownItemText = ({
 export interface DropdownProps
 	extends BsPrefixProps,
 		Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> {
+	drop?: 'up' | 'start' | 'end' | 'down';
 	show?: boolean;
 	onToggle?: (
 		isOpen: boolean,
@@ -59,6 +61,7 @@ const Dropdown: BsPrefixRefForwardingComponent<
 > = React.forwardRef<HTMLElement, DropdownProps>((pProps, ref) => {
 	const {
 		bsPrefix,
+		drop,
 		show,
 		className,
 		onSelect,
@@ -88,9 +91,18 @@ const Dropdown: BsPrefixRefForwardingComponent<
 		handleToggle(false, event, 'select');
 	});
 
+	// TODO RTL: Flip directions based on RTL setting.
+	let direction: DropDirection = drop as DropDirection;
+	if (drop === 'start') {
+		direction = 'left';
+	} else if (drop === 'end') {
+		direction = 'right';
+	}
+
 	return (
 		<SelectableContext.Provider value={handleSelect}>
 			<BaseDropdown
+				drop={direction}
 				show={show}
 				onToggle={handleToggle}
 				itemSelector={`.${prefix}-item:not(.disabled):not(:disabled)`}
@@ -98,7 +110,14 @@ const Dropdown: BsPrefixRefForwardingComponent<
 				<Component
 					{...props}
 					ref={ref}
-					className={classNames(className, show && 'open')}
+					className={classNames(
+						className,
+						show && 'open',
+						(!drop || drop === 'down') && prefix,
+						drop === 'up' && 'dropup',
+						drop === 'end' && 'dropend',
+						drop === 'start' && 'dropstart',
+					)}
 				/>
 			</BaseDropdown>
 		</SelectableContext.Provider>

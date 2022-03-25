@@ -93,7 +93,7 @@ const NavbarOuter: BsPrefixRefForwardingComponent<
 const Navbar = ({
 	children,
 	...props
-}: NavbarProps & { children: React.ReactNode }): React.ReactElement => {
+}: NavbarProps & { children?: React.ReactNode }): React.ReactElement => {
 	return (
 		<NavbarOuter {...props}>
 			<div className="navbar-inner">{children}</div>
