@@ -118,25 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces. Por favor remueve el duplicado y edita los roles apropiadamente.</value>
+    <value>Un mismo artista no puede ser añadido dos veces. Por favor borre el duplicado y edite los roles apropiadamente.</value>
   </data>
   <data name="NeedArtist" xml:space="preserve">
     <value>La canción requiere que se especifique al menos un artista.</value>
   </data>
   <data name="NeedOriginal" xml:space="preserve">
-    <value>Las canciones derivadas necesitan que se especifique una version original de la que derivan, si esta ya se encuentra en la base de datos y/o que deba ser mencionada en las notas.</value>
+    <value>Las canciones derivadas deben tener una versión original especificada si está en la base de datos, o la versión original debe mencionarse en las notas.</value>
   </data>
   <data name="NeedProducer" xml:space="preserve">
-    <value>La canción requiere que se especifique al menos un productor con su respectivo rol (compositor, arreglista, ilustrador, animador, etc).</value>
+    <value>La canción requiere que se especifique al menos un rol de productor (compositor, arreglista, animador, etc).</value>
   </data>
   <data name="NeedReferences" xml:space="preserve">
-    <value>Se requieren notas, PVs y/o links de referencia de la canción.</value>
+    <value>Se requieren notas, PVs o links de referencia de la canción.</value>
   </data>
   <data name="NeedType" xml:space="preserve">
     <value>Se requiere especificar el tipo de canción.</value>
   </data>
   <data name="NonInstrumentalSongNeedsVocalists" xml:space="preserve">
-    <value>Esta canción no tiene vocalistas. Los instrumentales originales necesitan estar etiquetados como 'instrumental' (tambien aplica para versiones de karaoke). De otra manera, se deben especificar los vocalistas.</value>
+    <value>Esta canción no tiene vocalistas. Los instrumentales originales deben ser etiquetados como 'instrumental' (también aplica para versiones de karaoke). Si no, se debe especificar los vocalistas.</value>
+  </data>
+  <data name="RedundantEvent" xml:space="preserve">
+    <value>No es necesario especificar el mismo evento de lanzamiento para la canción y el álbum.</value>
+  </data>
+  <data name="RedundantRoles" xml:space="preserve">
+    <value>No es necesario especificar los roles del productor cuando ese productor es el único.</value>
   </data>
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>Se debe especificar un nombre principal para la canción.</value>
