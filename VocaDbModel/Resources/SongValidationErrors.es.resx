@@ -136,7 +136,7 @@
     <value>Se requiere especificar el tipo de canción.</value>
   </data>
   <data name="NonInstrumentalSongNeedsVocalists" xml:space="preserve">
-    <value>Esta canción no tiene vocalistas. Los instrumentales originales deben ser etiquetados como 'instrumental' (también aplica para versiones de karaoke). Si no, se debe especificar los vocalistas.</value>
+    <value>Esta canción no tiene vocalistas. Los instrumentales originales deben ser etiquetados como 'instrumental' (también aplica para versiones de karaoke). Si no, se deben especificar los vocalistas.</value>
   </data>
   <data name="RedundantEvent" xml:space="preserve">
     <value>No es necesario especificar el mismo evento de lanzamiento para la canción y el álbum.</value>
