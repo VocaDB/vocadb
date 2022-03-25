@@ -1,5 +1,5 @@
 import Container from '@Bootstrap/Container';
-import Footer from '@Components/Shared/Partials/Footer';
+import AboutDisclaimer from '@Components/Shared/Partials/AboutDisclaimer';
 import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
 import React from 'react';
@@ -27,7 +27,7 @@ const App = (): React.ReactElement => {
 				</div>
 			</Container>
 
-			<Footer />
+			<AboutDisclaimer />
 
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 		</>

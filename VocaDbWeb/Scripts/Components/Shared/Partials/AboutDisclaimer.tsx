@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Footer = React.memo(
+const AboutDisclaimer = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -27,4 +27,4 @@ const Footer = React.memo(
 	},
 );
 
-export default Footer;
+export default AboutDisclaimer;
