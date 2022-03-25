@@ -121,7 +121,7 @@
     <value>Utaite, UtaiteDB, Base de datos Utaite</value>
   </data>
   <data name="PaypalDonateTitle" xml:space="preserve">
-    <value>UtaiteDB es un proyecto sin ánimos de lucro. Todo el dinero recaudado mediante donaciones es invertido en el desarrollo a futuro de la plataforma, renta de hosteo web y licencias de software de terceros utilizado en el desarrollo y manejo de la misma.</value>
+    <value>UtaiteDB es un proyecto sin fines de lucro. Todo el dinero se utilizará para seguir desarrollando el sitio, las tarifas de alojamiento y las licencias de software.</value>
   </data>
   <data name="SiteName" xml:space="preserve">
     <value>UtaiteDB</value>
