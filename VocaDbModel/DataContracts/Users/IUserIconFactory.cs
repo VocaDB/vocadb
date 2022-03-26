@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 

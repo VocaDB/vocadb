@@ -1,3 +1,4 @@
+// Corresponds to the EventCategory enum in C#.
 enum EventCategory {
 	Unspecified = 0,
 	AlbumRelease = 1 << 0,

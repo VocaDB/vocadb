@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -46,10 +44,14 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of PVs.</returns>
 		[HttpGet("for-songs")]
-		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
+		public PartialFindResult<PVForSongContract> GetList(
+			string? name = null,
+			string? author = null,
 			PVService? service = null,
-			int maxResults = 10, bool getTotalCount = false,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetList(name, author, service, maxResults, getTotalCount, lang);
+			int maxResults = 10,
+			bool getTotalCount = false,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetList(name, author, service, maxResults, getTotalCount, lang);
 
 		[HttpGet("")]
 		[ApiExplorerSettings(IgnoreApi = true)]

@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Translations;
@@ -11,9 +10,11 @@ namespace VocaDb.Model.Domain
 		where TEntry : class, IEntryWithNames
 		where TReport : struct, Enum
 	{
-		private TEntry _song;
+		private TEntry _entry;
 
+#nullable disable
 		protected GenericEntryReport() { }
+#nullable enable
 
 		protected GenericEntryReport(TEntry entry, TReport reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(user, hostname, notes, versionNumber)
@@ -32,27 +33,26 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual TEntry Entry
 		{
-			get => _song;
+			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
-				_song = value;
+				_entry = value;
 			}
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"Entry report '{ReportType}' for {EntryBase} [{Id}]";
 		}
-#nullable disable
 
-		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations)
+		public override string? TranslatedReportTypeName(IEnumTranslations enumTranslations)
 		{
 			return enumTranslations.Translation(ReportType);
 		}
 
-		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations, CultureInfo culture)
+		public override string? TranslatedReportTypeName(IEnumTranslations enumTranslations, CultureInfo? culture)
 		{
 			return enumTranslations.Translation(ReportType, culture);
 		}

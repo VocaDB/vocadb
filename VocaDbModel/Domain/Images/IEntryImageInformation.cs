@@ -22,6 +22,7 @@ namespace VocaDb.Model.Domain.Images
 		/// </summary>
 		int Id { get; }
 
+#nullable enable
 		/// <summary>
 		/// Image MIME type.
 		/// Used to determine file extension.
@@ -29,7 +30,8 @@ namespace VocaDb.Model.Domain.Images
 		/// If this is null or empty, it is assumed that there is no image. 
 		/// Images without MIME type (or unknown MIME type) are not supported.
 		/// </summary>
-		string Mime { get; }
+		string? Mime { get; }
+#nullable disable
 
 		/// <summary>
 		/// Image purpose. Main or additional.

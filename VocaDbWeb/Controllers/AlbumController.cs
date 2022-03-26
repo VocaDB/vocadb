@@ -86,9 +86,11 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public void CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber)
+		public async Task<IActionResult> CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber)
 		{
-			_queries.CreateReport(albumId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			var (created, _) = await _queries.CreateReport(albumId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
 		}
 
 		//
@@ -98,7 +100,7 @@ namespace VocaDb.Web.Controllers
 		{
 			return RedirectToAction("Index", "Search", new SearchRouteParams
 			{
-				searchType = EntryType.Album,
+				searchType = SearchType.Album,
 				filter = routeParams.filter,
 				sort = routeParams.sort,
 				discType = routeParams.discType
@@ -145,7 +147,7 @@ namespace VocaDb.Web.Controllers
 
 			var prop = PageProperties;
 			prop.Title = model.Name;
-			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			//prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.GlobalSearchType = EntryType.Album;
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Type = OpenGraphTypes.Album;
@@ -172,7 +174,7 @@ namespace VocaDb.Web.Controllers
 
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(new AlbumDetails(model, PermissionContext, _pvHelper));
+			return View("React/Index");
 		}
 
 		public ActionResult DownloadTags(int id = InvalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)

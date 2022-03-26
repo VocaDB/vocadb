@@ -1,8 +1,11 @@
 import EntryRefContract from '@DataContracts/EntryRefContract';
+import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryType from '@Models/EntryType';
+import { SearchType } from '@Stores/Search/SearchStore';
+import qs from 'qs';
 
 import functions from './GlobalFunctions';
 
@@ -24,37 +27,37 @@ export default class EntryUrlMapper {
 
 		switch (typeName) {
 			case EntryType.Album:
-				prefix = functions.mapAbsoluteUrl('/Al/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Al/${id}`);
 				break;
 			case EntryType.Artist:
-				prefix = functions.mapAbsoluteUrl('/Ar/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Ar/${id}`);
 				break;
 			case EntryType.DiscussionTopic:
-				prefix = functions.mapAbsoluteUrl('/discussion/topics/' + id);
+				prefix = functions.mapAbsoluteUrl(`/discussion/topics/${id}`);
 				break;
 			case EntryType.ReleaseEvent:
-				prefix = functions.mapAbsoluteUrl('/E/' + id);
+				prefix = functions.mapAbsoluteUrl(`/E/${id}`);
 				break;
 			case EntryType.ReleaseEventSeries:
-				prefix = functions.mapAbsoluteUrl('/Es/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Es/${id}`);
 				break;
 			case EntryType.Song:
-				prefix = functions.mapAbsoluteUrl('/S/' + id);
+				prefix = functions.mapAbsoluteUrl(`/S/${id}`);
 				break;
 			case EntryType.SongList:
-				prefix = functions.mapAbsoluteUrl('/L/' + id);
+				prefix = functions.mapAbsoluteUrl(`/L/${id}`);
 				break;
 			case EntryType.Tag:
-				prefix = functions.mapAbsoluteUrl('/T/' + id);
+				prefix = functions.mapAbsoluteUrl(`/T/${id}`);
 				break;
 			case EntryType.User:
-				prefix = functions.mapAbsoluteUrl('/User/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/User/Details/${id}`);
 				break;
 			case EntryType.Venue:
-				prefix = functions.mapAbsoluteUrl('/Venue/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/Venue/Details/${id}`);
 				break;
 			default:
-				prefix = functions.mapAbsoluteUrl('/' + typeName + '/Details/' + id);
+				prefix = functions.mapAbsoluteUrl(`/${typeName}/Details/${id}`);
 				break;
 		}
 
@@ -80,16 +83,53 @@ export default class EntryUrlMapper {
 	}
 
 	public static details_tag_contract(
-		tag: TagBaseContract | TagApiContract,
-	): string | null {
-		if (!tag) return null;
+		tag: TagBaseContract | TagApiContract | undefined,
+	): string | undefined {
+		if (!tag) return undefined;
 
 		if (!tag.id) return '/Tag/Details/' + tag.name; // Legacy URL, this will be removed
 
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
 	}
 
-	public static details_user_byName(name: string): string {
+	public static details_user_byName(name?: string): string {
 		return functions.mapAbsoluteUrl('/Profile/' + name);
 	}
+
+	public static index = (
+		fullEntryType: EntryTypeAndSubTypeContract,
+	): string => {
+		switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+			case EntryType.Artist:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Artist,
+					artistType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.Album:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Album,
+					discType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.Song:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Song,
+					songType: fullEntryType.subType,
+				})}`;
+
+			case EntryType.ReleaseEvent:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.ReleaseEvent,
+				})}`;
+
+			case EntryType.Tag:
+				return `/Search?${qs.stringify({
+					searchType: SearchType.Tag,
+				})}`;
+
+			default:
+				return '';
+		}
+	};
 }

@@ -14,9 +14,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		string IEntryBase.DefaultName => Name;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
+#nullable enable
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
-		string IEntryImageInformation.Mime => PictureMime;
+		string? IEntryImageInformation.Mime => PictureMime;
+#nullable disable
 
 		public ReleaseEventSeriesContract()
 		{
@@ -65,14 +67,16 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public string Name { get; init; }
 
+#nullable enable
 		[DataMember]
-		public string PictureMime { get; init; }
+		public string? PictureMime { get; init; }
 
 		[DataMember]
 		public EntryStatus Status { get; init; }
 
 		[DataMember]
 		public string UrlSlug { get; init; }
+#nullable disable
 
 		[DataMember]
 		public int Version { get; init; }

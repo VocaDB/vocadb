@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Albums
@@ -36,7 +34,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override bool IsIncluded(AlbumEditableFields field)
 		{
-			return (field != AlbumEditableFields.Cover ? base.IsIncluded(field) : IncludeCover);
+			return field != AlbumEditableFields.Cover ? base.IsIncluded(field) : IncludeCover;
 		}
 	}
 }

@@ -67,7 +67,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("DetailsById", new { id });
 		}
 
-		private ActionResult RenderDetails(TagDetailsContract contract)
+		private ActionResult RenderDetails(TagDetailsForApiContract contract)
 		{
 			if (contract == null)
 				return NotFound();
@@ -80,7 +80,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 			PageProperties.Robots = contract.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View("Details", contract);
+			return View("React/Index");
 		}
 
 		// Kept for now since there's external references.
@@ -138,7 +138,7 @@ namespace VocaDb.Web.Controllers
 
 			var prop = PageProperties;
 
-			var thumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original);
+			var thumbUrl = Url.ImageThumb(contract.MainPicture, ImageSize.Original);
 			if (!string.IsNullOrEmpty(thumbUrl))
 			{
 				PageProperties.OpenGraph.Image = thumbUrl;
@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = ViewRes.SharedStrings.Tags;
 
-			return View(tags);
+			return View("React/Index");
 		}
 
 		public ActionResult Merge(int id)

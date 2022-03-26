@@ -21,7 +21,7 @@
 </h1>
 
 @if (Model.NewSongs.Any()) {
-<h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
+<h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = SearchType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
     
 <div class="pvPlayer">
 	<div class="scrollable-navi">
@@ -56,14 +56,14 @@
 <br />
 
 @if (Model.NewAlbums.Any()) {
-	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = SearchType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 	<div id="newAlbums">
 		<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.NewAlbums))" />
 	</div>	
 }
 
 @if (Model.TopAlbums.Any()) {
-	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = SearchType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 	<div id="topAlbums">
 		<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.TopAlbums))" />
 	</div>	

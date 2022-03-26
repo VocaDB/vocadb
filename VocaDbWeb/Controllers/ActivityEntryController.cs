@@ -37,7 +37,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = Resources.Views.ActivityEntry.IndexStrings.RecentActivity;
 
-			return View("Index");
+			return View("React/Index");
 		}
 	}
 

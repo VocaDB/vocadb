@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
@@ -15,6 +16,7 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[Obsolete]
 	public class TagStatsContract
 	{
 		public TagStatsContract() { }

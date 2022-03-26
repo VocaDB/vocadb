@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -141,8 +142,9 @@ namespace VocaDb.Web.Controllers.Api
 			bool getTotalCount = false,
 			EventSortRule sort = EventSortRule.Name,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			SortDirection? sortDirection = null
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new EventQueryParams
@@ -160,7 +162,8 @@ namespace VocaDb.Web.Controllers.Api
 				TagIds = tagId,
 				EntryStatus = status,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
-				SortRule = sort
+				SortRule = sort,
+				SortDirection = sortDirection,
 			};
 
 			return _queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, _thumbPersister), queryParams);
@@ -196,6 +199,17 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[HttpPost("{eventId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public async Task<IActionResult> PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber)
+		{
+			var (created, _) = await _queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
+		}
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ReleaseEventDetailsForApiContract GetDetails(int id) => _queries.GetDetails(id);
+#nullable disable
 	}
 }

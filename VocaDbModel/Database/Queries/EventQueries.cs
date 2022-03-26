@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Database.Queries.Partial;
@@ -75,7 +76,8 @@ namespace VocaDb.Model.Database.Queries
 			IUserMessageMailer mailer,
 			IFollowedArtistNotifier followedArtistNotifier,
 			IAggregatedEntryImageUrlFactory imageUrlFactory,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(eventRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -96,7 +98,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+				return new Service.Queries.EntryReportQueries().CreateReport(
 					ctx,
 					PermissionContext,
 					_entryLinkFactory,
@@ -106,7 +108,9 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier);
+					_discordWebhookNotifier,
+					EventReport.ReportTypesWithRequiredNotes
+				);
 			});
 		}
 #nullable disable
@@ -210,7 +214,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public ReleaseEventDetailsContract GetDetails(int id)
+		public ReleaseEventDetailsForApiContract GetDetails(int id)
 		{
 			return HandleQuery(ctx =>
 			{
@@ -224,13 +228,21 @@ namespace VocaDb.Model.Database.Queries
 						.FirstOrDefault();
 				}
 
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, _userIconFactory,
-					new EntryTypeTags(ctx))
-				{
-					EventAssociationType = eventAssociation,
-					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
-						ctx, PermissionContext, _userIconFactory, _entryLinkFactory).GetList(id, 3)
-				};
+				return new ReleaseEventDetailsForApiContract(
+					releaseEvent: ctx.Load<ReleaseEvent>(id),
+					languagePreference: PermissionContext.LanguagePreference,
+					userContext: PermissionContext,
+					userIconFactory: _userIconFactory,
+					entryTypeTags: new EntryTypeTags(ctx),
+					eventAssociationType: eventAssociation,
+					latestComments: new CommentQueries<ReleaseEventComment, ReleaseEvent>(
+						ctx: ctx,
+						permissionContext: PermissionContext,
+						userIconFactory: _userIconFactory,
+						entryLinkFactory: _entryLinkFactory
+					).GetList(id, 3),
+					thumbPersister: _imageUrlFactory
+				);
 			});
 		}
 
@@ -668,9 +680,9 @@ namespace VocaDb.Model.Database.Queries
 				return new ReleaseEventContract(ev, LanguagePreference);
 			});
 		}
-#nullable disable
 
-		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData)
+		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
 		{
 			if (pictureData == null) return null;
 
@@ -695,7 +707,6 @@ namespace VocaDb.Model.Database.Queries
 			ev.PictureMime = parsed.Mime;
 		}
 
-#nullable enable
 		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
@@ -852,5 +863,12 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray();
 			});
 		}
+
+#nullable enable
+		public ReleaseEventSeriesDetailsForApiContract GetSeriesDetails(int id)
+		{
+			return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(session.Load<ReleaseEventSeries>(id), LanguagePreference, _imageUrlFactory));
+		}
+#nullable disable
 	}
 }

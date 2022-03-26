@@ -57,10 +57,10 @@
 			} else {
 				<li><a asp-action="Profile" asp-controller="User" asp-route-id="@(Login.Manager.Name)">@(ViewRes.User.MySettingsStrings.Profile)</a></li>
 				<li>
-					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Albums">@Res.MyAlbums</a>
+					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })/albums">@Res.MyAlbums</a>
 				</li>
 				<li>
-					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Songs">@Res.MySongs</a>
+					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })/songs">@Res.MySongs</a>
 				</li>
 				<li><a asp-action="MySettings" asp-controller="User">@(ViewRes.User.DetailsStrings.MySettings)</a></li>
 				if (Login.CanManageEntryReports) {

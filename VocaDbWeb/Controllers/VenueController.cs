@@ -41,7 +41,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = venue.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(venue);
+			return View("React/Index");
 		}
 
 		[Authorize]

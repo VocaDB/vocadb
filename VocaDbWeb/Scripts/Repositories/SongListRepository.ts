@@ -134,4 +134,10 @@ export default class SongListRepository {
 			data,
 		);
 	};
+
+	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
+		return this.httpClient.get<SongListContract>(
+			this.urlMapper.mapRelative(`/api/songLists/${id}/details`),
+		);
+	};
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 
@@ -124,11 +122,9 @@ namespace VocaDb.Model.Domain.Versioning
 			_val.SetFlag(_field, value);
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"{_field} changed: {IsChanged}";
 		}
-#nullable disable
 	}
 }

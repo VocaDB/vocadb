@@ -8,6 +8,20 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2021_12_16_2300)]
+	public class RemoveFK_TagComments_TagsFromTagComments : Migration
+	{
+		public override void Up()
+		{
+			Delete.ForeignKey("FK_TagComments_Tags").OnTable(TableNames.TagComments);
+		}
+
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 	[Migration(2021_05_26_0026)]
 	public class Webhook : AutoReversingMigration
 	{

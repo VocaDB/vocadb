@@ -100,16 +100,18 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public void CreateReport(int songId, SongReportType reportType, string notes, int? versionNumber)
+		public async Task<IActionResult> CreateReport(int songId, SongReportType reportType, string notes, int? versionNumber)
 		{
-			_queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			var (created, _) = await _queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
 		}
 
 		public ActionResult Index(IndexRouteParams indexParams)
 		{
 			return RedirectToAction("Index", "Search", new SearchRouteParams
 			{
-				searchType = EntryType.Song,
+				searchType = SearchType.Song,
 				filter = indexParams.filter,
 				sort = indexParams.sort,
 				songType = indexParams.songType,
@@ -176,13 +178,13 @@ namespace VocaDb.Web.Controllers
 				prop.OpenGraph.Image = model.ThumbUrlMaxSize;
 			}
 
-			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			//prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.OpenGraph.Title = hasDescription ? $"{titleAndArtist} ({Translate.SongTypeNames[model.SongType]})" : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -497,7 +499,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = _brandableStringsManager.Song.RankingsTitle;
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult Related(int id = InvalidId)

@@ -13,6 +13,7 @@ using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
@@ -262,17 +263,19 @@ namespace VocaDb.Model.Database.Queries
 			return pvResult;
 		}
 
-		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef)
+#nullable enable
+		private static ArtistForSong? RestoreArtistRef(Song song, Artist? artist, ArchivedArtistForSongContract albumRef)
 		{
 			if (artist != null)
 			{
-				return (!artist.HasSong(song) ? artist.AddSong(song, albumRef.IsSupport, albumRef.Roles) : null);
+				return !artist.HasSong(song) ? artist.AddSong(song, albumRef.IsSupport, albumRef.Roles) : null;
 			}
 			else
 			{
 				return song.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
 			}
 		}
+#nullable disable
 
 		public SongQueries(
 			ISongRepository repository,
@@ -288,7 +291,8 @@ namespace VocaDb.Model.Database.Queries
 			VdbConfigManager config,
 			IEntrySubTypeNameFactory entrySubTypeNameFactory,
 			IFollowedArtistNotifier followedArtistNotifier,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -451,7 +455,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+				return new Service.Queries.EntryReportQueries().CreateReport(
 					ctx,
 					PermissionContext,
 					_entryLinkFactory,
@@ -461,7 +465,9 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier);
+					_discordWebhookNotifier,
+					SongReport.ReportTypesWithRequiredNotes
+				);
 			});
 		}
 #nullable disable
@@ -498,6 +504,7 @@ namespace VocaDb.Model.Database.Queries
 				session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
 		}
 
+#nullable enable
 		public SongDetailsContract GetSongDetails(int songId, int albumId, string hostname, ContentLanguagePreference? languagePreference,
 			IEnumerable<OptionalCultureCode> userLanguages)
 		{
@@ -566,7 +573,103 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
+		public SongDetailsForApiContract GetSongDetailsForApi(
+			int songId,
+			int albumId,
+			string hostname,
+			ContentLanguagePreference? languagePreference,
+			IEnumerable<OptionalCultureCode> userLanguages
+		)
+		{
+			return HandleQuery(session =>
+			{
+				var lang = languagePreference ?? PermissionContext.LanguagePreference;
+				var song = session.Load<Song>(songId);
+
+				var contract = new SongDetailsForApiContract(
+					song: song,
+					languagePreference: lang,
+					pools: GetSongPools(ctx: session, songId: songId),
+					specialTags: _config.SpecialTags,
+					entryTypeTags: new EntryTypeTags(session),
+					userContext: PermissionContext,
+					thumbPersister: _entryThumbPersister,
+					songTypeTag: GetSongTypeTag(ctx: session, songType: song.SongType)
+				);
+
+				if (PermissionContext.LoggedUser is { } user)
+				{
+					var rating = session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == user.Id);
+					contract.UserRating = rating?.Rating ?? SongVoteRating.Nothing;
+				}
+
+				contract.CommentCount = Comments(session).GetCount(songId);
+				contract.LatestComments = Comments(session).GetList(entryId: songId, count: 3);
+				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+
+				contract.Suggestions = GetSongSuggestions(session, song)
+					.Select(s => new SongForApiContract(
+						song: s,
+						languagePreference: lang,
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					))
+					.ToArray();
+
+				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(
+					lyrics: contract.LyricsFromParents,
+					uiCultureCode: new OptionalCultureCode(CultureInfo.CurrentUICulture, true),
+					userLanguages: userLanguages,
+					knownLanguages: new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(_permissionContext)?.KnownLanguages, false)
+				);
+
+				if (albumId != 0)
+				{
+					var album = session.Load<Album>(albumId);
+
+					var track = album.Songs.FirstOrDefault(s => song.Equals(s.Song));
+
+					if (track is not null)
+					{
+						contract.Album = new AlbumForApiContract(
+							album: album,
+							languagePreference: lang,
+							thumbPersister: _entryThumbPersister,
+							fields: AlbumOptionalFields.None
+						);
+
+						contract.AlbumSong = new SongInAlbumForApiContract(songInAlbum: track, languagePreference: lang, fields: SongOptionalFields.None);
+
+						var previousIndex = album.PreviousTrackIndex(track.Index);
+						var previous = album.Songs.FirstOrDefault(s => s.Index == previousIndex);
+						contract.PreviousSong = previous is not null && previous.Song is not null
+							? new SongInAlbumForApiContract(songInAlbum: previous, languagePreference: lang, fields: SongOptionalFields.None)
+							: null;
+
+						var nextIndex = album.NextTrackIndex(track.Index);
+						var next = album.Songs.FirstOrDefault(s => s.Index == nextIndex);
+						contract.NextSong = next is not null && next.Song is not null
+							? new SongInAlbumForApiContract(songInAlbum: next, languagePreference: lang, fields: SongOptionalFields.None)
+							: null;
+					}
+				}
+
+				if (song.Deleted)
+				{
+					var mergeEntry = GetMergeRecord(session, songId);
+					contract.MergedTo = mergeEntry is not null
+						? new SongForApiContract(song: mergeEntry.Target, languagePreference: lang, fields: SongOptionalFields.None)
+						: null;
+				}
+
+				AddSongHit(session, song, hostname);
+
+				return contract;
+			});
+		}
+#nullable disable
+
+			public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
 		{
 			return HandleQuery(session =>
 			{
@@ -1077,11 +1180,15 @@ namespace VocaDb.Model.Database.Queries
 				song.MaxMilliBpm = fullProperties.MaxMilliBpm;
 
 				// Artists
-				var artistDiff = DatabaseContextHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
-					session.OfType<Artist>(), warnings, song.AllArtists, fullProperties.Artists,
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
-					artistForSong => artistForSong.Delete());
+				var artistDiff = DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Artist>(),
+					warnings: warnings,
+					existing: song.AllArtists,
+					objRefs: fullProperties.Artists,
+					equality: (a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					createEntryFunc: (artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
+					deleteFunc: artistForSong => artistForSong.Delete()
+				);
 
 				if (artistDiff.Changed)
 				{
@@ -1098,7 +1205,11 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				if (fullProperties.WebLinks != null)
 				{
-					var webLinkDiff = WebLink.SyncByValue(song.WebLinks, fullProperties.WebLinks, song);
+					var webLinkDiff = WebLink.SyncByValue(
+						oldLinks: song.WebLinks,
+						newLinks: fullProperties.WebLinks,
+						webLinkFactory: song
+					);
 					session.Sync(webLinkDiff);
 				}
 

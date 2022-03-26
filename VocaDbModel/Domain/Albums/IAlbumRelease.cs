@@ -1,11 +1,9 @@
-#nullable disable
-
 namespace VocaDb.Model.Domain.Albums
 {
 	public interface IAlbumRelease
 	{
-		string CatNum { get; }
+		string? CatNum { get; }
 
-		IOptionalDateTime ReleaseDate { get; }
+		IOptionalDateTime? ReleaseDate { get; }
 	}
 }

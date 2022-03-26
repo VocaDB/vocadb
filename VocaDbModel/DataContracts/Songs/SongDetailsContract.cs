@@ -18,6 +18,7 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongDetailsContract
 	{

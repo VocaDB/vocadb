@@ -18,9 +18,11 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		EntryType IEntryBase.EntryType => EntryType.Artist;
 
+#nullable enable
 		EntryType IEntryImageInformation.EntryType => EntryType.Artist;
-		string IEntryImageInformation.Mime => PictureMime;
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		public ArtistContract() { }
 

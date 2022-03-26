@@ -22,7 +22,7 @@ namespace VocaDb.Model.Service.Helpers
 		/// <param name="partialLink">Partial URL. Can be null.</param>
 		/// <param name="assumeWww">Whether to assume the URL should start with www.</param>
 		/// <returns>Full URL including http://. Can be null if source was null.</returns>
-		[return:NotNullIfNotNull("partialLink"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("partialLink"/* TODO: use nameof */)]
 		public static string? MakeLink(string? partialLink, bool assumeWww = false)
 		{
 			if (string.IsNullOrEmpty(partialLink))
@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service.Helpers
 			return $"http://{partialLink}";
 		}
 
-		[return:NotNullIfNotNull("partialLink"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("partialLink"/* TODO: use nameof */)]
 		public static string? MakePossileAffiliateLink(string? partialLink)
 		{
 			var link = MakeLink(partialLink);
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Service.Helpers
 		/// <summary>
 		/// Removes http:// and https:// from the beginning of an URL.
 		/// </summary>
-		[return:NotNullIfNotNull("url"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("url"/* TODO: use nameof */)]
 		public static string? RemoveScheme(string? url)
 		{
 			if (string.IsNullOrEmpty(url))
@@ -80,7 +80,7 @@ namespace VocaDb.Model.Service.Helpers
 			new RegexLinkMatcher("https://tn.smilevideo.jp/smile?i={0}", @"^http://tn(?:-skr\d)?\.smilevideo\.jp/smile\?i=([\d\.]+)$")
 		};
 
-		[return:NotNullIfNotNull("url"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull("url"/* TODO: use nameof */)]
 		public static string? UpgradeToHttps(string? url)
 		{
 			if (string.IsNullOrEmpty(url) || url.StartsWith("https://"))

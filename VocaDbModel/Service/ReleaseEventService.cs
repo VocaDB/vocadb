@@ -1,15 +1,15 @@
 #nullable disable
 
-using System.Linq;
 using NHibernate;
+using System.Linq;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
-using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.QueryableExtensions;
-using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.Service
 {
@@ -55,11 +55,6 @@ namespace VocaDb.Model.Service
 				var series = session.Load<ReleaseEventSeries>(id);
 				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series, LanguagePreference), series.ArchivedVersionsManager.Versions.Select(v => new ArchivedEventSeriesVersionContract(v, _userIconFactory)).ToArray());
 			});
-		}
-
-		public ReleaseEventSeriesDetailsContract GetReleaseEventSeriesDetails(int id)
-		{
-			return HandleQuery(session => new ReleaseEventSeriesDetailsContract(session.Load<ReleaseEventSeries>(id), LanguagePreference));
 		}
 
 		public ReleaseEventSeriesForEditContract GetReleaseEventSeriesForEdit(int id)

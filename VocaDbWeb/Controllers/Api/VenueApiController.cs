@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -109,6 +110,17 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[HttpPost("{id:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public async Task<IActionResult> PostReport(int id, VenueReportType reportType, string notes, int? versionNumber)
+		{
+			var (created, _) = await _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
+		}
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public VenueForApiContract GetDetails(int id) => _queries.GetDetails(id);
+#nullable disable
 	}
 }

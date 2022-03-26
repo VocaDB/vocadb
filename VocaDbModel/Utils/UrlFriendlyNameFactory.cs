@@ -38,6 +38,7 @@ namespace VocaDb.Model.Utils
 			return GetUrlFriendlyName(raw);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Gets an URL-friendly name from translated name.
 		/// The processed name can be used as user-friendly part of an URL.
@@ -46,7 +47,7 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		public static string GetUrlFriendlyName(TranslatedString translatedString)
 		{
-			string raw = null;
+			string? raw = null;
 
 			// Try English if English is the default language selection
 			if (translatedString.DefaultLanguage == ContentLanguageSelection.English)
@@ -79,7 +80,7 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		/// <param name="name">Entry name, for example "Hatsune Miku". Can be null or empty.</param>
 		/// <returns>Processed name, for example "hatsune-miku". Can be empty. Cannot be null.</returns>
-		public static string GetUrlFriendlyName(string name)
+		public static string GetUrlFriendlyName(string? name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
@@ -88,5 +89,6 @@ namespace VocaDb.Model.Utils
 			var cleanedName = Regex.Replace(name.Replace(' ', '-'), @"[^a-zA-Z0-9_-]", string.Empty);
 			return cleanedName.Trim(' ', '-', '_').Truncate(30).ToLowerInvariant();
 		}
+#nullable disable
 	}
 }

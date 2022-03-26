@@ -14,7 +14,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ReleaseEventSeriesForApiContract() { }
 
-		public ReleaseEventSeriesForApiContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, ReleaseEventSeriesOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister)
+#nullable enable
+		public ReleaseEventSeriesForApiContract(
+			ReleaseEventSeries series,
+			ContentLanguagePreference languagePreference,
+			ReleaseEventSeriesOptionalFields fields,
+			IAggregatedEntryImageUrlFactory? thumbPersister
+		)
 		{
 			Category = series.Category;
 			Id = series.Id;
@@ -50,9 +56,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.WebLinks))
 			{
-				WebLinks = series.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
+				WebLinks = series.WebLinks
+					.OrderBy(w => w.DescriptionOrUrl)
+					.Select(w => new WebLinkForApiContract(w))
+					.ToArray();
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
@@ -72,8 +82,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public int Id { get; init; }
 
+#nullable enable
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
+#nullable disable
 
 		[DataMember]
 		public string Name { get; init; }

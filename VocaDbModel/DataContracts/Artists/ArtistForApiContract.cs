@@ -21,10 +21,12 @@ namespace VocaDb.Model.DataContracts.Artists
 	{
 		public ArtistForApiContract() { }
 
-		public ArtistForApiContract(Artist artist,
+		public ArtistForApiContract(
+			Artist artist,
 			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
-			ArtistOptionalFields includedFields)
+			ArtistOptionalFields includedFields
+		)
 		{
 			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
@@ -154,11 +156,13 @@ namespace VocaDb.Model.DataContracts.Artists
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; init; }
 
+#nullable enable
 		/// <summary>
 		/// MIME type for the main picture.
 		/// </summary>
 		[DataMember]
-		public string PictureMime { get; init; }
+		public string? PictureMime { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// Artist relations. Optional field.

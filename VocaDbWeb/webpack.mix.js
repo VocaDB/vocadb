@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 require('laravel-mix-eslint');
 
@@ -19,18 +20,28 @@ mix
 	.webpackConfig({
 		output: {
 			library: 'app',
+			chunkFilename: 'bundles/[name].[chunkhash].js',
 		},
+		plugins: [
+			new CleanWebpackPlugin({
+				cleanOnceBeforeBuildPatterns: ['bundles/**/*'],
+			}),
+		],
 	})
 	.options({
 		processCssUrls: false,
 	})
 	.alias({
+		'@Bootstrap': path.join(__dirname, 'Scripts/Bootstrap'),
+		'@Components': path.join(__dirname, 'Scripts/Components'),
 		'@DataContracts': path.join(__dirname, 'Scripts/DataContracts'),
 		'@Helpers': path.join(__dirname, 'Scripts/Helpers'),
+		'@JQueryUI': path.join(__dirname, 'Scripts/JQueryUI'),
 		'@KnockoutExtensions': path.join(__dirname, 'Scripts/KnockoutExtensions'),
 		'@Models': path.join(__dirname, 'Scripts/Models'),
 		'@Repositories': path.join(__dirname, 'Scripts/Repositories'),
 		'@Shared': path.join(__dirname, 'Scripts/Shared'),
+		'@Stores': path.join(__dirname, 'Scripts/Stores'),
 		'@ViewModels': path.join(__dirname, 'Scripts/ViewModels'),
 	})
 	.eslint({
@@ -78,7 +89,10 @@ mix
 	.styles(
 		['wwwroot/Scripts/jqwidgets27/styles/jqx.base.css'],
 		'wwwroot/Scripts/jqwidgets27/styles/css.css',
-	);
+	)
+
+	.ts('Scripts/index.tsx', 'wwwroot/bundles')
+	.react();
 
 if (mix.inProduction()) {
 	mix.version();

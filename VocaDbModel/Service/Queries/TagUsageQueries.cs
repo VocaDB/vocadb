@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +20,7 @@ namespace VocaDb.Model.Service.Queries
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext _permissionContext;
 
-		private bool IsValid(TagBaseContract contract)
+		private bool IsValid(TagBaseContract? contract)
 		{
 			if (contract == null)
 				return false;
@@ -43,15 +41,17 @@ namespace VocaDb.Model.Service.Queries
 			_permissionContext = permissionContext;
 		}
 
-		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId,
+		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(
+			int entryId,
 			TagBaseContract[] tags,
 			bool onlyAdd,
 			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations,
 			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory)
-			where TEntry : class, IEntryWithNames, IEntryWithTags
+			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory
+		)
+			where TEntry : class, IEntryWithNames, IEntryWithTags, IEntryWithStatus
 			where TTag : TagUsage
 		{
 			ParamIs.NotNull(() => tags);
@@ -61,10 +61,14 @@ namespace VocaDb.Model.Service.Queries
 			tags = tags.Where(IsValid).ToArray();
 
 			if (onlyAdd && !tags.Any())
-				return new TagUsageForApiContract[0];
+				return Array.Empty<TagUsageForApiContract>();
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
+				var entry = await ctx.LoadAsync<TEntry>(entryId);
+
+				EntryPermissionManager.VerifyEditTagsForEntry(_permissionContext, entry);
+
 				// Tags are primarily added by Id, secondarily by translated name.
 				// First separate given tags for tag IDs and tag names
 				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
@@ -81,8 +85,6 @@ namespace VocaDb.Model.Service.Queries
 				var user = await ctx.OfType<User>().GetLoggedUserAsync(_permissionContext);
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
 				var newTags = await tagFactory.CreateTagsAsync(newTagNames);
-
-				var entry = await ctx.LoadAsync<TEntry>(entryId);
 
 				// Get the final list of tag names with translations
 				var appliedTags = tagsFromNames

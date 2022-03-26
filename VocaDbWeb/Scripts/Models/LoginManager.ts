@@ -1,5 +1,14 @@
+import CommentContract from '@DataContracts/CommentContract';
+import EntryRefContract from '@DataContracts/EntryRefContract';
+import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import GlobalValues from '@Shared/GlobalValues';
+import _ from 'lodash';
+
+import EntryStatus from './EntryStatus';
+import EntryType from './EntryType';
+import IEntryWithStatus from './IEntryWithStatus';
+import UserGroup from './Users/UserGroup';
 
 // Corresponds to the PermissionToken struct in C#.
 export enum PermissionToken {
@@ -38,13 +47,19 @@ export enum PermissionToken {
 	ViewHiddenRatings = '47bcc523-5667-403d-bd20-d2728e1f9c5f',
 	ViewHiddenRevisions = 'c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d',
 	ManageWebhooks = '838dde1d-51ba-423b-ad8e-c1e2c2024a37',
+	CreateXmlDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
 }
 
+// Corresponds to the LoginManager and EntryPermissionManager classes in C#.
 export default class LoginManager {
 	public constructor(private readonly values: GlobalValues) {}
 
 	public get isLoggedIn(): boolean {
 		return this.values.isLoggedIn;
+	}
+
+	public get loggedUserId(): number {
+		return this.values.loggedUserId;
 	}
 
 	public get loggedUser(): UserWithPermissionsContract | undefined {
@@ -66,11 +81,208 @@ export default class LoginManager {
 		return this.loggedUser.effectivePermissions.includes(token);
 	};
 
+	public get canAccessManageMenu(): boolean {
+		return this.hasPermission(PermissionToken.AccessManageMenu);
+	}
+
+	public get canAdmin(): boolean {
+		return this.hasPermission(PermissionToken.Admin);
+	}
+
+	public get canApproveEntries(): boolean {
+		return this.hasPermission(PermissionToken.ApproveEntries);
+	}
+
 	public get canBulkDeletePVs(): boolean {
 		return this.hasPermission(PermissionToken.BulkDeletePVs);
+	}
+
+	public get canCreateComments(): boolean {
+		return this.hasPermission(PermissionToken.CreateComments);
 	}
 
 	public get canDeleteComments(): boolean {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
+
+	public get canDisableUsers(): boolean {
+		return this.hasPermission(PermissionToken.DisableUsers);
+	}
+
+	public get canEditAllSongLists(): boolean {
+		return this.hasPermission(PermissionToken.EditAllSongLists);
+	}
+
+	public get canEditFeaturedLists(): boolean {
+		return this.hasPermission(PermissionToken.EditFeaturedLists);
+	}
+
+	public get canEditProfile(): boolean {
+		return this.hasPermission(PermissionToken.EditProfile);
+	}
+
+	public get canLockEntries(): boolean {
+		return this.hasPermission(PermissionToken.LockEntries);
+	}
+
+	public get canManageDatabase(): boolean {
+		return this.hasPermission(PermissionToken.ManageDatabase);
+	}
+
+	public get canEditTags(): boolean {
+		return this.hasPermission(PermissionToken.EditTags);
+	}
+
+	public get canManageUserPermissions(): boolean {
+		return this.hasPermission(PermissionToken.ManageUserPermissions);
+	}
+
+	public get canManageEntryReports(): boolean {
+		return this.hasPermission(PermissionToken.ManageEntryReports);
+	}
+
+	public get canManageIPRules(): boolean {
+		return this.hasPermission(PermissionToken.ManageIPRules);
+	}
+
+	public get canManageTagMappings(): boolean {
+		return this.hasPermission(PermissionToken.ManageTagMappings);
+	}
+
+	public get canMikuDbImport(): boolean {
+		return this.hasPermission(PermissionToken.MikuDbImport);
+	}
+
+	public get canMoveToTrash(): boolean {
+		return this.hasPermission(PermissionToken.MoveToTrash);
+	}
+
+	public get canReportUser(): boolean {
+		return this.hasPermission(PermissionToken.ReportUser);
+	}
+
+	public get canRemoveEditPermission(): boolean {
+		return this.hasPermission(PermissionToken.RemoveEditPermission);
+	}
+
+	public get canViewAuditLog(): boolean {
+		return this.hasPermission(PermissionToken.ViewAuditLog);
+	}
+
+	public get canManageWebhooks(): boolean {
+		return this.hasPermission(PermissionToken.ManageWebhooks);
+	}
+
+	private static readonly allPermissions: EntryStatus[] = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+		EntryStatus.Approved,
+		EntryStatus.Locked,
+	] /* TODO: use Object.values */;
+
+	// Entry statuses allowed for normal users
+	private static readonly normalStatusPermissions = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+	];
+
+	// Entry statuses allowed for trusted users
+	private static readonly trustedStatusPermissions = [
+		EntryStatus.Draft,
+		EntryStatus.Finished,
+		EntryStatus.Approved,
+	];
+
+	public canDeleteComment = (comment: CommentContract): boolean => {
+		return (
+			this.canDeleteComments ||
+			(!!comment.author &&
+				!!this.loggedUser &&
+				comment.author.id === this.loggedUser.id)
+		);
+	};
+
+	private isDirectlyVerifiedFor = (entry?: EntryRefContract): boolean => {
+		return (
+			!!entry &&
+			entry.entryType === EntryType[EntryType.Artist] &&
+			!!this.loggedUser &&
+			this.loggedUser.verifiedArtist &&
+			_.some(
+				this.loggedUser.ownedArtistEntries,
+				(a) => a.artist.id === entry.id,
+			)
+		);
+	};
+
+	/// <summary>
+	/// Gets a list of entry statuses that the user can edit or set.
+	/// This means, the user is allowed to edit entries with any of these statuses,
+	/// and the user is able to change the entry status to any of these.
+	/// </summary>
+	/// <remarks>
+	/// Most of the time the allowed entry statuses are global, but associating a user account with an artist entry
+	/// gives special entry-specific permissions for the user editing that entry.
+	/// </remarks>
+	/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
+	/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
+	/// <returns>A list of permissions that can be set by the user.</returns>
+	private allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
+		// Check for basic edit permissions, without these the user is limited or disabled
+		if (!this.canManageDatabase) return [];
+
+		// Moderators with lock permissions can edit everything
+		if (this.canLockEntries) return LoginManager.allPermissions;
+
+		// Trusted users can edit approved entries
+		if (this.canApproveEntries) return LoginManager.trustedStatusPermissions;
+
+		// Verified artists get trusted permissions for their own entry
+		if (this.isDirectlyVerifiedFor(entry))
+			return LoginManager.trustedStatusPermissions;
+
+		// Normal user permissions
+		if (this.canManageDatabase) return LoginManager.normalStatusPermissions;
+
+		return [];
+	};
+
+	/// <summary>
+	/// Tests whether the user can edit a specific entry.
+	/// The permission depends on both the user's global permissions and entry status.
+	/// </summary>
+	/// <param name="permissionContext">User permission context. Cannot be null.</param>
+	/// <param name="entry">Entry to be checked. Cannot be null.</param>
+	/// <returns>True if the user can edit the entry, otherwise false.</returns>
+	public canEdit = (entry: IEntryWithStatus): boolean => {
+		return this.allowedEntryStatuses(entry).includes(
+			EntryStatus[entry.status as keyof typeof EntryStatus],
+		);
+	};
+
+	public canEditSongList = (songList: SongListContract): boolean => {
+		if (songList.featuredCategory !== 'Nothing' && this.canEditFeaturedLists)
+			return true;
+
+		if (this.canEditAllSongLists) return true;
+
+		return songList.author.id === this.loggedUserId;
+	};
+
+	private canEditGroupTo = (groupId: UserGroup): boolean => {
+		return (
+			!!this.loggedUser &&
+			(this.loggedUser.groupId === UserGroup.Admin ||
+				Object.values(UserGroup).indexOf(this.loggedUser.groupId) >
+					Object.values(UserGroup).indexOf(groupId))
+		);
+	};
+
+	public canEditUser = (groupId: UserGroup): boolean => {
+		return this.canEditGroupTo(groupId);
+	};
+
+	public canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {
+		return this.canEditTags && this.canEdit(entry);
+	};
 }

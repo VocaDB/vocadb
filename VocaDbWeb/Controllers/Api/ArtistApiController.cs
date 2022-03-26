@@ -20,9 +20,9 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
-using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -228,5 +228,16 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{id:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArtistDetailsForApiContract GetDetails(int id)
+		{
+			WebHelper.VerifyUserAgent(Request);
+
+			return _queries.GetDetailsForApi(id: id, hostname: WebHelper.GetHostnameForValidHit(Request));
+		}
+#nullable disable
 	}
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.IO;
 using System.Linq;
@@ -34,15 +32,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class TagQueriesTests
 	{
-		private InMemoryImagePersister _imagePersister;
-		private FakePermissionContext _permissionContext;
-		private TagQueries _queries;
-		private FakeTagRepository _repository;
-		private Tag _tag;
-		private Tag _tag2;
-		private User _user;
+		private InMemoryImagePersister _imagePersister = default!;
+		private FakePermissionContext _permissionContext = default!;
+		private TagQueries _queries = default!;
+		private FakeTagRepository _repository = default!;
+		private Tag _tag = default!;
+		private Tag _tag2 = default!;
+		private User _user = default!;
 
-		private ArchivedTagVersion GetArchivedVersion(Tag tag)
+		private ArchivedTagVersion? GetArchivedVersion(Tag tag)
 		{
 			return _repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 		}
@@ -95,7 +93,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FakeUserIconFactory(),
 				new EnumTranslations(),
 				new FakeObjectCache(),
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier()
+			);
 		}
 
 		[TestMethod]
@@ -117,7 +116,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task GetDetails_RecentEvents()
 		{
-			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent)
+			void AssertContainsEvent(TagDetailsForApiContract details, ReleaseEvent releaseEvent)
 			{
 				details.Stats.Events.Any(e => e.Id == releaseEvent.Id).Should().BeTrue("Contains " + releaseEvent);
 			}
@@ -501,7 +500,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_repository.List<TagMapping>().Count.Should().Be(1, "Precondition: mapping exists in database");
 			_tag.Mappings.Count.Should().Be(1, "Precondition: mapping exists for tag");
 
-			_queries.UpdateMappings(new TagMappingContract[0]);
+			_queries.UpdateMappings(Array.Empty<TagMappingContract>());
 
 			_repository.List<TagMapping>().Count.Should().Be(0, "Mapping was deleted");
 			_tag.Mappings.Count.Should().Be(0, "Mapping was removed from tag");

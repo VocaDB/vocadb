@@ -211,7 +211,7 @@ export default class ActivityEntryListViewModel {
 			(result: PartialFindResultContract<ActivityEntryContract>) => {
 				var entries = result.items;
 
-				if (!entries && entries!.length > 0) return;
+				if (!entries) return;
 
 				ko.utils.arrayPushAll(this.entries, entries);
 				this.lastEntryDate = new Date(_.last(entries)!.createDate);

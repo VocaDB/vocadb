@@ -827,7 +827,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Statistics / Reports";
 
-			return View();
+			return View("React/Index");
 		}
 	}
 }

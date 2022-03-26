@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Images;
@@ -14,7 +12,7 @@ namespace VocaDb.Web.Code
 	/// </summary>
 	public class GravatarUserIconFactory : IUserIconFactory
 	{
-		private string GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx);
+		private static string? GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx);
 
 		public GravatarUserIconFactory() { }
 

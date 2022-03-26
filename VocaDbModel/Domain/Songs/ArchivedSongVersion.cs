@@ -1,11 +1,10 @@
-#nullable disable
-
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.DataContracts.Songs;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
+using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Domain.Activityfeed;
 
 namespace VocaDb.Model.Domain.Songs
 {
@@ -22,10 +21,20 @@ namespace VocaDb.Model.Domain.Songs
 		private SongDiff _diff;
 		private Song _song;
 
+#nullable disable
 		public ArchivedSongVersion() { }
+#nullable enable
 
-		public ArchivedSongVersion(Song song, XDocument data, SongDiff diff, AgentLoginData author, int version, EntryStatus status,
-			SongArchiveReason reason, string notes)
+		public ArchivedSongVersion(
+			Song song,
+			XDocument data,
+			SongDiff diff,
+			AgentLoginData author,
+			int version,
+			EntryStatus status,
+			SongArchiveReason reason,
+			string notes
+		)
 			: base(data, author, version, status, notes)
 		{
 			ParamIs.NotNull(() => data);
@@ -38,6 +47,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual SongDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			protected set => _diff = value;
 		}
 
@@ -47,8 +57,9 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			get
 			{
-				return (Reason == SongArchiveReason.Created || Reason == SongArchiveReason.AutoImportedFromMikuDb ?
-					EntryEditEvent.Created : EntryEditEvent.Updated);
+				return Reason == SongArchiveReason.Created || Reason == SongArchiveReason.AutoImportedFromMikuDb
+					? EntryEditEvent.Created :
+					EntryEditEvent.Updated;
 			}
 		}
 
@@ -59,6 +70,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual Song Song
 		{
 			get => _song;
+			[MemberNotNull(nameof(_song))]
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -66,7 +78,7 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual ArchivedSongVersion GetLatestVersionWithField(SongEditableFields field)
+		public virtual ArchivedSongVersion? GetLatestVersionWithField(SongEditableFields field)
 		{
 			if (IsIncluded(field))
 				return this;
@@ -76,7 +88,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual bool IsIncluded(SongEditableFields field)
 		{
-			return (Diff != null && Data != null && Diff.IsIncluded(field));
+			return Diff != null && Data != null && Diff.IsIncluded(field);
 		}
 	}
 }

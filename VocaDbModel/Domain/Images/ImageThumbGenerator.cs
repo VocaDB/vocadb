@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Drawing;
 using System.IO;
 using VocaDb.Model.Helpers;
@@ -12,14 +10,12 @@ namespace VocaDb.Model.Domain.Images
 
 		public const int Unlimited = ImageHelper.ImageSizeUnlimited;
 
-#nullable enable
 		public ImageThumbGenerator(IEntryImagePersister persister)
 		{
 			ParamIs.NotNull(() => persister);
 
 			_persister = persister;
 		}
-#nullable disable
 
 		/// <summary>
 		/// Writes an image to a file, overwriting any existing file.
@@ -36,10 +32,9 @@ namespace VocaDb.Model.Domain.Images
 		{
 			if (dimensions != Unlimited && (original.Width > dimensions || original.Height > dimensions))
 			{
-				using (var thumb = ImageHelper.ResizeToFixedSize(original, dimensions, dimensions))
-				{
-					_persister.Write(imageInfo, size, thumb);
-				}
+				using var thumb = ImageHelper.ResizeToFixedSize(original, dimensions, dimensions);
+
+				_persister.Write(imageInfo, size, thumb);
 			}
 			else
 			{
@@ -53,20 +48,19 @@ namespace VocaDb.Model.Domain.Images
 		/// <exception cref="InvalidPictureException">If the image could not be opened. Most likely the file is broken.</exception>
 		public void GenerateThumbsAndMoveImage(Stream input, IEntryImageInformation imageInfo, ImageSizes imageSizes, int originalSize = Unlimited)
 		{
-			using (var original = ImageHelper.OpenImage(input))
-			{
-				if (imageSizes.HasFlag(ImageSizes.Original))
-					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.Original, originalSize);
+			using var original = ImageHelper.OpenImage(input);
 
-				if (imageSizes.HasFlag(ImageSizes.Thumb))
-					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.Thumb, ImageHelper.DefaultThumbSize);
+			if (imageSizes.HasFlag(ImageSizes.Original))
+				GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.Original, originalSize);
 
-				if (imageSizes.HasFlag(ImageSizes.SmallThumb))
-					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.SmallThumb, ImageHelper.DefaultSmallThumbSize);
+			if (imageSizes.HasFlag(ImageSizes.Thumb))
+				GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.Thumb, ImageHelper.DefaultThumbSize);
 
-				if (imageSizes.HasFlag(ImageSizes.TinyThumb))
-					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.TinyThumb, ImageHelper.DefaultTinyThumbSize);
-			}
+			if (imageSizes.HasFlag(ImageSizes.SmallThumb))
+				GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.SmallThumb, ImageHelper.DefaultSmallThumbSize);
+
+			if (imageSizes.HasFlag(ImageSizes.TinyThumb))
+				GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.TinyThumb, ImageHelper.DefaultTinyThumbSize);
 		}
 	}
 }

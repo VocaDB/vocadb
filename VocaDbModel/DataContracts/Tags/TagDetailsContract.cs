@@ -1,12 +1,14 @@
 #nullable disable
 
+using System;
 using System.Linq;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[Obsolete]
 	public class TagDetailsContract : TagContract, IEntryWithStatus
 	{
 		string IEntryBase.DefaultName => Name;

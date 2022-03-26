@@ -23,6 +23,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -341,5 +342,14 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, AlbumDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
+
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public AlbumDetailsForApiContract GetDetails(int id)
+		{
+			WebHelper.VerifyUserAgent(Request);
+
+			return _queries.GetAlbumDetailsForApi(id: id, hostname: WebHelper.GetHostnameForValidHit(Request));
+		}
 	}
 }

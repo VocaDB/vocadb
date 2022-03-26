@@ -85,6 +85,7 @@ namespace VocaDb.Model.Database.Queries
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Stats shared for all users. These are cached for 1 hour.
 		/// </summary>
@@ -106,6 +107,7 @@ namespace VocaDb.Model.Database.Queries
 				};
 			});
 		}
+#nullable disable
 
 		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef)
 		{
@@ -165,7 +167,8 @@ namespace VocaDb.Model.Database.Queries
 			IFollowedArtistNotifier followedArtistNotifier,
 			IAggregatedEntryImageUrlFactory entryThumbPersister,
 			ObjectCache cache,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -356,7 +359,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return HandleTransactionAsync(ctx =>
 			{
-				return new Model.Service.Queries.EntryReportQueries().CreateReport(
+				return new Service.Queries.EntryReportQueries().CreateReport(
 					ctx,
 					PermissionContext,
 					_entryLinkFactory,
@@ -366,10 +369,11 @@ namespace VocaDb.Model.Database.Queries
 					reportType,
 					hostname,
 					notes,
-					_discordWebhookNotifier);
+					_discordWebhookNotifier,
+					AlbumReport.ReportTypesWithRequiredNotes
+				);
 			});
 		}
-#nullable disable
 
 		/// <summary>
 		/// Gets album details, and updates hit count if necessary.
@@ -451,6 +455,112 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
+
+		/// <summary>
+		/// Gets album details, and updates hit count if necessary.
+		/// </summary>
+		/// <param name="id">Id of the album to be retrieved.</param>
+		/// <param name="hostname">
+		/// Hostname of the user requestin the album. Used to hit counting when no user is logged in. If null or empty, and no user is logged in, hit count won't be updated.
+		/// </param>
+		/// <returns>Album details contract. Cannot be null.</returns>
+		public AlbumDetailsForApiContract GetAlbumDetailsForApi(int id, string hostname)
+		{
+			return HandleQuery(session =>
+			{
+				var album = session.Load<Album>(id);
+
+				var user = PermissionContext.LoggedUser;
+
+				SongVoteRating? GetRatingFunc(Song song)
+				{
+					return user is not null && song is not null
+						? session.Query<FavoriteSongForUser>()
+							.Where(s => s.Song.Id == song.Id && s.User.Id == user.Id)
+							.Select(r => r.Rating)
+							.FirstOrDefault()
+						: null;
+				}
+
+				var contract = new AlbumDetailsForApiContract(
+					album: album,
+					languagePreference: PermissionContext.LanguagePreference,
+					userContext: PermissionContext,
+					thumbPersister: _imageUrlFactory,
+					getSongRating: GetRatingFunc,
+					discTypeTag: new EntryTypeTags(session).GetTag(entryType: EntryType.Album, subType: album.DiscType)
+				)
+				{
+					CommentCount = Comments(session).GetCount(id),
+					Hits = session.Query<AlbumHit>().Count(h => h.Entry.Id == id),
+					Stats = GetSharedAlbumStats(session, album),
+				};
+
+				if (user is not null)
+				{
+					var albumForUser = session.Query<AlbumForUser>().FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
+
+					contract.AlbumForUser = albumForUser is not null
+						? new AlbumForUserForApiContract(
+							albumForUser: albumForUser,
+							languagePreference: PermissionContext.LanguagePreference,
+							thumbPersister: null,
+							fields: AlbumOptionalFields.None,
+							shouldShowCollectionStatus: true
+						)
+						: null;
+				}
+
+				contract.LatestComments = session.Query<AlbumComment>()
+					.WhereNotDeleted()
+					.Where(c => c.EntryForComment.Id == id)
+					.OrderByDescending(c => c.Created)
+					.Take(3)
+					.ToArray()
+					.Select(c => new CommentForApiContract(comment: c, iconFactory: _userIconFactory))
+					.ToArray();
+
+				if (album.Deleted)
+				{
+					var mergeEntry = GetMergeRecord(session, id);
+
+					contract.MergedTo = mergeEntry is not null
+						? new AlbumForApiContract(
+							album: mergeEntry.Target,
+							languagePreference: LanguagePreference,
+							thumbPersister: null,
+							fields: AlbumOptionalFields.None
+						)
+						: null;
+				}
+
+				if (user is not null || !string.IsNullOrEmpty(hostname))
+				{
+					var agentNum = user is not null ? user.Id : hostname.GetHashCode();
+
+					using var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+					var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
+
+					if (!isHit)
+					{
+						var hit = new AlbumHit(album, agentNum);
+						session.Save(hit);
+
+						try
+						{
+							tx.Commit();
+						}
+						catch (SqlException x)
+						{
+							session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
+						}
+					}
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
 
 		public T GetAlbumWithMergeRecord<T>(int id, Func<Album, AlbumMergeRecord, T> fac)
 		{
@@ -769,21 +879,31 @@ namespace VocaDb.Model.Database.Queries
 				diff.Cover.Set(!Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic));
 
 				// Original release
-				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent)) : null);
+				album.OriginalRelease = fullProperties.OriginalRelease != null
+					? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent))
+					: null;
 
 				// Artists
-				DatabaseContextHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
-					session.OfType<Artist>(), warnings, album.AllArtists, fullProperties.Artists,
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
-					albumForArtist => albumForArtist.Delete());
+				DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Artist>(),
+					warnings: warnings,
+					existing: album.AllArtists,
+					objRefs: fullProperties.Artists,
+					equality: (a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					createEntryFunc: (artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
+					deleteFunc: albumForArtist => albumForArtist.Delete()
+				);
 
 				// Songs
-				DatabaseContextHelper.RestoreObjectRefs<SongInAlbum, Song, SongInAlbumRefContract>(
-					session.OfType<Song>(), warnings, album.AllSongs, fullProperties.Songs,
-					(a1, a2) => ((a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(song, songRef) => RestoreTrackRef(album, song, songRef),
-					songInAlbum => songInAlbum.Delete());
+				DatabaseContextHelper.RestoreObjectRefs(
+					session: session.OfType<Song>(),
+					warnings: warnings,
+					existing: album.AllSongs,
+					objRefs: fullProperties.Songs,
+					equality: (a1, a2) => (a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint,
+					createEntryFunc: (song, songRef) => RestoreTrackRef(album, song, songRef),
+					deleteFunc: songInAlbum => songInAlbum.Delete()
+				);
 
 				// Names
 				if (fullProperties.Names != null)
@@ -795,14 +915,18 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				if (fullProperties.WebLinks != null)
 				{
-					var webLinkDiff = WebLink.SyncByValue(album.WebLinks, fullProperties.WebLinks, album);
+					var webLinkDiff = WebLink.SyncByValue(
+						oldLinks: album.WebLinks,
+						newLinks: fullProperties.WebLinks,
+						webLinkFactory: album
+					);
 					session.Sync(webLinkDiff);
 				}
 
 				// PVs
 				if (fullProperties.PVs != null)
 				{
-					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
+					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => p1.PVId == p2.PVId && p1.Service == p2.Service);
 
 					foreach (var pv in pvDiff.Added)
 					{

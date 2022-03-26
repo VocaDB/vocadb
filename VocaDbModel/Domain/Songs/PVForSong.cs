@@ -1,11 +1,8 @@
-#nullable disable
-
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs
@@ -15,10 +12,12 @@ namespace VocaDb.Model.Domain.Songs
 		private Song _song;
 		private string _thumbUrl;
 
+#nullable disable
 		public PVForSong()
 		{
 			ThumbUrl = string.Empty;
 		}
+#nullable enable
 
 		public PVForSong(Song song, PVContract contract)
 			: base(contract)
@@ -46,6 +45,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual Song Song
 		{
 			get => _song;
+			[MemberNotNull(nameof(_song))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -56,6 +56,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual string ThumbUrl
 		{
 			get => _thumbUrl;
+			[MemberNotNull(nameof(_thumbUrl))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -63,12 +64,10 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-#nullable enable
 		public override bool ContentEquals(PVContract? pv)
 		{
 			return base.ContentEquals(pv) && Disabled == pv.Disabled;
 		}
-#nullable disable
 
 		public override void CopyMetaFrom(PVContract contract)
 		{
@@ -78,7 +77,6 @@ namespace VocaDb.Model.Domain.Songs
 			ThumbUrl = contract.ThumbUrl;
 		}
 
-#nullable enable
 		public virtual bool Equals(PVForSong? another)
 		{
 			if (another == null)
@@ -102,7 +100,6 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return base.GetHashCode();
 		}
-#nullable disable
 
 		public override void OnDelete()
 		{
@@ -126,11 +123,9 @@ namespace VocaDb.Model.Domain.Songs
 			Length = result.LengthSeconds ?? Length;
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' [{Id}] for {Song}";
 		}
-#nullable disable
 	}
 }

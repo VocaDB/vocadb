@@ -1,5 +1,6 @@
 import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
 import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
 import CommentContract from '@DataContracts/CommentContract';
 import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
@@ -182,7 +183,7 @@ export default class ArtistRepository
 		childTags: boolean;
 		followedByUserId?: number;
 		fields: string;
-		status: string;
+		status?: string;
 		advancedFilters: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
@@ -230,6 +231,16 @@ export default class ArtistRepository
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
 			contract,
+		);
+	};
+
+	public getDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ArtistDetailsContract> => {
+		return this.httpClient.get<ArtistDetailsContract>(
+			this.urlMapper.mapRelative(`/api/artists/${id}/details`),
 		);
 	};
 }

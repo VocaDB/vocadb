@@ -158,13 +158,11 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
-		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
+#nullable enable
+		public static string? ExternalHelpPath => Val(nameof(ExternalHelpPath));
+#nullable disable
 
 		public static int FilteredArtistId => Val("FilteredArtistId", 0);
-
-		public static string GAAccountId => Val(nameof(GAAccountId));
-
-		public static string GADomain => Val(nameof(GADomain));
 
 		public static GlobalLinksSection GetGlobalLinksSection()
 		{
@@ -186,7 +184,7 @@ namespace VocaDb.Model.Utils
 		/// Host address of the main site, contains full path to the web application's root, including hostname.
 		/// For example https://vocadb.net
 		/// </summary>
-		public static string HostAddress => Val("HostAddress");
+		public static string? HostAddress => Val("HostAddress");
 
 		public static string? LockdownMessage => Val("LockdownMessage");
 #nullable disable

@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -46,19 +45,24 @@ namespace VocaDb.Model.Service.Queries
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			Func<TEntry, User, string, TReport> reportFunc,
-			Func<string> reportNameFunc,
+			Func<string?> reportNameFunc,
 			int entryId,
 			TReportType reportType,
 			string hostname,
 			string notes,
 			IDiscordWebhookNotifier discordWebhookNotifier,
-			bool allowNotification = true)
+			HashSet<TReportType> reportTypesWithRequiredNotes,
+			bool allowNotification = true
+		)
 			where TEntry : class, IEntryWithVersions, IEntryWithNames
 			where TReport : GenericEntryReport<TEntry, TReportType>
 			where TReportType : struct, Enum
 		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
+
+			if (reportTypesWithRequiredNotes.Contains(reportType) && string.IsNullOrWhiteSpace(notes))
+				return (created: false, reportId: 0);
 
 			var msg = $"creating report for {typeof(TEntry).Name} [{entryId}] as {reportType}";
 			ctx.AuditLogger.SysLog(msg, hostname);
@@ -75,7 +79,7 @@ namespace VocaDb.Model.Service.Queries
 			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open))
 			{
 				s_log.Info("Report already exists: {0}", existing);
-				return (false, existing.Id);
+				return (created: false, reportId: existing.Id);
 			}
 
 			var entry = ctx.Load(entryId);
@@ -101,7 +105,7 @@ namespace VocaDb.Model.Service.Queries
 			}
 
 			// Get translated report type name
-			string reportName = null;
+			string? reportName = null;
 			if (versionForReport != null && versionForReport.Author != null)
 			{
 				using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(versionForReport.Author.LanguageOrLastLoginCulture)))
@@ -124,10 +128,11 @@ namespace VocaDb.Model.Service.Queries
 				title: $"[{entry.DefaultName}] Report opened",
 				url: entryLinkFactory.GetFullEntryUrl(entry),
 				description: notes,
-				color: new Color(235, 100, 32));
+				color: new Color(235, 100, 32)
+			);
 
 			ctx.Save(report);
-			return (true, report.Id);
+			return (created: true, reportId: report.Id);
 		}
 	}
 }

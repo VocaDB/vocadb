@@ -29,6 +29,7 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -462,5 +463,22 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, SongDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongDetailsForApiContract GetDetails(int id, int albumId = 0)
+		{
+			WebHelper.VerifyUserAgent(Request);
+
+			return _queries.GetSongDetailsForApi(
+				songId: id,
+				albumId: albumId,
+				hostname: WebHelper.GetHostnameForValidHit(Request),
+				languagePreference: null,
+				userLanguages: WebHelper.GetUserLanguageCodes(Request)
+			);
+		}
+#nullable disable
 	}
 }

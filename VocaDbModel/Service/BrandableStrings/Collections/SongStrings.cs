@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Resources;
 using VocaDb.Model.Resources.Views;
 
@@ -10,7 +8,7 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections
 		public SongStrings(ResourceManager resourceMan)
 			: base(resourceMan) { }
 
-		public string NewSongInfo => GetString(nameof(SongRes.NewSongInfo));
-		public string RankingsTitle => GetString(nameof(SongRes.RankingsTitle));
+		public string? NewSongInfo => GetString(nameof(SongRes.NewSongInfo));
+		public string? RankingsTitle => GetString(nameof(SongRes.RankingsTitle));
 	}
 }

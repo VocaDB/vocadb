@@ -1,17 +1,17 @@
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using NLog;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
-using System;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -19,19 +19,32 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Artists
 {
-	public class Artist : IEntryBase, IEntryWithNames<ArtistName>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry,
-		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments<ArtistComment>,
+	public class Artist :
+		IEntryBase,
+		IEntryWithNames<ArtistName>,
+		IEntryWithVersions,
+		IEntryWithStatus,
+		IDeletableEntry,
+		IEquatable<Artist>,
+		INameFactory<ArtistName>,
+		IWebLinkFactory<ArtistWebLink>,
+		IEntryWithTags<ArtistTagUsage>,
+		IEntryWithComments<ArtistComment>,
 		IEntryWithLinks<ArtistWebLink>,
 		IEntryWithArtists
 	{
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private IList<ArtistForAlbum> _albums = new List<ArtistForAlbum>();
+#nullable enable
 		private ArchivedVersionManager<ArchivedArtistVersion, ArtistEditableFields> _archivedVersions = new();
+#nullable disable
 		private IList<Artist> _childVoicebanks = new List<Artist>();
 		private IList<ArtistComment> _comments = new List<ArtistComment>();
 		private User _createdBy;
@@ -135,6 +148,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual bool AllowNotifications => true;
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedArtistVersion, ArtistEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -144,6 +158,7 @@ namespace VocaDb.Model.Domain.Artists
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, LinkDirection direction, bool allowInheritance = false)
 		{
@@ -286,7 +301,9 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual PictureData Picture { get; set; }
 
-		public virtual string PictureMime { get; set; }
+#nullable enable
+		public virtual string? PictureMime { get; set; }
+#nullable disable
 
 		public virtual EntryPictureFileManager<ArtistPictureFile> Pictures
 		{

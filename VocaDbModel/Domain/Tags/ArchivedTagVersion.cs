@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Activityfeed;
@@ -22,13 +21,21 @@ namespace VocaDb.Model.Domain.Tags
 		private TagDiff _diff;
 		private Tag _tag;
 
+#nullable disable
 		public ArchivedTagVersion()
 		{
 			Status = EntryStatus.Finished;
 		}
+#nullable enable
 
-		public ArchivedTagVersion(Tag tag, XDocument data, TagDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent, string notes)
+		public ArchivedTagVersion(
+			Tag tag,
+			XDocument data,
+			TagDiff diff,
+			AgentLoginData author,
+			EntryEditEvent commonEditEvent,
+			string notes
+		)
 			: base(data, author, tag.Version, tag.Status, notes)
 		{
 			ParamIs.NotNull(() => diff);
@@ -45,6 +52,7 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual TagDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,6 +67,7 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual Tag Tag
 		{
 			get => _tag;
+			[MemberNotNull(nameof(_tag))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -66,7 +75,7 @@ namespace VocaDb.Model.Domain.Tags
 			}
 		}
 
-		public virtual ArchivedTagVersion GetLatestVersionWithField(TagEditableFields field)
+		public virtual ArchivedTagVersion? GetLatestVersionWithField(TagEditableFields field)
 		{
 			if (IsIncluded(field))
 				return this;
@@ -76,7 +85,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual bool IsIncluded(TagEditableFields field)
 		{
-			return (Diff != null && Data != null && Diff.IsIncluded(field));
+			return Diff != null && Data != null && Diff.IsIncluded(field);
 		}
 	}
 }

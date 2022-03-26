@@ -63,6 +63,7 @@ namespace VocaDb.Model.Domain.Globalization
 				SortNames[language] = Names.First().Value;
 		}
 
+#nullable enable
 		/// <summary>
 		/// Comma-separated string containing names that aren't part of any sort name.
 		/// This can be used to construct the additional names string without loading the full list of names from the DB.
@@ -76,6 +77,7 @@ namespace VocaDb.Model.Domain.Globalization
 				_additionalNamesString = value;
 			}
 		}
+#nullable disable
 
 		public virtual IEnumerable<string> AllValues
 		{
@@ -152,6 +154,7 @@ namespace VocaDb.Model.Domain.Globalization
 			return name != null ? name.Value : null;
 		}
 
+#nullable enable
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference)
 		{
 			var display = SortNames[languagePreference];
@@ -162,6 +165,7 @@ namespace VocaDb.Model.Domain.Globalization
 			else
 				return string.Join(", ", different);
 		}
+#nullable disable
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{

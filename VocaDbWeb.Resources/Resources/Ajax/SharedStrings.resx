@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -128,5 +128,8 @@
   </data>
   <data name="ThanksForRating" xml:space="preserve">
     <value>Thank you for rating!</value>
+  </data>
+  <data name="UnableToSendReport" xml:space="preserve">
+    <value>Unable to send report.</value>
   </data>
 </root>

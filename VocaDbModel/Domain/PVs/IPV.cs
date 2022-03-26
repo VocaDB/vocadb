@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.PVs
@@ -28,8 +26,6 @@ namespace VocaDb.Model.Domain.PVs
 		/// </summary>
 		PVService Service { get; }
 
-#nullable enable
 		bool ContentEquals(PVContract? pv);
-#nullable disable
 	}
 }

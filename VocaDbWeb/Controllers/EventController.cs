@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +15,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
-using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
-using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
@@ -72,7 +69,8 @@ namespace VocaDb.Web.Controllers
 			return Xml(content);
 		}
 
-		public ActionResult Details(int id = InvalidId, string slug = null)
+#nullable enable
+		public ActionResult Details(int id = InvalidId, string? slug = null)
 		{
 			if (id == InvalidId)
 				return NoId();
@@ -87,7 +85,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var inheritedCategory = ev.InheritedCategory;
-			string subtitle;
+			string? subtitle;
 
 			if (inheritedCategory == EventCategory.Unspecified || inheritedCategory == EventCategory.Other)
 			{
@@ -98,7 +96,7 @@ namespace VocaDb.Web.Controllers
 				subtitle = Translate.ReleaseEventCategoryNames[inheritedCategory];
 			}
 
-			var pictureData = !string.IsNullOrEmpty(ev.PictureMime) ? (IEntryImageInformation)ev : ev.Series;
+			var pictureData = ev.MainPicture ?? ev.Series?.MainPicture;
 
 			PageProperties.PageTitle = $"{ev.Name} ({subtitle})";
 			PageProperties.Title = ev.Name;
@@ -111,8 +109,9 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = ev.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(ev);
+			return View("React/Index");
 		}
+#nullable disable
 
 		[Authorize]
 		public ActionResult Edit(int? id, int? seriesId, int? venueId)
@@ -266,22 +265,9 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index()
 		{
-			var queryParams = new EventQueryParams
-			{
-				AfterDate = DateTime.Now.AddDays(-2),
-				Paging = new PagingProperties(0, 15, false),
-				SortRule = EventSortRule.Date,
-				SortDirection = SortDirection.Ascending
-			};
-
-			var events = _queries.Find(e =>
-				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference,
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, _thumbPersister),
-				queryParams);
-
 			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-			return View(events.Items);
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -336,7 +322,7 @@ namespace VocaDb.Web.Controllers
 
 			slug ??= string.Empty;
 
-			var series = Service.GetReleaseEventSeriesDetails(id);
+			var series = _queries.GetSeriesDetails(id);
 
 			if (slug != series.UrlSlug)
 			{
@@ -357,14 +343,14 @@ namespace VocaDb.Web.Controllers
 			PageProperties.PageTitle = $"{series.Name} ({subtitle})";
 			PageProperties.Title = series.Name;
 			PageProperties.Subtitle = subtitle;
-			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);
+			PageProperties.OpenGraph.Image = Url.ImageThumb(series.MainPicture, ImageSize.Original);
 
 			var descriptionStripped = _markdownParser.GetPlainText(series.Description);
 
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = series.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(series);
+			return View("React/Index");
 		}
 
 		public ActionResult SeriesVersions(int id = InvalidId)

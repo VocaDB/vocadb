@@ -8,7 +8,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Discussions";
 
-			return View();
+			return View("React/Index");
 		}
 	}
 }

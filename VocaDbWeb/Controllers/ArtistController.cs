@@ -70,9 +70,11 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public void CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
+		public async Task<IActionResult> CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
 		{
-			_queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			var (created, _) = await _queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
+			return created ? NoContent() : BadRequest();
 		}
 
 		[Obsolete]
@@ -80,7 +82,7 @@ namespace VocaDb.Web.Controllers
 		{
 			return RedirectToAction("Index", "Search", new SearchRouteParams
 			{
-				searchType = EntryType.Artist,
+				searchType = SearchType.Artist,
 				filter = routeParams.filter,
 				sort = routeParams.sort,
 				artistType = routeParams.artistType
@@ -137,13 +139,13 @@ namespace VocaDb.Web.Controllers
 			prop.Title = model.Name;
 			prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
 			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
-			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
+			//prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 			prop.Robots = model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		public ActionResult Picture(int id = InvalidId)

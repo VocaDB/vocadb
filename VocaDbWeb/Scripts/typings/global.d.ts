@@ -6,9 +6,12 @@ declare global {
 			albumEdit: any;
 			entryEdit: any;
 			shared: any;
-			song: any;
+			song: any | /* TODO: Remove. */ { rankingsTitle?: string };
 			album: { addedToCollection?: string };
 			albumDetails: { download: string };
+			artist: { authoredBy?: string };
+			layout: { paypalDonateTitle?: string };
+			home: { welcome?: string; welcomeSubtitle?: string };
 		};
 		values: GlobalValues;
 	};

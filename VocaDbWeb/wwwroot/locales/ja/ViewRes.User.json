@@ -69,12 +69,12 @@
     "VerifiedOwner": "証明されたオーナー",
     "VisibleOnlyToMe": "自分とスタッフだけが見える",
     "ArtistVerificationPage": "アーティスト証明ページ",
-    "PossibleProducerMessage": "ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{{0}}をご覧下さい。",
+    "PossibleProducerMessage": "ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、<a>アーティスト証明ページ</a>をご覧下さい。",
     "ImportSongList": "ニコニコ動画やYouTubeから輸入",
     "SupporterTitle": "ご支援ありがとうございます",
     "CommentsMade": "コメント",
     "LanguagesIKnow": "話せる言語",
-    "KnownLanguagesMessage": "<a href=\"{{0}}\">アカウント設定 、プロフィール</a>の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。"
+    "KnownLanguagesMessage": "<a>アカウント設定 、プロフィール</a>の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。"
   },
   "FavoriteSongs": {
     "GroupByRating": "評価点数で仕分け"

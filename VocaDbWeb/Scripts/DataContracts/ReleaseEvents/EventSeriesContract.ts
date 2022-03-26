@@ -6,6 +6,8 @@ import WebLinkContract from '../WebLinkContract';
 
 // Matches ReleaseEventForApiContract
 export default interface EventSeriesContract extends IEntryWithIdAndName {
+	additionalNames?: string;
+
 	category: string;
 
 	id: number;
@@ -15,6 +17,8 @@ export default interface EventSeriesContract extends IEntryWithIdAndName {
 	name: string;
 
 	names?: LocalizedStringWithIdContract[];
+
+	urlSlug?: string;
 
 	webLinks: WebLinkContract[];
 }

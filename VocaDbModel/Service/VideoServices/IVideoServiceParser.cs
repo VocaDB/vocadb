@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
@@ -13,19 +11,64 @@ namespace VocaDb.Model.Service.VideoServices
 
 	public class VideoTitleParseResult
 	{
-		public static VideoTitleParseResult Empty => new VideoTitleParseResult(true, null, null, null, null, null);
+		public static VideoTitleParseResult Empty => new(
+			success: true,
+			error: null,
+			title: null,
+			author: null,
+			authorId: null,
+			thumbUrl: null
+		);
 
-		public static VideoTitleParseResult CreateError(string error)
+		public static VideoTitleParseResult CreateError(string? error)
 		{
-			return new VideoTitleParseResult(false, error, null, null, null, null);
+			return new VideoTitleParseResult(
+				success: false,
+				error: error,
+				title: null,
+				author: null,
+				authorId: null,
+				thumbUrl: null
+			);
 		}
 
-		public static VideoTitleParseResult CreateSuccess(string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null)
+		public static VideoTitleParseResult CreateSuccess(
+			string? title,
+			string? author,
+			string? authorId,
+			string? thumbUrl,
+			int? length = null,
+			string[]? tags = null,
+			DateTime? uploadDate = null,
+			PVExtendedMetadata? extendedMetadata = null
+		)
 		{
-			return new VideoTitleParseResult(true, null, title, author, authorId, thumbUrl, length, tags, uploadDate, extendedMetadata);
+			return new VideoTitleParseResult(
+				success: true,
+				error: null,
+				title,
+				author,
+				authorId,
+				thumbUrl,
+				length,
+				tags,
+				uploadDate,
+				extendedMetadata
+			);
 		}
 
-		public VideoTitleParseResult(bool success, string error, string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null)
+		public VideoTitleParseResult(
+			bool success,
+			string? error,
+			string? title,
+			string? author,
+			string? authorId,
+			string? thumbUrl,
+			int? length = null,
+			string[]? tags = null,
+			DateTime? uploadDate = null,
+			PVExtendedMetadata? extendedMetadata = null
+		)
 		{
 			Error = error;
 			Success = success;
@@ -36,7 +79,7 @@ namespace VocaDb.Model.Service.VideoServices
 			LengthSeconds = length;
 			UploadDate = uploadDate;
 			ExtendedMetadata = extendedMetadata;
-			Tags = tags ?? new string[0];
+			Tags = tags ?? Array.Empty<string>();
 		}
 
 		/// <summary>
@@ -59,9 +102,9 @@ namespace VocaDb.Model.Service.VideoServices
 		/// Error that occurred while parsing metadata.
 		/// Null if there was no error.
 		/// </summary>
-		public string Error { get; set; }
+		public string? Error { get; set; }
 
-		public PVExtendedMetadata ExtendedMetadata { get; set; }
+		public PVExtendedMetadata? ExtendedMetadata { get; set; }
 
 		public int? LengthSeconds { get; set; }
 

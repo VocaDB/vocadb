@@ -1,22 +1,19 @@
-#nullable disable
-
 using System;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.PVs
 {
 	public class PV : IEquatable<PV>, IEditablePV
 	{
-		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata extendedMetadata = null)
+		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata? extendedMetadata = null)
 		{
 			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
 		}
 
 		private string _author;
-		private PVExtendedMetadata _extendedMetadata;
+		private PVExtendedMetadata? _extendedMetadata;
 		private string _name;
 		private string _pvId;
 
@@ -29,7 +26,6 @@ namespace VocaDb.Model.Domain.PVs
 			PVType = PVType.Other;
 		}
 
-#nullable enable
 		public PV(PVContract contract)
 			: this()
 		{
@@ -43,11 +39,11 @@ namespace VocaDb.Model.Domain.PVs
 			Author = contract.Author ?? string.Empty;
 			ExtendedMetadata = contract.ExtendedMetadata;
 		}
-#nullable disable
 
 		public virtual string Author
 		{
 			get => _author;
+			[MemberNotNull(nameof(_author))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -63,7 +59,7 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual int Id { get; set; }
 
-		public virtual PVExtendedMetadata ExtendedMetadata
+		public virtual PVExtendedMetadata? ExtendedMetadata
 		{
 			get => _extendedMetadata;
 			set => _extendedMetadata = value;
@@ -72,6 +68,7 @@ namespace VocaDb.Model.Domain.PVs
 		public virtual string Name
 		{
 			get => _name;
+			[MemberNotNull(nameof(_name))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -97,13 +94,12 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
 
-#nullable enable
-		public virtual bool ContentEquals(PVContract? pv)
+		public virtual bool ContentEquals([NotNullWhen(true)] PVContract? pv)
 		{
 			if (pv == null)
 				return false;
 
-			return (Name == pv.Name);
+			return Name == pv.Name;
 		}
 
 		public virtual void CopyMetaFrom(PVContract contract)
@@ -138,15 +134,12 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			return Id.GetHashCode();
 		}
-#nullable disable
 
 		public virtual void OnDelete() { }
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' on {Service} [{Id}]";
 		}
-#nullable disable
 	}
 }

@@ -6,10 +6,12 @@ namespace VocaDb.Model.Domain
 {
 	public class EntryThumb : IEntryImageInformation
 	{
-		public static EntryThumb Create<T>(T entry) where T : class, IEntryBase, IEntryImageInformation
+#nullable enable
+		public static EntryThumb? Create<T>(T? entry) where T : class, IEntryBase, IEntryImageInformation
 		{
 			return !string.IsNullOrEmpty(entry?.Mime) ? new EntryThumb(entry, entry.Mime, entry.Purpose) : null;
 		}
+#nullable disable
 
 		private IEntryBase _entry;
 

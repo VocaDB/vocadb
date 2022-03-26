@@ -1,5 +1,8 @@
+import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
 import _ from 'lodash';
+
+import VideoServiceHelper from './VideoServiceHelper';
 
 export default class PVHelper {
 	public static pvServicesArrayFromString = (
@@ -14,5 +17,12 @@ export default class PVHelper {
 		);
 
 		return services;
+	};
+
+	public static primaryPV = (pvs: PVContract[]): PVContract | undefined => {
+		return VideoServiceHelper.primaryPV(
+			pvs,
+			vdb.values.loggedUser?.preferredVideoService,
+		);
 	};
 }

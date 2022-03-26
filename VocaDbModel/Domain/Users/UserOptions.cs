@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Users
@@ -19,8 +18,9 @@ namespace VocaDb.Model.Domain.Users
 		private string _realname;
 		private string _twitterName;
 		private User _user;
-		private OptionalCultureCode _lastLoginCulture;
+		private OptionalCultureCode? _lastLoginCulture;
 
+#nullable disable
 		public UserOptions()
 		{
 			LastLoginAddress
@@ -39,6 +39,7 @@ namespace VocaDb.Model.Domain.Users
 			EmailVerified = false;
 			UnreadNotificationsToKeep = 10;
 		}
+#nullable enable
 
 		public UserOptions(User user)
 			: this()
@@ -49,6 +50,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string AboutMe
 		{
 			get => _aboutMe;
+			[MemberNotNull(nameof(_aboutMe))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,6 +61,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string AlbumFormatString
 		{
 			get => _albumFormatString;
+			[MemberNotNull(nameof(_albumFormatString))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -74,7 +77,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual OptionalCultureCode LastLoginCulture
 		{
-			get => _lastLoginCulture ?? (_lastLoginCulture = new OptionalCultureCode());
+			get => _lastLoginCulture ??= new OptionalCultureCode();
 			set
 			{
 				_lastLoginCulture = value ?? OptionalCultureCode.Empty;
@@ -84,6 +87,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string LastLoginAddress
 		{
 			get => _lastLoginAddress;
+			[MemberNotNull(nameof(_lastLoginAddress))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -94,6 +98,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string Location
 		{
 			get => _location;
+			[MemberNotNull(nameof(_location))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -120,6 +125,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string Realname
 		{
 			get => _realname;
+			[MemberNotNull(nameof(_realname))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -134,7 +140,7 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// Custom stylesheet name. If null or empty, default stylesheet is used.
 		/// </summary>
-		public virtual string Stylesheet { get; set; }
+		public virtual string? Stylesheet { get; set; }
 
 		public virtual bool Supporter { get; set; }
 
@@ -143,6 +149,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string TwitterName
 		{
 			get => _twitterName;
+			[MemberNotNull(nameof(_twitterName))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -153,6 +160,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string TwitterOAuthToken
 		{
 			get => _oauthToken;
+			[MemberNotNull(nameof(_oauthToken))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -163,6 +171,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string TwitterOAuthTokenSecret
 		{
 			get => _oauthTokenSecret;
+			[MemberNotNull(nameof(_oauthTokenSecret))]
 			set
 			{
 				_oauthTokenSecret = value;
@@ -175,6 +184,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual User User
 		{
 			get => _user;
+			[MemberNotNull(nameof(_user))]
 			set
 			{
 				ParamIs.NotNull(() => value);

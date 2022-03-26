@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +9,38 @@ namespace VocaDb.Model.Database.Repositories
 {
 	public static class DatabaseContextHelper
 	{
-		public static void RestoreObjectRefs<TExisting, TEntry>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
-			IEnumerable<ObjectRefContract> objRefs, Func<TExisting, ObjectRefContract, bool> equality,
-			Func<TEntry, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
+		public static void RestoreObjectRefs<TExisting, TEntry>(
+			IDatabaseContext<TEntry> session,
+			IList<string> warnings,
+			IEnumerable<TExisting> existing,
+			IEnumerable<ObjectRefContract> objRefs,
+			Func<TExisting, ObjectRefContract, bool> equality,
+			Func<TEntry?, TExisting?> createEntryFunc,
+			Action<TExisting> deleteFunc
+		)
 			where TEntry : class, IDatabaseObject
 			where TExisting : class, IDatabaseObject
 		{
-			RestoreObjectRefs<TExisting, TEntry, ObjectRefContract>(session, warnings, existing, objRefs, equality, (entry, ex)
-				=> createEntryFunc(entry), deleteFunc);
+			RestoreObjectRefs(
+				session,
+				warnings,
+				existing,
+				objRefs,
+				equality,
+				createEntryFunc: (entry, ex) => createEntryFunc(entry),
+				deleteFunc
+			);
 		}
 
-		public static CollectionDiff<TExisting, TObjRef> RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
-			IEnumerable<TObjRef> objRefs, Func<TExisting, TObjRef, bool> equality,
-			Func<TEntry, TObjRef, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
+		public static CollectionDiff<TExisting, TObjRef> RestoreObjectRefs<TExisting, TEntry, TObjRef>(
+			IDatabaseContext<TEntry> session,
+			IList<string> warnings,
+			IEnumerable<TExisting> existing,
+			IEnumerable<TObjRef>? objRefs,
+			Func<TExisting, TObjRef, bool> equality,
+			Func<TEntry?, TObjRef, TExisting?> createEntryFunc,
+			Action<TExisting> deleteFunc
+		)
 			where TObjRef : ObjectRefContract
 			where TEntry : class, IDatabaseObject
 			where TExisting : class, IDatabaseObject
@@ -81,7 +98,7 @@ namespace VocaDb.Model.Database.Repositories
 		/// <param name="warnings">List of warnings. Cannot be null.</param>
 		/// <param name="objRef">Reference to the target. Can be null in which case null is returned.</param>
 		/// <returns>The restored object reference. Can be null if the reference was null originally, or the target is deleted.</returns>
-		public static TEntry RestoreWeakRootEntityRef<TEntry>(IDatabaseContext<TEntry> session, IList<string> warnings, ObjectRefContract objRef) where TEntry : class
+		public static TEntry? RestoreWeakRootEntityRef<TEntry>(IDatabaseContext<TEntry> session, IList<string> warnings, ObjectRefContract? objRef) where TEntry : class
 		{
 			if (objRef == null)
 				return null;

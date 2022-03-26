@@ -60,10 +60,12 @@ namespace VocaDb.Model.Service.VideoServices
 			return Task.FromResult(GetVideoTitle(id));
 		}
 
-		public override bool IsAuthorized(IUserPermissionContext permissionContext)
+#nullable enable
+		public override bool IsAuthorized(IUserPermissionContext? permissionContext)
 		{
 			return permissionContext != null && permissionContext.HasPermission(PermissionToken.AddRawFileMedia);
 		}
+#nullable disable
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{

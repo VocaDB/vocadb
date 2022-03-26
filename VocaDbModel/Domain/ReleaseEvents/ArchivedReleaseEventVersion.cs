@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
@@ -22,13 +21,21 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		private ReleaseEventDiff _diff;
 		private ReleaseEvent _releaseEvent;
 
+#nullable disable
 		public ArchivedReleaseEventVersion()
 		{
 			Status = EntryStatus.Finished;
 		}
+#nullable enable
 
-		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, XDocument data, ReleaseEventDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent, string notes)
+		public ArchivedReleaseEventVersion(
+			ReleaseEvent releaseEvent,
+			XDocument data,
+			ReleaseEventDiff diff,
+			AgentLoginData author,
+			EntryEditEvent commonEditEvent,
+			string notes
+		)
 			: base(data, author, releaseEvent.Version, releaseEvent.Status, notes)
 		{
 			ParamIs.NotNull(() => diff);
@@ -45,6 +52,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		public virtual ReleaseEventDiff Diff
 		{
 			get => _diff;
+			[MemberNotNull(nameof(_diff))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,6 +67,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		public virtual ReleaseEvent ReleaseEvent
 		{
 			get => _releaseEvent;
+			[MemberNotNull(nameof(_releaseEvent))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -66,7 +75,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual ArchivedReleaseEventVersion GetLatestVersionWithField(ReleaseEventEditableFields field)
+		public virtual ArchivedReleaseEventVersion? GetLatestVersionWithField(ReleaseEventEditableFields field)
 		{
 			if (IsIncluded(field))
 				return this;

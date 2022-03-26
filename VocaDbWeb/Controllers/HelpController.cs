@@ -25,7 +25,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Index()
 		{
 			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
-				return View("External");
+				return View("React/Index");
 
 			ViewBag.FreeTagId = _config.SpecialTags.Free;
 			ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
@@ -35,17 +35,17 @@ namespace VocaDb.Web.Controllers
 				case "ja":
 					PageProperties.Title = "サポート / DBについて";
 
-					return View("Index.ja");
+					return View("React/Index");
 
 				case "zh":
 					PageProperties.Title = "Help / About";
 
-					return View("Index.zh-Hans");
+					return View("React/Index");
 
 				default:
 					PageProperties.Title = "Help / About";
 
-					return View();
+					return View("React/Index");
 			}
 		}
 	}

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Api;
@@ -13,12 +11,17 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ActivityEntryForApiContract
 	{
+#nullable disable
 		public ActivityEntryForApiContract() { }
+#nullable enable
 
-		public ActivityEntryForApiContract(ActivityEntry activityEntry, EntryForApiContract entryForApiContract,
+		public ActivityEntryForApiContract(
+			ActivityEntry activityEntry,
+			EntryForApiContract entryForApiContract,
 			IUserIconFactory userIconFactory,
 			IUserPermissionContext permissionContext,
-			ActivityEntryOptionalFields fields)
+			ActivityEntryOptionalFields fields
+		)
 		{
 			CreateDate = activityEntry.CreateDate.ToUniversalTime();
 			EditEvent = activityEntry.EditEvent;
@@ -39,10 +42,10 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 		}
 
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedObjectVersionForApiContract ArchivedVersion { get; init; }
+		public ArchivedObjectVersionForApiContract? ArchivedVersion { get; init; }
 
 		[DataMember]
-		public UserForApiContract Author { get; init; }
+		public UserForApiContract? Author { get; init; }
 
 		[DataMember]
 		public DateTime CreateDate { get; init; }

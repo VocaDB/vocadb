@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"properties": {
+		"artistType": {
+			"type": "string"
+		},
+		"page": {
+			"type": "number"
+		},
+		"pageSize": {
+			"type": "number"
+		},
+		"tagId": {
+			"anyOf": [
+				{
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				{
+					"type": "number"
+				}
+			]
+		}
+	},
+	"type": "object"
+}

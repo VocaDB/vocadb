@@ -1,5 +1,7 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
@@ -103,6 +105,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 			nameMatchMode: NameMatchMode[nameMatchMode],
 			lang: queryParams.lang,
 			sort: queryParams.sort,
+			sortDirection: queryParams.sortDirection,
 		};
 
 		return this.httpClient.get<PartialFindResultContract<ReleaseEventContract>>(
@@ -155,6 +158,26 @@ export default class ReleaseEventRepository extends BaseRepository {
 			PartialFindResultContract<ReleaseEventSeriesForApiContract>
 		>(url, data);
 	};
+
+	public getDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventDetailsContract> => {
+		return this.httpClient.get<ReleaseEventDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${id}/details`),
+		);
+	};
+
+	public getSeriesDetails = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesDetailsContract> => {
+		return this.httpClient.get<ReleaseEventSeriesDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/details`),
+		);
+	};
 }
 
 export interface EventQueryParams extends CommonQueryParams {
@@ -176,6 +199,8 @@ export interface EventQueryParams extends CommonQueryParams {
 	includeMembers?: boolean;
 
 	sort?: string;
+
+	sortDirection?: 'Ascending' | 'Descending';
 
 	status?: string;
 

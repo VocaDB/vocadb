@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Description = descriptionStripped;
 			PageProperties.Robots = viewModel.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
-			return View(viewModel);
+			return View("React/Index");
 		}
 
 		//
@@ -135,7 +135,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;
 
-			return View(viewModel);
+			return View("React/Index");
 		}
 
 		[Authorize]

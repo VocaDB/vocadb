@@ -16,10 +16,12 @@ namespace VocaDb.Model.DataContracts.Users
 	/// Data contract for <see cref="User"/>, for details view.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
+	[Obsolete]
 	public class ServerOnlyUserDetailsContract : ServerOnlyUserWithPermissionsContract
 	{
 		public ServerOnlyUserDetailsContract() { }
 
+#nullable enable
 		public ServerOnlyUserDetailsContract(User user, IUserPermissionContext permissionContext)
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true)
 		{
@@ -35,6 +37,7 @@ namespace VocaDb.Model.DataContracts.Users
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 		}
+#nullable disable
 
 		public string AboutMe { get; init; }
 

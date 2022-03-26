@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -26,24 +26,41 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent,
-		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent>
+	public class ReleaseEvent :
+		IEntryWithNames<EventName>,
+		IEntryWithVersions,
+		IWebLinkFactory<ReleaseEventWebLink>,
+		IReleaseEvent,
+		IEntryImageInformation,
+		IEntryWithComments<ReleaseEventComment>,
+		IEntryWithStatus,
+		INameFactory<EventName>,
+		IEntryWithTags<EventTagUsage>,
+		IEntryWithArtistLinks<ArtistForEvent>
 	{
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 		string IReleaseEvent.Name => DefaultName;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
-		string IEntryImageInformation.Mime => PictureMime;
+#nullable enable
+		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+#nullable disable
 
 		private IList<Album> _albums = new List<Album>();
+#nullable enable
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> _archivedVersions = new();
+#nullable disable
 		private IList<ArtistForEvent> _artists = new List<ArtistForEvent>();
 		private IList<ReleaseEventComment> _comments = new List<ReleaseEventComment>();
 		private string _description;
 		private NameManager<EventName> _names = new();
 		private PVManager<PVForEvent> _pvs = new();
-		private ReleaseEventSeries _series;
+#nullable enable
+		private ReleaseEventSeries? _series;
+#nullable disable
 		private string _seriesSuffix;
 		private IList<Song> _songs = new List<Song>();
 		private TagManager<EventTagUsage> _tags = new();
@@ -128,6 +145,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual bool AllowNotifications => true;
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -137,6 +155,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual IEnumerable<ArtistForEvent> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
@@ -180,7 +199,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
+#nullable enable
+		[MemberNotNullWhen(true, nameof(Series))]
 		public virtual bool HasSeries => Series != null;
+#nullable disable
 
 		public virtual int Id { get; set; }
 
@@ -199,7 +221,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual string PictureMime { get; set; }
+#nullable enable
+		public virtual string? PictureMime { get; set; }
+#nullable disable
 
 		public virtual PVManager<PVForEvent> PVs
 		{
@@ -211,11 +235,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual ReleaseEventSeries Series
+#nullable enable
+		public virtual ReleaseEventSeries? Series
 		{
 			get => _series;
 			set => _series = value;
 		}
+#nullable disable
 
 		public virtual int SeriesNumber { get; set; }
 
@@ -229,7 +255,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual SongList SongList { get; set; }
+#nullable enable
+		public virtual SongList? SongList { get; set; }
+#nullable disable
 
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
@@ -249,10 +277,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
+#nullable enable
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
 		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
+#nullable disable
 
 		public virtual IList<EventForUser> Users
 		{

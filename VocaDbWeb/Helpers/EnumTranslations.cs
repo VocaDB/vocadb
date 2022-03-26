@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Globalization;
 using VocaDb.Model.Domain.Albums;
@@ -22,12 +20,12 @@ namespace VocaDb.Web.Helpers
 			return Translate.Translations<TEnum>();
 		}
 
-		public string Translation<TEnum>(TEnum val) where TEnum : struct, Enum
+		public string? Translation<TEnum>(TEnum val) where TEnum : struct, Enum
 		{
 			return Translations<TEnum>()[val];
 		}
 
-		public string Translation<TEnum>(TEnum val, CultureInfo culture) where TEnum : struct, Enum
+		public string? Translation<TEnum>(TEnum val, CultureInfo? culture) where TEnum : struct, Enum
 		{
 			return Translations<TEnum>().GetName(val, culture);
 		}

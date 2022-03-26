@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.PVs;
@@ -10,12 +8,13 @@ namespace VocaDb.Model.DataContracts.PVs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedPVContract
 	{
+#nullable disable
 		public ArchivedPVContract()
 		{
 			Author = ThumbUrl = string.Empty;
 		}
-
 #nullable enable
+
 		public ArchivedPVContract(PV pv)
 			: this()
 		{
@@ -28,7 +27,6 @@ namespace VocaDb.Model.DataContracts.PVs
 			Service = pv.Service;
 			PVType = pv.PVType;
 		}
-#nullable disable
 
 		public ArchivedPVContract(PVForSong pv)
 			: this((PV)pv)
@@ -46,7 +44,7 @@ namespace VocaDb.Model.DataContracts.PVs
 		public bool Disabled { get; init; }
 
 		[DataMember]
-		public PVExtendedMetadata ExtendedMetadata { get; init; }
+		public PVExtendedMetadata? ExtendedMetadata { get; init; }
 
 		[DataMember]
 		public int Length { get; init; }

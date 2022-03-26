@@ -158,7 +158,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Site management";
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult GeneratePictureThumbs()

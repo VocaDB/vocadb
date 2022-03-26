@@ -1,6 +1,4 @@
-#nullable disable
-
-using System;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.PVs
@@ -10,9 +8,11 @@ namespace VocaDb.Model.Domain.PVs
 	{
 		private TEntry _entry;
 
+#nullable disable
 		protected GenericPV()
 		{
 		}
+#nullable enable
 
 		protected GenericPV(TEntry entry, PVContract contract)
 			: base(contract)
@@ -25,6 +25,7 @@ namespace VocaDb.Model.Domain.PVs
 		public virtual TEntry Entry
 		{
 			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -37,7 +38,6 @@ namespace VocaDb.Model.Domain.PVs
 		/// </summary>
 		public virtual int Length { get; set; }
 
-#nullable enable
 		public virtual bool Equals(GenericPV<TEntry>? another)
 		{
 			if (another == null)
@@ -66,6 +66,5 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			return $"PV '{PVId}' on {Service} [{Id}] for {Entry}";
 		}
-#nullable disable
 	}
 }

@@ -17,9 +17,12 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs
 {
-	public class SongList : IEntryWithNames, ISongList,
+	public class SongList :
+		IEntryWithNames,
+		ISongList,
 		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>,
-		IEntryWithComments<SongListComment>, IEntryWithStatus,
+		IEntryWithComments<SongListComment>,
+		IEntryWithStatus,
 		IEntryWithTags<SongListTagUsage>
 	{
 		IUser ISongList.Author => Author;
@@ -33,7 +36,9 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
+#nullable enable
 		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> _archivedVersions = new();
+#nullable disable
 		private User _author;
 		private IList<SongListComment> _comments = new List<SongListComment>();
 		private string _description;
@@ -67,6 +72,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual bool AllowNotifications => FeaturedList;
 
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager
@@ -78,6 +84,7 @@ namespace VocaDb.Model.Domain.Songs
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual User Author
 		{

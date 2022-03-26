@@ -15,8 +15,10 @@ namespace VocaDb.Model.Service.VideoServices
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		public VideoServicePiapro(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+#nullable enable
+		public VideoServicePiapro(PVService service, IVideoServiceParser? parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
+#nullable disable
 
 		private VideoUrlParseResult Parse(PostQueryResult result, string url)
 		{

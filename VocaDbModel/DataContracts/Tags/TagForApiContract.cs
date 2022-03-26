@@ -18,14 +18,18 @@ namespace VocaDb.Model.DataContracts.Tags
 	{
 		public TagForApiContract() { }
 
-		public TagForApiContract(Tag tag,
+		public TagForApiContract(
+			Tag tag,
 			ContentLanguagePreference languagePreference,
-			TagOptionalFields optionalFields) : this(tag, null, languagePreference, optionalFields) { }
+			TagOptionalFields optionalFields
+		) : this(tag, null, languagePreference, optionalFields) { }
 
-		public TagForApiContract(Tag tag,
+		public TagForApiContract(
+			Tag tag,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ContentLanguagePreference languagePreference,
-			TagOptionalFields optionalFields)
+			TagOptionalFields optionalFields
+		)
 		{
 			ParamIs.NotNull(() => tag);
 

@@ -3,31 +3,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Songs;
-using System.Xml.Linq;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Helpers;
-using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
-using System.Threading.Tasks;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Albums
 {
-	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
-		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtistLinks<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
-		IEntryWithLinks<AlbumWebLink>, IEntryWithComments<AlbumComment>, IEntryWithArtists
+	public class Album :
+		IEntryBase,
+		IEntryWithNames<AlbumName>,
+		IEntryWithVersions,
+		IEntryWithStatus,
+		IDeletableEntry,
+		IEquatable<Album>,
+		INameFactory<AlbumName>,
+		IWebLinkFactory<AlbumWebLink>,
+		IEntryWithArtistLinks<ArtistForAlbum>,
+		IEntryWithTags<AlbumTagUsage>,
+		IEntryWithLinks<AlbumWebLink>,
+		IEntryWithComments<AlbumComment>,
+		IEntryWithArtists
 	{
+#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+#nullable disable
 
 		public static string ParseBarcode(string barcode)
 		{
@@ -48,7 +61,9 @@ namespace VocaDb.Model.Domain.Albums
 				   && second.Artists.All(a => first.ArtistList.Any(a2 => a.Id == a2.Id));
 		}
 
+#nullable enable
 		private ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> _archivedVersions = new();
+#nullable disable
 		private TranslatedStringWithDefault _artistString;
 		private IList<ArtistForAlbum> _artists = new List<ArtistForAlbum>();
 		private IList<AlbumComment> _comments = new List<AlbumComment>();
@@ -121,6 +136,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool AllowNotifications => true;
 
+#nullable enable
 		public virtual ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -130,6 +146,7 @@ namespace VocaDb.Model.Domain.Albums
 				_archivedVersions = value;
 			}
 		}
+#nullable disable
 
 		public virtual IEnumerable<ArtistForAlbum> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
@@ -176,11 +193,13 @@ namespace VocaDb.Model.Domain.Albums
 		/// </summary>
 		public virtual PictureData CoverPictureData { get; set; }
 
+#nullable enable
 		/// <summary>
 		/// Album cover picture (main picture) MIME.
 		/// Can be null if there is no picture.
 		/// </summary>
-		public virtual string CoverPictureMime { get; set; }
+		public virtual string? CoverPictureMime { get; set; }
+#nullable disable
 
 		public virtual DateTime CreateDate { get; set; }
 
@@ -312,9 +331,11 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual string PersonalDescriptionText { get; set; }
-		public virtual Artist PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
+#nullable enable
+		public virtual string? PersonalDescriptionText { get; set; }
+		public virtual Artist? PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
 		public virtual int? PersonalDescriptionAuthorId { get; set; }
+#nullable disable
 
 		public virtual EntryPictureFileManager<AlbumPictureFile> Pictures
 		{

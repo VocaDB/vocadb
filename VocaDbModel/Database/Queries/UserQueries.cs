@@ -75,8 +75,10 @@ namespace VocaDb.Model.Database.Queries
 
 			public int FavoriteSongCount { get; set; }
 
+#nullable enable
 			// Statistical information, not essential
-			public int[] FavoriteTags { get; set; }
+			public int[]? FavoriteTags { get; set; }
+#nullable disable
 
 			// Only used for "power"
 			public int OwnedAlbumCount { get; set; }
@@ -117,6 +119,7 @@ namespace VocaDb.Model.Database.Queries
 			return report;
 		}
 
+#nullable enable
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user)
 		{
 			/* 
@@ -206,7 +209,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private async Task SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message)
+		private async Task SendPrivateMessageNotification(string? mySettingsUrl, string? messagesUrl, UserMessage message)
 		{
 			ParamIs.NotNull(() => message);
 
@@ -304,6 +307,148 @@ namespace VocaDb.Model.Database.Queries
 			return details;
 		}
 
+		public UserDetailsForApiContract? GetUserDetailsForApi(string? name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return null;
+
+			return HandleQuery(ctx =>
+			{
+				var user = ctx.Query().FirstOrDefault(u => u.Name == name);
+
+				if (user is null)
+					return null;
+
+				var contract = new UserDetailsForApiContract(
+					user: user,
+					iconFactory: _userIconFactory,
+					languagePreference: LanguagePreference,
+					thumbPersister: _entryImagePersister,
+					permissionContext: PermissionContext
+				);
+
+				var cachedStats = GetCachedUserStats(ctx, user);
+				contract.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
+				contract.ArtistCount = cachedStats.ArtistCount;
+				contract.FavoriteSongCount = cachedStats.FavoriteSongCount;
+
+				contract.FavoriteTags = cachedStats.FavoriteTags is not null
+					? ctx.Query<Tag>()
+						.Where(t => cachedStats.FavoriteTags.Contains(t.Id))
+						.ToArray()
+						.Select(t => new TagBaseContract(
+							tag: t,
+							languagePreference: LanguagePreference,
+							includeAdditionalNames: true
+						))
+						.ToArray()
+					: Array.Empty<TagBaseContract>();
+
+				contract.CommentCount = cachedStats.CommentCount;
+				contract.EditCount = cachedStats.EditCount;
+				contract.SubmitCount = cachedStats.SubmitCount;
+				contract.TagVotes = cachedStats.TagVotes;
+
+				contract.FavoriteAlbums = ctx.Query<AlbumForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Album.Deleted && c.Rating > 3)
+					.OrderByDescending(c => c.Rating)
+					.ThenByDescending(c => c.Id)
+					.Select(a => a.Album)
+					.Take(7)
+					.ToArray()
+					.Select(c => new AlbumForApiContract(
+						album: c,
+						languagePreference: LanguagePreference,
+						thumbPersister: _entryImagePersister,
+						fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture
+					))
+					.ToArray();
+
+				contract.FollowedArtists = ctx.Query<ArtistForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Artist.Deleted)
+					.OrderByDescending(a => a.Id)
+					.Select(c => c.Artist)
+					.Take(6)
+					.ToArray()
+					.Select(c => new ArtistForApiContract(
+						artist: c,
+						languagePreference: LanguagePreference,
+						thumbPersister: _entryImagePersister,
+						includedFields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture
+					))
+					.ToArray();
+
+				contract.LatestComments = ctx.Query<UserComment>()
+					.WhereNotDeleted()
+					.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
+					.ToArray()
+					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
+
+				contract.LatestRatedSongs = ctx.Query<FavoriteSongForUser>()
+					.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
+					.OrderByDescending(c => c.Date)
+					.Select(c => c.Song)
+					.Take(6)
+					.ToArray()
+					.Select(c => new SongForApiContract(
+						song: c,
+						languagePreference: LanguagePreference,
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					))
+					.ToArray();
+
+				// Correct cached stats if we can determine they're out of date
+				contract.AlbumCollectionCount = Math.Max(contract.AlbumCollectionCount, contract.FavoriteAlbums.Length);
+				contract.ArtistCount = Math.Max(contract.ArtistCount, contract.FollowedArtists.Length);
+				contract.FavoriteSongCount = Math.Max(contract.FavoriteSongCount, contract.LatestRatedSongs.Length);
+				var songListCount = ctx.Query<SongList>().Count(l => l.Author.Id == user.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing);
+
+				contract.Power = UserHelper.GetPower(contract, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount, songListCount);
+				contract.Level = UserHelper.GetLevel(contract.Power);
+				contract.IsVeteran = UserHelper.IsVeteran(contract);
+
+				// If the user is viewing their own profile, check for possible producer account.
+				// Skip users who are not active, limited or are already verified artists.
+				if (
+					user.Active &&
+					user.GroupId >= UserGroupId.Regular &&
+					user.GroupId <= UserGroupId.Trusted &&
+					user.Equals(PermissionContext.LoggedUser) &&
+					!user.VerifiedArtist
+				)
+				{
+					// Scan by Twitter account name and entry name.
+					var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName)
+						? $"https://twitter.com/{user.Options.TwitterName}"
+						: null;
+
+					var producerTypes = new[]
+					{
+						ArtistType.Producer,
+						ArtistType.Animator,
+						ArtistType.Illustrator
+					};
+
+					contract.PossibleProducerAccount = ctx.Query<Artist>()
+						.Any(a =>
+							!a.Deleted &&
+							producerTypes.Contains(a.ArtistType) &&
+							(
+								a.Names.Names.Any(n => n.Value == user.Name) ||
+								(twitterUrl != null && a.WebLinks.Any(l => l.Url == twitterUrl))
+							) &&
+							!a.OwnerUsers.Any()
+						);
+
+					if (contract.PossibleProducerAccount)
+						ctx.AuditLogger.SysLog("possible producer account");
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
+
 		private bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
 		{
 			return ctx.OfType<UserOptions>().Query().Any(o => o.Poisoned && o.User.NameLC == lcUserName);
@@ -374,7 +519,8 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache,
 			BrandableStringsManager brandableStringsManager,
 			IEnumTranslations enumTranslations,
-			IDiscordWebhookNotifier discordWebhookNotifier)
+			IDiscordWebhookNotifier discordWebhookNotifier
+		)
 			: base(repository, permissionContext)
 		{
 			ParamIs.NotNull(() => repository);
@@ -1139,7 +1285,10 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private TagSelectionContract[] GetTagSelections<TEntry, TUsage, TVote>(int entryId, int userId) where TEntry : class, IEntryWithNames where TUsage : GenericTagUsage<TEntry, TVote> where TVote : GenericTagVote<TUsage>
+		private TagSelectionContract[] GetTagSelections<TEntry, TUsage, TVote>(int entryId, int userId)
+			where TEntry : class, IEntryWithNames, IEntryWithStatus
+			where TUsage : GenericTagUsage<TEntry, TVote>
+			where TVote : GenericTagVote<TUsage>
 		{
 			return HandleQuery(session =>
 			{
@@ -1215,7 +1364,8 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), _userIconFactory, fields));
 		}
 
-		public ServerOnlyUserDetailsContract GetUserByNameNonSensitive(string name)
+#nullable enable
+		public ServerOnlyUserDetailsContract? GetUserByNameNonSensitive(string? name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return null;
@@ -1237,6 +1387,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return HandleQuery(ctx => GetUserDetails(ctx, ctx.Load(id)));
 		}
+#nullable disable
 
 		public PartialFindResult<T> GetUsers<T>(UserQueryParams queryParams,
 			Func<User, T> fac)
@@ -1382,53 +1533,91 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		public async Task<TagUsageForApiContract[]> SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(PermissionContext).AddTags<Album, AlbumTagUsage>(
-				albumId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				album => album.Tags,
-				(album, ctx) => new AlbumTagUsageFactory(ctx, album));
+				entryId: albumId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: album => album.Tags,
+				tagUsageFactoryFactory: (album, ctx) => new AlbumTagUsageFactory(ctx, album)
+			);
 		}
 
 		public async Task<TagUsageForApiContract[]> SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(PermissionContext).AddTags<Artist, ArtistTagUsage>(
-				artistId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				artist => artist.Tags,
-				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
+				entryId: artistId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: artist => artist.Tags,
+				tagUsageFactoryFactory: (artist, ctx) => new ArtistTagUsageFactory(ctx, artist)
+			);
 		}
 
 		public async Task<TagUsageForApiContract[]> SaveEventTags(int eventId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(PermissionContext).AddTags<ReleaseEvent, EventTagUsage>(
-				eventId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				releaseEvent => releaseEvent.Tags,
-				(releaseEvent, ctx) => new EventTagUsageFactory(ctx, releaseEvent));
+				entryId: eventId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: releaseEvent => releaseEvent.Tags,
+				tagUsageFactoryFactory: (releaseEvent, ctx) => new EventTagUsageFactory(ctx, releaseEvent)
+			);
 		}
 
 		public async Task<TagUsageForApiContract[]> SaveEventSeriesTags(int seriesId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(PermissionContext).AddTags<ReleaseEventSeries, EventSeriesTagUsage>(
-				seriesId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				releaseEvent => releaseEvent.Tags,
-				(releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent));
+				entryId: seriesId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: releaseEvent => releaseEvent.Tags,
+				tagUsageFactoryFactory: (releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent)
+			);
 		}
 
 		public async Task<TagUsageForApiContract[]> SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(_permissionContext).AddTags<SongList, SongListTagUsage>(
-				songListId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				songList => songList.Tags,
-				(songList, ctx) => new SongListTagUsageFactory(ctx, songList));
+				entryId: songListId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: songList => songList.Tags,
+				tagUsageFactoryFactory: (songList, ctx) => new SongListTagUsageFactory(ctx, songList)
+			);
 		}
 
 		public async Task<TagUsageForApiContract[]> SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd)
 		{
 			return await new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
-				songId, tags, onlyAdd, _repository, _entryLinkFactory, _enumTranslations,
-				song => song.Tags,
-				(song, ctx) => new SongTagUsageFactory(ctx, song));
+				entryId: songId,
+				tags: tags,
+				onlyAdd: onlyAdd,
+				repository: _repository,
+				entryLinkFactory: _entryLinkFactory,
+				enumTranslations: _enumTranslations,
+				tagFunc: song => song.Tags,
+				tagUsageFactoryFactory: (song, ctx) => new SongTagUsageFactory(ctx, song)
+			);
 		}
+#nullable disable
 
 		public async Task<UserMessageContract> SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl)
 		{

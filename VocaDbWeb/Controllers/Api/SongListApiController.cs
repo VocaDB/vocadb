@@ -282,5 +282,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{listId:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => _queries.CreateComment(listId, contract);
+
+#nullable enable
+		[HttpGet("{id:int}/details")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongListForApiContract GetDetails(int id) => _queries.GetDetails(id);
+#nullable disable
 	}
 }

@@ -677,6 +677,7 @@ namespace VocaDb.Web.Controllers.Api
 			return "OK";
 		}
 
+#nullable enable
 		/// <summary>
 		/// Updates tag selections for an album by the logged in user.
 		/// </summary>
@@ -686,56 +687,56 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/albumTags/{albumId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutAlbumTags(int albumId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutAlbumTags(int albumId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveAlbumTags(albumId, tags, false);
+			return await _queries.SaveAlbumTags(albumId, tags, onlyAdd: false);
 		}
 
 		[HttpPut("current/artistTags/{artistId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutArtistTags(int artistId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutArtistTags(int artistId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveArtistTags(artistId, tags, false);
+			return await _queries.SaveArtistTags(artistId, tags, onlyAdd: false);
 		}
 
 		[HttpPut("current/eventTags/{eventId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventTags(int eventId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventTags(int eventId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveEventTags(eventId, tags, false);
+			return await _queries.SaveEventTags(eventId, tags, onlyAdd: false);
 		}
 
 		[HttpPut("current/eventSeriesTags/{seriesId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventSeriesTags(int seriesId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventSeriesTags(int seriesId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveEventSeriesTags(seriesId, tags, false);
+			return await _queries.SaveEventSeriesTags(seriesId, tags, onlyAdd: false);
 		}
 
 		[HttpPut("current/songListTags/{songListId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongListTags(int songListId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongListTags(int songListId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveSongListTags(songListId, tags, false);
+			return await _queries.SaveSongListTags(songListId, tags, onlyAdd: false);
 		}
 
 		/// <summary>
@@ -751,25 +752,26 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("current/songTags/{songId:int}")]
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-		public async Task<IActionResult> PostSongTags(int songId, TagBaseContract[] tags)
+		public async Task<IActionResult> PostSongTags(int songId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			await _queries.SaveSongTags(songId, tags, true);
+			await _queries.SaveSongTags(songId, tags, onlyAdd: true);
 			return NoContent();
 		}
 
 		[HttpPut("current/songTags/{songId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongTags(int songId, TagBaseContract[] tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongTags(int songId, TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
 
-			return await _queries.SaveSongTags(songId, tags, false);
+			return await _queries.SaveSongTags(songId, tags, onlyAdd: false);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Posts a new comment.
@@ -839,5 +841,14 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public AlbumForUserForApiContract GetAlbumForUser(int albumId) => GetAlbumForUser(_permissionContext.LoggedUserId, albumId);
+
+#nullable enable
+		[HttpGet("~/api/profiles/{name}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public UserDetailsForApiContract GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
+		{
+			return _queries.GetUserDetailsForApi(name);
+		}
+#nullable disable
 	}
 }

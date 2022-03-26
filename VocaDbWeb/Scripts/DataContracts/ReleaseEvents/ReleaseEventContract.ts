@@ -1,3 +1,5 @@
+import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+
 import EntryThumbContract from '../EntryThumbContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import PVContract from '../PVs/PVContract';
@@ -9,6 +11,8 @@ import EventSeriesContract from './EventSeriesContract';
 
 // Matches ReleaseEventForApiContract
 export default interface ReleaseEventContract {
+	additionalNames?: string;
+
 	artists: ArtistForEventContract[];
 
 	category: string;
@@ -33,7 +37,15 @@ export default interface ReleaseEventContract {
 
 	songList?: SongListBaseContract;
 
+	status?: string;
+
+	tags?: TagUsageForApiContract[];
+
+	urlSlug?: string;
+
 	venue?: VenueForApiContract;
+
+	venueName?: string;
 
 	webLinks: WebLinkContract[];
 }

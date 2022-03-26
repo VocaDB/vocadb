@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Venues
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; init; }
 
+#nullable enable
 		/// <summary>
 		/// Venue address, without country, for example "2-1, Nakase, Mihama-ku, Chiba-city, 261-8550".
 		/// </summary>
@@ -33,10 +34,12 @@ namespace VocaDb.Model.DataContracts.Venues
 		/// </summary>
 		[DataMember]
 		public string AddressCountryCode { get; init; }
+#nullable disable
 
 		[DataMember]
 		public OptionalGeoPointContract Coordinates { get; init; }
 
+		[DataMember]
 		public bool Deleted { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
@@ -104,7 +107,10 @@ namespace VocaDb.Model.DataContracts.Venues
 
 			if (fields.HasFlag(VenueOptionalFields.WebLinks))
 			{
-				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl)).ToArray();
+				WebLinks = venue.WebLinks.Links
+					.OrderBy(w => w.DescriptionOrUrl)
+					.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
+					.ToArray();
 			}
 		}
 #nullable disable

@@ -1,5 +1,3 @@
-#nullable disable
-
 namespace VocaDb.Model.Domain
 {
 	public interface IEntryWithStatus : IEntryBase

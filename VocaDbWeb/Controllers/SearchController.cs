@@ -204,32 +204,32 @@ namespace VocaDb.Web.Controllers
 			if (viewModel == null)
 				viewModel = new SearchIndexViewModel();
 
-			var filter = viewModel.Filter;
+			var filter = viewModel.filter;
 			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
 
-			if (viewModel.AllowRedirect && !string.IsNullOrEmpty(filter))
+			if (viewModel.allowRedirect && !string.IsNullOrEmpty(filter))
 			{
-				var redirectResult = TryRedirect(filter, viewModel.SearchType);
+				var redirectResult = TryRedirect(filter, viewModel.searchType);
 
 				if (redirectResult != null)
 					return redirectResult;
 			}
 
-			if (!string.IsNullOrEmpty(viewModel.Tag))
+			if (!string.IsNullOrEmpty(viewModel.tag))
 			{
-				viewModel.TagId = new[] { _tagQueries.GetTagIdByName(viewModel.Tag) };
+				viewModel.tagId = new[] { _tagQueries.GetTagIdByName(viewModel.tag) };
 			}
 
-			viewModel.Filter = filter;
+			viewModel.filter = filter;
 
-			SetSearchEntryType(viewModel.SearchType);
+			SetSearchEntryType(viewModel.searchType);
 
-			return View("Index", viewModel);
+			return View("React/Index");
 		}
 
 		public ActionResult Radio()
 		{
-			return Index(new SearchIndexViewModel(EntryType.Song) { MinScore = 1, Sort = "AdditionDate", ViewMode = "PlayList", Autoplay = true, Shuffle = true });
+			return Index(new SearchIndexViewModel(EntryType.Song) { minScore = 1, sort = "AdditionDate", viewMode = "PlayList", autoplay = true, shuffle = true });
 		}
 	}
 }

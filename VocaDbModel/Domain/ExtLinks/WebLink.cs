@@ -1,6 +1,5 @@
-#nullable disable
-
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
@@ -9,7 +8,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public class WebLink : IWebLink, IEntryWithIntId
 	{
-#nullable enable
 		public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
 		{
@@ -51,7 +49,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
 		}
-#nullable disable
 
 		public static CollectionDiff<T, T> SyncByValue<T>(IList<T> oldLinks, IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
@@ -76,9 +73,10 @@ namespace VocaDb.Model.Domain.ExtLinks
 		private string _description;
 		private string _url;
 
+#nullable disable
 		public WebLink() { }
-
 #nullable enable
+
 		public WebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
@@ -99,7 +97,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 			Url = contract.Url;
 			Disabled = contract.Disabled;
 		}
-#nullable disable
 
 		public virtual WebLinkCategory Category { get; set; }
 
@@ -111,6 +108,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		public virtual string Description
 		{
 			get => _description;
+			[MemberNotNull(nameof(_description))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -131,6 +129,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		public virtual string Url
 		{
 			get => _url;
+			[MemberNotNull(nameof(_url))]
 			set
 			{
 				ParamIs.NotNullOrWhiteSpace(() => value);
@@ -138,7 +137,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
-#nullable enable
 		public virtual bool ContentEquals(IWebLink? other)
 		{
 			if (other == null)
@@ -151,7 +149,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 		{
 			return $"web link '{Url}'";
 		}
-#nullable disable
 	}
 
 	public interface IWebLink
