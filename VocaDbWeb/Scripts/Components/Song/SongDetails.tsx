@@ -64,6 +64,10 @@ const SongDetailsLayout = observer(
 
 		useVocaDbTitle(titleAndArtist, true);
 
+		const primaryPV = model.contract.pvs.filter(
+			(pv) => pv.id === songDetailsStore.selectedPvId,
+		)[0];
+
 		return (
 			<Layout
 				title={model.name}
@@ -87,13 +91,7 @@ const SongDetailsLayout = observer(
 					<>
 						{(model.originalPVs.length > 0 || model.otherPVs.length > 0) && (
 							<div id="pvPlayer" className="song-pv-player">
-								<EmbedPV
-									pv={
-										model.contract.pvs.filter(
-											(pv) => pv.id === songDetailsStore.selectedPvId,
-										)[0]
-									}
-								/>
+								{primaryPV && <EmbedPV pv={primaryPV} />}
 							</div>
 						)}
 						{loginManager.isLoggedIn ? (

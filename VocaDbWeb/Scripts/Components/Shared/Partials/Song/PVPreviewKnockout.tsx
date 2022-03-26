@@ -20,6 +20,10 @@ const PVPreviewKnockout = observer(
 	}: PVPreviewKnockoutProps): React.ReactElement => {
 		if (!previewStore.preview || !previewStore.selectedSong) return <></>;
 
+		const primaryPV = previewStore.selectedSong.pvs.filter(
+			(pv) => pv.service === previewStore.pvService,
+		)[0];
+
 		return (
 			<div /* TODO: slideVisible */ className="pvPreview">
 				<div className="pull-right">
@@ -58,15 +62,7 @@ const PVPreviewKnockout = observer(
 						</ButtonGroup>
 					</div>
 				</div>
-				<div>
-					<EmbedPV
-						pv={
-							previewStore.selectedSong.pvs.filter(
-								(pv) => pv.service === previewStore.pvService,
-							)[0]
-						}
-					/>
-				</div>
+				<div>{primaryPV && <EmbedPV pv={primaryPV} />}</div>
 			</div>
 		);
 	},
