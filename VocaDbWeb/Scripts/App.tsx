@@ -6,6 +6,7 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import AppRoutes from './AppRoutes';
+import VdbPlayer from './Components/VdbPlayer/VdbPlayer';
 import ScrollToTop from './ScrollToTop';
 
 const App = (): React.ReactElement => {
@@ -24,12 +25,14 @@ const App = (): React.ReactElement => {
 							<AppRoutes />
 						</React.Suspense>
 					</div>
+
+					<AboutDisclaimer />
 				</div>
 			</Container>
 
-			<AboutDisclaimer />
-
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
+
+			<VdbPlayer />
 		</>
 	);
 };
