@@ -11,6 +11,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import EmbedPV from './PV/EmbedPV';
 import PVRatingButtonsForIndex from './PVRatingButtonsForIndex';
 import SongTypeLabel from './Song/SongTypeLabel';
 
@@ -53,15 +54,14 @@ const PlayList = observer(
 									/>
 								)}
 
-								{pvPlayerStore.playerHtml && (
-									// HACK
-									// TODO: Replace this with React
-									<div
-										id="pv-player-wrapper"
-										dangerouslySetInnerHTML={{
-											__html: pvPlayerStore.playerHtml,
-										}}
-									/>
+								{pvPlayerStore.primaryPV && (
+									<div id="pv-player-wrapper">
+										<EmbedPV
+											pv={pvPlayerStore.primaryPV}
+											enableApi={true}
+											id="pv-player"
+										/>
+									</div>
 								)}
 							</div>
 						)}

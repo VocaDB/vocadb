@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
+import EmbedPV from '../PV/EmbedPV';
 import PVRatingButtonsForIndex from '../PVRatingButtonsForIndex';
 
 interface PVPreviewKnockoutProps {
@@ -17,7 +18,13 @@ const PVPreviewKnockout = observer(
 		previewStore,
 		getPvServiceIcons,
 	}: PVPreviewKnockoutProps): React.ReactElement => {
-		return previewStore.preview ? (
+		if (!previewStore.preview || !previewStore.selectedSong) return <></>;
+
+		const primaryPV = previewStore.selectedSong.pvs.filter(
+			(pv) => pv.service === previewStore.pvService,
+		)[0];
+
+		return (
 			<div /* TODO: slideVisible */ className="pvPreview">
 				<div className="pull-right">
 					{previewStore.ratingButtons && (
@@ -55,18 +62,8 @@ const PVPreviewKnockout = observer(
 						</ButtonGroup>
 					</div>
 				</div>
-				<div>
-					{previewStore.previewHtml && (
-						// HACK
-						// TODO: Replace this with React
-						<div
-							dangerouslySetInnerHTML={{ __html: previewStore.previewHtml }}
-						/>
-					)}
-				</div>
+				<div>{primaryPV && <EmbedPV pv={primaryPV} />}</div>
 			</div>
-		) : (
-			<></>
 		);
 	},
 );
