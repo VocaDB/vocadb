@@ -40,7 +40,7 @@
         "eslint-webpack-plugin": "^2.5.4",
         "jest": "^27.0.1",
         "jest-expect-message": "^1.0.2",
-        "laravel-mix": "^6.0.39",
+        "laravel-mix": "^6.0.43",
         "laravel-mix-eslint": "^0.2.0",
         "less": "^4.1.2",
         "less-loader": "^10.2.0",
