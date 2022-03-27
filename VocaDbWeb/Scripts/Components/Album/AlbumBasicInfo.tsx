@@ -32,7 +32,7 @@ import ExternalLinksRows from '../Shared/Partials/EntryDetails/ExternalLinksRows
 import PersonalDescriptionMedia from '../Shared/Partials/EntryDetails/PersonalDescriptionMedia';
 import FormatMarkdown from '../Shared/Partials/Html/FormatMarkdown';
 import LanguageFlag from '../Shared/Partials/Html/LanguageFlag';
-import EmbedPV from '../Shared/Partials/PV/EmbedPV';
+import EmbedPVPreview from '../Shared/Partials/PV/EmbedPVPreview';
 import DraftIcon from '../Shared/Partials/Shared/DraftIcon';
 import EntryPictureFileLink from '../Shared/Partials/Shared/EntryPictureFileLink';
 import FormatPVLink from '../Shared/Partials/Shared/FormatPVLink';
@@ -549,7 +549,13 @@ const AlbumBasicInfo = observer(
 
 				{model.primaryPV && (
 					<div className="song-pv-player">
-						<EmbedPV pv={model.primaryPV} />
+						<EmbedPVPreview
+							entry={{
+								...model.contract,
+								entryType: EntryType[EntryType.Album],
+							}}
+							pv={model.primaryPV}
+						/>
 					</div>
 				)}
 

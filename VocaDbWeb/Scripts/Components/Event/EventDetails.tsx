@@ -13,7 +13,7 @@ import DeletedBanner from '@Components/Shared/Partials/EntryDetails/DeletedBanne
 import ExternalLinksList from '@Components/Shared/Partials/EntryDetails/ExternalLinksList';
 import ReportEntryPopupKnockout from '@Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import FormatMarkdown from '@Components/Shared/Partials/Html/FormatMarkdown';
-import EmbedPV from '@Components/Shared/Partials/PV/EmbedPV';
+import EmbedPVPreview from '@Components/Shared/Partials/PV/EmbedPVPreview';
 import EmbedGoogleMaps from '@Components/Shared/Partials/Shared/EmbedGoogleMaps';
 import EntryStatusMessage from '@Components/Shared/Partials/Shared/EntryStatusMessage';
 import FormatPVLink from '@Components/Shared/Partials/Shared/FormatPVLink';
@@ -520,7 +520,10 @@ const EventDetailsLayout = observer(
 
 				{primaryPV && (
 					<div className="song-pv-player">
-						<EmbedPV pv={primaryPV} />
+						<EmbedPVPreview
+							entry={{ ...event, entryType: EntryType[EntryType.ReleaseEvent] }}
+							pv={primaryPV}
+						/>
 					</div>
 				)}
 

@@ -28,7 +28,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import Layout from '../Shared/Layout';
 import DeletedBanner from '../Shared/Partials/EntryDetails/DeletedBanner';
 import ReportEntryPopupKnockout from '../Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import EmbedPV from '../Shared/Partials/PV/EmbedPV';
+import EmbedPVPreview from '../Shared/Partials/PV/EmbedPVPreview';
 import DraftMessage from '../Shared/Partials/Shared/DraftMessage';
 import EntryStatusMessage from '../Shared/Partials/Shared/EntryStatusMessage';
 import TagsEdit from '../Shared/Partials/TagsEdit';
@@ -91,7 +91,15 @@ const SongDetailsLayout = observer(
 					<>
 						{(model.originalPVs.length > 0 || model.otherPVs.length > 0) && (
 							<div id="pvPlayer" className="song-pv-player">
-								{primaryPV && <EmbedPV pv={primaryPV} />}
+								{primaryPV && (
+									<EmbedPVPreview
+										entry={{
+											...model.contract.song,
+											entryType: EntryType[EntryType.Song],
+										}}
+										pv={primaryPV}
+									/>
+								)}
 							</div>
 						)}
 						{loginManager.isLoggedIn ? (

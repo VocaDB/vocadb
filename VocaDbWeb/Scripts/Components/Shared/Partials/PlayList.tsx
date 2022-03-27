@@ -11,7 +11,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import EmbedPV from './PV/EmbedPV';
+import EmbedPVPreview from './PV/EmbedPVPreview';
 import PVRatingButtonsForIndex from './PVRatingButtonsForIndex';
 import SongTypeLabel from './Song/SongTypeLabel';
 
@@ -56,7 +56,11 @@ const PlayList = observer(
 
 								{pvPlayerStore.primaryPV && (
 									<div id="pv-player-wrapper">
-										<EmbedPV
+										<EmbedPVPreview
+											entry={{
+												...pvPlayerStore.selectedSong.song,
+												entryType: EntryType[EntryType.Song],
+											}}
 											pv={pvPlayerStore.primaryPV}
 											enableApi={true}
 											id="pv-player"

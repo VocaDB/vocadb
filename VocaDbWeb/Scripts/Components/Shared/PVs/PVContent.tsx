@@ -13,7 +13,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import EmbedPV from '../Partials/PV/EmbedPV';
+import EmbedPVPreview from '../Partials/PV/EmbedPVPreview';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -121,7 +121,14 @@ const PVContent = observer(
 					)}
 				</div>
 				<div className="pv-embed-wrapper">
-					{primaryPV && <EmbedPV pv={primaryPV} width={560} height={340} />}
+					{primaryPV && (
+						<EmbedPVPreview
+							entry={{ ...selectedSong, entryType: EntryType[EntryType.Song] }}
+							pv={primaryPV}
+							width={560}
+							height={340}
+						/>
+					)}
 				</div>
 				<Button
 					as={Link}
