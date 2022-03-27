@@ -14,7 +14,6 @@ import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
 import Layout from '../Shared/Layout';
-import useScript from '../useScript';
 import useStoreWithPaging from '../useStoreWithPaging';
 import useVocaDbTitle from '../useVocaDbTitle';
 import RatedSongs from './Partials/RatedSongs';
@@ -43,9 +42,6 @@ const UserFavoriteSongsLayout = ({
 	useVocaDbTitle(title, true);
 
 	useStoreWithPaging(ratedSongsStore);
-
-	useScript('/Scripts/soundcloud-api.js');
-	useScript('https://www.youtube.com/iframe_api');
 
 	return (
 		<Layout

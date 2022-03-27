@@ -29,7 +29,6 @@ import { Link, useParams } from 'react-router-dom';
 import '../../../wwwroot/Content/Styles/songlist.less';
 import Layout from '../Shared/Layout';
 import EntryDeletePopupBase from '../Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import useScript from '../useScript';
 import useVocaDbTitle from '../useVocaDbTitle';
 import UserDetailsRoutes from './UserDetailsRoutes';
 
@@ -59,9 +58,6 @@ const UserDetailsLayout = observer(
 		const title = user.name;
 
 		useVocaDbTitle(title, true);
-
-		useScript('/Scripts/soundcloud-api.js');
-		useScript('https://www.youtube.com/iframe_api');
 
 		const ownProfile =
 			loginManager.loggedUser &&
