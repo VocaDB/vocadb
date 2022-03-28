@@ -19,6 +19,7 @@ export enum SongOptionalField {
 	Tags = 1 << 5,
 	ThumbUrl = 1 << 6,
 	WebLinks = 1 << 7,
+	MainPicture = 1 << 8,
 }
 
 export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {

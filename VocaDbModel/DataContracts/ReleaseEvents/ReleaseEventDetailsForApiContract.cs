@@ -180,7 +180,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 					.Select(s => new SongInListForApiContract(
 						songInList: s,
 						languagePreference: languagePreference,
-						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 					))
 					.ToArray()
 				: null;
@@ -189,7 +189,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				.Select(s => new SongForApiContract(
 					song: s,
 					languagePreference: languagePreference,
-					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.OrderBy(s => s.Name)
 				.ToArray();

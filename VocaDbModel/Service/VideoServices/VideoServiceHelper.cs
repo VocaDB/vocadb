@@ -128,10 +128,13 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			ParamIs.NotNull(() => pvs);
 
-			var pv = GetPV(pvs, false,
+			var pv = GetPV(
+				allPvs: pvs,
+				acceptFirst: false,
 				p => p.Service == PVService.Youtube && p.PVType == PVType.Original,
 				p => p.Service == PVService.Youtube && p.PVType == PVType.Reprint,
-				p => p.Service == PVService.Youtube);
+				p => p.Service == PVService.Youtube
+			);
 
 			if (pv != null)
 			{

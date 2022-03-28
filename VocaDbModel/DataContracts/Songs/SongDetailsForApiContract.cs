@@ -201,7 +201,7 @@ namespace VocaDb.Model.DataContracts.Songs
 					song: song.OriginalVersion,
 					mergeRecord: null,
 					languagePreference: languagePreference,
-					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				)
 				: null;
 

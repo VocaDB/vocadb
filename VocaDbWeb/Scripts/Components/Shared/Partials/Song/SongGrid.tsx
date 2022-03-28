@@ -14,15 +14,17 @@ interface SongIconLinkProps {
 }
 
 const SongIconLink = ({ song }: SongIconLinkProps): React.ReactElement => {
-	return (
+	return song.mainPicture && song.mainPicture.urlThumb ? (
 		<Link to={EntryUrlMapper.details_song(song)}>
 			<img
-				src={UrlHelper.upgradeToHttps(song.thumbUrl)}
+				src={UrlHelper.upgradeToHttps(song.mainPicture.urlThumb)}
 				alt="Cover" /* TODO: localize */
 				className="coverPicThumb"
 				referrerPolicy="same-origin"
 			/>
 		</Link>
+	) : (
+		<></>
 	);
 };
 
@@ -57,7 +59,9 @@ const SongGrid = ({
 						<tr key={index}>
 							{chunk.map((song) => (
 								<React.Fragment key={song.id}>
-									<td>{song.thumbUrl && <SongIconLink song={song} />}</td>
+									<td>
+										<SongIconLink song={song} />
+									</td>
 									<td>
 										<SongLink song={song} />
 										{displayType && (

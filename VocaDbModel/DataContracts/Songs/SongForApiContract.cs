@@ -64,7 +64,10 @@ namespace VocaDb.Model.DataContracts.Songs
 
 				if (!string.IsNullOrEmpty(thumb))
 				{
-					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb };
+					MainPicture = new EntryThumbForApiContract
+					{
+						UrlThumb = thumb,
+					};
 				}
 			}
 
@@ -272,6 +275,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		PVs = 1 << 6,
 		ReleaseEvent = 1 << 7,
 		Tags = 1 << 8,
+		[Obsolete($"Use {nameof(SongForApiContract.MainPicture)}.{nameof(SongForApiContract.MainPicture.UrlThumb)} instead.")]
 		ThumbUrl = 1 << 9,
 		WebLinks = 1 << 10,
 		Bpm = 1 << 11,

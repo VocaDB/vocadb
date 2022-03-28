@@ -127,7 +127,7 @@ namespace VocaDb.Model.DataContracts.Tags
 				.Select(a => new SongForApiContract(
 					song: a,
 					languagePreference: languagePreference,
-					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.ToArray();
 			SongCount = songCount;

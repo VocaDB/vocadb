@@ -240,14 +240,14 @@ const SongRankings = observer(
 										<h1>{index + 1}</h1>
 									</td>
 									<td style={{ width: '80px' }}>
-										{song.thumbUrl && (
+										{song.mainPicture && song.mainPicture.urlThumb && (
 											<Link
 												to={EntryUrlMapper.details_song(song)}
 												title={song.additionalNames}
 											>
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
-													src={song.thumbUrl}
+													src={song.mainPicture.urlThumb}
 													title="Cover picture" /* TODO: localize */
 													className="coverPicThumb img-rounded"
 													referrerPolicy="same-origin"

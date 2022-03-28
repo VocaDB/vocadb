@@ -393,7 +393,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(c => new SongForApiContract(
 						song: c,
 						languagePreference: LanguagePreference,
-						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 					))
 					.ToArray();
 
