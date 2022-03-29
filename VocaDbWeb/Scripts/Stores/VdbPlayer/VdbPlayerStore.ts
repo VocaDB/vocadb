@@ -1,5 +1,6 @@
 import EntryContract from '@DataContracts/EntryContract';
 import PVContract from '@DataContracts/PVs/PVContract';
+import PVService from '@Models/PVs/PVService';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export enum RepeatMode {
@@ -14,6 +15,14 @@ export interface IVdbPlayerEntry {
 }
 
 export default class VdbPlayerStore {
+	private static readonly autoplayServices = [
+		PVService.File,
+		PVService.LocalFile,
+		//PVService.NicoNicoDouga,
+		PVService.Youtube,
+		PVService.SoundCloud,
+	];
+
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
@@ -30,6 +39,15 @@ export default class VdbPlayerStore {
 
 	@computed public get hasNextSong(): boolean {
 		return false /* TODO: Implement. */;
+	}
+
+	@computed public get canAutoplay(): boolean {
+		return (
+			!!this.entry &&
+			VdbPlayerStore.autoplayServices.includes(
+				PVService[this.entry.pv.service as keyof typeof PVService],
+			)
+		);
 	}
 
 	@action public toggleRepeat = (): void => {
@@ -61,14 +79,10 @@ export default class VdbPlayerStore {
 	};
 
 	@action public play = (): void => {
-		this.playing = true;
-
 		// TODO: Implement.
 	};
 
 	@action public pause = (): void => {
-		this.playing = false;
-
 		// TODO: Implement.
 	};
 
@@ -80,9 +94,11 @@ export default class VdbPlayerStore {
 		// TODO: Implement.
 	};
 
+	// Starts playing if autoplay is available for this video service, or expands the player if not available.
 	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
 		this.entry = entry;
 
-		this.play();
+		if (this.canAutoplay) this.play();
+		else this.expand();
 	};
 }

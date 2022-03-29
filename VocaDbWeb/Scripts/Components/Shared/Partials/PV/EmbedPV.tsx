@@ -70,9 +70,15 @@ const EmbedPV = React.memo(
 			case PVService.File:
 			case PVService.LocalFile:
 				return isAudio(pv.url) ? (
-					<audio id={id} controls controlsList="nodownload" src={pv.url} />
+					<audio
+						id={id}
+						controls
+						controlsList="nodownload"
+						src={pv.url}
+						css={{ width: width, height: height }}
+					/>
 				) : (
-					<div style={{ width: `${width}px`, height: `${height}px` }}>
+					<div css={{ width: width, height: height }}>
 						<a href={pv.url}>
 							<img
 								style={{ maxWidth: '100%', maxHeight: '100%' }}
@@ -95,7 +101,7 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.Piapro:
-				return <EmbedPiapro pv={pv} />;
+				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			case PVService.SoundCloud:
 				return (

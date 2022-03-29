@@ -41,7 +41,12 @@ const VdbPlayer = observer(
 					}}
 				>
 					{vdbPlayer.entry && (
-						<EmbedPV pv={vdbPlayer.entry.pv} width="100%" height="100%" />
+						<EmbedPV
+							pv={vdbPlayer.entry.pv}
+							width="100%"
+							height="100%"
+							enableApi={true}
+						/>
 					)}
 				</div>
 
@@ -52,11 +57,14 @@ const VdbPlayer = observer(
 								<Button
 									variant="inverse"
 									title={
-										`Shuffle: ${
-											vdbPlayer.shuffle ? 'On' : 'Off'
+										`Shuffle: ${vdbPlayer.shuffle ? 'On' : 'Off'}${
+											vdbPlayer.canAutoplay
+												? ''
+												: ' (Unavailable for this video service)'
 										}` /* TODO: localize */
 									}
 									onClick={vdbPlayer.toggleShuffle}
+									disabled={!vdbPlayer.canAutoplay}
 									className={classNames(vdbPlayer.shuffle && 'active')}
 								>
 									<i className="icon-random icon-white" />
@@ -73,14 +81,20 @@ const VdbPlayer = observer(
 										variant="inverse"
 										title="Pause" /* TODO: localize */
 										onClick={vdbPlayer.pause}
+										disabled={!vdbPlayer.canAutoplay}
 									>
 										<i className="icon-pause icon-white" />
 									</Button>
 								) : (
 									<Button
 										variant="inverse"
-										title="Play" /* TODO: localize */
+										title={`Play${
+											vdbPlayer.canAutoplay
+												? ''
+												: ' (Unavailable for this video service)'
+										}`} /* TODO: localize */
 										onClick={vdbPlayer.play}
+										disabled={!vdbPlayer.canAutoplay}
 									>
 										<i className="icon-play icon-white" />
 									</Button>
@@ -94,8 +108,15 @@ const VdbPlayer = observer(
 								</Button>
 								<Button
 									variant="inverse"
-									title={`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
+									title={
+										`Repeat: ${vdbPlayer.repeat}${
+											vdbPlayer.canAutoplay
+												? ''
+												: ' (Unavailable for this video service)'
+										}` /* TODO: localize */
+									}
 									onClick={vdbPlayer.toggleRepeat}
+									disabled={!vdbPlayer.canAutoplay}
 								>
 									<i className="icon-repeat icon-white" />
 								</Button>
@@ -187,6 +208,7 @@ const VdbPlayer = observer(
 										variant="inverse"
 										title="Expand" /* TODO: localize */
 										onClick={vdbPlayer.expand}
+										disabled={!vdbPlayer.entry}
 									>
 										<i className="icon-resize-full icon-white" />
 									</Button>
