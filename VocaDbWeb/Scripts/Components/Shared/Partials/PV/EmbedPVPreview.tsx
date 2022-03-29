@@ -1,6 +1,5 @@
 import EntryContract from '@DataContracts/EntryContract';
 import PVContract from '@DataContracts/PVs/PVContract';
-import { runInAction } from 'mobx';
 import React from 'react';
 
 import { useVdbPlayer } from '../../../VdbPlayer/VdbPlayerContext';
@@ -37,11 +36,9 @@ const EmbedPVPreview = ({
 				cursor: 'pointer',
 			}}
 			onClick={(): void =>
-				runInAction(() => {
-					vdbPlayer.entry = {
-						entry: entry,
-						pv: pv,
-					};
+				vdbPlayer.selectEntry({
+					entry: entry,
+					pv: pv,
 				})
 			}
 		/>

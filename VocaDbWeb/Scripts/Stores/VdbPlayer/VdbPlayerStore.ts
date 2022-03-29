@@ -70,4 +70,10 @@ export default class VdbPlayerStore {
 	public next = (): void => {
 		// TODO: Implement.
 	};
+
+	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
+		this.entry = entry;
+
+		this.play();
+	};
 }
