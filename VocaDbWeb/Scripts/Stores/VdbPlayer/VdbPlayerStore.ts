@@ -1,3 +1,5 @@
+import EntryContract from '@DataContracts/EntryContract';
+import PVContract from '@DataContracts/PVs/PVContract';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export enum RepeatMode {
@@ -6,10 +8,16 @@ export enum RepeatMode {
 	One = 'One',
 }
 
+export interface IVdbPlayerEntry {
+	entry: EntryContract;
+	pv: PVContract;
+}
+
 export default class VdbPlayerStore {
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
+	@observable public entry?: IVdbPlayerEntry;
 
 	public constructor() {
 		makeObservable(this);

@@ -1,8 +1,11 @@
 import Button from '@Bootstrap/Button';
 import Container from '@Bootstrap/Container';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { css } from '@emotion/react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ButtonGroup from '../../Bootstrap/ButtonGroup';
 import { useVdbPlayer } from './VdbPlayerContext';
@@ -79,25 +82,77 @@ const VdbPlayer = observer(
 
 						<div css={{ flexGrow: 1 }}></div>
 
-						<div css={{ width: 360 }}>
+						<div css={{ width: 220 }}>
 							<div css={{ display: 'flex', alignItems: 'center' }}>
-								<div css={{ flexGrow: 1 }}>
-									<div
-										css={{
-											width: 64,
-											height: 36,
-											backgroundColor: 'rgb(28, 28, 28)',
-										}}
-									/>
-								</div>
+								{vdbPlayer.entry && (
+									<Link
+										to={EntryUrlMapper.details_entry(vdbPlayer.entry.entry)}
+										css={{ marginRight: 8 }}
+									>
+										<div
+											css={{
+												width: 64,
+												height: 36,
+												backgroundColor: 'rgb(28, 28, 28)',
+												backgroundImage: `url(${vdbPlayer.entry.entry.mainPicture?.urlThumb})`,
+												backgroundSize: 'cover',
+												backgroundPosition: 'center',
+											}}
+										/>
+									</Link>
+								)}
 
-								<ButtonGroup>
-									<Button variant="inverse">
-										<i className="icon-info-sign icon-white" />
-									</Button>
-								</ButtonGroup>
+								<div
+									css={{
+										flexGrow: 1,
+										display: 'flex',
+										minWidth: 0,
+										flexDirection: 'column',
+									}}
+								>
+									{vdbPlayer.entry && (
+										<>
+											<Link
+												to={EntryUrlMapper.details_entry(vdbPlayer.entry.entry)}
+												css={css`
+													color: white;
+													&:hover {
+														color: white;
+													}
+													&:visited {
+														color: white;
+													}
+													font-weight: bold;
+													overflow: hidden;
+													text-overflow: ellipsis;
+													white-space: nowrap;
+												`}
+											>
+												{vdbPlayer.entry.entry.name}
+											</Link>
+											<div css={{ display: 'flex' }}>
+												<span
+													css={{
+														color: '#999999',
+														overflow: 'hidden',
+														textOverflow: 'ellipsis',
+														whiteSpace: 'nowrap',
+													}}
+												>
+													{vdbPlayer.entry.entry.artistString}
+												</span>
+											</div>
+										</>
+									)}
+								</div>
 							</div>
 						</div>
+
+						<ButtonGroup css={{ marginLeft: 8 }}>
+							<Button variant="inverse">
+								<i className="icon-info-sign icon-white" />
+							</Button>
+						</ButtonGroup>
 					</div>
 				</Container>
 			</div>
