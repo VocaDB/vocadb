@@ -17,6 +17,7 @@ export default class VdbPlayerStore {
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
+	@observable public expanded = false;
 	@observable public entry?: IVdbPlayerEntry;
 
 	public constructor() {
@@ -49,6 +50,14 @@ export default class VdbPlayerStore {
 
 	@action public toggleShuffle = (): void => {
 		this.shuffle = !this.shuffle;
+	};
+
+	@action public expand = (): void => {
+		this.expanded = true;
+	};
+
+	@action public collapse = (): void => {
+		this.expanded = false;
 	};
 
 	@action public play = (): void => {
