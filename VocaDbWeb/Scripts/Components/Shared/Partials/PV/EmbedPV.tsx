@@ -36,8 +36,8 @@ const isAudio = (filename?: string): boolean => !isImage(filename);
 
 interface EmbedPVProps {
 	pv: PVContract;
-	width?: number;
-	height?: number;
+	width?: number | string;
+	height?: number | string;
 	autoplay?: boolean;
 	enableApi?: boolean;
 	id?: string;
@@ -103,7 +103,7 @@ const EmbedPV = React.memo(
 					<iframe
 						id={id}
 						width={width}
-						height={Math.min(height, 166)}
+						height={typeof height === 'number' ? Math.min(height, 166) : height}
 						scrolling="no"
 						frameBorder="no"
 						src={`https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${
@@ -154,7 +154,7 @@ const EmbedPV = React.memo(
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
 						width={width}
-						height={Math.min(height, 120)}
+						height={typeof height === 'number' ? Math.min(height, 120) : height}
 						scrolling="no"
 						frameBorder="no"
 						src={`https://creofuga.net/audios/player?color=black&id=${pv.pvId}`}

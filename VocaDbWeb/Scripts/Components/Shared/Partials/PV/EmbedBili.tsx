@@ -3,8 +3,8 @@ import React from 'react';
 
 interface EmbedBiliProps {
 	pv: PVContract;
-	width: number;
-	height: number;
+	width: number | string;
+	height: number | string;
 }
 
 const EmbedBili = React.memo(
@@ -27,11 +27,11 @@ const EmbedBili = React.memo(
 					framespacing="0"
 					allowFullScreen
 					width={width}
-					height={height + 67}
+					height={typeof height === 'number' ? height + 67 : height}
 					style={{
 						marginBottom: '-43px',
-						width: `${width}px`,
-						height: `${height + 67}px`,
+						width: width,
+						height: typeof height === 'number' ? height + 67 : height,
 					}}
 					key={pv.pvId}
 				/>

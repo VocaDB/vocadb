@@ -8,6 +8,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import ButtonGroup from '../../Bootstrap/ButtonGroup';
+import EmbedPV from '../Shared/Partials/PV/EmbedPV';
 import { useVdbPlayer } from './VdbPlayerContext';
 
 const VdbPlayer = observer(
@@ -38,7 +39,11 @@ const VdbPlayer = observer(
 						flexGrow: 1,
 						backgroundColor: 'black',
 					}}
-				></div>
+				>
+					{vdbPlayer.entry && (
+						<EmbedPV pv={vdbPlayer.entry.pv} width="100%" height="100%" />
+					)}
+				</div>
 
 				<div>
 					<Container>

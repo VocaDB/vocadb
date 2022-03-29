@@ -2,8 +2,8 @@ import React from 'react';
 
 interface EmbedNicoProps {
 	pvId: string;
-	width: number;
-	height: number;
+	width: number | string;
+	height: number | string;
 	id?: string;
 	enableApi?: boolean;
 }
