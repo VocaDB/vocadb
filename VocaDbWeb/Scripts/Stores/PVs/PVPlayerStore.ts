@@ -41,7 +41,6 @@ export default class PVPlayerStore {
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
-	private currentPlayer?: IPVPlayer;
 	private readonly players: { [index: string]: IPVPlayer };
 	public nextSong?: () => void;
 	@observable public primaryPV?: PVContract;
@@ -70,11 +69,6 @@ export default class PVPlayerStore {
 			() => this.selectedSong,
 			(song) => {
 				if (!song) {
-					if (this.currentPlayer) {
-						this.currentPlayer.detach();
-						this.currentPlayer = undefined;
-					}
-
 					this.primaryPV = undefined;
 					this.ratingButtonsStore = undefined;
 					return;
@@ -92,20 +86,8 @@ export default class PVPlayerStore {
 					});
 
 				// Use current player
-				if (
-					this.currentPlayer &&
-					this.songHasPVService(song, this.currentPlayer.service)
-				) {
-					this.loadPVId(this.currentPlayer.service, song.song.id).then((pvId) =>
-						this.currentPlayer!.play(pvId),
-					);
+				if (false) {
 				} else {
-					// Detech old player
-					if (this.currentPlayer) {
-						this.currentPlayer.detach();
-						this.currentPlayer = undefined;
-					}
-
 					const services = this.autoplay
 						? PVPlayerStore.autoplayPVServicesString
 						: undefined;
@@ -129,14 +111,7 @@ export default class PVPlayerStore {
 								};
 								this.playerService =
 									PVService[result.pvService as keyof typeof PVService];
-								this.currentPlayer = this.players[result.pvService];
 							});
-
-							if (this.currentPlayer) {
-								this.currentPlayer.attach(false, () => {
-									this.currentPlayer!.play();
-								});
-							}
 						});
 				}
 			},
@@ -153,24 +128,12 @@ export default class PVPlayerStore {
 						3) currently playing song doesn't have a PV that supports autoplay: switch song
 					*/
 
-					// Case 1
-					if (this.currentPlayer) {
-						return;
-					}
-
 					// Case 2
 					const newService = _.find(this.autoplayServices, (s) =>
 						this.songHasPVService(this.selectedSong!, s),
 					);
 					if (newService) {
 						this.playerService = newService;
-						this.currentPlayer = this.players[PVService[newService]];
-						this.currentPlayer.attach(true, () => {
-							this.loadPVId(
-								this.currentPlayer!.service,
-								this.selectedSong!.song.id,
-							).then((pvId) => this.currentPlayer!.play(pvId));
-						});
 						return;
 					}
 
