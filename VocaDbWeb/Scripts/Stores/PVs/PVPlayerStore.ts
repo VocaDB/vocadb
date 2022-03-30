@@ -14,7 +14,7 @@ export interface IPVPlayer {
 	// Attach the player by creating the JavaScript object, either to the currently playing element, or create a new element.
 	// reset: whether to create a new player element
 	// readyCallback: called when the player is ready
-	attach: (reset?: boolean, readyCallback?: () => void) => void;
+	attach: (reset?: boolean, readyCallback?: () => void) => Promise<void>;
 
 	detach: () => void;
 
