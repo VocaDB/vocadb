@@ -2,6 +2,7 @@ import Button from '@Bootstrap/Button';
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Container from '@Bootstrap/Container';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -92,6 +93,9 @@ const VdbPlayerLeftControls = observer(
 					}
 					onClick={vdbPlayer.toggleRepeat}
 					disabled={!vdbPlayer.canAutoplay}
+					className={classNames(
+						vdbPlayer.repeat !== RepeatMode.Off && 'active',
+					)}
 				>
 					<i className="icon-repeat icon-white" />
 				</Button>

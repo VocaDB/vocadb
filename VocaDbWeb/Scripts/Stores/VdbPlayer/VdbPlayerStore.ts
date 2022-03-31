@@ -50,13 +50,26 @@ export default class VdbPlayerStore {
 		);
 	}
 
+	@action public setPlaying = (value: boolean): void => {
+		this.playing = value;
+	};
+
 	@action public toggleRepeat = (): void => {
-		switch (this.repeat) {
+		/*switch (this.repeat) {
 			case RepeatMode.Off:
 				this.repeat = RepeatMode.All;
 				break;
 
 			case RepeatMode.All:
+				this.repeat = RepeatMode.One;
+				break;
+
+			case RepeatMode.One:
+				this.repeat = RepeatMode.Off;
+				break;
+		}*/
+		switch (this.repeat) {
+			case RepeatMode.Off:
 				this.repeat = RepeatMode.One;
 				break;
 
@@ -78,14 +91,6 @@ export default class VdbPlayerStore {
 		this.expanded = false;
 	};
 
-	@action public play = (): void => {
-		// TODO: Implement.
-	};
-
-	@action public pause = (): void => {
-		// TODO: Implement.
-	};
-
 	public previous = (): void => {
 		// TODO: Implement.
 	};
@@ -98,9 +103,7 @@ export default class VdbPlayerStore {
 	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
 		this.entry = entry;
 
-		if (this.canAutoplay) {
-			this.play();
-		} else {
+		if (!this.canAutoplay) {
 			this.expand();
 		}
 	};

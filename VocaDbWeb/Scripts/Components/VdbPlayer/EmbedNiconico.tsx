@@ -22,6 +22,10 @@ class PVPlayerNiconico implements IPVPlayer {
 	public pause = (): void => {
 		console.debug('[VdbPlayer] PVPlayerNiconico.pause');
 	};
+
+	public seekTo = (seconds: number): void => {
+		console.debug('[VdbPlayer] PVPlayerNiconico.seekTo');
+	};
 }
 
 interface EmbedNiconicoProps {

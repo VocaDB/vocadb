@@ -1,16 +1,18 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
+import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
 import _ from 'lodash';
 import React from 'react';
 
 // TODO: Implement lazy loading.
 import EmbedBili from '../Shared/Partials/PV/EmbedBili';
+import EmbedNico from '../Shared/Partials/PV/EmbedNico';
 import EmbedPiapro from '../Shared/Partials/PV/EmbedPiapro';
 import EmbedFile from './EmbedFile';
-import EmbedNiconico from './EmbedNiconico';
 import EmbedSoundCloud from './EmbedSoundCloud';
 import EmbedYouTube from './EmbedYouTube';
 import IPVPlayer from './IPVPlayer';
+import { useVdbPlayer } from './VdbPlayerContext';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
 // TODO: Test.
@@ -61,9 +63,67 @@ const EmbedPV = React.memo(
 	}: EmbedPVProps): React.ReactElement => {
 		console.debug('[VdbPlayer] EmbedPV');
 
+		const vdbPlayer = useVdbPlayer();
+
 		React.useEffect(() => {
-			playerRef.current.load(pv);
+			const player = playerRef.current;
+
+			player
+				.load(pv)
+				.then(player.play)
+				.catch((e) => {
+					console.error(
+						'[VdbPlayer] Failed to load PV',
+						JSON.parse(JSON.stringify(pv)),
+						e,
+					);
+				});
 		}, [playerRef, pv]);
+
+		const handleError = React.useCallback((e: any) => {
+			console.error('[VdbPlayer] error', e);
+		}, []);
+
+		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
+			vdbPlayer,
+		]);
+
+		const handlePause = React.useCallback(() => vdbPlayer.setPlaying(false), [
+			vdbPlayer,
+		]);
+
+		const handleEnded = React.useCallback(() => {
+			console.debug(
+				`[VdbPlayer] Playback ended (repeat mode: ${vdbPlayer.repeat})`,
+			);
+
+			const player = playerRef.current;
+
+			switch (vdbPlayer.repeat) {
+				case RepeatMode.Off:
+					vdbPlayer.setPlaying(false);
+					break;
+
+				case RepeatMode.One:
+					player.seekTo(0);
+					player.play();
+					break;
+
+				case RepeatMode.All:
+					// TODO: Implement.
+					break;
+			}
+		}, [vdbPlayer, playerRef]);
+
+		const playerOptions = React.useMemo(
+			() => ({
+				onError: handleError,
+				onPlay: handlePlay,
+				onPause: handlePause,
+				onEnded: handleEnded,
+			}),
+			[handleError, handlePlay, handlePause, handleEnded],
+		);
 
 		switch (PVService[pv.service as keyof typeof PVService]) {
 			case PVService.Bandcamp:
@@ -83,7 +143,7 @@ const EmbedPV = React.memo(
 			case PVService.File:
 			case PVService.LocalFile:
 				return isAudio(pv.url) ? (
-					<EmbedFile playerRef={playerRef} />
+					<EmbedFile playerRef={playerRef} {...playerOptions} />
 				) : (
 					<div css={{ width: width, height: height }}>
 						<a href={pv.url}>
@@ -97,16 +157,24 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.NicoNicoDouga:
-				return <EmbedNiconico playerRef={playerRef} />;
+				return (
+					<EmbedNico
+						pvId={pv.pvId}
+						width={width}
+						height={height}
+						id={id}
+						enableApi={enableApi}
+					/>
+				);
 
 			case PVService.Piapro:
 				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			case PVService.SoundCloud:
-				return <EmbedSoundCloud playerRef={playerRef} />;
+				return <EmbedSoundCloud playerRef={playerRef} {...playerOptions} />;
 
 			case PVService.Youtube:
-				return <EmbedYouTube playerRef={playerRef} />;
+				return <EmbedYouTube playerRef={playerRef} {...playerOptions} />;
 
 			case PVService.Vimeo:
 				return (
