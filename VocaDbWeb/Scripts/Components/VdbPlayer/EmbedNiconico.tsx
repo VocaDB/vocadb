@@ -29,7 +29,7 @@ class PVPlayerNiconico implements IPVPlayer {
 }
 
 interface EmbedNiconicoProps {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
 }
 
 const EmbedNiconico = React.memo(

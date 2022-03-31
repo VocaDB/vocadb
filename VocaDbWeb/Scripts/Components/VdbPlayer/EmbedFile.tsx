@@ -86,7 +86,7 @@ class PVPlayerFile implements IPVPlayer {
 }
 
 interface EmbedFileProps extends IPVPlayerOptions {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
 }
 
 const EmbedFile = React.memo(

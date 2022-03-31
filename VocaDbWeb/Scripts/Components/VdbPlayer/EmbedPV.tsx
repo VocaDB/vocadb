@@ -48,7 +48,7 @@ interface EmbedPVProps {
 	autoplay?: boolean;
 	enableApi?: boolean;
 	id?: string;
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
 }
 
 const EmbedPV = React.memo(
@@ -67,6 +67,8 @@ const EmbedPV = React.memo(
 
 		React.useEffect(() => {
 			const player = playerRef.current;
+
+			if (!player) return;
 
 			player
 				.load(pv)
@@ -99,6 +101,8 @@ const EmbedPV = React.memo(
 
 			const player = playerRef.current;
 
+			if (!player) return;
+
 			switch (vdbPlayer.repeat) {
 				case RepeatMode.Off:
 					vdbPlayer.setPlaying(false);
@@ -127,6 +131,9 @@ const EmbedPV = React.memo(
 
 		switch (PVService[pv.service as keyof typeof PVService]) {
 			case PVService.Bandcamp:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -138,6 +145,9 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.Bilibili:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <EmbedBili pv={pv} width={width} height={height} />;
 
 			case PVService.File:
@@ -157,6 +167,9 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.NicoNicoDouga:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					<EmbedNico
 						pvId={pv.pvId}
@@ -168,6 +181,9 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.Piapro:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			case PVService.SoundCloud:
@@ -177,6 +193,9 @@ const EmbedPV = React.memo(
 				return <EmbedYouTube playerRef={playerRef} {...playerOptions} />;
 
 			case PVService.Vimeo:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -193,6 +212,9 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.Creofuga:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -206,6 +228,9 @@ const EmbedPV = React.memo(
 				);
 
 			default:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <></>;
 		}
 	},

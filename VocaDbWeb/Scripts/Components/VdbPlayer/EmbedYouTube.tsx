@@ -119,7 +119,7 @@ class PVPlayerYouTube implements IPVPlayer {
 }
 
 interface EmbedYouTubeProps extends IPVPlayerOptions {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
 }
 
 const EmbedYouTube = React.memo(
