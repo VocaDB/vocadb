@@ -8,12 +8,24 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import EmbedPV from '../Shared/Partials/PV/EmbedPV';
+import EmbedPV from './EmbedPV';
+import IPVPlayer from './IPVPlayer';
 import { useVdbPlayer } from './VdbPlayerContext';
 
+interface VdbPlayerLeftControlsProps {
+	playerRef: React.MutableRefObject<IPVPlayer>;
+}
+
 const VdbPlayerLeftControls = observer(
-	(): React.ReactElement => {
+	({ playerRef }: VdbPlayerLeftControlsProps): React.ReactElement => {
 		const vdbPlayer = useVdbPlayer();
+
+		const handlePause = React.useCallback(() => playerRef.current.pause(), [
+			playerRef,
+		]);
+		const handlePlay = React.useCallback(() => playerRef.current.play(), [
+			playerRef,
+		]);
 
 		return (
 			<ButtonGroup>
@@ -43,7 +55,7 @@ const VdbPlayerLeftControls = observer(
 					<Button
 						variant="inverse"
 						title="Pause" /* TODO: localize */
-						onClick={vdbPlayer.pause}
+						onClick={handlePause}
 						disabled={!vdbPlayer.canAutoplay}
 					>
 						<i className="icon-pause icon-white" />
@@ -56,7 +68,7 @@ const VdbPlayerLeftControls = observer(
 								? ''
 								: ' (Unavailable for this video service)'
 						}`} /* TODO: localize */
-						onClick={vdbPlayer.play}
+						onClick={handlePlay}
 						disabled={!vdbPlayer.canAutoplay}
 					>
 						<i className="icon-play icon-white" />
@@ -195,11 +207,15 @@ const VdbPlayerRightControls = observer(
 	},
 );
 
+interface VdbPlayerControlsProps {
+	playerRef: React.MutableRefObject<IPVPlayer>;
+}
+
 const VdbPlayerControls = observer(
-	(): React.ReactElement => {
+	({ playerRef }: VdbPlayerControlsProps): React.ReactElement => {
 		return (
 			<div css={{ display: 'flex', height: 50, alignItems: 'center' }}>
-				<VdbPlayerLeftControls />
+				<VdbPlayerLeftControls playerRef={playerRef} />
 
 				<div css={{ flexGrow: 1 }}></div>
 
@@ -215,7 +231,11 @@ const VdbPlayerControls = observer(
 
 const VdbPlayer = observer(
 	(): React.ReactElement => {
+		console.debug('[VdbPlayer] VdbPlayer');
+
 		const vdbPlayer = useVdbPlayer();
+
+		const playerRef = React.useRef<IPVPlayer>(undefined!);
 
 		return (
 			<div
@@ -244,13 +264,14 @@ const VdbPlayer = observer(
 							width="100%"
 							height="100%"
 							enableApi={true}
+							playerRef={playerRef}
 						/>
 					)}
 				</div>
 
 				<div>
 					<Container>
-						<VdbPlayerControls />
+						<VdbPlayerControls playerRef={playerRef} />
 					</Container>
 				</div>
 			</div>

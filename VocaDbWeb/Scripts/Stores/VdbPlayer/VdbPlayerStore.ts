@@ -27,7 +27,7 @@ export default class VdbPlayerStore {
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
 	@observable public expanded = false;
-	@observable public entry?: IVdbPlayerEntry;
+	@observable.struct public entry?: IVdbPlayerEntry;
 
 	public constructor() {
 		makeObservable(this);
@@ -98,7 +98,10 @@ export default class VdbPlayerStore {
 	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
 		this.entry = entry;
 
-		if (this.canAutoplay) this.play();
-		else this.expand();
+		if (this.canAutoplay) {
+			this.play();
+		} else {
+			this.expand();
+		}
 	};
 }
