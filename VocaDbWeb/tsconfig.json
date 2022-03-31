@@ -30,5 +30,6 @@
 		"useDefineForClassFields": true,
 		"lib": ["dom", "esnext"]
 	},
-	"include": ["Scripts/**/*"]
+	"include": ["Scripts/**/*"],
+	"exclude": ["node_modules"]
 }
