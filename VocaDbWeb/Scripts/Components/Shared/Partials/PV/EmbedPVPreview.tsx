@@ -29,7 +29,7 @@ const EmbedPVPreview = ({
 				display: 'inline-block',
 				width: width,
 				height: height,
-				backgroundColor: 'rgb(39, 39, 39)',
+				backgroundColor: 'rgb(28, 28, 28)',
 				backgroundImage: `url(${entry.mainPicture?.urlOriginal})`,
 				backgroundSize: 'cover',
 				backgroundPosition: 'center',
