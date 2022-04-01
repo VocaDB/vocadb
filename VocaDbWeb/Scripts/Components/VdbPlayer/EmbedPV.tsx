@@ -6,9 +6,9 @@ import React from 'react';
 
 // TODO: Implement lazy loading.
 import EmbedBili from '../Shared/Partials/PV/EmbedBili';
-import EmbedNico from '../Shared/Partials/PV/EmbedNico';
 import EmbedPiapro from '../Shared/Partials/PV/EmbedPiapro';
 import EmbedFile from './EmbedFile';
+import EmbedNiconico from './EmbedNiconico';
 import EmbedSoundCloud from './EmbedSoundCloud';
 import EmbedYouTube from './EmbedYouTube';
 import IPVPlayer from './IPVPlayer';
@@ -168,18 +168,7 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.NicoNicoDouga:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
-				return (
-					<EmbedNico
-						pvId={pv.pvId}
-						width={width}
-						height={height}
-						id={id}
-						enableApi={enableApi}
-					/>
-				);
+				return <EmbedNiconico playerRef={playerRef} {...playerOptions} />;
 
 			case PVService.Piapro:
 				// TODO: Remove.

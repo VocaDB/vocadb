@@ -18,7 +18,7 @@ export default class VdbPlayerStore {
 	private static readonly autoplayServices = [
 		PVService.File,
 		PVService.LocalFile,
-		//PVService.NicoNicoDouga,
+		PVService.NicoNicoDouga,
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
