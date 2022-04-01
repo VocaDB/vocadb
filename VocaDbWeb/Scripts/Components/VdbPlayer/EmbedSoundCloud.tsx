@@ -55,7 +55,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		await this.attach();
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] SoundCloud player is not attached');
+			console.warn('[VdbPlayer] SoundCloud player is not attached');
 			return;
 		}
 
@@ -68,7 +68,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerSoundCloud.play');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] SoundCloud player is not attached');
+			console.warn('[VdbPlayer] SoundCloud player is not attached');
 			return;
 		}
 
@@ -79,7 +79,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerSoundCloud.pause');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] SoundCloud player is not attached');
+			console.warn('[VdbPlayer] SoundCloud player is not attached');
 			return;
 		}
 
@@ -90,7 +90,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerSoundCloud.seekTo');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] SoundCloud player is not attached');
+			console.warn('[VdbPlayer] SoundCloud player is not attached');
 			return;
 		}
 

@@ -32,14 +32,14 @@ class PVPlayerFile implements IPVPlayer {
 		);
 
 		if (!pv.url) {
-			console.assert('[VdbPlayer] pv.url is not defined');
+			console.warn('[VdbPlayer] pv.url is not defined');
 			return;
 		}
 
 		await this.attach();
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] File player is not attached');
+			console.warn('[VdbPlayer] File player is not attached');
 			return;
 		}
 
@@ -55,7 +55,7 @@ class PVPlayerFile implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerFile.play');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] File player is not attached');
+			console.warn('[VdbPlayer] File player is not attached');
 			return;
 		}
 
@@ -66,7 +66,7 @@ class PVPlayerFile implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerFile.pause');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] File player is not attached');
+			console.warn('[VdbPlayer] File player is not attached');
 			return;
 		}
 
@@ -77,7 +77,7 @@ class PVPlayerFile implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerFile.seekTo');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] File player is not attached');
+			console.warn('[VdbPlayer] File player is not attached');
 			return;
 		}
 

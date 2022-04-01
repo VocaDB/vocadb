@@ -35,7 +35,7 @@ class PVPlayerYouTube implements IPVPlayer {
 					onError: (e): void => this.options.onError?.(e),
 					onStateChange: (e: YT.EventArgs): void => {
 						if (!this.player) {
-							console.assert('[VdbPlayer] YouTube player is not attached');
+							console.warn('[VdbPlayer] YouTube player is not attached');
 							return;
 						}
 
@@ -75,7 +75,7 @@ class PVPlayerYouTube implements IPVPlayer {
 		await this.attach();
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] YouTube player is not attached');
+			console.warn('[VdbPlayer] YouTube player is not attached');
 			return;
 		}
 
@@ -88,7 +88,7 @@ class PVPlayerYouTube implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerYouTube.play');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] YouTube player is not attached');
+			console.warn('[VdbPlayer] YouTube player is not attached');
 			return;
 		}
 
@@ -99,7 +99,7 @@ class PVPlayerYouTube implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerYouTube.pause');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] YouTube player is not attached');
+			console.warn('[VdbPlayer] YouTube player is not attached');
 			return;
 		}
 
@@ -110,7 +110,7 @@ class PVPlayerYouTube implements IPVPlayer {
 		console.debug('[VdbPlayer] PVPlayerYouTube.seekTo');
 
 		if (!this.player) {
-			console.assert('[VdbPlayer] YouTube player is not attached');
+			console.warn('[VdbPlayer] YouTube player is not attached');
 			return;
 		}
 
