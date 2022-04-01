@@ -2,6 +2,7 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/e147650a8f1f85c8fa865d0ab562126c278527ec/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts.
 class PVPlayerSoundCloud implements IPVPlayer {
@@ -11,13 +12,13 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		private readonly playerElementRef: React.MutableRefObject<HTMLIFrameElement>,
 		private readonly options: IPVPlayerOptions,
 	) {
-		console.debug('[VdbPlayer] PVPlayerSoundCloud.ctor');
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.ctor');
 	}
 
 	private attach = (): Promise<void> => {
 		return new Promise((resolve, reject /* TODO: Reject. */) => {
 			if (this.player) {
-				console.debug('[VdbPlayer] SoundCloud player is already attached');
+				VdbPlayerConsole.debug('SoundCloud player is already attached');
 
 				resolve();
 				return;
@@ -25,7 +26,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 
 			this.player = SC.Widget(this.playerElementRef.current);
 			this.player.bind(SC.Widget.Events.READY, () => {
-				console.debug('[VdbPlayer] SoundCloud player attached');
+				VdbPlayerConsole.debug('SoundCloud player attached');
 
 				resolve();
 			});
@@ -45,30 +46,30 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	};
 
 	public load = async (pv: PVContract): Promise<void> => {
-		console.debug(
-			'[VdbPlayer] PVPlayerSoundCloud.load',
+		VdbPlayerConsole.debug(
+			'PVPlayerSoundCloud.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
 
-		console.debug('[VdbPlayer] Attaching SoundCloud player...');
+		VdbPlayerConsole.debug('Attaching SoundCloud player...');
 
 		await this.attach();
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] SoundCloud player is not attached');
+			VdbPlayerConsole.warn('SoundCloud player is not attached');
 			return;
 		}
 
-		console.debug('[VdbPlayer] Loading SoundCloud video...');
+		VdbPlayerConsole.debug('Loading SoundCloud video...');
 
 		this.player.load(this.getUrlFromId(pv.pvId), { auto_play: true });
 	};
 
 	public play = (): void => {
-		console.debug('[VdbPlayer] PVPlayerSoundCloud.play');
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.play');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] SoundCloud player is not attached');
+			VdbPlayerConsole.warn('SoundCloud player is not attached');
 			return;
 		}
 
@@ -76,10 +77,10 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	};
 
 	public pause = (): void => {
-		console.debug('[VdbPlayer] PVPlayerSoundCloud.pause');
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.pause');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] SoundCloud player is not attached');
+			VdbPlayerConsole.warn('SoundCloud player is not attached');
 			return;
 		}
 
@@ -87,10 +88,10 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		console.debug('[VdbPlayer] PVPlayerSoundCloud.seekTo');
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.seekTo');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] SoundCloud player is not attached');
+			VdbPlayerConsole.warn('SoundCloud player is not attached');
 			return;
 		}
 
@@ -104,7 +105,7 @@ interface EmbedSoundCloudProps extends IPVPlayerOptions {
 
 const EmbedSoundCloud = React.memo(
 	({ playerRef, ...options }: EmbedSoundCloudProps): React.ReactElement => {
-		console.debug('[VdbPlayer] EmbedSoundCloud');
+		VdbPlayerConsole.debug('EmbedSoundCloud');
 
 		const playerElementRef = React.useRef<HTMLIFrameElement>(undefined!);
 

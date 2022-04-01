@@ -12,6 +12,7 @@ import EmbedFile from './EmbedFile';
 import EmbedSoundCloud from './EmbedSoundCloud';
 import EmbedYouTube from './EmbedYouTube';
 import IPVPlayer from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 import { useVdbPlayer } from './VdbPlayerContext';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
@@ -61,7 +62,7 @@ const EmbedPV = React.memo(
 		id,
 		playerRef,
 	}: EmbedPVProps): React.ReactElement => {
-		console.debug('[VdbPlayer] EmbedPV');
+		VdbPlayerConsole.debug('EmbedPV');
 
 		const vdbPlayer = useVdbPlayer();
 
@@ -74,8 +75,8 @@ const EmbedPV = React.memo(
 				.load(pv)
 				.then(player.play)
 				.catch((e) => {
-					console.error(
-						'[VdbPlayer] Failed to load PV',
+					VdbPlayerConsole.error(
+						'Failed to load PV',
 						JSON.parse(JSON.stringify(pv)),
 						e,
 					);
@@ -83,7 +84,7 @@ const EmbedPV = React.memo(
 		}, [playerRef, pv]);
 
 		const handleError = React.useCallback((e: any) => {
-			console.error('[VdbPlayer] error', e);
+			VdbPlayerConsole.error('error', e);
 		}, []);
 
 		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
@@ -95,8 +96,8 @@ const EmbedPV = React.memo(
 		]);
 
 		const handleEnded = React.useCallback(() => {
-			console.debug(
-				`[VdbPlayer] Playback ended (repeat mode: ${vdbPlayer.repeat})`,
+			VdbPlayerConsole.debug(
+				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
 			);
 
 			const player = playerRef.current;

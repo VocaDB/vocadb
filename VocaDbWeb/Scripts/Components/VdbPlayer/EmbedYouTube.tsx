@@ -2,6 +2,7 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/076dac9f0808aba5da7332209fdfd2ff4e12c235/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerYoutube.ts.
 class PVPlayerYouTube implements IPVPlayer {
@@ -11,13 +12,13 @@ class PVPlayerYouTube implements IPVPlayer {
 		private readonly playerElementRef: React.MutableRefObject<HTMLDivElement>,
 		private readonly options: IPVPlayerOptions,
 	) {
-		console.debug('[VdbPlayer] PVPlayerYouTube.ctor', playerElementRef.current);
+		VdbPlayerConsole.debug('PVPlayerYouTube.ctor', playerElementRef.current);
 	}
 
 	private attach = (): Promise<void> => {
 		return new Promise((resolve, reject /* TODO: Reject. */) => {
 			if (this.player) {
-				console.debug('[VdbPlayer] YouTube player is already attached');
+				VdbPlayerConsole.debug('YouTube player is already attached');
 
 				resolve();
 				return;
@@ -28,32 +29,32 @@ class PVPlayerYouTube implements IPVPlayer {
 				height: '100%',
 				events: {
 					onReady: (): void => {
-						console.debug('[VdbPlayer] YouTube player attached');
+						VdbPlayerConsole.debug('YouTube player attached');
 
 						resolve();
 					},
 					onError: (e): void => this.options.onError?.(e),
 					onStateChange: (e: YT.EventArgs): void => {
 						if (!this.player) {
-							console.warn('[VdbPlayer] YouTube player is not attached');
+							VdbPlayerConsole.warn('YouTube player is not attached');
 							return;
 						}
 
 						switch (e.data) {
 							case YT.PlayerState.PLAYING:
-								console.debug('[VdbPlayer] YouTube state changed: PLAYING');
+								VdbPlayerConsole.debug('YouTube state changed: PLAYING');
 
 								this.options.onPlay?.();
 								break;
 
 							case YT.PlayerState.PAUSED:
-								console.debug('[VdbPlayer] YouTube state changed: PAUSED');
+								VdbPlayerConsole.debug('YouTube state changed: PAUSED');
 
 								this.options.onPause?.();
 								break;
 
 							case YT.PlayerState.ENDED:
-								console.debug('[VdbPlayer] YouTube state changed: ENDED');
+								VdbPlayerConsole.debug('YouTube state changed: ENDED');
 
 								this.options.onEnded?.();
 								break;
@@ -65,30 +66,30 @@ class PVPlayerYouTube implements IPVPlayer {
 	};
 
 	public load = async (pv: PVContract): Promise<void> => {
-		console.debug(
-			'[VdbPlayer] PVPlayerYouTube.load',
+		VdbPlayerConsole.debug(
+			'PVPlayerYouTube.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
 
-		console.debug('[VdbPlayer] Attaching YouTube player...');
+		VdbPlayerConsole.debug('Attaching YouTube player...');
 
 		await this.attach();
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] YouTube player is not attached');
+			VdbPlayerConsole.warn('YouTube player is not attached');
 			return;
 		}
 
-		console.debug('[VdbPlayer] Loading YouTube video...');
+		VdbPlayerConsole.debug('Loading YouTube video...');
 
 		this.player.loadVideoById(pv.pvId);
 	};
 
 	public play = (): void => {
-		console.debug('[VdbPlayer] PVPlayerYouTube.play');
+		VdbPlayerConsole.debug('PVPlayerYouTube.play');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] YouTube player is not attached');
+			VdbPlayerConsole.warn('YouTube player is not attached');
 			return;
 		}
 
@@ -96,10 +97,10 @@ class PVPlayerYouTube implements IPVPlayer {
 	};
 
 	public pause = (): void => {
-		console.debug('[VdbPlayer] PVPlayerYouTube.pause');
+		VdbPlayerConsole.debug('PVPlayerYouTube.pause');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] YouTube player is not attached');
+			VdbPlayerConsole.warn('YouTube player is not attached');
 			return;
 		}
 
@@ -107,10 +108,10 @@ class PVPlayerYouTube implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		console.debug('[VdbPlayer] PVPlayerYouTube.seekTo');
+		VdbPlayerConsole.debug('PVPlayerYouTube.seekTo');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] YouTube player is not attached');
+			VdbPlayerConsole.warn('YouTube player is not attached');
 			return;
 		}
 
@@ -124,7 +125,7 @@ interface EmbedYouTubeProps extends IPVPlayerOptions {
 
 const EmbedYouTube = React.memo(
 	({ playerRef, ...options }: EmbedYouTubeProps): React.ReactElement => {
-		console.debug('[VdbPlayer] EmbedYouTube');
+		VdbPlayerConsole.debug('EmbedYouTube');
 
 		const playerElementRef = React.useRef<HTMLDivElement>(undefined!);
 

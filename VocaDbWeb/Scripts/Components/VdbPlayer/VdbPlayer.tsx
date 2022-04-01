@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 
 import EmbedPV from './EmbedPV';
 import IPVPlayer from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 import { useVdbPlayer } from './VdbPlayerContext';
 
 interface VdbPlayerLeftControlsProps {
@@ -235,7 +236,7 @@ const VdbPlayerControls = observer(
 
 const VdbPlayer = observer(
 	(): React.ReactElement => {
-		console.debug('[VdbPlayer] VdbPlayer');
+		VdbPlayerConsole.debug('VdbPlayer');
 
 		const vdbPlayer = useVdbPlayer();
 

@@ -2,29 +2,30 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import React from 'react';
 
 import IPVPlayer from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 
 class PVPlayerNiconico implements IPVPlayer {
 	public constructor() {
-		console.debug('[VdbPlayer] PVPlayerNiconico.ctor');
+		VdbPlayerConsole.debug('PVPlayerNiconico.ctor');
 	}
 
 	public load = async (pv: PVContract): Promise<void> => {
-		console.debug(
-			'[VdbPlayer] PVPlayerNiconico.load',
+		VdbPlayerConsole.debug(
+			'PVPlayerNiconico.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
 	};
 
 	public play = (): void => {
-		console.debug('[VdbPlayer] PVPlayerNiconico.play');
+		VdbPlayerConsole.debug('PVPlayerNiconico.play');
 	};
 
 	public pause = (): void => {
-		console.debug('[VdbPlayer] PVPlayerNiconico.pause');
+		VdbPlayerConsole.debug('PVPlayerNiconico.pause');
 	};
 
 	public seekTo = (seconds: number): void => {
-		console.debug('[VdbPlayer] PVPlayerNiconico.seekTo');
+		VdbPlayerConsole.debug('PVPlayerNiconico.seekTo');
 	};
 }
 
@@ -34,7 +35,7 @@ interface EmbedNiconicoProps {
 
 const EmbedNiconico = React.memo(
 	({ playerRef }: EmbedNiconicoProps): React.ReactElement => {
-		console.debug('[VdbPlayer] EmbedNiconico');
+		VdbPlayerConsole.debug('EmbedNiconico');
 
 		React.useEffect(() => {
 			playerRef.current = new PVPlayerNiconico();

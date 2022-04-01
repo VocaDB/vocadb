@@ -2,6 +2,7 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
+import VdbPlayerConsole from './VdbPlayerConsole';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/61b8c54f3eca906a477101dab4fdd9b154be310e/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerFile.ts.
 class PVPlayerFile implements IPVPlayer {
@@ -11,35 +12,32 @@ class PVPlayerFile implements IPVPlayer {
 		private readonly playerElementRef: React.MutableRefObject<HTMLAudioElement>,
 		private readonly options: IPVPlayerOptions,
 	) {
-		console.debug('[VdbPlayer] PVPlayerFile.ctor');
+		VdbPlayerConsole.debug('PVPlayerFile.ctor');
 	}
 
 	private attach = async (): Promise<void> => {
 		if (this.player) {
-			console.debug('[VdbPlayer] File player is already attached');
+			VdbPlayerConsole.debug('File player is already attached');
 			return;
 		}
 
 		this.player = this.playerElementRef.current;
 
-		console.debug('[VdbPlayer] File player attached');
+		VdbPlayerConsole.debug('File player attached');
 	};
 
 	public load = async (pv: PVContract): Promise<void> => {
-		console.debug(
-			'[VdbPlayer] PVPlayerFile.load',
-			JSON.parse(JSON.stringify(pv)),
-		);
+		VdbPlayerConsole.debug('PVPlayerFile.load', JSON.parse(JSON.stringify(pv)));
 
 		if (!pv.url) {
-			console.warn('[VdbPlayer] pv.url is not defined');
+			VdbPlayerConsole.warn('pv.url is not defined');
 			return;
 		}
 
 		await this.attach();
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] File player is not attached');
+			VdbPlayerConsole.warn('File player is not attached');
 			return;
 		}
 
@@ -52,10 +50,10 @@ class PVPlayerFile implements IPVPlayer {
 	};
 
 	public play = (): void => {
-		console.debug('[VdbPlayer] PVPlayerFile.play');
+		VdbPlayerConsole.debug('PVPlayerFile.play');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] File player is not attached');
+			VdbPlayerConsole.warn('File player is not attached');
 			return;
 		}
 
@@ -63,10 +61,10 @@ class PVPlayerFile implements IPVPlayer {
 	};
 
 	public pause = (): void => {
-		console.debug('[VdbPlayer] PVPlayerFile.pause');
+		VdbPlayerConsole.debug('PVPlayerFile.pause');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] File player is not attached');
+			VdbPlayerConsole.warn('File player is not attached');
 			return;
 		}
 
@@ -74,10 +72,10 @@ class PVPlayerFile implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		console.debug('[VdbPlayer] PVPlayerFile.seekTo');
+		VdbPlayerConsole.debug('PVPlayerFile.seekTo');
 
 		if (!this.player) {
-			console.warn('[VdbPlayer] File player is not attached');
+			VdbPlayerConsole.warn('File player is not attached');
 			return;
 		}
 
@@ -91,7 +89,7 @@ interface EmbedFileProps extends IPVPlayerOptions {
 
 const EmbedFile = React.memo(
 	({ playerRef, ...options }: EmbedFileProps): React.ReactElement => {
-		console.debug('[VdbPlayer] EmbedFile');
+		VdbPlayerConsole.debug('EmbedFile');
 
 		const playerElementRef = React.useRef<HTMLAudioElement>(undefined!);
 
