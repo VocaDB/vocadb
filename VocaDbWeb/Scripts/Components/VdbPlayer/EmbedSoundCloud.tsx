@@ -3,6 +3,7 @@ import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
+import { getScript } from './getScript';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/e147650a8f1f85c8fa865d0ab562126c278527ec/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts.
 class PVPlayerSoundCloud implements IPVPlayer {
@@ -15,14 +16,45 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerSoundCloud.ctor');
 	}
 
+	private static scriptLoaded = false;
+
+	private loadScript = (): Promise<void> => {
+		return new Promise(async (resolve, reject) => {
+			if (PVPlayerSoundCloud.scriptLoaded) {
+				VdbPlayerConsole.debug('SoundCloud script is already loaded');
+
+				resolve();
+				return;
+			}
+
+			try {
+				VdbPlayerConsole.debug('Loading SoundCloud script...');
+
+				await getScript('/Scripts/soundcloud-api.js');
+
+				PVPlayerSoundCloud.scriptLoaded = true;
+
+				VdbPlayerConsole.debug('SoundCloud script loaded');
+
+				resolve();
+			} catch {
+				VdbPlayerConsole.error('Failed to load SoundCloud script');
+
+				reject();
+			}
+		});
+	};
+
 	private attach = (): Promise<void> => {
-		return new Promise((resolve, reject /* TODO: Reject. */) => {
+		return new Promise(async (resolve, reject /* TODO: Reject. */) => {
 			if (this.player) {
 				VdbPlayerConsole.debug('SoundCloud player is already attached');
 
 				resolve();
 				return;
 			}
+
+			await this.loadScript();
 
 			this.player = SC.Widget(this.playerElementRef.current);
 			this.player.bind(SC.Widget.Events.READY, () => {

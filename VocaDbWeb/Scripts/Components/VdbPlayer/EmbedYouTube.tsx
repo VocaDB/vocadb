@@ -3,6 +3,13 @@ import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
+import { getScript } from './getScript';
+
+declare global {
+	interface Window {
+		onYouTubeIframeAPIReady: () => void;
+	}
+}
 
 // Code from: https://github.com/VocaDB/vocadb/blob/076dac9f0808aba5da7332209fdfd2ff4e12c235/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerYoutube.ts.
 class PVPlayerYouTube implements IPVPlayer {
@@ -15,18 +22,56 @@ class PVPlayerYouTube implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerYouTube.ctor', playerElementRef.current);
 	}
 
+	private static scriptLoaded = false;
+
+	private loadScript = (): Promise<void> => {
+		return new Promise(async (resolve, reject) => {
+			if (PVPlayerYouTube.scriptLoaded) {
+				VdbPlayerConsole.debug('YouTube script is already loaded');
+
+				resolve();
+				return;
+			}
+
+			// Code from: https://stackoverflow.com/a/18154942.
+			window.onYouTubeIframeAPIReady = (): void => {
+				VdbPlayerConsole.debug('YouTube iframe API ready');
+
+				resolve();
+			};
+
+			try {
+				VdbPlayerConsole.debug('Loading YouTube script...');
+
+				await getScript('https://www.youtube.com/iframe_api');
+
+				PVPlayerYouTube.scriptLoaded = true;
+
+				VdbPlayerConsole.debug('YouTube script loaded');
+			} catch {
+				VdbPlayerConsole.error('Failed to load YouTube script');
+
+				reject();
+			}
+		});
+	};
+
 	private assertPlayerAttached = (): void => {
 		VdbPlayerConsole.assert(!!this.player, 'YouTube player is not attached');
 	};
 
 	private attach = (): Promise<void> => {
-		return new Promise((resolve, reject /* TODO: Reject. */) => {
+		return new Promise(async (resolve, reject /* TODO: Reject. */) => {
 			if (this.player) {
 				VdbPlayerConsole.debug('YouTube player is already attached');
 
 				resolve();
 				return;
 			}
+
+			await this.loadScript();
+
+			VdbPlayerConsole.debug('Attaching YouTube player...');
 
 			this.player = new YT.Player(this.playerElementRef.current, {
 				width: '100%',
@@ -72,8 +117,6 @@ class PVPlayerYouTube implements IPVPlayer {
 			'PVPlayerYouTube.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
-
-		VdbPlayerConsole.debug('Attaching YouTube player...');
 
 		await this.attach();
 
