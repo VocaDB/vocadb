@@ -15,6 +15,10 @@ class PVPlayerYouTube implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerYouTube.ctor', playerElementRef.current);
 	}
 
+	private assertPlayerAttached = (): void => {
+		VdbPlayerConsole.assert(!!this.player, 'YouTube player is not attached');
+	};
+
 	private attach = (): Promise<void> => {
 		return new Promise((resolve, reject /* TODO: Reject. */) => {
 			if (this.player) {
@@ -35,10 +39,8 @@ class PVPlayerYouTube implements IPVPlayer {
 					},
 					onError: (e): void => this.options.onError?.(e),
 					onStateChange: (e: YT.EventArgs): void => {
-						if (!this.player) {
-							VdbPlayerConsole.warn('YouTube player is not attached');
-							return;
-						}
+						this.assertPlayerAttached();
+						if (!this.player) return;
 
 						switch (e.data) {
 							case YT.PlayerState.PLAYING:
@@ -75,10 +77,8 @@ class PVPlayerYouTube implements IPVPlayer {
 
 		await this.attach();
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('YouTube player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		VdbPlayerConsole.debug('Loading YouTube video...');
 
@@ -88,10 +88,8 @@ class PVPlayerYouTube implements IPVPlayer {
 	public play = (): void => {
 		VdbPlayerConsole.debug('PVPlayerYouTube.play');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('YouTube player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.playVideo();
 	};
@@ -99,10 +97,8 @@ class PVPlayerYouTube implements IPVPlayer {
 	public pause = (): void => {
 		VdbPlayerConsole.debug('PVPlayerYouTube.pause');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('YouTube player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.pauseVideo();
 	};
@@ -110,10 +106,8 @@ class PVPlayerYouTube implements IPVPlayer {
 	public seekTo = (seconds: number): void => {
 		VdbPlayerConsole.debug('PVPlayerYouTube.seekTo');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('YouTube player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.seekTo(seconds, false);
 	};

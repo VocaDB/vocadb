@@ -39,6 +39,10 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		});
 	};
 
+	private assertPlayerAttached = (): void => {
+		VdbPlayerConsole.assert(!!this.player, 'SoundCloud player is not attached');
+	};
+
 	private getUrlFromId = (pvId: string): string => {
 		var parts = pvId.split(' ');
 		var url = `https://api.soundcloud.com/tracks/${parts[0]}`;
@@ -55,10 +59,8 @@ class PVPlayerSoundCloud implements IPVPlayer {
 
 		await this.attach();
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('SoundCloud player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		VdbPlayerConsole.debug('Loading SoundCloud video...');
 
@@ -68,10 +70,8 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	public play = (): void => {
 		VdbPlayerConsole.debug('PVPlayerSoundCloud.play');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('SoundCloud player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.play();
 	};
@@ -79,10 +79,8 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	public pause = (): void => {
 		VdbPlayerConsole.debug('PVPlayerSoundCloud.pause');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('SoundCloud player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.pause();
 	};
@@ -90,10 +88,8 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	public seekTo = (seconds: number): void => {
 		VdbPlayerConsole.debug('PVPlayerSoundCloud.seekTo');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('SoundCloud player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.seekTo(seconds * 1000);
 	};

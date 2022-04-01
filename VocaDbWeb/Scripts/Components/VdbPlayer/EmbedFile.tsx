@@ -26,20 +26,20 @@ class PVPlayerFile implements IPVPlayer {
 		VdbPlayerConsole.debug('File player attached');
 	};
 
+	private assertPlayerAttached = (): void => {
+		VdbPlayerConsole.assert(!!this.player, 'File player is not attached');
+	};
+
 	public load = async (pv: PVContract): Promise<void> => {
 		VdbPlayerConsole.debug('PVPlayerFile.load', JSON.parse(JSON.stringify(pv)));
 
-		if (!pv.url) {
-			VdbPlayerConsole.warn('pv.url is not defined');
-			return;
-		}
+		VdbPlayerConsole.assert(!!pv.url, 'pv.url is not defined');
+		if (!pv.url) return;
 
 		await this.attach();
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('File player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.src = pv.url;
 
@@ -52,10 +52,8 @@ class PVPlayerFile implements IPVPlayer {
 	public play = (): void => {
 		VdbPlayerConsole.debug('PVPlayerFile.play');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('File player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.play();
 	};
@@ -63,10 +61,8 @@ class PVPlayerFile implements IPVPlayer {
 	public pause = (): void => {
 		VdbPlayerConsole.debug('PVPlayerFile.pause');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('File player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.pause();
 	};
@@ -74,10 +70,8 @@ class PVPlayerFile implements IPVPlayer {
 	public seekTo = (seconds: number): void => {
 		VdbPlayerConsole.debug('PVPlayerFile.seekTo');
 
-		if (!this.player) {
-			VdbPlayerConsole.warn('File player is not attached');
-			return;
-		}
+		this.assertPlayerAttached();
+		if (!this.player) return;
 
 		this.player.currentTime = seconds;
 	};
