@@ -36,10 +36,10 @@ const PVPreviewKnockout = observer(
 
 					{/* PV service switcher */}
 					<div className="btn-toolbar">
-						<ButtonGroup>
-							{previewStore.pvServices &&
-								previewStore.pvServices.indexOf(',') > 0 && (
-									<div className="pv-preview-services">
+						{previewStore.pvServices &&
+							previewStore.pvServices.indexOf(',') > 0 && (
+								<div className="pv-preview-services">
+									<ButtonGroup>
 										{getPvServiceIcons(previewStore.pvServices).map(
 											(icon, index) => (
 												<Button
@@ -58,9 +58,9 @@ const PVPreviewKnockout = observer(
 												</Button>
 											),
 										)}
-									</div>
-								)}
-						</ButtonGroup>
+									</ButtonGroup>
+								</div>
+							)}
 					</div>
 				</div>
 				<div>
