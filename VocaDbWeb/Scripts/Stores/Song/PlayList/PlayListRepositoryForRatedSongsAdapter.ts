@@ -52,7 +52,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
 				advancedFilters: this.ratedSongsAdapterStore.advancedFilters.filters,
 				groupByRating: this.ratedSongsAdapterStore.groupByRating,
 				pvServices: pvServices,
-				fields: 'ThumbUrl',
+				fields: 'MainPicture' /* TODO: enum */,
 				sort: this.ratedSongsAdapterStore.sort,
 			})
 			.then(

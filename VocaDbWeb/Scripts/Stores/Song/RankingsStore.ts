@@ -59,7 +59,7 @@ export default class RankingsStore
 				this.urlMapper.mapRelative('/api/songs/top-rated'),
 				{
 					durationHours: this.durationHours,
-					fields: 'AdditionalNames,ThumbUrl,Tags',
+					fields: 'AdditionalNames,MainPicture,Tags' /* TODO: enum */,
 					vocalist: this.vocalistSelection,
 					filterBy: this.dateFilterType,
 					languagePreference: this.languagePreference,

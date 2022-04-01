@@ -155,7 +155,7 @@ const PlayList = observer(
 									key={song.song.id}
 								>
 									<td style={{ width: '30px' }}>
-										{song.song.thumbUrl && (
+										{song.song.mainPicture && song.song.mainPicture.urlThumb && (
 											<a
 												href={EntryUrlMapper.details(
 													EntryType.Song,
@@ -166,7 +166,7 @@ const PlayList = observer(
 											>
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
-													src={song.song.thumbUrl}
+													src={song.song.mainPicture.urlThumb}
 													title="Cover picture" /* TODO: localize */
 													className="coverPicIcon img-rounded"
 													referrerPolicy="same-origin"

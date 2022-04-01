@@ -19,7 +19,7 @@ const SongIconLink = React.memo(
 				})}`}
 			>
 				<img
-					src={UrlHelper.upgradeToHttps(song.thumbUrl)}
+					src={UrlHelper.upgradeToHttps(song.mainPicture?.urlThumb)}
 					alt="Cover" /* TODO: localize */
 					className="coverPicThumb"
 					referrerPolicy="same-origin"

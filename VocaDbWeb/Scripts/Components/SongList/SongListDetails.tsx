@@ -467,14 +467,14 @@ const SongListDetailsLayout = observer(
 								{songListStore.page.map((item, index) => (
 									<tr key={index}>
 										<td style={{ width: '75px' }}>
-											{item.song.thumbUrl && (
+											{item.song.mainPicture && item.song.mainPicture.urlThumb && (
 												<Link
 													to={EntryUrlMapper.details_song(item.song)}
 													title={item.song.additionalNames}
 												>
 													{/* eslint-disable-next-line jsx-a11y/alt-text */}
 													<img
-														src={item.song.thumbUrl}
+														src={item.song.mainPicture.urlThumb}
 														title="Cover picture" /* TODO: localize */
 														className="coverPicThumb img-rounded"
 														referrerPolicy="same-origin"

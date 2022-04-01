@@ -197,8 +197,8 @@ export default class SongSearchStore
 
 	@computed public get fields(): string {
 		return this.showTags
-			? 'AdditionalNames,ThumbUrl,Tags'
-			: 'AdditionalNames,ThumbUrl';
+			? 'AdditionalNames,MainPicture,Tags'
+			: 'AdditionalNames,MainPicture' /* TODO: enum */;
 	}
 
 	@computed public get showUnifyEntryTypesAndTags(): boolean {

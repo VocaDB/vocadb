@@ -152,7 +152,9 @@ export default class RatedSongsSearchStore
 	}
 
 	@computed public get fields(): string {
-		return `AdditionalNames,ThumbUrl${this.showTags ? ',Tags' : ''}`;
+		return `AdditionalNames,MainPicture${
+			this.showTags ? ',Tags' : ''
+		}` /* TODO: enum */;
 	}
 
 	@action public selectTag = (tag: TagBaseContract): void => {
