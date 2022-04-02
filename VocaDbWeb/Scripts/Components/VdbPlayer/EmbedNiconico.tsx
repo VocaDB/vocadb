@@ -98,6 +98,8 @@ declare global {
 class PVPlayerNiconico implements IPVPlayer {
 	private static origin = 'https://embed.nicovideo.jp';
 
+	private player?: HTMLIFrameElement;
+
 	public constructor(
 		private readonly playerElementRef: React.MutableRefObject<HTMLIFrameElement>,
 		private readonly options: IPVPlayerOptions,
@@ -105,25 +107,114 @@ class PVPlayerNiconico implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerNiconico.ctor');
 	}
 
-	public load = async (pv: PVContract): Promise<void> => {
+	private attach = (): Promise<void> => {
 		return new Promise((resolve, reject /* TODO: Reject. */) => {
+			if (this.player) {
+				VdbPlayerConsole.debug('Niconico player is already attached');
+
+				resolve();
+				return;
+			}
+
+			this.player = this.playerElementRef.current;
+
+			window.addEventListener('message', (e: nico.PlayerEvent) => {
+				if (e.origin !== PVPlayerNiconico.origin) return;
+
+				switch (e.data.eventName) {
+					case 'playerStatusChange':
+						VdbPlayerConsole.debug(
+							`Niconico player status changed: ${e.data.data.playerStatus}`,
+						);
+
+						switch (e.data.data.playerStatus) {
+							case nico.PlayerStatus.Play:
+								this.options.onPlay?.();
+								break;
+
+							case nico.PlayerStatus.Pause:
+								this.options.onPause?.();
+								break;
+
+							case nico.PlayerStatus.End:
+								this.options.onEnded?.();
+								break;
+						}
+						break;
+
+					case 'statusChange':
+						VdbPlayerConsole.debug(
+							`Niconico status changed: ${e.data.data.playerStatus}`,
+						);
+						break;
+
+					case 'playerMetadataChange':
+						break;
+
+					case 'loadComplete':
+						VdbPlayerConsole.debug('Niconico load completed');
+
+						// TODO: Implement.
+						break;
+
+					case 'error':
+						// TODO: Implement.
+
+						this.options.onError?.(e.data);
+						break;
+
+					case 'player-error:video:play':
+					case 'player-error:video:seek':
+						this.options.onError?.(e.data);
+						break;
+
+					default:
+						VdbPlayerConsole.warn(
+							'Niconico message',
+							e.data.eventName,
+							e.data.data,
+						);
+						break;
+				}
+			});
+
+			VdbPlayerConsole.debug('Niconico player attached');
+
+			resolve();
+		});
+	};
+
+	private assertPlayerAttached = (): void => {
+		VdbPlayerConsole.assert(!!this.player, 'Niconico player is not attached');
+	};
+
+	public load = async (pv: PVContract): Promise<void> => {
+		return new Promise(async (resolve, reject /* TODO: Reject. */) => {
 			VdbPlayerConsole.debug(
 				'PVPlayerNiconico.load',
 				JSON.parse(JSON.stringify(pv)),
 			);
 
-			const player = this.playerElementRef.current;
+			await this.attach();
+
+			this.assertPlayerAttached();
+			if (!this.player) return;
 
 			// Wait for iframe to load.
-			player.onload = (): void => {
-				player.onload = null;
+			this.player.onload = (): void => {
+				this.assertPlayerAttached();
+				if (!this.player) return;
+
+				this.player.onload = null;
 
 				VdbPlayerConsole.debug('Niconico iframe loaded');
 
 				resolve();
 			};
 
-			player.src = `https://embed.nicovideo.jp/watch/${pv.pvId}?${qs.stringify({
+			this.player.src = `https://embed.nicovideo.jp/watch/${
+				pv.pvId
+			}?${qs.stringify({
 				jsapi: 1,
 				playerId: 1,
 			})}`;
@@ -132,7 +223,10 @@ class PVPlayerNiconico implements IPVPlayer {
 
 	// Code from: https://blog.hayu.io/web/create/nicovideo-embed-player-api/.
 	private postMessage = (message: any): void => {
-		this.playerElementRef.current.contentWindow?.postMessage(
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		this.player.contentWindow?.postMessage(
 			{
 				...message,
 				playerId: '1' /* Needs to be a string, not a number. */,
