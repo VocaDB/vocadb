@@ -57,12 +57,6 @@ declare namespace nico {
 	}
 }
 
-declare global {
-	interface Window {
-		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
-	}
-}
-
 /*
 		Note: I'm not terrible happy about the implementation for now.
 		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.

@@ -75,6 +75,24 @@ class PVPlayerFile implements IPVPlayer {
 
 		this.player.currentTime = seconds;
 	};
+
+	public mute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerFile.mute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
+
+	public unmute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerFile.unmute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
 }
 
 interface EmbedFileProps extends IPVPlayerOptions {

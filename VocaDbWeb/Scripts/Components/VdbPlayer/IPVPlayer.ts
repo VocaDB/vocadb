@@ -12,4 +12,6 @@ export default interface IPVPlayer {
 	play: () => void;
 	pause: () => void;
 	seekTo: (seconds: number) => void;
+	mute: () => void;
+	unmute: () => void;
 }

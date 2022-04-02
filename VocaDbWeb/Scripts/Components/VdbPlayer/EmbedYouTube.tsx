@@ -154,6 +154,24 @@ class PVPlayerYouTube implements IPVPlayer {
 
 		this.player.seekTo(seconds, false);
 	};
+
+	public mute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerYouTube.mute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
+
+	public unmute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerYouTube.unmute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
 }
 
 interface EmbedYouTubeProps extends IPVPlayerOptions {

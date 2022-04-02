@@ -1,4 +1,5 @@
 import PVContract from '@DataContracts/PVs/PVContract';
+import $ from 'jquery';
 import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
@@ -7,6 +8,8 @@ import { getScript } from './getScript';
 
 declare namespace nico {
 	export interface NicoPlayer {
+		iframeElement: HTMLIFrameElement;
+		playerId: string;
 		play(): void;
 		pause(): void;
 	}
@@ -21,8 +24,15 @@ declare namespace nico {
 		End = 4,
 	}
 
-	export interface StatusEvent {
+	export interface PlayerStatusEvent {
 		eventName: 'playerStatusChange';
+		data: {
+			playerStatus: PlayerStatus;
+		};
+	}
+
+	export interface StatusEvent {
+		eventName: 'statusChange';
 		data: {
 			playerStatus: PlayerStatus;
 		};
@@ -59,12 +69,19 @@ declare namespace nico {
 		};
 	}
 
+	export interface UnknownEvent {
+		eventName: string;
+		data: any;
+	}
+
 	type EventData =
+		| PlayerStatusEvent
 		| StatusEvent
 		| MetadataEvent
 		| LoadCompleteEvent
 		| ErrorEvent
-		| PlayerErrorEvent;
+		| PlayerErrorEvent
+		| UnknownEvent;
 
 	export interface PlayerEvent {
 		origin: string;
@@ -80,6 +97,10 @@ declare global {
 
 // Code from: https://github.com/VocaDB/vocadb/blob/a4b5f9d8186772d7e6f58f997bbcbb51509d2539/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerNico.ts.
 class PVPlayerNiconico implements IPVPlayer {
+	private static origin = 'https://embed.nicovideo.jp';
+
+	private player?: nico.NicoPlayer;
+
 	public constructor(
 		private readonly playerElementRef: React.MutableRefObject<HTMLDivElement>,
 		private readonly options: IPVPlayerOptions,
@@ -105,25 +126,36 @@ class PVPlayerNiconico implements IPVPlayer {
 				VdbPlayerConsole.debug('Niconico player factory ready', factory);
 
 				window.addEventListener('message', (e: nico.PlayerEvent) => {
-					if (e.origin !== 'https://embed.nicovideo.jp') return;
-
-					VdbPlayerConsole.debug(
-						'Niconico message',
-						e.data.eventName,
-						e.data.data,
-					);
+					if (e.origin !== PVPlayerNiconico.origin) return;
 
 					switch (e.data.eventName) {
 						case 'playerStatusChange':
 							VdbPlayerConsole.debug(
-								`Niconico status changed: ${e.data.data.playerStatus}`,
+								`Niconico player status changed: ${e.data.data.playerStatus}`,
 							);
 
 							switch (e.data.data.playerStatus) {
+								case nico.PlayerStatus.Play:
+									this.options.onPlay?.();
+									break;
+
+								case nico.PlayerStatus.Pause:
+									this.options.onPause?.();
+									break;
+
 								case nico.PlayerStatus.End:
 									this.options.onEnded?.();
 									break;
 							}
+							break;
+
+						case 'statusChange':
+							VdbPlayerConsole.debug(
+								`Niconico status changed: ${e.data.data.playerStatus}`,
+							);
+							break;
+
+						case 'playerMetadataChange':
 							break;
 
 						case 'loadComplete':
@@ -141,6 +173,14 @@ class PVPlayerNiconico implements IPVPlayer {
 						case 'player-error:video:play':
 						case 'player-error:video:seek':
 							this.options.onError?.(e.data);
+							break;
+
+						default:
+							VdbPlayerConsole.warn(
+								'Niconico message',
+								e.data.eventName,
+								e.data.data,
+							);
 							break;
 					}
 				});
@@ -171,18 +211,95 @@ class PVPlayerNiconico implements IPVPlayer {
 		);
 
 		await this.loadScript();
+
+		$(this.playerElementRef.current).empty();
+
+		VdbPlayerConsole.assert(
+			!!PVPlayerNiconico.playerFactory,
+			'Niconico playerFactory is not defined',
+		);
+		if (!PVPlayerNiconico.playerFactory) return;
+
+		this.player = await PVPlayerNiconico.playerFactory.create(
+			this.playerElementRef.current,
+			pv.pvId,
+		);
+
+		VdbPlayerConsole.assert(
+			!!this.player.iframeElement,
+			'player.iframeElement is not defined',
+		);
+
+		this.player.iframeElement.width = '100%';
+		this.player.iframeElement.height = '100%';
+
+		// As of Chrome 66, videos must be muted in order to play automatically.
+		// See also https://github.com/cookpete/react-player/blob/137f1fc3569fc56e14640df7c5c9af1ceba7f992/README.md#autoplay and https://kiite.jp/faq#browser-setting.
+		this.mute();
+	};
+
+	private assertPlayerAttached = (): void => {
+		VdbPlayerConsole.assert(!!this.player, 'Niconico player is not attached');
+	};
+
+	// Code from: https://blog.hayu.io/web/create/nicovideo-embed-player-api/.
+	private postMessage = (message: any): void => {
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		this.player.iframeElement.contentWindow?.postMessage(
+			{
+				...message,
+				playerId: this.player.playerId,
+				sourceConnectorType: 1,
+			},
+			PVPlayerNiconico.origin,
+		);
 	};
 
 	public play = (): void => {
 		VdbPlayerConsole.debug('PVPlayerNiconico.play');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		this.player.play();
 	};
 
 	public pause = (): void => {
 		VdbPlayerConsole.debug('PVPlayerNiconico.pause');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		this.player.pause();
 	};
 
 	public seekTo = (seconds: number): void => {
 		VdbPlayerConsole.debug('PVPlayerNiconico.seekTo');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		this.postMessage({ eventName: 'seek', data: { time: seconds * 1000 } });
+	};
+
+	public mute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerNiconico.mute');
+
+		this.postMessage({
+			eventName: 'mute',
+			data: { mute: true },
+		});
+	};
+
+	public unmute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerNiconico.unmute');
+
+		this.postMessage({
+			eventName: 'mute',
+			data: { mute: false },
+		});
 	};
 }
 
@@ -200,7 +317,9 @@ const EmbedNiconico = React.memo(
 			playerRef.current = new PVPlayerNiconico(playerElementRef, options);
 		}, [playerRef, options]);
 
-		return <div ref={playerElementRef} />;
+		return (
+			<div ref={playerElementRef} style={{ width: '100%', height: '100%' }} />
+		);
 	},
 );
 

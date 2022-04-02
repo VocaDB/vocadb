@@ -125,6 +125,24 @@ class PVPlayerSoundCloud implements IPVPlayer {
 
 		this.player.seekTo(seconds * 1000);
 	};
+
+	public mute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.mute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
+
+	public unmute = (): void => {
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.unmute');
+
+		this.assertPlayerAttached();
+		if (!this.player) return;
+
+		// TODO: Implement.
+	};
 }
 
 interface EmbedSoundCloudProps extends IPVPlayerOptions {
