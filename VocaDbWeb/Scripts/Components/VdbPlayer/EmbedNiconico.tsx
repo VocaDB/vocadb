@@ -68,19 +68,13 @@ declare namespace nico {
 		};
 	}
 
-	export interface UnknownEvent {
-		eventName: string;
-		data: any;
-	}
-
 	type EventData =
 		| PlayerStatusEvent
 		| StatusEvent
 		| MetadataEvent
 		| LoadCompleteEvent
 		| ErrorEvent
-		| PlayerErrorEvent
-		| UnknownEvent;
+		| PlayerErrorEvent;
 
 	export interface PlayerEvent {
 		origin: string;
@@ -171,7 +165,9 @@ class PVPlayerNiconico implements IPVPlayer {
 					default:
 						VdbPlayerConsole.warn(
 							'Niconico message',
+							// @ts-ignore
 							e.data.eventName,
+							// @ts-ignore
 							e.data.data,
 						);
 						break;
