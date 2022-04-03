@@ -6,7 +6,7 @@ const VdbPlayerContext = React.createContext<VdbPlayerStore>(undefined!);
 export const VdbPlayerProvider = VdbPlayerContext.Provider;
 
 export const useVdbPlayer = (): VdbPlayerStore => {
-	const miniPlayerContext = React.useContext(VdbPlayerContext);
+	const vdbPlayerContext = React.useContext(VdbPlayerContext);
 
-	return miniPlayerContext;
+	return vdbPlayerContext;
 };
