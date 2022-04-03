@@ -30,5 +30,6 @@
 		PAUSE: string;
 		PLAY: string;
 		READY: string;
+		PLAY_PROGRESS: string;
 	}
 }
