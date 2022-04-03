@@ -99,7 +99,6 @@ export default class VdbPlayerStore {
 		// TODO: Implement.
 	};
 
-	// Starts playing if autoplay is available for this video service, or expands the player if not available.
 	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
 		this.entry = entry;
 
