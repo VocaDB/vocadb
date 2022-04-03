@@ -25,6 +25,12 @@ namespace VocaDb.Model.Service.VideoServices
 				}
 			);
 
+		public static readonly VideoService NicoLog =
+			new VideoServiceNND(PVService.NicoNicoDouga, new NicoLogParser(), new[] {
+				new RegexLinkMatcher("www.nicolog.jp/watch/{0}", @"nicolog.jp/watch/([a-z]{2}\d{4,10})"),
+				new RegexLinkMatcher("www.nicolog.jp/watch/{0}", @"nicolog.jp/watch/(\d{6,12})")
+			});
+
 		public static readonly VideoService Piapro =
 			new VideoServicePiapro(
 				service: PVService.Piapro,
