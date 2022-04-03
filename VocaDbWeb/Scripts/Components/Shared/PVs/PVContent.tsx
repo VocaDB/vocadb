@@ -84,7 +84,10 @@ interface PVContentProps {
 
 const PVContent = observer(
 	({ pvPlayerStore, selectedSong }: PVContentProps): React.ReactElement => {
-		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
+		const { t } = useTranslation([
+			'ViewRes.Home',
+			'VocaDb.Model.Resources.Songs',
+		]);
 
 		const primaryPV = PVHelper.primaryPV(selectedSong.pvs);
 
