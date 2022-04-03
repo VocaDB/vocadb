@@ -3,7 +3,7 @@ import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
-import { getScript } from './getScript';
+import getScript from './getScript';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/e147650a8f1f85c8fa865d0ab562126c278527ec/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts.
 class PVPlayerSoundCloud implements IPVPlayer {

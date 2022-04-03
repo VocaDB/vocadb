@@ -3,7 +3,7 @@ import React from 'react';
 
 import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
-import { getScript } from './getScript';
+import getScript from './getScript';
 
 declare global {
 	interface Window {
