@@ -245,7 +245,7 @@ class PVPlayerNiconico implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		VdbPlayerConsole.debug('PVPlayerNiconico.seekTo');
+		VdbPlayerConsole.debug('PVPlayerNiconico.seekTo', seconds);
 
 		this.postMessage({ eventName: 'seek', data: { time: seconds * 1000 } });
 	};

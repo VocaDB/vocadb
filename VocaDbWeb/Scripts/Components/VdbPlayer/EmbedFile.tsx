@@ -68,7 +68,7 @@ class PVPlayerFile implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		VdbPlayerConsole.debug('PVPlayerFile.seekTo');
+		VdbPlayerConsole.debug('PVPlayerFile.seekTo', seconds);
 
 		this.assertPlayerAttached();
 		if (!this.player) return;

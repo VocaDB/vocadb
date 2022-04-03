@@ -118,7 +118,7 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		VdbPlayerConsole.debug('PVPlayerSoundCloud.seekTo');
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.seekTo', seconds);
 
 		this.assertPlayerAttached();
 		if (!this.player) return;

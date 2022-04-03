@@ -147,7 +147,7 @@ class PVPlayerYouTube implements IPVPlayer {
 	};
 
 	public seekTo = (seconds: number): void => {
-		VdbPlayerConsole.debug('PVPlayerYouTube.seekTo');
+		VdbPlayerConsole.debug('PVPlayerYouTube.seekTo', seconds);
 
 		this.assertPlayerAttached();
 		if (!this.player) return;
