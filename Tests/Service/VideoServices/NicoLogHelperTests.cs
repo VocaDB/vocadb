@@ -3,6 +3,7 @@ using System.Linq;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;
+using FluentAssertions;
 
 namespace VocaDb.Tests.Service.VideoServices {
 
@@ -14,7 +15,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		[TestMethod]
 		public void ParsePage_Test() {
-			string samplePage = @"<!DOCTYPE html>
+			var samplePage = @"<!DOCTYPE html>
 									<html lang=""ja"">
 									<head>
 									<meta charset=""utf-8"">
@@ -166,19 +167,17 @@ namespace VocaDb.Tests.Service.VideoServices {
 									</body>
 									</html>";
 
-			HtmlDocument samplePageHtml = new HtmlDocument();
+			var samplePageHtml = new HtmlDocument();
 			samplePageHtml.LoadHtml(samplePage);
-			VideoTitleParseResult result = NicoLogHelper.ParsePage(samplePageHtml);
+			var result = NicoLogHelper.ParsePage(samplePageHtml);
 
-			Assert.AreEqual("琴葉茜の闇ゲー#185 「木シミュレーター（2023年版）」", result.Title);
-			Assert.AreEqual("moco78", result.Author);
-			Assert.AreEqual("1594318", result.AuthorId);
-			Assert.AreEqual(239, result.LengthSeconds);
-			Assert.AreEqual(new DateTime(2022, 4, 3, 18, 0, 0), result.UploadDate);
-			foreach (var tag in result.Tags.Zip(new[]{"ゲーム", "ゲーム", "VOICEROID実況プレイ", "琴葉茜実況プレイ", "琴葉茜・葵実況プレイ", "琴葉茜", "結月ゆかり実況プレイ", "Tree_Simulator", "tree_simulator_2023", "虚無ゲー", "ゲー無", "マリオとワリオ"}, (s, s1) => (s, s1))) {
-				Assert.AreEqual(tag.s1, tag.s);
-			}
-			Assert.AreEqual("https://nicovideo.cdn.nimg.jp/thumbnails/40268860/40268860.66068857", result.ThumbUrl);
+			result.Title.Should().Be("琴葉茜の闇ゲー#185 「木シミュレーター（2023年版）」");
+			result.Author.Should().Be("moco78");
+			result.AuthorId.Should().Be("1594318");
+			result.LengthSeconds.Should().Be(239);
+			result.UploadDate.Should().Be(new DateTime(2022, 4, 3, 18, 0, 0));
+			result.Tags.Should().BeEquivalentTo("ゲーム", "ゲーム", "VOICEROID実況プレイ", "琴葉茜実況プレイ", "琴葉茜・葵実況プレイ", "琴葉茜", "結月ゆかり実況プレイ", "Tree_Simulator", "tree_simulator_2023", "虚無ゲー", "ゲー無", "マリオとワリオ");
+			result.ThumbUrl.Should().Be("https://nicovideo.cdn.nimg.jp/thumbnails/40268860/40268860.66068857");
 		}
 
 	}
