@@ -14,6 +14,7 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoService.Bandcamp,
  			VideoService.Bilibili,
 			VideoService.NicoNicoDouga,
+			VideoService.NicoLog,
 			VideoService.Piapro,
 			VideoService.SoundCloud,
 			VideoService.Youtube,
