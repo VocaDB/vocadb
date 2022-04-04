@@ -2,7 +2,9 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import AlbumForUserForApiContract, {
+	MediaType,
+} from '@DataContracts/User/AlbumForUserForApiContract';
 import AlbumType from '@Models/Albums/AlbumType';
 import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -40,6 +42,7 @@ interface AlbumCollectionRouteParams {
 	sort?: AlbumSortRule;
 	tagId?: number;
 	viewMode?: 'Details' | 'Tiles' /* TODO: enum */;
+	mediaType?: MediaType;
 }
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
@@ -65,6 +68,7 @@ export default class AlbumCollectionStore
 	@observable public sort = AlbumSortRule.Name;
 	public readonly tag: BasicEntryLinkStore<TagBaseContract>;
 	@observable public viewMode: 'Details' | 'Tiles' = 'Details'; /* TODO: enum */
+	@observable public mediaType?: MediaType;
 
 	public constructor(
 		private readonly values: GlobalValues,
@@ -141,6 +145,7 @@ export default class AlbumCollectionStore
 				releaseEventId: this.releaseEvent.id,
 				advancedFilters: this.advancedFilters.filters,
 				sort: this.sort,
+				mediaType: this.mediaType,
 			})
 			.then((result: PartialFindResultContract<AlbumForUserForApiContract>) => {
 				this.pauseNotifications = false;
@@ -167,6 +172,7 @@ export default class AlbumCollectionStore
 		'artistId',
 		'collectionStatus',
 		'eventId',
+		'mediaType',
 	];
 
 	@computed.struct public get routeParams(): AlbumCollectionRouteParams {
@@ -187,6 +193,7 @@ export default class AlbumCollectionStore
 			sort: this.sort,
 			tagId: this.tag.id,
 			viewMode: this.viewMode,
+			mediaType: this.mediaType,
 		};
 	}
 	public set routeParams(value: AlbumCollectionRouteParams) {
@@ -201,6 +208,7 @@ export default class AlbumCollectionStore
 		this.sort = value.sort ?? AlbumSortRule.Name;
 		this.tag.id = value.tagId;
 		this.viewMode = value.viewMode || 'Details';
+		this.mediaType = value.mediaType;
 	}
 
 	public validateRouteParams = (
