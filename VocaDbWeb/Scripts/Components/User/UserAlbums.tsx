@@ -150,16 +150,28 @@ const AlbumCollection = observer(
 								<Button
 									onClick={(): void =>
 										runInAction(() => {
-											albumCollectionStore.collectionStatus =
-												'Wishlisted,Ordered';
+											albumCollectionStore.collectionStatus = 'Ordered';
 										})
 									}
 									className={classNames(
-										albumCollectionStore.collectionStatus ===
-											'Wishlisted,Ordered' && 'active',
+										albumCollectionStore.collectionStatus === 'Ordered' &&
+											'active',
 									)}
 								>
-									{t('ViewRes.User:AlbumCollection.CollectionWishedOrOrdered')}
+									{t('Resources:AlbumCollectionStatusNames.Ordered')}
+								</Button>{' '}
+								<Button
+									onClick={(): void =>
+										runInAction(() => {
+											albumCollectionStore.collectionStatus = 'Wishlisted';
+										})
+									}
+									className={classNames(
+										albumCollectionStore.collectionStatus === 'Wishlisted' &&
+											'active',
+									)}
+								>
+									{t('Resources:AlbumCollectionStatusNames.Wishlisted')}
 								</Button>
 							</div>
 						</div>
