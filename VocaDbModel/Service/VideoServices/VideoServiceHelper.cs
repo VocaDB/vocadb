@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public static class VideoServiceHelper
 	{
-		private static readonly VideoService[] services = {
+		public static readonly VideoService[] Services = {
 			VideoService.Bandcamp,
  			VideoService.Bilibili,
 			VideoService.NicoNicoDouga,
@@ -23,8 +23,6 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoService.LocalFile,
 			VideoService.Creofuga,
 		};
-
-		public static readonly Dictionary<PVService, VideoService> Services = services.ToDictionary(s => s.Service);
 
 		private static readonly ImmutableHashSet<PVService> servicesWithoutExternalSiteLink =
 			ImmutableHashSet.Create(PVService.File, PVService.LocalFile);
@@ -73,7 +71,10 @@ namespace VocaDb.Model.Service.VideoServices
 			return acceptFirst ? allPvs.FirstOrDefault() : null;
 		}
 
-		public static string? GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
+		public static string? GetThumbUrl(IPVWithThumbnail pv) => Services
+			.Where(s => s.IsValidFor(pv.Service))
+			.Select(s => s.GetThumbUrlById(pv.PVId))
+			.FirstOrDefault(r => r != null);
 
 		public static string? GetThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
@@ -160,7 +161,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext? permissionContext)
 		{
-			return ParseByUrlAsync(url, getTitle, permissionContext, services);
+			return ParseByUrlAsync(url, getTitle, permissionContext, Services);
 		}
 
 		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext? permissionContext, params VideoService[] testServices)

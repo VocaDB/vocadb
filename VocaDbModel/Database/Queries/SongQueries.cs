@@ -195,12 +195,12 @@ namespace VocaDb.Model.Database.Queries
 
 		private string[] GetUserProfileUrls(VideoUrlParseResult res)
 		{
-			var profileUrls = VideoServiceHelper.Services[res.Service]
-				.GetUserProfileUrls(res.AuthorId)
-				.WhereIsNotNullOrEmpty()
-				.ToArray();
+			var profileUrls = VideoServiceHelper.Services
+				.Where(s => s.IsValidFor(res.Service))
+				.Select(s => s.GetUserProfileUrls(res.AuthorId).WhereIsNotNullOrEmpty().ToList())
+				.FirstOrDefault(s => s.Count != 0);
 
-			return profileUrls;
+			return profileUrls?.ToArray() ?? Array.Empty<string>();
 		}
 
 		private NicoTitleParseResult ParseNicoPV(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res)

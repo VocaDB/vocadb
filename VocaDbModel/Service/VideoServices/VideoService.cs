@@ -141,6 +141,11 @@ namespace VocaDb.Model.Service.VideoServices
 			return _linkMatchers.Any(m => m.IsMatch(url));
 		}
 
+		public bool IsValidFor(PVService service)
+		{
+			return service == Service;
+		}
+
 		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
 			var id = GetIdByUrl(url);
