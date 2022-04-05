@@ -197,8 +197,8 @@ namespace VocaDb.Model.Database.Queries
 		{
 			var profileUrls = VideoServiceHelper.Services
 				.Where(s => s.IsValidFor(res.Service))
-				.Select(s => s.GetUserProfileUrls(res.AuthorId).WhereIsNotNullOrEmpty().ToList())
-				.FirstOrDefault(s => s.Count != 0);
+				.Select(s => s.GetUserProfileUrls(res.AuthorId).WhereIsNotNullOrEmpty())
+				.FirstOrDefault(s => s.Any());
 
 			return profileUrls?.ToArray() ?? Array.Empty<string>();
 		}
