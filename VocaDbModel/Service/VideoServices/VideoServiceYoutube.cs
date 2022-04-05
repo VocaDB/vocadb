@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.PVs;
@@ -13,14 +11,16 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override string GetThumbUrlById(string id)
 		{
-			const string url = "https://img.youtube.com/vi/{0}/default.jpg";
-			return string.Format(url, id);
+			// Use `i1.ytimg.com` instead of `img.youtube.com`.
+			// See https://stackoverflow.com/a/64632873.
+			return $"https://i1.ytimg.com/vi/{id}/default.jpg";
 		}
 
 		public override string GetMaxSizeThumbUrlById(string id)
 		{
-			const string url = "https://img.youtube.com/vi/{0}/hqdefault.jpg";
-			return string.Format(url, id);
+			// Use `i1.ytimg.com` instead of `img.youtube.com`.
+			// See https://stackoverflow.com/a/64632873.
+			return $"https://i1.ytimg.com/vi/{id}/hqdefault.jpg";
 		}
 
 		public override string GetUrlById(string id, PVExtendedMetadata _)
