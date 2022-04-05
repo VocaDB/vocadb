@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -9,7 +10,10 @@ namespace VocaDb.Model.Domain.PVs
 	{
 		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata? extendedMetadata = null)
 		{
-			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
+			return VideoServiceHelper.Services
+				.Where(s => s.IsValidFor(service))
+				.Select(s => s.GetUrlById(pvId, extendedMetadata))
+				.First();
 		}
 
 		private string _author;
