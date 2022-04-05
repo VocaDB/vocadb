@@ -62,6 +62,10 @@
 		"filter": {
 			"type": "string"
 		},
+		"mediaType": {
+			"enum": ["DigitalDownload", "Other", "PhysicalDisc"],
+			"type": "string"
+		},
 		"page": {
 			"type": "number"
 		},
