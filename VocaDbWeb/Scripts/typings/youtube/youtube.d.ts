@@ -57,6 +57,7 @@ declare namespace YT {
 		videoId?: string;
 		playerVars?: PlayerVars;
 		events?: Events;
+		host?: string;
 	}
 
 	interface VideoByIdParams {

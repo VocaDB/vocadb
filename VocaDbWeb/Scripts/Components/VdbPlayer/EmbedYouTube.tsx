@@ -74,6 +74,7 @@ class PVPlayerYouTube implements IPVPlayer {
 			VdbPlayerConsole.debug('Attaching YouTube player...');
 
 			this.player = new YT.Player(this.playerElementRef.current, {
+				host: 'https://www.youtube-nocookie.com',
 				width: '100%',
 				height: '100%',
 				events: {
