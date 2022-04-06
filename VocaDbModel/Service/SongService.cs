@@ -1,21 +1,13 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using NHibernate;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories.NHibernate;
-using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.ExtLinks;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -24,7 +16,6 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
@@ -293,6 +284,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
+#nullable enable
 		public SongListContract[] GetPublicSongListsForSong(int songId)
 		{
 			return HandleQuery(session =>
@@ -308,6 +300,7 @@ namespace VocaDb.Model.Service
 					.ToArray();
 			});
 		}
+#nullable disable
 
 		public SongContract GetSongWithAdditionalNames(int id)
 		{
