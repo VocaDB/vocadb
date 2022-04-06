@@ -169,7 +169,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (listId == 0)
 				return query;
 
-			return query.Where(s => s.Song.ListLinks.Any(l => l.List.Id == listId));
+			return query.Where(s => s.Song.AllListLinks.Any(l => l.List.Id == listId));
 		}
 
 		/// <summary>

@@ -533,7 +533,7 @@ namespace VocaDb.Model.Database.Queries
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
-				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 
 				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, new OptionalCultureCode(CultureInfo.CurrentUICulture, true), userLanguages,
@@ -606,7 +606,7 @@ namespace VocaDb.Model.Database.Queries
 				contract.CommentCount = Comments(session).GetCount(songId);
 				contract.LatestComments = Comments(session).GetList(entryId: songId, count: 3);
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
-				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 
 				contract.Suggestions = GetSongSuggestions(session, song)
 					.Select(s => new SongForApiContract(
@@ -1049,7 +1049,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				// Custom lists
-				var songLists = source.ListLinks.ToArray();
+				var songLists = source.AllListLinks.ToArray();
 				foreach (var s in songLists)
 				{
 					s.ChangeSong(target);

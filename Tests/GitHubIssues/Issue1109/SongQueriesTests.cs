@@ -69,26 +69,24 @@ namespace VocaDb.Tests.GitHubIssues.Issue1109
 		public void GetPublicSongListsForSong()
 		{
 			var list1 = _repository.Save(new SongList("Mikulist", _user));
-			_song1.ListLinks.Add(_repository.Save(list1.AddSong(_song1)));
+			_song1.AllListLinks.Add(_repository.Save(list1.AddSong(_song1)));
 
 			var list2 = _repository.Save(new SongList("Rinlist", _user));
-			_song1.ListLinks.Add(_repository.Save(list2.AddSong(_song1)));
-			_song2.ListLinks.Add(_repository.Save(list2.AddSong(_song2)));
+			_song1.AllListLinks.Add(_repository.Save(list2.AddSong(_song1)));
+			_song2.AllListLinks.Add(_repository.Save(list2.AddSong(_song2)));
 
 			var list3 = _repository.Save(new SongList("Lukalist", _user) { Deleted = true });
-			_song1.ListLinks.Add(_repository.Save(list3.AddSong(_song1)));
-			_song2.ListLinks.Add(_repository.Save(list3.AddSong(_song2)));
+			_song1.AllListLinks.Add(_repository.Save(list3.AddSong(_song1)));
+			_song2.AllListLinks.Add(_repository.Save(list3.AddSong(_song2)));
 
 			var contracts1 = _queries.GetPublicSongListsForSong(songId: 1);
-			contracts1.Length.Should().Be(3);
-			contracts1[0].Name.Should().Be("Lukalist");
-			contracts1[1].Name.Should().Be("Mikulist");
-			contracts1[2].Name.Should().Be("Rinlist");
+			contracts1.Length.Should().Be(2);
+			contracts1[0].Name.Should().Be("Mikulist");
+			contracts1[1].Name.Should().Be("Rinlist");
 
 			var contracts2 = _queries.GetPublicSongListsForSong(songId: 2);
-			contracts2.Length.Should().Be(2);
-			contracts2[0].Name.Should().Be("Lukalist");
-			contracts2[1].Name.Should().Be("Rinlist");
+			contracts2.Length.Should().Be(1);
+			contracts2[0].Name.Should().Be("Rinlist");
 		}
 	}
 }
