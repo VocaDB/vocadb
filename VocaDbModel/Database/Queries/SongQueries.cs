@@ -1508,6 +1508,24 @@ namespace VocaDb.Model.Database.Queries
 				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
 			});
 		}
+
+#nullable enable
+		public SongListContract[] GetPublicSongListsForSong(int songId)
+		{
+			return HandleQuery(session =>
+			{
+				var song = session.Load<Song>(songId);
+				var userId = PermissionContext.LoggedUserId;
+				return song.ListLinks
+					.Where(l => l.List.FeaturedCategory != SongListFeaturedCategory.Nothing || l.List.Author.Id == userId || l.List.Author.Options.PublicRatings)
+					.OrderBy(l => l.List.Name)
+					.Select(l => l.List)
+					.Distinct()
+					.Select(l => new SongListContract(l, PermissionContext))
+					.ToArray();
+			});
+		}
+#nullable disable
 	}
 
 	public enum TopSongsDateFilterType

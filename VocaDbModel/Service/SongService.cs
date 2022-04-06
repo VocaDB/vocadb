@@ -284,24 +284,6 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-#nullable enable
-		public SongListContract[] GetPublicSongListsForSong(int songId)
-		{
-			return HandleQuery(session =>
-			{
-				var song = session.Load<Song>(songId);
-				var userId = PermissionContext.LoggedUserId;
-				return song.ListLinks
-					.Where(l => l.List.FeaturedCategory != SongListFeaturedCategory.Nothing || l.List.Author.Id == userId || l.List.Author.Options.PublicRatings)
-					.OrderBy(l => l.List.Name)
-					.Select(l => l.List)
-					.Distinct()
-					.Select(l => new SongListContract(l, PermissionContext))
-					.ToArray();
-			});
-		}
-#nullable disable
-
 		public SongContract GetSongWithAdditionalNames(int id)
 		{
 			return HandleQuery(

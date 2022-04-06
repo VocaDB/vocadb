@@ -125,7 +125,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == InvalidId)
 				return NoId();
 
-			var lists = Service.GetPublicSongListsForSong(songId);
+			var lists = _queries.GetPublicSongListsForSong(songId);
 			return PartialView("Partials/_SongInListsDialogContent", lists);
 		}
 
