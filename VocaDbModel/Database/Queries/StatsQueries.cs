@@ -169,7 +169,12 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+#nullable enable
+		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(
+			DateTime? cutoff,
+			ArtistType[]? vocalistTypes = null,
+			int startYear = 2007
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -195,7 +200,9 @@ namespace VocaDb.Model.Database.Queries
 
 				points = SumToBaseVoicebanks(ctx, points);
 
-				var artists = ctx.Query<Artist>().Where(a => vocalistTypes.Contains(a.ArtistType)).ToDictionary(a => a.Id);
+				var artists = ctx.Query<Artist>()
+					.Where(a => vocalistTypes.Contains(a.ArtistType))
+					.ToDictionary(a => a.Id);
 
 				// Group by artist, select artists with top 20 most songs (as counted for the root VB)
 				// Note: we're filtering artists only after summing to root VBs, because otherwise appends would be ignored
@@ -207,7 +214,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(
+			DateTime? cutoff,
+			ArtistType[]? vocalistTypes = null,
+			int startYear = 2007
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -237,6 +248,7 @@ namespace VocaDb.Model.Database.Queries
 				return points;
 			});
 		}
+#nullable disable
 
 		public IEnumerable<EntryWithIdAndData<LocalizedValue>> HitsPerSongOverTime(DateTime? cutoff)
 		{
