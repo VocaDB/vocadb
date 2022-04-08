@@ -200,19 +200,16 @@ namespace VocaDb.Model.Database.Queries
 
 				points = SumToBaseVoicebanks(ctx, points);
 
-				var artistIds = points.Select(p => p.ArtistId).ToArray();
-
-				var artists = ctx.Query<Artist>()
-					.Where(a => artistIds.Contains(a.Id))
-					.ToDictionary(a => a.Id);
-
 				// Group by artist, select artists with top 20 most songs (as counted for the root VB)
 				// Note: we're filtering artists only after summing to root VBs, because otherwise appends would be ignored
-				var byArtist = points.GroupBy(p => p.ArtistId)
+				var byArtistId = points.GroupBy(p => p.ArtistId)
 					.OrderByDescending(byArtist2 => byArtist2.Select(p2 => p2.Count).Sum())
 					.Take(15)
-					.Select(a => (artists[a.Key], a.ToArray()));
-				return byArtist;
+					.ToArray();
+
+				var artists = ctx.LoadMultiple<Artist>(byArtistId.Select(a => a.Key)).ToDictionary(a => a.Id);
+
+				return byArtistId.Select(a => (artists[a.Key], a.ToArray()));
 			});
 		}
 
