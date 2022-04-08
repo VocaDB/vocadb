@@ -172,7 +172,7 @@ namespace VocaDb.Model.Database.Queries
 #nullable enable
 		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(
 			DateTime? cutoff,
-			ArtistType[]? vocalistTypes = null,
+			ArtistType[] vocalistTypes,
 			int startYear = 2007
 		)
 		{
@@ -216,7 +216,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(
 			DateTime? cutoff,
-			ArtistType[]? vocalistTypes = null,
+			ArtistType[] vocalistTypes,
 			int startYear = 2007
 		)
 		{

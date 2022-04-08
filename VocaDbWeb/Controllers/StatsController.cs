@@ -618,9 +618,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 #nullable enable
-		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[]? vocalistTypes = null, int startYear = 2007)
+		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes, int startYear = 2007)
 		{
-			if (vocalistTypes == null)
+			if (!vocalistTypes.Any())
 			{
 				vocalistTypes = new[]
 				{
@@ -644,9 +644,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
-		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[]? vocalistTypes = null, int startYear = 2007)
+		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes, int startYear = 2007)
 		{
-			if (vocalistTypes == null)
+			if (!vocalistTypes.Any())
 			{
 				vocalistTypes = new[]
 				{
