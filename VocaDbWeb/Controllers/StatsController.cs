@@ -636,8 +636,8 @@ namespace VocaDb.Web.Controllers
 
 			var dataSeries = data.Select(ser => new Series
 			{
-				Name = ser.Item1.Names.SortNames.English,
-				Data = Series.DateData(ser.Item2, p => p.Date, p => p.Count)
+				Name = ser.Artist.Names.SortNames.English,
+				Data = Series.DateData(ser.Points, p => p.Date, p => p.Count)
 			}).ToArray();
 
 			return AreaChart("Songs per voicebank over time", dataSeries);
@@ -664,7 +664,7 @@ namespace VocaDb.Web.Controllers
 				.Select(ser => new Series
 				{
 					Name = Translate.ArtistTypeName(ser.Key),
-					Data = Series.DateData(ser, p => p.Item1, p => p.Item3)
+					Data = Series.DateData(ser, p => p.Date, p => p.Count)
 				})
 				.ToArray();
 

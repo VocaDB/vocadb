@@ -170,7 +170,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(
+		public IEnumerable<(Artist Artist, SongsPerArtistPerDate[] Points)> SongsPerVocaloidOverTime(
 			DateTime? cutoff,
 			ArtistType[] vocalistTypes,
 			int startYear = 2007
@@ -211,12 +211,12 @@ namespace VocaDb.Model.Database.Queries
 				var byArtist = points.GroupBy(p => p.ArtistId)
 					.OrderByDescending(byArtist2 => byArtist2.Select(p2 => p2.Count).Sum())
 					.Take(15)
-					.Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
+					.Select(a => (artists[a.Key], a.ToArray()));
 				return byArtist;
 			});
 		}
 
-		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(
+		public IEnumerable<IGrouping<ArtistType, (DateTime Date, ArtistType ArtistType, int Count)>> GetSongsPerVoicebankTypeOverTime(
 			DateTime? cutoff,
 			ArtistType[] vocalistTypes,
 			int startYear = 2007
@@ -243,8 +243,8 @@ namespace VocaDb.Model.Database.Queries
 						Count = s.Count()
 					})
 					.ToArray()
-					.Select(s => Tuple.Create(new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count))
-					.GroupBy(s => s.Item2)
+					.Select(s => (new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count))
+					.GroupBy(s => s.ArtistType)
 					.ToArray();
 
 				return points;
