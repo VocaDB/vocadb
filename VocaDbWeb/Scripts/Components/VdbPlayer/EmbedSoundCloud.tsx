@@ -145,12 +145,13 @@ class PVPlayerSoundCloud implements IPVPlayer {
 	};
 }
 
-interface EmbedSoundCloudProps extends IPVPlayerOptions {
+interface EmbedSoundCloudProps {
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
+	options: IPVPlayerOptions;
 }
 
 const EmbedSoundCloud = React.memo(
-	({ playerRef, ...options }: EmbedSoundCloudProps): React.ReactElement => {
+	({ playerRef, options }: EmbedSoundCloudProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedSoundCloud');
 
 		const playerElementRef = React.useRef<HTMLIFrameElement>(undefined!);

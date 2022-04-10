@@ -95,12 +95,13 @@ class PVPlayerFile implements IPVPlayer {
 	};
 }
 
-interface EmbedFileProps extends IPVPlayerOptions {
+interface EmbedFileProps {
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
+	options: IPVPlayerOptions;
 }
 
 const EmbedFile = React.memo(
-	({ playerRef, ...options }: EmbedFileProps): React.ReactElement => {
+	({ playerRef, options }: EmbedFileProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedFile');
 
 		const playerElementRef = React.useRef<HTMLAudioElement>(undefined!);

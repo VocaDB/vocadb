@@ -175,12 +175,13 @@ class PVPlayerYouTube implements IPVPlayer {
 	};
 }
 
-interface EmbedYouTubeProps extends IPVPlayerOptions {
+interface EmbedYouTubeProps {
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
+	options: IPVPlayerOptions;
 }
 
 const EmbedYouTube = React.memo(
-	({ playerRef, ...options }: EmbedYouTubeProps): React.ReactElement => {
+	({ playerRef, options }: EmbedYouTubeProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedYouTube');
 
 		const playerElementRef = React.useRef<HTMLDivElement>(undefined!);

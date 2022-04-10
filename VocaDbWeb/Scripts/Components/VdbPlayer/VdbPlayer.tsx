@@ -345,7 +345,7 @@ const PVPlayer = observer(
 			}
 		}, [vdbPlayer, playerRef]);
 
-		const playerOptions = React.useMemo(
+		const options = React.useMemo(
 			() => ({
 				onError: handleError,
 				onPlay: handlePlay,
@@ -362,7 +362,7 @@ const PVPlayer = observer(
 				height="100%"
 				enableApi={true}
 				playerRef={playerRef}
-				playerOptions={playerOptions}
+				options={options}
 			/>
 		);
 	},

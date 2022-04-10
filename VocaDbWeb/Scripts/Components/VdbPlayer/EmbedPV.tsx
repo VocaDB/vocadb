@@ -48,7 +48,7 @@ interface EmbedPVProps {
 	enableApi?: boolean;
 	id?: string;
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
-	playerOptions: IPVPlayerOptions;
+	options: IPVPlayerOptions;
 }
 
 const EmbedPV = React.memo(
@@ -60,7 +60,7 @@ const EmbedPV = React.memo(
 		enableApi = false,
 		id,
 		playerRef,
-		playerOptions,
+		options,
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
@@ -88,7 +88,7 @@ const EmbedPV = React.memo(
 			case PVService.File:
 			case PVService.LocalFile:
 				return isAudio(pv.url) ? (
-					<EmbedFile playerRef={playerRef} {...playerOptions} />
+					<EmbedFile playerRef={playerRef} options={options} />
 				) : (
 					<div css={{ width: width, height: height }}>
 						<a href={pv.url}>
@@ -102,7 +102,7 @@ const EmbedPV = React.memo(
 				);
 
 			case PVService.NicoNicoDouga:
-				return <EmbedNiconico playerRef={playerRef} {...playerOptions} />;
+				return <EmbedNiconico playerRef={playerRef} options={options} />;
 
 			case PVService.Piapro:
 				// TODO: Remove.
@@ -111,10 +111,10 @@ const EmbedPV = React.memo(
 				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			case PVService.SoundCloud:
-				return <EmbedSoundCloud playerRef={playerRef} {...playerOptions} />;
+				return <EmbedSoundCloud playerRef={playerRef} options={options} />;
 
 			case PVService.Youtube:
-				return <EmbedYouTube playerRef={playerRef} {...playerOptions} />;
+				return <EmbedYouTube playerRef={playerRef} options={options} />;
 
 			case PVService.Vimeo:
 				// TODO: Remove.

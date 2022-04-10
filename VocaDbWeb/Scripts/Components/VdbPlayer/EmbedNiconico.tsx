@@ -269,12 +269,13 @@ class PVPlayerNiconico implements IPVPlayer {
 	};
 }
 
-interface EmbedNiconicoProps extends IPVPlayerOptions {
+interface EmbedNiconicoProps {
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
+	options: IPVPlayerOptions;
 }
 
 const EmbedNiconico = React.memo(
-	({ playerRef, ...options }: EmbedNiconicoProps): React.ReactElement => {
+	({ playerRef, options }: EmbedNiconicoProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedNiconico');
 
 		const playerElementRef = React.useRef<HTMLIFrameElement>(undefined!);
