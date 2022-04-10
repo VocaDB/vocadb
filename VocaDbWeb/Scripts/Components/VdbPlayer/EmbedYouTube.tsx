@@ -193,10 +193,17 @@ const EmbedYouTube = React.memo(
 		const playerElementRef = React.useRef<HTMLDivElement>(undefined!);
 
 		React.useEffect(() => {
-			playerRef.current = new PVPlayerYouTube(playerElementRef, options);
+			const player = new PVPlayerYouTube(playerElementRef, options);
+			playerRef.current = player;
 
 			return (): void => {
-				playerRef.current?.detach();
+				VdbPlayerConsole.assert(
+					player === playerRef.current,
+					'player differs',
+					player,
+					playerRef.current,
+				);
+				player.detach();
 			};
 		}, [playerRef, options]);
 

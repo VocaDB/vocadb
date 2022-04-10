@@ -291,10 +291,17 @@ const EmbedNiconico = React.memo(
 		const playerElementRef = React.useRef<HTMLIFrameElement>(undefined!);
 
 		React.useEffect(() => {
-			playerRef.current = new PVPlayerNiconico(playerElementRef, options);
+			const player = new PVPlayerNiconico(playerElementRef, options);
+			playerRef.current = player;
 
 			return (): void => {
-				playerRef.current?.detach();
+				VdbPlayerConsole.assert(
+					player === playerRef.current,
+					'player differs',
+					player,
+					playerRef.current,
+				);
+				player.detach();
 			};
 		}, [playerRef, options]);
 

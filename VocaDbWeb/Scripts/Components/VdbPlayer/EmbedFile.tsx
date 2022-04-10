@@ -113,10 +113,17 @@ const EmbedFile = React.memo(
 		const playerElementRef = React.useRef<HTMLAudioElement>(undefined!);
 
 		React.useEffect(() => {
-			playerRef.current = new PVPlayerFile(playerElementRef, options);
+			const player = new PVPlayerFile(playerElementRef, options);
+			playerRef.current = player;
 
 			return (): void => {
-				playerRef.current?.detach();
+				VdbPlayerConsole.assert(
+					player === playerRef.current,
+					'player differs',
+					player,
+					playerRef.current,
+				);
+				player.detach();
 			};
 		}, [playerRef, options]);
 

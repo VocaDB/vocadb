@@ -163,10 +163,17 @@ const EmbedSoundCloud = React.memo(
 		const playerElementRef = React.useRef<HTMLIFrameElement>(undefined!);
 
 		React.useEffect(() => {
-			playerRef.current = new PVPlayerSoundCloud(playerElementRef, options);
+			const player = new PVPlayerSoundCloud(playerElementRef, options);
+			playerRef.current = player;
 
 			return (): void => {
-				playerRef.current?.detach();
+				VdbPlayerConsole.assert(
+					player === playerRef.current,
+					'player differs',
+					player,
+					playerRef.current,
+				);
+				player.detach();
 			};
 		}, [playerRef, options]);
 
