@@ -321,7 +321,12 @@ const PVPlayer = observer(
 
 							case RepeatMode.All:
 								if (vdbPlayer.playQueueStore.hasMultipleEntries) {
-									vdbPlayer.playQueueStore.goToFirst();
+									// HACK: Prevent vdbPlayer.next from being called in the same context.
+									// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
+									// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
+									setTimeout(() => {
+										vdbPlayer.playQueueStore.goToFirst();
+									});
 								} else {
 									player.seekTo(0);
 									player.play();
@@ -329,7 +334,12 @@ const PVPlayer = observer(
 								break;
 						}
 					} else {
-						vdbPlayer.next();
+						// HACK: Prevent vdbPlayer.next from being called in the same context.
+						// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
+						// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
+						setTimeout(() => {
+							vdbPlayer.next();
+						});
 					}
 					break;
 			}
