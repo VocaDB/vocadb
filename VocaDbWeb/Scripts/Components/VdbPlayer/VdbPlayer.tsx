@@ -14,6 +14,12 @@ import IPVPlayer from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
 import { useVdbPlayer } from './VdbPlayerContext';
 
+const repeatIcons: Record<RepeatMode, string> = {
+	[RepeatMode.Off]: 'icon-ban-circle',
+	[RepeatMode.All]: 'icon-refresh',
+	[RepeatMode.One]: 'icon-repeat',
+};
+
 interface VdbPlayerLeftControlsProps {
 	playerRef: React.MutableRefObject<IPVPlayer>;
 }
@@ -96,11 +102,10 @@ const VdbPlayerLeftControls = observer(
 					}
 					onClick={vdbPlayer.toggleRepeat}
 					disabled={!vdbPlayer.canAutoplay}
-					className={classNames(
-						vdbPlayer.repeat !== RepeatMode.Off && 'active',
-					)}
 				>
-					<i className="icon-repeat icon-white" />
+					<i
+						className={classNames(repeatIcons[vdbPlayer.repeat], 'icon-white')}
+					/>
 				</Button>
 			</ButtonGroup>
 		);

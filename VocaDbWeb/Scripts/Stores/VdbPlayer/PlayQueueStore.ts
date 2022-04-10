@@ -14,7 +14,7 @@ export default class PlayQueueStore {
 		return this.queue.length === 0;
 	}
 
-	@computed private get hasMultipleEntries(): boolean {
+	@computed public get hasMultipleEntries(): boolean {
 		return this.queue.length > 1;
 	}
 
@@ -38,6 +38,13 @@ export default class PlayQueueStore {
 		return this.selectedIndex !== undefined
 			? this.queue[this.selectedIndex]
 			: undefined;
+	}
+
+	@computed public get isLastEntry(): boolean {
+		return (
+			this.selectedIndex !== undefined &&
+			this.selectedIndex === this.queue.length - 1
+		);
 	}
 
 	@action public clear = (): void => {
@@ -76,5 +83,11 @@ export default class PlayQueueStore {
 		if (!this.hasNextEntry) return;
 
 		this.selectedIndex++;
+	};
+
+	@action public goToFirst = (): void => {
+		if (this.selectedIndex === undefined) return;
+
+		this.selectedIndex = 0;
 	};
 }

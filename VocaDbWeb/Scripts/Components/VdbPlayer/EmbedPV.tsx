@@ -105,21 +105,31 @@ const EmbedPV = React.memo(
 			if (!player) return;
 
 			switch (vdbPlayer.repeat) {
-				case RepeatMode.Off:
-					if (vdbPlayer.playQueueStore.isEmpty) {
-						vdbPlayer.setPlaying(false);
-					} else {
-						vdbPlayer.next();
-					}
-					break;
-
 				case RepeatMode.One:
 					player.seekTo(0);
 					player.play();
 					break;
 
+				case RepeatMode.Off:
 				case RepeatMode.All:
-					// TODO: Implement.
+					if (vdbPlayer.playQueueStore.isLastEntry) {
+						switch (vdbPlayer.repeat) {
+							case RepeatMode.Off:
+								vdbPlayer.setPlaying(false);
+								break;
+
+							case RepeatMode.All:
+								if (vdbPlayer.playQueueStore.hasMultipleEntries) {
+									vdbPlayer.playQueueStore.goToFirst();
+								} else {
+									player.seekTo(0);
+									player.play();
+								}
+								break;
+						}
+					} else {
+						vdbPlayer.next();
+					}
 					break;
 			}
 		}, [vdbPlayer, playerRef]);

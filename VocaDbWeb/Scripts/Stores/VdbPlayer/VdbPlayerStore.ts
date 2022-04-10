@@ -61,21 +61,12 @@ export default class VdbPlayerStore {
 	};
 
 	@action public toggleRepeat = (): void => {
-		/*switch (this.repeat) {
+		switch (this.repeat) {
 			case RepeatMode.Off:
 				this.repeat = RepeatMode.All;
 				break;
 
 			case RepeatMode.All:
-				this.repeat = RepeatMode.One;
-				break;
-
-			case RepeatMode.One:
-				this.repeat = RepeatMode.Off;
-				break;
-		}*/
-		switch (this.repeat) {
-			case RepeatMode.Off:
 				this.repeat = RepeatMode.One;
 				break;
 
