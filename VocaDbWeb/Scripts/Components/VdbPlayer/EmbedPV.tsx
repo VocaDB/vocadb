@@ -106,7 +106,11 @@ const EmbedPV = React.memo(
 
 			switch (vdbPlayer.repeat) {
 				case RepeatMode.Off:
-					vdbPlayer.setPlaying(false);
+					if (vdbPlayer.playQueueStore.isEmpty) {
+						vdbPlayer.setPlaying(false);
+					} else {
+						vdbPlayer.next();
+					}
 					break;
 
 				case RepeatMode.One:
