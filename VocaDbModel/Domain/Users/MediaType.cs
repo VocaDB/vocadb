@@ -1,6 +1,3 @@
-#nullable disable
-
-
 namespace VocaDb.Model.Domain.Users
 {
 	public enum MediaType

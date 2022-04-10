@@ -6,7 +6,9 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
+import AlbumForUserForApiContract, {
+	MediaType,
+} from '@DataContracts/User/AlbumForUserForApiContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
@@ -186,6 +188,7 @@ export default class UserRepository implements ICommentRepository {
 		releaseEventId,
 		advancedFilters,
 		sort,
+		mediaType,
 	}: {
 		userId: number;
 		paging: PagingProperties;
@@ -198,6 +201,7 @@ export default class UserRepository implements ICommentRepository {
 		releaseEventId?: number;
 		advancedFilters: AdvancedSearchFilter[];
 		sort: string;
+		mediaType?: MediaType;
 	}): Promise<PartialFindResultContract<AlbumForUserForApiContract>> => {
 		var url = this.urlMapper.mapRelative(`/api/users/${userId}/albums`);
 		var data = {
@@ -215,6 +219,7 @@ export default class UserRepository implements ICommentRepository {
 			nameMatchMode: 'Auto',
 			sort: sort,
 			advancedFilters: advancedFilters,
+			mediaType: mediaType,
 		};
 
 		return this.httpClient.get<

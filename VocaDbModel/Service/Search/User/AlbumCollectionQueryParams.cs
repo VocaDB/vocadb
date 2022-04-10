@@ -44,5 +44,7 @@ namespace VocaDb.Model.Service.Search.User
 		/// Id of the user whose albums to get.
 		/// </summary>
 		public int UserId { get; init; }
+
+		public MediaType? MediaType { get; init; }
 	}
 }

@@ -1,5 +1,6 @@
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
+import { MediaType } from '@DataContracts/User/AlbumForUserForApiContract';
 import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
@@ -149,16 +150,28 @@ const AlbumCollection = observer(
 								<Button
 									onClick={(): void =>
 										runInAction(() => {
-											albumCollectionStore.collectionStatus =
-												'Wishlisted,Ordered';
+											albumCollectionStore.collectionStatus = 'Ordered';
 										})
 									}
 									className={classNames(
-										albumCollectionStore.collectionStatus ===
-											'Wishlisted,Ordered' && 'active',
+										albumCollectionStore.collectionStatus === 'Ordered' &&
+											'active',
 									)}
 								>
-									{t('ViewRes.User:AlbumCollection.CollectionWishedOrOrdered')}
+									{t('Resources:AlbumCollectionStatusNames.Ordered')}
+								</Button>{' '}
+								<Button
+									onClick={(): void =>
+										runInAction(() => {
+											albumCollectionStore.collectionStatus = 'Wishlisted';
+										})
+									}
+									className={classNames(
+										albumCollectionStore.collectionStatus === 'Wishlisted' &&
+											'active',
+									)}
+								>
+									{t('Resources:AlbumCollectionStatusNames.Wishlisted')}
 								</Button>
 							</div>
 						</div>
@@ -234,6 +247,65 @@ const AlbumCollection = observer(
 									basicEntryLinkStore={albumCollectionStore.releaseEvent}
 								/>
 							</div>
+						</div>
+					</div>
+
+					<div className="control-group">
+						<div className="control-label">
+							{t('ViewRes.User:AlbumCollection.MediaType')}
+						</div>
+						<div className="controls">
+							<Button
+								onClick={(): void =>
+									runInAction(() => {
+										albumCollectionStore.mediaType = undefined;
+									})
+								}
+								className={classNames(
+									albumCollectionStore.mediaType === undefined && 'active',
+								)}
+							>
+								{t('ViewRes.User:AlbumCollection.CollectionStatusAnything')}
+							</Button>{' '}
+							<Button
+								onClick={(): void =>
+									runInAction(() => {
+										albumCollectionStore.mediaType = MediaType.PhysicalDisc;
+									})
+								}
+								className={classNames(
+									albumCollectionStore.mediaType === MediaType.PhysicalDisc &&
+										'active',
+								)}
+							>
+								{t('Resources:AlbumMediaTypeNames.PhysicalDisc')}
+							</Button>{' '}
+							<Button
+								onClick={(): void =>
+									runInAction(() => {
+										albumCollectionStore.mediaType = MediaType.DigitalDownload;
+									})
+								}
+								className={classNames(
+									albumCollectionStore.mediaType ===
+										MediaType.DigitalDownload && 'active',
+								)}
+							>
+								{t('Resources:AlbumMediaTypeNames.DigitalDownload')}
+							</Button>{' '}
+							<Button
+								onClick={(): void =>
+									runInAction(() => {
+										albumCollectionStore.mediaType = MediaType.Other;
+									})
+								}
+								className={classNames(
+									albumCollectionStore.mediaType === MediaType.Other &&
+										'active',
+								)}
+							>
+								{t('Resources:AlbumMediaTypeNames.Other')}
+							</Button>
 						</div>
 					</div>
 

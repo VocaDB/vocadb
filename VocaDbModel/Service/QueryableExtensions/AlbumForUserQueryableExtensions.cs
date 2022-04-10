@@ -167,5 +167,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Where(s => s.Album.OriginalRelease.ReleaseEvent.Id == releaseEventId);
 		}
+
+		public static IQueryable<AlbumForUser> WhereHasMediaType(this IQueryable<AlbumForUser> query, MediaType? mediaType)
+		{
+			if (mediaType is null)
+				return query;
+
+			return query.Where(m => m.MediaType == mediaType);
+		}
 	}
 }

@@ -1071,7 +1071,8 @@ namespace VocaDb.Model.Database.Queries
 					.WhereAlbumHasTag(queryParams.TagId)
 					.WhereAlbumHasTag(queryParams.Tag)
 					.WhereAlbumMatchFilters(queryParams.AdvancedFilters)
-					.WhereAlbumHasType(queryParams.AlbumType);
+					.WhereAlbumHasType(queryParams.AlbumType)
+					.WhereHasMediaType(queryParams.MediaType);
 
 				var albums = query
 					.OrderBy(queryParams.Sort, PermissionContext.LanguagePreference)
