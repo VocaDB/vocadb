@@ -38,6 +38,7 @@ namespace VocaDb.Web.Controllers
 		private readonly SongAggregateQueries _songAggregateQueries;
 		private readonly ObjectCache _cache;
 
+#nullable enable
 		private ActionResult AreaChart(string title, params Series[] dataSeries)
 		{
 			var json = new Highchart
@@ -90,13 +91,12 @@ namespace VocaDb.Web.Controllers
 					Floating = true,
 					BackgroundColor = "#FFFFFF"
 				},
-				Series = (
-					dataSeries
-				)
+				Series = dataSeries,
 			};
 
 			return LowercaseJson(json);
 		}
+#nullable disable
 
 		private ActionResult DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points,
 			bool average = true)
@@ -617,27 +617,46 @@ namespace VocaDb.Web.Controllers
 			);
 		}
 
-		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+#nullable enable
+		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes, int startYear = 2007)
 		{
-			if (vocalistTypes == null)
-				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer, ArtistType.SynthesizerV };
+			if (!vocalistTypes.Any())
+			{
+				vocalistTypes = new[]
+				{
+					ArtistType.Vocaloid,
+					ArtistType.UTAU,
+					ArtistType.CeVIO,
+					ArtistType.OtherVoiceSynthesizer,
+					ArtistType.SynthesizerV
+				};
+			}
 
 			var data = _queries.SongsPerVocaloidOverTime(cutoff, vocalistTypes, startYear);
 
 			var dataSeries = data.Select(ser => new Series
 			{
-				Name = ser.Item1.Names.SortNames.English,
-				Data = Series.DateData(ser.Item2, p => p.Date, p => p.Count)
+				Name = ser.Artist.Names.SortNames.English,
+				Data = Series.DateData(ser.Points, p => p.Date, p => p.Count)
 			}).ToArray();
 
 			return AreaChart("Songs per voicebank over time", dataSeries);
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
-		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes, int startYear = 2007)
 		{
-			if (vocalistTypes == null)
-				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer, ArtistType.SynthesizerV };
+			if (!vocalistTypes.Any())
+			{
+				vocalistTypes = new[]
+				{
+					ArtistType.Vocaloid,
+					ArtistType.UTAU,
+					ArtistType.CeVIO,
+					ArtistType.OtherVoiceSynthesizer,
+					ArtistType.SynthesizerV
+				};
+			}
 
 			var data = _queries.GetSongsPerVoicebankTypeOverTime(cutoff, vocalistTypes, startYear);
 
@@ -645,12 +664,13 @@ namespace VocaDb.Web.Controllers
 				.Select(ser => new Series
 				{
 					Name = Translate.ArtistTypeName(ser.Key),
-					Data = Series.DateData(ser, p => p.Item1, p => p.Item3)
+					Data = Series.DateData(ser, p => p.Date, p => p.Count)
 				})
 				.ToArray();
 
 			return AreaChart("Songs per vocalist type over time", dataSeries);
 		}
+#nullable disable
 
 		[ResponseCache(Duration = ClientCacheDurationSec)]
 		public ActionResult SongsWithoutPVOverTime()
