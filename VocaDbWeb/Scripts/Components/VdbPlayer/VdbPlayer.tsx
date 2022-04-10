@@ -5,6 +5,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import classNames from 'classnames';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -31,9 +32,24 @@ const VdbPlayerLeftControls = observer(
 		const handlePause = React.useCallback(() => playerRef.current.pause(), [
 			playerRef,
 		]);
+
 		const handlePlay = React.useCallback(() => playerRef.current.play(), [
 			playerRef,
 		]);
+
+		React.useEffect(() => {
+			// Returns the disposer.
+			return reaction(
+				() => vdbPlayer.playQueueStore.selectedEntry,
+				(selectedEntry, previousEntry) => {
+					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
+					if (selectedEntry?.pv.id === previousEntry?.pv.id) {
+						playerRef.current.seekTo(0);
+						playerRef.current.play();
+					}
+				},
+			);
+		}, [vdbPlayer, playerRef]);
 
 		return (
 			<ButtonGroup>

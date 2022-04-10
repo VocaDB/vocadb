@@ -153,7 +153,7 @@ class PVPlayerYouTube implements IPVPlayer {
 		this.assertPlayerAttached();
 		if (!this.player) return;
 
-		this.player.seekTo(seconds, false);
+		this.player.seekTo(seconds);
 	};
 
 	public mute = (): void => {

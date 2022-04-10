@@ -118,7 +118,7 @@ declare namespace YT {
 		playVideo(): void;
 		pauseVideo(): void;
 		stopVideo(): void;
-		seekTo(seconds: number, allowSeekAhead: boolean): void;
+		seekTo(seconds: number, allowSeekAhead?: boolean): void;
 		clearVideo(): void;
 
 		// Playlist
