@@ -1,6 +1,5 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
-import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
 import _ from 'lodash';
 import React from 'react';
 
@@ -11,9 +10,8 @@ import EmbedFile from './EmbedFile';
 import EmbedNiconico from './EmbedNiconico';
 import EmbedSoundCloud from './EmbedSoundCloud';
 import EmbedYouTube from './EmbedYouTube';
-import IPVPlayer from './IPVPlayer';
+import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
 import VdbPlayerConsole from './VdbPlayerConsole';
-import { useVdbPlayer } from './VdbPlayerContext';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
 // TODO: Test.
@@ -50,6 +48,7 @@ interface EmbedPVProps {
 	enableApi?: boolean;
 	id?: string;
 	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
+	playerOptions: IPVPlayerOptions;
 }
 
 const EmbedPV = React.memo(
@@ -61,88 +60,9 @@ const EmbedPV = React.memo(
 		enableApi = false,
 		id,
 		playerRef,
+		playerOptions,
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
-
-		const vdbPlayer = useVdbPlayer();
-
-		React.useEffect(() => {
-			const player = playerRef.current;
-
-			if (!player) return;
-
-			player
-				.load(pv)
-				.then(player.play)
-				.catch((e) => {
-					VdbPlayerConsole.error(
-						'Failed to load PV',
-						JSON.parse(JSON.stringify(pv)),
-						e,
-					);
-				});
-		}, [playerRef, pv]);
-
-		const handleError = React.useCallback((e: any) => {
-			VdbPlayerConsole.error('error', e);
-		}, []);
-
-		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
-			vdbPlayer,
-		]);
-
-		const handlePause = React.useCallback(() => vdbPlayer.setPlaying(false), [
-			vdbPlayer,
-		]);
-
-		const handleEnded = React.useCallback(() => {
-			VdbPlayerConsole.debug(
-				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
-			);
-
-			const player = playerRef.current;
-
-			if (!player) return;
-
-			switch (vdbPlayer.repeat) {
-				case RepeatMode.One:
-					player.seekTo(0);
-					player.play();
-					break;
-
-				case RepeatMode.Off:
-				case RepeatMode.All:
-					if (vdbPlayer.playQueueStore.isLastEntry) {
-						switch (vdbPlayer.repeat) {
-							case RepeatMode.Off:
-								vdbPlayer.setPlaying(false);
-								break;
-
-							case RepeatMode.All:
-								if (vdbPlayer.playQueueStore.hasMultipleEntries) {
-									vdbPlayer.playQueueStore.goToFirst();
-								} else {
-									player.seekTo(0);
-									player.play();
-								}
-								break;
-						}
-					} else {
-						vdbPlayer.next();
-					}
-					break;
-			}
-		}, [vdbPlayer, playerRef]);
-
-		const playerOptions = React.useMemo(
-			() => ({
-				onError: handleError,
-				onPlay: handlePlay,
-				onPause: handlePause,
-				onEnded: handleEnded,
-			}),
-			[handleError, handlePlay, handlePause, handleEnded],
-		);
 
 		switch (PVService[pv.service as keyof typeof PVService]) {
 			case PVService.Bandcamp:

@@ -1,6 +1,7 @@
 import Button from '@Bootstrap/Button';
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Container from '@Bootstrap/Container';
+import PVContract from '@DataContracts/PVs/PVContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
@@ -257,6 +258,106 @@ const VdbPlayerControls = observer(
 	},
 );
 
+interface PVPlayerProps {
+	playerRef: React.MutableRefObject<IPVPlayer>;
+	pv: PVContract;
+}
+
+const PVPlayer = observer(
+	({ playerRef, pv }: PVPlayerProps): React.ReactElement => {
+		const vdbPlayer = useVdbPlayer();
+
+		React.useEffect(() => {
+			const player = playerRef.current;
+
+			if (!player) return;
+
+			player
+				.load(pv)
+				.then(player.play)
+				.catch((e) => {
+					VdbPlayerConsole.error(
+						'Failed to load PV',
+						JSON.parse(JSON.stringify(pv)),
+						e,
+					);
+				});
+		}, [playerRef, pv]);
+
+		const handleError = React.useCallback((e: any) => {
+			VdbPlayerConsole.error('error', e);
+		}, []);
+
+		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
+			vdbPlayer,
+		]);
+
+		const handlePause = React.useCallback(() => vdbPlayer.setPlaying(false), [
+			vdbPlayer,
+		]);
+
+		const handleEnded = React.useCallback(() => {
+			VdbPlayerConsole.debug(
+				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
+			);
+
+			const player = playerRef.current;
+
+			if (!player) return;
+
+			switch (vdbPlayer.repeat) {
+				case RepeatMode.One:
+					player.seekTo(0);
+					player.play();
+					break;
+
+				case RepeatMode.Off:
+				case RepeatMode.All:
+					if (vdbPlayer.playQueueStore.isLastEntry) {
+						switch (vdbPlayer.repeat) {
+							case RepeatMode.Off:
+								vdbPlayer.setPlaying(false);
+								break;
+
+							case RepeatMode.All:
+								if (vdbPlayer.playQueueStore.hasMultipleEntries) {
+									vdbPlayer.playQueueStore.goToFirst();
+								} else {
+									player.seekTo(0);
+									player.play();
+								}
+								break;
+						}
+					} else {
+						vdbPlayer.next();
+					}
+					break;
+			}
+		}, [vdbPlayer, playerRef]);
+
+		const playerOptions = React.useMemo(
+			() => ({
+				onError: handleError,
+				onPlay: handlePlay,
+				onPause: handlePause,
+				onEnded: handleEnded,
+			}),
+			[handleError, handlePlay, handlePause, handleEnded],
+		);
+
+		return (
+			<EmbedPV
+				pv={pv}
+				width="100%"
+				height="100%"
+				enableApi={true}
+				playerRef={playerRef}
+				playerOptions={playerOptions}
+			/>
+		);
+	},
+);
+
 const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
@@ -287,13 +388,7 @@ const VdbPlayer = observer(
 					}}
 				>
 					{vdbPlayer.selectedEntry && (
-						<EmbedPV
-							pv={vdbPlayer.selectedEntry.pv}
-							width="100%"
-							height="100%"
-							enableApi={true}
-							playerRef={playerRef}
-						/>
+						<PVPlayer playerRef={playerRef} pv={vdbPlayer.selectedEntry.pv} />
 					)}
 				</div>
 
