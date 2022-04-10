@@ -70,7 +70,7 @@
         "knockout": "^3.5.1",
         "knockout-punches": "^0.5.1",
         "lodash": "^4.17.19",
-        "marked": "^0.3.18",
+        "marked": "^4.0.10",
         "mobx": "^6.3.2",
         "mobx-react-lite": "^3.2.0",
         "moment": "^2.29.2",
