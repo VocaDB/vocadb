@@ -15,7 +15,9 @@ class PVPlayerFile implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerFile.ctor');
 	}
 
-	private attach = async (): Promise<void> => {
+	public attach = async (): Promise<void> => {
+		VdbPlayerConsole.debug('PVPlayerFile.attach');
+
 		if (this.player) {
 			VdbPlayerConsole.debug('File player is already attached');
 			return;
@@ -24,6 +26,12 @@ class PVPlayerFile implements IPVPlayer {
 		this.player = this.playerElementRef.current;
 
 		VdbPlayerConsole.debug('File player attached');
+	};
+
+	public detach = async (): Promise<void> => {
+		VdbPlayerConsole.debug('PVPlayerFile.detach');
+
+		this.player = undefined;
 	};
 
 	private assertPlayerAttached = (): void => {
@@ -35,8 +43,6 @@ class PVPlayerFile implements IPVPlayer {
 
 		VdbPlayerConsole.assert(!!pv.url, 'pv.url is not defined');
 		if (!pv.url) return;
-
-		await this.attach();
 
 		this.assertPlayerAttached();
 		if (!this.player) return;
@@ -108,6 +114,10 @@ const EmbedFile = React.memo(
 
 		React.useEffect(() => {
 			playerRef.current = new PVPlayerFile(playerElementRef, options);
+
+			return (): void => {
+				playerRef.current?.detach();
+			};
 		}, [playerRef, options]);
 
 		return (

@@ -273,7 +273,8 @@ const PVPlayer = observer(
 			if (!player) return;
 
 			player
-				.load(pv)
+				.attach()
+				.then(() => player.load(pv))
 				.then(player.play)
 				.catch((e) => {
 					VdbPlayerConsole.error(

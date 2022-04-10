@@ -45,8 +45,10 @@ class PVPlayerSoundCloud implements IPVPlayer {
 		});
 	};
 
-	private attach = (): Promise<void> => {
+	public attach = (): Promise<void> => {
 		return new Promise(async (resolve, reject /* TODO: Reject. */) => {
+			VdbPlayerConsole.debug('PVPlayerSoundCloud.attach');
+
 			if (this.player) {
 				VdbPlayerConsole.debug('SoundCloud player is already attached');
 
@@ -55,6 +57,8 @@ class PVPlayerSoundCloud implements IPVPlayer {
 			}
 
 			await this.loadScript();
+
+			VdbPlayerConsole.debug('Attaching SoundCloud player...');
 
 			this.player = SC.Widget(this.playerElementRef.current);
 			this.player.bind(SC.Widget.Events.READY, () => {
@@ -69,6 +73,12 @@ class PVPlayerSoundCloud implements IPVPlayer {
 			this.player.bind(SC.Widget.Events.PAUSE, () => this.options.onPause?.());
 			this.player.bind(SC.Widget.Events.FINISH, () => this.options.onEnded?.());
 		});
+	};
+
+	public detach = async (): Promise<void> => {
+		VdbPlayerConsole.debug('PVPlayerSoundCloud.detach');
+
+		this.player = undefined;
 	};
 
 	private assertPlayerAttached = (): void => {
@@ -86,10 +96,6 @@ class PVPlayerSoundCloud implements IPVPlayer {
 			'PVPlayerSoundCloud.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
-
-		VdbPlayerConsole.debug('Attaching SoundCloud player...');
-
-		await this.attach();
 
 		this.assertPlayerAttached();
 		if (!this.player) return;
@@ -158,6 +164,10 @@ const EmbedSoundCloud = React.memo(
 
 		React.useEffect(() => {
 			playerRef.current = new PVPlayerSoundCloud(playerElementRef, options);
+
+			return (): void => {
+				playerRef.current?.detach();
+			};
 		}, [playerRef, options]);
 
 		return (

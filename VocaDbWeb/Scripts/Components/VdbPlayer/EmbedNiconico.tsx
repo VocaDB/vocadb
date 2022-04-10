@@ -101,8 +101,72 @@ class PVPlayerNiconico implements IPVPlayer {
 		VdbPlayerConsole.debug('PVPlayerNiconico.ctor');
 	}
 
-	private attach = (): Promise<void> => {
+	private handleMessage = (e: nico.PlayerEvent): void => {
+		if (e.origin !== PVPlayerNiconico.origin) return;
+
+		switch (e.data.eventName) {
+			case 'playerStatusChange':
+				VdbPlayerConsole.debug(
+					`Niconico player status changed: ${e.data.data.playerStatus}`,
+				);
+
+				switch (e.data.data.playerStatus) {
+					case nico.PlayerStatus.Play:
+						this.options.onPlay?.();
+						break;
+
+					case nico.PlayerStatus.Pause:
+						this.options.onPause?.();
+						break;
+
+					case nico.PlayerStatus.End:
+						this.options.onEnded?.();
+						break;
+				}
+				break;
+
+			case 'statusChange':
+				VdbPlayerConsole.debug(
+					`Niconico status changed: ${e.data.data.playerStatus}`,
+				);
+				break;
+
+			case 'playerMetadataChange':
+				break;
+
+			case 'loadComplete':
+				VdbPlayerConsole.debug('Niconico load completed');
+
+				// TODO: Implement.
+				break;
+
+			case 'error':
+				// TODO: Implement.
+
+				this.options.onError?.(e.data);
+				break;
+
+			case 'player-error:video:play':
+			case 'player-error:video:seek':
+				this.options.onError?.(e.data);
+				break;
+
+			default:
+				VdbPlayerConsole.warn(
+					'Niconico message',
+					// @ts-ignore
+					e.data.eventName,
+					// @ts-ignore
+					e.data.data,
+				);
+				break;
+		}
+	};
+
+	public attach = (): Promise<void> => {
 		return new Promise((resolve, reject /* TODO: Reject. */) => {
+			VdbPlayerConsole.debug('PVPlayerNiconico.attach');
+
 			if (this.player) {
 				VdbPlayerConsole.debug('Niconico player is already attached');
 
@@ -112,72 +176,20 @@ class PVPlayerNiconico implements IPVPlayer {
 
 			this.player = this.playerElementRef.current;
 
-			window.addEventListener('message', (e: nico.PlayerEvent) => {
-				if (e.origin !== PVPlayerNiconico.origin) return;
-
-				switch (e.data.eventName) {
-					case 'playerStatusChange':
-						VdbPlayerConsole.debug(
-							`Niconico player status changed: ${e.data.data.playerStatus}`,
-						);
-
-						switch (e.data.data.playerStatus) {
-							case nico.PlayerStatus.Play:
-								this.options.onPlay?.();
-								break;
-
-							case nico.PlayerStatus.Pause:
-								this.options.onPause?.();
-								break;
-
-							case nico.PlayerStatus.End:
-								this.options.onEnded?.();
-								break;
-						}
-						break;
-
-					case 'statusChange':
-						VdbPlayerConsole.debug(
-							`Niconico status changed: ${e.data.data.playerStatus}`,
-						);
-						break;
-
-					case 'playerMetadataChange':
-						break;
-
-					case 'loadComplete':
-						VdbPlayerConsole.debug('Niconico load completed');
-
-						// TODO: Implement.
-						break;
-
-					case 'error':
-						// TODO: Implement.
-
-						this.options.onError?.(e.data);
-						break;
-
-					case 'player-error:video:play':
-					case 'player-error:video:seek':
-						this.options.onError?.(e.data);
-						break;
-
-					default:
-						VdbPlayerConsole.warn(
-							'Niconico message',
-							// @ts-ignore
-							e.data.eventName,
-							// @ts-ignore
-							e.data.data,
-						);
-						break;
-				}
-			});
+			window.addEventListener('message', this.handleMessage);
 
 			VdbPlayerConsole.debug('Niconico player attached');
 
 			resolve();
 		});
+	};
+
+	public detach = async (): Promise<void> => {
+		VdbPlayerConsole.debug('PVPlayerNiconico.detach');
+
+		this.player = undefined;
+
+		window.removeEventListener('message', this.handleMessage);
 	};
 
 	private assertPlayerAttached = (): void => {
@@ -190,8 +202,6 @@ class PVPlayerNiconico implements IPVPlayer {
 				'PVPlayerNiconico.load',
 				JSON.parse(JSON.stringify(pv)),
 			);
-
-			await this.attach();
 
 			this.assertPlayerAttached();
 			if (!this.player) return;
@@ -282,6 +292,10 @@ const EmbedNiconico = React.memo(
 
 		React.useEffect(() => {
 			playerRef.current = new PVPlayerNiconico(playerElementRef, options);
+
+			return (): void => {
+				playerRef.current?.detach();
+			};
 		}, [playerRef, options]);
 
 		return (

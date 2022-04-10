@@ -8,6 +8,8 @@ export interface IPVPlayerOptions {
 }
 
 export default interface IPVPlayer {
+	attach: () => Promise<void>;
+	detach: () => Promise<void>;
 	load: (pv: PVContract) => Promise<void>;
 	play: () => void;
 	pause: () => void;

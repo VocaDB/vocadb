@@ -60,8 +60,10 @@ class PVPlayerYouTube implements IPVPlayer {
 		VdbPlayerConsole.assert(!!this.player, 'YouTube player is not attached');
 	};
 
-	private attach = (): Promise<void> => {
+	public attach = (): Promise<void> => {
 		return new Promise(async (resolve, reject /* TODO: Reject. */) => {
+			VdbPlayerConsole.debug('PVPlayerYouTube.attach');
+
 			if (this.player) {
 				VdbPlayerConsole.debug('YouTube player is already attached');
 
@@ -113,13 +115,17 @@ class PVPlayerYouTube implements IPVPlayer {
 		});
 	};
 
+	public detach = async (): Promise<void> => {
+		VdbPlayerConsole.debug('PVPlayerYouTube.detach');
+
+		this.player = undefined;
+	};
+
 	public load = async (pv: PVContract): Promise<void> => {
 		VdbPlayerConsole.debug(
 			'PVPlayerYouTube.load',
 			JSON.parse(JSON.stringify(pv)),
 		);
-
-		await this.attach();
 
 		this.assertPlayerAttached();
 		if (!this.player) return;
@@ -188,6 +194,10 @@ const EmbedYouTube = React.memo(
 
 		React.useEffect(() => {
 			playerRef.current = new PVPlayerYouTube(playerElementRef, options);
+
+			return (): void => {
+				playerRef.current?.detach();
+			};
 		}, [playerRef, options]);
 
 		return (
