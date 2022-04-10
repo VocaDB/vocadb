@@ -3,6 +3,8 @@ import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
 import { action, computed, makeObservable, observable } from 'mobx';
 
+import PlayQueueStore from './PlayQueueStore';
+
 export enum RepeatMode {
 	Off = 'Off',
 	All = 'All',
@@ -27,25 +29,29 @@ export default class VdbPlayerStore {
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
 	@observable public expanded = false;
-	@observable.struct public entry?: IVdbPlayerEntry;
+	public readonly playQueueStore = new PlayQueueStore();
 
 	public constructor() {
 		makeObservable(this);
 	}
 
-	@computed public get hasPreviousSong(): boolean {
-		return false /* TODO: Implement. */;
+	@computed public get hasPreviousEntry(): boolean {
+		return this.playQueueStore.hasPreviousEntry;
 	}
 
-	@computed public get hasNextSong(): boolean {
-		return false /* TODO: Implement. */;
+	@computed public get hasNextEntry(): boolean {
+		return this.playQueueStore.hasNextEntry;
+	}
+
+	@computed public get selectedEntry(): IVdbPlayerEntry | undefined {
+		return this.playQueueStore.selectedEntry;
 	}
 
 	@computed public get canAutoplay(): boolean {
 		return (
-			!!this.entry &&
+			!!this.selectedEntry &&
 			VdbPlayerStore.autoplayServices.includes(
-				PVService[this.entry.pv.service as keyof typeof PVService],
+				PVService[this.selectedEntry.pv.service as keyof typeof PVService],
 			)
 		);
 	}
@@ -92,18 +98,36 @@ export default class VdbPlayerStore {
 	};
 
 	public previous = (): void => {
-		// TODO: Implement.
+		this.playQueueStore.previous();
 	};
 
 	public next = (): void => {
-		// TODO: Implement.
+		this.playQueueStore.next();
 	};
 
-	@action public selectEntry = (entry: IVdbPlayerEntry): void => {
-		this.entry = entry;
+	public play = (entry: IVdbPlayerEntry): void => {
+		this.playQueueStore.play(entry);
 
 		if (!this.canAutoplay) {
 			this.expand();
 		}
+	};
+
+	public playNext = (entry: IVdbPlayerEntry): void => {
+		if (this.playQueueStore.isEmpty) {
+			this.play(entry);
+			return;
+		}
+
+		this.playQueueStore.playNext(entry);
+	};
+
+	public addToQueue = (entry: IVdbPlayerEntry): void => {
+		if (this.playQueueStore.isEmpty) {
+			this.play(entry);
+			return;
+		}
+
+		this.playQueueStore.addToQueue(entry);
 	};
 }

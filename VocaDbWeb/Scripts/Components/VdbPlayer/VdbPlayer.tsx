@@ -49,7 +49,8 @@ const VdbPlayerLeftControls = observer(
 				<Button
 					variant="inverse"
 					title="Previous" /* TODO: localize */
-					disabled={!vdbPlayer.hasPreviousSong}
+					onClick={vdbPlayer.previous}
+					disabled={!vdbPlayer.hasPreviousEntry}
 				>
 					<i className="icon-step-backward icon-white" />
 				</Button>
@@ -79,7 +80,8 @@ const VdbPlayerLeftControls = observer(
 				<Button
 					variant="inverse"
 					title="Next" /* TODO: localize */
-					disabled={!vdbPlayer.hasNextSong}
+					onClick={vdbPlayer.next}
+					disabled={!vdbPlayer.hasNextEntry}
 				>
 					<i className="icon-step-forward icon-white" />
 				</Button>
@@ -115,9 +117,9 @@ const VdbPlayerEntryInfo = observer(
 
 		return (
 			<div css={{ display: 'flex', alignItems: 'center' }}>
-				{vdbPlayer.entry && (
+				{vdbPlayer.selectedEntry && (
 					<Link
-						to={EntryUrlMapper.details_entry(vdbPlayer.entry.entry)}
+						to={EntryUrlMapper.details_entry(vdbPlayer.selectedEntry.entry)}
 						onClick={handleEntryLinkClick}
 						css={{ marginRight: 8 }}
 					>
@@ -126,7 +128,7 @@ const VdbPlayerEntryInfo = observer(
 								width: 64,
 								height: 36,
 								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundImage: `url(${vdbPlayer.entry.entry.mainPicture?.urlThumb})`,
+								backgroundImage: `url(${vdbPlayer.selectedEntry.entry.mainPicture?.urlThumb})`,
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
 							}}
@@ -142,10 +144,10 @@ const VdbPlayerEntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					{vdbPlayer.entry && (
+					{vdbPlayer.selectedEntry && (
 						<>
 							<Link
-								to={EntryUrlMapper.details_entry(vdbPlayer.entry.entry)}
+								to={EntryUrlMapper.details_entry(vdbPlayer.selectedEntry.entry)}
 								onClick={handleEntryLinkClick}
 								css={css`
 									color: white;
@@ -161,7 +163,7 @@ const VdbPlayerEntryInfo = observer(
 									white-space: nowrap;
 								`}
 							>
-								{vdbPlayer.entry.entry.name}
+								{vdbPlayer.selectedEntry.entry.name}
 							</Link>
 							<div css={{ display: 'flex' }}>
 								<span
@@ -172,7 +174,7 @@ const VdbPlayerEntryInfo = observer(
 										whiteSpace: 'nowrap',
 									}}
 								>
-									{vdbPlayer.entry.entry.artistString}
+									{vdbPlayer.selectedEntry.entry.artistString}
 								</span>
 							</div>
 						</>
@@ -202,7 +204,7 @@ const VdbPlayerRightControls = observer(
 						variant="inverse"
 						title="Expand" /* TODO: localize */
 						onClick={vdbPlayer.expand}
-						disabled={!vdbPlayer.entry}
+						disabled={!vdbPlayer.selectedEntry}
 					>
 						<i className="icon-resize-full icon-white" />
 					</Button>
@@ -263,9 +265,9 @@ const VdbPlayer = observer(
 						backgroundColor: 'black',
 					}}
 				>
-					{vdbPlayer.entry && (
+					{vdbPlayer.selectedEntry && (
 						<EmbedPV
-							pv={vdbPlayer.entry.pv}
+							pv={vdbPlayer.selectedEntry.pv}
 							width="100%"
 							height="100%"
 							enableApi={true}
