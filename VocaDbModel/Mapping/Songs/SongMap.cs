@@ -79,7 +79,7 @@ namespace VocaDb.Model.Mapping.Songs
 			HasMany(m => m.AllArtists).Table("ArtistsForSongs").Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.AllComments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Hits).Inverse();
-			HasMany(m => m.ListLinks).Inverse();
+			HasMany(m => m.AllListLinks).Inverse();
 			HasMany(m => m.Lyrics).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.UserFavorites).Inverse();
 			HasMany(m => m.WebLinks).Table("SongWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
