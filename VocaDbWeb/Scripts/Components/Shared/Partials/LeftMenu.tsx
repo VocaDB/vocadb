@@ -186,8 +186,6 @@ const LeftMenu = React.memo(
 					)}
 					{/* TODO: PaypalDonateButton */}
 				</div>
-
-				{/* TODO: TwitterTimeline */}
 			</div>
 		);
 	},

@@ -78,10 +78,4 @@
 			<partial name="Partials/_PaypalDonateButton" />
 		}
 	</div>
-
-	@* HACK: `@section`s don't work in partial views. *@
-	@if (!string.IsNullOrEmpty(Config.SiteSettings.TwitterAccountName) && ViewBag.ShowTwitterTimeline ?? false)
-	{
-		<partial name="Partials/_TwitterTimeline" />
-	}
 </div>
