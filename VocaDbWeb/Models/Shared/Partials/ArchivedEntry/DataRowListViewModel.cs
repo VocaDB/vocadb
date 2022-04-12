@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry

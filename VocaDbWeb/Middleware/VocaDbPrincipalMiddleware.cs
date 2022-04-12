@@ -1,7 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using NLog;
 using VocaDb.Model;
 using VocaDb.Model.Service;

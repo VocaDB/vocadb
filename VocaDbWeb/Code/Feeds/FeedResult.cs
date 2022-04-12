@@ -1,11 +1,8 @@
 #nullable disable
 
-using System;
-using System.IO;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 

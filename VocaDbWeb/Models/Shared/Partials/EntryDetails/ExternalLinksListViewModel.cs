@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models.Shared.Partials.EntryDetails

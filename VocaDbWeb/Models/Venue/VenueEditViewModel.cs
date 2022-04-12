@@ -1,14 +1,13 @@
 #nullable disable
 
-using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
-using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Models.Venue
 {

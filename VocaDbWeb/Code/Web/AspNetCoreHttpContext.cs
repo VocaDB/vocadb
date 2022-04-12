@@ -1,12 +1,8 @@
 #nullable disable
 
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Claims;
 using System.Security.Principal;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using Antlr.Runtime.Misc;
 
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
