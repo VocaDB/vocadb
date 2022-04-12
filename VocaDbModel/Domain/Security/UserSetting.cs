@@ -4,10 +4,11 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Web;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security
 {
+	using VocaDb.Model.Helpers;
+
 	/// <summary>
 	/// Common interface for user settings that can be changed individually.
 	/// These settings can be persisted for the user account if the user is logged in, or in a cookie if the user has no account.
