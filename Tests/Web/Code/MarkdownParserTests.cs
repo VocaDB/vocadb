@@ -1,9 +1,7 @@
 #nullable disable
 
 using System.Text.RegularExpressions;
-using FluentAssertions;
 using HtmlAgilityPack;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code.Markdown;
 

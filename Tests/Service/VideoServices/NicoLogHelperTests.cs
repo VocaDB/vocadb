@@ -1,6 +1,4 @@
-using FluentAssertions;
 using HtmlAgilityPack;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Tests.Service.VideoServices

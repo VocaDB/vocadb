@@ -2,8 +2,6 @@
 
 using System.Net.Mime;
 using System.Runtime.Caching;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;

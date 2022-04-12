@@ -1,10 +1,8 @@
 #nullable disable
 
 using System.Net;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Models.Artist;
 

@@ -1,5 +1,3 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;

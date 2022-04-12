@@ -1,5 +1,3 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;

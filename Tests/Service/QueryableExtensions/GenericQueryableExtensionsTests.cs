@@ -1,7 +1,5 @@
 #nullable disable
 
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Tests.Service.QueryableExtensions

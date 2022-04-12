@@ -1,8 +1,6 @@
 #nullable disable
 
 using System.Xml.Linq;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Helpers;
 

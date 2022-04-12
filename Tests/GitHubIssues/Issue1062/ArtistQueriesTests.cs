@@ -1,6 +1,4 @@
 using System.Runtime.Caching;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;

@@ -1,7 +1,5 @@
 #nullable disable
 
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Code;
 using VocaDb.Web.Resources.Views.Shared;
 

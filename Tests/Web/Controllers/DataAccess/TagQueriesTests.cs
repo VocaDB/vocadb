@@ -1,6 +1,4 @@
 using System.Net.Mime;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Globalization;

@@ -1,5 +1,3 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;

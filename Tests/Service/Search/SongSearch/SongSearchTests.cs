@@ -1,7 +1,5 @@
 #nullable disable
 
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
