@@ -33,7 +33,9 @@ namespace VocaDb.Model.Domain.Versioning
 			Version = version;
 		}
 
+#nullable enable
 		public virtual string AgentName { get; protected set; }
+#nullable disable
 
 		/// <summary>
 		/// User who created this version. Can be null.

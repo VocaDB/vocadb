@@ -23,10 +23,11 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public AlbumForApiContract() { }
 
+#nullable enable
 		public AlbumForApiContract(
 			Album album,
 			ContentLanguagePreference languagePreference,
-			IAggregatedEntryImageUrlFactory thumbPersister,
+			IAggregatedEntryImageUrlFactory? thumbPersister,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields = SongOptionalFields.None
 		) :
@@ -35,9 +36,9 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public AlbumForApiContract(
 			Album album,
-			AlbumMergeRecord mergeRecord,
+			AlbumMergeRecord? mergeRecord,
 			ContentLanguagePreference languagePreference,
-			IAggregatedEntryImageUrlFactory thumbPersister,
+			IAggregatedEntryImageUrlFactory? thumbPersister,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields
 		)
@@ -119,6 +120,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
