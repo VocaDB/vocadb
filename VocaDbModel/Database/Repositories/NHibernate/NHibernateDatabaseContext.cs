@@ -1,8 +1,5 @@
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using NHibernate;
-using NHibernate.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 

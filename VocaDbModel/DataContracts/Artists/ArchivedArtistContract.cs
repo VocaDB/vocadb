@@ -1,9 +1,7 @@
 #nullable disable
 
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Artists;
-using System;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.Artists

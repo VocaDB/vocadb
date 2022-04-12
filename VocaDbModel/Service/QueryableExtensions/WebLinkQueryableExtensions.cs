@@ -1,6 +1,4 @@
-using System.Linq;
 using VocaDb.Model.Domain.ExtLinks;
-using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.QueryableExtensions
 {

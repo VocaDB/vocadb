@@ -1,11 +1,9 @@
 #nullable disable
 
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Globalization;
-using System.Drawing;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {

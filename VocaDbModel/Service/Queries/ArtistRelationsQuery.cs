@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;

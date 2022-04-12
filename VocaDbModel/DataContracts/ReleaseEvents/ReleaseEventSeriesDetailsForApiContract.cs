@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;

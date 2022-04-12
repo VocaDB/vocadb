@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags

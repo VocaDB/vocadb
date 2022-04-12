@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace VocaDb.Model.Helpers
 {
 	public static class StreamHelper

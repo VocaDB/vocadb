@@ -1,25 +1,19 @@
 #nullable disable
 
-using System;
-using System.Linq;
-using System.Xml.Linq;
-using NLog;
-using VocaDb.Model.Domain.Globalization;
 using NHibernate;
-using NHibernate.Linq;
+using NLog;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.Helpers;
-using System.Drawing;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Database.Repositories.NHibernate;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Domain.ExtLinks;
-using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.Service
 {

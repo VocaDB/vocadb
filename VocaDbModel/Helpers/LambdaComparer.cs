@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace VocaDb.Model.Helpers
 {
 	public class LambdaComparer<T> : IComparer<T>

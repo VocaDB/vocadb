@@ -1,7 +1,4 @@
-using System;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories

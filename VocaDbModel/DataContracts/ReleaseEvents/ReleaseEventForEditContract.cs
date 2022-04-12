@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Linq;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;

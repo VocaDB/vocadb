@@ -1,7 +1,6 @@
 #nullable disable
 
 using NHibernate;
-using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate
 {

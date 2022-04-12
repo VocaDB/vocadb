@@ -1,4 +1,3 @@
-using System.Linq;
 using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Service.QueryableExtensions

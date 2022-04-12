@@ -1,4 +1,3 @@
-using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;

@@ -1,18 +1,16 @@
 #nullable disable
 
-using System;
 using System.Configuration;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security.Principal;
 using NLog;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using System.Globalization;
-using System.Threading;
 using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Utils;
-using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Service.Security
 {

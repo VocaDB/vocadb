@@ -1,12 +1,11 @@
 #nullable disable
 
-using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Artists

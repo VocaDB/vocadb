@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.IO;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;

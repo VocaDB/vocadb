@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Globalization;
