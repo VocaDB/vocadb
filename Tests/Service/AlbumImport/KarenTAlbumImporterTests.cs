@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Linq;
-using System.Text;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

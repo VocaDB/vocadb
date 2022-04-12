@@ -1,11 +1,10 @@
-using System;
-using System.Linq;
+using FluentAssertions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;
-using FluentAssertions;
 
-namespace VocaDb.Tests.Service.VideoServices {
+namespace VocaDb.Tests.Service.VideoServices
+{
 
 	/// <summary>
 	/// Unit tests for <see cref="NicoLogHelper"/>.

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.Xml.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

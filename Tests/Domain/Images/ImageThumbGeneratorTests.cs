@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Drawing;
-using System.IO;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;

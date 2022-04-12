@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using VocaDb.Model.Domain;

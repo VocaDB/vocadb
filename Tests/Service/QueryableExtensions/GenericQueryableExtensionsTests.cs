@@ -1,13 +1,7 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Tests.Service.QueryableExtensions
