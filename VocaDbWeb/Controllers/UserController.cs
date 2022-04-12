@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Artists;
@@ -40,6 +39,8 @@ using VocaDb.Web.Models.User;
 
 namespace VocaDb.Web.Controllers
 {
+	using NLog;
+
 	public class UserController : ControllerBase
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();

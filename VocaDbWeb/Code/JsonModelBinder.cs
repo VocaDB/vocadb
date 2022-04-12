@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
-using NLog;
 
 namespace VocaDb.Web.Code
 {
+	using NLog;
+
 	public class JsonModelBinder : IModelBinder
 	{
 		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();

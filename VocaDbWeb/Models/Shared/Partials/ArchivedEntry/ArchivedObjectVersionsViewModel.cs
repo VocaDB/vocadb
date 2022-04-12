@@ -1,9 +1,9 @@
 #nullable disable
 
-using Antlr.Runtime.Misc;
-
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 {
+	using Antlr.Runtime.Misc;
+
 	public class ArchivedObjectVersionsViewModel
 	{
 		public ArchivedObjectVersionsViewModel(IEnumerable<ArchivedObjectVersion> archivedVersions, Func<int, string> linkFunc = null)

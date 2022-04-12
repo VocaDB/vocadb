@@ -1,4 +1,3 @@
-using NLog;
 using VocaDb.Model;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
@@ -6,6 +5,8 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Middleware
 {
+	using NLog;
+
 	public class VocaDbPrincipalMiddleware
 	{
 		private readonly RequestDelegate _next;
