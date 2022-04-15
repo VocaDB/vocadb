@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Database.Queries;
 
 namespace VocaDb.Model.DataContracts.Aggregate

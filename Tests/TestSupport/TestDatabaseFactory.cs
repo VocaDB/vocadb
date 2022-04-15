@@ -1,9 +1,7 @@
 #nullable disable
 
-using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.IO;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using VocaDb.Model.Service;

@@ -1,4 +1,3 @@
-using System;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain

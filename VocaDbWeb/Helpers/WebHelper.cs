@@ -1,9 +1,6 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.Linq;
 using AngleSharp.Io;
-using Microsoft.AspNetCore.Http;
 using NLog;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Web.Code;

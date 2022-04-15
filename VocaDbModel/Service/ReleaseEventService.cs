@@ -1,7 +1,6 @@
 #nullable disable
 
 using NHibernate;
-using System.Linq;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;

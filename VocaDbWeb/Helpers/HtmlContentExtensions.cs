@@ -1,4 +1,3 @@
-using System.IO;
 using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Helpers

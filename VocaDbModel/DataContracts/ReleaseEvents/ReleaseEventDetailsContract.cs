@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;

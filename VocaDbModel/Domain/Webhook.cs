@@ -1,5 +1,3 @@
-using System;
-
 namespace VocaDb.Model.Domain
 {
 	/// <remarks>

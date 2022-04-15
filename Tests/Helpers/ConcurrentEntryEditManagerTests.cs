@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;

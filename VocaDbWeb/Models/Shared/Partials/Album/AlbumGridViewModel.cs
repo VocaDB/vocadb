@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Albums;
 
 namespace VocaDb.Web.Models.Shared.Partials.Album

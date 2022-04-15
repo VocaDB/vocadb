@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;

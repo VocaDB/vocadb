@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
 

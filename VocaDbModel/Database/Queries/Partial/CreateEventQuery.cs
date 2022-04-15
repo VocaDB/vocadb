@@ -2,7 +2,6 @@
 
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;

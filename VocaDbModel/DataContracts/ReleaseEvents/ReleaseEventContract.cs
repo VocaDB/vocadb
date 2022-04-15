@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;

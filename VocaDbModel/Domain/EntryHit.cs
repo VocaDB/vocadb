@@ -1,8 +1,6 @@
 #nullable disable
 
 
-using System;
-
 namespace VocaDb.Model.Domain
 {
 	public abstract class EntryHit : IEntryWithLongId

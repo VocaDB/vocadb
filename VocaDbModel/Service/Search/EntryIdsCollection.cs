@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace VocaDb.Model.Service.Search
 {

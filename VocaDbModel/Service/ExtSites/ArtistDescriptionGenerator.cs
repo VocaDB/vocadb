@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;

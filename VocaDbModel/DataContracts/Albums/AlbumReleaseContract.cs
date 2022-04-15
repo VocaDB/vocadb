@@ -1,7 +1,7 @@
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Albums;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Albums

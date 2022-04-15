@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Threading.Tasks;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices.Youtube

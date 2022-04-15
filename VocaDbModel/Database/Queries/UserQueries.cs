@@ -1,14 +1,8 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using Discord;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;

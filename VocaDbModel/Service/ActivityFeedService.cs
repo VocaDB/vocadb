@@ -1,8 +1,6 @@
 #nullable disable
 
-using System.Linq;
 using NHibernate;
-using NHibernate.Linq;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;

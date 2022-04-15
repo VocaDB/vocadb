@@ -1,11 +1,8 @@
 #nullable disable
 
-using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.IO;
-using System.Drawing;
 using System.Net.Mime;
 using System.Runtime.Serialization;
 using NLog;

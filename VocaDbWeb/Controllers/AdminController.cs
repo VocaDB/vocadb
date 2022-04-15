@@ -1,14 +1,9 @@
 #nullable disable
 
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;

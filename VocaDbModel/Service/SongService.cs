@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using NHibernate;
 using NLog;
 using VocaDb.Model.Database.Repositories.NHibernate;

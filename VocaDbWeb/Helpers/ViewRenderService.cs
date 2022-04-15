@@ -1,17 +1,12 @@
 // Code from: https://ppolyzos.com/2016/09/09/asp-net-core-render-view-to-string/
 // See also: https://stackoverflow.com/questions/59301912/rendering-view-to-string-in-core-3-0-could-not-find-an-irouter-associated-with
 
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
 
 namespace VocaDb.Web.Helpers
 {

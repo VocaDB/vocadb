@@ -1,4 +1,3 @@
-using System.Linq;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers

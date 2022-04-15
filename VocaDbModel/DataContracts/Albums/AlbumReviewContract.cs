@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;

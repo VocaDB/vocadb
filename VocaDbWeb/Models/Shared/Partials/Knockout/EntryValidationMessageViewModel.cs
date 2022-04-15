@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 
 namespace VocaDb.Web.Models.Shared.Partials.Knockout
 {

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config

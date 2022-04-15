@@ -1,10 +1,8 @@
 #nullable disable
 
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -20,14 +18,12 @@ using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.TagFormatting;
-using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Models;
 using VocaDb.Web.Models.Album;
 
 namespace VocaDb.Web.Controllers

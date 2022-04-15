@@ -1,6 +1,4 @@
-using System;
 using System.Data;
-using System.Linq;
 using NHibernate;
 using NHibernate.Exceptions;
 using NLog;

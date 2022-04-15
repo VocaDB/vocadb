@@ -1,10 +1,9 @@
 #nullable disable
 
-using VocaDb.Model.DataContracts.Versioning;
-using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Domain.Activityfeed;
-using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
+using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {

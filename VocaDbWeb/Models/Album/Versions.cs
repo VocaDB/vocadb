@@ -1,11 +1,10 @@
 #nullable disable
 
-using System.Linq;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model;
-using VocaDb.Web.Models.Shared;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Models.Album
 {
