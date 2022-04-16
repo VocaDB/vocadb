@@ -11,7 +11,9 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		private string _additionalNamesString;
 		private IList<T> _names = new List<T>();
+#nullable enable
 		private TranslatedString _sortNames = new();
+#nullable disable
 
 		public NameManager()
 		{
@@ -111,6 +113,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual IEnumerable<LocalizedStringWithId> NamesBase => Names;
 
+#nullable enable
 		public virtual TranslatedString SortNames
 		{
 			get => _sortNames;
@@ -120,6 +123,7 @@ namespace VocaDb.Model.Domain.Globalization
 				_sortNames = value;
 			}
 		}
+#nullable disable
 
 		public virtual void Add(T name, bool update = true)
 		{

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
@@ -34,7 +32,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		IEntryWithTags<EventTagUsage>,
 		IEntryWithArtistLinks<ArtistForEvent>
 	{
-#nullable enable
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 #nullable disable
 		string IReleaseEvent.Name => DefaultName;
@@ -43,20 +40,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 #nullable enable
 		string? IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
-#nullable disable
 
 		private IList<Album> _albums = new List<Album>();
-#nullable enable
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> _archivedVersions = new();
-#nullable disable
 		private IList<ArtistForEvent> _artists = new List<ArtistForEvent>();
 		private IList<ReleaseEventComment> _comments = new List<ReleaseEventComment>();
 		private string _description;
 		private NameManager<EventName> _names = new();
 		private PVManager<PVForEvent> _pvs = new();
-#nullable enable
 		private ReleaseEventSeries? _series;
-#nullable disable
 		private string _seriesSuffix;
 		private IList<Song> _songs = new List<Song>();
 		private TagManager<EventTagUsage> _tags = new();
@@ -83,8 +75,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			TranslatedName.Clear();
 		}
 
-		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix,
-			ContentLanguageSelection defaultNameLanguage, bool customName)
+		public ReleaseEvent(
+			string description,
+			DateTime? date,
+			ReleaseEventSeries series,
+			int seriesNumber,
+			string seriesSuffix,
+			ContentLanguageSelection defaultNameLanguage,
+			bool customName
+		)
 			: this()
 		{
 			ParamIs.NotNull(() => series);
@@ -141,7 +140,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual bool AllowNotifications => true;
 
-#nullable enable
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager
 		{
 			get => _archivedVersions;
@@ -151,7 +149,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				_archivedVersions = value;
 			}
 		}
-#nullable disable
 
 		public virtual IEnumerable<ArtistForEvent> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
@@ -177,13 +174,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual Date Date { get; set; }
 
+#nullable disable
 		public virtual string DefaultName => TranslatedName.Default;
+#nullable enable
 
 		public virtual bool Deleted { get; set; }
 
 		public virtual string Description
 		{
 			get => _description;
+			[MemberNotNull(nameof(_description))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -195,10 +195,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
-#nullable enable
 		[MemberNotNullWhen(true, nameof(Series))]
 		public virtual bool HasSeries => Series != null;
-#nullable disable
 
 		public virtual int Id { get; set; }
 
@@ -217,9 +215,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-#nullable enable
 		public virtual string? PictureMime { get; set; }
-#nullable disable
 
 		public virtual PVManager<PVForEvent> PVs
 		{
@@ -231,19 +227,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-#nullable enable
 		public virtual ReleaseEventSeries? Series
 		{
 			get => _series;
 			set => _series = value;
 		}
-#nullable disable
 
 		public virtual int SeriesNumber { get; set; }
 
 		public virtual string SeriesSuffix
 		{
 			get => _seriesSuffix;
+			[MemberNotNull(nameof(_seriesSuffix))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -251,9 +246,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-#nullable enable
 		public virtual SongList? SongList { get; set; }
-#nullable disable
 
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
@@ -271,14 +264,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		ITagManager IEntryWithTags.Tags => Tags;
 
+#nullable disable
 		public virtual TranslatedString TranslatedName => Names.SortNames;
-
 #nullable enable
+
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
 		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
-#nullable disable
 
 		public virtual IList<EventForUser> Users
 		{
@@ -290,9 +283,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
-		public virtual Venue Venue { get; set; }
+		public virtual Venue? Venue { get; set; }
 
-		public virtual string VenueName { get; set; }
+		public virtual string? VenueName { get; set; }
 
 		public virtual int Version { get; set; }
 
@@ -315,7 +308,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return archived;
 		}
 
-#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -326,14 +318,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return comment;
 		}
-#nullable disable
 
 		public virtual EventName CreateName(string val, ContentLanguageSelection language)
 		{
 			return CreateName(new LocalizedString(val, language));
 		}
 
-#nullable enable
 		public virtual EventName CreateName(ILocalizedString localizedString)
 		{
 			ParamIs.NotNull(() => localizedString);
@@ -413,14 +403,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			AllArtists.Add(link);
 			return link;
 		}
-#nullable disable
 
 		public virtual IEnumerable<LocalizedString> GetNamesFromSeries()
 		{
 			return Series.Names.Select(seriesName => new LocalizedString(Series.GetEventName(SeriesNumber, SeriesSuffix, seriesName.Value), seriesName.Language));
 		}
 
-		public virtual void SetSeries(ReleaseEventSeries newSeries)
+		public virtual void SetSeries(ReleaseEventSeries? newSeries)
 		{
 			if (Equals(Series, newSeries))
 				return;
@@ -430,7 +419,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Series = newSeries;
 		}
 
-		public virtual void SetVenue(Venue newVenue)
+		public virtual void SetVenue(Venue? newVenue)
 		{
 			if (Equals(Venue, newVenue))
 				return;
@@ -440,7 +429,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Venue = newVenue;
 		}
 
-#nullable enable
 		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
 			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter)
 		{
@@ -464,11 +452,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		{
 			return $"Release event '{DefaultName}' [{Id}]";
 		}
-#nullable disable
 	}
 
 	public interface IReleaseEvent : IEntryWithIntId
 	{
+#nullable disable
 		string Name { get; }
+#nullable enable
 	}
 }
