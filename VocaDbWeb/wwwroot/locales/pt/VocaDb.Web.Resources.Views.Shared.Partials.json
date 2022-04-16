@@ -1,8 +1,8 @@
 {
-  "PlayList": {
-    "Autoplay": "Autoplay",
-    "AutoplayNote": "Autoplay só é suportado no YouTube e Soundcloud",
-    "NextSong": "Próxima música",
-    "Shuffle": "Aleatório"
-  }
+	"PlayList": {
+		"Autoplay": "Autoplay",
+		"AutoplayNote": "Autoplay só é suportado no YouTube e Soundcloud",
+		"NextSong": "Próxima música",
+		"Shuffle": "Aleatório"
+	}
 }

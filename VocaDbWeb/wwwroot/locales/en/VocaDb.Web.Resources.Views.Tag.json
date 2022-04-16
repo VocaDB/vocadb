@@ -1,6 +1,6 @@
 {
-  "Edit": {
-    "RelatedTags": "Related tags",
-    "ValidationNeedDescription": "Tag should have a description"
-  }
+	"Edit": {
+		"RelatedTags": "Related tags",
+		"ValidationNeedDescription": "Tag should have a description"
+	}
 }
