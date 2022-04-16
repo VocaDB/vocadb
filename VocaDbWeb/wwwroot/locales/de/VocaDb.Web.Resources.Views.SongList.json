@@ -1,6 +1,6 @@
 {
-	"SongListSortRuleNames": {
-		"CreateDate": "Erstellungs Zeitpunkt",
-		"Date": "Event Zeitpunkt"
-	}
+  "SongListSortRuleNames": {
+    "CreateDate": "Erstellungs Zeitpunkt",
+    "Date": "Event Zeitpunkt"
+  }
 }

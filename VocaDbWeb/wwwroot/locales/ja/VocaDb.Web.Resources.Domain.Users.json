@@ -1,8 +1,8 @@
 {
-	"UserLanguageProficiencyNames": {
-		"Advanced": "上級",
-		"Basics": "初級",
-		"Intermediate": "中級",
-		"Native": "ネイティブ"
-	}
+  "UserLanguageProficiencyNames": {
+    "Advanced": "上級",
+    "Basics": "初級",
+    "Intermediate": "中級",
+    "Native": "ネイティブ"
+  }
 }

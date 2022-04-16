@@ -1,23 +1,23 @@
 {
-	"EntryReportTypeNames": {
-		"BrokenPV": "Link del PV roto",
-		"Duplicate": "Entrada duplicada",
-		"Inappropriate": "Contenido inapropiado",
-		"InvalidInfo": "Información no válida o faltante",
-		"MaliciousIP": "IP maliciosa",
-		"Other": "Otro (especifique en las notas)",
-		"OwnershipClaim": "Reclamo de propiedad",
-		"RemovePermissions": "Edición restringida",
-		"Spamming": "Enviando spam"
-	},
-	"EntryTypeNames": {
-		"Album": "Álbum",
-		"Artist": "Artista",
-		"ReleaseEvent": "Evento",
-		"Song": "Canción",
-		"SongList": "Lista de canciones",
-		"Tag": "Etiqueta",
-		"Undefined": "Cualquier contenido",
-		"User": "Usuario"
-	}
+  "EntryReportTypeNames": {
+    "BrokenPV": "Link del PV roto",
+    "Duplicate": "Entrada duplicada",
+    "Inappropriate": "Contenido inapropiado",
+    "InvalidInfo": "Información no válida o faltante",
+    "MaliciousIP": "IP maliciosa",
+    "Other": "Otro (especifique en las notas)",
+    "OwnershipClaim": "Reclamo de propiedad",
+    "RemovePermissions": "Edición restringida",
+    "Spamming": "Enviando spam"
+  },
+  "EntryTypeNames": {
+    "Album": "Álbum",
+    "Artist": "Artista",
+    "ReleaseEvent": "Evento",
+    "Song": "Canción",
+    "SongList": "Lista de canciones",
+    "Tag": "Etiqueta",
+    "Undefined": "Cualquier contenido",
+    "User": "Usuario"
+  }
 }

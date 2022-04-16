@@ -1,12 +1,12 @@
 {
-	"DiscTypeNames": {
-		"Album": "Album original",
-		"Compilation": "Compilación",
-		"EP": "E.P.",
-		"Other": "Otro",
-		"Single": "Sencillo",
-		"SplitAlbum": "Album compartido",
-		"Unknown": "Sin especificar",
-		"Video": "Video"
-	}
+  "DiscTypeNames": {
+    "Album": "Album original",
+    "Compilation": "Compilación",
+    "EP": "E.P.",
+    "Other": "Otro",
+    "Single": "Sencillo",
+    "SplitAlbum": "Album compartido",
+    "Unknown": "Sin especificar",
+    "Video": "Video"
+  }
 }

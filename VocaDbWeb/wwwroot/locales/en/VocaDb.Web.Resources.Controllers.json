@@ -1,5 +1,5 @@
 {
-	"TagController": {
-		"TagNameError": "Tag name may contain only word characters and cannot be empty."
-	}
+  "TagController": {
+    "TagNameError": "Tag name may contain only word characters and cannot be empty."
+  }
 }

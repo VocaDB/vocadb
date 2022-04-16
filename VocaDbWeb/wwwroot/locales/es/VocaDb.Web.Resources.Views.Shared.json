@@ -1,9 +1,9 @@
 {
-	"Time": {
-		"Days": "días",
-		"Hours": "horas",
-		"Minutes": "minutos",
-		"Months": "meses",
-		"TimeAgo": "hace {{0}} {{1}}"
-	}
+  "Time": {
+    "Days": "días",
+    "Hours": "horas",
+    "Minutes": "minutos",
+    "Months": "meses",
+    "TimeAgo": "hace {{0}} {{1}}"
+  }
 }

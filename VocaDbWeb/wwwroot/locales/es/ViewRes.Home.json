@@ -1,16 +1,16 @@
 {
-	"Index": {
-		"NewAlbums": "Álbumes recientes o próximos",
-		"News": "Noticias",
-		"RecentActivity": "Actividad reciente",
-		"RecentEvents": "Sucediendo ahora",
-		"RecentSongs": "PVs destacados",
-		"SearchSite": "Busque en todo el sitio utilizando la búsqueda personalizada de Google",
-		"TopAlbums": "Álbumes populares al azar",
-		"ViewAll": "Ver todo",
-		"ViewMore": "Ver más",
-		"ViewSongInfo": "Ver información sobre esta canción",
-		"Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
-		"WelcomeSubtitle": "La base de datos colaborativa para Vocaloid, UTAU y otros sintetizadores de canto, con artistas, discografías, PVs y más."
-	}
+  "Index": {
+    "NewAlbums": "Álbumes recientes o próximos",
+    "News": "Noticias",
+    "RecentActivity": "Actividad reciente",
+    "RecentEvents": "Sucediendo ahora",
+    "RecentSongs": "PVs destacados",
+    "SearchSite": "Busque en todo el sitio utilizando la búsqueda personalizada de Google",
+    "TopAlbums": "Álbumes populares al azar",
+    "ViewAll": "Ver todo",
+    "ViewMore": "Ver más",
+    "ViewSongInfo": "Ver información sobre esta canción",
+    "Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
+    "WelcomeSubtitle": "La base de datos colaborativa para Vocaloid, UTAU y otros sintetizadores de canto, con artistas, discografías, PVs y más."
+  }
 }
