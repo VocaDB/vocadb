@@ -532,7 +532,6 @@ namespace VocaDb.Model.Database.Queries
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
