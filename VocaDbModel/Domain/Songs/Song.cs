@@ -1,9 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
@@ -251,7 +247,7 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public virtual int LengthSeconds { get; set; }
 
-		public virtual IList<SongInList> ListLinks
+		public virtual IList<SongInList> AllListLinks
 		{
 			get => _lists;
 			set
@@ -260,6 +256,8 @@ namespace VocaDb.Model.Domain.Songs
 				_lists = value;
 			}
 		}
+
+		public virtual IEnumerable<SongInList> ListLinks => AllListLinks.Where(listLink => !listLink.List.Deleted);
 
 		public virtual IList<LyricsForSong> Lyrics
 		{

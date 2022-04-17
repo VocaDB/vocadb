@@ -1,0 +1,7 @@
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model EmbedOpenStreetMapViewModel
+
+<div>
+	<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=@(Model.Coordinates.Longitude.Value.ToString(CultureHelper.EnUS)),@(Model.Coordinates.Latitude.Value.ToString(CultureHelper.EnUS)),@(Model.Coordinates.Longitude.Value.ToString(CultureHelper.EnUS)),@(Model.Coordinates.Latitude.Value.ToString(CultureHelper.EnUS))&layer=mapnik&marker=@(Model.Coordinates.Latitude.Value.ToString(CultureHelper.EnUS)),@(Model.Coordinates.Longitude.Value.ToString(CultureHelper.EnUS))" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/#map=19/@(Model.Coordinates.Latitude.Value.ToString(CultureHelper.EnUS))/@(Model.Coordinates.Longitude.Value.ToString(CultureHelper.EnUS))">View Larger Map</a></small>
+</div>

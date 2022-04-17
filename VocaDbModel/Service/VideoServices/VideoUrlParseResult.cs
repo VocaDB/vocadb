@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.PVs;
 

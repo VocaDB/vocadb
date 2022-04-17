@@ -1,7 +1,7 @@
 {
   "AlbumRes": {
     "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
-    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. <strong>The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthsizers such as UTAU are also allowed, but human-sung covers are not)</strong>. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. <strong>The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthesizers such as UTAU are also allowed, but human-sung covers are not)</strong>. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
   },
   "ArtistRes": {
     "AuthoredBy": "VocaDB account",

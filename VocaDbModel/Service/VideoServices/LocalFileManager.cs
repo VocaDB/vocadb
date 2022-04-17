@@ -1,9 +1,5 @@
 #nullable disable
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Security.AccessControl;
 using System.Security.Principal;
 using NLog;
 using TagLib;

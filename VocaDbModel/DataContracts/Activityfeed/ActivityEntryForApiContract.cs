@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;

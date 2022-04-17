@@ -19,6 +19,7 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

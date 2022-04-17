@@ -1,24 +1,21 @@
 #nullable disable
 
-using System;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Globalization;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NLog;
-using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Helpers;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Security;
 
@@ -51,7 +48,9 @@ namespace VocaDb.Model.Domain.Users
 		private OptionalCultureCode _language;
 		private IList<UserKnownLanguage> _knownLanguages = new List<UserKnownLanguage>();
 		private IList<UserMessage> _messages = new List<UserMessage>();
+#nullable enable
 		private string _name;
+#nullable disable
 		private string _nameLc;
 		private string _normalizedEmail;
 		private IList<OldUsername> _oldUsernames = new List<OldUsername>();
@@ -348,6 +347,7 @@ namespace VocaDb.Model.Domain.Users
 			}
 		}
 
+#nullable enable
 		/// <summary>
 		/// Username.
 		/// Must be unique, case-insensitive.
@@ -365,12 +365,14 @@ namespace VocaDb.Model.Domain.Users
 		public virtual string Name
 		{
 			get => _name;
+			[MemberNotNull(nameof(_name))]
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
 				_name = value;
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Username in lowercase.

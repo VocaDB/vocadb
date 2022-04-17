@@ -1,25 +1,28 @@
 {
   "AlbumRes": {
-    "NewAlbumArtistDesc": "Productores y vocalistas asociados con este album.",
-    "NewAlbumInfo": "Notesé que VocaDB y UtaiteDB son dos bases de datos distintas. <strong>El Album necesita al menos una pista con vocales Vocaloid para ser admitido en VocaDB (tambien se admiten vocales de otros tipos de banco de voz, tales como UTAU o CeVio, mas no albumes que íntegramente esten interpetados por vocalistas humanos)</strong>. Tampoco se admiten compliaciones fan-made (bootlegs). Para mas información, vease la página de Ayuda e Indicaciones."
+    "NewAlbumArtistDesc": "Productores y vocalistas asociados con este álbum.",
+    "NewAlbumInfo": "Tenga en cuenta que VocaDB no es UtaiteDB. <strong>El álbum debe tener al menos una pista con voces Vocaloid para que se permita en VocaDB (también se permiten otros sintetizadores de voz como UTAU, pero no versiones cantadas por humanos)</strong>. Tampoco se permiten compilaciones no oficiales hechas por fans (bootlegs). Para más información, ver Ayuda e Indicaciones."
   },
   "ArtistRes": {
     "AuthoredBy": "Cuenta de VocaDB",
     "NewArtistExternalLink": "Link referencial externo (al sitio web del artista, Hatsune Miku wiki, NND MyList, etcétera)."
   },
   "HomeRes": {
-    "SiteDescription": "VocaDB es una base de datos para musica Vocaloid con información de artistas, albumes y canciones.",
+    "SiteDescription": "VocaDB es una base de datos de música Vocaloid con artistas, álbumes y canciones.",
     "Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
-    "WelcomeSubtitle": "\\r\\nLa base de datos colaborativa sobre artistas de la escena Vocaloid, discografías, PVs y mas."
+    "WelcomeSubtitle": "La base de datos colaborativa para Vocaloid, UTAU y otros sintetizadores de canto, con artistas, discografías, PVs y más."
   },
   "LayoutRes": {
-    "Keywords": "Vocaloid, VocaDB, Base de datos Vocaloid, Hatsune Miku",
-    "PaypalDonateTitle": "VocaDB es un proyecto sin ánimos de lucro. Todo el dinero recaudado mediante donaciones  es invertido en el desarrollo a futuro de la plataforma, renta de hosteo web y licencias de software de terceros utilizado en el desarrollo y manejo de la misma.",
+    "Keywords": "Vocaloid, VocaDB, Base de datos Vocaloid, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB es un proyecto sin fines de lucro. Todo el dinero se utilizará para un mayor desarrollo del sitio, tarifas de alojamiento y licencias de software.",
     "SiteName": "VocaDB",
     "SiteTitle": "Base de datos Vocaloid"
   },
   "SongRes": {
-    "NewSongInfo": "Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Porcura incluir un link al PV ORIGINAL (NO REPRINTS SIN AUTORIZACIÓN).<br /><br />\nLas canciones que no son interpretadas por uno o mas Vocaloids (Es decir, canciones de vocalistas humanos) solo son admitidas si están incluidas en albumes que sí tienen pistas interpretadas por al menos un vocaloid. Interpretes de UTAU o cualquier otro tipo de plataformas de sintesís de voz tambien se admiten, mas no las interpretadas por humanos originalmente (a menos la especificación inicial).",
+    "NewSongInfo": "Asegúrese de que la canción que está a punto de enviar no se haya agregado antes. Debes ingresar al menos un nombre y artista. El enlace al PV original es muy deseable.\n\nTenga en cuenta que una canción sin voz Vocaloid solo está permitida si se publica en un álbum junto con canciones Vocaloid, o si hay varias versiones Vocaloid de esa canción. También se permiten UTAU y otros sintetizadores de voz, pero no las versiones cantadas por humanos.",
     "RankingsTitle": "Ranking de canciones en VocaDB"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "<p>\n\t\t\tSi eres productor, ilustrador, animador o cualquier otro creador de contenido que trabaja con música o videos Vocaloid,\n\t\t\to un representante de un círculo, puede utilizar este formulario para solicitar que el personal del sitio verifique su cuenta.\n\t\t\tDespués de la verificación, el nombre de su cuenta se mostrará en la(s) página(s) de entrada del artista y viceversa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tDebe proporcionar algún tipo de prueba de que es el propietario legítimo de esa entrada; de lo contrario, es probable que su solicitud sea rechazada.\n\t\t\t</strong>\n\t\t\tPor ejemplo, publicar en su Twitter o blog y vincular a su cuenta de VocaDB es una forma aceptable de demostrar que usted es quien dice ser.\n\t\t\t<strong>\n\t\t\t\tTambién debe tener al menos una o dos entradas de canciones aceptadas y finalizadas (Vocaloid o UTAU) en el sitio; puede enviarlas usted mismo si otros ya no lo han hecho.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tDespués de la verificación, puedes aprobar tu entrada de artista, lo que limita quién puede editarla.\n\t\t\tPor el momento, solo la entrada del artista en sí puede \"protegerse\" de esta manera; las canciones y los álbumes no se ven afectados.\n\t\t</p>\n\t\t<p>\n\t\t\tPor favor, comprenda que nos reservamos el derecho a rechazar su solicitud. Las razones pueden incluir cualquiera de las mencionadas anteriormente.\n\t\t\tA menos que el motivo del rechazo de la solicitud sea obvio, intentaremos comunicarnos con usted para pedirle que corrija los errores para que la solicitud pueda ser aprobada.\n\t\t</p>"
   }
 }

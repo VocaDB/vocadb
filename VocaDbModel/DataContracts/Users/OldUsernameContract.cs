@@ -1,4 +1,3 @@
-using System;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users

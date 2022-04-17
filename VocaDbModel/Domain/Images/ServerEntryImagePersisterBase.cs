@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Drawing;
-using System.IO;
 
 namespace VocaDb.Model.Domain.Images
 {

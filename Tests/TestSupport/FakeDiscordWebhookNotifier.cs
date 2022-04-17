@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Discord;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;

@@ -1,11 +1,7 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 using NLog;
 using Rss;

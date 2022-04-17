@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Globalization;

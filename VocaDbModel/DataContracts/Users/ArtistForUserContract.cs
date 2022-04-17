@@ -1,8 +1,6 @@
 #nullable disable
 
-using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 

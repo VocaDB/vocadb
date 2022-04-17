@@ -1,7 +1,5 @@
 #nullable disable
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VocaDb.Web.Controllers;
 
 namespace VocaDb.Tests.Web.Controllers
 {

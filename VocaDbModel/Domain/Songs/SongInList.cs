@@ -64,8 +64,8 @@ namespace VocaDb.Model.Domain.Songs
 			if (target.Equals(Song))
 				return;
 
-			Song.ListLinks.Remove(this);
-			target.ListLinks.Add(this);
+			Song.AllListLinks.Remove(this);
+			target.AllListLinks.Add(this);
 			Song = target;
 		}
 
@@ -87,7 +87,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual void Delete()
 		{
 			List.AllSongs.Remove(this);
-			Song.ListLinks.Remove(this);
+			Song.AllListLinks.Remove(this);
 		}
 
 #nullable enable

@@ -1,7 +1,6 @@
-#nullable disable
-
-using System;
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts;
+
 namespace VocaDb.Model.Domain.Globalization
 {
 	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
@@ -26,6 +25,7 @@ namespace VocaDb.Model.Domain.Globalization
 		public virtual string Value
 		{
 			get => _val;
+			[MemberNotNull(nameof(_val))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -33,7 +33,6 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-#nullable enable
 		public virtual bool ContentEquals(ILocalizedString? another)
 		{
 			return (another != null && another.Language == Language && another.Value == Value);
@@ -68,6 +67,5 @@ namespace VocaDb.Model.Domain.Globalization
 		{
 			return Language + ": " + Value;
 		}
-#nullable disable
 	}
 }

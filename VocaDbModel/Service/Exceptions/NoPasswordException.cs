@@ -1,5 +1,3 @@
-using System;
-
 namespace VocaDb.Model.Service.Exceptions
 {
 	public class NoPasswordException : Exception

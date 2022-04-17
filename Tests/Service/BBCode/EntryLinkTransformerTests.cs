@@ -1,8 +1,6 @@
 #nullable disable
 
 using System.Text;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.BBCode;
 using VocaDb.Web.Code;
 

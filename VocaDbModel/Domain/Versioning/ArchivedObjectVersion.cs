@@ -1,11 +1,10 @@
 #nullable disable
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Activityfeed;
-using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Domain.Versioning
 {
@@ -33,7 +32,9 @@ namespace VocaDb.Model.Domain.Versioning
 			Version = version;
 		}
 
+#nullable enable
 		public virtual string AgentName { get; protected set; }
+#nullable disable
 
 		/// <summary>
 		/// User who created this version. Can be null.

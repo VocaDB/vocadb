@@ -23,5 +23,9 @@
     "Undefined": "Anything",
     "User": "User",
     "Venue": "Venue"
+  },
+  "WebhookEventNames": {
+    "EntryReport": "Entry report",
+    "User": "User"
   }
 }

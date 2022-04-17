@@ -1,15 +1,13 @@
 #nullable disable
 
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using ViewRes;
 using ViewRes.Artist;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Models.Artist
 {

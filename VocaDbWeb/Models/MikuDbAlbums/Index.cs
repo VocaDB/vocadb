@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.MikuDb;
 using VocaDb.Model.Domain.MikuDb;

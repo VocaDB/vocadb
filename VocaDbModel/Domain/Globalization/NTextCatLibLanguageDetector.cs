@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.IO;
-using System.Linq;
 using IvanAkcheurov.NTextCat.Lib;
 using VocaDb.Model.Domain.Web;
 

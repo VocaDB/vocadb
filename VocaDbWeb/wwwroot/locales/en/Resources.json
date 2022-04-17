@@ -180,7 +180,9 @@
     "UploadMedia": "Upload own media",
     "ViewAuditLog": "View event log",
     "ViewHiddenRatings": "View hidden ratings",
-    "ViewHiddenRevisions": "View hidden revisions"
+    "ViewHiddenRevisions": "View hidden revisions",
+    "ManageWebhooks": "Manage webhooks",
+    "CreateXmlDump": "Create XML dump"
   },
   "PVTypeDescriptions": {
     "Original": "Original (official/authorized upload)",

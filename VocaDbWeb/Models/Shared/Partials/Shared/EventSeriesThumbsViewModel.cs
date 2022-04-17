@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 
 namespace VocaDb.Web.Models.Shared.Partials.Shared

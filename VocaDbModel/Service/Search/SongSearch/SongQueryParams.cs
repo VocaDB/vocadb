@@ -1,11 +1,9 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
-using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {

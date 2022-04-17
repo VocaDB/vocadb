@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using VocaDb.Model.Domain.MikuDb;
 using VocaDb.Model.Helpers;
 

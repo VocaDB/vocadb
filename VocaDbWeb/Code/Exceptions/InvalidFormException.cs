@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.Serialization;
 
 namespace VocaDb.Web.Code.Exceptions

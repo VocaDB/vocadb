@@ -1,7 +1,5 @@
 // Code from https://github.com/iDoRecall/email-normalize/blob/0938e0a4710c6fc076c50dd42ea2886b2984e219/email.js
 
-using System;
-using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 

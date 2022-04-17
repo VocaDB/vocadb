@@ -1,13 +1,9 @@
 #nullable disable
 
+using System.Net;
+using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using NLog;
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;

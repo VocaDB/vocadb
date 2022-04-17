@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewSongInfo" xml:space="preserve">
-    <value>Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Procura incluir un link al PV original.</value>
+    <value>Asegúrate de que la canción que estás a punto de enviar no se haya agregado antes. Debe ingresar al menos un nombre y un artista. El enlace al PV original es muy deseable.</value>
   </data>
   <data name="RankingsTitle" xml:space="preserve">
     <value>Ranking de canciones en UtaiteDB</value>

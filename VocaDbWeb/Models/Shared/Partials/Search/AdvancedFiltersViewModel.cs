@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Models.Shared.Partials.Search

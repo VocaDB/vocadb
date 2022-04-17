@@ -1,21 +1,11 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using NHibernate;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories.NHibernate;
-using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.ExtLinks;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -24,7 +14,6 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
@@ -289,22 +278,6 @@ namespace VocaDb.Model.Service
 					.OrderBy(l => l.Name)
 					.ToArray()
 					.Select(l => new SongListBaseContract(l))
-					.ToArray();
-			});
-		}
-
-		public SongListContract[] GetPublicSongListsForSong(int songId)
-		{
-			return HandleQuery(session =>
-			{
-				var song = session.Load<Song>(songId);
-				var userId = PermissionContext.LoggedUserId;
-				return song.ListLinks
-					.Where(l => l.List.FeaturedCategory != SongListFeaturedCategory.Nothing || l.List.Author.Id == userId || l.List.Author.Options.PublicRatings)
-					.OrderBy(l => l.List.Name)
-					.Select(l => l.List)
-					.Distinct()
-					.Select(l => new SongListContract(l, PermissionContext))
 					.ToArray();
 			});
 		}

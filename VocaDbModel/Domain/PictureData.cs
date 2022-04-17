@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Domain

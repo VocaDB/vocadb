@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain

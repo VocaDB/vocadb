@@ -1,9 +1,6 @@
 #nullable disable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -489,8 +486,15 @@ namespace VocaDb.Model.Database.Queries
 					if (!contract.Series.IsNullOrDefault())
 					{
 						var series = await session.LoadAsync<ReleaseEventSeries>(contract.Series.Id);
-						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix,
-							contract.DefaultNameLanguage, contract.CustomName);
+						ev = new ReleaseEvent(
+							description: contract.Description,
+							date: contract.Date,
+							series: series,
+							seriesNumber: contract.SeriesNumber,
+							seriesSuffix: contract.SeriesSuffix,
+							defaultNameLanguage: contract.DefaultNameLanguage,
+							customName: contract.CustomName
+						);
 						series.AllEvents.Add(ev);
 					}
 					else
@@ -540,7 +544,15 @@ namespace VocaDb.Model.Database.Queries
 
 					await session.SaveAsync(ev);
 
-					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
+					var namesChanged = new UpdateEventNamesQuery().UpdateNames(
+						session,
+						ev,
+						seriesLink: contract.Series,
+						customName: contract.CustomName,
+						seriesNumber: contract.SeriesNumber,
+						seriesSuffix: contract.SeriesSuffix,
+						nameContracts: contract.Names
+					);
 					if (namesChanged)
 					{
 						await session.UpdateAsync(ev);
@@ -582,7 +594,15 @@ namespace VocaDb.Model.Database.Queries
 						diff.OriginalName.Set();
 					}
 
-					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
+					var namesChanged = new UpdateEventNamesQuery().UpdateNames(
+						session,
+						ev,
+						seriesLink: contract.Series,
+						customName: contract.CustomName,
+						seriesNumber: contract.SeriesNumber,
+						seriesSuffix: contract.SeriesSuffix,
+						nameContracts: contract.Names
+					);
 
 					if (namesChanged)
 					{

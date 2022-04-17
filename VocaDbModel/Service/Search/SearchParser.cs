@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Service.Search

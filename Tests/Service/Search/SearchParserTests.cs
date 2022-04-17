@@ -1,8 +1,5 @@
 #nullable disable
 
-using System.Linq;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Tests.Service.Search

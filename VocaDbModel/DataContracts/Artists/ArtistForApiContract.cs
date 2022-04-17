@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -21,10 +19,11 @@ namespace VocaDb.Model.DataContracts.Artists
 	{
 		public ArtistForApiContract() { }
 
+#nullable enable
 		public ArtistForApiContract(
 			Artist artist,
 			ContentLanguagePreference languagePreference,
-			IAggregatedEntryImageUrlFactory thumbPersister,
+			IAggregatedEntryImageUrlFactory? thumbPersister,
 			ArtistOptionalFields includedFields
 		)
 		{
@@ -71,6 +70,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			if (includedFields.HasFlag(ArtistOptionalFields.WebLinks))
 				WebLinks = artist.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.

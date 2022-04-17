@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SiteDescription" xml:space="preserve">
-    <value>UtaiteDB es una base de datos con información detallada sobre artistas, albumes y canciones.</value>
+    <value>UtaiteDB es una base de datos de música utaite con información detallada sobre artistas, álbumes y canciones.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>¡Bienvenido a la base de datos utaite!</value>
+    <value>¡Bienvenido a la base de datos Utaite!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>\r\nLa base de datos colaborativa sobre artistas de la escena utaite, discografías, PVs y mas.</value>
+    <value>La base de datos colaborativa con artistas utaite, discografías, PVs y más.</value>
   </data>
 </root>

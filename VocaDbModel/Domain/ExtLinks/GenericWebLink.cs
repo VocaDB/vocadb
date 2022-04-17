@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -15,7 +14,9 @@ namespace VocaDb.Model.Domain.ExtLinks
 	{
 		private TEntry _entry;
 
+#nullable disable
 		protected GenericWebLink() { }
+#nullable enable
 
 		protected GenericWebLink(TEntry entry, WebLinkContract contract)
 			: base(contract)
@@ -32,6 +33,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		public virtual TEntry Entry
 		{
 			get => _entry;
+			[MemberNotNull(nameof(_entry))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -39,7 +41,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
-#nullable enable
 		public virtual bool Equals(GenericWebLink<TEntry>? another)
 		{
 			if (another == null)
@@ -68,7 +69,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 		{
 			return $"{base.ToString()} for {Entry}";
 		}
-#nullable disable
 	}
 
 	public class AlbumWebLink : GenericWebLink<Album>

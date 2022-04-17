@@ -1,5 +1,3 @@
-using System;
-
 namespace VocaDb.Model.Helpers
 {
 	public static class ObjectHelper

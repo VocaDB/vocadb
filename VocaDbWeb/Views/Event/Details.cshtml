@@ -171,7 +171,7 @@
 	<h3 class="withMargin">@Res.Venue: <a href="@Url.Action("Details", "Venue", new { id = Model.Venue.Id }, null)" title="@Model.Venue.AdditionalNames">@Model.Venue.Name</a></h3>
 
 	if (Model.Venue.Coordinates.HasValue) {
-		<partial name="Partials/Shared/_EmbedGoogleMaps" model="@(new EmbedGoogleMapsViewModel(Model.Venue.Coordinates))" />
+		<partial name="Partials/Shared/_EmbedOpenStreetMap" model="@(new EmbedOpenStreetMapViewModel(Model.Venue.Coordinates))" />
 	}
 
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {

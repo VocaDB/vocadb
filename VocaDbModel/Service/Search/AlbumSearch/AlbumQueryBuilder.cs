@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
