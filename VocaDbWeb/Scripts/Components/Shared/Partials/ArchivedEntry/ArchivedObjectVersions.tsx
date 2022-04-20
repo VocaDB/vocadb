@@ -12,6 +12,89 @@ import UserIconLinkOrName_UserForApiContract from '../User/UserIconLinkOrName_Us
 
 const loginManager = new LoginManager(vdb.values);
 
+interface ArchivedObjectVersionRowProps {
+	archivedVersion: ArchivedVersionContract;
+	linkFunc?: (id: number) => string;
+	entryType: EntryType;
+}
+
+const ArchivedObjectVersionRow = React.memo(
+	({
+		archivedVersion,
+		linkFunc,
+		entryType,
+	}: ArchivedObjectVersionRowProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		const changedFieldNames = useChangedFieldNames();
+
+		const anythingChanged = archivedVersion.changedFields.length > 0;
+
+		return (
+			<tr>
+				<td>
+					{linkFunc &&
+					(loginManager.canViewHiddenRevisions || !archivedVersion.hidden) ? (
+						<a
+							href={linkFunc(archivedVersion.id)}
+							className={classNames(!anythingChanged && 'muted')}
+							style={{
+								textDecoration: archivedVersion.hidden ? 'line-through' : '',
+							}}
+						>
+							{archivedVersion.version} (
+							{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
+						</a>
+					) : (
+						<span
+							style={{
+								textDecoration: archivedVersion.hidden ? 'line-through' : '',
+							}}
+						>
+							{archivedVersion.version} (
+							{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
+						</span>
+					)}
+				</td>
+				<td>
+					<span className={classNames(!anythingChanged && 'muted')}>
+						<UniversalTimeLabel dateTime={archivedVersion.created} />
+					</span>
+				</td>
+				<td>
+					{/* eslint-disable-next-line react/jsx-pascal-case */}
+					<UserIconLinkOrName_UserForApiContract
+						user={archivedVersion.author}
+						name={archivedVersion.agentName}
+					/>
+				</td>
+				<td>
+					<span className={classNames(!anythingChanged && 'muted')}>
+						{t(`Resources:EntryEditEventNames.${archivedVersion.editEvent}`)}{' '}
+						{archivedVersion.changedFields.length > 0 && (
+							<>
+								{' '}
+								(
+								{archivedVersion.changedFields
+									.map((changedField) =>
+										changedFieldNames(entryType, changedField),
+									)
+									.join(', ')}
+								)
+							</>
+						)}
+					</span>
+				</td>
+				<td>
+					<span className={classNames(!anythingChanged && 'muted')}>
+						{archivedVersion.notes}
+					</span>
+				</td>
+			</tr>
+		);
+	},
+);
+
 interface ArchivedObjectVersionsProps {
 	archivedVersions: ArchivedVersionContract[];
 	linkFunc?: (id: number) => string;
@@ -24,7 +107,7 @@ const ArchivedObjectVersions = React.memo(
 		linkFunc,
 		entryType,
 	}: ArchivedObjectVersionsProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes']);
+		const { t } = useTranslation(['ViewRes']);
 
 		const ordered = React.useMemo(
 			() =>
@@ -33,8 +116,6 @@ const ArchivedObjectVersions = React.memo(
 					.value(),
 			[archivedVersions],
 		);
-
-		const changedFieldNames = useChangedFieldNames();
 
 		return (
 			<table className="table table-striped table-hover">
@@ -49,87 +130,12 @@ const ArchivedObjectVersions = React.memo(
 				</thead>
 				<tbody>
 					{ordered.map((archivedVersion) => (
-						<tr key={archivedVersion.id}>
-							<td>
-								{linkFunc &&
-								(loginManager.canViewHiddenRevisions ||
-									!archivedVersion.hidden) ? (
-									<a
-										href={linkFunc(archivedVersion.id)}
-										className={classNames(
-											archivedVersion.changedFields.length === 0 && 'muted',
-										)}
-										style={{
-											textDecoration: archivedVersion.hidden
-												? 'line-through'
-												: '',
-										}}
-									>
-										{archivedVersion.version} (
-										{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
-									</a>
-								) : (
-									<span
-										style={{
-											textDecoration: archivedVersion.hidden
-												? 'line-through'
-												: '',
-										}}
-									>
-										{archivedVersion.version} (
-										{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
-									</span>
-								)}
-							</td>
-							<td>
-								<span
-									className={classNames(
-										archivedVersion.changedFields.length === 0 && 'muted',
-									)}
-								>
-									<UniversalTimeLabel dateTime={archivedVersion.created} />
-								</span>
-							</td>
-							<td>
-								{/* eslint-disable-next-line react/jsx-pascal-case */}
-								<UserIconLinkOrName_UserForApiContract
-									user={archivedVersion.author}
-									name={archivedVersion.agentName}
-								/>
-							</td>
-							<td>
-								<span
-									className={classNames(
-										archivedVersion.changedFields.length === 0 && 'muted',
-									)}
-								>
-									{t(
-										`Resources:EntryEditEventNames.${archivedVersion.editEvent}`,
-									)}{' '}
-									{archivedVersion.changedFields.length > 0 && (
-										<>
-											{' '}
-											(
-											{archivedVersion.changedFields
-												.map((changedField) =>
-													changedFieldNames(entryType, changedField),
-												)
-												.join(', ')}
-											)
-										</>
-									)}
-								</span>
-							</td>
-							<td>
-								<span
-									className={classNames(
-										archivedVersion.changedFields.length === 0 && 'muted',
-									)}
-								>
-									{archivedVersion.notes}
-								</span>
-							</td>
-						</tr>
+						<ArchivedObjectVersionRow
+							archivedVersion={archivedVersion}
+							linkFunc={linkFunc}
+							entryType={entryType}
+							key={archivedVersion.id}
+						/>
 					))}
 				</tbody>
 			</table>
