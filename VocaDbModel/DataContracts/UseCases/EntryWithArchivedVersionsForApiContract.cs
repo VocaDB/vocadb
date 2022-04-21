@@ -1,8 +1,10 @@
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Versioning;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-	public class EntryWithArchivedVersionsForApiContract<TEntry> : IEntryWithArchivedVersionsForApiContract<TEntry>
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public sealed record EntryWithArchivedVersionsForApiContract<TEntry> : IEntryWithArchivedVersionsForApiContract<TEntry>
 	{
 #nullable disable
 		public EntryWithArchivedVersionsForApiContract() { }
@@ -14,8 +16,10 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Entry = entry;
 		}
 
+		[DataMember]
 		public ArchivedObjectVersionForApiContract[] ArchivedVersions { get; init; }
 
+		[DataMember]
 		public TEntry Entry { get; init; }
 	}
 
