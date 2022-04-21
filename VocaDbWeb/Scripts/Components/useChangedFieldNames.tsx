@@ -25,7 +25,7 @@ const useChangedFieldNames = (): ((
 
 				case EntryType.ReleaseEventSeries:
 					return t(
-						`VocaDb.Web.Resources.Domain.ReleaseEvents.ReleaseEventSeriesEditableFieldNames.${changedField}`,
+						`VocaDb.Web.Resources.Domain.ReleaseEvents:ReleaseEventSeriesEditableFieldNames.${changedField}`,
 					);
 
 				case EntryType.Song:
