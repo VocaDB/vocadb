@@ -34,7 +34,11 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 
 			if (fields.HasFlag(ActivityEntryOptionalFields.ArchivedVersion) && activityEntry.ArchivedVersionBase != null)
 			{
-				ArchivedVersion = new ArchivedObjectVersionForApiContract(activityEntry.ArchivedVersionBase, userIconFactory);
+				ArchivedVersion = new ArchivedObjectVersionForApiContract(
+					archivedObjectVersion: activityEntry.ArchivedVersionBase,
+					anythingChanged: false,
+					userIconFactory: userIconFactory
+				);
 			}
 
 			Entry = entryForApiContract;

@@ -261,7 +261,13 @@ namespace VocaDb.Model.Database.Queries
 				var songList = session.Load(id);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new SongListForApiContract(songList, PermissionContext.LanguagePreference, _userIconFactory, imagePersister: null, fields: SongListOptionalFields.None),
-					versions: songList.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+					versions: songList.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: true,
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
 				);
 			});
 		}

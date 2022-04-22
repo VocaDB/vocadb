@@ -1199,7 +1199,13 @@ namespace VocaDb.Model.Database.Queries
 				var album = session.Load<Album>(albumId);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new AlbumForApiContract(album, PermissionContext.LanguagePreference, thumbPersister: null, fields: AlbumOptionalFields.None),
-					versions: album.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+					versions: album.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: a.Reason != AlbumArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != AlbumEditableFields.Nothing,
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
 				);
 			});
 		}

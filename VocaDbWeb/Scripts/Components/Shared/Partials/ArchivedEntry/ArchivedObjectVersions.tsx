@@ -28,8 +28,6 @@ const ArchivedObjectVersionRow = React.memo(
 
 		const changedFieldNames = useChangedFieldNames();
 
-		const anythingChanged = archivedVersion.changedFields.length > 0;
-
 		return (
 			<tr>
 				<td>
@@ -37,7 +35,9 @@ const ArchivedObjectVersionRow = React.memo(
 					(loginManager.canViewHiddenRevisions || !archivedVersion.hidden) ? (
 						<a
 							href={linkFunc(archivedVersion.id)}
-							className={classNames(!anythingChanged && 'muted')}
+							className={classNames(
+								!archivedVersion.anythingChanged && 'muted',
+							)}
 							style={{
 								textDecoration: archivedVersion.hidden ? 'line-through' : '',
 							}}
@@ -57,7 +57,9 @@ const ArchivedObjectVersionRow = React.memo(
 					)}
 				</td>
 				<td>
-					<span className={classNames(!anythingChanged && 'muted')}>
+					<span
+						className={classNames(!archivedVersion.anythingChanged && 'muted')}
+					>
 						<UniversalTimeLabel dateTime={archivedVersion.created} />
 					</span>
 				</td>
@@ -69,7 +71,9 @@ const ArchivedObjectVersionRow = React.memo(
 					/>
 				</td>
 				<td>
-					<span className={classNames(!anythingChanged && 'muted')}>
+					<span
+						className={classNames(!archivedVersion.anythingChanged && 'muted')}
+					>
 						{t(`Resources:EntryEditEventNames.${archivedVersion.editEvent}`)}{' '}
 						{archivedVersion.changedFields.length > 0 && (
 							<>
@@ -86,7 +90,9 @@ const ArchivedObjectVersionRow = React.memo(
 					</span>
 				</td>
 				<td>
-					<span className={classNames(!anythingChanged && 'muted')}>
+					<span
+						className={classNames(!archivedVersion.anythingChanged && 'muted')}
+					>
 						{archivedVersion.notes}
 					</span>
 				</td>

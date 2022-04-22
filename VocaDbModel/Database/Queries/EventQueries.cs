@@ -898,7 +898,13 @@ namespace VocaDb.Model.Database.Queries
 				var ev = session.Load<ReleaseEvent>(id);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ReleaseEventForApiContract(ev, LanguagePreference, fields: ReleaseEventOptionalFields.None, thumbPersister: null),
-					versions: ev.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+					versions: ev.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: !Equals(a.Diff.ChangedFields, default(ReleaseEventEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
 				);
 			});
 		}
@@ -910,7 +916,13 @@ namespace VocaDb.Model.Database.Queries
 				var series = session.Load<ReleaseEventSeries>(id);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ReleaseEventSeriesForApiContract(series, LanguagePreference, fields: ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
-					versions: series.ArchivedVersionsManager.Versions.Select(v => new ArchivedObjectVersionForApiContract(v, _userIconFactory)).ToArray()
+					versions: series.ArchivedVersionsManager.Versions
+						.Select(v => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: v,
+							anythingChanged: !Equals(v.Diff.ChangedFields, default(ReleaseEventSeriesEditableFields)) || !Equals(v.CommonEditEvent, default(EntryEditEvent)),
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
 				);
 			});
 		}

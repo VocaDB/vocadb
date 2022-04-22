@@ -13,13 +13,14 @@ namespace VocaDb.Model.DataContracts.Versioning
 		public ArchivedObjectVersionForApiContract() { }
 #nullable enable
 
-		public ArchivedObjectVersionForApiContract(ArchivedObjectVersion archivedObjectVersion, IUserIconFactory userIconFactory)
+		public ArchivedObjectVersionForApiContract(ArchivedObjectVersion archivedObjectVersion, bool anythingChanged, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author is null
 				? archivedObjectVersion.AgentName
 				: archivedObjectVersion.Author.Name;
+			AnythingChanged = anythingChanged;
 			Author = archivedObjectVersion.Author is not null ?
 				new UserForApiContract(archivedObjectVersion.Author, userIconFactory, UserOptionalFields.MainPicture)
 				: null;
@@ -35,6 +36,9 @@ namespace VocaDb.Model.DataContracts.Versioning
 
 		[DataMember]
 		public string AgentName { get; init; }
+
+		[DataMember]
+		public bool AnythingChanged { get; init; }
 
 		[DataMember]
 		public UserForApiContract? Author { get; init; }

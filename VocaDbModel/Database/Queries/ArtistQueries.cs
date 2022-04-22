@@ -823,7 +823,13 @@ namespace VocaDb.Model.Database.Queries
 				var artist = session.Load<Artist>(artistId);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ArtistForApiContract(artist, PermissionContext.LanguagePreference, thumbPersister: null, includedFields: ArtistOptionalFields.None),
-					versions: artist.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+					versions: artist.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: a.Reason != ArtistArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != ArtistEditableFields.Nothing,
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
 				);
 			});
 		}

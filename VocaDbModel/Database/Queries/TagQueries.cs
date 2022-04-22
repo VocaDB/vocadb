@@ -591,7 +591,13 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return LoadTag(id, tag => EntryWithArchivedVersionsForApiContract.Create(
 				entry: new TagForApiContract(tag, thumbPersister: null, LanguagePreference, optionalFields: TagOptionalFields.None),
-				versions: tag.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).ToArray()
+				versions: tag.ArchivedVersionsManager.Versions
+					.Select(a => new ArchivedObjectVersionForApiContract(
+						archivedObjectVersion: a,
+						anythingChanged: !Equals(a.Diff.ChangedFields, default(TagEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
+						userIconFactory: _userIconFactory
+					))
+					.ToArray()
 			));
 		}
 #nullable disable

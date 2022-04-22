@@ -1530,7 +1530,13 @@ namespace VocaDb.Model.Database.Queries
 				var song = session.Load<Song>(songId);
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
-					versions: song.ArchivedVersionsManager.Versions.Select(a => new ArchivedObjectVersionForApiContract(a, _userIconFactory)).OrderByDescending(v => v.Version).ToArray()
+					versions: song.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: a.Reason != SongArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != SongEditableFields.Nothing,
+							userIconFactory: _userIconFactory
+						)).OrderByDescending(v => v.Version)
+						.ToArray()
 				);
 			});
 		}
