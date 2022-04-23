@@ -1,7 +1,8 @@
+import WebLinkCategory from '@Models/WebLinkCategory';
 import WebLinkEditViewModel from '@ViewModels/WebLinkEditViewModel';
 
 var webLinkData = {
-	category: 'Official',
+	category: WebLinkCategory.Official,
 	description: 'Youtube Channel',
 	id: 0,
 	url: 'http://www.youtube.com/user/tripshots',
