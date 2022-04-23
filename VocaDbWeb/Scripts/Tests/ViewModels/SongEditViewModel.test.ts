@@ -1,5 +1,6 @@
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
 import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
@@ -14,7 +15,7 @@ var categories: TranslatedEnumField[] = [
 	{ id: 'Commercial', name: 'Commercial' },
 ];
 var webLinkData = {
-	category: 'Official',
+	category: WebLinkCategory.Official,
 	description: 'Youtube Channel',
 	id: 0,
 	url: 'http://www.youtube.com/user/tripshots',

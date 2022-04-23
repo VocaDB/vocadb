@@ -3,6 +3,7 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel, {
 	TrackArtistSelectionViewModel,
@@ -84,7 +85,7 @@ var roles: { [key: string]: string } = {
 	VoiceManipulator: 'Voice manipulator',
 };
 var webLinkData = {
-	category: 'Official',
+	category: WebLinkCategory.Official,
 	description: 'Youtube Channel',
 	id: 123,
 	url: 'http://www.youtube.com/user/tripshots',
