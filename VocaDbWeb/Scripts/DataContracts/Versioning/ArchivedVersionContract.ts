@@ -7,10 +7,10 @@ export default interface ArchivedVersionContract {
 	author?: UserApiContract;
 	changedFields: string[];
 	created: Date;
-	editEvent: string;
 	hidden: boolean;
 	id: number;
 	notes: string;
+	reason: string;
 	status: string;
 	version: number;
 }

@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.Versioning
 		public ArchivedObjectVersionForApiContract() { }
 #nullable enable
 
-		public ArchivedObjectVersionForApiContract(ArchivedObjectVersion archivedObjectVersion, bool anythingChanged, IUserIconFactory userIconFactory)
+		public ArchivedObjectVersionForApiContract(ArchivedObjectVersion archivedObjectVersion, bool anythingChanged, string reason, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
 
@@ -26,10 +26,10 @@ namespace VocaDb.Model.DataContracts.Versioning
 				: null;
 			ChangedFields = archivedObjectVersion.DiffBase.ChangedFieldNames;
 			Created = archivedObjectVersion.Created;
-			EditEvent = archivedObjectVersion.EditEvent;
 			Hidden = archivedObjectVersion.Hidden;
 			Id = archivedObjectVersion.Id;
 			Notes = archivedObjectVersion.Notes;
+			Reason = reason;
 			Status = archivedObjectVersion.Status;
 			Version = archivedObjectVersion.Version;
 		}
@@ -50,9 +50,6 @@ namespace VocaDb.Model.DataContracts.Versioning
 		public DateTime Created { get; init; }
 
 		[DataMember]
-		public EntryEditEvent EditEvent { get; init; }
-
-		[DataMember]
 		public bool Hidden { get; init; }
 
 		[DataMember]
@@ -60,6 +57,9 @@ namespace VocaDb.Model.DataContracts.Versioning
 
 		[DataMember]
 		public string Notes { get; init; }
+
+		[DataMember]
+		public string Reason { get; init; }
 
 		[DataMember]
 		public EntryStatus Status { get; init; }

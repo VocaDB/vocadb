@@ -902,6 +902,7 @@ namespace VocaDb.Model.Database.Queries
 						.Select(a => new ArchivedObjectVersionForApiContract(
 							archivedObjectVersion: a,
 							anythingChanged: !Equals(a.Diff.ChangedFields, default(ReleaseEventEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
+							reason: a.CommonEditEvent.ToString(),
 							userIconFactory: _userIconFactory
 						))
 						.ToArray()
@@ -920,6 +921,7 @@ namespace VocaDb.Model.Database.Queries
 						.Select(v => new ArchivedObjectVersionForApiContract(
 							archivedObjectVersion: v,
 							anythingChanged: !Equals(v.Diff.ChangedFields, default(ReleaseEventSeriesEditableFields)) || !Equals(v.CommonEditEvent, default(EntryEditEvent)),
+							reason: v.CommonEditEvent.ToString(),
 							userIconFactory: _userIconFactory
 						))
 						.ToArray()

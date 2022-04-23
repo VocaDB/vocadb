@@ -12,6 +12,45 @@ import UserIconLinkOrName_UserForApiContract from '../User/UserIconLinkOrName_Us
 
 const loginManager = new LoginManager(vdb.values);
 
+const useReasonNames = (): ((
+	entryType: EntryType,
+	archivedVersion: ArchivedVersionContract,
+) => string | undefined) => {
+	const { t } = useTranslation(['Resources']);
+
+	return React.useCallback(
+		(
+			entryType: EntryType,
+			archivedVersion: ArchivedVersionContract,
+		): string | undefined => {
+			switch (entryType) {
+				case EntryType.Album:
+					return archivedVersion.reason === 'Unknown'
+						? archivedVersion.notes
+						: t(`Resources:AlbumArchiveReasonNames.${archivedVersion.reason}`);
+
+				case EntryType.Artist:
+					return archivedVersion.reason === 'Unknown'
+						? archivedVersion.notes
+						: t(`Resources:ArtistArchiveReasonNames.${archivedVersion.reason}`);
+
+				case EntryType.Song:
+					return archivedVersion.reason === 'Unknown'
+						? archivedVersion.notes
+						: t(`Resources:SongArchiveReasonNames.${archivedVersion.reason}`);
+
+				case EntryType.ReleaseEvent:
+				case EntryType.ReleaseEventSeries:
+				case EntryType.Tag:
+				case EntryType.SongList:
+				case EntryType.Venue:
+					return t(`Resources:EntryEditEventNames.${archivedVersion.reason}`);
+			}
+		},
+		[t],
+	);
+};
+
 interface ArchivedObjectVersionRowProps {
 	archivedVersion: ArchivedVersionContract;
 	linkFunc?: (id: number) => string;
@@ -26,6 +65,7 @@ const ArchivedObjectVersionRow = React.memo(
 	}: ArchivedObjectVersionRowProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources']);
 
+		const reasonNames = useReasonNames();
 		const changedFieldNames = useChangedFieldNames();
 
 		return (
@@ -74,7 +114,7 @@ const ArchivedObjectVersionRow = React.memo(
 					<span
 						className={classNames(!archivedVersion.anythingChanged && 'muted')}
 					>
-						{t(`Resources:EntryEditEventNames.${archivedVersion.editEvent}`)}{' '}
+						{reasonNames(entryType, archivedVersion)}{' '}
 						{archivedVersion.changedFields.length > 0 && (
 							<>
 								{' '}

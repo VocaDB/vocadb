@@ -1534,6 +1534,7 @@ namespace VocaDb.Model.Database.Queries
 						.Select(a => new ArchivedObjectVersionForApiContract(
 							archivedObjectVersion: a,
 							anythingChanged: a.Reason != SongArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != SongEditableFields.Nothing,
+							reason: a.Reason.ToString(),
 							userIconFactory: _userIconFactory
 						)).OrderByDescending(v => v.Version)
 						.ToArray()

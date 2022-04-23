@@ -595,6 +595,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(a => new ArchivedObjectVersionForApiContract(
 						archivedObjectVersion: a,
 						anythingChanged: !Equals(a.Diff.ChangedFields, default(TagEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
+						reason: a.CommonEditEvent.ToString(),
 						userIconFactory: _userIconFactory
 					))
 					.ToArray()

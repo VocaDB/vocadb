@@ -1203,6 +1203,7 @@ namespace VocaDb.Model.Database.Queries
 						.Select(a => new ArchivedObjectVersionForApiContract(
 							archivedObjectVersion: a,
 							anythingChanged: a.Reason != AlbumArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != AlbumEditableFields.Nothing,
+							reason: a.Reason.ToString(),
 							userIconFactory: _userIconFactory
 						))
 						.ToArray()

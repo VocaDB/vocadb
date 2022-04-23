@@ -265,6 +265,7 @@ namespace VocaDb.Model.Database.Queries
 						.Select(a => new ArchivedObjectVersionForApiContract(
 							archivedObjectVersion: a,
 							anythingChanged: true,
+							reason: a.CommonEditEvent.ToString(),
 							userIconFactory: _userIconFactory
 						))
 						.ToArray()
