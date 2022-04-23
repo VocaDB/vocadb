@@ -1,14 +1,13 @@
 import ActivityEntryContract from '@DataContracts/ActivityEntry/ActivityEntryContract';
 import EntryContract from '@DataContracts/EntryContract';
-import ArchivedVersionContract from '@DataContracts/Versioning/ArchivedVersionContract';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import useChangedFieldNames from '../../../useChangedFieldNames';
 import IconNameAndTypeLinkKnockout from '../User/IconNameAndTypeLinkKnockout';
 
 const useActivityFeedEventName = (): ((
@@ -35,63 +34,6 @@ const useActivityFeedEventName = (): ((
 
 				default:
 					return undefined;
-			}
-		},
-		[t],
-	);
-};
-
-const useChangedFieldNames = (): ((
-	entry: EntryContract,
-	archivedVersion?: ArchivedVersionContract,
-) => string | undefined) => {
-	const { t } = useTranslation(['Resources']);
-
-	return React.useCallback(
-		(
-			entry: EntryContract,
-			archivedVersion?: ArchivedVersionContract,
-		): string | undefined => {
-			if (
-				!archivedVersion ||
-				!archivedVersion.changedFields ||
-				archivedVersion.changedFields.length === 0
-			)
-				return undefined;
-
-			switch (EntryType[entry.entryType as keyof typeof EntryType]) {
-				case EntryType.Album:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:AlbumEditableFieldNames.${f}`),
-					).join(', ');
-
-				case EntryType.Artist:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:ArtistEditableFieldNames.${f}`),
-					).join(', ');
-
-				case EntryType.ReleaseEvent:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:ReleaseEventEditableFieldNames.${f}`),
-					).join(', ');
-
-				case EntryType.Song:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:SongEditableFieldNames.${f}`),
-					).join(', ');
-
-				case EntryType.SongList:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:SongListEditableFieldNames.${f}`),
-					).join(', ');
-
-				case EntryType.Tag:
-					return _.map(archivedVersion.changedFields, (f) =>
-						t(`Resources:TagEditableFieldNames.${f}`),
-					).join(', ');
-
-				default:
-					return _.join(', ') /* TODO: localize */;
 			}
 		},
 		[t],
@@ -176,7 +118,18 @@ const ActivityEntryKnockout = ({
 						{entry.archivedVersion.changedFields &&
 							entry.archivedVersion.changedFields.length > 0 && (
 								<span>
-									({changedFieldNames(entry.entry, entry.archivedVersion)})
+									(
+									{entry.archivedVersion.changedFields
+										.map((changedField) =>
+											changedFieldNames(
+												EntryType[
+													entry.entry.entryType as keyof typeof EntryType
+												],
+												changedField,
+											),
+										)
+										.join(', ')}
+									)
 								</span>
 							)}
 						{entry.archivedVersion.notes && (

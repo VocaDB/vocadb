@@ -3,6 +3,7 @@ import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContr
 import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
 import functions from '@Shared/GlobalFunctions';
@@ -177,6 +178,28 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<ReleaseEventSeriesDetailsContract>(
 			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/details`),
 		);
+	};
+
+	public getReleaseEventWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<ReleaseEventContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<ReleaseEventContract>
+		>(this.urlMapper.mapRelative(`/api/releaseEvents/${id}/versions`));
+	};
+
+	public getReleaseEventSeriesWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<
+		EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
+	> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
+		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
 	};
 }
 

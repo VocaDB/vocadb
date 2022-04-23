@@ -288,6 +288,7 @@ namespace VocaDb.Model.Service
 				session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
 		}
 
+		[Obsolete]
 		public SongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId)
 		{
 			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference, _userIconFactory));

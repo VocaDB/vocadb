@@ -48,11 +48,14 @@ namespace VocaDb.Web.Controllers.Api
 			_cache = cache;
 		}
 
-		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m,
+		private ArtistForApiContract GetArtist(
+			Artist a,
+			ArtistMergeRecord m,
 			ArtistOptionalFields fields,
 			ArtistRelationsFields relations,
 			ContentLanguagePreference lang,
-			IDatabaseContext<Artist> ctx)
+			IDatabaseContext<Artist> ctx
+		)
 		{
 			var contract = new ArtistForApiContract(a, lang, _thumbPersister, fields);
 
@@ -110,10 +113,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Artist data.</returns>
 		/// <example>http://vocadb.net/api/artists/1</example>
 		[HttpGet("{id:int}")]
-		public ArtistForApiContract GetOne(int id,
+		public ArtistForApiContract GetOne(
+			int id,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ArtistRelationsFields relations = ArtistRelationsFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
 
 #nullable enable
 		/// <summary>
@@ -159,7 +164,8 @@ namespace VocaDb.Web.Controllers.Api
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		)
 		{
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
@@ -193,7 +199,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of artist names.</returns>
 		[HttpGet("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => _service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
+		public string[] GetNames(
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
+			int maxResults = 15
+		) => _service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpGet("{id:int}/tagSuggestions")]
@@ -235,6 +245,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.GetDetailsForApi(id: id, hostname: WebHelper.GetHostnameForValidHit(Request));
 		}
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<ArtistForApiContract> GetArtistWithArchivedVersions(int id) =>
+			_queries.GetArtistWithArchivedVersionsForApi(id);
 #nullable disable
 	}
 }

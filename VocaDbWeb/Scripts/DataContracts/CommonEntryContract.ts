@@ -6,4 +6,6 @@ export default interface CommonEntryContract {
 	name: string;
 
 	status?: string;
+
+	version?: number;
 }

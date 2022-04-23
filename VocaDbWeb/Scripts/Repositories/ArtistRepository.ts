@@ -7,6 +7,7 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
@@ -242,6 +243,16 @@ export default class ArtistRepository
 		return this.httpClient.get<ArtistDetailsContract>(
 			this.urlMapper.mapRelative(`/api/artists/${id}/details`),
 		);
+	};
+
+	public getArtistWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<ArtistApiContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<ArtistApiContract>
+		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
 	};
 }
 

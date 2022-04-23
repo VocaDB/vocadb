@@ -182,6 +182,7 @@ namespace VocaDb.Model.Service
 				session.Load<Album>(id), PermissionContext.LanguagePreference));
 		}
 
+		[Obsolete]
 		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
 		{
 			return HandleQuery(session =>

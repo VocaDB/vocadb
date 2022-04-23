@@ -7,6 +7,8 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 import ErrorNotFound from '../Error/ErrorNotFound';
 
+const AlbumVersions = React.lazy(() => import('./AlbumVersions'));
+
 const AlbumDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();
 
@@ -31,6 +33,7 @@ const AlbumRoutes = (): React.ReactElement => {
 				}
 			/>
 			<Route path="Details/:id/*" element={<AlbumDetailsNavigate />} />
+			<Route path="Versions/:id" element={<AlbumVersions />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

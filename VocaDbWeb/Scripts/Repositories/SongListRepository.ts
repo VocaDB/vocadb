@@ -9,6 +9,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
 
+import EntryWithArchivedVersionsContract from '../DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import EntryCommentRepository from './EntryCommentRepository';
 
 export default class SongListRepository {
@@ -139,5 +140,15 @@ export default class SongListRepository {
 		return this.httpClient.get<SongListContract>(
 			this.urlMapper.mapRelative(`/api/songLists/${id}/details`),
 		);
+	};
+
+	public getSongListWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<SongListContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<SongListContract>
+		>(this.urlMapper.mapRelative(`/api/songLists/${id}/versions`));
 	};
 }
