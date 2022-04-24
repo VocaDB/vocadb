@@ -218,9 +218,7 @@ const AboutVocaDb = React.memo(() => {
 				IP addresses of the users accessing the site, but this information is
 				strictly available to moderators only. We do not use cookies to track
 				user activity. However, cookies are used to store certain user-related
-				settings such as the display language. For avatars, we use Gravatar,
-				which retrieves a user's profile picture based on their email address.
-				The original email address is never revealed - only the hash.
+				settings such as the display language.
 			</p>
 			<br />
 			<h4 id="staff">Staff</h4>
