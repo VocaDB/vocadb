@@ -53,17 +53,10 @@ interface AvatarProps {
 }
 
 const Avatar = ({ user }: AvatarProps): React.ReactElement => {
-	const { t } = useTranslation(['ViewRes.User']);
-
 	return loginManager.loggedUser &&
 		loginManager.loggedUser.id === user.id &&
 		loginManager.loggedUser.active ? (
-		<a
-			href="https://gravatar.com/emails/"
-			title={t('ViewRes.User:Details.SetAvatar')}
-			id="avatar"
-			className="user-avatar"
-		>
+		<a href="/User/MySettings#profile" id="avatar" className="user-avatar">
 			<AvatarImg user={user} />
 		</a>
 	) : (
