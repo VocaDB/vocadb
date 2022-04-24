@@ -1,9 +1,7 @@
 #nullable disable
 
-using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using VocaDb.BandcampMetadataExtractor;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;

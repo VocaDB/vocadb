@@ -1,31 +1,23 @@
 #nullable disable
 
-using System.Linq;
-using System.Xml.Linq;
-using NLog;
 using NHibernate;
-using NHibernate.Linq;
+using NLog;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Domain.Artists;
-using System.Drawing;
-using System;
-using VocaDb.Model.Database.Repositories.NHibernate;
-using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.TagFormatting;
-using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service
 {
@@ -190,6 +182,7 @@ namespace VocaDb.Model.Service
 				session.Load<Album>(id), PermissionContext.LanguagePreference));
 		}
 
+		[Obsolete]
 		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
 		{
 			return HandleQuery(session =>

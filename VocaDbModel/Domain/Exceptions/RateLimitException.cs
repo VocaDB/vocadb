@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using System.Runtime.Serialization;
 
 namespace VocaDb.Model.Domain.Exceptions

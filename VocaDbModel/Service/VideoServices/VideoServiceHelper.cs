@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,10 +10,11 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public static class VideoServiceHelper
 	{
-		private static readonly VideoService[] services = {
+		public static readonly VideoService[] Services = {
 			VideoService.Bandcamp,
  			VideoService.Bilibili,
 			VideoService.NicoNicoDouga,
+			VideoService.NicoLog,
 			VideoService.Piapro,
 			VideoService.SoundCloud,
 			VideoService.Youtube,
@@ -25,8 +24,6 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoService.Creofuga,
 		};
 
-		public static readonly Dictionary<PVService, VideoService> Services = services.ToDictionary(s => s.Service);
-
 		private static readonly ImmutableHashSet<PVService> servicesWithoutExternalSiteLink =
 			ImmutableHashSet.Create(PVService.File, PVService.LocalFile);
 
@@ -35,24 +32,30 @@ namespace VocaDb.Model.Service.VideoServices
 			return !servicesWithoutExternalSiteLink.Contains(service);
 		}
 
-		public static T GetPV<T>(T[] allPvs, PVService service)
+		public static T? GetPV<T>(T[] allPvs, PVService service)
 			where T : class, IPV
 		{
 			var servicePvs = allPvs.Where(p => p.Service == service).ToArray();
 
-			return GetPV(servicePvs, true,
+			return GetPV(
+				allPvs: servicePvs,
+				acceptFirst: true,
 				p => p.PVType == PVType.Original,
-				p => p.PVType == PVType.Reprint);
+				p => p.PVType == PVType.Reprint
+			);
 		}
 
-		public static T GetPV<T>(T[] allPvs) where T : class, IPV
+		public static T? GetPV<T>(T[] allPvs) where T : class, IPV
 		{
-			return GetPV(allPvs, true,
+			return GetPV(
+				allPvs: allPvs,
+				acceptFirst: true,
 				p => p.PVType == PVType.Original,
-				p => p.PVType == PVType.Reprint);
+				p => p.PVType == PVType.Reprint
+			);
 		}
 
-		public static T GetPV<T>(ICollection<T> allPvs, bool acceptFirst, params Func<T, bool>[] predicates) where T : class, IPV
+		public static T? GetPV<T>(ICollection<T> allPvs, bool acceptFirst, params Func<T, bool>[] predicates) where T : class, IPV
 		{
 			if (!allPvs.Any())
 				return null;
@@ -68,10 +71,12 @@ namespace VocaDb.Model.Service.VideoServices
 			return acceptFirst ? allPvs.FirstOrDefault() : null;
 		}
 
-		public static string GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
+		public static string? GetThumbUrl(IPVWithThumbnail pv) => Services
+			.Where(s => s.IsValidFor(pv.Service))
+			.Select(s => s.GetThumbUrlById(pv.PVId))
+			.FirstOrDefault(r => r != null);
 
-#nullable enable
-		public static string GetThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
+		public static string? GetThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
 			ParamIs.NotNull(() => pvs);
 
@@ -86,7 +91,9 @@ namespace VocaDb.Model.Service.VideoServices
 				pvs.FirstOrDefault(p => p.PVType == PVType.Original) ??
 				pvs.FirstOrDefault();
 
-			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
+			return pv != null
+				? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv))
+				: string.Empty;
 		}
 
 		/// <summary>
@@ -94,7 +101,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		/// <param name="pvs">List of PVs. Cannot be null.</param>
 		/// <returns>Thumb URL. Cannot be null. Can be empty if there's no PV.</returns>
-		public static string GetThumbUrlPreferNotNico<T>(IList<T> pvs) where T : class, IPVWithThumbnail
+		public static string? GetThumbUrlPreferNotNico<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
 			ParamIs.NotNull(() => pvs);
 
@@ -114,17 +121,22 @@ namespace VocaDb.Model.Service.VideoServices
 			if (pv == null)
 				pv = pvs.FirstOrDefault();
 
-			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
+			return pv != null
+				? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv))
+				: string.Empty;
 		}
 
 		public static string? GetMaxSizeThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
 			ParamIs.NotNull(() => pvs);
 
-			var pv = GetPV(pvs, false,
+			var pv = GetPV(
+				allPvs: pvs,
+				acceptFirst: false,
 				p => p.Service == PVService.Youtube && p.PVType == PVType.Original,
 				p => p.Service == PVService.Youtube && p.PVType == PVType.Reprint,
-				p => p.Service == PVService.Youtube);
+				p => p.Service == PVService.Youtube
+			);
 
 			if (pv != null)
 			{
@@ -134,7 +146,7 @@ namespace VocaDb.Model.Service.VideoServices
 			return null;
 		}
 
-		public static T PrimaryPV<T>(IEnumerable<T> pvs, PVService? preferredService = null)
+		public static T? PrimaryPV<T>(IEnumerable<T> pvs, PVService? preferredService = null)
 			where T : class, IPV
 		{
 			ParamIs.NotNull(() => pvs);
@@ -146,14 +158,13 @@ namespace VocaDb.Model.Service.VideoServices
 			else
 				return GetPV(p);
 		}
-#nullable disable
 
-		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext)
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext? permissionContext)
 		{
-			return ParseByUrlAsync(url, getTitle, permissionContext, services);
+			return ParseByUrlAsync(url, getTitle, permissionContext, Services);
 		}
 
-		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices)
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext? permissionContext, params VideoService[] testServices)
 		{
 			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
 

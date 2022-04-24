@@ -212,8 +212,6 @@ export default class SongDetailsStore {
 	@observable public originalVersion: SongLinkWithUrl;
 	public readonly reportStore: ReportEntryStore;
 	public readonly lyricsStore: SongLyricsStore;
-	// PV player HTML.
-	@observable public previewHtml?: string = undefined;
 	@observable public selectedPvId: number;
 	public readonly personalDescription: SelfDescriptionStore;
 	public readonly description: EnglishTranslatedStringStore;

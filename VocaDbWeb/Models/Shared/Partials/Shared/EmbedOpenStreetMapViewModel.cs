@@ -4,9 +4,9 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Web.Models.Shared.Partials.Shared
 {
-	public class EmbedGoogleMapsViewModel
+	public class EmbedOpenStreetMapViewModel
 	{
-		public EmbedGoogleMapsViewModel(OptionalGeoPointContract coordinates)
+		public EmbedOpenStreetMapViewModel(OptionalGeoPointContract coordinates)
 		{
 			Coordinates = coordinates;
 		}

@@ -1,12 +1,12 @@
 {
   "AlbumCollection": {
-    "Album": "Album",
+    "Album": "Álbum",
     "CollectionStatusAnything": "Cualquiera",
-    "CollectionWishedOrOrdered": "Deseado o ordenado",
+    "CollectionWishedOrOrdered": "Deseado o pedido",
     "MediaType": "Tipo de multimedia",
-    "Rating": "Rating",
+    "Rating": "Calificación",
     "ReleaseDate": "Fecha de lanzamiento",
-    "ReleaseEvent": "Salida de evento",
+    "ReleaseEvent": "Evento de lanzamiento",
     "Status": "Estado de la colección"
   },
   "Create": {

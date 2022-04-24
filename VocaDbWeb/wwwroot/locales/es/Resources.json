@@ -11,9 +11,9 @@
   },
   "AlbumCollectionStatusNames": {
     "Nothing": "Nada",
-    "Ordered": "Ordenado",
-    "Owned": "Adquirido por",
-    "Wishlisted": "Aprobado"
+    "Ordered": "Pedido",
+    "Owned": "Adquirido",
+    "Wishlisted": "Deseado"
   },
   "AlbumDiscMediaTypeNames": {
     "Audio": "Audio",
@@ -38,7 +38,7 @@
     "Discs": "Discos"
   },
   "AlbumMediaTypeNames": {
-    "DigitalDownload": "Formato dígital",
+    "DigitalDownload": "Formato digital",
     "Other": "Sin especificar",
     "PhysicalDisc": "Disco físico"
   },

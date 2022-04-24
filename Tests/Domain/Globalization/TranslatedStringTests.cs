@@ -1,7 +1,5 @@
 #nullable disable
 
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Tests.Domain.Globalization

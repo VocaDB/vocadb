@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Comments

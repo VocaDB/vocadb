@@ -76,9 +76,11 @@ const PVPlayer = observer(
 												className="js-songId"
 												value={song.id}
 											/>
-											{song.thumbUrl && (
+											{song.mainPicture && song.mainPicture.urlThumb && (
 												<img
-													src={UrlHelper.upgradeToHttps(song.thumbUrl)}
+													src={UrlHelper.upgradeToHttps(
+														song.mainPicture.urlThumb,
+													)}
 													alt="Cover" /* TODO: localize */
 													className="coverPicThumb"
 													referrerPolicy="same-origin"

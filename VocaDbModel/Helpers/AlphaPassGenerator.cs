@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace VocaDb.Model.Helpers
 {
 	public class AlphaPassGenerator

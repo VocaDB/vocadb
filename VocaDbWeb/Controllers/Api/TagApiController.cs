@@ -1,9 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -11,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -93,8 +90,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
 		[HttpGet("{id:int}")]
-		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
-			=> _queries.LoadTag(id, t => new TagForApiContract(t, _thumbPersister, lang, fields));
+		public TagForApiContract GetById(
+			int id,
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.LoadTag(id, t => new TagForApiContract(t, _thumbPersister, lang, fields));
 
 		/// <summary>
 		/// DEPRECATED. Gets a tag by name.
@@ -108,15 +108,21 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Tag data.</returns>
 		[HttpGet("byName/{name}")]
 		[Obsolete]
-		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
-			=> _queries.GetTagByName(name, t => new TagForApiContract(t, _thumbPersister, lang, fields));
+		public TagForApiContract GetByName(
+			string name,
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetTagByName(name, t => new TagForApiContract(t, _thumbPersister, lang, fields));
 
 		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
 		[HttpGet("categoryNames")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => _queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
+		public string[] GetCategoryNamesList(
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto
+		) => _queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
 
 		/// <summary>
 		/// Gets a list of child tags for a tag.
@@ -128,9 +134,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>List of child tags.</returns>
 		/// <example>http://vocadb.net/api/tags/481/children</example>
 		[HttpGet("{tagId:int}/children")]
-		public TagForApiContract[] GetChildTags(int tagId,
+		public TagForApiContract[] GetChildTags(
+			int tagId,
 			TagOptionalFields fields = TagOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetChildTags(tagId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetChildTags(tagId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of comments for a tag.
@@ -174,7 +182,8 @@ namespace VocaDb.Web.Controllers.Api
 			bool preferAccurateMatches = false,
 			TagOptionalFields fields = TagOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			TagTargetTypes target = TagTargetTypes.All)
+			TagTargetTypes target = TagTargetTypes.All
+		)
 		{
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? AbsoluteMax : int.MaxValue);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
@@ -200,7 +209,10 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
-			int start = 0, int maxEntries = DefaultMax, bool getTotalCount = false) => _queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
+			int start = 0,
+			int maxEntries = DefaultMax,
+			bool getTotalCount = false
+		) => _queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
 
 		/// <summary>
 		/// Find tag names by a part of name.
@@ -218,8 +230,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// </returns>
 		[HttpGet("names")]
 		public string[] GetNames(
-			string query = "", bool allowAliases = true,
-			int maxResults = 10) => _queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
+			string query = "",
+			bool allowAliases = true,
+			int maxResults = 10
+		) => _queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
 
 		/// <summary>
 		/// Gets the most common tags in a category.
@@ -231,9 +245,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[HttpGet("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
+		public TagBaseContract[] GetTopTags(
+			string categoryName = null,
+			EntryType? entryType = null,
 			int maxResults = 15,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetTopTags(categoryName, entryType, maxResults, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetTopTags(categoryName, entryType, maxResults, lang);
 
 		/// <summary>
 		/// Creates a new report.
@@ -321,8 +338,15 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagCategoryForApiContract[] GetTagsByCategories() => _queries.GetTagsByCategories();
 
+#nullable enable
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagDetailsForApiContract> GetDetails(int id) => _queries.GetDetailsAsync(id);
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersions(int id) =>
+			_queries.GetTagWithArchivedVersionsForApi(id);
+#nullable disable
 	}
 }

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;

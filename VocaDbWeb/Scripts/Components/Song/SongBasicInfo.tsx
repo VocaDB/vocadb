@@ -246,7 +246,7 @@ const SongBasicInfo = observer(
 						id: 0,
 						url: `https://www.youtube.com/results?search_query=${query}`,
 						description: t('ViewRes.Song:Details.SearchYoutube'),
-						category: WebLinkCategory[WebLinkCategory.Other],
+						category: WebLinkCategory.Other,
 						disabled: false,
 					},
 				];

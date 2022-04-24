@@ -14,7 +14,7 @@ import ExternalLinksList from '@Components/Shared/Partials/EntryDetails/External
 import ReportEntryPopupKnockout from '@Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import FormatMarkdown from '@Components/Shared/Partials/Html/FormatMarkdown';
 import EmbedPV from '@Components/Shared/Partials/PV/EmbedPV';
-import EmbedGoogleMaps from '@Components/Shared/Partials/Shared/EmbedGoogleMaps';
+import EmbedOpenStreetMap from '@Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import EntryStatusMessage from '@Components/Shared/Partials/Shared/EntryStatusMessage';
 import FormatPVLink from '@Components/Shared/Partials/Shared/FormatPVLink';
 import SongGrid from '@Components/Shared/Partials/Song/SongGrid';
@@ -201,8 +201,8 @@ const EventDetailsLayout = observer(
 							{t('ViewRes:Shared.Edit')}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Event/Versions/${event.id}`}
+							as={Link}
+							to={`/Event/Versions/${event.id}`}
 							icons={{ primary: 'ui-icon-clock' }}
 						>
 							{t('ViewRes:EntryDetails.ViewModifications')}
@@ -447,7 +447,7 @@ const EventDetailsLayout = observer(
 						</h3>
 
 						{event.venue.coordinates.hasValue && (
-							<EmbedGoogleMaps coordinates={event.venue.coordinates} />
+							<EmbedOpenStreetMap coordinates={event.venue.coordinates} />
 						)}
 
 						{event.venue.description && (

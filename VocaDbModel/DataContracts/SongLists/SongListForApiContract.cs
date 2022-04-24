@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
@@ -22,8 +20,13 @@ namespace VocaDb.Model.DataContracts.SongLists
 
 		public SongListForApiContract() { }
 
-		public SongListForApiContract(SongList list, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory imagePersister,
-			SongListOptionalFields fields) : base(list)
+		public SongListForApiContract(
+			SongList list,
+			ContentLanguagePreference languagePreference,
+			IUserIconFactory userIconFactory,
+			IAggregatedEntryImageUrlFactory imagePersister,
+			SongListOptionalFields fields
+		) : base(list)
 		{
 			ParamIs.NotNull(() => list);
 

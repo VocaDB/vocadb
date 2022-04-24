@@ -17,7 +17,11 @@ export default interface ReleaseEventSeriesForApiContract {
 
 	names?: LocalizedStringWithIdContract[];
 
+	status?: string;
+
 	urlSlug: string;
+
+	version?: number;
 
 	webLinks: WebLinkContract[];
 }

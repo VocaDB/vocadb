@@ -96,8 +96,8 @@ const EventSeriesDetailsLayout = ({
 										{t('ViewRes:Shared.Edit')}
 									</JQueryUIButton>{' '}
 									<JQueryUIButton
-										as="a"
-										href={`/Event/SeriesVersions/${series.id}`}
+										as={Link}
+										to={`/Event/SeriesVersions/${series.id}`}
 										icons={{ primary: 'ui-icon-clock' }}
 									>
 										{t('ViewRes:EntryDetails.ViewModifications')}

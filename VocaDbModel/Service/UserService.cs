@@ -1,14 +1,10 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Security;

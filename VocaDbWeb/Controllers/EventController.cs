@@ -1,9 +1,6 @@
 #nullable disable
 
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -363,7 +360,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Entry.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View(new Versions<ReleaseEventSeriesContract>(contract, _enumTranslations));
+			return View("React/Index");
 		}
 
 		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden)
@@ -400,7 +397,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View(new Versions(contract, _enumTranslations));
+			return View("React/Index");
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -169,7 +166,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (listId == 0)
 				return query;
 
-			return query.Where(s => s.Song.ListLinks.Any(l => l.List.Id == listId));
+			return query.Where(s => s.Song.AllListLinks.Any(l => l.List.Id == listId));
 		}
 
 		/// <summary>

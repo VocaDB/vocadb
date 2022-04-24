@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -201,7 +199,7 @@ namespace VocaDb.Model.DataContracts.Songs
 					song: song.OriginalVersion,
 					mergeRecord: null,
 					languagePreference: languagePreference,
-					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				)
 				: null;
 

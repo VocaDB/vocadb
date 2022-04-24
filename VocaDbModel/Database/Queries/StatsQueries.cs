@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Aggregate;
@@ -169,7 +166,12 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+#nullable enable
+		public IEnumerable<(Artist Artist, SongsPerArtistPerDate[] Points)> SongsPerVocaloidOverTime(
+			DateTime? cutoff,
+			ArtistType[] vocalistTypes,
+			int startYear = 2007
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -195,19 +197,24 @@ namespace VocaDb.Model.Database.Queries
 
 				points = SumToBaseVoicebanks(ctx, points);
 
-				var artists = ctx.Query<Artist>().Where(a => vocalistTypes.Contains(a.ArtistType)).ToDictionary(a => a.Id);
-
 				// Group by artist, select artists with top 20 most songs (as counted for the root VB)
 				// Note: we're filtering artists only after summing to root VBs, because otherwise appends would be ignored
-				var byArtist = points.GroupBy(p => p.ArtistId)
+				var byArtistId = points.GroupBy(p => p.ArtistId)
 					.OrderByDescending(byArtist2 => byArtist2.Select(p2 => p2.Count).Sum())
 					.Take(15)
-					.Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
-				return byArtist;
+					.ToArray();
+
+				var artists = ctx.LoadMultiple<Artist>(byArtistId.Select(a => a.Key)).ToDictionary(a => a.Id);
+
+				return byArtistId.Select(a => (artists[a.Key], a.ToArray()));
 			});
 		}
 
-		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
+		public IEnumerable<IGrouping<ArtistType, (DateTime Date, ArtistType ArtistType, int Count)>> GetSongsPerVoicebankTypeOverTime(
+			DateTime? cutoff,
+			ArtistType[] vocalistTypes,
+			int startYear = 2007
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -230,13 +237,14 @@ namespace VocaDb.Model.Database.Queries
 						Count = s.Count()
 					})
 					.ToArray()
-					.Select(s => Tuple.Create(new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count))
-					.GroupBy(s => s.Item2)
+					.Select(s => (new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count))
+					.GroupBy(s => s.ArtistType)
 					.ToArray();
 
 				return points;
 			});
 		}
+#nullable disable
 
 		public IEnumerable<EntryWithIdAndData<LocalizedValue>> HitsPerSongOverTime(DateTime? cutoff)
 		{

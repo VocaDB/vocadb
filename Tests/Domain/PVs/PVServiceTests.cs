@@ -1,5 +1,3 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Tests.Domain.PVs

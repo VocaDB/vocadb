@@ -259,7 +259,7 @@ export default class SongListStore
 		} else {
 			const fields = [
 				SongOptionalField.AdditionalNames,
-				SongOptionalField.ThumbUrl,
+				SongOptionalField.MainPicture,
 			];
 
 			if (this.showTags) fields.push(SongOptionalField.Tags);

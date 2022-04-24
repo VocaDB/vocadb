@@ -9,7 +9,17 @@ interface MarkdownProps {
 
 const Markdown = ({ children }: MarkdownProps): React.ReactElement => {
 	return (
-		<ReactMarkdown remarkPlugins={[gfm, remarkBreaks]}>
+		<ReactMarkdown
+			remarkPlugins={[gfm, remarkBreaks]}
+			components={{
+				p: ({ node, ...props }): React.ReactElement => (
+					<p
+						css={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+						{...props}
+					/>
+				),
+			}}
+		>
 			{children}
 		</ReactMarkdown>
 	);

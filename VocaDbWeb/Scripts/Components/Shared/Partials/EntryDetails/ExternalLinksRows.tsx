@@ -17,8 +17,8 @@ const ExternalLinksRows = React.memo(
 			() =>
 				webLinks.filter(
 					(webLink) =>
-						webLink.category === WebLinkCategory[WebLinkCategory.Official] ||
-						webLink.category === WebLinkCategory[WebLinkCategory.Commercial],
+						webLink.category === WebLinkCategory.Official ||
+						webLink.category === WebLinkCategory.Commercial,
 				),
 			[webLinks],
 		);

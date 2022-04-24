@@ -1,3 +1,4 @@
+import PVContract from '@DataContracts/PVs/PVContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import PVService from '@Models/PVs/PVService';
 import SongRepository from '@Repositories/SongRepository';
@@ -43,7 +44,7 @@ export default class PVPlayerStore {
 	private currentPlayer?: IPVPlayer;
 	private readonly players: { [index: string]: IPVPlayer };
 	public nextSong?: () => void;
-	@observable public playerHtml?: string;
+	@observable public primaryPV?: PVContract;
 	public playerService?: PVService;
 	@observable public ratingButtonsStore?: PVRatingButtonsStore;
 	public resetSong?: () => void;
@@ -74,7 +75,7 @@ export default class PVPlayerStore {
 						this.currentPlayer = undefined;
 					}
 
-					this.playerHtml = '';
+					this.primaryPV = undefined;
 					this.ratingButtonsStore = undefined;
 					return;
 				}
@@ -121,7 +122,11 @@ export default class PVPlayerStore {
 						})
 						.then((result) => {
 							runInAction(() => {
-								this.playerHtml = result.playerHtml;
+								this.primaryPV = {
+									pvId: result.pvId,
+									service: result.pvService,
+									pvType: '',
+								};
 								this.playerService =
 									PVService[result.pvService as keyof typeof PVService];
 								this.currentPlayer = this.players[result.pvService];

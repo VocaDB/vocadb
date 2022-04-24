@@ -28,7 +28,7 @@ const EventThumbs = ({
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
 
 	return (
-		<div className="clearfix">
+		<div className="clearfix" css={{ display: 'flex', flexWrap: 'wrap' }}>
 			{events.map((event) => (
 				<div
 					className={classNames(

@@ -124,7 +124,7 @@
     <value>Se requiere especificar el tipo de artista.</value>
   </data>
   <data name="UnnecessaryPName" xml:space="preserve">
-    <value>No se necesita añadir el nombre del artista con el sufijo "P".</value>
+    <value>No se necesita añadir el nombre del artista con y sin el sufijo "P".</value>
   </data>
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>Se requiere especificar el nombre principal del artista.</value>

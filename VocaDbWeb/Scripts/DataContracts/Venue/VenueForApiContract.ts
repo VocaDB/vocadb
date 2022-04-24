@@ -27,5 +27,7 @@ export default interface VenueForApiContract {
 
 	status: string /* TODO: enum */;
 
+	version?: number;
+
 	webLinks: WebLinkContract[];
 }

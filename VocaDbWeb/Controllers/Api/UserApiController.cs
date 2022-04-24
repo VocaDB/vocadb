@@ -1,9 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -138,7 +134,9 @@ namespace VocaDb.Web.Controllers.Api
 			AlbumSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			MediaType? mediaType = null
+		)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -154,6 +152,7 @@ namespace VocaDb.Web.Controllers.Api
 				TagId = tagId ?? 0,
 				Tag = tag,
 				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				MediaType = mediaType,
 			};
 
 			var albums = _queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) =>

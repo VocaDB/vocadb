@@ -1,11 +1,7 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using NHibernate;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts;

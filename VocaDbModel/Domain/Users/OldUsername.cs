@@ -1,5 +1,3 @@
-using System;
-
 namespace VocaDb.Model.Domain.Users
 {
 	public class OldUsername : IEntryWithIntId

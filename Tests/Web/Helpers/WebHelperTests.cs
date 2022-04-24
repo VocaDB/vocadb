@@ -1,9 +1,7 @@
 #nullable disable
 
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Web.Helpers;
 

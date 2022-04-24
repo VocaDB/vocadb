@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Linq;
-using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.SongImport;
 
 namespace VocaDb.Model.Service.SongImport

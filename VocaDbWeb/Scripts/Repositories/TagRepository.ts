@@ -6,6 +6,7 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagCategoryContract from '@DataContracts/Tag/TagCategoryContract';
 import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
 import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
@@ -188,6 +189,16 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.get<TagCategoryContract[]>(
 			this.urlMapper.mapRelative('/api/tags/by-categories'),
 		);
+	};
+
+	public getTagWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<TagApiContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<TagApiContract>
+		>(this.urlMapper.mapRelative(`/api/tags/${id}/versions`));
 	};
 }
 

@@ -1,9 +1,10 @@
 @light-green: rgb(150, 220, 220);
-@medium-green: #64B7B7;
+@medium-green: #64b7b7;
 
 body {
 	color: rgb(150, 220, 220);
-	background: url(https://static.vocadb.net/img/darkangel.png)top center no-repeat fixed;
+	background: url(https://static.vocadb.net/img/darkangel.png) top center
+		no-repeat fixed;
 	background-color: black;
 }
 
@@ -35,7 +36,8 @@ body {
 .rightFrame a.btn {
 	color: black;
 
-	&.btn-inverse, &.btn-info {
+	&.btn-inverse,
+	&.btn-info {
 		color: white;
 	}
 }
@@ -50,23 +52,42 @@ body {
 	color: rgb(100, 180, 250) !important;
 
 	&:hover {
-		color: #0065B2 !important;
+		color: #0065b2 !important;
 	}
 }
 
-span.extraInfo, small.extraInfo {
-	color: #79AFAF;
+span.extraInfo,
+small.extraInfo {
+	color: #79afaf;
 }
 
-.table-striped tbody > tr:nth-child(odd) > td, .table-striped tbody > tr:nth-child(odd) > th {
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
 	background-color: rgba(0, 50, 50, 0.85);
 }
 
-.pagination ul > li > a, .pagination ul > li > span {
+.pagination ul > li > a,
+.pagination ul > li > span {
 	background-color: rgba(0, 50, 50, 0.85);
 }
 
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+select,
+textarea,
+input[type='text'],
+input[type='password'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='date'],
+input[type='month'],
+input[type='time'],
+input[type='week'],
+input[type='number'],
+input[type='email'],
+input[type='url'],
+input[type='search'],
+input[type='tel'],
+input[type='color'],
+.uneditable-input {
 	background-color: @light-green;
 	color: black;
 }
@@ -77,7 +98,8 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	border: solid #009696 2px;
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
+.nav > li > a:hover,
+.nav > li > a:focus {
 	background-color: rgba(0, 70, 70, 0.85);
 }
 
@@ -89,10 +111,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	color: rgb(80, 160, 220);
 }
 
-.nav-list > li > a, .nav-list .nav-header {
+.nav-list > li > a,
+.nav-list .nav-header {
 	text-shadow: none;
 }
 
-img[title="GitHub"] {
+img[title='GitHub'] {
 	filter: invert(1);
 }

@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Tests.TestSupport

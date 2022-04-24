@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 
 namespace VocaDb.Model.Service.Search
 {

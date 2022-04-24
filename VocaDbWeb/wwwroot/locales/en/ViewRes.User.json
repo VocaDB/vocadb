@@ -63,7 +63,7 @@
     "OldNameUntil": "(until {{0}})",
     "OldUsernames": "Old usernames",
     "Overview": "Overview",
-    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the <a>artist verification page</a>.",
+    "PossibleProducerMessage": "Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?\nIf so, please see the {{0}}.",
     "Power": "Power",
     "ReportSpamming": "Report user for spamming",
     "SetAvatar": "Set your avatar at gravatar.com",

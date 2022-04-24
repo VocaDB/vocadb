@@ -1,15 +1,10 @@
-#nullable disable
-
-using System;
-using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts.Versioning
 {
-	public class ArchivedObjectVersionWithFieldsContract<TFields, TReason>
-		: ArchivedObjectVersionContract
+	public class ArchivedObjectVersionWithFieldsContract<TFields, TReason> : ArchivedObjectVersionContract
 		where TFields : struct, Enum
 		where TReason : struct, Enum
 	{
@@ -17,8 +12,12 @@ namespace VocaDb.Model.DataContracts.Versioning
 
 		public ArchivedObjectVersionWithFieldsContract() { }
 
-		public ArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
-			TFields fields, TReason reason)
+		public ArchivedObjectVersionWithFieldsContract(
+			ArchivedObjectVersion archivedVersion,
+			IUserIconFactory userIconFactory,
+			TFields fields,
+			TReason reason
+		)
 			: base(archivedVersion, userIconFactory)
 		{
 			ChangedFields = fields;
@@ -39,7 +38,7 @@ namespace VocaDb.Model.DataContracts.Versioning
 			return !Equals(ChangedFields, DefaultField) ? translator.Translations<TFields>().GetAllNameNames(ChangedFields, DefaultField) : string.Empty;
 		}
 
-		public override string TranslateReason(IEnumTranslations translator)
+		public override string? TranslateReason(IEnumTranslations translator)
 		{
 			return !Equals(Reason, default(TReason)) ? translator.Translations<TReason>().GetName(Reason) : Notes;
 		}
@@ -48,8 +47,13 @@ namespace VocaDb.Model.DataContracts.Versioning
 	public static class ArchivedObjectVersionWithFieldsContract
 	{
 		public static ArchivedObjectVersionWithFieldsContract<TFields, TReason> Create<TFields, TReason>(
-			ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
-			TFields fields, TReason reason) where TFields : struct, Enum where TReason : struct, Enum
+			ArchivedObjectVersion archivedVersion,
+			IUserIconFactory userIconFactory,
+			TFields fields,
+			TReason reason
+		)
+			where TFields : struct, Enum
+			where TReason : struct, Enum
 		{
 			return new ArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, userIconFactory, fields, reason);
 		}

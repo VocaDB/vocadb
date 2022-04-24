@@ -1,8 +1,6 @@
 #nullable disable
 
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace VocaDb.Model.Domain.Globalization
 {

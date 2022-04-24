@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Songs
 				song,
 				mergeRecord: null,
 				languagePreference,
-				fields: SongOptionalFields.AdditionalNames | SongOptionalFields.PVs | SongOptionalFields.ThumbUrl
+				fields: SongOptionalFields.AdditionalNames | SongOptionalFields.PVs | SongOptionalFields.MainPicture
 			)
 		{
 			Vote = vote;

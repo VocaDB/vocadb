@@ -1,14 +1,13 @@
 #nullable disable
 
-using System;
 using System.Net;
 using AngleSharp.Io;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using NLog;
 
 namespace VocaDb.Web.Code
 {
+	using NLog;
+
 	public static class ErrorLogger
 	{
 		public const int Code_BadRequest = (int)HttpStatusCode.BadRequest;

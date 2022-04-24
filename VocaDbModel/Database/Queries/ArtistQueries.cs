@@ -1,11 +1,6 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Threading.Tasks;
 using NHibernate;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -15,6 +10,7 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -818,5 +814,26 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+#nullable enable
+		public EntryWithArchivedVersionsForApiContract<ArtistForApiContract> GetArtistWithArchivedVersionsForApi(int artistId)
+		{
+			return HandleQuery(session =>
+			{
+				var artist = session.Load<Artist>(artistId);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new ArtistForApiContract(artist, PermissionContext.LanguagePreference, thumbPersister: null, includedFields: ArtistOptionalFields.None),
+					versions: artist.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: a.Reason != ArtistArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != ArtistEditableFields.Nothing,
+							reason: a.Reason.ToString(),
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
+				);
+			});
+		}
+#nullable disable
 	}
 }

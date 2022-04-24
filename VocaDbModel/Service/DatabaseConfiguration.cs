@@ -1,13 +1,12 @@
 #nullable disable
 
-using System;
+using System.Configuration;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NLog;
 using NHibernate;
+using NLog;
 using VocaDb.Model.Mapping;
 using VocaDb.Model.Mapping.Songs;
-using System.Configuration;
 
 namespace VocaDb.Model.Service
 {

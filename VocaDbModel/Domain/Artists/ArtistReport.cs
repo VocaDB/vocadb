@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 

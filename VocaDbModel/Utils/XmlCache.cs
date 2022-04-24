@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
 using System.Xml.Linq;
 using VocaDb.Model.Helpers;
 

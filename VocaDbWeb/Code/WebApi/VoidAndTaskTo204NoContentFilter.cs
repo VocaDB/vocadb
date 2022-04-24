@@ -1,7 +1,5 @@
 // Code from: https://stackoverflow.com/questions/50325969/how-do-i-make-an-asp-net-core-void-task-action-method-return-204-no-content/60563876#60563876
 
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 

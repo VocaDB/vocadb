@@ -5,7 +5,7 @@ import Layout from '@Components/Shared/Layout';
 import DeletedBanner from '@Components/Shared/Partials/EntryDetails/DeletedBanner';
 import ExternalLinksList from '@Components/Shared/Partials/EntryDetails/ExternalLinksList';
 import ReportEntryPopupKnockout from '@Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import EmbedGoogleMaps from '@Components/Shared/Partials/Shared/EmbedGoogleMaps';
+import EmbedOpenStreetMap from '@Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import EntryStatusMessage from '@Components/Shared/Partials/Shared/EntryStatusMessage';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
@@ -80,8 +80,8 @@ const VenueDetailsLayout = ({
 						{t('ViewRes:Shared.Edit')}
 					</JQueryUIButton>{' '}
 					<JQueryUIButton
-						as="a"
-						href={`/Venue/Versions/${venue.id}`}
+						as={Link}
+						to={`/Venue/Versions/${venue.id}`}
 						icons={{ primary: 'ui-icon-clock' }}
 					>
 						{t('ViewRes:EntryDetails.ViewModifications')}
@@ -115,7 +115,7 @@ const VenueDetailsLayout = ({
 			{venue.deleted && <DeletedBanner />}
 
 			{venue.coordinates.hasValue && (
-				<EmbedGoogleMaps coordinates={venue.coordinates} />
+				<EmbedOpenStreetMap coordinates={venue.coordinates} />
 			)}
 
 			<div className="media">

@@ -1,8 +1,6 @@
 // Code from: https://github.com/mono/aspnetwebstack/blob/6248bfd24c31356e75a31c1b1030d4d96f669a6a/src/Microsoft.Web.Helpers/Gravatar.cs
 
-using System;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Html;

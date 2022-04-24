@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Configuration;
-using NHibernate.Linq.Functions;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;

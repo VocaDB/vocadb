@@ -1,15 +1,10 @@
-#nullable disable
-
-using System;
-using System.Collections.Generic;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Versioning;
-
 namespace VocaDb.Model.DataContracts.UseCases
 {
 	public class EntryWithArchivedVersionsContract<TEntry, TVersion> : IEntryWithArchivedVersionsContract<TEntry, TVersion>
 	{
+#nullable disable
 		public EntryWithArchivedVersionsContract() { }
+#nullable enable
 
 		public EntryWithArchivedVersionsContract(TEntry entry, TVersion[] archivedVersions)
 		{

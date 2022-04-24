@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Helpers

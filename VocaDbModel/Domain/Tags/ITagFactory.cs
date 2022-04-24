@@ -1,7 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Tags
 {

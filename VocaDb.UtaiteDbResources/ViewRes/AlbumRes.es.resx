@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewAlbumArtistDesc" xml:space="preserve">
-    <value>Utaites y otros artistas asociados con este album.</value>
+    <value>Utaites y otros artistas asociados con este álbum.</value>
   </data>
   <data name="NewAlbumInfo" xml:space="preserve">
-    <value>Este album necesita tener al menos una pista con un utaite registrado en UtaiteDB. Compilaciones no oficiales/fan-made (bootlegs) no están permitidas. Para mas información, vease la página de Ayuda.</value>
+    <value>Este álbum necesita tener al menos una pista con un utaite para ser aceptado en UtaiteDB. Compilaciones fan-made no oficiales (bootlegs) tampoco están permitidas. Para más información, consulte la página de Ayuda.</value>
   </data>
 </root>

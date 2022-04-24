@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Circle" xml:space="preserve">
-    <value>Círculo productor</value>
+    <value>Círculo</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>Sello discográfico</value>
@@ -130,10 +130,10 @@
     <value>Productor musical</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Sin especificar</value>
+    <value>No especificado</value>
   </data>
   <data name="UTAU" xml:space="preserve">
-    <value>UTAUloid</value>
+    <value>UTAU</value>
   </data>
   <data name="Vocaloid" xml:space="preserve">
     <value>Vocaloid</value>
@@ -142,10 +142,10 @@
     <value>Otro grupo</value>
   </data>
   <data name="Animator" xml:space="preserve">
-    <value>Productor de animación [Animador]</value>
+    <value>Productor de animación</value>
   </data>
   <data name="OtherIndividual" xml:space="preserve">
-    <value>Otro tipo de artista</value>
+    <value>Otro individuo</value>
   </data>
   <data name="Illustrator" xml:space="preserve">
     <value>Ilustrador</value>
@@ -154,7 +154,7 @@
     <value>Letrista</value>
   </data>
   <data name="OtherVoiceSynthesizer" xml:space="preserve">
-    <value>Otro sistetizador de voz</value>
+    <value>Otro sintetizador de voz</value>
   </data>
   <data name="Band" xml:space="preserve">
     <value>Banda/grupo</value>
@@ -164,5 +164,17 @@
   </data>
   <data name="CeVIO" xml:space="preserve">
     <value>CeVIO</value>
+  </data>
+  <data name="Vocalist" xml:space="preserve">
+    <value>Vocalista</value>
+  </data>
+  <data name="Character" xml:space="preserve">
+    <value>Personaje</value>
+  </data>
+  <data name="SynthesizerV" xml:space="preserve">
+    <value>Synthesizer V</value>
+  </data>
+  <data name="CoverArtist" xml:space="preserve">
+    <value>Artista de covers</value>
   </data>
 </root>

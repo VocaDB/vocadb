@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.Caching;
 
 namespace VocaDb.Tests.TestSupport

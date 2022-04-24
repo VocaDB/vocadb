@@ -1,8 +1,5 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
@@ -34,8 +31,12 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IUserPermissionContext _permissionContext;
 		private readonly EntryForApiContractFactory _entryForApiContractFactory;
 
-		public ActivityEntryQueries(IRepository repository, IUserIconFactory userIconFactory,
-			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory)
+		public ActivityEntryQueries(
+			IRepository repository,
+			IUserIconFactory userIconFactory,
+			IUserPermissionContext permissionContext,
+			EntryForApiContractFactory entryForApiContractFactory
+		)
 		{
 			_repository = repository;
 			_userIconFactory = userIconFactory;
@@ -93,7 +94,8 @@ namespace VocaDb.Model.Database.Queries
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending)
+			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending
+		)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 

@@ -1,8 +1,8 @@
 #nullable disable
 
 using System.Runtime.Serialization;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {

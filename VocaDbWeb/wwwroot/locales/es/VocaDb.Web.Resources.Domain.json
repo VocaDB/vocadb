@@ -1,15 +1,17 @@
 {
   "EntryReportTypeNames": {
-    "BrokenPV": "Link del PV roto o volcado",
+    "BrokenPV": "Link del PV roto",
     "Duplicate": "Entrada duplicada",
     "Inappropriate": "Contenido inapropiado",
-    "InvalidInfo": "Información invalida o sin sustento",
+    "InvalidInfo": "Información no válida o faltante",
     "MaliciousIP": "IP maliciosa",
-    "Other": "Otro (especifiquése en las notas)",
-    "OwnershipClaim": "Reclamo de propiedad"
+    "Other": "Otro (especifique en las notas)",
+    "OwnershipClaim": "Reclamo de propiedad",
+    "RemovePermissions": "Edición restringida",
+    "Spamming": "Enviando spam"
   },
   "EntryTypeNames": {
-    "Album": "Album",
+    "Album": "Álbum",
     "Artist": "Artista",
     "ReleaseEvent": "Evento",
     "Song": "Canción",

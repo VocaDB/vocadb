@@ -1,7 +1,5 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
@@ -23,7 +21,7 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class ArtistRelationsQuery
 	{
-		private static readonly SongOptionalFields s_songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
+		private static readonly SongOptionalFields s_songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture;
 		private readonly ObjectCache _cache;
 		private readonly IDatabaseContext _ctx;
 		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;

@@ -1,15 +1,9 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using Discord;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
@@ -395,7 +389,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(c => new SongForApiContract(
 						song: c,
 						languagePreference: LanguagePreference,
-						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 					))
 					.ToArray();
 
@@ -1075,7 +1069,8 @@ namespace VocaDb.Model.Database.Queries
 					.WhereAlbumHasTag(queryParams.TagId)
 					.WhereAlbumHasTag(queryParams.Tag)
 					.WhereAlbumMatchFilters(queryParams.AdvancedFilters)
-					.WhereAlbumHasType(queryParams.AlbumType);
+					.WhereAlbumHasType(queryParams.AlbumType)
+					.WhereHasMediaType(queryParams.MediaType);
 
 				var albums = query
 					.OrderBy(queryParams.Sort, PermissionContext.LanguagePreference)

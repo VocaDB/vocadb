@@ -1,12 +1,8 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Threading.Tasks;
 using System.Web;
 using NHibernate.Linq;
 using NLog;
@@ -19,6 +15,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -195,12 +192,12 @@ namespace VocaDb.Model.Database.Queries
 
 		private string[] GetUserProfileUrls(VideoUrlParseResult res)
 		{
-			var profileUrls = VideoServiceHelper.Services[res.Service]
-				.GetUserProfileUrls(res.AuthorId)
-				.WhereIsNotNullOrEmpty()
-				.ToArray();
+			var profileUrls = VideoServiceHelper.Services
+				.Where(s => s.IsValidFor(res.Service))
+				.Select(s => s.GetUserProfileUrls(res.AuthorId).WhereIsNotNullOrEmpty())
+				.FirstOrDefault(s => s.Any());
 
-			return profileUrls;
+			return profileUrls?.ToArray() ?? Array.Empty<string>();
 		}
 
 		private NicoTitleParseResult ParseNicoPV(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res)
@@ -533,7 +530,7 @@ namespace VocaDb.Model.Database.Queries
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
-				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 
 				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, new OptionalCultureCode(CultureInfo.CurrentUICulture, true), userLanguages,
@@ -606,13 +603,13 @@ namespace VocaDb.Model.Database.Queries
 				contract.CommentCount = Comments(session).GetCount(songId);
 				contract.LatestComments = Comments(session).GetList(entryId: songId, count: 3);
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
-				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
 
 				contract.Suggestions = GetSongSuggestions(session, song)
 					.Select(s => new SongForApiContract(
 						song: s,
 						languagePreference: lang,
-						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+						fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 					))
 					.ToArray();
 
@@ -1049,7 +1046,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				// Custom lists
-				var songLists = source.ListLinks.ToArray();
+				var songLists = source.AllListLinks.ToArray();
 				foreach (var s in songLists)
 				{
 					s.ChangeSong(target);
@@ -1508,6 +1505,43 @@ namespace VocaDb.Model.Database.Queries
 				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
 			});
 		}
+
+#nullable enable
+		public SongListContract[] GetPublicSongListsForSong(int songId)
+		{
+			return HandleQuery(session =>
+			{
+				var song = session.Load<Song>(songId);
+				var userId = PermissionContext.LoggedUserId;
+				return song.ListLinks
+					.Where(l => l.List.FeaturedCategory != SongListFeaturedCategory.Nothing || l.List.Author.Id == userId || l.List.Author.Options.PublicRatings)
+					.OrderBy(l => l.List.Name)
+					.Select(l => l.List)
+					.Distinct()
+					.Select(l => new SongListContract(l, PermissionContext))
+					.ToArray();
+			});
+		}
+
+		public EntryWithArchivedVersionsForApiContract<SongForApiContract> GetSongWithArchivedVersionsForApi(int songId)
+		{
+			return HandleQuery(session =>
+			{
+				var song = session.Load<Song>(songId);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
+					versions: song.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: a.Reason != SongArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != SongEditableFields.Nothing,
+							reason: a.Reason.ToString(),
+							userIconFactory: _userIconFactory
+						)).OrderByDescending(v => v.Version)
+						.ToArray()
+				);
+			});
+		}
+#nullable disable
 	}
 
 	public enum TopSongsDateFilterType

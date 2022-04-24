@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Security;
 

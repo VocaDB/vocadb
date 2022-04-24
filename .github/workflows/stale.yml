@@ -19,6 +19,6 @@ jobs:
         stale-issue-message: 'This issue is stale because it has been open 60 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
         stale-pr-message: 'This PR is stale because it has been open 60 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
         exempt-milestones: 'Backlog,Working Set'
-        exempt-issue-labels: 'bug,exception,high-priority,infrastructure,permissions,security'
+        exempt-issue-labels: 'bug,exception,high-priority,infrastructure,permissions,security,good first issue'
         exempt-pr-labels: 'dependencies'
         exempt-all-assignees: true

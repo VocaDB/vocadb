@@ -2,7 +2,6 @@
 
 using System.Net;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Domain.Web;
 

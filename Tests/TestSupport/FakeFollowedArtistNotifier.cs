@@ -1,8 +1,5 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;

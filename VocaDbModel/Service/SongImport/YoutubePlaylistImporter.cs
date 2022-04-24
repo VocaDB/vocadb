@@ -1,10 +1,6 @@
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;

@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Threading.Tasks;
 using VocaDb.Model.Service.Security.StopForumSpam;
 
 namespace VocaDb.Tests.TestSupport

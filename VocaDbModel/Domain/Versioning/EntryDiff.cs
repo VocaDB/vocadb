@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace VocaDb.Model.Domain.Versioning
 {
 	public abstract class EntryDiff<T> : IEntryDiff where T : struct, Enum

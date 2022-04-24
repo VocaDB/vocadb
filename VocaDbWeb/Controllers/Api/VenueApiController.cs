@@ -1,10 +1,10 @@
 #nullable disable
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
@@ -85,7 +85,8 @@ namespace VocaDb.Web.Controllers.Api
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			VenueSortRule sortRule = VenueSortRule.Name,
-			double? latitude = null, double? longitude = null, double? radius = null, DistanceUnit distanceUnit = DistanceUnit.Kilometers)
+			double? latitude = null, double? longitude = null, double? radius = null, DistanceUnit distanceUnit = DistanceUnit.Kilometers
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new VenueQueryParams
@@ -121,6 +122,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public VenueForApiContract GetDetails(int id) => _queries.GetDetails(id);
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<VenueForApiContract> GetWithArchivedVersions(int id) =>
+			_queries.GetVenueWithArchivedVersionsForApi(id);
 #nullable disable
 	}
 }

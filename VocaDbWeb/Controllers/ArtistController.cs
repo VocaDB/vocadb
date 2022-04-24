@@ -1,9 +1,6 @@
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -328,7 +325,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + contract.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View(new Versions(contract));
+			return View("React/Index");
 		}
 
 		public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)

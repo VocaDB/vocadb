@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;

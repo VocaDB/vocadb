@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
@@ -35,7 +34,12 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 
 			if (fields.HasFlag(ActivityEntryOptionalFields.ArchivedVersion) && activityEntry.ArchivedVersionBase != null)
 			{
-				ArchivedVersion = new ArchivedObjectVersionForApiContract(activityEntry.ArchivedVersionBase);
+				ArchivedVersion = new ArchivedObjectVersionForApiContract(
+					archivedObjectVersion: activityEntry.ArchivedVersionBase,
+					anythingChanged: false,
+					reason: string.Empty,
+					userIconFactory: userIconFactory
+				);
 			}
 
 			Entry = entryForApiContract;

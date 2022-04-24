@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -127,7 +124,7 @@ namespace VocaDb.Model.DataContracts.Tags
 				.Select(a => new SongForApiContract(
 					song: a,
 					languagePreference: languagePreference,
-					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.MainPicture
 				))
 				.ToArray();
 			SongCount = songCount;

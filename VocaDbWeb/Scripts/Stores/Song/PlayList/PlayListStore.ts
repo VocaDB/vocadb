@@ -157,7 +157,7 @@ export default class PlayListStore {
 				pagingProperties,
 				SongOptionalFields.create(
 					SongOptionalField.AdditionalNames,
-					SongOptionalField.ThumbUrl,
+					SongOptionalField.MainPicture,
 				),
 				this.values.languagePreference,
 			)

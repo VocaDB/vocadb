@@ -1,10 +1,9 @@
 #nullable disable
 
-using System.Linq;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model;
-using VocaDb.Web.Helpers;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Models.Artist

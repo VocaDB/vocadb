@@ -4,7 +4,7 @@ import WebLinkMatcher from '@Shared/WebLinkMatcher';
 import ko, { Observable } from 'knockout';
 
 export default class WebLinkEditViewModel {
-	public category: Observable<string>;
+	public category: Observable<WebLinkCategory>;
 
 	public description: Observable<string>;
 
@@ -22,7 +22,7 @@ export default class WebLinkEditViewModel {
 			this.id = data.id;
 			this.url = ko.observable(data.url);
 		} else {
-			this.category = ko.observable(WebLinkCategory[WebLinkCategory.Other]);
+			this.category = ko.observable(WebLinkCategory.Other);
 			this.description = ko.observable('');
 			this.disabled = ko.observable(false);
 			this.id = 0;
@@ -35,7 +35,7 @@ export default class WebLinkEditViewModel {
 
 				if (matcher) {
 					this.description(matcher.desc);
-					this.category(WebLinkCategory[matcher.cat]);
+					this.category(matcher.cat);
 				}
 			}
 		});
