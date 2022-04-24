@@ -28,7 +28,7 @@ namespace VocaDb.Model.Domain.Images
 		{
 			if (string.IsNullOrEmpty(_staticRoot))
 				return string.Empty;
-			var relative = $@"img\{picture.EntryType}\{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}\{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+			var relative = $@"img/{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
 			return Path.Combine(_staticRoot, relative);
 		}
 
