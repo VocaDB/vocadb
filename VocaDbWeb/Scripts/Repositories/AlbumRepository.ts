@@ -12,6 +12,7 @@ import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
+import AlbumType from '@Models/Albums/AlbumType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
@@ -203,7 +204,7 @@ export default class AlbumRepository
 		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
-		discTypes?: string;
+		discTypes?: AlbumType[];
 		tags?: number[];
 		childTags?: boolean;
 		artistIds?: number[];
@@ -225,7 +226,7 @@ export default class AlbumRepository
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
-			discTypes: discTypes,
+			discTypes: discTypes?.join(','),
 			tagId: tags,
 			childTags: childTags || undefined,
 			artistId: artistIds,
@@ -332,5 +333,5 @@ export default class AlbumRepository
 }
 
 export interface AlbumQueryParams extends CommonQueryParams {
-	discTypes: string;
+	discTypes: AlbumType[];
 }

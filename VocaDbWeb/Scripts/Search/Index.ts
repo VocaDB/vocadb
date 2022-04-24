@@ -1,3 +1,4 @@
+import AlbumType from '@Models/Albums/AlbumType';
 import SongType from '@Models/Songs/SongType';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
@@ -15,7 +16,7 @@ const SearchIndex = (model: {
 	autoplay: boolean;
 	childTags: boolean;
 	childVoicebanks: boolean;
-	discType: string;
+	discType: AlbumType;
 	eventCategory: string;
 	eventId: number;
 	filter: string;

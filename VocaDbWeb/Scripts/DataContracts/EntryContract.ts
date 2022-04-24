@@ -1,3 +1,4 @@
+import AlbumType from '@Models/Albums/AlbumType';
 import SongType from '@Models/Songs/SongType';
 
 import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
@@ -12,7 +13,7 @@ export default interface EntryContract extends EntryWithTagUsagesContract {
 
 	artistType?: string;
 
-	discType?: string;
+	discType?: AlbumType;
 
 	entryType: string;
 

@@ -132,7 +132,7 @@ export default class AlbumEditViewModel {
 
 	// Album disc type.
 	public discType: Computed<AlbumType>;
-	public discTypeStr: Observable<string>;
+	public discTypeStr: Observable<AlbumType>;
 
 	public discs: AlbumDiscPropertiesListEditViewModel;
 
@@ -297,9 +297,7 @@ export default class AlbumEditViewModel {
 			data.description,
 		);
 		this.discTypeStr = ko.observable(data.discType);
-		this.discType = ko.computed(
-			() => AlbumType[this.discTypeStr() as keyof typeof AlbumType],
-		);
+		this.discType = ko.computed(() => this.discTypeStr());
 		this.id = data.id;
 		this.pvs = new PVListEditViewModel(
 			pvRepository,

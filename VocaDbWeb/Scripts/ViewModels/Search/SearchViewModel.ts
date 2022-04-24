@@ -1,5 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import AlbumType from '@Models/Albums/AlbumType';
 import ResourcesManager from '@Models/ResourcesManager';
 import SongType from '@Models/Songs/SongType';
 import Tag from '@Models/Tags/Tag';
@@ -56,7 +57,7 @@ export default class SearchViewModel {
 		childVoicebanks: boolean,
 		eventId: number,
 		artistType: string,
-		albumType: string,
+		albumType: AlbumType,
 		songType: SongType,
 		eventCategory: string,
 		onlyWithPVs: boolean,

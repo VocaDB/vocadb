@@ -3,6 +3,7 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import AlbumType from '@Models/Albums/AlbumType';
 import SongType from '@Models/Songs/SongType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
@@ -168,7 +169,7 @@ beforeEach(() => {
 			original: '',
 			english: '',
 		},
-		discType: 'Album',
+		discType: AlbumType.Album,
 		discs: [],
 		id: 0,
 		identifiers: [],
