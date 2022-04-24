@@ -1,5 +1,6 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import AlbumType from '@Models/Albums/AlbumType';
 import ResourcesManager from '@Models/ResourcesManager';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -23,7 +24,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		sort: string,
 		artistId: number[],
 		childVoicebanks: boolean,
-		albumType: string,
+		albumType: AlbumType,
 		viewMode: string,
 	) {
 		super(searchViewModel);
@@ -46,7 +47,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		);
 		this.artistFilters.selectArtists(artistId);
 
-		this.albumType = ko.observable(albumType || 'Unknown');
+		this.albumType = ko.observable(albumType || AlbumType.Unknown);
 		this.sort = ko.observable(sort || 'Name');
 		this.viewMode = ko.observable(viewMode || 'Details');
 
@@ -74,7 +75,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 				lang: values.languagePreference,
 				query: searchTerm,
 				sort: this.sort(),
-				discTypes: this.albumType(),
+				discTypes: [this.albumType()],
 				tags: tags,
 				childTags: childTags,
 				artistIds: artistIds,
@@ -89,7 +90,7 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 		};
 	}
 
-	public albumType: Observable<string>;
+	public albumType: Observable<AlbumType>;
 	public artistFilters: ArtistFilters;
 	private resourceManager: ResourcesManager;
 	public sort: Observable<string>;

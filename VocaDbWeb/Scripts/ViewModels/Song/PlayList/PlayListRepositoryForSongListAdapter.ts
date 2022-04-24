@@ -17,7 +17,7 @@ export default class PlayListRepositoryForSongListAdapter
 		private songListRepo: SongListRepository,
 		private songListId: number,
 		private query: Observable<string>,
-		private songType: Observable<string>,
+		private songType: Observable<SongType>,
 		private tagIds: Computed<number[]>,
 		private childTags: Observable<boolean>,
 		private artistIds: Computed<number[]>,
@@ -38,8 +38,8 @@ export default class PlayListRepositoryForSongListAdapter
 				listId: this.songListId,
 				query: this.query(),
 				songTypes:
-					this.songType() !== SongType[SongType.Unspecified]
-						? this.songType()
+					this.songType() !== SongType.Unspecified
+						? [this.songType()]
 						: undefined,
 				tagIds: this.tagIds(),
 				childTags: this.childTags(),

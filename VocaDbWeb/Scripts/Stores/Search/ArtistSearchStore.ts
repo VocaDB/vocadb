@@ -26,7 +26,7 @@ export enum ArtistSortRule {
 
 export interface ArtistSearchRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
-	artistType?: string /* TODO: enum */;
+	artistType?: ArtistType;
 	childTags?: boolean;
 	draftsOnly?: boolean;
 	filter?: string;
@@ -40,7 +40,7 @@ export interface ArtistSearchRouteParams {
 }
 
 export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistContract> {
-	@observable public artistType = 'Unknown' /* TODO: enum */;
+	@observable public artistType = ArtistType.Unknown;
 	@observable public onlyFollowedByMe = false;
 	@observable public onlyRootVoicebanks = false;
 	@observable public sort = ArtistSortRule.Name;
@@ -74,9 +74,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 			query: searchTerm,
 			sort: this.sort,
 			artistTypes:
-				this.artistType !== ArtistType[ArtistType.Unknown]
-					? this.artistType
-					: undefined,
+				this.artistType !== ArtistType.Unknown ? [this.artistType] : undefined,
 			allowBaseVoicebanks: !this.onlyRootVoicebanks,
 			tags: tags,
 			childTags: childTags,
@@ -90,9 +88,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 	};
 
 	@computed public get canHaveChildVoicebanks(): boolean {
-		return ArtistHelper.canHaveChildVoicebanks(
-			ArtistType[this.artistType as keyof typeof ArtistType],
-		);
+		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
 	public readonly clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
@@ -132,7 +128,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistCon
 	}
 	public set routeParams(value: ArtistSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
-		this.artistType = value.artistType ?? 'Unknown';
+		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.childTags = value.childTags ?? false;
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';

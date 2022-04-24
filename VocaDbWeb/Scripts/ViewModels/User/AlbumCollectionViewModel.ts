@@ -4,6 +4,7 @@ import ResourcesContract from '@DataContracts/ResourcesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
+import AlbumType from '@Models/Albums/AlbumType';
 import EntryType from '@Models/EntryType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
@@ -46,7 +47,7 @@ export default class AlbumCollectionViewModel {
 	}
 
 	public advancedFilters = new AdvancedSearchFilters();
-	public albumType = ko.observable('Unknown');
+	public albumType = ko.observable(AlbumType.Unknown);
 	public artistId = ko.observable<number>(null!);
 	public artistName = ko.observable('');
 	public artistSearchParams: ArtistAutoCompleteParams;

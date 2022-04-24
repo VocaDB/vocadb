@@ -134,7 +134,7 @@ export default class SongDetailsViewModel {
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {
-				if (song.songType === SongType[SongType.Original])
+				if (song.songType === SongType.Original)
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
 			});
 	};
@@ -294,7 +294,7 @@ export default class SongDetailsViewModel {
 		this.tagUsages = new TagListViewModel(data.tagUsages);
 
 		if (
-			data.songType !== SongType[SongType.Original] &&
+			data.songType !== SongType.Original &&
 			this.originalVersion().entry == null
 		) {
 			this.getOriginal(data.linkedPages!);
@@ -437,7 +437,7 @@ export interface SongDetailsAjax {
 
 	personalDescriptionAuthor?: ArtistApiContract;
 
-	songType: string;
+	songType: SongType;
 
 	tagUsages: TagUsageForApiContract[];
 

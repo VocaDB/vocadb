@@ -5,10 +5,8 @@ import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePag
 import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
 import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import EntryContract from '@DataContracts/EntryContract';
-import ArtistType from '@Models/Artists/ArtistType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
-import SongType from '@Models/Songs/SongType';
 import AnythingSearchStore from '@Stores/Search/AnythingSearchStore';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import classNames from 'classnames';
@@ -125,23 +123,13 @@ const AnythingSearchList = observer(
 									{entry.artistType && (
 										<>
 											{' '}
-											<ArtistTypeLabel
-												artistType={
-													ArtistType[
-														entry.artistType as keyof typeof ArtistType
-													]
-												}
-											/>
+											<ArtistTypeLabel artistType={entry.artistType} />
 										</>
 									)}
 									{entry.songType && (
 										<>
 											{' '}
-											<SongTypeLabel
-												songType={
-													SongType[entry.songType as keyof typeof SongType]
-												}
-											/>
+											<SongTypeLabel songType={entry.songType} />
 										</>
 									)}{' '}
 									<DraftIcon

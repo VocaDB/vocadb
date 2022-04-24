@@ -98,7 +98,7 @@ export default class SongCreateViewModel {
 		return false;
 	};
 
-	private getSongTypeTag = async (songType: string): Promise<void> => {
+	private getSongTypeTag = async (songType: SongType): Promise<void> => {
 		const tag = await this.tagRepository.getEntryTypeTag({
 			entryType: EntryType.Song,
 			subType: songType,
@@ -122,7 +122,7 @@ export default class SongCreateViewModel {
 
 	public pv1 = ko.observable('');
 	public pv2 = ko.observable('');
-	public songType = ko.observable('Original');
+	public songType = ko.observable(SongType.Original);
 	public songTypeTag = ko.observable<TagApiContract>(null!);
 	public songTypeName = ko.computed(() => this.songTypeTag()?.name);
 	public songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
@@ -133,8 +133,7 @@ export default class SongCreateViewModel {
 	public coverArtists: Computed<ArtistContract[]>;
 
 	public canHaveOriginalVersion = ko.computed(
-		() =>
-			SongType[this.songType() as keyof typeof SongType] !== SongType.Original,
+		() => this.songType() !== SongType.Original,
 	);
 
 	public hasName: Computed<boolean>;
@@ -221,7 +220,7 @@ export default class SongCreateViewModel {
 
 		this.originalVersionSearchParams = {
 			acceptSelection: this.originalVersion.id,
-			extraQueryParams: { songTypes: SongHelper.originalVersionTypesString() },
+			extraQueryParams: { songTypes: SongHelper.originalVersionTypes },
 		};
 
 		this.originalSongSuggestions = ko.computed(() => {
@@ -244,9 +243,7 @@ export default class SongCreateViewModel {
 		this.coverArtists = ko.computed(() => {
 			return _.filter(
 				this.artists(),
-				(a) =>
-					ArtistType[a.artistType as keyof typeof ArtistType] ===
-					ArtistType.CoverArtist,
+				(a) => a.artistType === ArtistType.CoverArtist,
 			);
 		});
 	}

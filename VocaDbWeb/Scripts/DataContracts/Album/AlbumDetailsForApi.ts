@@ -77,7 +77,7 @@ export default class AlbumDetailsForApi {
 	public readonly deleted: boolean;
 	public readonly description: EnglishTranslatedStringContract;
 	public readonly discs: AlbumDisc[];
-	public readonly discType: string /* TODO: enum */;
+	public readonly discType: AlbumType;
 	public readonly discTypeTag?: TagBaseContract;
 	public readonly draft: boolean;
 	public readonly fullReleaseDate?: Date;
@@ -189,9 +189,7 @@ export default class AlbumDetailsForApi {
 					: undefined;
 		}
 
-		this.contentFocus = AlbumHelper.getContentFocus(
-			AlbumType[this.discType as keyof typeof AlbumType],
-		);
+		this.contentFocus = AlbumHelper.getContentFocus(this.discType);
 
 		this.bands = contract.artistLinks.filter((artist) =>
 			artist

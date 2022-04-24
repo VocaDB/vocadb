@@ -34,7 +34,7 @@ interface AlbumCollectionRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
 	artistId?: number;
 	collectionStatus?: string;
-	discType?: string /* TODO: enum */;
+	discType?: AlbumType;
 	eventId?: number;
 	filter?: string;
 	page?: number;
@@ -55,7 +55,7 @@ const validate = ajv.compile(schema);
 export default class AlbumCollectionStore
 	implements IStoreWithPaging<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
-	@observable public albumType = AlbumType[AlbumType.Unknown] /* TODO: enum */;
+	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;
 	@observable public artistName = '';
 	@observable public collectionStatus = '';
@@ -200,7 +200,7 @@ export default class AlbumCollectionStore
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artist.id = value.artistId;
 		this.collectionStatus = value.collectionStatus ?? '';
-		this.albumType = value.discType ?? AlbumType[AlbumType.Unknown];
+		this.albumType = value.discType ?? AlbumType.Unknown;
 		this.releaseEvent.id = value.eventId;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;

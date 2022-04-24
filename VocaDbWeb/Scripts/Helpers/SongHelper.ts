@@ -1,6 +1,5 @@
 import ContentFocus from '@Models/ContentFocus';
 import SongType from '@Models/Songs/SongType';
-import _ from 'lodash';
 
 export default class SongHelper {
 	public static originalVersionTypes = [
@@ -13,9 +12,6 @@ export default class SongHelper {
 		SongType.DramaPV,
 		SongType.Other,
 	];
-
-	public static originalVersionTypesString = (): string =>
-		_.map(SongHelper.originalVersionTypes, (s) => SongType[s]).join(',');
 
 	// Checks whether a song type is to be considered animation where animators are considered as the main role
 	public static getContentFocus(songType: SongType): ContentFocus {

@@ -1,6 +1,5 @@
 import { ArtistToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistType from '@Models/Artists/ArtistType';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import React from 'react';
@@ -25,11 +24,7 @@ const ArtistLink = ({
 }: ArtistLinkProps): React.ReactElement => {
 	return (
 		<>
-			{typeLabel && (
-				<ArtistTypeLabel
-					artistType={ArtistType[artist.artistType as keyof typeof ArtistType]}
-				/>
-			)}
+			{typeLabel && <ArtistTypeLabel artistType={artist.artistType} />}
 			{typeLabel && ' '}
 			{tooltip ? (
 				<ArtistToolTip

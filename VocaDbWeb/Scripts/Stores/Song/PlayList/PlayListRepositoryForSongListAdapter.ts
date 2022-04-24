@@ -13,7 +13,7 @@ import { ISongForPlayList } from './PlayListStore';
 
 export interface ISongListStore {
 	query: string;
-	songType: string /* TODO: enum */;
+	songType: SongType;
 	tagIds: number[];
 	childTags: boolean;
 	artistFilters: ArtistFilters;
@@ -40,8 +40,8 @@ export default class PlayListRepositoryForSongListAdapter
 				listId: this.songListId,
 				query: this.songListStore.query,
 				songTypes:
-					this.songListStore.songType !== SongType[SongType.Unspecified]
-						? this.songListStore.songType
+					this.songListStore.songType !== SongType.Unspecified
+						? [this.songListStore.songType]
 						: undefined,
 				tagIds: this.songListStore.tagIds,
 				childTags: this.songListStore.childTags,

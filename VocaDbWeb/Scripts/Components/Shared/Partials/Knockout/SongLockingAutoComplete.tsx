@@ -1,6 +1,7 @@
 import SongAutoComplete from '@Components/KnockoutExtensions/SongAutoComplete';
 import SongContract from '@DataContracts/Song/SongContract';
 import EntryType from '@Models/EntryType';
+import SongType from '@Models/Songs/SongType';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -11,7 +12,7 @@ import LockingAutoComplete from './LockingAutoComplete';
 
 interface SongLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<SongContract>;
-	songTypes?: string /* TODO: enum */[];
+	songTypes?: SongType[];
 	ignoreId?: number;
 }
 
@@ -43,7 +44,7 @@ const SongLockingAutoComplete = observer(
 							runInAction(() => {
 								basicEntryLinkStore.id = id;
 							}),
-						extraQueryParams: { songTypes: songTypes.join(',') },
+						extraQueryParams: { songTypes: songTypes },
 						ignoreId: ignoreId,
 					}}
 					placeholder={t('ViewRes:Shared.Search')}

@@ -3,6 +3,7 @@ import ReleaseEventLockingAutoComplete from '@Components/Shared/Partials/Knockou
 import SongLockingAutoComplete from '@Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { SongAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
 import SongTypesDropdownKnockout from '@Components/Shared/Partials/Song/SongTypesDropdownKnockout';
+import SongType from '@Models/Songs/SongType';
 import SongSearchStore from '@Stores/Search/SongSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -37,7 +38,7 @@ const SongSearchOptions = observer(
 								activeKey={songSearchStore.songType}
 								onSelect={(eventKey): void =>
 									runInAction(() => {
-										songSearchStore.songType = eventKey;
+										songSearchStore.songType = eventKey as SongType;
 									})
 								}
 							/>

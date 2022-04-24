@@ -1,6 +1,7 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import AlbumType from '@Models/Albums/AlbumType';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
@@ -32,7 +33,7 @@ export interface AlbumSearchRouteParams {
 	artistParticipationStatus?: string /* TODO: enum */;
 	childTags?: boolean;
 	childVoicebanks?: boolean;
-	discType?: string /* TODO: enum */;
+	discType?: AlbumType;
 	draftsOnly?: boolean;
 	filter?: string;
 	includeMembers?: boolean;
@@ -46,7 +47,7 @@ export interface AlbumSearchRouteParams {
 }
 
 export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContract> {
-	@observable public albumType = 'Unknown' /* TODO: enum */;
+	@observable public albumType = AlbumType.Unknown;
 	public readonly artistFilters: ArtistFilters;
 	@observable public sort = AlbumSortRule.Name;
 	@observable public viewMode = 'Details' /* TODO: enum */;
@@ -84,7 +85,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			lang: this.values.languagePreference,
 			query: searchTerm,
 			sort: this.sort,
-			discTypes: this.albumType,
+			discTypes: [this.albumType],
 			tags: tags,
 			childTags: childTags,
 			artistIds: artistIds,
@@ -158,7 +159,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContr
 			value.artistParticipationStatus ?? 'Everything';
 		this.childTags = value.childTags ?? false;
 		this.artistFilters.childVoicebanks = value.childVoicebanks ?? false;
-		this.albumType = value.discType ?? 'Unknown';
+		this.albumType = value.discType ?? AlbumType.Unknown;
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;

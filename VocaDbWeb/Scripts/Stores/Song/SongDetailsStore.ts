@@ -319,10 +319,7 @@ export default class SongDetailsStore {
 
 		this.tagUsages = new TagListStore(data.tagUsages);
 
-		if (
-			data.songType !== SongType[SongType.Original] &&
-			!this.originalVersion.entry
-		) {
+		if (data.songType !== SongType.Original && !this.originalVersion.entry) {
 			this.getOriginal(data.linkedPages);
 		}
 	}
@@ -373,7 +370,7 @@ export default class SongDetailsStore {
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {
-				if (song.songType === SongType[SongType.Original]) {
+				if (song.songType === SongType.Original) {
 					runInAction(() => {
 						this.originalVersion = { entry: song, url: page, domain: siteUrl };
 					});

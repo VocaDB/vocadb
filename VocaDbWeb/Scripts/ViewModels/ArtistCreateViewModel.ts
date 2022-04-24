@@ -11,7 +11,7 @@ import ko from 'knockout';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 export default class ArtistCreateViewModel {
-	public artistType = ko.observable(ArtistType[ArtistType.Producer]);
+	public artistType = ko.observable(ArtistType.Producer);
 	public artistTypeTag = ko.observable<TagApiContract>(null!);
 	public artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
 	public artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
@@ -23,7 +23,7 @@ export default class ArtistCreateViewModel {
 
 	public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
-	private getArtistTypeTag = async (artistType: string): Promise<void> => {
+	private getArtistTypeTag = async (artistType: ArtistType): Promise<void> => {
 		const tag = await this.tagRepository.getEntryTypeTag({
 			entryType: EntryType.Artist,
 			subType: artistType,

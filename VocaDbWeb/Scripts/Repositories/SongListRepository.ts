@@ -5,6 +5,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import SongType from '@Models/Songs/SongType';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
@@ -98,7 +99,7 @@ export default class SongListRepository {
 	}: {
 		listId: number;
 		query: string;
-		songTypes?: string;
+		songTypes?: SongType[];
 		tagIds: number[];
 		childTags: boolean;
 		artistIds: number[];
@@ -114,7 +115,7 @@ export default class SongListRepository {
 		var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
 		var data = {
 			query: query,
-			songTypes: songTypes,
+			songTypes: songTypes?.join(','),
 			tagId: tagIds,
 			childTags: childTags,
 			artistId: artistIds,

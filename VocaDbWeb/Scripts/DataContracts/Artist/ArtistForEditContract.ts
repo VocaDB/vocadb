@@ -1,3 +1,5 @@
+import ArtistType from '@Models/Artists/ArtistType';
+
 import EntryPictureFileContract from '../EntryPictureFileContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
@@ -6,7 +8,7 @@ import ArtistContract from './ArtistContract';
 import ArtistForArtistContract from './ArtistForArtistContract';
 
 export default interface ArtistForEditContract {
-	artistType: string;
+	artistType: ArtistType;
 
 	associatedArtists: ArtistForArtistContract[];
 

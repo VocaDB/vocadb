@@ -16,6 +16,8 @@ import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
 import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import { Tuple2 } from '@Helpers/HighchartsHelper';
+import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
 import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@Models/SongVoteRating';
@@ -195,7 +197,7 @@ export default class UserRepository implements ICommentRepository {
 		lang: ContentLanguagePreference;
 		query: string;
 		tag?: number;
-		albumType: string;
+		albumType: AlbumType;
 		artistId?: number;
 		purchaseStatuses: string;
 		releaseEventId?: number;
@@ -272,7 +274,7 @@ export default class UserRepository implements ICommentRepository {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
 		tagIds: number[];
-		artistType: string;
+		artistType: ArtistType;
 	}): Promise<PartialFindResultContract<ArtistForUserForApiContract>> => {
 		var url = this.urlMapper.mapRelative(
 			`/api/users/${userId}/followedArtists`,

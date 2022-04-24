@@ -1,3 +1,7 @@
+import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
+import SongType from '@Models/Songs/SongType';
+
 import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 import EntryThumbContract from './EntryThumbContract';
 
@@ -8,9 +12,9 @@ export default interface EntryContract extends EntryWithTagUsagesContract {
 
 	artistString?: string;
 
-	artistType?: string;
+	artistType?: ArtistType;
 
-	discType?: string;
+	discType?: AlbumType;
 
 	entryType: string;
 
@@ -26,7 +30,7 @@ export default interface EntryContract extends EntryWithTagUsagesContract {
 
 	songListFeaturedCategory?: string;
 
-	songType?: string;
+	songType?: SongType;
 
 	status?: string;
 

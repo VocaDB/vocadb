@@ -9,7 +9,6 @@ import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryStatus from '@Models/EntryStatus';
 import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
 import {
@@ -147,11 +146,7 @@ const SongSearchList = observer(
 											>
 												{song.name}
 											</Link>{' '}
-											<SongTypeLabel
-												songType={
-													SongType[song.songType as keyof typeof SongType]
-												}
-											/>{' '}
+											<SongTypeLabel songType={song.songType} />{' '}
 											{songSearchStore
 												.getPVServiceIcons(song.pvServices)
 												.map((icon, index) => (

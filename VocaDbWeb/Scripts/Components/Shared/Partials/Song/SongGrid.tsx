@@ -1,6 +1,5 @@
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import UrlHelper from '@Helpers/UrlHelper';
-import SongType from '@Models/Songs/SongType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import _ from 'lodash';
 import moment from 'moment';
@@ -67,11 +66,7 @@ const SongGrid = ({
 										{displayType && (
 											<>
 												{' '}
-												<SongTypeLabel
-													songType={
-														SongType[song.songType as keyof typeof SongType]
-													}
-												/>
+												<SongTypeLabel songType={song.songType} />
 											</>
 										)}
 										{displayPublishDate && song.publishDate && (

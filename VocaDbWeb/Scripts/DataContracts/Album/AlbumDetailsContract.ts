@@ -1,3 +1,5 @@
+import AlbumType from '@Models/Albums/AlbumType';
+
 import ArtistApiContract from '../Artist/ArtistApiContract';
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import CommentContract from '../CommentContract';
@@ -35,7 +37,7 @@ export default interface AlbumDetailsContract {
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	discs: Record<string, AlbumDiscPropertiesContract>;
-	discType: string /* TODO: enum */;
+	discType: AlbumType;
 	discTypeTag?: TagBaseContract;
 	hits: number;
 	id: number;

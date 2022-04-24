@@ -1,3 +1,5 @@
+import SongType from '@Models/Songs/SongType';
+
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
@@ -39,7 +41,7 @@ export default interface SongForEditContract {
 
 	releaseEvent?: ReleaseEventContract;
 
-	songType: string;
+	songType: SongType;
 
 	status: string;
 
