@@ -213,7 +213,10 @@ namespace VocaDb.Model.Database.Queries
 				"You can view your messages at {1}." +
 				"\n\n" +
 				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
-				message.Sender.Name, messagesUrl, mySettingsUrl);
+				message.Sender.Name,
+				messagesUrl,
+				mySettingsUrl
+			);
 
 			await _mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 		}
@@ -652,8 +655,14 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes,
-			int reportCountDisable = 10, int reportCountLimit = 5)
+		public (bool created, int reportId) CreateReport(
+			int userId,
+			UserReportType reportType,
+			string hostname,
+			string notes,
+			int reportCountDisable = 10,
+			int reportCountLimit = 5
+		)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
 
@@ -815,7 +824,8 @@ namespace VocaDb.Model.Database.Queries
 			string culture,
 			TimeSpan timeSpan,
 			IPRuleManager ipRuleManager,
-			string verifyEmailUrl)
+			string verifyEmailUrl
+		)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -880,7 +890,8 @@ namespace VocaDb.Model.Database.Queries
 						hostname,
 						culture,
 						sfsCheckResult,
-						verifyEmailUrl);
+						verifyEmailUrl
+					);
 					ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} in {timeSpan} (SFS check {sfsStr}, UA '{userAgent}').", user);
 					await tx.CommitAsync();
 				}
@@ -897,7 +908,8 @@ namespace VocaDb.Model.Database.Queries
 			string hostname,
 			string culture,
 			SFSResponseContract sfsCheckResult,
-			string verifyEmailUrl)
+			string verifyEmailUrl
+		)
 		{
 			var confidenceReport = 1;
 			var confidenceLimited = 60;
@@ -930,7 +942,8 @@ namespace VocaDb.Model.Database.Queries
 				WebhookEvents.User,
 				user,
 				title: $"New user registered: {user.Name}",
-				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id)
+			);
 
 			return user;
 		}
@@ -956,7 +969,8 @@ namespace VocaDb.Model.Database.Queries
 			int twitterId,
 			string twitterName,
 			string hostname,
-			string culture)
+			string culture
+		)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNull(() => email);
@@ -993,7 +1007,8 @@ namespace VocaDb.Model.Database.Queries
 					WebhookEvents.User,
 					user,
 					title: $"New user registered: {user.Name}",
-					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id)
+				);
 
 				return new ServerOnlyUserContract(user);
 			});
@@ -1384,8 +1399,10 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public PartialFindResult<T> GetUsers<T>(UserQueryParams queryParams,
-			Func<User, T> fac)
+		public PartialFindResult<T> GetUsers<T>(
+			UserQueryParams queryParams,
+			Func<User, T> fac
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -1781,8 +1798,13 @@ namespace VocaDb.Model.Database.Queries
 			user.NameLC = newName.ToLowerInvariant();
 		}
 
-		public void UpdateAlbumForUser(int userId, int albumId, PurchaseStatus status,
-			MediaType mediaType, int rating)
+		public void UpdateAlbumForUser(
+			int userId,
+			int albumId,
+			PurchaseStatus status,
+			MediaType mediaType,
+			int rating
+		)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
