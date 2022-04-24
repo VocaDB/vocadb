@@ -247,13 +247,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public async Task Create_EmailAlreadyExistsButDisabled()
+		public void Create_EmailAlreadyExistsButDisabled()
 		{
 			_userWithEmail.Active = false;
-			var result = await CallCreate(email: "already_in_use@vocadb.net");
-
-			result.Should().NotBeNull("Result is not null");
-			result.Name.Should().Be("hatsune_miku", "Name");
+			this.Awaiting(subject => subject.CallCreate(email: "already_in_use@vocadb.net")).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
