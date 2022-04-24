@@ -171,7 +171,7 @@ namespace VocaDb.Web
 			builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 			builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();
-			builder.RegisterType<GravatarUserIconFactory>().As<IUserIconFactory>();
+			builder.RegisterType<VocaDbUserIconFactory>().As<IUserIconFactory>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 			builder.RegisterType<AlbumDescriptionGenerator>().AsSelf().SingleInstance();
 			builder.RegisterType<MarkdownParser>().AsSelf();

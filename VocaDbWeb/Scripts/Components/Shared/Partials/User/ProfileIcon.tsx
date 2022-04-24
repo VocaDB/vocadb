@@ -15,7 +15,11 @@ const ProfileIcon = React.memo(
 					display: 'inline-block',
 				}}
 			>
-				<img src={url} alt="Icon" /* TODO: localize */ />
+				<img
+					src={url}
+					alt="Icon" /* TODO: localize */
+					style={{ width: size, height: size, objectFit: 'cover' }}
+				/>
 			</div>
 		) : (
 			<></>

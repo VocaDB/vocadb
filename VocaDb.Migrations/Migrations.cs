@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Data;
 using FluentMigrator;
@@ -7,6 +5,15 @@ using FluentMigrator;
 namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
+
+	[Migration(2022_03_19_0300)]
+	public class UserPicture : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			Create.Column("PictureMime").OnTable(TableNames.Users).AsString(32).Nullable();
+		}
+	}
 
 	[Migration(2021_12_16_2300)]
 	public class RemoveFK_TagComments_TagsFromTagComments : Migration

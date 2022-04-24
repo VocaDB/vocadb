@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Users
 			HasTwitterToken = !string.IsNullOrEmpty(user.Options.TwitterOAuthToken);
 			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			Location = user.Options.Location;
+			PictureMime = user.PictureMime;
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
 			Stylesheet = user.Options.Stylesheet;
@@ -48,6 +49,10 @@ namespace VocaDb.Model.DataContracts.Users
 		public UserKnownLanguageContract[] KnownLanguages { get; init; }
 
 		public string Location { get; init; }
+
+#nullable enable
+		public string? PictureMime { get; init; }
+#nullable disable
 
 		public bool PublicRatings { get; init; }
 
