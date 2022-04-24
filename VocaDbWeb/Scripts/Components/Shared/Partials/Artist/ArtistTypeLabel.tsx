@@ -10,9 +10,7 @@ const ArtistTypeLabel = React.memo(
 	({ artistType }: ArtistTypeLabelProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Model.Resources']);
 
-		const title = t(
-			`VocaDb.Model.Resources:ArtistTypeNames.${ArtistType[artistType]}`,
-		);
+		const title = t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`);
 
 		switch (artistType) {
 			case ArtistType.Vocaloid:

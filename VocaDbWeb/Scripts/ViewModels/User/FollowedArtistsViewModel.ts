@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
+import ArtistType from '@Models/Artists/ArtistType';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
@@ -40,7 +41,7 @@ export default class FollowedArtistsViewModel {
 			});
 	};
 
-	public artistType = ko.observable('Unknown');
+	public artistType = ko.observable(ArtistType.Unknown);
 	public isInit = false;
 	public loading = ko.observable(true); // Currently loading for data
 	public page = ko.observableArray<ArtistForUserForApiContract>([]); // Current page of items

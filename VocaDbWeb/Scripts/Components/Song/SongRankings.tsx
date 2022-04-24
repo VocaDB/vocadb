@@ -8,7 +8,6 @@ import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
 import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
@@ -279,11 +278,7 @@ const SongRankings = observer(
 										>
 											{song.name}
 										</Link>{' '}
-										<SongTypeLabel
-											songType={
-												SongType[song.songType as keyof typeof SongType]
-											}
-										/>{' '}
+										<SongTypeLabel songType={song.songType} />{' '}
 										{rankingsStore
 											.getPVServiceIcons(song.pvServices)
 											.map((icon, index) => (

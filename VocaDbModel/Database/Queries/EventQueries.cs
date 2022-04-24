@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -532,7 +533,6 @@ namespace VocaDb.Model.Database.Queries
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
@@ -888,6 +888,44 @@ namespace VocaDb.Model.Database.Queries
 		public ReleaseEventSeriesDetailsForApiContract GetSeriesDetails(int id)
 		{
 			return HandleQuery(session => new ReleaseEventSeriesDetailsForApiContract(session.Load<ReleaseEventSeries>(id), LanguagePreference, _imageUrlFactory));
+		}
+
+		public EntryWithArchivedVersionsForApiContract<ReleaseEventForApiContract> GetReleaseEventWithArchivedVersionsForApi(int id)
+		{
+			return HandleQuery(session =>
+			{
+				var ev = session.Load<ReleaseEvent>(id);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new ReleaseEventForApiContract(ev, LanguagePreference, fields: ReleaseEventOptionalFields.None, thumbPersister: null),
+					versions: ev.ArchivedVersionsManager.Versions
+						.Select(a => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: a,
+							anythingChanged: !Equals(a.Diff.ChangedFields, default(ReleaseEventEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
+							reason: a.CommonEditEvent.ToString(),
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
+				);
+			});
+		}
+
+		public EntryWithArchivedVersionsForApiContract<ReleaseEventSeriesForApiContract> GetReleaseEventSeriesWithArchivedVersionsForApi(int id)
+		{
+			return HandleQuery(session =>
+			{
+				var series = session.Load<ReleaseEventSeries>(id);
+				return EntryWithArchivedVersionsForApiContract.Create(
+					entry: new ReleaseEventSeriesForApiContract(series, LanguagePreference, fields: ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
+					versions: series.ArchivedVersionsManager.Versions
+						.Select(v => new ArchivedObjectVersionForApiContract(
+							archivedObjectVersion: v,
+							anythingChanged: !Equals(v.Diff.ChangedFields, default(ReleaseEventSeriesEditableFields)) || !Equals(v.CommonEditEvent, default(EntryEditEvent)),
+							reason: v.CommonEditEvent.ToString(),
+							userIconFactory: _userIconFactory
+						))
+						.ToArray()
+				);
+			});
 		}
 #nullable disable
 	}

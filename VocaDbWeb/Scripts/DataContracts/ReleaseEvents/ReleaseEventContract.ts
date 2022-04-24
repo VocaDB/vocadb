@@ -45,6 +45,8 @@ export default interface ReleaseEventContract {
 
 	venue?: VenueForApiContract;
 
+	version?: number;
+
 	venueName?: string;
 
 	webLinks: WebLinkContract[];

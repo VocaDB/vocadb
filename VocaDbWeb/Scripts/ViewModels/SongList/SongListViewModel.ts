@@ -169,7 +169,7 @@ export default class SongListViewModel {
 	public showTags = ko.observable(false);
 	public sort = ko.observable('');
 	public sortName: Computed<string>;
-	public songType = ko.observable(SongType[SongType.Unspecified]);
+	public songType = ko.observable(SongType.Unspecified);
 	public tagsEditViewModel: TagsEditViewModel;
 	public tags = ko.observableArray<TagFilter>();
 	public tagIds: Computed<number[]>;
@@ -209,8 +209,8 @@ export default class SongListViewModel {
 				listId: this.listId,
 				query: this.query(),
 				songTypes:
-					this.songType() !== SongType[SongType.Unspecified]
-						? this.songType()
+					this.songType() !== SongType.Unspecified
+						? [this.songType()]
 						: undefined,
 				tagIds: this.tagIds(),
 				childTags: this.childTags(),

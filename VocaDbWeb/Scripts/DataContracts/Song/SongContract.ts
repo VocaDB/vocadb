@@ -1,3 +1,5 @@
+import SongType from '@Models/Songs/SongType';
+
 import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';
 
@@ -19,7 +21,7 @@ export default interface SongContract extends CommonEntryContract {
 
 	ratingScore: number;
 
-	songType: string;
+	songType: SongType;
 
 	status: string;
 

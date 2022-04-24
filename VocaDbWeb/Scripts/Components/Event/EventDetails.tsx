@@ -201,8 +201,8 @@ const EventDetailsLayout = observer(
 							{t('ViewRes:Shared.Edit')}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Event/Versions/${event.id}`}
+							as={Link}
+							to={`/Event/Versions/${event.id}`}
 							icons={{ primary: 'ui-icon-clock' }}
 						>
 							{t('ViewRes:EntryDetails.ViewModifications')}

@@ -1,4 +1,5 @@
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import WebLinksEditViewModel from '@ViewModels/WebLinksEditViewModel';
 
 var categories: TranslatedEnumField[] = [
@@ -6,7 +7,7 @@ var categories: TranslatedEnumField[] = [
 	{ id: 'Commercial', name: 'Commercial' },
 ];
 var webLinkData = {
-	category: 'Official',
+	category: WebLinkCategory.Official,
 	description: 'Youtube Channel',
 	id: 0,
 	url: 'http://www.youtube.com/user/tripshots',

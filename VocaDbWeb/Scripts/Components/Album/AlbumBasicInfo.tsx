@@ -496,19 +496,12 @@ const AlbumBasicInfo = observer(
 																	]
 																}
 															/>
-															{song.song.songType !==
-																SongType[SongType.Original] &&
-																song.song.songType !==
-																	SongType[SongType.Unspecified] && (
+															{song.song.songType !== SongType.Original &&
+																song.song.songType !== SongType.Unspecified && (
 																	<>
 																		{' '}
 																		<SongTypeLabel
-																			songType={
-																				SongType[
-																					song.song
-																						.songType as keyof typeof SongType
-																				]
-																			}
+																			songType={song.song.songType}
 																		/>
 																	</>
 																)}{' '}

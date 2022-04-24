@@ -217,8 +217,8 @@ const SongDetailsLayout = observer(
 							{t('ViewRes:Shared.Edit')}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Song/Versions/${model.id}`}
+							as={Link}
+							to={`/Song/Versions/${model.id}`}
 							icons={{ primary: 'ui-icon-clock' }}
 						>
 							{t('ViewRes:EntryDetails.ViewModifications')}

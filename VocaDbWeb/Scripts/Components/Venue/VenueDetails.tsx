@@ -80,8 +80,8 @@ const VenueDetailsLayout = ({
 						{t('ViewRes:Shared.Edit')}
 					</JQueryUIButton>{' '}
 					<JQueryUIButton
-						as="a"
-						href={`/Venue/Versions/${venue.id}`}
+						as={Link}
+						to={`/Venue/Versions/${venue.id}`}
 						icons={{ primary: 'ui-icon-clock' }}
 					>
 						{t('ViewRes:EntryDetails.ViewModifications')}

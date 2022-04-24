@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -122,7 +123,8 @@ namespace VocaDb.Web.Controllers.Api
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields fields = SongListOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new SongListQueryParams
@@ -178,7 +180,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of songs.</returns>
 		[HttpGet("{listId:int}/songs")]
-		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
+		public PartialFindResult<SongInListForApiContract> GetSongs(
+			int listId,
 			string query = "",
 			string? songTypes = null,
 			PVServices? pvServices = null,
@@ -190,7 +193,8 @@ namespace VocaDb.Web.Controllers.Api
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
@@ -283,6 +287,11 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongListForApiContract GetDetails(int id) => _queries.GetDetails(id);
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<SongListForApiContract> GetSongListWithArchivedVersions(int id) =>
+			_queries.GetSongListWithArchivedVersionsForApi(id);
 #nullable disable
 	}
 }

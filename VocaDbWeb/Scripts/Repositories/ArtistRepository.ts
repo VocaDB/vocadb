@@ -7,7 +7,9 @@ import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultCon
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
+import ArtistType from '@Models/Artists/ArtistType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
@@ -177,7 +179,7 @@ export default class ArtistRepository
 		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
-		artistTypes?: string;
+		artistTypes?: ArtistType[];
 		allowBaseVoicebanks: boolean;
 		tags: number[];
 		childTags: boolean;
@@ -196,7 +198,7 @@ export default class ArtistRepository
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
-			artistTypes: artistTypes,
+			artistTypes: artistTypes?.join(','),
 			allowBaseVoicebanks: allowBaseVoicebanks,
 			tagId: tags,
 			childTags: childTags,
@@ -243,8 +245,18 @@ export default class ArtistRepository
 			this.urlMapper.mapRelative(`/api/artists/${id}/details`),
 		);
 	};
+
+	public getArtistWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<ArtistApiContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<ArtistApiContract>
+		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
+	};
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
-	artistTypes: string;
+	artistTypes: ArtistType[];
 }

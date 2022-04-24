@@ -1,4 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistType from '@Models/Artists/ArtistType';
+import SongType from '@Models/Songs/SongType';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
@@ -9,7 +11,7 @@ var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
 var tagRepository = new FakeTagRepository();
 var producer: ArtistContract = {
-	artistType: 'Producer',
+	artistType: ArtistType.Producer,
 	id: 1,
 	name: 'Tripshots',
 	additionalNames: '',
@@ -20,7 +22,7 @@ repository.results = {
 	titleLanguage: 'English',
 	artists: [producer],
 	matches: [],
-	songType: 'Original',
+	songType: SongType.Original,
 };
 
 function createViewModel(): SongCreateViewModel {

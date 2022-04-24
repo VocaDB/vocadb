@@ -40,7 +40,7 @@ interface UserDetailsContractBase {
 	latestRatedSongs: SongApiContract[];
 	level: number;
 	location: string;
-	mainPicture: EntryThumbContract;
+	mainPicture?: EntryThumbContract;
 	name: string;
 	oldUsernames: OldUsernameContract[];
 	ownedArtistEntries: ArtistForUserForApiContract[];

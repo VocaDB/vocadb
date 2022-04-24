@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Web;
@@ -95,6 +96,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IStopForumSpamClient _sfsClient;
 		private readonly IUserIconFactory _userIconFactory;
 		private readonly IDiscordWebhookNotifier _discordWebhookNotifier;
+		private readonly IEntryThumbPersister _imagePersister;
 
 		public IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
@@ -213,7 +215,10 @@ namespace VocaDb.Model.Database.Queries
 				"You can view your messages at {1}." +
 				"\n\n" +
 				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
-				message.Sender.Name, messagesUrl, mySettingsUrl);
+				message.Sender.Name,
+				messagesUrl,
+				mySettingsUrl
+			);
 
 			await _mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 		}
@@ -513,7 +518,8 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache,
 			BrandableStringsManager brandableStringsManager,
 			IEnumTranslations enumTranslations,
-			IDiscordWebhookNotifier discordWebhookNotifier
+			IDiscordWebhookNotifier discordWebhookNotifier,
+			IEntryThumbPersister imagePersister
 		)
 			: base(repository, permissionContext)
 		{
@@ -532,6 +538,7 @@ namespace VocaDb.Model.Database.Queries
 			_brandableStringsManager = brandableStringsManager;
 			_enumTranslations = enumTranslations;
 			_discordWebhookNotifier = discordWebhookNotifier;
+			_imagePersister = imagePersister;
 		}
 
 		public void AddFollowedTag(int userId, int tagId)
@@ -652,8 +659,14 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes,
-			int reportCountDisable = 10, int reportCountLimit = 5)
+		public (bool created, int reportId) CreateReport(
+			int userId,
+			UserReportType reportType,
+			string hostname,
+			string notes,
+			int reportCountDisable = 10,
+			int reportCountLimit = 5
+		)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
 
@@ -815,7 +828,8 @@ namespace VocaDb.Model.Database.Queries
 			string culture,
 			TimeSpan timeSpan,
 			IPRuleManager ipRuleManager,
-			string verifyEmailUrl)
+			string verifyEmailUrl
+		)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -880,7 +894,8 @@ namespace VocaDb.Model.Database.Queries
 						hostname,
 						culture,
 						sfsCheckResult,
-						verifyEmailUrl);
+						verifyEmailUrl
+					);
 					ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} in {timeSpan} (SFS check {sfsStr}, UA '{userAgent}').", user);
 					await tx.CommitAsync();
 				}
@@ -897,7 +912,8 @@ namespace VocaDb.Model.Database.Queries
 			string hostname,
 			string culture,
 			SFSResponseContract sfsCheckResult,
-			string verifyEmailUrl)
+			string verifyEmailUrl
+		)
 		{
 			var confidenceReport = 1;
 			var confidenceLimited = 60;
@@ -908,8 +924,13 @@ namespace VocaDb.Model.Database.Queries
 
 			if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceReport)
 			{
-				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname,
-					$"Confidence {sfsCheckResult.Confidence} %, Frequency {sfsCheckResult.Frequency}, Last seen {sfsCheckResult.LastSeen.ToShortDateString()}. Conclusion {sfsCheckResult.Conclusion}.");
+				var report = new UserReport(
+					reportedUser: user,
+					reportType: UserReportType.MaliciousIP,
+					user: null,
+					hostname: hostname,
+					notes: $"Confidence {sfsCheckResult.Confidence} %, Frequency {sfsCheckResult.Frequency}, Last seen {sfsCheckResult.LastSeen.ToShortDateString()}. Conclusion {sfsCheckResult.Conclusion}."
+				);
 
 				await ctx.OfType<UserReport>().SaveAsync(report);
 
@@ -930,7 +951,8 @@ namespace VocaDb.Model.Database.Queries
 				WebhookEvents.User,
 				user,
 				title: $"New user registered: {user.Name}",
-				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id)
+			);
 
 			return user;
 		}
@@ -956,7 +978,8 @@ namespace VocaDb.Model.Database.Queries
 			int twitterId,
 			string twitterName,
 			string hostname,
-			string culture)
+			string culture
+		)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNull(() => email);
@@ -993,7 +1016,8 @@ namespace VocaDb.Model.Database.Queries
 					WebhookEvents.User,
 					user,
 					title: $"New user registered: {user.Name}",
-					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+					url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id)
+				);
 
 				return new ServerOnlyUserContract(user);
 			});
@@ -1384,8 +1408,10 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public PartialFindResult<T> GetUsers<T>(UserQueryParams queryParams,
-			Func<User, T> fac)
+		public PartialFindResult<T> GetUsers<T>(
+			UserQueryParams queryParams,
+			Func<User, T> fac
+		)
 		{
 			return _repository.HandleQuery(ctx =>
 			{
@@ -1781,8 +1807,13 @@ namespace VocaDb.Model.Database.Queries
 			user.NameLC = newName.ToLowerInvariant();
 		}
 
-		public void UpdateAlbumForUser(int userId, int albumId, PurchaseStatus status,
-			MediaType mediaType, int rating)
+		public void UpdateAlbumForUser(
+			int userId,
+			int albumId,
+			PurchaseStatus status,
+			MediaType mediaType,
+			int rating
+		)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
@@ -1900,6 +1931,32 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
+		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
+		{
+			if (pictureData == null) return null;
+
+			var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+
+			pictureData.Id = entry.Id;
+			pictureData.EntryType = entry.EntryType;
+			var thumbGenerator = new ImageThumbGenerator(_imagePersister);
+			thumbGenerator.GenerateThumbsAndMoveImage(
+				input: pictureData.UploadedFile,
+				imageInfo: pictureData,
+				imageSizes: ImageSizes.AllThumbs,
+				originalSize: Constants.RestrictedImageOriginalSize
+			);
+			return parsed;
+		}
+
+		private void SaveImage(User user, EntryPictureFileContract pictureData)
+		{
+			var parsed = SaveImage((IEntryImageInformation)user, pictureData);
+			user.PictureMime = parsed.Mime;
+		}
+
 		/// <summary>
 		/// Updates user's settings (usually by the user themselves from my settings page).
 		/// </summary>
@@ -1911,7 +1968,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract)
+		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -1982,6 +2039,9 @@ namespace VocaDb.Model.Database.Queries
 				var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages.Distinct(l => l.CultureCode), (l, l2) => l.CultureCode.Equals(l2.CultureCode) && l.Proficiency == l2.Proficiency, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
 				ctx.Sync(knownLanguagesDiff);
 
+				if (pictureData != null)
+					SaveImage(user, pictureData);
+
 				ctx.Update(user);
 
 				ctx.AuditLogger.AuditLog("updated settings");
@@ -1989,6 +2049,7 @@ namespace VocaDb.Model.Database.Queries
 				return new ServerOnlyUserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 			});
 		}
+#nullable disable
 
 		public void UpdateUserSetting(IUserSetting setting)
 		{

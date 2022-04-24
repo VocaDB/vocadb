@@ -16,7 +16,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 		values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 		/* TODO: remove */ private readonly loggedUserId: number,
-		artistType: string,
+		artistType: ArtistType,
 	) {
 		super(searchViewModel);
 
@@ -41,8 +41,8 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 				query: searchTerm,
 				sort: this.sort(),
 				artistTypes:
-					this.artistType() !== ArtistType[ArtistType.Unknown]
-						? this.artistType()
+					this.artistType() !== ArtistType.Unknown
+						? [this.artistType()]
 						: undefined,
 				allowBaseVoicebanks: !this.onlyRootVoicebanks(),
 				tags: tags,
@@ -60,7 +60,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 		return this.searchViewModel.resources().artistTypeNames![artist.artistType];
 	};
 
-	public artistType = ko.observable('Unknown');
+	public artistType = ko.observable(ArtistType.Unknown);
 	public onlyFollowedByMe = ko.observable(false);
 	public onlyRootVoicebanks = ko.observable(false);
 	public showTags = ko.observable(false);
@@ -72,9 +72,7 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
 	);
 
 	public canHaveChildVoicebanks = ko.computed(() =>
-		ArtistHelper.canHaveChildVoicebanks(
-			ArtistType[this.artistType() as keyof typeof ArtistType],
-		),
+		ArtistHelper.canHaveChildVoicebanks(this.artistType()),
 	);
 
 	public fields = ko.computed(() =>

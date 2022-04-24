@@ -90,11 +90,7 @@ const AlternateVersions = React.memo(
 								)
 							</>
 						)}{' '}
-						<SongTypeLabel
-							songType={
-								SongType[alternateVersion.songType as keyof typeof SongType]
-							}
-						/>
+						<SongTypeLabel songType={alternateVersion.songType} />
 						<br />
 						{alternateVersion.artistString}
 						<br />
@@ -246,7 +242,7 @@ const SongBasicInfo = observer(
 						id: 0,
 						url: `https://www.youtube.com/results?search_query=${query}`,
 						description: t('ViewRes.Song:Details.SearchYoutube'),
-						category: WebLinkCategory[WebLinkCategory.Other],
+						category: WebLinkCategory.Other,
 						disabled: false,
 					},
 				];
@@ -276,7 +272,7 @@ const SongBasicInfo = observer(
 						{model.performers.length > 0 && (
 							<tr>
 								<td>
-									{model.songType !== SongType[SongType.Illustration]
+									{model.songType !== SongType.Illustration
 										? t('ViewRes.Song:Details.Vocalists')
 										: t('ViewRes:EntryDetails.Subject')}
 								</td>
@@ -360,9 +356,7 @@ const SongBasicInfo = observer(
 						<tr>
 							<td>{t('ViewRes:Shared.Type')}</td>
 							<td>
-								<SongTypeLabel
-									songType={SongType[model.songType as keyof typeof SongType]}
-								/>{' '}
+								<SongTypeLabel songType={model.songType} />{' '}
 								{model.songTypeTag ? (
 									<TagToolTip
 										as={Link}
@@ -527,12 +521,7 @@ const SongBasicInfo = observer(
 										toolTipDomain={songDetailsStore.originalVersion.domain}
 									/>{' '}
 									<SongTypeLabel
-										songType={
-											SongType[
-												songDetailsStore.originalVersion.entry
-													.songType as keyof typeof SongType
-											]
-										}
+										songType={songDetailsStore.originalVersion.entry.songType}
 									/>
 									<br />
 									<span>

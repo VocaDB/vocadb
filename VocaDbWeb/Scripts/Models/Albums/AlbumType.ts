@@ -1,27 +1,27 @@
 enum AlbumType {
-	Unknown = 0,
+	Unknown = 'Unknown',
 
-	Album = 1 << 0,
+	Album = 'Album',
 
-	Single = 1 << 1,
+	Single = 'Single',
 
-	EP = 1 << 2,
+	EP = 'EP',
 
-	SplitAlbum = 1 << 3,
+	SplitAlbum = 'SplitAlbum',
 
-	Compilation = 1 << 4,
+	Compilation = 'Compilation',
 
-	Video = 1 << 5,
+	Video = 'Video',
 
-	Artbook = 1 << 6,
+	Artbook = 'Artbook',
 
-	Game = 1 << 7,
+	Game = 'Game',
 
-	Fanmade = 1 << 8,
+	Fanmade = 'Fanmade',
 
-	Instrumental = 1 << 9,
+	Instrumental = 'Instrumental',
 
-	Other = 1 << 10,
+	Other = 'Other',
 }
 
 export default AlbumType;

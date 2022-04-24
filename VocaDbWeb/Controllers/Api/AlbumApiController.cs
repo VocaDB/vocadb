@@ -104,7 +104,8 @@ namespace VocaDb.Web.Controllers.Api
 			int id,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
 			SongOptionalFields songFields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, _thumbPersister, fields, songFields));
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, _thumbPersister, fields, songFields));
 
 #nullable enable
 		/// <summary>
@@ -180,7 +181,8 @@ namespace VocaDb.Web.Controllers.Api
 			bool deleted = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
@@ -219,7 +221,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of album names.</returns>
 		[HttpGet("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => _service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
+		public string[] GetNames(
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
+			int maxResults = 15
+		) => _service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		/// <summary>
 		/// Gets list of upcoming or recent albums, same as front page.
@@ -231,7 +237,8 @@ namespace VocaDb.Web.Controllers.Api
 		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetNewAlbums(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			AlbumOptionalFields fields = AlbumOptionalFields.None) => _otherService.GetRecentAlbums(languagePreference, fields);
+			AlbumOptionalFields fields = AlbumOptionalFields.None
+		) => _otherService.GetRecentAlbums(languagePreference, fields);
 
 		[HttpGet("{id:int}/reviews")]
 		public Task<IEnumerable<AlbumReviewContract>> GetReviews(int id, string languageCode = null) => _queries.GetReviews(id, languageCode);
@@ -258,7 +265,8 @@ namespace VocaDb.Web.Controllers.Api
 		public IEnumerable<AlbumForApiContract> GetTopAlbums(
 			[FromQuery(Name = "ignoreIds[]")] int[] ignoreIds = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			AlbumOptionalFields fields = AlbumOptionalFields.None)
+			AlbumOptionalFields fields = AlbumOptionalFields.None
+		)
 		{
 			ignoreIds ??= Array.Empty<int>();
 			return _otherService.GetTopAlbums(languagePreference, fields, ignoreIds);
@@ -282,7 +290,8 @@ namespace VocaDb.Web.Controllers.Api
 		public SongInAlbumForApiContract[] GetTracks(
 			int id,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumForApiContract(s, lang, fields)).ToArray());
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumForApiContract(s, lang, fields)).ToArray());
 
 		/// <summary>
 		/// Gets tracks for an album formatted using the CSV format string.
@@ -294,9 +303,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>List of songs with the specified fields.</returns>
 		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
 		[HttpGet("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromQuery(Name = "field[]")] string[] field = null,
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(
+			int id,
+			[FromQuery(Name = "field[]")] string[] field = null,
 			int? discNumber = null,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetTracksFormatted(id, discNumber, field, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
+		) => _queries.GetTracksFormatted(id, discNumber, field, lang);
 
 		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
@@ -339,6 +351,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void PostPersonalDescription(int id, AlbumDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
 
+#nullable enable
 		[HttpGet("{id:int}/details")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public AlbumDetailsForApiContract GetDetails(int id)
@@ -347,5 +360,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.GetAlbumDetailsForApi(id: id, hostname: WebHelper.GetHostnameForValidHit(Request));
 		}
+
+		[HttpGet("{id:int}/versions")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryWithArchivedVersionsForApiContract<AlbumForApiContract> GetAlbumWithArchivedVersions(int id) =>
+			_queries.GetAlbumWithArchivedVersionsForApi(id);
+#nullable disable
 	}
 }

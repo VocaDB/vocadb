@@ -1,29 +1,29 @@
 enum SongType {
-	Unspecified = 0,
+	Unspecified = 'Unspecified',
 
-	Original = 1 << 0,
+	Original = 'Original',
 
-	Remaster = 1 << 1,
+	Remaster = 'Remaster',
 
-	Remix = 1 << 2,
+	Remix = 'Remix',
 
-	Cover = 1 << 3,
+	Cover = 'Cover',
 
-	Arrangement = 1 << 4,
+	Arrangement = 'Arrangement',
 
-	Instrumental = 1 << 5,
+	Instrumental = 'Instrumental',
 
-	Mashup = 1 << 6,
+	Mashup = 'Mashup',
 
-	MusicPV = 1 << 7,
+	MusicPV = 'MusicPV',
 
-	DramaPV = 1 << 8,
+	DramaPV = 'DramaPV',
 
-	Live = 1 << 9,
+	Live = 'Live',
 
-	Illustration = 1 << 10,
+	Illustration = 'Illustration',
 
-	Other = 1 << 11,
+	Other = 'Other',
 }
 
 export default SongType;

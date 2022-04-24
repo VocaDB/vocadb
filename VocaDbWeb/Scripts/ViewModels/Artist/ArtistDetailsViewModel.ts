@@ -3,6 +3,7 @@ import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import HighchartsHelper from '@Helpers/HighchartsHelper';
 import TimeUnit from '@Models/Aggregate/TimeUnit';
+import AlbumType from '@Models/Albums/AlbumType';
 import EntryType from '@Models/EntryType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import AlbumRepository from '@Repositories/AlbumRepository';
@@ -186,7 +187,7 @@ export default class ArtistDetailsViewModel {
 				null!,
 				[this.artistId],
 				null!,
-				'Unknown',
+				AlbumType.Unknown,
 				null!,
 			),
 		);
@@ -209,7 +210,7 @@ export default class ArtistDetailsViewModel {
 				null!,
 				[this.artistId],
 				null!,
-				'Unknown',
+				AlbumType.Unknown,
 				null!,
 			),
 		);

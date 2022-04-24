@@ -3,6 +3,10 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
+import SongType from '@Models/Songs/SongType';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel, {
 	TrackArtistSelectionViewModel,
@@ -33,19 +37,19 @@ var producer: ArtistContract = {
 	id: 1,
 	name: 'Tripshots',
 	additionalNames: '',
-	artistType: 'Producer',
+	artistType: ArtistType.Producer,
 };
 var vocalist: ArtistContract = {
 	id: 2,
 	name: 'Hatsune Miku',
 	additionalNames: '初音ミク',
-	artistType: 'Vocalist',
+	artistType: ArtistType.Vocalist,
 };
 var label: ArtistContract = {
 	id: 3,
 	name: 'KarenT',
 	additionalNames: '',
-	artistType: 'Label',
+	artistType: ArtistType.Label,
 };
 
 var producerArtistLink = {
@@ -84,7 +88,7 @@ var roles: { [key: string]: string } = {
 	VoiceManipulator: 'Voice manipulator',
 };
 var webLinkData = {
-	category: 'Official',
+	category: WebLinkCategory.Official,
 	description: 'Youtube Channel',
 	id: 123,
 	url: 'http://www.youtube.com/user/tripshots',
@@ -122,7 +126,7 @@ beforeEach(() => {
 		name: 'Anger',
 		pvServices: 'Nothing',
 		ratingScore: 0,
-		songType: 'Original',
+		songType: SongType.Original,
 		createDate: null!,
 		status: 'Finished',
 	};
@@ -166,7 +170,7 @@ beforeEach(() => {
 			original: '',
 			english: '',
 		},
-		discType: 'Album',
+		discType: AlbumType.Album,
 		discs: [],
 		id: 0,
 		identifiers: [],
@@ -273,7 +277,7 @@ test('addArtist existing', () => {
 		id: 4,
 		name: 'Kagamine Rin',
 		additionalNames: '',
-		artistType: 'Vocaloid',
+		artistType: ArtistType.Vocaloid,
 	};
 	artistRep.result = newVocalist;
 

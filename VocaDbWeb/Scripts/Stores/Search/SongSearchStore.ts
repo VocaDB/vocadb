@@ -80,7 +80,7 @@ export interface SongSearchRouteParams {
 	searchType?: SearchType.Song;
 	shuffle?: boolean;
 	since?: number;
-	songType?: string /* TODO: enum */;
+	songType?: SongType;
 	sort?: SongSortRule;
 	tag?: string;
 	tagId?: number | number[];
@@ -104,7 +104,7 @@ export default class SongSearchStore
 	@observable public pvsOnly = false;
 	private readonly pvServiceIcons: PVServiceIcons;
 	@observable public since?: number;
-	@observable public songType = SongType[SongType.Unspecified] /* TODO: enum */;
+	@observable public songType = SongType.Unspecified;
 	@observable public sort = SongSortRule.Name;
 	@observable public unifyEntryTypesAndTags = false;
 	@observable public viewMode: 'Details' | 'PlayList' =
@@ -203,8 +203,8 @@ export default class SongSearchStore
 
 	@computed public get showUnifyEntryTypesAndTags(): boolean {
 		return (
-			this.songType !== SongType[SongType.Unspecified] &&
-			this.songType !== SongType[SongType.Original]
+			this.songType !== SongType.Unspecified &&
+			this.songType !== SongType.Original
 		);
 	}
 
@@ -226,8 +226,8 @@ export default class SongSearchStore
 					query: searchTerm,
 					sort: this.sort,
 					songTypes:
-						this.songType !== SongType[SongType.Unspecified]
-							? this.songType
+						this.songType !== SongType.Unspecified
+							? [this.songType]
 							: undefined,
 					afterDate: this.afterDate,
 					beforeDate: this.beforeDate,
@@ -387,7 +387,7 @@ export default class SongSearchStore
 		this.parentVersion.id = value.parentVersionId;
 		// TODO: shuffle
 		this.since = value.since;
-		this.songType = value.songType ?? 'Unspecified';
+		this.songType = value.songType ?? SongType.Unspecified;
 		this.sort = value.sort ?? SongSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;

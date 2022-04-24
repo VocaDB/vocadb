@@ -178,8 +178,8 @@ const SongListDetailsLayout = observer(
 									{t('ViewRes:Shared.Edit')}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
-									as="a"
-									href={`/SongList/Versions/${songList.id}`}
+									as={Link}
+									to={`/SongList/Versions/${songList.id}`}
 									icons={{ primary: 'ui-icon-clock' }}
 								>
 									{t('ViewRes:EntryDetails.ViewModifications')}
@@ -407,7 +407,7 @@ const SongListDetailsLayout = observer(
 										activeKey={songListStore.songType}
 										onSelect={(eventKey): void =>
 											runInAction(() => {
-												songListStore.songType = eventKey;
+												songListStore.songType = eventKey as SongType;
 											})
 										}
 									/>
@@ -511,11 +511,7 @@ const SongListDetailsLayout = observer(
 													</span>
 												</>
 											)}{' '}
-											<SongTypeLabel
-												songType={
-													SongType[item.song.songType as keyof typeof SongType]
-												}
-											/>{' '}
+											<SongTypeLabel songType={item.song.songType} />{' '}
 											{songListStore.pvServiceIcons
 												.getIconUrls(item.song.pvServices)
 												.map((icon, index) => (

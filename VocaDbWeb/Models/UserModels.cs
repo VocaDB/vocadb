@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -96,14 +98,16 @@ namespace VocaDb.Web.Models
 		public string ReturnUrl { get; set; }
 	}
 
-	public class MySettingsModel
+	public class MySettingsModel : IEntryImageInformation
 	{
 		public MySettingsModel()
 		{
 			AboutMe = string.Empty;
 			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
+			AllStylesheets = AppConfig.SiteSettings.Stylesheets?
+				.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+				.ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
 			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
@@ -129,6 +133,7 @@ namespace VocaDb.Web.Models
 			InterfaceLanguageSelection = user.Language;
 			Location = user.Location;
 			KnownLanguages = user.KnownLanguages;
+			PictureMime = user.PictureMime;
 			PreferredVideoService = user.PreferredVideoService;
 			PublicAlbumCollection = user.PublicAlbumCollection;
 			PublicRatings = user.PublicRatings;
@@ -231,6 +236,15 @@ namespace VocaDb.Web.Models
 
 		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
+
+#nullable enable
+		public string? PictureMime { get; init; }
+
+		EntryType IEntryImageInformation.EntryType => EntryType.User;
+		string? IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+		int IEntryImageInformation.Version => 0;
+#nullable disable
 
 		public ServerOnlyUpdateUserSettingsContract ToContract()
 		{

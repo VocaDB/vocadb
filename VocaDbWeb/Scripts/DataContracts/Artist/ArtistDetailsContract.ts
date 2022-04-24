@@ -1,3 +1,5 @@
+import ArtistType from '@Models/Artists/ArtistType';
+
 import AlbumForApiContract from '../Album/AlbumForApiContract';
 import CommentContract from '../CommentContract';
 import EntryThumbContract from '../EntryThumbContract';
@@ -37,7 +39,7 @@ interface SharedArtistStatsContract {
 export default interface ArtistDetailsContract {
 	additionalNames: string;
 	advancedStats?: AdvancedArtistStatsContract;
-	artistType: string /* TODO: enum */;
+	artistType: ArtistType;
 	artistTypeTag: TagBaseContract;
 	baseVoicebank?: ArtistApiContract;
 	canRemoveTagUsages: boolean;

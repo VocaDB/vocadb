@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -21,7 +22,13 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.Domain.Users
 {
-	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments
+	public class User :
+		IEntryWithNames,
+		IUserWithEmail,
+		IEquatable<IUser>,
+		IWebLinkFactory<UserWebLink>,
+		IEntryWithComments,
+		IEntryImageInformation
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "^[a-zA-Z0-9_]+$";
@@ -491,6 +498,12 @@ namespace VocaDb.Model.Domain.Users
 		}
 
 #nullable enable
+		public virtual string? PictureMime { get; set; }
+
+		int IEntryImageInformation.Version => 0;
+		string? IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+
 		/// <summary>
 		/// Add album to user collection.
 		/// </summary>

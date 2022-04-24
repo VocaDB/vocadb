@@ -1,5 +1,3 @@
-#nullable disable
-
 namespace VocaDb.Model.Domain.Users
 {
 	/// <summary>

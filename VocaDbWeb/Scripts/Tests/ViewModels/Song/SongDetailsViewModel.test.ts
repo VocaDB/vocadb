@@ -1,4 +1,5 @@
 import SongVoteRating from '@Models/SongVoteRating';
+import SongType from '@Models/Songs/SongType';
 import HttpClient from '@Shared/HttpClient';
 import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
 import { SongDetailsResources } from '@ViewModels/Song/SongDetailsViewModel';
@@ -17,7 +18,7 @@ var data: SongDetailsAjax = {
 	version: 0,
 	selectedLyricsId: 0,
 	selectedPvId: 0,
-	songType: 'Original',
+	songType: SongType.Original,
 	tagUsages: [],
 	userRating: 'Nothing',
 	latestComments: [],

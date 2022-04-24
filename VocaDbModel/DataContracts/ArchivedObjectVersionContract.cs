@@ -58,7 +58,7 @@ namespace VocaDb.Model.DataContracts
 			return string.Empty;
 		}
 
-		public virtual string TranslateReason(IEnumTranslations translator)
+		public virtual string? TranslateReason(IEnumTranslations translator)
 		{
 			return string.Empty;
 		}

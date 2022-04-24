@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using VocaDb.Model.Database.Queries;
@@ -14,6 +15,7 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -678,8 +680,9 @@ namespace VocaDb.Web.Controllers
 			return View(new MySettingsModel(user));
 		}
 
+#nullable enable
 		[HttpPost]
-		public async Task<ActionResult> MySettings(MySettingsModel model)
+		public async Task<ActionResult> MySettings(MySettingsModel model, IFormFile? pictureUpload = null)
 		{
 			var user = PermissionContext.LoggedUser;
 
@@ -705,7 +708,9 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				newUser = Data.UpdateUserSettings(contract);
+				var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
+
+				newUser = Data.UpdateUserSettings(contract, pictureData);
 				_loginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			}
@@ -750,6 +755,7 @@ namespace VocaDb.Web.Controllers
 
 			return RedirectToAction("Profile", new { id = newUser.Name });
 		}
+#nullable disable
 
 		[HttpPost]
 		public void RemoveArtistFromUser(int artistId)

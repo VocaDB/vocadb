@@ -1,3 +1,6 @@
+import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
+import SongType from '@Models/Songs/SongType';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -10,11 +13,11 @@ import moment from 'moment';
 
 const SearchIndex = (model: {
 	artistId: number[];
-	artistType: string;
+	artistType: ArtistType;
 	autoplay: boolean;
 	childTags: boolean;
 	childVoicebanks: boolean;
-	discType: string;
+	discType: AlbumType;
 	eventCategory: string;
 	eventId: number;
 	filter: string;
@@ -25,7 +28,7 @@ const SearchIndex = (model: {
 	searchTypeName: string;
 	shuffle: boolean;
 	since: number;
-	songType: string;
+	songType: SongType;
 	sort: string;
 	tagId: number[];
 	viewMode: string;

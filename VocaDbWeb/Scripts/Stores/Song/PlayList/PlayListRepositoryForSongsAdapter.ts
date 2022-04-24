@@ -18,7 +18,7 @@ import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
 export interface ISongsAdapterStore {
 	searchTerm: string;
 	sort: string;
-	songType: string;
+	songType: SongType;
 	afterDate?: Date;
 	beforeDate?: Date;
 	tagIds: number[];
@@ -57,8 +57,8 @@ export default class PlayListRepositoryForSongsAdapter
 				query: this.songsAdapterStore.searchTerm,
 				sort: this.songsAdapterStore.sort,
 				songTypes:
-					this.songsAdapterStore.songType !== SongType[SongType.Unspecified]
-						? this.songsAdapterStore.songType
+					this.songsAdapterStore.songType !== SongType.Unspecified
+						? [this.songsAdapterStore.songType]
 						: undefined,
 				afterDate: this.songsAdapterStore.afterDate,
 				beforeDate: this.songsAdapterStore.beforeDate,

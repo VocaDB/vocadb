@@ -60,7 +60,7 @@ export default class SongEditViewModel {
 	public releaseEvent: BasicEntryLinkViewModel<ReleaseEventContract>;
 	public showLyricsNote: Computed<boolean>;
 	public songType: Computed<SongType>;
-	public songTypeStr: Observable<string>;
+	public songTypeStr: Observable<SongType>;
 	public status: Observable<string>;
 	public submittedJson = ko.observable('');
 	public submitting = ko.observable(false);
@@ -298,9 +298,7 @@ export default class SongEditViewModel {
 			null!,
 		);
 		this.songTypeStr = ko.observable(data.songType);
-		this.songType = ko.computed(
-			() => SongType[this.songTypeStr() as keyof typeof SongType],
-		);
+		this.songType = ko.computed(() => this.songTypeStr());
 		this.status = ko.observable(data.status);
 		this.tags = data.tags;
 		this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
@@ -329,8 +327,17 @@ export default class SongEditViewModel {
 		this.originalVersionSearchParams = {
 			acceptSelection: this.originalVersion.id,
 			extraQueryParams: {
-				songTypes:
-					'Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,DramaPV,Other',
+				songTypes: [
+					SongType.Unspecified,
+					SongType.Original,
+					SongType.Remaster,
+					SongType.Remix,
+					SongType.Cover,
+					SongType.Arrangement,
+					SongType.Mashup,
+					SongType.DramaPV,
+					SongType.Other,
+				],
 			},
 			ignoreId: this.id,
 			height: 250,

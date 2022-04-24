@@ -2,6 +2,7 @@ import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import { MediaType } from '@DataContracts/User/AlbumForUserForApiContract';
 import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
+import AlbumType from '@Models/Albums/AlbumType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
@@ -207,7 +208,7 @@ const AlbumCollection = observer(
 								activeKey={albumCollectionStore.albumType}
 								onSelect={(eventKey): void =>
 									runInAction(() => {
-										albumCollectionStore.albumType = eventKey;
+										albumCollectionStore.albumType = eventKey as AlbumType;
 									})
 								}
 							/>

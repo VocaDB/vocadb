@@ -1,4 +1,5 @@
 import AlbumContract from '@DataContracts/Album/AlbumContract';
+import AlbumType from '@Models/Albums/AlbumType';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
@@ -16,7 +17,7 @@ export default class DeletedAlbumsViewModel {
 		this.searchTerm.subscribe(() => this.updateResults(true));
 	}
 
-	public discTypeName = (discType: string): string => discType;
+	public discTypeName = (discType: AlbumType): AlbumType => discType;
 	public loading = ko.observable(false);
 	public page = ko.observableArray<AlbumContract>([]); // Current page of items
 	public paging = new ServerSidePagingViewModel(20); // Paging view model

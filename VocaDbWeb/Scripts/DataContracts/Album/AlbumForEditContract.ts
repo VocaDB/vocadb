@@ -1,3 +1,5 @@
+import AlbumType from '@Models/Albums/AlbumType';
+
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EntryPictureFileContract from '../EntryPictureFileContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
@@ -19,7 +21,7 @@ export default interface AlbumForEditContract {
 
 	discs: AlbumDiscPropertiesContract[];
 
-	discType: string;
+	discType: AlbumType;
 
 	id: number;
 

@@ -13,6 +13,7 @@ import SongWithPVPlayerAndVoteContract from '@DataContracts/Song/SongWithPVPlaye
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
+import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import TimeUnit from '@Models/Aggregate/TimeUnit';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
@@ -325,7 +326,7 @@ export default class SongRepository
 		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
-		songTypes?: string;
+		songTypes?: SongType[];
 		afterDate?: Date;
 		beforeDate?: Date;
 		tagIds: number[];
@@ -360,7 +361,7 @@ export default class SongRepository
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
-			songTypes: songTypes,
+			songTypes: songTypes?.join(','),
 			afterDate: this.getDate(afterDate),
 			beforeDate: this.getDate(beforeDate),
 			tagId: tagIds,
@@ -536,6 +537,16 @@ export default class SongRepository
 			{ albumId: albumId },
 		);
 	};
+
+	public getSongWithArchivedVersions = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<EntryWithArchivedVersionsContract<SongApiContract>> => {
+		return this.httpClient.get<
+			EntryWithArchivedVersionsContract<SongApiContract>
+		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
+	};
 }
 
 export interface PVEmbedParams {
@@ -549,5 +560,5 @@ export interface PVEmbedParams {
 export interface SongQueryParams extends CommonQueryParams {
 	sort?: string;
 
-	songTypes?: string;
+	songTypes?: SongType[];
 }

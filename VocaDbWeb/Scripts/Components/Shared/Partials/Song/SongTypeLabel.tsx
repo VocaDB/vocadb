@@ -10,9 +10,7 @@ const SongTypeLabel = React.memo(
 	({ songType }: SongTypeLabelProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
 
-		const title = t(
-			`VocaDb.Model.Resources.Songs:SongTypeNames.${SongType[songType]}`,
-		);
+		const title = t(`VocaDb.Model.Resources.Songs:SongTypeNames.${songType}`);
 
 		switch (songType) {
 			case SongType.Arrangement:

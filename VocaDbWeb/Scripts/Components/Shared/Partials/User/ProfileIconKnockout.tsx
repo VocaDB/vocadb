@@ -15,7 +15,11 @@ const ProfileIconKnockout = React.memo(
 					display: 'inline-block',
 				}}
 			>
-				<img src={icon ?? '/Content/unknown.png'} alt="User avatar" />
+				<img
+					src={icon ?? '/Content/unknown.png'}
+					alt="User avatar"
+					style={{ width: size, height: size, objectFit: 'cover' }}
+				/>
 			</div>
 		);
 	},
