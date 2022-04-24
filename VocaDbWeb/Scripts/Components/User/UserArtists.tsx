@@ -48,7 +48,8 @@ const FollowedArtists = observer(
 								value={followedArtistsStore.artistType}
 								onChange={(e): void =>
 									runInAction(() => {
-										followedArtistsStore.artistType = e.target.value;
+										followedArtistsStore.artistType = e.target
+											.value as ArtistType;
 									})
 								}
 							/>
@@ -121,12 +122,7 @@ const FollowedArtists = observer(
 											{artistForUser.artist.name}
 										</Link>{' '}
 										<ArtistTypeLabel
-											artistType={
-												ArtistType[
-													artistForUser.artist
-														.artistType as keyof typeof ArtistType
-												]
-											}
+											artistType={artistForUser.artist.artistType}
 										/>{' '}
 										<DraftIcon
 											status={

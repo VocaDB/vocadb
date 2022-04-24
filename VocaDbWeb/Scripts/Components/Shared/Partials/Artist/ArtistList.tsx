@@ -1,7 +1,6 @@
 import ArtistLinkContract from '@DataContracts/Song/ArtistLinkContract';
 import ArtistCategories from '@Models/Artists/ArtistCategories';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
-import ArtistType from '@Models/Artists/ArtistType';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -72,13 +71,7 @@ const ArtistList = ({
 					{artist.artist ? (
 						<>
 							{showType && (
-								<ArtistTypeLabel
-									artistType={
-										ArtistType[
-											artist.artist.artistType as keyof typeof ArtistType
-										]
-									}
-								/>
+								<ArtistTypeLabel artistType={artist.artist.artistType} />
 							)}
 							{showType && ' '}
 							<ArtistLink

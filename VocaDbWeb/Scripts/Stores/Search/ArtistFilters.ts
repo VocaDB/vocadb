@@ -1,6 +1,5 @@
 import ArtistHelper from '@Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ArtistType from '@Models/Artists/ArtistType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import _ from 'lodash';
@@ -92,8 +91,7 @@ export default class ArtistFilters {
 				.then((artist) => {
 					runInAction(() => {
 						newArtist.name = artist.name;
-						newArtist.artistType =
-							ArtistType[artist.artistType as keyof typeof ArtistType];
+						newArtist.artistType = artist.artistType;
 					});
 				});
 		});

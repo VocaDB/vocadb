@@ -1,5 +1,6 @@
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import SongType from '@Models/Songs/SongType';
 
@@ -12,7 +13,7 @@ interface MenuPageLink {
 // Corresponds to the GlobalValues record class in C#.
 export default interface GlobalValues {
 	albumTypes: AlbumType[];
-	artistTypes: string /* TODO: enum ArtistType */[];
+	artistTypes: ArtistType[];
 	externalHelpPath?: string;
 	hostAddress: string;
 	lockdownMessage?: string;

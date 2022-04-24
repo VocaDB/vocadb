@@ -1,5 +1,6 @@
 import ArtistTypesDropdownKnockout from '@Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
 import { ArtistAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
+import ArtistType from '@Models/Artists/ArtistType';
 import ArtistSearchStore from '@Stores/Search/ArtistSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -25,7 +26,7 @@ const ArtistSearchOptions = observer(
 							value={artistSearchStore.artistType}
 							onChange={(e): void =>
 								runInAction(() => {
-									artistSearchStore.artistType = e.target.value;
+									artistSearchStore.artistType = e.target.value as ArtistType;
 								})
 							}
 						/>

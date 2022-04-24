@@ -1,4 +1,5 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistType from '@Models/Artists/ArtistType';
 import SongType from '@Models/Songs/SongType';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 
@@ -10,7 +11,7 @@ var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
 var tagRepository = new FakeTagRepository();
 var producer: ArtistContract = {
-	artistType: 'Producer',
+	artistType: ArtistType.Producer,
 	id: 1,
 	name: 'Tripshots',
 	additionalNames: '',

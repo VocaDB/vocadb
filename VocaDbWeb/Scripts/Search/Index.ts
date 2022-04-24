@@ -1,4 +1,5 @@
 import AlbumType from '@Models/Albums/AlbumType';
+import ArtistType from '@Models/Artists/ArtistType';
 import SongType from '@Models/Songs/SongType';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
@@ -12,7 +13,7 @@ import moment from 'moment';
 
 const SearchIndex = (model: {
 	artistId: number[];
-	artistType: string;
+	artistType: ArtistType;
 	autoplay: boolean;
 	childTags: boolean;
 	childVoicebanks: boolean;

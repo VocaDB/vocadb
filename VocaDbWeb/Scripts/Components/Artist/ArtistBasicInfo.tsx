@@ -13,7 +13,6 @@ import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
 import UrlHelper from '@Helpers/UrlHelper';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
-import ArtistType from '@Models/Artists/ArtistType';
 import EntryType from '@Models/EntryType';
 import ImageSize from '@Models/Images/ImageSize';
 import LoginManager from '@Models/LoginManager';
@@ -232,11 +231,7 @@ const ArtistBasicInfo = observer(
 							<tr>
 								<td>{t('ViewRes:Shared.Type')}</td>
 								<td>
-									<ArtistTypeLabel
-										artistType={
-											ArtistType[artist.artistType as keyof typeof ArtistType]
-										}
-									/>{' '}
+									<ArtistTypeLabel artistType={artist.artistType} />{' '}
 									{artist.artistTypeTag ? (
 										<TagToolTip
 											as={Link}

@@ -66,11 +66,7 @@ export default class ArtistHelper {
 	}
 
 	// Whether the roles for an artist type can be customized
-	public static isCustomizable(at: ArtistType | string): boolean {
-		if (typeof at === 'string') {
-			at = ArtistType[at as keyof typeof ArtistType];
-		}
-
+	public static isCustomizable(at: ArtistType): boolean {
 		return _.includes(ArtistHelper.customizableTypes, at);
 	}
 
@@ -110,9 +106,7 @@ export default class ArtistHelper {
 		focus: ContentFocus,
 	): boolean {
 		return ArtistHelper.isProducerRoleType(
-			artist != null
-				? ArtistType[artist.artistType as keyof typeof ArtistType]
-				: ArtistType.Unknown,
+			artist != null ? artist.artistType : ArtistType.Unknown,
 			roles,
 			focus,
 		);
@@ -120,13 +114,9 @@ export default class ArtistHelper {
 
 	// Whether an artist type with default roles is to be considered a producer
 	public static isProducerType(
-		artistType: ArtistType | string,
+		artistType: ArtistType,
 		focus: ContentFocus,
 	): boolean {
-		if (typeof artistType === 'string') {
-			artistType = ArtistType[artistType as keyof typeof ArtistType];
-		}
-
 		return (
 			artistType === ArtistType.Producer ||
 			artistType === ArtistType.Circle ||
@@ -143,8 +133,7 @@ export default class ArtistHelper {
 	): boolean {
 		if (!artistLink.artist || artistLink.isSupport) return false;
 
-		const artistType =
-			ArtistType[artistLink.artist.artistType as keyof typeof ArtistType];
+		const artistType = artistLink.artist.artistType;
 		const rolesArray = ArtistHelper.getRolesArray(artistLink.roles);
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -195,9 +184,7 @@ export default class ArtistHelper {
 		roles: ArtistRoles[],
 	): boolean {
 		return ArtistHelper.isVocalistRoleType(
-			artist != null
-				? ArtistType[artist.artistType as keyof typeof ArtistType]
-				: ArtistType.Unknown,
+			artist != null ? artist.artistType : ArtistType.Unknown,
 			roles,
 		);
 	}

@@ -1,5 +1,6 @@
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import ArtistType from '@Models/Artists/ArtistType';
 import SongType from '@Models/Songs/SongType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
@@ -170,7 +171,7 @@ test('suggestedPublishDate with album date', () => {
 test('validationError_duplicateArtist', () => {
 	var target = createViewModel();
 	var artist = new ArtistForAlbumEditViewModel(null!, {
-		artist: { id: 1, name: '164' },
+		artist: { id: 1, name: '164', artistType: ArtistType.Unknown },
 		roles: '',
 	});
 
@@ -186,7 +187,11 @@ test('validationError_duplicateArtist', () => {
 test('validationError_duplicateArtist support', () => {
 	const target = createViewModel();
 
-	const artist = { id: 39, name: 'Clean Tears' };
+	const artist = {
+		id: 39,
+		name: 'Clean Tears',
+		artistType: ArtistType.Unknown,
+	};
 	target.artistLinks.push(
 		new ArtistForAlbumEditViewModel(null!, {
 			artist: artist,

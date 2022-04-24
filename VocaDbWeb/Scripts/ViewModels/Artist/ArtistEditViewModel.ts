@@ -48,7 +48,7 @@ export default class ArtistEditViewModel {
 	};
 
 	public artistType: Computed<ArtistType>;
-	public artistTypeStr: Observable<string>;
+	public artistTypeStr: Observable<ArtistType>;
 	public allowBaseVoicebank: Computed<boolean>;
 	public associatedArtists: ObservableArray<ArtistForArtistEditViewModel>;
 	public baseVoicebank: BasicEntryLinkViewModel<ArtistContract>;
@@ -100,7 +100,14 @@ export default class ArtistEditViewModel {
 
 	public groupSearchParams: ArtistAutoCompleteParams = {
 		acceptSelection: this.addGroup,
-		extraQueryParams: { artistTypes: 'Label,Circle,OtherGroup,Band' },
+		extraQueryParams: {
+			artistTypes: [
+				ArtistType.Label,
+				ArtistType.Circle,
+				ArtistType.OtherGroup,
+				ArtistType.Band,
+			],
+		},
 		height: 300,
 	};
 
@@ -188,9 +195,7 @@ export default class ArtistEditViewModel {
 		private dialogService: IDialogService,
 	) {
 		this.artistTypeStr = ko.observable(data.artistType);
-		this.artistType = ko.computed(
-			() => ArtistType[this.artistTypeStr() as keyof typeof ArtistType],
-		);
+		this.artistType = ko.computed(() => this.artistTypeStr());
 		this.allowBaseVoicebank = ko.computed(() =>
 			this.canHaveBaseVoicebank(this.artistType()),
 		);
@@ -234,8 +239,15 @@ export default class ArtistEditViewModel {
 		this.baseVoicebankSearchParams = {
 			acceptSelection: this.baseVoicebank.id,
 			extraQueryParams: {
-				artistTypes:
-					'Vocaloid,UTAU,CeVIO,SynthesizerV,OtherVocalist,OtherVoiceSynthesizer,Unknown',
+				artistTypes: [
+					ArtistType.Vocaloid,
+					ArtistType.UTAU,
+					ArtistType.CeVIO,
+					ArtistType.SynthesizerV,
+					ArtistType.OtherVocalist,
+					ArtistType.OtherVoiceSynthesizer,
+					ArtistType.Unknown,
+				],
 			},
 			ignoreId: this.id,
 		};

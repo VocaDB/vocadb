@@ -243,9 +243,7 @@ export default class SongCreateViewModel {
 		this.coverArtists = ko.computed(() => {
 			return _.filter(
 				this.artists(),
-				(a) =>
-					ArtistType[a.artistType as keyof typeof ArtistType] ===
-					ArtistType.CoverArtist,
+				(a) => a.artistType === ArtistType.CoverArtist,
 			);
 		});
 	}

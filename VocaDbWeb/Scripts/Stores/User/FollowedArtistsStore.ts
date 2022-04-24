@@ -19,7 +19,7 @@ import TagFilters from '../Search/TagFilters';
 import ServerSidePagingStore from '../ServerSidePagingStore';
 
 export interface FollowedArtistsRouteParams {
-	artistType?: string /* TODO: enum */;
+	artistType?: ArtistType;
 	page?: number;
 	pageSize?: number;
 	tagId?: number | number[];
@@ -34,8 +34,7 @@ const validate = ajv.compile(schema);
 
 export default class FollowedArtistsStore
 	implements IStoreWithPaging<FollowedArtistsRouteParams> {
-	@observable public artistType =
-		ArtistType[ArtistType.Unknown] /* TODO: enum */;
+	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
 	public readonly paging = new ServerSidePagingStore(20); // Paging store
@@ -112,7 +111,7 @@ export default class FollowedArtistsStore
 		};
 	}
 	public set routeParams(value: FollowedArtistsRouteParams) {
-		this.artistType = value.artistType ?? ArtistType[ArtistType.Unknown];
+		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
