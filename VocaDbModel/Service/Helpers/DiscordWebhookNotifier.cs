@@ -22,7 +22,14 @@ namespace VocaDb.Model.Service.Helpers
 
 	public interface IDiscordWebhookNotifier
 	{
-		Task SendMessageAsync(WebhookEvents webhookEvent, User? user, string? title = null, string? url = null, string? description = null, Color? color = null);
+		Task SendMessageAsync(
+			WebhookEvents webhookEvent,
+			User? user,
+			string? title = null,
+			string? url = null,
+			string? description = null,
+			Color? color = null
+		);
 	}
 
 	public sealed class DiscordWebhookNotifier : IDiscordWebhookNotifier
@@ -64,7 +71,7 @@ namespace VocaDb.Model.Service.Helpers
 					var profileUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id);
 
 					builder
-						.WithAuthor(name: user.Name, iconUrl: _userIconFactory.GetIcons(user, ImageSizes.Thumb).UrlThumb, url: profileUrl)
+						.WithAuthor(name: user.Name, iconUrl: _userIconFactory.GetIcons(user, ImageSizes.Thumb)?.UrlThumb, url: profileUrl)
 						.WithUrl(profileUrl);
 				}
 

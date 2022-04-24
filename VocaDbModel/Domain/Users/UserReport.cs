@@ -24,7 +24,7 @@ namespace VocaDb.Model.Domain.Users
 	{
 		public UserReport() { }
 
-		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
+		public UserReport(User reportedUser, UserReportType reportType, User? user, string hostname, string notes)
 			: base(reportedUser, reportType, user, hostname, notes, null) { }
 	}
 }

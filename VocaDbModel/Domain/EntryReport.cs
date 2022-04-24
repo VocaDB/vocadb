@@ -27,7 +27,7 @@ namespace VocaDb.Model.Domain
 			Status = ReportStatus.Open;
 		}
 
-		protected EntryReport(User user, string hostname, string notes, int? versionNumber)
+		protected EntryReport(User? user, string hostname, string notes, int? versionNumber)
 			: this()
 		{
 			User = user;

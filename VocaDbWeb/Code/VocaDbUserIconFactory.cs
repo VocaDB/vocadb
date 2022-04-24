@@ -13,7 +13,7 @@ namespace VocaDb.Web.Code
 			_thumbPersister = thumbPersister;
 		}
 
-		public EntryThumbForApiContract GetIcons(IEntryImageInformation user, ImageSizes sizes = ImageSizes.All)
+		public EntryThumbForApiContract? GetIcons(IEntryImageInformation user, ImageSizes sizes = ImageSizes.All)
 		{
 			return EntryThumbForApiContract.Create(user, _thumbPersister, sizes);
 		}

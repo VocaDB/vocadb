@@ -912,8 +912,13 @@ namespace VocaDb.Model.Database.Queries
 
 			if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceReport)
 			{
-				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname,
-					$"Confidence {sfsCheckResult.Confidence} %, Frequency {sfsCheckResult.Frequency}, Last seen {sfsCheckResult.LastSeen.ToShortDateString()}. Conclusion {sfsCheckResult.Conclusion}.");
+				var report = new UserReport(
+					reportedUser: user,
+					reportType: UserReportType.MaliciousIP,
+					user: null,
+					hostname: hostname,
+					notes: $"Confidence {sfsCheckResult.Confidence} %, Frequency {sfsCheckResult.Frequency}, Last seen {sfsCheckResult.LastSeen.ToShortDateString()}. Conclusion {sfsCheckResult.Conclusion}."
+				);
 
 				await ctx.OfType<UserReport>().SaveAsync(report);
 
@@ -934,7 +939,8 @@ namespace VocaDb.Model.Database.Queries
 				WebhookEvents.User,
 				user,
 				title: $"New user registered: {user.Name}",
-				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id));
+				url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id)
+			);
 
 			return user;
 		}

@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain
 		protected GenericEntryReport() { }
 #nullable enable
 
-		protected GenericEntryReport(TEntry entry, TReport reportType, User user, string hostname, string notes, int? versionNumber)
+		protected GenericEntryReport(TEntry entry, TReport reportType, User? user, string hostname, string notes, int? versionNumber)
 			: base(user, hostname, notes, versionNumber)
 		{
 			Entry = entry;
