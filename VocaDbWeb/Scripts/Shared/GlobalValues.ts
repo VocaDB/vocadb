@@ -1,5 +1,6 @@
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
+import SongType from '@Models/Songs/SongType';
 
 interface MenuPageLink {
 	bannerImg: string;
@@ -14,7 +15,7 @@ export default interface GlobalValues {
 	externalHelpPath?: string;
 	hostAddress: string;
 	lockdownMessage?: string;
-	songTypes: string /* TODO: enum SongType */[];
+	songTypes: SongType[];
 	staticContentHost: string;
 
 	siteName: string;

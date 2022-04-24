@@ -1,5 +1,6 @@
 import SongForEditContract from '@DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import SongType from '@Models/Songs/SongType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
 import ArtistForAlbumEditViewModel from '@ViewModels/ArtistForAlbumEditViewModel';
@@ -51,7 +52,7 @@ beforeEach(() => {
 		notes: { original: '', english: '' },
 		originalVersion: null!,
 		pvs: [],
-		songType: 'Original',
+		songType: SongType.Original,
 		status: 'Draft',
 		tags: [],
 		webLinks: [webLinkData],

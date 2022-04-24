@@ -1,6 +1,5 @@
 import Button from '@Bootstrap/Button';
 import EntryType from '@Models/EntryType';
-import SongType from '@Models/Songs/SongType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
 import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
@@ -187,11 +186,7 @@ const PlayList = observer(
 										</a>
 									</td>
 									<td>
-										<SongTypeLabel
-											songType={
-												SongType[song.song.songType as keyof typeof SongType]
-											}
-										/>
+										<SongTypeLabel songType={song.song.songType} />
 									</td>
 									<td>
 										{song.song.lengthSeconds && (

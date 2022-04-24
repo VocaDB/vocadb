@@ -65,7 +65,7 @@ export default class SongDetailsForApi {
 	public readonly publishDate?: string;
 	public readonly ratingScore: number;
 	public readonly releaseEvent?: ReleaseEventContract;
-	public readonly songType: string /* TODO: enum */;
+	public readonly songType: SongType;
 	public readonly songTypeTag: TagBaseContract;
 	public readonly status: string /* TODO: enum */;
 	public readonly subject: ArtistForSongContract[];
@@ -78,7 +78,7 @@ export default class SongDetailsForApi {
 		this.additionalNames = contract.additionalNames;
 		this.albums = contract.albums;
 		this.alternateVersions = contract.alternateVersions.filter(
-			(a) => a.songType !== SongType[SongType.Original],
+			(a) => a.songType !== SongType.Original,
 		);
 		this.artistString = contract.artistString;
 		this.browsedAlbumId = contract.album?.id;
@@ -103,7 +103,7 @@ export default class SongDetailsForApi {
 		this.notes = contract.notes;
 
 		this.originalVersion =
-			contract.song.songType !== SongType[SongType.Original]
+			contract.song.songType !== SongType.Original
 				? contract.originalVersion
 				: undefined;
 
@@ -121,9 +121,7 @@ export default class SongDetailsForApi {
 		this.userRating = contract.userRating;
 		this.webLinks = contract.webLinks;
 
-		const contentFocus = SongHelper.getContentFocus(
-			SongType[this.songType as keyof typeof SongType],
-		);
+		const contentFocus = SongHelper.getContentFocus(this.songType);
 
 		this.animators = contract.artists.filter((artist) =>
 			artist.categories
@@ -223,7 +221,7 @@ export class SongDetailsAjax {
 	public readonly selectedPvId: number;
 	public readonly personalDescriptionAuthor?: ArtistApiContract;
 	public readonly personalDescriptionText?: string;
-	public readonly songType: string;
+	public readonly songType: SongType;
 	public readonly tagUsages: TagUsageForApiContract[];
 	public readonly userRating: string;
 	public readonly version: number;

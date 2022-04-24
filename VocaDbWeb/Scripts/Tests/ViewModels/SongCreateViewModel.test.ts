@@ -1,4 +1,5 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import SongType from '@Models/Songs/SongType';
 import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
 
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
@@ -20,7 +21,7 @@ repository.results = {
 	titleLanguage: 'English',
 	artists: [producer],
 	matches: [],
-	songType: 'Original',
+	songType: SongType.Original,
 };
 
 function createViewModel(): SongCreateViewModel {

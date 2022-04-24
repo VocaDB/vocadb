@@ -42,7 +42,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 		sort: string,
 		artistId: number[],
 		childVoicebanks: boolean,
-		songType: string,
+		songType: SongType,
 		eventId: number,
 		onlyWithPVs: boolean,
 		onlyRatedSongs: boolean,
@@ -209,8 +209,8 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 						query: searchTerm,
 						sort: this.sort(),
 						songTypes:
-							this.songType() !== SongType[SongType.Unspecified]
-								? this.songType()
+							this.songType() !== SongType.Unspecified
+								? [this.songType()]
 								: undefined,
 						afterDate: this.afterDate(),
 						beforeDate: this.beforeDate(),
@@ -282,7 +282,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 	private pvServiceIcons: PVServiceIcons;
 	private resourceManager: ResourcesManager;
 	public since: Observable<number>;
-	public songType = ko.observable(SongType[SongType.Unspecified]);
+	public songType = ko.observable(SongType.Unspecified);
 	public sort = ko.observable('Name');
 	public sortName: Computed<string>;
 	public unifyEntryTypesAndTags = ko.observable(false);
@@ -344,8 +344,8 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
 	public showUnifyEntryTypesAndTags = ko.computed(
 		() =>
-			this.songType() !== SongType[SongType.Unspecified] &&
-			this.songType() !== SongType[SongType.Original],
+			this.songType() !== SongType.Unspecified &&
+			this.songType() !== SongType.Original,
 	);
 }
 

@@ -1,6 +1,7 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import ResourcesManager from '@Models/ResourcesManager';
+import SongType from '@Models/Songs/SongType';
 import Tag from '@Models/Tags/Tag';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -56,7 +57,7 @@ export default class SearchViewModel {
 		eventId: number,
 		artistType: string,
 		albumType: string,
-		songType: string,
+		songType: SongType,
 		eventCategory: string,
 		onlyWithPVs: boolean,
 		onlyRatedSongs: boolean,

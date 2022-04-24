@@ -18,7 +18,7 @@ export default class PlayListRepositoryForSongsAdapter
 		private songRepo: SongRepository,
 		private query: Observable<string>,
 		private sort: Observable<string>,
-		private songType: Observable<string>,
+		private songType: Observable<SongType>,
 		private afterDate: Computed<Date>,
 		private beforeDate: () => Date,
 		private tagIds: Computed<number[]>,
@@ -53,8 +53,8 @@ export default class PlayListRepositoryForSongsAdapter
 				query: this.query(),
 				sort: this.sort(),
 				songTypes:
-					this.songType() !== SongType[SongType.Unspecified]
-						? this.songType()
+					this.songType() !== SongType.Unspecified
+						? [this.songType()]
 						: undefined,
 				afterDate: this.afterDate(),
 				beforeDate: this.beforeDate(),

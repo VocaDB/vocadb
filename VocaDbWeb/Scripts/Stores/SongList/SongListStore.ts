@@ -62,7 +62,7 @@ interface SongListRouteParams {
 	playlistMode?: boolean;
 	query?: string;
 	sort?: string /* TODO: enum */;
-	songType?: string /* TODO: enum */;
+	songType?: SongType;
 	tagId?: number[];
 }
 
@@ -92,7 +92,7 @@ export default class SongListStore
 	@observable public showAdvancedFilters = false;
 	@observable public showTags = false;
 	@observable public sort = '' /* TODO: enum */;
-	@observable public songType = SongType[SongType.Unspecified] /* TODO: enum */;
+	@observable public songType = SongType.Unspecified;
 	public readonly tagsEditStore: TagsEditStore;
 	public readonly tagFilters: TagFilters;
 	public readonly tagUsages: TagListStore;
@@ -243,7 +243,7 @@ export default class SongListStore
 		this.playlistMode = value.playlistMode ?? false;
 		this.query = value.query ?? '';
 		this.sort = value.sort ?? '';
-		this.songType = value.songType ?? SongType[SongType.Unspecified];
+		this.songType = value.songType ?? SongType.Unspecified;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
@@ -268,9 +268,7 @@ export default class SongListStore
 				listId: this.listId,
 				query: this.query,
 				songTypes:
-					this.songType !== SongType[SongType.Unspecified]
-						? this.songType
-						: undefined,
+					this.songType !== SongType.Unspecified ? [this.songType] : undefined,
 				tagIds: this.tagIds,
 				childTags: this.childTags,
 				artistIds: this.artistFilters.artistIds,

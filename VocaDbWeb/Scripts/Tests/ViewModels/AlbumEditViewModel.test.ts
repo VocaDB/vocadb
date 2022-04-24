@@ -3,6 +3,7 @@ import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
+import SongType from '@Models/Songs/SongType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import UrlMapper from '@Shared/UrlMapper';
 import AlbumEditViewModel, {
@@ -123,7 +124,7 @@ beforeEach(() => {
 		name: 'Anger',
 		pvServices: 'Nothing',
 		ratingScore: 0,
-		songType: 'Original',
+		songType: SongType.Original,
 		createDate: null!,
 		status: 'Finished',
 	};

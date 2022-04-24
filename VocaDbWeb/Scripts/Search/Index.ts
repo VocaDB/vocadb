@@ -1,3 +1,4 @@
+import SongType from '@Models/Songs/SongType';
 import RepositoryFactory from '@Repositories/RepositoryFactory';
 import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
@@ -25,7 +26,7 @@ const SearchIndex = (model: {
 	searchTypeName: string;
 	shuffle: boolean;
 	since: number;
-	songType: string;
+	songType: SongType;
 	sort: string;
 	tagId: number[];
 	viewMode: string;

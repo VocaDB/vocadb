@@ -411,7 +411,7 @@ const SongListDetailsLayout = observer(
 										activeKey={songListStore.songType}
 										onSelect={(eventKey): void =>
 											runInAction(() => {
-												songListStore.songType = eventKey;
+												songListStore.songType = eventKey as SongType;
 											})
 										}
 									/>
@@ -515,11 +515,7 @@ const SongListDetailsLayout = observer(
 													</span>
 												</>
 											)}{' '}
-											<SongTypeLabel
-												songType={
-													SongType[item.song.songType as keyof typeof SongType]
-												}
-											/>{' '}
+											<SongTypeLabel songType={item.song.songType} />{' '}
 											{songListStore.pvServiceIcons
 												.getIconUrls(item.song.pvServices)
 												.map((icon, index) => (

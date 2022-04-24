@@ -8,7 +8,6 @@ import EntryContract from '@DataContracts/EntryContract';
 import ArtistType from '@Models/Artists/ArtistType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
-import SongType from '@Models/Songs/SongType';
 import AnythingSearchStore from '@Stores/Search/AnythingSearchStore';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
 import classNames from 'classnames';
@@ -137,11 +136,7 @@ const AnythingSearchList = observer(
 									{entry.songType && (
 										<>
 											{' '}
-											<SongTypeLabel
-												songType={
-													SongType[entry.songType as keyof typeof SongType]
-												}
-											/>
+											<SongTypeLabel songType={entry.songType} />
 										</>
 									)}{' '}
 									<DraftIcon

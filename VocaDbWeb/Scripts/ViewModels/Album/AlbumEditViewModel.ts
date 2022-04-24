@@ -7,6 +7,7 @@ import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams
 import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import AlbumType from '@Models/Albums/AlbumType';
 import EntryType from '@Models/EntryType';
+import SongType from '@Models/Songs/SongType';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import PVRepository from '@Repositories/PVRepository';
@@ -524,10 +525,22 @@ export default class AlbumEditViewModel {
 
 		this.tracks.subscribe(() => this.updateTrackNumbers());
 
-		var songTypes =
-			'Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,Other,Instrumental,Live,Illustration';
+		const songTypes = [
+			SongType.Unspecified,
+			SongType.Original,
+			SongType.Remaster,
+			SongType.Remix,
+			SongType.Cover,
+			SongType.Arrangement,
+			SongType.Mashup,
+			SongType.Other,
+			SongType.Instrumental,
+			SongType.Live,
+			SongType.Illustration,
+		];
 
-		if (data.discType === 'Video') songTypes += ',MusicPV,DramaPV';
+		if (data.discType === 'Video')
+			songTypes.push(SongType.MusicPV, SongType.DramaPV);
 
 		this.trackSearchParams = {
 			acceptSelection: this.acceptTrackSelection,

@@ -1,3 +1,5 @@
+import SongType from '@Models/Songs/SongType';
+
 import ArtistContract from './Artist/ArtistContract';
 import DuplicateEntryResultContract from './DuplicateEntryResultContract';
 
@@ -6,7 +8,7 @@ export default interface NewSongCheckResultContract {
 
 	matches: DuplicateEntryResultContract[];
 
-	songType: string;
+	songType: SongType;
 
 	title: string;
 

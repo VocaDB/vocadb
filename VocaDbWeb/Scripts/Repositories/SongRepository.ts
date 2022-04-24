@@ -326,7 +326,7 @@ export default class SongRepository
 		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
-		songTypes?: string;
+		songTypes?: SongType[];
 		afterDate?: Date;
 		beforeDate?: Date;
 		tagIds: number[];
@@ -361,7 +361,7 @@ export default class SongRepository
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
-			songTypes: songTypes,
+			songTypes: songTypes?.join(','),
 			afterDate: this.getDate(afterDate),
 			beforeDate: this.getDate(beforeDate),
 			tagId: tagIds,
@@ -560,5 +560,5 @@ export interface PVEmbedParams {
 export interface SongQueryParams extends CommonQueryParams {
 	sort?: string;
 
-	songTypes?: string;
+	songTypes?: SongType[];
 }
