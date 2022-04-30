@@ -19,6 +19,6 @@ namespace VocaDb.Model.DataContracts.Users
 		/// <param name="user">User whose icons are to be loaded. Cannot be null.</param>
 		/// <param name="sizes">Sizes of icons to get. Note that user icon image sizes are different from other entries.</param>
 		/// <returns>User icons. Cannot be null.</returns>
-		EntryThumbForApiContract GetIcons(IEntryImageInformation user, ImageSizes sizes = ImageSizes.All);
+		EntryThumbForApiContract? GetIcons(IEntryImageInformation user, ImageSizes sizes = ImageSizes.All);
 	}
 }

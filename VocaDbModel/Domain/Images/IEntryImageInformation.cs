@@ -1,6 +1,3 @@
-#nullable disable
-
-
 namespace VocaDb.Model.Domain.Images
 {
 	/// <summary>
@@ -22,7 +19,6 @@ namespace VocaDb.Model.Domain.Images
 		/// </summary>
 		int Id { get; }
 
-#nullable enable
 		/// <summary>
 		/// Image MIME type.
 		/// Used to determine file extension.
@@ -31,7 +27,6 @@ namespace VocaDb.Model.Domain.Images
 		/// Images without MIME type (or unknown MIME type) are not supported.
 		/// </summary>
 		string? Mime { get; }
-#nullable disable
 
 		/// <summary>
 		/// Image purpose. Main or additional.
@@ -49,7 +44,6 @@ namespace VocaDb.Model.Domain.Images
 
 	public static class EntryImageInformationExtensions
 	{
-#nullable enable
 		public static bool PurposeMainOrUnspecified(this IEntryImageInformation image) => image.Purpose == ImagePurpose.Main || image.Purpose == ImagePurpose.Unspesified;
 
 		/// <summary>
@@ -64,6 +58,5 @@ namespace VocaDb.Model.Domain.Images
 		{
 			return image != null && !string.IsNullOrEmpty(image.Mime);
 		}
-#nullable disable
 	}
 }

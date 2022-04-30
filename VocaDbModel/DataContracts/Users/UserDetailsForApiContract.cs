@@ -89,7 +89,7 @@ namespace VocaDb.Model.DataContracts.Users
 		/// Can be null.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
 
 		[DataMember]
 		public string Name { get; set; }
