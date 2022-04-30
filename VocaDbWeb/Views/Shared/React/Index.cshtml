@@ -7,6 +7,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Html
 @inherits VocaDbPage
 @addTagHelper *, VocaDb.ReMikus
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
 @{
 	Layout = null;
@@ -56,7 +57,16 @@
 </head>
 <body class="vdb">
 	<div id="app"></div>
-	<script>window.vdb = @ToJS(new { Resources = new GlobalResources(this), Values = new GlobalValues(this) })</script>
+	<script>
+		window.vdb = @ToJS(new
+		{
+			Resources = new GlobalResources(this),
+			Values = new GlobalValues(this)
+			{
+				RequestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken,
+			},
+		});
+	</script>
 	<remikus path="/bundles/manifest.js" />
 	<remikus path="/bundles/vendor.js" />
 	<remikus path="/bundles/index.js" />
