@@ -13,8 +13,10 @@ import {
 import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
 import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { UpdateUserSettingsContract } from '@/DataContracts/User/UpdateUserSettingsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { UserForMySettingsContract } from '@/DataContracts/User/UserForMySettingsContract';
 import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { Tuple2 } from '@/Helpers/HighchartsHelper';
@@ -816,6 +818,34 @@ export class UserRepository implements ICommentRepository {
 	}): Promise<UserDetailsContract> => {
 		return this.httpClient.get<UserDetailsContract>(
 			this.urlMapper.mapRelative(`/api/profiles/${name}`),
+		);
+	};
+
+	public getForMySettings = (): Promise<UserForMySettingsContract> => {
+		return this.httpClient.get<UserForMySettingsContract>(
+			this.urlMapper.mapRelative('/api/users/current/for-my-settings'),
+		);
+	};
+
+	public updateMySettings = (
+		requestToken: string,
+		contract: UpdateUserSettingsContract,
+		pictureUpload: File | undefined,
+	): Promise<string> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<string>(
+			this.urlMapper.mapRelative('/api/users/current/my-settings'),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
 		);
 	};
 }

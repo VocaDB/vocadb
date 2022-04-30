@@ -79,7 +79,7 @@ const AlbumCreateLayout = observer(
 									: t('ViewRes.Album:Create.UnableToCreateAlbum'),
 							);
 
-							throw e;
+							throw error;
 						}
 					}}
 				>

@@ -57,9 +57,9 @@ const Avatar = ({ user }: AvatarProps): React.ReactElement => {
 	return loginManager.loggedUser &&
 		loginManager.loggedUser.id === user.id &&
 		loginManager.loggedUser.active ? (
-		<a href="/User/MySettings#profile" id="avatar" className="user-avatar">
+		<Link to="/User/MySettings#profile" id="avatar" className="user-avatar">
 			<AvatarImg user={user} />
-		</a>
+		</Link>
 	) : (
 		<AvatarImg user={user} />
 	);

@@ -30,6 +30,7 @@ export interface GlobalValues {
 	blogUrl?: string;
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
+	stylesheets: string[];
 
 	amazonComAffiliateId: string;
 	amazonJpAffiliateId: string;

@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Web;
 using Discord;
+using FluentValidation;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
@@ -1970,11 +1971,14 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public Task<ServerOnlyUserWithPermissionsContract> UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
+		public Task<ServerOnlyUserWithPermissionsContract> UpdateUserSettings(ServerOnlyUpdateUserSettingsForApiContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			var validator = new ServerOnlyUpdateUserSettingsForApiContractValidator();
+			validator.ValidateAndThrow(contract);
 
 			return _repository.HandleTransactionAsync(async ctx =>
 			{
@@ -2175,6 +2179,16 @@ namespace VocaDb.Model.Database.Queries
 			var albumForUser = ctx.OfType<AlbumForUser>().Query().FirstOrDefault(s => s.Album.Id == albumId && s.User.Id == userId);
 			return new AlbumForUserForApiContract(albumForUser, LanguagePreference, _entryImagePersister, AlbumOptionalFields.None, shouldShowCollectionStatus: true);
 		});
+
+#nullable enable
+		public ServerOnlyUserForMySettingsForApiContract GetUserForMySettings()
+		{
+			return HandleQuery(session => new ServerOnlyUserForMySettingsForApiContract(
+				user: session.Load<User>(PermissionContext.LoggedUser.Id),
+				iconFactory: _userIconFactory
+			));
+		}
+#nullable disable
 	}
 
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage>

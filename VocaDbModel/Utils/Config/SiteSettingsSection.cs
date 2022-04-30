@@ -85,11 +85,13 @@ namespace VocaDb.Model.Utils.Config
 			set => this["sitewideAnnouncement"] = value;
 		}
 
+#nullable enable
 		/// <summary>
 		/// Comma-separated list of stylesheets with extensions, for example "TetoDB.css,DarkAngel.css"
 		/// </summary>
 		[ConfigurationProperty("stylesheets", DefaultValue = null)]
-		public string Stylesheets => (string)this["stylesheets"];
+		public string? Stylesheets => (string?)this["stylesheets"];
+#nullable disable
 
 		[ConfigurationProperty("twitterAccountName", DefaultValue = "")]
 		public string TwitterAccountName

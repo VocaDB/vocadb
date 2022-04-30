@@ -254,7 +254,7 @@ const VenueEditLayout = observer(
 									<div className="editor-field">
 										<input
 											type="number"
-											value={venueEditStore.latitude}
+											value={venueEditStore.latitude ?? ''}
 											onChange={(e): void =>
 												runInAction(() => {
 													venueEditStore.latitude = Number(e.target.value);
@@ -274,7 +274,7 @@ const VenueEditLayout = observer(
 									<div className="editor-field">
 										<input
 											type="number"
-											value={venueEditStore.longitude}
+											value={venueEditStore.longitude ?? ''}
 											onChange={(e): void =>
 												runInAction(() => {
 													venueEditStore.longitude = Number(e.target.value);

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using VocaDb.Model.Database.Queries;
@@ -15,7 +14,6 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -31,7 +29,6 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
@@ -60,11 +57,6 @@ namespace VocaDb.Web.Controllers
 		private readonly OtherService _otherService;
 		private readonly IRepository _repository;
 		private UserService Service { get; set; }
-
-		private ServerOnlyUserForMySettingsContract GetUserForMySettings()
-		{
-			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
-		}
 
 		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
 		{
@@ -663,90 +655,13 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
+#nullable enable
 		[Authorize]
 		public ActionResult MySettings()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			var user = GetUserForMySettings();
-
-			return View(new MySettingsModel(user));
-		}
-
-#nullable enable
-		[HttpPost]
-		public async Task<ActionResult> MySettings(MySettingsModel model, IFormFile? pictureUpload = null)
-		{
-			var user = PermissionContext.LoggedUser;
-
-			if (user == null || user.Id != model.Id)
-				return Forbid();
-
-			if (!ModelState.IsValid)
-				return View(new MySettingsModel(GetUserForMySettings()));
-
-			ServerOnlyUpdateUserSettingsContract contract;
-
-			try
-			{
-				contract = model.ToContract();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-				return View(model);
-			}
-
-			ServerOnlyUserWithPermissionsContract newUser;
-
-			try
-			{
-				var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
-
-				newUser = await Data.UpdateUserSettings(contract, pictureData);
-				_loginManager.SetLoggedUser(newUser);
-				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
-			}
-			catch (InvalidPasswordException x)
-			{
-				ModelState.AddModelError("OldPass", x.Message);
-				return View(model);
-			}
-			catch (UserEmailAlreadyExistsException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.EmailTaken);
-				return View(model);
-			}
-			catch (InvalidEmailFormatException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
-				return View(model);
-			}
-			catch (InvalidUserNameException)
-			{
-				ModelState.AddModelError("Username", "Username is invalid. Username may contain alphanumeric characters and underscores.");
-				return View(model);
-			}
-			catch (UserNameAlreadyExistsException)
-			{
-				ModelState.AddModelError("Username", "Username is already in use.");
-				return View(model);
-			}
-			catch (UserNameTooSoonException)
-			{
-				ModelState.AddModelError("Username", "Username may only be changed once per year. If necessary, contact a staff member.");
-				return View(model);
-			}
-
-			// Updating username currently requires signing in again
-			if (newUser.Name != user.Name)
-			{
-				await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			}
-
-			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
-
-			return RedirectToAction("Profile", new { id = newUser.Name });
+			return View("React/Index");
 		}
 #nullable disable
 
