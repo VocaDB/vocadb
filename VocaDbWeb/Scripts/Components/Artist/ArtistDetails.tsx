@@ -193,8 +193,8 @@ const ArtistDetailsLayout = observer(
 							</JQueryUIButton>
 						)}{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Artist/Edit/${artist.id}`}
+							as={Link}
+							to={`/Artist/Edit/${artist.id}`}
 							disabled={
 								!loginManager.canEdit({
 									...artist,

@@ -6,6 +6,7 @@ import qs from 'qs';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
+const ArtistEdit = React.lazy(() => import('./ArtistEdit'));
 const ArtistVersions = React.lazy(() => import('./ArtistVersions'));
 
 const ArtistDetailsNavigate = (): React.ReactElement => {
@@ -32,6 +33,7 @@ const ArtistRoutes = (): React.ReactElement => {
 				}
 			/>
 			<Route path="Details/:id/*" element={<ArtistDetailsNavigate />} />
+			<Route path="Edit/:id" element={<ArtistEdit />} />
 			<Route path="Versions/:id" element={<ArtistVersions />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>

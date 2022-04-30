@@ -124,7 +124,7 @@ export default class TagEditStore {
 
 	@action public submit = async (
 		categoryName: string /* HACK */,
-		thumbPicUpload?: File,
+		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 

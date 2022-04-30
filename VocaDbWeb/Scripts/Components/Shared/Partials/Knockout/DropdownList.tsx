@@ -1,3 +1,4 @@
+import ArtistLinkType from '@Models/Artists/ArtistLinkType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
@@ -170,6 +171,28 @@ export const SongListFeaturedCategoryDropdownList = React.memo(
 				{Object.values(SongListFeaturedCategory).map((featuredCategory) => (
 					<option value={featuredCategory} key={featuredCategory}>
 						{t(`Resources:SongListFeaturedCategoryNames.${featuredCategory}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+const associatedArtistTypes = Object.values(ArtistLinkType).filter(
+	(artistLinkType) => artistLinkType !== ArtistLinkType.Group,
+);
+
+export const AssociatedArtistTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Artists']);
+
+		return (
+			<select {...props}>
+				{associatedArtistTypes.map((associatedArtistType) => (
+					<option value={associatedArtistType} key={associatedArtistType}>
+						{t(
+							`VocaDb.Web.Resources.Domain.Artists:ArtistLinkTypeNames.${associatedArtistType}`,
+						)}
 					</option>
 				))}
 			</select>

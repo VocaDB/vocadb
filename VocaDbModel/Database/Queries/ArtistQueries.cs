@@ -330,12 +330,17 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => fac(ctx.Load(id)));
 		}
 
-		public ArtistForEditContract GetArtistForEdit(int id)
+#nullable enable
+		public ArtistForEditForApiContract GetArtistForEdit(int id)
 		{
-			return
-				HandleQuery(session =>
-					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
+			return HandleQuery(session => new ArtistForEditForApiContract(
+				artist: session.Load<Artist>(id),
+				languagePreference: PermissionContext.LanguagePreference,
+				imageStore: _imageUrlFactory,
+				permissionContext: PermissionContext
+			));
 		}
+#nullable disable
 
 		public CommentForApiContract[] GetComments(int artistId)
 		{
@@ -649,7 +654,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract? pictureData, IUserPermissionContext permissionContext)
+		public async Task<int> Update(ArtistForEditForApiContract properties, EntryPictureFileContract? pictureData, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);

@@ -1,4 +1,5 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import ArtistType from '@Models/Artists/ArtistType';
 import functions from '@Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +12,12 @@ import EntryAutoComplete, {
 interface ArtistAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	properties: ArtistAutoCompleteParams;
+	artistTypes?: ArtistType[];
 }
 
 const ArtistAutoComplete = ({
 	properties,
+	artistTypes,
 	...props
 }: ArtistAutoCompleteProps): React.ReactElement => {
 	const { t } = useTranslation(['VocaDb.Model.Resources']);
@@ -37,6 +40,7 @@ const ArtistAutoComplete = ({
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,
+		artistTypes: artistTypes?.join(','),
 	};
 
 	const params: EntryAutoCompleteParams<ArtistContract> = {
