@@ -1,4 +1,5 @@
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
@@ -20,5 +21,7 @@ namespace VocaDb.Model.DataContracts.Users
 		/// <param name="sizes">Sizes of icons to get. Note that user icon image sizes are different from other entries.</param>
 		/// <returns>User icons. Cannot be null.</returns>
 		EntryThumbForApiContract? GetIcons(IEntryImageInformation user, ImageSizes sizes = ImageSizes.All);
+
+		EntryThumbForApiContract? GetUserIcons(User user, ImageSizes sizes = ImageSizes.All);
 	}
 }

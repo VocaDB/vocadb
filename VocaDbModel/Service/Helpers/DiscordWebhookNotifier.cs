@@ -71,7 +71,7 @@ namespace VocaDb.Model.Service.Helpers
 					var profileUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id);
 
 					builder
-						.WithAuthor(name: user.Name, iconUrl: _userIconFactory.GetIcons(user, ImageSizes.Thumb)?.UrlThumb, url: profileUrl)
+						.WithAuthor(name: user.Name, iconUrl: _userIconFactory.GetUserIcons(user, ImageSizes.Thumb)?.UrlThumb, url: profileUrl)
 						.WithUrl(profileUrl);
 				}
 

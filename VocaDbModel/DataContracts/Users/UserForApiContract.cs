@@ -33,7 +33,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && iconFactory != null)
 			{
-				MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
+				MainPicture = iconFactory.GetUserIcons(user, ImageSizes.All);
 			}
 
 			if (optionalFields.HasFlag(UserOptionalFields.OldUsernames))
