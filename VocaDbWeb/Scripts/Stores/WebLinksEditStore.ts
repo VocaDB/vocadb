@@ -1,5 +1,5 @@
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
 import WebLinkContract from '@DataContracts/WebLinkContract';
+import WebLinkCategory from '@Models/WebLinkCategory';
 import { makeObservable } from 'mobx';
 
 import BasicListEditStore from './BasicListEditStore';
@@ -11,7 +11,7 @@ export default class WebLinksEditStore extends BasicListEditStore<
 > {
 	public constructor(
 		webLinkContracts: WebLinkContract[],
-		public categories?: TranslatedEnumField[],
+		public categories?: WebLinkCategory[],
 	) {
 		super(WebLinkEditStore, webLinkContracts);
 

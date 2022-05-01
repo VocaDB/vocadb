@@ -22,5 +22,9 @@ export default class BasicListEditStore<TItem, TContract> {
 		this.items.push(new this.type());
 	};
 
+	@action public remove = (item: TItem): void => {
+		_.pull(this.items, item);
+	};
+
 	// TODO: toContracts
 }

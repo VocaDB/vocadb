@@ -4,7 +4,7 @@ import WebLinkMatcher from '@Shared/WebLinkMatcher';
 import { makeObservable, observable, reaction } from 'mobx';
 
 export default class WebLinkEditStore {
-	@observable public category: string;
+	@observable public category: WebLinkCategory;
 	@observable public description: string;
 	@observable public disabled: boolean;
 	public readonly id: number;
