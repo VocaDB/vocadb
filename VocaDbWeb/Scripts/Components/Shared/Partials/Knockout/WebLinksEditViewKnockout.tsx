@@ -124,11 +124,11 @@ const WebLinksEditViewKnockout = observer(
 						)}
 					</thead>
 					<tbody>
-						{webLinksEditStore.items.map((item) => (
+						{webLinksEditStore.items.map((item, index) => (
 							<WebLinkEditViewKnockout
 								webLinksEditStore={webLinksEditStore}
 								webLinkEditStore={item}
-								key={item.id}
+								key={index}
 							/>
 						))}
 					</tbody>
