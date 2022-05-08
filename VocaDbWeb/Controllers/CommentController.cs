@@ -18,7 +18,7 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Comment/
 
-		public async Task<ActionResult> Index(int? userId = null)
+		public ActionResult Index(int? userId = null)
 		{
 			if (userId.HasValue)
 			{
@@ -27,15 +27,13 @@ namespace VocaDb.Web.Controllers
 				PageProperties.Title = "Comments - " + user.Name;
 				PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-				return View("CommentsByUser", user);
+				return View("React/Index");
 			}
 			else
 			{
-				var comments = await _otherService.GetRecentComments();
-
 				PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;
 
-				return View(comments);
+				return View("React/Index");
 			}
 		}
 	}

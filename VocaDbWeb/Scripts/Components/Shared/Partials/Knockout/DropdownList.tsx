@@ -1,3 +1,4 @@
+import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
 import UserGroup from '@Models/Users/UserGroup';
 import React from 'react';
@@ -57,6 +58,34 @@ export const UserLanguageCultureDropdownList = React.memo(
 				{Object.entries(userLanguageCultures).map(([key, value]) => (
 					<option value={key} key={key}>
 						{value.nativeName} ({value.englishName /* TODO: localize */})
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+const commentTargetTypes: string[] = [
+	EntryType[EntryType.Undefined],
+	EntryType[EntryType.Album],
+	EntryType[EntryType.Artist],
+	EntryType[EntryType.DiscussionTopic],
+	EntryType[EntryType.ReleaseEvent],
+	EntryType[EntryType.Song],
+	EntryType[EntryType.SongList],
+	EntryType[EntryType.Tag],
+	EntryType[EntryType.User],
+];
+
+export const CommentTargetTypeDropdownList = React.memo(
+	({ ...props }: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation('VocaDb.Web.Resources.Domain');
+
+		return (
+			<select {...props}>
+				{Object.values(commentTargetTypes).map((entryType) => (
+					<option value={entryType} key={entryType}>
+						{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
 					</option>
 				))}
 			</select>
