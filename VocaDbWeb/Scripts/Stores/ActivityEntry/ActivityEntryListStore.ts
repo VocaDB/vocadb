@@ -6,7 +6,7 @@ import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import _ from 'lodash';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 enum ActivityEntrySortRule {
 	CreateDateDescending = 'CreateDateDescending',
@@ -60,8 +60,10 @@ export default class ActivityEntryListStore {
 
 				if (!entries) return;
 
-				this.entries = [...this.entries, ...entries];
-				this.lastEntryDate = new Date(_.last(entries)!.createDate);
+				runInAction(() => {
+					this.entries.push(...entries);
+					this.lastEntryDate = new Date(_.last(entries)!.createDate);
+				});
 			});
 	};
 

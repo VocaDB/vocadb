@@ -1,0 +1,16 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"properties": {
+		"entryType": {
+			"type": "string"
+		},
+		"sort": {
+			"enum": ["CreateDate", "CreateDateDescending"],
+			"type": "string"
+		},
+		"userId": {
+			"type": "number"
+		}
+	},
+	"type": "object"
+}
