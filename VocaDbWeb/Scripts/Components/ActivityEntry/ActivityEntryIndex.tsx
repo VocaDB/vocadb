@@ -52,9 +52,9 @@ const ActivityEntryIndex = observer(
 						</li>
 					)}
 					<li>
-						<a href="/Comment">
+						<Link to="/Comment">
 							{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.Comments')}
-						</a>
+						</Link>
 					</li>
 				</ul>
 
@@ -70,7 +70,7 @@ const ActivityEntryIndex = observer(
 
 				<hr />
 				<h3>
-					<SafeAnchor onClick={(): void => activityEntryListStore.loadMore()}>
+					<SafeAnchor onClick={activityEntryListStore.loadMore}>
 						{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.ViewMore')}
 					</SafeAnchor>
 				</h3>

@@ -9,6 +9,9 @@ const AlbumRoutes = React.lazy(() => import('@Components/Album/AlbumRoutes'));
 const ArtistRoutes = React.lazy(
 	() => import('@Components/Artist/ArtistRoutes'),
 );
+const CommentRoutes = React.lazy(
+	() => import('@Components/Comment/CommentRoutes'),
+);
 const DiscussionRoutes = React.lazy(
 	() => import('@Components/Discussion/DiscussionRoutes'),
 );
@@ -49,6 +52,7 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="Admin/*" element={<AdminRoutes />} />
 			<Route path="Album/*" element={<AlbumRoutes />} />
 			<Route path="Artist/*" element={<ArtistRoutes />} />
+			<Route path="Comment/*" element={<CommentRoutes />} />
 			<Route path="discussion/*" element={<DiscussionRoutes />} />
 			<Route path="Event/*" element={<EventRoutes />} />
 			<Route path="Help/*" element={<HelpRoutes />} />

@@ -20,7 +20,7 @@ const AdminIndex = (): React.ReactElement => {
 			</p>
 
 			<p>
-				<a href="/Comment">View recent comments{/* TODO: localize */}</a>
+				<Link to="/Comment">View recent comments{/* TODO: localize */}</Link>
 			</p>
 
 			{loginManager.canViewAuditLog && (

@@ -229,7 +229,7 @@ const HomeIndexLayout = ({
 				<div className="span5">
 					<h3 className="withMargin">
 						{t('ViewRes.Comment:Index.RecentComments')} (
-						<a href="/Comment">{t('ViewRes.Home:Index.ViewMore')}</a>)
+						<Link to="/Comment">{t('ViewRes.Home:Index.ViewMore')}</Link>)
 					</h3>
 
 					{model.recentComments.map((comment, index) => (
@@ -240,7 +240,7 @@ const HomeIndexLayout = ({
 						/>
 					))}
 
-					<a href="/Comment">{t('ViewRes.Home:Index.ViewMore')}</a>
+					<Link to="/Comment">{t('ViewRes.Home:Index.ViewMore')}</Link>
 				</div>
 			</div>
 		</Layout>
