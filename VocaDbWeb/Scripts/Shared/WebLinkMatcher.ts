@@ -326,7 +326,49 @@ export default class WebLinkMatcher {
 			url: 'www.lagoa.jp/',
 			desc: 'THREE!',
 			cat: WebLinkCategory.Commercial,
-		} /* UtaiteDB */,
+		},
+		{
+			url: 'linkco.re/',
+			desc: 'TuneCore',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 's.awa.fm/',
+			desc: 'Awa',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'recochoku.jp/',
+			desc: 'Recochoku',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'amazon.de/',
+			desc: 'Amazon',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'kkbox.com/',
+			desc: 'KKBox',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'deezer.com/',
+			desc: 'Deezer',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'seiga.nicovideo.jp/',
+			desc: 'NicoNicoSeiga',
+			cat: WebLinkCategory.Official
+		},
+		{
+			url: 'commons.nicovideo.jp/',
+			desc: 'Nicommons',
+			cat: WebLinkCategory.Official
+		}
+		
+		/* UtaiteDB */,
 		{ url: '.taobao.com', desc: 'Taobao', cat: WebLinkCategory.Commercial },
 		{
 			url: 'thwiki.cc/',
