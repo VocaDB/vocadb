@@ -17,10 +17,22 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'music.amazon.co.jp/',
+			desc: 'Amazon Music Unlimited (JP)',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'music.amazon.com/',
+			desc: 'Amazon Music Unlimited (JP)',
+			cat: WebLinkCategory.Commercial
+		},
+		{
 			url: 'www.amazon.co.jp/',
 			desc: 'Amazon',
 			cat: WebLinkCategory.Commercial,
 		},
+		{ url: 'www.amazon.co.jp/gp/product/', desc: 'Amazon MP3 (JP)', cat: WebLinkCategory.Commercial },
+		{ url: 'www.amazon.com/gp/product/', desc: 'Amazon MP3 (US)', cat: WebLinkCategory.Commercial },
 		{ url: 'www.amazon.com/', desc: 'Amazon', cat: WebLinkCategory.Commercial },
 		{ url: 'amzn.to/', desc: 'Amazon', cat: WebLinkCategory.Commercial },
 		{ url: 'ameblo.jp/', desc: 'Blog', cat: WebLinkCategory.Official },
@@ -141,14 +153,15 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{ url: 'karent.jp/', desc: 'KarenT', cat: WebLinkCategory.Commercial },
-		{ url: 'kkbox.fm/', desc: 'KKBox', cat: WebLinkCategory.Commercial },
+		{ url: 'kkbox.fm/', desc: 'KKBOX', cat: WebLinkCategory.Commercial },
 		{
 			url: 'last.fm/user/',
 			desc: 'Last.fm profile',
 			cat: WebLinkCategory.Official,
 		},
 		{ url: 'last.fm/', desc: 'Last.fm', cat: WebLinkCategory.Reference },
-		{ url: 'line.me/', desc: 'Line Music', cat: WebLinkCategory.Commercial },
+		{ url: 'line.me/', desc: 'LINE MUSIC', cat: WebLinkCategory.Commercial },
+		{ url: 'lin.ee/', desc: 'LINE MUSIC', cat: WebLinkCategory.Commercial },
 		{
 			url: 'listography.com',
 			desc: 'Listography',
@@ -278,8 +291,9 @@ export default class WebLinkMatcher {
 			desc: 'NND Tag',
 			cat: WebLinkCategory.Reference,
 		},
-		{ url: 'oricon.co.jp/', desc: 'Oricon', cat: WebLinkCategory.Commercial },
-		{ url: 'ototoy.jp/', desc: 'Ototoy', cat: WebLinkCategory.Commercial },
+		{ url: 'music.oricon.co.jp/', desc: 'ORICON music', cat: WebLinkCategory.Commercial },
+		{ url: 'oricon.co.jp/', desc: 'ORICON', cat: WebLinkCategory.Commercial },
+		{ url: 'ototoy.jp/', desc: 'OTOTOY', cat: WebLinkCategory.Commercial },
 		{
 			url: 'otoyapage.jp/user/',
 			desc: 'Otoya Page',
@@ -292,8 +306,13 @@ export default class WebLinkMatcher {
 		{ url: 'www.pixiv.net/', desc: 'Pixiv', cat: WebLinkCategory.Official },
 		{
 			url: 'books.rakuten.co.jp/',
-			desc: 'Rakuten',
+			desc: 'Rakuten books',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'music.rakuten.co.jp/',
+			desc: 'Rakuten music',
+			cat: WebLinkCategory.Commercial
 		},
 		{ url: 'skeb.jp/', desc: 'Skeb', cat: WebLinkCategory.Commercial },
 		{ url: 'spotify.com/', desc: 'Spotify', cat: WebLinkCategory.Commercial },
@@ -334,12 +353,12 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 's.awa.fm/',
-			desc: 'Awa',
+			desc: 'AWA',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'recochoku.jp/',
-			desc: 'Recochoku',
+			desc: 'recochoku',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -349,11 +368,11 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'kkbox.com/',
-			desc: 'KKBox',
+			desc: 'KKBOX',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
-			url: 'deezer.com/',
+			url: 'www.deezer.com/',
 			desc: 'Deezer',
 			cat: WebLinkCategory.Commercial
 		},
@@ -366,7 +385,57 @@ export default class WebLinkMatcher {
 			url: 'commons.nicovideo.jp/',
 			desc: 'Nicommons',
 			cat: WebLinkCategory.Official
-		}
+		},
+		{ 
+			url: 'linktr.ee/',
+			desc: 'Linktree',
+			cat: WebLinkCategory.Reference
+		},
+		{ 
+			url: 'music.dmkt-sp.jp/',
+			desc: 'd music',
+			cat: WebLinkCategory.Commercial 
+		},
+		{ 
+			url: 'music.hikaritv.net/',
+			desc: 'Hikari TV Music',
+			cat: WebLinkCategory.Commercial 
+		},
+		{ 
+			url: 'musicstore.auone.jp/',
+			desc: 'Music Store',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'nex-tone.link/',
+			desc: 'NexTone.Link',
+			cat: WebLinkCategory.Reference
+		},
+		{
+			url: 'pc.animelo.jp/',
+			desc: 'animelo mix',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'pc.dwango.jp/',
+			desc: 'dwango.jp',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'uta.573.jp/',
+			desc: 'KONAMI MUSIC',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'www.beatport.com/',
+			desc: 'Beatport',
+			cat: WebLinkCategory.Commercial
+		},
+		{
+			url: 'www.e-onkyo.com/',
+			desc: 'e-onkyo music',
+			cat: WebLinkCategory.Commercial
+		},
 		
 		/* UtaiteDB */,
 		{ url: '.taobao.com', desc: 'Taobao', cat: WebLinkCategory.Commercial },
@@ -387,13 +456,18 @@ export default class WebLinkMatcher {
 		},
 		{ url: 'touhoudb.com/', desc: 'TouhouDB', cat: WebLinkCategory.Reference },
 		{
+			url: 'music.tower.jp/',
+			desc: 'TOWER RECORDS MUSIC',
+			cat: WebLinkCategory.Commercial
+		},
+		{
 			url: 'tower.com/',
-			desc: 'Tower Records',
+			desc: 'TOWER RECORDS',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'tower.jp/',
-			desc: 'Tower Records',
+			desc: 'TOWER RECORDS',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -570,6 +644,11 @@ export default class WebLinkMatcher {
 			url: 'www.yesasia.com/',
 			desc: 'YesAsia',
 			cat: WebLinkCategory.Commercial,
+		},
+		{ 
+			url: 'music.youtube.com/',
+			desc: 'YouTube Music',
+			cat: WebLinkCategory.Commercial
 		},
 		{
 			url: 'youtube.com/channel/',
