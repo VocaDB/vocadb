@@ -7,7 +7,7 @@ using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api;
 
-[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
+[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 [Route("api/antiforgery")]
 [ApiController]
 public class AntiforgeryApiController : ApiController

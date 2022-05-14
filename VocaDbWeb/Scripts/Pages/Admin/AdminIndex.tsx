@@ -25,7 +25,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canViewAuditLog && (
 				<p>
-					<a href="/Admin/ViewAuditLog">View audit log{/* TODO: localize */}</a>
+					<Link to="/Admin/ViewAuditLog">
+						View audit log{/* TODO: localize */}
+					</Link>
 				</p>
 			)}
 

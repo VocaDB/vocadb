@@ -1,4 +1,6 @@
+import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
@@ -72,5 +74,33 @@ export class AdminRepository {
 	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/api/webhooks');
 		return this.httpClient.put<void>(url, webhooks);
+	};
+
+	public getAuditLogEntries = ({
+		excludeUsers,
+		filter,
+		groupId,
+		onlyNewUsers,
+		userName,
+		start,
+	}: {
+		excludeUsers: string;
+		filter: string;
+		groupId?: UserGroup;
+		onlyNewUsers: boolean;
+		userName: string;
+		start: number;
+	}): Promise<AuditLogEntryContract[]> => {
+		return this.httpClient.get<AuditLogEntryContract[]>(
+			this.urlMapper.mapRelative('/api/admin/audit-logs'),
+			{
+				excludeUsers: excludeUsers,
+				filter: filter,
+				groupId: groupId,
+				onlyNewUsers: onlyNewUsers,
+				userName: userName,
+				start: start,
+			},
+		);
 	};
 }
