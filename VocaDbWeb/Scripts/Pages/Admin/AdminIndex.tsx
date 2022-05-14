@@ -32,9 +32,9 @@ const AdminIndex = (): React.ReactElement => {
 			{loginManager.canManageTagMappings && (
 				<>
 					<p>
-						<a href="/Admin/ManageTagMappings">
+						<Link to="/Admin/ManageTagMappings">
 							Manage tag mappings{/* TODO: localize */}
-						</a>
+						</Link>
 					</p>
 					<p>
 						<a href="/Admin/ManageEntryTagMappings">
