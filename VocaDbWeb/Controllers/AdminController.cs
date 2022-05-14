@@ -219,11 +219,9 @@ namespace VocaDb.Web.Controllers
 		{
 			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
-			var model = new PVsByAuthor(author ?? string.Empty, songs);
-
 			PageProperties.Title = "PVs by author";
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		public ActionResult RefreshDbCache()

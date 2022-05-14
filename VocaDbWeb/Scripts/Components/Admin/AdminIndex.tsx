@@ -54,9 +54,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canBulkDeletePVs && (
 				<p>
-					<a href="/Admin/PVsByAuthor">
+					<Link to="/Admin/PVsByAuthor">
 						Delete PVs by author{/* TODO: localize */}
-					</a>
+					</Link>
 				</p>
 			)}
 
