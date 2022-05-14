@@ -107,17 +107,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult DeleteEntryReport(int id)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-			Service.DeleteEntryReports(new[] { id });
-			TempData.SetStatusMessage("Reports deleted");
-
-			return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
-		}
-
-		[Authorize]
 		public ActionResult DeletePVsByAuthor(string author)
 		{
 			var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
@@ -288,16 +277,13 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open)
+		public ActionResult ViewEntryReports()
 		{
-			ViewBag.ReportStatus = status;
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-			var reports = Service.GetEntryReports(status);
 
 			PageProperties.Title = "View entry reports";
 
-			return View(reports);
+			return View("React/Index");
 		}
 
 		[Authorize]

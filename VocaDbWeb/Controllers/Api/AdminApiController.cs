@@ -70,5 +70,16 @@ namespace VocaDb.Web.Controllers.Api
 				groupId
 			);
 		}
+
+		[HttpDelete("reports/{id:int}")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteEntryReport(int id)
+		{
+			_userContext.VerifyPermission(PermissionToken.ManageEntryReports);
+
+			_adminService.DeleteEntryReports(new[] { id });
+
+			return NoContent();
+		}
 	}
 }
