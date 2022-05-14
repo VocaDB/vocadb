@@ -429,7 +429,7 @@ export const GlobalSearchBox = observer(
 									{t('ViewRes.User:Details.MySettings')}
 								</Dropdown.Item>
 								{loginManager.canManageEntryReports && (
-									<Dropdown.Item href={'/Admin/ViewEntryReports'}>
+									<Dropdown.Item as={Link} to={'/Admin/ViewEntryReports'}>
 										{t('ViewRes:TopBar.EntryReports')}
 										{topBarStore.reportCount > 0 && (
 											<>

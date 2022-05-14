@@ -107,17 +107,6 @@ public class AdminController : ControllerBase
 	}
 
 	[Authorize]
-	public ActionResult DeleteEntryReport(int id)
-	{
-		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-		Service.DeleteEntryReports(new[] { id });
-		TempData.SetStatusMessage("Reports deleted");
-
-		return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
-	}
-
-	[Authorize]
 	public ActionResult DeletePVsByAuthor(string author)
 	{
 		var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
@@ -136,7 +125,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Site management";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult GeneratePictureThumbs()
@@ -155,7 +144,7 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage blocked IPs";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -163,7 +152,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage entry type to tag mappings";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
@@ -171,7 +160,7 @@ public class AdminController : ControllerBase
 	{
 		PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	public ActionResult PVAuthorNames(string term)
@@ -284,20 +273,17 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "View audit log";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 
 	[Authorize]
-	public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open)
+	public ActionResult ViewEntryReports()
 	{
-		ViewBag.ReportStatus = status;
 		PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
-
-		var reports = Service.GetEntryReports(status);
 
 		PageProperties.Title = "View entry reports";
 
-		return View(reports);
+		return View("React/Index");
 	}
 
 	[Authorize]
@@ -321,6 +307,6 @@ public class AdminController : ControllerBase
 
 		PageProperties.Title = "Manage webhooks";
 
-		return File("index.html", "text/html") ;
+		return File("index.html", "text/html");
 	}
 }

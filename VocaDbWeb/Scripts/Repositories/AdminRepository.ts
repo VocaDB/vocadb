@@ -95,6 +95,15 @@ export class AdminRepository {
 			},
 		);
 	};
+
+	deleteEntryReport = (
+		requestToken: string,
+		{ id }: { id: number },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(`/api/admin/reports/${id}`),
+		);
+	};
 }
 
 export const adminRepo = new AdminRepository(httpClient, urlMapper);

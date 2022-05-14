@@ -43,7 +43,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canManageEntryReports && (
 				<p>
-					<a href="/Admin/ViewEntryReports">Manage entry reports{/* LOC */}</a>
+					<Link to="/Admin/ViewEntryReports">
+						Manage entry reports{/* LOC */}
+					</Link>
 				</p>
 			)}
 
