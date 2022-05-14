@@ -252,7 +252,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Deleted albums";
 
-			return View();
+			return View("React/Index");
 		}
 
 		[Authorize]

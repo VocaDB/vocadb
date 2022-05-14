@@ -62,9 +62,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canMoveToTrash && (
 				<p>
-					<a href="/Album/Deleted">
+					<Link to="/Album/Deleted">
 						Manage deleted albums{/* TODO: localize */}
-					</a>
+					</Link>
 				</p>
 			)}
 
