@@ -23,17 +23,17 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'music.amazon.com/',
-			desc: 'Amazon Music Unlimited (JP)',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'www.amazon.co.jp/',
-			desc: 'Amazon',
+			desc: 'Amazon Music Unlimited (EN)',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'www.amazon.co.jp/gp/product/',
 			desc: 'Amazon MP3 (JP)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'www.amazon.co.jp/',
+			desc: 'Amazon',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -301,7 +301,7 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'music.oricon.co.jp/',
-			desc: 'ORICON music',
+			desc: 'ORICON MUSIC',
 			cat: WebLinkCategory.Commercial,
 		},
 		{ url: 'oricon.co.jp/', desc: 'ORICON', cat: WebLinkCategory.Commercial },
@@ -361,7 +361,12 @@ export default class WebLinkMatcher {
 		{
 			url: 'linkco.re/',
 			desc: 'TuneCore',
-			cat: WebLinkCategory.Official,
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'tunecore.co.jp/',
+			desc: 'TuneCore',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 's.awa.fm/',
@@ -436,11 +441,6 @@ export default class WebLinkMatcher {
 		{
 			url: 'uta.573.jp/',
 			desc: 'KONAMI MUSIC',
-			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'www.beatport.com/',
-			desc: 'Beatport',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
