@@ -45,11 +45,9 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
-
 			PageProperties.Title = "Active editors";
 
-			return View(items);
+			return View("React/Index");
 		}
 
 		[Authorize]

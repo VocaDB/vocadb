@@ -90,9 +90,9 @@ const AdminIndex = (): React.ReactElement => {
 				<>
 					<h3>Database maintenance tasks{/* TODO: localize */}</h3>
 					<p>
-						<a href="/Admin/ActiveEdits">
+						<Link to="/Admin/ActiveEdits">
 							View active editors{/* TODO: localize */}
-						</a>
+						</Link>
 					</p>
 					<p>
 						<a href="/Admin/CreateXmlDump">
