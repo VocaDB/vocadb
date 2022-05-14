@@ -6,6 +6,9 @@ const AdminIndex = React.lazy(() => import('./AdminIndex'));
 const AdminManageEntryTagMappings = React.lazy(
 	() => import('./AdminManageEntryTagMappings'),
 );
+const AdminManageIPRules = React.lazy(
+	() => import('../../Pages/Admin/AdminManageIPRules'),
+);
 const AdminManageTagMappings = React.lazy(
 	() => import('./AdminManageTagMappings'),
 );
@@ -19,6 +22,7 @@ const AdminRoutes = (): React.ReactElement => {
 				path="ManageEntryTagMappings"
 				element={<AdminManageEntryTagMappings />}
 			/>
+			<Route path="ManageIPRules" element={<AdminManageIPRules />} />
 			<Route path="ManageTagMappings" element={<AdminManageTagMappings />} />
 			<Route path="ManageWebhooks" element={<AdminManageWebhooks />} />
 			<Route path="*" element={<ErrorNotFound />} />

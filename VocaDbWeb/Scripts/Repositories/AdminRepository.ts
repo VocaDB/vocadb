@@ -1,13 +1,37 @@
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { IPRuleContract } from '@/ViewModels/Admin/ManageIPRulesViewModel';
+
+export interface IPRuleContract {
+	address?: string;
+	created?: string;
+	id?: number;
+	notes?: string;
+}
 
 export class AdminRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
+
+	// eslint-disable-next-line no-empty-pattern
+	public getIPRules = ({}: {}): Promise<IPRuleContract[]> => {
+		return this.httpClient.get<IPRuleContract[]>(
+			this.urlMapper.mapRelative('/api/ip-rules'),
+		);
+	};
+
+	public saveIPRules = ({
+		ipRules,
+	}: {
+		ipRules: IPRuleContract[];
+	}): Promise<void> => {
+		return this.httpClient.put<void>(
+			this.urlMapper.mapRelative('/api/ip-rules'),
+			ipRules,
+		);
+	};
 
 	public addIpToBanList = ({
 		rule,
