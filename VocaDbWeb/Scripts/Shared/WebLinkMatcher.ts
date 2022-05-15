@@ -300,6 +300,11 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Reference,
 		},
 		{
+			url: 'nicovideo.jp/series/',
+			desc: 'NND Series',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'music.oricon.co.jp/',
 			desc: 'ORICON MUSIC',
 			cat: WebLinkCategory.Commercial,
