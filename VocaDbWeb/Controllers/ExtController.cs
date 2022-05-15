@@ -40,7 +40,8 @@ namespace VocaDb.Web.Controllers
 				return Json(obj);
 		}
 
-		protected ActionResult Xml<T>(T obj) where T : class
+#nullable enable
+		protected ActionResult Xml<T>(T? obj) where T : class
 		{
 			if (obj == null)
 				return new EmptyResult();
@@ -48,6 +49,7 @@ namespace VocaDb.Web.Controllers
 			var content = XmlHelper.SerializeToUTF8XmlString(obj);
 			return base.Xml(content);
 		}
+#nullable disable
 
 		public ExtController(
 			IEntryUrlParser entryUrlParser,

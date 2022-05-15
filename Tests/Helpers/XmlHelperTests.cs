@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Helpers;
@@ -12,7 +11,8 @@ namespace VocaDb.Tests.Helpers
 	[TestClass]
 	public class XmlHelperTests
 	{
-		private static T SerializeToObjectAndBack<T>(T obj)
+		[return: NotNullIfNotNull("obj"/* TODO: Use nameof. */)]
+		private static T? SerializeToObjectAndBack<T>(T? obj)
 		{
 			var xml = XmlHelper.SerializeToXml(obj);
 
@@ -76,7 +76,9 @@ namespace VocaDb.Tests.Helpers
 
 			album.Description.IsNormalized().Should().BeTrue();
 
-			this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+			var res = SerializeToObjectAndBack(album);
+
+			res.Description.Should().Be(name, "string is intact");
 		}
 
 		[TestMethod]
@@ -87,7 +89,9 @@ namespace VocaDb.Tests.Helpers
 
 			album.Description.IsNormalized().Should().BeTrue();
 
-			this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+			var res = SerializeToObjectAndBack(album);
+
+			res.Description.Should().Be(name, "string is intact");
 		}
 	}
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -11,7 +9,7 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public static class XmlHelper
 	{
-		public static string GetNodeTextOrEmpty(XElement node)
+		public static string GetNodeTextOrEmpty(XElement? node)
 		{
 			if (node == null)
 				return string.Empty;
@@ -24,7 +22,6 @@ namespace VocaDb.Model.Helpers
 			return GetNodeTextOrEmpty(doc.XPathSelectElement(xpath));
 		}
 
-#nullable enable
 		/// <summary>
 		/// Serializes an object to a string in UTF-8 format, 
 		/// including the XML declaration.
@@ -48,7 +45,6 @@ namespace VocaDb.Model.Helpers
 				}
 			}
 		}
-#nullable disable
 
 		/// <summary>
 		/// Serializes an object to a string in UTF-8 format, 
@@ -71,7 +67,7 @@ namespace VocaDb.Model.Helpers
 		/// <returns>The object serialized as XML document. Cannot be null.</returns>
 		/// <exception cref="XmlException">If the serialization failed. This could happen if the object contains illegal characters.</exception>
 		/// <remarks>Some illegal characters are sanitized from the object, for example 0x02 (STX).</remarks>
-		public static XDocument SerializeToXml<T>(T obj)
+		public static XDocument SerializeToXml<T>(T? obj)
 		{
 			var serializer = new XmlSerializer(typeof(T));
 			XDocument doc;
@@ -96,27 +92,25 @@ namespace VocaDb.Model.Helpers
 			return doc;
 		}
 
-#nullable enable
 		/// <summary>
 		/// Deserializes an object from XML.
 		/// </summary>
 		/// <typeparam name="T">Type of the object to be deserialized.</typeparam>
 		/// <param name="doc">XML document containing the serialized object. Cannot be null.</param>
 		/// <returns>The deserialized object.</returns>
-		public static T DeserializeFromXml<T>(XDocument doc)
+		public static T? DeserializeFromXml<T>(XDocument doc)
 		{
 			ParamIs.NotNull(() => doc);
 
 			var serializer = new XmlSerializer(typeof(T));
-			T obj;
+			T? obj;
 
 			using (var reader = doc.CreateReader())
 			{
-				obj = (T)serializer.Deserialize(reader);
+				obj = (T?)serializer.Deserialize(reader);
 			}
 
 			return obj;
 		}
-#nullable disable
 	}
 }
