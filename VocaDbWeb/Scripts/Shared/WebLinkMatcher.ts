@@ -122,6 +122,7 @@ export default class WebLinkMatcher {
 			desc: 'fasic',
 			cat: WebLinkCategory.Commercial,
 		} /* UtaiteDB */,
+		{ url: 'utaudatabase.wiki.fc2.com/', desc: 'UTAU Visual Archive', cat: WebLinkCategory.Reference },
 		{ url: '.web.fc2.com', desc: 'Website', cat: WebLinkCategory.Official },
 		{ url: '.fc2.com', desc: 'Blog', cat: WebLinkCategory.Official },
 		{
@@ -516,12 +517,12 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'utau.wikia.com/wiki/',
-			desc: 'UTAU Wiki',
+			desc: 'UTAU Wiki (ENG)',
 			cat: WebLinkCategory.Reference,
 		},
 		{
 			url: 'utau.fandom.com/wiki/',
-			desc: 'UTAU Wiki',
+			desc: 'UTAU Wiki (ENG)',
 			cat: WebLinkCategory.Reference,
 		},
 		{
