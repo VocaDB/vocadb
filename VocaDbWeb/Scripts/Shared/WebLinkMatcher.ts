@@ -700,6 +700,11 @@ export default class WebLinkMatcher {
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'fanbox.cc',
+			desc: 'Pixiv Fanbox',
+			cat: WebLinkCategory.Official,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
