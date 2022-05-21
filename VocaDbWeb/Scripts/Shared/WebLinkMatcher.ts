@@ -705,6 +705,16 @@ export default class WebLinkMatcher {
 			desc: 'Pixiv Fanbox',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'mmdelight.blogspot.com',
+			desc: 'MMDownload',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'blogspot',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
