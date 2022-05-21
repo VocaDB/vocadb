@@ -5,6 +5,7 @@ import EntryType from '@Models/EntryType';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import FollowedArtistsStore from '@Stores/User/FollowedArtistsStore';
 import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -19,7 +20,6 @@ import EntryCountBox from '../Shared/Partials/EntryCountBox';
 import ServerSidePaging from '../Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '../Shared/Partials/Shared/DraftIcon';
 import TagFilters from '../Shared/Partials/TagFilters';
-import useStoreWithPaging from '../useStoreWithPaging';
 import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface FollowedArtistsProps {
@@ -34,7 +34,7 @@ const FollowedArtists = observer(
 			'VocaDb.Model.Resources',
 		]);
 
-		useStoreWithPaging(followedArtistsStore);
+		useStoreWithPagination(followedArtistsStore);
 
 		return (
 			<>

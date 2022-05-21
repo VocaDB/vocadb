@@ -89,7 +89,7 @@ export interface SongSearchRouteParams {
 }
 
 export default class SongSearchStore
-	extends SearchCategoryBaseStore<ISongSearchItem>
+	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
 	implements ISongSearchStore, ISongsAdapterStore {
 	public readonly artistFilters: ArtistFilters;
 	@observable public dateDay?: number = undefined;

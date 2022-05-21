@@ -2,7 +2,6 @@ import SafeAnchor from '@Bootstrap/SafeAnchor';
 import Layout from '@Components/Shared/Layout';
 import SongListsKnockout from '@Components/Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
-import useStoreWithUpdateResults from '@Components/useStoreWithUpdateResults';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import LoginManager from '@Models/LoginManager';
@@ -13,6 +12,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import FeaturedSongListsStore, {
 	SongListFeaturedCategory,
 } from '@Stores/SongList/FeaturedSongListsStore';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

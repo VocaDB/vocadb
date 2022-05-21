@@ -40,7 +40,10 @@ export interface EventSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class EventSearchStore extends SearchCategoryBaseStore<ReleaseEventContract> {
+export default class EventSearchStore extends SearchCategoryBaseStore<
+	EventSearchRouteParams,
+	ReleaseEventContract
+> {
 	@observable public afterDate?: Date = undefined;
 	@observable public allowAliases = false;
 	public readonly artistFilters: ArtistFilters;

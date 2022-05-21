@@ -54,6 +54,7 @@
     "dependencies": {
         "@emotion/react": "^11.8.2",
         "@restart/ui": "^0.2.3",
+        "@vocadb/route-sphere": "^1.0.0-rc.1",
         "ajv": "^8.6.2",
         "ajv-formats": "^2.1.1",
         "axios": "^0.21.2",

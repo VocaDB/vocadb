@@ -1,7 +1,7 @@
 import AlbumSearchList from '@Components/Search/Partials/AlbumSearchList';
-import useStoreWithPaging from '@Components/useStoreWithPaging';
 import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
 import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useParams } from 'react-router';
@@ -27,7 +27,7 @@ const ArtistCollaborationAlbums = observer(
 			];
 		}, [id, artistDetailsStore]);
 
-		useStoreWithPaging(artistDetailsStore.collaborationAlbumsStore);
+		useStoreWithPagination(artistDetailsStore.collaborationAlbumsStore);
 
 		return (
 			<ArtistDetailsTabs

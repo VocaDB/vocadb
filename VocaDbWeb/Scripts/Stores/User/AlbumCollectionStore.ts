@@ -1,5 +1,4 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract, {
@@ -17,6 +16,7 @@ import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
 import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -27,7 +27,6 @@ import {
 	runInAction,
 } from 'mobx';
 
-import IStoreWithPaging from '../IStoreWithPaging';
 import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
 
 interface AlbumCollectionRouteParams {
@@ -53,7 +52,7 @@ const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumColle
 const validate = ajv.compile(schema);
 
 export default class AlbumCollectionStore
-	implements IStoreWithPaging<AlbumCollectionRouteParams> {
+	implements StoreWithPagination<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;
@@ -123,7 +122,9 @@ export default class AlbumCollectionStore
 		return ratings;
 	};
 
-	@action public updateResults = (clearResults: boolean = true): void => {
+	@action public updateResults = async (
+		clearResults: boolean = true,
+	): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -132,32 +133,30 @@ export default class AlbumCollectionStore
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
-		this.userRepo
-			.getAlbumCollectionList({
-				userId: this.userId,
-				paging: pagingProperties,
-				lang: this.values.languagePreference,
-				query: this.searchTerm,
-				tag: this.tagId,
-				albumType: this.albumType,
-				artistId: this.artist.id,
-				purchaseStatuses: this.collectionStatus,
-				releaseEventId: this.releaseEvent.id,
-				advancedFilters: this.advancedFilters.filters,
-				sort: this.sort,
-				mediaType: this.mediaType,
-			})
-			.then((result: PartialFindResultContract<AlbumForUserForApiContract>) => {
-				this.pauseNotifications = false;
+		const result = await this.userRepo.getAlbumCollectionList({
+			userId: this.userId,
+			paging: pagingProperties,
+			lang: this.values.languagePreference,
+			query: this.searchTerm,
+			tag: this.tagId,
+			albumType: this.albumType,
+			artistId: this.artist.id,
+			purchaseStatuses: this.collectionStatus,
+			releaseEventId: this.releaseEvent.id,
+			advancedFilters: this.advancedFilters.filters,
+			sort: this.sort,
+			mediaType: this.mediaType,
+		});
 
-				runInAction(() => {
-					if (pagingProperties.getTotalCount)
-						this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-					this.page = result.items;
-					this.loading = false;
-				});
-			});
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+
+			this.page = result.items;
+			this.loading = false;
+		});
 	};
 
 	public popState = false;
@@ -213,5 +212,11 @@ export default class AlbumCollectionStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is AlbumCollectionRouteParams => validate(data);
+	): data is AlbumCollectionRouteParams => {
+		return validate(data);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

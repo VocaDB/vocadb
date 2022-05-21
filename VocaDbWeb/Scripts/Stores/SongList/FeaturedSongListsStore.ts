@@ -3,7 +3,7 @@ import SongListContract from '@DataContracts/Song/SongListContract';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
+import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
@@ -67,7 +67,7 @@ const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./Featured
 const validate = ajv.compile(schema);
 
 export default class FeaturedSongListsStore
-	implements IStoreWithUpdateResults<FeaturedSongListsRouteParams> {
+	implements StoreWithUpdateResults<FeaturedSongListsRouteParams> {
 	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
 	@observable public category = SongListFeaturedCategory.Concerts;
 
@@ -130,17 +130,19 @@ export default class FeaturedSongListsStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is FeaturedSongListsRouteParams => validate(data);
+	): data is FeaturedSongListsRouteParams => {
+		return validate(data);
+	};
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.currentCategoryStore.clear().then(() => {
-			this.pauseNotifications = false;
-		});
+		await this.currentCategoryStore.clear();
+
+		this.pauseNotifications = false;
 	};
 }

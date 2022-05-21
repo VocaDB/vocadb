@@ -3,6 +3,7 @@ import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -11,7 +12,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useStoreWithUpdateResults from '../useStoreWithUpdateResults';
 import { userLanguageCultures } from '../userLanguageCultures';
 import { SongDetailsTabs } from './SongDetailsRoutes';
 

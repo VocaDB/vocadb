@@ -7,9 +7,9 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import IStoreWithUpdateResults from '@Stores/IStoreWithUpdateResults';
 import { ISongSearchItem } from '@Stores/Search/SongSearchStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -28,7 +28,7 @@ const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRoutePara
 const validate = ajv.compile(schema);
 
 export default class RankingsStore
-	implements IStoreWithUpdateResults<RankingsRouteParams> {
+	implements StoreWithUpdateResults<RankingsRouteParams> {
 	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
 	@observable public durationHours?: number;
 	private readonly pvServiceIcons: PVServiceIcons;
@@ -111,18 +111,19 @@ export default class RankingsStore
 		this.vocalistSelection = value.vocalistSelection;
 	}
 
-	public validateRouteParams = (data: any): data is RankingsRouteParams =>
-		validate(data);
+	public validateRouteParams = (data: any): data is RankingsRouteParams => {
+		return validate(data);
+	};
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.getSongs().then(() => {
-			this.pauseNotifications = false;
-		});
+		await this.getSongs();
+
+		this.pauseNotifications = false;
 	};
 }

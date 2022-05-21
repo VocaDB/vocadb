@@ -9,6 +9,7 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
 import AlbumCollectionStore from '@Stores/User/AlbumCollectionStore';
 import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -27,7 +28,6 @@ import ServerSidePaging from '../Shared/Partials/Knockout/ServerSidePaging';
 import TagLockingAutoComplete from '../Shared/Partials/Knockout/TagLockingAutoComplete';
 import { AlbumAdvancedFilters } from '../Shared/Partials/Search/AdvancedFilters';
 import DraftIcon from '../Shared/Partials/Shared/DraftIcon';
-import useStoreWithPaging from '../useStoreWithPaging';
 import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface AlbumCollectionProps {
@@ -44,7 +44,7 @@ const AlbumCollection = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useStoreWithPaging(albumCollectionStore);
+		useStoreWithPagination(albumCollectionStore);
 
 		return (
 			<>

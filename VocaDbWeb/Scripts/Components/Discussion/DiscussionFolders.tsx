@@ -1,7 +1,7 @@
 import Breadcrumb from '@Bootstrap/Breadcrumb';
-import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ const DiscussionFolders = observer(
 			discussionIndexStore.selectFolderById(Number(folderId));
 		}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
 
-		useStoreWithPaging(discussionIndexStore);
+		useStoreWithPagination(discussionIndexStore);
 
 		React.useEffect(() => {
 			discussionIndexStore.updateResults(true);

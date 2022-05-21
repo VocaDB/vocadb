@@ -2,6 +2,7 @@ import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApi
 import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -12,9 +13,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
 import ArtistType from '../../Models/Artists/ArtistType';
-import IStoreWithPaging from '../IStoreWithPaging';
 import TagFilters from '../Search/TagFilters';
 import ServerSidePagingStore from '../ServerSidePagingStore';
 
@@ -33,7 +32,7 @@ const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedAr
 const validate = ajv.compile(schema);
 
 export default class FollowedArtistsStore
-	implements IStoreWithPaging<FollowedArtistsRouteParams> {
+	implements StoreWithPagination<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
@@ -62,7 +61,7 @@ export default class FollowedArtistsStore
 
 	public pauseNotifications = false;
 
-	@action public updateResults = (clearResults = true): void => {
+	@action public updateResults = async (clearResults = true): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -71,27 +70,23 @@ export default class FollowedArtistsStore
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
-		this.userRepo
-			.getFollowedArtistsList({
-				userId: this.userId,
-				paging: pagingProperties,
-				lang: this.values.languagePreference,
-				tagIds: this.tagFilters.tagIds,
-				artistType: this.artistType,
-			})
-			.then(
-				(result: PartialFindResultContract<ArtistForUserForApiContract>) => {
-					this.pauseNotifications = false;
+		const result = await this.userRepo.getFollowedArtistsList({
+			userId: this.userId,
+			paging: pagingProperties,
+			lang: this.values.languagePreference,
+			tagIds: this.tagFilters.tagIds,
+			artistType: this.artistType,
+		});
 
-					runInAction(() => {
-						if (pagingProperties.getTotalCount)
-							this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-						this.page = result.items;
-						this.loading = false;
-					});
-				},
-			);
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+
+			this.page = result.items;
+			this.loading = false;
+		});
 	};
 
 	public popState = false;
@@ -119,5 +114,11 @@ export default class FollowedArtistsStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is FollowedArtistsRouteParams => validate(data);
+	): data is FollowedArtistsRouteParams => {
+		return validate(data);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

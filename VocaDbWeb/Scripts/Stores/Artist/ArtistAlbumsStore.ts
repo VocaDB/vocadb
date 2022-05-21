@@ -1,10 +1,10 @@
 import AlbumRepository from '@Repositories/AlbumRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import AlbumSearchStore, {
 	AlbumSortRule,
 } from '@Stores/Search/AlbumSearchStore';
 import CommonSearchStore from '@Stores/Search/CommonSearchStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
 export interface ArtistAlbumsRouteParams {
@@ -23,7 +23,7 @@ const validate = ajv.compile(schema);
 
 export default class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements IStoreWithPaging<ArtistAlbumsRouteParams> {
+	implements StoreWithPagination<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -57,7 +57,6 @@ export default class ArtistAlbumsStore
 	}
 
 	public validateRouteParams = (data: any): data is ArtistAlbumsRouteParams => {
-		if (validate(data)) return true;
-		return false;
+		return validate(data);
 	};
 }

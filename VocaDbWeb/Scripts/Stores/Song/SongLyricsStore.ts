@@ -1,9 +1,8 @@
 import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import SongRepository from '@Repositories/SongRepository';
+import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
-
-import IStoreWithUpdateResults from '../IStoreWithUpdateResults';
 
 interface SongLyricsRouteParams {
 	albumId?: number;
@@ -18,7 +17,7 @@ const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRoute
 const validate = ajv.compile(schema);
 
 export default class SongLyricsStore
-	implements IStoreWithUpdateResults<SongLyricsRouteParams> {
+	implements StoreWithUpdateResults<SongLyricsRouteParams> {
 	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;
 	@observable public selectedLyricsId: number;
@@ -46,29 +45,28 @@ export default class SongLyricsStore
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 
-	public validateRouteParams = (data: any): data is SongLyricsRouteParams =>
-		validate(data);
+	public validateRouteParams = (data: any): data is SongLyricsRouteParams => {
+		return validate(data);
+	};
 
 	public clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.songRepo
-			.getLyrics({
-				lyricsId: this.selectedLyricsId,
-				songVersion: this.songVersion,
-			})
-			.then((lyrics) => {
-				this.pauseNotifications = false;
+		const lyrics = await this.songRepo.getLyrics({
+			lyricsId: this.selectedLyricsId,
+			songVersion: this.songVersion,
+		});
 
-				runInAction(() => {
-					this.selectedLyrics = lyrics;
-				});
-			});
+		this.pauseNotifications = false;
+
+		runInAction(() => {
+			this.selectedLyrics = lyrics;
+		});
 	};
 }
