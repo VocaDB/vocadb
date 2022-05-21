@@ -21,7 +21,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import AdvancedSearchFilter from '@Stores/Search/AdvancedSearchFilter';
@@ -38,6 +37,7 @@ import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import TagListStore from '@Stores/Tag/TagListStore';
 import TagsEditStore from '@Stores/Tag/TagsEditStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -74,7 +74,7 @@ const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRoutePara
 const validate = ajv.compile(schema);
 
 export default class SongListStore
-	implements ISongListStore, IStoreWithPaging<SongListRouteParams> {
+	implements ISongListStore, StoreWithPagination<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;
 	public readonly comments: EditableCommentsStore;
@@ -247,8 +247,9 @@ export default class SongListStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (data: any): data is SongListRouteParams =>
-		validate(data);
+	public validateRouteParams = (data: any): data is SongListRouteParams => {
+		return validate(data);
+	};
 
 	private loadResults = (
 		pagingProperties: PagingProperties,
@@ -284,7 +285,9 @@ export default class SongListStore
 		}
 	};
 
-	@action public updateResults = (clearResults: boolean): void => {
+	@action public updateResults = async (
+		clearResults: boolean,
+	): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -293,36 +296,45 @@ export default class SongListStore
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
-		this.loadResults(pagingProperties).then((result) => {
-			_.each(result.items, (item) => {
-				const song = item.song;
-				const songAny: any = song;
+		const result = await this.loadResults(pagingProperties);
 
-				if (song.pvServices && song.pvServices !== 'Nothing') {
-					songAny.previewStore = new SongWithPreviewStore(
-						this.songRepo,
-						this.userRepo,
-						song.id,
-						song.pvServices,
-					);
-					// TODO: songAny.previewViewModel.ratingComplete = ui.showThankYouForRatingMessage;
-				} else {
-					songAny.previewStore = undefined;
-				}
-			});
+		_.each(result.items, (item) => {
+			const song = item.song;
+			const songAny: any = song;
 
-			this.pauseNotifications = false;
+			if (song.pvServices && song.pvServices !== 'Nothing') {
+				songAny.previewStore = new SongWithPreviewStore(
+					this.songRepo,
+					this.userRepo,
+					song.id,
+					song.pvServices,
+				);
+				// TODO: songAny.previewViewModel.ratingComplete = ui.showThankYouForRatingMessage;
+			} else {
+				songAny.previewStore = undefined;
+			}
+		});
 
-			runInAction(() => {
-				if (pagingProperties.getTotalCount)
-					this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-				this.page = result.items;
-				this.loading = false;
-			});
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+
+			this.page = result.items;
+			this.loading = false;
 		});
 	};
 
-	public updateResultsWithTotalCount = (): void => this.updateResults(true);
-	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.updateResults(true);
+	};
+
+	public updateResultsWithoutTotalCount = (): Promise<void> => {
+		return this.updateResults(false);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

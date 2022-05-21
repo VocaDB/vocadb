@@ -10,6 +10,7 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
@@ -17,7 +18,6 @@ import { makeObservable, observable, reaction, runInAction } from 'mobx';
 import HighchartsHelper from '../../Helpers/HighchartsHelper';
 import DeleteEntryStore from '../DeleteEntryStore';
 import EditableCommentsStore from '../EditableCommentsStore';
-import IStoreWithUpdateResults from '../IStoreWithUpdateResults';
 import SongListsBaseStore, {
 	SongListSortRule,
 } from '../SongList/SongListsBaseStore';
@@ -40,7 +40,7 @@ const validate = ajv.compile(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements IStoreWithUpdateResults<UserSongListsRouteParams> {
+	implements StoreWithUpdateResults<UserSongListsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		private readonly userId: number,
@@ -71,19 +71,22 @@ export class UserSongListsStore
 		'tagId',
 	];
 
-	public validateRouteParams = (data: any): data is UserSongListsRouteParams =>
-		validate(data);
+	public validateRouteParams = (
+		data: any,
+	): data is UserSongListsRouteParams => {
+		return validate(data);
+	};
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.clear().then(() => {
-			this.pauseNotifications = false;
-		});
+		await this.clear();
+
+		this.pauseNotifications = false;
 	};
 }
 

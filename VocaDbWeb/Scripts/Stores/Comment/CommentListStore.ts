@@ -7,6 +7,7 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -18,7 +19,6 @@ import {
 } from 'mobx';
 
 import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import IStoreWithUpdateResults from '../IStoreWithUpdateResults';
 
 export enum CommentSortRule {
 	CreateDateDescending = 'CreateDateDescending',
@@ -48,7 +48,7 @@ const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRou
 const validate = ajv.compile(schema);
 
 export default class CommentListStore
-	implements IStoreWithUpdateResults<CommentListRouteParams> {
+	implements StoreWithUpdateResults<CommentListRouteParams> {
 	@observable public entries: EntryWithCommentsContract[] = [];
 	@observable public entryType = EntryType[EntryType.Undefined];
 	@observable public lastEntryDate?: Date;
@@ -150,13 +150,13 @@ export default class CommentListStore
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.clear().then(() => {
-			this.pauseNotifications = false;
-		});
+		await this.clear();
+
+		this.pauseNotifications = false;
 	};
 }

@@ -2,10 +2,10 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import CommonSearchStore from '@Stores/Search/CommonSearchStore';
 import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
 export interface ArtistSongsRouteParams {
@@ -24,7 +24,7 @@ const validate = ajv.compile(schema);
 
 export default class ArtistSongsStore
 	extends SongSearchStore
-	implements IStoreWithPaging<ArtistSongsRouteParams> {
+	implements StoreWithPagination<ArtistSongsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,
@@ -69,7 +69,6 @@ export default class ArtistSongsStore
 	}
 
 	public validateRouteParams = (data: any): data is ArtistSongsRouteParams => {
-		if (validate(data)) return true;
-		return false;
+		return validate(data);
 	};
 }

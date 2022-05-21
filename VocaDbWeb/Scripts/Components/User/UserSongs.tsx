@@ -1,8 +1,8 @@
 import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
 import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import React from 'react';
 
-import useStoreWithPaging from '../useStoreWithPaging';
 import RatedSongs from './Partials/RatedSongs';
 import { UserDetailsNav } from './UserDetailsRoutes';
 
@@ -19,7 +19,7 @@ const UserSongs = ({
 		userDetailsStore.ratedSongsStore.init();
 	}, [userDetailsStore]);
 
-	useStoreWithPaging(userDetailsStore.ratedSongsStore);
+	useStoreWithPagination(userDetailsStore.ratedSongsStore);
 
 	return (
 		<>

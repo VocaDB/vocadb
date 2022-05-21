@@ -26,7 +26,10 @@ export interface TagSearchRouteParams {
 	sort?: TagSortRule;
 }
 
-export default class TagSearchStore extends SearchCategoryBaseStore<TagApiContract> {
+export default class TagSearchStore extends SearchCategoryBaseStore<
+	TagSearchRouteParams,
+	TagApiContract
+> {
 	@observable public allowAliases = false;
 	@observable public categoryName?: string;
 	@observable public sort = TagSortRule.Name;

@@ -4,13 +4,13 @@ import LoginManager from '@Models/LoginManager';
 import UserDetailsStore, {
 	UserSongListsStore,
 } from '@Stores/User/UserDetailsStore';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import SongListsKnockout from '../Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '../Shared/Partials/SongListsFilters';
-import useStoreWithUpdateResults from '../useStoreWithUpdateResults';
 import { UserDetailsNav } from './UserDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);

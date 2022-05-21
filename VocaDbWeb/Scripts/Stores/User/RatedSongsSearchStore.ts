@@ -1,8 +1,6 @@
 import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
@@ -16,6 +14,7 @@ import TagFilters from '@Stores/Search/TagFilters';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@Stores/SongList/SongListsBaseStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -28,7 +27,6 @@ import {
 } from 'mobx';
 import moment from 'moment';
 
-import IStoreWithPaging from '../IStoreWithPaging';
 import PVPlayerStore from '../PVs/PVPlayerStore';
 import PVPlayersFactory from '../PVs/PVPlayersFactory';
 import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
@@ -78,7 +76,7 @@ const validate = ajv.compile(schema);
 
 export default class RatedSongsSearchStore
 	implements
-		IStoreWithPaging<RatedSongsSearchRouteParams>,
+		StoreWithPagination<RatedSongsSearchRouteParams>,
 		ISongSearchStore,
 		IRatedSongsAdapterStore {
 	public readonly advancedFilters = new AdvancedSearchFilters();
@@ -194,7 +192,9 @@ export default class RatedSongsSearchStore
 
 	public pauseNotifications = false;
 
-	@action public updateResults = (clearResults: boolean = true): void => {
+	@action public updateResults = async (
+		clearResults: boolean = true,
+	): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -213,62 +213,63 @@ export default class RatedSongsSearchStore
 			return;
 		}
 
-		this.userRepo
-			.getRatedSongsList({
-				userId: this.userId,
-				paging: pagingProperties,
-				lang: this.values.languagePreference,
-				query: this.searchTerm,
-				tagIds: this.tagFilters.tagIds,
-				artistIds: this.artistFilters.artistIds,
-				childVoicebanks: this.artistFilters.childVoicebanks,
-				rating: this.rating,
-				songListId: this.songListId,
-				advancedFilters: this.advancedFilters.filters,
-				groupByRating: this.groupByRating,
-				pvServices: undefined,
-				fields: this.fields,
-				sort: this.sort,
-			})
-			.then(
-				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-					var songs: IRatedSongSearchItem[] = [];
+		const result = await this.userRepo.getRatedSongsList({
+			userId: this.userId,
+			paging: pagingProperties,
+			lang: this.values.languagePreference,
+			query: this.searchTerm,
+			tagIds: this.tagFilters.tagIds,
+			artistIds: this.artistFilters.artistIds,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			rating: this.rating,
+			songListId: this.songListId,
+			advancedFilters: this.advancedFilters.filters,
+			groupByRating: this.groupByRating,
+			pvServices: undefined,
+			fields: this.fields,
+			sort: this.sort,
+		});
 
-					_.each(result.items, (item) => {
-						const song: IRatedSongSearchItem = item.song!;
+		var songs: IRatedSongSearchItem[] = [];
 
-						song.rating = item.rating;
+		_.each(result.items, (item) => {
+			const song: IRatedSongSearchItem = item.song!;
 
-						if (song.pvServices && song.pvServices !== 'Nothing') {
-							song.previewStore = new SongWithPreviewStore(
-								this.songRepo,
-								this.userRepo,
-								song.id,
-								song.pvServices,
-							);
-							// TODO: song.previewStore.ratingComplete =
-						} else {
-							song.previewStore = undefined;
-						}
+			song.rating = item.rating;
 
-						songs.push(song);
-					});
+			if (song.pvServices && song.pvServices !== 'Nothing') {
+				song.previewStore = new SongWithPreviewStore(
+					this.songRepo,
+					this.userRepo,
+					song.id,
+					song.pvServices,
+				);
+				// TODO: song.previewStore.ratingComplete =
+			} else {
+				song.previewStore = undefined;
+			}
 
-					this.pauseNotifications = false;
+			songs.push(song);
+		});
 
-					runInAction(() => {
-						if (pagingProperties.getTotalCount)
-							this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-						this.page = songs;
-						this.loading = false;
-					});
-				},
-			);
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+
+			this.page = songs;
+			this.loading = false;
+		});
 	};
 
-	public updateResultsWithTotalCount = (): void => this.updateResults(true);
-	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.updateResults(true);
+	};
+
+	public updateResultsWithoutTotalCount = (): Promise<void> => {
+		return this.updateResults(false);
+	};
 
 	public popState = false;
 
@@ -337,5 +338,11 @@ export default class RatedSongsSearchStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is RatedSongsSearchRouteParams => validate(data);
+	): data is RatedSongsSearchRouteParams => {
+		return validate(data);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

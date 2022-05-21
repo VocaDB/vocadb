@@ -6,6 +6,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import CommentListStore, {
 	CommentSortRule,
 } from '@Stores/Comment/CommentListStore';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -19,7 +20,6 @@ import CommentEntryItem from '../Shared/Partials/Comment/CommentEntryItem';
 import Dropdown from '../Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '../Shared/Partials/Knockout/DropdownList';
 import UserLockingAutoComplete from '../Shared/Partials/Knockout/UserLockingAutoComplete';
-import useStoreWithUpdateResults from '../useStoreWithUpdateResults';
 import useVocaDbTitle from '../useVocaDbTitle';
 
 const loginManager = new LoginManager(vdb.values);
