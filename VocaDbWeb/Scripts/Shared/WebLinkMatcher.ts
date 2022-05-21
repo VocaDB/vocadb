@@ -275,6 +275,16 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'seiga.nicovideo.jp/',
+			desc: 'NicoNicoSeiga',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'commons.nicovideo.jp/',
+			desc: 'Nicommons',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'chokuhan.nicovideo.jp/',
 			desc: 'NicoNico Chokuhan',
 			cat: WebLinkCategory.Commercial,
@@ -370,12 +380,12 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'linkco.re/',
-			desc: 'TuneCore',
-			cat: WebLinkCategory.Reference,
+			desc: 'TuneCore Japan',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'tunecore.co.jp/',
-			desc: 'TuneCore',
+			desc: 'TuneCore Japan',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -402,16 +412,6 @@ export default class WebLinkMatcher {
 			url: 'www.deezer.com/',
 			desc: 'Deezer',
 			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'seiga.nicovideo.jp/',
-			desc: 'NicoNicoSeiga',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'commons.nicovideo.jp/',
-			desc: 'Nicommons',
-			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'linktr.ee/',
@@ -678,6 +678,26 @@ export default class WebLinkMatcher {
 		{
 			url: 'youtube.com/user/',
 			desc: 'YouTube Channel',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jimdofree.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jimdo.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'seesaa.net',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jugem.jp',
+			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
 	];
