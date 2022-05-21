@@ -9,9 +9,9 @@ import TagRepository from '@Repositories/TagRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
 import {
@@ -62,7 +62,7 @@ const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.s
 const validate = ajv.compile(schema);
 
 export default class SearchStore
-	implements ICommonSearchStore, IStoreWithPaging<SearchRouteParams> {
+	implements ICommonSearchStore, StoreWithPagination<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -174,26 +174,30 @@ export default class SearchStore
 
 	private getCategoryStore = (
 		searchType: SearchType,
-	): ISearchCategoryBaseStore => {
+	): ISearchCategoryBaseStore<SearchRouteParams> => {
 		switch (searchType) {
 			case SearchType.Anything:
-				return this.anythingSearchStore;
+				return this
+					.anythingSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 			case SearchType.Artist:
-				return this.artistSearchStore;
+				return this
+					.artistSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 			case SearchType.Album:
-				return this.albumSearchStore;
+				return this
+					.albumSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 			case SearchType.ReleaseEvent:
-				return this.eventSearchStore;
+				return this
+					.eventSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 			case SearchType.Song:
-				return this.songSearchStore;
+				return this
+					.songSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 			case SearchType.Tag:
-				return this.tagSearchStore;
-			default:
-				throw new Error(`Invalid searchType: ${searchType}`);
+				return this
+					.tagSearchStore as ISearchCategoryBaseStore<SearchRouteParams>;
 		}
 	};
 
-	public get currentCategoryStore(): ISearchCategoryBaseStore {
+	public get currentCategoryStore(): ISearchCategoryBaseStore<SearchRouteParams> {
 		return this.getCategoryStore(this.searchType);
 	}
 
@@ -203,7 +207,7 @@ export default class SearchStore
 		return this.currentCategoryStore.paging;
 	}
 
-	public get clearResultsByQueryKeys(): string[] {
+	public get clearResultsByQueryKeys(): (keyof SearchRouteParams)[] {
 		return this.currentCategoryStore.clearResultsByQueryKeys;
 	}
 
@@ -216,12 +220,19 @@ export default class SearchStore
 		this.currentCategoryStore.routeParams = value;
 	}
 
-	public validateRouteParams = (data: any): data is SearchRouteParams =>
-		validate(data);
+	public validateRouteParams = (data: any): data is SearchRouteParams => {
+		return validate(data);
+	};
 
-	public updateResults = (clearResults: boolean): void =>
-		this.currentCategoryStore.updateResults(clearResults);
+	public updateResults = (clearResults: boolean): Promise<void> => {
+		return this.currentCategoryStore.updateResults(clearResults);
+	};
 
-	public updateResultsWithTotalCount = (): void =>
-		this.currentCategoryStore.updateResultsWithTotalCount();
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.currentCategoryStore.updateResultsWithTotalCount();
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

@@ -243,9 +243,9 @@ const UserOverview = observer(
 						<br />
 						<span>
 							{canSeeDetailedStats ? (
-								<a href={`/Comment?${qs.stringify({ userId: user.id })}`}>
+								<Link to={`/Comment?${qs.stringify({ userId: user.id })}`}>
 									{commentText}
-								</a>
+								</Link>
 							) : (
 								commentText
 							)}

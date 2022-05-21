@@ -2,8 +2,8 @@ import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolder
 import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
 import LoginManager from '@Models/LoginManager';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -30,7 +30,7 @@ const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export default class DiscussionIndexStore
-	implements IStoreWithPaging<DiscussionIndexRouteParams> {
+	implements StoreWithPagination<DiscussionIndexRouteParams> {
 	@observable public folders: DiscussionFolderContract[] = [];
 	@observable public newTopic: DiscussionTopicEditStore;
 	public readonly paging = new ServerSidePagingStore(30); // Paging store
@@ -186,17 +186,23 @@ export default class DiscussionIndexStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is DiscussionIndexRouteParams => validate(data);
+	): data is DiscussionIndexRouteParams => {
+		return validate(data);
+	};
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
-		this.loadTopicsForCurrentFolder().then(() => {
-			this.pauseNotifications = false;
-		});
+		await this.loadTopicsForCurrentFolder();
+
+		this.pauseNotifications = false;
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
 	};
 }

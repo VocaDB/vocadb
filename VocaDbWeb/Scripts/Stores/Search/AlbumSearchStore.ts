@@ -46,7 +46,10 @@ export interface AlbumSearchRouteParams {
 	viewMode?: string /* TODO: enum */;
 }
 
-export default class AlbumSearchStore extends SearchCategoryBaseStore<AlbumContract> {
+export default class AlbumSearchStore extends SearchCategoryBaseStore<
+	AlbumSearchRouteParams,
+	AlbumContract
+> {
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artistFilters: ArtistFilters;
 	@observable public sort = AlbumSortRule.Name;

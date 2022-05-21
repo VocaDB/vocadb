@@ -22,7 +22,6 @@ import SongTypeLabel from '@Components/Shared/Partials/Song/SongTypeLabel';
 import SongTypesDropdownKnockout from '@Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import TagList from '@Components/Shared/Partials/TagList';
 import TagsEdit from '@Components/Shared/Partials/TagsEdit';
-import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import UrlHelper from '@Helpers/UrlHelper';
@@ -43,6 +42,7 @@ import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@Stores/Search/SongSearchStore';
 import SongListStore from '@Stores/SongList/SongListStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -122,7 +122,7 @@ const SongListDetailsLayout = observer(
 
 		useVocaDbTitle(pageTitle, ready);
 
-		useStoreWithPaging(songListStore);
+		useStoreWithPagination(songListStore);
 
 		const smallThumbUrl = UrlHelper.imageThumb(
 			songList.mainPicture,

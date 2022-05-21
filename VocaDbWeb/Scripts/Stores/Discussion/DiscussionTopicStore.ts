@@ -3,7 +3,7 @@ import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicCo
 import LoginManager from '@Models/LoginManager';
 import DiscussionRepository from '@Repositories/DiscussionRepository';
 import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import IStoreWithRouteParams from '@Stores/IStoreWithRouteParams';
+import { StoreWithRouteParams } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -27,7 +27,7 @@ const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export default class DiscussionTopicStore
-	implements IStoreWithRouteParams<DiscussionTopicRouteParams> {
+	implements StoreWithRouteParams<DiscussionTopicRouteParams> {
 	@observable public comments: EditableCommentsStore;
 	@observable public contract: DiscussionTopicContract;
 	@observable public editStore?: DiscussionTopicEditStore = undefined;
@@ -106,5 +106,7 @@ export default class DiscussionTopicStore
 
 	public validateRouteParams = (
 		data: any,
-	): data is DiscussionTopicRouteParams => validate(data);
+	): data is DiscussionTopicRouteParams => {
+		return validate(data);
+	};
 }

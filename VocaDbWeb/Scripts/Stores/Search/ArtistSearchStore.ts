@@ -39,7 +39,10 @@ export interface ArtistSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class ArtistSearchStore extends SearchCategoryBaseStore<ArtistContract> {
+export default class ArtistSearchStore extends SearchCategoryBaseStore<
+	ArtistSearchRouteParams,
+	ArtistContract
+> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public onlyFollowedByMe = false;
 	@observable public onlyRootVoicebanks = false;

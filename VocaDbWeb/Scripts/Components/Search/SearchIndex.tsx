@@ -9,7 +9,6 @@ import {
 	SongSearchDropdown,
 } from '@Components/Shared/Partials/Knockout/SearchDropdown';
 import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
-import useStoreWithPaging from '@Components/useStoreWithPaging';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -22,6 +21,7 @@ import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
 import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -102,7 +102,7 @@ const SearchIndex = observer(
 
 		useVocaDbTitle(undefined, true);
 
-		useStoreWithPaging(searchStore);
+		useStoreWithPagination(searchStore);
 
 		return (
 			<Layout>

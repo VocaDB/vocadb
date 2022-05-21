@@ -63,7 +63,8 @@ namespace VocaDb.Model.Database.Queries
 			CommentOptionalFields fields = CommentOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			CommentSortRule sortRule = CommentSortRule.CreateDateDescending)
+			CommentSortRule sortRule = CommentSortRule.CreateDateDescending
+		)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 

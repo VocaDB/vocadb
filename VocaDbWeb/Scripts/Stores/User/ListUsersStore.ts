@@ -1,8 +1,8 @@
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserGroup from '@Models/Users/UserGroup';
 import UserRepository from '@Repositories/UserRepository';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -32,7 +32,7 @@ const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRoutePa
 const validate = ajv.compile(schema);
 
 export default class ListUsersStore
-	implements IStoreWithPaging<ListUsersRouteParams> {
+	implements StoreWithPagination<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -81,42 +81,50 @@ export default class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	public validateRouteParams = (data: any): data is ListUsersRouteParams =>
-		validate(data);
+	public validateRouteParams = (data: any): data is ListUsersRouteParams => {
+		return validate(data);
+	};
 
 	private pauseNotifications = false;
 
-	public updateResults = (clearResults: boolean): void => {
+	public updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
-		this.userRepo
-			.getList({
-				paging: pagingProperties,
-				query: this.searchTerm,
-				sort: this.sort,
-				groups: this.group,
-				includeDisabled: this.disabledUsers,
-				onlyVerified: this.onlyVerifiedArtists,
-				knowsLanguage: this.knowsLanguage,
-				nameMatchMode: 'Auto' /* TODO: enum */,
-				fields: 'MainPicture' /* TODO: enum */,
-			})
-			.then((result) => {
-				this.pauseNotifications = false;
+		const result = await this.userRepo.getList({
+			paging: pagingProperties,
+			query: this.searchTerm,
+			sort: this.sort,
+			groups: this.group,
+			includeDisabled: this.disabledUsers,
+			onlyVerified: this.onlyVerifiedArtists,
+			knowsLanguage: this.knowsLanguage,
+			nameMatchMode: 'Auto' /* TODO: enum */,
+			fields: 'MainPicture' /* TODO: enum */,
+		});
 
-				runInAction(() => {
-					this.page = result.items;
+		this.pauseNotifications = false;
 
-					if (pagingProperties.getTotalCount)
-						this.paging.totalItems = result.totalCount;
-				});
-			});
+		runInAction(() => {
+			this.page = result.items;
+
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+		});
 	};
 
-	public updateResultsWithTotalCount = (): void => this.updateResults(true);
-	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.updateResults(true);
+	};
+
+	public updateResultsWithoutTotalCount = (): Promise<void> => {
+		return this.updateResults(false);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

@@ -21,7 +21,10 @@ export interface AnythingSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class AnythingSearchStore extends SearchCategoryBaseStore<EntryContract> {
+export default class AnythingSearchStore extends SearchCategoryBaseStore<
+	AnythingSearchRouteParams,
+	EntryContract
+> {
 	public constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,

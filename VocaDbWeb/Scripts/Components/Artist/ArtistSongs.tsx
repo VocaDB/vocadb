@@ -2,9 +2,9 @@ import Button from '@Bootstrap/Button';
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import SongSearchList from '@Components/Search/Partials/SongSearchList';
 import { SongSearchDropdown } from '@Components/Shared/Partials/Knockout/SearchDropdown';
-import useStoreWithPaging from '@Components/useStoreWithPaging';
 import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
 import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -29,7 +29,7 @@ const ArtistSongs = observer(
 			artistDetailsStore.songsStore.artistFilters.artistIds = [Number(id)];
 		}, [id, artistDetailsStore]);
 
-		useStoreWithPaging(artistDetailsStore.songsStore);
+		useStoreWithPagination(artistDetailsStore.songsStore);
 
 		return (
 			<ArtistDetailsTabs

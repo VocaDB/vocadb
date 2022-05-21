@@ -2,8 +2,8 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import IStoreWithPaging from '@Stores/IStoreWithPaging';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { StoreWithPagination } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {
 	action,
@@ -20,18 +20,21 @@ import { ICommonSearchStore } from './CommonSearchStore';
 import { SearchRouteParams } from './SearchStore';
 import TagFilter from './TagFilter';
 
-export interface ISearchCategoryBaseStore
-	extends Omit<
-		IStoreWithPaging<SearchRouteParams>,
+export interface ISearchCategoryBaseStore<
+	TRouteParams extends SearchRouteParams
+> extends Omit<
+		StoreWithPagination<TRouteParams>,
 		'popState' | 'validateRouteParams'
 	> {
-	updateResultsWithTotalCount: () => void;
+	paging: ServerSidePagingStore;
+	updateResultsWithTotalCount: () => Promise<void>;
 }
 
 // Base class for different types of searches.
 export default abstract class SearchCategoryBaseStore<
+	TRouteParams extends SearchRouteParams,
 	TEntry extends EntryWithTagUsagesContract
-> implements ISearchCategoryBaseStore {
+> implements ISearchCategoryBaseStore<TRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	private readonly commonSearchStore: ICommonSearchStore;
 	@observable public loading = true; // Currently loading for data
@@ -125,12 +128,14 @@ export default abstract class SearchCategoryBaseStore<
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public abstract clearResultsByQueryKeys: string[];
-	public abstract routeParams: SearchRouteParams;
+	public abstract clearResultsByQueryKeys: (keyof TRouteParams)[];
+	public abstract routeParams: TRouteParams;
 
 	private pauseNotifications = false;
 
-	@action public updateResults = (clearResults: boolean): void => {
+	@action public updateResults = async (
+		clearResults: boolean,
+	): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -139,39 +144,47 @@ export default abstract class SearchCategoryBaseStore<
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
-		this.loadResults(
+		const result = await this.loadResults(
 			pagingProperties,
 			this.searchTerm,
 			this.tagIds,
 			this.childTags,
 			this.draftsOnly ? 'Draft' : undefined,
-		).then((result) => {
-			if (this.showTags) {
-				_.forEach(result.items, (item) => {
-					if (item.tags) {
-						item.tags = _.take(
-							_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
-							10,
-						);
-					}
-				});
-			}
+		);
 
-			this.pauseNotifications = false;
-
-			runInAction(() => {
-				if (pagingProperties.getTotalCount)
-					this.paging.totalItems = result.totalCount;
-
-				this.page = result.items;
-				this.loading = false;
+		if (this.showTags) {
+			_.forEach(result.items, (item) => {
+				if (item.tags) {
+					item.tags = _.take(
+						_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
+						10,
+					);
+				}
 			});
+		}
+
+		this.pauseNotifications = false;
+
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
+
+			this.page = result.items;
+			this.loading = false;
 		});
 	};
 
 	// Update results loading the first page and updating total number of items.
 	// Commonly this is done after changing the filters or sorting.
-	public updateResultsWithTotalCount = (): void => this.updateResults(true);
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.updateResults(true);
+	};
 
-	public updateResultsWithoutTotalCount = (): void => this.updateResults(false);
+	public updateResultsWithoutTotalCount = (): Promise<void> => {
+		return this.updateResults(false);
+	};
+
+	public onClearResults = (): void => {
+		this.paging.goToFirstPage();
+	};
 }

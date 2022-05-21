@@ -89,7 +89,7 @@ namespace VocaDb.Model.DataContracts.Users
 		/// Can be null.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; init; }
+		public EntryThumbForApiContract? MainPicture { get; init; }
 
 		[DataMember]
 		public string Name { get; set; }
@@ -160,7 +160,7 @@ namespace VocaDb.Model.DataContracts.Users
 				.ToArray();
 
 			Location = user.Options.Location;
-			MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
+			MainPicture = iconFactory.GetUserIcons(user, ImageSizes.All);
 			Name = user.Name;
 			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 
