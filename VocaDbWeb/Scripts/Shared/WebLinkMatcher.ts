@@ -715,6 +715,11 @@ export default class WebLinkMatcher {
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'vocalotracks.ssw.co.jp',
+			desc: 'Vocalotracks',
+			cat: WebLinkCategory.Commercial,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
