@@ -275,6 +275,11 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'nicovideo.jp/watch',
+			desc: 'NicoNicoDouga',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'seiga.nicovideo.jp/',
 			desc: 'NicoNicoSeiga',
 			cat: WebLinkCategory.Official,
@@ -669,6 +674,16 @@ export default class WebLinkMatcher {
 			url: 'music.youtube.com/',
 			desc: 'YouTube Music',
 			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'youtu.be/',
+			desc: 'YouTube',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtube.com/watch',
+			desc: 'YouTube',
+			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'youtube.com/channel/',
