@@ -735,6 +735,11 @@ export default class WebLinkMatcher {
 			desc: 'Vocalotracks',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'twpf.jp',
+			desc: 'Twpf',
+			cat: WebLinkCategory.Official,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
