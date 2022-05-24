@@ -745,6 +745,11 @@ export default class WebLinkMatcher {
 			desc: 'Twpf',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'tiktok.com',
+			desc: 'TikTok',
+			cat: WebLinkCategory.Official,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
