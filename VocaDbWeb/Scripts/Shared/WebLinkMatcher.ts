@@ -676,6 +676,11 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'youtube.com/playlist',
+			desc: 'YouTube Playlist',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'youtu.be/',
 			desc: 'YouTube',
 			cat: WebLinkCategory.Official,
