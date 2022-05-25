@@ -750,6 +750,11 @@ export default class WebLinkMatcher {
 			desc: 'TikTok',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'blog.livedoor.jp',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
