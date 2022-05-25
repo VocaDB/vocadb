@@ -755,6 +755,11 @@ export default class WebLinkMatcher {
 			desc: 'Blog',
 			cat: WebLinkCategory.Official,
 		},
+		{
+			url: 'suzuri.jp',
+			desc: 'Suzuri',
+			cat: WebLinkCategory.Commercial,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
