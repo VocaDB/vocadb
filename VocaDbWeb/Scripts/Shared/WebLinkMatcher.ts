@@ -760,6 +760,11 @@ export default class WebLinkMatcher {
 			desc: 'Suzuri',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'coconala.com',
+			desc: 'Coconala',
+			cat: WebLinkCategory.Commercial,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
