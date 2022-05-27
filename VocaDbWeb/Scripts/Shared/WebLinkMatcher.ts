@@ -275,6 +275,21 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'nicovideo.jp/watch',
+			desc: 'NicoNicoDouga',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'seiga.nicovideo.jp/',
+			desc: 'NicoNicoSeiga',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'commons.nicovideo.jp/',
+			desc: 'Nicommons',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'chokuhan.nicovideo.jp/',
 			desc: 'NicoNico Chokuhan',
 			cat: WebLinkCategory.Commercial,
@@ -370,12 +385,12 @@ export default class WebLinkMatcher {
 		},
 		{
 			url: 'linkco.re/',
-			desc: 'TuneCore',
-			cat: WebLinkCategory.Reference,
+			desc: 'TuneCore Japan',
+			cat: WebLinkCategory.Commercial,
 		},
 		{
 			url: 'tunecore.co.jp/',
-			desc: 'TuneCore',
+			desc: 'TuneCore Japan',
 			cat: WebLinkCategory.Commercial,
 		},
 		{
@@ -402,16 +417,6 @@ export default class WebLinkMatcher {
 			url: 'www.deezer.com/',
 			desc: 'Deezer',
 			cat: WebLinkCategory.Commercial,
-		},
-		{
-			url: 'seiga.nicovideo.jp/',
-			desc: 'NicoNicoSeiga',
-			cat: WebLinkCategory.Official,
-		},
-		{
-			url: 'commons.nicovideo.jp/',
-			desc: 'Nicommons',
-			cat: WebLinkCategory.Official,
 		},
 		{
 			url: 'linktr.ee/',
@@ -671,6 +676,21 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'youtube.com/playlist',
+			desc: 'YouTube Playlist',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtu.be/',
+			desc: 'YouTube',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'youtube.com/watch',
+			desc: 'YouTube',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'youtube.com/channel/',
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
@@ -679,6 +699,71 @@ export default class WebLinkMatcher {
 			url: 'youtube.com/user/',
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jimdofree.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jimdo.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'seesaa.net',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'jugem.jp',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'fanbox.cc',
+			desc: 'Pixiv Fanbox',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'mmdelight.blogspot.com',
+			desc: 'MMDownload',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'blogspot',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'vocalotracks.ssw.co.jp',
+			desc: 'Vocalotracks',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'twpf.jp',
+			desc: 'Twpf',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tiktok.com',
+			desc: 'TikTok',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'blog.livedoor.jp',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'suzuri.jp',
+			desc: 'Suzuri',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'coconala.com',
+			desc: 'Coconala',
+			cat: WebLinkCategory.Commercial,
 		},
 	];
 
