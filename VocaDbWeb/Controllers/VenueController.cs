@@ -43,43 +43,13 @@ namespace VocaDb.Web.Controllers
 			return View("React/Index");
 		}
 
+#nullable enable
 		[Authorize]
 		public ActionResult Edit(int? id)
 		{
-			if (id.HasValue)
-			{
-				CheckConcurrentEdit(EntryType.Venue, id.Value);
-			}
-
-			var contract = id.HasValue ? _queries.GetForEdit(id.Value) : new VenueForEditContract();
-			return View(new VenueEditViewModel(contract, PermissionContext));
+			return View("React/Index");
 		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult Edit(VenueEditViewModel model)
-		{
-			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value)))
-			{
-				ModelState.AddModelError("Names", "Name cannot be empty");
-			}
-
-			if ((model.Coordinates != null) && !OptionalGeoPoint.IsValid(model.Coordinates.Latitude, model.Coordinates.Longitude))
-			{
-				ModelState.AddModelError("Coordinates", "Invalid coordinates");
-			}
-
-			if (!ModelState.IsValid)
-			{
-				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
-				return View(model);
-			}
-
-			var id = _queries.Update(model.ToContract());
-
-			return RedirectToAction("Details", new { id });
-		}
+#nullable disable
 
 		public ActionResult Restore(int id)
 		{

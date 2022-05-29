@@ -67,8 +67,8 @@ const VenueDetailsLayout = ({
 			toolbar={
 				<>
 					<JQueryUIButton
-						as="a"
-						href={`/Venue/Edit/${venue.id}`}
+						as={Link}
+						to={`/Venue/Edit/${venue.id}`}
 						disabled={
 							!loginManager.canEdit({
 								...venue,
