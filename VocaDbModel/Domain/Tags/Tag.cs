@@ -256,10 +256,12 @@ namespace VocaDb.Model.Domain.Tags
 
 		INameManager IEntryWithNames.Names => Names;
 
+#nullable enable
 		/// <summary>
 		/// Parent tag, if any. Can be null.
 		/// </summary>
-		public virtual Tag Parent { get; set; }
+		public virtual Tag? Parent { get; set; }
+#nullable disable
 
 		/// <summary>
 		/// List of sibling tags (children of the same parent excluding this one). 

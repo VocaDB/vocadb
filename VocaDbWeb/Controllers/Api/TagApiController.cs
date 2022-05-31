@@ -18,6 +18,8 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -347,6 +349,68 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersions(int id) =>
 			_queries.GetTagWithArchivedVersionsForApi(id);
+
+		[HttpGet("{id:int}/for-edit")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagForEditForApiContract GetForEdit(int id) => _queries.GetTagForEdit(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] TagForEditForApiContract contract
+		)
+		{
+			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
+			UploadedFileContract? uploadedPicture = null;
+			if (coverPicUpload is not null && coverPicUpload.Length > 0)
+			{
+				ControllerBase.CheckUploadedPicture(this, coverPicUpload, "thumbPicUpload");
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
+			}
+
+			try
+			{
+				static void CheckModel(TagForEditForApiContract contract)
+				{
+					if (contract.Description is null)
+						throw new InvalidFormException("Description was null");
+
+					if (contract.Names is null)
+						throw new InvalidFormException("Names list was null");
+
+					if (contract.WebLinks is null)
+						throw new InvalidFormException("WebLinks list was null");
+				}
+
+				CheckModel(contract);
+			}
+			catch (InvalidFormException x)
+			{
+				ControllerBase.AddFormSubmissionError(this, x.Message);
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			TagBaseContract result;
+
+			try
+			{
+				result = _queries.Update(contract, uploadedPicture);
+			}
+			catch (DuplicateTagNameException x)
+			{
+				ModelState.AddModelError("Names", x.Message);
+				return ValidationProblem(ModelState);
+			}
+
+			return result.Id;
+		}
 #nullable disable
 	}
 }

@@ -1,3 +1,4 @@
+import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
@@ -10,12 +11,20 @@ import LockingAutoComplete from './LockingAutoComplete';
 
 interface TagLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<TagBaseContract>;
+	tagFilter?: (entry: TagApiContract) => boolean;
+	clearValue?: boolean;
+	allowAliases?: boolean;
+	tagTarget?: any /* TODO */;
 }
 
 // Locking autocomplete for tag selection. Allows selection of one (existing) tag. When tag is selected, clear button is displayed.
 const TagLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
+		tagFilter,
+		clearValue,
+		allowAliases,
+		tagTarget,
 	}: TagLockingAutoCompleteProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -38,6 +47,10 @@ const TagLockingAutoComplete = observer(
 						})
 					}
 					placeholder={t('ViewRes:Shared.Search')}
+					tagFilter={tagFilter}
+					clearValue={clearValue}
+					allowAliases={allowAliases}
+					tagTarget={tagTarget}
 				/>
 			</LockingAutoComplete>
 		);

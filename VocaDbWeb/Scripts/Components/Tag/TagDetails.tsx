@@ -402,8 +402,8 @@ const TagDetailsLayout = observer(
 							</JQueryUIButton>
 						)}{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Tag/Edit/${tag.id}`}
+							as={Link}
+							to={`/Tag/Edit/${tag.id}`}
 							disabled={
 								!loginManager.canEdit({
 									...tag,

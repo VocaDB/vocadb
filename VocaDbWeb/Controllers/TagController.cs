@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -13,15 +12,12 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Shared;
-using VocaDb.Web.Models.Tag;
 
 namespace VocaDb.Web.Controllers
 {
@@ -146,62 +142,14 @@ namespace VocaDb.Web.Controllers
 			return RenderDetails(contract);
 		}
 
+
+#nullable enable
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
-			CheckConcurrentEdit(EntryType.Tag, id);
-
-			var model = new TagEditViewModel(_queries.GetTagForEdit(id), PermissionContext);
-			return View(model);
+			return View("React/Index");
 		}
-
-		private ActionResult RenderEdit(TagEditViewModel model)
-		{
-			var contract = _queries.GetTagForEdit(model.Id);
-			model.CopyNonEditableProperties(contract, PermissionContext);
-			return View("Edit", model);
-		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult Edit(TagEditViewModel model)
-		{
-			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
-			UploadedFileContract uploadedPicture = null;
-			if (coverPicUpload != null && coverPicUpload.Length > 0)
-			{
-				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
-				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
-			}
-
-			try
-			{
-				model.CheckModel();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return RenderEdit(model);
-			}
-
-			TagBaseContract result;
-
-			try
-			{
-				result = _queries.Update(model.ToContract(), uploadedPicture);
-			}
-			catch (DuplicateTagNameException x)
-			{
-				ModelState.AddModelError("Names", x.Message);
-				return RenderEdit(model);
-			}
-
-			return RedirectToAction("DetailsById", new { id = result.Id, slug = result.UrlSlug });
-		}
+#nullable disable
 
 		public ActionResult Index(string filter = null)
 		{

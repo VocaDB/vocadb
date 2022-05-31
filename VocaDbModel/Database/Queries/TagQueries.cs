@@ -556,19 +556,22 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public TagForEditContract GetTagForEdit(int id)
+#nullable enable
+		public TagForEditForApiContract GetTagForEdit(int id)
 		{
 			return HandleQuery(session =>
 			{
-				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
+				var inUse =
+					session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
 					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
 					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted);
 
-				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, PermissionContext);
+				var contract = new TagForEditForApiContract(LoadTagById(session, id), !inUse, PermissionContext, _thumbStore);
 
 				return contract;
 			});
 		}
+#nullable disable
 
 		/// <summary>
 		/// Get tag Id by (exact) tag name.
@@ -849,7 +852,7 @@ namespace VocaDb.Model.Database.Queries
 			return diff;
 		}
 
-		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract? uploadedImage)
+		public TagBaseContract Update(TagForEditForApiContract contract, UploadedFileContract? uploadedImage)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -871,7 +874,7 @@ namespace VocaDb.Model.Database.Queries
 				if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 					diff.HideFromSuggestions.Set();
 
-				if (tag.Targets != contract.Targets)
+				if (tag.Targets != (TagTargetTypes)contract.Targets)
 					diff.Targets.Set();
 
 				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage)
@@ -914,7 +917,7 @@ namespace VocaDb.Model.Database.Queries
 				tag.CategoryName = contract.CategoryName;
 				tag.HideFromSuggestions = contract.HideFromSuggestions;
 				tag.Status = contract.Status;
-				tag.Targets = contract.Targets;
+				tag.Targets = (TagTargetTypes)contract.Targets;
 
 				if (uploadedImage != null)
 				{

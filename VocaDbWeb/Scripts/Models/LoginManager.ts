@@ -152,6 +152,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.ManageTagMappings);
 	}
 
+	public get canMergeEntries(): boolean {
+		return this.hasPermission(PermissionToken.MergeEntries);
+	}
+
 	public get canMikuDbImport(): boolean {
 		return this.hasPermission(PermissionToken.MikuDbImport);
 	}

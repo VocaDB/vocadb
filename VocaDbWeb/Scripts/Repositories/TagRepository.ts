@@ -5,6 +5,7 @@ import TagApiContract from '@DataContracts/Tag/TagApiContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagCategoryContract from '@DataContracts/Tag/TagCategoryContract';
 import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
+import TagForEditContract from '@DataContracts/Tag/TagForEditContract';
 import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
 import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
@@ -199,6 +200,32 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<TagApiContract>
 		>(this.urlMapper.mapRelative(`/api/tags/${id}/versions`));
+	};
+
+	public getForEdit = ({ id }: { id: number }): Promise<TagForEditContract> => {
+		return this.httpClient.get<TagForEditContract>(
+			this.urlMapper.mapRelative(`/api/tags/${id}/for-edit`),
+		);
+	};
+
+	public edit = (
+		contract: TagForEditContract,
+		thumbPicUpload?: File,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/tags/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
 	};
 }
 

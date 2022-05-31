@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[Obsolete]
 	[DataContract]
 	public class TagForEditContract : TagContract
 	{
