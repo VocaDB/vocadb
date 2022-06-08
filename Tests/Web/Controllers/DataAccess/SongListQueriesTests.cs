@@ -3,6 +3,7 @@
 using System.Net.Mime;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -28,7 +29,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private InMemoryImagePersister _imagePersister;
 		private FakePermissionContext _permissionContext;
 		private FakeSongListRepository _repository;
-		private SongListForEditContract _songListContract;
+		private SongListForEditForApiContract _songListContract;
 		private SongListQueries _queries;
 		private Song _song1;
 		private Song _song2;
@@ -60,7 +61,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_repository.Add(_userWithSongList);
 			_repository.Add(_song1, _song2);
 
-			_songListContract = new SongListForEditContract
+			_songListContract = new SongListForEditForApiContract
 			{
 				Name = "Mikunopolis Setlist",
 				Description = "MIKUNOPOLIS in LOS ANGELES - Hatsune Miku US debut concert held at Nokia Theatre for Anime Expo 2011 on 2nd July 2011.",

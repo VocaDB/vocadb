@@ -1,6 +1,6 @@
 import SongListContract from '@DataContracts/Song/SongListContract';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import functions from '@Shared/GlobalFunctions';
-import { SongListFeaturedCategory } from '@Stores/SongList/FeaturedSongListsStore';
 import React from 'react';
 
 import EntryAutoComplete, {

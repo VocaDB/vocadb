@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
@@ -8,14 +9,6 @@ import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
-
-export enum SongListFeaturedCategory {
-	Nothing = 'Nothing',
-	Concerts = 'Concerts',
-	VocaloidRanking = 'VocaloidRanking',
-	Pools = 'Pools',
-	Other = 'Other',
-}
 
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 	public constructor(

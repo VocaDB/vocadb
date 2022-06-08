@@ -2,6 +2,7 @@ import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import UserGroup from '@Models/Users/UserGroup';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -155,6 +156,22 @@ export const EntryStatusDropdownList = React.memo(
 							{t(`Resources:EntryStatusNames.${status}`)}
 						</option>
 					))}
+			</select>
+		);
+	},
+);
+
+export const SongListFeaturedCategoryDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(SongListFeaturedCategory).map((featuredCategory) => (
+					<option value={featuredCategory} key={featuredCategory}>
+						{t(`Resources:SongListFeaturedCategoryNames.${featuredCategory}`)}
+					</option>
+				))}
 			</select>
 		);
 	},

@@ -3,4 +3,5 @@ import SongListContract from './SongListContract';
 
 export default interface SongListForEditContract extends SongListContract {
 	songLinks: SongInListEditContract[];
+	updateNotes?: string;
 }
