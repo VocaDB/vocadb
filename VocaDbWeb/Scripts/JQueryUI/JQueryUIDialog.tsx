@@ -16,7 +16,7 @@ type JQueryUIDialogProps = {
 	children?: React.ReactNode;
 	close?: () => void;
 	modal?: boolean;
-	width?: number;
+	width: number;
 } & React.InputHTMLAttributes<HTMLDivElement>;
 
 const JQueryUIDialog = ({
@@ -41,17 +41,22 @@ const JQueryUIDialog = ({
 			onHide={close}
 			className="ui-front"
 			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
 				position: 'fixed',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
+				inset: 0,
+				paddingBottom: '10vh',
 			}}
 			restoreFocusOptions={{ preventScroll: true }}
 		>
 			<>
 				<div className={classNames('ui-widget-overlay', 'ui-front')} />
-				<Draggable>
+				<Draggable
+					bounds="parent"
+					handle=".ui-dialog-titlebar"
+					cancel=".ui-dialog-titlebar-close"
+				>
 					<div
 						{...props}
 						className={classNames(
@@ -65,12 +70,11 @@ const JQueryUIDialog = ({
 						)}
 						role="dialog"
 						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							maxHeight: '75vh',
 							width: width,
 							height: height,
-							margin: '10vh auto',
-							top: 0,
-							left: '50%',
-							transform: 'translateX(-50%)',
 						}}
 					>
 						<div
@@ -78,7 +82,6 @@ const JQueryUIDialog = ({
 								'ui-dialog-titlebar',
 								'ui-widget-header',
 								'ui-corner-all',
-								'ui-helper-clearfix',
 							)}
 						>
 							<span className="ui-dialog-title">{title}</span>
@@ -123,7 +126,6 @@ const JQueryUIDialog = ({
 								className={classNames(
 									'ui-dialog-buttonpane',
 									'ui-widget-content',
-									'ui-helper-clearfix',
 								)}
 							>
 								<div className="ui-dialog-buttonset">
