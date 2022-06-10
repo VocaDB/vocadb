@@ -59,6 +59,7 @@ const JQueryUIDialog = ({
 						'ui-corner-all',
 						'ui-front',
 						'ui-dialog-buttons',
+						'ui-draggable',
 					)}
 					role="dialog"
 					style={{
