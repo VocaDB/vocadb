@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Modal } from 'react-overlays';
 
@@ -48,10 +49,17 @@ const JQueryUIDialog = ({
 			restoreFocusOptions={{ preventScroll: true }}
 		>
 			<>
-				<div className="ui-widget-overlay ui-front" />
+				<div className={classNames('ui-widget-overlay', 'ui-front')} />
 				<div
 					{...props}
-					className="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons"
+					className={classNames(
+						'ui-dialog',
+						'ui-widget',
+						'ui-widget-content',
+						'ui-corner-all',
+						'ui-front',
+						'ui-dialog-buttons',
+					)}
 					role="dialog"
 					style={{
 						width: width,
@@ -62,15 +70,35 @@ const JQueryUIDialog = ({
 						transform: 'translateX(-50%)',
 					}}
 				>
-					<div className="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+					<div
+						className={classNames(
+							'ui-dialog-titlebar',
+							'ui-widget-header',
+							'ui-corner-all',
+							'ui-helper-clearfix',
+						)}
+					>
 						<span className="ui-dialog-title">{title}</span>
 						<button
 							type="button"
-							className="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close"
+							className={classNames(
+								'ui-button',
+								'ui-widget',
+								'ui-state-default',
+								'ui-corner-all',
+								'ui-button-icon-only',
+								'ui-dialog-titlebar-close',
+							)}
 							title="close" /* TODO: localize */
 							onClick={close}
 						>
-							<span className="ui-button-icon-primary ui-icon ui-icon-closethick" />
+							<span
+								className={classNames(
+									'ui-button-icon-primary',
+									'ui-icon',
+									'ui-icon-closethick',
+								)}
+							/>
 							<span className="ui-button-text">
 								close{/* TODO: localize */}
 							</span>
@@ -83,12 +111,18 @@ const JQueryUIDialog = ({
 							maxHeight: 'none',
 							height: 'auto',
 						}}
-						className="ui-dialog-content ui-widget-content"
+						className={classNames('ui-dialog-content', 'ui-widget-content')}
 					>
 						{children}
 					</div>
 					{buttons && (
-						<div className="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+						<div
+							className={classNames(
+								'ui-dialog-buttonpane',
+								'ui-widget-content',
+								'ui-helper-clearfix',
+							)}
+						>
 							<div className="ui-dialog-buttonset">
 								{buttons.map((button, index) => (
 									<JQueryUIButton
