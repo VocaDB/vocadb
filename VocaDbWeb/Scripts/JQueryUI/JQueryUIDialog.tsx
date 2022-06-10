@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import Draggable from 'react-draggable';
 import { Modal } from 'react-overlays';
 
 import JQueryUIButton from './JQueryUIButton';
@@ -50,96 +51,98 @@ const JQueryUIDialog = ({
 		>
 			<>
 				<div className={classNames('ui-widget-overlay', 'ui-front')} />
-				<div
-					{...props}
-					className={classNames(
-						'ui-dialog',
-						'ui-widget',
-						'ui-widget-content',
-						'ui-corner-all',
-						'ui-front',
-						'ui-dialog-buttons',
-						'ui-draggable',
-					)}
-					role="dialog"
-					style={{
-						width: width,
-						height: height,
-						margin: '10vh auto',
-						top: 0,
-						left: '50%',
-						transform: 'translateX(-50%)',
-					}}
-				>
+				<Draggable>
 					<div
+						{...props}
 						className={classNames(
-							'ui-dialog-titlebar',
-							'ui-widget-header',
+							'ui-dialog',
+							'ui-widget',
+							'ui-widget-content',
 							'ui-corner-all',
-							'ui-helper-clearfix',
+							'ui-front',
+							'ui-dialog-buttons',
+							'ui-draggable',
 						)}
-					>
-						<span className="ui-dialog-title">{title}</span>
-						<button
-							type="button"
-							className={classNames(
-								'ui-button',
-								'ui-widget',
-								'ui-state-default',
-								'ui-corner-all',
-								'ui-button-icon-only',
-								'ui-dialog-titlebar-close',
-							)}
-							title="close" /* TODO: localize */
-							onClick={close}
-						>
-							<span
-								className={classNames(
-									'ui-button-icon-primary',
-									'ui-icon',
-									'ui-icon-closethick',
-								)}
-							/>
-							<span className="ui-button-text">
-								close{/* TODO: localize */}
-							</span>
-						</button>
-					</div>
-					<div
+						role="dialog"
 						style={{
-							width: 'auto',
-							minHeight: '32px',
-							maxHeight: 'none',
-							height: 'auto',
+							width: width,
+							height: height,
+							margin: '10vh auto',
+							top: 0,
+							left: '50%',
+							transform: 'translateX(-50%)',
 						}}
-						className={classNames('ui-dialog-content', 'ui-widget-content')}
 					>
-						{children}
-					</div>
-					{buttons && (
 						<div
 							className={classNames(
-								'ui-dialog-buttonpane',
-								'ui-widget-content',
+								'ui-dialog-titlebar',
+								'ui-widget-header',
+								'ui-corner-all',
 								'ui-helper-clearfix',
 							)}
 						>
-							<div className="ui-dialog-buttonset">
-								{buttons.map((button, index) => (
-									<JQueryUIButton
-										as="button"
-										onClick={button.click}
-										disabled={button.disabled}
-										key={index}
-										icons={button.icons}
-									>
-										{button.text}
-									</JQueryUIButton>
-								))}
-							</div>
+							<span className="ui-dialog-title">{title}</span>
+							<button
+								type="button"
+								className={classNames(
+									'ui-button',
+									'ui-widget',
+									'ui-state-default',
+									'ui-corner-all',
+									'ui-button-icon-only',
+									'ui-dialog-titlebar-close',
+								)}
+								title="close" /* TODO: localize */
+								onClick={close}
+							>
+								<span
+									className={classNames(
+										'ui-button-icon-primary',
+										'ui-icon',
+										'ui-icon-closethick',
+									)}
+								/>
+								<span className="ui-button-text">
+									close{/* TODO: localize */}
+								</span>
+							</button>
 						</div>
-					)}
-				</div>
+						<div
+							style={{
+								width: 'auto',
+								minHeight: '32px',
+								maxHeight: 'none',
+								height: 'auto',
+							}}
+							className={classNames('ui-dialog-content', 'ui-widget-content')}
+						>
+							{children}
+						</div>
+						{buttons && (
+							<div
+								className={classNames(
+									'ui-dialog-buttonpane',
+									'ui-widget-content',
+									'ui-helper-clearfix',
+								)}
+							>
+								<div className="ui-dialog-buttonset">
+									{buttons.map((button, index) => (
+										<JQueryUIButton
+											as="button"
+											onClick={button.click}
+											disabled={button.disabled}
+											key={index}
+											icons={button.icons}
+										>
+											{button.text}
+										</JQueryUIButton>
+									))}
+								</div>
+							</div>
+						)}
+					</div>
+				</Draggable>
 			</>
 		</Modal>
 	);
