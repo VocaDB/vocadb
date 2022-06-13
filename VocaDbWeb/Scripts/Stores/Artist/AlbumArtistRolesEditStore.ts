@@ -8,7 +8,7 @@ export interface RoleSelection {
 	// Role Id, for example "VoiceManipulator"
 	id: string;
 	// User-visible role name, for example "Voice Manipulator"
-	name: string;
+	name?: string;
 	selected: boolean;
 }
 
@@ -17,7 +17,7 @@ class RoleSelectionStore implements RoleSelection {
 
 	public constructor(
 		public readonly id: string,
-		public readonly name: string /* TODO: Remove. */,
+		public readonly name: string | undefined,
 		selected: boolean,
 	) {
 		makeObservable(this);
@@ -32,7 +32,7 @@ export class ArtistRolesEditStore {
 	@observable public selectedArtist?: IEditableArtistWithSupport = undefined;
 
 	public constructor(
-		roleNames: { [key: string]: string },
+		roleNames: { [key: string]: string | undefined },
 		private readonly defaultRoleName: string,
 	) {
 		makeObservable(this);
@@ -75,7 +75,7 @@ export class ArtistRolesEditStore {
 }
 
 export default class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
-	public constructor(roleNames: { [key: string]: string }) {
+	public constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistRoles[ArtistRoles.Default]);
 	}
 }

@@ -14,7 +14,7 @@ export default class ArtistForAlbumEditStore
 	public readonly artist: ArtistContract;
 	// Unique link Id.
 	public readonly id: number;
-	public readonly isCustomName: boolean;
+	public isCustomName: boolean;
 	@observable public isSupport: boolean;
 	@observable public name: string;
 	@observable public nameDialogVisible = false;

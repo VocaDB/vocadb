@@ -77,14 +77,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				return new ArtistForAlbumContract { Name = customArtistName, Roles = roles };
 		}
 
-		private Task<AlbumForEditContract> CallUpdate(AlbumForEditContract contract)
+		private Task<AlbumForEditForApiContract> CallUpdate(AlbumForEditForApiContract contract)
 		{
 			return _queries.UpdateBasicProperties(contract, null);
 		}
 
-		private async Task<AlbumForEditContract> CallUpdate(Stream image)
+		private async Task<AlbumForEditForApiContract> CallUpdate(Stream image)
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			using (var stream = image)
 			{
 				return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
@@ -378,7 +378,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			// Arrange
 			_album.Description.English = "Original";
 			var oldVer = _repository.HandleTransaction(ctx => _queries.Archive(ctx, _album, AlbumArchiveReason.PropertiesUpdated));
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			contract.Description.English = "Updated";
 			CallUpdate(contract);
 
@@ -425,7 +425,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Names()
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated album";
@@ -476,7 +476,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Tracks()
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			var existingSong = CreateEntry.Song(name: "Nebula");
 			_repository.Save(existingSong);
 
@@ -506,7 +506,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Discs()
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			_repository.Save(CreateEntry.AlbumDisc(_album));
 
 			contract.Discs = new[] {
@@ -557,7 +557,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Artists()
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			contract.ArtistLinks = new[] {
 				CreateArtistForAlbumContract(artistId: _producer.Id),
 				CreateArtistForAlbumContract(artistId: _vocalist.Id)
@@ -582,7 +582,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Artists_CustomArtist()
 		{
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			contract.ArtistLinks = new[] {
 				CreateArtistForAlbumContract(customArtistName: "Custom artist", roles: ArtistRoles.Composer)
 			};
@@ -606,7 +606,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			Save(_user2.AddArtist(_vocalist));
 
-			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.Default, new InMemoryImagePersister());
+			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.Default, new InMemoryImagePersister(), _permissionContext);
 			contract.ArtistLinks = contract.ArtistLinks.Concat(new[] { CreateArtistForAlbumContract(_vocalist.Id) }).ToArray();
 
 			await _queries.UpdateBasicProperties(contract, null);

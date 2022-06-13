@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumForEditContract : AlbumContract
 	{

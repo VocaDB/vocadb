@@ -10,36 +10,25 @@ import WebLinkContract from '../WebLinkContract';
 import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
 import AlbumReleaseContract from './AlbumReleaseContract';
 
+// Corresponds to the AlbumForEditForApiContract record class in C#.
 export default interface AlbumForEditContract {
 	artistLinks: ArtistForAlbumContract[];
-
+	canDelete?: boolean;
 	coverPictureMime?: string;
-
 	defaultNameLanguage: string;
-
+	deleted?: boolean;
 	description: EnglishTranslatedStringContract;
-
 	discs: AlbumDiscPropertiesContract[];
-
 	discType: AlbumType;
-
 	id: number;
-
 	identifiers: string[];
-
+	name?: string;
 	names: LocalizedStringWithIdContract[];
-
 	originalRelease: AlbumReleaseContract;
-
 	pictures: EntryPictureFileContract[];
-
 	pvs: PVContract[];
-
 	songs: SongInAlbumEditContract[];
-
 	status: string;
-
 	updateNotes?: string;
-
 	webLinks: WebLinkContract[];
 }

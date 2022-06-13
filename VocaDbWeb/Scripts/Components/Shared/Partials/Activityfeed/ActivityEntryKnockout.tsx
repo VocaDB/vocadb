@@ -133,7 +133,10 @@ const ActivityEntryKnockout = ({
 								</span>
 							)}
 						{entry.archivedVersion.notes && (
-							<span>"{entry.archivedVersion.notes}"</span>
+							<>
+								{' '}
+								<span>"{entry.archivedVersion.notes}"</span>
+							</>
 						)}{' '}
 						{entry.entry.entryType !== 'SongList' &&
 							entry.entry.entryType !== 'ReleaseEvent' && (

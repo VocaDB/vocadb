@@ -1,5 +1,4 @@
 import ArtistHelper from '@Helpers/ArtistHelper';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import _ from 'lodash';
@@ -18,7 +17,6 @@ import ArtistFilter from './ArtistFilter';
 export default class ArtistFilters {
 	@observable public artists: ArtistFilter[] = [];
 	@observable public artistParticipationStatus = 'Everything' /* TODO: enum */;
-	public readonly artistSearchParams: ArtistAutoCompleteParams;
 	@observable public childVoicebanks = false;
 	@observable public includeMembers = false;
 
@@ -27,8 +25,6 @@ export default class ArtistFilters {
 		private readonly artistRepo: ArtistRepository,
 	) {
 		makeObservable(this);
-
-		this.artistSearchParams = { acceptSelection: this.selectArtist };
 	}
 
 	@computed public get artistIds(): number[] {
