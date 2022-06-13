@@ -5,7 +5,6 @@ import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
 import { SongDetailsResources } from '@ViewModels/Song/SongDetailsViewModel';
 import SongDetailsViewModel from '@ViewModels/Song/SongDetailsViewModel';
 import { SongListsViewModel } from '@ViewModels/Song/SongDetailsViewModel';
-import _ from 'lodash';
 
 import FakeSongRepository from '../../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
@@ -139,7 +138,7 @@ test('addSongToList custom list when there are only featured lists', () => {
 		rep.songLists.length,
 		'rep.songLists.length: New list was created',
 	).toBe(3);
-	var newList = _.find(rep.songLists, (sl) => sl.name === 'Favorite Rinnssss')!;
+	var newList = rep.songLists.find((sl) => sl.name === 'Favorite Rinnssss')!;
 	expect(newList, 'newList: New list was created').toBeTruthy();
 	expect(
 		rep.songsInLists.length,

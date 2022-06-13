@@ -84,7 +84,7 @@ export default class UserMessagesViewModel {
 			this.sentMessages,
 		];
 
-		var inbox = _.find(this.inboxes, (i) => i.inbox === inboxType)!;
+		var inbox = this.inboxes.find((i) => i.inbox === inboxType)!;
 
 		inbox.init(() => {
 			if (selectedMessageId != null) {
@@ -146,7 +146,7 @@ export default class UserMessagesViewModel {
 		messageId: number,
 		inbox: UserMessageFolderViewModel,
 	): void => {
-		var message = _.find(inbox.items(), (msg) => msg.id === messageId);
+		var message = inbox.items().find((msg) => msg.id === messageId);
 
 		if (message) {
 			this.selectInbox(inbox.inbox);

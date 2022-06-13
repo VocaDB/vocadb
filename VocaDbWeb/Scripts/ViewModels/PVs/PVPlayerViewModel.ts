@@ -116,7 +116,7 @@ export default class PVPlayerViewModel {
 				}
 
 				// Case 2
-				var newService = _.find(this.autoplayServices, (s) =>
+				var newService = this.autoplayServices.find((s) =>
 					this.songHasPVService(this.selectedSong()!, s),
 				);
 				if (newService) {

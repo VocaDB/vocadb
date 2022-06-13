@@ -43,8 +43,7 @@ export default class TagsEditStore {
 		tagName = _.trim(tagName);
 
 		// If tag is already added, select it
-		const selection = _.find(
-			this.selections,
+		const selection = this.selections.find(
 			(sel) => sel.tag.name.toLowerCase() === tagName.toLowerCase(),
 		);
 
@@ -61,7 +60,7 @@ export default class TagsEditStore {
 	};
 
 	@action public autoCompletedTag = (tag: TagBaseContract): void => {
-		const selection = _.find(this.selections, (sel) => sel.tag.id === tag.id);
+		const selection = this.selections.find((sel) => sel.tag.id === tag.id);
 
 		if (selection) {
 			selection.selected = true;

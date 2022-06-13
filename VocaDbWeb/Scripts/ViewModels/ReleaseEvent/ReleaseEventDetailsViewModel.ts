@@ -12,7 +12,6 @@ import HttpClient from '@Shared/HttpClient';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import { IEntryReportType } from '../ReportEntryViewModel';
@@ -103,8 +102,7 @@ export default class ReleaseEventDetailsViewModel {
 	public removeEvent = (): void => {
 		this.userRepo.deleteEventForUser({ eventId: this.eventId });
 		this.eventAssociationType(null!);
-		var link = _.find(
-			this.usersAttending(),
+		var link = this.usersAttending().find(
 			(u) => u.id === this.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);
@@ -131,8 +129,7 @@ export default class ReleaseEventDetailsViewModel {
 			associationType: UserEventRelationshipType.Interested,
 		});
 		this.eventAssociationType(UserEventRelationshipType.Interested);
-		var link = _.find(
-			this.usersAttending(),
+		var link = this.usersAttending().find(
 			(u) => u.id === this.values.loggedUserId,
 		)!;
 		this.usersAttending.remove(link);

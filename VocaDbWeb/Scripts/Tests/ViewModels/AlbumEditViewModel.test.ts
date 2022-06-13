@@ -216,7 +216,7 @@ function findArtistSelection(
 	target: TrackPropertiesViewModel,
 	artist: ArtistContract,
 ): TrackArtistSelectionViewModel {
-	return _.find(target.artistSelections, (a) => a.artist === artist)!;
+	return target.artistSelections.find((a) => a.artist === artist)!;
 }
 
 test('constructor', () => {

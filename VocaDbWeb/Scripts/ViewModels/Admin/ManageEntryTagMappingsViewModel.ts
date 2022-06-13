@@ -119,8 +119,7 @@ export default class ManageEntryTagMappingsViewModel {
 
 	public entrySubTypes: Computed<string[]> = ko.computed(
 		() =>
-			_.find(
-				this.entrySubTypesByType,
+			this.entrySubTypesByType.find(
 				(et) => EntryType[et.key] === this.newEntryType(),
 			)?.values ?? [],
 	);

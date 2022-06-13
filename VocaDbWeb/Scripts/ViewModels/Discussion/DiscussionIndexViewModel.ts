@@ -4,7 +4,6 @@ import DiscussionRepository from '@Repositories/DiscussionRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
-import _ from 'lodash';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
@@ -99,7 +98,7 @@ export default class DiscussionIndexViewModel {
 	public folders = ko.observableArray<DiscussionFolderContract>([]);
 
 	private getFolder = (folderId: number): DiscussionFolderContract => {
-		return _.find(this.folders(), (f) => f.id === folderId)!;
+		return this.folders().find((f) => f.id === folderId)!;
 	};
 
 	private loadTopicsForCurrentFolder = (): void => {

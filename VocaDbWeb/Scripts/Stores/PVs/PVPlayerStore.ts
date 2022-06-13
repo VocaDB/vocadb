@@ -159,7 +159,7 @@ export default class PVPlayerStore {
 					}
 
 					// Case 2
-					const newService = _.find(this.autoplayServices, (s) =>
+					const newService = this.autoplayServices.find((s) =>
 						this.songHasPVService(this.selectedSong!, s),
 					);
 					if (newService) {

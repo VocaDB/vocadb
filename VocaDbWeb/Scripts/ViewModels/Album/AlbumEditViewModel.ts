@@ -449,8 +449,7 @@ export default class AlbumEditViewModel {
 		this.editedSong = ko.observable(null!);
 
 		this.getArtistLink = (artistForAlbumId): ArtistForAlbumEditViewModel => {
-			return _.find(
-				this.artistLinks(),
+			return this.artistLinks().find(
 				(artist) => artist.id === artistForAlbumId,
 			)!;
 		};

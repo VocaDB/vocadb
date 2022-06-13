@@ -39,7 +39,7 @@ export default class NamesEditStore {
 		names: LocalizedStringWithIdEditStore[],
 		lang: ContentLanguageSelection,
 	): LocalizedStringWithIdEditStore {
-		const name = _.find(names, (n) => n.language === lang);
+		const name = names.find((n) => n.language === lang);
 		return name || new LocalizedStringWithIdEditStore(lang, '');
 	}
 

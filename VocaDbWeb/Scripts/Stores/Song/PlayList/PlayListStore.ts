@@ -60,7 +60,7 @@ export default class PlayListStore {
 		pvPlayerStore.nextSong = this.nextSong;
 		pvPlayerStore.resetSong = (): void => {
 			runInAction(() => {
-				pvPlayerStore.selectedSong = _.find(this.page, (song) =>
+				pvPlayerStore.selectedSong = this.page.find((song) =>
 					pvPlayerStore.songIsValid(song),
 				);
 			});
@@ -108,7 +108,7 @@ export default class PlayListStore {
 		index: number,
 	): ISongForPlayList | undefined => {
 		// Might need to build a lookup for this for large playlists
-		return _.find(this.page, (s) => s.indexInPlayList === index);
+		return this.page.find((s) => s.indexInPlayList === index);
 	};
 
 	@action private playSong = (song?: ISongForPlayList): void => {
