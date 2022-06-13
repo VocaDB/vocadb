@@ -75,7 +75,7 @@ export default class TagEditViewModel {
 		this.relatedTags.push(tag);
 
 	public allowRelatedTag = (tag: TagBaseContract): boolean =>
-		this.denySelf(tag) && _.every(this.relatedTags(), (t) => t.id !== tag.id);
+		this.denySelf(tag) && this.relatedTags().every((t) => t.id !== tag.id);
 
 	public deleteViewModel = new DeleteEntryViewModel((notes) => {
 		$.ajax(

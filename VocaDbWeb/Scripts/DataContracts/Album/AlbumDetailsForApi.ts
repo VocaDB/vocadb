@@ -50,8 +50,7 @@ export class AlbumDisc {
 		this.isVideo =
 			!!discProperties && discProperties.mediaType === DiscMediaType.Video;
 		this.name = discProperties?.name;
-		this.totalLengthSeconds = _.every(
-			this.songs,
+		this.totalLengthSeconds = this.songs.every(
 			(s) => s.song && s.song.lengthSeconds > 0,
 		)
 			? _.sumBy(this.songs, (s) => s.song.lengthSeconds)

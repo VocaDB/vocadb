@@ -383,7 +383,7 @@ export default class AlbumEditViewModel {
 						.artistSelections.filter(
 							(a) =>
 								a.selected() &&
-								_.every(song.artists(), (a2) => a.artist.id !== a2.id),
+								song.artists().every((a2) => a.artist.id !== a2.id),
 						)
 						.map((a3) => a3.artist);
 					song.artists.push.apply(song.artists, added);
