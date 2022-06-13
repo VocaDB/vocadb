@@ -10,7 +10,7 @@ export default class ManageIPRulesViewModel {
 
 		if (!addr) return;
 
-		if (_.some(this.rules(), (r) => r.address() === addr)) {
+		if (this.rules().some((r) => r.address() === addr)) {
 			ui.showErrorMessage('Address already added');
 			return;
 		}

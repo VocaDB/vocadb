@@ -160,7 +160,7 @@ export default class ArtistHelper {
 			ArtistRoles.VoiceManipulator,
 		];
 
-		return _.some(validRoles, (r) => _.includes(rolesArray, r));
+		return validRoles.some((r) => _.includes(rolesArray, r));
 	}
 
 	public static isVocalistRoleType(

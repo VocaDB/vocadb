@@ -346,7 +346,7 @@ export default class SongEditViewModel {
 			return (
 				this.pvs.isPossibleInstrumental() &&
 				this.songType() !== SongType.Instrumental &&
-				!_.some(this.tags, (t) => t === this.instrumentalTagId)
+				!this.tags.some((t) => t === this.instrumentalTagId)
 			);
 		});
 
@@ -366,7 +366,7 @@ export default class SongEditViewModel {
 		});
 
 		this.validationError_needArtist = ko.computed(
-			() => !_.some(this.artistLinks(), (a) => a.artist != null),
+			() => !this.artistLinks().some((a) => a.artist != null),
 		);
 
 		this.validationError_needOriginal = ko.computed(() => {
@@ -390,8 +390,7 @@ export default class SongEditViewModel {
 		this.validationError_needProducer = ko.computed(
 			() =>
 				!this.validationError_needArtist() &&
-				!_.some(
-					this.artistLinks(),
+				!this.artistLinks().some(
 					(a) =>
 						a.artist != null &&
 						ArtistHelper.isProducerRole(
@@ -419,8 +418,8 @@ export default class SongEditViewModel {
 				!this.validationError_needArtist() &&
 				!SongHelper.isInstrumental(this.songType()) &&
 				this.songType() !== SongType.Arrangement && // Arrangements are considered possible instrumentals in this context
-				!_.some(this.tags, (t) => t === this.instrumentalTagId) &&
-				!_.some(this.artistLinks(), (a) =>
+				!this.tags.some((t) => t === this.instrumentalTagId) &&
+				!this.artistLinks().some((a) =>
 					ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()),
 				)
 			);

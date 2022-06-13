@@ -32,7 +32,7 @@ export function initToolTip(
 	];
 	const url =
 		foreignDomain &&
-		_.some(whitelistedDomains, (domain) =>
+		whitelistedDomains.some((domain) =>
 			_.includes(foreignDomain.toLocaleLowerCase(), domain),
 		)
 			? functions.mergeUrls(foreignDomain, relativeUrl)

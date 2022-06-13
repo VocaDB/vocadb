@@ -121,7 +121,7 @@ export default class ManageWebhooksViewModel {
 	public addWebhook = (): void => {
 		if (!this.newUrl() || !this.newWebhookEvents()) return;
 
-		if (_.some(this.webhooks(), (w) => w.url === this.newUrl())) {
+		if (this.webhooks().some((w) => w.url === this.newUrl())) {
 			ui.showErrorMessage('Hook already exists');
 			return;
 		}

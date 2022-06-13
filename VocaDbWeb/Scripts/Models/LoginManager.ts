@@ -3,7 +3,6 @@ import EntryRefContract from '@DataContracts/EntryRefContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
 
 import EntryStatus from './EntryStatus';
 import EntryType from './EntryType';
@@ -212,10 +211,7 @@ export default class LoginManager {
 			entry.entryType === EntryType[EntryType.Artist] &&
 			!!this.loggedUser &&
 			this.loggedUser.verifiedArtist &&
-			_.some(
-				this.loggedUser.ownedArtistEntries,
-				(a) => a.artist.id === entry.id,
-			)
+			this.loggedUser.ownedArtistEntries.some((a) => a.artist.id === entry.id)
 		);
 	};
 

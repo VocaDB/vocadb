@@ -68,7 +68,7 @@ export default class NamesEditStore {
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
 	public hasPrimaryName = (): boolean => {
-		return _.some(this.getPrimaryNames(), (name) => name && name.value);
+		return this.getPrimaryNames().some((name) => name && name.value);
 	};
 
 	public toContracts = (): LocalizedStringWithIdContract[] => {

@@ -37,7 +37,7 @@ export default class ImportSongListViewModel {
 	};
 
 	public missingSongs = ko.computed(() =>
-		_.some(this.items(), (i) => i.matchedSong == null),
+		this.items().some((i) => i.matchedSong == null),
 	);
 
 	public name = ko.observable('');

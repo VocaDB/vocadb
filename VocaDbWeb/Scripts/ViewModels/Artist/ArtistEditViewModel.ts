@@ -287,9 +287,8 @@ export default class ArtistEditViewModel {
 		);
 		this.validationError_unnecessaryPName = ko.computed(() => {
 			var allNames = this.names.getAllNames();
-			return _.some(allNames, (n) =>
-				_.some(
-					allNames,
+			return allNames.some((n) =>
+				allNames.some(
 					(n2) =>
 						n !== n2 &&
 						(n.value() === n2.value() + 'P' ||

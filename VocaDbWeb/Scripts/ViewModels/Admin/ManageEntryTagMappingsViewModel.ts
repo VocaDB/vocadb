@@ -26,8 +26,7 @@ export default class ManageEntryTagMappingsViewModel {
 		if (!this.newEntryType || this.newTargetTag.isEmpty()) return;
 
 		if (
-			_.some(
-				this.mappings(),
+			this.mappings().some(
 				(m) =>
 					m.tag.id === this.newTargetTag.id() &&
 					m.entryType.entryType === this.newEntryType() &&

@@ -291,8 +291,7 @@ export default class AlbumDetailsForApi {
 	public get showProducerRoles(): boolean {
 		return (
 			this.producers.length > 1 &&
-			_.some(
-				this.producers,
+			this.producers.some(
 				(p) =>
 					p.roles !== ArtistRoles[ArtistRoles.Default] &&
 					p.roles !== ArtistRoles[ArtistRoles.Composer],

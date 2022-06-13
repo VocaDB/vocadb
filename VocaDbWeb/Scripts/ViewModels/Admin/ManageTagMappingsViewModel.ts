@@ -23,8 +23,7 @@ export default class ManageTagMappingsViewModel {
 		if (!this.newSourceName || this.newTargetTag.isEmpty()) return;
 
 		if (
-			_.some(
-				this.mappings(),
+			this.mappings().some(
 				(m) =>
 					m.tag.id === this.newTargetTag.id() &&
 					m.sourceTag.toLowerCase() === this.newSourceName().toLowerCase(),

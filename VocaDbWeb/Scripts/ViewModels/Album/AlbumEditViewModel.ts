@@ -473,8 +473,7 @@ export default class AlbumEditViewModel {
 					var removed = song
 						.artists()
 						.filter((a) =>
-							_.some(
-								this.editedSong()!.artistSelections,
+							this.editedSong()!.artistSelections.some(
 								(a2) => a2.selected() && a.id === a2.artist.id,
 							),
 						);
@@ -694,17 +693,17 @@ export class TrackPropertiesViewModel {
 			(a) =>
 				new TrackArtistSelectionViewModel(
 					a,
-					song != null && _.some(song.artists(), (sa) => a.id === sa.id),
+					song != null && song.artists().some((sa) => a.id === sa.id),
 					this.filter,
 				),
 		);
 
 		this.somethingSelected = ko.computed(() => {
-			return _.some(this.artistSelections, (a) => a.selected());
+			return this.artistSelections.some((a) => a.selected());
 		});
 
 		this.somethingSelectable = ko.computed(() => {
-			return _.some(this.artistSelections, (a) => !a.selected() && a.visible());
+			return this.artistSelections.some((a) => !a.selected() && a.visible());
 		});
 	}
 }

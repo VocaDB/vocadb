@@ -30,8 +30,7 @@ export default class AdvancedSearchFilters {
 		filterType: AdvancedFilterType,
 		param: string,
 	): boolean => {
-		const result = _.some(
-			this.filters,
+		const result = this.filters.some(
 			(f) => f.filterType === filterType && f.param === param,
 		);
 		return result;

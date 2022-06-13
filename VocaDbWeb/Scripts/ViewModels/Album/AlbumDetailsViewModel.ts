@@ -319,8 +319,7 @@ export class AlbumReviewsViewModel {
 	public writeReview = ko.observable(false);
 
 	public reviewAlreadySubmitted = ko.computed(() => {
-		return _.some(
-			this.reviews(),
+		return this.reviews().some(
 			(review) =>
 				review.user.id === this.loggedUserId &&
 				review.languageCode() === this.languageCode(),

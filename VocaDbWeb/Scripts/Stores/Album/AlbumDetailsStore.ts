@@ -134,8 +134,7 @@ export class AlbumReviewsStore {
 	}
 
 	@computed public get reviewAlreadySubmitted(): boolean {
-		return _.some(
-			this.reviews,
+		return this.reviews.some(
 			(review) =>
 				review.user.id === this.loggedUserId &&
 				review.languageCode === this.languageCode,

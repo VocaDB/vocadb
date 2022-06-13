@@ -205,7 +205,7 @@ export default class SongCreateViewModel {
 		});
 
 		this.isDuplicatePV = ko.computed(() => {
-			return _.some(this.dupeEntries(), (item) => {
+			return this.dupeEntries().some((item) => {
 				return item.matchProperty === 'PV';
 			});
 		});
