@@ -87,7 +87,7 @@ export default class TagsEditViewModel {
 	public show = (): void => {
 		this.repo.getTagSelections().then((selections) => {
 			this.selections(
-				_.map(selections, (selection) => new TagSelectionViewModel(selection)),
+				selections.map((selection) => new TagSelectionViewModel(selection)),
 			);
 			this.dialogVisible(true);
 		});

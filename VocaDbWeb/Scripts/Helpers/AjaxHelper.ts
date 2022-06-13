@@ -13,9 +13,9 @@ export default class AjaxHelper {
 			par.push(
 				key +
 					'=' +
-					_.map(val as string[], (v) => encodeURIComponent(v || '')).join(
-						'&' + key + '=',
-					),
+					(val as string[])
+						.map((v) => encodeURIComponent(v || ''))
+						.join('&' + key + '='),
 			);
 		});
 

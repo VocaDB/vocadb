@@ -72,7 +72,7 @@ export default class ManageEntryTagMappingsViewModel {
 
 	private loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getEntryTagMappings({});
-		this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
+		this.mappings(result.map((t) => new EditEntryTagMappingViewModel(t)));
 	};
 
 	public mappings = ko.observableArray<EditEntryTagMappingViewModel>();

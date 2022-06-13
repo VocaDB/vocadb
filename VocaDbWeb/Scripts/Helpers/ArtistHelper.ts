@@ -54,12 +54,12 @@ export default class ArtistHelper {
 
 	public static getRolesArray(roles: string[] | string): ArtistRoles[] {
 		const stringArr = typeof roles === 'string' ? roles.split(',') : roles;
-		return _.map(stringArr, (s) => ArtistRoles[s as keyof typeof ArtistRoles]);
+		return stringArr.map((s) => ArtistRoles[s as keyof typeof ArtistRoles]);
 	}
 
 	public static getRolesList(roles: ArtistRoles | ArtistRoles[]): string {
 		if (Array.isArray(roles)) {
-			return _.map(roles, (r) => ArtistRoles[r]).join(',');
+			return roles.map((r) => ArtistRoles[r]).join(',');
 		} else {
 			return ArtistRoles[roles];
 		}

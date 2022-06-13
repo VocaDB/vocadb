@@ -6,7 +6,6 @@ import SongType from '@Models/Songs/SongType';
 import SongListRepository from '@Repositories/SongListRepository';
 import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
 import ArtistFilters from '@Stores/Search/ArtistFilters';
-import _ from 'lodash';
 
 import { IPlayListRepository } from './PlayListStore';
 import { ISongForPlayList } from './PlayListStore';
@@ -57,15 +56,13 @@ export default class PlayListRepositoryForSongListAdapter
 				lang: lang,
 			})
 			.then((result) => {
-				const mapped = _.map(result.items, (song, idx) => {
-					return {
-						name: `${song.order}. ${song.song.name}${
-							song.notes ? ` (${song.notes})` : ''
-						}`,
-						song: song.song,
-						indexInPlayList: paging.start! + idx,
-					};
-				});
+				const mapped = result.items.map((song, idx) => ({
+					name: `${song.order}. ${song.song.name}${
+						song.notes ? ` (${song.notes})` : ''
+					}`,
+					song: song.song,
+					indexInPlayList: paging.start! + idx,
+				}));
 
 				return { items: mapped, totalCount: result.totalCount };
 			});

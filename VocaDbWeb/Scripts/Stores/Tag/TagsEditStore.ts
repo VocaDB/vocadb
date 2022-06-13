@@ -100,8 +100,7 @@ export default class TagsEditStore {
 	@action public show = (): void => {
 		this.repo.getTagSelections().then((selections) => {
 			runInAction(() => {
-				this.selections = _.map(
-					selections,
+				this.selections = selections.map(
 					(selection) => new TagSelectionStore(selection),
 				);
 				this.dialogVisible = true;

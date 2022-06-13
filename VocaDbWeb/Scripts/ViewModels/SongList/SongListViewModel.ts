@@ -72,7 +72,7 @@ export default class SongListViewModel {
 				: '';
 		});
 
-		this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+		this.tagIds = ko.computed(() => this.tags().map((t) => t.id));
 
 		// TODO
 		this.pvPlayerViewModel = new PVPlayerViewModel(

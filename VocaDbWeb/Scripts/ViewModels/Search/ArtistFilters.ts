@@ -41,7 +41,7 @@ export default class ArtistFilters {
 	}
 
 	public artists = ko.observableArray<ArtistFilter>();
-	public artistIds = ko.computed(() => _.map(this.artists(), (a) => a.id));
+	public artistIds = ko.computed(() => this.artists().map((a) => a.id));
 	public artistParticipationStatus = ko.observable('Everything');
 	public artistSearchParams: ArtistAutoCompleteParams;
 	public childVoicebanks: Observable<boolean>;
@@ -59,7 +59,7 @@ export default class ArtistFilters {
 	public selectArtists = (selectedArtistIds: number[]): void => {
 		if (!selectedArtistIds) return;
 
-		var filters = _.map(selectedArtistIds, (a) => new ArtistFilter(a));
+		var filters = selectedArtistIds.map((a) => new ArtistFilter(a));
 		ko.utils.arrayPushAll(this.artists, filters);
 
 		if (!this.artistRepo) return;

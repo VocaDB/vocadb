@@ -141,7 +141,7 @@ export default class RatedSongsSearchStore
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tagFilters.tags, (t) => t.id);
+		return this.tagFilters.tags.map((t) => t.id);
 	}
 	public set tagIds(value: number[]) {
 		// OPTIMIZE

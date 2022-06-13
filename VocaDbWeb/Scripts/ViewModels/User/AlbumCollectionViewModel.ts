@@ -12,7 +12,6 @@ import UserRepository from '@Repositories/UserRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
-import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
@@ -107,9 +106,9 @@ export default class AlbumCollectionViewModel {
 	};
 
 	public ratingStars = (userRating: number): { enabled: boolean }[] => {
-		var ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return { enabled: Math.round(userRating) >= rating };
-		});
+		var ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(userRating) >= rating,
+		}));
 		return ratings;
 	};
 

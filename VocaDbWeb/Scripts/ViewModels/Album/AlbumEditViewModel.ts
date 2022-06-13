@@ -208,7 +208,7 @@ export default class AlbumEditViewModel {
 		this.submitting(true);
 
 		var submittedModel: AlbumForEditContract = {
-			artistLinks: _.map(this.artistLinks(), (artist) => artist.toContract()),
+			artistLinks: this.artistLinks().map((artist) => artist.toContract()),
 			defaultNameLanguage: this.defaultNameLanguage(),
 			description: this.description.toContract(),
 			discs: this.discs.toContracts(),
@@ -342,7 +342,7 @@ export default class AlbumEditViewModel {
 					})
 					.then((song) => {
 						var artists = _.filter(
-							_.map(song.artists!, (artistLink) => artistLink.artist),
+							song.artists!.map((artistLink) => artistLink.artist),
 							(artist) => artist != null,
 						);
 
@@ -380,15 +380,12 @@ export default class AlbumEditViewModel {
 			_.forEach(
 				_.filter(this.tracks(), (s) => s.selected()),
 				(song) => {
-					var added = _.map(
-						_.filter(
-							this.editedSong()!.artistSelections,
-							(a) =>
-								a.selected() &&
-								_.every(song.artists(), (a2) => a.artist.id !== a2.id),
-						),
-						(a3) => a3.artist,
-					);
+					var added = _.filter(
+						this.editedSong()!.artistSelections,
+						(a) =>
+							a.selected() &&
+							_.every(song.artists(), (a2) => a.artist.id !== a2.id),
+					).map((a3) => a3.artist);
 					song.artists.push.apply(song.artists, added);
 				},
 			);
@@ -406,20 +403,15 @@ export default class AlbumEditViewModel {
 
 		this.artistsForTracks = (): ArtistContract[] => {
 			var notAllowedTypes = ['Label'];
-			return _.map(
-				_.filter(
-					this.artistLinks(),
-					(a) =>
-						a.artist != null &&
-						!_.includes(notAllowedTypes, a.artist.artistType),
-				),
-				(a) => a.artist,
-			);
+			return _.filter(
+				this.artistLinks(),
+				(a) =>
+					a.artist != null && !_.includes(notAllowedTypes, a.artist.artistType),
+			).map((a) => a.artist);
 		};
 
 		this.artistLinks = ko.observableArray(
-			_.map(
-				data.artistLinks,
+			data.artistLinks.map(
 				(artist) => new ArtistForAlbumEditViewModel(repository, artist),
 			),
 		);
@@ -498,10 +490,9 @@ export default class AlbumEditViewModel {
 			this.trackPropertiesDialogVisible(false);
 
 			if (this.editedSong) {
-				var selected = _.map(
-					_.filter(this.editedSong()!.artistSelections, (a) => a.selected()),
-					(a) => a.artist,
-				);
+				var selected = _.filter(this.editedSong()!.artistSelections, (a) =>
+					a.selected(),
+				).map((a) => a.artist);
 				this.editedSong()!.song.artists(selected);
 				this.editedSong(null!);
 			}
@@ -514,7 +505,7 @@ export default class AlbumEditViewModel {
 		this.trackPropertiesDialogVisible = ko.observable(false);
 
 		this.tracks = ko.observableArray(
-			_.map(data.songs, (song) => new SongInAlbumEditViewModel(song)),
+			data.songs.map((song) => new SongInAlbumEditViewModel(song)),
 		);
 
 		_.forEach(this.tracks(), (song) => {
@@ -696,8 +687,7 @@ export class TrackPropertiesViewModel {
 		artists: ArtistContract[],
 		public song: SongInAlbumEditViewModel,
 	) {
-		this.artistSelections = _.map(
-			artists,
+		this.artistSelections = artists.map(
 			(a) =>
 				new TrackArtistSelectionViewModel(
 					a,

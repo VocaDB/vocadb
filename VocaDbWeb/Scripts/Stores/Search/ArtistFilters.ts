@@ -32,7 +32,7 @@ export default class ArtistFilters {
 	}
 
 	@computed public get artistIds(): number[] {
-		return _.map(this.artists, (a) => a.id);
+		return this.artists.map((a) => a.id);
 	}
 	public set artistIds(value: number[]) {
 		// OPTIMIZE
@@ -78,7 +78,7 @@ export default class ArtistFilters {
 	@action public selectArtists = (selectedArtistIds?: number[]): void => {
 		if (!selectedArtistIds) return;
 
-		const filters = _.map(selectedArtistIds, (a) => new ArtistFilter(a));
+		const filters = selectedArtistIds.map((a) => new ArtistFilter(a));
 		this.artists.push(...filters);
 
 		if (!this.artistRepo) return;

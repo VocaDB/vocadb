@@ -6,7 +6,6 @@ import { HttpClientError } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import PVEditViewModel from './PVEditViewModel';
 
@@ -20,7 +19,7 @@ export default class PVListEditViewModel {
 		public allowDisabled: boolean,
 	) {
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
-		this.pvs = ko.observableArray(_.map(pvs, (pv) => new PVEditViewModel(pv)));
+		this.pvs = ko.observableArray(pvs.map((pv) => new PVEditViewModel(pv)));
 	}
 
 	public add = (): void => {

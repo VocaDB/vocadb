@@ -70,7 +70,7 @@ export default class ManageTagMappingsViewModel {
 				getTotalCount: false,
 			},
 		});
-		this.mappings(_.map(result.items, (t) => new EditTagMappingViewModel(t)));
+		this.mappings(result.items.map((t) => new EditTagMappingViewModel(t)));
 		this.paging.totalItems(this.filteredMappings().length);
 		this.paging.goToFirstPage();
 	};

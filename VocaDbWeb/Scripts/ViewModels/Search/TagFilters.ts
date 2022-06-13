@@ -14,7 +14,7 @@ export default class TagFilters {
 		tags: ObservableArray<TagFilter> = null!,
 	) {
 		this.tags = tags || ko.observableArray<TagFilter>();
-		this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+		this.tagIds = ko.computed(() => this.tags().map((t) => t.id));
 		this.childTags = ko.observable(false);
 
 		this.filters = ko
@@ -31,7 +31,7 @@ export default class TagFilters {
 	public addTags = (selectedTagIds: number[]): void => {
 		if (!selectedTagIds) return;
 
-		var filters = _.map(selectedTagIds, (a) => new TagFilter(a));
+		var filters = selectedTagIds.map((a) => new TagFilter(a));
 		ko.utils.arrayPushAll(this.tags, filters);
 
 		if (!this.tagRepo) return;

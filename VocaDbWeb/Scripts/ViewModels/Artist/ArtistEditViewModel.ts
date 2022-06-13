@@ -142,7 +142,7 @@ export default class ArtistEditViewModel {
 
 		var submittedModel: ArtistForEditContract = {
 			artistType: this.artistTypeStr(),
-			associatedArtists: _.map(this.associatedArtists(), (a) => a.toContract()),
+			associatedArtists: this.associatedArtists().map((a) => a.toContract()),
 			baseVoicebank: this.baseVoicebank.entry(),
 			defaultNameLanguage: this.defaultNameLanguage(),
 			description: this.description.toContract(),
@@ -200,7 +200,7 @@ export default class ArtistEditViewModel {
 			this.canHaveBaseVoicebank(this.artistType()),
 		);
 		this.associatedArtists = ko.observableArray(
-			_.map(data.associatedArtists, (a) => new ArtistForArtistEditViewModel(a)),
+			data.associatedArtists.map((a) => new ArtistForArtistEditViewModel(a)),
 		);
 		this.baseVoicebank = new BasicEntryLinkViewModel(
 			data.baseVoicebank,

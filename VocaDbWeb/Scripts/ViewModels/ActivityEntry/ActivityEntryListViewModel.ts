@@ -148,7 +148,7 @@ export default class ActivityEntryListViewModel {
 				return archivedVersion.changedFields.join(', ');
 		}
 
-		var names = _.map(archivedVersion.changedFields, (f) => namesSet[f]);
+		var names = archivedVersion.changedFields.map((f) => namesSet[f]);
 		return names.join(', ');
 	};
 

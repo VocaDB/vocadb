@@ -45,7 +45,7 @@ export default class SearchCategoryBaseViewModel<TEntry>
 			this.searchTerm.subscribe(this.updateResultsWithTotalCount);
 			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 			this.tags.subscribe(this.updateResultsWithTotalCount);
-			this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+			this.tagIds = ko.computed(() => this.tags().map((t) => t.id));
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 		}
 

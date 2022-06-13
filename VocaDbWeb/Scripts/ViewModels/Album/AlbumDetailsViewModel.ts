@@ -267,9 +267,9 @@ export class AlbumReviewsViewModel {
 	}
 
 	public ratingStars(userRating: number): { enabled: boolean }[] {
-		var ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return { enabled: Math.round(userRating) >= rating };
-		});
+		var ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(userRating) >= rating,
+		}));
 		return ratings;
 	}
 
@@ -292,8 +292,7 @@ export class AlbumReviewsViewModel {
 			this.albumRepository.getReviews({ albumId: this.albumId }),
 			this.albumRepository.getUserCollections({ albumId: this.albumId }),
 		]);
-		const reviewViewModels = _.map(
-			reviews,
+		const reviewViewModels = reviews.map(
 			(review) =>
 				new AlbumReviewViewModel(
 					review,

@@ -42,7 +42,7 @@ export default class NamesEditViewModel {
 	};
 
 	public toContracts = (): LocalizedStringWithIdContract[] => {
-		return _.map(this.getAllNames(), (name) => {
+		return this.getAllNames().map((name) => {
 			var contract: LocalizedStringWithIdContract = {
 				id: name.id,
 				language: name.languageStr(),
@@ -57,7 +57,7 @@ export default class NamesEditViewModel {
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditViewModel {
 		return new NamesEditViewModel(
-			_.map(contracts, (contract) =>
+			contracts.map((contract) =>
 				LocalizedStringWithIdEditViewModel.fromContract(contract),
 			),
 		);

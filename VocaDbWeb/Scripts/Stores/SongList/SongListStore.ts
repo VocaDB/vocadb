@@ -179,7 +179,7 @@ export default class SongListStore
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+		return this.tags.map((t) => t.id);
 	}
 	public set tagIds(value: number[]) {
 		// OPTIMIZE

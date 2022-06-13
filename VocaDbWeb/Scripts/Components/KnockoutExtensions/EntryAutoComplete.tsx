@@ -106,16 +106,13 @@ const EntryAutoComplete = React.forwardRef<
 						? result.items
 						: _.filter(result.items, filter);
 
-					const mapped: AutoCompleteItem<TContract>[] = _.map(
-						filtered,
-						(item) => {
-							return {
-								label: item.name,
-								value: item.id,
-								data: item,
-								term: par.term,
-							};
-						},
+					const mapped: AutoCompleteItem<TContract>[] = filtered.map(
+						(item) => ({
+							label: item.name,
+							value: item.id,
+							data: item,
+							term: par.term,
+						}),
 					);
 
 					if (createNewItem) {

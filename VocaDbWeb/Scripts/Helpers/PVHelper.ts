@@ -1,6 +1,5 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
-import _ from 'lodash';
 
 import VideoServiceHelper from './VideoServiceHelper';
 
@@ -11,8 +10,7 @@ export default class PVHelper {
 		if (!pvServices) return [];
 
 		var values = pvServices.split(',');
-		var services: PVService[] = _.map(
-			values,
+		var services: PVService[] = values.map(
 			(val) => PVService[val.trim() as keyof typeof PVService],
 		);
 

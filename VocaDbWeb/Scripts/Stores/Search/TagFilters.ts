@@ -28,7 +28,7 @@ export default class TagFilters {
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+		return this.tags.map((t) => t.id);
 	}
 
 	// Fired when any of the tag filters is changed
@@ -45,7 +45,7 @@ export default class TagFilters {
 	@action public addTags = (selectedTagIds: number[]): void => {
 		if (!selectedTagIds) return;
 
-		const filters = _.map(selectedTagIds, (a) => new TagFilter(a));
+		const filters = selectedTagIds.map((a) => new TagFilter(a));
 		this.tags.push(...filters);
 
 		if (!this.tagRepo) return;

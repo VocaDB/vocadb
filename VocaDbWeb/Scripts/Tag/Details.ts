@@ -29,7 +29,7 @@ function initChart(
 
 	var tagLinks = (tagList: TagBaseContract[]): string => {
 		var str = '';
-		const links = _.map(tagList, (item) => tagLink(item));
+		const links = tagList.map((item) => tagLink(item));
 		const tagsPerRow = 7;
 
 		for (var i = 0; i < tagList.length; i += tagsPerRow) {

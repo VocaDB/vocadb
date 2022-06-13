@@ -131,14 +131,12 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
 			success: (result: PartialFindResultContract<TContract>) => {
 				var filtered = !filter ? result.items : _.filter(result.items, filter);
 
-				var mapped: AutoCompleteItem<TContract>[] = _.map(filtered, (item) => {
-					return {
-						label: item.name,
-						value: item.id,
-						data: item,
-						term: par.term,
-					};
-				});
+				var mapped: AutoCompleteItem<TContract>[] = filtered.map((item) => ({
+					label: item.name,
+					value: item.id,
+					data: item,
+					term: par.term,
+				}));
 
 				if (createNewItem)
 					mapped.push({

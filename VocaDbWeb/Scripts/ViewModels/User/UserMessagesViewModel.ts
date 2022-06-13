@@ -278,8 +278,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 				iconSize: 40,
 			})
 			.then((result) => {
-				var messageViewModels = _.map(
-					result.items,
+				var messageViewModels = result.items.map(
 					(msg) => new UserMessageViewModel(msg),
 				);
 				callback({ items: messageViewModels, totalCount: result.totalCount });

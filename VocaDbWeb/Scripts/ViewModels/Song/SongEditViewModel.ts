@@ -144,12 +144,10 @@ export default class SongEditViewModel {
 	public async findOriginalSongSuggestions(): Promise<void> {
 		this.originalVersionSuggestions.removeAll();
 
-		const names = _.map(
-			this.names.getPrimaryNames().length
-				? this.names.getPrimaryNames()
-				: this.names.getAllNames(),
-			(n) => n.value(),
-		);
+		const names = (this.names.getPrimaryNames().length
+			? this.names.getPrimaryNames()
+			: this.names.getAllNames()
+		).map((n) => n.value());
 		const [all, originals] = await Promise.all([
 			this.songRepository.getByNames({
 				names: names,
@@ -197,7 +195,7 @@ export default class SongEditViewModel {
 		this.submitting(true);
 
 		var submittedModel: SongForEditContract = {
-			artists: _.map(this.artistLinks(), (artist) => artist.toContract()),
+			artists: this.artistLinks().map((artist) => artist.toContract()),
 			defaultNameLanguage: this.defaultNameLanguage(),
 			deleted: this.deleted,
 			hasAlbums: this.hasAlbums,
@@ -262,8 +260,7 @@ export default class SongEditViewModel {
 			? moment(data.albumReleaseDate)
 			: null!;
 		this.artistLinks = ko.observableArray(
-			_.map(
-				data.artists,
+			data.artists.map(
 				(artist) => new ArtistForAlbumEditViewModel(null!, artist),
 			),
 		);

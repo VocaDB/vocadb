@@ -71,14 +71,12 @@ export default class ImportSongListViewModel {
 		var order = 1;
 		var songs = _.chain(this.items())
 			.filter((i) => i.matchedSong != null)
-			.map((i: ImportedSongInListContract) => {
-				return {
-					order: order++,
-					notes: '',
-					song: i.matchedSong,
-					songInListId: null!,
-				};
-			})
+			.map((i: ImportedSongInListContract) => ({
+				order: order++,
+				notes: '',
+				song: i.matchedSong,
+				songInListId: null!,
+			}))
 			.value();
 
 		var contract: SongListForEditContract = {

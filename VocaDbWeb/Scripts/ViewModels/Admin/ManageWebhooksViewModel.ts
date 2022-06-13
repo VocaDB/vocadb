@@ -54,9 +54,9 @@ class WebhookEditViewModel {
 	) {
 		this.url = webhook.url;
 		this.webhookEvents = webhook.webhookEvents;
-		this.webhookEventsArray = _.map(webhook.webhookEvents.split(','), (val) =>
-			val.trim(),
-		);
+		this.webhookEventsArray = webhook.webhookEvents
+			.split(',')
+			.map((val) => val.trim());
 		this.isNew = isNew;
 	}
 
@@ -104,8 +104,7 @@ export default class ManageWebhooksViewModel {
 		this.loadWebhooks = async (): Promise<void> => {
 			const result = await this.adminRepo.getWebhooks({});
 			this.webhooks(
-				_.map(
-					result,
+				result.map(
 					(t) => new WebhookEditViewModel(t, false, webhookEventNames),
 				),
 			);

@@ -74,7 +74,7 @@ export default class NamesEditStore {
 	};
 
 	public toContracts = (): LocalizedStringWithIdContract[] => {
-		return _.map(this.getAllNames(), (name) => {
+		return this.getAllNames().map((name) => {
 			const contract: LocalizedStringWithIdContract = {
 				id: name.id,
 				language: name.languageStr,
@@ -89,7 +89,7 @@ export default class NamesEditStore {
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditStore {
 		return new NamesEditStore(
-			_.map(contracts, (contract) =>
+			contracts.map((contract) =>
 				LocalizedStringWithIdEditStore.fromContract(contract),
 			),
 		);
