@@ -3,7 +3,6 @@ import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
 import ArtistType from '@Models/Artists/ArtistType';
 import ContentFocus from '@Models/ContentFocus';
-import _ from 'lodash';
 
 export default class ArtistHelper {
 	/// <summary>
@@ -67,7 +66,7 @@ export default class ArtistHelper {
 
 	// Whether the roles for an artist type can be customized
 	public static isCustomizable(at: ArtistType): boolean {
-		return _.includes(ArtistHelper.customizableTypes, at);
+		return ArtistHelper.customizableTypes.includes(at);
 	}
 
 	// Whether roles array indicates default roles
@@ -87,15 +86,15 @@ export default class ArtistHelper {
 		}
 
 		let res =
-			_.includes(roles, ArtistRoles.Arranger) ||
-			_.includes(roles, ArtistRoles.Composer) ||
-			_.includes(roles, ArtistRoles.VoiceManipulator);
+			roles.includes(ArtistRoles.Arranger) ||
+			roles.includes(ArtistRoles.Composer) ||
+			roles.includes(ArtistRoles.VoiceManipulator);
 
 		if (focus === ContentFocus.Video)
-			res = res || _.includes(roles, ArtistRoles.Animator);
+			res = res || roles.includes(ArtistRoles.Animator);
 
 		if (focus === ContentFocus.Illustration)
-			res = res || _.includes(roles, ArtistRoles.Illustrator);
+			res = res || roles.includes(ArtistRoles.Illustrator);
 
 		return res;
 	}
@@ -146,7 +145,7 @@ export default class ArtistHelper {
 				ArtistType.Band,
 				ArtistType.Animator,
 			];
-			return _.includes(validTypes, artistType);
+			return validTypes.includes(artistType);
 		}
 
 		const validRoles = [
@@ -160,7 +159,7 @@ export default class ArtistHelper {
 			ArtistRoles.VoiceManipulator,
 		];
 
-		return validRoles.some((r) => _.includes(rolesArray, r));
+		return validRoles.some((r) => rolesArray.includes(r));
 	}
 
 	public static isVocalistRoleType(
@@ -173,8 +172,8 @@ export default class ArtistHelper {
 		}
 
 		var res =
-			_.includes(roles, ArtistRoles.Vocalist) ||
-			_.includes(roles, ArtistRoles.Chorus);
+			roles.includes(ArtistRoles.Vocalist) ||
+			roles.includes(ArtistRoles.Chorus);
 
 		return res;
 	}
@@ -190,7 +189,7 @@ export default class ArtistHelper {
 	}
 
 	public static isVocalistType(artistType: ArtistType): boolean {
-		return _.includes(ArtistHelper.vocalistTypes, artistType);
+		return ArtistHelper.vocalistTypes.includes(artistType);
 	}
 
 	// Whether default roles should be used for an artist type and roles combination.

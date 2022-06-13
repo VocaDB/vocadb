@@ -33,7 +33,7 @@ export function initToolTip(
 	const url =
 		foreignDomain &&
 		whitelistedDomains.some((domain) =>
-			_.includes(foreignDomain.toLocaleLowerCase(), domain),
+			foreignDomain.toLocaleLowerCase().includes(domain),
 		)
 			? functions.mergeUrls(foreignDomain, relativeUrl)
 			: functions.mapAbsoluteUrl(relativeUrl);

@@ -81,8 +81,8 @@ export default class ManageTagMappingsViewModel {
 		if (!filter) return this.mappings();
 		return this.mappings().filter(
 			(mapping) =>
-				_.includes(mapping.sourceTag.toLowerCase(), filter) ||
-				_.includes(mapping.tag.name.toLowerCase(), filter),
+				mapping.sourceTag.toLowerCase().includes(filter) ||
+				mapping.tag.name.toLowerCase().includes(filter),
 		);
 	});
 

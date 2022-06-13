@@ -13,7 +13,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 import moment from 'moment';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -268,7 +267,7 @@ export default class ArtistEditViewModel {
 				ArtistType.OtherVoiceSynthesizer,
 				ArtistType.SynthesizerV,
 			];
-			return _.includes(vocaloidTypes, this.artistType());
+			return vocaloidTypes.includes(this.artistType());
 		});
 
 		this.newAssociatedArtist.entry.subscribe(this.addAssociatedArtist);

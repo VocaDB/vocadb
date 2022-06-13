@@ -76,7 +76,7 @@ export default class ManageWebhooksViewModel {
 	): string[] =>
 		Object.keys(Enum).filter(
 			(k) =>
-				(!selected || _.includes(selected, Enum[k])) &&
+				(!selected || selected.includes(Enum[k])) &&
 				typeof Enum[k as any] === 'number',
 		);
 

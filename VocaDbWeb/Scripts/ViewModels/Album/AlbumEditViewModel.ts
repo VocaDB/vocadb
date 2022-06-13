@@ -403,8 +403,7 @@ export default class AlbumEditViewModel {
 			return this.artistLinks()
 				.filter(
 					(a) =>
-						a.artist != null &&
-						!_.includes(notAllowedTypes, a.artist.artistType),
+						a.artist != null && !notAllowedTypes.includes(a.artist.artistType),
 				)
 				.map((a) => a.artist);
 		};

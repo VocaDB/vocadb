@@ -383,7 +383,7 @@ export default class SongEditViewModel {
 			return (
 				(this.notes.original() === null || this.notes.original() === '') &&
 				this.originalVersion.entry() == null &&
-				_.includes(derivedTypes, this.songType())
+				derivedTypes.includes(this.songType())
 			);
 		});
 

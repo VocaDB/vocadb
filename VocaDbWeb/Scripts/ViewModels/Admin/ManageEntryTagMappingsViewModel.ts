@@ -11,7 +11,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
 import ko, { Computed } from 'knockout';
-import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
@@ -88,7 +87,7 @@ export default class ManageEntryTagMappingsViewModel {
 	): string[] =>
 		Object.keys(Enum).filter(
 			(k) =>
-				(!selected || _.includes(selected, Enum[k])) &&
+				(!selected || selected.includes(Enum[k])) &&
 				typeof Enum[k as any] === 'number',
 		);
 

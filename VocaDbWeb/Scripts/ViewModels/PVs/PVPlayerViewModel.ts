@@ -6,7 +6,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
-import _ from 'lodash';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 import PVPlayersFactory from './PVPlayersFactory';
@@ -169,14 +168,14 @@ export default class PVPlayerViewModel {
 		song: IPVPlayerSong,
 		service: PVService,
 	): boolean => {
-		return _.includes(song.song.pvServicesArray!, service);
+		return song.song.pvServicesArray?.includes(service) ?? false;
 	};
 
 	public songIsValid = (song: IPVPlayerSong): boolean => {
 		return (
 			!this.autoplay() ||
-			this.autoplayServices.some((s) =>
-				_.includes(song.song.pvServicesArray!, s),
+			this.autoplayServices.some(
+				(s) => song.song.pvServicesArray?.includes(s) ?? false,
 			)
 		);
 	};

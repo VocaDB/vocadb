@@ -46,7 +46,7 @@ export default class ArtistRolesEditViewModel {
 
 	public show = (artist: IEditableArtistWithSupport): void => {
 		for (const r of this.roleSelections) {
-			r.selected(artist && _.includes(artist.rolesArray(), r.id));
+			r.selected(artist && artist.rolesArray().includes(r.id));
 		}
 
 		this.selectedArtist(artist);

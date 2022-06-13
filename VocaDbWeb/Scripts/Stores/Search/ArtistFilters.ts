@@ -62,7 +62,8 @@ export default class ArtistFilters {
 	@computed public get showMembers(): boolean {
 		return (
 			this.hasSingleArtist &&
-			_.includes(ArtistHelper.groupTypes, this.firstArtist.artistType)
+			!!this.firstArtist.artistType &&
+			ArtistHelper.groupTypes.includes(this.firstArtist.artistType)
 		);
 	}
 
