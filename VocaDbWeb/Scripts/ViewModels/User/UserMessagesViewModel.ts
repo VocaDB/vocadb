@@ -214,7 +214,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
 		this.unread = ko.computed(() => {
 			return this.items().length
-				? _.size(_.filter(this.items(), (msg) => !msg.read()))
+				? _.size(this.items().filter((msg) => !msg.read()))
 				: this.unreadOnServer()!;
 		});
 

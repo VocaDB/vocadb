@@ -141,7 +141,7 @@ export default class ManageWebhooksViewModel {
 	};
 
 	public activeWebhooks = ko.computed(() =>
-		_.filter(this.webhooks(), (m) => !m.isDeleted()),
+		this.webhooks().filter((m) => !m.isDeleted()),
 	);
 
 	public save = async (): Promise<void> => {

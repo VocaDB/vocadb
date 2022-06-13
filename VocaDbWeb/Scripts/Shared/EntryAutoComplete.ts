@@ -2,7 +2,6 @@ import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesCo
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import HtmlHelper from '@Helpers/HtmlHelper';
 import $ from 'jquery';
-import _ from 'lodash';
 
 export interface EntryAutoCompleteParams<TContract> {
 	acceptSelection: (
@@ -129,7 +128,7 @@ export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(
 			url: searchUrl,
 			data: queryParams,
 			success: (result: PartialFindResultContract<TContract>) => {
-				var filtered = !filter ? result.items : _.filter(result.items, filter);
+				var filtered = !filter ? result.items : result.items.filter(filter);
 
 				var mapped: AutoCompleteItem<TContract>[] = filtered.map((item) => ({
 					label: item.name,

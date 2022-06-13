@@ -80,7 +80,7 @@ export default class ManageEntryTagMappingsViewModel {
 	public paging = new ServerSidePagingViewModel(50);
 
 	public activeMappings = ko.computed(() =>
-		_.filter(this.mappings(), (m) => !m.isDeleted()),
+		this.mappings().filter((m) => !m.isDeleted()),
 	);
 
 	private getEnumValues = <TEnum>(

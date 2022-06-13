@@ -341,10 +341,9 @@ export default class AlbumEditViewModel {
 						lang: values.languagePreference,
 					})
 					.then((song) => {
-						var artists = _.filter(
-							song.artists!.map((artistLink) => artistLink.artist),
-							(artist) => artist != null,
-						);
+						var artists = song
+							.artists!.map((artistLink) => artistLink.artist)
+							.filter((artist) => artist != null);
 
 						var track = new SongInAlbumEditViewModel({
 							artists: artists,
@@ -378,14 +377,15 @@ export default class AlbumEditViewModel {
 
 		this.addArtistsToSelectedTracks = (): void => {
 			_.forEach(
-				_.filter(this.tracks(), (s) => s.selected()),
+				this.tracks().filter((s) => s.selected()),
 				(song) => {
-					var added = _.filter(
-						this.editedSong()!.artistSelections,
-						(a) =>
-							a.selected() &&
-							_.every(song.artists(), (a2) => a.artist.id !== a2.id),
-					).map((a3) => a3.artist);
+					var added = this.editedSong()!
+						.artistSelections.filter(
+							(a) =>
+								a.selected() &&
+								_.every(song.artists(), (a2) => a.artist.id !== a2.id),
+						)
+						.map((a3) => a3.artist);
 					song.artists.push.apply(song.artists, added);
 				},
 			);
@@ -403,11 +403,13 @@ export default class AlbumEditViewModel {
 
 		this.artistsForTracks = (): ArtistContract[] => {
 			var notAllowedTypes = ['Label'];
-			return _.filter(
-				this.artistLinks(),
-				(a) =>
-					a.artist != null && !_.includes(notAllowedTypes, a.artist.artistType),
-			).map((a) => a.artist);
+			return this.artistLinks()
+				.filter(
+					(a) =>
+						a.artist != null &&
+						!_.includes(notAllowedTypes, a.artist.artistType),
+				)
+				.map((a) => a.artist);
 		};
 
 		this.artistLinks = ko.observableArray(
@@ -467,14 +469,16 @@ export default class AlbumEditViewModel {
 
 		this.removeArtistsFromSelectedTracks = (): void => {
 			_.forEach(
-				_.filter(this.tracks(), (s) => s.selected()),
+				this.tracks().filter((s) => s.selected()),
 				(song) => {
-					var removed = _.filter(song.artists(), (a) =>
-						_.some(
-							this.editedSong()!.artistSelections,
-							(a2) => a2.selected() && a.id === a2.artist.id,
-						),
-					);
+					var removed = song
+						.artists()
+						.filter((a) =>
+							_.some(
+								this.editedSong()!.artistSelections,
+								(a2) => a2.selected() && a.id === a2.artist.id,
+							),
+						);
 					song.artists.removeAll(removed);
 				},
 			);
@@ -490,9 +494,9 @@ export default class AlbumEditViewModel {
 			this.trackPropertiesDialogVisible(false);
 
 			if (this.editedSong) {
-				var selected = _.filter(this.editedSong()!.artistSelections, (a) =>
-					a.selected(),
-				).map((a) => a.artist);
+				var selected = this.editedSong()!
+					.artistSelections.filter((a) => a.selected())
+					.map((a) => a.artist);
 				this.editedSong()!.song.artists(selected);
 				this.editedSong(null!);
 			}

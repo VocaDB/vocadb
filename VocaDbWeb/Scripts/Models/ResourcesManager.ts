@@ -10,8 +10,7 @@ export default class ResourcesManager {
 	) {}
 
 	private setsToLoad = (setNames: string[]): string[] => {
-		var missing = _.filter(
-			setNames,
+		var missing = setNames.filter(
 			(setName) =>
 				this.resources[setName as keyof Observable<ResourcesContract>] == null,
 		);

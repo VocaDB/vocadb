@@ -20,10 +20,9 @@ export default class NamesEditViewModel {
 	};
 
 	public getAllNames = (): LocalizedStringWithIdEditViewModel[] => {
-		return _.filter(
-			this.getAllPrimaryNames().concat(this.aliases()),
-			(name) => !!name && !!name.value && !!name.value(),
-		);
+		return this.getAllPrimaryNames()
+			.concat(this.aliases())
+			.filter((name) => !!name && !!name.value && !!name.value());
 	};
 
 	private getAllPrimaryNames: () => LocalizedStringWithIdEditViewModel[] = () => {
@@ -31,7 +30,7 @@ export default class NamesEditViewModel {
 	};
 
 	public getPrimaryNames = (): LocalizedStringWithIdEditViewModel[] =>
-		_.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value && !!n.value());
+		this.getAllPrimaryNames().filter((n) => !!n && !!n.value && !!n.value());
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
 	public hasPrimaryName = (): boolean => {
@@ -86,8 +85,7 @@ export default class NamesEditViewModel {
 		);
 
 		this.aliases = ko.observableArray(
-			_.filter(
-				names,
+			names.filter(
 				(n) =>
 					n.id !== this.englishName.id &&
 					n.id !== this.originalName.id &&

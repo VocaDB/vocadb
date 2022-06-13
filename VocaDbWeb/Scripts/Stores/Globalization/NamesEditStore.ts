@@ -27,8 +27,7 @@ export default class NamesEditStore {
 			ContentLanguageSelection.Romaji,
 		);
 
-		this.aliases = _.filter(
-			names,
+		this.aliases = names.filter(
 			(n) =>
 				n.id !== this.englishName.id &&
 				n.id !== this.originalName.id &&
@@ -59,14 +58,13 @@ export default class NamesEditStore {
 	};
 
 	public getAllNames = (): LocalizedStringWithIdEditStore[] => {
-		return _.filter(
-			this.getAllPrimaryNames().concat(this.aliases),
-			(name) => !!name && !!name.value,
-		);
+		return this.getAllPrimaryNames()
+			.concat(this.aliases)
+			.filter((name) => !!name && !!name.value);
 	};
 
 	public getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
-		_.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value);
+		this.getAllPrimaryNames().filter((n) => !!n && !!n.value);
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
 	public hasPrimaryName = (): boolean => {

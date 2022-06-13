@@ -80,8 +80,7 @@ export default class ManageTagMappingsViewModel {
 	public filteredMappings = ko.computed(() => {
 		const filter = this.filter().toLowerCase();
 		if (!filter) return this.mappings();
-		return _.filter(
-			this.mappings(),
+		return this.mappings().filter(
 			(mapping) =>
 				_.includes(mapping.sourceTag.toLowerCase(), filter) ||
 				_.includes(mapping.tag.name.toLowerCase(), filter),
@@ -91,7 +90,7 @@ export default class ManageTagMappingsViewModel {
 	public paging = new ServerSidePagingViewModel(50);
 
 	public activeMappings = ko.computed(() =>
-		_.filter(this.mappings(), (m) => !m.isDeleted()),
+		this.mappings().filter((m) => !m.isDeleted()),
 	);
 
 	public newSourceName = ko.observable('');

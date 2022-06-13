@@ -26,7 +26,7 @@ export default class ManageIPRulesViewModel {
 	public deleteOldRules = (): void => {
 		var cutOff = moment().subtract(1, 'years').toDate();
 
-		var toBeRemoved = _.filter(this.rules(), (r) => r.created < cutOff);
+		var toBeRemoved = this.rules().filter((r) => r.created < cutOff);
 		this.rules.removeAll(toBeRemoved);
 	};
 
