@@ -1,7 +1,6 @@
 import ResourcesContract from '@DataContracts/ResourcesContract';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import ko, { Observable } from 'knockout';
-import _ from 'lodash';
 
 export default class ResourcesManager {
 	public constructor(
@@ -27,12 +26,10 @@ export default class ResourcesManager {
 				setNames: setsToLoad,
 			})
 			.then((resources) => {
-				_.each(
-					setNames,
-					(setName) =>
-						(this.resources()[setName as keyof ResourcesContract] =
-							resources[setName as keyof ResourcesContract]),
-				);
+				for (const setName of setNames) {
+					this.resources()[setName as keyof ResourcesContract] =
+						resources[setName as keyof ResourcesContract];
+				}
 				this.resources.valueHasMutated!();
 			});
 	};

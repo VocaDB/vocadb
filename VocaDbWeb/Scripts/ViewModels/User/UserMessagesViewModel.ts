@@ -232,7 +232,9 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		}
 
 		this.selectAll.subscribe((selected) => {
-			_.forEach(this.items(), (m) => m.checked(selected));
+			for (const m of this.items()) {
+				m.checked(selected);
+			}
 		});
 
 		this.anotherUser = new BasicEntryLinkViewModel<UserApiContract>(
@@ -288,9 +290,9 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 	public selectAll = ko.observable(false);
 
 	public selectMessage = (message: UserMessageViewModel): void => {
-		_.each(this.items(), (msg) => {
+		for (const msg of this.items()) {
 			if (msg !== message) msg.selected(false);
-		});
+		}
 	};
 
 	public unread: Computed<number>;

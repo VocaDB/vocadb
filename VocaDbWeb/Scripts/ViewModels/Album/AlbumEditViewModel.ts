@@ -376,19 +376,16 @@ export default class AlbumEditViewModel {
 		};
 
 		this.addArtistsToSelectedTracks = (): void => {
-			_.forEach(
-				this.tracks().filter((s) => s.selected()),
-				(song) => {
-					var added = this.editedSong()!
-						.artistSelections.filter(
-							(a) =>
-								a.selected() &&
-								song.artists().every((a2) => a.artist.id !== a2.id),
-						)
-						.map((a3) => a3.artist);
-					song.artists.push.apply(song.artists, added);
-				},
-			);
+			for (const song of this.tracks().filter((s) => s.selected())) {
+				var added = this.editedSong()!
+					.artistSelections.filter(
+						(a) =>
+							a.selected() &&
+							song.artists().every((a2) => a.artist.id !== a2.id),
+					)
+					.map((a3) => a3.artist);
+				song.artists.push.apply(song.artists, added);
+			}
 
 			this.trackPropertiesDialogVisible(false);
 		};
@@ -396,9 +393,9 @@ export default class AlbumEditViewModel {
 		this.allTracksSelected = ko.observable(false);
 
 		this.allTracksSelected.subscribe((selected) => {
-			_.forEach(this.tracks(), (s) => {
+			for (const s of this.tracks()) {
 				if (!s.isCustomTrack) s.selected(selected);
-			});
+			}
 		});
 
 		this.artistsForTracks = (): ArtistContract[] => {
@@ -467,19 +464,16 @@ export default class AlbumEditViewModel {
 		};
 
 		this.removeArtistsFromSelectedTracks = (): void => {
-			_.forEach(
-				this.tracks().filter((s) => s.selected()),
-				(song) => {
-					var removed = song
-						.artists()
-						.filter((a) =>
-							this.editedSong()!.artistSelections.some(
-								(a2) => a2.selected() && a.id === a2.artist.id,
-							),
-						);
-					song.artists.removeAll(removed);
-				},
-			);
+			for (const song of this.tracks().filter((s) => s.selected())) {
+				var removed = song
+					.artists()
+					.filter((a) =>
+						this.editedSong()!.artistSelections.some(
+							(a2) => a2.selected() && a.id === a2.artist.id,
+						),
+					);
+				song.artists.removeAll(removed);
+			}
 
 			this.trackPropertiesDialogVisible(false);
 		};
@@ -510,9 +504,9 @@ export default class AlbumEditViewModel {
 			data.songs.map((song) => new SongInAlbumEditViewModel(song)),
 		);
 
-		_.forEach(this.tracks(), (song) => {
+		for (const song of this.tracks()) {
 			song.isNextDisc.subscribe(() => this.updateTrackNumbers());
-		});
+		}
 
 		this.tracks.subscribe(() => this.updateTrackNumbers());
 
@@ -550,7 +544,7 @@ export default class AlbumEditViewModel {
 			var track = 1;
 			var disc = 1;
 
-			_.forEach(this.tracks(), (song) => {
+			for (const song of this.tracks()) {
 				if (song.isNextDisc()) {
 					disc++;
 					track = 1;
@@ -559,7 +553,7 @@ export default class AlbumEditViewModel {
 				song.discNumber(disc);
 				song.trackNumber(track);
 				track++;
-			});
+			}
 		};
 
 		this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);

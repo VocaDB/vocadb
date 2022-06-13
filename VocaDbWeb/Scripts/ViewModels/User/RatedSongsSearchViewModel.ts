@@ -13,7 +13,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko from 'knockout';
-import _ from 'lodash';
 import moment from 'moment';
 
 import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
@@ -223,7 +222,7 @@ export default class RatedSongsSearchViewModel {
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
 					var songs: IRatedSongSearchItem[] = [];
 
-					_.each(result.items, (item) => {
+					for (const item of result.items) {
 						var song: IRatedSongSearchItem = item.song!;
 
 						song.rating = item.rating;
@@ -242,7 +241,7 @@ export default class RatedSongsSearchViewModel {
 						}
 
 						songs.push(song);
-					});
+					}
 
 					this.pauseNotifications = false;
 

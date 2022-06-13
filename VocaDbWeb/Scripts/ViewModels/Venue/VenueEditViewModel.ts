@@ -7,7 +7,6 @@ import VenueRepository from '@Repositories/VenueRepository';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable } from 'knockout';
-import _ from 'lodash';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import NamesEditViewModel from '../Globalization/NamesEditViewModel';
@@ -48,18 +47,15 @@ export default class VenueEditViewModel {
 				10000,
 			);
 		} else {
-			_.forEach(
-				[
-					this.names.originalName,
-					this.names.romajiName,
-					this.names.englishName,
-				],
-				(name) => {
-					ko.computed(() => name.value())
-						.extend({ rateLimit: 500 })
-						.subscribe(this.checkName);
-				},
-			);
+			for (const name of [
+				this.names.originalName,
+				this.names.romajiName,
+				this.names.englishName,
+			]) {
+				ko.computed(() => name.value())
+					.extend({ rateLimit: 500 })
+					.subscribe(this.checkName);
+			}
 		}
 	}
 

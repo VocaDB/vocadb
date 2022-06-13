@@ -20,7 +20,6 @@ import PlayListRepositoryForSongsAdapter, {
 } from '@Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
-import _ from 'lodash';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -261,7 +260,7 @@ export default class SongSearchStore
 						: undefined,
 				})
 				.then((result) => {
-					_.each(result.items, (song: ISongSearchItem) => {
+					for (const song of result.items as ISongSearchItem[]) {
 						if (song.pvServices && song.pvServices !== 'Nothing') {
 							song.previewStore = new SongWithPreviewStore(
 								this.songRepo,
@@ -273,7 +272,7 @@ export default class SongSearchStore
 						} else {
 							song.previewStore = undefined;
 						}
-					});
+					}
 
 					return result;
 				});

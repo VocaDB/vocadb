@@ -19,7 +19,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed } from 'knockout';
-import _ from 'lodash';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
@@ -225,7 +224,7 @@ export default class SongListViewModel {
 				lang: this.values.languagePreference,
 			})
 			.then((result) => {
-				_.each(result.items, (item) => {
+				for (const item of result.items) {
 					var song = item.song;
 					var songAny: any = song;
 
@@ -241,7 +240,7 @@ export default class SongListViewModel {
 					} else {
 						songAny.previewViewModel = null;
 					}
-				});
+				}
 
 				this.pauseNotifications = false;
 

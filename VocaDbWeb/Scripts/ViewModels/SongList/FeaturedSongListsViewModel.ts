@@ -5,7 +5,6 @@ import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import ko from 'knockout';
-import _ from 'lodash';
 
 import SongListsBaseViewModel from './SongListsBaseViewModel';
 
@@ -18,7 +17,7 @@ export default class FeaturedSongListsViewModel {
 		tagIds: number[],
 		categoryNames: string[],
 	) {
-		_.forEach(categoryNames, (categoryName) => {
+		for (const categoryName of categoryNames) {
 			this.categories[categoryName] = new FeaturedSongListCategoryViewModel(
 				values,
 				listRepo,
@@ -27,7 +26,7 @@ export default class FeaturedSongListsViewModel {
 				tagIds,
 				categoryName,
 			);
-		});
+		}
 
 		window.onhashchange = (): void => {
 			if (window.location.hash && window.location.hash.length >= 1)

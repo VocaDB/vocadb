@@ -11,11 +11,11 @@ export default class VideoServiceHelper {
 	): PVContract | undefined => {
 		if (allPVs.length === 0) return undefined;
 
-		_.forEach(predicates, (predicate) => {
+		for (const predicate of predicates) {
 			const pv = _.chain(allPVs).filter(predicate).first().value();
 
 			if (pv) return pv;
-		});
+		}
 
 		return acceptFirst ? _.first(allPVs) : undefined;
 	};

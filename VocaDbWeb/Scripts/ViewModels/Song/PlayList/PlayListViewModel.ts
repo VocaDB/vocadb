@@ -12,7 +12,6 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed } from 'knockout';
-import _ from 'lodash';
 
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
 import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
@@ -187,12 +186,12 @@ export default class PlayListViewModel {
 				if (pagingProperties.getTotalCount)
 					this.paging.totalItems(result.totalCount);
 
-				_.each(result.items, (item) => {
+				for (const item of result.items) {
 					item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
 						item.song.pvServices,
 					);
 					this.page.push(item);
-				});
+				}
 
 				this.loading(false);
 

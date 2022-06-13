@@ -83,7 +83,7 @@ export default class ArtistFilters {
 
 		if (!this.artistRepo) return;
 
-		_.forEach(filters, (newArtist) => {
+		for (const newArtist of filters) {
 			const selectedArtistId = newArtist.id;
 
 			this.artistRepo
@@ -94,7 +94,7 @@ export default class ArtistFilters {
 						newArtist.artistType = artist.artistType;
 					});
 				});
-		});
+		}
 	};
 
 	public selectArtist = (selectedArtistId?: number): void => {

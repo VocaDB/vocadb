@@ -88,9 +88,9 @@ export default class SongCreateViewModel {
 				}
 
 				if (result.artists && this.artists().length === 0) {
-					_.forEach(result.artists, (artist) => {
+					for (const artist of result.artists) {
 						this.artists.push(artist);
-					});
+					}
 				}
 			});
 

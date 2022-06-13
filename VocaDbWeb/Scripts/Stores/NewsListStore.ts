@@ -1,6 +1,5 @@
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
-import _ from 'lodash';
 import { makeObservable, observable, runInAction } from 'mobx';
 
 export interface WordpressResponse {
@@ -47,7 +46,7 @@ export default class NewsListStore {
 
 		$.ajax({ dataType: 'json', url: url, data: { number: 3 } })
 			.done((response: WordpressResponse) => {
-				_.forEach(response.posts, (post) => {
+				for (const post of response.posts) {
 					if (post.content.length > 400) {
 						post.content = post.content.substring(0, 400) + '...';
 						post.date = new Date(post.date).toLocaleString();
@@ -60,7 +59,7 @@ export default class NewsListStore {
 							'https://',
 						);
 					}
-				});
+				}
 
 				runInAction(() => {
 					this.posts = response.posts;

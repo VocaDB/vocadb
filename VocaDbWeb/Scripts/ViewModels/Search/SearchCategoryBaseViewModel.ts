@@ -1,4 +1,3 @@
-import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
 import EntryContract from '@DataContracts/EntryContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
@@ -116,13 +115,13 @@ export default class SearchCategoryBaseViewModel<TEntry>
 			this.draftsOnly() ? 'Draft' : null!,
 		).then((result: PartialFindResultContract<any>) => {
 			if (this.showTags()) {
-				_.forEach(result.items, (item: EntryWithTagUsagesContract) => {
+				for (const item of result.items) {
 					if (item.tags)
 						item.tags = _.take(
 							_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
 							10,
 						);
-				});
+				}
 			}
 
 			this.pauseNotifications = false;

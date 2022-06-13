@@ -39,7 +39,6 @@ import TagListStore from '@Stores/Tag/TagListStore';
 import TagsEditStore from '@Stores/Tag/TagsEditStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -298,7 +297,7 @@ export default class SongListStore
 
 		const result = await this.loadResults(pagingProperties);
 
-		_.each(result.items, (item) => {
+		for (const item of result.items) {
 			const song = item.song;
 			const songAny: any = song;
 
@@ -313,7 +312,7 @@ export default class SongListStore
 			} else {
 				songAny.previewStore = undefined;
 			}
-		});
+		}
 
 		this.pauseNotifications = false;
 

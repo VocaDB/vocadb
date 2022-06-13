@@ -50,7 +50,7 @@ export default class TagFilters {
 
 		if (!this.tagRepo) return;
 
-		_.forEach(filters, (newTag) => {
+		for (const newTag of filters) {
 			const selectedTagId = newTag.id;
 
 			this.tagRepo
@@ -65,7 +65,7 @@ export default class TagFilters {
 						newTag.urlSlug = tag.urlSlug;
 					});
 				});
-		});
+		}
 	};
 
 	@action public removeTag = (tag: TagFilter): void => {

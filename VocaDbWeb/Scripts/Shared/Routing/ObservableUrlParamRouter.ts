@@ -48,14 +48,14 @@ export default class ObservableUrlParamRouter {
 				.map((z) => z.split('=').map((v) => decodeURIComponent(v)));
 			var dict = _.fromPairs(params);
 
-			_.each(this.paramDatas, (paramData) => {
+			for (const paramData of this.paramDatas) {
 				this.popState = true;
 
 				// Set observable value to either value from the route or initial value if the value is not present
 				paramData.observable(dict[paramData.name] || paramData.initialValue);
 
 				this.popState = false;
-			});
+			}
 		};
 	}
 

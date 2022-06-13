@@ -10,7 +10,6 @@ import ObservableUrlParamRouter from '@Shared/Routing/ObservableUrlParamRouter';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko from 'knockout';
-import _ from 'lodash';
 
 import SongWithPreviewViewModel from './SongWithPreviewViewModel';
 
@@ -56,7 +55,7 @@ export default class RankingsViewModel {
 				languagePreference: this.languagePreference,
 			},
 			(songs: SongApiContract[]) => {
-				_.each(songs, (song: any) => {
+				for (const song of songs as any[]) {
 					if (song.pvServices && song.pvServices !== 'Nothing') {
 						song.previewViewModel = new SongWithPreviewViewModel(
 							this.songRepo,
@@ -69,7 +68,7 @@ export default class RankingsViewModel {
 					} else {
 						song.previewViewModel = null;
 					}
-				});
+				}
 
 				this.songs(songs);
 			},

@@ -16,7 +16,6 @@ import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@Stores/SongList/SongListsBaseStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -232,7 +231,7 @@ export default class RatedSongsSearchStore
 
 		var songs: IRatedSongSearchItem[] = [];
 
-		_.each(result.items, (item) => {
+		for (const item of result.items) {
 			const song: IRatedSongSearchItem = item.song!;
 
 			song.rating = item.rating;
@@ -250,7 +249,7 @@ export default class RatedSongsSearchStore
 			}
 
 			songs.push(song);
-		});
+		}
 
 		this.pauseNotifications = false;
 

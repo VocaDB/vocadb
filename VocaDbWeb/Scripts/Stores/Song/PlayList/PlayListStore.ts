@@ -13,7 +13,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayerStore, { IPVPlayerSong } from '@Stores/PVs/PVPlayerStore';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -168,12 +167,12 @@ export default class PlayListStore {
 					if (pagingProperties.getTotalCount)
 						this.paging.totalItems = result.totalCount;
 
-					_.each(result.items, (item) => {
+					for (const item of result.items) {
 						item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
 							item.song.pvServices,
 						);
 						this.page.push(item);
-					});
+					}
 
 					this.loading = false;
 				});

@@ -11,7 +11,6 @@ import { ISongSearchItem } from '@Stores/Search/SongSearchStore';
 import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 interface RankingsRouteParams {
@@ -66,7 +65,7 @@ export default class RankingsStore
 				},
 			)
 			.then((songs) => {
-				_.each(songs, (song: any) => {
+				for (const song of songs as any[]) {
 					if (song.pvServices && song.pvServices !== 'Nothing') {
 						song.previewStore = new SongWithPreviewStore(
 							this.songRepo,
@@ -78,7 +77,7 @@ export default class RankingsStore
 					} else {
 						song.previewStore = undefined;
 					}
-				});
+				}
 
 				runInAction(() => {
 					this.songs = songs;

@@ -64,7 +64,7 @@ export default class ArtistFilters {
 
 		if (!this.artistRepo) return;
 
-		_.forEach(filters, (newArtist) => {
+		for (const newArtist of filters) {
 			var selectedArtistId = newArtist.id;
 
 			this.artistRepo
@@ -76,7 +76,7 @@ export default class ArtistFilters {
 					newArtist.name(artist.name);
 					newArtist.artistType(artist.artistType);
 				});
-		});
+		}
 	};
 
 	public showChildVoicebanks: Computed<boolean>;

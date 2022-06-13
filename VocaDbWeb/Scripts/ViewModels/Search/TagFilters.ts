@@ -2,7 +2,6 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import TagFilter from './TagFilter';
 
@@ -36,7 +35,7 @@ export default class TagFilters {
 
 		if (!this.tagRepo) return;
 
-		_.forEach(filters, (newTag) => {
+		for (const newTag of filters) {
 			var selectedTagId = newTag.id;
 
 			this.tagRepo
@@ -49,7 +48,7 @@ export default class TagFilters {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug!);
 				});
-		});
+		}
 	};
 
 	public childTags: Observable<boolean>;
