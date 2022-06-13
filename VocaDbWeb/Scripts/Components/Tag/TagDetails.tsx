@@ -124,8 +124,7 @@ const tagLinks = (tagList: TagBaseContract[]): string => {
 	const tagsPerRow = 7;
 
 	for (var i = 0; i < tagList.length; i += tagsPerRow) {
-		str += _.reduce(
-			_.take(_.drop(links, i), tagsPerRow),
+		str += _.take(_.drop(links, i), tagsPerRow).reduce(
 			(list, item) => list + ', ' + item,
 		);
 
