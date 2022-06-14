@@ -5,7 +5,6 @@ import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
@@ -80,7 +79,7 @@ export default class FeaturedSongListsStore
 	) {
 		makeObservable(this);
 
-		_.forEach(categoryNames, (categoryName) => {
+		for (const categoryName of categoryNames) {
 			this.categories[categoryName] = new FeaturedSongListCategoryStore(
 				values,
 				songListRepo,
@@ -88,7 +87,7 @@ export default class FeaturedSongListsStore
 				tagIds,
 				categoryName,
 			);
-		});
+		}
 	}
 
 	@action public setCategory = (

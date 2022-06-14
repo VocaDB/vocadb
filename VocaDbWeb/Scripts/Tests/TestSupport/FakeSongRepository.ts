@@ -41,8 +41,7 @@ export default class FakeSongRepository extends SongRepository {
 					notes: notes,
 				});
 			} else {
-				const nextListId =
-					(_.max(_.map(this.songLists, (sl) => sl.id)) || 0) + 1;
+				const nextListId = (_.max(this.songLists.map((sl) => sl.id)) || 0) + 1;
 				this.songLists.push({ id: nextListId, name: newListName });
 				this.songsInLists.push({
 					listId: nextListId,

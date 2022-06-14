@@ -1,6 +1,5 @@
 import PVContract from '@DataContracts/PVs/PVContract';
 import PVService from '@Models/PVs/PVService';
-import _ from 'lodash';
 import React from 'react';
 
 import EmbedBili from './EmbedBili';
@@ -29,7 +28,7 @@ const getExtension = (path?: string): string | undefined => {
 const isImage = (filename?: string): boolean => {
 	const imageExtensions = ['.jpg', '.png'];
 	const ext = getExtension(filename);
-	return _.includes(imageExtensions, ext);
+	return !!ext && imageExtensions.includes(ext);
 };
 
 const isAudio = (filename?: string): boolean => !isImage(filename);

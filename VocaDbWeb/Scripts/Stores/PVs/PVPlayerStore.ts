@@ -5,7 +5,6 @@ import SongRepository from '@Repositories/SongRepository';
 import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
-import _ from 'lodash';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 import PVPlayersFactory from './PVPlayersFactory';
@@ -159,7 +158,7 @@ export default class PVPlayerStore {
 					}
 
 					// Case 2
-					const newService = _.find(this.autoplayServices, (s) =>
+					const newService = this.autoplayServices.find((s) =>
 						this.songHasPVService(this.selectedSong!, s),
 					);
 					if (newService) {
@@ -192,14 +191,14 @@ export default class PVPlayerStore {
 		song: IPVPlayerSong,
 		service: PVService,
 	): boolean => {
-		return _.includes(song.song.pvServicesArray, service);
+		return song.song.pvServicesArray?.includes(service) ?? false;
 	};
 
 	public songIsValid = (song: IPVPlayerSong): boolean => {
 		return (
 			!this.autoplay ||
-			this.autoplayServices.some((s) =>
-				_.includes(song.song.pvServicesArray, s),
+			this.autoplayServices.some(
+				(s) => song.song.pvServicesArray?.includes(s) ?? false,
 			)
 		);
 	};

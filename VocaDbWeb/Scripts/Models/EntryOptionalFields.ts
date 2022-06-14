@@ -1,9 +1,7 @@
-import _ from 'lodash';
-
 export class EntryOptionalFields<T> {
 	// TODO: better way for generic constraints?
 	public constructor(type: (val: T) => string, fields: T[]) {
-		this.fields = _.map(fields, (field) => type(field)).join(',');
+		this.fields = fields.map((field) => type(field)).join(',');
 	}
 
 	public fields: string;

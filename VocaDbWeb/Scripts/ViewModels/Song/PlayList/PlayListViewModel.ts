@@ -12,7 +12,6 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed } from 'knockout';
-import _ from 'lodash';
 
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
 import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
@@ -30,7 +29,7 @@ export default class PlayListViewModel {
 		pvPlayerViewModel.nextSong = this.nextSong;
 		pvPlayerViewModel.resetSong = (): void => {
 			this.pvPlayerViewModel.selectedSong(
-				_.find(this.page(), (song) => pvPlayerViewModel.songIsValid(song))!,
+				this.page().find((song) => pvPlayerViewModel.songIsValid(song))!,
 			);
 		};
 
@@ -67,7 +66,7 @@ export default class PlayListViewModel {
 	// If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
 	private getSongWithPlayListIndex = (index: number): ISongForPlayList => {
 		// Might need to build a lookup for this for large playlists
-		return _.find(this.page(), (s) => s.indexInPlayList === index)!;
+		return this.page().find((s) => s.indexInPlayList === index)!;
 	};
 
 	private hasMoreSongs: Computed<boolean>;
@@ -187,12 +186,12 @@ export default class PlayListViewModel {
 				if (pagingProperties.getTotalCount)
 					this.paging.totalItems(result.totalCount);
 
-				_.each(result.items, (item) => {
+				for (const item of result.items) {
 					item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
 						item.song.pvServices,
 					);
 					this.page.push(item);
-				});
+				}
 
 				this.loading(false);
 

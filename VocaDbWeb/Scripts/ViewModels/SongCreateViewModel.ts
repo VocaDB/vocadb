@@ -30,13 +30,14 @@ export default class SongCreateViewModel {
 
 	public artistsWithRoles: Computed<ArtistForAlbumContract[]> = ko.computed(
 		() =>
-			_.map(this.artists(), (a) => {
-				return { artist: a, roles: ArtistRoles[ArtistRoles.Default] };
-			}),
+			this.artists().map((a) => ({
+				artist: a,
+				roles: ArtistRoles[ArtistRoles.Default],
+			})),
 	);
 
 	private getArtistIds = (): number[] => {
-		return _.map(this.artists(), (a) => a.id);
+		return this.artists().map((a) => a.id);
 	};
 
 	public checkDuplicatesAndPV = (
@@ -87,9 +88,9 @@ export default class SongCreateViewModel {
 				}
 
 				if (result.artists && this.artists().length === 0) {
-					_.forEach(result.artists, (artist) => {
+					for (const artist of result.artists) {
 						this.artists.push(artist);
-					});
+					}
 				}
 			});
 
@@ -204,7 +205,7 @@ export default class SongCreateViewModel {
 		});
 
 		this.isDuplicatePV = ko.computed(() => {
-			return _.some(this.dupeEntries(), (item) => {
+			return this.dupeEntries().some((item) => {
 				return item.matchProperty === 'PV';
 			});
 		});
@@ -241,8 +242,7 @@ export default class SongCreateViewModel {
 		this.getSongTypeTag(this.songType());
 
 		this.coverArtists = ko.computed(() => {
-			return _.filter(
-				this.artists(),
+			return this.artists().filter(
 				(a) => a.artistType === ArtistType.CoverArtist,
 			);
 		});

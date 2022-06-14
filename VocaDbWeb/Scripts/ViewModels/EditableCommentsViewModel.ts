@@ -145,7 +145,7 @@ export default class EditableCommentsViewModel {
 
 	private setComments = (commentContracts: CommentContract[]): void => {
 		var commentViewModels = _.sortBy(
-			_.map(commentContracts, (comment) => this.processComment(comment)),
+			commentContracts.map((comment) => this.processComment(comment)),
 			(comment) => comment.created,
 		);
 

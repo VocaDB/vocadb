@@ -42,8 +42,8 @@ const ToolTip = React.forwardRef<HTMLElement, ToolTipProps>(
 		React.useEffect(() => {
 			const url =
 				foreignDomain &&
-				_.some(whitelistedDomains, (domain) =>
-					_.includes(foreignDomain.toLocaleLowerCase(), domain),
+				whitelistedDomains.some((domain) =>
+					foreignDomain.toLocaleLowerCase().includes(domain),
 				)
 					? functions.mergeUrls(foreignDomain, relativeUrl)
 					: functions.mapAbsoluteUrl(relativeUrl);

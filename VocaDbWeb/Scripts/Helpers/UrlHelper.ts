@@ -128,7 +128,7 @@ export default class UrlHelper {
 	public static upgradeToHttps = (url?: string): string | undefined => {
 		if (!url || url.startsWith('https://')) return url;
 
-		if (_.some(UrlHelper.httpUpgradeDomains, (m) => url!.startsWith(m)))
+		if (UrlHelper.httpUpgradeDomains.some((m) => url!.startsWith(m)))
 			return url.replace('http://', 'https://');
 
 		const httpUpgradeMatch = _.chain(UrlHelper.httpUpgradeMatchers)

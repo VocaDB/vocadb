@@ -3,7 +3,6 @@ import WebLinkContract from '@DataContracts/WebLinkContract';
 import UserRepository from '@Repositories/UserRepository';
 import ui from '@Shared/MessagesTyped';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
@@ -35,7 +34,7 @@ export default class MySettingsViewModel {
 		this.email = ko.observable(email);
 		this.emailVerified = ko.observable(emailVerified);
 		this.knownLanguages = ko.observableArray(
-			_.map(knownLanguages, (l) => new UserKnownLanguageEditViewModel(l)),
+			knownLanguages.map((l) => new UserKnownLanguageEditViewModel(l)),
 		);
 		this.webLinksViewModel = new WebLinksEditViewModel(webLinkContracts);
 

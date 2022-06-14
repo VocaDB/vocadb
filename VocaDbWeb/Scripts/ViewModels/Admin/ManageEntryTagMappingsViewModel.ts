@@ -11,7 +11,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import ui from '@Shared/MessagesTyped';
 import ko, { Computed } from 'knockout';
-import _ from 'lodash';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
@@ -26,8 +25,7 @@ export default class ManageEntryTagMappingsViewModel {
 		if (!this.newEntryType || this.newTargetTag.isEmpty()) return;
 
 		if (
-			_.some(
-				this.mappings(),
+			this.mappings().some(
 				(m) =>
 					m.tag.id === this.newTargetTag.id() &&
 					m.entryType.entryType === this.newEntryType() &&
@@ -72,7 +70,7 @@ export default class ManageEntryTagMappingsViewModel {
 
 	private loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getEntryTagMappings({});
-		this.mappings(_.map(result, (t) => new EditEntryTagMappingViewModel(t)));
+		this.mappings(result.map((t) => new EditEntryTagMappingViewModel(t)));
 	};
 
 	public mappings = ko.observableArray<EditEntryTagMappingViewModel>();
@@ -80,7 +78,7 @@ export default class ManageEntryTagMappingsViewModel {
 	public paging = new ServerSidePagingViewModel(50);
 
 	public activeMappings = ko.computed(() =>
-		_.filter(this.mappings(), (m) => !m.isDeleted()),
+		this.mappings().filter((m) => !m.isDeleted()),
 	);
 
 	private getEnumValues = <TEnum>(
@@ -89,7 +87,7 @@ export default class ManageEntryTagMappingsViewModel {
 	): string[] =>
 		Object.keys(Enum).filter(
 			(k) =>
-				(!selected || _.includes(selected, Enum[k])) &&
+				(!selected || selected.includes(Enum[k])) &&
 				typeof Enum[k as any] === 'number',
 		);
 
@@ -119,8 +117,7 @@ export default class ManageEntryTagMappingsViewModel {
 
 	public entrySubTypes: Computed<string[]> = ko.computed(
 		() =>
-			_.find(
-				this.entrySubTypesByType,
+			this.entrySubTypesByType.find(
 				(et) => EntryType[et.key] === this.newEntryType(),
 			)?.values ?? [],
 	);

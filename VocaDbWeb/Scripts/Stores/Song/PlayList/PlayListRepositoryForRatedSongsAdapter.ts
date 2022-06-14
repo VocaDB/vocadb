@@ -4,7 +4,6 @@ import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUser
 import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserRepository from '@Repositories/UserRepository';
-import _ from 'lodash';
 
 import AdvancedSearchFilters from '../../Search/AdvancedSearchFilters';
 import ArtistFilters from '../../Search/ArtistFilters';
@@ -57,13 +56,11 @@ export default class PlayListRepositoryForRatedSongsAdapter
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-					const mapped = _.map(result.items, (song, index) => {
-						return {
-							name: song.song!.name,
-							song: song.song!,
-							indexInPlayList: paging.start! + index,
-						};
-					});
+					const mapped = result.items.map((song, index) => ({
+						name: song.song!.name,
+						song: song.song!,
+						indexInPlayList: paging.start! + index,
+					}));
 
 					return { items: mapped, totalCount: result.totalCount };
 				},

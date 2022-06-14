@@ -4,7 +4,6 @@ import UserRepository from '@Repositories/UserRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -51,7 +50,7 @@ export default class FollowedArtistsStore
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tagFilters.tags, (t) => t.id);
+		return this.tagFilters.tags.map((t) => t.id);
 	}
 	public set tagIds(value: number[]) {
 		// OPTIMIZE

@@ -18,7 +18,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import functions from '@Shared/GlobalFunctions';
 import SongDetailsStore from '@Stores/Song/SongDetailsStore';
 import classNames from 'classnames';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -221,8 +220,7 @@ const SongBasicInfo = observer(
 
 		const webLinks = React.useMemo(() => {
 			if (
-				_.every(
-					model.contract.pvs,
+				model.contract.pvs.every(
 					(p) => p.service !== PVService[PVService.Youtube],
 				)
 			) {

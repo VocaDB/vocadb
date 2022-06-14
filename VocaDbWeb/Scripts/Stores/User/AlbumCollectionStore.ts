@@ -18,7 +18,6 @@ import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -116,9 +115,9 @@ export default class AlbumCollectionStore
 	}
 
 	public ratingStars = (userRating: number): { enabled: boolean }[] => {
-		const ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return { enabled: Math.round(userRating) >= rating };
-		});
+		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(userRating) >= rating,
+		}));
 		return ratings;
 	};
 

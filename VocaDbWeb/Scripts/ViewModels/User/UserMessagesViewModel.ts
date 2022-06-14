@@ -84,7 +84,7 @@ export default class UserMessagesViewModel {
 			this.sentMessages,
 		];
 
-		var inbox = _.find(this.inboxes, (i) => i.inbox === inboxType)!;
+		var inbox = this.inboxes.find((i) => i.inbox === inboxType)!;
 
 		inbox.init(() => {
 			if (selectedMessageId != null) {
@@ -146,7 +146,7 @@ export default class UserMessagesViewModel {
 		messageId: number,
 		inbox: UserMessageFolderViewModel,
 	): void => {
-		var message = _.find(inbox.items(), (msg) => msg.id === messageId);
+		var message = inbox.items().find((msg) => msg.id === messageId);
 
 		if (message) {
 			this.selectInbox(inbox.inbox);
@@ -214,7 +214,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 
 		this.unread = ko.computed(() => {
 			return this.items().length
-				? _.size(_.filter(this.items(), (msg) => !msg.read()))
+				? _.size(this.items().filter((msg) => !msg.read()))
 				: this.unreadOnServer()!;
 		});
 
@@ -232,7 +232,9 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 		}
 
 		this.selectAll.subscribe((selected) => {
-			_.forEach(this.items(), (m) => m.checked(selected));
+			for (const m of this.items()) {
+				m.checked(selected);
+			}
 		});
 
 		this.anotherUser = new BasicEntryLinkViewModel<UserApiContract>(
@@ -278,8 +280,7 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 				iconSize: 40,
 			})
 			.then((result) => {
-				var messageViewModels = _.map(
-					result.items,
+				var messageViewModels = result.items.map(
 					(msg) => new UserMessageViewModel(msg),
 				);
 				callback({ items: messageViewModels, totalCount: result.totalCount });
@@ -289,9 +290,9 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
 	public selectAll = ko.observable(false);
 
 	public selectMessage = (message: UserMessageViewModel): void => {
-		_.each(this.items(), (msg) => {
+		for (const msg of this.items()) {
 			if (msg !== message) msg.selected(false);
-		});
+		}
 	};
 
 	public unread: Computed<number>;

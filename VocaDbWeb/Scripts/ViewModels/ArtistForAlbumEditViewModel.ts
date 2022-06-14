@@ -4,7 +4,6 @@ import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistRoles from '@Models/Artists/ArtistRoles';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 // View model for editing artist for album link.
 export default class ArtistForAlbumEditViewModel
@@ -67,7 +66,7 @@ export default class ArtistForAlbumEditViewModel
 				return this.rolesArray().join();
 			},
 			write: (value: string) => {
-				this.rolesArray(_.map(value.split(','), (val) => val.trim()));
+				this.rolesArray(value.split(',').map((val) => val.trim()));
 			},
 		});
 

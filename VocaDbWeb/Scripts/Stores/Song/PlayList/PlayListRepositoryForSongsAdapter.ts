@@ -11,7 +11,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
 import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
 import ArtistFilters from '@Stores/Search/ArtistFilters';
-import _ from 'lodash';
 
 import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
 
@@ -88,13 +87,11 @@ export default class PlayListRepositoryForSongsAdapter
 				maxLength: undefined,
 			})
 			.then((result: PartialFindResultContract<SongApiContract>) => {
-				const mapped = _.map(result.items, (song, idx) => {
-					return {
-						name: song.name,
-						song: song,
-						indexInPlayList: paging.start! + idx,
-					};
-				});
+				const mapped = result.items.map((song, idx) => ({
+					name: song.name,
+					song: song,
+					indexInPlayList: paging.start! + idx,
+				}));
 
 				return { items: mapped, totalCount: result.totalCount };
 			});

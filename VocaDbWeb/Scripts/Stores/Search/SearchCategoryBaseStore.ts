@@ -103,7 +103,7 @@ export default abstract class SearchCategoryBaseStore<
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+		return this.tags.map((t) => t.id);
 	}
 	public set tagIds(value: number[]) {
 		// OPTIMIZE
@@ -153,14 +153,14 @@ export default abstract class SearchCategoryBaseStore<
 		);
 
 		if (this.showTags) {
-			_.forEach(result.items, (item) => {
+			for (const item of result.items) {
 				if (item.tags) {
 					item.tags = _.take(
 						_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
 						10,
 					);
 				}
-			});
+			}
 		}
 
 		this.pauseNotifications = false;

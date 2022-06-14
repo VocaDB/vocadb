@@ -1,7 +1,6 @@
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
 import ko from 'knockout';
-import _ from 'lodash';
 
 export default class NewsListViewModel {
 	public constructor(public readonly blogUrl: string) {
@@ -18,7 +17,7 @@ export default class NewsListViewModel {
 
 		$.ajax({ dataType: 'json', url: url, data: { number: 3 } })
 			.done((response: WordpressResponse) => {
-				_.forEach(response.posts, (post) => {
+				for (const post of response.posts) {
 					if (post.content.length > 400) {
 						post.content = post.content.substring(0, 400) + '...';
 						post.date = new Date(post.date).toLocaleString();
@@ -31,7 +30,7 @@ export default class NewsListViewModel {
 							'https://',
 						);
 					}
-				});
+				}
 
 				this.posts(response.posts);
 			})

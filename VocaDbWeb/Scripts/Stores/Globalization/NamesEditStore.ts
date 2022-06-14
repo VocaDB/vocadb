@@ -27,8 +27,7 @@ export default class NamesEditStore {
 			ContentLanguageSelection.Romaji,
 		);
 
-		this.aliases = _.filter(
-			names,
+		this.aliases = names.filter(
 			(n) =>
 				n.id !== this.englishName.id &&
 				n.id !== this.originalName.id &&
@@ -40,7 +39,7 @@ export default class NamesEditStore {
 		names: LocalizedStringWithIdEditStore[],
 		lang: ContentLanguageSelection,
 	): LocalizedStringWithIdEditStore {
-		const name = _.find(names, (n) => n.language === lang);
+		const name = names.find((n) => n.language === lang);
 		return name || new LocalizedStringWithIdEditStore(lang, '');
 	}
 
@@ -59,22 +58,21 @@ export default class NamesEditStore {
 	};
 
 	public getAllNames = (): LocalizedStringWithIdEditStore[] => {
-		return _.filter(
-			this.getAllPrimaryNames().concat(this.aliases),
-			(name) => !!name && !!name.value,
-		);
+		return this.getAllPrimaryNames()
+			.concat(this.aliases)
+			.filter((name) => !!name && !!name.value);
 	};
 
 	public getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
-		_.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value);
+		this.getAllPrimaryNames().filter((n) => !!n && !!n.value);
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
 	public hasPrimaryName = (): boolean => {
-		return _.some(this.getPrimaryNames(), (name) => name && name.value);
+		return this.getPrimaryNames().some((name) => name && name.value);
 	};
 
 	public toContracts = (): LocalizedStringWithIdContract[] => {
-		return _.map(this.getAllNames(), (name) => {
+		return this.getAllNames().map((name) => {
 			const contract: LocalizedStringWithIdContract = {
 				id: name.id,
 				language: name.languageStr,
@@ -89,7 +87,7 @@ export default class NamesEditStore {
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditStore {
 		return new NamesEditStore(
-			_.map(contracts, (contract) =>
+			contracts.map((contract) =>
 				LocalizedStringWithIdEditStore.fromContract(contract),
 			),
 		);

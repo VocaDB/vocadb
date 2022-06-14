@@ -5,7 +5,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import PagedItemsStore from '@Stores/PagedItemsStore';
 import TagFilter from '@Stores/Search/TagFilter';
 import TagFilters from '@Stores/Search/TagFilters';
-import _ from 'lodash';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import moment from 'moment';
 
@@ -55,7 +54,7 @@ export default abstract class SongListsBaseStore extends PagedItemsStore<SongLis
 	}
 
 	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+		return this.tags.map((t) => t.id);
 	}
 	public set tagIds(value: number[]) {
 		// OPTIMIZE

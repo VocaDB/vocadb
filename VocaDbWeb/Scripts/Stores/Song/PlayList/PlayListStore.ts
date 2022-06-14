@@ -13,7 +13,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import PVPlayerStore, { IPVPlayerSong } from '@Stores/PVs/PVPlayerStore';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -60,7 +59,7 @@ export default class PlayListStore {
 		pvPlayerStore.nextSong = this.nextSong;
 		pvPlayerStore.resetSong = (): void => {
 			runInAction(() => {
-				pvPlayerStore.selectedSong = _.find(this.page, (song) =>
+				pvPlayerStore.selectedSong = this.page.find((song) =>
 					pvPlayerStore.songIsValid(song),
 				);
 			});
@@ -108,7 +107,7 @@ export default class PlayListStore {
 		index: number,
 	): ISongForPlayList | undefined => {
 		// Might need to build a lookup for this for large playlists
-		return _.find(this.page, (s) => s.indexInPlayList === index);
+		return this.page.find((s) => s.indexInPlayList === index);
 	};
 
 	@action private playSong = (song?: ISongForPlayList): void => {
@@ -168,12 +167,12 @@ export default class PlayListStore {
 					if (pagingProperties.getTotalCount)
 						this.paging.totalItems = result.totalCount;
 
-					_.each(result.items, (item) => {
+					for (const item of result.items) {
 						item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
 							item.song.pvServices,
 						);
 						this.page.push(item);
-					});
+					}
 
 					this.loading = false;
 				});

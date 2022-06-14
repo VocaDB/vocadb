@@ -23,8 +23,7 @@ export default class ManageTagMappingsViewModel {
 		if (!this.newSourceName || this.newTargetTag.isEmpty()) return;
 
 		if (
-			_.some(
-				this.mappings(),
+			this.mappings().some(
 				(m) =>
 					m.tag.id === this.newTargetTag.id() &&
 					m.sourceTag.toLowerCase() === this.newSourceName().toLowerCase(),
@@ -70,7 +69,7 @@ export default class ManageTagMappingsViewModel {
 				getTotalCount: false,
 			},
 		});
-		this.mappings(_.map(result.items, (t) => new EditTagMappingViewModel(t)));
+		this.mappings(result.items.map((t) => new EditTagMappingViewModel(t)));
 		this.paging.totalItems(this.filteredMappings().length);
 		this.paging.goToFirstPage();
 	};
@@ -80,18 +79,17 @@ export default class ManageTagMappingsViewModel {
 	public filteredMappings = ko.computed(() => {
 		const filter = this.filter().toLowerCase();
 		if (!filter) return this.mappings();
-		return _.filter(
-			this.mappings(),
+		return this.mappings().filter(
 			(mapping) =>
-				_.includes(mapping.sourceTag.toLowerCase(), filter) ||
-				_.includes(mapping.tag.name.toLowerCase(), filter),
+				mapping.sourceTag.toLowerCase().includes(filter) ||
+				mapping.tag.name.toLowerCase().includes(filter),
 		);
 	});
 
 	public paging = new ServerSidePagingViewModel(50);
 
 	public activeMappings = ko.computed(() =>
-		_.filter(this.mappings(), (m) => !m.isDeleted()),
+		this.mappings().filter((m) => !m.isDeleted()),
 	);
 
 	public newSourceName = ko.observable('');

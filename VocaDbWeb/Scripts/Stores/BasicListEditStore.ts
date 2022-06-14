@@ -14,7 +14,7 @@ export default class BasicListEditStore<TItem, TContract> {
 	) {
 		makeObservable(this);
 
-		this.items = _.map(contracts, (contract) => new type(contract));
+		this.items = contracts.map((contract) => new type(contract));
 	}
 
 	// add new item by instansiating the item type with default parameters

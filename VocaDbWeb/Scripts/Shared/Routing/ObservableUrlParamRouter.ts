@@ -43,19 +43,19 @@ export default class ObservableUrlParamRouter {
 
 			// History state includes the query string as key/value pairs separated by "&"
 			var datas: string = event.state || '';
-			var params = _.map(datas.split('&'), (z) =>
-				z.split('=').map((v) => decodeURIComponent(v)),
-			);
+			var params = datas
+				.split('&')
+				.map((z) => z.split('=').map((v) => decodeURIComponent(v)));
 			var dict = _.fromPairs(params);
 
-			_.each(this.paramDatas, (paramData) => {
+			for (const paramData of this.paramDatas) {
 				this.popState = true;
 
 				// Set observable value to either value from the route or initial value if the value is not present
 				paramData.observable(dict[paramData.name] || paramData.initialValue);
 
 				this.popState = false;
-			});
+			}
 		};
 	}
 

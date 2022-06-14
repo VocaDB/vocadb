@@ -1,7 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
 import ko, { Computed, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 // View model for editing artist for album link.
 export default class ArtistForEventEditViewModel
@@ -40,7 +39,7 @@ export default class ArtistForEventEditViewModel
 				return this.rolesArray().join();
 			},
 			write: (value: string) => {
-				this.rolesArray(_.map(value.split(','), (val) => val.trim()));
+				this.rolesArray(value.split(',').map((val) => val.trim()));
 			},
 		});
 

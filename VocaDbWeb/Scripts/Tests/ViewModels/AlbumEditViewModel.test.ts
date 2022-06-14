@@ -216,7 +216,7 @@ function findArtistSelection(
 	target: TrackPropertiesViewModel,
 	artist: ArtistContract,
 ): TrackArtistSelectionViewModel {
-	return _.find(target.artistSelections, (a) => a.artist === artist)!;
+	return target.artistSelections.find((a) => a.artist === artist)!;
 }
 
 test('constructor', () => {
@@ -286,7 +286,7 @@ test('addArtist existing', () => {
 
 	expect(target.artistLinks().length, 'artistLinks().length').toBe(5);
 	expect(
-		_.some(target.artistLinks(), (a) => a.artist === newVocalist),
+		target.artistLinks().some((a) => a.artist === newVocalist),
 		'New vocalist was added',
 	).toBe(true);
 });
@@ -297,7 +297,7 @@ test('addArtist custom', () => {
 
 	expect(target.artistLinks().length, 'artistLinks().length').toBe(5);
 	expect(
-		_.some(target.artistLinks(), (a) => a.name() === 'Custom artist'),
+		target.artistLinks().some((a) => a.name() === 'Custom artist'),
 		'Custom artist was added',
 	).toBe(true);
 });

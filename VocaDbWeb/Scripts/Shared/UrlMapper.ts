@@ -1,10 +1,8 @@
-import _ from 'lodash';
-
 import functions from './GlobalFunctions';
 
 export default class UrlMapper {
 	public static buildUrl = (...args: string[]): string => {
-		return _.reduce(args, (list: string, item: string) =>
+		return args.reduce((list: string, item: string) =>
 			UrlMapper.mergeUrls(list, item),
 		)!;
 	};

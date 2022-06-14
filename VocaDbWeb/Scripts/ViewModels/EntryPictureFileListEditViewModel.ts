@@ -1,13 +1,12 @@
 import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
 import ko, { ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
 export default class EntryPictureFileListEditViewModel {
 	public constructor(pictures: EntryPictureFileContract[]) {
 		this.pictures = ko.observableArray(
-			_.map(pictures, (picture) => new EntryPictureFileEditViewModel(picture)),
+			pictures.map((picture) => new EntryPictureFileEditViewModel(picture)),
 		);
 	}
 
