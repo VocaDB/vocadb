@@ -170,29 +170,36 @@ namespace VocaDb.Web.Controllers
 			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile is null);
 		}
 
-		protected EntryPictureFileContract? ParsePicture(IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
+		public static EntryPictureFileContract? ParsePicture(Microsoft.AspNetCore.Mvc.ControllerBase controller, IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
 		{
 			EntryPictureFileContract? pictureData = null;
 
-			if (Request.Form.Files.Count > 0 && pictureUpload is not null && pictureUpload.Length > 0)
+			if (controller.Request.Form.Files.Count > 0 && pictureUpload is not null && pictureUpload.Length > 0)
 			{
 				if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 				{
-					ModelState.AddModelError(fieldName, "Picture file is too large.");
+					controller.ModelState.AddModelError(fieldName, "Picture file is too large.");
 					return null;
 				}
 
 				if (!ImageHelper.IsValidImageExtension(pictureUpload.FileName))
 				{
-					ModelState.AddModelError(fieldName, "Picture format is not valid.");
+					controller.ModelState.AddModelError(fieldName, "Picture format is not valid.");
 					return null;
 				}
 
-				pictureData = new EntryPictureFileContract(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose);
-				pictureData.OriginalFileName = pictureUpload.FileName;
+				pictureData = new(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose)
+				{
+					OriginalFileName = pictureUpload.FileName
+				};
 			}
 
 			return pictureData;
+		}
+
+		protected EntryPictureFileContract? ParsePicture(IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
+		{
+			return ParsePicture(this, pictureUpload, fieldName, purpose);
 		}
 #nullable disable
 

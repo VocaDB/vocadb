@@ -115,6 +115,7 @@ const EntryAutoComplete = React.forwardRef<
 					if (createNewItem) {
 						mapped.push({
 							label: createNewItem.replace('{0}', par.term),
+							value: null!,
 							term: par.term,
 							itemType: 'new',
 						});
@@ -123,6 +124,7 @@ const EntryAutoComplete = React.forwardRef<
 					if (createCustomItem) {
 						mapped.push({
 							label: createCustomItem.replace('{0}', par.term),
+							value: null!,
 							term: par.term,
 							itemType: 'custom',
 						});

@@ -1,6 +1,5 @@
-#nullable disable
-
 using NLog;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
 
@@ -14,41 +13,16 @@ namespace VocaDb.Model.Helpers
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private static readonly ConcurrentEntryEditManager s_staticInstance = new();
 
-		public static readonly EntryEditData Nothing = new();
+		public static readonly EntryEditDataContract Nothing = new();
 
-		public class EntryEditData
-		{
-			public EntryEditData() { }
+		public static IEnumerable<KeyValuePair<EntryRef, EntryEditDataContract>> Editors => s_staticInstance._editors;
 
-			public EntryEditData(IUser user)
-				: this()
-			{
-				UserId = user.Id;
-				UserName = user.Name;
-				Time = DateTime.Now;
-			}
-
-			public DateTime Time { get; set; }
-
-			public int UserId { get; private set; }
-
-			public string UserName { get; private set; }
-
-			public void Refresh(IUser user)
-			{
-				if (user.Id == UserId)
-					Time = DateTime.Now;
-			}
-		}
-
-		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => s_staticInstance._editors;
-
-		public static EntryEditData CheckConcurrentEdits(EntryRef entry, IUser user)
+		public static EntryEditDataContract CheckConcurrentEdits(EntryRef entry, IUser user)
 		{
 			return s_staticInstance.CheckConcurrentEditsInst(entry, user);
 		}
 
-		private readonly Dictionary<EntryRef, EntryEditData> _editors = new();
+		private readonly Dictionary<EntryRef, EntryEditDataContract> _editors = new();
 
 		private void ClearExpiredUsages()
 		{
@@ -56,14 +30,16 @@ namespace VocaDb.Model.Helpers
 
 			lock (_editors)
 			{
-				var expired = _editors.Where(e => e.Value.Time < cutoffDate).Select(e => e.Key).ToArray();
+				var expired = _editors
+					.Where(e => e.Value.Time < cutoffDate)
+					.Select(e => e.Key)
+					.ToArray();
 
 				foreach (var e in expired)
 					_editors.Remove(e);
 			}
 		}
 
-#nullable enable
 		private void AddOrUpdate(EntryRef entry, IUser user)
 		{
 			ParamIs.NotNull(() => entry);
@@ -81,7 +57,7 @@ namespace VocaDb.Model.Helpers
 			}
 		}
 
-		private EntryEditData GetEditor(EntryRef entry)
+		private EntryEditDataContract GetEditor(EntryRef entry)
 		{
 			ParamIs.NotNull(() => entry);
 
@@ -100,7 +76,7 @@ namespace VocaDb.Model.Helpers
 		/// <param name="entry">Entry to be checked. Cannot be null.</param>
 		/// <param name="user">User attempting to edit the entry. Cannot be null.</param>
 		/// <returns>Edit data for the active editor. Cannot be null.</returns>
-		public EntryEditData CheckConcurrentEditsInst(EntryRef entry, IUser user)
+		public EntryEditDataContract CheckConcurrentEditsInst(EntryRef entry, IUser user)
 		{
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => user);
@@ -116,11 +92,10 @@ namespace VocaDb.Model.Helpers
 
 			return Nothing;
 		}
-#nullable disable
 
-		public virtual EntryEditData CreateEntryEditData(IUser user)
+		public virtual EntryEditDataContract CreateEntryEditData(IUser user)
 		{
-			return new EntryEditData(user);
+			return new EntryEditDataContract(user);
 		}
 	}
 }

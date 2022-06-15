@@ -127,6 +127,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<VenueForApiContract> GetWithArchivedVersions(int id) =>
 			_queries.GetVenueWithArchivedVersionsForApi(id);
+
+		[HttpGet("{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public VenueForApiContract GetOne(int id) => _queries.GetOne(id);
 #nullable disable
 	}
 }

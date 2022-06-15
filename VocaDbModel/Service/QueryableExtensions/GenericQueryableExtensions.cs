@@ -117,7 +117,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return new List<T>().AsQueryable();
 		}
 
-		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId
+		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithReadOnlyIntId
 			=> query.Where(e => ids.Contains(e.Id));
 #nullable disable
 	}

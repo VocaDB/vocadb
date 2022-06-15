@@ -400,5 +400,12 @@ namespace VocaDb.Model.Database.Queries
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 		public string GetTagString(int id, string formatString) => HandleQuery(ctx => new SongListFormatter(_entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
+
+#nullable enable
+		public SongListBaseContract GetOne(int id)
+		{
+			return _repository.HandleQuery(ctx => new SongListBaseContract(ctx.Load(id)));
+		}
+#nullable disable
 	}
 }

@@ -35,15 +35,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private ReleaseEventSeries _series;
 		private User _user;
 
-		private async Task<ReleaseEvent> CallUpdate(ReleaseEventForEditContract contract)
+		private async Task<ReleaseEvent> CallUpdate(ReleaseEventForEditForApiContract contract)
 		{
-			var result = await _queries.Update(contract, null);
+			var result = await _queries.Update(contract, pictureData: null);
 			return _repository.Load(result.Id);
 		}
 
-		private ReleaseEventForEditContract Contract(ReleaseEvent releaseEvent)
+		private ReleaseEventForEditForApiContract Contract(ReleaseEvent releaseEvent)
 		{
-			return new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, _permissionContext, null);
+			return new ReleaseEventForEditForApiContract(releaseEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null);
 		}
 
 		private LocalizedStringWithIdContract[] Names(string name)
@@ -88,7 +88,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Create_NoSeries()
 		{
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Description = string.Empty,
 				Names = Names("Vocaloid Paradise")
@@ -104,10 +104,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Create_WithSeriesAndSuffix()
 		{
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Description = string.Empty,
-				Series = new ReleaseEventSeriesContract(_series, ContentLanguagePreference.English),
+				Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 				SeriesNumber = 2014,
 				SeriesSuffix = "Spring",
 			};
@@ -126,10 +126,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Create_WithSeriesNoSuffix()
 		{
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Description = string.Empty,
-				Series = new ReleaseEventSeriesContract(_series, ContentLanguagePreference.English),
+				Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 				SeriesNumber = 2014,
 				SeriesSuffix = string.Empty,
 			};
@@ -152,10 +152,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				_series.CreateName("Comic Market", ContentLanguageSelection.Unspecified),
 			}.ToList();
 
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Description = string.Empty,
-				Series = new ReleaseEventSeriesContract(_series, ContentLanguagePreference.English),
+				Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 				SeriesNumber = 39,
 				SeriesSuffix = string.Empty,
 			};
@@ -173,7 +173,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Create_WithCustomArtists()
 		{
 			var artist = _repository.Save(CreateEntry.Artist(ArtistType.Producer));
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Description = string.Empty,
 				SeriesSuffix = string.Empty,
@@ -200,7 +200,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_ChangeSeriesSuffix()
 		{
-			var contract = new ReleaseEventForEditContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, null);
+			var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null);
 			contract.SeriesSuffix = "Fall";
 
 			var result = await CallUpdate(contract);
@@ -219,7 +219,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_ChangeName_CustomName()
 		{
-			var contract = new ReleaseEventForEditContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, null);
+			var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null);
 			contract.CustomName = true;
 			contract.Names[0].Value = "M3 2013 Fall X2";
 
@@ -235,7 +235,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_ChangeName_UseSeriesName()
 		{
-			var contract = new ReleaseEventForEditContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, null);
+			var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null);
 			contract.Names[0].Value = "New name";
 			contract.DefaultNameLanguage = ContentLanguageSelection.Romaji;
 
@@ -252,8 +252,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_ChangeName_DuplicateOfAnotherEvent()
 		{
-			var contract = new ReleaseEventForEditContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, null);
-			contract.Id = 0; // Simulate new event
+			var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null)
+			{
+				Id = 0, // Simulate new event
+			};
 
 			_queries.Awaiting(subject => subject.Update(contract, null)).Should().Throw<DuplicateEventNameException>();
 		}
@@ -262,7 +264,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void Update_ChangeName_DuplicateForSameEvent()
 		{
 			var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
-			var contract = new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, _permissionContext, null)
+			var contract = new ReleaseEventForEditForApiContract(releaseEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null)
 			{
 				Names = new[] {
 					new LocalizedStringWithIdContract {Value = "Comiket 39"},
@@ -278,7 +280,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("M3 39"));
 			var contract = Contract(releaseEvent);
-			contract.Series = new ReleaseEventSeriesContract(_series, ContentLanguagePreference.Default);
+			contract.Series = new ReleaseEventSeriesForApiContract(_series, ContentLanguagePreference.Default, ReleaseEventSeriesOptionalFields.None, thumbPersister: null);
 
 			await _queries.Update(contract, null);
 

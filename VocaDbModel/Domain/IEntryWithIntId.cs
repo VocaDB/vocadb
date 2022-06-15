@@ -1,12 +1,19 @@
 namespace VocaDb.Model.Domain
 {
+	public interface IEntryWithReadOnlyIntId : IDatabaseObject
+	{
+		int Id { get; }
+	}
+
 	/// <summary>
 	/// Base interface for database objects with Int32 ID.
 	/// Applies to both root entities and child entities.
 	/// </summary>
-	public interface IEntryWithIntId : IDatabaseObject
+	public interface IEntryWithIntId : IEntryWithReadOnlyIntId
 	{
-		int Id { get; set; }
+		new int Id { get; set; }
+
+		int IEntryWithReadOnlyIntId.Id => Id;
 	}
 
 	/// <summary>
@@ -18,7 +25,7 @@ namespace VocaDb.Model.Domain
 		long Id { get; set; }
 	}
 
-	public static class IEntryWithIntIdExtensions
+	public static class IEntryWithReadOnlyIntIdExtensions
 	{
 		/// <summary>
 		/// Compares the Id of this entry with another.
@@ -37,22 +44,22 @@ namespace VocaDb.Model.Domain
 		/// null + 39 == false
 		/// 0 + 39 == false
 		/// </remarks>
-		public static bool NullSafeIdEquals(this IEntryWithIntId? left, IEntryWithIntId? right)
+		public static bool NullSafeIdEquals(this IEntryWithReadOnlyIntId? left, IEntryWithReadOnlyIntId? right)
 		{
 			return left.IdOrDefault() == right.IdOrDefault();
 		}
 
-		public static bool IdEquals(this IEntryWithIntId left, IEntryWithIntId right)
+		public static bool IdEquals(this IEntryWithReadOnlyIntId left, IEntryWithReadOnlyIntId right)
 		{
 			return left.Id == right.Id;
 		}
 
-		public static int IdOrDefault(this IEntryWithIntId? entry)
+		public static int IdOrDefault(this IEntryWithReadOnlyIntId? entry)
 		{
 			return entry != null ? entry.Id : 0;
 		}
 
-		public static bool IsNullOrDefault(this IEntryWithIntId? entry)
+		public static bool IsNullOrDefault(this IEntryWithReadOnlyIntId? entry)
 		{
 			return entry == null || entry.Id == 0;
 		}

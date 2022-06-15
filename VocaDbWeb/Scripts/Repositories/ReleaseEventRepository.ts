@@ -1,6 +1,7 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import ReleaseEventForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventForEditContract';
 import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
@@ -120,6 +121,16 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
+	public getOneSeries = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForApiContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForApiContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}`),
+		);
+	};
+
 	public getOneByName = async ({
 		name,
 	}: {
@@ -200,6 +211,36 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
 		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
+	};
+
+	public getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventForEditContract> => {
+		return this.httpClient.get<ReleaseEventForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${id}/for-edit`),
+		);
+	};
+
+	public edit = (
+		contract: ReleaseEventForEditContract,
+		pictureUpload?: File,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
 	};
 }
 

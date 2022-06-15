@@ -104,6 +104,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
+	public get canDeleteEntries(): boolean {
+		return this.hasPermission(PermissionToken.DeleteEntries);
+	}
+
 	public get canDisableUsers(): boolean {
 		return this.hasPermission(PermissionToken.DisableUsers);
 	}
@@ -227,7 +231,7 @@ export default class LoginManager {
 	/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
 	/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
 	/// <returns>A list of permissions that can be set by the user.</returns>
-	private allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
+	public allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
 		// Check for basic edit permissions, without these the user is limited or disabled
 		if (!this.canManageDatabase) return [];
 

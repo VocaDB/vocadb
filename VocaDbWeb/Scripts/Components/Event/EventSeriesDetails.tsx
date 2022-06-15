@@ -105,8 +105,8 @@ const EventSeriesDetailsLayout = ({
 								</>
 							)}{' '}
 							<JQueryUIButton
-								as="a"
-								href={`/Event/Edit?${qs.stringify({ seriesId: series.id })}`}
+								as={Link}
+								to={`/Event/Edit?${qs.stringify({ seriesId: series.id })}`}
 								icons={{ primary: 'ui-icon-plus' }}
 							>
 								{t('ViewRes.Event:EventsBySeries.CreateEvent')}

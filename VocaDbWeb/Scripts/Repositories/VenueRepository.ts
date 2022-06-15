@@ -98,4 +98,10 @@ export default class VenueRepository extends BaseRepository {
 			EntryWithArchivedVersionsContract<VenueForApiContract>
 		>(this.urlMapper.mapRelative(`/api/venues/${id}/versions`));
 	};
+
+	public getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {
+		return this.httpClient.get<VenueForApiContract>(
+			this.urlMapper.mapRelative(`/api/venues/${id}`),
+		);
+	};
 }

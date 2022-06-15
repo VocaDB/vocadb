@@ -90,8 +90,8 @@ const VenueDetailsLayout = ({
 						<>
 							{' '}
 							<JQueryUIButton
-								as="a"
-								href={`/Event/Edit?${qs.stringify({ venueId: venue.id })}`}
+								as={Link}
+								to={`/Event/Edit?${qs.stringify({ venueId: venue.id })}`}
 								icons={{ primary: 'ui-icon-plus' }}
 							>
 								{t('ViewRes.Event:EventsBySeries.CreateEvent')}

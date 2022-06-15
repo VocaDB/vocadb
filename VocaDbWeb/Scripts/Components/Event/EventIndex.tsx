@@ -64,8 +64,8 @@ const EventIndexLayout = ({
 					{loginManager.canManageDatabase && (
 						<>
 							<JQueryUIButton
-								as="a"
-								href={`/Event/Edit`}
+								as={Link}
+								to={`/Event/Edit`}
 								icons={{ primary: 'ui-icon-plus' }}
 							>
 								{t('ViewRes.Event:EventsBySeries.CreateEvent')}
