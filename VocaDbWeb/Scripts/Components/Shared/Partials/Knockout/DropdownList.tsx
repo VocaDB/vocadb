@@ -1,9 +1,12 @@
+import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
+import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import UserGroup from '@Models/Users/UserGroup';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { regions } from '../../../regions';
 import { userLanguageCultures } from '../../../userLanguageCultures';
 
 interface DropdownListProps
@@ -13,7 +16,7 @@ interface DropdownListProps
 	> {}
 
 export const ReleaseEventCategoryDropdownList = React.memo(
-	({ ...props }: DropdownListProps): React.ReactElement => {
+	(props: DropdownListProps): React.ReactElement => {
 		const { t } = useTranslation('VocaDb.Web.Resources.Domain.ReleaseEvents');
 
 		return (
@@ -33,7 +36,7 @@ export const ReleaseEventCategoryDropdownList = React.memo(
 );
 
 export const UserGroupDropdownList = React.memo(
-	({ ...props }: DropdownListProps): React.ReactElement => {
+	(props: DropdownListProps): React.ReactElement => {
 		const { t } = useTranslation('Resources');
 
 		return (
@@ -49,7 +52,7 @@ export const UserGroupDropdownList = React.memo(
 );
 
 export const UserLanguageCultureDropdownList = React.memo(
-	({ ...props }: DropdownListProps): React.ReactElement => {
+	(props: DropdownListProps): React.ReactElement => {
 		return (
 			<select {...props}>
 				{props.placeholder !== undefined && (
@@ -78,7 +81,7 @@ const commentTargetTypes: string[] = [
 ];
 
 export const CommentTargetTypeDropdownList = React.memo(
-	({ ...props }: DropdownListProps): React.ReactElement => {
+	(props: DropdownListProps): React.ReactElement => {
 		const { t } = useTranslation('VocaDb.Web.Resources.Domain');
 
 		return (
@@ -88,6 +91,70 @@ export const CommentTargetTypeDropdownList = React.memo(
 						{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
 					</option>
 				))}
+			</select>
+		);
+	},
+);
+
+export const LanguageSelectionDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(ContentLanguageSelection)
+					.filter((languageSelection) => isNaN(Number(languageSelection)))
+					.map((languageSelection) => (
+						<option value={languageSelection} key={languageSelection}>
+							{t(
+								`Resources:ContentLanguageSelectionNames.${languageSelection}`,
+							)}
+						</option>
+					))}
+			</select>
+		);
+	},
+);
+
+export const RegionDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
+
+		return (
+			<select {...props}>
+				<option value="">
+					{t(
+						'VocaDb.Web.Resources.Domain.Globalization:InterfaceLanguage.Other',
+					)}
+				</option>
+				{Object.entries(regions).map(([key, value]) => (
+					<option value={key} key={key}>
+						{value}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const EntryStatusDropdownList = React.memo(
+	({
+		allowedEntryStatuses,
+		...props
+	}: DropdownListProps & {
+		allowedEntryStatuses: EntryStatus[];
+	}): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{allowedEntryStatuses
+					.map((status) => EntryStatus[status])
+					.map((status) => (
+						<option value={status} key={status}>
+							{t(`Resources:EntryStatusNames.${status}`)}
+						</option>
+					))}
 			</select>
 		);
 	},
