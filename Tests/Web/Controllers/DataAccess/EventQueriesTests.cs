@@ -291,7 +291,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateSeries_Create()
 		{
-			var contract = new ReleaseEventSeriesForEditContract
+			var contract = new ReleaseEventSeriesForEditForApiContract
 			{
 				Names = Names("Comiket")
 			};
@@ -311,7 +311,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateSeries_UpdateName_EventsUpdated()
 		{
-			var contract = new ReleaseEventSeriesForEditContract(_series, ContentLanguagePreference.English);
+			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
 			contract.Names[0].Value = "M3.9";
 
 			var result = _queries.UpdateSeries(contract, null);
@@ -332,7 +332,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated()
 		{
-			var contract = new ReleaseEventSeriesForEditContract(_series, ContentLanguagePreference.English)
+			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null)
 			{
 				DefaultNameLanguage = ContentLanguageSelection.Japanese
 			};
@@ -347,7 +347,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var series2 = _repository.SaveWithNames<ReleaseEventSeries, EventSeriesName>(CreateEntry.EventSeries("M3.9"));
 			_repository.SaveWithNames<ReleaseEvent, EventName>(CreateEntry.SeriesEvent(series2, 2013, "Spring"));
 
-			var contract = new ReleaseEventSeriesForEditContract(_series, ContentLanguagePreference.English);
+			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
 			contract.Names[0].Value = "M3.9";
 
 			_queries.Invoking(subject => subject.UpdateSeries(contract, null)).Should().Throw<DuplicateEventNameException>();
@@ -359,7 +359,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_user.GroupId = UserGroupId.Limited;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ReleaseEventSeriesForEditContract(_series, ContentLanguagePreference.English);
+			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
 			_queries.Invoking(subject => subject.UpdateSeries(contract, null)).Should().Throw<NotAllowedException>();
 		}
 	}

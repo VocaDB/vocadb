@@ -749,7 +749,7 @@ namespace VocaDb.Model.Database.Queries
 			ev.PictureMime = parsed.Mime;
 		}
 
-		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract? pictureData)
+		public int UpdateSeries(ReleaseEventSeriesForEditForApiContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -948,6 +948,15 @@ namespace VocaDb.Model.Database.Queries
 						.ToArray()
 				);
 			});
+		}
+
+		public ReleaseEventSeriesForEditForApiContract GetReleaseEventSeriesForEditForApi(int id)
+		{
+			return HandleQuery(session => new ReleaseEventSeriesForEditForApiContract(
+				series: session.Load<ReleaseEventSeries>(id),
+				languagePreference: LanguagePreference,
+				thumbPersister: _imageUrlFactory
+			));
 		}
 #nullable disable
 	}
