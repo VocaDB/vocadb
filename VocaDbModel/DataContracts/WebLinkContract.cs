@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -7,13 +5,20 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.DataContracts
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class WebLinkContract : IWebLinkWithDescriptionOrUrl
+	public interface IWebLinkContract : IWebLinkWithDescriptionOrUrl
 	{
+		int Id { get; }
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class WebLinkContract : IWebLinkWithDescriptionOrUrl, IWebLinkContract
+	{
+#nullable disable
 		public WebLinkContract()
 		{
 			Category = WebLinkCategory.Other;
 		}
+#nullable enable
 
 		public WebLinkContract(string url, string description, WebLinkCategory category, bool disabled)
 		{
@@ -25,7 +30,6 @@ namespace VocaDb.Model.DataContracts
 			DescriptionOrUrl = !string.IsNullOrEmpty(description) ? description : url;
 		}
 
-#nullable enable
 		public WebLinkContract(WebLink link)
 		{
 			ParamIs.NotNull(() => link);
@@ -37,7 +41,6 @@ namespace VocaDb.Model.DataContracts
 			Id = link.Id;
 			Url = link.Url;
 		}
-#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

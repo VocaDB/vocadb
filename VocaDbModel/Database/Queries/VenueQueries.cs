@@ -354,6 +354,11 @@ namespace VocaDb.Model.Database.Queries
 				return venue.Id;
 			});
 		}
+
+		public VenueForApiContract GetOne(int id)
+		{
+			return HandleQuery(ctx => new VenueForApiContract(ctx.Load(id), LanguagePreference, VenueOptionalFields.None));
+		}
 #nullable disable
 	}
 }

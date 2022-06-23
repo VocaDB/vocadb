@@ -262,6 +262,28 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
+		public ReleaseEventForEditForApiContract GetEventForEditForApi(int id)
+		{
+			return HandleQuery(
+				session => new ReleaseEventForEditForApiContract(
+					releaseEvent: session.Load<ReleaseEvent>(id),
+					languagePreference: PermissionContext.LanguagePreference,
+					permissionContext: PermissionContext,
+					allSeries: session.Query<ReleaseEventSeries>()
+						.Select(s => new ReleaseEventSeriesForApiContract(
+							s,
+							LanguagePreference,
+							ReleaseEventSeriesOptionalFields.None,
+							null
+						))
+						.ToArray(),
+					thumbPersister: _imageUrlFactory
+				)
+			);
+		}
+#nullable disable
+
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields)
 		{
 			return _repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, _imageUrlFactory));
@@ -470,7 +492,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
-		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract? pictureData)
+		public async Task<ReleaseEventContract> Update(ReleaseEventForEditForApiContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 

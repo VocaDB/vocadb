@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public class WebLink : IWebLink, IEntryWithIntId
 	{
-		public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+		public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
 		{
 			ParamIs.NotNull(() => oldLinks);
@@ -162,6 +162,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 	public interface IWebLinkWithDescriptionOrUrl : IWebLink
 	{
-		string DescriptionOrUrl { get; }
+		string? DescriptionOrUrl { get; }
 	}
 }

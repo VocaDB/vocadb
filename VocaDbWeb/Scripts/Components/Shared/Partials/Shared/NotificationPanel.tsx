@@ -5,7 +5,7 @@ import NotificationIcon from './NotificationIcon';
 
 interface NotificationPanelProps {
 	message: string;
-	messageId: string;
+	messageId?: string;
 }
 
 const NotificationPanel = React.memo(

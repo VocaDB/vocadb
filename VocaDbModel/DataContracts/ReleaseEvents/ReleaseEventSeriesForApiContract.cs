@@ -8,7 +8,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-	public class ReleaseEventSeriesForApiContract
+	public class ReleaseEventSeriesForApiContract : IEntryWithReadOnlyIntId
 	{
 		public ReleaseEventSeriesForApiContract() { }
 

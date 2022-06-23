@@ -108,80 +108,13 @@ namespace VocaDb.Web.Controllers
 
 			return View("React/Index");
 		}
+
+		[Authorize]
+		public ActionResult Edit(int? id)
+		{
+			return View("React/Index");
+		}
 #nullable disable
-
-		[Authorize]
-		public ActionResult Edit(int? id, int? seriesId, int? venueId)
-		{
-			if (id != null)
-			{
-				CheckConcurrentEdit(EntryType.ReleaseEvent, id.Value);
-			}
-
-			var model = (id != null ? new EventEdit(_queries.GetEventForEdit(id.Value), PermissionContext)
-				: new EventEdit(
-					seriesId.HasValue ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null,
-					venueId.HasValue ? _service.GetVenueForEdit(venueId.Value) : null,
-					PermissionContext));
-
-			return View(model);
-		}
-
-		[HttpPost]
-		[Authorize]
-		public async Task<ActionResult> Edit(EventEdit model, IFormFile pictureUpload = null)
-		{
-			ActionResult RenderEdit()
-			{
-				if (model.Id != 0)
-				{
-					var contract = _queries.GetEventForEdit(model.Id);
-					model.CopyNonEditableProperties(contract, PermissionContext);
-				}
-				else
-				{
-					model.CopyNonEditableProperties(null, PermissionContext);
-				}
-
-				return View("Edit", model);
-			}
-
-			// Either series or name must be specified. If series is specified, name is generated automatically.
-			if (model.Series.IsNullOrDefault() || model.CustomName)
-			{
-				// Note: name is allowed to be whitespace, but not empty.
-				if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value)))
-				{
-					ModelState.AddModelError("Names", "Name cannot be empty");
-				}
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return RenderEdit();
-			}
-
-			var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
-
-			if (!ModelState.IsValid)
-			{
-				return RenderEdit();
-			}
-
-			int id;
-
-			try
-			{
-				id = (await _queries.Update(model.ToContract(), pictureData)).Id;
-			}
-			catch (DuplicateEventNameException x)
-			{
-				ModelState.AddModelError("Names", x.Message);
-				return RenderEdit();
-			}
-
-			return RedirectToAction("Details", new { id });
-		}
 
 		[Authorize]
 		public ActionResult EditSeries(int? id)

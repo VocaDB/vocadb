@@ -28,7 +28,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		private readonly FakeUserIconFactory _userIconFactory = new();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
-		private Task<ReleaseEventForEditContract> Update(ReleaseEventForEditContract contract)
+		private Task<ReleaseEventForEditForApiContract> Update(ReleaseEventForEditForApiContract contract)
 		{
 			return _context.RunTestAsync(async repository =>
 			{
@@ -42,11 +42,12 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 					_mailer,
 					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
 					_imageStore,
-					new FakeDiscordWebhookNotifier());
+					new FakeDiscordWebhookNotifier()
+				);
 
-				var updated = await queries.Update(contract, null);
+				var updated = await queries.Update(contract, pictureData: null);
 
-				return queries.GetEventForEdit(updated.Id);
+				return queries.GetEventForEditForApi(updated.Id);
 			});
 		}
 
@@ -97,7 +98,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public async Task Create()
 		{
-			var contract = new ReleaseEventForEditContract
+			var contract = new ReleaseEventForEditForApiContract
 			{
 				Names = new[] {
 					new LocalizedStringWithIdContract { Value = "M3 2016" }
@@ -114,7 +115,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		public void Update_DuplicateName()
 		{
 			// Name "Comiket 39" is already taken by ReleaseEvent2
-			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, null);
+			var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null);
 			contract.Names[0].Value = "Comiket 39";
 
 			this.Awaiting(subject => subject.Update(contract)).Should().Throw<DuplicateEventNameException>();
@@ -125,9 +126,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		public void Update_DuplicateNameFromSeries()
 		{
 			// Generated name is "Comiket 39", which is already taken
-			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, null)
+			var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null)
 			{
-				Series = new ReleaseEventSeriesContract(Db.ReleaseEventSeries, ContentLanguagePreference.English),
+				Series = new ReleaseEventSeriesForApiContract(Db.ReleaseEventSeries, ContentLanguagePreference.English, ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 				SeriesNumber = 39
 			};
 
@@ -138,7 +139,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public async Task Update_SwapNameTranslations()
 		{
-			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, null);
+			var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null);
 			contract.Names[0].Value = "ミク誕生祭"; // Swap values
 			contract.Names[1].Value = "Miku's birthday";
 
