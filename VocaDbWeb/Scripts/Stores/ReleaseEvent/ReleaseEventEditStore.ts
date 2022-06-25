@@ -232,11 +232,12 @@ export default class ReleaseEventEditStore {
 			return id;
 		} catch (error: any) {
 			if (error.response) {
-				if (error.response.status === 400) {
-					runInAction(() => {
+				runInAction(() => {
+					this.errors = undefined;
+
+					if (error.response.status === 400)
 						this.errors = error.response.data.errors;
-					});
-				}
+				});
 			}
 
 			throw error;

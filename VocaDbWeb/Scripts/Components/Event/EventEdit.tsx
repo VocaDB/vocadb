@@ -1,7 +1,6 @@
 import Breadcrumb from '@Bootstrap/Breadcrumb';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import ReleaseEventForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventForEditContract';
-import ImageHelper from '@Helpers/ImageHelper';
 import UrlHelper from '@Helpers/UrlHelper';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@JQueryUI/JQueryUIDatepicker';
@@ -56,6 +55,7 @@ import VenueLockingAutoComplete from '../Shared/Partials/Knockout/VenueLockingAu
 import WebLinksEditViewKnockout from '../Shared/Partials/Knockout/WebLinksEditViewKnockout';
 import ConcurrentEditWarning from '../Shared/Partials/Shared/ConcurrentEditWarning';
 import HelpLabel from '../Shared/Partials/Shared/HelpLabel';
+import ImageUploadMessage from '../Shared/Partials/Shared/ImageUploadMessage';
 import SaveAndBackBtn from '../Shared/Partials/Shared/SaveAndBackBtn';
 import ValidationSummaryPanel from '../Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '../ui';
@@ -75,10 +75,14 @@ const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface BasicInfoTabContentProps {
 	releaseEventEditStore: ReleaseEventEditStore;
+	pictureUploadRef: React.MutableRefObject<HTMLInputElement>;
 }
 
 const BasicInfoTabContent = observer(
-	({ releaseEventEditStore }: BasicInfoTabContentProps): React.ReactElement => {
+	({
+		releaseEventEditStore,
+		pictureUploadRef,
+	}: BasicInfoTabContentProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		return (
@@ -350,20 +354,18 @@ const BasicInfoTabContent = observer(
 											releaseEventEditStore.contract.mainPicture,
 											ImageSize.SmallThumb,
 										)}
-										alt="Picture"
-										/* TODO: localize */
+										alt="Picture" /* TODO: localize */
 										className="coverPic"
 									/>
 								</td>
 								<td>
-									<p>{
-										`Allowed types: ${ImageHelper.allowedExtensions.join(
-											', ',
-										)}. Maximum size is ${
-											ImageHelper.maxImageSizeMB
-										} MB.` /* TODO: localize */
-									}</p>
-									<input type="file" id="pictureUpload" name="pictureUpload" />
+									<ImageUploadMessage />
+									<input
+										type="file"
+										id="pictureUpload"
+										name="pictureUpload"
+										ref={pictureUploadRef}
+									/>
 								</td>
 							</tr>
 						</tbody>
@@ -611,6 +613,8 @@ const EventEditLayout = observer(
 
 		const conflictingEditor = useConflictingEditor(EntryType.ReleaseEvent);
 
+		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
+
 		return (
 			<Layout
 				title={title}
@@ -657,7 +661,7 @@ const EventEditLayout = observer(
 						<>
 							{contract.deleted ? (
 								<JQueryUIButton
-									as={SafeAnchor}
+									as="a"
 									href={`/Event/Restore/${contract.id}`}
 									icons={{ primary: 'ui-icon-trash' }}
 								>
@@ -672,16 +676,19 @@ const EventEditLayout = observer(
 								>
 									{t('ViewRes:Shared.Delete')}
 								</JQueryUIButton>
-							)}{' '}
+							)}
 							{loginManager.canMoveToTrash && (
-								<JQueryUIButton
-									as={SafeAnchor}
-									href="#"
-									onClick={releaseEventEditStore.trashStore.show}
-									icons={{ primary: 'ui-icon-trash' }}
-								>
-									{t('ViewRes:EntryEdit.MoveToTrash')}
-								</JQueryUIButton>
+								<>
+									{' '}
+									<JQueryUIButton
+										as={SafeAnchor}
+										href="#"
+										onClick={releaseEventEditStore.trashStore.show}
+										icons={{ primary: 'ui-icon-trash' }}
+									>
+										{t('ViewRes:EntryEdit.MoveToTrash')}
+									</JQueryUIButton>
+								</>
 							)}
 						</>
 					)
@@ -704,17 +711,17 @@ const EventEditLayout = observer(
 
 						try {
 							const pictureUpload =
-								(document.getElementById(
-									'pictureUpload',
-								) as HTMLInputElement).files?.item(0) ?? undefined;
+								pictureUploadRef.current.files?.item(0) ?? undefined;
 
 							const id = await releaseEventEditStore.submit(pictureUpload);
 
 							navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, id));
-						} catch {
+						} catch (e) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);
+
+							throw e;
 						}
 					}}
 				>
@@ -730,6 +737,7 @@ const EventEditLayout = observer(
 						>
 							<BasicInfoTabContent
 								releaseEventEditStore={releaseEventEditStore}
+								pictureUploadRef={pictureUploadRef}
 							/>
 						</JQueryUITab>
 
