@@ -8,16 +8,13 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers
@@ -114,56 +111,13 @@ namespace VocaDb.Web.Controllers
 		{
 			return View("React/Index");
 		}
-#nullable disable
 
 		[Authorize]
 		public ActionResult EditSeries(int? id)
 		{
-			if (id != null)
-			{
-				CheckConcurrentEdit(EntryType.ReleaseEventSeries, id.Value);
-			}
-
-			var contract = (id != null ? Service.GetReleaseEventSeriesForEdit(id.Value) : new ReleaseEventSeriesForEditContract());
-			return View(new SeriesEdit(contract, PermissionContext));
+			return View("React/Index");
 		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult EditSeries(SeriesEdit model, IFormFile pictureUpload = null)
-		{
-			ActionResult RenderEdit()
-			{
-				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
-				return View("EditSeries", model);
-			}
-
-			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value)))
-			{
-				ModelState.AddModelError("Names", "Name cannot be empty");
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return RenderEdit();
-			}
-
-			var pictureData = ParsePicture(pictureUpload, "Picture", ImagePurpose.Main);
-
-			int id;
-			try
-			{
-				id = _queries.UpdateSeries(model.ToContract(), pictureData);
-			}
-			catch (DuplicateEventNameException x)
-			{
-				ModelState.AddModelError("Names", x.Message);
-				return RenderEdit();
-			}
-
-			return RedirectToAction("SeriesDetails", new { id });
-		}
+#nullable disable
 
 		public ActionResult EventsByDate()
 		{

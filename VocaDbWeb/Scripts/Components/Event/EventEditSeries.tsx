@@ -1,0 +1,451 @@
+import Alert from '@Bootstrap/Alert';
+import Breadcrumb from '@Bootstrap/Breadcrumb';
+import SafeAnchor from '@Bootstrap/SafeAnchor';
+import ReleaseEventSeriesForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import UrlHelper from '@Helpers/UrlHelper';
+import JQueryUIButton from '@JQueryUI/JQueryUIButton';
+import EntryStatus from '@Models/EntryStatus';
+import EntryType from '@Models/EntryType';
+import EventCategory from '@Models/Events/EventCategory';
+import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import ImageSize from '@Models/Images/ImageSize';
+import LoginManager from '@Models/LoginManager';
+import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import HttpClient from '@Shared/HttpClient';
+import UrlMapper from '@Shared/UrlMapper';
+import ReleaseEventSeriesEditStore from '@Stores/ReleaseEvent/ReleaseEventSeriesEditStore';
+import _ from 'lodash';
+import { reaction, runInAction } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
+import Markdown from '../KnockoutExtensions/Markdown';
+import NamesEditor from '../Shared/KnockoutPartials/NamesEditor';
+import Layout from '../Shared/Layout';
+import EntryDeletePopup from '../Shared/Partials/EntryDetails/EntryDeletePopup';
+import EntryTrashPopup from '../Shared/Partials/EntryDetails/EntryTrashPopup';
+import {
+	EntryStatusDropdownList,
+	LanguageSelectionDropdownList,
+	ReleaseEventCategoryDropdownList,
+} from '../Shared/Partials/Knockout/DropdownList';
+import WebLinksEditViewKnockout from '../Shared/Partials/Knockout/WebLinksEditViewKnockout';
+import ConcurrentEditWarning from '../Shared/Partials/Shared/ConcurrentEditWarning';
+import HelpLabel from '../Shared/Partials/Shared/HelpLabel';
+import ImageUploadMessage from '../Shared/Partials/Shared/ImageUploadMessage';
+import SaveAndBackBtn from '../Shared/Partials/Shared/SaveAndBackBtn';
+import ValidationSummaryPanel from '../Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '../ui';
+import { useConflictingEditor } from '../useConflictingEditor';
+import useVocaDbTitle from '../useVocaDbTitle';
+
+const loginManager = new LoginManager(vdb.values);
+
+const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
+const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
+
+interface EventEditSeriesLayoutProps {
+	releaseEventSeriesEditStore: ReleaseEventSeriesEditStore;
+}
+
+const EventEditSeriesLayout = observer(
+	({
+		releaseEventSeriesEditStore,
+	}: EventEditSeriesLayoutProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources', 'ViewRes']);
+
+		const contract = releaseEventSeriesEditStore.contract;
+		const isNew = contract.id === 0;
+		const backAction = isNew
+			? '/Event'
+			: EntryUrlMapper.details(EntryType.ReleaseEventSeries, contract.id);
+
+		const title = isNew
+			? 'Create a new series' /* TODO: localize */
+			: `Edit series - ${contract.name}`; /* TODO: localize */
+
+		useVocaDbTitle(title, true);
+
+		const navigate = useNavigate();
+
+		const conflictingEditor = useConflictingEditor(
+			EntryType.ReleaseEventSeries,
+		);
+
+		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
+
+		React.useEffect(() => {
+			if (releaseEventSeriesEditStore.contract.id) return;
+
+			const disposers = [
+				releaseEventSeriesEditStore.names.originalName,
+				releaseEventSeriesEditStore.names.romajiName,
+				releaseEventSeriesEditStore.names.englishName,
+			].map((name) =>
+				reaction(
+					() => name.value,
+					_.debounce(releaseEventSeriesEditStore.checkName, 500),
+				),
+			);
+
+			return (): void => {
+				for (const disposer of disposers) disposer();
+			};
+		}, [releaseEventSeriesEditStore]);
+
+		return (
+			<Layout
+				title={title}
+				parents={
+					isNew ? (
+						<>
+							<Breadcrumb.Item
+								linkAs={Link}
+								linkProps={{
+									to: '/Event',
+								}}
+							>
+								Events{/* TODO: localize */}
+							</Breadcrumb.Item>
+						</>
+					) : (
+						<>
+							<Breadcrumb.Item
+								linkAs={Link}
+								linkProps={{
+									to: '/Event',
+								}}
+								divider
+							>
+								Events{/* TODO: localize */}
+							</Breadcrumb.Item>
+							<Breadcrumb.Item
+								linkAs={Link}
+								linkProps={{
+									to: EntryUrlMapper.details(
+										EntryType.ReleaseEventSeries,
+										contract.id,
+									),
+								}}
+							>
+								{contract.name}
+							</Breadcrumb.Item>
+						</>
+					)
+				}
+				toolbar={
+					!isNew &&
+					loginManager.canDeleteEntries && (
+						<>
+							{contract.deleted ? (
+								<JQueryUIButton
+									as="a"
+									href={`/Event/RestoreSeries/${contract.id}`}
+									icons={{ primary: 'ui-icon-trash' }}
+								>
+									{t('ViewRes:EntryEdit.Restore')}
+								</JQueryUIButton>
+							) : (
+								<JQueryUIButton
+									as={SafeAnchor}
+									href="#"
+									onClick={releaseEventSeriesEditStore.deleteStore.show}
+									icons={{ primary: 'ui-icon-trash' }}
+								>
+									{t('ViewRes:Shared.Delete')}
+								</JQueryUIButton>
+							)}
+							{loginManager.canMoveToTrash && (
+								<>
+									{' '}
+									<JQueryUIButton
+										as={SafeAnchor}
+										href="#"
+										onClick={releaseEventSeriesEditStore.trashStore.show}
+										icons={{ primary: 'ui-icon-trash' }}
+									>
+										{t('ViewRes:EntryEdit.MoveToTrash')}
+									</JQueryUIButton>
+								</>
+							)}
+						</>
+					)
+				}
+			>
+				{conflictingEditor && conflictingEditor.userId !== 0 && (
+					<ConcurrentEditWarning conflictingEditor={conflictingEditor} />
+				)}
+
+				{releaseEventSeriesEditStore.errors && (
+					<ValidationSummaryPanel
+						message="Unable to save properties." /* TODO: localize */
+						errors={releaseEventSeriesEditStore.errors}
+					/>
+				)}
+
+				<form
+					onSubmit={async (e): Promise<void> => {
+						e.preventDefault();
+
+						try {
+							const pictureUpload =
+								pictureUploadRef.current.files?.item(0) ?? undefined;
+
+							const id = await releaseEventSeriesEditStore.submit(
+								pictureUpload,
+							);
+
+							navigate(
+								EntryUrlMapper.details(EntryType.ReleaseEventSeries, id),
+							);
+						} catch (e) {
+							showErrorMessage(
+								'Unable to save properties.' /* TODO: localize */,
+							);
+
+							throw e;
+						}
+					}}
+				>
+					<SaveAndBackBtn
+						backAction={backAction}
+						submitting={releaseEventSeriesEditStore.submitting}
+					/>
+
+					<div className="editor-label">
+						<HelpLabel
+							label={t('ViewRes:EntryEdit.DefaultLanguageSelection')}
+							title={t('ViewRes:EntryEdit.DefaultLanguageHelp')}
+						/>
+					</div>
+					<div className="editor-field">
+						<LanguageSelectionDropdownList
+							value={releaseEventSeriesEditStore.defaultNameLanguage}
+							onChange={(e): void =>
+								runInAction(() => {
+									releaseEventSeriesEditStore.defaultNameLanguage =
+										e.target.value;
+								})
+							}
+						/>
+					</div>
+
+					<div className="editor-label">
+						<label>Names{/* TODO: localize */}</label>
+					</div>
+					<div className="editor-field">
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<NamesEditor
+											namesEditStore={releaseEventSeriesEditStore.names}
+										/>
+									</td>
+									<td style={{ verticalAlign: 'top' }}>
+										{releaseEventSeriesEditStore.duplicateName && (
+											<Alert>
+												Series already exists with name{/* TODO: localize */}{' '}
+												<span>{releaseEventSeriesEditStore.duplicateName}</span>
+											</Alert>
+										)}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div className="editor-label">
+						<label htmlFor="description">
+							Description{/* TODO: localize */}
+						</label>
+					</div>
+					<div className="editor-field">
+						<textarea
+							id="description"
+							value={releaseEventSeriesEditStore.description}
+							onChange={(e): void =>
+								runInAction(() => {
+									releaseEventSeriesEditStore.description = e.target.value;
+								})
+							}
+							cols={60}
+							rows={4}
+							maxLength={4000}
+							className="span4"
+						/>
+						Live preview{/* TODO: localize */}
+						<Markdown>{releaseEventSeriesEditStore.description}</Markdown>
+					</div>
+
+					<div className="editor-label">
+						<label>Category{/* TODO: localize */}</label>
+					</div>
+					<div className="editor-field">
+						<div className="row-fluid">
+							<div className="span4">
+								<ReleaseEventCategoryDropdownList
+									value={releaseEventSeriesEditStore.category}
+									onChange={(e): void =>
+										runInAction(() => {
+											releaseEventSeriesEditStore.category = e.target.value;
+										})
+									}
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div className="editor-label">
+						<label>Picture{/* TODO: localize */}</label>
+					</div>
+					<div className="editor-field">
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+										<img
+											src={UrlHelper.imageThumb(
+												contract.mainPicture,
+												ImageSize.SmallThumb,
+											)}
+											alt="Picture" /* TODO: localize */
+											className="coverPic"
+										/>
+									</td>
+									<td>
+										<ImageUploadMessage />
+										<input
+											type="file"
+											id="pictureUpload"
+											name="pictureUpload"
+											ref={pictureUploadRef}
+										/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div className="editor-label">
+						<HelpLabel
+							label={t('ViewRes:EntryEdit.WebLinks')}
+							title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+						/>
+					</div>
+					<div className="editor-field">
+						<WebLinksEditViewKnockout
+							webLinksEditStore={releaseEventSeriesEditStore.webLinks}
+						/>
+					</div>
+
+					<div className="editor-label">
+						<HelpLabel
+							label={t('ViewRes:EntryEdit.Status')}
+							title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						/>
+					</div>
+					<div className="editor-field">
+						<EntryStatusDropdownList
+							allowedEntryStatuses={loginManager.allowedEntryStatuses()}
+							value={releaseEventSeriesEditStore.status}
+							onChange={(e): void =>
+								runInAction(() => {
+									releaseEventSeriesEditStore.status = e.target.value;
+								})
+							}
+						/>
+					</div>
+
+					<br />
+					<SaveAndBackBtn
+						backAction={backAction}
+						submitting={releaseEventSeriesEditStore.submitting}
+					/>
+				</form>
+
+				<EntryDeletePopup
+					confirmText={t('ViewRes:EntryEdit.ConfirmDelete')}
+					deleteEntryStore={releaseEventSeriesEditStore.deleteStore}
+					onDelete={(): void =>
+						navigate(
+							EntryUrlMapper.details(EntryType.ReleaseEventSeries, contract.id),
+						)
+					}
+				/>
+				<EntryTrashPopup
+					confirmText={t('ViewRes:EntryEdit.ConfirmMoveToTrash')}
+					deleteEntryStore={releaseEventSeriesEditStore.trashStore}
+					onDelete={(): void => navigate('/Event')}
+				/>
+			</Layout>
+		);
+	},
+);
+
+const defaultModel: ReleaseEventSeriesForEditContract = {
+	category: EventCategory[EventCategory.Unspecified],
+	defaultNameLanguage:
+		ContentLanguageSelection[ContentLanguageSelection.Unspecified],
+	deleted: false,
+	description: '',
+	id: 0,
+	name: '',
+	names: [],
+	status: EntryStatus[EntryStatus.Draft],
+	webLinks: [],
+};
+
+const EventEditSeries = (): React.ReactElement => {
+	const { id } = useParams();
+
+	const [model, setModel] = React.useState<{
+		releaseEventSeriesEditStore: ReleaseEventSeriesEditStore;
+	}>();
+
+	React.useEffect(() => {
+		if (id) {
+			eventRepo
+				.getSeriesForEdit({ id: Number(id) })
+				.then((model) =>
+					setModel({
+						releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
+							eventRepo,
+							model,
+						),
+					}),
+				)
+				.catch((error) => {
+					if (error.response) {
+						if (error.response.status === 404)
+							window.location.href = '/Error/NotFound';
+					}
+
+					throw error;
+				});
+		} else {
+			setModel({
+				releaseEventSeriesEditStore: new ReleaseEventSeriesEditStore(
+					eventRepo,
+					defaultModel,
+				),
+			});
+		}
+	}, [id]);
+
+	return model ? (
+		<EventEditSeriesLayout
+			releaseEventSeriesEditStore={model.releaseEventSeriesEditStore}
+		/>
+	) : (
+		<></>
+	);
+};
+
+export default EventEditSeries;

@@ -89,8 +89,8 @@ const EventSeriesDetailsLayout = ({
 							}) && (
 								<>
 									<JQueryUIButton
-										as="a"
-										href={`/Event/EditSeries/${series.id}`}
+										as={Link}
+										to={`/Event/EditSeries/${series.id}`}
 										icons={{ primary: 'ui-icon-wrench' }}
 									>
 										{t('ViewRes:Shared.Edit')}

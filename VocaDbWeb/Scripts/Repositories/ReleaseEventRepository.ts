@@ -11,6 +11,7 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
+import ReleaseEventSeriesForEditContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 
@@ -233,6 +234,36 @@ export default class ReleaseEventRepository extends BaseRepository {
 
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/releaseEvents/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
+
+	public getSeriesForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForEditContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/for-edit`),
+		);
+	};
+
+	public editSeries = (
+		contract: ReleaseEventSeriesForEditContract,
+		pictureUpload?: File,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${contract.id}`),
 			formData,
 			{
 				headers: {
