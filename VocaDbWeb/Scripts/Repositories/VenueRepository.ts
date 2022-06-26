@@ -1,5 +1,6 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
+import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
 import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import AjaxHelper from '@Helpers/AjaxHelper';
 import NameMatchMode from '@Models/NameMatchMode';
@@ -102,6 +103,24 @@ export default class VenueRepository extends BaseRepository {
 	public getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {
 		return this.httpClient.get<VenueForApiContract>(
 			this.urlMapper.mapRelative(`/api/venues/${id}`),
+		);
+	};
+
+	public getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<VenueForEditContract> => {
+		return this.httpClient.get<VenueForEditContract>(
+			this.urlMapper.mapRelative(`/api/venues/${id}/for-edit`),
+		);
+	};
+
+	public edit = (contract: VenueForEditContract): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/venues/${contract.id}`),
+			contract,
+			{ headers: { requestVerificationToken: vdb.values.requestToken } },
 		);
 	};
 }

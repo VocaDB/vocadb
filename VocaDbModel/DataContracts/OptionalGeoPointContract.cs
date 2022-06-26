@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
@@ -20,9 +18,10 @@ namespace VocaDb.Model.DataContracts
 		[DataMember]
 		public double? Longitude { get; init; }
 
+#nullable disable
 		public OptionalGeoPointContract() { }
-
 #nullable enable
+
 		public OptionalGeoPointContract(OptionalGeoPoint geoPoint)
 		{
 			ParamIs.NotNull(() => geoPoint);
@@ -32,6 +31,5 @@ namespace VocaDb.Model.DataContracts
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
 		}
-#nullable disable
 	}
 }

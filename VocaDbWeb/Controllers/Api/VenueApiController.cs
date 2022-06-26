@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service;
@@ -131,6 +132,38 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public VenueForApiContract GetOne(int id) => _queries.GetOne(id);
+
+		[HttpGet("{id:int}/for-edit")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public VenueForEditForApiContract GetForEdit(int id) => _queries.GetForEdit(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(VenueForEditForApiContract contract)
+		{
+			// Note: name is allowed to be whitespace, but not empty.
+			if (contract.Names is null || contract.Names.All(n => string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Names", "Name cannot be empty");
+			}
+
+			if ((contract.Coordinates is not null) && !OptionalGeoPoint.IsValid(contract.Coordinates.Latitude, contract.Coordinates.Longitude))
+			{
+				ModelState.AddModelError("Coordinates", "Invalid coordinates");
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			var id = _queries.Update(contract);
+
+			return id;
+		}
 #nullable disable
 	}
 }

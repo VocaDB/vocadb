@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 // Item type can be constructed from a contract, or with default parameters (for new items).
-export default class BasicListEditStore<TItem, TContract> {
+export default class BasicListEditStore<TItem extends TContract, TContract> {
 	@observable public items: TItem[];
 
 	// type: item constructor, optionally receiving a data contract parameter.
@@ -26,5 +26,7 @@ export default class BasicListEditStore<TItem, TContract> {
 		_.pull(this.items, item);
 	};
 
-	// TODO: toContracts
+	public toContracts = (): TContract[] => {
+		return this.items as TContract[];
+	};
 }

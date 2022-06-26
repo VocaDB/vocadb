@@ -78,8 +78,8 @@ const EventIndexLayout = ({
 								{t('ViewRes.Event:EventsBySeries.CreateSeries')}
 							</JQueryUIButton>{' '}
 							<JQueryUIButton
-								as="a"
-								href={`/Venue/Edit`}
+								as={Link}
+								to="/Venue/Edit"
 								icons={{ primary: 'ui-icon-plus' }}
 							>
 								{t('ViewRes.Event:EventsBySeries.CreateVenue')}
