@@ -21,6 +21,11 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Commercial,
 		},
 		{
+			url: 'amazon.co.jp/music/',
+			desc: 'Amazon Music Unlimited (JP)',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
 			url: 'music.amazon.com/',
 			desc: 'Amazon Music Unlimited (EN)',
 			cat: WebLinkCategory.Commercial,
@@ -690,6 +695,11 @@ export default class WebLinkMatcher {
 			cat: WebLinkCategory.Official,
 		},
 		{
+			url: 'youtube.com/c/',
+			desc: 'YouTube Channel',
+			cat: WebLinkCategory.Official,
+		},
+		{
 			url: 'youtube.com/channel/',
 			desc: 'YouTube Channel',
 			cat: WebLinkCategory.Official,
@@ -762,6 +772,91 @@ export default class WebLinkMatcher {
 		{
 			url: 'coconala.com',
 			desc: 'Coconala',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'streamlink.to',
+			desc: 'Streamlink',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'artstation.com',
+			desc: 'ArtStation',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'peing.net',
+			desc: 'Peing',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'hatenadiary.org',
+			desc: 'Blog',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'nana-music.com',
+			desc: 'Nana Music',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'bowlroll.net',
+			desc: 'Bowlroll',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'weebly.com',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'sakura.ne.jp',
+			desc: 'Website',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tinami.com',
+			desc: 'Tinami',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tinami.com',
+			desc: 'Tinami',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'tinami.jp',
+			desc: 'TINAMI',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'note.com',
+			desc: 'Note',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'plurk.com',
+			desc: 'Plurk',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'skima.jp',
+			desc: 'Skima',
+			cat: WebLinkCategory.Commercial,
+		},
+		{
+			url: 'atwiki.jp/cevio_synthv',
+			desc: 'CeVIO/SynthV Wiki',
+			cat: WebLinkCategory.Reference,
+		},
+		{
+			url: 'myspace.com',
+			desc: 'MySpace',
+			cat: WebLinkCategory.Official,
+		},
+		{
+			url: 'itch.io',
+			desc: 'Itch.io',
 			cat: WebLinkCategory.Commercial,
 		},
 	];
