@@ -21,26 +21,35 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				.ThenBy(a => a.CreateDate, direction);
 		}
 
-		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule,
-			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0) => sortRule switch
-		{
-			SongSortRule.Name => query.OrderByEntryName(languagePreference),
-			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
-			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
-			SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
-			SongSortRule.RatingScore => query.OrderByDescending(a => a.RatingScore),
-			SongSortRule.TagUsageCount => query.OrderByTagUsage(tagId),
-			_ => query,
-		};
+		public static IQueryable<Song> OrderBy(
+			this IQueryable<Song> query,
+			SongSortRule sortRule,
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+			int tagId = 0
+		) =>
+			sortRule switch
+			{
+				SongSortRule.Name => query.OrderByEntryName(languagePreference),
+				SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+				SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
+				SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
+				SongSortRule.RatingScore => query.OrderByDescending(a => a.RatingScore),
+				SongSortRule.TagUsageCount => query.OrderByTagUsage(tagId),
+				_ => query,
+			};
 
 		public static IQueryable<Song> OrderBy(
-			this IQueryable<Song> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
-		{
-			EntrySortRule.Name => query.OrderByEntryName(languagePreference),
-			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
-			EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTime),
-			_ => query,
-		};
+			this IQueryable<Song> query,
+			EntrySortRule sortRule,
+			ContentLanguagePreference languagePreference
+		) =>
+			sortRule switch
+			{
+				EntrySortRule.Name => query.OrderByEntryName(languagePreference),
+				EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+				EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTime),
+				_ => query,
+			};
 
 		public static IMaybeOrderedQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId)
 		{
@@ -52,7 +61,9 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (string.IsNullOrEmpty(tagName))
 				return query;
 
-			return query.Where(s => s.AllArtists.Any(a => a.Artist.Tags.Usages.Any(t => t.Tag.Names.SortNames.English == tagName || t.Tag.Names.SortNames.Romaji == tagName || t.Tag.Names.SortNames.Japanese == tagName)));
+			return query.Where(s => s.AllArtists.Any(a => a.Artist.Tags.Usages.Any(t =>
+				t.Tag.Names.SortNames.English == tagName || t.Tag.Names.SortNames.Romaji == tagName || t.Tag.Names.SortNames.Japanese == tagName
+			)));
 		}
 
 		public static IQueryable<Song> WhereArtistHasType(this IQueryable<Song> query, ArtistType artistType)
@@ -89,18 +100,33 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.WhereHasArtist<Song, ArtistForSong>(artistId, false, false);
 		}
 
-		public static IQueryable<Song> WhereHasArtistParticipationStatus(this IQueryable<Song> query,
+		public static IQueryable<Song> WhereHasArtistParticipationStatus(
+			this IQueryable<Song> query,
 			ArtistParticipationQueryParams queryParams,
-			IEntityLoader<Artist> artistGetter)
+			IEntityLoader<Artist> artistGetter
+		)
 		{
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 			var artistId = queryParams.ArtistIds.Primary;
 
-			return EntryWithArtistsQueryableExtensions.WhereHasArtistParticipationStatus(new ArtistParticipationQueryParams<Song, ArtistForSong>(query, queryParams, artistGetter,
-				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Song.ArtistString.Default != various),
-				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Song.ArtistString.Default == various))
-			));
+			return EntryWithArtistsQueryableExtensions.WhereHasArtistParticipationStatus(
+				new ArtistParticipationQueryParams<Song, ArtistForSong>(
+					query,
+					queryParams,
+					artistGetter,
+					mainEntriesExpression: al => al.AllArtists.Any(a =>
+						a.Artist.Id == artistId &&
+						!a.IsSupport &&
+						((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) &&
+						a.Song.ArtistString.Default != various
+					),
+					collaborationsExpression: al => al.AllArtists.Any(a =>
+						a.Artist.Id == artistId &&
+						(a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Song.ArtistString.Default == various)
+					)
+				)
+			);
 		}
 
 		public static IQueryable<Song> WhereHasLyrics(this IQueryable<Song> query, string[]? languageCodes, bool any)
@@ -171,9 +197,11 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (parentSongId == 0)
 				return query;
 
-			query = query.Where(s => s.OriginalVersion.Id == parentSongId
-				|| s.OriginalVersion.OriginalVersion.Id == parentSongId
-				|| s.OriginalVersion.OriginalVersion.OriginalVersion.Id == parentSongId);
+			query = query.Where(s =>
+				s.OriginalVersion.Id == parentSongId ||
+				s.OriginalVersion.OriginalVersion.Id == parentSongId ||
+				s.OriginalVersion.OriginalVersion.OriginalVersion.Id == parentSongId
+			);
 
 			return query;
 		}

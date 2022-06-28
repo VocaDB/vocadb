@@ -32,11 +32,21 @@ namespace VocaDb.Model.Service
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams)
 		{
-			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, _entryUrlParser).Find(queryParams);
+			return new SongSearch(
+				new NHibernateDatabaseContext(session, PermissionContext),
+				queryParams.LanguagePreference,
+				_entryUrlParser
+			).Find(queryParams);
 		}
 
-		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
-			VdbConfigManager config, IUserIconFactory userIconFactory)
+		public SongService(
+			ISessionFactory sessionFactory,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryUrlParser entryUrlParser,
+			VdbConfigManager config,
+			IUserIconFactory userIconFactory
+		)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
@@ -131,8 +141,11 @@ namespace VocaDb.Model.Service
 			{
 				var result = Find(session, queryParams);
 
-				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
-					result.TotalCount, result.Term);
+				return new PartialFindResult<T>(
+					items: result.Items.Select(fac).ToArray(),
+					totalCount: result.TotalCount,
+					term: result.Term
+				);
 			});
 		}
 
