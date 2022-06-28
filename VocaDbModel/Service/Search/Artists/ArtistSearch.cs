@@ -20,7 +20,8 @@ namespace VocaDb.Model.Service.Search.Artists
 		private IQueryable<Artist> CreateQuery(
 			ArtistQueryParams queryParams,
 			ParsedArtistQuery parsedQuery,
-			NameMatchMode? nameMatchMode = null)
+			NameMatchMode? nameMatchMode = null
+		)
 		{
 			var textQuery = (parsedQuery.HasNameQuery ? queryParams.Common.TextQuery.OverrideMatchMode(nameMatchMode) : ArtistSearchTextQuery.Empty);
 
@@ -114,11 +115,13 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams)
 		{
-			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
-				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
-				&& !queryParams.Common.TextQuery.IsExact
-				&& queryParams.Paging.Start == 0
-				&& !queryParams.Common.TextQuery.IsEmpty);
+			var isMoveToTopQuery = (
+				queryParams.Common.MoveExactToTop &&
+				queryParams.Common.NameMatchMode != NameMatchMode.StartsWith &&
+				!queryParams.Common.TextQuery.IsExact &&
+				queryParams.Paging.Start == 0 &&
+				!queryParams.Common.TextQuery.IsEmpty
+			);
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 

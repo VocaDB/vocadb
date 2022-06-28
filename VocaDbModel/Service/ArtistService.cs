@@ -32,7 +32,13 @@ namespace VocaDb.Model.Service
 			return new ArtistSearch(queryParams.LanguagePreference, context, _entryUrlParser).Find(queryParams);
 		}
 
-		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser, IUserIconFactory userIconFactory)
+		public ArtistService(
+			ISessionFactory sessionFactory,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryUrlParser entryUrlParser,
+			IUserIconFactory userIconFactory
+		)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
@@ -79,8 +85,11 @@ namespace VocaDb.Model.Service
 			{
 				var result = Find(session, queryParams);
 
-				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
-					result.TotalCount, result.Term);
+				return new PartialFindResult<T>(
+					items: result.Items.Select(fac).ToArray(),
+					totalCount: result.TotalCount,
+					term: result.Term
+				);
 			});
 		}
 
