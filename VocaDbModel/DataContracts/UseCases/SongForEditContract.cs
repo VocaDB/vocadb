@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongForEditContract : SongContract
 	{

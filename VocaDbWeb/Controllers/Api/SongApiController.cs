@@ -18,12 +18,15 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
@@ -146,10 +149,12 @@ namespace VocaDb.Web.Controllers.Api
 		) =>
 			_queries.GetDerived(id, fields, lang);
 
+#nullable enable
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongForEditContract GetForEdit(int id) =>
+		public SongForEditForApiContract GetForEdit(int id) =>
 			_queries.GetSongForEdit(id);
+#nullable disable
 
 		/// <summary>
 		/// Gets a song by Id.
@@ -559,6 +564,72 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<SongForApiContract> GetSongWithArchivedVersions(int id) =>
 			_queries.GetSongWithArchivedVersionsForApi(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] SongForEditForApiContract contract
+		)
+		{
+			// Unable to continue if viewmodel is null because we need the ID at least
+			if (contract is null)
+			{
+				return BadRequest("Viewmodel was null - probably JavaScript is disabled");
+			}
+
+			try
+			{
+				static void CheckModel(SongForEditForApiContract contract)
+				{
+					if (contract is null)
+						throw new InvalidFormException("Model was null");
+
+					if (contract.Artists is null)
+						throw new InvalidFormException("ArtistLinks list was null"); // Shouldn't be null
+
+					if (contract.Lyrics is null)
+						throw new InvalidFormException("Lyrics list was null"); // Shouldn't be null
+
+					if (contract.Names is null)
+						throw new InvalidFormException("Names list was null"); // Shouldn't be null
+
+					if (contract.PVs is null)
+						throw new InvalidFormException("PVs list was null"); // Shouldn't be null
+
+					if (contract.WebLinks is null)
+						throw new InvalidFormException("WebLinks list was null"); // Shouldn't be null
+				}
+
+				CheckModel(contract);
+			}
+			catch (InvalidFormException x)
+			{
+				ControllerBase.AddFormSubmissionError(this, x.Message);
+			}
+
+			// Note: name is allowed to be whitespace, but not empty.
+			if (contract.Names is null || contract.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Names", SongValidationErrors.UnspecifiedNames);
+			}
+
+			if (contract.Lyrics is not null && contract.Lyrics.Any(n => string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Lyrics", "Lyrics cannot be empty");
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			await _queries.UpdateBasicProperties(contract);
+
+			return contract.Id;
+		}
 #nullable disable
 	}
 }

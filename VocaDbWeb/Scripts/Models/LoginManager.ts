@@ -172,6 +172,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.RemoveEditPermission);
 	}
 
+	public get canUploadMedia(): boolean {
+		return this.hasPermission(PermissionToken.UploadMedia);
+	}
+
 	public get canViewAuditLog(): boolean {
 		return this.hasPermission(PermissionToken.ViewAuditLog);
 	}

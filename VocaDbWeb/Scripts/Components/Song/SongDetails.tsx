@@ -194,8 +194,8 @@ const SongDetailsLayout = observer(
 							</>
 						)}{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Song/Edit/${model.id}?${qs.stringify({
+							as={Link}
+							to={`/Song/Edit/${model.id}?${qs.stringify({
 								albumId: model.browsedAlbumId,
 							})}`}
 							disabled={

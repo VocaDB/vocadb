@@ -547,6 +547,22 @@ export default class SongRepository
 			EntryWithArchivedVersionsContract<SongApiContract>
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
 	};
+
+	public edit = (contract: SongForEditContract): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songs/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
 }
 
 export interface PVEmbedParams {
