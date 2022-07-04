@@ -16,9 +16,14 @@ jobs:
     - uses: actions/stale@v3
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'This issue is stale because it has been open 60 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
+        stale-issue-message: 'This issue is stale because it has been open 7 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
         stale-pr-message: 'This PR is stale because it has been open 60 days with no activity. Remove stale label or comment or this will be closed in 7 days.'
+        days-before-issue-stale: 7
+        stale-issue-label: 'stale-issue'
+        close-issue-label: 'stale-issue-closed'
+        stale-pr-label: 'stale-pr'
+        close-pr-label: 'stale-pr-closed'
         exempt-milestones: 'Backlog,Working Set'
-        exempt-issue-labels: 'bug,exception,high-priority,infrastructure,permissions,security,good first issue'
+        exempt-issue-labels: 'bug,exception,high-priority,infrastructure,permissions,security,skip-stale-check'
         exempt-pr-labels: 'dependencies'
         exempt-all-assignees: true
