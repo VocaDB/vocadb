@@ -1,6 +1,6 @@
 import WebLinkContract from '@DataContracts/WebLinkContract';
 import WebLinkCategory from '@Models/WebLinkCategory';
-import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import ko, { Observable } from 'knockout';
 
 export default class WebLinkEditViewModel {
