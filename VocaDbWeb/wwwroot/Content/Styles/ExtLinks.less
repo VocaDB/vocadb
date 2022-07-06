@@ -42,8 +42,8 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons//archive.png"));
 	}
 
-	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"], &[href^="https://w.atwiki.jp/hmiku/"]
-	{
+	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"], &[href^="https://w.atwiki.jp/hmiku/"],
+	&[href*="atwiki.jp/cevio_synthv/"] {
 		background-image: url('/Content/ExtIcons/atwiki.png');
 	}
 
@@ -635,6 +635,59 @@ a.extLink[href^="https://music.tower.jp"]
 	.extLink(url('/Content/ExtIcons/towerrecordsmusic.png'));
 }
 
-a.extLink[href*="selection.music.dmkt-sp.jp"] {
+a.extLink[href*='itch.io'] {
+	.extLink(url('/Content/ExtIcons/itch_io.png'));
+}
+
+a.extLink[href*='myspace.com'] {
+	.extLink(url('/Content/ExtIcons/myspace.png'));
+}
+
+a.extLink[href*='skima.jp'] {
+	.extLink(url('/Content/ExtIcons/skima.png'));
+}
+
+a.extLink[href*='plurk.com'] {
+	.extLink(url('/Content/ExtIcons/plurk.png'));
+}
+
+a.extLink[href*='note.com'] {
+	.extLink(url('/Content/ExtIcons/note.png'));
+}
+
+a.extLink[href*='tinami.com'],
+a.extLink[href*='tinami.jp'] {
+	.extLink(url('/Content/ExtIcons/tinami.png'));
+}
+
+a.extLink[href*='weebly.com'] {
+	.extLink(url('/Content/ExtIcons/weebly.png'));
+}
+
+a.extLink[href*='bowlroll.net'] {
+	.extLink(url('/Content/ExtIcons/bowlroll.png'));
+}
+
+a.extLink[href*='hatenadiary.org'] {
+	.extLink(url('/Content/ExtIcons/hatena_diary.png'));
+}
+
+a.extLink[href*='nana-music.com'] {
+	.extLink(url('/Content/ExtIcons/nana.png'));
+}
+
+a.extLink[href*='peing.net'] {
+	.extLink(url('/Content/ExtIcons/peing.png'));
+}
+
+a.extLink[href*='artstation.com'] {
+	.extLink(url('/Content/ExtIcons/artstation.png'));
+}
+
+a.extLink[href*='streamlink.to'] {
+	.extLink(url('/Content/ExtIcons/streamlink.png'));
+}
+
+a.extLink[href*='selection.music.dmkt-sp.jp'] {
 	.extLink(url('/Content/ExtIcons/d-hits.png'));
 }
