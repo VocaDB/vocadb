@@ -859,6 +859,11 @@ export default class WebLinkMatcher {
 			desc: 'Itch.io',
 			cat: WebLinkCategory.Commercial,
 		},
+		{
+			url: 'selection.music.dmkt-sp.jp',
+			desc: 'd hits',
+			cat: WebLinkCategory.Commercial,
+		},
 	];
 
 	private static isMatch(url: string, item: WebLinkMatcher): boolean {
