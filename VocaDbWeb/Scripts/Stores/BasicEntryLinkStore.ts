@@ -40,7 +40,7 @@ export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 	}
 
 	@computed public get isEmpty(): boolean {
-		return !this.entry;
+		return !this.id;
 	}
 
 	public clear = (): void => {

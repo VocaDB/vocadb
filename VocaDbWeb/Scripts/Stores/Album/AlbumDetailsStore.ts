@@ -134,8 +134,7 @@ export class AlbumReviewsStore {
 	}
 
 	@computed public get reviewAlreadySubmitted(): boolean {
-		return _.some(
-			this.reviews,
+		return this.reviews.some(
 			(review) =>
 				review.user.id === this.loggedUserId &&
 				review.languageCode === this.languageCode,
@@ -215,9 +214,9 @@ export class AlbumReviewsStore {
 	};
 
 	public ratingStars = (userRating: number): { enabled: boolean }[] => {
-		const ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return { enabled: Math.round(userRating) >= rating };
-		});
+		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(userRating) >= rating,
+		}));
 		return ratings;
 	};
 
@@ -240,8 +239,7 @@ export class AlbumReviewsStore {
 			this.albumRepo.getReviews({ albumId: this.albumId }),
 			this.albumRepo.getUserCollections({ albumId: this.albumId }),
 		]);
-		const reviewStores = _.map(
-			reviews,
+		const reviewStores = reviews.map(
 			(review) =>
 				new AlbumReviewStore(
 					review,

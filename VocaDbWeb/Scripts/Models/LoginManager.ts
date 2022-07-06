@@ -3,7 +3,6 @@ import EntryRefContract from '@DataContracts/EntryRefContract';
 import SongListContract from '@DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
 import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
 
 import EntryStatus from './EntryStatus';
 import EntryType from './EntryType';
@@ -105,6 +104,10 @@ export default class LoginManager {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
+	public get canDeleteEntries(): boolean {
+		return this.hasPermission(PermissionToken.DeleteEntries);
+	}
+
 	public get canDisableUsers(): boolean {
 		return this.hasPermission(PermissionToken.DisableUsers);
 	}
@@ -147,6 +150,10 @@ export default class LoginManager {
 
 	public get canManageTagMappings(): boolean {
 		return this.hasPermission(PermissionToken.ManageTagMappings);
+	}
+
+	public get canMergeEntries(): boolean {
+		return this.hasPermission(PermissionToken.MergeEntries);
 	}
 
 	public get canMikuDbImport(): boolean {
@@ -212,10 +219,7 @@ export default class LoginManager {
 			entry.entryType === EntryType[EntryType.Artist] &&
 			!!this.loggedUser &&
 			this.loggedUser.verifiedArtist &&
-			_.some(
-				this.loggedUser.ownedArtistEntries,
-				(a) => a.artist.id === entry.id,
-			)
+			this.loggedUser.ownedArtistEntries.some((a) => a.artist.id === entry.id)
 		);
 	};
 
@@ -231,7 +235,7 @@ export default class LoginManager {
 	/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
 	/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
 	/// <returns>A list of permissions that can be set by the user.</returns>
-	private allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
+	public allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
 		// Check for basic edit permissions, without these the user is limited or disabled
 		if (!this.canManageDatabase) return [];
 

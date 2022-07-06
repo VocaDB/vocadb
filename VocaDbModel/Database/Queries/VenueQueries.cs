@@ -142,9 +142,9 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public VenueForEditContract GetForEdit(int id)
+		public VenueForEditForApiContract GetForEdit(int id)
 		{
-			return HandleQuery(ctx => new VenueForEditContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new VenueForEditForApiContract(ctx.Load(id), LanguagePreference));
 		}
 
 		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
@@ -242,7 +242,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public int Update(VenueForEditContract contract)
+		public int Update(VenueForEditForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -353,6 +353,11 @@ namespace VocaDb.Model.Database.Queries
 
 				return venue.Id;
 			});
+		}
+
+		public VenueForApiContract GetOne(int id)
+		{
+			return HandleQuery(ctx => new VenueForApiContract(ctx.Load(id), LanguagePreference, VenueOptionalFields.None));
 		}
 #nullable disable
 	}

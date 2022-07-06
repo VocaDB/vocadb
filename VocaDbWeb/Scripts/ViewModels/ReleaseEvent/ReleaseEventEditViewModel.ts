@@ -13,7 +13,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 import moment from 'moment';
 
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
@@ -40,10 +39,7 @@ export default class ReleaseEventEditViewModel {
 			artistRoleNames,
 		);
 		this.artistLinks = ko.observableArray(
-			_.map(
-				contract.artists,
-				(artist) => new ArtistForEventEditViewModel(artist),
-			),
+			contract.artists.map((artist) => new ArtistForEventEditViewModel(artist)),
 		);
 		this.id = contract.id;
 		this.date = ko.observable(

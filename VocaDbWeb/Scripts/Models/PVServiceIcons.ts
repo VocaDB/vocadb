@@ -1,5 +1,4 @@
 import UrlMapper from '@Shared/UrlMapper';
-import _ from 'lodash';
 
 // Class for getting URLs of PV service icons.
 export default class PVServiceIcons {
@@ -31,7 +30,7 @@ export default class PVServiceIcons {
 		if (!servicesStr || servicesStr === 'Nothing') return [];
 
 		var services = servicesStr.split(',');
-		return _.map(services, (service) => {
+		return services.map((service) => {
 			var trimmed = service.trim();
 
 			return {

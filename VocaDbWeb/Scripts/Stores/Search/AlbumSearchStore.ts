@@ -5,7 +5,6 @@ import AlbumType from '@Models/Albums/AlbumType';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
 import { computed, makeObservable, observable } from 'mobx';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';
@@ -105,11 +104,9 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<
 	public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
 		if (!album) return [];
 
-		const ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return {
-				enabled: Math.round(album.ratingAverage) >= rating,
-			};
-		});
+		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(album.ratingAverage) >= rating,
+		}));
 		return ratings;
 	};
 

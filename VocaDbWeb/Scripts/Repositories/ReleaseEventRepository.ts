@@ -1,6 +1,7 @@
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
 import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import ReleaseEventForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventForEditContract';
 import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
@@ -10,6 +11,7 @@ import functions from '@Shared/GlobalFunctions';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 
+import ReleaseEventSeriesForEditContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 
@@ -120,6 +122,16 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<ReleaseEventContract>(url);
 	};
 
+	public getOneSeries = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForApiContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForApiContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}`),
+		);
+	};
+
 	public getOneByName = async ({
 		name,
 	}: {
@@ -200,6 +212,66 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
 		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
+	};
+
+	public getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventForEditContract> => {
+		return this.httpClient.get<ReleaseEventForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${id}/for-edit`),
+		);
+	};
+
+	public edit = (
+		contract: ReleaseEventForEditContract,
+		pictureUpload?: File,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
+
+	public getSeriesForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForEditContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/for-edit`),
+		);
+	};
+
+	public editSeries = (
+		contract: ReleaseEventSeriesForEditContract,
+		pictureUpload?: File,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
 	};
 }
 

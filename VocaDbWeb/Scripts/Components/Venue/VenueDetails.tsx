@@ -67,8 +67,8 @@ const VenueDetailsLayout = ({
 			toolbar={
 				<>
 					<JQueryUIButton
-						as="a"
-						href={`/Venue/Edit/${venue.id}`}
+						as={Link}
+						to={`/Venue/Edit/${venue.id}`}
 						disabled={
 							!loginManager.canEdit({
 								...venue,
@@ -90,8 +90,8 @@ const VenueDetailsLayout = ({
 						<>
 							{' '}
 							<JQueryUIButton
-								as="a"
-								href={`/Event/Edit?${qs.stringify({ venueId: venue.id })}`}
+								as={Link}
+								to={`/Event/Edit?${qs.stringify({ venueId: venue.id })}`}
 								icons={{ primary: 'ui-icon-plus' }}
 							>
 								{t('ViewRes.Event:EventsBySeries.CreateEvent')}

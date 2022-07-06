@@ -1,5 +1,4 @@
 import ko, { ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 // Basic list view model implementation where items are constructed from data contracts.
 // Item type can be constructed from a contract, or with default parameters (for new items).
@@ -11,7 +10,7 @@ export default class BasicListEditViewModel<TItem, TContract> {
 		contracts: TContract[],
 	) {
 		this.items = ko.observableArray(
-			_.map(contracts, (contract) => new type(contract)),
+			contracts.map((contract) => new type(contract)),
 		);
 	}
 

@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
-		public CollectionDiffWithValue<T, T> Sync(IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
+		public CollectionDiffWithValue<T, T> Sync(IEnumerable<IWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 		{
 			return WebLink.Sync(Links, newLinks, webLinkFactory);
 		}

@@ -37,7 +37,7 @@ export default class ImportSongListViewModel {
 	};
 
 	public missingSongs = ko.computed(() =>
-		_.some(this.items(), (i) => i.matchedSong == null),
+		this.items().some((i) => i.matchedSong == null),
 	);
 
 	public name = ko.observable('');
@@ -71,14 +71,12 @@ export default class ImportSongListViewModel {
 		var order = 1;
 		var songs = _.chain(this.items())
 			.filter((i) => i.matchedSong != null)
-			.map((i: ImportedSongInListContract) => {
-				return {
-					order: order++,
-					notes: '',
-					song: i.matchedSong,
-					songInListId: null!,
-				};
-			})
+			.map((i: ImportedSongInListContract) => ({
+				order: order++,
+				notes: '',
+				song: i.matchedSong,
+				songInListId: null!,
+			}))
 			.value();
 
 		var contract: SongListForEditContract = {

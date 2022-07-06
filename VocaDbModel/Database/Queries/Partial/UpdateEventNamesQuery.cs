@@ -75,14 +75,23 @@ namespace VocaDb.Model.Database.Queries.Partial
 			return diff.Changed;
 		}
 
-		private IEnumerable<ILocalizedString> GetNames(IDatabaseContext ctx,
-			IEntryWithIntId seriesLink, bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
+#nullable enable
+		private IEnumerable<ILocalizedString> GetNames(
+			IDatabaseContext ctx,
+			IEntryWithReadOnlyIntId? seriesLink,
+			bool customName,
+			int seriesNumber,
+			string seriesSuffix,
+			IEnumerable<ILocalizedString> nameContracts
+		)
 		{
 			var series = ctx.NullSafeLoad<ReleaseEventSeries>(seriesLink);
 
 			var names = series != null && !customName
-				? series.Names.Select(seriesName =>
-					new LocalizedStringContract(series.GetEventName(seriesNumber, seriesSuffix, seriesName.Value), seriesName.Language))
+				? series.Names.Select(seriesName => new LocalizedStringContract(
+					value: series.GetEventName(seriesNumber, seriesSuffix, seriesName.Value),
+					language: seriesName.Language
+				))
 				: nameContracts;
 
 			return names;
@@ -105,8 +114,15 @@ namespace VocaDb.Model.Database.Queries.Partial
 		/// If custom name is enabled or no series is specified, given names are used.
 		/// Default name language is inherited from series as well, but that setting is not touched by this method.
 		/// </remarks>
-		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink,
-			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
+		public bool UpdateNames(
+			IDatabaseContext ctx,
+			ReleaseEvent ev,
+			IEntryWithReadOnlyIntId? seriesLink,
+			bool customName,
+			int seriesNumber,
+			string seriesSuffix,
+			IEnumerable<ILocalizedString> nameContracts
+		)
 		{
 			var names = GetNames(ctx, seriesLink, customName, seriesNumber, seriesSuffix, nameContracts).ToArray();
 			var namesValues = names.Select(n => n.Value).ToArray();
@@ -115,5 +131,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 			var changed = SaveNames(ctx, ev, names);
 			return changed;
 		}
+#nullable disable
 	}
 }

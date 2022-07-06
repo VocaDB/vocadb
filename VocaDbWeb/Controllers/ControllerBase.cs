@@ -55,18 +55,23 @@ namespace VocaDb.Web.Controllers
 
 #nullable enable
 		protected string GetHostnameForValidHit() => WebHelper.GetHostnameForValidHit(Request);
-#nullable disable
 
 		protected ActionResult NoId()
 		{
 			return NotFound("No ID specified");
 		}
 
-		protected void AddFormSubmissionError(string details)
+		public static void AddFormSubmissionError(Microsoft.AspNetCore.Mvc.ControllerBase controller, string details)
 		{
 			s_log.Warn("Form submission error: {0}", details);
-			ModelState.AddModelError(string.Empty, $"Error while sending form contents - please try again. Diagnostic error message: {details}.");
+			controller.ModelState.AddModelError(string.Empty, $"Error while sending form contents - please try again. Diagnostic error message: {details}.");
 		}
+
+		protected void AddFormSubmissionError(string details)
+		{
+			AddFormSubmissionError(this, details);
+		}
+#nullable disable
 
 		protected ActionResult Picture(EntryForPictureDisplayContract contract)
 		{
@@ -111,24 +116,31 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		protected bool CheckUploadedPicture(IFormFile pictureUpload, string fieldName)
+#nullable enable
+		public static bool CheckUploadedPicture(Microsoft.AspNetCore.Mvc.ControllerBase controller, IFormFile pictureUpload, string fieldName)
 		{
 			bool errors = false;
 
 			if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 			{
-				ModelState.AddModelError(fieldName, "Picture file is too large.");
+				controller.ModelState.AddModelError(fieldName, "Picture file is too large.");
 				errors = true;
 			}
 
 			if (!ImageHelper.IsValidImageExtension(pictureUpload.FileName))
 			{
-				ModelState.AddModelError(fieldName, "Picture format is not valid.");
+				controller.ModelState.AddModelError(fieldName, "Picture format is not valid.");
 				errors = true;
 			}
 
 			return !errors;
 		}
+
+		protected bool CheckUploadedPicture(IFormFile pictureUpload, string fieldName)
+		{
+			return CheckUploadedPicture(this, pictureUpload, fieldName);
+		}
+#nullable disable
 
 		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
 		{
@@ -170,29 +182,36 @@ namespace VocaDb.Web.Controllers
 			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile is null);
 		}
 
-		protected EntryPictureFileContract? ParsePicture(IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
+		public static EntryPictureFileContract? ParsePicture(Microsoft.AspNetCore.Mvc.ControllerBase controller, IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
 		{
 			EntryPictureFileContract? pictureData = null;
 
-			if (Request.Form.Files.Count > 0 && pictureUpload is not null && pictureUpload.Length > 0)
+			if (controller.Request.Form.Files.Count > 0 && pictureUpload is not null && pictureUpload.Length > 0)
 			{
 				if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 				{
-					ModelState.AddModelError(fieldName, "Picture file is too large.");
+					controller.ModelState.AddModelError(fieldName, "Picture file is too large.");
 					return null;
 				}
 
 				if (!ImageHelper.IsValidImageExtension(pictureUpload.FileName))
 				{
-					ModelState.AddModelError(fieldName, "Picture format is not valid.");
+					controller.ModelState.AddModelError(fieldName, "Picture format is not valid.");
 					return null;
 				}
 
-				pictureData = new EntryPictureFileContract(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose);
-				pictureData.OriginalFileName = pictureUpload.FileName;
+				pictureData = new(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose)
+				{
+					OriginalFileName = pictureUpload.FileName
+				};
 			}
 
 			return pictureData;
+		}
+
+		protected EntryPictureFileContract? ParsePicture(IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
+		{
+			return ParsePicture(this, pictureUpload, fieldName, purpose);
 		}
 #nullable disable
 

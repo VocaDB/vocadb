@@ -348,7 +348,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Description()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Description = new EnglishTranslatedStringContract { Original = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)", English = string.Empty };
 
 			_queries.Update(updated, null);
@@ -363,7 +363,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Image()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			using (var stream = TestImage())
 			{
 				_queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
@@ -381,7 +381,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Name()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Names[0].Value = "Api Miku";
 
 			_queries.Update(updated, null);
@@ -396,7 +396,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Name_DuplicateWithAnotherTag()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Names[0].Value = "MMD";
 
 			_queries.Invoking(subject => subject.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
@@ -405,7 +405,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Name_DuplicateTranslation()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
 
 			_queries.Invoking(subject => subject.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
@@ -415,7 +415,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Name_DuplicateKana()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext)
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null)
 			{
 				Names = new[] {
 					new LocalizedStringWithIdContract {Value = "コノザマ", Language = ContentLanguageSelection.Japanese},
@@ -429,7 +429,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Parent()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Parent = new TagBaseContract(_tag2, ContentLanguagePreference.English);
 
 			_queries.Update(updated, null);
@@ -445,7 +445,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Parent_IgnoreSelf()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			updated.Parent = new TagBaseContract(_tag, ContentLanguagePreference.English);
 
 			_queries.Update(updated, null);
@@ -460,7 +460,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Parent_Renamed()
 		{
-			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			var updated = new TagForEditForApiContract(_tag, false, _permissionContext, thumbPersister: null);
 			_tag2.TranslatedName.Default = "Api Miku";
 			updated.Parent = new TagBaseContract(_tag2, ContentLanguagePreference.English);
 

@@ -15,7 +15,6 @@ import GlobalValues from '@Shared/GlobalValues';
 import ui from '@Shared/MessagesTyped';
 import UrlMapper from '@Shared/UrlMapper';
 import ko, { Computed, Observable } from 'knockout';
-import _ from 'lodash';
 import moment from 'moment';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
@@ -239,7 +238,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 						maxLength: this.maxLength() ? this.maxLength() : undefined,
 					})
 					.then((result) => {
-						_.each(result.items, (song: ISongSearchItem) => {
+						for (const song of result.items as ISongSearchItem[]) {
 							if (song.pvServices && song.pvServices !== 'Nothing') {
 								song.previewViewModel = new SongWithPreviewViewModel(
 									this.songRepo,
@@ -252,7 +251,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 							} else {
 								song.previewViewModel = null!;
 							}
-						});
+						}
 
 						return result;
 					});

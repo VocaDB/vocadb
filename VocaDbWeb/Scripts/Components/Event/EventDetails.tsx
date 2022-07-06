@@ -188,8 +188,8 @@ const EventDetailsLayout = observer(
 				toolbar={
 					<>
 						<JQueryUIButton
-							as="a"
-							href={`/Event/Edit/${event.id}`}
+							as={Link}
+							to={`/Event/Edit/${event.id}`}
 							disabled={
 								!loginManager.canEdit({
 									...event,

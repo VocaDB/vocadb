@@ -2,7 +2,6 @@ import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import TagRepository from '@Repositories/TagRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import TagFilter from './TagFilter';
 
@@ -14,7 +13,7 @@ export default class TagFilters {
 		tags: ObservableArray<TagFilter> = null!,
 	) {
 		this.tags = tags || ko.observableArray<TagFilter>();
-		this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+		this.tagIds = ko.computed(() => this.tags().map((t) => t.id));
 		this.childTags = ko.observable(false);
 
 		this.filters = ko
@@ -31,12 +30,12 @@ export default class TagFilters {
 	public addTags = (selectedTagIds: number[]): void => {
 		if (!selectedTagIds) return;
 
-		var filters = _.map(selectedTagIds, (a) => new TagFilter(a));
+		var filters = selectedTagIds.map((a) => new TagFilter(a));
 		ko.utils.arrayPushAll(this.tags, filters);
 
 		if (!this.tagRepo) return;
 
-		_.forEach(filters, (newTag) => {
+		for (const newTag of filters) {
 			var selectedTagId = newTag.id;
 
 			this.tagRepo
@@ -49,7 +48,7 @@ export default class TagFilters {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug!);
 				});
-		});
+		}
 	};
 
 	public childTags: Observable<boolean>;

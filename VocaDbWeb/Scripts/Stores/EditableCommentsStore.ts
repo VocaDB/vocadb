@@ -130,7 +130,7 @@ export default class EditableCommentsStore {
 
 	@action private setComments = (commentContracts: CommentContract[]): void => {
 		var commentStores = _.sortBy(
-			_.map(commentContracts, (comment) => this.processComment(comment)),
+			commentContracts.map((comment) => this.processComment(comment)),
 			(comment) => comment.created,
 		);
 

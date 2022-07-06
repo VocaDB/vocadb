@@ -144,12 +144,10 @@ export default class SongEditViewModel {
 	public async findOriginalSongSuggestions(): Promise<void> {
 		this.originalVersionSuggestions.removeAll();
 
-		const names = _.map(
-			this.names.getPrimaryNames().length
-				? this.names.getPrimaryNames()
-				: this.names.getAllNames(),
-			(n) => n.value(),
-		);
+		const names = (this.names.getPrimaryNames().length
+			? this.names.getPrimaryNames()
+			: this.names.getAllNames()
+		).map((n) => n.value());
 		const [all, originals] = await Promise.all([
 			this.songRepository.getByNames({
 				names: names,
@@ -197,7 +195,7 @@ export default class SongEditViewModel {
 		this.submitting(true);
 
 		var submittedModel: SongForEditContract = {
-			artists: _.map(this.artistLinks(), (artist) => artist.toContract()),
+			artists: this.artistLinks().map((artist) => artist.toContract()),
 			defaultNameLanguage: this.defaultNameLanguage(),
 			deleted: this.deleted,
 			hasAlbums: this.hasAlbums,
@@ -262,8 +260,7 @@ export default class SongEditViewModel {
 			? moment(data.albumReleaseDate)
 			: null!;
 		this.artistLinks = ko.observableArray(
-			_.map(
-				data.artists,
+			data.artists.map(
 				(artist) => new ArtistForAlbumEditViewModel(null!, artist),
 			),
 		);
@@ -349,7 +346,7 @@ export default class SongEditViewModel {
 			return (
 				this.pvs.isPossibleInstrumental() &&
 				this.songType() !== SongType.Instrumental &&
-				!_.some(this.tags, (t) => t === this.instrumentalTagId)
+				!this.tags.some((t) => t === this.instrumentalTagId)
 			);
 		});
 
@@ -369,7 +366,7 @@ export default class SongEditViewModel {
 		});
 
 		this.validationError_needArtist = ko.computed(
-			() => !_.some(this.artistLinks(), (a) => a.artist != null),
+			() => !this.artistLinks().some((a) => a.artist != null),
 		);
 
 		this.validationError_needOriginal = ko.computed(() => {
@@ -386,15 +383,14 @@ export default class SongEditViewModel {
 			return (
 				(this.notes.original() === null || this.notes.original() === '') &&
 				this.originalVersion.entry() == null &&
-				_.includes(derivedTypes, this.songType())
+				derivedTypes.includes(this.songType())
 			);
 		});
 
 		this.validationError_needProducer = ko.computed(
 			() =>
 				!this.validationError_needArtist() &&
-				!_.some(
-					this.artistLinks(),
+				!this.artistLinks().some(
 					(a) =>
 						a.artist != null &&
 						ArtistHelper.isProducerRole(
@@ -422,8 +418,8 @@ export default class SongEditViewModel {
 				!this.validationError_needArtist() &&
 				!SongHelper.isInstrumental(this.songType()) &&
 				this.songType() !== SongType.Arrangement && // Arrangements are considered possible instrumentals in this context
-				!_.some(this.tags, (t) => t === this.instrumentalTagId) &&
-				!_.some(this.artistLinks(), (a) =>
+				!this.tags.some((t) => t === this.instrumentalTagId) &&
+				!this.artistLinks().some((a) =>
 					ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()),
 				)
 			);

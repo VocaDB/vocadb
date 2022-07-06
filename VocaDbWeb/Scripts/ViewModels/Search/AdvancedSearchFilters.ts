@@ -1,5 +1,4 @@
 import ko from 'knockout';
-import _ from 'lodash';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 
@@ -21,8 +20,7 @@ export default class AdvancedSearchFilters {
 	public filters = ko.observableArray<AdvancedSearchFilter>();
 
 	public hasFilter = (filterType: string, param: string): boolean => {
-		var result = _.some(
-			this.filters(),
+		var result = this.filters().some(
 			(f) => f.filterType === filterType && f.param === param,
 		);
 		return result;

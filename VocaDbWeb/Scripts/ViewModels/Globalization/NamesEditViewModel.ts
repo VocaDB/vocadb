@@ -1,7 +1,6 @@
 import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import ko, { ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';
 
@@ -20,10 +19,9 @@ export default class NamesEditViewModel {
 	};
 
 	public getAllNames = (): LocalizedStringWithIdEditViewModel[] => {
-		return _.filter(
-			this.getAllPrimaryNames().concat(this.aliases()),
-			(name) => !!name && !!name.value && !!name.value(),
-		);
+		return this.getAllPrimaryNames()
+			.concat(this.aliases())
+			.filter((name) => !!name && !!name.value && !!name.value());
 	};
 
 	private getAllPrimaryNames: () => LocalizedStringWithIdEditViewModel[] = () => {
@@ -31,18 +29,17 @@ export default class NamesEditViewModel {
 	};
 
 	public getPrimaryNames = (): LocalizedStringWithIdEditViewModel[] =>
-		_.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value && !!n.value());
+		this.getAllPrimaryNames().filter((n) => !!n && !!n.value && !!n.value());
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
 	public hasPrimaryName = (): boolean => {
-		return _.some(
-			this.getPrimaryNames(),
+		return this.getPrimaryNames().some(
 			(name) => name && name.value && name.value(),
 		);
 	};
 
 	public toContracts = (): LocalizedStringWithIdContract[] => {
-		return _.map(this.getAllNames(), (name) => {
+		return this.getAllNames().map((name) => {
 			var contract: LocalizedStringWithIdContract = {
 				id: name.id,
 				language: name.languageStr(),
@@ -57,7 +54,7 @@ export default class NamesEditViewModel {
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditViewModel {
 		return new NamesEditViewModel(
-			_.map(contracts, (contract) =>
+			contracts.map((contract) =>
 				LocalizedStringWithIdEditViewModel.fromContract(contract),
 			),
 		);
@@ -67,7 +64,7 @@ export default class NamesEditViewModel {
 		names: LocalizedStringWithIdEditViewModel[],
 		lang: ContentLanguageSelection,
 	): LocalizedStringWithIdEditViewModel {
-		const name = _.find(names, (n) => n.language() === lang);
+		const name = names.find((n) => n.language() === lang);
 		return name || new LocalizedStringWithIdEditViewModel(lang, '');
 	}
 
@@ -86,8 +83,7 @@ export default class NamesEditViewModel {
 		);
 
 		this.aliases = ko.observableArray(
-			_.filter(
-				names,
+			names.filter(
 				(n) =>
 					n.id !== this.englishName.id &&
 					n.id !== this.originalName.id &&

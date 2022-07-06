@@ -22,8 +22,7 @@ export default class TagsEditViewModel {
 		tagName = _.trim(tagName);
 
 		// If tag is already added, select it
-		var selection = _.find(
-			this.selections(),
+		var selection = this.selections().find(
 			(sel) => sel.tag.name.toLowerCase() === tagName.toLowerCase(),
 		);
 
@@ -40,7 +39,7 @@ export default class TagsEditViewModel {
 	};
 
 	public autoCompletedTag = (tag: TagBaseContract): void => {
-		var selection = _.find(this.selections(), (sel) => sel.tag.id === tag.id);
+		var selection = this.selections().find((sel) => sel.tag.id === tag.id);
 
 		if (selection) {
 			selection.selected(true);
@@ -87,7 +86,7 @@ export default class TagsEditViewModel {
 	public show = (): void => {
 		this.repo.getTagSelections().then((selections) => {
 			this.selections(
-				_.map(selections, (selection) => new TagSelectionViewModel(selection)),
+				selections.map((selection) => new TagSelectionViewModel(selection)),
 			);
 			this.dialogVisible(true);
 		});

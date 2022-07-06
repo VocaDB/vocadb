@@ -36,6 +36,9 @@ const useChangedFieldNames = (): ((
 
 				case EntryType.Tag:
 					return t(`Resources:TagEditableFieldNames.${changedField}`);
+
+				case EntryType.Venue:
+					return t(`Resources:VenueEditableFieldNames.${changedField}`);
 			}
 		},
 		[t],

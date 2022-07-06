@@ -1,7 +1,7 @@
 import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import TranslationType from '@Models/Globalization/TranslationType';
-import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
@@ -77,10 +77,7 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
 	LyricsForSongContract
 > {
 	private find = (translationType: string): LyricsForSongEditViewModel => {
-		var vm = _.find(
-			this.items(),
-			(i) => i.translationType() === translationType,
-		);
+		var vm = this.items().find((i) => i.translationType() === translationType);
 		if (vm) _.remove(this.items(), vm);
 		else {
 			vm = new LyricsForSongEditViewModel({ translationType: translationType });

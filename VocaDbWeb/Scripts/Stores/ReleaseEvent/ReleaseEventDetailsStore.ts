@@ -105,8 +105,7 @@ export default class ReleaseEventDetailsStore {
 	@action public removeEvent = (): void => {
 		this.userRepo.deleteEventForUser({ eventId: this.eventId });
 		this.eventAssociationType = undefined;
-		const link = _.find(
-			this.usersAttending,
+		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
 		_.pull(this.usersAttending, link);
@@ -136,8 +135,7 @@ export default class ReleaseEventDetailsStore {
 			associationType: UserEventRelationshipType.Interested,
 		});
 		this.eventAssociationType = UserEventRelationshipType.Interested;
-		const link = _.find(
-			this.usersAttending,
+		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
 		_.pull(this.usersAttending, link);

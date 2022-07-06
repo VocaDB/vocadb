@@ -3,7 +3,6 @@ import HtmlHelper from '@Helpers/HtmlHelper';
 import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
 import HttpClient from '@Shared/HttpClient';
 import $ from 'jquery';
-import _ from 'lodash';
 import React from 'react';
 
 const httpClient = new HttpClient();
@@ -102,25 +101,21 @@ const EntryAutoComplete = React.forwardRef<
 			httpClient
 				.get<PartialFindResultContract<TContract>>(searchUrl, queryParams)
 				.then((result) => {
-					const filtered = !filter
-						? result.items
-						: _.filter(result.items, filter);
+					const filtered = !filter ? result.items : result.items.filter(filter);
 
-					const mapped: AutoCompleteItem<TContract>[] = _.map(
-						filtered,
-						(item) => {
-							return {
-								label: item.name,
-								value: item.id,
-								data: item,
-								term: par.term,
-							};
-						},
+					const mapped: AutoCompleteItem<TContract>[] = filtered.map(
+						(item) => ({
+							label: item.name,
+							value: item.id,
+							data: item,
+							term: par.term,
+						}),
 					);
 
 					if (createNewItem) {
 						mapped.push({
 							label: createNewItem.replace('{0}', par.term),
+							value: null!,
 							term: par.term,
 							itemType: 'new',
 						});
@@ -129,6 +124,7 @@ const EntryAutoComplete = React.forwardRef<
 					if (createCustomItem) {
 						mapped.push({
 							label: createCustomItem.replace('{0}', par.term),
+							value: null!,
 							term: par.term,
 							itemType: 'custom',
 						});

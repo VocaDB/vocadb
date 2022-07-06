@@ -31,9 +31,17 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// <param name="onlyByName">Whether to search items only by name, and not for example NicoId. Ignored when query string is null or empty.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
-		public SongQueryParams(SearchTextQuery textQuery, SongType[]? songTypes, int start, int maxResults,
-			bool getTotalCount, SongSortRule sortRule,
-			bool onlyByName, bool moveExactToTop, int[]? ignoredIds)
+		public SongQueryParams(
+			SearchTextQuery textQuery,
+			SongType[]? songTypes,
+			int start,
+			int maxResults,
+			bool getTotalCount,
+			SongSortRule sortRule,
+			bool onlyByName,
+			bool moveExactToTop,
+			int[]? ignoredIds
+		)
 		{
 			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);

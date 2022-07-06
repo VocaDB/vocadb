@@ -10,6 +10,7 @@ import AlbumForUserForApiContract, {
 	MediaType,
 } from '@DataContracts/User/AlbumForUserForApiContract';
 import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
+import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
 import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
 import UserApiContract from '@DataContracts/User/UserApiContract';
 import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
@@ -594,8 +595,8 @@ export default class UserRepository implements ICommentRepository {
 	}: {
 		entryType: EntryType;
 		entryId: number;
-	}): Promise<void> => {
-		return this.httpClient.post<void>(
+	}): Promise<EntryEditDataContract> => {
+		return this.httpClient.post<EntryEditDataContract>(
 			this.urlMapper.mapRelative(
 				`/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
 			),

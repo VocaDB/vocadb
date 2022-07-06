@@ -58,10 +58,10 @@ describe('hasPermission', () => {
 		loginManager: LoginManager,
 		tokens: PermissionToken[],
 	): void => {
-		_.forEach(tokens, (token) => {
+		for (const token of tokens) {
 			const result = loginManager.hasPermission(token);
 			expect(result).toBe(true);
-		});
+		}
 
 		_.xor(Object.values(PermissionToken), tokens).forEach((token) => {
 			const result = loginManager.hasPermission(token);

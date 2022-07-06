@@ -5,7 +5,6 @@ import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePref
 import SongType from '@Models/Songs/SongType';
 import SongListRepository from '@Repositories/SongListRepository';
 import { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
 import { IPlayListRepository } from './PlayListViewModel';
@@ -54,17 +53,15 @@ export default class PlayListRepositoryForSongListAdapter
 				lang: lang,
 			})
 			.then((result) => {
-				var mapped = _.map(result.items, (song, idx) => {
-					return {
-						name:
-							song.order +
-							'. ' +
-							song.song.name +
-							(song.notes ? ' (' + song.notes + ')' : ''),
-						song: song.song,
-						indexInPlayList: paging.start! + idx,
-					};
-				});
+				var mapped = result.items.map((song, idx) => ({
+					name:
+						song.order +
+						'. ' +
+						song.song.name +
+						(song.notes ? ' (' + song.notes + ')' : ''),
+					song: song.song,
+					indexInPlayList: paging.start! + idx,
+				}));
 
 				return { items: mapped, totalCount: result.totalCount };
 			});

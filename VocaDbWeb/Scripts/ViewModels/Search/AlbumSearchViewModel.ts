@@ -7,7 +7,6 @@ import ArtistRepository from '@Repositories/ArtistRepository';
 import ResourceRepository from '@Repositories/ResourceRepository';
 import GlobalValues from '@Shared/GlobalValues';
 import ko, { Computed, Observable } from 'knockout';
-import _ from 'lodash';
 
 import ArtistFilters from './ArtistFilters';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
@@ -111,11 +110,9 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
 	public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
 		if (!album) return [];
 
-		var ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return {
-				enabled: Math.round(album.ratingAverage) >= rating,
-			};
-		});
+		var ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(album.ratingAverage) >= rating,
+		}));
 		return ratings;
 	};
 }

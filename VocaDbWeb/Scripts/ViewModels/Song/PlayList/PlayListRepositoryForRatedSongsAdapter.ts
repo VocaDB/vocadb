@@ -5,7 +5,6 @@ import { SongOptionalFields } from '@Models/EntryOptionalFields';
 import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
 import UserRepository from '@Repositories/UserRepository';
 import { Computed, Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
 import { IPlayListRepository } from './PlayListViewModel';
@@ -53,13 +52,11 @@ export default class PlayListRepositoryForRatedSongsAdapter
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-					var mapped = _.map(result.items, (song, idx) => {
-						return {
-							name: song.song!.name,
-							song: song.song!,
-							indexInPlayList: paging.start! + idx,
-						};
-					});
+					var mapped = result.items.map((song, idx) => ({
+						name: song.song!.name,
+						song: song.song!,
+						indexInPlayList: paging.start! + idx,
+					}));
 
 					return {
 						items: mapped,

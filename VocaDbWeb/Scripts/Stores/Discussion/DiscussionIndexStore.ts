@@ -5,7 +5,6 @@ import DiscussionRepository from '@Repositories/DiscussionRepository';
 import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -73,7 +72,7 @@ export default class DiscussionIndexStore
 	private getFolder = (
 		folderId: number,
 	): DiscussionFolderContract | undefined => {
-		return _.find(this.folders, (f) => f.id === folderId);
+		return this.folders.find((f) => f.id === folderId);
 	};
 
 	@action public selectFolderById = (folderId: number): void => {

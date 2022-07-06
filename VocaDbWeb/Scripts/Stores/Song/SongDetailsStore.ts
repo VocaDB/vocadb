@@ -175,12 +175,10 @@ export class SongListsStore {
 		this.songRepo
 			.songListsForUser({ ignoreSongId: this.songId })
 			.then((songLists) => {
-				const personalLists = _.filter(
-					songLists,
+				const personalLists = songLists.filter(
 					(list) => list.featuredCategory === 'Nothing',
 				);
-				const featuredLists = _.filter(
-					songLists,
+				const featuredLists = songLists.filter(
 					(list) => list.featuredCategory !== 'Nothing',
 				);
 

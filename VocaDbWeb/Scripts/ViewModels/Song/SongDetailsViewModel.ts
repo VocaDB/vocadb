@@ -392,12 +392,10 @@ export class SongListsViewModel {
 			repository
 				.songListsForUser({ ignoreSongId: songId })
 				.then((songLists) => {
-					var personalLists = _.filter(
-						songLists,
+					var personalLists = songLists.filter(
 						(list) => list.featuredCategory === 'Nothing',
 					);
-					var featuredLists = _.filter(
-						songLists,
+					var featuredLists = songLists.filter(
 						(list) => list.featuredCategory !== 'Nothing',
 					);
 

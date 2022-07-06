@@ -54,9 +54,9 @@ class WebhookEditViewModel {
 	) {
 		this.url = webhook.url;
 		this.webhookEvents = webhook.webhookEvents;
-		this.webhookEventsArray = _.map(webhook.webhookEvents.split(','), (val) =>
-			val.trim(),
-		);
+		this.webhookEventsArray = webhook.webhookEvents
+			.split(',')
+			.map((val) => val.trim());
 		this.isNew = isNew;
 	}
 
@@ -76,7 +76,7 @@ export default class ManageWebhooksViewModel {
 	): string[] =>
 		Object.keys(Enum).filter(
 			(k) =>
-				(!selected || _.includes(selected, Enum[k])) &&
+				(!selected || selected.includes(Enum[k])) &&
 				typeof Enum[k as any] === 'number',
 		);
 
@@ -104,8 +104,7 @@ export default class ManageWebhooksViewModel {
 		this.loadWebhooks = async (): Promise<void> => {
 			const result = await this.adminRepo.getWebhooks({});
 			this.webhooks(
-				_.map(
-					result,
+				result.map(
 					(t) => new WebhookEditViewModel(t, false, webhookEventNames),
 				),
 			);
@@ -122,7 +121,7 @@ export default class ManageWebhooksViewModel {
 	public addWebhook = (): void => {
 		if (!this.newUrl() || !this.newWebhookEvents()) return;
 
-		if (_.some(this.webhooks(), (w) => w.url === this.newUrl())) {
+		if (this.webhooks().some((w) => w.url === this.newUrl())) {
 			ui.showErrorMessage('Hook already exists');
 			return;
 		}
@@ -142,7 +141,7 @@ export default class ManageWebhooksViewModel {
 	};
 
 	public activeWebhooks = ko.computed(() =>
-		_.filter(this.webhooks(), (m) => !m.isDeleted()),
+		this.webhooks().filter((m) => !m.isDeleted()),
 	);
 
 	public save = async (): Promise<void> => {

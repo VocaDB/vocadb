@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventForEditContract : ReleaseEventDetailsContract
 	{
 		public ReleaseEventForEditContract()

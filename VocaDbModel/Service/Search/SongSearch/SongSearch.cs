@@ -24,10 +24,15 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		private IQueryable<Song> CreateQuery(
 			SongQueryParams queryParams,
 			ParsedSongQuery parsedQuery,
-			NameMatchMode? nameMatchMode = null)
+			NameMatchMode? nameMatchMode = null
+		)
 		{
-			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ?
-				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
+			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name)
+				? new SearchTextQuery(
+					query: parsedQuery.Name.Query,
+					matchMode: nameMatchMode ?? parsedQuery.Name.MatchMode,
+					originalQuery: parsedQuery.Name.OriginalQuery
+				)
 				: SearchTextQuery.Empty;
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
@@ -224,12 +229,14 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
-				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
-				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact
-				&& !queryParams.ArtistParticipation.ArtistIds.HasAny
-				&& queryParams.Paging.Start == 0
-				&& parsedQuery.HasNameQuery);
+			var isMoveToTopQuery = (
+				queryParams.Common.MoveExactToTop &&
+				queryParams.Common.NameMatchMode != NameMatchMode.StartsWith &&
+				queryParams.Common.NameMatchMode != NameMatchMode.Exact &&
+				!queryParams.ArtistParticipation.ArtistIds.HasAny &&
+				queryParams.Paging.Start == 0 &&
+				parsedQuery.HasNameQuery
+			);
 
 			if (isMoveToTopQuery)
 			{
@@ -305,14 +312,21 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.Paged(queryParams.Paging)
 				.ToArray();
 
-			var songs = SortByIds(_querySource
-				.Query<Song>()
-				.Where(s => ids.Contains(s.Id))
-				.ToArray(), ids);
+			var songs = SortByIds(
+				songs: _querySource
+					.Query<Song>()
+					.Where(s => ids.Contains(s.Id))
+					.ToArray(),
+				idList: ids
+			);
 
-			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
+			var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
 
-			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
+			return new PartialFindResult<Song>(
+				items: songs,
+				totalCount: count,
+				term: queryParams.Common.Query
+			);
 		}
 	}
 }

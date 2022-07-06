@@ -1,7 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
 import ko, { Observable, ObservableArray } from 'knockout';
-import _ from 'lodash';
 
 export default class SongInAlbumEditViewModel {
 	public artists: ObservableArray<ArtistContract>;
@@ -44,7 +43,11 @@ export default class SongInAlbumEditViewModel {
 
 		this.artists.subscribe(() => {
 			// TODO: construct proper artist string (from server)
-			this.artistString(_.map(this.artists(), (a) => a.name).join(', '));
+			this.artistString(
+				this.artists()
+					.map((a) => a.name)
+					.join(', '),
+			);
 		});
 	}
 }

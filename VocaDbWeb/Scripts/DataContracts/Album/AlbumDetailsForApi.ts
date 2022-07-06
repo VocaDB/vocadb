@@ -50,8 +50,7 @@ export class AlbumDisc {
 		this.isVideo =
 			!!discProperties && discProperties.mediaType === DiscMediaType.Video;
 		this.name = discProperties?.name;
-		this.totalLengthSeconds = _.every(
-			this.songs,
+		this.totalLengthSeconds = this.songs.every(
 			(s) => s.song && s.song.lengthSeconds > 0,
 		)
 			? _.sumBy(this.songs, (s) => s.song.lengthSeconds)
@@ -292,8 +291,7 @@ export default class AlbumDetailsForApi {
 	public get showProducerRoles(): boolean {
 		return (
 			this.producers.length > 1 &&
-			_.some(
-				this.producers,
+			this.producers.some(
 				(p) =>
 					p.roles !== ArtistRoles[ArtistRoles.Default] &&
 					p.roles !== ArtistRoles[ArtistRoles.Composer],

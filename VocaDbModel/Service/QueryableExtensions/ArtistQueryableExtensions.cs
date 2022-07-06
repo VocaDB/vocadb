@@ -20,9 +20,11 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			if (textQuery.IsExact)
 			{
-				return query.Where(m => m.Value == canonizedName
-					|| m.Value == $"{canonizedName}P"
-					|| m.Value == $"{canonizedName}-P");
+				return query.Where(m =>
+					m.Value == canonizedName ||
+					m.Value == $"{canonizedName}P" ||
+					m.Value == $"{canonizedName}-P"
+				);
 			}
 			else
 			{
@@ -39,29 +41,42 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		}
 
 		public static IQueryable<Artist> OrderBy(
-			this IQueryable<Artist> criteria, ArtistSortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
+			this IQueryable<Artist> criteria,
+			ArtistSortRule sortRule,
+			ContentLanguagePreference languagePreference
+		)
 		{
-			ArtistSortRule.Name => FindHelpers.AddNameOrder(criteria, languagePreference),
-			ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDate),
-			ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDate),
-			ArtistSortRule.ReleaseDate => OrderByReleaseDate(criteria, SortDirection.Descending),
-			ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.AllSongs.Count(s => !s.Song.Deleted)),
-			ArtistSortRule.SongRating => criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore)),
-			ArtistSortRule.FollowerCount => criteria.OrderByDescending(a => a.Users.Count),
-			_ => criteria,
-		};
+			return sortRule switch
+			{
+				ArtistSortRule.Name => FindHelpers.AddNameOrder(criteria, languagePreference),
+				ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDate),
+				ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDate),
+				ArtistSortRule.ReleaseDate => OrderByReleaseDate(criteria, SortDirection.Descending),
+				ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.AllSongs.Count(s => !s.Song.Deleted)),
+				ArtistSortRule.SongRating => criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore)),
+				ArtistSortRule.FollowerCount => criteria.OrderByDescending(a => a.Users.Count),
+				_ => criteria,
+			};
+		}
 
 		public static IQueryable<Artist> OrderBy(
-			this IQueryable<Artist> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
+			this IQueryable<Artist> query,
+			EntrySortRule sortRule,
+			ContentLanguagePreference languagePreference
+		)
 		{
-			EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
-			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
-			_ => query,
-		};
+			return sortRule switch
+			{
+				EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
+				EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+				_ => query,
+			};
+		}
 
 		public static IQueryable<Artist> OrderByReleaseDate(this IQueryable<Artist> criteria, SortDirection direction)
 		{
-			return criteria.OrderBy(a => a.ReleaseDate, direction)
+			return criteria
+				.OrderBy(a => a.ReleaseDate, direction)
 				.ThenBy(a => a.CreateDate, direction);
 		}
 
@@ -117,9 +132,10 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (textQuery.IsExact)
 			{
 				return query.Where(m => m.Names.Names.Any(n =>
-					n.Value == canonizedName
-					|| n.Value == $"{canonizedName}P"
-					|| n.Value == $"{canonizedName}-P"));
+					n.Value == canonizedName ||
+					n.Value == $"{canonizedName}P" ||
+					n.Value == $"{canonizedName}-P"
+				));
 			}
 			else
 			{
