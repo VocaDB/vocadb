@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28721.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Model", "VocaDbModel\VocaDb.Model.csproj", "{024D07DF-F669-46E9-9514-3AB8094F74AC}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{A08B80F0-5124-4674-86DC-D128ECC7A885}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{565D8308-1887-499A-9F71-E51431480360}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Model.Resources", "VocaDbModel.Resources\VocaDb.Model.Resources.csproj", "{E05781A2-F1F1-406B-9A4C-05338CE91C07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{565D8308-1887-499A-9F71-E51431480360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05781A2-F1F1-406B-9A4C-05338CE91C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05781A2-F1F1-406B-9A4C-05338CE91C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05781A2-F1F1-406B-9A4C-05338CE91C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05781A2-F1F1-406B-9A4C-05338CE91C07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
