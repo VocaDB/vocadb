@@ -1,0 +1,3 @@
+[submodule "VocaDbWeb/wwwroot/Content/ExtIcons"]
+	path = VocaDbWeb/wwwroot/Content/ExtIcons
+	url = https://github.com/VocaDB/ExtIcons.git
