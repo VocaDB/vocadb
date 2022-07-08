@@ -4,6 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>
