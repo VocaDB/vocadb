@@ -68,6 +68,9 @@
     <PackageReference Include="VocaDb.PiaproClient" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\vocadb-loc\VocaDbModel.Resources\VocaDb.Model.Resources.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="RSS.NET">
       <HintPath>..\Libs\RSS.NET.dll</HintPath>
     </Reference>

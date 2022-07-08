@@ -23,6 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Migrations", "VocaDb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{565D8308-1887-499A-9F71-E51431480360}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.TouhouDb.Resources", "vocadb-loc\VocaDb.TouhouDb.Resources\VocaDb.TouhouDb.Resources.csproj", "{BF02D394-4900-4DFB-9348-C9A39762614A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.UtaiteDb.Resources", "vocadb-loc\VocaDb.UtaiteDbResources\VocaDb.UtaiteDb.Resources.csproj", "{C5A20185-136F-45B0-81C4-84102D3F2A80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Model.Resources", "vocadb-loc\VocaDbModel.Resources\VocaDb.Model.Resources.csproj", "{1516D867-218A-4738-BD70-BB2A2B02EE4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "vocadb-loc\VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{7BFC65B5-7E25-43F8-A632-E04E1F3B37D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +57,22 @@ Global
 		{565D8308-1887-499A-9F71-E51431480360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A20185-136F-45B0-81C4-84102D3F2A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A20185-136F-45B0-81C4-84102D3F2A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A20185-136F-45B0-81C4-84102D3F2A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A20185-136F-45B0-81C4-84102D3F2A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1516D867-218A-4738-BD70-BB2A2B02EE4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1516D867-218A-4738-BD70-BB2A2B02EE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1516D867-218A-4738-BD70-BB2A2B02EE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1516D867-218A-4738-BD70-BB2A2B02EE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BFC65B5-7E25-43F8-A632-E04E1F3B37D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BFC65B5-7E25-43F8-A632-E04E1F3B37D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BFC65B5-7E25-43F8-A632-E04E1F3B37D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BFC65B5-7E25-43F8-A632-E04E1F3B37D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
