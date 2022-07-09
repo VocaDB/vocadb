@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\vocadb-loc\VocaDbWeb.Resources\VocaDbWeb.Resources.csproj" />
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
-    <ProjectReference Include="..\VocaDbWeb.Resources\VocaDbWeb.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
