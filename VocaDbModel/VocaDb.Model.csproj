@@ -18,7 +18,6 @@
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-    <ResXFileCodeGenerator_PublicClass>true</ResXFileCodeGenerator_PublicClass>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -67,10 +66,9 @@
     <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.4" />
     <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.1" />
     <PackageReference Include="VocaDb.PiaproClient" Version="3.0.1" />
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vocadb-loc\VocaDbModel.Resources\VocaDb.Model.Resources.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RSS.NET">
