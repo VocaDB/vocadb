@@ -710,7 +710,7 @@ namespace VocaDb.Web.Controllers
 			{
 				var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
 
-				newUser = Data.UpdateUserSettings(contract, pictureData);
+				newUser = await Data.UpdateUserSettings(contract, pictureData);
 				_loginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			}

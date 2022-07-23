@@ -240,5 +240,9 @@ namespace VocaDb.Model.Utils
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
 		public static string VimeoApiKey => Val("VimeoApiKey");
+
+#nullable enable
+		public static string? MLNetActiveModelPath = Val(nameof(MLNetActiveModelPath));
+#nullable disable
 	}
 }

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Web;
+using Discord;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
@@ -46,6 +47,7 @@ using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Database.Queries
 {
@@ -1968,13 +1970,13 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
+		public Task<ServerOnlyUserWithPermissionsContract> UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return _repository.HandleTransaction(ctx =>
+			return _repository.HandleTransactionAsync(async ctx =>
 			{
 				var user = ctx.Load(contract.Id);
 
@@ -2045,6 +2047,51 @@ namespace VocaDb.Model.Database.Queries
 				ctx.Update(user);
 
 				ctx.AuditLogger.AuditLog("updated settings");
+
+				if (!string.IsNullOrEmpty(AppConfig.MLNetActiveModelPath) && !string.IsNullOrWhiteSpace(user.Options.AboutMe))
+				{
+					// Skip users who are
+					// - able to disable users
+					// - not active
+					// - more than or equal to 2 weeks old
+					// - trusted+
+					// - verified artists
+					// - supporters
+					if (
+						user.CanBeDisabled &&
+						user.Active &&
+						DateTime.Now - user.CreateDate < TimeSpan.FromDays(14) &&
+						user.GroupId <= UserGroupId.Regular &&
+						!user.VerifiedArtist &&
+						!user.Options.Supporter
+					)
+					{
+						var modelInput = new ActiveModel.ModelInput()
+						{
+							Col0 = user.Options.AboutMe,
+						};
+
+						var predictionResult = ActiveModel.Predict(modelInput);
+
+						if (predictionResult.PredictedLabel == 0)
+						{
+							// TODO: Comment in these lines if you want to automatically disable users.
+							//s_log.Info("User disabled");
+							//user.Active = false;
+							//ctx.Update(user);
+
+							ctx.AuditLogger.SysLog("Possible spam account");
+
+							await _discordWebhookNotifier.SendMessageAsync(
+								WebhookEvents.User,
+								user,
+								title: $"Possible spam account: {user.Name}",
+								url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id),
+								color: new Color(252, 41, 41)
+							);
+						}
+					}
+				}
 
 				return new ServerOnlyUserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 			});
