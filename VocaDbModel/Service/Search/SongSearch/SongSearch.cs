@@ -68,7 +68,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.WhereHasPV(queryParams.OnlyWithPVs)
 				.WhereMatchFilters(queryParams.AdvancedFilters)
 				.WhereMilliBpmIsBetween(queryParams.MinMilliBpm, queryParams.MaxMilliBpm)
-				.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength);
+				.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength)
+				.OrderByDescending(s => s.SongType == SongType.Original);
 
 			return query;
 		}

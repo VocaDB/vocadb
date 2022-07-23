@@ -374,9 +374,9 @@ namespace VocaDb.Web.Controllers.Api
 			};
 			param = param with { Common = param.Common with { EntryStatus = status } };
 
-			var artists = _service.Find(s => new SongForApiContract(s, null, lang, fields), param);
+			var songs = _service.Find(s => new SongForApiContract(s, null, lang, fields), param);
 
-			return artists;
+			return songs;
 		}
 #nullable disable
 
