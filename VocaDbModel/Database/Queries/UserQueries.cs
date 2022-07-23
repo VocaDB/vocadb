@@ -2075,10 +2075,9 @@ namespace VocaDb.Model.Database.Queries
 
 						if (predictionResult.PredictedLabel == 0)
 						{
-							// TODO: Comment in these lines if you want to automatically disable users.
-							//s_log.Info("User disabled");
-							//user.Active = false;
-							//ctx.Update(user);
+							s_log.Info("User disabled");
+							user.Active = false;
+							ctx.Update(user);
 
 							ctx.AuditLogger.SysLog("Possible spam account");
 
