@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
@@ -72,7 +73,7 @@ namespace VocaDb.Web.Controllers
 			}
 			else if (!string.IsNullOrWhiteSpace(newListName))
 			{
-				var contract = new SongListForEditContract
+				var contract = new SongListForEditForApiContract
 				{
 					Name = newListName,
 					SongLinks = new[] {new SongInListEditContract {

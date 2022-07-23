@@ -184,10 +184,11 @@ export default class UrlHelper {
 	public static imageThumb = (
 		imageInfo: EntryThumbContract | undefined,
 		size: ImageSize,
+		useUnknownImage = true,
 	): string => {
 		return (
 			(imageInfo && UrlHelper.getSmallestThumb(imageInfo, size)) ||
-			'/Content/unknown.png'
+			(useUnknownImage ? '/Content/unknown.png' : '')
 		);
 	};
 }

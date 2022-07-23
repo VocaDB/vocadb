@@ -1,12 +1,9 @@
 #nullable disable
 
-using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
@@ -77,43 +74,15 @@ namespace VocaDb.Web.Controllers
 			return View("React/Index");
 		}
 
+#nullable enable
 		//
 		// GET: /SongList/Edit/
 		[Authorize]
 		public ActionResult Edit(int? id)
 		{
-			var contract = id != null ? _queries.GetSongList(id.Value) : new SongListContract();
-			var model = new SongListEditViewModel(contract, PermissionContext);
-
-			return View(model);
+			return View("React/Index");
 		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult Edit(SongListEditViewModel model)
-		{
-			if (model == null)
-			{
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");
-			}
-
-			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
-			UploadedFileContract uploadedPicture = null;
-			if (coverPicUpload != null && coverPicUpload.Length > 0)
-			{
-				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
-				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return View(new SongListEditViewModel(model.ToContract(), PermissionContext));
-			}
-
-			var listId = _queries.UpdateSongList(model.ToContract(), uploadedPicture);
-
-			return RedirectToAction("Details", new { id = listId });
-		}
+#nullable disable
 
 		public ActionResult Export(int id)
 		{
