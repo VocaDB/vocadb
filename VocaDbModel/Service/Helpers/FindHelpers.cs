@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using VocaDb.Model.Domain;
@@ -11,14 +9,17 @@ namespace VocaDb.Model.Service.Helpers
 	{
 		public const int MaxSearchWords = 10;
 
-		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames => languagePreference switch
-		{
-			ContentLanguagePreference.Japanese => e => e.Names.SortNames.Japanese,
-			ContentLanguagePreference.English => e => e.Names.SortNames.English,
-			ContentLanguagePreference.Romaji => e => e.Names.SortNames.Romaji,
-			// Note: the Default name field is not mapped to database so we're selecting it here dynamically. There is some small performance penalty.
-			_ => e => e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.English ? e.Names.SortNames.English : (e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.Romaji ? e.Names.SortNames.Romaji : e.Names.SortNames.Japanese),
-		};
+		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames =>
+			languagePreference switch
+			{
+				ContentLanguagePreference.Japanese => e => e.Names.SortNames.Japanese,
+				ContentLanguagePreference.English => e => e.Names.SortNames.English,
+				ContentLanguagePreference.Romaji => e => e.Names.SortNames.Romaji,
+				// Note: the Default name field is not mapped to database so we're selecting it here dynamically. There is some small performance penalty.
+				_ => e => e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.English
+					? e.Names.SortNames.English
+					: (e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.Romaji ? e.Names.SortNames.Romaji : e.Names.SortNames.Japanese),
+			};
 
 		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames
 		{
@@ -30,7 +31,6 @@ namespace VocaDb.Model.Service.Helpers
 			return criteria.ThenBy(OrderByExpression<T>(languagePreference));
 		}
 
-#nullable enable
 		/// <summary>
 		/// Processes T-SQL wildcards, specifically the brackets "[]" and percent wildcard "%" from the search term.
 		/// </summary>
@@ -124,6 +124,5 @@ namespace VocaDb.Model.Service.Helpers
 				.Distinct()
 				.ToArray();
 		}
-#nullable disable
 	}
 }

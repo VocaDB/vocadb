@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -13,6 +10,14 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtensions
 {
+	public enum SongVocalistSelection
+	{
+		Nothing,
+		Vocaloid,
+		UTAU,
+		Other,
+	}
+
 	public static class SongQueryableExtensions
 	{
 		public static IOrderedQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction)
@@ -106,7 +111,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			IEntityLoader<Artist> artistGetter
 		)
 		{
-			var various = Model.Helpers.ArtistHelper.VariousArtists;
+			var various = ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 			var artistId = queryParams.ArtistIds.Primary;
 
@@ -308,9 +313,12 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist) => vocalist switch
 		{
-			SongVocalistSelection.Vocaloid => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid)),
-			SongVocalistSelection.UTAU => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU)),
-			SongVocalistSelection.Other => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer || a.Artist.ArtistType == ArtistType.SynthesizerV))),
+			SongVocalistSelection.Vocaloid =>
+				query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid)),
+			SongVocalistSelection.UTAU =>
+				query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU)),
+			SongVocalistSelection.Other =>
+				query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer || a.Artist.ArtistType == ArtistType.SynthesizerV))),
 			_ => query,
 		};
 
@@ -342,51 +350,27 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter? filter)
 		{
-			if (filter == null)
+			if (filter is null)
 				return query;
 
-			switch (filter.FilterType)
+			return filter.FilterType switch
 			{
-				case AdvancedFilterType.ArtistType:
-					{
-						var param = EnumVal<ArtistType>.Parse(filter.Param);
-						return WhereArtistHasType(query, param);
-					}
-				case AdvancedFilterType.HasAlbum:
-					return filter.Negate ? query.Where(s => !s.AllAlbums.Any()) : query.Where(s => s.AllAlbums.Any());
-				case AdvancedFilterType.HasMultipleVoicebanks:
-					{
-						return query.Where(s => s.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);
-					}
-				case AdvancedFilterType.HasPublishDate:
-					{
-						return query.WhereHasPublishDate(!filter.Negate);
-					}
-				case AdvancedFilterType.Lyrics:
-					{
-						var any = filter.Param == AdvancedSearchFilter.Any;
-						var languageCodes = !any ? (filter.Param ?? string.Empty).Split(',') : null;
-						return WhereHasLyrics(query, languageCodes, any);
-					}
-				case AdvancedFilterType.LyricsContent:
-					{
-						return query.WhereHasLyricsContent(filter.Param);
-					}
-				case AdvancedFilterType.HasOriginalMedia:
-					{
-						return query.Where(s => filter.Negate != s.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
-					}
-				case AdvancedFilterType.HasMedia:
-					{
-						return query.Where(s => filter.Negate != s.PVs.PVs.Any());
-					}
-				case AdvancedFilterType.WebLink:
-					{
-						return query.WhereHasLink<Song, SongWebLink>(filter.Param);
-					}
-			}
-
-			return query;
+				AdvancedFilterType.ArtistType => WhereArtistHasType(query, artistType: EnumVal<ArtistType>.Parse(filter.Param)),
+				AdvancedFilterType.HasAlbum => filter.Negate ? query.Where(s => !s.AllAlbums.Any()) : query.Where(s => s.AllAlbums.Any()),
+				AdvancedFilterType.HasMultipleVoicebanks => query.Where(s => s.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1),
+				AdvancedFilterType.HasPublishDate => query.WhereHasPublishDate(!filter.Negate),
+				AdvancedFilterType.Lyrics =>
+					WhereHasLyrics(
+						query,
+						languageCodes: (filter.Param != AdvancedSearchFilter.Any) ? (filter.Param ?? string.Empty).Split(',') : null,
+						any: filter.Param == AdvancedSearchFilter.Any
+					),
+				AdvancedFilterType.LyricsContent => query.WhereHasLyricsContent(filter.Param),
+				AdvancedFilterType.HasOriginalMedia => query.Where(s => filter.Negate != s.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original)),
+				AdvancedFilterType.HasMedia => query.Where(s => filter.Negate != s.PVs.PVs.Any()),
+				AdvancedFilterType.WebLink => query.WhereHasLink<Song, SongWebLink>(filter.Param),
+				_ => query,
+			};
 		}
 
 		public static IQueryable<Song> WhereMatchFilters(this IQueryable<Song> query, IEnumerable<AdvancedSearchFilter>? filters)
@@ -443,13 +427,5 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query;
 		}
-	}
-
-	public enum SongVocalistSelection
-	{
-		Nothing,
-		Vocaloid,
-		UTAU,
-		Other,
 	}
 }
