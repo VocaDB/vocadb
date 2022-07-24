@@ -258,7 +258,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			// Exact query contains the "exact" matches.
 			// Note: the matched name does not have to be in user's display language, it can be any name.
 			// The songs are sorted by user's display language though
-			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.StartsWith);
+			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.Exact);
 
 			int count;
 			int[] ids;
