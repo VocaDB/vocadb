@@ -26,6 +26,11 @@ public static class SongQueryableExtensions
 			.ThenBy(a => a.CreateDate, direction);
 	}
 
+	private static IOrderedQueryable<Song> OrderBySongType(this IQueryable<Song> query) =>
+		query
+			.OrderByDescending(s => s.SongType == SongType.Original)
+			.ThenBy(s => s.SongType == SongType.Cover);
+
 	public static IQueryable<Song> OrderBy(
 		this IQueryable<Song> query,
 		SongSortRule sortRule,
@@ -34,7 +39,7 @@ public static class SongQueryableExtensions
 	) =>
 		sortRule switch
 		{
-			SongSortRule.Name => query.OrderByEntryName(languagePreference),
+			SongSortRule.Name => query.OrderBySongType().ThenByEntryName(languagePreference),
 			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
 			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
 			SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
@@ -50,7 +55,7 @@ public static class SongQueryableExtensions
 	) =>
 		sortRule switch
 		{
-			EntrySortRule.Name => query.OrderByEntryName(languagePreference),
+			EntrySortRule.Name => query.OrderBySongType().ThenByEntryName(languagePreference),
 			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
 			EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTime),
 			_ => query,

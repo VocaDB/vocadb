@@ -68,8 +68,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.WhereHasPV(queryParams.OnlyWithPVs)
 				.WhereMatchFilters(queryParams.AdvancedFilters)
 				.WhereMilliBpmIsBetween(queryParams.MinMilliBpm, queryParams.MaxMilliBpm)
-				.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength)
-				.OrderByDescending(s => s.SongType == SongType.Original);
+				.WhereLengthIsBetween(queryParams.MinLength, queryParams.MaxLength);
 
 			return query;
 		}
@@ -230,14 +229,13 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			var isMoveToTopQuery = (
+			var isMoveToTopQuery =
 				queryParams.Common.MoveExactToTop &&
 				queryParams.Common.NameMatchMode != NameMatchMode.StartsWith &&
 				queryParams.Common.NameMatchMode != NameMatchMode.Exact &&
 				!queryParams.ArtistParticipation.ArtistIds.HasAny &&
 				queryParams.Paging.Start == 0 &&
-				parsedQuery.HasNameQuery
-			);
+				parsedQuery.HasNameQuery;
 
 			if (isMoveToTopQuery)
 			{
@@ -246,7 +244,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return GetSongs(queryParams, parsedQuery);
 		}
-#nullable disable
 
 		/// <summary>
 		/// Get songs, searching by exact matches FIRST.
@@ -281,7 +278,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
-					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
+					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 					.Select(s => s.Id)
 					.Take(maxResults)
 					.ToArray();
@@ -302,6 +299,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 		}
+#nullable disable
 
 		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
 		{
