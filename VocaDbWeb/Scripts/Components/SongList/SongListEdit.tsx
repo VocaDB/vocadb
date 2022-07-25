@@ -53,13 +53,13 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface PropertiesTabContentProps {
 	songListEditStore: SongListEditStore;
-	pictureUploadRef: React.MutableRefObject<HTMLInputElement>;
+	thumbPicUploadRef: React.MutableRefObject<HTMLInputElement>;
 }
 
 const PropertiesTabContent = observer(
 	({
 		songListEditStore,
-		pictureUploadRef,
+		thumbPicUploadRef,
 	}: PropertiesTabContentProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.SongList']);
 
@@ -168,7 +168,7 @@ const PropertiesTabContent = observer(
 								type="file"
 								id="thumbPicUpload"
 								name="thumbPicUpload"
-								ref={pictureUploadRef}
+								ref={thumbPicUploadRef}
 							/>
 						</div>
 					</div>
@@ -302,7 +302,7 @@ const SongListEditLayout = observer(
 
 		const navigate = useNavigate();
 
-		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
+		const thumbPicUploadRef = React.useRef<HTMLInputElement>(undefined!);
 
 		return (
 			<Layout
@@ -375,10 +375,10 @@ const SongListEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const pictureUpload =
-								pictureUploadRef.current.files?.item(0) ?? undefined;
+							const thumbPicUpload =
+								thumbPicUploadRef.current.files?.item(0) ?? undefined;
 
-							const id = await songListEditStore.submit(pictureUpload);
+							const id = await songListEditStore.submit(thumbPicUpload);
 
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
 						} catch (e) {
@@ -402,7 +402,7 @@ const SongListEditLayout = observer(
 						>
 							<PropertiesTabContent
 								songListEditStore={songListEditStore}
-								pictureUploadRef={pictureUploadRef}
+								thumbPicUploadRef={thumbPicUploadRef}
 							/>
 						</JQueryUITab>
 

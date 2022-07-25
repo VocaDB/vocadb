@@ -127,7 +127,9 @@ export default class SongListEditStore {
 		_.pull(this.songLinks, songLink);
 	};
 
-	@action public submit = async (pictureUpload?: File): Promise<number> => {
+	@action public submit = async (
+		thumbPicUpload: File | undefined,
+	): Promise<number> => {
 		this.submitting = true;
 
 		try {
@@ -143,7 +145,7 @@ export default class SongListEditStore {
 					status: this.status,
 					updateNotes: this.updateNotes,
 				},
-				pictureUpload,
+				thumbPicUpload,
 			);
 
 			return id;

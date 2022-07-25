@@ -226,10 +226,11 @@ export default class ReleaseEventRepository extends BaseRepository {
 
 	public edit = (
 		contract: ReleaseEventForEditContract,
-		pictureUpload?: File,
+		pictureUpload: File | undefined,
 	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
+
 		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
 
 		return this.httpClient.post<number>(
@@ -256,10 +257,11 @@ export default class ReleaseEventRepository extends BaseRepository {
 
 	public editSeries = (
 		contract: ReleaseEventSeriesForEditContract,
-		pictureUpload?: File,
+		pictureUpload: File | undefined,
 	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
+
 		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
 
 		return this.httpClient.post<number>(

@@ -63,7 +63,9 @@ export default class ReleaseEventSeriesEditStore {
 		});
 	};
 
-	@action public submit = async (pictureUpload?: File): Promise<number> => {
+	@action public submit = async (
+		pictureUpload: File | undefined,
+	): Promise<number> => {
 		this.submitting = true;
 
 		try {

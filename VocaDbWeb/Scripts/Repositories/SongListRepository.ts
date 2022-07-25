@@ -160,11 +160,12 @@ export default class SongListRepository {
 
 	public edit = (
 		contract: SongListForEditContract,
-		pictureUpload?: File,
+		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
-		if (pictureUpload) formData.append('thumbPicUpload', pictureUpload);
+
+		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
 
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/songLists/${contract.id}`),

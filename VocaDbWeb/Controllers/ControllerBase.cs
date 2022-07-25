@@ -151,12 +151,12 @@ namespace VocaDb.Web.Controllers
 		}
 
 #nullable enable
-		protected void ParseAdditionalPictures(IFormFile? mainPic, IList<EntryPictureFileContract> pictures)
+		public static void ParseAdditionalPictures(Microsoft.AspNetCore.Mvc.ControllerBase controller, IFormFile? mainPic, IList<EntryPictureFileContract> pictures)
 		{
 			ParamIs.NotNull(() => pictures);
 
-			var additionalPics = Enumerable.Range(0, Request.Form.Files.Count)
-				.Select(i => Request.Form.Files[i])
+			var additionalPics = Enumerable.Range(0, controller.Request.Form.Files.Count)
+				.Select(i => controller.Request.Form.Files[i])
 				.Where(f => f is not null && f.FileName != mainPic?.FileName)
 				.ToArray();
 
@@ -167,7 +167,7 @@ namespace VocaDb.Web.Controllers
 				if (i >= newPics.Length)
 					break;
 
-				var contract = ParsePicture(additionalPics[i], "Pictures", ImagePurpose.Additional);
+				var contract = ParsePicture(controller, additionalPics[i], "Pictures", ImagePurpose.Additional);
 
 				if (contract is not null)
 				{
@@ -180,6 +180,11 @@ namespace VocaDb.Web.Controllers
 			}
 
 			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile is null);
+		}
+
+		protected void ParseAdditionalPictures(IFormFile? mainPic, IList<EntryPictureFileContract> pictures)
+		{
+			ParseAdditionalPictures(this, mainPic, pictures);
 		}
 
 		public static EntryPictureFileContract? ParsePicture(Microsoft.AspNetCore.Mvc.ControllerBase controller, IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
