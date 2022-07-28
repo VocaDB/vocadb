@@ -51,9 +51,9 @@ const SongLists = observer(
 						<Link to="/SongList/Edit" className="textLink addLink">
 							{t('ViewRes.User:Details.CreateNewList')}
 						</Link>{' '}
-						<a href="/SongList/Import" className="textLink wandIcon">
+						<Link to="/SongList/Import" className="textLink wandIcon">
 							{t('ViewRes.User:Details.ImportSongList')}
-						</a>
+						</Link>
 					</>
 				)}
 			</>

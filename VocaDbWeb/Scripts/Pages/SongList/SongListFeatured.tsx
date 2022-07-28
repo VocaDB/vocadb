@@ -71,8 +71,8 @@ const SongListFeatured = observer(
 							<>
 								{' '}
 								<JQueryUIButton
-									as="a"
-									href="/SongList/Import"
+									as={Link}
+									to="/SongList/Import"
 									icons={{
 										primary: 'ui-icon-plusthick',
 									}}
