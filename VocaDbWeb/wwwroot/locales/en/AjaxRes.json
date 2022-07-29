@@ -14,7 +14,7 @@
     "TitleFilter": "title '{{0}}'"
   },
   "Shared": {
-    "AddExtraArtist": "Add custom artist named '{{0}}'",
+    "AddExtraArtist": "Add custom artist named '{0}'",
     "ReportSent": "Report sent. Thank you!",
     "Save": "Save",
     "ThanksForRating": "Thank you for rating!",

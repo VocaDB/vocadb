@@ -266,7 +266,9 @@ const SongsTabContent = observer(
 				<h4>{t('ViewRes.SongList:Edit.AddSong')}</h4>
 				<SongAutoComplete
 					type="text"
-					properties={songListEditStore.songSearchParams}
+					properties={{
+						acceptSelection: songListEditStore.acceptSongSelection,
+					}}
 					maxLength={128}
 					placeholder={t('ViewRes:Shared.Search')}
 					className="input-xlarge"

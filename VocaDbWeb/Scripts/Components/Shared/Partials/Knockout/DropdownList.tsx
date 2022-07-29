@@ -199,3 +199,19 @@ export const AssociatedArtistTypeDropdownList = React.memo(
 		);
 	},
 );
+
+export const AlbumTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Model.Resources.Albums']);
+
+		return (
+			<select {...props}>
+				{vdb.values.albumTypes.map((albumType) => (
+					<option value={albumType} key={albumType}>
+						{t(`VocaDb.Model.Resources.Albums:DiscTypeNames.${albumType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);

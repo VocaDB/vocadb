@@ -77,7 +77,10 @@ const EntryValidationMessage = React.memo(
 									{t('HelperRes:Helper.EntryIsMissingInformation')}
 								</strong>{' '}
 								{validationMessages.map((validationMessage, index) => (
-									<span key={index}>{validationMessage}</span>
+									<React.Fragment key={index}>
+										{index > 0 && ' '}
+										<span>{validationMessage}</span>
+									</React.Fragment>
 								))}
 							</div>
 						)}

@@ -10,12 +10,10 @@ import EntryAutoComplete, {
 interface ReleaseEventAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onAcceptSelection: (entry: ReleaseEventContract) => void;
-	createNewItem?: string;
 }
 
 const ReleaseEventAutoComplete = ({
 	onAcceptSelection,
-	createNewItem,
 	...props
 }: ReleaseEventAutoCompleteProps): React.ReactElement => {
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
@@ -45,7 +43,6 @@ const ReleaseEventAutoComplete = ({
 			`${item.name} (${t(
 				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${item.category}`,
 			)})`,
-		createNewItem: createNewItem,
 		extraQueryParams: queryParams,
 	};
 

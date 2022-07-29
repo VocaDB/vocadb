@@ -1,12 +1,13 @@
-import { ArtistAutoCompleteParams } from '@Components/KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistForArtistContract from '@DataContracts/Artist/ArtistForArtistContract';
 import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
 import ArtistHelper from '@Helpers/ArtistHelper';
 import ArtistLinkType from '@Models/Artists/ArtistLinkType';
 import ArtistType from '@Models/Artists/ArtistType';
+import EntryType from '@Models/EntryType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import ArtistRepository from '@Repositories/ArtistRepository';
+import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import GlobalValues from '@Shared/GlobalValues';
 import UrlMapper from '@Shared/UrlMapper';
 import $ from 'jquery';
@@ -61,7 +62,7 @@ export default class ArtistEditStore {
 				type: 'DELETE',
 				success: () => {
 					window.location.href = this.urlMapper.mapRelative(
-						`/Artist/Details/${this.contract.id}`,
+						EntryUrlMapper.details(EntryType.Artist, this.contract.id),
 					);
 				},
 			},
@@ -223,38 +224,6 @@ export default class ArtistEditStore {
 		runInAction(() => {
 			this.groups.push({ id: 0, parent: artist });
 		});
-	};
-
-	public readonly baseVoicebankSearchParams: ArtistAutoCompleteParams = {
-		acceptSelection: (id) =>
-			runInAction(() => {
-				this.baseVoicebank.id = id;
-			}),
-		extraQueryParams: {
-			artistTypes: [
-				ArtistType.Vocaloid,
-				ArtistType.UTAU,
-				ArtistType.CeVIO,
-				ArtistType.SynthesizerV,
-				ArtistType.OtherVocalist,
-				ArtistType.OtherVoiceSynthesizer,
-				ArtistType.Unknown,
-			],
-		},
-		ignoreId: this.contract.id,
-	};
-
-	public readonly groupSearchParams: ArtistAutoCompleteParams = {
-		acceptSelection: this.addGroup,
-		extraQueryParams: {
-			artistTypes: [
-				ArtistType.Label,
-				ArtistType.Circle,
-				ArtistType.OtherGroup,
-				ArtistType.Band,
-			],
-		},
-		height: 300,
 	};
 
 	@action public removeGroup = (group: ArtistForArtistContract): void => {

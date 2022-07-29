@@ -27,19 +27,19 @@ namespace VocaDb.Web.Models.Shared
 			}
 		}
 
+		public bool AllowCustomArtistName { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public DiscType[] AlbumTypes { get; init; }
-
+		public bool AllowCustomTracks { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public ArtistType[] ArtistTypes { get; init; }
-
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public ArtistRoles[] ArtistRoles { get; init; }
 		public string? ExternalHelpPath { get; init; }
 		public string? HostAddress { get; init; }
 		public string? LockdownMessage { get; init; }
-
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public SongType[] SongTypes { get; init; }
-
 		public string StaticContentHost { get; init; }
 
 		public string SiteName { get; init; }
@@ -57,10 +57,8 @@ namespace VocaDb.Web.Models.Shared
 		public int InstrumentalTagId { get; init; }
 
 		public string? BaseAddress { get; init; }
-
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguagePreference LanguagePreference { get; init; }
-
 		public bool IsLoggedIn { get; init; }
 		public int LoggedUserId { get; init; }
 		public SanitizedUserWithPermissionsContract? LoggedUser { get; init; }
@@ -78,8 +76,11 @@ namespace VocaDb.Web.Models.Shared
 
 		public GlobalValues(VocaDbPage model)
 		{
+			AllowCustomArtistName = AppConfig.AllowCustomArtistName;
 			AlbumTypes = AppConfig.AlbumTypes;
+			AllowCustomTracks = AppConfig.AllowCustomTracks;
 			ArtistTypes = AppConfig.ArtistTypes;
+			ArtistRoles = AppConfig.ArtistRoles;
 			ExternalHelpPath = AppConfig.ExternalHelpPath;
 			HostAddress = AppConfig.HostAddress;
 			LockdownMessage = AppConfig.LockdownMessage;

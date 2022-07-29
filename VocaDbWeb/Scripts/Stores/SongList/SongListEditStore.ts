@@ -1,4 +1,3 @@
-import { SongAutoCompleteParams } from '@Components/KnockoutExtensions/AutoCompleteParams';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongInListEditContract from '@DataContracts/Song/SongInListEditContract';
 import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
@@ -101,7 +100,7 @@ export default class SongListEditStore {
 		return this.eventDateDate ? this.eventDateDate.toISOString() : undefined;
 	}
 
-	private acceptSongSelection = (songId?: number): void => {
+	public acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
 
 		this.songRepo
@@ -117,10 +116,6 @@ export default class SongListEditStore {
 					this.songLinks.push(songInList);
 				});
 			});
-	};
-
-	public readonly songSearchParams: SongAutoCompleteParams = {
-		acceptSelection: this.acceptSongSelection,
 	};
 
 	@action public removeSong = (songLink: SongInListEditStore): void => {

@@ -274,7 +274,6 @@ namespace VocaDb.Web.Controllers.Api
 		public EntryWithArchivedVersionsForApiContract<ArtistForApiContract> GetArtistWithArchivedVersions(int id) =>
 			_queries.GetArtistWithArchivedVersionsForApi(id);
 
-
 		[HttpPost("{id:int}")]
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

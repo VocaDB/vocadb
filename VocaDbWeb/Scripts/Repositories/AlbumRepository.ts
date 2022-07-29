@@ -330,6 +330,30 @@ export default class AlbumRepository
 			EntryWithArchivedVersionsContract<AlbumForApiContract>
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
 	};
+
+	public edit = (
+		contract: AlbumForEditContract,
+		coverPicUpload: File | undefined,
+		pictureUpload: File[],
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (coverPicUpload) formData.append('coverPicUpload', coverPicUpload);
+
+		for (const file of pictureUpload) formData.append('pictureUpload', file);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/albums/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
 }
 
 export interface AlbumQueryParams extends CommonQueryParams {

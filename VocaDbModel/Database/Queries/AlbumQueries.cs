@@ -598,11 +598,16 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public AlbumForEditContract GetForEdit(int id)
+		public AlbumForEditForApiContract GetForEdit(int id)
 		{
-			return
-				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
+			return HandleQuery(session =>
+				new AlbumForEditForApiContract(
+					album: session.Load<Album>(id),
+					languagePreference: PermissionContext.LanguagePreference,
+					imageStore: _imageUrlFactory,
+					permissionContext: PermissionContext
+				)
+			);
 		}
 
 		public RelatedAlbumsContract GetRelatedAlbums(int albumId)
@@ -947,7 +952,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract? pictureData)
+		public async Task<AlbumForEditForApiContract> UpdateBasicProperties(AlbumForEditForApiContract properties, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => properties);
 
@@ -1140,7 +1145,7 @@ namespace VocaDb.Model.Database.Queries
 					}
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, _imageUrlFactory);
+				return new AlbumForEditForApiContract(album, PermissionContext.LanguagePreference, _imageUrlFactory, PermissionContext);
 			});
 		}
 #nullable disable

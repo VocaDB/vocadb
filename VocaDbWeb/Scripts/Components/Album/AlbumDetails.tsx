@@ -115,8 +115,8 @@ const AlbumDetailsLayout = observer(
 							</JQueryUIButton>
 						)}{' '}
 						<JQueryUIButton
-							as="a"
-							href={`/Album/Edit/${model.id}`}
+							as={Link}
+							to={`/Album/Edit/${model.id}`}
 							disabled={
 								!loginManager.canEdit({
 									...model.contract,

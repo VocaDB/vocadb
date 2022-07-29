@@ -216,18 +216,22 @@ const BasicInfoTabContent = observer(
 										<td>
 											<ArtistLockingAutoComplete
 												basicEntryLinkStore={artistEditStore.illustrator}
-												artistTypes={[
-													ArtistType.Unknown,
-													ArtistType.Circle,
-													ArtistType.Producer,
-													ArtistType.Illustrator,
-													ArtistType.Animator,
-													ArtistType.Lyricist,
-													ArtistType.OtherVocalist,
-													ArtistType.OtherGroup,
-													ArtistType.OtherIndividual,
-													ArtistType.CoverArtist,
-												]}
+												properties={{
+													extraQueryParams: {
+														artistTypes: [
+															ArtistType.Unknown,
+															ArtistType.Circle,
+															ArtistType.Producer,
+															ArtistType.Illustrator,
+															ArtistType.Animator,
+															ArtistType.Lyricist,
+															ArtistType.OtherVocalist,
+															ArtistType.OtherGroup,
+															ArtistType.OtherIndividual,
+															ArtistType.CoverArtist,
+														].join(','),
+													},
+												}}
 											/>
 										</td>
 										<td />
@@ -242,16 +246,20 @@ const BasicInfoTabContent = observer(
 										<td>
 											<ArtistLockingAutoComplete
 												basicEntryLinkStore={artistEditStore.voiceProvider}
-												artistTypes={[
-													ArtistType.Unknown,
-													ArtistType.Producer,
-													ArtistType.Illustrator,
-													ArtistType.Animator,
-													ArtistType.Lyricist,
-													ArtistType.OtherVocalist,
-													ArtistType.OtherIndividual,
-													ArtistType.CoverArtist,
-												]}
+												properties={{
+													extraQueryParams: {
+														artistTypes: [
+															ArtistType.Unknown,
+															ArtistType.Producer,
+															ArtistType.Illustrator,
+															ArtistType.Animator,
+															ArtistType.Lyricist,
+															ArtistType.OtherVocalist,
+															ArtistType.OtherIndividual,
+															ArtistType.CoverArtist,
+														].join(','),
+													},
+												}}
 											/>
 										</td>
 									</tr>
@@ -310,18 +318,22 @@ const BasicInfoTabContent = observer(
 												basicEntryLinkStore={
 													artistEditStore.newAssociatedArtist
 												}
-												artistTypes={[
-													ArtistType.Unknown,
-													ArtistType.Circle,
-													ArtistType.Producer,
-													ArtistType.Illustrator,
-													ArtistType.Animator,
-													ArtistType.Lyricist,
-													ArtistType.OtherVocalist,
-													ArtistType.OtherGroup,
-													ArtistType.OtherIndividual,
-													ArtistType.CoverArtist,
-												]}
+												properties={{
+													extraQueryParams: {
+														artistTypes: [
+															ArtistType.Unknown,
+															ArtistType.Circle,
+															ArtistType.Producer,
+															ArtistType.Illustrator,
+															ArtistType.Animator,
+															ArtistType.Lyricist,
+															ArtistType.OtherVocalist,
+															ArtistType.OtherGroup,
+															ArtistType.OtherIndividual,
+															ArtistType.CoverArtist,
+														].join(','),
+													},
+												}}
 											/>
 										</td>
 									</tr>
@@ -362,7 +374,18 @@ const BasicInfoTabContent = observer(
 
 							<ArtistAutoComplete
 								type="text"
-								properties={artistEditStore.groupSearchParams}
+								properties={{
+									acceptSelection: artistEditStore.addGroup,
+									extraQueryParams: {
+										artistTypes: [
+											ArtistType.Label,
+											ArtistType.Circle,
+											ArtistType.OtherGroup,
+											ArtistType.Band,
+										].join(','),
+									},
+									height: 300,
+								}}
 								maxLength={128}
 								placeholder={t('ViewRes:Shared.Search')}
 								className="input-xlarge"
@@ -379,6 +402,20 @@ const BasicInfoTabContent = observer(
 						<div className="editor-field">
 							<ArtistLockingAutoComplete
 								basicEntryLinkStore={artistEditStore.baseVoicebank}
+								properties={{
+									extraQueryParams: {
+										artistTypes: [
+											ArtistType.Vocaloid,
+											ArtistType.UTAU,
+											ArtistType.CeVIO,
+											ArtistType.SynthesizerV,
+											ArtistType.OtherVocalist,
+											ArtistType.OtherVoiceSynthesizer,
+											ArtistType.Unknown,
+										].join(','),
+									},
+									ignoreId: artistEditStore.contract.id,
+								}}
 							/>
 						</div>
 					</>
@@ -534,24 +571,25 @@ const ArtistEditLayout = observer(
 				}
 				toolbar={
 					<>
-						{contract.canDelete && contract.deleted ? (
-							<JQueryUIButton
-								as="a"
-								href={`/Artist/Restore/${contract.id}`}
-								icons={{ primary: 'ui-icon-trash' }}
-							>
-								{t('ViewRes:EntryEdit.Restore')}
-							</JQueryUIButton>
-						) : (
-							<JQueryUIButton
-								as={SafeAnchor}
-								href="#"
-								onClick={artistEditStore.deleteStore.show}
-								icons={{ primary: 'ui-icon-trash' }}
-							>
-								{t('ViewRes:Shared.Delete')}
-							</JQueryUIButton>
-						)}
+						{contract.canDelete &&
+							(contract.deleted ? (
+								<JQueryUIButton
+									as="a"
+									href={`/Artist/Restore/${contract.id}`}
+									icons={{ primary: 'ui-icon-trash' }}
+								>
+									{t('ViewRes:EntryEdit.Restore')}
+								</JQueryUIButton>
+							) : (
+								<JQueryUIButton
+									as={SafeAnchor}
+									href="#"
+									onClick={artistEditStore.deleteStore.show}
+									icons={{ primary: 'ui-icon-trash' }}
+								>
+									{t('ViewRes:Shared.Delete')}
+								</JQueryUIButton>
+							))}
 						{loginManager.canMergeEntries && (
 							<>
 								{' '}

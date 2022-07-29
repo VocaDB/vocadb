@@ -282,5 +282,5 @@ export default class ArtistRepository
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
-	artistTypes: ArtistType[];
+	artistTypes: string /* TODO: ArtistType[] */;
 }
