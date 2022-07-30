@@ -27,7 +27,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	public class ArtistQueriesTests
 	{
 		private Artist _artist;
-		private CreateArtistContract _newArtistContract;
+		private CreateArtistForApiContract _newArtistContract;
 		private InMemoryImagePersister _imagePersister;
 		private FakePermissionContext _permissionContext;
 		private ArtistQueries _queries;
@@ -85,14 +85,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FakeDiscordWebhookNotifier()
 			);
 
-			_newArtistContract = new CreateArtistContract
+			_newArtistContract = new CreateArtistForApiContract
 			{
 				ArtistType = ArtistType.Producer,
 				Description = string.Empty,
-				Names = new[] {
+				Names = new[]
+				{
 					new LocalizedStringContract("Tripshots", ContentLanguageSelection.English)
 				},
-				WebLink = new WebLinkContract("http://tripshots.net/", "Website", WebLinkCategory.Official, disabled: false)
+				WebLink = new WebLinkForApiContract
+				{
+					Url = "http://tripshots.net/",
+					Description = "Website",
+					Category = WebLinkCategory.Official,
+					Disabled = false,
+				},
 			};
 		}
 

@@ -174,39 +174,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Create()
 		{
-			return View(new Create());
-		}
-
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (string.IsNullOrWhiteSpace(model.Description) && string.IsNullOrWhiteSpace(model.WebLinkUrl))
-				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
-
-			var coverPicUpload = Request.Form.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-			contract.PictureData = pictureData;
-
-			ArtistContract artist;
-			try
-			{
-				artist = await _queries.Create(contract);
-			}
-			catch (InvalidPictureException)
-			{
-				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
-				return View(model);
-			}
-
-			return RedirectToAction("Edit", new { id = artist.Id });
+			return View("React/Index");
 		}
 
 #nullable enable

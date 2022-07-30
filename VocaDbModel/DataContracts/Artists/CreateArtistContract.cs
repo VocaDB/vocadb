@@ -4,6 +4,7 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
+	[Obsolete]
 	public class CreateArtistContract
 	{
 		public ArtistType ArtistType { get; init; }

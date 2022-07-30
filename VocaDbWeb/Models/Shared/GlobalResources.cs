@@ -8,10 +8,12 @@ namespace VocaDb.Web.Models.Shared
 		public sealed record ArtistResources
 		{
 			public string? AuthoredBy { get; }
+			public string? NewArtistExternalLink { get; }
 
 			public ArtistResources(ArtistStrings model)
 			{
 				AuthoredBy = model.AuthoredBy;
+				NewArtistExternalLink = model.NewArtistExternalLink;
 			}
 		}
 
