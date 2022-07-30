@@ -10,6 +10,7 @@ interface SongLinkProps {
 	albumId?: number;
 	tooltip?: boolean;
 	toolTipDomain?: string;
+	target?: string;
 }
 
 const SongLink = React.memo(
@@ -18,6 +19,7 @@ const SongLink = React.memo(
 		albumId,
 		tooltip = false,
 		toolTipDomain,
+		target,
 	}: SongLinkProps): React.ReactElement => {
 		return tooltip ? (
 			<SongToolTip
@@ -28,6 +30,7 @@ const SongLink = React.memo(
 				title={song.additionalNames}
 				id={song.id}
 				toolTipDomain={toolTipDomain}
+				target={target}
 			>
 				{song.name}
 			</SongToolTip>
@@ -37,6 +40,7 @@ const SongLink = React.memo(
 					albumId: albumId,
 				})}`}
 				title={song.additionalNames}
+				target={target}
 			>
 				{song.name}
 			</Link>

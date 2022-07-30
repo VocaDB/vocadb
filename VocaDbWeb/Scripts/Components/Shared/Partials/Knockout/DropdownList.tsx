@@ -3,6 +3,7 @@ import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import PVType from '@Models/PVs/PVType';
 import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import UserGroup from '@Models/Users/UserGroup';
 import React from 'react';
@@ -211,6 +212,40 @@ export const AlbumTypeDropdownList = React.memo(
 						{t(`VocaDb.Model.Resources.Albums:DiscTypeNames.${albumType}`)}
 					</option>
 				))}
+			</select>
+		);
+	},
+);
+
+export const SongTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
+
+		return (
+			<select {...props}>
+				{vdb.values.songTypes.map((songType) => (
+					<option value={songType} key={songType}>
+						{t(`VocaDb.Model.Resources.Songs:SongTypeNames.${songType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const PVTypeDescriptionsDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(PVType)
+					.filter((pvType) => isNaN(Number(pvType)))
+					.map((pvType) => (
+						<option value={pvType} key={pvType}>
+							{t(`Resources:PVTypeDescriptions.${pvType}`)}
+						</option>
+					))}
 			</select>
 		);
 	},

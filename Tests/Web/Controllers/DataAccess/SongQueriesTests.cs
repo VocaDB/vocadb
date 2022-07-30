@@ -73,9 +73,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			return (result.created, report);
 		}
 
-		private SongForEditContract EditContract()
+		private SongForEditForApiContract EditContract()
 		{
-			return new SongForEditContract(_song, ContentLanguagePreference.English);
+			return new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 		}
 
 		private void AssertHasArtist(Song song, Artist artist, ArtistRoles? roles = null)
@@ -783,9 +783,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_user.GroupId = UserGroupId.Moderator;
 			_permissionContext.RefreshLoggedUser(_repository);
-			SongForEditContract Contract()
+			SongForEditForApiContract Contract()
 			{
-				return new SongForEditContract(_song, ContentLanguagePreference.English);
+				return new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			}
 
 			await _queries.UpdateBasicProperties(Contract());
@@ -813,7 +813,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Names()
 		{
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated song";
 
@@ -849,7 +849,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			foreach (var name in newSong.Names)
 				_repository.Save(name);
 
-			var contract = new SongForEditContract(newSong, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(newSong, ContentLanguagePreference.English, _permissionContext);
 			contract.Artists = new[] {
 				CreateArtistForSongContract(artistId: _producer.Id),
 				CreateArtistForSongContract(artistId: _vocalist.Id),
@@ -878,7 +878,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_repository.Save(_user2.AddArtist(_vocalist2));
 			_repository.Save(_vocalist2);
 
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			contract.Artists = contract.Artists.Concat(new[] { CreateArtistForSongContract(_vocalist2.Id) }).ToArray();
 
 			await _queries.UpdateBasicProperties(contract);
@@ -896,7 +896,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_repository.Save(_song.AddArtist(_vocalist2));
 			_vocalist2.Deleted = true;
 
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 
 			await _queries.UpdateBasicProperties(contract);
 
@@ -921,7 +921,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_PublishDate_From_PVs()
 		{
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			contract.PVs = new[] {
 				CreateEntry.PVContract(id: 1, pvId: "hoLu7c2XZYU", pvType: PVType.Reprint, publishDate: new DateTime(2015, 3, 9, 10, 0, 0)),
 				CreateEntry.PVContract(id: 2, pvId: "mikumikumiku", pvType: PVType.Original, publishDate: new DateTime(2015, 4, 9, 16, 0, 0))
@@ -937,9 +937,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Weblinks()
 		{
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			contract.WebLinks = new[] {
-				new WebLinkContract("http://vocadb.net", "VocaDB", WebLinkCategory.Reference, disabled: false)
+				new WebLinkForApiContract
+				{
+					Url = "http://vocadb.net",
+					Description = "VocaDB",
+					Category = WebLinkCategory.Reference,
+					Disabled = false,
+				}
 			};
 
 			contract = await _queries.UpdateBasicProperties(contract);
@@ -951,9 +957,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Weblinks_SkipWhitespace()
 		{
-			var contract = new SongForEditContract(_song, ContentLanguagePreference.English);
+			var contract = new SongForEditForApiContract(_song, ContentLanguagePreference.English, _permissionContext);
 			contract.WebLinks = new[] {
-				new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference, disabled: false)
+				new WebLinkForApiContract
+				{
+					Url = " ",
+					Description = "VocaDB",
+					Category = WebLinkCategory.Reference,
+					Disabled = false,
+				}
 			};
 
 			contract = await _queries.UpdateBasicProperties(contract);
@@ -968,7 +980,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_ReleaseEvent_ExistingEvent_Selected()
 		{
 			var contract = EditContract();
-			contract.ReleaseEvent = new ReleaseEventContract(_releaseEvent, ContentLanguagePreference.English);
+			contract.ReleaseEvent = new ReleaseEventForApiContract(_releaseEvent, ContentLanguagePreference.English, ReleaseEventOptionalFields.None, thumbPersister: null);
 
 			await _queries.UpdateBasicProperties(contract);
 
@@ -982,7 +994,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_ReleaseEvent_ExistingEvent_MatchByName()
 		{
 			var contract = EditContract();
-			contract.ReleaseEvent = new ReleaseEventContract { Name = _releaseEvent.DefaultName };
+			contract.ReleaseEvent = new ReleaseEventForApiContract { Name = _releaseEvent.DefaultName };
 
 			await _queries.UpdateBasicProperties(contract);
 
@@ -993,7 +1005,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_ReleaseEvent_NewEvent_Standalone()
 		{
 			var contract = EditContract();
-			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
+			contract.ReleaseEvent = new ReleaseEventForApiContract { Name = "Comiket 40" };
 
 			await _queries.UpdateBasicProperties(contract);
 
@@ -1008,7 +1020,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var series = _repository.Save(CreateEntry.EventSeries("Comiket"));
 			var contract = EditContract();
-			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
+			contract.ReleaseEvent = new ReleaseEventForApiContract { Name = "Comiket 40" };
 
 			await _queries.UpdateBasicProperties(contract);
 
