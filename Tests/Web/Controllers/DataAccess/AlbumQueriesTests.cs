@@ -6,7 +6,6 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -35,7 +34,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private Album _album;
 		private InMemoryImagePersister _imagePersister;
 		private FakeUserMessageMailer _mailer;
-		private CreateAlbumContract _newAlbumContract;
+		private CreateAlbumForApiContract _newAlbumContract;
 		private FakePermissionContext _permissionContext;
 		private Artist _producer;
 		private FakeAlbumRepository _repository;
@@ -125,13 +124,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext = new FakePermissionContext(_user);
 			var entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
 
-			_newAlbumContract = new CreateAlbumContract
+			_newAlbumContract = new CreateAlbumForApiContract
 			{
 				DiscType = DiscType.Album,
-				Names = new[] {
+				Names = new[]
+				{
 					new LocalizedStringContract("Another Dimensions", ContentLanguageSelection.English)
 				},
-				Artists = new[] {
+				Artists = new[]
+				{
 					new ArtistContract(_producer, ContentLanguagePreference.Default),
 					new ArtistContract(_vocalist, ContentLanguagePreference.Default),
 				}
@@ -152,7 +153,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
 				new InMemoryImagePersister(),
 				new FakeObjectCache(),
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier()
+			);
 		}
 
 		[TestMethod]

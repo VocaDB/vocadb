@@ -215,32 +215,13 @@ namespace VocaDb.Web.Controllers
 			return Picture(data);
 		}
 
+#nullable enable
 		[Authorize]
 		public ActionResult Create()
 		{
-			return View(new Create());
+			return View("React/Index");
 		}
 
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji)
-				&& string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (model.Artists == null || !model.Artists.Any())
-				ModelState.AddModelError("Artists", ViewRes.Album.CreateStrings.NeedArtist);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-
-			var album = await _queries.Create(contract);
-			return RedirectToAction("Edit", new { id = album.Id });
-		}
-
-#nullable enable
 		//
 		// GET: /Album/Edit/5
 		[Authorize]

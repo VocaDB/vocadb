@@ -374,6 +374,29 @@ namespace VocaDb.Web.Controllers.Api
 		public EntryWithArchivedVersionsForApiContract<AlbumForApiContract> GetAlbumWithArchivedVersions(int id) =>
 			_queries.GetAlbumWithArchivedVersionsForApi(id);
 
+		[HttpPost("")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Create(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateAlbumForApiContract contract
+		)
+		{
+			if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
+
+			if (contract.Artists is null || !contract.Artists.Any())
+				ModelState.AddModelError("Artists", ViewRes.Album.CreateStrings.NeedArtist);
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			var album = await _queries.Create(contract);
+
+			return album.Id;
+		}
+
 		[HttpPost("{id:int}")]
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]

@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
+	[Obsolete]
 	public class CreateAlbumContract
 	{
 		public ArtistContract[] Artists { get; init; }
