@@ -6,7 +6,9 @@ declare global {
 			albumEdit: any;
 			entryEdit: any;
 			shared: any;
-			song: any | /* TODO: Remove. */ { rankingsTitle?: string };
+			song:
+				| any /* TODO: Remove. */
+				| { newSongInfo?: string; rankingsTitle?: string };
 			album: {
 				addedToCollection?: string;
 				newAlbumArtistDesc?: string;

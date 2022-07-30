@@ -19,8 +19,7 @@ import {
 } from 'mobx';
 
 export default class ArtistCreateStore {
-	@observable public artistType =
-		ArtistType[ArtistType.Producer] /* TODO: enum */;
+	@observable public artistType = ArtistType.Producer;
 	@observable public artistTypeTag?: TagApiContract;
 	@observable public draft = false;
 	@observable public description = '';

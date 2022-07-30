@@ -38,7 +38,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private const int ShortVersionTagId = 4717;
 		private EntryAnchorFactory _entryLinkFactory;
 		private FakeUserMessageMailer _mailer;
-		private CreateSongContract _newSongContract;
+		private CreateSongForApiContract _newSongContract;
 		private FakePermissionContext _permissionContext;
 		private Artist _producer;
 		private FakePVParser _pvParser;
@@ -128,17 +128,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext = new FakePermissionContext(_user);
 			_entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
 
-			_newSongContract = new CreateSongContract
+			_newSongContract = new CreateSongForApiContract
 			{
 				SongType = SongType.Original,
-				Names = new[] {
-					new LocalizedStringContract("Resistance", ContentLanguageSelection.English)
+				Names = new[]
+				{
+					new LocalizedStringContract("Resistance", ContentLanguageSelection.English),
 				},
-				Artists = new[] {
+				Artists = new[]
+				{
 					new ArtistForSongContract { Artist = new ArtistContract(_producer, ContentLanguagePreference.Default) },
 					new ArtistForSongContract { Artist = new ArtistContract(_vocalist, ContentLanguagePreference.Default) },
 				},
-				PVUrls = new[] { "http://test.vocadb.net/" }
+				PVUrls = new[] { "http://test.vocadb.net/" },
 			};
 
 			_pvParser = new FakePVParser();

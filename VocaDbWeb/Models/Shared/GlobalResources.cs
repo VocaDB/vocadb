@@ -53,10 +53,12 @@ namespace VocaDb.Web.Models.Shared
 
 		public sealed record SongResources
 		{
+			public string? NewSongInfo { get; }
 			public string? RankingsTitle { get; }
 
 			public SongResources(SongStrings model)
 			{
+				NewSongInfo = model.NewSongInfo;
 				RankingsTitle = model.RankingsTitle;
 			}
 		}
