@@ -2,7 +2,8 @@ import Alert from '@Bootstrap/Alert';
 import Breadcrumb from '@Bootstrap/Breadcrumb';
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryType from '@Models/EntryType';
+import DuplicateEntriesMessage from '@Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
+import SongHelper from '@Helpers/SongHelper';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
@@ -20,6 +21,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import ArtistAutoComplete from '../KnockoutExtensions/ArtistAutoComplete';
 import { EntryToolTip } from '../KnockoutExtensions/EntryToolTip';
 import Markdown from '../KnockoutExtensions/Markdown';
+import CoverArtistMessage from '../Shared/KnockoutPartials/CoverArtistMessage';
 import Layout from '../Shared/Layout';
 import ArtistLink from '../Shared/Partials/Artist/ArtistLink';
 import { SongTypeDropdownList } from '../Shared/Partials/Knockout/DropdownList';
@@ -73,7 +75,7 @@ const SongCreateLayout = observer(
 						try {
 							const id = await songCreateStore.submit();
 
-							navigate(EntryUrlMapper.details(EntryType.Song, id));
+							navigate(`/Song/Edit/${id}`);
 						} catch (e) {
 							showErrorMessage(t('ViewRes.Song:Create.UnableToCreateSong'));
 
@@ -263,6 +265,7 @@ const SongCreateLayout = observer(
 										>
 											<SongLockingAutoComplete
 												basicEntryLinkStore={songCreateStore.originalVersion}
+												songTypes={SongHelper.originalVersionTypes}
 											/>
 										</div>
 										{songCreateStore.originalVersion.isEmpty &&
@@ -427,6 +430,17 @@ const SongCreateLayout = observer(
 								<p>{t('ViewRes.Song:Create.NameHelp')}</p>
 								<p>{t('ViewRes.Song:Create.ArtistHelp')}</p>
 							</Alert>
+
+							{songCreateStore.coverArtists.length > 0 &&
+								!songCreateStore.canHaveOriginalVersion && (
+									<CoverArtistMessage
+										coverArtists={songCreateStore.coverArtists}
+									/>
+								)}
+
+							<DuplicateEntriesMessage
+								dupeEntries={songCreateStore.dupeEntries}
+							/>
 
 							{songCreateStore.songTypeInfo && (
 								<Alert variant="info">

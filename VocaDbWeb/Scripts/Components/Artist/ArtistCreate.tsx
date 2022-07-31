@@ -8,11 +8,9 @@ import RequiredField from '@Components/Shared/Partials/Shared/RequiredField';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import ImageHelper from '@Helpers/ImageHelper';
 import ArtistType from '@Models/Artists/ArtistType';
-import EntryType from '@Models/EntryType';
 import WebLinkCategory from '@Models/WebLinkCategory';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import TagRepository from '@Repositories/TagRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import ArtistCreateStore from '@Stores/Artist/ArtistCreateStore';
 import classNames from 'classnames';
@@ -78,7 +76,7 @@ const ArtistCreateLayout = observer(
 
 							const id = await artistCreateStore.submit(pictureUpload);
 
-							navigate(EntryUrlMapper.details(EntryType.Artist, id));
+							navigate(`/Artist/Edit/${id}`);
 						} catch (e) {
 							showErrorMessage(t('ViewRes.Artist:Create.UnableToCreateArtist'));
 

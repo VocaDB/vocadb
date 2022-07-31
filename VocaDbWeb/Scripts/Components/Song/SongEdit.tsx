@@ -175,6 +175,19 @@ const BasicInfoTabContent = observer(
 							<div style={{ display: 'inline-block' }} className="input-append">
 								<SongLockingAutoComplete
 									basicEntryLinkStore={songEditStore.originalVersion}
+									songTypes={[
+										SongType.Unspecified,
+										SongType.Original,
+										SongType.Remaster,
+										SongType.Remix,
+										SongType.Cover,
+										SongType.Arrangement,
+										SongType.Mashup,
+										SongType.DramaPV,
+										SongType.Other,
+									]}
+									ignoreId={songEditStore.contract.id}
+									height={250}
 								/>
 							</div>
 							{songEditStore.originalVersion.isEmpty && (

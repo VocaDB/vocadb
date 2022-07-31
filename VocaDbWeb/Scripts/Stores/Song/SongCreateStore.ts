@@ -4,6 +4,7 @@ import LocalizedStringContract from '@DataContracts/Globalization/LocalizedStrin
 import ArtistForSongContract from '@DataContracts/Song/ArtistForSongContract';
 import SongContract from '@DataContracts/Song/SongContract';
 import TagApiContract from '@DataContracts/Tag/TagApiContract';
+import ArtistType from '@Models/Artists/ArtistType';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
@@ -110,6 +111,12 @@ export default class SongCreateStore {
 
 	@computed public get songTypeTagUrl(): string | undefined {
 		return EntryUrlMapper.details_tag_contract(this.songTypeTag);
+	}
+
+	@computed public get coverArtists(): ArtistContract[] {
+		return this.artists.filter(
+			(artist) => artist.artistType === ArtistType.CoverArtist,
+		);
 	}
 
 	private getSongTypeTag = async (songType: SongType): Promise<void> => {
