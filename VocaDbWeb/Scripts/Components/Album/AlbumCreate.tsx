@@ -3,10 +3,8 @@ import Breadcrumb from '@Bootstrap/Breadcrumb';
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import AlbumType from '@Models/Albums/AlbumType';
-import EntryType from '@Models/EntryType';
 import AlbumRepository from '@Repositories/AlbumRepository';
 import ArtistRepository from '@Repositories/ArtistRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import AlbumCreateStore from '@Stores/Album/AlbumCreateStore';
 import { runInAction } from 'mobx';
@@ -67,7 +65,7 @@ const AlbumCreateLayout = observer(
 						try {
 							const id = await albumCreateStore.submit();
 
-							navigate(EntryUrlMapper.details(EntryType.Album, id));
+							navigate(`/Album/Edit/${id}`);
 						} catch (e) {
 							showErrorMessage(t('ViewRes.Album:Create.UnableToCreateAlbum'));
 

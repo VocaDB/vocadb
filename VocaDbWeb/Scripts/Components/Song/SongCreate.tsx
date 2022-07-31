@@ -2,7 +2,6 @@ import Alert from '@Bootstrap/Alert';
 import Breadcrumb from '@Bootstrap/Breadcrumb';
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryType from '@Models/EntryType';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
@@ -73,7 +72,7 @@ const SongCreateLayout = observer(
 						try {
 							const id = await songCreateStore.submit();
 
-							navigate(EntryUrlMapper.details(EntryType.Song, id));
+							navigate(`/Song/Edit/${id}`);
 						} catch (e) {
 							showErrorMessage(t('ViewRes.Song:Create.UnableToCreateSong'));
 
