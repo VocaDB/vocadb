@@ -5,18 +5,18 @@ import SongListsFilters from '@Components/Shared/Partials/SongListsFilters';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import JQueryUIButton from '@JQueryUI/JQueryUIButton';
 import LoginManager from '@Models/LoginManager';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import SongListRepository from '@Repositories/SongListRepository';
 import TagRepository from '@Repositories/TagRepository';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
-import FeaturedSongListsStore, {
-	SongListFeaturedCategory,
-} from '@Stores/SongList/FeaturedSongListsStore';
+import FeaturedSongListsStore from '@Stores/SongList/FeaturedSongListsStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -58,8 +58,8 @@ const SongListFeatured = observer(
 					<>
 						{loginManager.canEditFeaturedLists && (
 							<JQueryUIButton
-								as="a"
-								href="/SongList/Edit"
+								as={Link}
+								to="/SongList/Edit"
 								icons={{
 									primary: 'ui-icon-plusthick',
 								}}

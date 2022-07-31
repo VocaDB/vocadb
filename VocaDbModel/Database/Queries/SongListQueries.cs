@@ -59,8 +59,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongInListQueryParams queryParams,
-			Func<SongInList, T> fac)
+		private PartialFindResult<T> GetSongsInList<T>(
+			IDatabaseContext<SongList> session,
+			SongInListQueryParams queryParams,
+			Func<SongInList, T> fac
+		)
 		{
 			var q = session.OfType<SongInList>().Query()
 				.Where(a => !a.Song.Deleted && a.List.Id == queryParams.ListId)
@@ -80,7 +83,7 @@ namespace VocaDb.Model.Database.Queries
 			return new PartialFindResult<T>(contracts, totalCount);
 		}
 
-		private SongList CreateSongList(IDatabaseContext<SongList> ctx, SongListForEditContract contract, UploadedFileContract uploadedFile)
+		private SongList CreateSongList(IDatabaseContext<SongList> ctx, SongListForEditForApiContract contract, UploadedFileContract uploadedFile)
 		{
 			var user = GetLoggedUser(ctx);
 			var newList = new SongList(contract.Name, user);
@@ -123,8 +126,14 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
+		public SongListQueries(
+			ISongListRepository repository,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister imagePersister,
+			IAggregatedEntryImageUrlFactory thumbStore,
+			IUserIconFactory userIconFactory
+		)
 			: base(repository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
@@ -220,7 +229,13 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return _repository.HandleQuery(ctx =>
 			{
-				return new SongListForApiContract(ctx.Load(listId), LanguagePreference, _userIconFactory, _thumbStore, SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags)
+				return new SongListForApiContract(
+					list: ctx.Load(listId),
+					languagePreference: LanguagePreference,
+					userIconFactory: _userIconFactory,
+					imagePersister: _thumbStore,
+					fields: SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags
+				)
 				{
 					LatestComments = Comments(ctx).GetList(listId, 3)
 				};
@@ -242,9 +257,9 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(session => new SongListContract(session.Load(listId), PermissionContext));
 		}
 
-		public SongListForEditContract GetSongListForEdit(int listId)
+		public SongListForEditForApiContract GetSongListForEdit(int listId)
 		{
-			return _repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
+			return _repository.HandleQuery(session => new SongListForEditForApiContract(session.Load(listId), PermissionContext, _thumbStore));
 		}
 
 		[Obsolete]
@@ -290,7 +305,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public int UpdateSongList(SongListForEditContract contract, UploadedFileContract? uploadedFile)
+		public int UpdateSongList(SongListForEditForApiContract contract, UploadedFileContract? uploadedFile)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -375,12 +390,15 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+		public void DeleteComment(int commentId) =>
+			HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
-		public IEnumerable<string> GetFeaturedListNames(string query = "",
+		public IEnumerable<string> GetFeaturedListNames(
+			string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
-			int maxResults = 10)
+			int maxResults = 10
+		)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
@@ -397,9 +415,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+		public void PostEditComment(int commentId, CommentForApiContract contract) =>
+			HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
-		public string GetTagString(int id, string formatString) => HandleQuery(ctx => new SongListFormatter(_entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
+		public string GetTagString(int id, string formatString) =>
+			HandleQuery(ctx => new SongListFormatter(_entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
 
 #nullable enable
 		public SongListBaseContract GetOne(int id)

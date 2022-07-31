@@ -20,7 +20,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister)
+#nullable enable
+		public ReleaseEventForApiContract(
+			ReleaseEvent rel,
+			ContentLanguagePreference languagePreference,
+			ReleaseEventOptionalFields fields,
+			IAggregatedEntryImageUrlFactory? thumbPersister
+		)
 		{
 			Category = rel.Category;
 			Date = rel.Date;
@@ -54,7 +60,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				Description = rel.Description;
 			}
 
-			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture))
+			if (thumbPersister is not null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture))
 			{
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister);
 			}
@@ -69,7 +75,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				Series = new ReleaseEventSeriesContract(rel.Series, languagePreference);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null)
+			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList is not null)
 			{
 				SongList = new SongListBaseContract(rel.SongList);
 			}
@@ -79,7 +85,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				Tags = rel.Tags.ActiveUsages.Select(t => new TagUsageForApiContract(t, languagePreference)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue != null)
+			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue is not null)
 			{
 				Venue = new VenueForApiContract(rel.Venue, languagePreference, VenueOptionalFields.None);
 			}
@@ -89,6 +95,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				WebLinks = rel.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
@@ -118,7 +125,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public DateTime? EndDate { get; init; }
 
-		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
+		public bool HasVenueOrVenueName => Venue is not null || !string.IsNullOrEmpty(VenueName);
 
 		[DataMember]
 		public int Id { get; set; }

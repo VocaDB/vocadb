@@ -171,8 +171,8 @@ const SongListDetailsLayout = observer(
 						{loginManager.canEditSongList(songList) && (
 							<>
 								<JQueryUIButton
-									as="a"
-									href={`/SongList/Edit/${songList.id}`}
+									as={Link}
+									to={`/SongList/Edit/${songList.id}`}
 									icons={{ primary: 'ui-icon-wrench' }}
 								>
 									{t('ViewRes:Shared.Edit')}

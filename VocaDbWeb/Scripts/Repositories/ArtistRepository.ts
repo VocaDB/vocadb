@@ -2,6 +2,7 @@ import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
 import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
+import CreateArtistContract from '@DataContracts/Artist/CreateArtistContract';
 import CommentContract from '@DataContracts/CommentContract';
 import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
@@ -255,8 +256,53 @@ export default class ArtistRepository
 			EntryWithArchivedVersionsContract<ArtistApiContract>
 		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
 	};
+
+	public create = (
+		contract: CreateArtistContract,
+		pictureUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative('/api/artists'),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
+
+	public edit = (
+		contract: ArtistForEditContract,
+		coverPicUpload: File | undefined,
+		pictureUpload: File[],
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (coverPicUpload) formData.append('coverPicUpload', coverPicUpload);
+
+		for (const file of pictureUpload) formData.append('pictureUpload', file);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/artists/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
-	artistTypes: ArtistType[];
+	artistTypes: string /* TODO: ArtistType[] */;
 }

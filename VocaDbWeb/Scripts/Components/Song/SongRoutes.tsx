@@ -7,6 +7,8 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 import { SearchType } from '../../Stores/Search/SearchStore';
 
+const SongCreate = React.lazy(() => import('./SongCreate'));
+const SongEdit = React.lazy(() => import('./SongEdit'));
 const SongRankings = React.lazy(() => import('./SongRankings'));
 const SongVersions = React.lazy(() => import('./SongVersions'));
 
@@ -33,7 +35,9 @@ const SongRoutes = (): React.ReactElement => {
 					/>
 				}
 			/>
+			<Route path="Create" element={<SongCreate />} />
 			<Route path="Details/:id" element={<SongDetailsNavigate />} />
+			<Route path="Edit/:id" element={<SongEdit />} />
 			<Route path="Rankings" element={<SongRankings />} />
 			<Route path="Versions/:id" element={<SongVersions />} />
 			<Route path="*" element={<ErrorNotFound />} />

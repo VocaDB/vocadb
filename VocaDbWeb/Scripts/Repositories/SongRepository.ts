@@ -4,6 +4,7 @@ import CommentContract from '@DataContracts/CommentContract';
 import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import CreateSongContract from '@DataContracts/Song/CreateSongContract';
 import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
 import SongContract from '@DataContracts/Song/SongContract';
@@ -546,6 +547,38 @@ export default class SongRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<SongApiContract>
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
+	};
+
+	public create = (contract: CreateSongContract): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songs`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
+
+	public edit = (contract: SongForEditContract): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songs/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
 	};
 }
 

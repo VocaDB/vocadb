@@ -1,7 +1,7 @@
 import { DiscMediaType } from './AlbumDetailsForApi';
 
 export default interface AlbumDiscPropertiesContract {
-	discNumber: number;
+	discNumber?: number;
 
 	id: number;
 

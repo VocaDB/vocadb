@@ -229,14 +229,13 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			var isMoveToTopQuery = (
+			var isMoveToTopQuery =
 				queryParams.Common.MoveExactToTop &&
 				queryParams.Common.NameMatchMode != NameMatchMode.StartsWith &&
 				queryParams.Common.NameMatchMode != NameMatchMode.Exact &&
 				!queryParams.ArtistParticipation.ArtistIds.HasAny &&
 				queryParams.Paging.Start == 0 &&
-				parsedQuery.HasNameQuery
-			);
+				parsedQuery.HasNameQuery;
 
 			if (isMoveToTopQuery)
 			{
@@ -245,7 +244,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return GetSongs(queryParams, parsedQuery);
 		}
-#nullable disable
 
 		/// <summary>
 		/// Get songs, searching by exact matches FIRST.
@@ -260,7 +258,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			// Exact query contains the "exact" matches.
 			// Note: the matched name does not have to be in user's display language, it can be any name.
 			// The songs are sorted by user's display language though
-			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.StartsWith);
+			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.Exact);
 
 			int count;
 			int[] ids;
@@ -280,7 +278,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
-					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
+					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 					.Select(s => s.Id)
 					.Take(maxResults)
 					.ToArray();
@@ -301,6 +299,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 		}
+#nullable disable
 
 		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
 		{

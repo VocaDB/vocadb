@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
@@ -56,7 +57,9 @@ namespace VocaDb.Model.Domain.Songs
 		private IList<SongInList> _lists = new List<SongInList>();
 		private IList<LyricsForSong> _lyrics = new List<LyricsForSong>();
 		private NameManager<SongName> _names = new();
+#nullable enable
 		private EnglishTranslatedString _notes;
+#nullable disable
 		private PVManager<PVForSong> _pvs = new();
 		private TagManager<SongTagUsage> _tags = new();
 		private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
@@ -353,15 +356,18 @@ namespace VocaDb.Model.Domain.Songs
 
 		INameManager IEntryWithNames.Names => Names;
 
+#nullable enable
 		public virtual EnglishTranslatedString Notes
 		{
 			get => _notes;
+			[MemberNotNull(nameof(_notes))]
 			set
 			{
 				ParamIs.NotNull(() => value);
 				_notes = value;
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// List of albums this song appears on. 

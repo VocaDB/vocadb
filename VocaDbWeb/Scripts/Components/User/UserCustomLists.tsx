@@ -8,6 +8,7 @@ import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import SongListsKnockout from '../Shared/Partials/Song/SongListsKnockout';
 import SongListsFilters from '../Shared/Partials/SongListsFilters';
@@ -47,9 +48,9 @@ const SongLists = observer(
 
 				{ownProfile && (
 					<>
-						<a href="/SongList/Edit" className="textLink addLink">
+						<Link to="/SongList/Edit" className="textLink addLink">
 							{t('ViewRes.User:Details.CreateNewList')}
-						</a>{' '}
+						</Link>{' '}
 						<a href="/SongList/Import" className="textLink wandIcon">
 							{t('ViewRes.User:Details.ImportSongList')}
 						</a>

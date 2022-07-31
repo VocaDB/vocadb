@@ -107,7 +107,7 @@ const ArtistFilters = observer(
 					<ArtistAutoComplete
 						type="text"
 						className="input-large"
-						properties={artistFilters.artistSearchParams}
+						properties={{ acceptSelection: artistFilters.selectArtist }}
 						placeholder={t('ViewRes:Shared.Search')}
 					/>
 				</div>

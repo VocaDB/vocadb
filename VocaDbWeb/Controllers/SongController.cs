@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.ExtSites;
@@ -22,7 +22,6 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Feeds;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
@@ -72,7 +71,7 @@ namespace VocaDb.Web.Controllers
 			}
 			else if (!string.IsNullOrWhiteSpace(newListName))
 			{
-				var contract = new SongListForEditContract
+				var contract = new SongListForEditForApiContract
 				{
 					Name = newListName,
 					SongLinks = new[] {new SongInListEditContract {
@@ -186,96 +185,15 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Create(string pvUrl)
 		{
-			var model = new Create { PVUrl = pvUrl };
-
-			return View(model);
+			return View("React/Index");
 		}
-
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (model.Artists == null || !model.Artists.Any())
-				ModelState.AddModelError("Artists", ViewRes.Song.CreateStrings.NeedArtist);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-
-			try
-			{
-				var song = await _queries.Create(contract);
-				return RedirectToAction("Edit", new { id = song.Id });
-			}
-			catch (VideoParseException x)
-			{
-				ModelState.AddModelError("PVUrl", x.Message);
-				return View(model);
-			}
-		}
-
-		private int InstrumentalTagId => _queries.InstrumentalTagId;
 
 		//
 		// GET: /Song/Edit/5 
 		[Authorize]
 		public ActionResult Edit(int id, int? albumId = null)
 		{
-			CheckConcurrentEdit(EntryType.Song, id);
-
-			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false),
-				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, albumId: albumId));
-
-			return View(model);
-		}
-
-		//
-		// POST: /Song/Edit/5
-		[HttpPost]
-		[Authorize]
-		public async Task<ActionResult> Edit(SongEditViewModel viewModel)
-		{
-			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel?.EditedSong == null)
-			{
-				s_log.Warn("Viewmodel was null");
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
-			}
-
-			try
-			{
-				viewModel.CheckModel();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-			}
-
-			var model = viewModel.EditedSong;
-
-			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names == null || model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value)))
-			{
-				ModelState.AddModelError("Names", SongValidationErrors.UnspecifiedNames);
-			}
-
-			if (model.Lyrics != null && model.Lyrics.Any(n => string.IsNullOrEmpty(n.Value)))
-			{
-				ModelState.AddModelError("Lyrics", "Lyrics cannot be empty");
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return View(Service.GetSong(model.Id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false),
-					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
-			}
-
-			await _queries.UpdateBasicProperties(model);
-
-			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
+			return View("React/Index");
 		}
 
 		[HttpPost]

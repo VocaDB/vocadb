@@ -5,6 +5,7 @@ import PVType from '@Models/PVs/PVType';
 import PVRepository from '@Repositories/PVRepository';
 import { HttpClientError } from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
+import $ from 'jquery';
 import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
@@ -117,7 +118,25 @@ export default class PVListEditStore {
 		return this.pvs;
 	};
 
-	public uploadMedia = (): void => {
-		// TODO
+	public uploadMedia = async (uploadMedia: File): Promise<void> => {
+		const fd = new FormData();
+
+		fd.append('file', uploadMedia);
+		await $.ajax({
+			url: '/Song/PostMedia/',
+			data: fd,
+			processData: false,
+			contentType: false,
+			type: 'POST',
+			success: (result) =>
+				runInAction(() => {
+					this.pvs.push(new PVEditStore(result, 'Original'));
+				}),
+			error: (result) => {
+				const text =
+					result.status === 404 ? 'File too large' : result.statusText;
+				alert(`Unable to post file: ${text}` /* TODO: localize */);
+			},
+		});
 	};
 }

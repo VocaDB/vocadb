@@ -1,5 +1,6 @@
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import functions from '@Shared/GlobalFunctions';
+import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -38,6 +39,8 @@ const ArtistAutoComplete = ({
 		preferAccurateMatches: true,
 		maxResults: 20,
 	};
+	if (properties.extraQueryParams)
+		$.extend(queryParams, properties.extraQueryParams);
 
 	const params: EntryAutoCompleteParams<ArtistContract> = {
 		acceptSelection: properties.acceptSelection!,

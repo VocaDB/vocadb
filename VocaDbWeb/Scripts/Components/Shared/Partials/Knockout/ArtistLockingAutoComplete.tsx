@@ -6,16 +6,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ArtistAutoComplete from '../../../KnockoutExtensions/ArtistAutoComplete';
+import { ArtistAutoCompleteParams } from '../../../KnockoutExtensions/AutoCompleteParams';
 import LockingAutoComplete from './LockingAutoComplete';
 
 interface ArtistLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<ArtistContract>;
+	properties?: Omit<ArtistAutoCompleteParams, 'acceptSelection'>;
 }
 
 // Locking autocomplete for artist selection. Allows selection of one (existing) artist. When artist is selected, clear button is displayed.
 const ArtistLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
+		properties,
 	}: ArtistLockingAutoCompleteProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -33,6 +36,7 @@ const ArtistLockingAutoComplete = observer(
 					type="text"
 					className="input-large"
 					properties={{
+						...properties,
 						acceptSelection: (id): void =>
 							runInAction(() => {
 								basicEntryLinkStore.id = id;

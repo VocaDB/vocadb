@@ -210,10 +210,11 @@ export default class TagRepository extends BaseRepository {
 
 	public edit = (
 		contract: TagForEditContract,
-		thumbPicUpload?: File,
+		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
+
 		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
 
 		return this.httpClient.post<number>(

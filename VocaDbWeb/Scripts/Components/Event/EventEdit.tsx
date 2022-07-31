@@ -13,6 +13,7 @@ import EventCategory from '@Models/Events/EventCategory';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
 import ImageSize from '@Models/Images/ImageSize';
 import LoginManager from '@Models/LoginManager';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import PVRepository from '@Repositories/PVRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
@@ -22,7 +23,6 @@ import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import HttpClient from '@Shared/HttpClient';
 import UrlMapper from '@Shared/UrlMapper';
 import ReleaseEventEditStore from '@Stores/ReleaseEvent/ReleaseEventEditStore';
-import { SongListFeaturedCategory } from '@Stores/SongList/FeaturedSongListsStore';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -505,7 +505,11 @@ const ArtistsTabContent = observer(
 					<h4>Add artist{/* TODO: localize */}</h4>
 					<ArtistAutoComplete
 						type="text"
-						properties={releaseEventEditStore.artistSearchParams}
+						properties={{
+							createNewItem:
+								"Add custom artist named '{0}'" /* TODO: localize */,
+							acceptSelection: releaseEventEditStore.addArtist,
+						}}
 						maxLength={128}
 						placeholder={t('ViewRes:Shared.Search')}
 						className="input-xlarge"
@@ -787,12 +791,6 @@ const EventEditLayout = observer(
 	},
 );
 
-const artistRoleNames = _.fromPairs(
-	Object.values(ArtistEventRoles)
-		.filter((role) => isNaN(Number(role)))
-		.map((role) => [role as string, role as string]),
-); /* TODO */
-
 const defaultModel: ReleaseEventForEditContract = {
 	artists: [],
 	category: EventCategory[EventCategory.Unspecified],
@@ -813,6 +811,21 @@ const defaultModel: ReleaseEventForEditContract = {
 };
 
 const EventEdit = (): React.ReactElement => {
+	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
+
+	const artistRoleNames = React.useMemo(
+		() =>
+			_.fromPairs(
+				Object.values(ArtistEventRoles)
+					.filter((artistRole) => isNaN(Number(artistRole)))
+					.map((artistRole): [string, string | undefined] => [
+						artistRole as string,
+						t(`VocaDb.Web.Resources.Domain.ReleaseEvents:${artistRole}`),
+					]),
+			),
+		[t],
+	);
+
 	const { id } = useParams();
 	const [searchParams] = useSearchParams();
 	const seriesId = searchParams.get('seriesId');
@@ -868,7 +881,7 @@ const EventEdit = (): React.ReactElement => {
 				),
 			});
 		}
-	}, [id, seriesId, venueId]);
+	}, [artistRoleNames, id, seriesId, venueId]);
 
 	return model ? (
 		<EventEditLayout releaseEventEditStore={model.releaseEventEditStore} />

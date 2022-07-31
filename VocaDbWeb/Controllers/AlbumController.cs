@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Globalization;
-using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,16 +10,13 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -219,29 +215,11 @@ namespace VocaDb.Web.Controllers
 			return Picture(data);
 		}
 
+#nullable enable
 		[Authorize]
 		public ActionResult Create()
 		{
-			return View(new Create());
-		}
-
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji)
-				&& string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (model.Artists == null || !model.Artists.Any())
-				ModelState.AddModelError("Artists", ViewRes.Album.CreateStrings.NeedArtist);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-
-			var album = await _queries.Create(contract);
-			return RedirectToAction("Edit", new { id = album.Id });
+			return View("React/Index");
 		}
 
 		//
@@ -249,73 +227,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
-			CheckConcurrentEdit(EntryType.Album, id);
-
-			return View(CreateAlbumEditViewModel(id, null));
-		}
-
-#nullable enable
-		//
-		// POST: /Album/Edit/5
-
-		[HttpPost]
-		[Authorize]
-		public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
-		{
-			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel is null || viewModel.EditedAlbum is null)
-			{
-				s_log.Warn("Viewmodel was null");
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
-			}
-
-			try
-			{
-				viewModel.CheckModel();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-			}
-
-			var model = viewModel.EditedAlbum;
-
-			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names is not null && model.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
-			{
-				ModelState.AddModelError("Names", AlbumValidationErrors.UnspecifiedNames);
-			}
-
-			if (model.OriginalRelease is not null && model.OriginalRelease.ReleaseDate is not null && !OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
-				ModelState.AddModelError("ReleaseYear", "Invalid date");
-
-			var coverPicUpload = Request.Form.Files["coverPicUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
-
-			if (model.Pictures is null)
-			{
-				AddFormSubmissionError("List of pictures was null");
-			}
-
-			if (model.Pictures is not null)
-				ParseAdditionalPictures(coverPicUpload, model.Pictures);
-
-			if (!ModelState.IsValid)
-			{
-				return View(CreateAlbumEditViewModel(model.Id, model));
-			}
-
-			try
-			{
-				await _queries.UpdateBasicProperties(model, pictureData);
-			}
-			catch (InvalidPictureException)
-			{
-				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
-				return View(CreateAlbumEditViewModel(model.Id, model));
-			}
-
-			return RedirectToAction("Details", new { id = model.Id });
+			return View("React/Index");
 		}
 #nullable disable
 

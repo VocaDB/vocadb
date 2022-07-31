@@ -1,6 +1,5 @@
 #nullable disable
 
-using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -16,7 +15,6 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -34,8 +32,8 @@ namespace VocaDb.Web.Controllers
 
 		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist)
 		{
-			return _queries.Get(id, album => new ArtistEditViewModel(new ArtistContract(album, PermissionContext.LanguagePreference), PermissionContext,
-				EntryPermissionManager.CanDelete(PermissionContext, album), editedArtist));
+			return _queries.Get(id, artist => new ArtistEditViewModel(new ArtistContract(artist, PermissionContext.LanguagePreference), PermissionContext,
+				EntryPermissionManager.CanDelete(PermissionContext, artist), editedArtist));
 		}
 
 		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser)
@@ -176,41 +174,10 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Create()
 		{
-			return View(new Create());
+			return View("React/Index");
 		}
 
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (string.IsNullOrWhiteSpace(model.Description) && string.IsNullOrWhiteSpace(model.WebLinkUrl))
-				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
-
-			var coverPicUpload = Request.Form.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-			contract.PictureData = pictureData;
-
-			ArtistContract artist;
-			try
-			{
-				artist = await _queries.Create(contract);
-			}
-			catch (InvalidPictureException)
-			{
-				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
-				return View(model);
-			}
-
-			return RedirectToAction("Edit", new { id = artist.Id });
-		}
-
+#nullable enable
 		//
 		// GET: /Artist/Edit/5
 		[Authorize]
@@ -219,65 +186,7 @@ namespace VocaDb.Web.Controllers
 			if (id == InvalidId)
 				return NoId();
 
-			CheckConcurrentEdit(EntryType.Artist, id);
-
-			var model = CreateArtistEditViewModel(id, null);
-			return View(model);
-		}
-
-#nullable enable
-		//
-		// POST: /Artist/Edit/5
-		[HttpPost]
-		[Authorize]
-		public async Task<ActionResult> Edit(ArtistEditViewModel viewModel)
-		{
-			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel is null || viewModel.EditedArtist is null)
-			{
-				s_log.Warn("Viewmodel was null");
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
-			}
-
-			try
-			{
-				viewModel.CheckModel();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-			}
-
-			var model = viewModel.EditedArtist;
-
-			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
-			{
-				ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
-			}
-
-			var coverPicUpload = Request.Form.Files["coverPicUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
-
-			if (model.Pictures is not null)
-				ParseAdditionalPictures(coverPicUpload, model.Pictures);
-
-			if (!ModelState.IsValid)
-			{
-				return View("Edit", CreateArtistEditViewModel(model.Id, model));
-			}
-
-			try
-			{
-				await _queries.Update(model, pictureData, PermissionContext);
-			}
-			catch (InvalidPictureException)
-			{
-				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
-				return View("Edit", CreateArtistEditViewModel(model.Id, model));
-			}
-
-			return RedirectToAction("Details", new { id = model.Id });
+			return View("React/Index");
 		}
 #nullable disable
 

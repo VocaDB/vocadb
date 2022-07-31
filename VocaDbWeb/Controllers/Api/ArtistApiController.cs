@@ -15,9 +15,13 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
@@ -39,13 +43,21 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly ArtistQueries _queries;
 		private readonly ArtistService _service;
 		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
+		private readonly IUserPermissionContext _permissionContext;
 
-		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache)
+		public ArtistApiController(
+			ArtistQueries queries,
+			ArtistService service,
+			IAggregatedEntryImageUrlFactory thumbPersister,
+			ObjectCache cache,
+			IUserPermissionContext permissionContext
+		)
 		{
 			_queries = queries;
 			_service = service;
 			_thumbPersister = thumbPersister;
 			_cache = cache;
+			_permissionContext = permissionContext;
 		}
 
 		private ArtistForApiContract GetArtist(
@@ -74,7 +86,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="notes">Notes.</param>
 		[HttpDelete("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "") => _service.Delete(id, notes ?? string.Empty);
+		public void Delete(int id, string notes = "") =>
+			_service.Delete(id, notes ?? string.Empty);
 
 		/// <summary>
 		/// Deletes a comment.
@@ -86,7 +99,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpDelete("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
+		public void DeleteComment(int commentId) =>
+			_queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an artist.
@@ -97,11 +111,13 @@ namespace VocaDb.Web.Controllers.Api
 		/// Pagination and sorting might be added later.
 		/// </remarks>
 		[HttpGet("{id:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int id) => _queries.GetComments(id);
+		public IEnumerable<CommentForApiContract> GetComments(int id) =>
+			_queries.GetComments(id);
 
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public ArtistForEditContract GetForEdit(int id) => _queries.GetArtistForEdit(id);
+		public ArtistForEditForApiContract GetForEdit(int id) =>
+			_queries.GetArtistForEdit(id);
 
 		/// <summary>
 		/// Gets an artist by Id.
@@ -118,7 +134,8 @@ namespace VocaDb.Web.Controllers.Api
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ArtistRelationsFields relations = ArtistRelationsFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
-		) => _queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
+		) =>
+			_queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
 
 #nullable enable
 		/// <summary>
@@ -189,7 +206,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IEnumerable<int> GetIds() => _queries.GetIds();
+		public IEnumerable<int> GetIds() =>
+			_queries.GetIds();
 
 		/// <summary>
 		/// Gets a list of artist names. Ideal for autocomplete boxes.
@@ -203,15 +221,18 @@ namespace VocaDb.Web.Controllers.Api
 			string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int maxResults = 15
-		) => _service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
+		) =>
+			_service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpGet("{id:int}/tagSuggestions")]
-		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) => _queries.GetTagSuggestions(id);
+		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) =>
+			_queries.GetTagSuggestions(id);
 
 		[HttpGet("versions")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public EntryIdAndVersionContract[] GetVersions() => _queries.GetVersions();
+		public EntryIdAndVersionContract[] GetVersions() =>
+			_queries.GetVersions();
 
 		/// <summary>
 		/// Updates a comment.
@@ -224,7 +245,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpPost("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
+		public void PostEditComment(int commentId, CommentForApiContract contract) =>
+			_queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -234,7 +256,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[HttpPost("{id:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) =>
+			_queries.CreateComment(id, contract);
 
 #nullable enable
 		[HttpGet("{id:int}/details")]
@@ -250,6 +273,111 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<ArtistForApiContract> GetArtistWithArchivedVersions(int id) =>
 			_queries.GetArtistWithArchivedVersionsForApi(id);
+
+		[HttpPost("")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Create(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateArtistForApiContract contract
+		)
+		{
+			if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
+
+			if (string.IsNullOrWhiteSpace(contract.Description) && string.IsNullOrWhiteSpace(contract.WebLink?.Url))
+				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
+
+			var coverPicUpload = Request.Form.Files["pictureUpload"];
+			var pictureData = ControllerBase.ParsePicture(this, coverPicUpload, "Picture", ImagePurpose.Main);
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			contract.PictureData = pictureData;
+
+			try
+			{
+				var artist = await _queries.Create(contract);
+
+				return artist.Id;
+			}
+			catch (InvalidPictureException)
+			{
+				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return ValidationProblem(ModelState);
+			}
+		}
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistForEditForApiContract contract
+		)
+		{
+			// Unable to continue if viewmodel is null because we need the ID at least
+			if (contract is null)
+			{
+				return BadRequest("Viewmodel was null - probably JavaScript is disabled");
+			}
+
+			try
+			{
+				static void CheckModel(ArtistForEditForApiContract contract)
+				{
+					if (contract is null)
+						throw new InvalidFormException("Model was null");
+
+					if (contract.Names is null)
+						throw new InvalidFormException("Names list was null"); // Shouldn't be null
+
+					if (contract.Pictures is null)
+						throw new InvalidFormException("Pictures list was null"); // Shouldn't be null
+
+					if (contract.WebLinks is null)
+						throw new InvalidFormException("Weblinks list was null"); // Shouldn't be null
+				}
+
+				CheckModel(contract);
+			}
+			catch (InvalidFormException x)
+			{
+				ControllerBase.AddFormSubmissionError(this, x.Message);
+			}
+
+			// Note: name is allowed to be whitespace, but not empty.
+			if (contract.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
+			}
+
+			var coverPicUpload = Request.Form.Files["coverPicUpload"];
+			var pictureData = ControllerBase.ParsePicture(this, coverPicUpload, "Picture", ImagePurpose.Main);
+
+			if (contract.Pictures is not null)
+				ControllerBase.ParseAdditionalPictures(this, coverPicUpload, contract.Pictures);
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			try
+			{
+				var id = await _queries.Update(contract, pictureData, _permissionContext);
+
+				return id;
+			}
+			catch (InvalidPictureException)
+			{
+				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return ValidationProblem(ModelState);
+			}
+		}
 #nullable disable
 	}
 }

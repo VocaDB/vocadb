@@ -14,11 +14,7 @@ const ArtistRolesEditViewModel = observer(
 	({
 		artistRolesEditStore,
 	}: ArtistRolesEditViewModelProps): React.ReactElement => {
-		const { t } = useTranslation([
-			'ViewRes',
-			'ViewRes.Album',
-			'VocaDb.Web.Resources.Domain.ReleaseEvents',
-		]);
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Album']);
 
 		return (
 			<JQueryUIDialog
@@ -51,9 +47,7 @@ const ArtistRolesEditViewModel = observer(
 										})
 									}
 								>
-									{t(
-										`VocaDb.Web.Resources.Domain.ReleaseEvents:ArtistEventRoleNames.${selection.id}`,
-									)}
+									{selection.name}
 								</JQueryUICheckbox>
 							</span>
 						</React.Fragment>

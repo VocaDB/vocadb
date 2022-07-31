@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Globalization;
 
 namespace VocaDb.Model.Domain.Globalization
@@ -12,8 +11,8 @@ namespace VocaDb.Model.Domain.Globalization
 		private string _english;
 		private string _original;
 
-		public EnglishTranslatedString() :
-			this(string.Empty)
+		public EnglishTranslatedString()
+			: this(string.Empty)
 		{
 		}
 
@@ -26,6 +25,7 @@ namespace VocaDb.Model.Domain.Globalization
 		public virtual string English
 		{
 			get => _english;
+			[MemberNotNull(nameof(_english))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -45,6 +45,7 @@ namespace VocaDb.Model.Domain.Globalization
 		public virtual string Original
 		{
 			get => _original;
+			[MemberNotNull(nameof(_original))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -52,13 +53,12 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-#nullable enable
 		public virtual bool CopyFrom(EnglishTranslatedStringContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
 			var changed = false;
-			var newOriginal = contract.Original?.Trim();
+			var newOriginal = contract.Original.Trim();
 
 			if (Original != newOriginal)
 			{
@@ -66,7 +66,7 @@ namespace VocaDb.Model.Domain.Globalization
 				changed = true;
 			}
 
-			var newEnglish = contract.English?.Trim();
+			var newEnglish = contract.English.Trim();
 
 			if (English != newEnglish)
 			{
@@ -76,7 +76,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 			return changed;
 		}
-#nullable disable
 
 		public virtual bool CopyIfEmpty(EnglishTranslatedString source)
 		{

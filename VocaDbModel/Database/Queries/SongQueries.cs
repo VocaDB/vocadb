@@ -332,7 +332,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public Task<SongContract> Create(CreateSongContract contract)
+		public Task<SongContract> Create(CreateSongForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -704,10 +704,12 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public SongForEditContract GetSongForEdit(int songId)
+#nullable enable
+		public SongForEditForApiContract GetSongForEdit(int songId)
 		{
-			return HandleQuery(session => new SongForEditContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
+			return HandleQuery(session => new SongForEditForApiContract(session.Load<Song>(songId), PermissionContext.LanguagePreference, PermissionContext));
 		}
+#nullable disable
 
 		public T GetSongWithMergeRecord<T>(int id, Func<Song, SongMergeRecord, T> fac)
 		{
@@ -1289,7 +1291,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<SongForEditContract> UpdateBasicProperties(SongForEditContract properties)
+		public async Task<SongForEditForApiContract> UpdateBasicProperties(SongForEditForApiContract properties)
 		{
 			ParamIs.NotNull(() => properties);
 
@@ -1418,7 +1420,7 @@ namespace VocaDb.Model.Database.Queries
 					}
 				}
 
-				return new SongForEditContract(song, PermissionContext.LanguagePreference);
+				return new SongForEditForApiContract(song, PermissionContext.LanguagePreference, PermissionContext);
 			});
 		}
 #nullable disable

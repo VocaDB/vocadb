@@ -5,13 +5,27 @@ namespace VocaDb.Web.Models.Shared
 {
 	public sealed record GlobalResources
 	{
+		public sealed record AlbumResources
+		{
+			public string? NewAlbumArtistDesc { get; }
+			public string? NewAlbumInfo { get; }
+
+			public AlbumResources(AlbumStrings model)
+			{
+				NewAlbumArtistDesc = model.NewAlbumArtistDesc;
+				NewAlbumInfo = model.NewAlbumInfo;
+			}
+		}
+
 		public sealed record ArtistResources
 		{
 			public string? AuthoredBy { get; }
+			public string? NewArtistExternalLink { get; }
 
 			public ArtistResources(ArtistStrings model)
 			{
 				AuthoredBy = model.AuthoredBy;
+				NewArtistExternalLink = model.NewArtistExternalLink;
 			}
 		}
 
@@ -39,14 +53,17 @@ namespace VocaDb.Web.Models.Shared
 
 		public sealed record SongResources
 		{
+			public string? NewSongInfo { get; }
 			public string? RankingsTitle { get; }
 
 			public SongResources(SongStrings model)
 			{
+				NewSongInfo = model.NewSongInfo;
 				RankingsTitle = model.RankingsTitle;
 			}
 		}
 
+		public AlbumResources Album { get; }
 		public ArtistResources Artist { get; }
 		public HomeResources Home { get; }
 		public LayoutResources Layout { get; }
@@ -54,6 +71,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public GlobalResources(VocaDbPage model)
 		{
+			Album = new AlbumResources(model.BrandableStrings.Album);
 			Artist = new ArtistResources(model.BrandableStrings.Artist);
 			Home = new HomeResources(model.BrandableStrings.Home);
 			Layout = new LayoutResources(model.BrandableStrings.Layout);

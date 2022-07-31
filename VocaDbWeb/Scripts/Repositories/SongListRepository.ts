@@ -157,4 +157,25 @@ export default class SongListRepository {
 	public getOne = ({ id }: { id: number }): Promise<SongListBaseContract> => {
 		return this.httpClient.get<SongListBaseContract>(`/api/songLists/${id}`);
 	};
+
+	public edit = (
+		contract: SongListForEditContract,
+		thumbPicUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songLists/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
+	};
 }

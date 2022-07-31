@@ -33,7 +33,7 @@ import WebLinksEditStore from '../WebLinksEditStore';
 import ArtistForEventEditStore from './ArtistForEventEditStore';
 
 export class EventArtistRolesEditStore extends ArtistRolesEditStore {
-	public constructor(roleNames: { [key: string]: string }) {
+	public constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistEventRoles[ArtistEventRoles.Default]);
 	}
 }
@@ -84,7 +84,7 @@ export default class ReleaseEventEditStore {
 		songListRepo: SongListRepository,
 		venueRepo: VenueRepository,
 		urlMapper: UrlMapper,
-		artistRoleNames: { [key: string]: string },
+		artistRoleNames: { [key: string]: string | undefined },
 		public readonly contract: ReleaseEventForEditContract,
 	) {
 		makeObservable(this);
@@ -186,11 +186,6 @@ export default class ReleaseEventEditStore {
 		}
 	};
 
-	public readonly artistSearchParams = {
-		createNewItem: "Add custom artist named '{0}'" /* TODO: localize */,
-		acceptSelection: this.addArtist,
-	};
-
 	public editArtistRoles = (artist: ArtistForEventEditStore): void => {
 		this.artistRolesEditStore.show(artist);
 	};
@@ -199,7 +194,9 @@ export default class ReleaseEventEditStore {
 		_.pull(this.artistLinks, artist);
 	};
 
-	@action public submit = async (pictureUpload?: File): Promise<number> => {
+	@action public submit = async (
+		pictureUpload: File | undefined,
+	): Promise<number> => {
 		this.submitting = true;
 
 		try {

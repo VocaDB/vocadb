@@ -105,7 +105,7 @@ export default class ArtistEditViewModel {
 				ArtistType.Circle,
 				ArtistType.OtherGroup,
 				ArtistType.Band,
-			],
+			].join(','),
 		},
 		height: 300,
 	};
@@ -246,7 +246,7 @@ export default class ArtistEditViewModel {
 					ArtistType.OtherVocalist,
 					ArtistType.OtherVoiceSynthesizer,
 					ArtistType.Unknown,
-				],
+				].join(','),
 			},
 			ignoreId: this.id,
 		};

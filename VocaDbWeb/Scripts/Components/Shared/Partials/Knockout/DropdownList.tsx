@@ -1,7 +1,10 @@
+import ArtistLinkType from '@Models/Artists/ArtistLinkType';
 import EntryStatus from '@Models/EntryStatus';
 import EntryType from '@Models/EntryType';
 import EventCategory from '@Models/Events/EventCategory';
 import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import PVType from '@Models/PVs/PVType';
+import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
 import UserGroup from '@Models/Users/UserGroup';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -153,6 +156,94 @@ export const EntryStatusDropdownList = React.memo(
 					.map((status) => (
 						<option value={status} key={status}>
 							{t(`Resources:EntryStatusNames.${status}`)}
+						</option>
+					))}
+			</select>
+		);
+	},
+);
+
+export const SongListFeaturedCategoryDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(SongListFeaturedCategory).map((featuredCategory) => (
+					<option value={featuredCategory} key={featuredCategory}>
+						{t(`Resources:SongListFeaturedCategoryNames.${featuredCategory}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+const associatedArtistTypes = Object.values(ArtistLinkType).filter(
+	(artistLinkType) => artistLinkType !== ArtistLinkType.Group,
+);
+
+export const AssociatedArtistTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Artists']);
+
+		return (
+			<select {...props}>
+				{associatedArtistTypes.map((associatedArtistType) => (
+					<option value={associatedArtistType} key={associatedArtistType}>
+						{t(
+							`VocaDb.Web.Resources.Domain.Artists:ArtistLinkTypeNames.${associatedArtistType}`,
+						)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const AlbumTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Model.Resources.Albums']);
+
+		return (
+			<select {...props}>
+				{vdb.values.albumTypes.map((albumType) => (
+					<option value={albumType} key={albumType}>
+						{t(`VocaDb.Model.Resources.Albums:DiscTypeNames.${albumType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const SongTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
+
+		return (
+			<select {...props}>
+				{vdb.values.songTypes.map((songType) => (
+					<option value={songType} key={songType}>
+						{t(`VocaDb.Model.Resources.Songs:SongTypeNames.${songType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const PVTypeDescriptionsDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(PVType)
+					.filter((pvType) => isNaN(Number(pvType)))
+					.map((pvType) => (
+						<option value={pvType} key={pvType}>
+							{t(`Resources:PVTypeDescriptions.${pvType}`)}
 						</option>
 					))}
 			</select>
