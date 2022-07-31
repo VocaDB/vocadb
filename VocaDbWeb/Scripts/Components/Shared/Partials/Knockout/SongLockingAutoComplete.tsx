@@ -14,6 +14,7 @@ interface SongLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<SongContract>;
 	songTypes?: SongType[];
 	ignoreId?: number;
+	height?: number;
 }
 
 // Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed.
@@ -22,6 +23,7 @@ const SongLockingAutoComplete = observer(
 		basicEntryLinkStore,
 		songTypes = [],
 		ignoreId,
+		height,
 	}: SongLockingAutoCompleteProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -46,6 +48,7 @@ const SongLockingAutoComplete = observer(
 							}),
 						extraQueryParams: { songTypes: songTypes },
 						ignoreId: ignoreId,
+						height: height,
 					}}
 					placeholder={t('ViewRes:Shared.Search')}
 				/>

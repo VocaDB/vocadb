@@ -3,6 +3,7 @@ import Breadcrumb from '@Bootstrap/Breadcrumb';
 import Button from '@Bootstrap/Button';
 import SafeAnchor from '@Bootstrap/SafeAnchor';
 import DuplicateEntriesMessage from '@Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
+import SongHelper from '@Helpers/SongHelper';
 import SongType from '@Models/Songs/SongType';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
@@ -264,6 +265,7 @@ const SongCreateLayout = observer(
 										>
 											<SongLockingAutoComplete
 												basicEntryLinkStore={songCreateStore.originalVersion}
+												songTypes={SongHelper.originalVersionTypes}
 											/>
 										</div>
 										{songCreateStore.originalVersion.isEmpty &&
