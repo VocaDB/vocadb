@@ -9,7 +9,6 @@ using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -595,17 +594,13 @@ namespace VocaDb.Model.Database.Queries
 			return LoadTag(id, tag => EntryWithArchivedVersionsForApiContract.Create(
 				entry: new TagForApiContract(tag, thumbPersister: null, LanguagePreference, optionalFields: TagOptionalFields.None),
 				versions: tag.ArchivedVersionsManager.Versions
-					.Select(a => new ArchivedObjectVersionForApiContract(
-						archivedObjectVersion: a,
-						anythingChanged: !Equals(a.Diff.ChangedFields, default(TagEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
-						reason: a.CommonEditEvent.ToString(),
-						userIconFactory: _userIconFactory
-					))
+					.Select(a => ArchivedObjectVersionForApiContract.FromTag(a, _userIconFactory))
 					.ToArray()
 			));
 		}
 #nullable disable
 
+		[Obsolete]
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
@@ -622,6 +617,28 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
+
+#nullable enable
+		public ArchivedTagVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedTagVersionDetailsForApiContract(
+					archived: session.Load<ArchivedTagVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
 
 		/// <summary>
 		/// Loads a tag assuming that the tag exists - throws an exception if it doesn't.

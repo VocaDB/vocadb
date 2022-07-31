@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Utils;
@@ -97,6 +98,7 @@ public class ArchivedEventContract
 	public LocalizedStringContract[]? Names { get; set; }
 
 	[DataMember]
+	[JsonProperty("pvs")]
 	public ArchivedPVContract[]? PVs { get; set; }
 
 	[DataMember]

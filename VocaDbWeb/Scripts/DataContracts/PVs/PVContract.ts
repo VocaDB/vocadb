@@ -15,9 +15,13 @@ interface PVContractBase {
 	url?: string;
 }
 
+export interface PVExtendedMetadata {
+	json?: string;
+}
+
 export interface PiaproPVContract extends PVContractBase {
 	service: PVService.Piapro;
-	extendedMetadata?: { json?: string };
+	extendedMetadata?: PVExtendedMetadata;
 }
 
 export interface SoundCloudPVContract extends PVContractBase {

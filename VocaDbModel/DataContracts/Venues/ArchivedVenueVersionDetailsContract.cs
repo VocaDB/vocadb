@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
+	[Obsolete]
 	public class ArchivedVenueVersionDetailsContract
 	{
 #nullable enable

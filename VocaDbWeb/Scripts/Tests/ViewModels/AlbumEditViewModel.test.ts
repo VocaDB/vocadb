@@ -133,6 +133,7 @@ beforeEach(() => {
 		songType: SongType.Original,
 		createDate: null!,
 		status: EntryStatus.Finished,
+		version: undefined!,
 	};
 	songRep.song = song;
 

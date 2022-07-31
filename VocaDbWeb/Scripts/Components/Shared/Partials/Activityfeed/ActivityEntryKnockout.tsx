@@ -141,11 +141,11 @@ export const ActivityEntryKnockout = ({
 							entry.entry.entryType !== 'ReleaseEvent' && (
 								<span>
 									(
-									<a
-										href={`/${entry.entry.entryType}/ViewVersion/${entry.archivedVersion.id}`}
+									<Link
+										to={`/${entry.entry.entryType}/ViewVersion/${entry.archivedVersion.id}`}
 									>
 										{t('ViewRes:Misc.Details')}
-									</a>
+									</Link>
 									)
 								</span>
 							)}

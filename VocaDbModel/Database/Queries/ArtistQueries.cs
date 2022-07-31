@@ -827,14 +827,29 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ArtistForApiContract(artist, PermissionContext.LanguagePreference, thumbPersister: null, includedFields: ArtistOptionalFields.None),
 					versions: artist.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: a.Reason != ArtistArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != ArtistEditableFields.Nothing,
-							reason: a.Reason.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromArtist(a, _userIconFactory))
 						.ToArray()
 				);
+			});
+		}
+
+		public ArchivedArtistVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedArtistVersionDetailsForApiContract(
+					archived: session.Load<ArchivedArtistVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
 			});
 		}
 #nullable disable

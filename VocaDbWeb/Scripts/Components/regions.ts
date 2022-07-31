@@ -251,7 +251,7 @@ const regionCodes = [
 	'ZW',
 ];
 
-const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
+export const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
 	type: 'region',
 });
 

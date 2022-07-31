@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
@@ -128,6 +128,11 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<VenueForApiContract> GetWithArchivedVersions(int id) =>
 			_queries.GetVenueWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedVenueVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
 		[HttpGet("{id:int}")]
 		[ApiExplorerSettings(IgnoreApi = true)]

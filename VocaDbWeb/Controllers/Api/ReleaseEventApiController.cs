@@ -7,7 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -222,6 +222,11 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<ReleaseEventForApiContract> GetReleaseEventWithArchivedVersions(int id) =>
 			_queries.GetReleaseEventWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedEventVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]

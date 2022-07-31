@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -349,6 +349,11 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersions(int id) =>
 			_queries.GetTagWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedTagVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]

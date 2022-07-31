@@ -204,7 +204,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = "Revision " + contract.ArchivedVersion.Version + " for " + contract.Name;
 			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
+			return View("React/Index");
 		}
 	}
 }

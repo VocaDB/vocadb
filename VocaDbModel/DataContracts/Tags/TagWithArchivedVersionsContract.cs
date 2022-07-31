@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[Obsolete]
 	public class TagWithArchivedVersionsContract : TagContract
 	{
 		public TagWithArchivedVersionsContract(Tag tag, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)

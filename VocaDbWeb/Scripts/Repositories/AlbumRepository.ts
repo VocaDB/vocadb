@@ -3,6 +3,7 @@ import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
@@ -370,6 +371,19 @@ export class AlbumRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<AlbumForApiContract>
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
+	};
+
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedAlbumVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedAlbumVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/albums/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public create = (

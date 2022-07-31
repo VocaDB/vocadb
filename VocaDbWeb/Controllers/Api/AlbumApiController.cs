@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -373,6 +374,11 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<AlbumForApiContract> GetAlbumWithArchivedVersions(int id) =>
 			_queries.GetAlbumWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedAlbumVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
 
 		[HttpPost("")]
 		[Authorize]

@@ -10,6 +10,7 @@ const ArtistCreate = React.lazy(() => import('./ArtistCreate'));
 const ArtistEdit = React.lazy(() => import('./ArtistEdit'));
 const ArtistMerge = React.lazy(() => import('./ArtistMerge'));
 const ArtistVersions = React.lazy(() => import('./ArtistVersions'));
+const ArtistViewVersion = React.lazy(() => import('./ArtistViewVersion'));
 
 const ArtistDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();
@@ -39,6 +40,7 @@ const ArtistRoutes = (): React.ReactElement => {
 			<Route path="Edit/:id" element={<ArtistEdit />} />
 			<Route path="Merge/:id" element={<ArtistMerge />} />
 			<Route path="Versions/:id" element={<ArtistVersions />} />
+			<Route path="ViewVersion/:id" element={<ArtistViewVersion />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

@@ -1,4 +1,5 @@
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedVenueVersionDetailsContract } from '@/DataContracts/Venue/ArchivedVenueVersionDetailsContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
@@ -97,6 +98,19 @@ export class VenueRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<VenueForApiContract>
 		>(this.urlMapper.mapRelative(`/api/venues/${id}/versions`));
+	};
+
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedVenueVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedVenueVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/venues/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {

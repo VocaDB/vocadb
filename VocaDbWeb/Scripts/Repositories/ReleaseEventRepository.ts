@@ -1,4 +1,6 @@
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventSeriesVersionDetailsContract';
+import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
@@ -225,6 +227,19 @@ export class ReleaseEventRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/releaseEvents/${id}/versions`));
 	};
 
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedEventVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedEventVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
 	public getReleaseEventSeriesWithArchivedVersions = ({
 		id,
 	}: {
@@ -235,6 +250,19 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
 		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
+	};
+
+	public getSeriesVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedEventSeriesVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedEventSeriesVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public getForEdit = ({

@@ -52,9 +52,7 @@ export class VideoServiceHelper {
 		}_${timestamp}_audition.mp3`;
 	};
 
-	private static getSoundCloudUrlFromId = (
-		pv: SoundCloudPVContract,
-	): string => {
+	private static getSoundCloudUrlById = (pv: SoundCloudPVContract): string => {
 		const parts = pv.pvId.split(' ');
 		const url = `https://api.soundcloud.com/tracks/${parts[0]}`;
 		return url;
@@ -66,7 +64,7 @@ export class VideoServiceHelper {
 				return VideoServiceHelper.getPiaproUrlWithTimestamp(pv);
 
 			case PVService.SoundCloud:
-				return VideoServiceHelper.getSoundCloudUrlFromId(pv);
+				return VideoServiceHelper.getSoundCloudUrlById(pv);
 
 			default:
 				return pv.pvId;

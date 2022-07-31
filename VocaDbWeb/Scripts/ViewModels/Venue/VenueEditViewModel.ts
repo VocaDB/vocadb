@@ -33,7 +33,7 @@ export class VenueEditViewModel {
 			return {
 				latitude: !isNaN(this.latitude()) ? this.latitude() : null!,
 				longitude: !isNaN(this.longitude()) ? this.longitude() : null!,
-			};
+			} as OptionalGeoPointContract;
 		});
 
 		if (contract.id) {

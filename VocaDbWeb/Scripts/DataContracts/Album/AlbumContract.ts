@@ -18,4 +18,5 @@ export interface AlbumContract
 	releaseDate: OptionalDateTimeContract;
 	releaseEvent?: ReleaseEventContract;
 	status: EntryStatus;
+	version: number;
 }

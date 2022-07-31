@@ -163,12 +163,16 @@ export class LoginManager {
 		return this.hasPermission(PermissionToken.MoveToTrash);
 	}
 
+	public get canRemoveEditPermission(): boolean {
+		return this.hasPermission(PermissionToken.RemoveEditPermission);
+	}
+
 	public get canReportUser(): boolean {
 		return this.hasPermission(PermissionToken.ReportUser);
 	}
 
-	public get canRemoveEditPermission(): boolean {
-		return this.hasPermission(PermissionToken.RemoveEditPermission);
+	public get canRestoreRevisions(): boolean {
+		return this.hasPermission(PermissionToken.RestoreRevisions);
 	}
 
 	public get canUploadMedia(): boolean {

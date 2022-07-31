@@ -1538,14 +1538,30 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
 					versions: song.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: a.Reason != SongArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != SongEditableFields.Nothing,
-							reason: a.Reason.ToString(),
-							userIconFactory: _userIconFactory
-						)).OrderByDescending(v => v.Version)
+						.Select(a => ArchivedObjectVersionForApiContract.FromSong(a, _userIconFactory))
+						.OrderByDescending(v => v.Version)
 						.ToArray()
 				);
+			});
+		}
+
+		public ArchivedSongVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedSongVersionDetailsForApiContract(
+					archived: session.Load<ArchivedSongVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
 			});
 		}
 #nullable disable

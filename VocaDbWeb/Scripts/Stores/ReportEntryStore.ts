@@ -9,10 +9,8 @@ import {
 export interface IEntryReportType {
 	// Report type ID
 	id: string;
-
 	// Localized name
 	name?: string;
-
 	// Notes field is required for this report type
 	notesRequired: boolean;
 }

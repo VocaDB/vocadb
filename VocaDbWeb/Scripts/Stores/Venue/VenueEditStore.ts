@@ -70,7 +70,7 @@ export class VenueEditStore {
 		return {
 			latitude: !isNaN(this.latitude) ? this.latitude : undefined,
 			longitude: !isNaN(this.longitude) ? this.longitude : undefined,
-		};
+		} as OptionalGeoPointContract;
 	}
 
 	@action public checkName = async (value: string): Promise<void> => {

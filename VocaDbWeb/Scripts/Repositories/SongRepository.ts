@@ -4,6 +4,7 @@ import { CommentContract } from '@/DataContracts/CommentContract';
 import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
 import { CreateSongContract } from '@/DataContracts/Song/CreateSongContract';
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
@@ -571,6 +572,19 @@ export class SongRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<SongApiContract>
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
+	};
+
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedSongVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedSongVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/songs/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public create = (

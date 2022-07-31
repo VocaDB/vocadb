@@ -1,6 +1,7 @@
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { UserIconLinkOrName_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
+import { useReasonNames } from '@/Components/useReasonNames';
 import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
@@ -8,47 +9,9 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const useReasonNames = (): ((
-	entryType: EntryType,
-	archivedVersion: ArchivedVersionContract,
-) => string | undefined) => {
-	const { t } = useTranslation(['Resources']);
-
-	return React.useCallback(
-		(
-			entryType: EntryType,
-			archivedVersion: ArchivedVersionContract,
-		): string | undefined => {
-			switch (entryType) {
-				case EntryType.Album:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:AlbumArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.Artist:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:ArtistArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.Song:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:SongArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.ReleaseEvent:
-				case EntryType.ReleaseEventSeries:
-				case EntryType.Tag:
-				case EntryType.SongList:
-				case EntryType.Venue:
-					return t(`Resources:EntryEditEventNames.${archivedVersion.reason}`);
-			}
-		},
-		[t],
-	);
-};
 
 interface ArchivedObjectVersionRowProps {
 	archivedVersion: ArchivedVersionContract;
@@ -72,8 +35,8 @@ const ArchivedObjectVersionRow = React.memo(
 				<td>
 					{linkFunc &&
 					(loginManager.canViewHiddenRevisions || !archivedVersion.hidden) ? (
-						<a
-							href={linkFunc(archivedVersion.id)}
+						<Link
+							to={linkFunc(archivedVersion.id)}
 							className={classNames(
 								!archivedVersion.anythingChanged && 'muted',
 							)}
@@ -83,7 +46,7 @@ const ArchivedObjectVersionRow = React.memo(
 						>
 							{archivedVersion.version} (
 							{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
-						</a>
+						</Link>
 					) : (
 						<span
 							style={{

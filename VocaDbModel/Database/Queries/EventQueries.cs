@@ -315,6 +315,7 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, _imageUrlFactory));
 		}
 
+		[Obsolete]
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
@@ -332,6 +333,29 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
+		public ArchivedEventSeriesVersionDetailsForApiContract GetSeriesVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedEventSeriesVersionDetailsForApiContract(
+					archived: session.Load<ArchivedReleaseEventSeriesVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
+
+		[Obsolete]
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
@@ -348,6 +372,28 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
+
+#nullable enable
+		public ArchivedEventVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedEventVersionDetailsForApiContract(
+					archived: session.Load<ArchivedReleaseEventVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
 
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false)
 		{
@@ -920,12 +966,7 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ReleaseEventForApiContract(ev, LanguagePreference, fields: ReleaseEventOptionalFields.None, thumbPersister: null),
 					versions: ev.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: !Equals(a.Diff.ChangedFields, default(ReleaseEventEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
-							reason: a.CommonEditEvent.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromReleaseEvent(a, _userIconFactory))
 						.ToArray()
 				);
 			});
@@ -939,12 +980,7 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ReleaseEventSeriesForApiContract(series, LanguagePreference, fields: ReleaseEventSeriesOptionalFields.None, thumbPersister: null),
 					versions: series.ArchivedVersionsManager.Versions
-						.Select(v => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: v,
-							anythingChanged: !Equals(v.Diff.ChangedFields, default(ReleaseEventSeriesEditableFields)) || !Equals(v.CommonEditEvent, default(EntryEditEvent)),
-							reason: v.CommonEditEvent.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(v => ArchivedObjectVersionForApiContract.FromReleaseEventSeries(v, _userIconFactory))
 						.ToArray()
 				);
 			});

@@ -334,6 +334,7 @@ namespace VocaDb.Model.Service
 				.ToArray());
 		}
 
+		[Obsolete]
 		public ArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
