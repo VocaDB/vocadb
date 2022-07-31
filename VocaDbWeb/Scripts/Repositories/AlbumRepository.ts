@@ -3,6 +3,7 @@ import AlbumDetailsContract from '@DataContracts/Album/AlbumDetailsContract';
 import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
 import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
 import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
+import CreateAlbumContract from '@DataContracts/Album/CreateAlbumContract';
 import ArtistContract from '@DataContracts/Artist/ArtistContract';
 import CommentContract from '@DataContracts/CommentContract';
 import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
@@ -329,6 +330,22 @@ export default class AlbumRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<AlbumForApiContract>
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
+	};
+
+	public create = (contract: CreateAlbumContract): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative('/api/albums'),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: vdb.values.requestToken,
+				},
+			},
+		);
 	};
 
 	public edit = (

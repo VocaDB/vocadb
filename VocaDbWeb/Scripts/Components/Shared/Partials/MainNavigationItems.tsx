@@ -26,7 +26,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link as={Link} to={'/Artist/Create'}>
+								<Nav.Link as={Link} to="/Artist/Create">
 									{t('ViewRes:Layout.AddArtist')}
 								</Nav.Link>
 							</li>
@@ -40,7 +40,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link href={'/Album/Create'}>
+								<Nav.Link as={Link} to="/Album/Create">
 									{t('ViewRes:Layout.AddAlbum')}
 								</Nav.Link>
 							</li>

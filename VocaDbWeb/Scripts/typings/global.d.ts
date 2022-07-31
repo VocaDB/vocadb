@@ -7,7 +7,11 @@ declare global {
 			entryEdit: any;
 			shared: any;
 			song: any | /* TODO: Remove. */ { rankingsTitle?: string };
-			album: { addedToCollection?: string };
+			album: {
+				addedToCollection?: string;
+				newAlbumArtistDesc?: string;
+				newAlbumInfo?: string;
+			};
 			albumDetails: { download: string };
 			artist: { authoredBy?: string; newArtistExternalLink?: string };
 			layout: { paypalDonateTitle?: string };
