@@ -509,29 +509,6 @@ namespace VocaDb.Web.Controllers.Api
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) =>
 			_queries.CreateComment(id, contract);
 
-		[HttpPost("")]
-		[Authorize]
-		[ApiExplorerSettings(IgnoreApi = true)]
-		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
-		public async Task<ActionResult<SongContract>> PostNewSong(CreateSongContract contract)
-		{
-			if (contract == null)
-				return BadRequest("Message was empty");
-
-			try
-			{
-				return await _queries.Create(contract);
-			}
-			catch (VideoParseException x)
-			{
-				return BadRequest(x.Message);
-			}
-			catch (ArgumentException x)
-			{
-				return BadRequest(x.Message);
-			}
-		}
-
 		[HttpPost("{id:int}/pvs")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
@@ -564,6 +541,37 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<SongForApiContract> GetSongWithArchivedVersions(int id) =>
 			_queries.GetSongWithArchivedVersionsForApi(id);
+
+		[HttpPost("")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Create(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateSongForApiContract contract
+		)
+		{
+			if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
+
+			if (contract.Artists is null || !contract.Artists.Any())
+				ModelState.AddModelError("Artists", ViewRes.Song.CreateStrings.NeedArtist);
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			try
+			{
+				var song = await _queries.Create(contract);
+
+				return song.Id;
+			}
+			catch (VideoParseException x)
+			{
+				ModelState.AddModelError("PVUrl", x.Message);
+				return ValidationProblem(ModelState);
+			}
+		}
 
 		[HttpPost("{id:int}")]
 		[Authorize]

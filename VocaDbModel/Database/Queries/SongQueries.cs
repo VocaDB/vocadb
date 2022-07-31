@@ -332,7 +332,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public Task<SongContract> Create(CreateSongContract contract)
+		public Task<SongContract> Create(CreateSongForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 

@@ -1,19 +1,12 @@
 #nullable disable
 
-using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Models.Song;
 
 namespace VocaDb.Tests.Web.Controllers
 {
@@ -53,30 +46,6 @@ namespace VocaDb.Tests.Web.Controllers
 				pvHelper: null,
 				brandableStringsManager: null
 			);
-		}
-
-		[TestMethod]
-		public async Task Create()
-		{
-			var artist = _repository.Save(CreateEntry.Artist(ArtistType.Producer));
-
-			var model = new Create
-			{
-				NameOriginal = "Arabian Response",
-				PVUrl = "http://www.nicovideo.jp/watch/sm32982184",
-				Artists = new[] {
-					new ArtistForSongContract {
-						Artist = new ArtistContract(artist, ContentLanguagePreference.Default)
-					}
-				}
-			};
-
-			var result = await _controller.Create(model);
-			result.Should().BeOfType<RedirectToActionResult>("result");
-			var routeResult = (RedirectToActionResult)result;
-			routeResult.ActionName.Should().Be("Edit", "Action");
-
-			_repository.List<Song>().Count.Should().Be(1, "Song was created");
 		}
 	}
 }

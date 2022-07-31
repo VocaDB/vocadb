@@ -82,7 +82,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link href={'/Song/Create'}>
+								<Nav.Link as={Link} to="/Song/Create">
 									{t('ViewRes:Layout.AddSong')}
 								</Nav.Link>
 							</li>

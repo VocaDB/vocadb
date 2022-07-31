@@ -185,38 +185,8 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Create(string pvUrl)
 		{
-			var model = new Create { PVUrl = pvUrl };
-
-			return View(model);
+			return View("React/Index");
 		}
-
-		[HttpPost]
-		public async Task<ActionResult> Create(Create model)
-		{
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
-				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
-
-			if (model.Artists == null || !model.Artists.Any())
-				ModelState.AddModelError("Artists", ViewRes.Song.CreateStrings.NeedArtist);
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			var contract = model.ToContract();
-
-			try
-			{
-				var song = await _queries.Create(contract);
-				return RedirectToAction("Edit", new { id = song.Id });
-			}
-			catch (VideoParseException x)
-			{
-				ModelState.AddModelError("PVUrl", x.Message);
-				return View(model);
-			}
-		}
-
-		private int InstrumentalTagId => _queries.InstrumentalTagId;
 
 		//
 		// GET: /Song/Edit/5 
