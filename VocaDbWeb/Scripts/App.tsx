@@ -1,4 +1,3 @@
-import Container from '@Bootstrap/Container';
 import AboutDisclaimer from '@Components/Shared/Partials/AboutDisclaimer';
 import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
@@ -15,17 +14,15 @@ const App = (): React.ReactElement => {
 
 			<Header />
 
-			<Container fluid={true}>
-				<div className="row-fluid">
-					<LeftMenu />
+			<div>
+				<LeftMenu />
 
-					<div className="span10 rightFrame well">
-						<React.Suspense fallback={null /* TODO */}>
-							<AppRoutes />
-						</React.Suspense>
-					</div>
+				<div className="rightFrame well">
+					<React.Suspense fallback={null /* TODO */}>
+						<AppRoutes />
+					</React.Suspense>
 				</div>
-			</Container>
+			</div>
 
 			<AboutDisclaimer />
 
