@@ -17,14 +17,16 @@ const App = (): React.ReactElement => {
 			<div css={{ display: 'flex' }}>
 				<LeftMenu />
 
-				<div className="rightFrame well" css={{ flex: '1 1 100%' }}>
-					<React.Suspense fallback={null /* TODO */}>
-						<AppRoutes />
-					</React.Suspense>
+				<div css={{ width: '100%' }}>
+					<div className="rightFrame well" css={{ flex: '1 1 100%' }}>
+						<React.Suspense fallback={null /* TODO */}>
+							<AppRoutes />
+						</React.Suspense>
+					</div>
+
+					<AboutDisclaimer />
 				</div>
 			</div>
-
-			<AboutDisclaimer />
 
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 		</>

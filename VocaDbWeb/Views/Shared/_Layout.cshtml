@@ -70,8 +70,9 @@
 	    </div>
 	
 		<div style="display: flex;">
-				<partial name="Partials/_LeftMenu" />
+			<partial name="Partials/_LeftMenu" />
 
+			<div style="width: 100%;">
 				<div class="rightFrame well" style="flex: 1 1 100%">
                     
 							@if (ViewBag.Parents != null) {
@@ -146,10 +147,11 @@
 						</div>
 
 				</div>
+
+				<!-- Footer -->
+				<partial name="Partials/_Footer" />
+			</div>
 		</div>
-			
-        <!-- Footer -->	
-		<partial name="Partials/_Footer" />
 
 	    <partial name="Partials/_LayoutScripts" />
         
