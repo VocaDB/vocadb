@@ -72,84 +72,86 @@
 		<div style="display: flex;">
 			<partial name="Partials/_LeftMenu" />
 
-			<div style="width: 100%;">
-				<div class="rightFrame well" style="flex: 1 1 100%">
-                    
-							@if (ViewBag.Parents != null) {
-		   var arr = (IHtmlContent[])ViewBag.Parents;
-								<ul class="breadcrumb">
-								@foreach (var link in arr) {
-									<li>
-										@link 
-										@if (link != arr.Last()) {
-											<span class="divider">/</span>
-		  }
-									</li>
+			<div class="container-fluid" style="flex: 1 1 100%;">
+				<div class="row-fluid">
+					<div class="span12 rightFrame well">
+						
+								@if (ViewBag.Parents != null) {
+			var arr = (IHtmlContent[])ViewBag.Parents;
+									<ul class="breadcrumb">
+									@foreach (var link in arr) {
+										<li>
+											@link 
+											@if (link != arr.Last()) {
+												<span class="divider">/</span>
+			}
+										</li>
+			}
+									</ul>
 		}
-								</ul>
-	   }
-                                        
-							@if (!string.IsNullOrEmpty(PageProperties.Title)) {
-								<h1 class="page-title">@PageProperties.Title
-								@if (!string.IsNullOrEmpty(ViewBag.Subtitle)) {
-									<small>&nbsp;@ViewBag.Subtitle</small>
+											
+								@if (!string.IsNullOrEmpty(PageProperties.Title)) {
+									<h1 class="page-title">@PageProperties.Title
+									@if (!string.IsNullOrEmpty(ViewBag.Subtitle)) {
+										<small>&nbsp;@ViewBag.Subtitle</small>
+			}
+									</h1>
 		}
-								</h1>
-	   }
-                    
-                            @if (Login.Manager.LockdownEnabled) {
-                                <div class="alert">
-                                    @AppConfig.LockdownMessage
-                                </div>
-                            }
-							
-							@if (!string.IsNullOrEmpty(Config.SiteSettings.SitewideAnnouncement)) {
-								<div class="alert">
-									@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
-								</div>
-							}								
+						
+								@if (Login.Manager.LockdownEnabled) {
+									<div class="alert">
+										@AppConfig.LockdownMessage
+									</div>
+								}
+								
+								@if (!string.IsNullOrEmpty(Config.SiteSettings.SitewideAnnouncement)) {
+									<div class="alert">
+										@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
+									</div>
+								}								
 
-							@if (IsSectionDefined("Toolbar")) {
-								<p>
-									@RenderSection("Toolbar")
-								</p>
-	   }
-				
-		
-                            <div id="messages">
-                                <div class="wrapper">
-                                    <div id="ajaxLoadingMessage" style="display: none;">@ViewRes.SharedStrings.Loading</div>
-
-								    <div id="errorMessage" class="alert alert-error" style="display: none;">
-									    <a class="close" data-dismiss="alert" href="#">&times;</a>
-									    <span id="errorMessageString">@TempData.ErrorMessage()</span>
-								    </div>
-
-                                    <div id="successMessage" class="alert alert-success" style="display: none;">
-                                        <a class="close" data-dismiss="alert" href="#">&times;</a>
-                                        <span id="successMessageString">@TempData.SuccessMessage()</span>
-                                    </div>
-                                    
-                                    <div id="warnMessage" class="alert" style="display: none;">
-                                        <a class="close" data-dismiss="alert" href="#">&times;</a>
-                                        <span id="warnMessageString">@TempData.WarnMessage()</span>
-                                    </div>
-                                </div>
-                            </div>
-                                                            		
-							@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
-								<partial name="Partials/Shared/_NotificationPanel" model="@(new NotificationPanelViewModel(TempData.StatusMessage()))" />
-							}
-		
-							@RenderBody()
+								@if (IsSectionDefined("Toolbar")) {
+									<p>
+										@RenderSection("Toolbar")
+									</p>
+		}
 					
-						<div id="loginPopup" title="@ViewRes._LayoutStrings.LogIn" style="display: none;">
-						</div>
+			
+								<div id="messages">
+									<div class="wrapper">
+										<div id="ajaxLoadingMessage" style="display: none;">@ViewRes.SharedStrings.Loading</div>
 
+										<div id="errorMessage" class="alert alert-error" style="display: none;">
+											<a class="close" data-dismiss="alert" href="#">&times;</a>
+											<span id="errorMessageString">@TempData.ErrorMessage()</span>
+										</div>
+
+										<div id="successMessage" class="alert alert-success" style="display: none;">
+											<a class="close" data-dismiss="alert" href="#">&times;</a>
+											<span id="successMessageString">@TempData.SuccessMessage()</span>
+										</div>
+										
+										<div id="warnMessage" class="alert" style="display: none;">
+											<a class="close" data-dismiss="alert" href="#">&times;</a>
+											<span id="warnMessageString">@TempData.WarnMessage()</span>
+										</div>
+									</div>
+								</div>
+																		
+								@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
+									<partial name="Partials/Shared/_NotificationPanel" model="@(new NotificationPanelViewModel(TempData.StatusMessage()))" />
+								}
+			
+								@RenderBody()
+						
+							<div id="loginPopup" title="@ViewRes._LayoutStrings.LogIn" style="display: none;">
+							</div>
+
+					</div>
+
+					<!-- Footer -->
+					<partial name="Partials/_Footer" />
 				</div>
-
-				<!-- Footer -->
-				<partial name="Partials/_Footer" />
 			</div>
 		</div>
 

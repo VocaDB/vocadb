@@ -1,3 +1,4 @@
+import Container from '@Bootstrap/Container';
 import AboutDisclaimer from '@Components/Shared/Partials/AboutDisclaimer';
 import Header from '@Components/Shared/Partials/Header';
 import LeftMenu from '@Components/Shared/Partials/LeftMenu';
@@ -17,15 +18,17 @@ const App = (): React.ReactElement => {
 			<div css={{ display: 'flex' }}>
 				<LeftMenu />
 
-				<div css={{ width: '100%' }}>
-					<div className="rightFrame well" css={{ flex: '1 1 100%' }}>
-						<React.Suspense fallback={null /* TODO */}>
-							<AppRoutes />
-						</React.Suspense>
-					</div>
+				<Container fluid css={{ flex: '1 1 100%' }}>
+					<div className="row-fluid">
+						<div className="span12 rightFrame well">
+							<React.Suspense fallback={null /* TODO */}>
+								<AppRoutes />
+							</React.Suspense>
+						</div>
 
-					<AboutDisclaimer />
-				</div>
+						<AboutDisclaimer />
+					</div>
+				</Container>
 			</div>
 
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
