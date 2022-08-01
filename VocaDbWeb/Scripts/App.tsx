@@ -14,10 +14,10 @@ const App = (): React.ReactElement => {
 
 			<Header />
 
-			<div>
+			<div css={{ display: 'flex' }}>
 				<LeftMenu />
 
-				<div className="rightFrame well">
+				<div className="rightFrame well" css={{ flex: '1 1 100%' }}>
 					<React.Suspense fallback={null /* TODO */}>
 						<AppRoutes />
 					</React.Suspense>

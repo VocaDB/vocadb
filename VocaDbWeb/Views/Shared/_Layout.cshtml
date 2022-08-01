@@ -69,10 +69,10 @@
 		    </div>
 	    </div>
 	
-		<div>
+		<div style="display: flex;">
 				<partial name="Partials/_LeftMenu" />
 
-				<div class="rightFrame well">
+				<div class="rightFrame well" style="flex: 1 1 100%">
                     
 							@if (ViewBag.Parents != null) {
 		   var arr = (IHtmlContent[])ViewBag.Parents;

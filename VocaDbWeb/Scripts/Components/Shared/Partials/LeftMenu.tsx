@@ -80,7 +80,7 @@ const LeftMenu = React.memo(
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
-			<div className="menu">
+			<div className="menu" css={{ minWidth: 240, flex: '0 1 0' }}>
 				<div className="well">
 					<Link to="/">
 						<img
