@@ -25,6 +25,7 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { LoginManager } from '@/Models/LoginManager';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { VenueRepository } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -42,6 +43,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface VenueEditLayoutProps {
@@ -161,7 +163,9 @@ const VenueEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const id = await venueEditStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
+
+							const id = await venueEditStore.submit(requestToken);
 
 							navigate(EntryUrlMapper.details(EntryType.Venue, id));
 						} catch {

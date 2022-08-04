@@ -46,6 +46,7 @@ import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
 import SongInAlbumEdit from '@/Pages/Album/Partials/SongInAlbumEdit';
 import TrackProperties from '@/Pages/Album/Partials/TrackProperties';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -67,6 +68,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
@@ -952,6 +954,8 @@ const AlbumEditLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const coverPicUpload =
 								coverPicUploadRef.current.files?.item(0) ?? undefined;
 
@@ -965,6 +969,7 @@ const AlbumEditLayout = observer(
 								.value();
 
 							const id = await albumEditStore.submit(
+								requestToken,
 								coverPicUpload,
 								pictureUpload,
 							);

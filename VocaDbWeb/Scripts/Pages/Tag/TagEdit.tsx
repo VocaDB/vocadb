@@ -31,6 +31,7 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -47,6 +48,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 const allTagTargetTypes: TagTargetTypes[] = [
@@ -185,10 +187,13 @@ const TagEditLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const thumbPicUpload =
 								thumbPicUploadRef.current.files?.item(0) ?? undefined;
 
 							const id = await tagEditStore.submit(
+								requestToken,
 								categoryNameRef.current.value,
 								thumbPicUpload,
 							);

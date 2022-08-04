@@ -12,9 +12,11 @@ import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -25,7 +27,9 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
@@ -70,10 +74,15 @@ const ArtistCreateLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const pictureUpload =
 								pictureUploadRef.current.files?.item(0) ?? undefined;
 
-							const id = await artistCreateStore.submit(pictureUpload);
+							const id = await artistCreateStore.submit(
+								requestToken,
+								pictureUpload,
+							);
 
 							navigate(`/Artist/Edit/${id}`);
 						} catch (e) {
