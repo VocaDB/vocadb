@@ -727,24 +727,24 @@ const SongEditLayout = observer(
 					<>
 						{contract.canDelete &&
 							(contract.deleted ? (
-								<JQueryUIButton
-									as="a"
-									href={`/Song/Restore/${contract.id}`}
-									icons={{ primary: 'ui-icon-trash' }}
-								>
-									{t('ViewRes:EntryEdit.Restore')}
-								</JQueryUIButton>
-							) : (
 								loginManager.canDeleteEntries && (
 									<JQueryUIButton
-										as={SafeAnchor}
-										href="#"
-										onClick={songEditStore.deleteStore.show}
+										as="a"
+										href={`/Song/Restore/${contract.id}`}
 										icons={{ primary: 'ui-icon-trash' }}
 									>
-										{t('ViewRes:Shared.Delete')}
+										{t('ViewRes:EntryEdit.Restore')}
 									</JQueryUIButton>
 								)
+							) : (
+								<JQueryUIButton
+									as={SafeAnchor}
+									href="#"
+									onClick={songEditStore.deleteStore.show}
+									icons={{ primary: 'ui-icon-trash' }}
+								>
+									{t('ViewRes:Shared.Delete')}
+								</JQueryUIButton>
 							))}
 						{loginManager.canMergeEntries && (
 							<>
