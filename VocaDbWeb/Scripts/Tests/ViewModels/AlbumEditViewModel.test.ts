@@ -1,4 +1,5 @@
 import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
@@ -279,12 +280,14 @@ test('acceptTrackSelection add a second track', () => {
 });
 
 test('addArtist existing', () => {
-	var newVocalist: ArtistContract = {
+	var newVocalist: ArtistApiContract = {
 		id: 4,
 		name: 'Kagamine Rin',
 		additionalNames: '',
 		artistType: ArtistType.Vocaloid,
 		status: undefined!,
+		mainPicture: undefined!,
+		version: undefined!,
 	};
 	artistRep.result = newVocalist;
 

@@ -153,9 +153,9 @@ export class ArtistRepository
 	}: {
 		id: number;
 		lang: ContentLanguagePreference;
-	}): Promise<ArtistContract> => {
+	}): Promise<ArtistApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
-		return this.httpClient.get<ArtistContract>(url, {
+		return this.httpClient.get<ArtistApiContract>(url, {
 			fields: [ArtistOptionalField.AdditionalNames].join(','),
 			lang: lang,
 		});

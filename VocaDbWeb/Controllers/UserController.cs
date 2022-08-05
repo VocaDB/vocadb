@@ -272,18 +272,7 @@ namespace VocaDb.Web.Controllers
 
 			return RenderDetails(model);
 		}
-#nullable disable
 
-		[Authorize]
-		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
-		{
-			var artist = _artistService.GetArtist(artistId);
-			var ownedArtist = new ArtistForUserContract(artist);
-
-			return PartialView(ownedArtist);
-		}
-
-#nullable enable
 		public ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{
 			var model = Data.GetUserByNameNonSensitive(id);
@@ -576,43 +565,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-			var user = Service.GetUserWithPermissions(id);
-			return View(new UserEdit(user) { EditableGroups = UserEdit.GetEditableGroups(_loginManager) });
-		}
-
-		//
-		// POST: /User/Edit/5
-		[Authorize]
-		[HttpPost]
-		public ActionResult Edit(UserEdit model, IEnumerable<PermissionFlagEntry> permissions)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
-
-			model.EditableGroups = UserEdit.GetEditableGroups(_loginManager);
-			model.OldName = Service.GetUser(model.Id).Name;
-
-			if (permissions != null)
-				model.Permissions = permissions.ToArray();
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			try
-			{
-				Data.UpdateUser(model.ToContract());
-			}
-			catch (InvalidEmailFormatException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
-				return View(model);
-			}
-			catch (UserNameAlreadyExistsException)
-			{
-				ModelState.AddModelError("Username", "Username is already in use.");
-				return View(model);
-			}
-
-			return RedirectToAction("Details", new { id = model.Id });
+			return View("React/Index");
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]

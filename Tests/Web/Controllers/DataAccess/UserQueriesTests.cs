@@ -700,8 +700,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.AdditionalPermissions = new HashSet<PermissionToken>(new[] { PermissionToken.DesignatedStaff });
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				AdditionalPermissions = new[]
+				{
+					PermissionToken.DesignatedStaff
+				}.Select(permissionToken => permissionToken.Id).ToArray(),
+			};
 			_data.UpdateUser(contract);
 
 			var user = _repository.Load(contract.Id);
@@ -715,8 +720,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext.RefreshLoggedUser(_repository);
 
 			var oldName = _userWithoutEmail.Name;
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = "HatsuneMiku";
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = "HatsuneMiku",
+			};
 
 			_data.UpdateUser(contract);
 
@@ -735,8 +742,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = _userWithEmail.Name;
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = _userWithEmail.Name,
+			};
 
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<UserNameAlreadyExistsException>();
 		}
@@ -747,8 +756,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = "Miku!";
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = "Miku!",
+			};
 
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<InvalidUserNameException>();
 		}
@@ -756,7 +767,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUser_NotAllowed()
 		{
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<NotAllowedException>();
 		}
 
