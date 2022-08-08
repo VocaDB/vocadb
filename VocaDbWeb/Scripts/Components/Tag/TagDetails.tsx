@@ -14,7 +14,7 @@ import EventThumbs from '@Components/Shared/Partials/Shared/EventThumbs';
 import ShowMore from '@Components/Shared/Partials/Shared/ShowMore';
 import UniversalTimeLabel from '@Components/Shared/Partials/Shared/UniversalTimeLabel';
 import SongGrid from '@Components/Shared/Partials/Song/SongGrid';
-import TagList from '@Components/Shared/Partials/Tag/TagList';
+import TagLinkList from '@Components/Shared/Partials/Tag/TagLinkList';
 import useVocaDbTitle from '@Components/useVocaDbTitle';
 import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
@@ -473,7 +473,7 @@ const TagDetailsLayout = observer(
 							{tag.relatedTags.length > 0 && (
 								<p>
 									{t('ViewRes.Tag:Details.RelatedTags')}:{' '}
-									<TagList tagNames={tag.relatedTags} tooltip={true} />
+									<TagLinkList tagNames={tag.relatedTags} tooltip={true} />
 								</p>
 							)}
 
@@ -803,13 +803,13 @@ const TagDetailsLayout = observer(
 						{tag.siblings.length > 0 && (
 							<p>
 								{t('ViewRes.Tag:Details.Siblings')}:{' '}
-								<TagList tagNames={tag.siblings} />
+								<TagLinkList tagNames={tag.siblings} />
 							</p>
 						)}
 						{tag.children.length > 0 && (
 							<p>
 								{t('ViewRes.Tag:Details.Children')}:{' '}
-								<TagList tagNames={tag.children} />
+								<TagLinkList tagNames={tag.children} />
 							</p>
 						)}
 					</div>

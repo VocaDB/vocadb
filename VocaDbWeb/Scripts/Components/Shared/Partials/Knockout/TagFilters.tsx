@@ -1,7 +1,7 @@
 import ButtonGroup from '@Bootstrap/ButtonGroup';
 import Dropdown from '@Bootstrap/Dropdown';
 import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import TagFiltersCore from '@Components/Shared/Partials/TagFilters';
+import TagFiltersBase from '@Components/Shared/Partials/TagFiltersBase';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import EntryUrlMapper from '@Shared/EntryUrlMapper';
 import TagFiltersStore from '@Stores/Search/TagFilters';
@@ -21,7 +21,7 @@ const TagFilters = observer(
 
 		return (
 			<>
-				<TagFiltersCore tagFilters={tagFilters} />
+				<TagFiltersBase tagFilters={tagFilters} />
 
 				{tagFilters.tags.length > 0 && (
 					<div>

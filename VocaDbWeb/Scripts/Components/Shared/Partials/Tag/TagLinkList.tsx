@@ -3,13 +3,13 @@ import React from 'react';
 
 import TagLink from './TagLink';
 
-interface TagListProps {
+interface TagLinkListProps {
 	tagNames: TagBaseContract[];
 	tooltip?: boolean;
 }
 
-const TagList = React.memo(
-	({ tagNames, tooltip = false }: TagListProps): React.ReactElement => {
+const TagLinkList = React.memo(
+	({ tagNames, tooltip = false }: TagLinkListProps): React.ReactElement => {
 		return (
 			<>
 				{tagNames.map((tagName, index) => (
@@ -23,4 +23,4 @@ const TagList = React.memo(
 	},
 );
 
-export default TagList;
+export default TagLinkList;

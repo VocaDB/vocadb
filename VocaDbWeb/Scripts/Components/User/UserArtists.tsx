@@ -19,7 +19,7 @@ import ArtistTypesDropdownKnockout from '../Shared/Partials/Artist/ArtistTypesDr
 import EntryCountBox from '../Shared/Partials/EntryCountBox';
 import ServerSidePaging from '../Shared/Partials/Knockout/ServerSidePaging';
 import DraftIcon from '../Shared/Partials/Shared/DraftIcon';
-import TagFilters from '../Shared/Partials/TagFilters';
+import TagFiltersBase from '../Shared/Partials/TagFiltersBase';
 import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface FollowedArtistsProps {
@@ -59,7 +59,7 @@ const FollowedArtists = observer(
 					<div className="control-group">
 						<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 						<div className="controls">
-							<TagFilters tagFilters={followedArtistsStore.tagFilters} />
+							<TagFiltersBase tagFilters={followedArtistsStore.tagFilters} />
 							<div>
 								<TagAutoComplete
 									type="text"

@@ -12,7 +12,7 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
-import TagFilters from './TagFilters';
+import TagFiltersBase from './TagFiltersBase';
 
 interface SongListsFiltersProps {
 	songListsBaseStore: SongListsBaseStore;
@@ -132,7 +132,7 @@ const SongListsFilters = observer(
 				<div className="control-group">
 					<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 					<div className="controls">
-						<TagFilters tagFilters={songListsBaseStore.tagFilters} />
+						<TagFiltersBase tagFilters={songListsBaseStore.tagFilters} />
 						<div>
 							<TagAutoComplete
 								type="text"

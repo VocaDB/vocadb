@@ -23,7 +23,7 @@ import FormatMarkdown from '../Shared/Partials/Html/FormatMarkdown';
 import LanguageFlag from '../Shared/Partials/Html/LanguageFlag';
 import UniversalTimeLabel from '../Shared/Partials/Shared/UniversalTimeLabel';
 import SongGrid from '../Shared/Partials/Song/SongGrid';
-import TagList from '../Shared/Partials/Tag/TagList';
+import TagLinkList from '../Shared/Partials/Tag/TagLinkList';
 import ProfileIconKnockout from '../Shared/Partials/User/ProfileIconKnockout';
 import { showErrorMessage, showSuccessMessage } from '../ui';
 import { userLanguageCultures } from '../userLanguageCultures';
@@ -380,7 +380,7 @@ const UserOverview = observer(
 						{user.favoriteTags.length > 0 && (
 							<>
 								<h4>{t('ViewRes.User:Details.FavoriteTags')}</h4>
-								<TagList tagNames={user.favoriteTags} />
+								<TagLinkList tagNames={user.favoriteTags} />
 								<br />
 								{userDetailsStore.ratingsByGenreChart && (
 									<HighchartsReact

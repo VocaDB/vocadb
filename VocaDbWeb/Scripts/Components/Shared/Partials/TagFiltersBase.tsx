@@ -5,12 +5,12 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface TagFiltersProps {
+interface TagFiltersBaseProps {
 	tagFilters: TagFiltersStore;
 }
 
-const TagFilters = observer(
-	({ tagFilters }: TagFiltersProps): React.ReactElement => {
+const TagFiltersBase = observer(
+	({ tagFilters }: TagFiltersBaseProps): React.ReactElement => {
 		return (
 			<>
 				{tagFilters.tags.map((tag, index) => (
@@ -48,4 +48,4 @@ const TagFilters = observer(
 	},
 );
 
-export default TagFilters;
+export default TagFiltersBase;

@@ -12,7 +12,7 @@ import SongSearchList from '../../Search/Partials/SongSearchList';
 import ArtistFilters from '../../Shared/Partials/Knockout/ArtistFilters';
 import { RatedSongsSearchDropdown } from '../../Shared/Partials/Knockout/SearchDropdown';
 import { SongAdvancedFilters } from '../../Shared/Partials/Search/AdvancedFilters';
-import TagFilters from '../../Shared/Partials/TagFilters';
+import TagFiltersBase from '../../Shared/Partials/TagFiltersBase';
 import SongVoteRatingsRadioKnockout from '../../Shared/Partials/User/SongVoteRatingsRadioKnockout';
 
 interface RatedSongsProps {
@@ -147,7 +147,7 @@ const RatedSongs = observer(
 					<div className="control-group">
 						<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 						<div className="controls">
-							<TagFilters tagFilters={ratedSongsStore.tagFilters} />
+							<TagFiltersBase tagFilters={ratedSongsStore.tagFilters} />
 							<div>
 								<TagAutoComplete
 									type="text"
