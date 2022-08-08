@@ -1,8 +1,7 @@
 import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import SongLink from '@/Components/Shared/Partials/Song/SongLink';
 import SongApiContract from '@/DataContracts/Song/SongApiContract';
 import React from 'react';
-
-import SongLink from './SongLink';
 
 interface SongLinkKnockoutProps {
 	song: SongApiContract;

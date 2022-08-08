@@ -6,9 +6,8 @@ import ArtistRepository from '@/Repositories/ArtistRepository';
 import TagRepository from '@/Repositories/TagRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
+import WebLinkEditViewModel from '@/ViewModels/WebLinkEditViewModel';
 import ko from 'knockout';
-
-import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 export default class ArtistCreateViewModel {
 	public artistType = ko.observable(ArtistType.Producer);

@@ -1,5 +1,24 @@
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import {
+	TagToolTip,
+	EventToolTip,
+} from '@/Components/KnockoutExtensions/EntryToolTip';
+import AlbumLink from '@/Components/Shared/Partials/Album/AlbumLink';
+import ArtistList, {
+	ShowRolesMode,
+} from '@/Components/Shared/Partials/Artist/ArtistList';
+import LatestCommentsKnockout from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
+import EnglishTranslatedString from '@/Components/Shared/Partials/EnglishTranslatedString';
+import ExternalLinksRows from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
+import PersonalDescriptionMedia from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
+import PVServiceIcon from '@/Components/Shared/Partials/Shared/PVServiceIcon';
+import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import SongGrid from '@/Components/Shared/Partials/Song/SongGrid';
+import SongLink from '@/Components/Shared/Partials/Song/SongLink';
+import SongLinkKnockout from '@/Components/Shared/Partials/Song/SongLinkKnockout';
+import SongTypeLabel from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import TagList from '@/Components/Shared/Partials/TagList';
 import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
 import PVContract from '@/DataContracts/PVs/PVContract';
 import SongApiContract from '@/DataContracts/Song/SongApiContract';
@@ -14,6 +33,9 @@ import LoginManager from '@/Models/LoginManager';
 import PVService from '@/Models/PVs/PVService';
 import SongType from '@/Models/Songs/SongType';
 import WebLinkCategory from '@/Models/WebLinkCategory';
+import SongInListsDialog from '@/Pages/Song/Partials/SongInListsDialog';
+import UsersWithSongRating from '@/Pages/Song/Partials/UsersWithSongRating';
+import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
@@ -25,29 +47,6 @@ import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import {
-	EventToolTip,
-	TagToolTip,
-} from '../../Components/KnockoutExtensions/EntryToolTip';
-import AlbumLink from '../../Components/Shared/Partials/Album/AlbumLink';
-import ArtistList, {
-	ShowRolesMode,
-} from '../../Components/Shared/Partials/Artist/ArtistList';
-import LatestCommentsKnockout from '../../Components/Shared/Partials/Comment/LatestCommentsKnockout';
-import EnglishTranslatedString from '../../Components/Shared/Partials/EnglishTranslatedString';
-import ExternalLinksRows from '../../Components/Shared/Partials/EntryDetails/ExternalLinksRows';
-import PersonalDescriptionMedia from '../../Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
-import PVServiceIcon from '../../Components/Shared/Partials/Shared/PVServiceIcon';
-import UniversalTimeLabel from '../../Components/Shared/Partials/Shared/UniversalTimeLabel';
-import SongGrid from '../../Components/Shared/Partials/Song/SongGrid';
-import SongLink from '../../Components/Shared/Partials/Song/SongLink';
-import SongLinkKnockout from '../../Components/Shared/Partials/Song/SongLinkKnockout';
-import SongTypeLabel from '../../Components/Shared/Partials/Song/SongTypeLabel';
-import TagList from '../../Components/Shared/Partials/TagList';
-import SongInListsDialog from './Partials/SongInListsDialog';
-import UsersWithSongRating from './Partials/UsersWithSongRating';
-import { SongDetailsTabs } from './SongDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

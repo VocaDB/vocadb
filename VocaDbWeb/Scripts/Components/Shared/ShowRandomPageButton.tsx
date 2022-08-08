@@ -1,4 +1,5 @@
 import Button from '@/Bootstrap/Button';
+import { apiEndpointsForEntryType } from '@/Components/Shared/GlobalSearchBox';
 import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
 import EntryType from '@/Models/EntryType';
 import NameMatchMode from '@/Models/NameMatchMode';
@@ -8,8 +9,6 @@ import UrlMapper from '@/Shared/UrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { apiEndpointsForEntryType } from './GlobalSearchBox';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

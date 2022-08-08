@@ -1,3 +1,5 @@
+import SongListAutoComplete from '@/Components/KnockoutExtensions/SongListAutoComplete';
+import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
 import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
@@ -5,9 +7,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import SongListAutoComplete from '../../../KnockoutExtensions/SongListAutoComplete';
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface SongListLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<IEntryWithIdAndName>;

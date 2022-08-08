@@ -1,6 +1,6 @@
-import EntryContract from '../EntryContract';
-import UserApiContract from '../User/UserApiContract';
-import ArchivedVersionContract from '../Versioning/ArchivedVersionContract';
+import EntryContract from '@/DataContracts/EntryContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
 
 export default interface ActivityEntryContract {
 	archivedVersion: ArchivedVersionContract;

@@ -1,6 +1,5 @@
+import ArtistForAlbumEditStore from '@/Stores/ArtistForAlbumEditStore';
 import { action, makeObservable, observable } from 'mobx';
-
-import ArtistForAlbumEditStore from './ArtistForAlbumEditStore';
 
 export default class CustomNameEditStore {
 	@observable public artistLink?: ArtistForAlbumEditStore;

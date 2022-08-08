@@ -1,9 +1,8 @@
+import IconAndNameLinkKnockout from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
 import { RatingsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import IconAndNameLinkKnockout from '../../../Components/Shared/Partials/User/IconAndNameLinkKnockout';
 
 interface UsersWithSongRatingProps {
 	ratingsStore: RatingsStore;

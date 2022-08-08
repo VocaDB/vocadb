@@ -1,5 +1,6 @@
 import Layout from '@/Components/Shared/Layout';
 import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import ListUsers from '@/Pages/User/Partials/ListUsers';
 import UserRepository from '@/Repositories/UserRepository';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
@@ -7,8 +8,6 @@ import ListUsersStore from '@/Stores/User/ListUsersStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ListUsers from './Partials/ListUsers';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

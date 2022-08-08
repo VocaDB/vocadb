@@ -12,17 +12,17 @@ import UserRepository from '@/Repositories/UserRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import ArtistRolesEditViewModel, {
+	AlbumArtistRolesEditViewModel,
+} from '@/ViewModels/Artist/ArtistRolesEditViewModel';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
+import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
+import PVListEditViewModel from '@/ViewModels/PVs/PVListEditViewModel';
+import ArtistForEventEditViewModel from '@/ViewModels/ReleaseEvent/ArtistForEventEditViewModel';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
-
-import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
-import ArtistRolesEditViewModel from '../Artist/ArtistRolesEditViewModel';
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import PVListEditViewModel from '../PVs/PVListEditViewModel';
-import ArtistForEventEditViewModel from '../ReleaseEvent/ArtistForEventEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventEditViewModel {
 	public constructor(

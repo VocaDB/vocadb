@@ -1,11 +1,10 @@
+import Layout from '@/Components/Shared/Layout';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import ErrorNotFound from '../Error/ErrorNotFound';
 
 interface HelpIndexTabsProps {
 	tab: 'aboutvocadb' | 'aboutvocaloid' | 'guidelines';

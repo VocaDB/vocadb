@@ -1,7 +1,10 @@
 import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
+import ArtistType from '@/Models/Artists/ArtistType';
 import TagRepository from '@/Repositories/TagRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import TagFilters from '@/Stores/Search/TagFilters';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -11,10 +14,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import ArtistType from '../../Models/Artists/ArtistType';
-import TagFilters from '../Search/TagFilters';
-import ServerSidePagingStore from '../ServerSidePagingStore';
 
 export interface FollowedArtistsRouteParams {
 	artistType?: ArtistType;

@@ -1,5 +1,9 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import Layout from '@/Components/Shared/Layout';
+import useScript from '@/Components/useScript';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import RatedSongs from '@/Pages/User/Partials/RatedSongs';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import SongRepository from '@/Repositories/SongRepository';
 import TagRepository from '@/Repositories/TagRepository';
@@ -14,10 +18,6 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-import Layout from '../../Components/Shared/Layout';
-import useScript from '../../Components/useScript';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import RatedSongs from './Partials/RatedSongs';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

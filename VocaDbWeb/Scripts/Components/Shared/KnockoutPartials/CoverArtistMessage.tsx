@@ -1,10 +1,9 @@
 import Alert from '@/Bootstrap/Alert';
+import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
+import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import ArtistContract from '@/DataContracts/Artist/ArtistContract';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ArtistLink from '../Partials/Artist/ArtistLink';
-import NotificationIcon from '../Partials/Shared/NotificationIcon';
 
 interface CoverArtistMessageProps {
 	coverArtists: ArtistContract[];

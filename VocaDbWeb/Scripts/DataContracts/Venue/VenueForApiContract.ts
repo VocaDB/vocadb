@@ -1,8 +1,7 @@
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 
 export default interface VenueForApiContract {
 	additionalNames?: string;

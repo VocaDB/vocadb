@@ -1,8 +1,7 @@
+import CommentEntryItem from '@/Components/Shared/Partials/Comment/CommentEntryItem';
+import PrintComment from '@/Components/Shared/Partials/Comment/PrintComment';
 import EntryWithCommentsContract from '@/DataContracts/EntryWithCommentsContract';
 import React from 'react';
-
-import CommentEntryItem from './CommentEntryItem';
-import PrintComment from './PrintComment';
 
 interface CommentWithEntryVerticalProps {
 	entry: EntryWithCommentsContract;

@@ -1,7 +1,6 @@
 import Alert from '@/Bootstrap/Alert';
+import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import React from 'react';
-
-import NotificationIcon from './NotificationIcon';
 
 interface NotificationPanelProps {
 	message: string;

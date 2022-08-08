@@ -1,10 +1,9 @@
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import React from 'react';
-
-import { AlbumDetailsTabs } from './AlbumDetailsRoutes';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

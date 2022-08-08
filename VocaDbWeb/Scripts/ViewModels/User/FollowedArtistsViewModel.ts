@@ -5,10 +5,9 @@ import ResourceRepository from '@/Repositories/ResourceRepository';
 import TagRepository from '@/Repositories/TagRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import TagFilters from '@/ViewModels/Search/TagFilters';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
-
-import TagFilters from '../Search/TagFilters';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class FollowedArtistsViewModel {
 	public constructor(

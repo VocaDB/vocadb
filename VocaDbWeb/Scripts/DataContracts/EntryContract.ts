@@ -1,9 +1,8 @@
+import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
 import AlbumType from '@/Models/Albums/AlbumType';
 import ArtistType from '@/Models/Artists/ArtistType';
 import SongType from '@/Models/Songs/SongType';
-
-import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
-import EntryThumbContract from './EntryThumbContract';
 
 // Base data contract for entries from the API.
 // Corresponds to C# datacontract EntryForApiContract.

@@ -15,14 +15,14 @@ import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryW
 import AjaxHelper from '@/Helpers/AjaxHelper';
 import AlbumType from '@/Models/Albums/AlbumType';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import BaseRepository, {
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import ICommentRepository from '@/Repositories/ICommentRepository';
 import functions from '@/Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
-
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.

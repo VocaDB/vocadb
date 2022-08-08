@@ -1,7 +1,6 @@
+import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
-import ErrorNotFound from '../Error/ErrorNotFound';
 
 const CommentIndex = React.lazy(() => import('./CommentIndex'));
 

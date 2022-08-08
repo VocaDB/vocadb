@@ -1,5 +1,23 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
+import SongAutoComplete from '@/Components/KnockoutExtensions/SongAutoComplete';
+import Layout from '@/Components/Shared/Layout';
+import EntryDeletePopup from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
+import EntryTrashPopup from '@/Components/Shared/Partials/EntryDetails/EntryTrashPopup';
+import {
+	SongListFeaturedCategoryDropdownList,
+	EntryStatusDropdownList,
+} from '@/Components/Shared/Partials/Knockout/DropdownList';
+import ConcurrentEditWarning from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
+import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
+import ImageUploadMessage from '@/Components/Shared/Partials/Shared/ImageUploadMessage';
+import MarkdownNotice from '@/Components/Shared/Partials/Shared/MarkdownNotice';
+import SaveAndBackBtn from '@/Components/Shared/Partials/Shared/SaveAndBackBtn';
+import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '@/Components/ui';
+import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import SongListForEditContract from '@/DataContracts/Song/SongListForEditContract';
 import UrlHelper from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -23,25 +41,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-import Markdown from '../../Components/KnockoutExtensions/Markdown';
-import SongAutoComplete from '../../Components/KnockoutExtensions/SongAutoComplete';
-import Layout from '../../Components/Shared/Layout';
-import EntryDeletePopup from '../../Components/Shared/Partials/EntryDetails/EntryDeletePopup';
-import EntryTrashPopup from '../../Components/Shared/Partials/EntryDetails/EntryTrashPopup';
-import {
-	EntryStatusDropdownList,
-	SongListFeaturedCategoryDropdownList,
-} from '../../Components/Shared/Partials/Knockout/DropdownList';
-import ConcurrentEditWarning from '../../Components/Shared/Partials/Shared/ConcurrentEditWarning';
-import HelpLabel from '../../Components/Shared/Partials/Shared/HelpLabel';
-import ImageUploadMessage from '../../Components/Shared/Partials/Shared/ImageUploadMessage';
-import MarkdownNotice from '../../Components/Shared/Partials/Shared/MarkdownNotice';
-import SaveAndBackBtn from '../../Components/Shared/Partials/Shared/SaveAndBackBtn';
-import ValidationSummaryPanel from '../../Components/Shared/Partials/Shared/ValidationSummaryPanel';
-import { showErrorMessage } from '../../Components/ui';
-import { useConflictingEditor } from '../../Components/useConflictingEditor';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
 
 const loginManager = new LoginManager(vdb.values);
 

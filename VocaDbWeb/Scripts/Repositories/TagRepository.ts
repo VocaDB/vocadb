@@ -12,13 +12,13 @@ import AjaxHelper from '@/Helpers/AjaxHelper';
 import EntryType from '@/Models/EntryType';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '@/Models/NameMatchMode';
+import BaseRepository, {
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import EntryCommentRepository from '@/Repositories/EntryCommentRepository';
 import functions from '@/Shared/GlobalFunctions';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
-
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import EntryCommentRepository from './EntryCommentRepository';
 
 export default class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;

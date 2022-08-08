@@ -1,8 +1,7 @@
 import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
+import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import EntryRefContract from '@/DataContracts/EntryRefContract';
 import React from 'react';
-
-import { EntryToolTip } from '../../../KnockoutExtensions/EntryToolTip';
 
 interface ThumbItemProps {
 	as?: React.ElementType;

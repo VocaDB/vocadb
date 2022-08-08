@@ -1,5 +1,11 @@
+import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import SongBasicInfo from '@/Pages/Song/SongBasicInfo';
+import SongDiscussion from '@/Pages/Song/SongDiscussion';
+import SongLyrics from '@/Pages/Song/SongLyrics';
+import SongRelated from '@/Pages/Song/SongRelated';
+import SongShare from '@/Pages/Song/SongShare';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import _ from 'lodash';
@@ -7,13 +13,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import { userLanguageCultures } from '../../Components/userLanguageCultures';
-import SongBasicInfo from './SongBasicInfo';
-import SongDiscussion from './SongDiscussion';
-import SongLyrics from './SongLyrics';
-import SongRelated from './SongRelated';
-import SongShare from './SongShare';
 
 interface SongDetailsTabsProps {
 	model: SongDetailsForApi;

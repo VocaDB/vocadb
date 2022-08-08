@@ -1,6 +1,7 @@
 import ArtistHelper from '@/Helpers/ArtistHelper';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import ArtistFilter from '@/Stores/Search/ArtistFilter';
 import _ from 'lodash';
 import {
 	action,
@@ -9,8 +10,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import ArtistFilter from './ArtistFilter';
 
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page

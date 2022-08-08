@@ -4,12 +4,14 @@ import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUse
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
 import UserRepository from '@/Repositories/UserRepository';
-
-import AdvancedSearchFilters from '../../Search/AdvancedSearchFilters';
-import ArtistFilters from '../../Search/ArtistFilters';
-import { SongVoteRating } from '../../Search/SongSearchStore';
-import { RatedSongForUserSortRule } from '../../User/RatedSongsSearchStore';
-import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
+import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
+import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
+import {
+	IPlayListRepository,
+	ISongForPlayList,
+} from '@/Stores/Song/PlayList/PlayListStore';
+import { RatedSongForUserSortRule } from '@/Stores/User/RatedSongsSearchStore';
 
 export interface IRatedSongsAdapterStore {
 	userId: number;

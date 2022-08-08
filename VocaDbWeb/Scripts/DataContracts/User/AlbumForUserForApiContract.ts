@@ -1,5 +1,5 @@
-import AlbumContract from '../Album/AlbumContract';
-import UserApiContract from './UserApiContract';
+import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 
 export enum MediaType {
 	PhysicalDisc = 'PhysicalDisc',

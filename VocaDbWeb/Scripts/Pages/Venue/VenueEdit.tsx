@@ -1,6 +1,24 @@
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
+import NamesEditor from '@/Components/Shared/KnockoutPartials/NamesEditor';
+import Layout from '@/Components/Shared/Layout';
+import EntryDeletePopup from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
+import EntryTrashPopup from '@/Components/Shared/Partials/EntryDetails/EntryTrashPopup';
+import {
+	LanguageSelectionDropdownList,
+	RegionDropdownList,
+	EntryStatusDropdownList,
+} from '@/Components/Shared/Partials/Knockout/DropdownList';
+import WebLinksEditViewKnockout from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
+import ConcurrentEditWarning from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
+import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
+import SaveAndBackBtn from '@/Components/Shared/Partials/Shared/SaveAndBackBtn';
+import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '@/Components/ui';
+import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import EntryStatus from '@/Models/EntryStatus';
@@ -18,25 +36,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-import Markdown from '../../Components/KnockoutExtensions/Markdown';
-import NamesEditor from '../../Components/Shared/KnockoutPartials/NamesEditor';
-import Layout from '../../Components/Shared/Layout';
-import EntryDeletePopup from '../../Components/Shared/Partials/EntryDetails/EntryDeletePopup';
-import EntryTrashPopup from '../../Components/Shared/Partials/EntryDetails/EntryTrashPopup';
-import {
-	EntryStatusDropdownList,
-	LanguageSelectionDropdownList,
-	RegionDropdownList,
-} from '../../Components/Shared/Partials/Knockout/DropdownList';
-import WebLinksEditViewKnockout from '../../Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
-import ConcurrentEditWarning from '../../Components/Shared/Partials/Shared/ConcurrentEditWarning';
-import HelpLabel from '../../Components/Shared/Partials/Shared/HelpLabel';
-import SaveAndBackBtn from '../../Components/Shared/Partials/Shared/SaveAndBackBtn';
-import ValidationSummaryPanel from '../../Components/Shared/Partials/Shared/ValidationSummaryPanel';
-import { showErrorMessage } from '../../Components/ui';
-import { useConflictingEditor } from '../../Components/useConflictingEditor';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
 
 const loginManager = new LoginManager(vdb.values);
 

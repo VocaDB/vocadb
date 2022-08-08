@@ -1,12 +1,14 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/3d4c57374646949e6fedfef00236c99f4d1b4e71/src/AbstractNav.tsx
+import NavContext from '@/Bootstrap/NavContext';
+import SelectableContext, { makeEventKey } from '@/Bootstrap/SelectableContext';
+import TabContext from '@/Bootstrap/TabContext';
+import {
+	BsPrefixRefForwardingComponent,
+	SelectCallback,
+} from '@/Bootstrap/helpers';
+import { EventKey } from '@/Bootstrap/types';
 import * as React from 'react';
 import { useContext } from 'react';
-
-import NavContext from './NavContext';
-import SelectableContext, { makeEventKey } from './SelectableContext';
-import TabContext from './TabContext';
-import { BsPrefixRefForwardingComponent, SelectCallback } from './helpers';
-import { EventKey } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = (): void => {};

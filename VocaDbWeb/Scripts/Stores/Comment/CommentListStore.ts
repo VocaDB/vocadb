@@ -7,6 +7,7 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
@@ -17,8 +18,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
 
 export enum CommentSortRule {
 	CreateDateDescending = 'CreateDateDescending',

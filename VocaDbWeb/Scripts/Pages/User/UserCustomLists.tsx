@@ -1,6 +1,9 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import SongListsKnockout from '@/Components/Shared/Partials/Song/SongListsKnockout';
+import SongListsFilters from '@/Components/Shared/Partials/SongListsFilters';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import LoginManager from '@/Models/LoginManager';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import UserDetailsStore, {
 	UserSongListsStore,
 } from '@/Stores/User/UserDetailsStore';
@@ -9,10 +12,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import SongListsKnockout from '../../Components/Shared/Partials/Song/SongListsKnockout';
-import SongListsFilters from '../../Components/Shared/Partials/SongListsFilters';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

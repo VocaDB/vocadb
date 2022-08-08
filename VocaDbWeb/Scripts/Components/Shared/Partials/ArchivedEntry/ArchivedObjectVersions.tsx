@@ -1,3 +1,6 @@
+import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import UserIconLinkOrName_UserForApiContract from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
+import useChangedFieldNames from '@/Components/useChangedFieldNames';
 import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
 import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
@@ -5,10 +8,6 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import useChangedFieldNames from '../../../useChangedFieldNames';
-import UniversalTimeLabel from '../Shared/UniversalTimeLabel';
-import UserIconLinkOrName_UserForApiContract from '../User/UserIconLinkOrName_UserForApiContract';
 
 const loginManager = new LoginManager(vdb.values);
 

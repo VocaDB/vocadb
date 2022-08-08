@@ -1,9 +1,8 @@
+import ProfileIconKnockout from '@/Components/Shared/Partials/User/ProfileIconKnockout';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconAndNameLinkKnockoutProps {
 	user: UserApiContract;

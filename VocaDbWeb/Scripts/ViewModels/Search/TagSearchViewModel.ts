@@ -2,10 +2,9 @@ import PartialFindResultContract from '@/DataContracts/PartialFindResultContract
 import TagApiContract from '@/DataContracts/Tag/TagApiContract';
 import TagRepository from '@/Repositories/TagRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
 import ko from 'knockout';
-
-import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
-import SearchViewModel from './SearchViewModel';
 
 export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 	public constructor(

@@ -3,6 +3,7 @@ import ServerSidePaging from '@/Components/Shared/Partials/Knockout/ServerSidePa
 import ProfileIconKnockout_ImageSize from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import ImageSize from '@/Models/Images/ImageSize';
 import LoginManager from '@/Models/LoginManager';
+import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -11,8 +12,6 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-import EditTopic from './EditTopic';
 
 const loginManager = new LoginManager(vdb.values);
 

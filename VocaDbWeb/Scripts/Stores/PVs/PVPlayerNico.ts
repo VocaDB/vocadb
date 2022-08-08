@@ -1,7 +1,6 @@
 import PVService from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
-
-import { IPVPlayer } from './PVPlayerStore';
 
 declare namespace nico {
 	export interface NicoPlayerFactory {

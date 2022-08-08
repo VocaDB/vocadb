@@ -1,5 +1,12 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Layout from '@/Components/Shared/Layout';
+import DeletedBanner from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
+import ReportEntryPopupKnockout from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
+import DraftMessage from '@/Components/Shared/Partials/Shared/DraftMessage';
+import EntryStatusMessage from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
+import TagsEdit from '@/Components/Shared/Partials/TagsEdit';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import AlbumReportType, {
@@ -8,6 +15,9 @@ import AlbumReportType, {
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
+import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
+import DownloadTagsDialog from '@/Pages/Album/Partials/DownloadTagsDialog';
+import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import UserRepository from '@/Repositories/UserRepository';
@@ -19,17 +29,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import DeletedBanner from '../../Components/Shared/Partials/EntryDetails/DeletedBanner';
-import ReportEntryPopupKnockout from '../../Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import DraftMessage from '../../Components/Shared/Partials/Shared/DraftMessage';
-import EntryStatusMessage from '../../Components/Shared/Partials/Shared/EntryStatusMessage';
-import TagsEdit from '../../Components/Shared/Partials/TagsEdit';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import AlbumDetailsRoutes from './AlbumDetailsRoutes';
-import DownloadTagsDialog from './Partials/DownloadTagsDialog';
-import EditCollectionDialog from './Partials/EditCollectionDialog';
 
 const loginManager = new LoginManager(vdb.values);
 

@@ -1,6 +1,5 @@
+import StarsMeta from '@/Components/Shared/Partials/Shared/StarsMeta';
 import React from 'react';
-
-import StarsMeta from './StarsMeta';
 
 interface StarsMetaSpanProps {
 	current: number;

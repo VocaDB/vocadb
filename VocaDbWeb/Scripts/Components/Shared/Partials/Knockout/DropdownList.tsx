@@ -1,3 +1,5 @@
+import { regions } from '@/Components/regions';
+import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import ArtistLinkType from '@/Models/Artists/ArtistLinkType';
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
@@ -8,9 +10,6 @@ import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategor
 import UserGroup from '@/Models/Users/UserGroup';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { regions } from '../../../regions';
-import { userLanguageCultures } from '../../../userLanguageCultures';
 
 interface DropdownListProps
 	extends React.DetailedHTMLProps<

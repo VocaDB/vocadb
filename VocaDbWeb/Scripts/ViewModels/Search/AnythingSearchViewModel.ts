@@ -4,10 +4,9 @@ import EntryType from '@/Models/EntryType';
 import EntryRepository from '@/Repositories/EntryRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
+import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
 import ko from 'knockout';
-
-import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
-import SearchViewModel from './SearchViewModel';
 
 export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
 	public constructor(

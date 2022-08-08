@@ -1,7 +1,15 @@
+import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
+import ArtistTypeLabel from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import ArtistTypesDropdownKnockout from '@/Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
+import EntryCountBox from '@/Components/Shared/Partials/EntryCountBox';
+import ServerSidePaging from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import DraftIcon from '@/Components/Shared/Partials/Shared/DraftIcon';
+import TagFiltersBase from '@/Components/Shared/Partials/TagFiltersBase';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import ArtistType from '@/Models/Artists/ArtistType';
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import FollowedArtistsStore from '@/Stores/User/FollowedArtistsStore';
 import UserDetailsStore from '@/Stores/User/UserDetailsStore';
@@ -12,15 +20,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import TagAutoComplete from '../../Components/KnockoutExtensions/TagAutoComplete';
-import ArtistTypeLabel from '../../Components/Shared/Partials/Artist/ArtistTypeLabel';
-import ArtistTypesDropdownKnockout from '../../Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
-import EntryCountBox from '../../Components/Shared/Partials/EntryCountBox';
-import ServerSidePaging from '../../Components/Shared/Partials/Knockout/ServerSidePaging';
-import DraftIcon from '../../Components/Shared/Partials/Shared/DraftIcon';
-import TagFiltersBase from '../../Components/Shared/Partials/TagFiltersBase';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface FollowedArtistsProps {
 	followedArtistsStore: FollowedArtistsStore;

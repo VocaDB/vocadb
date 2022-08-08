@@ -1,5 +1,6 @@
 import Button from '@/Bootstrap/Button';
 import ArtistAutoComplete from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import ArtistParticipationStatusOptionsKnockout from '@/Components/Shared/Partials/Song/ArtistParticipationStatusOptionsKnockout';
 import EntryType from '@/Models/EntryType';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ArtistFiltersStore from '@/Stores/Search/ArtistFilters';
@@ -8,8 +9,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import ArtistParticipationStatusOptionsKnockout from '../Song/ArtistParticipationStatusOptionsKnockout';
 
 interface ArtistFiltersProps {
 	artistFilters: ArtistFiltersStore;

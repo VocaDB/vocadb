@@ -8,11 +8,10 @@ import SongRepository from '@/Repositories/SongRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
-
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
 
 export class SongInListEditViewModel {
 	public constructor(data: SongInListEditContract) {

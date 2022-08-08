@@ -4,13 +4,12 @@ import ArtistType from '@/Models/Artists/ArtistType';
 import SongType from '@/Models/Songs/SongType';
 import WebLinkCategory from '@/Models/WebLinkCategory';
 import UrlMapper from '@/Shared/UrlMapper';
+import FakeArtistRepository from '@/Tests/TestSupport/FakeArtistRepository';
+import FakeSongRepository from '@/Tests/TestSupport/FakeSongRepository';
+import FakeUserRepository from '@/Tests/TestSupport/FakeUserRepository';
 import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
 import SongEditViewModel from '@/ViewModels/Song/SongEditViewModel';
 import moment from 'moment';
-
-import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
-import FakeSongRepository from '../TestSupport/FakeSongRepository';
-import FakeUserRepository from '../TestSupport/FakeUserRepository';
 
 var categories: TranslatedEnumField[] = [
 	{ id: 'Official', name: 'Official' },

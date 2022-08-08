@@ -1,4 +1,4 @@
-import PartialImportedSongs from './PartialImportedSongs';
+import PartialImportedSongs from '@/DataContracts/SongList/PartialImportedSongs';
 
 export default interface ImportedSongListContract {
 	createDate: string;

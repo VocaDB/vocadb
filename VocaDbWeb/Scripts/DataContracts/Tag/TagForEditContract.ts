@@ -1,10 +1,9 @@
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import EntryType from '@/Models/EntryType';
-
-import EntryThumbContract from '../EntryThumbContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
-import TagBaseContract from './TagBaseContract';
 
 // Corresponds to the TagForEditForApiContract record class in C#.
 export default interface TagForEditContract {

@@ -1,5 +1,6 @@
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
+import AdvancedFilter from '@/Components/Shared/Partials/Search/AdvancedFilter';
 import ArtistType from '@/Models/Artists/ArtistType';
 import AdvancedSearchFilter, {
 	AdvancedFilterType,
@@ -7,8 +8,6 @@ import AdvancedSearchFilter, {
 import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import AdvancedFilter from './AdvancedFilter';
 
 interface AdvancedFiltersProps {
 	advancedFilters: AdvancedSearchFilters;

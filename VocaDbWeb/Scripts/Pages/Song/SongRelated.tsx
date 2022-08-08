@@ -1,10 +1,9 @@
 import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import React from 'react';
-
-import { SongDetailsTabs } from './SongDetailsRoutes';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

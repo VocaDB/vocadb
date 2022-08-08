@@ -7,9 +7,8 @@ import EnglishTranslatedStringContract from '@/DataContracts/Globalization/Engli
 import EventSeriesContract from '@/DataContracts/ReleaseEvents/EventSeriesContract';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import SongContract from '@/DataContracts/Song/SongContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import WebLinkContract from '@/DataContracts/WebLinkContract';
-
-import TagBaseContract from './TagBaseContract';
 
 // Corresponds to the TagStatsForApiContract record class in C#.
 interface TagStatsContract {

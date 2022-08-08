@@ -8,17 +8,16 @@ import ArtistType from '@/Models/Artists/ArtistType';
 import SongType from '@/Models/Songs/SongType';
 import WebLinkCategory from '@/Models/WebLinkCategory';
 import UrlMapper from '@/Shared/UrlMapper';
+import FakeAlbumRepository from '@/Tests/TestSupport/FakeAlbumRepository';
+import FakeArtistRepository from '@/Tests/TestSupport/FakeArtistRepository';
+import FakeSongRepository from '@/Tests/TestSupport/FakeSongRepository';
+import FakeUserRepository from '@/Tests/TestSupport/FakeUserRepository';
 import AlbumEditViewModel, {
 	TrackArtistSelectionViewModel,
 } from '@/ViewModels/Album/AlbumEditViewModel';
 import { TrackPropertiesViewModel } from '@/ViewModels/Album/AlbumEditViewModel';
 import SongInAlbumEditViewModel from '@/ViewModels/SongInAlbumEditViewModel';
 import _ from 'lodash';
-
-import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
-import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
-import FakeSongRepository from '../TestSupport/FakeSongRepository';
-import FakeUserRepository from '../TestSupport/FakeUserRepository';
 
 var rep = new FakeAlbumRepository();
 var songRep: FakeSongRepository;

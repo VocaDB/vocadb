@@ -2,6 +2,15 @@ import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ArtistAutoComplete from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import DuplicateEntriesMessage from '@/Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
+import Layout from '@/Components/Shared/Layout';
+import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
+import { AlbumTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
+import RequiredField from '@/Components/Shared/Partials/Shared/RequiredField';
+import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '@/Components/ui';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import AlbumType from '@/Models/Albums/AlbumType';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
@@ -12,16 +21,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-import ArtistAutoComplete from '../../Components/KnockoutExtensions/ArtistAutoComplete';
-import DuplicateEntriesMessage from '../../Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
-import Layout from '../../Components/Shared/Layout';
-import ArtistLink from '../../Components/Shared/Partials/Artist/ArtistLink';
-import { AlbumTypeDropdownList } from '../../Components/Shared/Partials/Knockout/DropdownList';
-import RequiredField from '../../Components/Shared/Partials/Shared/RequiredField';
-import ValidationSummaryPanel from '../../Components/Shared/Partials/Shared/ValidationSummaryPanel';
-import { showErrorMessage } from '../../Components/ui';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
 
 const httpClient = new HttpClient();
 

@@ -2,6 +2,7 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
 import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
+import TagFiltersBase from '@/Components/Shared/Partials/TagFiltersBase';
 import SongListsBaseStore, {
 	SongListSortRule,
 } from '@/Stores/SongList/SongListsBaseStore';
@@ -11,8 +12,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-
-import TagFiltersBase from './TagFiltersBase';
 
 interface SongListsFiltersProps {
 	songListsBaseStore: SongListsBaseStore;

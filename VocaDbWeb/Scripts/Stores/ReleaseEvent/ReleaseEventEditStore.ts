@@ -11,6 +11,15 @@ import SongListRepository from '@/Repositories/SongListRepository';
 import VenueRepository from '@/Repositories/VenueRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import AlbumArtistRolesEditStore, {
+	ArtistRolesEditStore,
+} from '@/Stores/Artist/AlbumArtistRolesEditStore';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
+import PVListEditStore from '@/Stores/PVs/PVListEditStore';
+import ArtistForEventEditStore from '@/Stores/ReleaseEvent/ArtistForEventEditStore';
+import WebLinksEditStore from '@/Stores/WebLinksEditStore';
 import _ from 'lodash';
 import {
 	action,
@@ -21,16 +30,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import AlbumArtistRolesEditStore, {
-	ArtistRolesEditStore,
-} from '../Artist/AlbumArtistRolesEditStore';
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import PVListEditStore from '../PVs/PVListEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
-import ArtistForEventEditStore from './ArtistForEventEditStore';
 
 export class EventArtistRolesEditStore extends ArtistRolesEditStore {
 	public constructor(roleNames: { [key: string]: string | undefined }) {

@@ -4,12 +4,11 @@ import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryC
 import { UserInboxType } from '@/Repositories/UserRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import PagedItemsViewModel from '@/ViewModels/PagedItemsViewModel';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import PagedItemsViewModel from '../PagedItemsViewModel';
 
 export class NewMessageViewModel {
 	public constructor() {

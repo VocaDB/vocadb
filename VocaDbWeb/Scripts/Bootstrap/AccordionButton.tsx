@@ -1,17 +1,19 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/AccordionButton.tsx.
+import AccordionContext, {
+	AccordionEventKey,
+	isAccordionItemSelected,
+} from '@/Bootstrap/AccordionContext';
+import AccordionItemContext from '@/Bootstrap/AccordionItemContext';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useContext } from 'react';
-
-import AccordionContext, {
-	isAccordionItemSelected,
-	AccordionEventKey,
-} from './AccordionContext';
-import AccordionItemContext from './AccordionItemContext';
-import SafeAnchor from './SafeAnchor';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 type EventHandler = React.EventHandler<React.SyntheticEvent>;
 

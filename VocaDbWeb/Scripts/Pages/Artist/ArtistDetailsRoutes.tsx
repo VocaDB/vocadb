@@ -1,19 +1,18 @@
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import EntryType from '@/Models/EntryType';
+import ArtistBasicInfo from '@/Pages/Artist/ArtistBasicInfo';
+import ArtistCollaborationAlbums from '@/Pages/Artist/ArtistCollaborationAlbums';
+import ArtistDiscussion from '@/Pages/Artist/ArtistDiscussion';
+import ArtistMainAlbums from '@/Pages/Artist/ArtistMainAlbums';
+import ArtistPictures from '@/Pages/Artist/ArtistPictures';
+import ArtistShare from '@/Pages/Artist/ArtistShare';
+import ArtistSongs from '@/Pages/Artist/ArtistSongs';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import ArtistBasicInfo from './ArtistBasicInfo';
-import ArtistCollaborationAlbums from './ArtistCollaborationAlbums';
-import ArtistDiscussion from './ArtistDiscussion';
-import ArtistMainAlbums from './ArtistMainAlbums';
-import ArtistPictures from './ArtistPictures';
-import ArtistShare from './ArtistShare';
-import ArtistSongs from './ArtistSongs';
 
 interface ArtistDetailsTabsProps {
 	artist: ArtistDetailsContract;

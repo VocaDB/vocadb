@@ -1,7 +1,6 @@
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
-
-import SongApiContract from '../Song/SongApiContract';
-import UserApiContract from './UserApiContract';
 
 export default interface RatedSongForUserForApiContract {
 	rating: SongVoteRating;

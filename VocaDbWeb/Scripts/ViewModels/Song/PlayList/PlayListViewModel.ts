@@ -11,11 +11,11 @@ import SongRepository from '@/Repositories/SongRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVPlayerViewModel, {
+	IPVPlayerSong,
+} from '@/ViewModels/PVs/PVPlayerViewModel';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed } from 'knockout';
-
-import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
-import PVPlayerViewModel from '../../PVs/PVPlayerViewModel';
-import ServerSidePagingViewModel from '../../ServerSidePagingViewModel';
 
 export default class PlayListViewModel {
 	public constructor(

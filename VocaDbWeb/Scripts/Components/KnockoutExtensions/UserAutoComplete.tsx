@@ -1,10 +1,9 @@
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface UserAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -1,7 +1,6 @@
+import VenueLink from '@/Components/Shared/Partials/Venue/VenueLink';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import React from 'react';
-
-import VenueLink from '../Venue/VenueLink';
 
 interface VenueLinkOrVenueNameProps {
 	event: ReleaseEventContract;

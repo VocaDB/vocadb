@@ -1,7 +1,6 @@
 import SongVoteRating from '@/Models/SongVoteRating';
+import FakeUserRepository from '@/Tests/TestSupport/FakeUserRepository';
 import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
-
-import FakeUserRepository from '../TestSupport/FakeUserRepository';
 
 var repository = new FakeUserRepository();
 

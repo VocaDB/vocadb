@@ -1,4 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import RequiredField from '@/Components/Shared/Partials/Shared/RequiredField';
 import WebLinkCategory from '@/Models/WebLinkCategory';
 import WebLinkEditStore from '@/Stores/WebLinkEditStore';
 import WebLinksEditStore from '@/Stores/WebLinksEditStore';
@@ -6,8 +7,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import RequiredField from '../Shared/RequiredField';
 
 interface WebLinkEditViewKnockoutProps {
 	webLinksEditStore: WebLinksEditStore;

@@ -1,13 +1,12 @@
+import LargeShareLinks from '@/Components/Shared/Partials/EntryDetails/LargeShareLinks';
 import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
 import { MarkdownHelper } from '@/Helpers/MarkdownHelper';
+import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import LargeShareLinks from '../../Components/Shared/Partials/EntryDetails/LargeShareLinks';
-import { SongDetailsTabs } from './SongDetailsRoutes';
 
 interface SongShareProps {
 	model: SongDetailsForApi;

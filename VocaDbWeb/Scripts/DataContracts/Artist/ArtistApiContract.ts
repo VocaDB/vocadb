@@ -1,8 +1,7 @@
+import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import CommonEntryContract from '@/DataContracts/CommonEntryContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
 import ArtistType from '@/Models/Artists/ArtistType';
-
-import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
-import CommonEntryContract from '../CommonEntryContract';
-import EntryThumbContract from '../EntryThumbContract';
 
 export default interface ArtistApiContract
 	extends CommonEntryContract,

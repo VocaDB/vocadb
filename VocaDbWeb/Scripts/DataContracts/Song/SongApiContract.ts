@@ -1,9 +1,8 @@
+import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
+import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import LocalizedStringContract from '@/DataContracts/Globalization/LocalizedStringContract';
+import SongContract from '@/DataContracts/Song/SongContract';
 import PVService from '@/Models/PVs/PVService';
-
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
-import LocalizedStringContract from '../Globalization/LocalizedStringContract';
-import SongContract from './SongContract';
 
 export default interface SongApiContract
 	extends SongContract,

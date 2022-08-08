@@ -1,11 +1,10 @@
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ArtistForArtistContract from '@/DataContracts/Artist/ArtistForArtistContract';
+import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import ArtistType from '@/Models/Artists/ArtistType';
-
-import EntryPictureFileContract from '../EntryPictureFileContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
-import ArtistContract from './ArtistContract';
-import ArtistForArtistContract from './ArtistForArtistContract';
 
 // Corresponds to the ArtistForEditForApiContract record class in C#.
 export default interface ArtistForEditContract {

@@ -1,8 +1,7 @@
 import EntryReportRepository from '@/Repositories/EntryReportRepository';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
-
-import FakePromise from './FakePromise';
+import FakePromise from '@/Tests/TestSupport/FakePromise';
 
 export default class FakeEntryReportRepository extends EntryReportRepository {
 	public entryReportCount!: number;

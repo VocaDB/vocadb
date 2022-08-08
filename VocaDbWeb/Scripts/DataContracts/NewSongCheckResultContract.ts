@@ -1,7 +1,6 @@
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
 import SongType from '@/Models/Songs/SongType';
-
-import ArtistContract from './Artist/ArtistContract';
-import DuplicateEntryResultContract from './DuplicateEntryResultContract';
 
 export default interface NewSongCheckResultContract {
 	artists: ArtistContract[];

@@ -18,21 +18,20 @@ import UserRepository from '@/Repositories/UserRepository';
 import { IDialogService } from '@/Shared/DialogService';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import { AlbumArtistRolesEditViewModel } from '@/ViewModels/Artist/ArtistRolesEditViewModel';
+import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import CustomNameEditViewModel from '@/ViewModels/CustomNameEditViewModel';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
+import EnglishTranslatedStringEditViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
+import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
+import PVListEditViewModel from '@/ViewModels/PVs/PVListEditViewModel';
+import { LyricsForSongListEditViewModel } from '@/ViewModels/Song/LyricsForSongEditViewModel';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
-
-import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
-import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import CustomNameEditViewModel from '../CustomNameEditViewModel';
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import PVListEditViewModel from '../PVs/PVListEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
-import { LyricsForSongListEditViewModel } from './LyricsForSongEditViewModel';
 
 export default class SongEditViewModel {
 	private albumEventId: number;

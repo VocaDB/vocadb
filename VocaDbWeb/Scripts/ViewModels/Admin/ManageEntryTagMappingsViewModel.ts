@@ -10,11 +10,10 @@ import TagRepository from '@/Repositories/TagRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import ui from '@/Shared/MessagesTyped';
+import { EditTagMappingViewModel } from '@/ViewModels/Admin/ManageTagMappingsViewModel';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed } from 'knockout';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import { EditTagMappingViewModel } from './ManageTagMappingsViewModel';
 
 export default class ManageEntryTagMappingsViewModel {
 	public constructor(private readonly tagRepo: TagRepository) {

@@ -1,10 +1,9 @@
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface VenueAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

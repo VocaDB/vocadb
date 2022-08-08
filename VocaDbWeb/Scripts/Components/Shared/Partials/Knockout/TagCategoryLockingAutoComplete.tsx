@@ -1,8 +1,7 @@
 import TagCategoryAutoComplete from '@/Components/KnockoutExtensions/TagCategoryAutoComplete';
+import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface TagCategoryLockingAutoCompleteProps {
 	value?: string;

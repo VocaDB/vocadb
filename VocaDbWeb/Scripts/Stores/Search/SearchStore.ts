@@ -10,6 +10,27 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
 import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
+import AlbumSearchStore, {
+	AlbumSearchRouteParams,
+} from '@/Stores/Search/AlbumSearchStore';
+import AnythingSearchStore, {
+	AnythingSearchRouteParams,
+} from '@/Stores/Search/AnythingSearchStore';
+import ArtistSearchStore, {
+	ArtistSearchRouteParams,
+} from '@/Stores/Search/ArtistSearchStore';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import EventSearchStore, {
+	EventSearchRouteParams,
+} from '@/Stores/Search/EventSearchStore';
+import { ISearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import SongSearchStore, {
+	SongSearchRouteParams,
+} from '@/Stores/Search/SongSearchStore';
+import TagFilters from '@/Stores/Search/TagFilters';
+import TagSearchStore, {
+	TagSearchRouteParams,
+} from '@/Stores/Search/TagSearchStore';
 import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
@@ -21,20 +42,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-
-import AlbumSearchStore, { AlbumSearchRouteParams } from './AlbumSearchStore';
-import AnythingSearchStore, {
-	AnythingSearchRouteParams,
-} from './AnythingSearchStore';
-import ArtistSearchStore, {
-	ArtistSearchRouteParams,
-} from './ArtistSearchStore';
-import { ICommonSearchStore } from './CommonSearchStore';
-import EventSearchStore, { EventSearchRouteParams } from './EventSearchStore';
-import { ISearchCategoryBaseStore } from './SearchCategoryBaseStore';
-import SongSearchStore, { SongSearchRouteParams } from './SongSearchStore';
-import TagFilters from './TagFilters';
-import TagSearchStore, { TagSearchRouteParams } from './TagSearchStore';
 
 export enum SearchType {
 	Anything = 'Anything',

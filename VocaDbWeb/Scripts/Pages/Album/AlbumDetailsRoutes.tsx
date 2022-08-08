@@ -1,18 +1,17 @@
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import EntryType from '@/Models/EntryType';
+import AlbumBasicInfo from '@/Pages/Album/AlbumBasicInfo';
+import AlbumDiscussion from '@/Pages/Album/AlbumDiscussion';
+import AlbumPictures from '@/Pages/Album/AlbumPictures';
+import AlbumRelated from '@/Pages/Album/AlbumRelated';
+import AlbumReviews from '@/Pages/Album/AlbumReviews';
+import AlbumShare from '@/Pages/Album/AlbumShare';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import AlbumBasicInfo from './AlbumBasicInfo';
-import AlbumDiscussion from './AlbumDiscussion';
-import AlbumPictures from './AlbumPictures';
-import AlbumRelated from './AlbumRelated';
-import AlbumReviews from './AlbumReviews';
-import AlbumShare from './AlbumShare';
 
 interface AlbumDetailsTabsProps {
 	model: AlbumDetailsForApi;

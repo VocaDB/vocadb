@@ -1,4 +1,4 @@
-import SongApiContract from './SongApiContract';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
 
 export default interface SongInAlbumContract {
 	discNumber: number;

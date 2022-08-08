@@ -8,10 +8,9 @@ import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ui from '@/Shared/MessagesTyped';
 import ObservableUrlParamRouter from '@/Shared/Routing/ObservableUrlParamRouter';
 import UrlMapper from '@/Shared/UrlMapper';
+import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
-
-import SongWithPreviewViewModel from './SongWithPreviewViewModel';
 
 export default class RankingsViewModel {
 	public constructor(

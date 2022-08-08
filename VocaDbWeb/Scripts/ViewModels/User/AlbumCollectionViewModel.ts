@@ -11,11 +11,10 @@ import ResourceRepository from '@/Repositories/ResourceRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class AlbumCollectionViewModel {
 	public constructor(

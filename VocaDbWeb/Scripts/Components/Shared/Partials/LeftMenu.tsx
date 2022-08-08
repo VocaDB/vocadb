@@ -1,11 +1,10 @@
+import MainNavigationItems from '@/Components/Shared/Partials/MainNavigationItems';
+import PatreonLink from '@/Components/Shared/Partials/PatreonLink';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import MainNavigationItems from './MainNavigationItems';
-import PatreonLink from './PatreonLink';
 
 interface BannerLinkProps {
 	title: string;

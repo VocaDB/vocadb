@@ -1,13 +1,12 @@
+import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
+import SongContract from '@/DataContracts/Song/SongContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import SongType from '@/Models/Songs/SongType';
-
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import PVContract from '../PVs/PVContract';
-import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
-import WebLinkContract from '../WebLinkContract';
-import LyricsForSongContract from './LyricsForSongContract';
-import SongContract from './SongContract';
 
 // Corresponds to the SongForEditForApiContract record class in C#.
 export default interface SongForEditContract {

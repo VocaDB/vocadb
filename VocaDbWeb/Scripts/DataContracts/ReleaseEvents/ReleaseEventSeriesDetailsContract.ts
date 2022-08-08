@@ -1,8 +1,7 @@
 import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
 import WebLinkContract from '@/DataContracts/WebLinkContract';
-
-import ReleaseEventContract from './ReleaseEventContract';
 
 // Corresponds to the ReleaseEventSeriesDetailsForApiContract record class in C#.
 export default interface ReleaseEventSeriesDetailsContract {

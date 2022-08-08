@@ -15,17 +15,16 @@ import TagRepository from '@/Repositories/TagRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import AlbumSearchViewModel from '@/ViewModels/Search/AlbumSearchViewModel';
+import AnythingSearchViewModel from '@/ViewModels/Search/AnythingSearchViewModel';
+import ArtistSearchViewModel from '@/ViewModels/Search/ArtistSearchViewModel';
+import EventSearchViewModel from '@/ViewModels/Search/EventSearchViewModel';
+import { ISearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import SongSearchViewModel from '@/ViewModels/Search/SongSearchViewModel';
+import TagFilters from '@/ViewModels/Search/TagFilters';
+import TagSearchViewModel from '@/ViewModels/Search/TagSearchViewModel';
 import ko, { Computed, Observable } from 'knockout';
-
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import AlbumSearchViewModel from './AlbumSearchViewModel';
-import AnythingSearchViewModel from './AnythingSearchViewModel';
-import ArtistSearchViewModel from './ArtistSearchViewModel';
-import EventSearchViewModel from './EventSearchViewModel';
-import { ISearchCategoryBaseViewModel } from './SearchCategoryBaseViewModel';
-import SongSearchViewModel from './SongSearchViewModel';
-import TagFilters from './TagFilters';
-import TagSearchViewModel from './TagSearchViewModel';
 
 class SearchType {
 	public static Anything = 'Anything';

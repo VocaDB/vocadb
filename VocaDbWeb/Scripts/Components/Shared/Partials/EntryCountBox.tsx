@@ -1,8 +1,7 @@
+import EntryCount from '@/Components/Shared/Partials/Knockout/EntryCount';
 import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import EntryCount from './Knockout/EntryCount';
 
 interface EntryCountBoxProps {
 	pagingStore: ServerSidePagingStore;

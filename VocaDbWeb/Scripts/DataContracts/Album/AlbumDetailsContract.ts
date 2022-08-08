@@ -1,20 +1,19 @@
+import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
+import AlbumReleaseContract from '@/DataContracts/Album/AlbumReleaseContract';
+import AlbumReviewContract from '@/DataContracts/Album/AlbumReviewContract';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
+import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import SongInAlbumContract from '@/DataContracts/Song/SongInAlbumContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import AlbumForUserForApiContract from '@/DataContracts/User/AlbumForUserForApiContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import AlbumType from '@/Models/Albums/AlbumType';
-
-import ArtistApiContract from '../Artist/ArtistApiContract';
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import CommentContract from '../CommentContract';
-import EntryThumbContract from '../EntryThumbContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import PVContract from '../PVs/PVContract';
-import SongInAlbumContract from '../Song/SongInAlbumContract';
-import TagBaseContract from '../Tag/TagBaseContract';
-import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
-import AlbumForUserForApiContract from '../User/AlbumForUserForApiContract';
-import WebLinkContract from '../WebLinkContract';
-import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
-import AlbumForApiContract from './AlbumForApiContract';
-import AlbumReleaseContract from './AlbumReleaseContract';
-import AlbumReviewContract from './AlbumReviewContract';
 
 interface SharedAlbumStatsContract {
 	latestReview?: AlbumReviewContract;

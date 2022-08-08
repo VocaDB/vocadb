@@ -1,5 +1,34 @@
 import Carousel from '@/Bootstrap/Carousel';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import {
+	TagToolTip,
+	EventToolTip,
+} from '@/Components/KnockoutExtensions/EntryToolTip';
+import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import CoverLink from '@/Components/Shared/Partials/Album/CoverLink';
+import ArtistList, {
+	ShowRolesMode,
+} from '@/Components/Shared/Partials/Artist/ArtistList';
+import LatestCommentsKnockout from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
+import EnglishTranslatedString from '@/Components/Shared/Partials/EnglishTranslatedString';
+import ExternalLinksRows from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
+import PersonalDescriptionMedia from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
+import FormatMarkdown from '@/Components/Shared/Partials/Html/FormatMarkdown';
+import LanguageFlag from '@/Components/Shared/Partials/Html/LanguageFlag';
+import EmbedPV from '@/Components/Shared/Partials/PV/EmbedPV';
+import DraftIcon from '@/Components/Shared/Partials/Shared/DraftIcon';
+import EntryPictureFileLink from '@/Components/Shared/Partials/Shared/EntryPictureFileLink';
+import FormatPVLink from '@/Components/Shared/Partials/Shared/FormatPVLink';
+import PVServiceIcons from '@/Components/Shared/Partials/Shared/PVServiceIcons';
+import Stars from '@/Components/Shared/Partials/Shared/Stars';
+import StarsMetaSpan from '@/Components/Shared/Partials/Shared/StarsMetaSpan';
+import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import RatingIcon from '@/Components/Shared/Partials/Song/RatingIcon';
+import SongLink from '@/Components/Shared/Partials/Song/SongLink';
+import SongTypeLabel from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import TagList from '@/Components/Shared/Partials/TagList';
+import ProfileIcon from '@/Components/Shared/Partials/User/ProfileIcon';
+import UserLink from '@/Components/Shared/Partials/User/UserLink';
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
 import ArtistLinkContract from '@/DataContracts/Song/ArtistLinkContract';
 import DateTimeHelper from '@/Helpers/DateTimeHelper';
@@ -11,6 +40,7 @@ import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
 import SongVoteRating from '@/Models/SongVoteRating';
 import SongType from '@/Models/Songs/SongType';
+import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
@@ -19,37 +49,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import {
-	EventToolTip,
-	TagToolTip,
-} from '../../Components/KnockoutExtensions/EntryToolTip';
-import MomentJsTimeAgo from '../../Components/KnockoutExtensions/MomentJsTimeAgo';
-import CoverLink from '../../Components/Shared/Partials/Album/CoverLink';
-import ArtistList, {
-	ShowRolesMode,
-} from '../../Components/Shared/Partials/Artist/ArtistList';
-import LatestCommentsKnockout from '../../Components/Shared/Partials/Comment/LatestCommentsKnockout';
-import EnglishTranslatedString from '../../Components/Shared/Partials/EnglishTranslatedString';
-import ExternalLinksRows from '../../Components/Shared/Partials/EntryDetails/ExternalLinksRows';
-import PersonalDescriptionMedia from '../../Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
-import FormatMarkdown from '../../Components/Shared/Partials/Html/FormatMarkdown';
-import LanguageFlag from '../../Components/Shared/Partials/Html/LanguageFlag';
-import EmbedPV from '../../Components/Shared/Partials/PV/EmbedPV';
-import DraftIcon from '../../Components/Shared/Partials/Shared/DraftIcon';
-import EntryPictureFileLink from '../../Components/Shared/Partials/Shared/EntryPictureFileLink';
-import FormatPVLink from '../../Components/Shared/Partials/Shared/FormatPVLink';
-import PVServiceIcons from '../../Components/Shared/Partials/Shared/PVServiceIcons';
-import Stars from '../../Components/Shared/Partials/Shared/Stars';
-import StarsMetaSpan from '../../Components/Shared/Partials/Shared/StarsMetaSpan';
-import UniversalTimeLabel from '../../Components/Shared/Partials/Shared/UniversalTimeLabel';
-import RatingIcon from '../../Components/Shared/Partials/Song/RatingIcon';
-import SongLink from '../../Components/Shared/Partials/Song/SongLink';
-import SongTypeLabel from '../../Components/Shared/Partials/Song/SongTypeLabel';
-import TagList from '../../Components/Shared/Partials/TagList';
-import ProfileIcon from '../../Components/Shared/Partials/User/ProfileIcon';
-import UserLink from '../../Components/Shared/Partials/User/UserLink';
-import { AlbumDetailsTabs } from './AlbumDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

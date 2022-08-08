@@ -1,7 +1,6 @@
 import SongRepository from '@/Repositories/SongRepository';
 import ui from '@/Shared/MessagesTyped';
-
-import ReportEntryViewModel from '../ReportEntryViewModel';
+import ReportEntryViewModel from '@/ViewModels/ReportEntryViewModel';
 
 export default class ArchivedSongViewModel {
 	public constructor(

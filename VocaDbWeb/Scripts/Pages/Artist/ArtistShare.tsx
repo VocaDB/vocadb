@@ -1,13 +1,12 @@
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
 import { MarkdownHelper } from '@/Helpers/MarkdownHelper';
 import EntryType from '@/Models/EntryType';
+import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { ArtistDetailsTabs } from './ArtistDetailsRoutes';
 
 interface ArtistShareProps {
 	artist: ArtistDetailsContract;

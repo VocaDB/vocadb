@@ -4,12 +4,11 @@ import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventCont
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable, observable } from 'mobx';
-
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {

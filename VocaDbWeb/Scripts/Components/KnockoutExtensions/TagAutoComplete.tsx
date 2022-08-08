@@ -1,10 +1,9 @@
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import TagApiContract from '@/DataContracts/Tag/TagApiContract';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface TagAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

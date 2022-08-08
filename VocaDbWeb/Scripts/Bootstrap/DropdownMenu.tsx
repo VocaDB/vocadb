@@ -1,14 +1,13 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/DropdownMenu.tsx
-import classNames from 'classnames';
-import * as React from 'react';
-import { useDropdownMenu } from 'react-overlays/DropdownMenu';
-
-import { useBootstrapPrefix } from './ThemeProvider';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
 import {
 	BsPrefixProps,
 	BsPrefixRefForwardingComponent,
-	SelectCallback,
-} from './helpers';
+} from '@/Bootstrap/helpers';
+import { SelectCallback } from '@restart/ui/esm/types';
+import classNames from 'classnames';
+import * as React from 'react';
+import { useDropdownMenu } from 'react-overlays/DropdownMenu';
 
 export interface DropdownMenuProps
 	extends BsPrefixProps,

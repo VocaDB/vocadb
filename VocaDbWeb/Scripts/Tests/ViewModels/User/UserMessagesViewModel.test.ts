@@ -2,9 +2,8 @@ import PartialFindResultContract from '@/DataContracts/PartialFindResultContract
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
 import { UserInboxType } from '@/Repositories/UserRepository';
+import FakeUserRepository from '@/Tests/TestSupport/FakeUserRepository';
 import UserMessagesViewModel from '@/ViewModels/User/UserMessagesViewModel';
-
-import FakeUserRepository from '../../TestSupport/FakeUserRepository';
 
 var receiver: UserApiContract;
 var data: PartialFindResultContract<UserMessageSummaryContract>;

@@ -12,16 +12,15 @@ import GlobalValues from '@/Shared/GlobalValues';
 import HttpClient from '@/Shared/HttpClient';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import SongListsBaseViewModel from '@/ViewModels/SongList/SongListsBaseViewModel';
+import AlbumCollectionViewModel from '@/ViewModels/User/AlbumCollectionViewModel';
+import FollowedArtistsViewModel from '@/ViewModels/User/FollowedArtistsViewModel';
+import RatedSongsSearchViewModel from '@/ViewModels/User/RatedSongsSearchViewModel';
 import { Options } from 'highcharts';
 import $ from 'jquery';
 import ko from 'knockout';
-
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
-import AlbumCollectionViewModel from './AlbumCollectionViewModel';
-import FollowedArtistsViewModel from './FollowedArtistsViewModel';
-import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
 
 export default class UserDetailsViewModel {
 	private static overview = 'Overview';

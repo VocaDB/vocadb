@@ -1,10 +1,9 @@
 import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@/DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
-
-import GlobalValues from '../Shared/GlobalValues';
-import BasicEntryLinkStore from './BasicEntryLinkStore';
 
 export default class SelfDescriptionStore {
 	@observable public artists: ArtistContract[] = [];

@@ -1,4 +1,15 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/73a559ee345bc4033c66fc97858163a6a200126d/src/Carousel.tsx
+import CarouselCaption from '@/Bootstrap/CarouselCaption';
+import CarouselItem from '@/Bootstrap/CarouselItem';
+import { forEach, map } from '@/Bootstrap/ElementChildren';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import TransitionWrapper from '@/Bootstrap/TransitionWrapper';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
+import transitionEndListener from '@/Bootstrap/transitionEndListener';
+import triggerBrowserReflow from '@/Bootstrap/triggerBrowserReflow';
 import useCommittedRef from '@restart/hooks/useCommittedRef';
 import useEventCallback from '@restart/hooks/useEventCallback';
 import useTimeout from '@restart/hooks/useTimeout';
@@ -17,15 +28,6 @@ import {
 } from 'react';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { useUncontrolled } from 'uncontrollable';
-
-import CarouselCaption from './CarouselCaption';
-import CarouselItem from './CarouselItem';
-import { map, forEach } from './ElementChildren';
-import { useBootstrapPrefix } from './ThemeProvider';
-import TransitionWrapper from './TransitionWrapper';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
-import transitionEndListener from './transitionEndListener';
-import triggerBrowserReflow from './triggerBrowserReflow';
 
 export type CarouselVariant = 'dark';
 

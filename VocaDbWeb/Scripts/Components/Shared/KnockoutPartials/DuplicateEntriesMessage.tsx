@@ -1,12 +1,11 @@
 import Alert from '@/Bootstrap/Alert';
 import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import NotificationIcon from '../Partials/Shared/NotificationIcon';
 
 interface DuplicateEntriesMessageProps {
 	dupeEntries: DuplicateEntryResultContract[];

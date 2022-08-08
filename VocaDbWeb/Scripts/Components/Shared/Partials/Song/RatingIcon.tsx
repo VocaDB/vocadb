@@ -1,7 +1,6 @@
+import SongVoteRating from '@/Models/SongVoteRating';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import SongVoteRating from '../../../../Models/SongVoteRating';
 
 interface RatingIconProps {
 	rating: SongVoteRating;

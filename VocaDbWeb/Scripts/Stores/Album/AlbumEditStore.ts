@@ -13,6 +13,18 @@ import SongRepository from '@/Repositories/SongRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import AlbumDiscPropertiesListEditStore from '@/Stores/Album/AlbumDiscPropertiesListEditStore';
+import AlbumArtistRolesEditStore from '@/Stores/Artist/AlbumArtistRolesEditStore';
+import ArtistForAlbumEditStore from '@/Stores/ArtistForAlbumEditStore';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import CustomNameEditStore from '@/Stores/CustomNameEditStore';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import EntryPictureFileListEditStore from '@/Stores/EntryPictureFileListEditStore';
+import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
+import PVListEditStore from '@/Stores/PVs/PVListEditStore';
+import SongInAlbumEditStore from '@/Stores/SongInAlbumEditStore';
+import WebLinksEditStore from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -24,19 +36,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment, { Moment } from 'moment';
-
-import AlbumArtistRolesEditStore from '../Artist/AlbumArtistRolesEditStore';
-import ArtistForAlbumEditStore from '../ArtistForAlbumEditStore';
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import CustomNameEditStore from '../CustomNameEditStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EntryPictureFileListEditStore from '../EntryPictureFileListEditStore';
-import EnglishTranslatedStringEditStore from '../Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import PVListEditStore from '../PVs/PVListEditStore';
-import SongInAlbumEditStore from '../SongInAlbumEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
-import AlbumDiscPropertiesListEditStore from './AlbumDiscPropertiesListEditStore';
 
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionStore {

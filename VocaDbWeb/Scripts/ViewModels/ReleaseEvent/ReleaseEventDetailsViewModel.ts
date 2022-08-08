@@ -11,13 +11,13 @@ import GlobalValues from '@/Shared/GlobalValues';
 import HttpClient from '@/Shared/HttpClient';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import ReportEntryViewModel, {
+	IEntryReportType,
+} from '@/ViewModels/ReportEntryViewModel';
+import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
+import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { ObservableArray } from 'knockout';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ReleaseEventDetailsViewModel {
 	public constructor(

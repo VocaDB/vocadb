@@ -5,10 +5,9 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
 import ko, { Observable } from 'knockout';
-
-import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import PVPlayersFactory from './PVPlayersFactory';
 
 export default class PVPlayerViewModel {
 	public static autoplayPVServicesString =

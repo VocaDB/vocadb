@@ -1,10 +1,13 @@
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
 import DuplicateEntriesMessage from '@/Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
 import Layout from '@/Components/Shared/Layout';
 import ArtistTypesDropdownKnockout from '@/Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
 import RequiredField from '@/Components/Shared/Partials/Shared/RequiredField';
+import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '@/Components/ui';
 import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import ImageHelper from '@/Helpers/ImageHelper';
 import ArtistType from '@/Models/Artists/ArtistType';
@@ -20,10 +23,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-import Markdown from '../../Components/KnockoutExtensions/Markdown';
-import ValidationSummaryPanel from '../../Components/Shared/Partials/Shared/ValidationSummaryPanel';
-import { showErrorMessage } from '../../Components/ui';
 
 const httpClient = new HttpClient();
 

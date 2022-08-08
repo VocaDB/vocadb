@@ -1,4 +1,4 @@
-import UserApiContract from './UserApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 
 export default interface UserMessageSummaryContract {
 	/* 

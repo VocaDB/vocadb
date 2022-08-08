@@ -1,9 +1,8 @@
+import ExternalLinksList from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
 import WebLinkContract from '@/DataContracts/WebLinkContract';
 import WebLinkCategory from '@/Models/WebLinkCategory';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ExternalLinksList from './ExternalLinksList';
 
 interface ExternalLinksRowsProps {
 	webLinks: WebLinkContract[];

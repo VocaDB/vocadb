@@ -1,4 +1,5 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
 import ArtistRoles from '@/Models/Artists/ArtistRoles';
 import ArtistForAlbumEditStore from '@/Stores/ArtistForAlbumEditStore';
 import SongEditStore from '@/Stores/Song/SongEditStore';
@@ -6,8 +7,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ArtistLink from '../../../Components/Shared/Partials/Artist/ArtistLink';
 
 interface ArtistForSongEditProps {
 	songEditStore: SongEditStore;

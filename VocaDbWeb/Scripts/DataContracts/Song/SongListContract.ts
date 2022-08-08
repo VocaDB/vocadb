@@ -2,11 +2,10 @@ import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesC
 import CommentContract from '@/DataContracts/CommentContract';
 import EntryThumbContract from '@/DataContracts/EntryThumbContract';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongListBaseContract from '@/DataContracts/SongListBaseContract';
 import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import UserBaseContract from '@/DataContracts/User/UserBaseContract';
 import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
-
-import SongListBaseContract from '../SongListBaseContract';
-import UserBaseContract from '../User/UserBaseContract';
 
 export default interface SongListContract
 	extends SongListBaseContract,

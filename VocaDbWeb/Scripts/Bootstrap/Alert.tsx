@@ -1,12 +1,11 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/c11bc67ab3105e7a1839c0dcaacc5f1099885f02/src/Alert.tsx
+import CloseButton, { CloseButtonVariant } from '@/Bootstrap/CloseButton';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import { Variant } from '@/Bootstrap/types';
 import useEventCallback from '@restart/hooks/useEventCallback';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useUncontrolled } from 'uncontrollable';
-
-import CloseButton, { CloseButtonVariant } from './CloseButton';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { Variant } from './types';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 	bsPrefix?: string;

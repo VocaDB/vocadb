@@ -4,9 +4,8 @@ import ResourceRepository from '@/Repositories/ResourceRepository';
 import SongListRepository from '@/Repositories/SongListRepository';
 import TagRepository from '@/Repositories/TagRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import SongListsBaseViewModel from '@/ViewModels/SongList/SongListsBaseViewModel';
 import ko from 'knockout';
-
-import SongListsBaseViewModel from './SongListsBaseViewModel';
 
 export default class FeaturedSongListsViewModel {
 	public constructor(

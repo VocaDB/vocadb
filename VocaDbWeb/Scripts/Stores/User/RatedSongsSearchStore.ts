@@ -8,10 +8,21 @@ import TagRepository from '@/Repositories/TagRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
+import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
+import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
 import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import {
+	IRatedSongSearchItem,
+	SongVoteRating,
+} from '@/Stores/Search/SongSearchStore';
+import TagFilter from '@/Stores/Search/TagFilter';
 import TagFilters from '@/Stores/Search/TagFilters';
 import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { IRatedSongsAdapterStore } from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import PlayListRepositoryForRatedSongsAdapter from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
@@ -25,19 +36,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import PVPlayerStore from '../PVs/PVPlayerStore';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
-import {
-	IRatedSongSearchItem,
-	SongVoteRating,
-} from '../Search/SongSearchStore';
-import TagFilter from '../Search/TagFilter';
-import PlayListRepositoryForRatedSongsAdapter, {
-	IRatedSongsAdapterStore,
-} from '../Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import PlayListStore from '../Song/PlayList/PlayListStore';
 
 export enum RatedSongForUserSortRule {
 	None = 'None',

@@ -1,8 +1,7 @@
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-
-import EntryThumbContract from '../EntryThumbContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
 
 // Matches ReleaseEventForApiContract
 export default interface EventSeriesContract extends IEntryWithIdAndName {

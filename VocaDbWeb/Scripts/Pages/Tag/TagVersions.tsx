@@ -1,4 +1,8 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import Layout from '@/Components/Shared/Layout';
+import ArchivedObjectVersions from '@/Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
+import CurrentVersionMessage from '@/Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import TagApiContract from '@/DataContracts/Tag/TagApiContract';
 import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import EntryStatus from '@/Models/EntryStatus';
@@ -9,11 +13,6 @@ import HttpClient from '@/Shared/HttpClient';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import ArchivedObjectVersions from '../../Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
-import CurrentVersionMessage from '../../Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
 
 const httpClient = new HttpClient();
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);

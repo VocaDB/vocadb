@@ -1,10 +1,21 @@
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import DiscTypesDropdownKnockout from '@/Components/Shared/Partials/Album/DiscTypesDropdownKnockout';
+import EntryCountBox from '@/Components/Shared/Partials/EntryCountBox';
+import ArtistLockingAutoComplete from '@/Components/Shared/Partials/Knockout/ArtistLockingAutoComplete';
+import ReleaseEventLockingAutoComplete from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
+import { AlbumSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
+import ServerSidePaging from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import TagLockingAutoComplete from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
+import { AlbumAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
+import DraftIcon from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { MediaType } from '@/DataContracts/User/AlbumForUserForApiContract';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import AlbumType from '@/Models/Albums/AlbumType';
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
+import { AlbumSearchListTiles } from '@/Pages/Search/Partials/AlbumSearchList';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import AlbumCollectionStore from '@/Stores/User/AlbumCollectionStore';
@@ -17,18 +28,6 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import DiscTypesDropdownKnockout from '../../Components/Shared/Partials/Album/DiscTypesDropdownKnockout';
-import EntryCountBox from '../../Components/Shared/Partials/EntryCountBox';
-import ArtistLockingAutoComplete from '../../Components/Shared/Partials/Knockout/ArtistLockingAutoComplete';
-import ReleaseEventLockingAutoComplete from '../../Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
-import { AlbumSearchDropdown } from '../../Components/Shared/Partials/Knockout/SearchDropdown';
-import ServerSidePaging from '../../Components/Shared/Partials/Knockout/ServerSidePaging';
-import TagLockingAutoComplete from '../../Components/Shared/Partials/Knockout/TagLockingAutoComplete';
-import { AlbumAdvancedFilters } from '../../Components/Shared/Partials/Search/AdvancedFilters';
-import DraftIcon from '../../Components/Shared/Partials/Shared/DraftIcon';
-import { AlbumSearchListTiles } from '../Search/Partials/AlbumSearchList';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface AlbumCollectionProps {
 	albumCollectionStore: AlbumCollectionStore;

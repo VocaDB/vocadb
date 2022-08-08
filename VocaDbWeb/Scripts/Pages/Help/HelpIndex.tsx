@@ -1,14 +1,13 @@
+import Layout from '@/Components/Shared/Layout';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import UserGroup from '@/Models/Users/UserGroup';
+import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import { SearchType } from '../../Stores/Search/SearchStore';
-import ErrorNotFound from '../Error/ErrorNotFound';
 
 interface HelpIndexTabsProps {
 	tab: 'aboutvocadb' | 'aboutvocaloid' | 'guidelines';

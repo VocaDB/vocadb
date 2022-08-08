@@ -19,6 +19,8 @@ import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
 import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
 import ReportEntryStore from '@/Stores/ReportEntryStore';
+import SelfDescriptionStore from '@/Stores/SelfDescriptionStore';
+import SongLyricsStore from '@/Stores/Song/SongLyricsStore';
 import TagListStore from '@/Stores/Tag/TagListStore';
 import TagsEditStore from '@/Stores/Tag/TagsEditStore';
 import _ from 'lodash';
@@ -29,9 +31,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import SelfDescriptionStore from '../SelfDescriptionStore';
-import SongLyricsStore from './SongLyricsStore';
 
 const fav = SongVoteRating[SongVoteRating.Favorite];
 const like = SongVoteRating[SongVoteRating.Like];

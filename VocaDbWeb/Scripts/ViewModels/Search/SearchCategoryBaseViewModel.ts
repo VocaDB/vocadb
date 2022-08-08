@@ -2,14 +2,13 @@ import EntryContract from '@/DataContracts/EntryContract';
 import PagingProperties from '@/DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
 import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
+import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
+import TagFilter from '@/ViewModels/Search/TagFilter';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
-
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import AdvancedSearchFilters from './AdvancedSearchFilters';
-import SearchViewModel from './SearchViewModel';
-import TagFilter from './TagFilter';
 
 export interface ISearchCategoryBaseViewModel {
 	updateResultsWithTotalCount: () => void;

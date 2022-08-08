@@ -1,4 +1,4 @@
-import EntryRefContract from './EntryRefContract';
+import EntryRefContract from '@/DataContracts/EntryRefContract';
 
 export default interface DuplicateEntryResultContract {
 	entry: EntryRefWithNameContract & {

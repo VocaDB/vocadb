@@ -1,8 +1,7 @@
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import BasicListEditStore from '@/Stores/BasicListEditStore';
 import { makeObservable, observable } from 'mobx';
-
-import BasicListEditStore from '../BasicListEditStore';
 
 export class AlbumDiscPropertiesEditStore {
 	public readonly id!: number;

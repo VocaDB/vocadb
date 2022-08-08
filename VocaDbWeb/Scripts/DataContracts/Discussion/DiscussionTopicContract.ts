@@ -1,5 +1,5 @@
-import CommentContract from '../CommentContract';
-import UserApiContract from '../User/UserApiContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 
 export default interface DiscussionTopicContract {
 	author: UserApiContract;

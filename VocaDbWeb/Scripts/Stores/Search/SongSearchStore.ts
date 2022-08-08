@@ -15,6 +15,13 @@ import UrlMapper from '@/Shared/UrlMapper';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
 import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
+import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
+import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
+import SongBpmFilter from '@/Stores/Search/SongBpmFilter';
+import SongLengthFilter from '@/Stores/Search/SongLengthFilter';
 import PlayListRepositoryForSongsAdapter, {
 	ISongsAdapterStore,
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
@@ -22,14 +29,6 @@ import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
 import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
-
-import AdvancedSearchFilter from './AdvancedSearchFilter';
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
-import SongBpmFilter from './SongBpmFilter';
-import SongLengthFilter from './SongLengthFilter';
 
 export interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;

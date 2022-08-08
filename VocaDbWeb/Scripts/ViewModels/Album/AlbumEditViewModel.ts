@@ -17,6 +17,18 @@ import UserRepository from '@/Repositories/UserRepository';
 import { IDialogService } from '@/Shared/DialogService';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import { AlbumDiscPropertiesListEditViewModel } from '@/ViewModels/Album/AlbumDiscPropertiesEditViewModel';
+import { AlbumArtistRolesEditViewModel } from '@/ViewModels/Artist/ArtistRolesEditViewModel';
+import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import CustomNameEditViewModel from '@/ViewModels/CustomNameEditViewModel';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
+import EntryPictureFileListEditViewModel from '@/ViewModels/EntryPictureFileListEditViewModel';
+import EnglishTranslatedStringEditViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
+import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
+import PVListEditViewModel from '@/ViewModels/PVs/PVListEditViewModel';
+import SongInAlbumEditViewModel from '@/ViewModels/SongInAlbumEditViewModel';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 import $ from 'jquery';
 import ko, {
 	Computed,
@@ -26,19 +38,6 @@ import ko, {
 } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
-
-import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
-import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import CustomNameEditViewModel from '../CustomNameEditViewModel';
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
-import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import PVListEditViewModel from '../PVs/PVListEditViewModel';
-import SongInAlbumEditViewModel from '../SongInAlbumEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
-import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';
 
 // Edit view model for album.
 export default class AlbumEditViewModel {

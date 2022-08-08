@@ -1,22 +1,21 @@
 import Alert from '@/Bootstrap/Alert';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
+import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
+import MarkdownNotice from '@/Components/Shared/Partials/Shared/MarkdownNotice';
+import IconAndLinkKnockout from '@/Components/Shared/Partials/User/IconAndLinkKnockout';
+import NameLinkKnockout from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
 import LoginManager from '@/Models/LoginManager';
+import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import functions from '@/Shared/GlobalFunctions';
 import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import Markdown from '../../Components/KnockoutExtensions/Markdown';
-import MomentJsTimeAgo from '../../Components/KnockoutExtensions/MomentJsTimeAgo';
-import { UserLanguageCultureDropdownList } from '../../Components/Shared/Partials/Knockout/DropdownList';
-import MarkdownNotice from '../../Components/Shared/Partials/Shared/MarkdownNotice';
-import IconAndLinkKnockout from '../../Components/Shared/Partials/User/IconAndLinkKnockout';
-import NameLinkKnockout from '../../Components/Shared/Partials/User/NameLinkKnockout';
-import { AlbumDetailsTabs } from './AlbumDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

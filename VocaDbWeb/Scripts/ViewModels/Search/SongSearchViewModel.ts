@@ -14,18 +14,17 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import PVPlayerViewModel from '@/ViewModels/PVs/PVPlayerViewModel';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
+import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
+import PlayListRepositoryForSongsAdapter from '@/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter';
+import PlayListViewModel from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
 import ko, { Computed, Observable } from 'knockout';
 import moment from 'moment';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import PlayListRepositoryForSongsAdapter from '../Song/PlayList/PlayListRepositoryForSongsAdapter';
-import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import ArtistFilters from './ArtistFilters';
-import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
-import SearchViewModel from './SearchViewModel';
 
 export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(

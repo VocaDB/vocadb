@@ -15,10 +15,9 @@ import SongRepository from '@/Repositories/SongRepository';
 import TagRepository from '@/Repositories/TagRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
-
-import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 // View model for song creation view
 export default class SongCreateViewModel {

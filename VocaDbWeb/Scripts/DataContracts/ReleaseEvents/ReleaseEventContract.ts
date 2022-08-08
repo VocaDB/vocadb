@@ -1,13 +1,12 @@
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import ArtistForEventContract from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import EventSeriesContract from '@/DataContracts/ReleaseEvents/EventSeriesContract';
+import SongListBaseContract from '@/DataContracts/SongListBaseContract';
 import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-
-import EntryThumbContract from '../EntryThumbContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import PVContract from '../PVs/PVContract';
-import SongListBaseContract from '../SongListBaseContract';
-import VenueForApiContract from '../Venue/VenueForApiContract';
-import WebLinkContract from '../WebLinkContract';
-import ArtistForEventContract from './ArtistForEventContract';
-import EventSeriesContract from './EventSeriesContract';
+import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 
 // Matches ReleaseEventForApiContract
 export default interface ReleaseEventContract {

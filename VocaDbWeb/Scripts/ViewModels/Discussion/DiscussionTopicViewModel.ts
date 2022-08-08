@@ -3,9 +3,8 @@ import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicC
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import DiscussionRepository from '@/Repositories/DiscussionRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
 import ko, { Observable } from 'knockout';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
 
 export default class DiscussionTopicViewModel {
 	public constructor(

@@ -3,6 +3,7 @@ import Button from '@/Bootstrap/Button';
 import CommentKnockout from '@/Components/Shared/Partials/Comment/CommentKnockout';
 import EditableComments from '@/Components/Shared/Partials/Comment/EditableComments';
 import LoginManager from '@/Models/LoginManager';
+import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
 import DiscussionTopicStore from '@/Stores/Discussion/DiscussionTopicStore';
 import { useStoreWithRouteParams } from '@vocadb/route-sphere';
@@ -10,8 +11,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-import EditTopic from './EditTopic';
 
 const loginManager = new LoginManager(vdb.values);
 

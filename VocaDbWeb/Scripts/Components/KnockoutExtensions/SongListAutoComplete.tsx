@@ -1,11 +1,10 @@
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import SongListContract from '@/DataContracts/Song/SongListContract';
 import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface SongListAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

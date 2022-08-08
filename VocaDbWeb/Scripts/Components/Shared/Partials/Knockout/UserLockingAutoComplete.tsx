@@ -1,12 +1,11 @@
+import UserAutoComplete from '@/Components/KnockoutExtensions/UserAutoComplete';
+import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import UserBaseContract from '@/DataContracts/User/UserBaseContract';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import UserAutoComplete from '../../../KnockoutExtensions/UserAutoComplete';
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface UserLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<UserBaseContract>;

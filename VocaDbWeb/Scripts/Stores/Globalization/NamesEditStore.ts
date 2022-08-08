@@ -1,9 +1,8 @@
 import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
+import LocalizedStringWithIdEditStore from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
-
-import LocalizedStringWithIdEditStore from './LocalizedStringWithIdEditStore';
 
 export default class NamesEditStore {
 	@observable public aliases: LocalizedStringWithIdEditStore[];

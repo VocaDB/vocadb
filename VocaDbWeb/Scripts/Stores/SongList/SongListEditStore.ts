@@ -5,6 +5,7 @@ import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategor
 import SongListRepository from '@/Repositories/SongListRepository';
 import SongRepository from '@/Repositories/SongRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
 import _ from 'lodash';
 import {
 	action,
@@ -15,8 +16,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import DeleteEntryStore from '../DeleteEntryStore';
 
 export class SongInListEditStore {
 	private static nextId = 1;

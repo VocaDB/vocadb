@@ -1,14 +1,13 @@
+import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import AlbumReleaseContract from '@/DataContracts/Album/AlbumReleaseContract';
+import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
+import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import SongInAlbumEditContract from '@/DataContracts/Song/SongInAlbumEditContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 import AlbumType from '@/Models/Albums/AlbumType';
-
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import EntryPictureFileContract from '../EntryPictureFileContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import PVContract from '../PVs/PVContract';
-import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
-import WebLinkContract from '../WebLinkContract';
-import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
-import AlbumReleaseContract from './AlbumReleaseContract';
 
 // Corresponds to the AlbumForEditForApiContract record class in C#.
 export default interface AlbumForEditContract {

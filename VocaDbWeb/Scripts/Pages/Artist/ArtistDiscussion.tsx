@@ -1,11 +1,10 @@
+import EditableComments from '@/Components/Shared/Partials/Comment/EditableComments';
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
 import LoginManager from '@/Models/LoginManager';
+import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import EditableComments from '../../Components/Shared/Partials/Comment/EditableComments';
-import { ArtistDetailsTabs } from './ArtistDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

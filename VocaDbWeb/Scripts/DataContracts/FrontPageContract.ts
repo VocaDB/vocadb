@@ -1,8 +1,8 @@
-import ActivityEntryContract from './ActivityEntry/ActivityEntryContract';
-import AlbumForApiContract from './Album/AlbumForApiContract';
-import EntryWithCommentsContract from './EntryWithCommentsContract';
-import ReleaseEventContract from './ReleaseEvents/ReleaseEventContract';
-import SongWithPVAndVoteContract from './Song/SongWithPVAndVoteContract';
+import ActivityEntryContract from '@/DataContracts/ActivityEntry/ActivityEntryContract';
+import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
+import EntryWithCommentsContract from '@/DataContracts/EntryWithCommentsContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
 
 // Corresponds to the FrontPageForApiContract record class in C#.
 export default interface FrontPageContract {

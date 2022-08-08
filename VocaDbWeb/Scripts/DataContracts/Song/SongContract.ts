@@ -1,7 +1,6 @@
+import CommonEntryContract from '@/DataContracts/CommonEntryContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
 import SongType from '@/Models/Songs/SongType';
-
-import CommonEntryContract from '../CommonEntryContract';
-import EntryThumbContract from '../EntryThumbContract';
 
 export default interface SongContract extends CommonEntryContract {
 	additionalNames: string;

@@ -6,9 +6,10 @@ import SongType from '@/Models/Songs/SongType';
 import SongListRepository from '@/Repositories/SongListRepository';
 import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import ArtistFilters from '@/Stores/Search/ArtistFilters';
-
-import { IPlayListRepository } from './PlayListStore';
-import { ISongForPlayList } from './PlayListStore';
+import {
+	IPlayListRepository,
+	ISongForPlayList,
+} from '@/Stores/Song/PlayList/PlayListStore';
 
 export interface ISongListStore {
 	query: string;

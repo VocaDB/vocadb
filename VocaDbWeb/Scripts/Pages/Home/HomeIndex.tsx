@@ -5,8 +5,10 @@ import ActivityEntryKnockout from '@/Components/Shared/Partials/Activityfeed/Act
 import AlbumThumbs from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import CommentWithEntryVertical from '@/Components/Shared/Partials/Comment/CommentWithEntryVertical';
 import EventThumbs from '@/Components/Shared/Partials/Shared/EventThumbs';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import FrontPageContract from '@/DataContracts/FrontPageContract';
 import UrlHelper from '@/Helpers/UrlHelper';
+import NewsItems from '@/Pages/Home/Partials/NewsItems';
 import UserRepository from '@/Repositories/UserRepository';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
@@ -24,9 +26,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import NewsItems from './Partials/NewsItems';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

@@ -1,13 +1,15 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/AccordionBody.tsx.
+import AccordionCollapse from '@/Bootstrap/AccordionCollapse';
+import AccordionItemContext from '@/Bootstrap/AccordionItemContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useContext } from 'react';
-
-import AccordionCollapse from './AccordionCollapse';
-import AccordionItemContext from './AccordionItemContext';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixRefForwardingComponent, BsPrefixProps } from './helpers';
 
 export interface AccordionBodyProps
 	extends BsPrefixProps,

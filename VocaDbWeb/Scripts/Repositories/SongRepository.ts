@@ -21,14 +21,14 @@ import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePre
 import PVService from '@/Models/PVs/PVService';
 import SongVoteRating from '@/Models/SongVoteRating';
 import SongType from '@/Models/Songs/SongType';
+import BaseRepository, {
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import ICommentRepository from '@/Repositories/ICommentRepository';
 import functions from '@/Shared/GlobalFunctions';
 import HttpClient, { HeaderNames, MediaTypes } from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
-
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
 
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.

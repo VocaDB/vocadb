@@ -11,8 +11,10 @@ import GlobalValues from '@/Shared/GlobalValues';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import ArtistFilters from '@/Stores/Search/ArtistFilters';
-
-import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
+import {
+	IPlayListRepository,
+	ISongForPlayList,
+} from '@/Stores/Song/PlayList/PlayListStore';
 
 export interface ISongsAdapterStore {
 	searchTerm: string;

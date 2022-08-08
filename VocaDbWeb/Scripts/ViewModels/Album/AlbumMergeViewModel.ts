@@ -3,9 +3,8 @@ import EntryMergeValidationHelper from '@/Helpers/EntryMergeValidationHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
 import ko from 'knockout';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 
 export default class AlbumMergeViewModel {
 	public constructor(values: GlobalValues, repo: AlbumRepository, id: number) {

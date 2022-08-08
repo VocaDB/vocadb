@@ -2,12 +2,11 @@ import CommentContract from '@/DataContracts/CommentContract';
 import EntryRefContract from '@/DataContracts/EntryRefContract';
 import SongListContract from '@/DataContracts/Song/SongListContract';
 import UserWithPermissionsContract from '@/DataContracts/User/UserWithPermissionsContract';
+import EntryStatus from '@/Models/EntryStatus';
+import EntryType from '@/Models/EntryType';
+import IEntryWithStatus from '@/Models/IEntryWithStatus';
+import UserGroup from '@/Models/Users/UserGroup';
 import GlobalValues from '@/Shared/GlobalValues';
-
-import EntryStatus from './EntryStatus';
-import EntryType from './EntryType';
-import IEntryWithStatus from './IEntryWithStatus';
-import UserGroup from './Users/UserGroup';
 
 // Corresponds to the PermissionToken struct in C#.
 export enum PermissionToken {

@@ -1,8 +1,7 @@
 import TagRepository from '@/Repositories/TagRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import TagFilters from '@/Stores/Search/TagFilters';
 import { makeObservable, observable } from 'mobx';
-
-import TagFilters from './TagFilters';
 
 export interface ICommonSearchStore {
 	draftsOnly: boolean;

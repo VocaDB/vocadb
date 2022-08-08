@@ -1,10 +1,9 @@
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import RatedSongs from '@/Pages/User/Partials/RatedSongs';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import React from 'react';
-
-import RatedSongs from './Partials/RatedSongs';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface UserSongsProps {
 	user: UserDetailsContract;

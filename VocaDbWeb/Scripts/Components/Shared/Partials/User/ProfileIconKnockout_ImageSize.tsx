@@ -1,9 +1,8 @@
+import ProfileIconKnockout from '@/Components/Shared/Partials/User/ProfileIconKnockout';
 import EntryThumbContract from '@/DataContracts/EntryThumbContract';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import ImageSize from '@/Models/Images/ImageSize';
 import React from 'react';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 const getImageUrl = (
 	size: ImageSize,

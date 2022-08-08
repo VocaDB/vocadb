@@ -1,5 +1,8 @@
 import Accordion from '@/Bootstrap/Accordion';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { UserLanguageCultureDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
+import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
+import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import LyricsForSongListEditStore, {
 	LyricsForSongEditStore,
 } from '@/Stores/Song/LyricsForSongListEditStore';
@@ -7,10 +10,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { UserLanguageCultureDropdownList } from '../../../Components/Shared/Partials/Knockout/DropdownList';
-import HelpLabel from '../../../Components/Shared/Partials/Shared/HelpLabel';
-import { userLanguageCultures } from '../../../Components/userLanguageCultures';
 
 interface LyricsForSongEditProps {
 	lyricsForSongListEditStore: LyricsForSongListEditStore;

@@ -2,6 +2,8 @@ import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolde
 import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
 import LoginManager from '@/Models/LoginManager';
 import DiscussionRepository from '@/Repositories/DiscussionRepository';
+import DiscussionTopicEditStore from '@/Stores/Discussion/DiscussionTopicEditStore';
+import DiscussionTopicStore from '@/Stores/Discussion/DiscussionTopicStore';
 import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
@@ -13,9 +15,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-
-import DiscussionTopicEditStore from './DiscussionTopicEditStore';
-import DiscussionTopicStore from './DiscussionTopicStore';
 
 interface DiscussionIndexRouteParams {
 	page?: number;

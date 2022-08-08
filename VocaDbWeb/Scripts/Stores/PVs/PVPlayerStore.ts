@@ -5,9 +5,8 @@ import SongRepository from '@/Repositories/SongRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
+import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
-
-import PVPlayersFactory from './PVPlayersFactory';
 
 export interface IPVPlayer {
 	// Attach the player by creating the JavaScript object, either to the currently playing element, or create a new element.

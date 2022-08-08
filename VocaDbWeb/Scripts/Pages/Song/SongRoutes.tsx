@@ -1,11 +1,10 @@
 import EntryType from '@/Models/EntryType';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
-
-import { SearchType } from '../../Stores/Search/SearchStore';
 
 const SongCreate = React.lazy(() => import('./SongCreate'));
 const SongEdit = React.lazy(() => import('./SongEdit'));

@@ -1,4 +1,11 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Layout from '@/Components/Shared/Layout';
+import CommentBodyLarge from '@/Components/Shared/Partials/Comment/CommentBodyLarge';
+import CommentEntryItem from '@/Components/Shared/Partials/Comment/CommentEntryItem';
+import Dropdown from '@/Components/Shared/Partials/Knockout/Dropdown';
+import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
+import UserLockingAutoComplete from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import LoginManager from '@/Models/LoginManager';
 import UserRepository from '@/Repositories/UserRepository';
 import HttpClient from '@/Shared/HttpClient';
@@ -13,14 +20,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import CommentBodyLarge from '../../Components/Shared/Partials/Comment/CommentBodyLarge';
-import CommentEntryItem from '../../Components/Shared/Partials/Comment/CommentEntryItem';
-import Dropdown from '../../Components/Shared/Partials/Knockout/Dropdown';
-import { CommentTargetTypeDropdownList } from '../../Components/Shared/Partials/Knockout/DropdownList';
-import UserLockingAutoComplete from '../../Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
 
 const loginManager = new LoginManager(vdb.values);
 

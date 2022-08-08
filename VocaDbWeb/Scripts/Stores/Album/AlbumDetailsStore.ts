@@ -13,6 +13,13 @@ import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import functions from '@/Shared/GlobalFunctions';
+import GlobalValues from '@/Shared/GlobalValues';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
+import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
+import ReportEntryStore from '@/Stores/ReportEntryStore';
+import SelfDescriptionStore from '@/Stores/SelfDescriptionStore';
+import TagListStore from '@/Stores/Tag/TagListStore';
+import TagsEditStore from '@/Stores/Tag/TagsEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -22,14 +29,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import GlobalValues from '../../Shared/GlobalValues';
-import EditableCommentsStore from '../EditableCommentsStore';
-import EnglishTranslatedStringStore from '../Globalization/EnglishTranslatedStringStore';
-import ReportEntryStore from '../ReportEntryStore';
-import SelfDescriptionStore from '../SelfDescriptionStore';
-import TagListStore from '../Tag/TagListStore';
-import TagsEditStore from '../Tag/TagsEditStore';
 
 export class DownloadTagsStore {
 	@observable public dialogVisible = false;

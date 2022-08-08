@@ -3,12 +3,12 @@ import TagRepository from '@/Repositories/TagRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import ReportEntryViewModel, {
+	IEntryReportType,
+} from '@/ViewModels/ReportEntryViewModel';
 import ko, { Observable } from 'knockout';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
 
 export default class TagDetailsViewModel {
 	public constructor(

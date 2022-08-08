@@ -3,8 +3,11 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import Layout from '@/Components/Shared/Layout';
+import DeletedBanner from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
 import ReportEntryPopupKnockout from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import { AlbumSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
+import DraftMessage from '@/Components/Shared/Partials/Shared/DraftMessage';
+import EntryStatusMessage from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -14,6 +17,8 @@ import ArtistReportType, {
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
+import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
+import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import SongRepository from '@/Repositories/SongRepository';
@@ -31,11 +36,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-import DeletedBanner from '../../Components/Shared/Partials/EntryDetails/DeletedBanner';
-import DraftMessage from '../../Components/Shared/Partials/Shared/DraftMessage';
-import EntryStatusMessage from '../../Components/Shared/Partials/Shared/EntryStatusMessage';
-import ArtistDetailsRoutes from './ArtistDetailsRoutes';
-import CustomizeArtistSubscriptionDialog from './Partials/CustomizeArtistSubscriptionDialog';
 
 const loginManager = new LoginManager(vdb.values);
 

@@ -1,7 +1,6 @@
 import PVContract from '@/DataContracts/PVs/PVContract';
+import VideoServiceHelper from '@/Helpers/VideoServiceHelper';
 import PVService from '@/Models/PVs/PVService';
-
-import VideoServiceHelper from './VideoServiceHelper';
 
 export default class PVHelper {
 	public static pvServicesArrayFromString = (

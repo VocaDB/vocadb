@@ -1,7 +1,6 @@
+import PVServiceIcon from '@/Components/Shared/Partials/Shared/PVServiceIcon';
 import PVService from '@/Models/PVs/PVService';
 import React from 'react';
-
-import PVServiceIcon from './PVServiceIcon';
 
 interface PVServiceIconsProps {
 	services: string /* TODO: enum */[];

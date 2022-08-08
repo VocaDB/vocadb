@@ -17,17 +17,17 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import HttpClient from '@/Shared/HttpClient';
 import ui from '@/Shared/MessagesTyped';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
+import ReportEntryViewModel, {
+	IEntryReportType,
+} from '@/ViewModels/ReportEntryViewModel';
+import SelfDescriptionViewModel from '@/ViewModels/SelfDescriptionViewModel';
+import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
+import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export class RatingsViewModel {
 	public constructor() {

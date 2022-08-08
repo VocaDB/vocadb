@@ -1,18 +1,17 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/DropdownItem.tsx
-import useEventCallback from '@restart/hooks/useEventCallback';
-import classNames from 'classnames';
-import * as React from 'react';
-import { useContext } from 'react';
-
-import SafeAnchor from './SafeAnchor';
-import SelectableContext, { makeEventKey } from './SelectableContext';
-import { useBootstrapPrefix } from './ThemeProvider';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import SelectableContext, { makeEventKey } from '@/Bootstrap/SelectableContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
 import {
 	BsPrefixProps,
 	BsPrefixRefForwardingComponent,
 	SelectCallback,
-} from './helpers';
-import { EventKey } from './types';
+} from '@/Bootstrap/helpers';
+import { EventKey } from '@/Bootstrap/types';
+import useEventCallback from '@restart/hooks/useEventCallback';
+import classNames from 'classnames';
+import * as React from 'react';
+import { useContext } from 'react';
 
 export interface DropdownItemProps
 	extends BsPrefixProps,

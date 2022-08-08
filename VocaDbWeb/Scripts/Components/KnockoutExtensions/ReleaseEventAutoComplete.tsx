@@ -1,11 +1,10 @@
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface ReleaseEventAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

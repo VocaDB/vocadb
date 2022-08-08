@@ -11,6 +11,17 @@ import {
 import TagFilters from '@/Components/Shared/Partials/Knockout/TagFilters';
 import useScript from '@/Components/useScript';
 import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
+import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
+import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
+import ArtistSearchList from '@/Pages/Search/Partials/ArtistSearchList';
+import ArtistSearchOptions from '@/Pages/Search/Partials/ArtistSearchOptions';
+import EventSearchList from '@/Pages/Search/Partials/EventSearchList';
+import EventSearchOptions from '@/Pages/Search/Partials/EventSearchOptions';
+import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
+import SongSearchOptions from '@/Pages/Search/Partials/SongSearchOptions';
+import TagSearchList from '@/Pages/Search/Partials/TagSearchList';
+import TagSearchOptions from '@/Pages/Search/Partials/TagSearchOptions';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import EntryRepository from '@/Repositories/EntryRepository';
@@ -31,17 +42,6 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-import AlbumSearchList from './Partials/AlbumSearchList';
-import AlbumSearchOptions from './Partials/AlbumSearchOptions';
-import AnythingSearchList from './Partials/AnythingSearchList';
-import ArtistSearchList from './Partials/ArtistSearchList';
-import ArtistSearchOptions from './Partials/ArtistSearchOptions';
-import EventSearchList from './Partials/EventSearchList';
-import EventSearchOptions from './Partials/EventSearchOptions';
-import SongSearchList from './Partials/SongSearchList';
-import SongSearchOptions from './Partials/SongSearchOptions';
-import TagSearchList from './Partials/TagSearchList';
-import TagSearchOptions from './Partials/TagSearchOptions';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);

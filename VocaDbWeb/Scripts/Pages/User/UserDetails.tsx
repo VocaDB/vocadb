@@ -1,11 +1,16 @@
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Layout from '@/Components/Shared/Layout';
+import EntryDeletePopupBase from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
+import useScript from '@/Components/useScript';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import LoginManager from '@/Models/LoginManager';
 import UserGroup from '@/Models/Users/UserGroup';
+import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import AdminRepository from '@/Repositories/AdminRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
@@ -27,11 +32,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-import Layout from '../../Components/Shared/Layout';
-import EntryDeletePopupBase from '../../Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import useScript from '../../Components/useScript';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import UserDetailsRoutes from './UserDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

@@ -1,4 +1,4 @@
-import ArchivedVersionContract from './ArchivedVersionContract';
+import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
 
 // C# class: EntryWithArchivedVersionsForApiContract
 export default interface EntryWithArchivedVersionsContract<TEntry> {

@@ -1,12 +1,11 @@
 import Button from '@/Bootstrap/Button';
+import CommentBodyKnockout from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
 import CommentStore from '@/Stores/CommentStore';
 import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import CommentBodyKnockout from './CommentBodyKnockout';
 
 interface CommentBodyEditableKnockoutProps {
 	editableCommentsStore: EditableCommentsStore;

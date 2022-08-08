@@ -3,11 +3,11 @@ import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicC
 import DiscussionRepository from '@/Repositories/DiscussionRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import UrlMapper from '@/Shared/UrlMapper';
+import DiscussionTopicViewModel, {
+	DiscussionTopicEditViewModel,
+} from '@/ViewModels/Discussion/DiscussionTopicViewModel';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Observable } from 'knockout';
-
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
-import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 
 export default class DiscussionIndexViewModel {
 	public constructor(

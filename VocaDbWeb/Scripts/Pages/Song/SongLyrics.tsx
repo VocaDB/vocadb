@@ -1,5 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
@@ -11,9 +13,6 @@ import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { userLanguageCultures } from '../../Components/userLanguageCultures';
-import { SongDetailsTabs } from './SongDetailsRoutes';
 
 interface SongLyricsProps {
 	model: SongDetailsForApi;

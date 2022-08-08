@@ -1,7 +1,6 @@
+import UserIconLink_UserForApiContract from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import React from 'react';
-
-import UserIconLink_UserForApiContract from './UserIconLink_UserForApiContract';
 
 interface UserIconLinkOrName_UserForApiContractProps {
 	user?: UserApiContract;

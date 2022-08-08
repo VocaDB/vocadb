@@ -1,6 +1,5 @@
+import ProfileIconKnockout from '@/Components/Shared/Partials/User/ProfileIconKnockout';
 import React from 'react';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconAndNameKnockoutProps {
 	icon?: string;

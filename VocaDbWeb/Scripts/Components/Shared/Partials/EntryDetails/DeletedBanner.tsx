@@ -1,9 +1,8 @@
 import Alert from '@/Bootstrap/Alert';
+import EntryLink from '@/Components/Shared/Partials/Shared/EntryLink';
 import EntryBaseContract from '@/DataContracts/EntryBaseContract';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EntryLink from '../Shared/EntryLink';
 
 interface DeletedBannerProps {
 	mergedTo?: EntryBaseContract;

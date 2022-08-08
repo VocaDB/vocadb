@@ -1,4 +1,4 @@
-import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
 
 export default interface EntryWithTagUsagesContract {
 	id: number;

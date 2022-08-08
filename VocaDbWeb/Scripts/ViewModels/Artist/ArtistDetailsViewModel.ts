@@ -14,18 +14,18 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import ReportEntryViewModel, {
+	IEntryReportType,
+} from '@/ViewModels/ReportEntryViewModel';
+import AlbumSearchViewModel from '@/ViewModels/Search/AlbumSearchViewModel';
+import SongSearchViewModel from '@/ViewModels/Search/SongSearchViewModel';
+import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
+import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
 import { Options } from 'highcharts';
 import ko, { Observable } from 'knockout';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-import AlbumSearchViewModel from '../Search/AlbumSearchViewModel';
-import SongSearchViewModel from '../Search/SongSearchViewModel';
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class ArtistDetailsViewModel {
 	public constructor(

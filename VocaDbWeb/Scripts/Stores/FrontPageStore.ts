@@ -1,12 +1,11 @@
 import FrontPageContract from '@/DataContracts/FrontPageContract';
 import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import NewsListStore from '@/Stores/NewsListStore';
+import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
-
-import GlobalValues from '../Shared/GlobalValues';
-import NewsListStore from './NewsListStore';
-import PVRatingButtonsStore from './PVRatingButtonsStore';
-import ServerSidePagingStore from './ServerSidePagingStore';
 
 export class FrontPagePVPlayerStore {
 	public readonly paging = new ServerSidePagingStore(4);

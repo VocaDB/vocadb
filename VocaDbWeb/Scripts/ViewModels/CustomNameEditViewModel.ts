@@ -1,6 +1,5 @@
+import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
 import ko from 'knockout';
-
-import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 
 export default class CustomNameEditViewModel {
 	public artistLink = ko.observable<ArtistForAlbumEditViewModel>();

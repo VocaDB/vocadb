@@ -1,7 +1,6 @@
+import DateTimeHelper from '@/Helpers/DateTimeHelper';
 import Decimal from 'decimal.js-light';
 import ko, { Computed, Observable } from 'knockout';
-
-import DateTimeHelper from './DateTimeHelper';
 
 export default class KnockoutHelper {
 	public static stringEnum<T>(

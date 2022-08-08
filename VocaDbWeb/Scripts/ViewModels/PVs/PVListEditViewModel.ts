@@ -4,10 +4,9 @@ import PVServiceIcons from '@/Models/PVServiceIcons';
 import PVRepository from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVEditViewModel from '@/ViewModels/PVs/PVEditViewModel';
 import $ from 'jquery';
 import ko, { ObservableArray } from 'knockout';
-
-import PVEditViewModel from './PVEditViewModel';
 
 export default class PVListEditViewModel {
 	public constructor(

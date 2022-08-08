@@ -4,9 +4,8 @@ import SongListBaseContract from '@/DataContracts/SongListBaseContract';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
 import SongRepository from '@/Repositories/SongRepository';
 import HttpClient from '@/Shared/HttpClient';
+import FakePromise from '@/Tests/TestSupport/FakePromise';
 import _ from 'lodash';
-
-import FakePromise from './FakePromise';
 
 export interface SongInList {
 	listId: number;

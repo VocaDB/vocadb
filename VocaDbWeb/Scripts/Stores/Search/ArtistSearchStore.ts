@@ -5,12 +5,11 @@ import ArtistHelper from '@/Helpers/ArtistHelper';
 import ArtistType from '@/Models/Artists/ArtistType';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable, observable } from 'mobx';
-
-import AdvancedSearchFilter from './AdvancedSearchFilter';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {

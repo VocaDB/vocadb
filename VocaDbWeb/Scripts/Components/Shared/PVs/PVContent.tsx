@@ -1,4 +1,5 @@
 import Button from '@/Bootstrap/Button';
+import EmbedPV from '@/Components/Shared/Partials/PV/EmbedPV';
 import { showSuccessMessage } from '@/Components/ui';
 import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import PVHelper from '@/Helpers/PVHelper';
@@ -12,8 +13,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import EmbedPV from '../Partials/PV/EmbedPV';
 
 const loginManager = new LoginManager(vdb.values);
 

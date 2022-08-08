@@ -1,6 +1,6 @@
-import EntryThumbContract from '../EntryThumbContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the ReleaseEventSeriesForEditForApiContract record class in C#.
 export default interface ReleaseEventSeriesForEditContract {

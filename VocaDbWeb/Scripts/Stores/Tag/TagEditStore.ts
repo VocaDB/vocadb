@@ -5,6 +5,11 @@ import TagTargetTypes from '@/Models/Tags/TagTargetTypes';
 import TagRepository from '@/Repositories/TagRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import UrlMapper from '@/Shared/UrlMapper';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
+import WebLinksEditStore from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -14,12 +19,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EnglishTranslatedStringEditStore from '../Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
 
 export default class TagEditStore {
 	// Bitmask for all possible entry types (all bits 1)

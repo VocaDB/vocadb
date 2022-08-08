@@ -2,6 +2,34 @@ import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ArtistAutoComplete from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import SongAutoComplete from '@/Components/KnockoutExtensions/SongAutoComplete';
+import EntryPictureFileEdit from '@/Components/Shared/KnockoutPartials/EntryPictureFileEdit';
+import NamesEditor from '@/Components/Shared/KnockoutPartials/NamesEditor';
+import Layout from '@/Components/Shared/Layout';
+import PVEdit from '@/Components/Shared/PVs/PVEdit';
+import ArtistRolesEditViewModel from '@/Components/Shared/Partials/ArtistRolesEditViewModel';
+import CustomNameEdit from '@/Components/Shared/Partials/CustomNameEdit';
+import EnglishTranslatedStringEdit from '@/Components/Shared/Partials/EnglishTranslatedStringEdit';
+import EntryDeletePopup from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
+import {
+	LanguageSelectionDropdownList,
+	AlbumTypeDropdownList,
+	EntryStatusDropdownList,
+} from '@/Components/Shared/Partials/Knockout/DropdownList';
+import EntryValidationMessage from '@/Components/Shared/Partials/Knockout/EntryValidationMessage';
+import ReleaseEventLockingAutoComplete from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
+import WebLinksEditViewKnockout from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
+import ConcurrentEditWarning from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
+import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
+import MarkdownNotice from '@/Components/Shared/Partials/Shared/MarkdownNotice';
+import RequiredField from '@/Components/Shared/Partials/Shared/RequiredField';
+import SaveAndBackBtn from '@/Components/Shared/Partials/Shared/SaveAndBackBtn';
+import ValidationErrorIcon from '@/Components/Shared/Partials/Shared/ValidationErrorIcon';
+import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { showErrorMessage } from '@/Components/ui';
+import { useConflictingEditor } from '@/Components/useConflictingEditor';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 import ImageHelper from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -14,6 +42,9 @@ import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
 import SongType from '@/Models/Songs/SongType';
 import WebLinkCategory from '@/Models/WebLinkCategory';
+import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
+import SongInAlbumEdit from '@/Pages/Album/Partials/SongInAlbumEdit';
+import TrackProperties from '@/Pages/Album/Partials/TrackProperties';
 import AlbumRepository from '@/Repositories/AlbumRepository';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import PVRepository from '@/Repositories/PVRepository';
@@ -30,38 +61,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-import ArtistAutoComplete from '../../Components/KnockoutExtensions/ArtistAutoComplete';
-import SongAutoComplete from '../../Components/KnockoutExtensions/SongAutoComplete';
-import EntryPictureFileEdit from '../../Components/Shared/KnockoutPartials/EntryPictureFileEdit';
-import NamesEditor from '../../Components/Shared/KnockoutPartials/NamesEditor';
-import Layout from '../../Components/Shared/Layout';
-import PVEdit from '../../Components/Shared/PVs/PVEdit';
-import ArtistRolesEditViewModel from '../../Components/Shared/Partials/ArtistRolesEditViewModel';
-import CustomNameEdit from '../../Components/Shared/Partials/CustomNameEdit';
-import EnglishTranslatedStringEdit from '../../Components/Shared/Partials/EnglishTranslatedStringEdit';
-import EntryDeletePopup from '../../Components/Shared/Partials/EntryDetails/EntryDeletePopup';
-import {
-	AlbumTypeDropdownList,
-	EntryStatusDropdownList,
-	LanguageSelectionDropdownList,
-} from '../../Components/Shared/Partials/Knockout/DropdownList';
-import EntryValidationMessage from '../../Components/Shared/Partials/Knockout/EntryValidationMessage';
-import ReleaseEventLockingAutoComplete from '../../Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
-import WebLinksEditViewKnockout from '../../Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
-import ConcurrentEditWarning from '../../Components/Shared/Partials/Shared/ConcurrentEditWarning';
-import HelpLabel from '../../Components/Shared/Partials/Shared/HelpLabel';
-import MarkdownNotice from '../../Components/Shared/Partials/Shared/MarkdownNotice';
-import RequiredField from '../../Components/Shared/Partials/Shared/RequiredField';
-import SaveAndBackBtn from '../../Components/Shared/Partials/Shared/SaveAndBackBtn';
-import ValidationErrorIcon from '../../Components/Shared/Partials/Shared/ValidationErrorIcon';
-import ValidationSummaryPanel from '../../Components/Shared/Partials/Shared/ValidationSummaryPanel';
-import { showErrorMessage } from '../../Components/ui';
-import { useConflictingEditor } from '../../Components/useConflictingEditor';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import ArtistForAlbumEdit from './Partials/ArtistForAlbumEdit';
-import SongInAlbumEdit from './Partials/SongInAlbumEdit';
-import TrackProperties from './Partials/TrackProperties';
 
 const loginManager = new LoginManager(vdb.values);
 

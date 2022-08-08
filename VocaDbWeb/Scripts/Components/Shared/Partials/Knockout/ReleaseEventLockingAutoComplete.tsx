@@ -1,12 +1,11 @@
 import ReleaseEventAutoComplete from '@/Components/KnockoutExtensions/ReleaseEventAutoComplete';
+import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface ReleaseEventLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<IEntryWithIdAndName>;

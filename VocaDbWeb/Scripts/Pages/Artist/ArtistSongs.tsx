@@ -2,6 +2,7 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
@@ -11,8 +12,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-
-import { ArtistDetailsTabs } from './ArtistDetailsRoutes';
 
 interface ArtistSongsProps {
 	artist: ArtistDetailsContract;

@@ -1,8 +1,7 @@
 import ArtistRoles from '@/Models/Artists/ArtistRoles';
+import { IEditableArtistWithSupport } from '@/ViewModels/ArtistForAlbumEditViewModel';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
-
-import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 
 export default class ArtistRolesEditViewModel {
 	public constructor(

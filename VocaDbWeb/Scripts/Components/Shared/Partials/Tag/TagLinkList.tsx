@@ -1,7 +1,6 @@
+import TagLink from '@/Components/Shared/Partials/Tag/TagLink';
 import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import React from 'react';
-
-import TagLink from './TagLink';
 
 interface TagLinkListProps {
 	tagNames: TagBaseContract[];

@@ -1,7 +1,6 @@
+import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
 import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 import React from 'react';
-
-import ArtistLink from './ArtistLink';
 
 interface ArtistLinkListProps {
 	artists: ArtistApiContract[];

@@ -1,4 +1,4 @@
-import UserApiContract from '../User/UserApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 
 export default interface AlbumReviewContract {
 	date: string;

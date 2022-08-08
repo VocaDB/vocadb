@@ -2,9 +2,8 @@ import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
 import EntryType from '@/Models/EntryType';
 import UserRepository from '@/Repositories/UserRepository';
-
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
+import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
 
 export default class EventSeriesDetailsViewModel {
 	public constructor(

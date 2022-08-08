@@ -1,4 +1,4 @@
-import UserApiContract from '../User/UserApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 
 // C# class: ArchivedObjectVersionForApiContract
 export default interface ArchivedVersionContract {

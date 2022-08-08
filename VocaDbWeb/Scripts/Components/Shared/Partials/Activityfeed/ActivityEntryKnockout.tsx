@@ -1,3 +1,5 @@
+import IconNameAndTypeLinkKnockout from '@/Components/Shared/Partials/User/IconNameAndTypeLinkKnockout';
+import useChangedFieldNames from '@/Components/useChangedFieldNames';
 import ActivityEntryContract from '@/DataContracts/ActivityEntry/ActivityEntryContract';
 import EntryContract from '@/DataContracts/EntryContract';
 import EntryType from '@/Models/EntryType';
@@ -6,9 +8,6 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import useChangedFieldNames from '../../../useChangedFieldNames';
-import IconNameAndTypeLinkKnockout from '../User/IconNameAndTypeLinkKnockout';
 
 const useActivityFeedEventName = (): ((
 	activityEntry: ActivityEntryContract,

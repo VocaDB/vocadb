@@ -23,11 +23,10 @@ import EntryType from '@/Models/EntryType';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
 import SongVoteRating from '@/Models/SongVoteRating';
 import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
+import ICommentRepository from '@/Repositories/ICommentRepository';
 import HttpClient, { HeaderNames, MediaTypes } from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
-
-import ICommentRepository from './ICommentRepository';
 
 export enum UserInboxType {
 	Nothing,

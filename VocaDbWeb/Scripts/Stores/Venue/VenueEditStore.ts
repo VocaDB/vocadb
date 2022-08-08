@@ -3,6 +3,9 @@ import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
 import EntryStatus from '@/Models/EntryStatus';
 import NameMatchMode from '@/Models/NameMatchMode';
 import VenueRepository from '@/Repositories/VenueRepository';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
+import WebLinksEditStore from '@/Stores/WebLinksEditStore';
 import {
 	action,
 	computed,
@@ -10,10 +13,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import DeleteEntryStore from '../DeleteEntryStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
 
 export default class VenueEditStore {
 	@observable public address: string;

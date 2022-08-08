@@ -1,6 +1,8 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import EntryType from '@/Models/EntryType';
 import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
@@ -10,9 +12,6 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import EntryType from '../../Models/EntryType';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 interface EventsProps {
 	userDetailsStore: UserDetailsStore;

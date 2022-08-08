@@ -1,8 +1,7 @@
 import ArtistContract from '@/DataContracts/Artist/ArtistContract';
 import ArtistForEventContract from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import { computed, makeObservable, observable } from 'mobx';
-
-import { IEditableArtistWithSupport } from '../ArtistForAlbumEditStore';
 
 // Store for editing artist for album link.
 export default class ArtistForEventEditStore

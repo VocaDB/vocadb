@@ -1,9 +1,8 @@
 import Alert from '@/Bootstrap/Alert';
+import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import NotificationIcon from './NotificationIcon';
 
 interface DraftMessageProps {
 	section: string;

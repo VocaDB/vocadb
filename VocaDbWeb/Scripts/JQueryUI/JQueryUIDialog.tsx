@@ -1,7 +1,6 @@
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import React from 'react';
 import { Modal } from 'react-overlays';
-
-import JQueryUIButton from './JQueryUIButton';
 
 type JQueryUIDialogProps = {
 	autoOpen?: boolean;

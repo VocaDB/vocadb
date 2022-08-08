@@ -1,10 +1,9 @@
+import EditableComments from '@/Components/Shared/Partials/Comment/EditableComments';
 import LoginManager from '@/Models/LoginManager';
 import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EditableComments from './EditableComments';
 
 const loginManager = new LoginManager(vdb.values);
 

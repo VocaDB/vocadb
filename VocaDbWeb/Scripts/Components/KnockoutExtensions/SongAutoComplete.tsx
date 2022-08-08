@@ -1,3 +1,7 @@
+import { SongAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
+import EntryAutoComplete, {
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import SongContract from '@/DataContracts/Song/SongContract';
 import SearchTextQueryHelper from '@/Helpers/SearchTextQueryHelper';
 import NameMatchMode from '@/Models/NameMatchMode';
@@ -6,11 +10,6 @@ import functions from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { SongAutoCompleteParams } from './AutoCompleteParams';
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface SongAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

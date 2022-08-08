@@ -2,9 +2,8 @@ import UserKnownLanguageContract from '@/DataContracts/User/UserKnownLanguageCon
 import WebLinkContract from '@/DataContracts/WebLinkContract';
 import UserRepository from '@/Repositories/UserRepository';
 import ui from '@/Shared/MessagesTyped';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
-
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 // User my settings view model
 export default class MySettingsViewModel {

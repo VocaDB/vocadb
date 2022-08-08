@@ -1,8 +1,7 @@
 import ArtistRoles from '@/Models/Artists/ArtistRoles';
+import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
-
-import { IEditableArtistWithSupport } from '../ArtistForAlbumEditStore';
 
 export interface RoleSelection {
 	// Role Id, for example "VoiceManipulator"

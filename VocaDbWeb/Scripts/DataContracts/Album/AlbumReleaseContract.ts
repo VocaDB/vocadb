@@ -1,5 +1,5 @@
-import OptionalDateTimeContract from '../OptionalDateTimeContract';
-import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
+import OptionalDateTimeContract from '@/DataContracts/OptionalDateTimeContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 
 export default interface AlbumReleaseContract {
 	catNum: string;

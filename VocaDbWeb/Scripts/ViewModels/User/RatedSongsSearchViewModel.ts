@@ -12,19 +12,18 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import PVPlayerViewModel from '@/ViewModels/PVs/PVPlayerViewModel';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
+import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
+import TagFilter from '@/ViewModels/Search/TagFilter';
+import TagFilters from '@/ViewModels/Search/TagFilters';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import PlayListRepositoryForRatedSongsAdapter from '@/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import PlayListViewModel from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
 import ko from 'knockout';
 import moment from 'moment';
-
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
-import ArtistFilters from '../Search/ArtistFilters';
-import TagFilter from '../Search/TagFilter';
-import TagFilters from '../Search/TagFilters';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import PlayListRepositoryForRatedSongsAdapter from '../Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 
 export default class RatedSongsSearchViewModel {
 	public constructor(

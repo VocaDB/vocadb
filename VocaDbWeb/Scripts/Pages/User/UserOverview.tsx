@@ -1,9 +1,22 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import AlbumThumbs from '@/Components/Shared/Partials/Album/AlbumThumbs';
+import ArtistGrid from '@/Components/Shared/Partials/Artist/ArtistGrid';
+import EditableComments from '@/Components/Shared/Partials/Comment/EditableComments';
+import ExternalLinksList from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
+import FormatMarkdown from '@/Components/Shared/Partials/Html/FormatMarkdown';
+import LanguageFlag from '@/Components/Shared/Partials/Html/LanguageFlag';
+import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import SongGrid from '@/Components/Shared/Partials/Song/SongGrid';
+import TagLinkList from '@/Components/Shared/Partials/Tag/TagLinkList';
+import ProfileIconKnockout from '@/Components/Shared/Partials/User/ProfileIconKnockout';
+import { showSuccessMessage, showErrorMessage } from '@/Components/ui';
+import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import UserKnownLanguageContract, {
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
 import LoginManager, { PermissionToken } from '@/Models/LoginManager';
+import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import Highcharts from 'highcharts';
@@ -14,20 +27,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import AlbumThumbs from '../../Components/Shared/Partials/Album/AlbumThumbs';
-import ArtistGrid from '../../Components/Shared/Partials/Artist/ArtistGrid';
-import EditableComments from '../../Components/Shared/Partials/Comment/EditableComments';
-import ExternalLinksList from '../../Components/Shared/Partials/EntryDetails/ExternalLinksList';
-import FormatMarkdown from '../../Components/Shared/Partials/Html/FormatMarkdown';
-import LanguageFlag from '../../Components/Shared/Partials/Html/LanguageFlag';
-import UniversalTimeLabel from '../../Components/Shared/Partials/Shared/UniversalTimeLabel';
-import SongGrid from '../../Components/Shared/Partials/Song/SongGrid';
-import TagLinkList from '../../Components/Shared/Partials/Tag/TagLinkList';
-import ProfileIconKnockout from '../../Components/Shared/Partials/User/ProfileIconKnockout';
-import { showErrorMessage, showSuccessMessage } from '../../Components/ui';
-import { userLanguageCultures } from '../../Components/userLanguageCultures';
-import { UserDetailsNav } from './UserDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

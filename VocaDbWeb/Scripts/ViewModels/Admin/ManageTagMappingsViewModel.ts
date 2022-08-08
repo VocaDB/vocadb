@@ -4,11 +4,10 @@ import TagRepository from '@/Repositories/TagRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import functions from '@/Shared/GlobalFunctions';
 import ui from '@/Shared/MessagesTyped';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
 import _ from 'lodash';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 export default class ManageTagMappingsViewModel {
 	public constructor(private readonly tagRepo: TagRepository) {

@@ -2,9 +2,8 @@ import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '@/DataContracts/Artist/ArtistContract';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
 import ko, { Observable } from 'knockout';
-
-import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 export default class SelfDescriptionViewModel {
 	public constructor(

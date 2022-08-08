@@ -8,11 +8,10 @@ import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryW
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
 import SongType from '@/Models/Songs/SongType';
+import EntryCommentRepository from '@/Repositories/EntryCommentRepository';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
 import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
-
-import EntryCommentRepository from './EntryCommentRepository';
 
 export default class SongListRepository {
 	public constructor(

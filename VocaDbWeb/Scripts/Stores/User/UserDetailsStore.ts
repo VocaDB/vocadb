@@ -2,6 +2,7 @@ import CommentContract from '@/DataContracts/CommentContract';
 import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import SongListContract from '@/DataContracts/Song/SongListContract';
+import HighchartsHelper from '@/Helpers/HighchartsHelper';
 import LoginManager from '@/Models/LoginManager';
 import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
 import AdminRepository from '@/Repositories/AdminRepository';
@@ -10,20 +11,18 @@ import UserRepository from '@/Repositories/UserRepository';
 import GlobalValues from '@/Shared/GlobalValues';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
+import SongListsBaseStore, {
+	SongListSortRule,
+} from '@/Stores/SongList/SongListsBaseStore';
+import AlbumCollectionStore from '@/Stores/User/AlbumCollectionStore';
+import FollowedArtistsStore from '@/Stores/User/FollowedArtistsStore';
+import RatedSongsSearchStore from '@/Stores/User/RatedSongsSearchStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
-
-import HighchartsHelper from '../../Helpers/HighchartsHelper';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EditableCommentsStore from '../EditableCommentsStore';
-import SongListsBaseStore, {
-	SongListSortRule,
-} from '../SongList/SongListsBaseStore';
-import AlbumCollectionStore from './AlbumCollectionStore';
-import FollowedArtistsStore from './FollowedArtistsStore';
-import RatedSongsSearchStore from './RatedSongsSearchStore';
 
 interface UserSongListsRouteParams {
 	filter?: string;

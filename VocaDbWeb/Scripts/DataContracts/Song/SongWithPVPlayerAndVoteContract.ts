@@ -1,4 +1,4 @@
-import SongWithPVAndVoteContract from './SongWithPVAndVoteContract';
+import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
 
 export default interface SongWithPVPlayerAndVoteContract {
 	playerHtml: string;

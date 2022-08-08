@@ -1,5 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import CommentBodyKnockout from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
+import ProfileIconKnockout_ImageSize from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import ImageSize from '@/Models/Images/ImageSize';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
@@ -8,9 +10,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import ProfileIconKnockout_ImageSize from '../User/ProfileIconKnockout_ImageSize';
-import CommentBodyKnockout from './CommentBodyKnockout';
 
 interface CommentKnockoutStore {
 	author: UserApiContract;

@@ -6,11 +6,10 @@ import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
 import UserRepository from '@/Repositories/UserRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import UrlMapper from '@/Shared/UrlMapper';
+import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
+import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Observable } from 'knockout';
-
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 export default class ReleaseEventSeriesEditViewModel {
 	public constructor(

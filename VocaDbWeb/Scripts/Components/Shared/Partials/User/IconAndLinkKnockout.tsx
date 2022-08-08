@@ -1,10 +1,9 @@
+import ProfileIconKnockout_ImageSize from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import UserApiContract from '@/DataContracts/User/UserApiContract';
 import ImageSize from '@/Models/Images/ImageSize';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import ProfileIconKnockout_ImageSize from './ProfileIconKnockout_ImageSize';
 
 interface IconAndLinkKnockoutProps {
 	user: UserApiContract;

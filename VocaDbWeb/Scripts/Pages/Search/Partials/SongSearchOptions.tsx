@@ -4,15 +4,14 @@ import SongLockingAutoComplete from '@/Components/Shared/Partials/Knockout/SongL
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import SongTypesDropdownKnockout from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import SongType from '@/Models/Songs/SongType';
+import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
+import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import SongSearchStore from '@/Stores/Search/SongSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-
-import SongBpmFilter from './SongBpmFilter';
-import SongLengthFilter from './SongLengthFilter';
 
 interface SongSearchOptionsProps {
 	songSearchStore: SongSearchStore;

@@ -1,4 +1,4 @@
-import ArtistApiContract from '../Artist/ArtistApiContract';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 
 export default interface ArtistLinkContract {
 	artist: ArtistApiContract;

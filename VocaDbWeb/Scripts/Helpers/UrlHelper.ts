@@ -1,9 +1,8 @@
 import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import RegexLinkMatcher from '@/Helpers/RegexLinkMatcher';
 import ImageSize from '@/Models/Images/ImageSize';
 import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
-
-import RegexLinkMatcher from './RegexLinkMatcher';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
 /// <summary>

@@ -13,6 +13,7 @@ import UserRepository from '@/Repositories/UserRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
 import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
 import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
@@ -25,8 +26,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
 
 interface AlbumCollectionRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];

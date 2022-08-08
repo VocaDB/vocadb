@@ -1,8 +1,13 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { TagToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import AlbumThumbs from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import ArtistGrid from '@/Components/Shared/Partials/Artist/ArtistGrid';
 import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
+import ArtistLinkList from '@/Components/Shared/Partials/Artist/ArtistLinkList';
 import ArtistTypeLabel from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import LatestCommentsKnockout from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
+import EnglishTranslatedString from '@/Components/Shared/Partials/EnglishTranslatedString';
+import ExternalLinksRows from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
 import EventThumbs from '@/Components/Shared/Partials/Shared/EventThumbs';
 import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import SongGrid from '@/Components/Shared/Partials/Song/SongGrid';
@@ -16,6 +21,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import EntryType from '@/Models/EntryType';
 import ImageSize from '@/Models/Images/ImageSize';
 import LoginManager from '@/Models/LoginManager';
+import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
@@ -32,13 +38,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import { TagToolTip } from '../../Components/KnockoutExtensions/EntryToolTip';
-import ArtistLinkList from '../../Components/Shared/Partials/Artist/ArtistLinkList';
-import LatestCommentsKnockout from '../../Components/Shared/Partials/Comment/LatestCommentsKnockout';
-import EnglishTranslatedString from '../../Components/Shared/Partials/EnglishTranslatedString';
-import ExternalLinksRows from '../../Components/Shared/Partials/EntryDetails/ExternalLinksRows';
-import { ArtistDetailsTabs } from './ArtistDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

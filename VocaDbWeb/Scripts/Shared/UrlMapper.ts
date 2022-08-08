@@ -1,4 +1,4 @@
-import functions from './GlobalFunctions';
+import functions from '@/Shared/GlobalFunctions';
 
 export default class UrlMapper {
 	public static buildUrl = (...args: string[]): string => {

@@ -1,4 +1,5 @@
 import SongAutoComplete from '@/Components/KnockoutExtensions/SongAutoComplete';
+import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import SongContract from '@/DataContracts/Song/SongContract';
 import EntryType from '@/Models/EntryType';
 import SongType from '@/Models/Songs/SongType';
@@ -7,8 +8,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface SongLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<SongContract>;

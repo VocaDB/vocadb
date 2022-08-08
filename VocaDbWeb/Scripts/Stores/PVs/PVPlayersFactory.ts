@@ -1,10 +1,9 @@
 import PVService from '@/Models/PVs/PVService';
-
-import PVPlayerFile from './PVPlayerFile';
-import PVPlayerNico from './PVPlayerNico';
-import PVPlayerSoundCloud from './PVPlayerSoundCloud';
-import { IPVPlayer } from './PVPlayerStore';
-import PVPlayerYoutube from './PVPlayerYoutube';
+import PVPlayerFile from '@/Stores/PVs/PVPlayerFile';
+import PVPlayerNico from '@/Stores/PVs/PVPlayerNico';
+import PVPlayerSoundCloud from '@/Stores/PVs/PVPlayerSoundCloud';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
+import PVPlayerYoutube from '@/Stores/PVs/PVPlayerYoutube';
 
 export default class PVPlayersFactory {
 	public constructor(

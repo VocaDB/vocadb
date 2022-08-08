@@ -1,5 +1,13 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Layout from '@/Components/Shared/Layout';
+import DeletedBanner from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
+import ReportEntryPopupKnockout from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
+import EmbedPV from '@/Components/Shared/Partials/PV/EmbedPV';
+import DraftMessage from '@/Components/Shared/Partials/Shared/DraftMessage';
+import EntryStatusMessage from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
+import TagsEdit from '@/Components/Shared/Partials/TagsEdit';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -11,6 +19,8 @@ import SongVoteRating from '@/Models/SongVoteRating';
 import SongReportType, {
 	songReportTypesWithRequiredNotes,
 } from '@/Models/Songs/SongReportType';
+import AddToListDialog from '@/Pages/Song/Partials/AddToListDialog';
+import SongDetailsRoutes from '@/Pages/Song/SongDetailsRoutes';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import SongRepository from '@/Repositories/SongRepository';
 import UserRepository from '@/Repositories/UserRepository';
@@ -24,17 +34,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
-import Layout from '../../Components/Shared/Layout';
-import DeletedBanner from '../../Components/Shared/Partials/EntryDetails/DeletedBanner';
-import ReportEntryPopupKnockout from '../../Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import EmbedPV from '../../Components/Shared/Partials/PV/EmbedPV';
-import DraftMessage from '../../Components/Shared/Partials/Shared/DraftMessage';
-import EntryStatusMessage from '../../Components/Shared/Partials/Shared/EntryStatusMessage';
-import TagsEdit from '../../Components/Shared/Partials/TagsEdit';
-import useVocaDbTitle from '../../Components/useVocaDbTitle';
-import AddToListDialog from './Partials/AddToListDialog';
-import SongDetailsRoutes from './SongDetailsRoutes';
 
 const loginManager = new LoginManager(vdb.values);
 

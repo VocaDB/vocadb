@@ -18,20 +18,19 @@ import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import GlobalValues from '@/Shared/GlobalValues';
 import ui from '@/Shared/MessagesTyped';
 import UrlMapper from '@/Shared/UrlMapper';
+import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import PVPlayerViewModel from '@/ViewModels/PVs/PVPlayerViewModel';
+import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
+import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
+import TagFilter from '@/ViewModels/Search/TagFilter';
+import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import PlayListRepositoryForSongListAdapter from '@/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter';
+import PlayListViewModel from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
+import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
+import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { Computed } from 'knockout';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
-import ArtistFilters from '../Search/ArtistFilters';
-import TagFilter from '../Search/TagFilter';
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-import PlayListRepositoryForSongListAdapter from '../Song/PlayList/PlayListRepositoryForSongListAdapter';
-import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export default class SongListViewModel {
 	public constructor(

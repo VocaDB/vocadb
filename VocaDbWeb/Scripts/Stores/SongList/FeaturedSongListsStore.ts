@@ -4,11 +4,12 @@ import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategor
 import SongListRepository from '@/Repositories/SongListRepository';
 import TagRepository from '@/Repositories/TagRepository';
 import GlobalValues from '@/Shared/GlobalValues';
+import SongListsBaseStore, {
+	SongListSortRule,
+} from '@/Stores/SongList/SongListsBaseStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
-
-import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
 
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 	public constructor(
