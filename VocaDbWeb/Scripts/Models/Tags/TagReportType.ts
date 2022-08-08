@@ -7,7 +7,7 @@ enum TagReportType {
 
 export default TagReportType;
 
-export const reportTypesWithRequiredNotes = [
+export const tagReportTypesWithRequiredNotes = [
 	TagReportType.InvalidInfo,
 	TagReportType.Other,
 ];

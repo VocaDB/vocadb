@@ -34,7 +34,7 @@ import EntryType from '@/Models/EntryType';
 import ArtistEventRoles from '@/Models/Events/ArtistEventRoles';
 import EventCategory from '@/Models/Events/EventCategory';
 import EventReportType, {
-	reportTypesWithRequiredNotes,
+	eventReportTypesWithRequiredNotes,
 } from '@/Models/Events/EventReportType';
 import ImageSize from '@/Models/Images/ImageSize';
 import LoginManager from '@/Models/LoginManager';
@@ -595,7 +595,7 @@ const EventDetailsLayout = observer(
 					reportTypes={Object.values(EventReportType).map((r) => ({
 						id: r,
 						name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-						notesRequired: reportTypesWithRequiredNotes.includes(r),
+						notesRequired: eventReportTypesWithRequiredNotes.includes(r),
 					}))}
 				/>
 			</Layout>

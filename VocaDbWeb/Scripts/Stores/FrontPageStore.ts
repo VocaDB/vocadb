@@ -8,7 +8,7 @@ import NewsListStore from './NewsListStore';
 import PVRatingButtonsStore from './PVRatingButtonsStore';
 import ServerSidePagingStore from './ServerSidePagingStore';
 
-export class PVPlayerStore {
+export class FrontPagePVPlayerStore {
 	public readonly paging = new ServerSidePagingStore(4);
 	@observable public ratingButtonsStore?: PVRatingButtonsStore;
 	@observable public selectedSong?: SongWithPVAndVoteContract;
@@ -51,7 +51,7 @@ export class PVPlayerStore {
 
 export default class FrontPageStore {
 	public readonly newsListStore: NewsListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
+	public readonly pvPlayerStore: FrontPagePVPlayerStore;
 
 	public constructor(
 		values: GlobalValues,
@@ -59,6 +59,6 @@ export default class FrontPageStore {
 		data: FrontPageContract,
 	) {
 		this.newsListStore = new NewsListStore(values.blogUrl);
-		this.pvPlayerStore = new PVPlayerStore(values, userRepo, data);
+		this.pvPlayerStore = new FrontPagePVPlayerStore(values, userRepo, data);
 	}
 }

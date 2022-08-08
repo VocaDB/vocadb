@@ -8,7 +8,7 @@ enum ArtistReportType {
 
 export default ArtistReportType;
 
-export const reportTypesWithRequiredNotes = [
+export const artistReportTypesWithRequiredNotes = [
 	ArtistReportType.InvalidInfo,
 	ArtistReportType.Other,
 ];

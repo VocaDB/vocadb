@@ -9,7 +9,7 @@ import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePre
 import LoginManager from '@/Models/LoginManager';
 import SongVoteRating from '@/Models/SongVoteRating';
 import SongReportType, {
-	reportTypesWithRequiredNotes,
+	songReportTypesWithRequiredNotes,
 } from '@/Models/Songs/SongReportType';
 import ArtistRepository from '@/Repositories/ArtistRepository';
 import SongRepository from '@/Repositories/SongRepository';
@@ -270,7 +270,7 @@ const SongDetailsLayout = observer(
 					reportTypes={Object.values(SongReportType).map((r) => ({
 						id: r,
 						name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-						notesRequired: reportTypesWithRequiredNotes.includes(r),
+						notesRequired: songReportTypesWithRequiredNotes.includes(r),
 					}))}
 				/>
 

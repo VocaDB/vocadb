@@ -3,7 +3,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import AlbumReportType, {
-	reportTypesWithRequiredNotes,
+	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
@@ -194,7 +194,7 @@ const AlbumDetailsLayout = observer(
 					reportTypes={Object.values(AlbumReportType).map((r) => ({
 						id: r,
 						name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-						notesRequired: reportTypesWithRequiredNotes.includes(r),
+						notesRequired: albumReportTypesWithRequiredNotes.includes(r),
 					}))}
 				/>
 			</Layout>

@@ -29,7 +29,7 @@ import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePre
 import ImageSize from '@/Models/Images/ImageSize';
 import LoginManager from '@/Models/LoginManager';
 import TagReportType, {
-	reportTypesWithRequiredNotes,
+	tagReportTypesWithRequiredNotes,
 } from '@/Models/Tags/TagReportType';
 import TagTargetTypes from '@/Models/Tags/TagTargetTypes';
 import TagRepository from '@/Repositories/TagRepository';
@@ -859,7 +859,7 @@ const TagDetailsLayout = observer(
 					reportTypes={Object.values(TagReportType).map((r) => ({
 						id: r,
 						name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-						notesRequired: reportTypesWithRequiredNotes.includes(r),
+						notesRequired: tagReportTypesWithRequiredNotes.includes(r),
 					}))}
 				/>
 			</Layout>

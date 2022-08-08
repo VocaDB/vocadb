@@ -14,7 +14,7 @@ import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
 import VenueReportType, {
-	reportTypesWithRequiredNotes,
+	venueReportTypesWithRequiredNotes,
 } from '@/Models/Venues/VenueReportType';
 import VenueRepository from '@/Repositories/VenueRepository';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
@@ -176,7 +176,7 @@ const VenueDetailsLayout = ({
 				reportTypes={Object.values(VenueReportType).map((r) => ({
 					id: r,
 					name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-					notesRequired: reportTypesWithRequiredNotes.includes(r),
+					notesRequired: venueReportTypesWithRequiredNotes.includes(r),
 				}))}
 			/>
 		</Layout>

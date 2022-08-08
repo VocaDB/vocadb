@@ -5,7 +5,7 @@ import PVHelper from '@/Helpers/PVHelper';
 import EntryType from '@/Models/EntryType';
 import LoginManager from '@/Models/LoginManager';
 import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import { PVPlayerStore } from '@/Stores/FrontPageStore';
+import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
 import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -78,7 +78,7 @@ const RatingBar = observer(
 );
 
 interface PVContentProps {
-	pvPlayerStore: PVPlayerStore;
+	pvPlayerStore: FrontPagePVPlayerStore;
 	selectedSong: SongWithPVAndVoteContract;
 }
 

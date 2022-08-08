@@ -1,13 +1,13 @@
-enum ArtistReportType {
+enum AlbumReportType {
 	InvalidInfo = 'InvalidInfo',
 	Duplicate = 'Duplicate',
 	Inappropriate = 'Inappropriate',
 	Other = 'Other',
 }
 
-export default ArtistReportType;
+export default AlbumReportType;
 
-export const reportTypesWithRequiredNotes = [
-	ArtistReportType.InvalidInfo,
-	ArtistReportType.Other,
+export const albumReportTypesWithRequiredNotes = [
+	AlbumReportType.InvalidInfo,
+	AlbumReportType.Other,
 ];

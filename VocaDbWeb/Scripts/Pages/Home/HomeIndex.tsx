@@ -10,7 +10,9 @@ import UrlHelper from '@/Helpers/UrlHelper';
 import UserRepository from '@/Repositories/UserRepository';
 import HttpClient from '@/Shared/HttpClient';
 import UrlMapper from '@/Shared/UrlMapper';
-import FrontPageStore, { PVPlayerStore } from '@/Stores/FrontPageStore';
+import FrontPageStore, {
+	FrontPagePVPlayerStore,
+} from '@/Stores/FrontPageStore';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
@@ -33,7 +35,7 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface PVPlayerProps {
 	model: FrontPageContract;
-	pvPlayerStore: PVPlayerStore;
+	pvPlayerStore: FrontPagePVPlayerStore;
 }
 
 const PVPlayer = observer(

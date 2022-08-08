@@ -9,7 +9,7 @@ import useVocaDbTitle from '@/Components/useVocaDbTitle';
 import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import ArtistReportType, {
-	reportTypesWithRequiredNotes,
+	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import EntryStatus from '@/Models/EntryStatus';
 import EntryType from '@/Models/EntryType';
@@ -252,7 +252,7 @@ const ArtistDetailsLayout = observer(
 						.map((r) => ({
 							id: r,
 							name: t(`VocaDb.Web.Resources.Domain:EntryReportTypeNames.${r}`),
-							notesRequired: reportTypesWithRequiredNotes.includes(r),
+							notesRequired: artistReportTypesWithRequiredNotes.includes(r),
 						}))}
 				/>
 

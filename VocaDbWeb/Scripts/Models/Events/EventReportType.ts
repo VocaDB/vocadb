@@ -7,7 +7,7 @@ enum EventReportType {
 
 export default EventReportType;
 
-export const reportTypesWithRequiredNotes = [
+export const eventReportTypesWithRequiredNotes = [
 	EventReportType.InvalidInfo,
 	EventReportType.Other,
 ];

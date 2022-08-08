@@ -7,7 +7,7 @@ enum VenueReportType {
 
 export default VenueReportType;
 
-export const reportTypesWithRequiredNotes = [
+export const venueReportTypesWithRequiredNotes = [
 	VenueReportType.InvalidInfo,
 	VenueReportType.Other,
 ];
