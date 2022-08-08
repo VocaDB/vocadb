@@ -1,8 +1,8 @@
-import ThumbItem from '@Components/Shared/Partials/Shared/ThumbItem';
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import ImageSize from '@Models/Images/ImageSize';
-import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import ThumbItem from '@/Components/Shared/Partials/Shared/ThumbItem';
+import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import UrlHelper from '@/Helpers/UrlHelper';
+import ImageSize from '@/Models/Images/ImageSize';
+import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

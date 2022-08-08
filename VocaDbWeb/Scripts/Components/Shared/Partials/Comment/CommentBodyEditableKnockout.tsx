@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import CommentStore from '@Stores/CommentStore';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import Button from '@/Bootstrap/Button';
+import CommentStore from '@/Stores/CommentStore';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

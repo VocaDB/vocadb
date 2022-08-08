@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import functions from '@/Shared/GlobalFunctions';
+import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';

@@ -1,4 +1,4 @@
-import Alert from '@Bootstrap/Alert';
+import Alert from '@/Bootstrap/Alert';
 import _ from 'lodash';
 import React from 'react';
 

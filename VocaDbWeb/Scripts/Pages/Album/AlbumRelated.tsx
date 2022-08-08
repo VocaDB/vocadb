@@ -1,7 +1,7 @@
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import React from 'react';
 
 import { AlbumDetailsTabs } from './AlbumDetailsRoutes';

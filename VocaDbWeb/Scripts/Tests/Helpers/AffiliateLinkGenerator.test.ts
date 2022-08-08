@@ -1,5 +1,5 @@
-import { AffiliateLinkGenerator } from '@Helpers/UrlHelper';
-import GlobalValues from '@Shared/GlobalValues';
+import { AffiliateLinkGenerator } from '@/Helpers/UrlHelper';
+import GlobalValues from '@/Shared/GlobalValues';
 
 const generator = new AffiliateLinkGenerator({
 	amazonJpAffiliateId: 'vocadb',

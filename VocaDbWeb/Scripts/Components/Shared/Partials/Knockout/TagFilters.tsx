@@ -1,10 +1,10 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import TagFiltersBase from '@Components/Shared/Partials/TagFiltersBase';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import TagFiltersStore from '@Stores/Search/TagFilters';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
+import TagFiltersBase from '@/Components/Shared/Partials/TagFiltersBase';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import TagFiltersStore from '@/Stores/Search/TagFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

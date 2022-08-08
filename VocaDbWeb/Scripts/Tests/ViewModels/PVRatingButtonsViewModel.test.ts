@@ -1,5 +1,5 @@
-import SongVoteRating from '@Models/SongVoteRating';
-import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
+import SongVoteRating from '@/Models/SongVoteRating';
+import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
 
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 

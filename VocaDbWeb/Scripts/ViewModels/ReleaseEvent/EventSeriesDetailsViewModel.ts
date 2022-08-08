@@ -1,7 +1,7 @@
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryType from '@Models/EntryType';
-import UserRepository from '@Repositories/UserRepository';
+import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import EntryType from '@/Models/EntryType';
+import UserRepository from '@/Repositories/UserRepository';
 
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';

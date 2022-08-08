@@ -1,4 +1,4 @@
-import AjaxHelper from '@Helpers/AjaxHelper';
+import AjaxHelper from '@/Helpers/AjaxHelper';
 
 var testCreateUrl = (
 	params: { [key: string]: any[] },

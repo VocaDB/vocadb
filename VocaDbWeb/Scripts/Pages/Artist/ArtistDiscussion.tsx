@@ -1,6 +1,6 @@
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import LoginManager from '@Models/LoginManager';
-import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import LoginManager from '@/Models/LoginManager';
+import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

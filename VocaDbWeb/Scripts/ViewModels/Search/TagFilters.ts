@@ -1,6 +1,6 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 
 import TagFilter from './TagFilter';

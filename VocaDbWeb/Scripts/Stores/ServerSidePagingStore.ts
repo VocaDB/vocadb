@@ -1,4 +1,4 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 

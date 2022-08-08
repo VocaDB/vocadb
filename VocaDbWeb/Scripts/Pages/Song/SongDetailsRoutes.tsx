@@ -1,7 +1,7 @@
-import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
-import { JQueryUINavItemComponent } from '@JQueryUI/JQueryUITabs';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import _ from 'lodash';
 import qs from 'qs';
 import React from 'react';

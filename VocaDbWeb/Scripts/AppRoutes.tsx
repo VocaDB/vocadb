@@ -2,40 +2,40 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 const ActivityEntryRoutes = React.lazy(
-	() => import('@Pages/ActivityEntry/ActivityEntryRoutes'),
+	() => import('@/Pages/ActivityEntry/ActivityEntryRoutes'),
 );
-const AdminRoutes = React.lazy(() => import('@Pages/Admin/AdminRoutes'));
-const AlbumRoutes = React.lazy(() => import('@Pages/Album/AlbumRoutes'));
-const ArtistRoutes = React.lazy(() => import('@Pages/Artist/ArtistRoutes'));
-const CommentRoutes = React.lazy(() => import('@Pages/Comment/CommentRoutes'));
+const AdminRoutes = React.lazy(() => import('@/Pages/Admin/AdminRoutes'));
+const AlbumRoutes = React.lazy(() => import('@/Pages/Album/AlbumRoutes'));
+const ArtistRoutes = React.lazy(() => import('@/Pages/Artist/ArtistRoutes'));
+const CommentRoutes = React.lazy(() => import('@/Pages/Comment/CommentRoutes'));
 const DiscussionRoutes = React.lazy(
-	() => import('@Pages/Discussion/DiscussionRoutes'),
+	() => import('@/Pages/Discussion/DiscussionRoutes'),
 );
-const EventRoutes = React.lazy(() => import('@Pages/Event/EventRoutes'));
-const HelpRoutes = React.lazy(() => import('@Pages/Help/HelpRoutes'));
-const HomeRoutes = React.lazy(() => import('@Pages/Home/HomeRoutes'));
-const SearchRoutes = React.lazy(() => import('@Pages/Search/SearchRoutes'));
+const EventRoutes = React.lazy(() => import('@/Pages/Event/EventRoutes'));
+const HelpRoutes = React.lazy(() => import('@/Pages/Help/HelpRoutes'));
+const HomeRoutes = React.lazy(() => import('@/Pages/Home/HomeRoutes'));
+const SearchRoutes = React.lazy(() => import('@/Pages/Search/SearchRoutes'));
 const SongListRoutes = React.lazy(
-	() => import('@Pages/SongList/SongListRoutes'),
+	() => import('@/Pages/SongList/SongListRoutes'),
 );
-const SongRoutes = React.lazy(() => import('@Pages/Song/SongRoutes'));
-const StatsRoutes = React.lazy(() => import('@Pages/Stats/StatsRoutes'));
-const TagRoutes = React.lazy(() => import('@Pages/Tag/TagRoutes'));
-const UserRoutes = React.lazy(() => import('@Pages/User/UserRoutes'));
-const VenueRoutes = React.lazy(() => import('@Pages/Venue/VenueRoutes'));
+const SongRoutes = React.lazy(() => import('@/Pages/Song/SongRoutes'));
+const StatsRoutes = React.lazy(() => import('@/Pages/Stats/StatsRoutes'));
+const TagRoutes = React.lazy(() => import('@/Pages/Tag/TagRoutes'));
+const UserRoutes = React.lazy(() => import('@/Pages/User/UserRoutes'));
+const VenueRoutes = React.lazy(() => import('@/Pages/Venue/VenueRoutes'));
 
-const AlbumDetails = React.lazy(() => import('@Pages/Album/AlbumDetails'));
-const ArtistDetails = React.lazy(() => import('@Pages/Artist/ArtistDetails'));
-const EventDetails = React.lazy(() => import('@Pages/Event/EventDetails'));
+const AlbumDetails = React.lazy(() => import('@/Pages/Album/AlbumDetails'));
+const ArtistDetails = React.lazy(() => import('@/Pages/Artist/ArtistDetails'));
+const EventDetails = React.lazy(() => import('@/Pages/Event/EventDetails'));
 const EventSeriesDetails = React.lazy(
-	() => import('@Pages/Event/EventSeriesDetails'),
+	() => import('@/Pages/Event/EventSeriesDetails'),
 );
-const SongDetails = React.lazy(() => import('@Pages/Song/SongDetails'));
+const SongDetails = React.lazy(() => import('@/Pages/Song/SongDetails'));
 const SongListDetails = React.lazy(
-	() => import('@Pages/SongList/SongListDetails'),
+	() => import('@/Pages/SongList/SongListDetails'),
 );
-const TagDetails = React.lazy(() => import('@Pages/Tag/TagDetails'));
-const UserDetails = React.lazy(() => import('@Pages/User/UserDetails'));
+const TagDetails = React.lazy(() => import('@/Pages/Tag/TagDetails'));
+const UserDetails = React.lazy(() => import('@/Pages/User/UserDetails'));
 
 const AppRoutes = (): React.ReactElement => {
 	return (

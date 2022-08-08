@@ -1,25 +1,25 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import SongType from '@Models/Songs/SongType';
-import { ISongSearchStore } from '@Pages/Search/Partials/SongSearchList';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import SongContract from '@/DataContracts/Song/SongContract';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import PVServiceIcons from '@/Models/PVServiceIcons';
+import SongType from '@/Models/Songs/SongType';
+import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import SongRepository from '@/Repositories/SongRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import UrlMapper from '@/Shared/UrlMapper';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
+import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
 import PlayListRepositoryForSongsAdapter, {
 	ISongsAdapterStore,
-} from '@Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
-import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+} from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
+import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
+import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 

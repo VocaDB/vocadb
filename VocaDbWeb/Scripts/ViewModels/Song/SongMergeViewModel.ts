@@ -1,8 +1,8 @@
-import SongContract from '@DataContracts/Song/SongContract';
-import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
-import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import SongRepository from '@Repositories/SongRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import SongContract from '@/DataContracts/Song/SongContract';
+import EntryMergeValidationHelper from '@/Helpers/EntryMergeValidationHelper';
+import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import SongRepository from '@/Repositories/SongRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';

@@ -1,8 +1,8 @@
-import Button from '@Bootstrap/Button';
-import ArtistAutoComplete from '@Components/KnockoutExtensions/ArtistAutoComplete';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import ArtistFiltersStore from '@Stores/Search/ArtistFilters';
+import Button from '@/Bootstrap/Button';
+import ArtistAutoComplete from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import ArtistFiltersStore from '@/Stores/Search/ArtistFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

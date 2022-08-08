@@ -1,5 +1,5 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';

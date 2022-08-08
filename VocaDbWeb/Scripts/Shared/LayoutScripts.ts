@@ -1,6 +1,6 @@
-import EntryReportRepository from '@Repositories/EntryReportRepository';
-import UserRepository from '@Repositories/UserRepository';
-import TopBarViewModel from '@ViewModels/TopBarViewModel';
+import EntryReportRepository from '@/Repositories/EntryReportRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import TopBarViewModel from '@/ViewModels/TopBarViewModel';
 
 import HttpClient from './HttpClient';
 import ui from './MessagesTyped';

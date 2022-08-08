@@ -1,6 +1,6 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import LocalizedStringWithIdEditStore from '@Stores/Globalization/LocalizedStringWithIdEditStore';
-import NamesEditStore from '@Stores/Globalization/NamesEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import LocalizedStringWithIdEditStore from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
+import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

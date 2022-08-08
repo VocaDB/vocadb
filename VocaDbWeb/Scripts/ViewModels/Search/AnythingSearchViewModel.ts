@@ -1,9 +1,9 @@
-import EntryContract from '@DataContracts/EntryContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryType from '@Models/EntryType';
-import EntryRepository from '@Repositories/EntryRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
+import EntryContract from '@/DataContracts/EntryContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import EntryType from '@/Models/EntryType';
+import EntryRepository from '@/Repositories/EntryRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';

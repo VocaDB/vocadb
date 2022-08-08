@@ -1,7 +1,7 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SongListsBaseStore from '@Stores/SongList/SongListsBaseStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import SongListsBaseStore from '@/Stores/SongList/SongListsBaseStore';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';

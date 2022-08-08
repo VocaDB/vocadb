@@ -1,5 +1,5 @@
-import Alert from '@Bootstrap/Alert';
-import Breadcrumb from '@Bootstrap/Breadcrumb';
+import Alert from '@/Bootstrap/Alert';
+import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import React from 'react';
 
 interface LayoutProps {

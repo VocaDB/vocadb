@@ -1,5 +1,5 @@
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ui from '@Shared/MessagesTyped';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ui from '@/Shared/MessagesTyped';
 
 import ReportEntryViewModel from '../ReportEntryViewModel';
 

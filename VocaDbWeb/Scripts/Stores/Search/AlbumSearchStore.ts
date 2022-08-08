@@ -1,10 +1,10 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import AlbumType from '@/Models/Albums/AlbumType';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { computed, makeObservable, observable } from 'mobx';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';

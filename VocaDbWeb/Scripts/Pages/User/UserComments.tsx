@@ -1,6 +1,6 @@
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import LoginManager from '@Models/LoginManager';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import LoginManager from '@/Models/LoginManager';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

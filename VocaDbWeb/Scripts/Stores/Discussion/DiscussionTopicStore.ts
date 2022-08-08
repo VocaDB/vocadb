@@ -1,8 +1,8 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@Models/LoginManager';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
+import LoginManager from '@/Models/LoginManager';
+import DiscussionRepository from '@/Repositories/DiscussionRepository';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import { StoreWithRouteParams } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {

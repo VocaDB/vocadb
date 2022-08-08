@@ -1,5 +1,5 @@
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { makeObservable, observable } from 'mobx';
 
 import TagFilters from './TagFilters';

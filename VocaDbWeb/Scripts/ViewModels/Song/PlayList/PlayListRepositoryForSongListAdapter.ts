@@ -1,9 +1,9 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongType from '@Models/Songs/SongType';
-import SongListRepository from '@Repositories/SongListRepository';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import { SongOptionalFields } from '@/Models/EntryOptionalFields';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import SongType from '@/Models/Songs/SongType';
+import SongListRepository from '@/Repositories/SongListRepository';
 import { Computed, Observable, ObservableArray } from 'knockout';
 
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';

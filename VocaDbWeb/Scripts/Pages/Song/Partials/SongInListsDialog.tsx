@@ -1,5 +1,5 @@
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import { SongInListsStore } from '@Stores/Song/SongDetailsStore';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { SongInListsStore } from '@/Stores/Song/SongDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

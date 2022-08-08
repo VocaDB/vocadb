@@ -1,4 +1,4 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
 
 import EntryThumbContract from '../EntryThumbContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';

@@ -1,5 +1,5 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import { initEntrySearch } from '@Shared/EntryAutoComplete';
+import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import { initEntrySearch } from '@/Shared/EntryAutoComplete';
 import $ from 'jquery';
 
 function initPage(): void {

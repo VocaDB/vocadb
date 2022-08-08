@@ -1,6 +1,6 @@
-import Dropdown from '@Bootstrap/Dropdown';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Dropdown from '@/Bootstrap/Dropdown';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

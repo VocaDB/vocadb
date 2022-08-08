@@ -1,5 +1,5 @@
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import SongRepository from '@Repositories/SongRepository';
+import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
+import SongRepository from '@/Repositories/SongRepository';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';

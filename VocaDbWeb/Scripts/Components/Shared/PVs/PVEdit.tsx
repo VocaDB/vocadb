@@ -1,7 +1,7 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import PVType from '@Models/PVs/PVType';
-import PVListEditStore, { PVEditStore } from '@Stores/PVs/PVListEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import DateTimeHelper from '@/Helpers/DateTimeHelper';
+import PVType from '@/Models/PVs/PVType';
+import PVListEditStore, { PVEditStore } from '@/Stores/PVs/PVListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';

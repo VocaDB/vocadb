@@ -1,4 +1,4 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import PVContract from '@/DataContracts/PVs/PVContract';
 import React from 'react';
 
 interface PiaproMetadata {

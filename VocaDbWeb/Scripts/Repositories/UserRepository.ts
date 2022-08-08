@@ -1,31 +1,31 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
 import AlbumForUserForApiContract, {
 	MediaType,
-} from '@DataContracts/User/AlbumForUserForApiContract';
-import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import { Tuple2 } from '@Helpers/HighchartsHelper';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongVoteRating from '@Models/SongVoteRating';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
+import EntryEditDataContract from '@/DataContracts/User/EntryEditDataContract';
+import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
+import AjaxHelper from '@/Helpers/AjaxHelper';
+import { Tuple2 } from '@/Helpers/HighchartsHelper';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ArtistType from '@/Models/Artists/ArtistType';
+import EntryType from '@/Models/EntryType';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import SongVoteRating from '@/Models/SongVoteRating';
+import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
+import HttpClient, { HeaderNames, MediaTypes } from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
 
 import ICommentRepository from './ICommentRepository';
 

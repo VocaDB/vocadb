@@ -1,10 +1,10 @@
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import EnglishTranslatedStringStore from '@Stores/Globalization/EnglishTranslatedStringStore';
-import ReportEntryStore from '@Stores/ReportEntryStore';
+import CommentContract from '@/DataContracts/CommentContract';
+import LoginManager from '@/Models/LoginManager';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
+import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
+import ReportEntryStore from '@/Stores/ReportEntryStore';
 import { action, makeObservable, observable } from 'mobx';
 
 export default class TagDetailsStore {

@@ -1,16 +1,16 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongInListContract from '@DataContracts/Song/SongInListContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongType from '@Models/Songs/SongType';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import SongInListContract from '@/DataContracts/Song/SongInListContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import SongListForEditContract from '@/DataContracts/Song/SongListForEditContract';
+import SongListBaseContract from '@/DataContracts/SongListBaseContract';
+import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { SongOptionalFields } from '@/Models/EntryOptionalFields';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import SongType from '@/Models/Songs/SongType';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
 
 import EntryCommentRepository from './EntryCommentRepository';
 

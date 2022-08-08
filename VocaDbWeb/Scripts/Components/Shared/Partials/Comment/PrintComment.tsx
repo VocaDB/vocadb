@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import MomentJsTimeAgo from '@Components/KnockoutExtensions/MomentJsTimeAgo';
-import truncateWithEllipsis from '@Components/truncateWithEllipsis';
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import truncateWithEllipsis from '@/Components/truncateWithEllipsis';
+import CommentContract from '@/DataContracts/CommentContract';
+import LoginManager from '@/Models/LoginManager';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -1,4 +1,4 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import React from 'react';
 
 import VenueLink from '../Venue/VenueLink';

@@ -1,4 +1,4 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
 import { action, makeObservable, observable } from 'mobx';
 
 // Generic store that supports simple paging by loading more items

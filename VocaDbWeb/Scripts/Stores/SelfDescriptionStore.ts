@@ -1,6 +1,6 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ArtistRepository from '@/Repositories/ArtistRepository';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import GlobalValues from '../Shared/GlobalValues';

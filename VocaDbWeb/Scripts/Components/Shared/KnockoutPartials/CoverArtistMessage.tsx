@@ -1,5 +1,5 @@
-import Alert from '@Bootstrap/Alert';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
+import Alert from '@/Bootstrap/Alert';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

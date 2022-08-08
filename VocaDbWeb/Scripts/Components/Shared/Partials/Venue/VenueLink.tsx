@@ -1,6 +1,6 @@
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

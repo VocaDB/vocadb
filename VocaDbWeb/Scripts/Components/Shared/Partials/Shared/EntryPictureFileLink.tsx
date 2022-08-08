@@ -1,6 +1,6 @@
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import ImageSize from '@Models/Images/ImageSize';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import UrlHelper from '@/Helpers/UrlHelper';
+import ImageSize from '@/Models/Images/ImageSize';
 import React from 'react';
 
 interface EntryPictureFileLinkProps {

@@ -1,7 +1,7 @@
-import EntryContract from '@DataContracts/EntryContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import EntryContract from '@/DataContracts/EntryContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';

@@ -1,9 +1,9 @@
-import AdminRepository from '@Repositories/AdminRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import AdminRepository from '@/Repositories/AdminRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 import ManageIPRulesViewModel, {
 	IPRuleContract,
-} from '@ViewModels/Admin/ManageIPRulesViewModel';
+} from '@/ViewModels/Admin/ManageIPRulesViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';

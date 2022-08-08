@@ -1,4 +1,4 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 
 enum ArtistAlbumParticipationStatus {

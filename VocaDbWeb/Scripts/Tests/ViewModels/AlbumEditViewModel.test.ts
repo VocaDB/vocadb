@@ -1,18 +1,18 @@
-import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import SongType from '@Models/Songs/SongType';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import UrlMapper from '@Shared/UrlMapper';
+import AlbumForEditContract from '@/DataContracts/Album/AlbumForEditContract';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import SongInAlbumEditContract from '@/DataContracts/Song/SongInAlbumEditContract';
+import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ArtistType from '@/Models/Artists/ArtistType';
+import SongType from '@/Models/Songs/SongType';
+import WebLinkCategory from '@/Models/WebLinkCategory';
+import UrlMapper from '@/Shared/UrlMapper';
 import AlbumEditViewModel, {
 	TrackArtistSelectionViewModel,
-} from '@ViewModels/Album/AlbumEditViewModel';
-import { TrackPropertiesViewModel } from '@ViewModels/Album/AlbumEditViewModel';
-import SongInAlbumEditViewModel from '@ViewModels/SongInAlbumEditViewModel';
+} from '@/ViewModels/Album/AlbumEditViewModel';
+import { TrackPropertiesViewModel } from '@/ViewModels/Album/AlbumEditViewModel';
+import SongInAlbumEditViewModel from '@/ViewModels/SongInAlbumEditViewModel';
 import _ from 'lodash';
 
 import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';

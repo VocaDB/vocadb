@@ -1,6 +1,6 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

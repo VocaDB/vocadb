@@ -1,7 +1,7 @@
-import ArtistTypesDropdownKnockout from '@Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
-import { ArtistAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
-import ArtistType from '@Models/Artists/ArtistType';
-import ArtistSearchStore from '@Stores/Search/ArtistSearchStore';
+import ArtistTypesDropdownKnockout from '@/Components/Shared/Partials/Artist/ArtistTypesDropdownKnockout';
+import { ArtistAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
+import ArtistType from '@/Models/Artists/ArtistType';
+import ArtistSearchStore from '@/Stores/Search/ArtistSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

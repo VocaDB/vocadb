@@ -1,4 +1,4 @@
-import functions from '@Shared/GlobalFunctions';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

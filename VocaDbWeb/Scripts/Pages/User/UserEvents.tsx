@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

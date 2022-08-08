@@ -1,6 +1,6 @@
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import { SearchType } from '@Stores/Search/SearchStore';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';

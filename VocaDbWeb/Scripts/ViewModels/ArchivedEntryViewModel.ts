@@ -1,4 +1,4 @@
-import ui from '@Shared/MessagesTyped';
+import ui from '@/Shared/MessagesTyped';
 
 import ReportEntryViewModel from './ReportEntryViewModel';
 

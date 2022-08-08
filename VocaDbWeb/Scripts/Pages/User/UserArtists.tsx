@@ -1,10 +1,10 @@
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import ArtistType from '@Models/Artists/ArtistType';
-import EntryStatus from '@Models/EntryStatus';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import FollowedArtistsStore from '@Stores/User/FollowedArtistsStore';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import ArtistType from '@/Models/Artists/ArtistType';
+import EntryStatus from '@/Models/EntryStatus';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import FollowedArtistsStore from '@/Stores/User/FollowedArtistsStore';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';

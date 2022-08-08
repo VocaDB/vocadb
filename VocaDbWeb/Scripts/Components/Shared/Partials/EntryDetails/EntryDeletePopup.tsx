@@ -1,4 +1,4 @@
-import DeleteEntryStore from '@Stores/DeleteEntryStore';
+import DeleteEntryStore from '@/Stores/DeleteEntryStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

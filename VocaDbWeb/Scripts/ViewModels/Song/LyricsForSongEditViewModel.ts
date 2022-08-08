@@ -1,6 +1,6 @@
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import TranslationType from '@Models/Globalization/TranslationType';
+import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
+import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
+import TranslationType from '@/Models/Globalization/TranslationType';
 import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';

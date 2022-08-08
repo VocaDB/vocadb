@@ -1,4 +1,4 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Basic link to an entry with ID and name.

@@ -1,4 +1,4 @@
-import { TrackPropertiesStore } from '@Stores/Album/AlbumEditStore';
+import { TrackPropertiesStore } from '@/Stores/Album/AlbumEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

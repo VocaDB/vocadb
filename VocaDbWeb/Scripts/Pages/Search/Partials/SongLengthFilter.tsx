@@ -1,4 +1,4 @@
-import SongLengthFilterStore from '@Stores/Search/SongLengthFilter';
+import SongLengthFilterStore from '@/Stores/Search/SongLengthFilter';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

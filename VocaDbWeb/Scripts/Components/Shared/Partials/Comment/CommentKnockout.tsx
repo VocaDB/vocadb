@@ -1,8 +1,8 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import MomentJsTimeAgo from '@Components/KnockoutExtensions/MomentJsTimeAgo';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import ImageSize from '@/Models/Images/ImageSize';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

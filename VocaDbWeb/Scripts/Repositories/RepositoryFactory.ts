@@ -1,5 +1,5 @@
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 
 import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';

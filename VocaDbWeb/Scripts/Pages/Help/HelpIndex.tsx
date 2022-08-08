@@ -1,6 +1,6 @@
-import { JQueryUINavItemComponent } from '@JQueryUI/JQueryUITabs';
-import UserGroup from '@Models/Users/UserGroup';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import UserGroup from '@/Models/Users/UserGroup';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';

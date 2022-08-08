@@ -1,10 +1,10 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import PVService from '@Models/PVs/PVService';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import PVService from '@/Models/PVs/PVService';
+import SongRepository from '@/Repositories/SongRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 import PVPlayersFactory from './PVPlayersFactory';

@@ -1,5 +1,5 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 

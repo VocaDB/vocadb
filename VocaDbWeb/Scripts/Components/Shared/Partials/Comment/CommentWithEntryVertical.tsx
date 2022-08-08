@@ -1,4 +1,4 @@
-import EntryWithCommentsContract from '@DataContracts/EntryWithCommentsContract';
+import EntryWithCommentsContract from '@/DataContracts/EntryWithCommentsContract';
 import React from 'react';
 
 import CommentEntryItem from './CommentEntryItem';

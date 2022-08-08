@@ -1,5 +1,5 @@
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import WebLinkCategory from '@Models/WebLinkCategory';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
+import WebLinkCategory from '@/Models/WebLinkCategory';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

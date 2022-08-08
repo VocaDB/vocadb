@@ -1,4 +1,4 @@
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
 import { makeObservable, observable } from 'mobx';
 
 export default class EnglishTranslatedStringEditStore {

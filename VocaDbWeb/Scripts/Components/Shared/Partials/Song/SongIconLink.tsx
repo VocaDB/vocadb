@@ -1,6 +1,6 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import UrlHelper from '@/Helpers/UrlHelper';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Link } from 'react-router-dom';

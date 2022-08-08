@@ -1,5 +1,5 @@
-import CommonEntryContract from '@DataContracts/CommonEntryContract';
-import EntryStatus from '@Models/EntryStatus';
+import CommonEntryContract from '@/DataContracts/CommonEntryContract';
+import EntryStatus from '@/Models/EntryStatus';
 import moment from 'moment';
 
 export default class EntryMergeValidationHelper {

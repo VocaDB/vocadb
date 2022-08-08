@@ -1,4 +1,4 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import { makeObservable, observable } from 'mobx';
 
 export default class TagFilter {

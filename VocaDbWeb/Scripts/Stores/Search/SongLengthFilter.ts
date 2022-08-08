@@ -1,4 +1,4 @@
-import DateTimeHelper from '@Helpers/DateTimeHelper';
+import DateTimeHelper from '@/Helpers/DateTimeHelper';
 import { computed, makeObservable, observable } from 'mobx';
 
 export default class SongLengthFilter {

@@ -1,7 +1,7 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import WebLinkEditStore from '@Stores/WebLinkEditStore';
-import WebLinksEditStore from '@Stores/WebLinksEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import WebLinkCategory from '@/Models/WebLinkCategory';
+import WebLinkEditStore from '@/Stores/WebLinkEditStore';
+import WebLinksEditStore from '@/Stores/WebLinksEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

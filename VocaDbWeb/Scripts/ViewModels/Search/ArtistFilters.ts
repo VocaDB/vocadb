@@ -1,7 +1,7 @@
-import ArtistHelper from '@Helpers/ArtistHelper';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ArtistHelper from '@/Helpers/ArtistHelper';
+import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 

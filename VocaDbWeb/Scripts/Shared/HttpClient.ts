@@ -1,4 +1,4 @@
-import AjaxHelper from '@Helpers/AjaxHelper';
+import AjaxHelper from '@/Helpers/AjaxHelper';
 import axios from 'axios';
 
 export class HeaderNames {

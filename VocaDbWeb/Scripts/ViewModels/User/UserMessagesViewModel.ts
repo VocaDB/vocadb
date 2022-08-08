@@ -1,9 +1,9 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import { UserInboxType } from '@Repositories/UserRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
+import { UserInboxType } from '@/Repositories/UserRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';

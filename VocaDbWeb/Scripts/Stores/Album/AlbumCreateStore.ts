@@ -1,11 +1,11 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import LocalizedStringContract from '@DataContracts/Globalization/LocalizedStringContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
+import LocalizedStringContract from '@/DataContracts/Globalization/LocalizedStringContract';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 

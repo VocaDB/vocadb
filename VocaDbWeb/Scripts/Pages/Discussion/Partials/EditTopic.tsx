@@ -1,6 +1,6 @@
-import Markdown from '@Components/KnockoutExtensions/Markdown';
-import LoginManager from '@Models/LoginManager';
-import DiscussionTopicEditStore from '@Stores/Discussion/DiscussionTopicEditStore';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
+import LoginManager from '@/Models/LoginManager';
+import DiscussionTopicEditStore from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

@@ -1,4 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import ArtistType from '@/Models/Artists/ArtistType';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

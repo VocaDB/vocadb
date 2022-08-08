@@ -1,5 +1,5 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import functions from '@Shared/GlobalFunctions';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 import EntryAutoComplete, {

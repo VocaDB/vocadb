@@ -1,4 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import ArtistType from '@/Models/Artists/ArtistType';
 import ko from 'knockout';
 
 export default class ArtistFilter {

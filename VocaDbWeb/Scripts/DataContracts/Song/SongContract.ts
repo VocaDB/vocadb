@@ -1,4 +1,4 @@
-import SongType from '@Models/Songs/SongType';
+import SongType from '@/Models/Songs/SongType';
 
 import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';

@@ -1,7 +1,7 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import TagApiContract from '@/DataContracts/Tag/TagApiContract';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';

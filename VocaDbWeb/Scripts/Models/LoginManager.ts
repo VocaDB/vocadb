@@ -1,8 +1,8 @@
-import CommentContract from '@DataContracts/CommentContract';
-import EntryRefContract from '@DataContracts/EntryRefContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
-import GlobalValues from '@Shared/GlobalValues';
+import CommentContract from '@/DataContracts/CommentContract';
+import EntryRefContract from '@/DataContracts/EntryRefContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import UserWithPermissionsContract from '@/DataContracts/User/UserWithPermissionsContract';
+import GlobalValues from '@/Shared/GlobalValues';
 
 import EntryStatus from './EntryStatus';
 import EntryType from './EntryType';

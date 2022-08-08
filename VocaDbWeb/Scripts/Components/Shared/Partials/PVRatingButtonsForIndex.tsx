@@ -1,8 +1,8 @@
-import Button from '@Bootstrap/Button';
-import { showSuccessMessage } from '@Components/ui';
-import LoginManager from '@Models/LoginManager';
-import SongVoteRating from '@Models/SongVoteRating';
-import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
+import Button from '@/Bootstrap/Button';
+import { showSuccessMessage } from '@/Components/ui';
+import LoginManager from '@/Models/LoginManager';
+import SongVoteRating from '@/Models/SongVoteRating';
+import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

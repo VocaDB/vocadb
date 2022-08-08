@@ -1,5 +1,5 @@
-import Pagination from '@Bootstrap/Pagination';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Pagination from '@/Bootstrap/Pagination';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

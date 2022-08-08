@@ -1,14 +1,14 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import ArtistTypeLabel from '@Components/Shared/Partials/Artist/ArtistTypeLabel';
-import EntryCountBox from '@Components/Shared/Partials/EntryCountBox';
-import ServerSidePaging from '@Components/Shared/Partials/Knockout/ServerSidePaging';
-import DraftIcon from '@Components/Shared/Partials/Shared/DraftIcon';
-import EntryStatus from '@Models/EntryStatus';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ArtistTypeLabel from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import EntryCountBox from '@/Components/Shared/Partials/EntryCountBox';
+import ServerSidePaging from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import DraftIcon from '@/Components/Shared/Partials/Shared/DraftIcon';
+import EntryStatus from '@/Models/EntryStatus';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import ArtistSearchStore, {
 	ArtistSortRule,
-} from '@Stores/Search/ArtistSearchStore';
+} from '@/Stores/Search/ArtistSearchStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

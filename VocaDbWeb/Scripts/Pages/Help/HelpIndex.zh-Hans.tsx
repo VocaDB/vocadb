@@ -1,5 +1,5 @@
-import { JQueryUINavItemComponent } from '@JQueryUI/JQueryUITabs';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 

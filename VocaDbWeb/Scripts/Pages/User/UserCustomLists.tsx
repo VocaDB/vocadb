@@ -1,9 +1,9 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import LoginManager from '@Models/LoginManager';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import LoginManager from '@/Models/LoginManager';
 import UserDetailsStore, {
 	UserSongListsStore,
-} from '@Stores/User/UserDetailsStore';
+} from '@/Stores/User/UserDetailsStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

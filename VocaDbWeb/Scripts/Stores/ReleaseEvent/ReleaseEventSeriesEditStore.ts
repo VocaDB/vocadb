@@ -1,6 +1,6 @@
-import ReleaseEventSeriesForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
-import NameMatchMode from '@Models/NameMatchMode';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
+import ReleaseEventSeriesForEditContract from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import NameMatchMode from '@/Models/NameMatchMode';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import DeleteEntryStore from '../DeleteEntryStore';

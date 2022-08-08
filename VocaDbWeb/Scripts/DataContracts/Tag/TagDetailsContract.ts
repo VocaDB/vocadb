@@ -1,13 +1,13 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@DataContracts/CommentContract';
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
-import EventSeriesContract from '@DataContracts/ReleaseEvents/EventSeriesContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
+import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import EntryTypeAndSubTypeContract from '@/DataContracts/EntryTypeAndSubTypeContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import EventSeriesContract from '@/DataContracts/ReleaseEvents/EventSeriesContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongContract from '@/DataContracts/Song/SongContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 
 import TagBaseContract from './TagBaseContract';
 

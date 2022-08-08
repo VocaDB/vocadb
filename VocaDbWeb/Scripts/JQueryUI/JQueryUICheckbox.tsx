@@ -1,4 +1,4 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';

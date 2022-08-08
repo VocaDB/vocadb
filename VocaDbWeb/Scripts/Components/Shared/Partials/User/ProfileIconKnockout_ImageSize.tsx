@@ -1,6 +1,6 @@
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ImageSize from '@Models/Images/ImageSize';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import ImageSize from '@/Models/Images/ImageSize';
 import React from 'react';
 
 import ProfileIconKnockout from './ProfileIconKnockout';

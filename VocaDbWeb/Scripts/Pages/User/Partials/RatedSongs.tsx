@@ -1,5 +1,5 @@
-import Button from '@Bootstrap/Button';
-import RatedSongsSearchStore from '@Stores/User/RatedSongsSearchStore';
+import Button from '@/Bootstrap/Button';
+import RatedSongsSearchStore from '@/Stores/User/RatedSongsSearchStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

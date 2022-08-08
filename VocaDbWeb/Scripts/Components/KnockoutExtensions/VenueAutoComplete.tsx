@@ -1,5 +1,5 @@
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import functions from '@Shared/GlobalFunctions';
+import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 import EntryAutoComplete, {

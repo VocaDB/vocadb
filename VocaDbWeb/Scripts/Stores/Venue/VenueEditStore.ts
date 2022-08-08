@@ -1,8 +1,8 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
-import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
-import EntryStatus from '@Models/EntryStatus';
-import NameMatchMode from '@Models/NameMatchMode';
-import VenueRepository from '@Repositories/VenueRepository';
+import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
+import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
+import EntryStatus from '@/Models/EntryStatus';
+import NameMatchMode from '@/Models/NameMatchMode';
+import VenueRepository from '@/Repositories/VenueRepository';
 import {
 	action,
 	computed,

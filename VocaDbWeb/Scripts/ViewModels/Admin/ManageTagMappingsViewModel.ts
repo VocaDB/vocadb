@@ -1,9 +1,9 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
-import TagRepository from '@Repositories/TagRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import ui from '@Shared/MessagesTyped';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagMappingContract from '@/DataContracts/Tag/TagMappingContract';
+import TagRepository from '@/Repositories/TagRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import functions from '@/Shared/GlobalFunctions';
+import ui from '@/Shared/MessagesTyped';
 import ko from 'knockout';
 import _ from 'lodash';
 

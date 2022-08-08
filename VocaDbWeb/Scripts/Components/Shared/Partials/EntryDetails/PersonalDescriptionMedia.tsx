@@ -1,8 +1,8 @@
-import Button from '@Bootstrap/Button';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SelfDescriptionStore from '@Stores/SelfDescriptionStore';
+import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import SelfDescriptionStore from '@/Stores/SelfDescriptionStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

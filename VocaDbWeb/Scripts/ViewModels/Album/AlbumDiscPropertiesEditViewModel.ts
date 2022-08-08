@@ -1,4 +1,4 @@
-import AlbumDiscPropertiesContract from '@DataContracts/Album/AlbumDiscPropertiesContract';
+import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
 import ko, { Observable } from 'knockout';
 
 import BasicListEditViewModel from '../BasicListEditViewModel';

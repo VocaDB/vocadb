@@ -1,5 +1,5 @@
-import CommentContract from '@DataContracts/CommentContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 import { action, makeObservable, observable } from 'mobx';
 
 export default class CommentStore {

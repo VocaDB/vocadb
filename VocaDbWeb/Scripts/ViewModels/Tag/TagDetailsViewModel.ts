@@ -1,8 +1,8 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import ui from '@Shared/MessagesTyped';
+import CommentContract from '@/DataContracts/CommentContract';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import ui from '@/Shared/MessagesTyped';
 import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

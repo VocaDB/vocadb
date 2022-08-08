@@ -1,6 +1,6 @@
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import WebLinksEditViewModel from '@ViewModels/WebLinksEditViewModel';
+import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
+import WebLinkCategory from '@/Models/WebLinkCategory';
+import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
 
 var categories: TranslatedEnumField[] = [
 	{ id: 'Official', name: 'Official' },

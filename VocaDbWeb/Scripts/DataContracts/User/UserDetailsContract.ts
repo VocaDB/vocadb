@@ -1,5 +1,5 @@
-import { PermissionToken } from '@Models/LoginManager';
-import UserGroup from '@Models/Users/UserGroup';
+import { PermissionToken } from '@/Models/LoginManager';
+import UserGroup from '@/Models/Users/UserGroup';
 
 import AlbumForApiContract from '../Album/AlbumForApiContract';
 import ArtistApiContract from '../Artist/ArtistApiContract';

@@ -1,4 +1,4 @@
-import PVService from '@Models/PVs/PVService';
+import PVService from '@/Models/PVs/PVService';
 import React from 'react';
 
 const videoServiceLinkUrl = (service: PVService): string => {

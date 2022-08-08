@@ -1,6 +1,6 @@
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

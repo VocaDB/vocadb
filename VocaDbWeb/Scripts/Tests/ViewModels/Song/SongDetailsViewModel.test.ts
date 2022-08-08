@@ -1,10 +1,10 @@
-import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
-import HttpClient from '@Shared/HttpClient';
-import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
-import { SongDetailsResources } from '@ViewModels/Song/SongDetailsViewModel';
-import SongDetailsViewModel from '@ViewModels/Song/SongDetailsViewModel';
-import { SongListsViewModel } from '@ViewModels/Song/SongDetailsViewModel';
+import SongVoteRating from '@/Models/SongVoteRating';
+import SongType from '@/Models/Songs/SongType';
+import HttpClient from '@/Shared/HttpClient';
+import { SongDetailsAjax } from '@/ViewModels/Song/SongDetailsViewModel';
+import { SongDetailsResources } from '@/ViewModels/Song/SongDetailsViewModel';
+import SongDetailsViewModel from '@/ViewModels/Song/SongDetailsViewModel';
+import { SongListsViewModel } from '@/ViewModels/Song/SongDetailsViewModel';
 
 import FakeSongRepository from '../../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';

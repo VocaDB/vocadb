@@ -1,5 +1,5 @@
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import WebLinkContract from '@DataContracts/WebLinkContract';
+import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
 
 import BasicListEditViewModel from './BasicListEditViewModel';
 import WebLinkEditViewModel from './WebLinkEditViewModel';

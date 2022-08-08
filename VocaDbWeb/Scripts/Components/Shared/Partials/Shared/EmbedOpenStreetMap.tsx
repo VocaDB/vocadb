@@ -1,4 +1,4 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
+import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
 import qs from 'qs';
 import React from 'react';
 

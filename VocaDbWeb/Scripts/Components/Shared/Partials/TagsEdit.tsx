@@ -1,10 +1,10 @@
-import Button from '@Bootstrap/Button';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import JQueryUIButton from '@JQueryUI/JQueryUIButton';
-import JQueryUICheckbox from '@JQueryUI/JQueryUICheckbox';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
+import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import JQueryUICheckbox from '@/JQueryUI/JQueryUICheckbox';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import TagsEditStore from '@/Stores/Tag/TagsEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

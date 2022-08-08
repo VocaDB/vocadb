@@ -1,4 +1,4 @@
-import AlbumType from '@Models/Albums/AlbumType';
+import AlbumType from '@/Models/Albums/AlbumType';
 
 import ArtistApiContract from '../Artist/ArtistApiContract';
 import ArtistForAlbumContract from '../ArtistForAlbumContract';

@@ -1,9 +1,9 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import PVRepository from '@Repositories/PVRepository';
-import { HttpClientError } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import DateTimeHelper from '@/Helpers/DateTimeHelper';
+import PVServiceIcons from '@/Models/PVServiceIcons';
+import PVRepository from '@/Repositories/PVRepository';
+import { HttpClientError } from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { ObservableArray } from 'knockout';
 

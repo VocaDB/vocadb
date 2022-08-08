@@ -1,9 +1,9 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { computed, makeObservable, observable } from 'mobx';
 
 import ArtistFilters from './ArtistFilters';

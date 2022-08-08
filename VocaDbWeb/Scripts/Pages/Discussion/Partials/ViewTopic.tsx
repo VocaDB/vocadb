@@ -1,10 +1,10 @@
-import Alert from '@Bootstrap/Alert';
-import Button from '@Bootstrap/Button';
-import CommentKnockout from '@Components/Shared/Partials/Comment/CommentKnockout';
-import EditableComments from '@Components/Shared/Partials/Comment/EditableComments';
-import LoginManager from '@Models/LoginManager';
-import DiscussionIndexStore from '@Stores/Discussion/DiscussionIndexStore';
-import DiscussionTopicStore from '@Stores/Discussion/DiscussionTopicStore';
+import Alert from '@/Bootstrap/Alert';
+import Button from '@/Bootstrap/Button';
+import CommentKnockout from '@/Components/Shared/Partials/Comment/CommentKnockout';
+import EditableComments from '@/Components/Shared/Partials/Comment/EditableComments';
+import LoginManager from '@/Models/LoginManager';
+import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import DiscussionTopicStore from '@/Stores/Discussion/DiscussionTopicStore';
 import { useStoreWithRouteParams } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

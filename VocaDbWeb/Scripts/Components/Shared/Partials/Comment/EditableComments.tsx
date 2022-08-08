@@ -1,5 +1,5 @@
-import CommentStore from '@Stores/CommentStore';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import CommentStore from '@/Stores/CommentStore';
+import EditableCommentsStore from '@/Stores/EditableCommentsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

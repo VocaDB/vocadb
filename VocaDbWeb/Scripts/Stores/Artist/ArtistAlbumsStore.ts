@@ -1,9 +1,9 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import AlbumSearchStore, {
 	AlbumSortRule,
-} from '@Stores/Search/AlbumSearchStore';
-import CommonSearchStore from '@Stores/Search/CommonSearchStore';
+} from '@/Stores/Search/AlbumSearchStore';
+import CommonSearchStore from '@/Stores/Search/CommonSearchStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 

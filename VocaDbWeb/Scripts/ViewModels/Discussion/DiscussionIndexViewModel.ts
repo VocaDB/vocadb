@@ -1,8 +1,8 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
+import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
+import DiscussionRepository from '@/Repositories/DiscussionRepository';
+import GlobalValues from '@/Shared/GlobalValues';
+import UrlMapper from '@/Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
 
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

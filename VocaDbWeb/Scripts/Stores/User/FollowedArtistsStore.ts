@@ -1,7 +1,7 @@
-import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {

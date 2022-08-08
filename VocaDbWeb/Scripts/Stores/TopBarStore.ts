@@ -1,9 +1,9 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import EntryReportRepository from '@Repositories/EntryReportRepository';
-import UserRepository from '@Repositories/UserRepository';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
+import EntryType from '@/Models/EntryType';
+import LoginManager from '@/Models/LoginManager';
+import EntryReportRepository from '@/Repositories/EntryReportRepository';
+import UserRepository from '@/Repositories/UserRepository';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Store for the top bar.

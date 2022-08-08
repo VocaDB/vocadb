@@ -1,4 +1,4 @@
-import Markdown from '@Components/KnockoutExtensions/Markdown';
+import Markdown from '@/Components/KnockoutExtensions/Markdown';
 import React from 'react';
 
 interface FormatMarkdownProps {

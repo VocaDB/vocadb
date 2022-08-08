@@ -1,10 +1,10 @@
-import AlbumHelper from '@Helpers/AlbumHelper';
-import PVHelper from '@Helpers/PVHelper';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistCategories from '@Models/Artists/ArtistCategories';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
-import ContentFocus from '@Models/ContentFocus';
-import EntryStatus from '@Models/EntryStatus';
+import AlbumHelper from '@/Helpers/AlbumHelper';
+import PVHelper from '@/Helpers/PVHelper';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ArtistCategories from '@/Models/Artists/ArtistCategories';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
+import ContentFocus from '@/Models/ContentFocus';
+import EntryStatus from '@/Models/EntryStatus';
 import _ from 'lodash';
 import moment from 'moment';
 

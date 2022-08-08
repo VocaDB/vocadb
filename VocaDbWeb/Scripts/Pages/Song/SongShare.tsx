@@ -1,8 +1,8 @@
-import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
-import { MarkdownHelper } from '@Helpers/MarkdownHelper';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { MarkdownHelper } from '@/Helpers/MarkdownHelper';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import functions from '@/Shared/GlobalFunctions';
+import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

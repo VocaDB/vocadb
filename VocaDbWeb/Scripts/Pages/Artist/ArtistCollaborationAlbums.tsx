@@ -1,6 +1,6 @@
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import AlbumSearchList from '@Pages/Search/Partials/AlbumSearchList';
-import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
+import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

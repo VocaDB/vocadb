@@ -1,6 +1,6 @@
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import SongType from '@Models/Songs/SongType';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ArtistType from '@/Models/Artists/ArtistType';
+import SongType from '@/Models/Songs/SongType';
 
 import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 import EntryThumbContract from './EntryThumbContract';

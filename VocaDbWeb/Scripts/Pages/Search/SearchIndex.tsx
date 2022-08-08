@@ -1,27 +1,27 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import Layout from '@Components/Shared/Layout';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Layout from '@/Components/Shared/Layout';
 import {
 	AlbumSearchDropdown,
 	ArtistSearchDropdown,
 	EventSearchDropdown,
 	SongSearchDropdown,
-} from '@Components/Shared/Partials/Knockout/SearchDropdown';
-import TagFilters from '@Components/Shared/Partials/Knockout/TagFilters';
-import useScript from '@Components/useScript';
-import useVocaDbTitle from '@Components/useVocaDbTitle';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import EntryRepository from '@Repositories/EntryRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongRepository from '@Repositories/SongRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import SearchStore, { SearchType } from '@Stores/Search/SearchStore';
+} from '@/Components/Shared/Partials/Knockout/SearchDropdown';
+import TagFilters from '@/Components/Shared/Partials/Knockout/TagFilters';
+import useScript from '@/Components/useScript';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import EntryRepository from '@/Repositories/EntryRepository';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import SongRepository from '@/Repositories/SongRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
+import SearchStore, { SearchType } from '@/Stores/Search/SearchStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';

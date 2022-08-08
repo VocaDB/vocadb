@@ -1,7 +1,7 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistType from '@Models/Artists/ArtistType';
-import SongType from '@Models/Songs/SongType';
-import SongCreateViewModel from '@ViewModels/SongCreateViewModel';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ArtistType from '@/Models/Artists/ArtistType';
+import SongType from '@/Models/Songs/SongType';
+import SongCreateViewModel from '@/ViewModels/SongCreateViewModel';
 
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';

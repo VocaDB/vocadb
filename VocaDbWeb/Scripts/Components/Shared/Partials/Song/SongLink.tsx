@@ -1,6 +1,6 @@
-import { SongToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Link } from 'react-router-dom';

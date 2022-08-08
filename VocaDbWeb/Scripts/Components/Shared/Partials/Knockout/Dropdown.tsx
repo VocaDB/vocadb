@@ -1,5 +1,5 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import BootstrapDropdown from '@Bootstrap/Dropdown';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import BootstrapDropdown from '@/Bootstrap/Dropdown';
 import React from 'react';
 
 interface DropdownProps {

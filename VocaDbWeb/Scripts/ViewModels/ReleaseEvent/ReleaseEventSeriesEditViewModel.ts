@@ -1,11 +1,11 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
+import EntryType from '@/Models/EntryType';
+import NameMatchMode from '@/Models/NameMatchMode';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UrlMapper from '@/Shared/UrlMapper';
 import ko, { Observable } from 'knockout';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';

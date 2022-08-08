@@ -1,9 +1,9 @@
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
-import NewsListViewModel from '@ViewModels/NewsListViewModel';
-import PVRatingButtonsViewModel from '@ViewModels/PVRatingButtonsViewModel';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import ui from '@/Shared/MessagesTyped';
+import UrlMapper from '@/Shared/UrlMapper';
+import NewsListViewModel from '@/ViewModels/NewsListViewModel';
+import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 

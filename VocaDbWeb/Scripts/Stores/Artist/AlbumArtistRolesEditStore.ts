@@ -1,4 +1,4 @@
-import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 

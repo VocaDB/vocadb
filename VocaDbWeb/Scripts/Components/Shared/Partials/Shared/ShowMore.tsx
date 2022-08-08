@@ -1,4 +1,4 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

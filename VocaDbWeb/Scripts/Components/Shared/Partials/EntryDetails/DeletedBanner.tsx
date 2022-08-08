@@ -1,5 +1,5 @@
-import Alert from '@Bootstrap/Alert';
-import EntryBaseContract from '@DataContracts/EntryBaseContract';
+import Alert from '@/Bootstrap/Alert';
+import EntryBaseContract from '@/DataContracts/EntryBaseContract';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

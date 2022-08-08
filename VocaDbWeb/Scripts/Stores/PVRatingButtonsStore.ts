@@ -1,5 +1,5 @@
-import SongVoteRating, { parseSongVoteRating } from '@Models/SongVoteRating';
-import UserRepository from '@Repositories/UserRepository';
+import SongVoteRating, { parseSongVoteRating } from '@/Models/SongVoteRating';
+import UserRepository from '@/Repositories/UserRepository';
 import {
 	action,
 	computed,

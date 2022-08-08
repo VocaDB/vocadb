@@ -1,4 +1,4 @@
-import SongBpmFilterStore from '@Stores/Search/SongBpmFilter';
+import SongBpmFilterStore from '@/Stores/Search/SongBpmFilter';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

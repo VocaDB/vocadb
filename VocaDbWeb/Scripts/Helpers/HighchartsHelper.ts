@@ -1,4 +1,4 @@
-import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
+import CountPerDayContract from '@/DataContracts/Aggregate/CountPerDayContract';
 import { Options, SeriesOptions } from 'highcharts';
 
 export interface Tuple2<T1, T2> {

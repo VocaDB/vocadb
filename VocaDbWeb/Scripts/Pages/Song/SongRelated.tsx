@@ -1,7 +1,7 @@
-import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import React from 'react';
 
 import { SongDetailsTabs } from './SongDetailsRoutes';

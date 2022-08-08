@@ -1,7 +1,7 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8e3f3c2b5f232e17829df3474b7b6e398f22ff3d/src/Tabs.tsx
-import { forEach, map } from '@Bootstrap/ElementChildren';
-import NavbarContext from '@Bootstrap/NavbarContext';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
+import { forEach, map } from '@/Bootstrap/ElementChildren';
+import NavbarContext from '@/Bootstrap/NavbarContext';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import BaseNav from '@restart/ui/Nav';
 import { useNavItem } from '@restart/ui/NavItem';
 import { makeEventKey } from '@restart/ui/SelectableContext';

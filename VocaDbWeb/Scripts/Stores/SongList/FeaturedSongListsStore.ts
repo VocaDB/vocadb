@@ -1,9 +1,9 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
-import SongListRepository from '@Repositories/SongListRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
+import SongListRepository from '@/Repositories/SongListRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';

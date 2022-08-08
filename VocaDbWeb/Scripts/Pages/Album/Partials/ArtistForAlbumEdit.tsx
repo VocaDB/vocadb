@@ -1,7 +1,7 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
-import AlbumEditStore from '@Stores/Album/AlbumEditStore';
-import ArtistForAlbumEditStore from '@Stores/ArtistForAlbumEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
+import AlbumEditStore from '@/Stores/Album/AlbumEditStore';
+import ArtistForAlbumEditStore from '@/Stores/ArtistForAlbumEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

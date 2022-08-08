@@ -1,10 +1,10 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongInListEditContract from '@DataContracts/Song/SongInListEditContract';
-import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
-import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
-import SongListRepository from '@Repositories/SongListRepository';
-import SongRepository from '@Repositories/SongRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import SongInListEditContract from '@/DataContracts/Song/SongInListEditContract';
+import SongListForEditContract from '@/DataContracts/Song/SongListForEditContract';
+import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
+import SongListRepository from '@/Repositories/SongListRepository';
+import SongRepository from '@/Repositories/SongRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
 import {
 	action,

@@ -1,5 +1,5 @@
-import { DiscMediaType } from '@DataContracts/Album/AlbumDetailsForApi';
-import AlbumDiscPropertiesContract from '@DataContracts/Album/AlbumDiscPropertiesContract';
+import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
+import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
 import { makeObservable, observable } from 'mobx';
 
 import BasicListEditStore from '../BasicListEditStore';

@@ -1,6 +1,6 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryPictureFileEditStore from '@Stores/EntryPictureFileEditStore';
-import EntryPictureFileListEditStore from '@Stores/EntryPictureFileListEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import EntryPictureFileEditStore from '@/Stores/EntryPictureFileEditStore';
+import EntryPictureFileListEditStore from '@/Stores/EntryPictureFileListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

@@ -1,5 +1,5 @@
-import CommentContract from '@DataContracts/CommentContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import CommentContract from '@/DataContracts/CommentContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 import ko, { Observable } from 'knockout';
 
 export default class CommentViewModel {

@@ -1,6 +1,6 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import ImageSize from '@/Models/Images/ImageSize';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

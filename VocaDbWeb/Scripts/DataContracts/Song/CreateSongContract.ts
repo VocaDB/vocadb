@@ -1,4 +1,4 @@
-import SongType from '@Models/Songs/SongType';
+import SongType from '@/Models/Songs/SongType';
 
 import LocalizedStringContract from '../Globalization/LocalizedStringContract';
 import ArtistForSongContract from './ArtistForSongContract';

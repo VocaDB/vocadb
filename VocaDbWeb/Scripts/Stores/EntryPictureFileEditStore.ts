@@ -1,4 +1,4 @@
-import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
 import { makeObservable, observable } from 'mobx';
 
 export default class EntryPictureFileEditStore {

@@ -1,6 +1,6 @@
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
-import ICommentRepository from '@Repositories/ICommentRepository';
+import CommentContract from '@/DataContracts/CommentContract';
+import LoginManager from '@/Models/LoginManager';
+import ICommentRepository from '@/Repositories/ICommentRepository';
 import _ from 'lodash';
 import {
 	action,

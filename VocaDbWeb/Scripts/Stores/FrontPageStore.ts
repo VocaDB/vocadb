@@ -1,6 +1,6 @@
-import FrontPageContract from '@DataContracts/FrontPageContract';
-import SongWithPVAndVoteContract from '@DataContracts/Song/SongWithPVAndVoteContract';
-import UserRepository from '@Repositories/UserRepository';
+import FrontPageContract from '@/DataContracts/FrontPageContract';
+import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import UserRepository from '@/Repositories/UserRepository';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 import GlobalValues from '../Shared/GlobalValues';

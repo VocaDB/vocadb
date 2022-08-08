@@ -1,5 +1,5 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

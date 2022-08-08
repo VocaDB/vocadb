@@ -1,9 +1,9 @@
-import ResourcesContract from '@DataContracts/ResourcesContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ResourcesContract from '@/DataContracts/ResourcesContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import ResourceRepository from '@/Repositories/ResourceRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 import moment from 'moment';
 

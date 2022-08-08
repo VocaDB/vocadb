@@ -1,10 +1,10 @@
-import SongContract from '@DataContracts/Song/SongContract';
-import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
-import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import NameMatchMode from '@Models/NameMatchMode';
-import { SongQueryParams } from '@Repositories/SongRepository';
-import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import functions from '@Shared/GlobalFunctions';
+import SongContract from '@/DataContracts/Song/SongContract';
+import SearchTextQueryHelper from '@/Helpers/SearchTextQueryHelper';
+import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import NameMatchMode from '@/Models/NameMatchMode';
+import { SongQueryParams } from '@/Repositories/SongRepository';
+import { initEntrySearch } from '@/Shared/EntryAutoComplete';
+import functions from '@/Shared/GlobalFunctions';
 import ko from 'knockout';
 
 declare global {

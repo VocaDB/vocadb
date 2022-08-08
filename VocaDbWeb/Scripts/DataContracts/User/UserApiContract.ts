@@ -1,4 +1,4 @@
-import UserGroup from '@Models/Users/UserGroup';
+import UserGroup from '@/Models/Users/UserGroup';
 
 import EntryThumbContract from '../EntryThumbContract';
 import UserBaseContract from './UserBaseContract';

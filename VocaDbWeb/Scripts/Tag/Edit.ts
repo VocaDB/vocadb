@@ -1,8 +1,8 @@
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import TagEditViewModel from '@ViewModels/TagEditViewModel';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import TagEditViewModel from '@/ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 

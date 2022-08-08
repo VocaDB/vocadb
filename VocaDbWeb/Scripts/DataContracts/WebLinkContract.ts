@@ -1,4 +1,4 @@
-import WebLinkCategory from '@Models/WebLinkCategory';
+import WebLinkCategory from '@/Models/WebLinkCategory';
 
 export default interface WebLinkContract {
 	category: WebLinkCategory;

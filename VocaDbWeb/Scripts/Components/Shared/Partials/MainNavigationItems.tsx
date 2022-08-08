@@ -1,6 +1,6 @@
-import Nav from '@Bootstrap/Nav';
-import LoginManager from '@Models/LoginManager';
-import { SearchType } from '@Stores/Search/SearchStore';
+import Nav from '@/Bootstrap/Nav';
+import LoginManager from '@/Models/LoginManager';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

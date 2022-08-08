@@ -1,6 +1,6 @@
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import ImageSize from '@Models/Images/ImageSize';
-import GlobalValues from '@Shared/GlobalValues';
+import EntryThumbContract from '@/DataContracts/EntryThumbContract';
+import ImageSize from '@/Models/Images/ImageSize';
+import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
 
 import RegexLinkMatcher from './RegexLinkMatcher';

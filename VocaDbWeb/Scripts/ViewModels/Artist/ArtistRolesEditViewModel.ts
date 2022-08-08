@@ -1,4 +1,4 @@
-import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 

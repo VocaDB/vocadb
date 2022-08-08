@@ -1,8 +1,8 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Computed } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';

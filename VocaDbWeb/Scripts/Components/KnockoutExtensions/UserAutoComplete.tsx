@@ -1,5 +1,5 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import functions from '@Shared/GlobalFunctions';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 import EntryAutoComplete, {

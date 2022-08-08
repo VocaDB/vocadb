@@ -1,6 +1,6 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import NameMatchMode from '@Models/NameMatchMode';
-import TagRepository from '@Repositories/TagRepository';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import NameMatchMode from '@/Models/NameMatchMode';
+import TagRepository from '@/Repositories/TagRepository';
 import {
 	computed,
 	makeObservable,

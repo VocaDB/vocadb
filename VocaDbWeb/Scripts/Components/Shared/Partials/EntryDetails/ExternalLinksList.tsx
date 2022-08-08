@@ -1,6 +1,6 @@
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import functions from '@Shared/GlobalFunctions';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
+import UrlHelper from '@/Helpers/UrlHelper';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

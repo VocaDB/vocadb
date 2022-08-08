@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import Button from '@/Bootstrap/Button';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

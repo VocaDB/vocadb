@@ -1,6 +1,6 @@
-import PVService from '@Models/PVs/PVService';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
+import PVService from '@/Models/PVs/PVService';
+import SongRepository from '@/Repositories/SongRepository';
+import UserRepository from '@/Repositories/UserRepository';
 import ko, { Observable } from 'knockout';
 
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';

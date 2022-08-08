@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

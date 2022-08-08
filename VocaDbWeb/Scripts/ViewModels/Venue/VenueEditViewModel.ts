@@ -1,11 +1,11 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
-import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import UserRepository from '@Repositories/UserRepository';
-import VenueRepository from '@Repositories/VenueRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
+import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
+import EntryType from '@/Models/EntryType';
+import NameMatchMode from '@/Models/NameMatchMode';
+import UserRepository from '@/Repositories/UserRepository';
+import VenueRepository from '@/Repositories/VenueRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UrlMapper from '@/Shared/UrlMapper';
 import ko, { Computed, Observable } from 'knockout';
 
 import DeleteEntryViewModel from '../DeleteEntryViewModel';

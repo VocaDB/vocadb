@@ -1,9 +1,9 @@
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import { MarkdownHelper } from '@Helpers/MarkdownHelper';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import { MarkdownHelper } from '@/Helpers/MarkdownHelper';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import functions from '@/Shared/GlobalFunctions';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

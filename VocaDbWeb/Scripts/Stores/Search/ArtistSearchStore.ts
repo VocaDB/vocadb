@@ -1,10 +1,10 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistType from '@Models/Artists/ArtistType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import ArtistHelper from '@/Helpers/ArtistHelper';
+import ArtistType from '@/Models/Artists/ArtistType';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import { computed, makeObservable, observable } from 'mobx';
 
 import AdvancedSearchFilter from './AdvancedSearchFilter';

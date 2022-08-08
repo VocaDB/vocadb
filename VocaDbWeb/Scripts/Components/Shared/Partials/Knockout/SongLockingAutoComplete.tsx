@@ -1,8 +1,8 @@
-import SongAutoComplete from '@Components/KnockoutExtensions/SongAutoComplete';
-import SongContract from '@DataContracts/Song/SongContract';
-import EntryType from '@Models/EntryType';
-import SongType from '@Models/Songs/SongType';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import SongAutoComplete from '@/Components/KnockoutExtensions/SongAutoComplete';
+import SongContract from '@/DataContracts/Song/SongContract';
+import EntryType from '@/Models/EntryType';
+import SongType from '@/Models/Songs/SongType';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

@@ -1,5 +1,5 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ui from '@Shared/MessagesTyped';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ui from '@/Shared/MessagesTyped';
 
 import ReportEntryViewModel from '../ReportEntryViewModel';
 

@@ -1,7 +1,7 @@
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import UrlHelper from '@Helpers/UrlHelper';
-import ImageSize from '@Models/Images/ImageSize';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import UrlHelper from '@/Helpers/UrlHelper';
+import ImageSize from '@/Models/Images/ImageSize';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

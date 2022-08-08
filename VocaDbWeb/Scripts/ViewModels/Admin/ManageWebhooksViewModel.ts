@@ -1,6 +1,8 @@
-import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
-import AdminRepository from '@Repositories/AdminRepository';
-import ui from '@Shared/MessagesTyped';
+import WebhookContract, {
+	WebhookEvents,
+} from '@/DataContracts/WebhookContract';
+import AdminRepository from '@/Repositories/AdminRepository';
+import ui from '@/Shared/MessagesTyped';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 

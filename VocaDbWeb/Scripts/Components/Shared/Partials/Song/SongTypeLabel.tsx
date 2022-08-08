@@ -1,4 +1,4 @@
-import SongType from '@Models/Songs/SongType';
+import SongType from '@/Models/Songs/SongType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

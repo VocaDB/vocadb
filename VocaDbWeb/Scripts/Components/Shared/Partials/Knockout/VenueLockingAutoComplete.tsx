@@ -1,5 +1,5 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

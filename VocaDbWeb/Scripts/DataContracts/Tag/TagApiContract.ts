@@ -1,4 +1,4 @@
-import EntryType from '@Models/EntryType';
+import EntryType from '@/Models/EntryType';
 
 import EntryThumbContract from '../EntryThumbContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';

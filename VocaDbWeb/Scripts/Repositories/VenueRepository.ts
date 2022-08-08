@@ -1,12 +1,12 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
+import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
+import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import AjaxHelper from '@/Helpers/AjaxHelper';
+import NameMatchMode from '@/Models/NameMatchMode';
+import functions from '@/Shared/GlobalFunctions';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 
 import BaseRepository from './BaseRepository';
 

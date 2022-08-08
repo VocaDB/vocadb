@@ -1,21 +1,21 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import AlbumForUserForApiContract, {
 	MediaType,
-} from '@DataContracts/User/AlbumForUserForApiContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import EntryType from '@Models/EntryType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
-import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import AlbumType from '@/Models/Albums/AlbumType';
+import EntryType from '@/Models/EntryType';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import GlobalValues from '@/Shared/GlobalValues';
+import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {

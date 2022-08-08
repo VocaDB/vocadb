@@ -1,4 +1,4 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
 import React from 'react';
 
 import UserIconLink_UserForApiContract from './UserIconLink_UserForApiContract';

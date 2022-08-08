@@ -1,9 +1,9 @@
-import EntryContract from '@DataContracts/EntryContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryRepository from '@Repositories/EntryRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
+import EntryContract from '@/DataContracts/EntryContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import EntryRepository from '@/Repositories/EntryRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import GlobalValues from '@/Shared/GlobalValues';
 import { computed, makeObservable } from 'mobx';
 
 import { ICommonSearchStore } from './CommonSearchStore';

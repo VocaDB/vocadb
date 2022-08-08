@@ -1,4 +1,4 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
 import React from 'react';
 
 import TagLink from './TagLink';

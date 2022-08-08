@@ -1,4 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import ArtistType from '@/Models/Artists/ArtistType';
 
 import AlbumForApiContract from '../Album/AlbumForApiContract';
 import CommentContract from '../CommentContract';

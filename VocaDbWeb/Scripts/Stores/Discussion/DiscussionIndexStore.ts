@@ -1,8 +1,8 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@Models/LoginManager';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
+import LoginManager from '@/Models/LoginManager';
+import DiscussionRepository from '@/Repositories/DiscussionRepository';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {

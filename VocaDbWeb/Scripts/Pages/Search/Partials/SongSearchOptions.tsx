@@ -1,10 +1,10 @@
-import ArtistFilters from '@Components/Shared/Partials/Knockout/ArtistFilters';
-import ReleaseEventLockingAutoComplete from '@Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
-import SongLockingAutoComplete from '@Components/Shared/Partials/Knockout/SongLockingAutoComplete';
-import { SongAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
-import SongTypesDropdownKnockout from '@Components/Shared/Partials/Song/SongTypesDropdownKnockout';
-import SongType from '@Models/Songs/SongType';
-import SongSearchStore from '@Stores/Search/SongSearchStore';
+import ArtistFilters from '@/Components/Shared/Partials/Knockout/ArtistFilters';
+import ReleaseEventLockingAutoComplete from '@/Components/Shared/Partials/Knockout/ReleaseEventLockingAutoComplete';
+import SongLockingAutoComplete from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
+import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
+import SongTypesDropdownKnockout from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
+import SongType from '@/Models/Songs/SongType';
+import SongSearchStore from '@/Stores/Search/SongSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

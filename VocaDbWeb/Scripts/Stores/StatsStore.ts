@@ -1,4 +1,4 @@
-import HttpClient from '@Shared/HttpClient';
+import HttpClient from '@/Shared/HttpClient';
 import {
 	computed,
 	makeObservable,

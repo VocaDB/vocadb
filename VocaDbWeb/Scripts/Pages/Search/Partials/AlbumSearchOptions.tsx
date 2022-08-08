@@ -1,8 +1,8 @@
-import DiscTypesDropdownKnockout from '@Components/Shared/Partials/Album/DiscTypesDropdownKnockout';
-import ArtistFilters from '@Components/Shared/Partials/Knockout/ArtistFilters';
-import { AlbumAdvancedFilters } from '@Components/Shared/Partials/Search/AdvancedFilters';
-import AlbumType from '@Models/Albums/AlbumType';
-import AlbumSearchStore from '@Stores/Search/AlbumSearchStore';
+import DiscTypesDropdownKnockout from '@/Components/Shared/Partials/Album/DiscTypesDropdownKnockout';
+import ArtistFilters from '@/Components/Shared/Partials/Knockout/ArtistFilters';
+import { AlbumAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
+import AlbumType from '@/Models/Albums/AlbumType';
+import AlbumSearchStore from '@/Stores/Search/AlbumSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

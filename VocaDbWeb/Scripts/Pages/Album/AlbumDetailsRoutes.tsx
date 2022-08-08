@@ -1,8 +1,8 @@
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import { JQueryUINavItemComponent } from '@JQueryUI/JQueryUITabs';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';

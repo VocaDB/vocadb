@@ -1,5 +1,5 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import functions from '@Shared/GlobalFunctions';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import functions from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,10 +1,10 @@
-import Alert from '@Bootstrap/Alert';
-import Button from '@Bootstrap/Button';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import LoginManager from '@Models/LoginManager';
-import functions from '@Shared/GlobalFunctions';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import Alert from '@/Bootstrap/Alert';
+import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import LoginManager from '@/Models/LoginManager';
+import functions from '@/Shared/GlobalFunctions';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

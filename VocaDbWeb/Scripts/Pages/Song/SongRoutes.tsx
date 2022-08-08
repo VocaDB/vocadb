@@ -1,6 +1,6 @@
-import EntryType from '@Models/EntryType';
-import ErrorNotFound from '@Pages/Error/ErrorNotFound';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import EntryType from '@/Models/EntryType';
+import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';

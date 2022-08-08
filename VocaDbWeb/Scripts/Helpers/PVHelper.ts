@@ -1,5 +1,5 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import PVService from '@/Models/PVs/PVService';
 
 import VideoServiceHelper from './VideoServiceHelper';
 

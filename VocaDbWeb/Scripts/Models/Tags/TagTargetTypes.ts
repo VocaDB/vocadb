@@ -1,4 +1,4 @@
-import EntryType from '@Models/EntryType';
+import EntryType from '@/Models/EntryType';
 
 enum TagTargetTypes {
 	Nothing = EntryType.Undefined,

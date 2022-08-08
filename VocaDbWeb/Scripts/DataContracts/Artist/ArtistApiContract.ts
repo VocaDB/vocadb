@@ -1,4 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import ArtistType from '@/Models/Artists/ArtistType';
 
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import CommonEntryContract from '../CommonEntryContract';

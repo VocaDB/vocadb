@@ -1,10 +1,10 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
 import SongListsBaseStore, {
 	SongListSortRule,
-} from '@Stores/SongList/SongListsBaseStore';
+} from '@/Stores/SongList/SongListsBaseStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

@@ -1,5 +1,5 @@
-import { SongToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
+import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import SongApiContract from '@/DataContracts/Song/SongApiContract';
 import React from 'react';
 
 import SongLink from './SongLink';

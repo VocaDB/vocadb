@@ -1,10 +1,10 @@
-import Button from '@Bootstrap/Button';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import Button from '@/Bootstrap/Button';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import EntryType from '@/Models/EntryType';
+import NameMatchMode from '@/Models/NameMatchMode';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';

@@ -1,5 +1,5 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
 import ko, { ObservableArray } from 'knockout';
 
 import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';

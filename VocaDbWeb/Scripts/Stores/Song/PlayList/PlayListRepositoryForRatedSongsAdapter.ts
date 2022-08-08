@@ -1,9 +1,9 @@
-import PagingPropertiesContract from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import UserRepository from '@Repositories/UserRepository';
+import PagingPropertiesContract from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { SongOptionalFields } from '@/Models/EntryOptionalFields';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import UserRepository from '@/Repositories/UserRepository';
 
 import AdvancedSearchFilters from '../../Search/AdvancedSearchFilters';
 import ArtistFilters from '../../Search/ArtistFilters';

@@ -1,6 +1,6 @@
-import Dropdown from '@Bootstrap/Dropdown';
-import { AdvancedFilterType } from '@Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
+import Dropdown from '@/Bootstrap/Dropdown';
+import { AdvancedFilterType } from '@/Stores/Search/AdvancedSearchFilter';
+import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import React from 'react';
 
 interface AdvancedFilterProps {

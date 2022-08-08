@@ -1,4 +1,4 @@
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
+import EntryEditDataContract from '@/DataContracts/User/EntryEditDataContract';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

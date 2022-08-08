@@ -1,6 +1,6 @@
-import ArtistLinkContract from '@DataContracts/Song/ArtistLinkContract';
-import ArtistCategories from '@Models/Artists/ArtistCategories';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistLinkContract from '@/DataContracts/Song/ArtistLinkContract';
+import ArtistCategories from '@/Models/Artists/ArtistCategories';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

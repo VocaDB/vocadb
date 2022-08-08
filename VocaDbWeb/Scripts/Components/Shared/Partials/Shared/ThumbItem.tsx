@@ -1,5 +1,5 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
-import EntryRefContract from '@DataContracts/EntryRefContract';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
+import EntryRefContract from '@/DataContracts/EntryRefContract';
 import React from 'react';
 
 import { EntryToolTip } from '../../../KnockoutExtensions/EntryToolTip';

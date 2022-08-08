@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import CustomNameEditStore from '@Stores/CustomNameEditStore';
+import Button from '@/Bootstrap/Button';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import CustomNameEditStore from '@/Stores/CustomNameEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

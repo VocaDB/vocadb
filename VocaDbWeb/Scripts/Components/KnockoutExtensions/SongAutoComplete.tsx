@@ -1,8 +1,8 @@
-import SongContract from '@DataContracts/Song/SongContract';
-import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import { SongQueryParams } from '@Repositories/SongRepository';
-import functions from '@Shared/GlobalFunctions';
+import SongContract from '@/DataContracts/Song/SongContract';
+import SearchTextQueryHelper from '@/Helpers/SearchTextQueryHelper';
+import NameMatchMode from '@/Models/NameMatchMode';
+import { SongQueryParams } from '@/Repositories/SongRepository';
+import functions from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

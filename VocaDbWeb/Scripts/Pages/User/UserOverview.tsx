@@ -1,11 +1,11 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
 import UserKnownLanguageContract, {
 	UserLanguageProficiency,
-} from '@DataContracts/User/UserKnownLanguageContract';
-import LoginManager, { PermissionToken } from '@Models/LoginManager';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+} from '@/DataContracts/User/UserKnownLanguageContract';
+import LoginManager, { PermissionToken } from '@/Models/LoginManager';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';

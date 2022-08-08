@@ -1,4 +1,4 @@
-import UrlMapper from '@Shared/UrlMapper';
+import UrlMapper from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko from 'knockout';
 

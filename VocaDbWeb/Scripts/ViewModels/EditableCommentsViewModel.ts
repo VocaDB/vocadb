@@ -1,6 +1,6 @@
-import CommentContract from '@DataContracts/CommentContract';
-import ICommentRepository from '@Repositories/ICommentRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import CommentContract from '@/DataContracts/CommentContract';
+import ICommentRepository from '@/Repositories/ICommentRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 

@@ -1,7 +1,7 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
+import RepositoryFactory from '@/Repositories/RepositoryFactory';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import AlbumCollectionViewModel from '@/ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 

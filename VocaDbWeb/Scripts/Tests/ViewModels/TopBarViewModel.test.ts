@@ -1,4 +1,4 @@
-import TopBarViewModel from '@ViewModels/TopBarViewModel';
+import TopBarViewModel from '@/ViewModels/TopBarViewModel';
 
 import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';

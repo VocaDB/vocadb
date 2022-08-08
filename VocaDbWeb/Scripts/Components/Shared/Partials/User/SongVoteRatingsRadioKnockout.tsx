@@ -1,5 +1,5 @@
-import Button from '@Bootstrap/Button';
-import { SongVoteRating } from '@Stores/Search/SongSearchStore';
+import Button from '@/Bootstrap/Button';
+import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

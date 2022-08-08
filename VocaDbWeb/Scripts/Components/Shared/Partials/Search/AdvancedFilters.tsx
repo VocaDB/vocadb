@@ -1,10 +1,10 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import ArtistType from '@Models/Artists/ArtistType';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import ArtistType from '@/Models/Artists/ArtistType';
 import AdvancedSearchFilter, {
 	AdvancedFilterType,
-} from '@Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
+} from '@/Stores/Search/AdvancedSearchFilter';
+import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

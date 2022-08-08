@@ -1,5 +1,5 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EnglishTranslatedStringEditStore from '@Stores/Globalization/EnglishTranslatedStringEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

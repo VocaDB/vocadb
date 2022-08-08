@@ -1,4 +1,4 @@
-import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
 import ko, { ObservableArray } from 'knockout';
 
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';

@@ -1,4 +1,4 @@
-import ImageHelper from '@Helpers/ImageHelper';
+import ImageHelper from '@/Helpers/ImageHelper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -1,5 +1,5 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import UserGroup from '@Models/Users/UserGroup';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import UserGroup from '@/Models/Users/UserGroup';
 
 // Corresponds to the ArtistForUserContract class in C#.
 interface ArtistForUserContract {

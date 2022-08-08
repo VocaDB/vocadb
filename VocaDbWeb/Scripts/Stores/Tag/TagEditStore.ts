@@ -1,10 +1,10 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagForEditContract from '@DataContracts/Tag/TagForEditContract';
-import EntryType from '@Models/EntryType';
-import TagTargetTypes from '@Models/Tags/TagTargetTypes';
-import TagRepository from '@Repositories/TagRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagForEditContract from '@/DataContracts/Tag/TagForEditContract';
+import EntryType from '@/Models/EntryType';
+import TagTargetTypes from '@/Models/Tags/TagTargetTypes';
+import TagRepository from '@/Repositories/TagRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UrlMapper from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import _ from 'lodash';
 import {

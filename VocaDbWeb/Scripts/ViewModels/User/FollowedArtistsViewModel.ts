@@ -1,10 +1,10 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ArtistForUserForApiContract from '@DataContracts/User/ArtistForUserForApiContract';
-import ArtistType from '@Models/Artists/ArtistType';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
+import ArtistType from '@/Models/Artists/ArtistType';
+import ResourceRepository from '@/Repositories/ResourceRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 
 import TagFilters from '../Search/TagFilters';

@@ -1,4 +1,4 @@
-import PVService from '@Models/PVs/PVService';
+import PVService from '@/Models/PVs/PVService';
 
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';

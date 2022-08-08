@@ -1,7 +1,7 @@
-import MomentJsTimeAgo from '@Components/KnockoutExtensions/MomentJsTimeAgo';
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import CommentContract from '@/DataContracts/CommentContract';
+import LoginManager from '@/Models/LoginManager';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

@@ -1,8 +1,8 @@
-import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {

@@ -1,6 +1,6 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
-import EnglishTranslatedStringStore from '@Stores/Globalization/EnglishTranslatedStringStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

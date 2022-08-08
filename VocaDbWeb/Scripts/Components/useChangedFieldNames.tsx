@@ -1,4 +1,4 @@
-import EntryType from '@Models/EntryType';
+import EntryType from '@/Models/EntryType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

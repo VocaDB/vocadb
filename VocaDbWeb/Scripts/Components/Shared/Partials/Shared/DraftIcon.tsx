@@ -1,4 +1,4 @@
-import EntryStatus from '@Models/EntryStatus';
+import EntryStatus from '@/Models/EntryStatus';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

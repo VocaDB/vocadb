@@ -1,4 +1,4 @@
-import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 

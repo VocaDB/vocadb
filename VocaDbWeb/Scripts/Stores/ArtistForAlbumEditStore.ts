@@ -1,7 +1,7 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
+import ArtistHelper from '@/Helpers/ArtistHelper';
+import ArtistRoles from '@/Models/Artists/ArtistRoles';
 import { computed, makeObservable, observable } from 'mobx';
 
 export interface IEditableArtistWithSupport {

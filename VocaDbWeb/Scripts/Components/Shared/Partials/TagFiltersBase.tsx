@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import TagFiltersStore from '@Stores/Search/TagFilters';
+import Button from '@/Bootstrap/Button';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import TagFiltersStore from '@/Stores/Search/TagFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';

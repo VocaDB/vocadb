@@ -1,9 +1,9 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import { SongSearchDropdown } from '@Components/Shared/Partials/Knockout/SearchDropdown';
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import SongSearchList from '@Pages/Search/Partials/SongSearchList';
-import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
+import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
+import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';

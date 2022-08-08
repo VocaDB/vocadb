@@ -1,4 +1,4 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
 
 import EntryThumbContract from '../EntryThumbContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';

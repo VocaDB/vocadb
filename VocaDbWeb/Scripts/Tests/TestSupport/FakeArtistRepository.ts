@@ -1,7 +1,7 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import HttpClient from '@Shared/HttpClient';
+import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import HttpClient from '@/Shared/HttpClient';
 
 import FakePromise from './FakePromise';
 

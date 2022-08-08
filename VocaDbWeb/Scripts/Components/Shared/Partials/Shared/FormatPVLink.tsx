@@ -1,5 +1,5 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import PVService from '@/Models/PVs/PVService';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

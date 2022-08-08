@@ -1,6 +1,6 @@
-import SongDetailsForApi from '@DataContracts/Song/SongDetailsForApi';
-import LoginManager from '@Models/LoginManager';
-import SongDetailsStore from '@Stores/Song/SongDetailsStore';
+import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import LoginManager from '@/Models/LoginManager';
+import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

@@ -1,8 +1,8 @@
-import Accordion from '@Bootstrap/Accordion';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
+import Accordion from '@/Bootstrap/Accordion';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import LyricsForSongListEditStore, {
 	LyricsForSongEditStore,
-} from '@Stores/Song/LyricsForSongListEditStore';
+} from '@/Stores/Song/LyricsForSongListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

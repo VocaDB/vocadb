@@ -1,4 +1,4 @@
-import AlbumType from '@Models/Albums/AlbumType';
+import AlbumType from '@/Models/Albums/AlbumType';
 
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EntryPictureFileContract from '../EntryPictureFileContract';

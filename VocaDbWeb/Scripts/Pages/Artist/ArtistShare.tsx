@@ -1,9 +1,9 @@
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import { MarkdownHelper } from '@Helpers/MarkdownHelper';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import ArtistDetailsStore from '@Stores/Artist/ArtistDetailsStore';
+import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import { MarkdownHelper } from '@/Helpers/MarkdownHelper';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import functions from '@/Shared/GlobalFunctions';
+import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

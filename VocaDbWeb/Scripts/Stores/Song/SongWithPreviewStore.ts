@@ -1,7 +1,7 @@
-import SongWithPVAndVoteContract from '@DataContracts/Song/SongWithPVAndVoteContract';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
+import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import SongRepository from '@/Repositories/SongRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 // Store for song with PV preview and rating buttons (for example, on front page and song index page).

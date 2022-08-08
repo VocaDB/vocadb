@@ -1,4 +1,4 @@
-import { RatingsStore } from '@Stores/Song/SongDetailsStore';
+import { RatingsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

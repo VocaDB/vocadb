@@ -1,4 +1,4 @@
-import TagCategoryAutoComplete from '@Components/KnockoutExtensions/TagCategoryAutoComplete';
+import TagCategoryAutoComplete from '@/Components/KnockoutExtensions/TagCategoryAutoComplete';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

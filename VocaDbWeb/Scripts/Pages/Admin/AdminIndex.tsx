@@ -1,6 +1,6 @@
-import Layout from '@Components/Shared/Layout';
-import useVocaDbTitle from '@Components/useVocaDbTitle';
-import LoginManager from '@Models/LoginManager';
+import Layout from '@/Components/Shared/Layout';
+import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import LoginManager from '@/Models/LoginManager';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

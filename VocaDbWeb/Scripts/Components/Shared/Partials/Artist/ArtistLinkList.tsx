@@ -1,4 +1,4 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 import React from 'react';
 
 import ArtistLink from './ArtistLink';

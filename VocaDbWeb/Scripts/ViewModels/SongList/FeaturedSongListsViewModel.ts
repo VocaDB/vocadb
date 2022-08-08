@@ -1,9 +1,9 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import SongListRepository from '@Repositories/SongListRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import SongListContract from '@/DataContracts/Song/SongListContract';
+import ResourceRepository from '@/Repositories/ResourceRepository';
+import SongListRepository from '@/Repositories/SongListRepository';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko from 'knockout';
 
 import SongListsBaseViewModel from './SongListsBaseViewModel';

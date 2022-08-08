@@ -1,4 +1,4 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

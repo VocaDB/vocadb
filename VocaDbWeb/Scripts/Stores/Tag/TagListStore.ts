@@ -1,5 +1,5 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 

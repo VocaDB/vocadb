@@ -1,11 +1,11 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import ResourcesManager from '@Models/ResourcesManager';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ResourcesManager from '@/Models/ResourcesManager';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import ResourceRepository from '@/Repositories/ResourceRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Computed, Observable } from 'knockout';
 
 import ArtistFilters from './ArtistFilters';

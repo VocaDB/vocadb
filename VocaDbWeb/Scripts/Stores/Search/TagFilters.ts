@@ -1,6 +1,6 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import TagRepository from '@/Repositories/TagRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
 import {
 	action,

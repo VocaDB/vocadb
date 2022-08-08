@@ -1,6 +1,6 @@
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import LoginManager from '@Models/LoginManager';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import LoginManager from '@/Models/LoginManager';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

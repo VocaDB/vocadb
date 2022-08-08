@@ -1,4 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import ArtistType from '@/Models/Artists/ArtistType';
 
 import EntryPictureFileContract from '../EntryPictureFileContract';
 import LocalizedStringContract from '../Globalization/LocalizedStringContract';

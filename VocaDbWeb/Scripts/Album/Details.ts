@@ -1,13 +1,13 @@
-import LoginManager from '@Models/LoginManager';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
+import LoginManager from '@/Models/LoginManager';
+import RepositoryFactory from '@/Repositories/RepositoryFactory';
+import functions from '@/Shared/GlobalFunctions';
+import HttpClient from '@/Shared/HttpClient';
+import ui from '@/Shared/MessagesTyped';
+import UrlMapper from '@/Shared/UrlMapper';
 import AlbumDetailsViewModel, {
 	AlbumDetailsAjax,
-} from '@ViewModels/Album/AlbumDetailsViewModel';
-import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+} from '@/ViewModels/Album/AlbumDetailsViewModel';
+import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';

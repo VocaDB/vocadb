@@ -1,6 +1,6 @@
-import TagRepository from '@Repositories/TagRepository';
-import HttpClient from '@Shared/HttpClient';
-import ManageEntryTagMappingsViewModel from '@ViewModels/Admin/ManageEntryTagMappingsViewModel';
+import TagRepository from '@/Repositories/TagRepository';
+import HttpClient from '@/Shared/HttpClient';
+import ManageEntryTagMappingsViewModel from '@/ViewModels/Admin/ManageEntryTagMappingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 

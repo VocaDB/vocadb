@@ -1,19 +1,19 @@
-import Breadcrumb from '@Bootstrap/Breadcrumb';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import AlbumDetailsForApi from '@DataContracts/Album/AlbumDetailsForApi';
-import JQueryUIButton from '@JQueryUI/JQueryUIButton';
+import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import AlbumReportType, {
 	reportTypesWithRequiredNotes,
-} from '@Models/Albums/AlbumReportType';
-import EntryStatus from '@Models/EntryStatus';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+} from '@/Models/Albums/AlbumReportType';
+import EntryStatus from '@/Models/EntryStatus';
+import EntryType from '@/Models/EntryType';
+import LoginManager from '@/Models/LoginManager';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

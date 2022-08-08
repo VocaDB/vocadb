@@ -1,7 +1,7 @@
-import UserKnownLanguageContract from '@DataContracts/User/UserKnownLanguageContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import UserRepository from '@Repositories/UserRepository';
-import ui from '@Shared/MessagesTyped';
+import UserKnownLanguageContract from '@/DataContracts/User/UserKnownLanguageContract';
+import WebLinkContract from '@/DataContracts/WebLinkContract';
+import UserRepository from '@/Repositories/UserRepository';
+import ui from '@/Shared/MessagesTyped';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 
 import WebLinksEditViewModel from '../WebLinksEditViewModel';

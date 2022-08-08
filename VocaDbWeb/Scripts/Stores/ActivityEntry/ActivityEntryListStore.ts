@@ -1,10 +1,10 @@
-import ActivityEntryContract from '@DataContracts/ActivityEntry/ActivityEntryContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryEditEvent from '@Models/ActivityEntries/EntryEditEvent';
-import EntryType from '@Models/EntryType';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import ActivityEntryContract from '@/DataContracts/ActivityEntry/ActivityEntryContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import EntryEditEvent from '@/Models/ActivityEntries/EntryEditEvent';
+import EntryType from '@/Models/EntryType';
+import GlobalValues from '@/Shared/GlobalValues';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 

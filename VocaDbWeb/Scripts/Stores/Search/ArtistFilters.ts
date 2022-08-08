@@ -1,6 +1,6 @@
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import ArtistHelper from '@/Helpers/ArtistHelper';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import _ from 'lodash';
 import {
 	action,

@@ -1,8 +1,8 @@
-import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongType from '@Models/Songs/SongType';
+import UserWithPermissionsContract from '@/DataContracts/User/UserWithPermissionsContract';
+import AlbumType from '@/Models/Albums/AlbumType';
+import ArtistType from '@/Models/Artists/ArtistType';
+import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
+import SongType from '@/Models/Songs/SongType';
 
 interface MenuPageLink {
 	bannerImg: string;

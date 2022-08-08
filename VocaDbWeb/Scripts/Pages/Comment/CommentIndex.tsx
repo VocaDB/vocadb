@@ -1,11 +1,11 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import LoginManager from '@Models/LoginManager';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import LoginManager from '@/Models/LoginManager';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 import CommentListStore, {
 	CommentSortRule,
-} from '@Stores/Comment/CommentListStore';
+} from '@/Stores/Comment/CommentListStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import { runInAction } from 'mobx';

@@ -1,4 +1,4 @@
-import Alert from '@Bootstrap/Alert';
+import Alert from '@/Bootstrap/Alert';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

@@ -1,13 +1,13 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import EntryType from '@Models/EntryType';
-import SongVoteRating from '@Models/SongVoteRating';
-import { UserInboxType } from '@Repositories/UserRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import EntryEditDataContract from '@/DataContracts/User/EntryEditDataContract';
+import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
+import EntryType from '@/Models/EntryType';
+import SongVoteRating from '@/Models/SongVoteRating';
+import { UserInboxType } from '@/Repositories/UserRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import HttpClient from '@/Shared/HttpClient';
+import UrlMapper from '@/Shared/UrlMapper';
 
 import FakePromise from './FakePromise';
 

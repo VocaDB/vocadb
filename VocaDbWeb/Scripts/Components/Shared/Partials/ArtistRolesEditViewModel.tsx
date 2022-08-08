@@ -1,6 +1,6 @@
-import JQueryUICheckbox from '@JQueryUI/JQueryUICheckbox';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import { ArtistRolesEditStore } from '@Stores/Artist/AlbumArtistRolesEditStore';
+import JQueryUICheckbox from '@/JQueryUI/JQueryUICheckbox';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { ArtistRolesEditStore } from '@/Stores/Artist/AlbumArtistRolesEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

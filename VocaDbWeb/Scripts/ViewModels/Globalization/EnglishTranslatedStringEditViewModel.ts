@@ -1,4 +1,4 @@
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
+import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
 import ko, { Observable } from 'knockout';
 
 export default class EnglishTranslatedStringEditViewModel {

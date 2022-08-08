@@ -1,4 +1,4 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
 import ko from 'knockout';
 
 // Generic viewmodel that supports simple paging by loading more items

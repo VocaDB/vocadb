@@ -1,9 +1,9 @@
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import EntryType from '@Models/EntryType';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import TagApiContract from '@/DataContracts/Tag/TagApiContract';
+import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import EntryType from '@/Models/EntryType';
+import UserRepository from '@/Repositories/UserRepository';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import UrlMapper from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';

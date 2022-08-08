@@ -1,18 +1,18 @@
-import { AlbumDetailsAjax } from '@DataContracts/Album/AlbumDetailsForApi';
-import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
+import { AlbumDetailsAjax } from '@/DataContracts/Album/AlbumDetailsForApi';
+import AlbumReviewContract from '@/DataContracts/Album/AlbumReviewContract';
+import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
 import AlbumForUserForApiContract, {
 	MediaType,
 	PurchaseStatus,
-} from '@DataContracts/User/AlbumForUserForApiContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import UserRepository from '@Repositories/UserRepository';
-import functions from '@Shared/GlobalFunctions';
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import ArtistHelper from '@/Helpers/ArtistHelper';
+import EntryType from '@/Models/EntryType';
+import LoginManager from '@/Models/LoginManager';
+import AlbumRepository from '@/Repositories/AlbumRepository';
+import ArtistRepository from '@/Repositories/ArtistRepository';
+import UserRepository from '@/Repositories/UserRepository';
+import functions from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import _ from 'lodash';
 import {

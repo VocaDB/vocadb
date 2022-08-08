@@ -1,7 +1,7 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import { SongListsStore } from '@Stores/Song/SongDetailsStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { SongListsStore } from '@/Stores/Song/SongDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

@@ -1,8 +1,8 @@
-import Button from '@Bootstrap/Button';
-import ArtistFilters from '@Components/Shared/Partials/Knockout/ArtistFilters';
-import { ReleaseEventCategoryDropdownList } from '@Components/Shared/Partials/Knockout/DropdownList';
-import JQueryUIDatepicker from '@JQueryUI/JQueryUIDatepicker';
-import EventSearchStore from '@Stores/Search/EventSearchStore';
+import Button from '@/Bootstrap/Button';
+import ArtistFilters from '@/Components/Shared/Partials/Knockout/ArtistFilters';
+import { ReleaseEventCategoryDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
+import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
+import EventSearchStore from '@/Stores/Search/EventSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

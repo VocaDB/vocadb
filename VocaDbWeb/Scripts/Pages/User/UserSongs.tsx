@@ -1,5 +1,5 @@
-import UserDetailsContract from '@DataContracts/User/UserDetailsContract';
-import UserDetailsStore from '@Stores/User/UserDetailsStore';
+import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import UserDetailsStore from '@/Stores/User/UserDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import React from 'react';
 

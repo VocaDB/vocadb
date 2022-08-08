@@ -1,5 +1,5 @@
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import functions from '@Shared/GlobalFunctions';
+import TagApiContract from '@/DataContracts/Tag/TagApiContract';
+import functions from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 import EntryAutoComplete, {

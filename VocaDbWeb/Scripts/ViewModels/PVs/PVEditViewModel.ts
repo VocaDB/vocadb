@@ -1,5 +1,5 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
+import PVContract from '@/DataContracts/PVs/PVContract';
+import DateTimeHelper from '@/Helpers/DateTimeHelper';
 import ko, { Observable } from 'knockout';
 
 export default class PVEditViewModel {

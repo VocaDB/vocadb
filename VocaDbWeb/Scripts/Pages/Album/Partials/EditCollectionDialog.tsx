@@ -1,12 +1,12 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import { showSuccessMessage } from '@Components/ui';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { showSuccessMessage } from '@/Components/ui';
 import {
 	MediaType,
 	PurchaseStatus,
-} from '@DataContracts/User/AlbumForUserForApiContract';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumDetailsStore from '@Stores/Album/AlbumDetailsStore';
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import UrlMapper from '@/Shared/UrlMapper';
+import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
 import $ from 'jquery';
 import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
 import { runInAction } from 'mobx';

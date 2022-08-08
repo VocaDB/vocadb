@@ -1,5 +1,5 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import AlbumType from '@Models/Albums/AlbumType';
+import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import AlbumType from '@/Models/Albums/AlbumType';
 
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import CommonEntryContract from '../CommonEntryContract';

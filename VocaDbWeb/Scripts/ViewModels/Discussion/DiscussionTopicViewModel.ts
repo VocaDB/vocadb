@@ -1,8 +1,8 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
+import UserApiContract from '@/DataContracts/User/UserApiContract';
+import DiscussionRepository from '@/Repositories/DiscussionRepository';
+import GlobalValues from '@/Shared/GlobalValues';
 import ko, { Observable } from 'knockout';
 
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

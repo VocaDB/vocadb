@@ -1,7 +1,7 @@
-import Alert from '@Bootstrap/Alert';
-import { EntryToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import Alert from '@/Bootstrap/Alert';
+import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

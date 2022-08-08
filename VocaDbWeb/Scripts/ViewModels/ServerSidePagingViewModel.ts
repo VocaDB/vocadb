@@ -1,4 +1,4 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
+import PagingProperties from '@/DataContracts/PagingPropertiesContract';
 import ko from 'knockout';
 import _ from 'lodash';
 

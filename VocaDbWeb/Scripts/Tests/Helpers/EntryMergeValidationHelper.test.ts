@@ -1,5 +1,5 @@
-import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
-import EntryStatus from '@Models/EntryStatus';
+import EntryMergeValidationHelper from '@/Helpers/EntryMergeValidationHelper';
+import EntryStatus from '@/Models/EntryStatus';
 import moment from 'moment';
 
 function testValidate(

@@ -1,4 +1,4 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
 import ko, { Computed, Observable } from 'knockout';
 
 // Basic link to an entry with ID and name.

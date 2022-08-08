@@ -1,7 +1,7 @@
-import ActivityEntryContract from '@DataContracts/ActivityEntry/ActivityEntryContract';
-import EntryContract from '@DataContracts/EntryContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import ActivityEntryContract from '@/DataContracts/ActivityEntry/ActivityEntryContract';
+import EntryContract from '@/DataContracts/EntryContract';
+import EntryType from '@/Models/EntryType';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

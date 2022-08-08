@@ -1,5 +1,5 @@
-import EntryBaseContract from '@DataContracts/EntryBaseContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import EntryBaseContract from '@/DataContracts/EntryBaseContract';
+import EntryUrlMapper from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import SongType from '@Models/Songs/SongType';
+import SongType from '@/Models/Songs/SongType';
 
 import ArtistContract from './Artist/ArtistContract';
 import DuplicateEntryResultContract from './DuplicateEntryResultContract';
