@@ -19,6 +19,7 @@
 			"@JQueryUI/*": ["Scripts/JQueryUI/*"],
 			"@KnockoutExtensions/*": ["Scripts/KnockoutExtensions/*"],
 			"@Models/*": ["Scripts/Models/*"],
+			"@Pages/*": ["Scripts/Pages/*"],
 			"@Repositories/*": ["Scripts/Repositories/*"],
 			"@Shared/*": ["Scripts/Shared/*"],
 			"@Stores/*": ["Scripts/Stores/*"],

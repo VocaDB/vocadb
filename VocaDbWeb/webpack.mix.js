@@ -39,6 +39,7 @@ mix
 		'@JQueryUI': path.join(__dirname, 'Scripts/JQueryUI'),
 		'@KnockoutExtensions': path.join(__dirname, 'Scripts/KnockoutExtensions'),
 		'@Models': path.join(__dirname, 'Scripts/Models'),
+		'@Pages': path.join(__dirname, 'Scripts/Pages'),
 		'@Repositories': path.join(__dirname, 'Scripts/Repositories'),
 		'@Shared': path.join(__dirname, 'Scripts/Shared'),
 		'@Stores': path.join(__dirname, 'Scripts/Stores'),

@@ -1,4 +1,3 @@
-import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
 import PagingProperties from '@DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
 import SongApiContract from '@DataContracts/Song/SongApiContract';
@@ -6,6 +5,7 @@ import SongContract from '@DataContracts/Song/SongContract';
 import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
 import PVServiceIcons from '@Models/PVServiceIcons';
 import SongType from '@Models/Songs/SongType';
+import { ISongSearchStore } from '@Pages/Search/Partials/SongSearchList';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
 import SongRepository from '@Repositories/SongRepository';

@@ -1,7 +1,7 @@
-import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
 import SongListBaseContract from '@DataContracts/SongListBaseContract';
 import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
 import PVServiceIcons from '@Models/PVServiceIcons';
+import { ISongSearchStore } from '@Pages/Search/Partials/SongSearchList';
 import ArtistRepository from '@Repositories/ArtistRepository';
 import SongRepository from '@Repositories/SongRepository';
 import TagRepository from '@Repositories/TagRepository';
