@@ -1,8 +1,8 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewTopic from '@/Pages/Discussion/Partials/ViewTopic';
-import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

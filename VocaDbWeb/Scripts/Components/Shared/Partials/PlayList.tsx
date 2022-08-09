@@ -1,11 +1,11 @@
 import Button from '@/Bootstrap/Button';
-import EmbedPV from '@/Components/Shared/Partials/PV/EmbedPV';
-import PVRatingButtonsForIndex from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
-import SongTypeLabel from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import EntryType from '@/Models/EntryType';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
-import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
+import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -18,7 +18,7 @@ interface PlayListProps {
 	pvPlayerStore: PVPlayerStore;
 }
 
-const PlayList = observer(
+export const PlayList = observer(
 	({ playListStore, pvPlayerStore }: PlayListProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes.Home',
@@ -203,5 +203,3 @@ const PlayList = observer(
 		);
 	},
 );
-
-export default PlayList;

@@ -1,9 +1,10 @@
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
-import SongListContract from '@/DataContracts/Song/SongListContract';
-import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
-import functions from '@/Shared/GlobalFunctions';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 interface SongListAutoCompleteProps
@@ -13,7 +14,7 @@ interface SongListAutoCompleteProps
 	songListCategory: SongListFeaturedCategory;
 }
 
-const SongListAutoComplete = ({
+export const SongListAutoComplete = ({
 	onAcceptSelection,
 	createNewItem,
 	songListCategory,
@@ -54,5 +55,3 @@ const SongListAutoComplete = ({
 		/>
 	);
 };
-
-export default SongListAutoComplete;

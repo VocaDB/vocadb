@@ -1,6 +1,6 @@
 import Button from '@/Bootstrap/Button';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import TagFiltersStore from '@/Stores/Search/TagFilters';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { TagFilters as TagFiltersStore } from '@/Stores/Search/TagFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ interface TagFiltersBaseProps {
 	tagFilters: TagFiltersStore;
 }
 
-const TagFiltersBase = observer(
+export const TagFiltersBase = observer(
 	({ tagFilters }: TagFiltersBaseProps): React.ReactElement => {
 		return (
 			<>
@@ -47,5 +47,3 @@ const TagFiltersBase = observer(
 		);
 	},
 );
-
-export default TagFiltersBase;

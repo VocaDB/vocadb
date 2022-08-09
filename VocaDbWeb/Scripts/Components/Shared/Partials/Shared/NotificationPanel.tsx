@@ -1,5 +1,5 @@
 import Alert from '@/Bootstrap/Alert';
-import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
+import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import React from 'react';
 
 interface NotificationPanelProps {
@@ -7,7 +7,7 @@ interface NotificationPanelProps {
 	messageId?: string;
 }
 
-const NotificationPanel = React.memo(
+export const NotificationPanel = React.memo(
 	({ message, messageId }: NotificationPanelProps): React.ReactElement => {
 		return (
 			<Alert>
@@ -17,5 +17,3 @@ const NotificationPanel = React.memo(
 		);
 	},
 );
-
-export default NotificationPanel;

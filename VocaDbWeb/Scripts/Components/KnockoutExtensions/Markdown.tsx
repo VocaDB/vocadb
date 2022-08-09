@@ -7,7 +7,7 @@ interface MarkdownProps {
 	children: string;
 }
 
-const Markdown = ({ children }: MarkdownProps): React.ReactElement => {
+export const Markdown = ({ children }: MarkdownProps): React.ReactElement => {
 	return (
 		<ReactMarkdown
 			remarkPlugins={[gfm, remarkBreaks]}
@@ -24,5 +24,3 @@ const Markdown = ({ children }: MarkdownProps): React.ReactElement => {
 		</ReactMarkdown>
 	);
 };
-
-export default Markdown;

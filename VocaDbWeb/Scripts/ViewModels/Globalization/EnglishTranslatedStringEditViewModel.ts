@@ -1,7 +1,7 @@
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
 import ko, { Observable } from 'knockout';
 
-export default class EnglishTranslatedStringEditViewModel {
+export class EnglishTranslatedStringEditViewModel {
 	public constructor(contract: EnglishTranslatedStringContract) {
 		this.english = ko.observable(contract ? contract.english : null!);
 		this.original = ko.observable(contract ? contract.original : null!);

@@ -1,5 +1,5 @@
-import TagCategoryAutoComplete from '@/Components/KnockoutExtensions/TagCategoryAutoComplete';
-import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { TagCategoryAutoComplete } from '@/Components/KnockoutExtensions/TagCategoryAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ interface TagCategoryLockingAutoCompleteProps {
 	clearValue: boolean;
 }
 
-const TagCategoryLockingAutoComplete = React.memo(
+export const TagCategoryLockingAutoComplete = React.memo(
 	({
 		value,
 		onChange,
@@ -34,5 +34,3 @@ const TagCategoryLockingAutoComplete = React.memo(
 		);
 	},
 );
-
-export default TagCategoryLockingAutoComplete;

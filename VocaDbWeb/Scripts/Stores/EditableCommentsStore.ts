@@ -1,8 +1,8 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import LoginManager from '@/Models/LoginManager';
-import ICommentRepository from '@/Repositories/ICommentRepository';
-import CommentStore from '@/Stores/CommentStore';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { CommentStore } from '@/Stores/CommentStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import _ from 'lodash';
 import {
 	action,
@@ -13,7 +13,7 @@ import {
 } from 'mobx';
 
 // Store for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
-export default class EditableCommentsStore {
+export class EditableCommentsStore {
 	@observable public comments: CommentStore[] = [];
 	// Whether all comments have been loaded
 	@observable public commentsLoaded = false;

@@ -1,8 +1,8 @@
-import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
-import EntryPictureFileEditViewModel from '@/ViewModels/EntryPictureFileEditViewModel';
+import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
+import { EntryPictureFileEditViewModel } from '@/ViewModels/EntryPictureFileEditViewModel';
 import ko, { ObservableArray } from 'knockout';
 
-export default class EntryPictureFileListEditViewModel {
+export class EntryPictureFileListEditViewModel {
 	public constructor(pictures: EntryPictureFileContract[]) {
 		this.pictures = ko.observableArray(
 			pictures.map((picture) => new EntryPictureFileEditViewModel(picture)),

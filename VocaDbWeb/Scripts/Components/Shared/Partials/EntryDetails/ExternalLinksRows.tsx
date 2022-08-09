@@ -1,6 +1,6 @@
-import ExternalLinksList from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import WebLinkCategory from '@/Models/WebLinkCategory';
+import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksList';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ interface ExternalLinksRowsProps {
 	webLinks: WebLinkContract[];
 }
 
-const ExternalLinksRows = React.memo(
+export const ExternalLinksRows = React.memo(
 	({ webLinks }: ExternalLinksRowsProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -50,5 +50,3 @@ const ExternalLinksRows = React.memo(
 		);
 	},
 );
-
-export default ExternalLinksRows;

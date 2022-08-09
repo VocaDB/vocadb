@@ -1,17 +1,17 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import ResourcesManager from '@/Models/ResourcesManager';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
-import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
-import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ResourcesManager } from '@/Models/ResourcesManager';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
+import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
 import ko, { Computed, Observable } from 'knockout';
 
-export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
+export class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
 		values: GlobalValues,

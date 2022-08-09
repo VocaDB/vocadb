@@ -1,20 +1,20 @@
-import AdminRepository from '@/Repositories/AdminRepository';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import DiscussionRepository from '@/Repositories/DiscussionRepository';
-import EntryRepository from '@/Repositories/EntryRepository';
-import PVRepository from '@/Repositories/PVRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import SongListRepository from '@/Repositories/SongListRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import VenueRepository from '@/Repositories/VenueRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-export default class RepositoryFactory {
+export class RepositoryFactory {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

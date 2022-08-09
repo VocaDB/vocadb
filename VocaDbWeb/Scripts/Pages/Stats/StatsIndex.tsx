@@ -1,7 +1,7 @@
-import Layout from '@/Components/Shared/Layout';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
-import HttpClient from '@/Shared/HttpClient';
-import StatsStore from '@/Stores/StatsStore';
+import { Layout } from '@/Components/Shared/Layout';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { HttpClient } from '@/Shared/HttpClient';
+import { StatsStore } from '@/Stores/StatsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';

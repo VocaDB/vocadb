@@ -1,9 +1,9 @@
 import { UserToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import ProfileIcon from '@/Components/Shared/Partials/User/ProfileIcon';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import UrlHelper from '@/Helpers/UrlHelper';
-import ImageSize from '@/Models/Images/ImageSize';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ interface UserIconLink_UserForApiContractProps {
 	tooltip?: boolean;
 }
 
-const UserIconLink_UserForApiContract = ({
+export const UserIconLink_UserForApiContract = ({
 	user,
 	size = 20,
 	userInfo = false,
@@ -69,5 +69,3 @@ const UserIconLink_UserForApiContract = ({
 		</Link>
 	);
 };
-
-export default UserIconLink_UserForApiContract;

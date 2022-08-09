@@ -1,4 +1,4 @@
-import ArtistRoles from '@/Models/Artists/ArtistRoles';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
@@ -73,7 +73,7 @@ export class ArtistRolesEditStore {
 	};
 }
 
-export default class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
+export class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
 	public constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistRoles[ArtistRoles.Default]);
 	}

@@ -9,7 +9,7 @@ interface SongVoteRatingsRadioKnockoutProps {
 	onRatingChange: (rating: SongVoteRating) => void;
 }
 
-const SongVoteRatingsRadioKnockout = React.memo(
+export const SongVoteRatingsRadioKnockout = React.memo(
 	({
 		rating,
 		onRatingChange,
@@ -41,5 +41,3 @@ const SongVoteRatingsRadioKnockout = React.memo(
 		);
 	},
 );
-
-export default SongVoteRatingsRadioKnockout;

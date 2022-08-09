@@ -1,12 +1,12 @@
-import PVServiceIcon from '@/Components/Shared/Partials/Shared/PVServiceIcon';
-import PVService from '@/Models/PVs/PVService';
+import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
 interface PVServiceIconsProps {
 	services: string /* TODO: enum */[];
 }
 
-const PVServiceIcons = React.memo(
+export const PVServiceIcons = React.memo(
 	({ services }: PVServiceIconsProps): React.ReactElement => {
 		return (
 			<>
@@ -24,5 +24,3 @@ const PVServiceIcons = React.memo(
 		);
 	},
 );
-
-export default PVServiceIcons;

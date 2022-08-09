@@ -1,11 +1,11 @@
 import Button from '@/Bootstrap/Button';
 import { apiEndpointsForEntryType } from '@/Components/Shared/GlobalSearchBox';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import EntryType from '@/Models/EntryType';
-import NameMatchMode from '@/Models/NameMatchMode';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ interface ShowRandomPageButtonProps {
 	globalSearchTermRef: React.MutableRefObject<HTMLInputElement>;
 }
 
-const ShowRandomPageButton = React.memo(
+export const ShowRandomPageButton = React.memo(
 	({
 		entryType,
 		globalSearchTermRef,
@@ -91,5 +91,3 @@ const ShowRandomPageButton = React.memo(
 		);
 	},
 );
-
-export default ShowRandomPageButton;

@@ -1,4 +1,4 @@
-import AjaxHelper from '@/Helpers/AjaxHelper';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import axios from 'axios';
 
 export class HeaderNames {
@@ -22,7 +22,7 @@ export interface HttpClientError<T = ErrorResponse> extends Error {
 	response?: T;
 }
 
-export default class HttpClient {
+export class HttpClient {
 	public delete = async <T>(url: string): Promise<T> => {
 		const response = await axios.delete<T>(url);
 		return response.data;

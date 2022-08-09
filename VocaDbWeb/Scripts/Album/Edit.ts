@@ -1,11 +1,11 @@
-import AlbumForEditContract from '@/DataContracts/Album/AlbumForEditContract';
-import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
-import LoginManager from '@/Models/LoginManager';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import DialogService from '@/Shared/DialogService';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import AlbumEditViewModel from '@/ViewModels/Album/AlbumEditViewModel';
+import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { DialogService } from '@/Shared/DialogService';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumEditViewModel } from '@/ViewModels/Album/AlbumEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
@@ -24,7 +24,7 @@ function initPage(): void {
 		});
 }
 
-const AlbumEdit = (
+export const AlbumEdit = (
 	allowCustomTracks: boolean,
 	artistRoleJson: { [key: string]: string },
 	model: {
@@ -104,5 +104,3 @@ const AlbumEdit = (
 		initPage();
 	});
 };
-
-export default AlbumEdit;

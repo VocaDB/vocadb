@@ -2,7 +2,7 @@ import Alert from '@/Bootstrap/Alert';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const MergeEntryInfo = React.memo(
+export const MergeEntryInfo = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -18,5 +18,3 @@ const MergeEntryInfo = React.memo(
 		);
 	},
 );
-
-export default MergeEntryInfo;

@@ -1,5 +1,5 @@
 import Nav from '@/Bootstrap/Nav';
-import LoginManager from '@/Models/LoginManager';
+import { LoginManager } from '@/Models/LoginManager';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
-const MainNavigationItems = React.memo(
+export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -187,5 +187,3 @@ const MainNavigationItems = React.memo(
 		);
 	},
 );
-
-export default MainNavigationItems;

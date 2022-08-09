@@ -1,9 +1,9 @@
-import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
-import UserIconLinkOrName_UserForApiContract from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
-import useChangedFieldNames from '@/Components/useChangedFieldNames';
-import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
+import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import { UserIconLinkOrName_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
+import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
+import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
 import classNames from 'classnames';
 import _ from 'lodash';
 import React from 'react';
@@ -146,7 +146,7 @@ interface ArchivedObjectVersionsProps {
 	entryType: EntryType;
 }
 
-const ArchivedObjectVersions = React.memo(
+export const ArchivedObjectVersions = React.memo(
 	({
 		archivedVersions,
 		linkFunc,
@@ -187,5 +187,3 @@ const ArchivedObjectVersions = React.memo(
 		);
 	},
 );
-
-export default ArchivedObjectVersions;

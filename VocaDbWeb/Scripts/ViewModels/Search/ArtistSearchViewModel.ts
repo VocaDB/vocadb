@@ -1,15 +1,15 @@
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ArtistHelper from '@/Helpers/ArtistHelper';
-import ArtistType from '@/Models/Artists/ArtistType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
-import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
 import ko from 'knockout';
 
-export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
+export class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
 		values: GlobalValues,

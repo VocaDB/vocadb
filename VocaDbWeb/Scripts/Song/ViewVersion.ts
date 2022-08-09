@@ -1,10 +1,10 @@
-import SongRepository from '@/Repositories/SongRepository';
-import HttpClient from '@/Shared/HttpClient';
-import ArchivedSongViewModel from '@/ViewModels/Song/ArchivedSongViewModel';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ArchivedSongViewModel } from '@/ViewModels/Song/ArchivedSongViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const SongViewVersion = (model: {
+export const SongViewVersion = (model: {
 	archivedVersion: {
 		version: number;
 	};
@@ -32,5 +32,3 @@ const SongViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default SongViewVersion;

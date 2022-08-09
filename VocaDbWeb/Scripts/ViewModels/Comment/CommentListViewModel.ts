@@ -1,12 +1,12 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import EntryContract from '@/DataContracts/EntryContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import EntryType from '@/Models/EntryType';
-import ResourcesManager, { ResourceSetNames } from '@/Models/ResourcesManager';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
+import { ResourceSetNames, ResourcesManager } from '@/Models/ResourcesManager';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -17,7 +17,7 @@ enum CommentSortRule {
 	CreateDate,
 }
 
-export default class CommentListViewModel {
+export class CommentListViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private urlMapper: UrlMapper,

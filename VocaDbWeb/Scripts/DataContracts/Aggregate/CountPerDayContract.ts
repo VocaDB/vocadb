@@ -1,4 +1,4 @@
-export default interface CountPerDayContract {
+export interface CountPerDayContract {
 	year: number;
 	month: number;
 	day: number;

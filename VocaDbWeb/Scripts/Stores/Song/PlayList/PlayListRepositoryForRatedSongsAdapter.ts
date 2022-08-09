@@ -1,11 +1,11 @@
-import PagingPropertiesContract from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import UserRepository from '@/Repositories/UserRepository';
-import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
 import {
 	IPlayListRepository,
@@ -25,7 +25,7 @@ export interface IRatedSongsAdapterStore {
 	sort: RatedSongForUserSortRule;
 }
 
-export default class PlayListRepositoryForRatedSongsAdapter
+export class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
 	public constructor(
 		private readonly userRepo: UserRepository,
@@ -34,7 +34,7 @@ export default class PlayListRepositoryForRatedSongsAdapter
 
 	public getSongs(
 		pvServices: string,
-		paging: PagingPropertiesContract,
+		paging: PagingProperties,
 		fields: SongOptionalFields,
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> {

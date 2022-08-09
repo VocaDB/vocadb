@@ -1,7 +1,7 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import EntryType from '@/Models/EntryType';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
 import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
@@ -23,7 +23,7 @@ class TagSelectionStore {
 	}
 }
 
-export default class TagsEditStore {
+export class TagsEditStore {
 	@observable public dialogVisible = false;
 	@observable public selections: TagSelectionStore[] = [];
 	@observable public suggestions: TagUsageForApiContract[] = [];

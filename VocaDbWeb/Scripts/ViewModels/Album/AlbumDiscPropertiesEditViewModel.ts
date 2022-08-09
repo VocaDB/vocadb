@@ -1,8 +1,8 @@
-import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
-import BasicListEditViewModel from '@/ViewModels/BasicListEditViewModel';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { BasicListEditViewModel } from '@/ViewModels/BasicListEditViewModel';
 import ko, { Observable } from 'knockout';
 
-export default class AlbumDiscPropertiesEditViewModel {
+export class AlbumDiscPropertiesEditViewModel {
 	public constructor(contract?: AlbumDiscPropertiesContract) {
 		if (contract) {
 			this.id = contract.id;

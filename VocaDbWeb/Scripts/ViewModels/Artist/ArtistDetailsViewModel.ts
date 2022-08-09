@@ -1,33 +1,34 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import HighchartsHelper from '@/Helpers/HighchartsHelper';
-import TimeUnit from '@/Models/Aggregate/TimeUnit';
-import AlbumType from '@/Models/Albums/AlbumType';
-import EntryType from '@/Models/EntryType';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
-import ReportEntryViewModel, {
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
+import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { EnglishTranslatedStringViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import {
 	IEntryReportType,
+	ReportEntryViewModel,
 } from '@/ViewModels/ReportEntryViewModel';
-import AlbumSearchViewModel from '@/ViewModels/Search/AlbumSearchViewModel';
-import SongSearchViewModel from '@/ViewModels/Search/SongSearchViewModel';
-import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { AlbumSearchViewModel } from '@/ViewModels/Search/AlbumSearchViewModel';
+import { SongSearchViewModel } from '@/ViewModels/Search/SongSearchViewModel';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import { Options } from 'highcharts';
 import ko, { Observable } from 'knockout';
 
-export default class ArtistDetailsViewModel {
+export class ArtistDetailsViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		repo: ArtistRepository,

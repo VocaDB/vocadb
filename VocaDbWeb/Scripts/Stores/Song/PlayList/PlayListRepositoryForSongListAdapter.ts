@@ -1,11 +1,11 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import SongType from '@/Models/Songs/SongType';
-import SongListRepository from '@/Repositories/SongListRepository';
-import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { SongType } from '@/Models/Songs/SongType';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import {
 	IPlayListRepository,
 	ISongForPlayList,
@@ -21,7 +21,7 @@ export interface ISongListStore {
 	sort: string /* TODO: enum */;
 }
 
-export default class PlayListRepositoryForSongListAdapter
+export class PlayListRepositoryForSongListAdapter
 	implements IPlayListRepository {
 	public constructor(
 		private readonly songListRepo: SongListRepository,

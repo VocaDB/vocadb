@@ -1,6 +1,6 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 
-export default interface ArtistForAlbumContract {
+export interface ArtistForAlbumContract {
 	artist: ArtistContract;
 
 	categories?: string /* TODO: enum */;

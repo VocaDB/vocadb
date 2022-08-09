@@ -1,42 +1,43 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import SongInListContract from '@/DataContracts/Song/SongInListContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import {
 	SongOptionalField,
 	SongOptionalFields,
 } from '@/Models/EntryOptionalFields';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import SongType from '@/Models/Songs/SongType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import SongListRepository from '@/Repositories/SongListRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import EditableCommentsStore from '@/Stores/EditableCommentsStore';
-import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
-import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
-import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
-import TagFilter from '@/Stores/Search/TagFilter';
-import TagFilters from '@/Stores/Search/TagFilters';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
-import PlayListRepositoryForSongListAdapter, {
+import { TagFilter } from '@/Stores/Search/TagFilter';
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import {
 	ISongListStore,
+	PlayListRepositoryForSongListAdapter,
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongListAdapter';
-import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
-import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
-import TagListStore from '@/Stores/Tag/TagListStore';
-import TagsEditStore from '@/Stores/Tag/TagsEditStore';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -72,7 +73,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SongListStore
+export class SongListStore
 	implements ISongListStore, StoreWithPagination<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;

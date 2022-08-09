@@ -1,10 +1,10 @@
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.
 // Works well with LockingAutoComplete.
-export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
+export class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 	@observable private _id?: number;
 	@observable public entry?: TEntry;
 

@@ -1,16 +1,16 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongContract from '@/DataContracts/Song/SongContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-import SongType from '@/Models/Songs/SongType';
-import SongRepository from '@/Repositories/SongRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
-import AdvancedSearchFilters from '@/Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { SongType } from '@/Models/Songs/SongType';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import {
 	IPlayListRepository,
 	ISongForPlayList,
@@ -37,8 +37,7 @@ export interface ISongsAdapterStore {
 	advancedFilters: AdvancedSearchFilters;
 }
 
-export default class PlayListRepositoryForSongsAdapter
-	implements IPlayListRepository {
+export class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly songRepo: SongRepository,

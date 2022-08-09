@@ -1,7 +1,7 @@
-import VenueRepository from '@/Repositories/VenueRepository';
-import ReportEntryStore from '@/Stores/ReportEntryStore';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 
-export default class VenueDetailsStore {
+export class VenueDetailsStore {
 	public readonly reportStore: ReportEntryStore;
 
 	public constructor(venueRepo: VenueRepository, venueId: number) {

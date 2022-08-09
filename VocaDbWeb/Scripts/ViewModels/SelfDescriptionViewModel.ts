@@ -1,11 +1,11 @@
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko, { Observable } from 'knockout';
 
-export default class SelfDescriptionViewModel {
+export class SelfDescriptionViewModel {
 	public constructor(
 		values: GlobalValues,
 		author: ArtistApiContract,

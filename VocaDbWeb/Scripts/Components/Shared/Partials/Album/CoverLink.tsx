@@ -1,6 +1,6 @@
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import UrlHelper from '@/Helpers/UrlHelper';
-import ImageSize from '@/Models/Images/ImageSize';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { ImageSize } from '@/Models/Images/ImageSize';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ interface CoverLinkProps {
 	imageInfo?: EntryThumbContract;
 }
 
-const CoverLink = React.memo(
+export const CoverLink = React.memo(
 	({ imageInfo }: CoverLinkProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes.Album']);
 
@@ -23,5 +23,3 @@ const CoverLink = React.memo(
 		);
 	},
 );
-
-export default CoverLink;

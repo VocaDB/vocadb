@@ -1,4 +1,4 @@
-import EntryStatus from '@/Models/EntryStatus';
+import { EntryStatus } from '@/Models/EntryStatus';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface EntryStatusMessageProps {
 	status: EntryStatus;
 }
 
-const EntryStatusMessage = React.memo(
+export const EntryStatusMessage = React.memo(
 	({ status }: EntryStatusMessageProps): React.ReactElement => {
 		const { t } = useTranslation(['HelperRes', 'Resources']);
 
@@ -52,5 +52,3 @@ const EntryStatusMessage = React.memo(
 		}
 	},
 );
-
-export default EntryStatusMessage;

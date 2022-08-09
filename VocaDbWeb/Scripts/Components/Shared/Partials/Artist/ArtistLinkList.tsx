@@ -1,5 +1,5 @@
-import ArtistLink from '@/Components/Shared/Partials/Artist/ArtistLink';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import React from 'react';
 
 interface ArtistLinkListProps {
@@ -9,7 +9,7 @@ interface ArtistLinkListProps {
 	tooltip?: boolean;
 }
 
-const ArtistLinkList = React.memo(
+export const ArtistLinkList = React.memo(
 	({
 		artists,
 		typeLabel = false,
@@ -33,5 +33,3 @@ const ArtistLinkList = React.memo(
 		);
 	},
 );
-
-export default ArtistLinkList;

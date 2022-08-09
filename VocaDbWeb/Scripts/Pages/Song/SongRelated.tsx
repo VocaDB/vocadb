@@ -1,8 +1,8 @@
-import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import React from 'react';
 
 const httpClient = new HttpClient();

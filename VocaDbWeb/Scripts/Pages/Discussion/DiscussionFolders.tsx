@@ -1,8 +1,8 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolder from '@/Pages/Discussion/Partials/ViewFolder';
-import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

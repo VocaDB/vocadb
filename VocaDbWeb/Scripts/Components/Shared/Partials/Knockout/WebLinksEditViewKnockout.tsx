@@ -1,8 +1,8 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import RequiredField from '@/Components/Shared/Partials/Shared/RequiredField';
-import WebLinkCategory from '@/Models/WebLinkCategory';
-import WebLinkEditStore from '@/Stores/WebLinkEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { WebLinkEditStore } from '@/Stores/WebLinkEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -98,7 +98,7 @@ interface WebLinksEditViewKnockoutProps {
 	webLinksEditStore: WebLinksEditStore;
 }
 
-const WebLinksEditViewKnockout = observer(
+export const WebLinksEditViewKnockout = observer(
 	({
 		webLinksEditStore,
 	}: WebLinksEditViewKnockoutProps): React.ReactElement => {
@@ -144,5 +144,3 @@ const WebLinksEditViewKnockout = observer(
 		);
 	},
 );
-
-export default WebLinksEditViewKnockout;

@@ -1,8 +1,8 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import SongInAlbumEditContract from '@/DataContracts/Song/SongInAlbumEditContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
 import ko, { Observable, ObservableArray } from 'knockout';
 
-export default class SongInAlbumEditViewModel {
+export class SongInAlbumEditViewModel {
 	public artists: ObservableArray<ArtistContract>;
 
 	public artistString: Observable<string>;

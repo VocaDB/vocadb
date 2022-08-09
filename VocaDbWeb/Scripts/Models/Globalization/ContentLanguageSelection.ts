@@ -1,4 +1,4 @@
-enum ContentLanguageSelection {
+export enum ContentLanguageSelection {
 	Unspecified = 0,
 
 	Japanese = 1,
@@ -7,5 +7,3 @@ enum ContentLanguageSelection {
 
 	English = 4,
 }
-
-export default ContentLanguageSelection;

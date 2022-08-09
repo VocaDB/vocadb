@@ -1,5 +1,5 @@
-import EntryRefContract from '@/DataContracts/EntryRefContract';
-import functions from '@/Shared/GlobalFunctions';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';

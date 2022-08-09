@@ -1,29 +1,29 @@
-import ResourcesContract from '@/DataContracts/ResourcesContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import ArtistType from '@/Models/Artists/ArtistType';
-import ResourcesManager from '@/Models/ResourcesManager';
-import SongType from '@/Models/Songs/SongType';
-import Tag from '@/Models/Tags/Tag';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import EntryRepository from '@/Repositories/EntryRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
-import AlbumSearchViewModel from '@/ViewModels/Search/AlbumSearchViewModel';
-import AnythingSearchViewModel from '@/ViewModels/Search/AnythingSearchViewModel';
-import ArtistSearchViewModel from '@/ViewModels/Search/ArtistSearchViewModel';
-import EventSearchViewModel from '@/ViewModels/Search/EventSearchViewModel';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ResourcesManager } from '@/Models/ResourcesManager';
+import { SongType } from '@/Models/Songs/SongType';
+import { Tag } from '@/Models/Tags/Tag';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { AlbumSearchViewModel } from '@/ViewModels/Search/AlbumSearchViewModel';
+import { AnythingSearchViewModel } from '@/ViewModels/Search/AnythingSearchViewModel';
+import { ArtistSearchViewModel } from '@/ViewModels/Search/ArtistSearchViewModel';
+import { EventSearchViewModel } from '@/ViewModels/Search/EventSearchViewModel';
 import { ISearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
-import SongSearchViewModel from '@/ViewModels/Search/SongSearchViewModel';
-import TagFilters from '@/ViewModels/Search/TagFilters';
-import TagSearchViewModel from '@/ViewModels/Search/TagSearchViewModel';
+import { SongSearchViewModel } from '@/ViewModels/Search/SongSearchViewModel';
+import { TagFilters } from '@/ViewModels/Search/TagFilters';
+import { TagSearchViewModel } from '@/ViewModels/Search/TagSearchViewModel';
 import ko, { Computed, Observable } from 'knockout';
 
 class SearchType {
@@ -35,7 +35,7 @@ class SearchType {
 	public static Tag = 'Tag';
 }
 
-export default class SearchViewModel {
+export class SearchViewModel {
 	public constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,

@@ -1,7 +1,7 @@
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
-import TranslationType from '@/Models/Globalization/TranslationType';
-import BasicListEditStore from '@/Stores/BasicListEditStore';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { TranslationType } from '@/Models/Globalization/TranslationType';
+import { BasicListEditStore } from '@/Stores/BasicListEditStore';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -45,7 +45,7 @@ export class LyricsForSongEditStore {
 	}
 }
 
-export default class LyricsForSongListEditStore extends BasicListEditStore<
+export class LyricsForSongListEditStore extends BasicListEditStore<
 	LyricsForSongEditStore,
 	LyricsForSongContract
 > {

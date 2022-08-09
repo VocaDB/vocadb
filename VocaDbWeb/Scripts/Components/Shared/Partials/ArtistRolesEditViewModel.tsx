@@ -10,7 +10,7 @@ interface ArtistRolesEditViewModelProps {
 	artistRolesEditStore: ArtistRolesEditStore;
 }
 
-const ArtistRolesEditViewModel = observer(
+export const ArtistRolesEditViewModel = observer(
 	({
 		artistRolesEditStore,
 	}: ArtistRolesEditViewModelProps): React.ReactElement => {
@@ -57,5 +57,3 @@ const ArtistRolesEditViewModel = observer(
 		);
 	},
 );
-
-export default ArtistRolesEditViewModel;

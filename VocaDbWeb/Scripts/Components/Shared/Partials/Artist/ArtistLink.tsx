@@ -1,8 +1,8 @@
 import { ArtistToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import ArtistTypeLabel from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import EntryType from '@/Models/EntryType';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ interface ArtistLinkProps {
 	tooltip?: boolean;
 }
 
-const ArtistLink = ({
+export const ArtistLink = ({
 	artist,
 	typeLabel = false,
 	name,
@@ -55,5 +55,3 @@ const ArtistLink = ({
 		</>
 	);
 };
-
-export default ArtistLink;

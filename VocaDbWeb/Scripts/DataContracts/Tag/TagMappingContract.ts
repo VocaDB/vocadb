@@ -1,6 +1,6 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 
-export default interface TagMappingContract {
+export interface TagMappingContract {
 	sourceTag: string;
 	tag: TagBaseContract;
 }

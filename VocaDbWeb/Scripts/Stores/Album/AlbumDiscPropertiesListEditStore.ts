@@ -1,6 +1,6 @@
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
-import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
-import BasicListEditStore from '@/Stores/BasicListEditStore';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { BasicListEditStore } from '@/Stores/BasicListEditStore';
 import { makeObservable, observable } from 'mobx';
 
 export class AlbumDiscPropertiesEditStore {
@@ -22,7 +22,7 @@ export class AlbumDiscPropertiesEditStore {
 	}
 }
 
-export default class AlbumDiscPropertiesListEditStore extends BasicListEditStore<
+export class AlbumDiscPropertiesListEditStore extends BasicListEditStore<
 	AlbumDiscPropertiesEditStore,
 	AlbumDiscPropertiesContract
 > {

@@ -1,12 +1,12 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import LoginManager from '@/Models/LoginManager';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
-import TagDetailsViewModel from '@/ViewModels/Tag/TagDetailsViewModel';
+import { TagDetailsViewModel } from '@/ViewModels/Tag/TagDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import _ from 'lodash';
@@ -243,7 +243,7 @@ function initTagsPage(vm: TagDetailsViewModel): void {
 	});
 }
 
-const TagDetails = (
+export const TagDetails = (
 	model: {
 		id: number;
 		isFollowing: boolean;
@@ -291,5 +291,3 @@ const TagDetails = (
 		initTagsPage(vm);
 	});
 };
-
-export default TagDetails;

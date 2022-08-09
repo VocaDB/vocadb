@@ -1,21 +1,21 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForArtistContract from '@/DataContracts/Artist/ArtistForArtistContract';
-import ArtistForEditContract from '@/DataContracts/Artist/ArtistForEditContract';
-import ArtistHelper from '@/Helpers/ArtistHelper';
-import ArtistLinkType from '@/Models/Artists/ArtistLinkType';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import WebLinkCategory from '@/Models/WebLinkCategory';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
-import EntryPictureFileListEditStore from '@/Stores/EntryPictureFileListEditStore';
-import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForArtistContract } from '@/DataContracts/Artist/ArtistForArtistContract';
+import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -47,7 +47,7 @@ export class ArtistForArtistEditStore {
 	};
 }
 
-export default class ArtistEditStore {
+export class ArtistEditStore {
 	@observable public artistType: ArtistType;
 	@observable public associatedArtists: ArtistForArtistEditStore[];
 	public readonly baseVoicebank: BasicEntryLinkStore<ArtistContract>;

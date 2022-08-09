@@ -1,4 +1,4 @@
-import HttpClient from '@/Shared/HttpClient';
+import { HttpClient } from '@/Shared/HttpClient';
 import {
 	computed,
 	makeObservable,
@@ -22,7 +22,7 @@ interface IReport {
 	url: string;
 }
 
-export default class StatsStore {
+export class StatsStore {
 	public categories: IReportCategory[] = [
 		{
 			name: 'Producers',

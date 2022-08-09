@@ -1,34 +1,34 @@
-import AlbumForEditContract from '@/DataContracts/Album/AlbumForEditContract';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
+import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import AlbumType from '@/Models/Albums/AlbumType';
-import EntryType from '@/Models/EntryType';
-import SongType from '@/Models/Songs/SongType';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import PVRepository from '@/Repositories/PVRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
+import { SongType } from '@/Models/Songs/SongType';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
 import { IDialogService } from '@/Shared/DialogService';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumDiscPropertiesListEditViewModel } from '@/ViewModels/Album/AlbumDiscPropertiesEditViewModel';
 import { AlbumArtistRolesEditViewModel } from '@/ViewModels/Artist/ArtistRolesEditViewModel';
-import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import CustomNameEditViewModel from '@/ViewModels/CustomNameEditViewModel';
-import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
-import EntryPictureFileListEditViewModel from '@/ViewModels/EntryPictureFileListEditViewModel';
-import EnglishTranslatedStringEditViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
-import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
-import PVListEditViewModel from '@/ViewModels/PVs/PVListEditViewModel';
-import SongInAlbumEditViewModel from '@/ViewModels/SongInAlbumEditViewModel';
-import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
+import { ArtistForAlbumEditViewModel } from '@/ViewModels/ArtistForAlbumEditViewModel';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { CustomNameEditViewModel } from '@/ViewModels/CustomNameEditViewModel';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { EntryPictureFileListEditViewModel } from '@/ViewModels/EntryPictureFileListEditViewModel';
+import { EnglishTranslatedStringEditViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { PVListEditViewModel } from '@/ViewModels/PVs/PVListEditViewModel';
+import { SongInAlbumEditViewModel } from '@/ViewModels/SongInAlbumEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import $ from 'jquery';
 import ko, {
 	Computed,
@@ -40,7 +40,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 // Edit view model for album.
-export default class AlbumEditViewModel {
+export class AlbumEditViewModel {
 	// Adds a song to the album, by either id (existing song) or name (new song).
 	public acceptTrackSelection: (
 		songId?: number,

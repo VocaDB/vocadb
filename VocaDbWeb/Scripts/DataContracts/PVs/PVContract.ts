@@ -1,4 +1,4 @@
-export default interface PVContract {
+export interface PVContract {
 	author?: string;
 
 	createdBy?: number;

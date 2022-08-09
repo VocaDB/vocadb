@@ -1,8 +1,8 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import EntryType from '@/Models/EntryType';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import AlbumEditStore from '@/Stores/Album/AlbumEditStore';
-import SongInAlbumEditStore from '@/Stores/SongInAlbumEditStore';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
+import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

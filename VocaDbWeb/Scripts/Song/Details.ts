@@ -1,13 +1,14 @@
-import LoginManager from '@/Models/LoginManager';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import functions from '@/Shared/GlobalFunctions';
-import HttpClient from '@/Shared/HttpClient';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
-import SongDetailsViewModel, {
+import {
 	SongDetailsAjax,
 	SongDetailsResources,
+	SongDetailsViewModel,
 } from '@/ViewModels/Song/SongDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
@@ -79,7 +80,7 @@ function initPage(
 	initMediaPlayer();
 }
 
-const SongDetails = (
+export const SongDetails = (
 	model: {
 		id: number;
 		jsonModel: SongDetailsAjax;
@@ -128,5 +129,3 @@ const SongDetails = (
 		initPage(jsonModel, model.id, saveStr, urlMapper, viewModel);
 	});
 };
-
-export default SongDetails;

@@ -1,4 +1,4 @@
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import { TagSelectionViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 
 var viewModel: TagsEditViewModel;

@@ -1,14 +1,14 @@
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
-import UserKnownLanguageContract from '@/DataContracts/User/UserKnownLanguageContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
+import { UserKnownLanguageContract } from '@/DataContracts/User/UserKnownLanguageContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { PermissionToken } from '@/Models/LoginManager';
-import UserGroup from '@/Models/Users/UserGroup';
+import { UserGroup } from '@/Models/Users/UserGroup';
 
 export interface OldUsernameContract {
 	date: Date;
@@ -56,7 +56,7 @@ interface UserDetailsContractBase {
 }
 
 // Corresponds to the UserDetailsForApiContract in C#.
-export default interface UserDetailsContract extends UserDetailsContractBase {
+export interface UserDetailsContract extends UserDetailsContractBase {
 	additionalPermissions: PermissionToken[];
 	effectivePermissions: PermissionToken[];
 	email: string;

@@ -1,11 +1,11 @@
-import PVService from '@/Models/PVs/PVService';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { PVRatingButtonsViewModel } from '@/ViewModels/PVRatingButtonsViewModel';
 import ko, { Observable } from 'knockout';
 
 // View model for song with PV preview and rating buttons (for example, on front page and song index page).
-export default class SongWithPreviewViewModel {
+export class SongWithPreviewViewModel {
 	// Destroy PV player (clears HTML)
 	public destroyPV: () => void;
 

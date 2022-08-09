@@ -1,15 +1,15 @@
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import SongContract from '@/DataContracts/Song/SongContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import SongType from '@/Models/Songs/SongType';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { SongType } from '@/Models/Songs/SongType';
 
 // Corresponds to the SongForEditForApiContract record class in C#.
-export default interface SongForEditContract {
+export interface SongForEditContract {
 	albumEventId?: number;
 	albumReleaseDate?: string;
 	artists: ArtistForAlbumContract[];

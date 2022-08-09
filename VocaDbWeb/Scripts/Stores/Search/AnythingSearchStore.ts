@@ -1,11 +1,11 @@
-import EntryContract from '@/DataContracts/EntryContract';
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import EntryRepository from '@/Repositories/EntryRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable } from 'mobx';
 
@@ -20,7 +20,7 @@ export interface AnythingSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class AnythingSearchStore extends SearchCategoryBaseStore<
+export class AnythingSearchStore extends SearchCategoryBaseStore<
 	AnythingSearchRouteParams,
 	EntryContract
 > {

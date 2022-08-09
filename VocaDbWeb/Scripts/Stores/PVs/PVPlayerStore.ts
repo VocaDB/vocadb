@@ -1,11 +1,11 @@
-import PVContract from '@/DataContracts/PVs/PVContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import PVService from '@/Models/PVs/PVService';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
-import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 export interface IPVPlayer {
@@ -29,7 +29,7 @@ export interface IPVPlayerSong {
 	song: SongApiContract;
 }
 
-export default class PVPlayerStore {
+export class PVPlayerStore {
 	public static autoplayPVServicesString =
 		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
 

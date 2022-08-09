@@ -1,5 +1,5 @@
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 
-export default interface ArtistForUserForApiContract {
+export interface ArtistForUserForApiContract {
 	artist: ArtistApiContract;
 }

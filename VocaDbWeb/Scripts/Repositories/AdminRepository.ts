@@ -1,9 +1,9 @@
-import WebhookContract from '@/DataContracts/WebhookContract';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { WebhookContract } from '@/DataContracts/WebhookContract';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { IPRuleContract } from '@/ViewModels/Admin/ManageIPRulesViewModel';
 
-export default class AdminRepository {
+export class AdminRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

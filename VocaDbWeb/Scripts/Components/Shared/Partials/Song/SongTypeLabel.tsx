@@ -1,4 +1,4 @@
-import SongType from '@/Models/Songs/SongType';
+import { SongType } from '@/Models/Songs/SongType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface SongTypeLabelProps {
 	songType: SongType;
 }
 
-const SongTypeLabel = React.memo(
+export const SongTypeLabel = React.memo(
 	({ songType }: SongTypeLabelProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
 
@@ -88,5 +88,3 @@ const SongTypeLabel = React.memo(
 		}
 	},
 );
-
-export default SongTypeLabel;

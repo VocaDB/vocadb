@@ -1,18 +1,18 @@
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import EntryType from '@/Models/EntryType';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import UrlMapper from '@/Shared/UrlMapper';
-import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
-import EnglishTranslatedStringEditViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
-import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
-import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { EnglishTranslatedStringEditViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
-export default class TagEditViewModel {
+export class TagEditViewModel {
 	// Bitmask for all possible entry types (all bits 1)
 	public static readonly allEntryTypes = 1073741823;
 

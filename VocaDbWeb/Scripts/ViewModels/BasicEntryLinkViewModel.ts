@@ -1,12 +1,10 @@
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import ko, { Computed, Observable } from 'knockout';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.
 // Works well with LockingAutoComplete.
-export default class BasicEntryLinkViewModel<
-	TEntry extends IEntryWithIdAndName
-> {
+export class BasicEntryLinkViewModel<TEntry extends IEntryWithIdAndName> {
 	// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 	// entryFunc: function for loading the entry asynchronously by Id.
 	public constructor(

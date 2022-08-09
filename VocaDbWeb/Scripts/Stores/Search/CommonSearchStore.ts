@@ -1,6 +1,6 @@
-import TagRepository from '@/Repositories/TagRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import TagFilters from '@/Stores/Search/TagFilters';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilters } from '@/Stores/Search/TagFilters';
 import { makeObservable, observable } from 'mobx';
 
 export interface ICommonSearchStore {
@@ -11,7 +11,7 @@ export interface ICommonSearchStore {
 	tagFilters: TagFilters;
 }
 
-export default class CommonSearchStore implements ICommonSearchStore {
+export class CommonSearchStore implements ICommonSearchStore {
 	@observable public draftsOnly = false;
 	@observable public pageSize = 10;
 	@observable public searchTerm = '';

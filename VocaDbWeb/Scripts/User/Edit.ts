@@ -1,6 +1,6 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 
 function initPage(): void {
@@ -42,10 +42,8 @@ function initPage(): void {
 	});
 }
 
-const UserEdit = (): void => {
+export const UserEdit = (): void => {
 	$(document).ready(function () {
 		initPage();
 	});
 };
-
-export default UserEdit;

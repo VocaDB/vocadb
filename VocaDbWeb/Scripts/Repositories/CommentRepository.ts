@@ -1,12 +1,12 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import EntryType from '@/Models/EntryType';
-import BaseRepository from '@/Repositories/BaseRepository';
-import ICommentRepository from '@/Repositories/ICommentRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
+import { BaseRepository } from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-export default class CommentRepository
+export class CommentRepository
 	extends BaseRepository
 	implements ICommentRepository {
 	public constructor(

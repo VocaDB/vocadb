@@ -1,16 +1,16 @@
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistForSongContract from '@/DataContracts/Song/ArtistForSongContract';
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongListBaseContract from '@/DataContracts/SongListBaseContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ArtistForSongContract } from '@/DataContracts/Song/ArtistForSongContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the SongInAlbumForApiContract in C#.
 interface SongInAlbumContract {
@@ -20,7 +20,7 @@ interface SongInAlbumContract {
 }
 
 // Corresponds to the SongDetailsForApiContract in C#.
-export default interface SongDetailsContract {
+export interface SongDetailsContract {
 	additionalNames: string;
 	album?: AlbumForApiContract;
 	albums: AlbumForApiContract[];

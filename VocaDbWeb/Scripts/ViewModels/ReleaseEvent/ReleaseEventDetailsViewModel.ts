@@ -1,25 +1,26 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import UserBaseContract from '@/DataContracts/User/UserBaseContract';
-import EntryType from '@/Models/EntryType';
-import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
-import CommentRepository from '@/Repositories/CommentRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import HttpClient from '@/Shared/HttpClient';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
-import ReportEntryViewModel, {
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { CommentRepository } from '@/Repositories/CommentRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import {
 	IEntryReportType,
+	ReportEntryViewModel,
 } from '@/ViewModels/ReportEntryViewModel';
-import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { ObservableArray } from 'knockout';
 
-export default class ReleaseEventDetailsViewModel {
+export class ReleaseEventDetailsViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		httpClient: HttpClient,

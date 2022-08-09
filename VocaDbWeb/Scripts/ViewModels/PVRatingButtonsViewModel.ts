@@ -1,10 +1,10 @@
 import { parseSongVoteRating } from '@/Models/SongVoteRating';
-import SongVoteRating from '@/Models/SongVoteRating';
-import UserRepository from '@/Repositories/UserRepository';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { UserRepository } from '@/Repositories/UserRepository';
 import ko, { Computed, Observable } from 'knockout';
 
 // Knockout view model for PV rating buttons
-export default class PVRatingButtonsViewModel {
+export class PVRatingButtonsViewModel {
 	public isRated: Computed<boolean>;
 
 	public isRatingFavorite: Computed<boolean>;

@@ -1,7 +1,7 @@
-import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 import ko from 'knockout';
 
-export default class AdvancedSearchFilters {
+export class AdvancedSearchFilters {
 	public add = (
 		filter: string,
 		param: string,

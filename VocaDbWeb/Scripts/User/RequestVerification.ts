@@ -1,11 +1,11 @@
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import RequestVerificationViewModel from '@/ViewModels/User/RequestVerificationViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { RequestVerificationViewModel } from '@/ViewModels/User/RequestVerificationViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const UserRequestVerification = (): void => {
+export const UserRequestVerification = (): void => {
 	$(document).ready(function () {
 		const httpClient = new HttpClient();
 		var repoFactory = new RepositoryFactory(
@@ -16,5 +16,3 @@ const UserRequestVerification = (): void => {
 		ko.applyBindings(new RequestVerificationViewModel(vdb.values, artistRepo));
 	});
 };
-
-export default UserRequestVerification;

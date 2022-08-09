@@ -1,8 +1,8 @@
-import PVService from '@/Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
 import { IPVPlayer } from '@/ViewModels/PVs/PVPlayerViewModel';
 import $ from 'jquery';
 
-export default class PVPlayerYoutube implements IPVPlayer {
+export class PVPlayerYoutube implements IPVPlayer {
 	public constructor(
 		private playerElementId: string,
 		private wrapperElement: HTMLElement,

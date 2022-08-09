@@ -1,8 +1,8 @@
-import UserWithPermissionsContract from '@/DataContracts/User/UserWithPermissionsContract';
-import LoginManager, { PermissionToken } from '@/Models/LoginManager';
-import PVService from '@/Models/PVs/PVService';
-import UserGroup from '@/Models/Users/UserGroup';
-import GlobalValues from '@/Shared/GlobalValues';
+import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
+import { LoginManager, PermissionToken } from '@/Models/LoginManager';
+import { PVService } from '@/Models/PVs/PVService';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import _ from 'lodash';
 
 const createUser = ({

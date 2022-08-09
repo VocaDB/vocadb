@@ -1,10 +1,11 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import SongListsKnockout from '@/Components/Shared/Partials/Song/SongListsKnockout';
-import SongListsFilters from '@/Components/Shared/Partials/SongListsFilters';
-import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
-import LoginManager from '@/Models/LoginManager';
+import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
+import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
+import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { LoginManager } from '@/Models/LoginManager';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
-import UserDetailsStore, {
+import {
+	UserDetailsStore,
 	UserSongListsStore,
 } from '@/Stores/User/UserDetailsStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';

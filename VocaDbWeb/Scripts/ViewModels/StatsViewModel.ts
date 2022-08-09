@@ -2,7 +2,7 @@ import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-export default class StatsViewModel {
+export class StatsViewModel {
 	public categories: IReportCategory[];
 	public chartData = ko.observable<any>(null);
 	private selectedReport = ko.observable<IReport>(null!);

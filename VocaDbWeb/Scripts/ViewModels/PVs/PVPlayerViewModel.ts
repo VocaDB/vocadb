@@ -1,15 +1,15 @@
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import PVService from '@/Models/PVs/PVService';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVRatingButtonsViewModel from '@/ViewModels/PVRatingButtonsViewModel';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVRatingButtonsViewModel } from '@/ViewModels/PVRatingButtonsViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
 import ko, { Observable } from 'knockout';
 
-export default class PVPlayerViewModel {
+export class PVPlayerViewModel {
 	public static autoplayPVServicesString =
 		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
 

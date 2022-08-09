@@ -1,7 +1,7 @@
-import MainNavigationItems from '@/Components/Shared/Partials/MainNavigationItems';
-import PatreonLink from '@/Components/Shared/Partials/PatreonLink';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import functions from '@/Shared/GlobalFunctions';
+import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
+import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -74,7 +74,7 @@ const SocialLink = React.memo(
 	),
 );
 
-const LeftMenu = React.memo(
+export const LeftMenu = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -189,5 +189,3 @@ const LeftMenu = React.memo(
 		);
 	},
 );
-
-export default LeftMenu;

@@ -1,15 +1,15 @@
-import ActivityEntryContract from '@/DataContracts/ActivityEntry/ActivityEntryContract';
-import EntryContract from '@/DataContracts/EntryContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
-import EntryEditEvent from '@/Models/ActivityEntries/EntryEditEvent';
-import EntryType from '@/Models/EntryType';
-import ResourcesManager from '@/Models/ResourcesManager';
+import { ActivityEntryContract } from '@/DataContracts/ActivityEntry/ActivityEntryContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
+import { EntryType } from '@/Models/EntryType';
+import { ResourcesManager } from '@/Models/ResourcesManager';
 import { ResourceSetNames } from '@/Models/ResourcesManager';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
@@ -20,7 +20,7 @@ enum ActivityEntrySortRule {
 	CreateDate,
 }
 
-export default class ActivityEntryListViewModel {
+export class ActivityEntryListViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private urlMapper: UrlMapper,

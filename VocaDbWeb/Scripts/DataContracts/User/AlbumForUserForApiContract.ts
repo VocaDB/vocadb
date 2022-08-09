@@ -1,5 +1,5 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
 export enum MediaType {
 	PhysicalDisc = 'PhysicalDisc',
@@ -14,7 +14,7 @@ export enum PurchaseStatus {
 	Owned = 'Owned',
 }
 
-export default interface AlbumForUserForApiContract {
+export interface AlbumForUserForApiContract {
 	album: AlbumContract;
 
 	mediaType: MediaType;

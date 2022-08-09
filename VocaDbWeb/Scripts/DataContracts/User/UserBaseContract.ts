@@ -1,6 +1,6 @@
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 
-export default interface UserBaseContract extends IEntryWithIdAndName {
+export interface UserBaseContract extends IEntryWithIdAndName {
 	id: number;
 
 	name?: string;

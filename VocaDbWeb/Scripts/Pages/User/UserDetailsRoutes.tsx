@@ -1,4 +1,4 @@
-import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
+import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import UserAlbums from '@/Pages/User/UserAlbums';
 import UserArtists from '@/Pages/User/UserArtists';
 import UserComments from '@/Pages/User/UserComments';
@@ -6,8 +6,8 @@ import UserCustomLists from '@/Pages/User/UserCustomLists';
 import UserEvents from '@/Pages/User/UserEvents';
 import UserOverview from '@/Pages/User/UserOverview';
 import UserSongs from '@/Pages/User/UserSongs';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import UserDetailsStore from '@/Stores/User/UserDetailsStore';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

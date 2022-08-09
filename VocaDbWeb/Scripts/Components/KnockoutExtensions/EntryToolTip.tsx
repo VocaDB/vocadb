@@ -1,6 +1,6 @@
 import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
-import EntryRefContract from '@/DataContracts/EntryRefContract';
-import functions from '@/Shared/GlobalFunctions';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import _ from 'lodash';
 import 'qtip2';

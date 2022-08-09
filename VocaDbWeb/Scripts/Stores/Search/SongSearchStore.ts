@@ -1,32 +1,33 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongContract from '@/DataContracts/Song/SongContract';
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import SongType from '@/Models/Songs/SongType';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongType } from '@/Models/Songs/SongType';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
-import PVPlayerStore from '@/Stores/PVs/PVPlayerStore';
-import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
-import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import SongBpmFilter from '@/Stores/Search/SongBpmFilter';
-import SongLengthFilter from '@/Stores/Search/SongLengthFilter';
-import PlayListRepositoryForSongsAdapter, {
+import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
+import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
+import {
 	ISongsAdapterStore,
+	PlayListRepositoryForSongsAdapter,
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
-import PlayListStore from '@/Stores/Song/PlayList/PlayListStore';
-import SongWithPreviewStore from '@/Stores/Song/SongWithPreviewStore';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -86,7 +87,7 @@ export interface SongSearchRouteParams {
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
-export default class SongSearchStore
+export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
 	implements ISongSearchStore, ISongsAdapterStore {
 	public readonly artistFilters: ArtistFilters;

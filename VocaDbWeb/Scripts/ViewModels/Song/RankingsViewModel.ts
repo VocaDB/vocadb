@@ -1,18 +1,18 @@
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import ui from '@/Shared/MessagesTyped';
-import ObservableUrlParamRouter from '@/Shared/Routing/ObservableUrlParamRouter';
-import UrlMapper from '@/Shared/UrlMapper';
-import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { ui } from '@/Shared/MessagesTyped';
+import { ObservableUrlParamRouter } from '@/Shared/Routing/ObservableUrlParamRouter';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { SongWithPreviewViewModel } from '@/ViewModels/Song/SongWithPreviewViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-export default class RankingsViewModel {
+export class RankingsViewModel {
 	public constructor(
 		private urlMapper: UrlMapper,
 		private songRepo: SongRepository,

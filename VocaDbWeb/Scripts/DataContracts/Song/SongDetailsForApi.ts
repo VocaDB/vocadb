@@ -1,28 +1,28 @@
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistForSongContract from '@/DataContracts/Song/ArtistForSongContract';
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongDetailsContract from '@/DataContracts/Song/SongDetailsContract';
-import SongListBaseContract from '@/DataContracts/SongListBaseContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import PVHelper from '@/Helpers/PVHelper';
-import RelatedSitesHelper from '@/Helpers/RelatedSitesHelper';
-import SongHelper from '@/Helpers/SongHelper';
-import ArtistCategories from '@/Models/Artists/ArtistCategories';
-import ContentFocus from '@/Models/ContentFocus';
-import EntryStatus from '@/Models/EntryStatus';
-import PVType from '@/Models/PVs/PVType';
-import SongType from '@/Models/Songs/SongType';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ArtistForSongContract } from '@/DataContracts/Song/ArtistForSongContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { RelatedSitesHelper } from '@/Helpers/RelatedSitesHelper';
+import { SongHelper } from '@/Helpers/SongHelper';
+import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
+import { ContentFocus } from '@/Models/ContentFocus';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { PVType } from '@/Models/PVs/PVType';
+import { SongType } from '@/Models/Songs/SongType';
 
 // Corresponds to the SongDetails class in C#.
-export default class SongDetailsForApi {
+export class SongDetailsForApi {
 	public readonly additionalNames: string;
 	public readonly albums: AlbumForApiContract[];
 	public readonly alternateVersions: SongApiContract[];

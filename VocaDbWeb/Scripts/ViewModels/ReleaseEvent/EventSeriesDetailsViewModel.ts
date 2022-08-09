@@ -1,11 +1,11 @@
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import EntryType from '@/Models/EntryType';
-import UserRepository from '@/Repositories/UserRepository';
-import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 
-export default class EventSeriesDetailsViewModel {
+export class EventSeriesDetailsViewModel {
 	public constructor(
 		private readonly userRepo: UserRepository,
 		private readonly seriesId: number,

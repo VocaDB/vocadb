@@ -1,12 +1,12 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
-import EntryReportRepository from '@/Repositories/EntryReportRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { EntryReportRepository } from '@/Repositories/EntryReportRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import ko, { Computed, Observable } from 'knockout';
 
 // View model for the top bar.
-export default class TopBarViewModel {
+export class TopBarViewModel {
 	public ensureMessagesLoaded = (): void => {
 		if (this.isLoaded()) return;
 

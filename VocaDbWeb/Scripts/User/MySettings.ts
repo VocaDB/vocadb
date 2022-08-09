@@ -1,13 +1,13 @@
-import UserKnownLanguageContract from '@/DataContracts/User/UserKnownLanguageContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import MySettingsViewModel from '@/ViewModels/User/MySettingsViewModel';
+import { UserKnownLanguageContract } from '@/DataContracts/User/UserKnownLanguageContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { MySettingsViewModel } from '@/ViewModels/User/MySettingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const UserMySettings = (model: {
+export const UserMySettings = (model: {
 	aboutMe: string;
 	email: string;
 	emailVerified: boolean;
@@ -32,5 +32,3 @@ const UserMySettings = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default UserMySettings;

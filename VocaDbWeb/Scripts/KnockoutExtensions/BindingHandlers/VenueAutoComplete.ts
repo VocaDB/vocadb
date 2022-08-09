@@ -1,7 +1,7 @@
-import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import ko, { Observable } from 'knockout';
 
 declare global {

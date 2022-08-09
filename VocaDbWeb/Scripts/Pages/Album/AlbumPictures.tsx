@@ -1,9 +1,9 @@
-import ThumbItem from '@/Components/Shared/Partials/Shared/ThumbItem';
-import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
-import UrlHelper from '@/Helpers/UrlHelper';
-import ImageSize from '@/Models/Images/ImageSize';
+import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
+import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { ImageSize } from '@/Models/Images/ImageSize';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
-import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
+import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,6 @@
 // Identifies common entry type.
 // Corresponds to the EntryType enum C#.
-enum EntryType {
+export enum EntryType {
 	Undefined = 0,
 
 	Album = 1 << 0,
@@ -25,5 +25,3 @@ enum EntryType {
 
 	Venue = 1 << 10,
 }
-
-export default EntryType;

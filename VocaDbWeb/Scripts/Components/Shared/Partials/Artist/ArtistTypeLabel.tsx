@@ -1,4 +1,4 @@
-import ArtistType from '@/Models/Artists/ArtistType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface ArtistTypeLabelProps {
 	artistType: ArtistType;
 }
 
-const ArtistTypeLabel = React.memo(
+export const ArtistTypeLabel = React.memo(
 	({ artistType }: ArtistTypeLabelProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Model.Resources']);
 
@@ -67,5 +67,3 @@ const ArtistTypeLabel = React.memo(
 		}
 	},
 );
-
-export default ArtistTypeLabel;

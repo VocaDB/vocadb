@@ -1,17 +1,17 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import UserRepository from '@/Repositories/UserRepository';
-import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 import {
 	IPlayListRepository,
 	ISongForPlayList,
 } from '@/ViewModels/Song/PlayList/PlayListViewModel';
 import { Computed, Observable, ObservableArray } from 'knockout';
 
-export default class PlayListRepositoryForRatedSongsAdapter
+export class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
 	public constructor(
 		private userRepo: UserRepository,

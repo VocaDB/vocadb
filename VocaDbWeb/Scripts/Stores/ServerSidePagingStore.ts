@@ -1,8 +1,8 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-export default class ServerSidePagingStore {
+export class ServerSidePagingStore {
 	@observable public page = 1;
 	@observable public totalItems = 0;
 	@observable public pageSize = 10;

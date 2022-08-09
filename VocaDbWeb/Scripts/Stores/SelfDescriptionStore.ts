@@ -1,11 +1,11 @@
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-export default class SelfDescriptionStore {
+export class SelfDescriptionStore {
 	@observable public artists: ArtistContract[] = [];
 	public readonly author: BasicEntryLinkStore<ArtistApiContract>;
 	@observable public editing = false;

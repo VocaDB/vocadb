@@ -1,15 +1,15 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
-import ArtistType from '@/Models/Artists/ArtistType';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import TagFilters from '@/ViewModels/Search/TagFilters';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilters } from '@/ViewModels/Search/TagFilters';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
 
-export default class FollowedArtistsViewModel {
+export class FollowedArtistsViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private userRepo: UserRepository,

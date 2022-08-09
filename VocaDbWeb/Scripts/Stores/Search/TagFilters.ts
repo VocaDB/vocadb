@@ -1,7 +1,7 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagRepository from '@/Repositories/TagRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import TagFilter from '@/Stores/Search/TagFilter';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilter } from '@/Stores/Search/TagFilter';
 import _ from 'lodash';
 import {
 	action,
@@ -12,7 +12,7 @@ import {
 } from 'mobx';
 
 // Manages tag filters for search
-export default class TagFilters {
+export class TagFilters {
 	@observable public childTags = false;
 	@observable public tags: TagFilter[] = [];
 

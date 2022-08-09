@@ -1,4 +1,4 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
 import $ from 'jquery';
 
@@ -31,10 +31,8 @@ function initPage(): void {
 	});
 }
 
-const MikuDbAlbumPrepareForImport = (): void => {
+export const MikuDbAlbumPrepareForImport = (): void => {
 	$(document).ready(function () {
 		initPage();
 	});
 };
-
-export default MikuDbAlbumPrepareForImport;

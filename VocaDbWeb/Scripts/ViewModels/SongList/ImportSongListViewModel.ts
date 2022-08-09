@@ -1,16 +1,16 @@
-import SongListForEditContract from '@/DataContracts/Song/SongListForEditContract';
-import ImportedSongInListContract from '@/DataContracts/SongList/ImportedSongInListContract';
-import ImportedSongListContract from '@/DataContracts/SongList/ImportedSongListContract';
-import PartialImportedSongs from '@/DataContracts/SongList/PartialImportedSongs';
-import SongListFeaturedCategory from '@/Models/SongLists/SongListFeaturedCategory';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { ImportedSongInListContract } from '@/DataContracts/SongList/ImportedSongInListContract';
+import { ImportedSongListContract } from '@/DataContracts/SongList/ImportedSongListContract';
+import { PartialImportedSongs } from '@/DataContracts/SongList/PartialImportedSongs';
+import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko from 'knockout';
 import _ from 'lodash';
 
-export default class ImportSongListViewModel {
+export class ImportSongListViewModel {
 	public constructor(
 		private httpClient: HttpClient,
 		private urlMapper: UrlMapper,

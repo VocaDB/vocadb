@@ -1,6 +1,6 @@
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 
-export default interface AlbumDiscPropertiesContract {
+export interface AlbumDiscPropertiesContract {
 	discNumber?: number;
 
 	id: number;

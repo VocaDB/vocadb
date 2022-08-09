@@ -1,8 +1,8 @@
-import PVContract from '@/DataContracts/PVs/PVContract';
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import ko, { Observable } from 'knockout';
 
-export default class PVEditViewModel {
+export class PVEditViewModel {
 	public constructor(contract: PVContract, pvType?: string) {
 		this.author = contract.author!;
 		this.createdBy = contract.createdBy!;

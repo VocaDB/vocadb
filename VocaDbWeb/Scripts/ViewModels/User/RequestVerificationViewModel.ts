@@ -1,10 +1,10 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import ko, { Observable } from 'knockout';
 
-export default class RequestVerificationViewModel {
+export class RequestVerificationViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepository: ArtistRepository,

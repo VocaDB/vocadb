@@ -1,7 +1,7 @@
-import EntryTypeAndSubTypeContract from '@/DataContracts/EntryTypeAndSubTypeContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 
-export default interface EntryTagMappingContract {
+export interface EntryTagMappingContract {
 	entryType: EntryTypeAndSubTypeContract;
 	tag: TagBaseContract;
 }

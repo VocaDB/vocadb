@@ -26,7 +26,7 @@ export enum AdvancedFilterType {
 	LyricsContent = 'LyricsContent',
 }
 
-export default interface AdvancedSearchFilter {
+export interface AdvancedSearchFilter {
 	description?: string;
 	filterType: AdvancedFilterType;
 	negate?: boolean;

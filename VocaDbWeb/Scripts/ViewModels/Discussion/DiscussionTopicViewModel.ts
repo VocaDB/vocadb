@@ -1,12 +1,12 @@
-import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import DiscussionRepository from '@/Repositories/DiscussionRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
 import ko, { Observable } from 'knockout';
 
-export default class DiscussionTopicViewModel {
+export class DiscussionTopicViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private repo: DiscussionRepository,

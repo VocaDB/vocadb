@@ -1,4 +1,4 @@
-import IconAndNameLinkKnockout from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
+import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
 import { RatingsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

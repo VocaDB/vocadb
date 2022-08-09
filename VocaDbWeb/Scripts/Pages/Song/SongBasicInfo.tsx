@@ -4,41 +4,42 @@ import {
 	TagToolTip,
 	EventToolTip,
 } from '@/Components/KnockoutExtensions/EntryToolTip';
-import AlbumLink from '@/Components/Shared/Partials/Album/AlbumLink';
-import ArtistList, {
+import { AlbumLink } from '@/Components/Shared/Partials/Album/AlbumLink';
+import {
+	ArtistList,
 	ShowRolesMode,
 } from '@/Components/Shared/Partials/Artist/ArtistList';
-import LatestCommentsKnockout from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
-import EnglishTranslatedString from '@/Components/Shared/Partials/EnglishTranslatedString';
-import ExternalLinksRows from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
-import PersonalDescriptionMedia from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
-import PVServiceIcon from '@/Components/Shared/Partials/Shared/PVServiceIcon';
-import UniversalTimeLabel from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
-import SongGrid from '@/Components/Shared/Partials/Song/SongGrid';
-import SongLink from '@/Components/Shared/Partials/Song/SongLink';
-import SongLinkKnockout from '@/Components/Shared/Partials/Song/SongLinkKnockout';
-import SongTypeLabel from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import TagList from '@/Components/Shared/Partials/TagList';
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
-import BpmHelper from '@/Helpers/BpmHelper';
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
-import VideoServiceHelper from '@/Helpers/VideoServiceHelper';
+import { LatestCommentsKnockout } from '@/Components/Shared/Partials/Comment/LatestCommentsKnockout';
+import { EnglishTranslatedString } from '@/Components/Shared/Partials/EnglishTranslatedString';
+import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
+import { PersonalDescriptionMedia } from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
+import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
+import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
+import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
+import { SongLinkKnockout } from '@/Components/Shared/Partials/Song/SongLinkKnockout';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { TagList } from '@/Components/Shared/Partials/TagList';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
+import { BpmHelper } from '@/Helpers/BpmHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
-import PVService from '@/Models/PVs/PVService';
-import SongType from '@/Models/Songs/SongType';
-import WebLinkCategory from '@/Models/WebLinkCategory';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongType } from '@/Models/Songs/SongType';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import SongInListsDialog from '@/Pages/Song/Partials/SongInListsDialog';
 import UsersWithSongRating from '@/Pages/Song/Partials/UsersWithSongRating';
 import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import functions from '@/Shared/GlobalFunctions';
-import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

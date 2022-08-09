@@ -1,5 +1,5 @@
 import Pagination from '@/Bootstrap/Pagination';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -9,7 +9,7 @@ interface ServerSidePagingProps {
 	pagingStore: ServerSidePagingStore;
 }
 
-const ServerSidePaging = observer(
+export const ServerSidePaging = observer(
 	({ pagingStore }: ServerSidePagingProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Other']);
 
@@ -62,5 +62,3 @@ const ServerSidePaging = observer(
 		);
 	},
 );
-
-export default ServerSidePaging;

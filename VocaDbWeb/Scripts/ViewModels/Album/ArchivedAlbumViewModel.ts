@@ -1,8 +1,8 @@
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ui from '@/Shared/MessagesTyped';
-import ReportEntryViewModel from '@/ViewModels/ReportEntryViewModel';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ui } from '@/Shared/MessagesTyped';
+import { ReportEntryViewModel } from '@/ViewModels/ReportEntryViewModel';
 
-export default class ArchivedAlbumViewModel {
+export class ArchivedAlbumViewModel {
 	public constructor(
 		albumId: number,
 		versionNumber: number,

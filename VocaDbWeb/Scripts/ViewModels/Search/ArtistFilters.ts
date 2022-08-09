@@ -1,14 +1,14 @@
-import ArtistHelper from '@/Helpers/ArtistHelper';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ArtistFilter from '@/ViewModels/Search/ArtistFilter';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilter } from '@/ViewModels/Search/ArtistFilter';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page
-export default class ArtistFilters {
+export class ArtistFilters {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,

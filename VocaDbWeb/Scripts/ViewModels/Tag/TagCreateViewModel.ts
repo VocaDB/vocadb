@@ -1,9 +1,9 @@
-import NameMatchMode from '@/Models/NameMatchMode';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import ko from 'knockout';
 
-export default class TagCreateViewModel {
+export class TagCreateViewModel {
 	public constructor(private tagRepo: TagRepository) {
 		this.newTagName.subscribe((val) => {
 			if (!val) {

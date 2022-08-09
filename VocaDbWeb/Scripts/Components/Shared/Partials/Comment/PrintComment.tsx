@@ -1,10 +1,10 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import MomentJsTimeAgo from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
-import FormatMarkdown from '@/Components/Shared/Partials/Html/FormatMarkdown';
-import UserIconLink_UserForApiContract from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
-import truncateWithEllipsis from '@/Components/truncateWithEllipsis';
-import CommentContract from '@/DataContracts/CommentContract';
-import LoginManager from '@/Models/LoginManager';
+import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
+import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
+import { truncateWithEllipsis } from '@/Components/truncateWithEllipsis';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LoginManager } from '@/Models/LoginManager';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +17,7 @@ interface PrintCommentProps {
 	maxLength?: number;
 }
 
-const PrintComment = ({
+export const PrintComment = ({
 	contract,
 	allowDelete,
 	alwaysAllowDelete = false,
@@ -50,5 +50,3 @@ const PrintComment = ({
 		</div>
 	);
 };
-
-export default PrintComment;

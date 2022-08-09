@@ -1,4 +1,4 @@
-import PVService from '@/Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
 import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
@@ -67,7 +67,7 @@ declare global {
 		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.
 		The current PV is saved into variable "loadedPv" when the original player is loaded.
 	*/
-export default class PVPlayerNico implements IPVPlayer {
+export class PVPlayerNico implements IPVPlayer {
 	private static scriptLoaded: boolean = false;
 	private static playerFactory?: nico.NicoPlayerFactory;
 	private currentPv?: string;

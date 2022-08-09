@@ -1,21 +1,21 @@
-import EntryTypeAndSubTypeContract from '@/DataContracts/EntryTypeAndSubTypeContract';
-import EntryTagMappingContract from '@/DataContracts/Tag/EntryTagMappingContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import EventCategory from '@/Models/Events/EventCategory';
-import SongType from '@/Models/Songs/SongType';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import functions from '@/Shared/GlobalFunctions';
-import ui from '@/Shared/MessagesTyped';
+import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
+import { EntryTagMappingContract } from '@/DataContracts/Tag/EntryTagMappingContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
+import { SongType } from '@/Models/Songs/SongType';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { ui } from '@/Shared/MessagesTyped';
 import { EditTagMappingViewModel } from '@/ViewModels/Admin/ManageTagMappingsViewModel';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed } from 'knockout';
 
-export default class ManageEntryTagMappingsViewModel {
+export class ManageEntryTagMappingsViewModel {
 	public constructor(private readonly tagRepo: TagRepository) {
 		this.loadMappings();
 	}

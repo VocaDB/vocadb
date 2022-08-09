@@ -1,11 +1,11 @@
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import EntryType from '@/Models/EntryType';
-import UserRepository from '@/Repositories/UserRepository';
-import TagListStore from '@/Stores/Tag/TagListStore';
-import TagsEditStore from '@/Stores/Tag/TagsEditStore';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 
-export default class EventSeriesDetailsStore {
+export class EventSeriesDetailsStore {
 	public readonly tagsEditStore: TagsEditStore;
 	public readonly tagUsages: TagListStore;
 

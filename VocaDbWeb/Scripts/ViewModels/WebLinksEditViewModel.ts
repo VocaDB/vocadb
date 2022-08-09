@@ -1,9 +1,9 @@
-import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import BasicListEditViewModel from '@/ViewModels/BasicListEditViewModel';
-import WebLinkEditViewModel from '@/ViewModels/WebLinkEditViewModel';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { BasicListEditViewModel } from '@/ViewModels/BasicListEditViewModel';
+import { WebLinkEditViewModel } from '@/ViewModels/WebLinkEditViewModel';
 
-export default class WebLinksEditViewModel extends BasicListEditViewModel<
+export class WebLinksEditViewModel extends BasicListEditViewModel<
 	WebLinkEditViewModel,
 	WebLinkContract
 > {

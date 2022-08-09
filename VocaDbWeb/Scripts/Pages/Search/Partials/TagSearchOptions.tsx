@@ -1,5 +1,5 @@
-import TagCategoryLockingAutoComplete from '@/Components/Shared/Partials/Knockout/TagCategoryLockingAutoComplete';
-import TagSearchStore from '@/Stores/Search/TagSearchStore';
+import { TagCategoryLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagCategoryLockingAutoComplete';
+import { TagSearchStore } from '@/Stores/Search/TagSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

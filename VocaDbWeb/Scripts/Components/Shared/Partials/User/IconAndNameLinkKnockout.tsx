@@ -1,6 +1,6 @@
-import ProfileIconKnockout from '@/Components/Shared/Partials/User/ProfileIconKnockout';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { ProfileIconKnockout } from '@/Components/Shared/Partials/User/ProfileIconKnockout';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ interface IconAndNameLinkKnockoutProps {
 	className?: string;
 }
 
-const IconAndNameLinkKnockout = React.memo(
+export const IconAndNameLinkKnockout = React.memo(
 	({
 		user,
 		iconSize = 20,
@@ -30,5 +30,3 @@ const IconAndNameLinkKnockout = React.memo(
 		);
 	},
 );
-
-export default IconAndNameLinkKnockout;

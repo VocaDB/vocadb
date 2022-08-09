@@ -1,4 +1,4 @@
-export default class RelatedSitesHelper {
+export class RelatedSitesHelper {
 	private static relatedSiteUrlRegex = new RegExp(
 		/^https?:\/\/((utaitedb\.net)|(vocadb\.net)|(touhoudb\.com))\/((Song\/Details)|S)\/\d+/,
 		'i',

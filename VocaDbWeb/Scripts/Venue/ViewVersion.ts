@@ -1,11 +1,11 @@
-import VenueRepository from '@/Repositories/VenueRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ArchivedEntryViewModel from '@/ViewModels/ArchivedEntryViewModel';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArchivedEntryViewModel } from '@/ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const VenueViewVersion = (model: {
+export const VenueViewVersion = (model: {
 	entry: {
 		archivedVersion: {
 			version: number;
@@ -36,5 +36,3 @@ const VenueViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default VenueViewVersion;

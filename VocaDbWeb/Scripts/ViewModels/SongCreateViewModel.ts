@@ -1,26 +1,26 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
-import SongContract from '@/DataContracts/Song/SongContract';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import SongHelper from '@/Helpers/SongHelper';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { SongHelper } from '@/Helpers/SongHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import ArtistRoles from '@/Models/Artists/ArtistRoles';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import SongType from '@/Models/Songs/SongType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko, { Computed } from 'knockout';
 import _ from 'lodash';
 
 // View model for song creation view
-export default class SongCreateViewModel {
+export class SongCreateViewModel {
 	public addArtist: (artistId?: number) => void;
 
 	public artistSearchParams: ArtistAutoCompleteParams;

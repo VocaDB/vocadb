@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export default class ui {
+export class ui {
 	public static showSuccessMessage = (message?: string): JQuery => {
 		var successMessage = $('#successMessage');
 		var successMessageString = $('#successMessageString');

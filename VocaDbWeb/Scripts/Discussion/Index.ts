@@ -1,13 +1,13 @@
-import LoginManager from '@/Models/LoginManager';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import DiscussionIndexViewModel from '@/ViewModels/Discussion/DiscussionIndexViewModel';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DiscussionIndexViewModel } from '@/ViewModels/Discussion/DiscussionIndexViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const DiscussionIndex = (): void => {
+export const DiscussionIndex = (): void => {
 	$(function () {
 		const loginManager = new LoginManager(vdb.values);
 		const canDeleteAllComments = loginManager.canDeleteComments;
@@ -30,5 +30,3 @@ const DiscussionIndex = (): void => {
 		);
 	});
 };
-
-export default DiscussionIndex;

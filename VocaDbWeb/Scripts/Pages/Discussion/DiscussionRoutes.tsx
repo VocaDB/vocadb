@@ -1,10 +1,10 @@
-import Layout from '@/Components/Shared/Layout';
-import LoginManager from '@/Models/LoginManager';
+import { Layout } from '@/Components/Shared/Layout';
+import { LoginManager } from '@/Models/LoginManager';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import DiscussionRepository from '@/Repositories/DiscussionRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 

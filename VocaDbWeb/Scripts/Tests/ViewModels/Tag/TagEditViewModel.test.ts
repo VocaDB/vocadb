@@ -1,9 +1,9 @@
-import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import EntryType from '@/Models/EntryType';
-import FakeUserRepository from '@/Tests/TestSupport/FakeUserRepository';
-import TagEditViewModel from '@/ViewModels/TagEditViewModel';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryType } from '@/Models/EntryType';
+import { FakeUserRepository } from '@/Tests/TestSupport/FakeUserRepository';
+import { TagEditViewModel } from '@/ViewModels/TagEditViewModel';
 
 var viewModel: TagEditViewModel;
 

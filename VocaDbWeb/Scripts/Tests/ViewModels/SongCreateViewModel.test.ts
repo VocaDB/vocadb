@@ -1,10 +1,10 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistType from '@/Models/Artists/ArtistType';
-import SongType from '@/Models/Songs/SongType';
-import FakeArtistRepository from '@/Tests/TestSupport/FakeArtistRepository';
-import FakeSongRepository from '@/Tests/TestSupport/FakeSongRepository';
-import FakeTagRepository from '@/Tests/TestSupport/FakeTagRepository';
-import SongCreateViewModel from '@/ViewModels/SongCreateViewModel';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { SongType } from '@/Models/Songs/SongType';
+import { FakeArtistRepository } from '@/Tests/TestSupport/FakeArtistRepository';
+import { FakeSongRepository } from '@/Tests/TestSupport/FakeSongRepository';
+import { FakeTagRepository } from '@/Tests/TestSupport/FakeTagRepository';
+import { SongCreateViewModel } from '@/ViewModels/SongCreateViewModel';
 
 var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();

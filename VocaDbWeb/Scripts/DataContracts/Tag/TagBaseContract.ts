@@ -1,4 +1,4 @@
-export default interface TagBaseContract {
+export interface TagBaseContract {
 	// Additional names list - optional field
 	additionalNames?: string;
 	categoryName?: string;

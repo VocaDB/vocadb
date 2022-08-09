@@ -1,7 +1,7 @@
-import ArtistForAlbumEditViewModel from '@/ViewModels/ArtistForAlbumEditViewModel';
+import { ArtistForAlbumEditViewModel } from '@/ViewModels/ArtistForAlbumEditViewModel';
 import ko from 'knockout';
 
-export default class CustomNameEditViewModel {
+export class CustomNameEditViewModel {
 	public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
 	public dialogVisible = ko.observable(false);
 	public name = ko.observable<string>(null!);

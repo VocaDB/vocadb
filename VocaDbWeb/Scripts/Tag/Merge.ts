@@ -1,11 +1,11 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagRepository from '@/Repositories/TagRepository';
-import HttpClient from '@/Shared/HttpClient';
-import TagMergeViewModel from '@/ViewModels/Tag/TagMergeViewModel';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { TagMergeViewModel } from '@/ViewModels/Tag/TagMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const TagMerge = (model: TagBaseContract): void => {
+export const TagMerge = (model: TagBaseContract): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var repo = new TagRepository(httpClient, vdb.values.baseAddress);
@@ -18,5 +18,3 @@ const TagMerge = (model: TagBaseContract): void => {
 		});
 	});
 };
-
-export default TagMerge;

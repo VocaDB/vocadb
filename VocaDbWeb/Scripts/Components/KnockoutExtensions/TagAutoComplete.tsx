@@ -1,8 +1,9 @@
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import functions from '@/Shared/GlobalFunctions';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 interface TagAutoCompleteProps
@@ -14,7 +15,7 @@ interface TagAutoCompleteProps
 	tagTarget?: any /* TODO */;
 }
 
-const TagAutoComplete = React.forwardRef<
+export const TagAutoComplete = React.forwardRef<
 	HTMLInputElement,
 	TagAutoCompleteProps
 >(
@@ -63,5 +64,3 @@ const TagAutoComplete = React.forwardRef<
 		);
 	},
 );
-
-export default TagAutoComplete;

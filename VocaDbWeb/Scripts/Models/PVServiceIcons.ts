@@ -1,7 +1,7 @@
-import UrlMapper from '@/Shared/UrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
 // Class for getting URLs of PV service icons.
-export default class PVServiceIcons {
+export class PVServiceIcons {
 	private icons: any;
 
 	public constructor(urlMapper: UrlMapper) {

@@ -1,6 +1,6 @@
 import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ interface SongLinkProps {
 	target?: string;
 }
 
-const SongLink = React.memo(
+export const SongLink = React.memo(
 	({
 		song,
 		albumId,
@@ -47,5 +47,3 @@ const SongLink = React.memo(
 		);
 	},
 );
-
-export default SongLink;

@@ -1,12 +1,13 @@
 import { SongAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
-import SongContract from '@/DataContracts/Song/SongContract';
-import SearchTextQueryHelper from '@/Helpers/SearchTextQueryHelper';
-import NameMatchMode from '@/Models/NameMatchMode';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SearchTextQueryHelper } from '@/Helpers/SearchTextQueryHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
 import { SongQueryParams } from '@/Repositories/SongRepository';
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +17,7 @@ interface SongAutoCompleteProps
 	properties: SongAutoCompleteParams;
 }
 
-const SongAutoComplete = ({
+export const SongAutoComplete = ({
 	properties,
 	...props
 }: SongAutoCompleteProps): React.ReactElement => {
@@ -72,5 +73,3 @@ const SongAutoComplete = ({
 		/>
 	);
 };
-
-export default SongAutoComplete;

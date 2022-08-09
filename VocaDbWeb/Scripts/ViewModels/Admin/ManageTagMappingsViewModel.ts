@@ -1,15 +1,15 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagMappingContract from '@/DataContracts/Tag/TagMappingContract';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import functions from '@/Shared/GlobalFunctions';
-import ui from '@/Shared/MessagesTyped';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagMappingContract } from '@/DataContracts/Tag/TagMappingContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { ui } from '@/Shared/MessagesTyped';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
 import _ from 'lodash';
 
-export default class ManageTagMappingsViewModel {
+export class ManageTagMappingsViewModel {
 	public constructor(private readonly tagRepo: TagRepository) {
 		this.filter.subscribe(() => {
 			this.paging.totalItems(this.filteredMappings().length);

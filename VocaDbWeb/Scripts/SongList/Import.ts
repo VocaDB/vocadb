@@ -1,10 +1,10 @@
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ImportSongListViewModel from '@/ViewModels/SongList/ImportSongListViewModel';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ImportSongListViewModel } from '@/ViewModels/SongList/ImportSongListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const SongListImport = (): void => {
+export const SongListImport = (): void => {
 	ko.punches.enableAll();
 
 	$(function () {
@@ -14,5 +14,3 @@ const SongListImport = (): void => {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default SongListImport;

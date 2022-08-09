@@ -1,8 +1,8 @@
-import ImageHelper from '@/Helpers/ImageHelper';
+import { ImageHelper } from '@/Helpers/ImageHelper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ImageUploadMessage = React.memo(
+export const ImageUploadMessage = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['HelperRes']);
 
@@ -16,5 +16,3 @@ const ImageUploadMessage = React.memo(
 		);
 	},
 );
-
-export default ImageUploadMessage;

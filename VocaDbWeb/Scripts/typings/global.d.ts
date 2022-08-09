@@ -1,4 +1,4 @@
-import GlobalValues from '@/Shared/GlobalValues';
+import { GlobalValues } from '@/Shared/GlobalValues';
 
 declare global {
 	const vdb: {

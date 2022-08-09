@@ -1,8 +1,8 @@
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ReleaseEventEditViewModel from '@/ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ReleaseEventEditViewModel } from '@/ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
@@ -13,7 +13,7 @@ function initPage(): void {
 	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
-const EventEdit = (
+export const EventEdit = (
 	artistRoleJson: { [key: string]: string },
 	model: ReleaseEventContract,
 ): void => {
@@ -44,5 +44,3 @@ const EventEdit = (
 		initPage();
 	});
 };
-
-export default EventEdit;

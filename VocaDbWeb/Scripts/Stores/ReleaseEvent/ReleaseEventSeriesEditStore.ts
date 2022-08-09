@@ -1,12 +1,12 @@
-import ReleaseEventSeriesForEditContract from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
-import NameMatchMode from '@/Models/NameMatchMode';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-export default class ReleaseEventSeriesEditStore {
+export class ReleaseEventSeriesEditStore {
 	@observable public category: string /* TODO: enum */;
 	@observable public defaultNameLanguage: string;
 	public readonly deleteStore = new DeleteEntryStore((notes) =>

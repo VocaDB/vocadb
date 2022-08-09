@@ -1,32 +1,33 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongListContract from '@/DataContracts/Song/SongListContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import AlbumForUserForApiContract, {
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import {
+	AlbumForUserForApiContract,
 	MediaType,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
-import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
-import EntryEditDataContract from '@/DataContracts/User/EntryEditDataContract';
-import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
-import UserMessageSummaryContract from '@/DataContracts/User/UserMessageSummaryContract';
-import AjaxHelper from '@/Helpers/AjaxHelper';
+import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
+import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { Tuple2 } from '@/Helpers/HighchartsHelper';
-import AlbumType from '@/Models/Albums/AlbumType';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import SongVoteRating from '@/Models/SongVoteRating';
-import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
-import ICommentRepository from '@/Repositories/ICommentRepository';
-import HttpClient, { HeaderNames, MediaTypes } from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import AdvancedSearchFilter from '@/ViewModels/Search/AdvancedSearchFilter';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
 export enum UserInboxType {
 	Nothing,
@@ -37,7 +38,7 @@ export enum UserInboxType {
 
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
-export default class UserRepository implements ICommentRepository {
+export class UserRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 

@@ -1,9 +1,9 @@
-import SongAutoComplete from '@/Components/KnockoutExtensions/SongAutoComplete';
-import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
-import SongContract from '@/DataContracts/Song/SongContract';
-import EntryType from '@/Models/EntryType';
-import SongType from '@/Models/Songs/SongType';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import { SongAutoComplete } from '@/Components/KnockoutExtensions/SongAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { EntryType } from '@/Models/EntryType';
+import { SongType } from '@/Models/Songs/SongType';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -17,7 +17,7 @@ interface SongLockingAutoCompleteProps {
 }
 
 // Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed.
-const SongLockingAutoComplete = observer(
+export const SongLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 		songTypes = [],
@@ -55,5 +55,3 @@ const SongLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default SongLockingAutoComplete;

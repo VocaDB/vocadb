@@ -1,8 +1,8 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import ko from 'knockout';
 import _ from 'lodash';
 
-export default class ServerSidePagingViewModel {
+export class ServerSidePagingViewModel {
 	public constructor(pageSize: number = 10) {
 		this.pageSize(pageSize);
 		this.page.subscribe(this.updateItems);

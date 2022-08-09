@@ -1,8 +1,8 @@
-import ArtistDetailsContract from '@/DataContracts/Artist/ArtistDetailsContract';
+import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { AlbumOptions } from '@/Pages/Artist/ArtistDetails';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
-import ArtistDetailsStore from '@/Stores/Artist/ArtistDetailsStore';
+import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

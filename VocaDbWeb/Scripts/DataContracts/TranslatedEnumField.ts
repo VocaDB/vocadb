@@ -1,4 +1,4 @@
-export default interface TranslatedEnumField {
+export interface TranslatedEnumField {
 	// Enum value.
 	id: string;
 

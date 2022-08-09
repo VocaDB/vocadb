@@ -7,7 +7,7 @@ interface DiscTypesDropdownKnockoutProps {
 	onSelect: (eventKey: string) => void;
 }
 
-const DiscTypesDropdownKnockout = React.memo(
+export const DiscTypesDropdownKnockout = React.memo(
 	({
 		activeKey,
 		onSelect,
@@ -31,5 +31,3 @@ const DiscTypesDropdownKnockout = React.memo(
 		);
 	},
 );
-
-export default DiscTypesDropdownKnockout;

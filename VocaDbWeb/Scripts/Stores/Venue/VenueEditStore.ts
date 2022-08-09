@@ -1,11 +1,11 @@
-import OptionalGeoPointContract from '@/DataContracts/OptionalGeoPointContract';
-import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
-import EntryStatus from '@/Models/EntryStatus';
-import NameMatchMode from '@/Models/NameMatchMode';
-import VenueRepository from '@/Repositories/VenueRepository';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import {
 	action,
 	computed,
@@ -14,7 +14,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class VenueEditStore {
+export class VenueEditStore {
 	@observable public address: string;
 	@observable public addressCountryCode: string;
 	@observable public defaultNameLanguage: string /* TODO: enum */;

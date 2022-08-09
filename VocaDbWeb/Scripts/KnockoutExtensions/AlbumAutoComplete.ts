@@ -1,7 +1,7 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { AlbumAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import ko from 'knockout';
 
 declare global {

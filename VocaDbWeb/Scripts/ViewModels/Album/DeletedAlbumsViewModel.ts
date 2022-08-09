@@ -1,11 +1,11 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
 
-export default class DeletedAlbumsViewModel {
+export class DeletedAlbumsViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private albumRepo: AlbumRepository,

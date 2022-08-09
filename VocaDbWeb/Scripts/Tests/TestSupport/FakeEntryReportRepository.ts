@@ -1,9 +1,9 @@
-import EntryReportRepository from '@/Repositories/EntryReportRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import FakePromise from '@/Tests/TestSupport/FakePromise';
+import { EntryReportRepository } from '@/Repositories/EntryReportRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
-export default class FakeEntryReportRepository extends EntryReportRepository {
+export class FakeEntryReportRepository extends EntryReportRepository {
 	public entryReportCount!: number;
 
 	public constructor() {

@@ -1,10 +1,10 @@
-import ArtistForUserForApiContract from '@/DataContracts/User/ArtistForUserForApiContract';
-import ArtistType from '@/Models/Artists/ArtistType';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import TagFilters from '@/Stores/Search/TagFilters';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -29,7 +29,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedArtistsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class FollowedArtistsStore
+export class FollowedArtistsStore
 	implements StoreWithPagination<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data

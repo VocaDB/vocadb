@@ -1,30 +1,30 @@
-import AlbumDetailsContract from '@/DataContracts/Album/AlbumDetailsContract';
-import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import AlbumReviewContract from '@/DataContracts/Album/AlbumReviewContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import OptionalDateTimeContract from '@/DataContracts/OptionalDateTimeContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongInAlbumContract from '@/DataContracts/Song/SongInAlbumContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { OptionalDateTimeContract } from '@/DataContracts/OptionalDateTimeContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import {
 	MediaType,
 	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import AlbumHelper from '@/Helpers/AlbumHelper';
-import PVHelper from '@/Helpers/PVHelper';
-import AlbumType from '@/Models/Albums/AlbumType';
-import ArtistCategories from '@/Models/Artists/ArtistCategories';
-import ArtistRoles from '@/Models/Artists/ArtistRoles';
-import ContentFocus from '@/Models/ContentFocus';
-import EntryStatus from '@/Models/EntryStatus';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { ContentFocus } from '@/Models/ContentFocus';
+import { EntryStatus } from '@/Models/EntryStatus';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -61,7 +61,7 @@ export class AlbumDisc {
 }
 
 // Corresponds to the AlbumDetails class in C#.
-export default class AlbumDetailsForApi {
+export class AlbumDetailsForApi {
 	public readonly additionalNames: string;
 	public readonly albumMediaType: MediaType;
 	public readonly albumPurchaseStatus: PurchaseStatus;

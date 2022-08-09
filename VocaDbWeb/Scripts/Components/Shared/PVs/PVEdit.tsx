@@ -1,7 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
-import PVType from '@/Models/PVs/PVType';
-import PVListEditStore, { PVEditStore } from '@/Stores/PVs/PVListEditStore';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVType } from '@/Models/PVs/PVType';
+import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -13,7 +13,7 @@ interface PVEditProps {
 	pvEditStore: PVEditStore;
 }
 
-const PVEdit = observer(
+export const PVEdit = observer(
 	({ pvListEditStore, pvEditStore }: PVEditProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
@@ -93,5 +93,3 @@ const PVEdit = observer(
 		);
 	},
 );
-
-export default PVEdit;

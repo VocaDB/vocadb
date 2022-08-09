@@ -1,5 +1,5 @@
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import SongRepository from '@/Repositories/SongRepository';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongRepository } from '@/Repositories/SongRepository';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -16,7 +16,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SongLyricsStore
+export class SongLyricsStore
 	implements StoreWithUpdateResults<SongLyricsRouteParams> {
 	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;

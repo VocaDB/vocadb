@@ -1,12 +1,12 @@
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ListUsersViewModel from '@/ViewModels/User/ListUsersViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ListUsersViewModel } from '@/ViewModels/User/ListUsersViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const UserIndex = (model: { filter: string; groupId: string }): void => {
+export const UserIndex = (model: { filter: string; groupId: string }): void => {
 	$(function () {
 		var cultureCode = vdb.values.culture;
 		moment.locale(cultureCode);
@@ -28,5 +28,3 @@ const UserIndex = (model: { filter: string; groupId: string }): void => {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default UserIndex;

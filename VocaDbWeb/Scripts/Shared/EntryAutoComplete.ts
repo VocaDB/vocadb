@@ -1,6 +1,6 @@
-import EntryWithTagUsagesContract from '@/DataContracts/Base/EntryWithTagUsagesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import HtmlHelper from '@/Helpers/HtmlHelper';
+import { EntryWithTagUsagesContract } from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { HtmlHelper } from '@/Helpers/HtmlHelper';
 import $ from 'jquery';
 
 export interface EntryAutoCompleteParams<TContract> {

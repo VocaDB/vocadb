@@ -1,7 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
-import LocalizedStringWithIdEditStore from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
+import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
+import { LocalizedStringWithIdEditStore } from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -50,7 +50,7 @@ interface NamesEditorProps {
 	showAliases?: boolean;
 }
 
-const NamesEditor = observer(
+export const NamesEditor = observer(
 	({
 		namesEditStore,
 		showAliases = true,
@@ -144,5 +144,3 @@ const NamesEditor = observer(
 		);
 	},
 );
-
-export default NamesEditor;

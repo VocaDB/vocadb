@@ -1,8 +1,8 @@
-import EntryContract from '@/DataContracts/EntryContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import ArchivedVersionContract from '@/DataContracts/Versioning/ArchivedVersionContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
 
-export default interface ActivityEntryContract {
+export interface ActivityEntryContract {
 	archivedVersion: ArchivedVersionContract;
 
 	author: UserApiContract;

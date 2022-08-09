@@ -1,5 +1,5 @@
 // Corresponds to the UserGroupId enum in C#.
-enum UserGroup {
+export enum UserGroup {
 	Nothing = 'Nothing',
 	Limited = 'Limited',
 	Regular = 'Regular',
@@ -7,5 +7,3 @@ enum UserGroup {
 	Moderator = 'Moderator',
 	Admin = 'Admin',
 }
-
-export default UserGroup;

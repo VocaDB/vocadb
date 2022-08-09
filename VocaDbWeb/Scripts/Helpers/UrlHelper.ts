@@ -1,7 +1,7 @@
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import RegexLinkMatcher from '@/Helpers/RegexLinkMatcher';
-import ImageSize from '@/Models/Images/ImageSize';
-import GlobalValues from '@/Shared/GlobalValues';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { RegexLinkMatcher } from '@/Helpers/RegexLinkMatcher';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import _ from 'lodash';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
@@ -69,7 +69,7 @@ export class AffiliateLinkGenerator {
 }
 
 // Corresponds to the UrlHelper and UrlHelperExtensionsForImages classes in C#.
-export default class UrlHelper {
+export class UrlHelper {
 	private static isFullLink = (str: string): boolean => {
 		return (
 			str.startsWith('http://') ||

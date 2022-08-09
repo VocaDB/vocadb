@@ -1,30 +1,31 @@
-import ArtistForEventContract from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongListBaseContract from '@/DataContracts/SongListBaseContract';
-import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
-import EntryType from '@/Models/EntryType';
-import ArtistEventRoles from '@/Models/Events/ArtistEventRoles';
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import PVRepository from '@/Repositories/PVRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import ArtistRolesEditViewModel, {
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
 	AlbumArtistRolesEditViewModel,
+	ArtistRolesEditViewModel,
 } from '@/ViewModels/Artist/ArtistRolesEditViewModel';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
-import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
-import PVListEditViewModel from '@/ViewModels/PVs/PVListEditViewModel';
-import ArtistForEventEditViewModel from '@/ViewModels/ReleaseEvent/ArtistForEventEditViewModel';
-import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { PVListEditViewModel } from '@/ViewModels/PVs/PVListEditViewModel';
+import { ArtistForEventEditViewModel } from '@/ViewModels/ReleaseEvent/ArtistForEventEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
 
-export default class ReleaseEventEditViewModel {
+export class ReleaseEventEditViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly repo: ReleaseEventRepository,

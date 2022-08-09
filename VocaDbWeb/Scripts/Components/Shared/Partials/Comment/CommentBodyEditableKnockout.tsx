@@ -1,7 +1,7 @@
 import Button from '@/Bootstrap/Button';
-import CommentBodyKnockout from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
-import CommentStore from '@/Stores/CommentStore';
-import EditableCommentsStore from '@/Stores/EditableCommentsStore';
+import { CommentBodyKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
+import { CommentStore } from '@/Stores/CommentStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -13,7 +13,7 @@ interface CommentBodyEditableKnockoutProps {
 	message: string;
 }
 
-const CommentBodyEditableKnockout = observer(
+export const CommentBodyEditableKnockout = observer(
 	({
 		editableCommentsStore,
 		commentStore,
@@ -55,5 +55,3 @@ const CommentBodyEditableKnockout = observer(
 		);
 	},
 );
-
-export default CommentBodyEditableKnockout;

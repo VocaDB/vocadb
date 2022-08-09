@@ -2,7 +2,7 @@ import Button from '@/Bootstrap/Button';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const SaveBtn = React.memo(
+export const SaveBtn = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation('HelperRes');
 
@@ -16,5 +16,3 @@ const SaveBtn = React.memo(
 		);
 	},
 );
-
-export default SaveBtn;

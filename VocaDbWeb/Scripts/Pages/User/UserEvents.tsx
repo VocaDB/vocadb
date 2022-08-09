@@ -1,10 +1,10 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import UserDetailsContract from '@/DataContracts/User/UserDetailsContract';
-import EntryType from '@/Models/EntryType';
-import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
+import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import UserDetailsStore from '@/Stores/User/UserDetailsStore';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

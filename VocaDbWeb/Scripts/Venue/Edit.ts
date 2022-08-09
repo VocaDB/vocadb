@@ -1,8 +1,8 @@
-import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import VenueEditViewModel from '@/ViewModels/Venue/VenueEditViewModel';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { VenueEditViewModel } from '@/ViewModels/Venue/VenueEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
@@ -12,7 +12,7 @@ function initPage(): void {
 	$('#trashLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
-const VenueEdit = (model: VenueForEditContract): void => {
+export const VenueEdit = (model: VenueForEditContract): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -27,5 +27,3 @@ const VenueEdit = (model: VenueForEditContract): void => {
 		initPage();
 	});
 };
-
-export default VenueEdit;

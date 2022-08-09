@@ -1,8 +1,8 @@
-import UrlMapper from '@/Shared/UrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import ko from 'knockout';
 
-export default class NewsListViewModel {
+export class NewsListViewModel {
 	public constructor(public readonly blogUrl: string) {
 		if (!blogUrl) {
 			this.loaded(true);

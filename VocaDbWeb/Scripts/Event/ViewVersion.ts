@@ -1,11 +1,11 @@
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ArchivedEntryViewModel from '@/ViewModels/ArchivedEntryViewModel';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArchivedEntryViewModel } from '@/ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const EventViewVersion = (model: {
+export const EventViewVersion = (model: {
 	entry: {
 		archivedVersion: {
 			version: number;
@@ -36,5 +36,3 @@ const EventViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default EventViewVersion;

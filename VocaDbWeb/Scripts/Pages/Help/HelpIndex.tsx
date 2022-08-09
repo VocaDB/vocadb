@@ -1,9 +1,9 @@
-import Layout from '@/Components/Shared/Layout';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import { Layout } from '@/Components/Shared/Layout';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
-import UserGroup from '@/Models/Users/UserGroup';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';

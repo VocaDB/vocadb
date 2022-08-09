@@ -1,9 +1,9 @@
-import EventSeriesContract from '@/DataContracts/ReleaseEvents/EventSeriesContract';
-import UrlHelper from '@/Helpers/UrlHelper';
-import EntryType from '@/Models/EntryType';
-import EventCategory from '@/Models/Events/EventCategory';
-import ImageSize from '@/Models/Images/ImageSize';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { EventSeriesContract } from '@/DataContracts/ReleaseEvents/EventSeriesContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ interface EventSeriesThumbsProps {
 	events: EventSeriesContract[];
 }
 
-const EventSeriesThumbs = ({
+export const EventSeriesThumbs = ({
 	events,
 }: EventSeriesThumbsProps): React.ReactElement => {
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
@@ -69,5 +69,3 @@ const EventSeriesThumbs = ({
 		</div>
 	);
 };
-
-export default EventSeriesThumbs;

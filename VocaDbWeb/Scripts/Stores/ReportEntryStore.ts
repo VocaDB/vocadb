@@ -17,7 +17,7 @@ export interface IEntryReportType {
 	notesRequired: boolean;
 }
 
-export default class ReportEntryStore {
+export class ReportEntryStore {
 	@observable public dialogVisible = false;
 	@observable public notes = '';
 	@observable public reportType?: IEntryReportType;

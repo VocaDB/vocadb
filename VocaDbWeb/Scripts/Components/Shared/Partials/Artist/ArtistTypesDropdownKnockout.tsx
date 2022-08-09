@@ -1,4 +1,4 @@
-import ArtistType from '@/Models/Artists/ArtistType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ interface ArtistTypesDropdownKnockoutProps
 		HTMLSelectElement
 	> {}
 
-const ArtistTypesDropdownKnockout = React.memo(
+export const ArtistTypesDropdownKnockout = React.memo(
 	({ ...props }: ArtistTypesDropdownKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation('VocaDb.Model.Resources');
 
@@ -76,5 +76,3 @@ const ArtistTypesDropdownKnockout = React.memo(
 		);
 	},
 );
-
-export default ArtistTypesDropdownKnockout;

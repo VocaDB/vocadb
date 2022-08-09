@@ -10,7 +10,7 @@ interface LayoutProps {
 	toolbar?: React.ReactNode;
 }
 
-const Layout = ({
+export const Layout = ({
 	children,
 	parents,
 	subtitle,
@@ -51,5 +51,3 @@ const Layout = ({
 		</>
 	);
 };
-
-export default Layout;

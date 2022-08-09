@@ -1,5 +1,5 @@
-import TagLink from '@/Components/Shared/Partials/Tag/TagLink';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import React from 'react';
 
 interface TagLinkListProps {
@@ -7,7 +7,7 @@ interface TagLinkListProps {
 	tooltip?: boolean;
 }
 
-const TagLinkList = React.memo(
+export const TagLinkList = React.memo(
 	({ tagNames, tooltip = false }: TagLinkListProps): React.ReactElement => {
 		return (
 			<>
@@ -21,5 +21,3 @@ const TagLinkList = React.memo(
 		);
 	},
 );
-
-export default TagLinkList;

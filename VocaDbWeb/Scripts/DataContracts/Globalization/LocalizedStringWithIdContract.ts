@@ -1,6 +1,5 @@
-import LocalizedStringContract from '@/DataContracts/Globalization/LocalizedStringContract';
+import { LocalizedStringContract } from '@/DataContracts/Globalization/LocalizedStringContract';
 
-export default interface LocalizedStringWithIdContract
-	extends LocalizedStringContract {
+export interface LocalizedStringWithIdContract extends LocalizedStringContract {
 	id: number;
 }

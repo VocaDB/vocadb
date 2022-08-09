@@ -1,10 +1,10 @@
-import PVContract from '@/DataContracts/PVs/PVContract';
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import PVType from '@/Models/PVs/PVType';
-import PVRepository from '@/Repositories/PVRepository';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVType } from '@/Models/PVs/PVType';
+import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
@@ -46,7 +46,7 @@ export class PVEditStore {
 	}
 }
 
-export default class PVListEditStore {
+export class PVListEditStore {
 	@observable public isPossibleInstrumental = false;
 	@observable public newPvType = PVType[PVType.Original];
 	@observable public newPvUrl = '';

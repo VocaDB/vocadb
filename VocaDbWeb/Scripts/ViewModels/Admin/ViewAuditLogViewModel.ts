@@ -1,8 +1,8 @@
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import ko from 'knockout';
 
-export default class ViewAuditLogViewModel {
+export class ViewAuditLogViewModel {
 	public excludeUsers = ko.observable('');
 
 	public filter = ko.observable('');

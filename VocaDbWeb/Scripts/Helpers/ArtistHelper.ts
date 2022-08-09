@@ -1,10 +1,10 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import ArtistRoles from '@/Models/Artists/ArtistRoles';
-import ArtistType from '@/Models/Artists/ArtistType';
-import ContentFocus from '@/Models/ContentFocus';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ContentFocus } from '@/Models/ContentFocus';
 
-export default class ArtistHelper {
+export class ArtistHelper {
 	/// <summary>
 	/// The roles of these artists can be customized
 	/// </summary>

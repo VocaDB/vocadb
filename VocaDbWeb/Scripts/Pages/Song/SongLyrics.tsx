@@ -1,10 +1,10 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
-import SongDetailsForApi from '@/DataContracts/Song/SongDetailsForApi';
+import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import functions from '@/Shared/GlobalFunctions';
-import SongDetailsStore from '@/Stores/Song/SongDetailsStore';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';

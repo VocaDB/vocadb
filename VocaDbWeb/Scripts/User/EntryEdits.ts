@@ -1,12 +1,12 @@
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ActivityEntryListViewModel from '@/ViewModels/ActivityEntry/ActivityEntryListViewModel';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ActivityEntryListViewModel } from '@/ViewModels/ActivityEntry/ActivityEntryListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const UserEntryEdits = (
+export const UserEntryEdits = (
 	additionsOnly: boolean,
 	model: {
 		id: number;
@@ -34,5 +34,3 @@ const UserEntryEdits = (
 		ko.applyBindings(vm);
 	});
 };
-
-export default UserEntryEdits;

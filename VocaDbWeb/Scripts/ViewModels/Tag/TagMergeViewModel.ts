@@ -1,11 +1,11 @@
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import EntryMergeValidationHelper from '@/Helpers/EntryMergeValidationHelper';
-import TagRepository from '@/Repositories/TagRepository';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryMergeValidationHelper } from '@/Helpers/EntryMergeValidationHelper';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko from 'knockout';
 
-export default class TagMergeViewModel {
+export class TagMergeViewModel {
 	public constructor(tagRepo: TagRepository, private base: TagBaseContract) {
 		this.target = new BasicEntryLinkViewModel<TagBaseContract>(null!, (id) =>
 			tagRepo.getById({ id: id, fields: undefined, lang: undefined }),

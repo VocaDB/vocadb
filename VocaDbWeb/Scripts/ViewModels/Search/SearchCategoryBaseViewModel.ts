@@ -1,11 +1,11 @@
-import EntryContract from '@/DataContracts/EntryContract';
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
-import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
-import TagFilter from '@/ViewModels/Search/TagFilter';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { AdvancedSearchFilters } from '@/ViewModels/Search/AdvancedSearchFilters';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
+import { TagFilter } from '@/ViewModels/Search/TagFilter';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
@@ -16,7 +16,7 @@ export interface ISearchCategoryBaseViewModel {
 
 // Base class for different types of searches.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default class SearchCategoryBaseViewModel<TEntry>
+export class SearchCategoryBaseViewModel<TEntry>
 	implements ISearchCategoryBaseViewModel {
 	public constructor(public searchViewModel: SearchViewModel) {
 		if (searchViewModel) {

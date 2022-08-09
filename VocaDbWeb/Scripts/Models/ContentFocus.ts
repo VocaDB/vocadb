@@ -1,7 +1,5 @@
-enum ContentFocus {
+export enum ContentFocus {
 	Music,
 	Video,
 	Illustration,
 }
-
-export default ContentFocus;

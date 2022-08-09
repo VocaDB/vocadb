@@ -1,8 +1,9 @@
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-import functions from '@/Shared/GlobalFunctions';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 
 interface ReleaseEventSeriesAutoCompleteProps
@@ -11,7 +12,7 @@ interface ReleaseEventSeriesAutoCompleteProps
 	seriesFilter?: (entry: IEntryWithIdAndName) => boolean;
 }
 
-const ReleaseEventSeriesAutoComplete = ({
+export const ReleaseEventSeriesAutoComplete = ({
 	onAcceptSelection,
 	seriesFilter,
 	...props
@@ -44,5 +45,3 @@ const ReleaseEventSeriesAutoComplete = ({
 		/>
 	);
 };
-
-export default ReleaseEventSeriesAutoComplete;

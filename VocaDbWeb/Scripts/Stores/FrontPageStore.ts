@@ -1,10 +1,10 @@
-import FrontPageContract from '@/DataContracts/FrontPageContract';
-import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import NewsListStore from '@/Stores/NewsListStore';
-import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { FrontPageContract } from '@/DataContracts/FrontPageContract';
+import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { NewsListStore } from '@/Stores/NewsListStore';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 export class FrontPagePVPlayerStore {
@@ -48,7 +48,7 @@ export class FrontPagePVPlayerStore {
 	}
 }
 
-export default class FrontPageStore {
+export class FrontPageStore {
 	public readonly newsListStore: NewsListStore;
 	public readonly pvPlayerStore: FrontPagePVPlayerStore;
 

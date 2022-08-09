@@ -1,29 +1,30 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import Layout from '@/Components/Shared/Layout';
-import DeletedBanner from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
-import ReportEntryPopupKnockout from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import DraftMessage from '@/Components/Shared/Partials/Shared/DraftMessage';
-import EntryStatusMessage from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import TagsEdit from '@/Components/Shared/Partials/TagsEdit';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
-import AlbumDetailsForApi from '@/DataContracts/Album/AlbumDetailsForApi';
+import { Layout } from '@/Components/Shared/Layout';
+import { DeletedBanner } from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
+import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
+import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
+import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
+import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import AlbumReportType, {
+import {
+	AlbumReportType,
 	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
-import EntryStatus from '@/Models/EntryStatus';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
 import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
 import DownloadTagsDialog from '@/Pages/Album/Partials/DownloadTagsDialog';
 import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

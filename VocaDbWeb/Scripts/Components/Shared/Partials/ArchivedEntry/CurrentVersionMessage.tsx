@@ -1,4 +1,4 @@
-import EntryStatus from '@/Models/EntryStatus';
+import { EntryStatus } from '@/Models/EntryStatus';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ interface CurrentVersionMessageProps {
 	status: EntryStatus;
 }
 
-const CurrentVersionMessage = ({
+export const CurrentVersionMessage = ({
 	version,
 	status,
 }: CurrentVersionMessageProps): React.ReactElement => {
@@ -20,5 +20,3 @@ const CurrentVersionMessage = ({
 		</p>
 	);
 };
-
-export default CurrentVersionMessage;

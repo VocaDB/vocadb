@@ -1,8 +1,8 @@
-import ResourcesContract from '@/DataContracts/ResourcesContract';
-import ResourceRepository from '@/Repositories/ResourceRepository';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
 import ko, { Observable } from 'knockout';
 
-export default class ResourcesManager {
+export class ResourcesManager {
 	public constructor(
 		private resourcesRepo: ResourceRepository,
 		private cultureCode: string,

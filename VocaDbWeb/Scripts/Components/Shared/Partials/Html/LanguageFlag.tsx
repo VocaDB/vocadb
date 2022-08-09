@@ -1,4 +1,4 @@
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface LanguageFlagProps {
 	languageCode: string;
 }
 
-const LanguageFlag = React.memo(
+export const LanguageFlag = React.memo(
 	({ languageCode }: LanguageFlagProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
 
@@ -35,5 +35,3 @@ const LanguageFlag = React.memo(
 		);
 	},
 );
-
-export default LanguageFlag;

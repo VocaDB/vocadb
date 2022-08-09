@@ -1,15 +1,15 @@
-import AlbumForApiContract from '@/DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import ArtistType from '@/Models/Artists/ArtistType';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 
 interface TopStatContract<T> {
 	count: number;
@@ -35,7 +35,7 @@ interface SharedArtistStatsContract {
 }
 
 // Corresponds to the ArtistDetailsForApiContract record class in C#.
-export default interface ArtistDetailsContract {
+export interface ArtistDetailsContract {
 	additionalNames: string;
 	advancedStats?: AdvancedArtistStatsContract;
 	artistType: ArtistType;

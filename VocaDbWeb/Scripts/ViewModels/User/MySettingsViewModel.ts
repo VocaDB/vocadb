@@ -1,12 +1,12 @@
-import UserKnownLanguageContract from '@/DataContracts/User/UserKnownLanguageContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import UserRepository from '@/Repositories/UserRepository';
-import ui from '@/Shared/MessagesTyped';
-import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
+import { UserKnownLanguageContract } from '@/DataContracts/User/UserKnownLanguageContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { ui } from '@/Shared/MessagesTyped';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 
 // User my settings view model
-export default class MySettingsViewModel {
+export class MySettingsViewModel {
 	public aboutMe: Observable<string>;
 
 	public canVerifyEmail: Computed<boolean>;

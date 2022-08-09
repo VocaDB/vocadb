@@ -1,9 +1,9 @@
 import { AdvancedFilterType } from '@/Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
-export default class AdvancedSearchFilters {
+export class AdvancedSearchFilters {
 	@observable public filters: AdvancedSearchFilter[] = [];
 
 	public constructor() {

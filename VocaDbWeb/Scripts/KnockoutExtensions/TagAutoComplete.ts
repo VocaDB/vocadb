@@ -1,7 +1,7 @@
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 import ko from 'knockout';
 
 declare global {

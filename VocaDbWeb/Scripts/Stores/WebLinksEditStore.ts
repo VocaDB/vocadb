@@ -1,10 +1,10 @@
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import WebLinkCategory from '@/Models/WebLinkCategory';
-import BasicListEditStore from '@/Stores/BasicListEditStore';
-import WebLinkEditStore from '@/Stores/WebLinkEditStore';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { BasicListEditStore } from '@/Stores/BasicListEditStore';
+import { WebLinkEditStore } from '@/Stores/WebLinkEditStore';
 import { makeObservable } from 'mobx';
 
-export default class WebLinksEditStore extends BasicListEditStore<
+export class WebLinksEditStore extends BasicListEditStore<
 	WebLinkEditStore,
 	WebLinkContract
 > {

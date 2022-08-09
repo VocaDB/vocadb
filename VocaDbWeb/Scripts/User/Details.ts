@@ -1,13 +1,13 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import LoginManager from '@/Models/LoginManager';
-import RepositoryFactory from '@/Repositories/RepositoryFactory';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
-import AlbumCollectionViewModel from '@/ViewModels/User/AlbumCollectionViewModel';
-import FollowedArtistsViewModel from '@/ViewModels/User/FollowedArtistsViewModel';
-import RatedSongsSearchViewModel from '@/ViewModels/User/RatedSongsSearchViewModel';
-import UserDetailsViewModel from '@/ViewModels/User/UserDetailsViewModel';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { AlbumCollectionViewModel } from '@/ViewModels/User/AlbumCollectionViewModel';
+import { FollowedArtistsViewModel } from '@/ViewModels/User/FollowedArtistsViewModel';
+import { RatedSongsSearchViewModel } from '@/ViewModels/User/RatedSongsSearchViewModel';
+import { UserDetailsViewModel } from '@/ViewModels/User/UserDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
@@ -32,7 +32,7 @@ function initPage(confirmDisableStr: string): void {
 	$('#favoriteAlbums img').vdbAlbumToolTip();
 }
 
-const UserDetails = (
+export const UserDetails = (
 	artistId: number,
 	childVoicebanks: boolean,
 	confirmDisableStr: string,
@@ -128,5 +128,3 @@ const UserDetails = (
 		initPage(confirmDisableStr);
 	});
 };
-
-export default UserDetails;

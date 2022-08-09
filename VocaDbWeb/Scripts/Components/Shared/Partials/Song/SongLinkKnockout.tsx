@@ -1,6 +1,6 @@
 import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import SongLink from '@/Components/Shared/Partials/Song/SongLink';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import React from 'react';
 
 interface SongLinkKnockoutProps {
@@ -11,7 +11,7 @@ interface SongLinkKnockoutProps {
 	toolTipDomain?: string;
 }
 
-const SongLinkKnockout = React.memo(
+export const SongLinkKnockout = React.memo(
 	({
 		song,
 		albumId,
@@ -46,5 +46,3 @@ const SongLinkKnockout = React.memo(
 		);
 	},
 );
-
-export default SongLinkKnockout;

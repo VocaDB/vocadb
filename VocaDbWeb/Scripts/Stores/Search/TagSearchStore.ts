@@ -1,10 +1,10 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import TagRepository from '@/Repositories/TagRepository';
-import GlobalValues from '@/Shared/GlobalValues';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable, observable } from 'mobx';
 
@@ -25,7 +25,7 @@ export interface TagSearchRouteParams {
 	sort?: TagSortRule;
 }
 
-export default class TagSearchStore extends SearchCategoryBaseStore<
+export class TagSearchStore extends SearchCategoryBaseStore<
 	TagSearchRouteParams,
 	TagApiContract
 > {

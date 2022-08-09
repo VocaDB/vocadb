@@ -1,9 +1,10 @@
 import { ArtistAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import functions from '@/Shared/GlobalFunctions';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { functions } from '@/Shared/GlobalFunctions';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,7 @@ interface ArtistAutoCompleteProps
 	properties: ArtistAutoCompleteParams;
 }
 
-const ArtistAutoComplete = ({
+export const ArtistAutoComplete = ({
 	properties,
 	...props
 }: ArtistAutoCompleteProps): React.ReactElement => {
@@ -62,5 +63,3 @@ const ArtistAutoComplete = ({
 		/>
 	);
 };
-
-export default ArtistAutoComplete;

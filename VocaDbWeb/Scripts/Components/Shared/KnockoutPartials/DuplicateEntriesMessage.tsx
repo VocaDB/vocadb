@@ -1,8 +1,8 @@
 import Alert from '@/Bootstrap/Alert';
 import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import NotificationIcon from '@/Components/Shared/Partials/Shared/NotificationIcon';
-import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ interface DuplicateEntriesMessageProps {
 }
 
 // Shows a message for duplicate instances of an entry.
-const DuplicateEntriesMessage = React.memo(
+export const DuplicateEntriesMessage = React.memo(
 	({ dupeEntries }: DuplicateEntriesMessageProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -46,5 +46,3 @@ const DuplicateEntriesMessage = React.memo(
 		);
 	},
 );
-
-export default DuplicateEntriesMessage;

@@ -1,23 +1,24 @@
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
-import PVHelper from '@/Helpers/PVHelper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVHelper } from '@/Helpers/PVHelper';
 import { SongOptionalField } from '@/Models/EntryOptionalFields';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import ContentLanguagePreference from '@/Models/Globalization/ContentLanguagePreference';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVPlayerViewModel, {
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
 	IPVPlayerSong,
+	PVPlayerViewModel,
 } from '@/ViewModels/PVs/PVPlayerViewModel';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed } from 'knockout';
 
-export default class PlayListViewModel {
+export class PlayListViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private urlMapper: UrlMapper,

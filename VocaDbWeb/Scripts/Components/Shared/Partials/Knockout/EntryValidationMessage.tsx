@@ -11,7 +11,7 @@ interface EntryValidationMessageProps {
 	helpSection?: string;
 }
 
-const EntryValidationMessage = React.memo(
+export const EntryValidationMessage = React.memo(
 	({
 		draft,
 		validationMessages,
@@ -90,5 +90,3 @@ const EntryValidationMessage = React.memo(
 		);
 	},
 );
-
-export default EntryValidationMessage;

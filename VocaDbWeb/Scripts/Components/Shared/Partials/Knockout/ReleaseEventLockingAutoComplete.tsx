@@ -1,7 +1,7 @@
-import ReleaseEventAutoComplete from '@/Components/KnockoutExtensions/ReleaseEventAutoComplete';
-import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
-import IEntryWithIdAndName from '@/Models/IEntryWithIdAndName';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import { ReleaseEventAutoComplete } from '@/Components/KnockoutExtensions/ReleaseEventAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -11,7 +11,7 @@ interface ReleaseEventLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<IEntryWithIdAndName>;
 }
 
-const ReleaseEventLockingAutoComplete = observer(
+export const ReleaseEventLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 	}: ReleaseEventLockingAutoCompleteProps): React.ReactElement => {
@@ -41,5 +41,3 @@ const ReleaseEventLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default ReleaseEventLockingAutoComplete;

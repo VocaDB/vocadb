@@ -1,27 +1,27 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForArtistContract from '@/DataContracts/Artist/ArtistForArtistContract';
-import ArtistForEditContract from '@/DataContracts/Artist/ArtistForEditContract';
-import TranslatedEnumField from '@/DataContracts/TranslatedEnumField';
-import ArtistHelper from '@/Helpers/ArtistHelper';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForArtistContract } from '@/DataContracts/Artist/ArtistForArtistContract';
+import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import UserRepository from '@/Repositories/UserRepository';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
 import { IDialogService } from '@/Shared/DialogService';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import DeleteEntryViewModel from '@/ViewModels/DeleteEntryViewModel';
-import EntryPictureFileListEditViewModel from '@/ViewModels/EntryPictureFileListEditViewModel';
-import EnglishTranslatedStringEditViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
-import NamesEditViewModel from '@/ViewModels/Globalization/NamesEditViewModel';
-import WebLinksEditViewModel from '@/ViewModels/WebLinksEditViewModel';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { EntryPictureFileListEditViewModel } from '@/ViewModels/EntryPictureFileListEditViewModel';
+import { EnglishTranslatedStringEditViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringEditViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import $ from 'jquery';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
 
-export default class ArtistEditViewModel {
+export class ArtistEditViewModel {
 	public addAssociatedArtist = (): void => {
 		if (this.newAssociatedArtist.isEmpty()) return;
 

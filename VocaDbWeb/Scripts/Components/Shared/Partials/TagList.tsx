@@ -1,8 +1,8 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { TagToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import TagListStore from '@/Stores/Tag/TagListStore';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -47,7 +47,7 @@ interface TagListProps {
 	tagListStore: TagListStore;
 }
 
-const TagList = observer(
+export const TagList = observer(
 	({ tagListStore }: TagListProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -91,5 +91,3 @@ const TagList = observer(
 		);
 	},
 );
-
-export default TagList;

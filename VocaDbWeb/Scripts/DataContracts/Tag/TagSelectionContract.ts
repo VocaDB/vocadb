@@ -1,6 +1,6 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 
-export default interface TagSelectionContract {
+export interface TagSelectionContract {
 	selected?: boolean;
 
 	tag: TagBaseContract;

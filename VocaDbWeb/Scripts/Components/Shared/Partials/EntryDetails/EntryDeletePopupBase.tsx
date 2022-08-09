@@ -1,5 +1,5 @@
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -16,7 +16,7 @@ interface EntryDeletePopupBaseProps {
 	onDelete?: () => void;
 }
 
-const EntryDeletePopupBase = observer(
+export const EntryDeletePopupBase = observer(
 	({
 		confirmText,
 		deleteEntryStore,
@@ -74,5 +74,3 @@ const EntryDeletePopupBase = observer(
 		);
 	},
 );
-
-export default EntryDeletePopupBase;

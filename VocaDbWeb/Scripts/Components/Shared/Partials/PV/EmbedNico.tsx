@@ -8,7 +8,7 @@ interface EmbedNicoProps {
 	enableApi?: boolean;
 }
 
-const EmbedNico = React.memo(
+export const EmbedNico = React.memo(
 	({
 		pvId,
 		width,
@@ -34,5 +34,3 @@ const EmbedNico = React.memo(
 		);
 	},
 );
-
-export default EmbedNico;

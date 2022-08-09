@@ -1,8 +1,8 @@
-import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
-import LockingAutoComplete from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -17,7 +17,7 @@ interface TagLockingAutoCompleteProps {
 }
 
 // Locking autocomplete for tag selection. Allows selection of one (existing) tag. When tag is selected, clear button is displayed.
-const TagLockingAutoComplete = observer(
+export const TagLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 		tagFilter,
@@ -55,5 +55,3 @@ const TagLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default TagLockingAutoComplete;

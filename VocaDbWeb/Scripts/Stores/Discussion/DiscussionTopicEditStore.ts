@@ -1,10 +1,10 @@
-import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import LoginManager from '@/Models/LoginManager';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { LoginManager } from '@/Models/LoginManager';
 import { makeObservable, observable } from 'mobx';
 
-export default class DiscussionTopicEditStore {
+export class DiscussionTopicEditStore {
 	public readonly author: UserApiContract;
 	@observable public content = '';
 	@observable public folderId?: number = undefined;

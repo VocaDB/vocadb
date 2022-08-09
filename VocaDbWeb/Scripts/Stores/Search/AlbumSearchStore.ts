@@ -1,14 +1,14 @@
-import AlbumContract from '@/DataContracts/Album/AlbumContract';
-import PagingProperties from '@/DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import AdvancedSearchFilter from '@/Stores/Search/AdvancedSearchFilter';
-import ArtistFilters from '@/Stores/Search/ArtistFilters';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import SearchCategoryBaseStore from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable, observable } from 'mobx';
 
@@ -44,7 +44,7 @@ export interface AlbumSearchRouteParams {
 	viewMode?: string /* TODO: enum */;
 }
 
-export default class AlbumSearchStore extends SearchCategoryBaseStore<
+export class AlbumSearchStore extends SearchCategoryBaseStore<
 	AlbumSearchRouteParams,
 	AlbumContract
 > {

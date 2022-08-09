@@ -1,9 +1,9 @@
 import Button from '@/Bootstrap/Button';
-import ArtistAutoComplete from '@/Components/KnockoutExtensions/ArtistAutoComplete';
-import ArtistParticipationStatusOptionsKnockout from '@/Components/Shared/Partials/Song/ArtistParticipationStatusOptionsKnockout';
-import EntryType from '@/Models/EntryType';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import ArtistFiltersStore from '@/Stores/Search/ArtistFilters';
+import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import { ArtistParticipationStatusOptionsKnockout } from '@/Components/Shared/Partials/Song/ArtistParticipationStatusOptionsKnockout';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { ArtistFilters as ArtistFiltersStore } from '@/Stores/Search/ArtistFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -15,7 +15,7 @@ interface ArtistFiltersProps {
 	artistParticipationStatus: boolean;
 }
 
-const ArtistFilters = observer(
+export const ArtistFilters = observer(
 	({
 		artistFilters,
 		artistParticipationStatus,
@@ -114,5 +114,3 @@ const ArtistFilters = observer(
 		);
 	},
 );
-
-export default ArtistFilters;

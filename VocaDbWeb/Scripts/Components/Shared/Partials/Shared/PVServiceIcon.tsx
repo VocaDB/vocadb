@@ -1,4 +1,4 @@
-import PVService from '@/Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
 const videoServiceLinkUrl = (service: PVService): string => {
@@ -31,7 +31,7 @@ interface PVServiceIconProps {
 	service: PVService;
 }
 
-const PVServiceIcon = React.memo(
+export const PVServiceIcon = React.memo(
 	({ service }: PVServiceIconProps): React.ReactElement => {
 		const iconUrl = videoServiceLinkUrl(service);
 
@@ -40,5 +40,3 @@ const PVServiceIcon = React.memo(
 		);
 	},
 );
-
-export default PVServiceIcon;

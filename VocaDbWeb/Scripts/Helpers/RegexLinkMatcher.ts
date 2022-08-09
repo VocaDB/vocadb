@@ -12,7 +12,7 @@ const format = (format: string, args: any): string => {
 /// Captures values from (partial) URL using regex and then formats a full
 /// URL using those captured values.
 /// </summary>
-export default class RegexLinkMatcher {
+export class RegexLinkMatcher {
 	private readonly regex: RegExp;
 
 	public constructor(private readonly template: string, regexStr: string) {

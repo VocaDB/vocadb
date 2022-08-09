@@ -1,6 +1,6 @@
-import UserApiContract from '@/DataContracts/User/UserApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
-export default interface UserMessageSummaryContract {
+export interface UserMessageSummaryContract {
 	/* 
 			Message body, optional field. 
 			This field is encoded with Markdown.

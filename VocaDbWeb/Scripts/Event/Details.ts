@@ -1,18 +1,18 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import UserBaseContract from '@/DataContracts/User/UserBaseContract';
-import LoginManager from '@/Models/LoginManager';
-import UserEventRelationshipType from '@/Models/Users/UserEventRelationshipType';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ReleaseEventDetailsViewModel from '@/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ReleaseEventDetailsViewModel } from '@/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const EventDetails = (
+export const EventDetails = (
 	eventAssociationType: UserEventRelationshipType,
 	model: {
 		id: number;
@@ -63,5 +63,3 @@ const EventDetails = (
 		$('.artistLink').vdbArtistToolTip();
 	});
 };
-
-export default EventDetails;

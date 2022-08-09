@@ -1,6 +1,6 @@
-import EntryRefContract from '@/DataContracts/EntryRefContract';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 
-export default interface DuplicateEntryResultContract {
+export interface DuplicateEntryResultContract {
 	entry: EntryRefWithNameContract & {
 		artistString?: string;
 

@@ -1,8 +1,8 @@
-import DateTimeHelper from '@/Helpers/DateTimeHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import Decimal from 'decimal.js-light';
 import ko, { Computed, Observable } from 'knockout';
 
-export default class KnockoutHelper {
+export class KnockoutHelper {
 	public static stringEnum<T>(
 		observable: Observable<T>,
 		enumType: any,

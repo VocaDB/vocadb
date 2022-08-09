@@ -1,28 +1,28 @@
-import LyricsForSongContract from '@/DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongDetailsAjax } from '@/DataContracts/Song/SongDetailsForApi';
-import SongListBaseContract from '@/DataContracts/SongListBaseContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import ArtistHelper from '@/Helpers/ArtistHelper';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
-import SongVoteRating from '@/Models/SongVoteRating';
-import SongType from '@/Models/Songs/SongType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import HttpClient from '@/Shared/HttpClient';
-import EditableCommentsStore from '@/Stores/EditableCommentsStore';
-import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
-import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
-import ReportEntryStore from '@/Stores/ReportEntryStore';
-import SelfDescriptionStore from '@/Stores/SelfDescriptionStore';
-import SongLyricsStore from '@/Stores/Song/SongLyricsStore';
-import TagListStore from '@/Stores/Tag/TagListStore';
-import TagsEditStore from '@/Stores/Tag/TagsEditStore';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { EnglishTranslatedStringStore } from '@/Stores/Globalization/EnglishTranslatedStringStore';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
+import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
+import { SongLyricsStore } from '@/Stores/Song/SongLyricsStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import _ from 'lodash';
 import {
 	action,
@@ -201,7 +201,7 @@ export class SongListsStore {
 }
 
 // Store for the song details view.
-export default class SongDetailsStore {
+export class SongDetailsStore {
 	@observable public allVersionsVisible = false;
 	public readonly comments: EditableCommentsStore;
 	public readonly id: number;

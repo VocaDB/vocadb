@@ -1,19 +1,20 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import Layout from '@/Components/Shared/Layout';
-import PVContent from '@/Components/Shared/PVs/PVContent';
-import ActivityEntryKnockout from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import AlbumThumbs from '@/Components/Shared/Partials/Album/AlbumThumbs';
-import CommentWithEntryVertical from '@/Components/Shared/Partials/Comment/CommentWithEntryVertical';
-import EventThumbs from '@/Components/Shared/Partials/Shared/EventThumbs';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
-import FrontPageContract from '@/DataContracts/FrontPageContract';
-import UrlHelper from '@/Helpers/UrlHelper';
+import { Layout } from '@/Components/Shared/Layout';
+import { PVContent } from '@/Components/Shared/PVs/PVContent';
+import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
+import { AlbumThumbs } from '@/Components/Shared/Partials/Album/AlbumThumbs';
+import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/CommentWithEntryVertical';
+import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { FrontPageContract } from '@/DataContracts/FrontPageContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
 import NewsItems from '@/Pages/Home/Partials/NewsItems';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import FrontPageStore, {
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
 	FrontPagePVPlayerStore,
+	FrontPageStore,
 } from '@/Stores/FrontPageStore';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';

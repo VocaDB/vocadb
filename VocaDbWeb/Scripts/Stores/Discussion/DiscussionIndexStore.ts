@@ -1,10 +1,10 @@
-import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@/Models/LoginManager';
-import DiscussionRepository from '@/Repositories/DiscussionRepository';
-import DiscussionTopicEditStore from '@/Stores/Discussion/DiscussionTopicEditStore';
-import DiscussionTopicStore from '@/Stores/Discussion/DiscussionTopicStore';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
+import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -27,7 +27,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./DiscussionIndexRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class DiscussionIndexStore
+export class DiscussionIndexStore
 	implements StoreWithPagination<DiscussionIndexRouteParams> {
 	@observable public folders: DiscussionFolderContract[] = [];
 	@observable public newTopic: DiscussionTopicEditStore;

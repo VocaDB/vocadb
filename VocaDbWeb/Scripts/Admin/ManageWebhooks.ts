@@ -1,11 +1,11 @@
-import AdminRepository from '@/Repositories/AdminRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import ManageWebhooksViewModel from '@/ViewModels/Admin/ManageWebhooksViewModel';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ManageWebhooksViewModel } from '@/ViewModels/Admin/ManageWebhooksViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const AdminManageWebhooks = (webhookEventNames: {
+export const AdminManageWebhooks = (webhookEventNames: {
 	[key: string]: string;
 }): void => {
 	$(function () {
@@ -19,5 +19,3 @@ const AdminManageWebhooks = (webhookEventNames: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default AdminManageWebhooks;

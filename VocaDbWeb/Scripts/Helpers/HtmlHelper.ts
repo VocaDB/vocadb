@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export default class HtmlHelper {
+export class HtmlHelper {
 	// Bolds and HTML encodes a term
 	public static boldAndHtmlEncode(text: string, term: string): string {
 		if (!text || !term) return text;

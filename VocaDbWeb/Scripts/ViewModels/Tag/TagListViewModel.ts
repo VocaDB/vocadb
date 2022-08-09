@@ -1,9 +1,9 @@
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
-export default class TagListViewModel {
+export class TagListViewModel {
 	private static maxDisplayedTags = 4;
 
 	public constructor(tagUsages: TagUsageForApiContract[]) {

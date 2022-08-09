@@ -1,10 +1,10 @@
-import EntryThumbContract from '@/DataContracts/EntryThumbContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the ReleaseEventSeriesDetailsForApiContract record class in C#.
-export default interface ReleaseEventSeriesDetailsContract {
+export interface ReleaseEventSeriesDetailsContract {
 	additionalNames: string;
 	category: string /* TODO: enum */;
 	deleted: boolean;

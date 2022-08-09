@@ -1,31 +1,31 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import SongListBaseContract from '@/DataContracts/SongListBaseContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import RatedSongForUserForApiContract from '@/DataContracts/User/RatedSongForUserForApiContract';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVPlayerViewModel from '@/ViewModels/PVs/PVPlayerViewModel';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
-import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
-import TagFilter from '@/ViewModels/Search/TagFilter';
-import TagFilters from '@/ViewModels/Search/TagFilters';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
-import PlayListRepositoryForRatedSongsAdapter from '@/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import PlayListViewModel from '@/ViewModels/Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayerViewModel } from '@/ViewModels/PVs/PVPlayerViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { AdvancedSearchFilters } from '@/ViewModels/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
+import { TagFilter } from '@/ViewModels/Search/TagFilter';
+import { TagFilters } from '@/ViewModels/Search/TagFilters';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
+import { PlayListRepositoryForRatedSongsAdapter } from '@/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import { PlayListViewModel } from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import { SongWithPreviewViewModel } from '@/ViewModels/Song/SongWithPreviewViewModel';
 import ko from 'knockout';
 import moment from 'moment';
 
-export default class RatedSongsSearchViewModel {
+export class RatedSongsSearchViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,

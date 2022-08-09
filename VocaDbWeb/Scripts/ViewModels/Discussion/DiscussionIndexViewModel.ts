@@ -1,15 +1,16 @@
-import DiscussionFolderContract from '@/DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@/DataContracts/Discussion/DiscussionTopicContract';
-import DiscussionRepository from '@/Repositories/DiscussionRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import DiscussionTopicViewModel, {
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
 	DiscussionTopicEditViewModel,
+	DiscussionTopicViewModel,
 } from '@/ViewModels/Discussion/DiscussionTopicViewModel';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Observable } from 'knockout';
 
-export default class DiscussionIndexViewModel {
+export class DiscussionIndexViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly repo: DiscussionRepository,

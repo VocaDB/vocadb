@@ -1,14 +1,14 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
-import SearchCategoryBaseViewModel from '@/ViewModels/Search/SearchCategoryBaseViewModel';
-import SearchViewModel from '@/ViewModels/Search/SearchViewModel';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
+import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
 import ko, { Computed } from 'knockout';
 
-export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
+export class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 	public constructor(
 		searchViewModel: SearchViewModel,
 		values: GlobalValues,

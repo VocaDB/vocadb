@@ -1,6 +1,6 @@
 import ko, { Computed } from 'knockout';
 
-export default class ReportEntryViewModel {
+export class ReportEntryViewModel {
 	public constructor(
 		public reportTypes: IEntryReportType[],
 		private sendFunc: (reportType: string, notes: string) => void,

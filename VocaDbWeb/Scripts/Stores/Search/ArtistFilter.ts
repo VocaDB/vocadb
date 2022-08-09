@@ -1,7 +1,7 @@
-import ArtistType from '@/Models/Artists/ArtistType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import { makeObservable, observable } from 'mobx';
 
-export default class ArtistFilter {
+export class ArtistFilter {
 	@observable public artistType?: ArtistType = undefined;
 	@observable public name?: string = undefined;
 

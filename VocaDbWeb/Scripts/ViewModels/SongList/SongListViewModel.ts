@@ -1,38 +1,38 @@
-import CommentContract from '@/DataContracts/CommentContract';
-import SongInListContract from '@/DataContracts/Song/SongInListContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { SongOptionalField } from '@/Models/EntryOptionalFields';
 import { SongOptionalFields } from '@/Models/EntryOptionalFields';
-import EntryType from '@/Models/EntryType';
-import PVServiceIcons from '@/Models/PVServiceIcons';
-import ResourcesManager from '@/Models/ResourcesManager';
-import SongType from '@/Models/Songs/SongType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import SongListRepository from '@/Repositories/SongListRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
-import PVPlayerViewModel from '@/ViewModels/PVs/PVPlayerViewModel';
-import PVPlayersFactory from '@/ViewModels/PVs/PVPlayersFactory';
-import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
-import ArtistFilters from '@/ViewModels/Search/ArtistFilters';
-import TagFilter from '@/ViewModels/Search/TagFilter';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
-import PlayListRepositoryForSongListAdapter from '@/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter';
-import PlayListViewModel from '@/ViewModels/Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '@/ViewModels/Song/SongWithPreviewViewModel';
-import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { EntryType } from '@/Models/EntryType';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { ResourcesManager } from '@/Models/ResourcesManager';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { PVPlayerViewModel } from '@/ViewModels/PVs/PVPlayerViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { AdvancedSearchFilters } from '@/ViewModels/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
+import { TagFilter } from '@/ViewModels/Search/TagFilter';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
+import { PlayListRepositoryForSongListAdapter } from '@/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter';
+import { PlayListViewModel } from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import { SongWithPreviewViewModel } from '@/ViewModels/Song/SongWithPreviewViewModel';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { Computed } from 'knockout';
 
-export default class SongListViewModel {
+export class SongListViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,

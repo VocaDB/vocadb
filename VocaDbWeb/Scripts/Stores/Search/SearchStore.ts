@@ -1,37 +1,43 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import Tag from '@/Models/Tags/Tag';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import EntryRepository from '@/Repositories/EntryRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import PVPlayersFactory from '@/Stores/PVs/PVPlayersFactory';
-import AlbumSearchStore, {
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { Tag } from '@/Models/Tags/Tag';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import {
 	AlbumSearchRouteParams,
+	AlbumSearchStore,
 } from '@/Stores/Search/AlbumSearchStore';
-import AnythingSearchStore, {
+import {
 	AnythingSearchRouteParams,
+	AnythingSearchStore,
 } from '@/Stores/Search/AnythingSearchStore';
-import ArtistSearchStore, {
+import {
 	ArtistSearchRouteParams,
+	ArtistSearchStore,
 } from '@/Stores/Search/ArtistSearchStore';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import EventSearchStore, {
+import {
 	EventSearchRouteParams,
+	EventSearchStore,
 } from '@/Stores/Search/EventSearchStore';
 import { ISearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
-import SongSearchStore, {
+import {
 	SongSearchRouteParams,
+	SongSearchStore,
 } from '@/Stores/Search/SongSearchStore';
-import TagFilters from '@/Stores/Search/TagFilters';
-import TagSearchStore, {
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import {
 	TagSearchRouteParams,
+	TagSearchStore,
 } from '@/Stores/Search/TagSearchStore';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
@@ -68,7 +74,7 @@ addFormats(ajv);
 const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SearchStore
+export class SearchStore
 	implements ICommonSearchStore, StoreWithPagination<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;

@@ -1,16 +1,16 @@
-import AlbumDiscPropertiesContract from '@/DataContracts/Album/AlbumDiscPropertiesContract';
-import AlbumReleaseContract from '@/DataContracts/Album/AlbumReleaseContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import EntryPictureFileContract from '@/DataContracts/EntryPictureFileContract';
-import EnglishTranslatedStringContract from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import SongInAlbumEditContract from '@/DataContracts/Song/SongInAlbumEditContract';
-import WebLinkContract from '@/DataContracts/WebLinkContract';
-import AlbumType from '@/Models/Albums/AlbumType';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { AlbumReleaseContract } from '@/DataContracts/Album/AlbumReleaseContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
 
 // Corresponds to the AlbumForEditForApiContract record class in C#.
-export default interface AlbumForEditContract {
+export interface AlbumForEditContract {
 	artistLinks: ArtistForAlbumContract[];
 	canDelete?: boolean;
 	coverPictureMime?: string;

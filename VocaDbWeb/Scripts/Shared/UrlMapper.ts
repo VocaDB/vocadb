@@ -1,6 +1,6 @@
-import functions from '@/Shared/GlobalFunctions';
+import { functions } from '@/Shared/GlobalFunctions';
 
-export default class UrlMapper {
+export class UrlMapper {
 	public static buildUrl = (...args: string[]): string => {
 		return args.reduce((list: string, item: string) =>
 			UrlMapper.mergeUrls(list, item),

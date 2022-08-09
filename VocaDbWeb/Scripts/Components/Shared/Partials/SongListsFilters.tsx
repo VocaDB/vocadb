@@ -1,9 +1,10 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
-import TagAutoComplete from '@/Components/KnockoutExtensions/TagAutoComplete';
-import TagFiltersBase from '@/Components/Shared/Partials/TagFiltersBase';
-import SongListsBaseStore, {
+import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
+import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
+import {
+	SongListsBaseStore,
 	SongListSortRule,
 } from '@/Stores/SongList/SongListsBaseStore';
 import classNames from 'classnames';
@@ -17,7 +18,7 @@ interface SongListsFiltersProps {
 	songListsBaseStore: SongListsBaseStore;
 }
 
-const SongListsFilters = observer(
+export const SongListsFilters = observer(
 	({ songListsBaseStore }: SongListsFiltersProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes',
@@ -146,5 +147,3 @@ const SongListsFilters = observer(
 		);
 	},
 );
-
-export default SongListsFilters;

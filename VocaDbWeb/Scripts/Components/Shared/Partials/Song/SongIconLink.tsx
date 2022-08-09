@@ -1,6 +1,6 @@
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import UrlHelper from '@/Helpers/UrlHelper';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ interface SongIconLinkProps {
 	albumId?: number;
 }
 
-const SongIconLink = React.memo(
+export const SongIconLink = React.memo(
 	({ song, albumId }: SongIconLinkProps): React.ReactElement => {
 		return (
 			<Link
@@ -28,5 +28,3 @@ const SongIconLink = React.memo(
 		);
 	},
 );
-
-export default SongIconLink;

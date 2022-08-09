@@ -1,15 +1,15 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import VenueForApiContract from '@/DataContracts/Venue/VenueForApiContract';
-import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
-import EntryWithArchivedVersionsContract from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@/Helpers/AjaxHelper';
-import NameMatchMode from '@/Models/NameMatchMode';
-import BaseRepository from '@/Repositories/BaseRepository';
-import functions from '@/Shared/GlobalFunctions';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { BaseRepository } from '@/Repositories/BaseRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-export default class VenueRepository extends BaseRepository {
+export class VenueRepository extends BaseRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

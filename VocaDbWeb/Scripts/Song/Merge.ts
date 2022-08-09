@@ -1,11 +1,11 @@
-import SongContract from '@/DataContracts/Song/SongContract';
-import SongRepository from '@/Repositories/SongRepository';
-import HttpClient from '@/Shared/HttpClient';
-import SongMergeViewModel from '@/ViewModels/Song/SongMergeViewModel';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { SongMergeViewModel } from '@/ViewModels/Song/SongMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const SongMerge = (model: SongContract): void => {
+export const SongMerge = (model: SongContract): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var repo = new SongRepository(httpClient, vdb.values.baseAddress);
@@ -18,5 +18,3 @@ const SongMerge = (model: SongContract): void => {
 		});
 	});
 };
-
-export default SongMerge;

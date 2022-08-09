@@ -1,31 +1,32 @@
-import AlbumReviewContract from '@/DataContracts/Album/AlbumReviewContract';
-import ArtistApiContract from '@/DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@/DataContracts/CommentContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@/DataContracts/Tag/TagUsageForApiContract';
-import AlbumForUserForApiContract from '@/DataContracts/User/AlbumForUserForApiContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import ArtistHelper from '@/Helpers/ArtistHelper';
-import EntryType from '@/Models/EntryType';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import functions from '@/Shared/GlobalFunctions';
-import GlobalValues from '@/Shared/GlobalValues';
-import ui from '@/Shared/MessagesTyped';
-import EditableCommentsViewModel from '@/ViewModels/EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
-import ReportEntryViewModel, {
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { EntryType } from '@/Models/EntryType';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { EnglishTranslatedStringViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import {
 	IEntryReportType,
+	ReportEntryViewModel,
 } from '@/ViewModels/ReportEntryViewModel';
-import SelfDescriptionViewModel from '@/ViewModels/SelfDescriptionViewModel';
-import TagListViewModel from '@/ViewModels/Tag/TagListViewModel';
-import TagsEditViewModel from '@/ViewModels/Tag/TagsEditViewModel';
+import { SelfDescriptionViewModel } from '@/ViewModels/SelfDescriptionViewModel';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
-export default class AlbumDetailsViewModel {
+export class AlbumDetailsViewModel {
 	public comments: EditableCommentsViewModel;
 
 	public downloadTagsDialog: DownloadTagsViewModel;

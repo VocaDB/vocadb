@@ -1,13 +1,13 @@
 import Button from '@/Bootstrap/Button';
-import EmbedPV from '@/Components/Shared/Partials/PV/EmbedPV';
+import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
 import { showSuccessMessage } from '@/Components/ui';
-import SongWithPVAndVoteContract from '@/DataContracts/Song/SongWithPVAndVoteContract';
-import PVHelper from '@/Helpers/PVHelper';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
-import PVRatingButtonsStore from '@/Stores/PVRatingButtonsStore';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -81,7 +81,7 @@ interface PVContentProps {
 	selectedSong: SongWithPVAndVoteContract;
 }
 
-const PVContent = observer(
+export const PVContent = observer(
 	({ pvPlayerStore, selectedSong }: PVContentProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes.Home',
@@ -138,5 +138,3 @@ const PVContent = observer(
 		);
 	},
 );
-
-export default PVContent;

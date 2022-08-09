@@ -1,4 +1,4 @@
-import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import React from 'react';

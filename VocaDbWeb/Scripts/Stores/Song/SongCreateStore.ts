@@ -1,19 +1,19 @@
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import DuplicateEntryResultContract from '@/DataContracts/DuplicateEntryResultContract';
-import LocalizedStringContract from '@/DataContracts/Globalization/LocalizedStringContract';
-import ArtistForSongContract from '@/DataContracts/Song/ArtistForSongContract';
-import SongContract from '@/DataContracts/Song/SongContract';
-import TagApiContract from '@/DataContracts/Tag/TagApiContract';
-import ArtistType from '@/Models/Artists/ArtistType';
-import EntryType from '@/Models/EntryType';
-import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
-import SongType from '@/Models/Songs/SongType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { LocalizedStringContract } from '@/DataContracts/Globalization/LocalizedStringContract';
+import { ArtistForSongContract } from '@/DataContracts/Song/ArtistForSongContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import _ from 'lodash';
 import {
 	action,
@@ -24,7 +24,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class SongCreateStore {
+export class SongCreateStore {
 	@observable public artists: ArtistContract[] = [];
 	@observable public draft = false;
 	@observable public dupeEntries: DuplicateEntryResultContract[] = [];

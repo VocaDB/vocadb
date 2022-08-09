@@ -1,16 +1,17 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import Layout from '@/Components/Shared/Layout';
-import CommentBodyLarge from '@/Components/Shared/Partials/Comment/CommentBodyLarge';
-import CommentEntryItem from '@/Components/Shared/Partials/Comment/CommentEntryItem';
-import Dropdown from '@/Components/Shared/Partials/Knockout/Dropdown';
+import { Layout } from '@/Components/Shared/Layout';
+import { CommentBodyLarge } from '@/Components/Shared/Partials/Comment/CommentBodyLarge';
+import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEntryItem';
+import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
-import UserLockingAutoComplete from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
-import LoginManager from '@/Models/LoginManager';
-import UserRepository from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import CommentListStore, {
+import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	CommentListStore,
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
 import { useStoreWithUpdateResults } from '@vocadb/route-sphere';

@@ -1,7 +1,7 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import ko from 'knockout';
 
-export default class TagFilter {
+export class TagFilter {
 	public static fromContract = (tag: TagBaseContract): TagFilter => {
 		return new TagFilter(tag.id, tag.name, tag.urlSlug);
 	};

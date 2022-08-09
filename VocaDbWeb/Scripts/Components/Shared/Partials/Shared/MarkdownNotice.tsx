@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const MarkdownNotice = React.memo(
+export const MarkdownNotice = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['HelperRes']);
 
@@ -20,5 +20,3 @@ const MarkdownNotice = React.memo(
 		);
 	},
 );
-
-export default MarkdownNotice;

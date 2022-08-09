@@ -1,4 +1,4 @@
-import ObservableUrlParamRouter from '@/Shared/Routing/ObservableUrlParamRouter';
+import { ObservableUrlParamRouter } from '@/Shared/Routing/ObservableUrlParamRouter';
 import jQuery from 'jquery';
 import ko from 'knockout';
 

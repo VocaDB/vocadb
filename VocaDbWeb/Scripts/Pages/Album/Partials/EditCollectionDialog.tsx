@@ -5,8 +5,8 @@ import {
 	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import UrlMapper from '@/Shared/UrlMapper';
-import AlbumDetailsStore from '@/Stores/Album/AlbumDetailsStore';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import $ from 'jquery';
 import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
 import { runInAction } from 'mobx';

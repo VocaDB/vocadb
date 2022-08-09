@@ -1,22 +1,22 @@
-import PartialFindResultContract from '@/DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import ResourcesContract from '@/DataContracts/ResourcesContract';
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import AlbumForUserForApiContract from '@/DataContracts/User/AlbumForUserForApiContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
-import AlbumType from '@/Models/Albums/AlbumType';
-import EntryType from '@/Models/EntryType';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import BasicEntryLinkViewModel from '@/ViewModels/BasicEntryLinkViewModel';
-import AdvancedSearchFilters from '@/ViewModels/Search/AdvancedSearchFilters';
-import ServerSidePagingViewModel from '@/ViewModels/ServerSidePagingViewModel';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { AdvancedSearchFilters } from '@/ViewModels/Search/AdvancedSearchFilters';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
 
-export default class AlbumCollectionViewModel {
+export class AlbumCollectionViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private userRepo: UserRepository,

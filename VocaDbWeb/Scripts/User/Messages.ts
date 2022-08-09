@@ -1,12 +1,12 @@
-import UserRepository, { UserInboxType } from '@/Repositories/UserRepository';
-import HttpClient from '@/Shared/HttpClient';
-import ui from '@/Shared/MessagesTyped';
-import UrlMapper from '@/Shared/UrlMapper';
-import UserMessagesViewModel from '@/ViewModels/User/UserMessagesViewModel';
+import { UserInboxType, UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { UserMessagesViewModel } from '@/ViewModels/User/UserMessagesViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const UserMessages = (
+export const UserMessages = (
 	message: string,
 	model: {
 		inbox: UserInboxType;
@@ -35,5 +35,3 @@ const UserMessages = (
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default UserMessages;

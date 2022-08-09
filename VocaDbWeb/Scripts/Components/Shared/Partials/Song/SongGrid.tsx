@@ -1,7 +1,7 @@
-import SongTypeLabel from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import SongApiContract from '@/DataContracts/Song/SongApiContract';
-import UrlHelper from '@/Helpers/UrlHelper';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
@@ -41,7 +41,7 @@ interface SongGridProps {
 	displayPublishDate?: boolean;
 }
 
-const SongGrid = ({
+export const SongGrid = ({
 	songs,
 	columns,
 	displayType = false,
@@ -93,5 +93,3 @@ const SongGrid = ({
 		</table>
 	);
 };
-
-export default SongGrid;

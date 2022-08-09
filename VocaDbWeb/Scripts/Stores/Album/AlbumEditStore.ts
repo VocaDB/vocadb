@@ -1,30 +1,30 @@
-import AlbumForEditContract from '@/DataContracts/Album/AlbumForEditContract';
-import ArtistContract from '@/DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@/DataContracts/ArtistForAlbumContract';
-import ReleaseEventContract from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import AlbumType from '@/Models/Albums/AlbumType';
-import EntryType from '@/Models/EntryType';
-import WebLinkCategory from '@/Models/WebLinkCategory';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import PVRepository from '@/Repositories/PVRepository';
-import ReleaseEventRepository from '@/Repositories/ReleaseEventRepository';
-import SongRepository from '@/Repositories/SongRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import GlobalValues from '@/Shared/GlobalValues';
-import UrlMapper from '@/Shared/UrlMapper';
-import AlbumDiscPropertiesListEditStore from '@/Stores/Album/AlbumDiscPropertiesListEditStore';
-import AlbumArtistRolesEditStore from '@/Stores/Artist/AlbumArtistRolesEditStore';
-import ArtistForAlbumEditStore from '@/Stores/ArtistForAlbumEditStore';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
-import CustomNameEditStore from '@/Stores/CustomNameEditStore';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
-import EntryPictureFileListEditStore from '@/Stores/EntryPictureFileListEditStore';
-import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
-import PVListEditStore from '@/Stores/PVs/PVListEditStore';
-import SongInAlbumEditStore from '@/Stores/SongInAlbumEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumDiscPropertiesListEditStore } from '@/Stores/Album/AlbumDiscPropertiesListEditStore';
+import { AlbumArtistRolesEditStore } from '@/Stores/Artist/AlbumArtistRolesEditStore';
+import { ArtistForAlbumEditStore } from '@/Stores/ArtistForAlbumEditStore';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { CustomNameEditStore } from '@/Stores/CustomNameEditStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
+import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -100,7 +100,7 @@ export class TrackPropertiesStore {
 	}
 }
 
-export default class AlbumEditStore {
+export class AlbumEditStore {
 	// Whether all tracks should be selected.
 	@observable public allTracksSelected: boolean;
 	// List of artist links for this album.

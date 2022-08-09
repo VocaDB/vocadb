@@ -1,15 +1,15 @@
-import TagBaseContract from '@/DataContracts/Tag/TagBaseContract';
-import TagForEditContract from '@/DataContracts/Tag/TagForEditContract';
-import EntryType from '@/Models/EntryType';
-import TagTargetTypes from '@/Models/Tags/TagTargetTypes';
-import TagRepository from '@/Repositories/TagRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import UrlMapper from '@/Shared/UrlMapper';
-import BasicEntryLinkStore from '@/Stores/BasicEntryLinkStore';
-import DeleteEntryStore from '@/Stores/DeleteEntryStore';
-import EnglishTranslatedStringEditStore from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '@/Stores/Globalization/NamesEditStore';
-import WebLinksEditStore from '@/Stores/WebLinksEditStore';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
+import { EntryType } from '@/Models/EntryType';
+import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -20,7 +20,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class TagEditStore {
+export class TagEditStore {
 	// Bitmask for all possible entry types (all bits 1)
 	public static readonly allEntryTypes = 1073741823;
 

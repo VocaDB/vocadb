@@ -1,7 +1,7 @@
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolders from '@/Pages/Discussion/Partials/ViewFolders';
-import DiscussionIndexStore from '@/Stores/Discussion/DiscussionIndexStore';
+import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

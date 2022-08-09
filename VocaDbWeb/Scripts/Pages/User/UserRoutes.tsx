@@ -1,9 +1,9 @@
-import UserApiContract from '@/DataContracts/User/UserApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import UserRepository from '@/Repositories/UserRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 

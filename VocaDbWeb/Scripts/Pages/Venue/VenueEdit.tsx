@@ -1,35 +1,35 @@
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import Markdown from '@/Components/KnockoutExtensions/Markdown';
-import NamesEditor from '@/Components/Shared/KnockoutPartials/NamesEditor';
-import Layout from '@/Components/Shared/Layout';
-import EntryDeletePopup from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
-import EntryTrashPopup from '@/Components/Shared/Partials/EntryDetails/EntryTrashPopup';
+import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
+import { NamesEditor } from '@/Components/Shared/KnockoutPartials/NamesEditor';
+import { Layout } from '@/Components/Shared/Layout';
+import { EntryDeletePopup } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopup';
+import { EntryTrashPopup } from '@/Components/Shared/Partials/EntryDetails/EntryTrashPopup';
 import {
 	LanguageSelectionDropdownList,
 	RegionDropdownList,
 	EntryStatusDropdownList,
 } from '@/Components/Shared/Partials/Knockout/DropdownList';
-import WebLinksEditViewKnockout from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
-import ConcurrentEditWarning from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
-import HelpLabel from '@/Components/Shared/Partials/Shared/HelpLabel';
-import SaveAndBackBtn from '@/Components/Shared/Partials/Shared/SaveAndBackBtn';
-import ValidationSummaryPanel from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
+import { WebLinksEditViewKnockout } from '@/Components/Shared/Partials/Knockout/WebLinksEditViewKnockout';
+import { ConcurrentEditWarning } from '@/Components/Shared/Partials/Shared/ConcurrentEditWarning';
+import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
+import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackBtn';
+import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import useVocaDbTitle from '@/Components/useVocaDbTitle';
-import VenueForEditContract from '@/DataContracts/Venue/VenueForEditContract';
+import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import EntryStatus from '@/Models/EntryStatus';
-import EntryType from '@/Models/EntryType';
-import ContentLanguageSelection from '@/Models/Globalization/ContentLanguageSelection';
-import LoginManager from '@/Models/LoginManager';
-import VenueRepository from '@/Repositories/VenueRepository';
-import EntryUrlMapper from '@/Shared/EntryUrlMapper';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import VenueEditStore from '@/Stores/Venue/VenueEditStore';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { LoginManager } from '@/Models/LoginManager';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { VenueEditStore } from '@/Stores/Venue/VenueEditStore';
 import _ from 'lodash';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

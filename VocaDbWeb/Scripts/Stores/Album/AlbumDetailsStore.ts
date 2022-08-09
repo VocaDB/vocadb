@@ -1,25 +1,26 @@
 import { AlbumDetailsAjax } from '@/DataContracts/Album/AlbumDetailsForApi';
-import AlbumReviewContract from '@/DataContracts/Album/AlbumReviewContract';
-import TagSelectionContract from '@/DataContracts/Tag/TagSelectionContract';
-import AlbumForUserForApiContract, {
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import {
+	AlbumForUserForApiContract,
 	MediaType,
 	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import ArtistHelper from '@/Helpers/ArtistHelper';
-import EntryType from '@/Models/EntryType';
-import LoginManager from '@/Models/LoginManager';
-import AlbumRepository from '@/Repositories/AlbumRepository';
-import ArtistRepository from '@/Repositories/ArtistRepository';
-import UserRepository from '@/Repositories/UserRepository';
-import functions from '@/Shared/GlobalFunctions';
-import GlobalValues from '@/Shared/GlobalValues';
-import EditableCommentsStore from '@/Stores/EditableCommentsStore';
-import EnglishTranslatedStringStore from '@/Stores/Globalization/EnglishTranslatedStringStore';
-import ReportEntryStore from '@/Stores/ReportEntryStore';
-import SelfDescriptionStore from '@/Stores/SelfDescriptionStore';
-import TagListStore from '@/Stores/Tag/TagListStore';
-import TagsEditStore from '@/Stores/Tag/TagsEditStore';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { EnglishTranslatedStringStore } from '@/Stores/Globalization/EnglishTranslatedStringStore';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
+import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -253,7 +254,7 @@ export class AlbumReviewsStore {
 	};
 }
 
-export default class AlbumDetailsStore {
+export class AlbumDetailsStore {
 	public readonly comments: EditableCommentsStore;
 	public readonly downloadTagsDialog: DownloadTagsStore;
 	public readonly editCollectionDialog: EditCollectionStore;

@@ -1,12 +1,12 @@
-import ResourceRepository from '@/Repositories/ResourceRepository';
-import HttpClient from '@/Shared/HttpClient';
-import UrlMapper from '@/Shared/UrlMapper';
-import CommentListViewModel from '@/ViewModels/Comment/CommentListViewModel';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { CommentListViewModel } from '@/ViewModels/Comment/CommentListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const CommentCommentsByUser = (model: { id: number }): void => {
+export const CommentCommentsByUser = (model: { id: number }): void => {
 	$(function () {
 		moment.locale(vdb.values.culture);
 		ko.punches.enableAll();
@@ -28,5 +28,3 @@ const CommentCommentsByUser = (model: { id: number }): void => {
 		ko.applyBindings(vm);
 	});
 };
-
-export default CommentCommentsByUser;

@@ -1,7 +1,7 @@
-import UserApiContract from '@/DataContracts/User/UserApiContract';
-import UserGroup from '@/Models/Users/UserGroup';
-import UserRepository from '@/Repositories/UserRepository';
-import ServerSidePagingStore from '@/Stores/ServerSidePagingStore';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -31,7 +31,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class ListUsersStore
+export class ListUsersStore
 	implements StoreWithPagination<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;

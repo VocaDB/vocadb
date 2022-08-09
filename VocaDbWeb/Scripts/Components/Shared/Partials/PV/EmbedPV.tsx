@@ -1,8 +1,8 @@
-import EmbedBili from '@/Components/Shared/Partials/PV/EmbedBili';
-import EmbedNico from '@/Components/Shared/Partials/PV/EmbedNico';
-import EmbedPiapro from '@/Components/Shared/Partials/PV/EmbedPiapro';
-import PVContract from '@/DataContracts/PVs/PVContract';
-import PVService from '@/Models/PVs/PVService';
+import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
+import { EmbedNico } from '@/Components/Shared/Partials/PV/EmbedNico';
+import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
@@ -41,7 +41,7 @@ interface EmbedPVProps {
 	id?: string;
 }
 
-const EmbedPV = React.memo(
+export const EmbedPV = React.memo(
 	({
 		pv,
 		width = 560,
@@ -165,5 +165,3 @@ const EmbedPV = React.memo(
 		}
 	},
 );
-
-export default EmbedPV;
