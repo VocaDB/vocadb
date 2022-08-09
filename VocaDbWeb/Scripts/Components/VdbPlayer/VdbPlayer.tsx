@@ -376,6 +376,15 @@ export const VdbPlayer = observer(
 
 		const playerRef = React.useRef<IPVPlayer>(undefined!);
 
+		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
+		React.useEffect(() => {
+			document.body.style.paddingBottom = '50px';
+
+			return (): void => {
+				document.body.style.paddingBottom = '';
+			};
+		});
+
 		return (
 			<div
 				css={{

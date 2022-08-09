@@ -86,7 +86,7 @@ export const LeftMenu = React.memo(
 					flex: '0 1 0',
 					overflowY: 'auto',
 					position: 'sticky',
-					maxHeight: 'calc(100vh - 40px)',
+					maxHeight: 'calc(100vh - 90px)',
 					top: 40,
 				}}
 			>
