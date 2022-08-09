@@ -14,19 +14,21 @@ const App = (): React.ReactElement => {
 
 			<Header />
 
-			<Container fluid={true}>
-				<div className="row-fluid">
-					<LeftMenu />
+			<div css={{ display: 'flex' }}>
+				<LeftMenu />
 
-					<div className="span10 rightFrame well">
-						<React.Suspense fallback={null /* TODO */}>
-							<AppRoutes />
-						</React.Suspense>
+				<Container fluid css={{ flex: '1 1 100%' }}>
+					<div className="row-fluid">
+						<div className="span12 rightFrame well">
+							<React.Suspense fallback={null /* TODO */}>
+								<AppRoutes />
+							</React.Suspense>
+						</div>
+
+						<AboutDisclaimer />
 					</div>
-				</div>
-			</Container>
-
-			<AboutDisclaimer />
+				</Container>
+			</div>
 
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 		</>

@@ -79,7 +79,17 @@ export const LeftMenu = React.memo(
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
-			<div className="span2 menu">
+			<div
+				className="menu"
+				css={{
+					minWidth: 240,
+					flex: '0 1 0',
+					overflowY: 'auto',
+					position: 'sticky',
+					maxHeight: 'calc(100vh - 40px)',
+					top: 40,
+				}}
+			>
 				<div className="well">
 					<Link to="/">
 						<img
