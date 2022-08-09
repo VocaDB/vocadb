@@ -1,16 +1,15 @@
-import EntryRefContract from '@DataContracts/EntryRefContract';
-import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import EntryType from '@Models/EntryType';
-import { SearchType } from '@Stores/Search/SearchStore';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
+import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { functions } from '@/Shared/GlobalFunctions';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 
-import functions from './GlobalFunctions';
-
 // Maps view URLs for common entry types.
-export default class EntryUrlMapper {
+export class EntryUrlMapper {
 	// URL to details view.
 	// typeName: entry type name.
 	// id: entry Id.

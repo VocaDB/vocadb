@@ -1,8 +1,8 @@
-import EntryType from '@Models/EntryType';
+import { EntryType } from '@/Models/EntryType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const useChangedFieldNames = (): ((
+export const useChangedFieldNames = (): ((
 	entryType: EntryType,
 	changedField: string,
 ) => string | undefined) => {
@@ -44,5 +44,3 @@ const useChangedFieldNames = (): ((
 		[t],
 	);
 };
-
-export default useChangedFieldNames;

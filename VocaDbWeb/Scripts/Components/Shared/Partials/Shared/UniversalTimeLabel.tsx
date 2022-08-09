@@ -5,7 +5,7 @@ interface UniversalTimeLabelProps {
 	dateTime: Date;
 }
 
-const UniversalTimeLabel = React.memo(
+export const UniversalTimeLabel = React.memo(
 	({ dateTime }: UniversalTimeLabelProps): React.ReactElement => {
 		return (
 			<span title="UTC" /* TODO: localize */>
@@ -14,5 +14,3 @@ const UniversalTimeLabel = React.memo(
 		);
 	},
 );
-
-export default UniversalTimeLabel;

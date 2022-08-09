@@ -1,7 +1,7 @@
-import ArtistType from '@Models/Artists/ArtistType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import ko from 'knockout';
 
-export default class ArtistFilter {
+export class ArtistFilter {
 	public constructor(public id: number) {}
 
 	public artistType = ko.observable<ArtistType>(null!);

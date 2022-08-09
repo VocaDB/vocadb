@@ -1,4 +1,4 @@
-export default interface OptionalDateTimeContract {
+export interface OptionalDateTimeContract {
 	day?: number;
 
 	formatted?: string;

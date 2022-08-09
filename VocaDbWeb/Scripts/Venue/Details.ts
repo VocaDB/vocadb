@@ -1,12 +1,12 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
-import VenueDetailsViewModel from '@ViewModels/Venue/VenueDetailsViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
+import { VenueDetailsViewModel } from '@/ViewModels/Venue/VenueDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const VenueDetails = (
+export const VenueDetails = (
 	model: {
 		id: number;
 	},
@@ -31,5 +31,3 @@ const VenueDetails = (
 		ko.applyBindings(vm);
 	});
 };
-
-export default VenueDetails;

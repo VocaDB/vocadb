@@ -1,9 +1,8 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerSoundCloud implements IPVPlayer {
+export class PVPlayerSoundCloud implements IPVPlayer {
 	private player?: SC.SoundCloudWidget;
 	public readonly service = PVService.SoundCloud;
 

@@ -1,7 +1,7 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import HtmlHelper from '@Helpers/HtmlHelper';
-import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
-import HttpClient from '@Shared/HttpClient';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { HtmlHelper } from '@/Helpers/HtmlHelper';
+import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
+import { HttpClient } from '@/Shared/HttpClient';
 import $ from 'jquery';
 import React from 'react';
 
@@ -58,7 +58,7 @@ interface EntryAutoCompleteProps<TContract extends any>
 	params: EntryAutoCompleteParams<TContract>;
 }
 
-const EntryAutoComplete = React.forwardRef<
+export const EntryAutoComplete = React.forwardRef<
 	HTMLInputElement,
 	EntryAutoCompleteProps<any>
 >(
@@ -214,5 +214,3 @@ const EntryAutoComplete = React.forwardRef<
 		);
 	},
 );
-
-export default EntryAutoComplete;

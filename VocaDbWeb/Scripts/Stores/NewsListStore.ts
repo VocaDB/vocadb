@@ -1,4 +1,4 @@
-import UrlMapper from '@Shared/UrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
 import { makeObservable, observable, runInAction } from 'mobx';
 
@@ -26,7 +26,7 @@ export interface WordpressAuthor {
 	name: string;
 }
 
-export default class NewsListStore {
+export class NewsListStore {
 	@observable public loaded = false;
 	@observable public posts: WordpressPost[] = [];
 

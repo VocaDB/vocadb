@@ -1,19 +1,18 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import EmbedPV from '../PV/EmbedPV';
-import PVRatingButtonsForIndex from '../PVRatingButtonsForIndex';
 
 interface PVPreviewKnockoutProps {
 	previewStore: SongWithPreviewStore;
 	getPvServiceIcons: (services: string) => { service: string; url: string }[];
 }
 
-const PVPreviewKnockout = observer(
+export const PVPreviewKnockout = observer(
 	({
 		previewStore,
 		getPvServiceIcons,
@@ -67,5 +66,3 @@ const PVPreviewKnockout = observer(
 		);
 	},
 );
-
-export default PVPreviewKnockout;

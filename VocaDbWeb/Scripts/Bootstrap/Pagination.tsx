@@ -1,10 +1,15 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/c11bc67ab3105e7a1839c0dcaacc5f1099885f02/src/Pagination.tsx
+import PageItem, {
+	First,
+	Prev,
+	Ellipsis,
+	Next,
+	Last,
+} from '@/Bootstrap/PageItem';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import { BsPrefixProps } from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import * as React from 'react';
-
-import PageItem, { Ellipsis, First, Last, Next, Prev } from './PageItem';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps } from './helpers';
 
 export interface PaginationProps
 	extends BsPrefixProps,

@@ -1,9 +1,8 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerFile implements IPVPlayer {
+export class PVPlayerFile implements IPVPlayer {
 	public readonly service;
 	private player?: HTMLAudioElement;
 

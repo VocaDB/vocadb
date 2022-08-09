@@ -1,4 +1,4 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
 
 interface EmbedBiliProps {
@@ -7,7 +7,7 @@ interface EmbedBiliProps {
 	height: number;
 }
 
-const EmbedBili = React.memo(
+export const EmbedBili = React.memo(
 	({ pv, width, height }: EmbedBiliProps): React.ReactElement => {
 		return height >= 274 && width >= 480 ? (
 			<div
@@ -53,5 +53,3 @@ const EmbedBili = React.memo(
 		);
 	},
 );
-
-export default EmbedBili;

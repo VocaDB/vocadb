@@ -1,13 +1,12 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import { ArtistAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ArtistAutoComplete from '../../../KnockoutExtensions/ArtistAutoComplete';
-import { ArtistAutoCompleteParams } from '../../../KnockoutExtensions/AutoCompleteParams';
-import LockingAutoComplete from './LockingAutoComplete';
 
 interface ArtistLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<ArtistContract>;
@@ -15,7 +14,7 @@ interface ArtistLockingAutoCompleteProps {
 }
 
 // Locking autocomplete for artist selection. Allows selection of one (existing) artist. When artist is selected, clear button is displayed.
-const ArtistLockingAutoComplete = observer(
+export const ArtistLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 		properties,
@@ -48,5 +47,3 @@ const ArtistLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default ArtistLockingAutoComplete;

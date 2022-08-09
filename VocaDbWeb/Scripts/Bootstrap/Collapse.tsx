@@ -1,4 +1,9 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/237d9f86fc614ba19d89df5d02e26c442bb34b59/src/Collapse.tsx
+import TransitionWrapper from '@/Bootstrap/TransitionWrapper';
+import createChainedFunction from '@/Bootstrap/createChainedFunction';
+import { TransitionCallbacks } from '@/Bootstrap/helpers';
+import transitionEndListener from '@/Bootstrap/transitionEndListener';
+import triggerBrowserReflow from '@/Bootstrap/triggerBrowserReflow';
 import classNames from 'classnames';
 import css from 'dom-helpers/css';
 import PropTypes from 'prop-types';
@@ -10,12 +15,6 @@ import Transition, {
 	EXITED,
 	EXITING,
 } from 'react-transition-group/Transition';
-
-import TransitionWrapper from './TransitionWrapper';
-import createChainedFunction from './createChainedFunction';
-import { TransitionCallbacks } from './helpers';
-import transitionEndListener from './transitionEndListener';
-import triggerBrowserReflow from './triggerBrowserReflow';
 
 type Dimension = 'height' | 'width';
 

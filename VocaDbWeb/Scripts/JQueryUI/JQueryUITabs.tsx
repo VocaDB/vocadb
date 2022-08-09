@@ -1,7 +1,9 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8e3f3c2b5f232e17829df3474b7b6e398f22ff3d/src/Tabs.tsx
-import { forEach, map } from '@Bootstrap/ElementChildren';
-import NavbarContext from '@Bootstrap/NavbarContext';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
+import { forEach, map } from '@/Bootstrap/ElementChildren';
+import NavbarContext from '@/Bootstrap/NavbarContext';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import JQueryUITabContent from '@/JQueryUI/JQueryUITabContent';
+import JQueryUITabPane from '@/JQueryUI/JQueryUITabPane';
 import BaseNav from '@restart/ui/Nav';
 import { useNavItem } from '@restart/ui/NavItem';
 import { makeEventKey } from '@restart/ui/SelectableContext';
@@ -9,12 +11,6 @@ import BaseTabs, { TabsProps as BaseTabsProps } from '@restart/ui/Tabs';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useUncontrolled } from 'uncontrollable';
-
-/*import JQueryUINav from './JQueryUINav';
-import JQueryUINavItem from './JQueryUINavItem';
-import JQueryUINavLink from './JQueryUINavLink';*/
-import JQueryUITabContent from './JQueryUITabContent';
-import JQueryUITabPane from './JQueryUITabPane';
 
 const JQueryUINav = (uncontrolledProps: any): React.ReactElement => {
 	const {

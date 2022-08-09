@@ -1,10 +1,10 @@
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import TagRepository from '@Repositories/TagRepository';
-import HttpClient from '@Shared/HttpClient';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { HttpClient } from '@/Shared/HttpClient';
 
-export default class FakeTagRepository extends TagRepository {
+export class FakeTagRepository extends TagRepository {
 	public constructor() {
 		super(new HttpClient(), '');
 

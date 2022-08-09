@@ -1,4 +1,4 @@
-import DateTimeHelper from '@Helpers/DateTimeHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';

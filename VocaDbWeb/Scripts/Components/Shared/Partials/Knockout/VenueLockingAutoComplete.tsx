@@ -1,18 +1,17 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import { VenueAutoComplete } from '@/Components/KnockoutExtensions/VenueAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import VenueAutoComplete from '../../../KnockoutExtensions/VenueAutoComplete';
-import LockingAutoComplete from './LockingAutoComplete';
-
 interface VenueLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<IEntryWithIdAndName>;
 }
 
-const VenueLockingAutoComplete = observer(
+export const VenueLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 	}: VenueLockingAutoCompleteProps): React.ReactElement => {
@@ -42,5 +41,3 @@ const VenueLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default VenueLockingAutoComplete;

@@ -1,7 +1,6 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/ViewModels/PVs/PVPlayerViewModel';
 import $ from 'jquery';
-
-import { IPVPlayer } from './PVPlayerViewModel';
 
 declare namespace nico {
 	export interface NicoPlayerFactory {
@@ -63,7 +62,7 @@ declare namespace nico {
 		The current PV is saved into variable "loadedPv" when the original player is loaded.
 	*/
 
-export default class PVPlayerNico implements IPVPlayer {
+export class PVPlayerNico implements IPVPlayer {
 	private static scriptLoaded: boolean = false;
 	private static playerFactory: nico.NicoPlayerFactory = null!;
 	private currentPv: string = null!;

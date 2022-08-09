@@ -1,10 +1,10 @@
-import AdminRepository from '@Repositories/AdminRepository';
-import ui from '@Shared/MessagesTyped';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { ui } from '@/Shared/MessagesTyped';
 import ko, { Observable, ObservableArray } from 'knockout';
 import _ from 'lodash';
 import moment from 'moment';
 
-export default class ManageIPRulesViewModel {
+export class ManageIPRulesViewModel {
 	public add = (): void => {
 		const addr = this.newAddress().trim();
 

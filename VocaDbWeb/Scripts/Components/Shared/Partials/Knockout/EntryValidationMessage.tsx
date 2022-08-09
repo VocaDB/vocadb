@@ -1,5 +1,5 @@
-import Alert from '@Bootstrap/Alert';
-import Button from '@Bootstrap/Button';
+import Alert from '@/Bootstrap/Alert';
+import Button from '@/Bootstrap/Button';
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ interface EntryValidationMessageProps {
 	helpSection?: string;
 }
 
-const EntryValidationMessage = React.memo(
+export const EntryValidationMessage = React.memo(
 	({
 		draft,
 		validationMessages,
@@ -90,5 +90,3 @@ const EntryValidationMessage = React.memo(
 		);
 	},
 );
-
-export default EntryValidationMessage;

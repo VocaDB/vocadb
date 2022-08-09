@@ -1,5 +1,5 @@
-import WebLinkCategory from '@Models/WebLinkCategory';
-import WebLinkEditViewModel from '@ViewModels/WebLinkEditViewModel';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { WebLinkEditViewModel } from '@/ViewModels/WebLinkEditViewModel';
 
 var webLinkData = {
 	category: WebLinkCategory.Official,

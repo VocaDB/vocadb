@@ -1,10 +1,9 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { LocalizedStringWithIdEditViewModel } from '@/ViewModels/Globalization/LocalizedStringWithIdEditViewModel';
 import ko, { ObservableArray } from 'knockout';
 
-import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';
-
-export default class NamesEditViewModel {
+export class NamesEditViewModel {
 	public aliases: ObservableArray<LocalizedStringWithIdEditViewModel>;
 	public englishName: LocalizedStringWithIdEditViewModel;
 	public originalName: LocalizedStringWithIdEditViewModel;

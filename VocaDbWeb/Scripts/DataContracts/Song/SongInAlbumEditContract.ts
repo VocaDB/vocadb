@@ -1,6 +1,6 @@
-import ArtistContract from '../Artist/ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 
-export default interface SongInAlbumEditContract {
+export interface SongInAlbumEditContract {
 	artists: ArtistContract[];
 
 	artistString: string;

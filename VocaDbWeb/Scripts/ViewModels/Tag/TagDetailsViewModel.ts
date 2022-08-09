@@ -1,16 +1,17 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import ui from '@Shared/MessagesTyped';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { EnglishTranslatedStringViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import {
+	IEntryReportType,
+	ReportEntryViewModel,
+} from '@/ViewModels/ReportEntryViewModel';
 import ko, { Observable } from 'knockout';
 
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-
-export default class TagDetailsViewModel {
+export class TagDetailsViewModel {
 	public constructor(
 		values: GlobalValues,
 		repo: TagRepository,

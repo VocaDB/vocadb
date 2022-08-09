@@ -1,9 +1,10 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import AlbumSearchStore, {
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import {
+	AlbumSearchStore,
 	AlbumSortRule,
-} from '@Stores/Search/AlbumSearchStore';
-import CommonSearchStore from '@Stores/Search/CommonSearchStore';
+} from '@/Stores/Search/AlbumSearchStore';
+import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
@@ -21,7 +22,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ArtistAlbumsRouteParams> = require('./ArtistAlbumsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class ArtistAlbumsStore
+export class ArtistAlbumsStore
 	extends AlbumSearchStore
 	implements StoreWithPagination<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {

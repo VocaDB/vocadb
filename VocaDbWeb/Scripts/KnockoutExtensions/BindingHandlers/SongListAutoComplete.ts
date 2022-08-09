@@ -1,7 +1,7 @@
-import SongListContract from '@DataContracts/Song/SongListContract';
-import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
-import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import functions from '@Shared/GlobalFunctions';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
+import { initEntrySearch } from '@/Shared/EntryAutoComplete';
+import { functions } from '@/Shared/GlobalFunctions';
 import ko, { Observable } from 'knockout';
 
 declare global {

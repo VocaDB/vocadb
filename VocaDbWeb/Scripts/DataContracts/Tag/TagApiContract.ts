@@ -1,12 +1,11 @@
-import EntryType from '@Models/EntryType';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryType } from '@/Models/EntryType';
 
-import EntryThumbContract from '../EntryThumbContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '../WebLinkContract';
-import TagBaseContract from './TagBaseContract';
-
-export default interface TagApiContract {
+export interface TagApiContract {
 	additionalNames?: string;
 
 	categoryName: string;

@@ -1,4 +1,4 @@
-import Alert from '@Bootstrap/Alert';
+import Alert from '@/Bootstrap/Alert';
 import React from 'react';
 import toast from 'react-hot-toast';
 

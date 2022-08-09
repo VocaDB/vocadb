@@ -1,10 +1,10 @@
-import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import DialogService from '@Shared/DialogService';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import ArtistEditViewModel from '@ViewModels/Artist/ArtistEditViewModel';
+import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { DialogService } from '@/Shared/DialogService';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArtistEditViewModel } from '@/ViewModels/Artist/ArtistEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
@@ -15,7 +15,7 @@ function initPage(): void {
 	$('#mergeLink').button();
 }
 
-const ArtistEdit = (
+export const ArtistEdit = (
 	model: {
 		artist: {
 			id: number;
@@ -68,5 +68,3 @@ const ArtistEdit = (
 		initPage();
 	});
 };
-
-export default ArtistEdit;

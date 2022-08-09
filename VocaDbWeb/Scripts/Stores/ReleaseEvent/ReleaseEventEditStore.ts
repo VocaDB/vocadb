@@ -1,16 +1,26 @@
-import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
-import ReleaseEventForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventForEditContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import ArtistEventRoles from '@Models/Events/ArtistEventRoles';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import PVRepository from '@Repositories/PVRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongListRepository from '@Repositories/SongListRepository';
-import VenueRepository from '@Repositories/VenueRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	AlbumArtistRolesEditStore,
+	ArtistRolesEditStore,
+} from '@/Stores/Artist/AlbumArtistRolesEditStore';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
+import { ArtistForEventEditStore } from '@/Stores/ReleaseEvent/ArtistForEventEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import _ from 'lodash';
 import {
 	action,
@@ -22,23 +32,13 @@ import {
 } from 'mobx';
 import moment from 'moment';
 
-import AlbumArtistRolesEditStore, {
-	ArtistRolesEditStore,
-} from '../Artist/AlbumArtistRolesEditStore';
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import PVListEditStore from '../PVs/PVListEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
-import ArtistForEventEditStore from './ArtistForEventEditStore';
-
 export class EventArtistRolesEditStore extends ArtistRolesEditStore {
 	public constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistEventRoles[ArtistEventRoles.Default]);
 	}
 }
 
-export default class ReleaseEventEditStore {
+export class ReleaseEventEditStore {
 	@observable public readonly artistLinks: ArtistForEventEditStore[];
 	public readonly artistRolesEditStore: EventArtistRolesEditStore;
 	@observable public category: string /* TODO: enum */;

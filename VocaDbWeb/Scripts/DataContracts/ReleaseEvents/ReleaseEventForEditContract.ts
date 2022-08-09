@@ -1,14 +1,13 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-
-import EntryThumbContract from '../EntryThumbContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import PVContract from '../PVs/PVContract';
-import SongListBaseContract from '../SongListBaseContract';
-import WebLinkContract from '../WebLinkContract';
-import ArtistForEventContract from './ArtistForEventContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 
 // Corresponds to the ReleaseEventForEditForApiContract record class in C#.
-export default interface ReleaseEventForEditContract {
+export interface ReleaseEventForEditContract {
 	artists: ArtistForEventContract[];
 	category: string /* TODO: enum */;
 	customName: boolean;

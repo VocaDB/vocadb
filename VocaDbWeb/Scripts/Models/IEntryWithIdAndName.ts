@@ -1,4 +1,4 @@
-export default interface IEntryWithIdAndName {
+export interface IEntryWithIdAndName {
 	id: number;
 
 	name?: string;

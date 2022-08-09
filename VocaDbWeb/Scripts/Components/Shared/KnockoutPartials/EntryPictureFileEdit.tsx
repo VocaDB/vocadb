@@ -1,6 +1,6 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryPictureFileEditStore from '@Stores/EntryPictureFileEditStore';
-import EntryPictureFileListEditStore from '@Stores/EntryPictureFileListEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { EntryPictureFileEditStore } from '@/Stores/EntryPictureFileEditStore';
+import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -11,7 +11,7 @@ interface EntryPictureFileEditProps {
 	entryPictureFileEditStore: EntryPictureFileEditStore;
 }
 
-const EntryPictureFileEdit = observer(
+export const EntryPictureFileEdit = observer(
 	({
 		entryPictureFileListEditStore,
 		entryPictureFileEditStore,
@@ -61,5 +61,3 @@ const EntryPictureFileEdit = observer(
 		);
 	},
 );
-
-export default EntryPictureFileEdit;

@@ -32,17 +32,7 @@ mix
 		processCssUrls: false,
 	})
 	.alias({
-		'@Bootstrap': path.join(__dirname, 'Scripts/Bootstrap'),
-		'@Components': path.join(__dirname, 'Scripts/Components'),
-		'@DataContracts': path.join(__dirname, 'Scripts/DataContracts'),
-		'@Helpers': path.join(__dirname, 'Scripts/Helpers'),
-		'@JQueryUI': path.join(__dirname, 'Scripts/JQueryUI'),
-		'@KnockoutExtensions': path.join(__dirname, 'Scripts/KnockoutExtensions'),
-		'@Models': path.join(__dirname, 'Scripts/Models'),
-		'@Repositories': path.join(__dirname, 'Scripts/Repositories'),
-		'@Shared': path.join(__dirname, 'Scripts/Shared'),
-		'@Stores': path.join(__dirname, 'Scripts/Stores'),
-		'@ViewModels': path.join(__dirname, 'Scripts/ViewModels'),
+		'@': path.join(__dirname, 'Scripts'),
 	})
 	.eslint({
 		fix: false,

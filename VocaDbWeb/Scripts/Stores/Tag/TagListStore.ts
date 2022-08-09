@@ -1,9 +1,9 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-export default class TagListStore {
+export class TagListStore {
 	private static maxDisplayedTags = 4;
 
 	@observable public expanded = false;

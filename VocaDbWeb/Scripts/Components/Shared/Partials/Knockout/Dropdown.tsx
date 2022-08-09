@@ -1,5 +1,5 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import BootstrapDropdown from '@Bootstrap/Dropdown';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import BootstrapDropdown from '@/Bootstrap/Dropdown';
 import React from 'react';
 
 interface DropdownProps {
@@ -8,7 +8,7 @@ interface DropdownProps {
 	onChange: (value: string) => void;
 }
 
-const Dropdown = React.memo(
+export const Dropdown = React.memo(
 	({ items, value, onChange }: DropdownProps): React.ReactElement => {
 		return (
 			<BootstrapDropdown as={ButtonGroup}>
@@ -26,5 +26,3 @@ const Dropdown = React.memo(
 		);
 	},
 );
-
-export default Dropdown;

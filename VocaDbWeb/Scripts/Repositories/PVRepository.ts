@@ -1,8 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-export default class PVRepository {
+export class PVRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

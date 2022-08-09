@@ -1,17 +1,16 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EnglishTranslatedStringEditStore from '@Stores/Globalization/EnglishTranslatedStringEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Markdown from '../../KnockoutExtensions/Markdown';
-
 interface EnglishTranslatedStringEditProps {
 	englishTranslatedStringEditStore: EnglishTranslatedStringEditStore;
 }
 
-const EnglishTranslatedStringEdit = observer(
+export const EnglishTranslatedStringEdit = observer(
 	({
 		englishTranslatedStringEditStore,
 	}: EnglishTranslatedStringEditProps): React.ReactElement => {
@@ -76,5 +75,3 @@ const EnglishTranslatedStringEdit = observer(
 		);
 	},
 );
-
-export default EnglishTranslatedStringEdit;

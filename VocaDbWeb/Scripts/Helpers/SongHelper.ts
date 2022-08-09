@@ -1,7 +1,7 @@
-import ContentFocus from '@Models/ContentFocus';
-import SongType from '@Models/Songs/SongType';
+import { ContentFocus } from '@/Models/ContentFocus';
+import { SongType } from '@/Models/Songs/SongType';
 
-export default class SongHelper {
+export class SongHelper {
 	public static originalVersionTypes = [
 		SongType.Unspecified,
 		SongType.Original,

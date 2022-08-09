@@ -1,6 +1,6 @@
-import ArtistContract from './ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 
-export default interface ArtistForArtistContract {
+export interface ArtistForArtistContract {
 	parent: ArtistContract;
 
 	// Link ID

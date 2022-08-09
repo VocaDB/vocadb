@@ -1,4 +1,4 @@
-import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
+import { CountPerDayContract } from '@/DataContracts/Aggregate/CountPerDayContract';
 import { Options, SeriesOptions } from 'highcharts';
 
 export interface Tuple2<T1, T2> {
@@ -6,7 +6,7 @@ export interface Tuple2<T1, T2> {
 	item2: T2;
 }
 
-export default class HighchartsHelper {
+export class HighchartsHelper {
 	public static dateLineChartWithAverage = (
 		title: string,
 		pointsTitle: string,

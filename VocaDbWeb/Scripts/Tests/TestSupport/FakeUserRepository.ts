@@ -1,17 +1,16 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import EntryType from '@Models/EntryType';
-import SongVoteRating from '@Models/SongVoteRating';
-import { UserInboxType } from '@Repositories/UserRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
+import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { EntryType } from '@/Models/EntryType';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { UserInboxType } from '@/Repositories/UserRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
-import FakePromise from './FakePromise';
-
-export default class FakeUserRepository extends UserRepository {
+export class FakeUserRepository extends UserRepository {
 	public message!: UserMessageSummaryContract;
 	public messages!: UserMessageSummaryContract[];
 	public songId!: number;

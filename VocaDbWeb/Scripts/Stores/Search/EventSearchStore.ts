@@ -1,15 +1,14 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import { computed, makeObservable, observable } from 'mobx';
-
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -40,7 +39,7 @@ export interface EventSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class EventSearchStore extends SearchCategoryBaseStore<
+export class EventSearchStore extends SearchCategoryBaseStore<
 	EventSearchRouteParams,
 	ReleaseEventContract
 > {

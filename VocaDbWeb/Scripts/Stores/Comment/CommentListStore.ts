@@ -1,12 +1,13 @@
-import CommentContract from '@DataContracts/CommentContract';
-import EntryWithCommentsContract from '@DataContracts/EntryWithCommentsContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UserBaseContract from '@DataContracts/User/UserBaseContract';
-import EntryType from '@Models/EntryType';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
@@ -17,8 +18,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
 
 export enum CommentSortRule {
 	CreateDateDescending = 'CreateDateDescending',
@@ -47,7 +46,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class CommentListStore
+export class CommentListStore
 	implements StoreWithUpdateResults<CommentListRouteParams> {
 	@observable public entries: EntryWithCommentsContract[] = [];
 	@observable public entryType = EntryType[EntryType.Undefined];

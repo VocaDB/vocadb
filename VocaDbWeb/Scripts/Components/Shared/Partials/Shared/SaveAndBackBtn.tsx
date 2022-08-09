@@ -1,4 +1,4 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ interface SaveAndBackBtnProps {
 	submitting?: boolean;
 }
 
-const SaveAndBackBtn = React.memo(
+export const SaveAndBackBtn = React.memo(
 	({ backAction, submitting }: SaveAndBackBtnProps): React.ReactElement => {
 		const { t } = useTranslation('HelperRes');
 
@@ -26,5 +26,3 @@ const SaveAndBackBtn = React.memo(
 		);
 	},
 );
-
-export default SaveAndBackBtn;

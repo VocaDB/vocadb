@@ -1,11 +1,11 @@
-import SongForEditContract from '@DataContracts/Song/SongForEditContract';
-import TranslatedEnumField from '@DataContracts/TranslatedEnumField';
-import LoginManager from '@Models/LoginManager';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import DialogService from '@Shared/DialogService';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import SongEditViewModel from '@ViewModels/Song/SongEditViewModel';
+import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
+import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { DialogService } from '@/Shared/DialogService';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { SongEditViewModel } from '@/ViewModels/Song/SongEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
@@ -26,7 +26,7 @@ function initPage(): void {
 	$('#artistsTableBody a.artistLink').vdbArtistToolTip();
 }
 
-const SongEdit = (
+export const SongEdit = (
 	addExtraArtist: string,
 	artistRoleJson: { [key: string]: string },
 	languageNames: any,
@@ -106,5 +106,3 @@ const SongEdit = (
 		initPage();
 	});
 };
-
-export default SongEdit;

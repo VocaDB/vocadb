@@ -1,6 +1,6 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import NameMatchMode from '@Models/NameMatchMode';
-import TagRepository from '@Repositories/TagRepository';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { TagRepository } from '@/Repositories/TagRepository';
 import {
 	computed,
 	makeObservable,
@@ -9,7 +9,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class TagCreateStore {
+export class TagCreateStore {
 	@observable public dialogVisible = false;
 	@observable public duplicateName = false;
 	@observable public newTagName = '';

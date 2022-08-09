@@ -1,20 +1,32 @@
-import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import SongForEditContract from '@DataContracts/Song/SongForEditContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import SongHelper from '@Helpers/SongHelper';
-import EntryType from '@Models/EntryType';
-import PVType from '@Models/PVs/PVType';
-import SongType from '@Models/Songs/SongType';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import PVRepository from '@Repositories/PVRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongRepository from '@Repositories/SongRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { SongHelper } from '@/Helpers/SongHelper';
+import { EntryType } from '@/Models/EntryType';
+import { PVType } from '@/Models/PVs/PVType';
+import { SongType } from '@/Models/Songs/SongType';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumArtistRolesEditStore } from '@/Stores/Artist/AlbumArtistRolesEditStore';
+import { ArtistForAlbumEditStore } from '@/Stores/ArtistForAlbumEditStore';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { CustomNameEditStore } from '@/Stores/CustomNameEditStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
+import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
+import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
+import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -26,25 +38,12 @@ import {
 } from 'mobx';
 import moment, { Moment } from 'moment';
 
-import AlbumArtistRolesEditStore from '../Artist/AlbumArtistRolesEditStore';
-import ArtistForAlbumEditStore from '../ArtistForAlbumEditStore';
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import CustomNameEditStore from '../CustomNameEditStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EnglishTranslatedStringEditStore from '../Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import PVListEditStore from '../PVs/PVListEditStore';
-import SongBpmFilter from '../Search/SongBpmFilter';
-import SongLengthFilter from '../Search/SongLengthFilter';
-import WebLinksEditStore from '../WebLinksEditStore';
-import LyricsForSongListEditStore from './LyricsForSongListEditStore';
-
 interface PotentialDate {
 	date: Moment;
 	source: string;
 }
 
-export default class SongEditStore {
+export class SongEditStore {
 	private readonly albumEventId?: number;
 	private readonly albumReleaseDate?: Moment;
 	// List of artist links for this song.

@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
-export default class DeleteEntryStore {
+export class DeleteEntryStore {
 	@observable public dialogVisible = false;
 	@observable public notes = '';
 

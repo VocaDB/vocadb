@@ -1,5 +1,5 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import UserGroup from '@Models/Users/UserGroup';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
 
 // Corresponds to the ArtistForUserContract class in C#.
 interface ArtistForUserContract {
@@ -7,7 +7,7 @@ interface ArtistForUserContract {
 }
 
 // Corresponds to the SanitizedUserWithPermissionsContract record class in C#.
-export default interface UserWithPermissionsContract {
+export interface UserWithPermissionsContract {
 	id: number;
 	name: string;
 	active: boolean;

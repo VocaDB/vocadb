@@ -1,15 +1,14 @@
-import EntryWithCommentsContract from '@DataContracts/EntryWithCommentsContract';
+import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEntryItem';
+import { PrintComment } from '@/Components/Shared/Partials/Comment/PrintComment';
+import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
 import React from 'react';
-
-import CommentEntryItem from './CommentEntryItem';
-import PrintComment from './PrintComment';
 
 interface CommentWithEntryVerticalProps {
 	entry: EntryWithCommentsContract;
 	maxLength?: number;
 }
 
-const CommentWithEntryVertical = React.memo(
+export const CommentWithEntryVertical = React.memo(
 	({
 		entry,
 		maxLength = 2147483647,
@@ -31,5 +30,3 @@ const CommentWithEntryVertical = React.memo(
 		);
 	},
 );
-
-export default CommentWithEntryVertical;

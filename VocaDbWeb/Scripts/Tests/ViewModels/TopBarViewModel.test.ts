@@ -1,7 +1,6 @@
-import TopBarViewModel from '@ViewModels/TopBarViewModel';
-
-import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository';
-import FakeUserRepository from '../TestSupport/FakeUserRepository';
+import { FakeEntryReportRepository } from '@/Tests/TestSupport/FakeEntryReportRepository';
+import { FakeUserRepository } from '@/Tests/TestSupport/FakeUserRepository';
+import { TopBarViewModel } from '@/ViewModels/TopBarViewModel';
 
 var entryTypeTranslations: { [x: string]: string };
 var entryReportRepo: FakeEntryReportRepository;

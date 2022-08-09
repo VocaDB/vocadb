@@ -1,6 +1,6 @@
-import { showErrorMessage, showSuccessMessage } from '@Components/ui';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import ReportEntryStore, { IEntryReportType } from '@Stores/ReportEntryStore';
+import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { IEntryReportType, ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -11,7 +11,7 @@ interface ReportEntryPopupKnockoutProps {
 	reportTypes: IEntryReportType[];
 }
 
-const ReportEntryPopupKnockout = observer(
+export const ReportEntryPopupKnockout = observer(
 	({
 		reportEntryStore,
 		reportTypes,
@@ -92,5 +92,3 @@ const ReportEntryPopupKnockout = observer(
 		);
 	},
 );
-
-export default ReportEntryPopupKnockout;

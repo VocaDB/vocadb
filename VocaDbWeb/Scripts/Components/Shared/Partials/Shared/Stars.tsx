@@ -6,7 +6,7 @@ interface StarsProps {
 	max: number;
 }
 
-const Stars = React.memo(
+export const Stars = React.memo(
 	({ current, max }: StarsProps): React.ReactElement => {
 		return (
 			<>
@@ -24,5 +24,3 @@ const Stars = React.memo(
 		);
 	},
 );
-
-export default Stars;

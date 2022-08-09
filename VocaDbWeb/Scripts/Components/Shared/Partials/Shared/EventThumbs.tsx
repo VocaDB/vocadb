@@ -1,16 +1,15 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryType from '@Models/EntryType';
-import EventCategory from '@Models/Events/EventCategory';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { VenueLinkOrVenueName } from '@/Components/Shared/Partials/Event/VenueLinkOrVenueName';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import VenueLinkOrVenueName from '../Event/VenueLinkOrVenueName';
 
 const getCategory = (event: ReleaseEventContract): string => {
 	return event.series?.category ?? event.category;
@@ -21,7 +20,7 @@ interface EventThumbsProps {
 	imageSize?: ImageSize;
 }
 
-const EventThumbs = ({
+export const EventThumbs = ({
 	events,
 	imageSize = ImageSize.SmallThumb,
 }: EventThumbsProps): React.ReactElement => {
@@ -104,5 +103,3 @@ const EventThumbs = ({
 		</div>
 	);
 };
-
-export default EventThumbs;

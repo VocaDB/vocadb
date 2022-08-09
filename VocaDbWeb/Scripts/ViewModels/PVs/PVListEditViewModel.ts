@@ -1,15 +1,14 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import PVRepository from '@Repositories/PVRepository';
-import { HttpClientError } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { HttpClientError } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVEditViewModel } from '@/ViewModels/PVs/PVEditViewModel';
 import $ from 'jquery';
 import ko, { ObservableArray } from 'knockout';
 
-import PVEditViewModel from './PVEditViewModel';
-
-export default class PVListEditViewModel {
+export class PVListEditViewModel {
 	public constructor(
 		private readonly repo: PVRepository,
 		public urlMapper: UrlMapper, // Used from the view to map to PV listing

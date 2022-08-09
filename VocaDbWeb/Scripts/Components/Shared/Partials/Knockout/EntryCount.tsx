@@ -1,6 +1,6 @@
-import Dropdown from '@Bootstrap/Dropdown';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import Dropdown from '@/Bootstrap/Dropdown';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -11,7 +11,7 @@ interface EntryCountProps {
 	selections?: number[];
 }
 
-const EntryCount = observer(
+export const EntryCount = observer(
 	({
 		pagingStore,
 		selections = [10, 20, 40, 100],
@@ -44,5 +44,3 @@ const EntryCount = observer(
 		);
 	},
 );
-
-export default EntryCount;

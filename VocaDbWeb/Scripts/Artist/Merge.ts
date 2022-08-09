@@ -1,11 +1,11 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import ArtistMergeViewModel from '@ViewModels/Artist/ArtistMergeViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArtistMergeViewModel } from '@/ViewModels/Artist/ArtistMergeViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const ArtistMerge = (model: { id: number }): void => {
+export const ArtistMerge = (model: { id: number }): void => {
 	$(function () {
 		const httpClient = new HttpClient();
 		var repoFactory = new RepositoryFactory(
@@ -21,5 +21,3 @@ const ArtistMerge = (model: { id: number }): void => {
 		});
 	});
 };
-
-export default ArtistMerge;

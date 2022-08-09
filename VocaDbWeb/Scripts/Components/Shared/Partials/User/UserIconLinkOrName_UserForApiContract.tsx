@@ -1,7 +1,6 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import React from 'react';
-
-import UserIconLink_UserForApiContract from './UserIconLink_UserForApiContract';
 
 interface UserIconLinkOrName_UserForApiContractProps {
 	user?: UserApiContract;
@@ -9,7 +8,7 @@ interface UserIconLinkOrName_UserForApiContractProps {
 	size?: number;
 }
 
-const UserIconLinkOrName_UserForApiContract = ({
+export const UserIconLinkOrName_UserForApiContract = ({
 	user,
 	name,
 	size,
@@ -21,5 +20,3 @@ const UserIconLinkOrName_UserForApiContract = ({
 		<>{name}</>
 	);
 };
-
-export default UserIconLinkOrName_UserForApiContract;

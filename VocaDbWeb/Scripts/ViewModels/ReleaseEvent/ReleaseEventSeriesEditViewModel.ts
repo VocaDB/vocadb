@@ -1,18 +1,17 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryType } from '@/Models/EntryType';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Observable } from 'knockout';
 
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-export default class ReleaseEventSeriesEditViewModel {
+export class ReleaseEventSeriesEditViewModel {
 	public constructor(
 		private readonly eventRepository: ReleaseEventRepository,
 		userRepository: UserRepository,

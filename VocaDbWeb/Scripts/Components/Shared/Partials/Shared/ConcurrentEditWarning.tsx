@@ -1,15 +1,14 @@
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
+import { NotificationPanel } from '@/Components/Shared/Partials/Shared/NotificationPanel';
+import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import NotificationPanel from './NotificationPanel';
 
 interface ConcurrentEditWarningProps {
 	conflictingEditor: EntryEditDataContract;
 }
 
-const ConcurrentEditWarning = React.memo(
+export const ConcurrentEditWarning = React.memo(
 	({ conflictingEditor }: ConcurrentEditWarningProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -31,5 +30,3 @@ const ConcurrentEditWarning = React.memo(
 		);
 	},
 );
-
-export default ConcurrentEditWarning;

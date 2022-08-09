@@ -1,14 +1,18 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/AccordionCollapse.tsx.
+import AccordionContext, {
+	isAccordionItemSelected,
+} from '@/Bootstrap/AccordionContext';
+import Collapse, { CollapseProps } from '@/Bootstrap/Collapse';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useContext } from 'react';
 import { Transition } from 'react-transition-group';
-
-import AccordionContext, { isAccordionItemSelected } from './AccordionContext';
-import Collapse, { CollapseProps } from './Collapse';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixRefForwardingComponent, BsPrefixProps } from './helpers';
 
 export interface AccordionCollapseProps extends BsPrefixProps, CollapseProps {
 	eventKey: string;

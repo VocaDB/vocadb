@@ -1,7 +1,7 @@
-import EntryContract from './EntryContract';
-import UserApiContract from './User/UserApiContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
-export default interface CommentContract {
+export interface CommentContract {
 	author: UserApiContract;
 
 	authorName?: string;

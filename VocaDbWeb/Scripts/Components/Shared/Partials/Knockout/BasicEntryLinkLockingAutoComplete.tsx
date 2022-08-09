@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import Button from '@/Bootstrap/Button';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ interface BasicEntryLinkLockingAutoCompleteProps<
 	basicEntryLinkStore: BasicEntryLinkStore<T>;
 }
 
-const BasicEntryLinkLockingAutoComplete = observer(
+export const BasicEntryLinkLockingAutoComplete = observer(
 	<T extends IEntryWithIdAndName>({
 		children,
 		basicEntryLinkStore,
@@ -36,5 +36,3 @@ const BasicEntryLinkLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default BasicEntryLinkLockingAutoComplete;

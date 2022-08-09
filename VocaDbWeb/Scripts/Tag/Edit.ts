@@ -1,8 +1,8 @@
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import TagEditViewModel from '@ViewModels/TagEditViewModel';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { TagEditViewModel } from '@/ViewModels/TagEditViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
@@ -12,7 +12,7 @@ function initPage(): void {
 	$('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
 }
 
-const TagEdit = (model: { id: number }): void => {
+export const TagEdit = (model: { id: number }): void => {
 	$(document).ready(function () {
 		initPage();
 
@@ -34,5 +34,3 @@ const TagEdit = (model: { id: number }): void => {
 			});
 	});
 };
-
-export default TagEdit;

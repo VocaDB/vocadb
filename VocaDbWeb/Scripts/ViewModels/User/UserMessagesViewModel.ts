@@ -1,15 +1,14 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import { UserInboxType } from '@Repositories/UserRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { UserInboxType } from '@/Repositories/UserRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { PagedItemsViewModel } from '@/ViewModels/PagedItemsViewModel';
 import $ from 'jquery';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
-
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import PagedItemsViewModel from '../PagedItemsViewModel';
 
 export class NewMessageViewModel {
 	public constructor() {
@@ -47,7 +46,7 @@ export class NewMessageViewModel {
 	};
 }
 
-export default class UserMessagesViewModel {
+export class UserMessagesViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly userRepository: UserRepository,

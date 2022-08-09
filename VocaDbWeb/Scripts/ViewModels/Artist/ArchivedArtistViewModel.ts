@@ -1,9 +1,8 @@
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ui from '@Shared/MessagesTyped';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ui } from '@/Shared/MessagesTyped';
+import { ReportEntryViewModel } from '@/ViewModels/ReportEntryViewModel';
 
-import ReportEntryViewModel from '../ReportEntryViewModel';
-
-export default class ArchivedArtistViewModel {
+export class ArchivedArtistViewModel {
 	public constructor(
 		artistId: number,
 		versionNumber: number,

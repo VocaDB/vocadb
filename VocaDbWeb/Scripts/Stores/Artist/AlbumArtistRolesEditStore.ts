@@ -1,8 +1,7 @@
-import ArtistRoles from '@Models/Artists/ArtistRoles';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
-
-import { IEditableArtistWithSupport } from '../ArtistForAlbumEditStore';
 
 export interface RoleSelection {
 	// Role Id, for example "VoiceManipulator"
@@ -74,7 +73,7 @@ export class ArtistRolesEditStore {
 	};
 }
 
-export default class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
+export class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
 	public constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistRoles[ArtistRoles.Default]);
 	}

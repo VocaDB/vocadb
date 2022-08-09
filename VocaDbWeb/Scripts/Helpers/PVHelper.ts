@@ -1,9 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { PVService } from '@/Models/PVs/PVService';
 
-import VideoServiceHelper from './VideoServiceHelper';
-
-export default class PVHelper {
+export class PVHelper {
 	public static pvServicesArrayFromString = (
 		pvServices: string,
 	): PVService[] => {

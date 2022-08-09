@@ -1,14 +1,13 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/62609973722e5769b968eb62913b4f5708df00fc/src/AbstractNavItem.tsx
+import NavContext from '@/Bootstrap/NavContext';
+import SelectableContext, { makeEventKey } from '@/Bootstrap/SelectableContext';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
+import { EventKey } from '@/Bootstrap/types';
 import useEventCallback from '@restart/hooks/useEventCallback';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useContext } from 'react';
 import warning from 'warning';
-
-import NavContext from './NavContext';
-import SelectableContext, { makeEventKey } from './SelectableContext';
-import { BsPrefixRefForwardingComponent } from './helpers';
-import { EventKey } from './types';
 
 export interface AbstractNavItemProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> {

@@ -1,4 +1,4 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ interface SongTypesDropdownKnockoutProps {
 	onSelect: (eventKey: string) => void;
 }
 
-const SongTypesDropdownKnockout = React.memo(
+export const SongTypesDropdownKnockout = React.memo(
 	({
 		activeKey,
 		onSelect,
@@ -31,5 +31,3 @@ const SongTypesDropdownKnockout = React.memo(
 		);
 	},
 );
-
-export default SongTypesDropdownKnockout;

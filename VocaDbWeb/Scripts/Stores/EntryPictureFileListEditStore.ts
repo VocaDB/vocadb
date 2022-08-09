@@ -1,10 +1,9 @@
-import EntryPictureFileContract from '@DataContracts/EntryPictureFileContract';
+import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
+import { EntryPictureFileEditStore } from '@/Stores/EntryPictureFileEditStore';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
-import EntryPictureFileEditStore from './EntryPictureFileEditStore';
-
-export default class EntryPictureFileListEditStore {
+export class EntryPictureFileListEditStore {
 	@observable public readonly pictures: EntryPictureFileEditStore[];
 
 	public constructor(pictures: EntryPictureFileContract[]) {

@@ -1,15 +1,14 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@DataContracts/CommentContract';
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import EntryTypeAndSubTypeContract from '@DataContracts/EntryTypeAndSubTypeContract';
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
-import EventSeriesContract from '@DataContracts/ReleaseEvents/EventSeriesContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
-
-import TagBaseContract from './TagBaseContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { EventSeriesContract } from '@/DataContracts/ReleaseEvents/EventSeriesContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the TagStatsForApiContract record class in C#.
 interface TagStatsContract {
@@ -27,7 +26,7 @@ interface TagStatsContract {
 }
 
 // Corresponds to the TagDetailsForApiContract record class in C#.
-export default interface TagDetailsContract {
+export interface TagDetailsContract {
 	additionalNames?: string;
 	allUsageCount: number;
 	categoryName?: string;

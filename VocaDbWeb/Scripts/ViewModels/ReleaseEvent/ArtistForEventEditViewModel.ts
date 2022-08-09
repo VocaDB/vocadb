@@ -1,10 +1,9 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import ko, { Computed, ObservableArray } from 'knockout';
 
 // View model for editing artist for album link.
-export default class ArtistForEventEditViewModel
-	implements IEditableArtistWithSupport {
+export class ArtistForEventEditViewModel implements IEditableArtistWithSupport {
 	public artist: ArtistContract;
 
 	// Unique link Id.

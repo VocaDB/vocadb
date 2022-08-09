@@ -1,5 +1,5 @@
 // Corresponds to the TagCategoryForApiContract class in C#.
-export default interface TagCategoryContract {
+export interface TagCategoryContract {
 	name: string;
 	tags: {
 		additionalNames?: string;

@@ -1,5 +1,5 @@
 // From ResourcesApiController
-export default interface ResourcesContract {
+export interface ResourcesContract {
 	activityEntry_activityFeedEventNames?: { [key: string]: string };
 	album_albumEditableFieldNames?: { [key: string]: string };
 	artist_artistEditableFieldNames?: { [key: string]: string };

@@ -1,21 +1,22 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
-import ReleaseEventForEditContract from '@DataContracts/ReleaseEvents/ReleaseEventForEditContract';
-import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
-import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
+import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
+import { ReleaseEventSeriesForApiContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import ReleaseEventSeriesForEditContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-
-export default class ReleaseEventRepository extends BaseRepository {
+export class ReleaseEventRepository extends BaseRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

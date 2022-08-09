@@ -1,10 +1,12 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/c11bc67ab3105e7a1839c0dcaacc5f1099885f02/src/BreadcrumbItem.tsx
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import * as React from 'react';
-
-import SafeAnchor from './SafeAnchor';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 export interface BreadcrumbItemProps
 	extends BsPrefixProps,

@@ -1,21 +1,20 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import CommentContract from '@DataContracts/CommentContract';
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import PVContract from '@DataContracts/PVs/PVContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongInListContract from '@DataContracts/Song/SongInListContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import WebLinkContract from '@DataContracts/WebLinkContract';
-
-import ArtistForEventContract from './ArtistForEventContract';
-import ReleaseEventSeriesForApiContract from './ReleaseEventSeriesForApiContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { ReleaseEventSeriesForApiContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the ReleaseEventDetailsForApiContract record class in C#.
-export default interface ReleaseEventDetailsContract {
+export interface ReleaseEventDetailsContract {
 	additionalNames: string;
 	albums: AlbumForApiContract[];
 	artists: ArtistForEventContract[];

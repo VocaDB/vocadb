@@ -1,19 +1,19 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import UserBaseContract from '@DataContracts/User/UserBaseContract';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import CommentRepository from '@Repositories/CommentRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import ReportEntryStore from '@Stores/ReportEntryStore';
-import TagListStore from '@Stores/Tag/TagListStore';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { CommentRepository } from '@/Repositories/CommentRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import _ from 'lodash';
 import {
 	action,
@@ -23,7 +23,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class ReleaseEventDetailsStore {
+export class ReleaseEventDetailsStore {
 	public readonly comments: EditableCommentsStore;
 	@observable public eventAssociationType?: UserEventRelationshipType;
 	public readonly reportStore: ReportEntryStore;

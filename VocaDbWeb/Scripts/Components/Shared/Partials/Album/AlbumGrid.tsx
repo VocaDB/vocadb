@@ -1,12 +1,11 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { AlbumIconLink } from '@/Components/Shared/Partials/Album/AlbumIconLink';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import AlbumIconLink from './AlbumIconLink';
 
 interface AlbumGridProps {
 	albums: AlbumForApiContract[];
@@ -16,7 +15,7 @@ interface AlbumGridProps {
 	displayType?: boolean;
 }
 
-const AlbumGrid = ({
+export const AlbumGrid = ({
 	albums,
 	columns,
 	displayRating,
@@ -75,5 +74,3 @@ const AlbumGrid = ({
 		</table>
 	);
 };
-
-export default AlbumGrid;

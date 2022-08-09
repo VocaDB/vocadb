@@ -1,8 +1,8 @@
-import CommentContract from '@DataContracts/CommentContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import ko, { Observable } from 'knockout';
 
-export default class CommentViewModel {
+export class CommentViewModel {
 	public constructor(
 		contract: CommentContract,
 		public canBeDeleted: boolean,

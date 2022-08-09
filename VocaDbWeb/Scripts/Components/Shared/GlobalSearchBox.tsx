@@ -1,27 +1,26 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import Navbar from '@Bootstrap/Navbar';
-import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import ImageSize from '@Models/Images/ImageSize';
-import LoginManager from '@Models/LoginManager';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import TopBarStore from '@Stores/TopBarStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import Navbar from '@/Bootstrap/Navbar';
+import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
+import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
+import { ShowRandomPageButton } from '@/Components/Shared/ShowRandomPageButton';
+import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import MainNavigationItems from './Partials/MainNavigationItems';
-import ProfileIconKnockout_ImageSize from './Partials/User/ProfileIconKnockout_ImageSize';
-import ShowRandomPageButton from './ShowRandomPageButton';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -84,7 +83,7 @@ interface GlobalSearchBoxProps {
 	topBarStore: TopBarStore;
 }
 
-const GlobalSearchBox = observer(
+export const GlobalSearchBox = observer(
 	({ topBarStore }: GlobalSearchBoxProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'Resources',
@@ -367,5 +366,3 @@ const GlobalSearchBox = observer(
 		);
 	},
 );
-
-export default GlobalSearchBox;

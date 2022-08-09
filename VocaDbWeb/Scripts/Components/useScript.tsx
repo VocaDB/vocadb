@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Code from: https://stackoverflow.com/questions/34424845/adding-script-tag-to-react-jsx/34425083#34425083
-const useScript = (src: string): void => {
+export const useScript = (src: string): void => {
 	React.useEffect(() => {
 		const script = document.createElement('script');
 
@@ -15,5 +15,3 @@ const useScript = (src: string): void => {
 		};
 	}, [src]);
 };
-
-export default useScript;

@@ -1,11 +1,10 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import ICommentRepository from './ICommentRepository';
-
-export default class EntryCommentRepository implements ICommentRepository {
+export class EntryCommentRepository implements ICommentRepository {
 	private baseUrl: string;
 
 	public constructor(

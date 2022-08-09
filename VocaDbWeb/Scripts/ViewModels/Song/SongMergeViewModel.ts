@@ -1,13 +1,12 @@
-import SongContract from '@DataContracts/Song/SongContract';
-import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
-import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import SongRepository from '@Repositories/SongRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { EntryMergeValidationHelper } from '@/Helpers/EntryMergeValidationHelper';
+import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko from 'knockout';
 
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-
-export default class SongMergeViewModel {
+export class SongMergeViewModel {
 	public constructor(
 		values: GlobalValues,
 		songRepo: SongRepository,

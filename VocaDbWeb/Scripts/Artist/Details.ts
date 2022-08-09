@@ -1,14 +1,14 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import LoginManager from '@Models/LoginManager';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import SongRepository from '@Repositories/SongRepository';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import ArtistDetailsViewModel from '@ViewModels/Artist/ArtistDetailsViewModel';
-import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
-import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArtistDetailsViewModel } from '@/ViewModels/Artist/ArtistDetailsViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
@@ -74,7 +74,7 @@ function initPage(
 	$('.artistLink').vdbArtistToolTip();
 }
 
-const ArtistDetails = (
+export const ArtistDetails = (
 	hasEnglishDescription: boolean,
 	model: {
 		emailNotifications: boolean;
@@ -134,5 +134,3 @@ const ArtistDetails = (
 		initPage(model.id, saveStr, urlMapper, viewModel, songRepo);
 	});
 };
-
-export default ArtistDetails;

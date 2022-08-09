@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js-light';
 import { computed, makeObservable, observable } from 'mobx';
 
-export default class SongBpmFilter {
+export class SongBpmFilter {
 	@observable public milliBpm?: number;
 
 	public constructor() {

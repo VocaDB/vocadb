@@ -1,15 +1,21 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistForArtistContract from '@DataContracts/Artist/ArtistForArtistContract';
-import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistLinkType from '@Models/Artists/ArtistLinkType';
-import ArtistType from '@Models/Artists/ArtistType';
-import EntryType from '@Models/EntryType';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForArtistContract } from '@/DataContracts/Artist/ArtistForArtistContract';
+import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EntryPictureFileListEditStore } from '@/Stores/EntryPictureFileListEditStore';
+import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
+import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
 import _ from 'lodash';
 import {
@@ -21,13 +27,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import BasicEntryLinkStore from '../BasicEntryLinkStore';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EntryPictureFileListEditStore from '../EntryPictureFileListEditStore';
-import EnglishTranslatedStringEditStore from '../Globalization/EnglishTranslatedStringEditStore';
-import NamesEditStore from '../Globalization/NamesEditStore';
-import WebLinksEditStore from '../WebLinksEditStore';
 
 export class ArtistForArtistEditStore {
 	@observable public linkType: string /* TODO: enum */;
@@ -48,7 +47,7 @@ export class ArtistForArtistEditStore {
 	};
 }
 
-export default class ArtistEditStore {
+export class ArtistEditStore {
 	@observable public artistType: ArtistType;
 	@observable public associatedArtists: ArtistForArtistEditStore[];
 	public readonly baseVoicebank: BasicEntryLinkStore<ArtistContract>;

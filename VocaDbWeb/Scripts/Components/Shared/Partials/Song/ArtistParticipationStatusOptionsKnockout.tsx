@@ -1,4 +1,4 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 
 enum ArtistAlbumParticipationStatus {
@@ -21,7 +21,7 @@ interface ArtistParticipationStatusOptionsKnockoutProps {
 	onSelect: (eventKey: string) => void;
 }
 
-const ArtistParticipationStatusOptionsKnockout = React.memo(
+export const ArtistParticipationStatusOptionsKnockout = React.memo(
 	({
 		activeKey,
 		onSelect,
@@ -43,5 +43,3 @@ const ArtistParticipationStatusOptionsKnockout = React.memo(
 		);
 	},
 );
-
-export default ArtistParticipationStatusOptionsKnockout;

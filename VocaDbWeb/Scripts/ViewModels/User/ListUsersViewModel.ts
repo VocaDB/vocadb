@@ -1,13 +1,12 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ResourcesManager from '@Models/ResourcesManager';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ResourcesManager } from '@/Models/ResourcesManager';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Observable } from 'knockout';
 
-import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
-
-export default class ListUsersViewModel {
+export class ListUsersViewModel {
 	public constructor(
 		values: GlobalValues,
 		private readonly repo: UserRepository,

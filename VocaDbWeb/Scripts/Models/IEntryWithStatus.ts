@@ -1,5 +1,5 @@
-import EntryRefContract from '@DataContracts/EntryRefContract';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 
-export default interface IEntryWithStatus extends EntryRefContract {
+export interface IEntryWithStatus extends EntryRefContract {
 	status: string;
 }

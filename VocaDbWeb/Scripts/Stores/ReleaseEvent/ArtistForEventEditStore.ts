@@ -1,12 +1,10 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistForEventContract from '@DataContracts/ReleaseEvents/ArtistForEventContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
+import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import { computed, makeObservable, observable } from 'mobx';
 
-import { IEditableArtistWithSupport } from '../ArtistForAlbumEditStore';
-
 // Store for editing artist for album link.
-export default class ArtistForEventEditStore
-	implements IEditableArtistWithSupport {
+export class ArtistForEventEditStore implements IEditableArtistWithSupport {
 	public readonly artist: ArtistContract;
 	// Unique link Id.
 	public readonly id: number;

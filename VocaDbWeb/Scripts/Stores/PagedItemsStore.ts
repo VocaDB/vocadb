@@ -1,8 +1,8 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { action, makeObservable, observable } from 'mobx';
 
 // Generic store that supports simple paging by loading more items
-export default abstract class PagedItemsStore<TModel> {
+export abstract class PagedItemsStore<TModel> {
 	@observable public hasMore = false;
 	private isInit = false;
 	@observable public items: TModel[] = [];

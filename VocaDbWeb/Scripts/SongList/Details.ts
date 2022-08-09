@@ -1,15 +1,15 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import LoginManager from '@Models/LoginManager';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
-import SongListViewModel from '@ViewModels/SongList/SongListViewModel';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { SongListViewModel } from '@/ViewModels/SongList/SongListViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const SongListDetails = (
+export const SongListDetails = (
 	defaultSortRuleName: string,
 	model: {
 		songList: {
@@ -61,5 +61,3 @@ const SongListDetails = (
 		ko.applyBindings(vm);
 	});
 };
-
-export default SongListDetails;

@@ -1,10 +1,10 @@
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import CommonSearchStore from '@Stores/Search/CommonSearchStore';
-import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
@@ -22,7 +22,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ArtistSongsRouteParams> = require('./ArtistSongsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class ArtistSongsStore
+export class ArtistSongsStore
 	extends SongSearchStore
 	implements StoreWithPagination<ArtistSongsRouteParams> {
 	public constructor(

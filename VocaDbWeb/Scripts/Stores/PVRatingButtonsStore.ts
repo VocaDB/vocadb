@@ -1,5 +1,5 @@
-import SongVoteRating, { parseSongVoteRating } from '@Models/SongVoteRating';
-import UserRepository from '@Repositories/UserRepository';
+import { parseSongVoteRating, SongVoteRating } from '@/Models/SongVoteRating';
+import { UserRepository } from '@/Repositories/UserRepository';
 import {
 	action,
 	computed,
@@ -14,7 +14,7 @@ interface SongWithVoteContract {
 }
 
 // MobX store for PV rating buttons
-export default class PVRatingButtonsStore {
+export class PVRatingButtonsStore {
 	@observable public rating: SongVoteRating;
 	// Rating operation is in progress. Prevents racing conditions.
 	@observable public ratingInProgress = false;

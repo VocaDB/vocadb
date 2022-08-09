@@ -1,8 +1,7 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
-import EntryRefContract from '@DataContracts/EntryRefContract';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
+import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import React from 'react';
-
-import { EntryToolTip } from '../../../KnockoutExtensions/EntryToolTip';
 
 interface ThumbItemProps {
 	as?: React.ElementType;
@@ -12,7 +11,7 @@ interface ThumbItemProps {
 	tooltip?: boolean;
 }
 
-const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
+export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	'a',
 	ThumbItemProps
 > = ({
@@ -56,5 +55,3 @@ const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 		</li>
 	);
 };
-
-export default ThumbItem;

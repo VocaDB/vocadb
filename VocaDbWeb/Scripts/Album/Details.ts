@@ -1,13 +1,14 @@
-import LoginManager from '@Models/LoginManager';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumDetailsViewModel, {
+import { LoginManager } from '@/Models/LoginManager';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
 	AlbumDetailsAjax,
-} from '@ViewModels/Album/AlbumDetailsViewModel';
-import { IEntryReportType } from '@ViewModels/ReportEntryViewModel';
+	AlbumDetailsViewModel,
+} from '@/ViewModels/Album/AlbumDetailsViewModel';
+import { IEntryReportType } from '@/ViewModels/ReportEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
@@ -147,7 +148,7 @@ function initAlbumDetailsPage(
 	});
 }
 
-const AlbumDetails = (
+export const AlbumDetails = (
 	addedToCollection: string,
 	albumDetails: typeof vdb.resources.albumDetails,
 	formatString: string,
@@ -202,5 +203,3 @@ const AlbumDetails = (
 		);
 	});
 };
-
-export default AlbumDetails;

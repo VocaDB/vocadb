@@ -1,14 +1,13 @@
-import CommentContract from '@DataContracts/CommentContract';
-import ICommentRepository from '@Repositories/ICommentRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { CommentViewModel } from '@/ViewModels/CommentViewModel';
+import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Computed, ObservableArray } from 'knockout';
 import _ from 'lodash';
 
-import CommentViewModel from './CommentViewModel';
-import ServerSidePagingViewModel from './ServerSidePagingViewModel';
-
 // Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
-export default class EditableCommentsViewModel {
+export class EditableCommentsViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private repo: ICommentRepository,

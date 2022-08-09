@@ -1,10 +1,10 @@
-import ArtistRepository from '@Repositories/ArtistRepository';
-import HttpClient from '@Shared/HttpClient';
-import ArchivedArtistViewModel from '@ViewModels/Artist/ArchivedArtistViewModel';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ArchivedArtistViewModel } from '@/ViewModels/Artist/ArchivedArtistViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const ArtistViewVersion = (model: {
+export const ArtistViewVersion = (model: {
 	archivedVersion: {
 		version: number;
 	};
@@ -32,5 +32,3 @@ const ArtistViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default ArtistViewVersion;

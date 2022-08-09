@@ -1,10 +1,11 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongInListEditContract from '@DataContracts/Song/SongInListEditContract';
-import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
-import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
-import SongListRepository from '@Repositories/SongListRepository';
-import SongRepository from '@Repositories/SongRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
+import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import _ from 'lodash';
 import {
 	action,
@@ -15,8 +16,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import DeleteEntryStore from '../DeleteEntryStore';
 
 export class SongInListEditStore {
 	private static nextId = 1;
@@ -38,7 +37,7 @@ export class SongInListEditStore {
 	}
 }
 
-export default class SongListEditStore {
+export class SongListEditStore {
 	public readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.songListRepo.delete({
 			id: this.contract.id,

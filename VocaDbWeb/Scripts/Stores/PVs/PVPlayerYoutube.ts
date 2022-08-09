@@ -1,9 +1,8 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerYoutube implements IPVPlayer {
+export class PVPlayerYoutube implements IPVPlayer {
 	private player?: YT.Player;
 	public readonly service = PVService.Youtube;
 

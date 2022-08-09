@@ -1,18 +1,18 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import PVHelper from '@Helpers/PVHelper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVHelper } from '@/Helpers/PVHelper';
 import {
 	SongOptionalField,
 	SongOptionalFields,
-} from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayerStore, { IPVPlayerSong } from '@Stores/PVs/PVPlayerStore';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+} from '@/Models/EntryOptionalFields';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { IPVPlayerSong, PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	action,
 	computed,
@@ -41,7 +41,7 @@ export interface IPlayListRepository {
 	): Promise<PartialFindResultContract<ISongForPlayList>>;
 }
 
-export default class PlayListStore {
+export class PlayListStore {
 	public isInit = false;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ISongForPlayList[] = []; // Current page of items

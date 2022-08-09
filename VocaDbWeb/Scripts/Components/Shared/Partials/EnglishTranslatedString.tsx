@@ -1,13 +1,12 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EnglishTranslatedStringContract from '@DataContracts/Globalization/EnglishTranslatedStringContract';
-import EnglishTranslatedStringStore from '@Stores/Globalization/EnglishTranslatedStringStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { EnglishTranslatedStringStore } from '@/Stores/Globalization/EnglishTranslatedStringStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import FormatMarkdown from './Html/FormatMarkdown';
 
 interface TextProps {
 	englishTranslatedStringStore: EnglishTranslatedStringStore;
@@ -57,7 +56,7 @@ interface EnglishTranslatedStringProps {
 	summaryLength?: number;
 }
 
-const EnglishTranslatedString = observer(
+export const EnglishTranslatedString = observer(
 	({
 		englishTranslatedStringStore,
 		string,
@@ -140,5 +139,3 @@ const EnglishTranslatedString = observer(
 		);
 	},
 );
-
-export default EnglishTranslatedString;

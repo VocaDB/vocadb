@@ -1,26 +1,27 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagCategoryContract from '@DataContracts/Tag/TagCategoryContract';
-import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
-import TagForEditContract from '@DataContracts/Tag/TagForEditContract';
-import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryTagMappingContract } from '@/DataContracts/Tag/EntryTagMappingContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
+import { TagDetailsContract } from '@/DataContracts/Tag/TagDetailsContract';
+import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
+import { TagMappingContract } from '@/DataContracts/Tag/TagMappingContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import EntryCommentRepository from './EntryCommentRepository';
-
-export default class TagRepository extends BaseRepository {
+export class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;
 
 	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {

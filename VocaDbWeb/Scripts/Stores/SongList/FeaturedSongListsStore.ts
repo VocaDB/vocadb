@@ -1,14 +1,16 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import SongListFeaturedCategory from '@Models/SongLists/SongListFeaturedCategory';
-import SongListRepository from '@Repositories/SongListRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import {
+	SongListsBaseStore,
+	SongListSortRule,
+} from '@/Stores/SongList/SongListsBaseStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
-
-import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
 
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 	public constructor(
@@ -58,7 +60,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./FeaturedSongListsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class FeaturedSongListsStore
+export class FeaturedSongListsStore
 	implements StoreWithUpdateResults<FeaturedSongListsRouteParams> {
 	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
 	@observable public category = SongListFeaturedCategory.Concerts;

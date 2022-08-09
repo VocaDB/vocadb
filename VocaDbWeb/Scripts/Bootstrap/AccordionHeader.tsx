@@ -1,11 +1,13 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/AccordionHeader.tsx.
+import AccordionButton from '@/Bootstrap/AccordionButton';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-
-import AccordionButton from './AccordionButton';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixRefForwardingComponent, BsPrefixProps } from './helpers';
 
 export interface AccordionHeaderProps
 	extends BsPrefixProps,

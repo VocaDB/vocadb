@@ -1,22 +1,21 @@
-import Button from '@Bootstrap/Button';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import SelfDescriptionStore from '@Stores/SelfDescriptionStore';
+import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import Markdown from '../../../KnockoutExtensions/Markdown';
-
 interface PersonalDescriptionMediaProps {
 	personalDescription: SelfDescriptionStore;
 	canEditPersonalDescription: boolean;
 }
 
-const PersonalDescriptionMedia = observer(
+export const PersonalDescriptionMedia = observer(
 	({
 		personalDescription,
 		canEditPersonalDescription,
@@ -119,5 +118,3 @@ const PersonalDescriptionMedia = observer(
 		);
 	},
 );
-
-export default PersonalDescriptionMedia;
