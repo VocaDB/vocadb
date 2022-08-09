@@ -1,8 +1,9 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@Models/LoginManager';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { StoreWithRouteParams } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -12,8 +13,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import DiscussionTopicEditStore from './DiscussionTopicEditStore';
 
 interface DiscussionTopicRouteParams {
 	page?: number;
@@ -26,7 +25,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./DiscussionTopicRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class DiscussionTopicStore
+export class DiscussionTopicStore
 	implements StoreWithRouteParams<DiscussionTopicRouteParams> {
 	@observable public comments: EditableCommentsStore;
 	@observable public contract: DiscussionTopicContract;

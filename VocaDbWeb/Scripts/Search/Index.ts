@@ -1,17 +1,17 @@
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import SongType from '@Models/Songs/SongType';
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@ViewModels/PVs/PVPlayersFactory';
-import SearchViewModel from '@ViewModels/Search/SearchViewModel';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { SongType } from '@/Models/Songs/SongType';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const SearchIndex = (model: {
+export const SearchIndex = (model: {
 	artistId: number[];
 	artistType: ArtistType;
 	autoplay: boolean;
@@ -109,5 +109,3 @@ const SearchIndex = (model: {
 		ko.applyBindings(vm);
 	});
 };
-
-export default SearchIndex;

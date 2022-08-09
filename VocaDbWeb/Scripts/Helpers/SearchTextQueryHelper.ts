@@ -1,4 +1,4 @@
-export default class SearchTextQueryHelper {
+export class SearchTextQueryHelper {
 	// Test whether a query text contains a wildcard - either quotes for exact match or asterisk for prefix.
 	public static isWildcardQuery = (queryText: string): boolean => {
 		if (!queryText || queryText.length < 2) return false;

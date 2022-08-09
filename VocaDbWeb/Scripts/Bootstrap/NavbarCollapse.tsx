@@ -1,12 +1,11 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/c11bc67ab3105e7a1839c0dcaacc5f1099885f02/src/NavbarCollapse.tsx
+import Collapse, { CollapseProps } from '@/Bootstrap/Collapse';
+import NavbarContext from '@/Bootstrap/NavbarContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import { BsPrefixProps } from '@/Bootstrap/helpers';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useContext } from 'react';
-
-import Collapse, { CollapseProps } from './Collapse';
-import NavbarContext from './NavbarContext';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps } from './helpers';
 
 export interface NavbarCollapseProps
 	extends Omit<CollapseProps, 'children'>,

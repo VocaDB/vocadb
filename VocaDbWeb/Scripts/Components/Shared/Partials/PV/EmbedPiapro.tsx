@@ -1,4 +1,4 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
 
 interface PiaproMetadata {
@@ -11,7 +11,7 @@ interface EmbedPiaproProps {
 	height?: number | string;
 }
 
-const EmbedPiapro = React.memo(
+export const EmbedPiapro = React.memo(
 	({ pv, width, height }: EmbedPiaproProps): React.ReactElement => {
 		const meta = pv.extendedMetadata
 			? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
@@ -44,5 +44,3 @@ const EmbedPiapro = React.memo(
 		);
 	},
 );
-
-export default EmbedPiapro;

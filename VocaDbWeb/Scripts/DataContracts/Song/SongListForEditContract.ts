@@ -1,7 +1,7 @@
-import SongInListEditContract from './SongInListEditContract';
-import SongListContract from './SongListContract';
+import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
 
-export default interface SongListForEditContract extends SongListContract {
+export interface SongListForEditContract extends SongListContract {
 	songLinks: SongInListEditContract[];
 	updateNotes?: string;
 }

@@ -1,8 +1,8 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import SongInAlbumEditContract from '@DataContracts/Song/SongInAlbumEditContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
 import { makeObservable, observable, reaction } from 'mobx';
 
-export default class SongInAlbumEditStore {
+export class SongInAlbumEditStore {
 	private static nextId = 1;
 
 	public readonly id: number;

@@ -1,8 +1,8 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { computed, makeObservable, observable } from 'mobx';
 
-export default class LocalizedStringWithIdEditStore {
+export class LocalizedStringWithIdEditStore {
 	public readonly id: number;
 	@observable public language = ContentLanguageSelection.Unspecified;
 	@observable public value: string;

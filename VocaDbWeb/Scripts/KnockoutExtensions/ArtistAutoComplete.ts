@@ -1,8 +1,8 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import { EntryAutoCompleteParams } from '@Shared/EntryAutoComplete';
-import { initEntrySearch } from '@Shared/EntryAutoComplete';
-import functions from '@Shared/GlobalFunctions';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
+import { initEntrySearch } from '@/Shared/EntryAutoComplete';
+import { functions } from '@/Shared/GlobalFunctions';
 import ko from 'knockout';
 
 declare global {

@@ -1,10 +1,10 @@
-import TagRepository from '@Repositories/TagRepository';
-import HttpClient from '@Shared/HttpClient';
-import ManageEntryTagMappingsViewModel from '@ViewModels/Admin/ManageEntryTagMappingsViewModel';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ManageEntryTagMappingsViewModel } from '@/ViewModels/Admin/ManageEntryTagMappingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const AdminManageEntryTagMappings = (): void => {
+export const AdminManageEntryTagMappings = (): void => {
 	$(function () {
 		ko.punches.enableAll();
 
@@ -15,5 +15,3 @@ const AdminManageEntryTagMappings = (): void => {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default AdminManageEntryTagMappings;

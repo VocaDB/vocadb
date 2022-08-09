@@ -1,33 +1,34 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import CommentContract from '@DataContracts/CommentContract';
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import EntryType from '@Models/EntryType';
-import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import ui from '@Shared/MessagesTyped';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { EntryType } from '@/Models/EntryType';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { EnglishTranslatedStringViewModel } from '@/ViewModels/Globalization/EnglishTranslatedStringViewModel';
+import { PVRatingButtonsViewModel } from '@/ViewModels/PVRatingButtonsViewModel';
+import {
+	IEntryReportType,
+	ReportEntryViewModel,
+} from '@/ViewModels/ReportEntryViewModel';
+import { SelfDescriptionViewModel } from '@/ViewModels/SelfDescriptionViewModel';
+import { TagListViewModel } from '@/ViewModels/Tag/TagListViewModel';
+import { TagsEditViewModel } from '@/ViewModels/Tag/TagsEditViewModel';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
-
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
-import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
-import TagListViewModel from '../Tag/TagListViewModel';
-import TagsEditViewModel from '../Tag/TagsEditViewModel';
 
 export class RatingsViewModel {
 	public constructor() {
@@ -97,7 +98,7 @@ export class RatingsViewModel {
 }
 
 // View model for the song details view.
-export default class SongDetailsViewModel {
+export class SongDetailsViewModel {
 	public allVersionsVisible: Observable<boolean>;
 
 	public comments: EditableCommentsViewModel;

@@ -1,9 +1,9 @@
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import WebLinkCategory from '@Models/WebLinkCategory';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import { makeObservable, observable, reaction } from 'mobx';
 
-export default class WebLinkEditStore {
+export class WebLinkEditStore {
 	@observable public category: WebLinkCategory;
 	@observable public description: string;
 	@observable public disabled: boolean;

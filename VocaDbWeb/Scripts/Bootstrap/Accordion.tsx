@@ -1,21 +1,23 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/Accordion.tsx.
+import AccordionBody from '@/Bootstrap/AccordionBody';
+import AccordionButton from '@/Bootstrap/AccordionButton';
+import AccordionCollapse from '@/Bootstrap/AccordionCollapse';
+import AccordionContext, {
+	AccordionEventKey,
+	AccordionSelectCallback,
+} from '@/Bootstrap/AccordionContext';
+import AccordionHeader from '@/Bootstrap/AccordionHeader';
+import AccordionItem from '@/Bootstrap/AccordionItem';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useUncontrolled } from 'uncontrollable';
-
-import AccordionBody from './AccordionBody';
-import AccordionButton from './AccordionButton';
-import AccordionCollapse from './AccordionCollapse';
-import AccordionContext, {
-	AccordionSelectCallback,
-	AccordionEventKey,
-} from './AccordionContext';
-import AccordionHeader from './AccordionHeader';
-import AccordionItem from './AccordionItem';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 export interface AccordionProps
 	extends Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'>,

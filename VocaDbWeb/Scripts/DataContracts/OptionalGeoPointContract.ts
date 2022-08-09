@@ -1,4 +1,4 @@
-export default interface OptionalGeoPointContract {
+export interface OptionalGeoPointContract {
 	formatted?: string;
 	hasValue?: boolean;
 	latitude?: number;

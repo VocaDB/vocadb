@@ -51,9 +51,13 @@
 	}
 }
 
+html {
+	overflow-y: scroll;
+}
+
 // Layout and Navigation
 body {
-	padding-top: 50px;
+	padding-top: 40px;
 	padding-bottom: 50px;
 
 	@media (max-width: @mobile-breakpoint) {
@@ -70,18 +74,6 @@ body .container-fluid {
 	@media (min-width: @mobile-breakpoint) {
 		padding-right: 10px;
 		padding-left: 10px;
-	}
-}
-
-.row-fluid .rightFrame {
-	@media (min-width: @left-menu-breakpoint) {
-		margin-left: 1%;
-		width: 84%;
-	}
-	@media (max-width: @left-menu-breakpoint) {
-		margin-left: 0;
-		margin-right: 0;
-		width: 100%;
 	}
 }
 

@@ -1,17 +1,17 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
+import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import { EmbedFile } from '@/Components/VdbPlayer/EmbedFile';
+import { EmbedNiconico } from '@/Components/VdbPlayer/EmbedNiconico';
+import { EmbedSoundCloud } from '@/Components/VdbPlayer/EmbedSoundCloud';
+import { EmbedYouTube } from '@/Components/VdbPlayer/EmbedYouTube';
+import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import _ from 'lodash';
 import React from 'react';
 
 // TODO: Implement lazy loading.
-import EmbedBili from '../Shared/Partials/PV/EmbedBili';
-import EmbedPiapro from '../Shared/Partials/PV/EmbedPiapro';
-import EmbedFile from './EmbedFile';
-import EmbedNiconico from './EmbedNiconico';
-import EmbedSoundCloud from './EmbedSoundCloud';
-import EmbedYouTube from './EmbedYouTube';
-import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
 // TODO: Test.
@@ -51,7 +51,7 @@ interface EmbedPVProps {
 	options: IPVPlayerOptions;
 }
 
-const EmbedPV = React.memo(
+export const EmbedPV = React.memo(
 	({
 		pv,
 		width = 560,
@@ -159,5 +159,3 @@ const EmbedPV = React.memo(
 		}
 	},
 );
-
-export default EmbedPV;

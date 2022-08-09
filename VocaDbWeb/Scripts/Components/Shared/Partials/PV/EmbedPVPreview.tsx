@@ -1,10 +1,9 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import EntryContract from '@DataContracts/EntryContract';
-import PVContract from '@DataContracts/PVs/PVContract';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { useContextMenu } from '@/Components/useContextMenu';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
-
-import { useVdbPlayer } from '../../../VdbPlayer/VdbPlayerContext';
-import useContextMenu from '../../../useContextMenu';
 
 interface EmbedPVPreviewProps {
 	entry: EntryContract;
@@ -16,7 +15,7 @@ interface EmbedPVPreviewProps {
 	id?: string;
 }
 
-const EmbedPVPreview = React.memo(
+export const EmbedPVPreview = React.memo(
 	({
 		entry,
 		pv,
@@ -99,5 +98,3 @@ const EmbedPVPreview = React.memo(
 		);
 	},
 );
-
-export default EmbedPVPreview;

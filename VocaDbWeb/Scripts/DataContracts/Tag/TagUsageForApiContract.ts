@@ -1,6 +1,6 @@
-import TagBaseContract from './TagBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 
-export default interface TagUsageForApiContract {
+export interface TagUsageForApiContract {
 	count: number;
 
 	tag: TagBaseContract;

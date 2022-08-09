@@ -1,16 +1,15 @@
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import ArtistType from '@Models/Artists/ArtistType';
-import EntryType from '@Models/EntryType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import TagRepository from '@Repositories/TagRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { WebLinkEditViewModel } from '@/ViewModels/WebLinkEditViewModel';
 import ko from 'knockout';
 
-import WebLinkEditViewModel from './WebLinkEditViewModel';
-
-export default class ArtistCreateViewModel {
+export class ArtistCreateViewModel {
 	public artistType = ko.observable(ArtistType.Producer);
 	public artistTypeTag = ko.observable<TagApiContract>(null!);
 	public artistTypeName = ko.computed(() => this.artistTypeTag()?.name);

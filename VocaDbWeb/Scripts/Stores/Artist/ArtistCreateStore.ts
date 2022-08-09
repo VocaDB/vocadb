@@ -1,14 +1,14 @@
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import LocalizedStringContract from '@DataContracts/Globalization/LocalizedStringContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import ArtistType from '@Models/Artists/ArtistType';
-import EntryType from '@Models/EntryType';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import TagRepository from '@Repositories/TagRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import WebLinkEditStore from '@Stores/WebLinkEditStore';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { LocalizedStringContract } from '@/DataContracts/Globalization/LocalizedStringContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { WebLinkEditStore } from '@/Stores/WebLinkEditStore';
 import {
 	action,
 	computed,
@@ -18,7 +18,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class ArtistCreateStore {
+export class ArtistCreateStore {
 	@observable public artistType = ArtistType.Producer;
 	@observable public artistTypeTag?: TagApiContract;
 	@observable public draft = false;

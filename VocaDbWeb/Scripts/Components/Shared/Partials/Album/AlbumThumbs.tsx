@@ -1,9 +1,9 @@
-import ThumbItem from '@Components/Shared/Partials/Shared/ThumbItem';
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryType from '@Models/EntryType';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryType } from '@/Models/EntryType';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ interface AlbumThumbsProps {
 	tooltip?: boolean;
 }
 
-const AlbumThumbs = ({
+export const AlbumThumbs = ({
 	albums,
 	tooltip,
 }: AlbumThumbsProps): React.ReactElement => {
@@ -35,5 +35,3 @@ const AlbumThumbs = ({
 		</ul>
 	);
 };
-
-export default AlbumThumbs;

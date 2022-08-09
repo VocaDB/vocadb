@@ -1,10 +1,10 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
-import { ArtistSortRule } from '@Stores/Search/ArtistSearchStore';
-import { EventSortRule } from '@Stores/Search/EventSearchStore';
-import { SongSortRule } from '@Stores/Search/SongSearchStore';
-import { RatedSongForUserSortRule } from '@Stores/User/RatedSongsSearchStore';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
+import { EventSortRule } from '@/Stores/Search/EventSearchStore';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { RatedSongForUserSortRule } from '@/Stores/User/RatedSongsSearchStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

@@ -1,15 +1,14 @@
-import ResourcesContract from '@DataContracts/ResourcesContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { PagedItemsViewModel } from '@/ViewModels/PagedItemsViewModel';
+import { TagFilter } from '@/ViewModels/Search/TagFilter';
+import { TagFilters } from '@/ViewModels/Search/TagFilters';
 import ko from 'knockout';
 import moment from 'moment';
-
-import PagedItemsViewModel from '../PagedItemsViewModel';
-import TagFilter from '../Search/TagFilter';
-import TagFilters from '../Search/TagFilters';
 
 enum SongListSortRule {
 	Name,
@@ -17,7 +16,7 @@ enum SongListSortRule {
 	CreateDate,
 }
 
-export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
+export class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
 	public constructor(
 		values: GlobalValues,
 		resourceRepo: ResourceRepository,

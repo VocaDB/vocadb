@@ -1,4 +1,4 @@
-enum ArtistReportType {
+export enum ArtistReportType {
 	InvalidInfo = 'InvalidInfo',
 	Duplicate = 'Duplicate',
 	Inappropriate = 'Inappropriate',
@@ -6,9 +6,7 @@ enum ArtistReportType {
 	Other = 'Other',
 }
 
-export default ArtistReportType;
-
-export const reportTypesWithRequiredNotes = [
+export const artistReportTypesWithRequiredNotes = [
 	ArtistReportType.InvalidInfo,
 	ArtistReportType.Other,
 ];

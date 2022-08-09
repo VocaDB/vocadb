@@ -1,4 +1,4 @@
-import VdbPlayerStore from '@Stores/VdbPlayer/VdbPlayerStore';
+import { VdbPlayerStore } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import React from 'react';
 
 const VdbPlayerContext = React.createContext<VdbPlayerStore>(undefined!);

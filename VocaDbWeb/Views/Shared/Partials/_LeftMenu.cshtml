@@ -24,7 +24,7 @@
 	}
 }
 
-<div class="span2 menu">
+<div class="menu" style="min-width: 240px; flex: 0 1 0; overflow-y: auto; position: sticky; max-height: calc(100vh - 40px); top: 40px">
 	<div class="well">
 		<a href="@Url.Action("Index", "Home")">
 			<img src="@(BannerUrl ?? VocaUrlHelper.StaticResource("/img/vocaDB-title.png"))" class="site-logo" alt="@BrandableStrings.Layout.SiteName" title="@BrandableStrings.Layout.SiteName" />

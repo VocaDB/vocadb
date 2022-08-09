@@ -1,7 +1,7 @@
-import EntryContract from '@DataContracts/EntryContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ interface CommentEntryItemProps {
 	entry: EntryContract;
 }
 
-const CommentEntryItem = React.memo(
+export const CommentEntryItem = React.memo(
 	({ entry }: CommentEntryItemProps): React.ReactElement => {
 		const thumbUrl = entry.mainPicture
 			? UrlHelper.upgradeToHttps(
@@ -49,5 +49,3 @@ const CommentEntryItem = React.memo(
 		);
 	},
 );
-
-export default CommentEntryItem;

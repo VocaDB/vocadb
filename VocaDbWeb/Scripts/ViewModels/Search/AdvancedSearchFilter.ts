@@ -1,4 +1,4 @@
-export default interface AdvancedSearchFilter {
+export interface AdvancedSearchFilter {
 	description?: string;
 
 	filterType: string;

@@ -1,13 +1,12 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { EntryMergeValidationHelper } from '@/Helpers/EntryMergeValidationHelper';
+import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko from 'knockout';
 
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-
-export default class AlbumMergeViewModel {
+export class AlbumMergeViewModel {
 	public constructor(values: GlobalValues, repo: AlbumRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<AlbumContract>(null!, (entryId) =>
 			repo.getOne({ id: entryId, lang: values.languagePreference }),

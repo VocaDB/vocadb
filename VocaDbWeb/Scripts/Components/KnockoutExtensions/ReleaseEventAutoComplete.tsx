@@ -1,18 +1,18 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import functions from '@Shared/GlobalFunctions';
+import {
+	EntryAutoComplete,
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface ReleaseEventAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onAcceptSelection: (entry: ReleaseEventContract) => void;
 }
 
-const ReleaseEventAutoComplete = ({
+export const ReleaseEventAutoComplete = ({
 	onAcceptSelection,
 	...props
 }: ReleaseEventAutoCompleteProps): React.ReactElement => {
@@ -54,5 +54,3 @@ const ReleaseEventAutoComplete = ({
 		/>
 	);
 };
-
-export default ReleaseEventAutoComplete;

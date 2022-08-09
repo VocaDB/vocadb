@@ -1,9 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { getScript } from '@/Components/VdbPlayer/getScript';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
-
-import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
-import getScript from './getScript';
 
 declare global {
 	interface Window {
@@ -186,7 +185,7 @@ interface EmbedYouTubeProps {
 	options: IPVPlayerOptions;
 }
 
-const EmbedYouTube = React.memo(
+export const EmbedYouTube = React.memo(
 	({ playerRef, options }: EmbedYouTubeProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedYouTube');
 
@@ -214,5 +213,3 @@ const EmbedYouTube = React.memo(
 		);
 	},
 );
-
-export default EmbedYouTube;

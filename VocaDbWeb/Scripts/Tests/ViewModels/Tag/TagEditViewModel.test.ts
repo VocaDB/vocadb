@@ -1,14 +1,17 @@
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import EntryType from '@Models/EntryType';
-import TagEditViewModel from '@ViewModels/TagEditViewModel';
-
-import FakeUserRepository from '../../TestSupport/FakeUserRepository';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryType } from '@/Models/EntryType';
+import { FakeUserRepository } from '@/Tests/TestSupport/FakeUserRepository';
+import { TagEditViewModel } from '@/ViewModels/TagEditViewModel';
 
 var viewModel: TagEditViewModel;
 
 beforeEach(() => {
 	viewModel = new TagEditViewModel(null!, new FakeUserRepository(), {
+		names: [] as LocalizedStringWithIdContract[],
 		targets: EntryType.Artist,
+		webLinks: [] as WebLinkContract[],
 	} as TagApiContract);
 });
 

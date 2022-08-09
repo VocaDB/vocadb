@@ -1,15 +1,14 @@
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { EntryCount } from '@/Components/Shared/Partials/Knockout/EntryCount';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import EntryCount from './Knockout/EntryCount';
 
 interface EntryCountBoxProps {
 	pagingStore: ServerSidePagingStore;
 	selections?: number[];
 }
 
-const EntryCountBox = observer(
+export const EntryCountBox = observer(
 	({
 		pagingStore,
 		selections = [10, 20, 40, 100],
@@ -21,5 +20,3 @@ const EntryCountBox = observer(
 		);
 	},
 );
-
-export default EntryCountBox;

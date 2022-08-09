@@ -1,8 +1,7 @@
-import DeleteEntryStore from '@Stores/DeleteEntryStore';
+import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EntryDeletePopupBase from './EntryDeletePopupBase';
 
 interface EntryTrashPopupProps {
 	confirmText: string;
@@ -10,7 +9,7 @@ interface EntryTrashPopupProps {
 	onDelete?: () => void;
 }
 
-const EntryTrashPopup = ({
+export const EntryTrashPopup = ({
 	confirmText,
 	deleteEntryStore,
 	onDelete,
@@ -27,5 +26,3 @@ const EntryTrashPopup = ({
 		/>
 	);
 };
-
-export default EntryTrashPopup;

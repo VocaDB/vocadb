@@ -4,7 +4,7 @@ export enum WebhookEvents {
 	EntryReport = 1 << 1,
 }
 
-export default interface WebhookContract {
+export interface WebhookContract {
 	url: string;
 	webhookEvents: string;
 }

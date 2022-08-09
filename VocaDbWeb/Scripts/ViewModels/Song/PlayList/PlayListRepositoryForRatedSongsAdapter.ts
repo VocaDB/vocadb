@@ -1,16 +1,17 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import UserRepository from '@Repositories/UserRepository';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { SongOptionalFields } from '@/Models/EntryOptionalFields';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import {
+	IPlayListRepository,
+	ISongForPlayList,
+} from '@/ViewModels/Song/PlayList/PlayListViewModel';
 import { Computed, Observable, ObservableArray } from 'knockout';
 
-import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
-import { IPlayListRepository } from './PlayListViewModel';
-import { ISongForPlayList } from './PlayListViewModel';
-
-export default class PlayListRepositoryForRatedSongsAdapter
+export class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
 	public constructor(
 		private userRepo: UserRepository,

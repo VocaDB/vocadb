@@ -1,4 +1,14 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/Dropdown.tsx
+import DropdownItem from '@/Bootstrap/DropdownItem';
+import DropdownMenu from '@/Bootstrap/DropdownMenu';
+import DropdownToggle from '@/Bootstrap/DropdownToggle';
+import SelectableContext from '@/Bootstrap/SelectableContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+	SelectCallback,
+} from '@/Bootstrap/helpers';
 import useEventCallback from '@restart/hooks/useEventCallback';
 import classNames from 'classnames';
 import * as React from 'react';
@@ -6,17 +16,6 @@ import { useContext } from 'react';
 import BaseDropdown from 'react-overlays/Dropdown';
 import { DropDirection } from 'react-overlays/DropdownContext';
 import { useUncontrolled } from 'uncontrollable';
-
-import DropdownItem from './DropdownItem';
-import DropdownMenu from './DropdownMenu';
-import DropdownToggle from './DropdownToggle';
-import SelectableContext from './SelectableContext';
-import { useBootstrapPrefix } from './ThemeProvider';
-import {
-	BsPrefixProps,
-	BsPrefixRefForwardingComponent,
-	SelectCallback,
-} from './helpers';
 
 const DropdownHeader = ({
 	as: Component = 'h6',

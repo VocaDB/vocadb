@@ -1,27 +1,28 @@
-import SongAutoComplete from '@Components/KnockoutExtensions/SongAutoComplete';
-import SongContract from '@DataContracts/Song/SongContract';
-import EntryType from '@Models/EntryType';
-import SongType from '@Models/Songs/SongType';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
+import { SongAutoComplete } from '@/Components/KnockoutExtensions/SongAutoComplete';
+import { LockingAutoComplete } from '@/Components/Shared/Partials/Knockout/LockingAutoComplete';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { EntryType } from '@/Models/EntryType';
+import { SongType } from '@/Models/Songs/SongType';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import LockingAutoComplete from './LockingAutoComplete';
-
 interface SongLockingAutoCompleteProps {
 	basicEntryLinkStore: BasicEntryLinkStore<SongContract>;
 	songTypes?: SongType[];
 	ignoreId?: number;
+	height?: number;
 }
 
 // Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed.
-const SongLockingAutoComplete = observer(
+export const SongLockingAutoComplete = observer(
 	({
 		basicEntryLinkStore,
 		songTypes = [],
 		ignoreId,
+		height,
 	}: SongLockingAutoCompleteProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -46,6 +47,7 @@ const SongLockingAutoComplete = observer(
 							}),
 						extraQueryParams: { songTypes: songTypes },
 						ignoreId: ignoreId,
+						height: height,
 					}}
 					placeholder={t('ViewRes:Shared.Search')}
 				/>
@@ -53,5 +55,3 @@ const SongLockingAutoComplete = observer(
 		);
 	},
 );
-
-export default SongLockingAutoComplete;

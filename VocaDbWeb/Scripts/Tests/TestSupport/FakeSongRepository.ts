@@ -1,12 +1,11 @@
-import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongRepository from '@Repositories/SongRepository';
-import HttpClient from '@Shared/HttpClient';
+import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 import _ from 'lodash';
-
-import FakePromise from './FakePromise';
 
 export interface SongInList {
 	listId: number;
@@ -14,7 +13,7 @@ export interface SongInList {
 	notes: string;
 }
 
-export default class FakeSongRepository extends SongRepository {
+export class FakeSongRepository extends SongRepository {
 	public results: NewSongCheckResultContract = null!;
 	public song: SongApiContract = null!;
 	public songLists: SongListBaseContract[] = [];

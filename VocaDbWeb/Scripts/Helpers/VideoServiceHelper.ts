@@ -1,8 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVType from '@Models/PVs/PVType';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVType } from '@/Models/PVs/PVType';
 import _ from 'lodash';
 
-export default class VideoServiceHelper {
+export class VideoServiceHelper {
 	// TODO: Test.
 	public static getPV = (
 		allPVs: PVContract[],

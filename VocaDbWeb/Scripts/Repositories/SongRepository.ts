@@ -1,38 +1,39 @@
-import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import CommentContract from '@DataContracts/CommentContract';
-import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import CreateSongContract from '@DataContracts/Song/CreateSongContract';
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import SongDetailsContract from '@DataContracts/Song/SongDetailsContract';
-import SongForEditContract from '@DataContracts/Song/SongForEditContract';
-import SongWithPVPlayerAndVoteContract from '@DataContracts/Song/SongWithPVPlayerAndVoteContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import TimeUnit from '@Models/Aggregate/TimeUnit';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import PVService from '@Models/PVs/PVService';
-import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
-
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
+import { CountPerDayContract } from '@/DataContracts/Aggregate/CountPerDayContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { CreateSongContract } from '@/DataContracts/Song/CreateSongContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
+import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
+import { SongWithPVPlayerAndVoteContract } from '@/DataContracts/Song/SongWithPVPlayerAndVoteContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { SongType } from '@/Models/Songs/SongType';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
-export default class SongRepository
+export class SongRepository
 	extends BaseRepository
 	implements ICommentRepository {
 	private readonly urlMapper: UrlMapper;

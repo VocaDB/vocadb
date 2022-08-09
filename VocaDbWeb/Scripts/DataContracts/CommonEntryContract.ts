@@ -1,4 +1,4 @@
-export default interface CommonEntryContract {
+export interface CommonEntryContract {
 	createDate?: string;
 
 	id: number;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotificationIcon = React.memo(
+export const NotificationIcon = React.memo(
 	(): React.ReactElement => {
 		return (
 			<span
@@ -10,5 +10,3 @@ const NotificationIcon = React.memo(
 		);
 	},
 );
-
-export default NotificationIcon;

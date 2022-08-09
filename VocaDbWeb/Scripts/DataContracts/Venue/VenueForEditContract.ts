@@ -1,9 +1,9 @@
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import OptionalGeoPointContract from '../OptionalGeoPointContract';
-import WebLinkContract from '../WebLinkContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 
 // Corresponds to the VenueForEditForApiContract record class in C#.
-export default interface VenueForEditContract {
+export interface VenueForEditContract {
 	address: string;
 	addressCountryCode: string;
 	coordinates?: OptionalGeoPointContract;

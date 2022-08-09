@@ -1,19 +1,18 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/3d4c57374646949e6fedfef00236c99f4d1b4e71/src/Navbar.tsx
-import classNames from 'classnames';
-import React, { useMemo } from 'react';
-import { useUncontrolled } from 'uncontrollable';
-
-import NavbarBrand from './NavbarBrand';
-import NavbarCollapse from './NavbarCollapse';
-import NavbarContext, { NavbarContextType } from './NavbarContext';
-import NavbarToggle from './NavbarToggle';
-import SelectableContext from './SelectableContext';
-import { useBootstrapPrefix } from './ThemeProvider';
+import NavbarBrand from '@/Bootstrap/NavbarBrand';
+import NavbarCollapse from '@/Bootstrap/NavbarCollapse';
+import NavbarContext, { NavbarContextType } from '@/Bootstrap/NavbarContext';
+import NavbarToggle from '@/Bootstrap/NavbarToggle';
+import SelectableContext from '@/Bootstrap/SelectableContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
 import {
 	BsPrefixProps,
 	BsPrefixRefForwardingComponent,
 	SelectCallback,
-} from './helpers';
+} from '@/Bootstrap/helpers';
+import classNames from 'classnames';
+import React, { useMemo } from 'react';
+import { useUncontrolled } from 'uncontrollable';
 
 export interface NavbarProps
 	extends BsPrefixProps,

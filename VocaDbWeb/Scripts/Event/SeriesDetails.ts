@@ -1,12 +1,12 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import EventSeriesDetailsViewModel from '@ViewModels/ReleaseEvent/EventSeriesDetailsViewModel';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EventSeriesDetailsViewModel } from '@/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const EventSeriesDetails = (model: {
+export const EventSeriesDetails = (model: {
 	id: number;
 	tags: TagUsageForApiContract[];
 }): void => {
@@ -25,5 +25,3 @@ const EventSeriesDetails = (model: {
 		ko.applyBindings(vm);
 	});
 };
-
-export default EventSeriesDetails;

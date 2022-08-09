@@ -1,10 +1,11 @@
-import VenueRepository from '@Repositories/VenueRepository';
-import ui from '@Shared/MessagesTyped';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { ui } from '@/Shared/MessagesTyped';
+import {
+	IEntryReportType,
+	ReportEntryViewModel,
+} from '@/ViewModels/ReportEntryViewModel';
 
-import { IEntryReportType } from '../ReportEntryViewModel';
-import ReportEntryViewModel from '../ReportEntryViewModel';
-
-export default class VenueDetailsViewModel {
+export class VenueDetailsViewModel {
 	public constructor(
 		repo: VenueRepository,
 		reportTypes: IEntryReportType[],

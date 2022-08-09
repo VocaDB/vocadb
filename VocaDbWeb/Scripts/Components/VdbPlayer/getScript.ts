@@ -1,5 +1,5 @@
 // Code from: https://stackoverflow.com/a/61903296.
-const getScript = (url: string): Promise<void> =>
+export const getScript = (url: string): Promise<void> =>
 	new Promise((resolve, reject) => {
 		const script = document.createElement('script');
 		script.src = url;
@@ -23,5 +23,3 @@ const getScript = (url: string): Promise<void> =>
 
 		document.head.appendChild(script);
 	});
-
-export default getScript;

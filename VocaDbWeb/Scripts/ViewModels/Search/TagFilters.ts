@@ -1,12 +1,11 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilter } from '@/ViewModels/Search/TagFilter';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 
-import TagFilter from './TagFilter';
-
 // Manages tag filters for search
-export default class TagFilters {
+export class TagFilters {
 	public constructor(
 		private readonly values: GlobalValues,
 		private tagRepo: TagRepository,

@@ -1,14 +1,14 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import { ISongSearchItem } from '@Stores/Search/SongSearchStore';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { StoreWithUpdateResults } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -26,7 +26,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class RankingsStore
+export class RankingsStore
 	implements StoreWithUpdateResults<RankingsRouteParams> {
 	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
 	@observable public durationHours?: number;

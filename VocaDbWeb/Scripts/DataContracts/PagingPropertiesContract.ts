@@ -1,4 +1,4 @@
-export default interface PagingProperties {
+export interface PagingProperties {
 	getTotalCount?: boolean;
 
 	maxEntries?: number;

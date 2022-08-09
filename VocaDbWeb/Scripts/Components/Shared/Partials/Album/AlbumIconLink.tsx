@@ -1,8 +1,8 @@
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryType from '@Models/EntryType';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryType } from '@/Models/EntryType';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,9 @@ interface AlbumIconLinkProps {
 	album: AlbumForApiContract;
 }
 
-const AlbumIconLink = ({ album }: AlbumIconLinkProps): React.ReactElement => {
+export const AlbumIconLink = ({
+	album,
+}: AlbumIconLinkProps): React.ReactElement => {
 	return (
 		<Link to={EntryUrlMapper.details(EntryType.Album, album.id)}>
 			<img
@@ -21,5 +23,3 @@ const AlbumIconLink = ({ album }: AlbumIconLinkProps): React.ReactElement => {
 		</Link>
 	);
 };
-
-export default AlbumIconLink;

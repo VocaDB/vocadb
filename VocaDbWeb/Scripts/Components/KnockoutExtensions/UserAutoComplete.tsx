@@ -1,17 +1,17 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import functions from '@Shared/GlobalFunctions';
-import React from 'react';
-
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { functions } from '@/Shared/GlobalFunctions';
+import React from 'react';
 
 interface UserAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onAcceptSelection: (entry: UserApiContract) => void;
 }
 
-const UserAutoComplete = ({
+export const UserAutoComplete = ({
 	onAcceptSelection,
 	...props
 }: UserAutoCompleteProps): React.ReactElement => {
@@ -34,5 +34,3 @@ const UserAutoComplete = ({
 		/>
 	);
 };
-
-export default UserAutoComplete;

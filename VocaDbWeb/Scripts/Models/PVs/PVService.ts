@@ -1,4 +1,4 @@
-enum PVService {
+export enum PVService {
 	NicoNicoDouga = 1 << 0,
 
 	Youtube = 1 << 1,
@@ -19,5 +19,3 @@ enum PVService {
 
 	Bandcamp = 1 << 9,
 }
-
-export default PVService;

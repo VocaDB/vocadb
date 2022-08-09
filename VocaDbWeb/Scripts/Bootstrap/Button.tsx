@@ -1,11 +1,13 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/Button.tsx
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
+import { ButtonVariant } from '@/Bootstrap/types';
 import classNames from 'classnames';
 import * as React from 'react';
-
-import SafeAnchor from './SafeAnchor';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
-import { ButtonVariant } from './types';
 
 export type ButtonType = 'button' | 'reset' | 'submit' | string;
 

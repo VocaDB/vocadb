@@ -1,13 +1,12 @@
-import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
-import HttpClient from '@Shared/HttpClient';
-import { SongDetailsAjax } from '@ViewModels/Song/SongDetailsViewModel';
-import { SongDetailsResources } from '@ViewModels/Song/SongDetailsViewModel';
-import SongDetailsViewModel from '@ViewModels/Song/SongDetailsViewModel';
-import { SongListsViewModel } from '@ViewModels/Song/SongDetailsViewModel';
-
-import FakeSongRepository from '../../TestSupport/FakeSongRepository';
-import FakeUserRepository from '../../TestSupport/FakeUserRepository';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { SongType } from '@/Models/Songs/SongType';
+import { HttpClient } from '@/Shared/HttpClient';
+import { FakeSongRepository } from '@/Tests/TestSupport/FakeSongRepository';
+import { FakeUserRepository } from '@/Tests/TestSupport/FakeUserRepository';
+import { SongDetailsAjax } from '@/ViewModels/Song/SongDetailsViewModel';
+import { SongDetailsResources } from '@/ViewModels/Song/SongDetailsViewModel';
+import { SongDetailsViewModel } from '@/ViewModels/Song/SongDetailsViewModel';
+import { SongListsViewModel } from '@/ViewModels/Song/SongDetailsViewModel';
 
 var rep: FakeSongRepository;
 var userRep = new FakeUserRepository();

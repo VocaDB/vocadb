@@ -1,6 +1,6 @@
-import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
 import useMergedRefs from '@restart/hooks/useMergedRefs';
 import React from 'react';
 
@@ -12,7 +12,7 @@ interface TagCategoryAutoCompleteProps
 	clearValue: boolean;
 }
 
-const TagCategoryAutoComplete = React.forwardRef<
+export const TagCategoryAutoComplete = React.forwardRef<
 	HTMLInputElement,
 	TagCategoryAutoCompleteProps
 >(
@@ -50,5 +50,3 @@ const TagCategoryAutoComplete = React.forwardRef<
 		);
 	},
 );
-
-export default TagCategoryAutoComplete;

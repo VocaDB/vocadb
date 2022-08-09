@@ -1,8 +1,7 @@
+import { IVdbPlayerEntry } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-import { IVdbPlayerEntry } from './VdbPlayerStore';
-
-export default class PlayQueueStore {
+export class PlayQueueStore {
 	@observable public queue: IVdbPlayerEntry[] = [];
 	@observable public selectedIndex?: number;
 

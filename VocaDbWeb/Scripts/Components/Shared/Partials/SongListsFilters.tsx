@@ -1,10 +1,12 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import SongListsBaseStore, {
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
+import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
+import {
+	SongListsBaseStore,
 	SongListSortRule,
-} from '@Stores/SongList/SongListsBaseStore';
+} from '@/Stores/SongList/SongListsBaseStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -12,13 +14,11 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
-import TagFilters from './TagFilters';
-
 interface SongListsFiltersProps {
 	songListsBaseStore: SongListsBaseStore;
 }
 
-const SongListsFilters = observer(
+export const SongListsFilters = observer(
 	({ songListsBaseStore }: SongListsFiltersProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes',
@@ -132,7 +132,7 @@ const SongListsFilters = observer(
 				<div className="control-group">
 					<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
 					<div className="controls">
-						<TagFilters tagFilters={songListsBaseStore.tagFilters} />
+						<TagFiltersBase tagFilters={songListsBaseStore.tagFilters} />
 						<div>
 							<TagAutoComplete
 								type="text"
@@ -147,5 +147,3 @@ const SongListsFilters = observer(
 		);
 	},
 );
-
-export default SongListsFilters;

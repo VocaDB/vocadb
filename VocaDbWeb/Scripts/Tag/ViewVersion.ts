@@ -1,10 +1,10 @@
-import TagRepository from '@Repositories/TagRepository';
-import HttpClient from '@Shared/HttpClient';
-import ArchivedEntryViewModel from '@ViewModels/ArchivedEntryViewModel';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ArchivedEntryViewModel } from '@/ViewModels/ArchivedEntryViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const TagViewVersion = (model: {
+export const TagViewVersion = (model: {
 	entry: {
 		archivedVersion: {
 			version: number;
@@ -32,5 +32,3 @@ const TagViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default TagViewVersion;

@@ -1,10 +1,9 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
+import { ArtistIconLink } from '@/Components/Shared/Partials/Artist/ArtistIconLink';
+import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ArtistIconLink from './ArtistIconLink';
-import ArtistLink from './ArtistLink';
 
 interface ArtistGridProps {
 	artists: ArtistApiContract[];
@@ -13,7 +12,7 @@ interface ArtistGridProps {
 	tooltip?: boolean;
 }
 
-const ArtistGrid = ({
+export const ArtistGrid = ({
 	artists,
 	columns,
 	displayType = false,
@@ -63,5 +62,3 @@ const ArtistGrid = ({
 		</table>
 	);
 };
-
-export default ArtistGrid;

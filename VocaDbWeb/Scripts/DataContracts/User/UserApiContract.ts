@@ -1,9 +1,8 @@
-import UserGroup from '@Models/Users/UserGroup';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
 
-import EntryThumbContract from '../EntryThumbContract';
-import UserBaseContract from './UserBaseContract';
-
-export default interface UserApiContract extends UserBaseContract {
+export interface UserApiContract extends UserBaseContract {
 	active?: boolean;
 
 	groupId?: UserGroup;

@@ -1,29 +1,28 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import HighchartsHelper from '@Helpers/HighchartsHelper';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import AdminRepository from '@Repositories/AdminRepository';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { EditableCommentsViewModel } from '@/ViewModels/EditableCommentsViewModel';
+import { SongListsBaseViewModel } from '@/ViewModels/SongList/SongListsBaseViewModel';
+import { AlbumCollectionViewModel } from '@/ViewModels/User/AlbumCollectionViewModel';
+import { FollowedArtistsViewModel } from '@/ViewModels/User/FollowedArtistsViewModel';
+import { RatedSongsSearchViewModel } from '@/ViewModels/User/RatedSongsSearchViewModel';
 import { Options } from 'highcharts';
 import $ from 'jquery';
 import ko from 'knockout';
 
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import EditableCommentsViewModel from '../EditableCommentsViewModel';
-import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
-import AlbumCollectionViewModel from './AlbumCollectionViewModel';
-import FollowedArtistsViewModel from './FollowedArtistsViewModel';
-import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
-
-export default class UserDetailsViewModel {
+export class UserDetailsViewModel {
 	private static overview = 'Overview';
 
 	public addBan = (): void => {

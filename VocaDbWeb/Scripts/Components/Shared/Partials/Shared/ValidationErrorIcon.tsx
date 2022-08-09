@@ -7,7 +7,7 @@ interface ValidationErrorIconProps {
 }
 
 // Displays label element with attached qTip tooltip
-const ValidationErrorIcon = ({
+export const ValidationErrorIcon = ({
 	title,
 }: ValidationErrorIconProps): React.ReactElement => {
 	const el = React.useRef<HTMLLabelElement>(undefined!);
@@ -24,5 +24,3 @@ const ValidationErrorIcon = ({
 
 	return <span className="icon errorIcon" title={title} ref={el} />;
 };
-
-export default ValidationErrorIcon;

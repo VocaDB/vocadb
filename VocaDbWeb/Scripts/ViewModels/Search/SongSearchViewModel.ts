@@ -1,33 +1,32 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import KnockoutHelper from '@Helpers/KnockoutHelper';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import ResourcesManager from '@Models/ResourcesManager';
-import SongType from '@Models/Songs/SongType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import ui from '@Shared/MessagesTyped';
-import UrlMapper from '@Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { KnockoutHelper } from '@/Helpers/KnockoutHelper';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { ResourcesManager } from '@/Models/ResourcesManager';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
+import { PVPlayerViewModel } from '@/ViewModels/PVs/PVPlayerViewModel';
+import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
+import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
+import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
+import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
+import { PlayListRepositoryForSongsAdapter } from '@/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter';
+import { PlayListViewModel } from '@/ViewModels/Song/PlayList/PlayListViewModel';
+import { SongWithPreviewViewModel } from '@/ViewModels/Song/SongWithPreviewViewModel';
 import ko, { Computed, Observable } from 'knockout';
 import moment from 'moment';
 
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import PlayListRepositoryForSongsAdapter from '../Song/PlayList/PlayListRepositoryForSongsAdapter';
-import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
-import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import ArtistFilters from './ArtistFilters';
-import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
-import SearchViewModel from './SearchViewModel';
-
-export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
+export class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 	public constructor(
 		searchViewModel: SearchViewModel,
 		values: GlobalValues,

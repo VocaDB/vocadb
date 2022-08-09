@@ -1,5 +1,5 @@
-import Button from '@Bootstrap/Button';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import Button from '@/Bootstrap/Button';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -12,7 +12,7 @@ interface CreateCommentProps {
 	newCommentRows: number;
 }
 
-const CreateComment = observer(
+export const CreateComment = observer(
 	({
 		editableCommentsStore,
 		className,
@@ -50,5 +50,3 @@ const CreateComment = observer(
 		);
 	},
 );
-
-export default CreateComment;

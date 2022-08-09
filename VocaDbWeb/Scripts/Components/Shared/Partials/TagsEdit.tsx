@@ -1,22 +1,21 @@
-import Button from '@Bootstrap/Button';
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import JQueryUIButton from '@JQueryUI/JQueryUIButton';
-import JQueryUICheckbox from '@JQueryUI/JQueryUICheckbox';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
+import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
+import { AjaxLoader } from '@/Components/Shared/Partials/Shared/AjaxLoader';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import JQueryUICheckbox from '@/JQueryUI/JQueryUICheckbox';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import AjaxLoader from './Shared/AjaxLoader';
-
 interface TagsEditProps {
 	tagsEditStore: TagsEditStore;
 }
 
-const TagsEdit = observer(
+export const TagsEdit = observer(
 	({ tagsEditStore }: TagsEditProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -138,5 +137,3 @@ const TagsEdit = observer(
 		);
 	},
 );
-
-export default TagsEdit;

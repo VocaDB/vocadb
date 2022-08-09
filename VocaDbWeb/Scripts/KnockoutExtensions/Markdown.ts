@@ -1,4 +1,4 @@
-import HtmlHelper from '@Helpers/HtmlHelper';
+import { HtmlHelper } from '@/Helpers/HtmlHelper';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';

@@ -1,8 +1,8 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import ko from 'knockout';
 
 // Generic viewmodel that supports simple paging by loading more items
-export default class PagedItemsViewModel<TModel> {
+export class PagedItemsViewModel<TModel> {
 	public clear = (): void => {
 		this.items([]);
 		this.start = 0;

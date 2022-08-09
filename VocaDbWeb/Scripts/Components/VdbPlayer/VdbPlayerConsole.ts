@@ -1,4 +1,4 @@
-export default class VdbPlayerConsole {
+export class VdbPlayerConsole {
 	private static title = 'VdbPlayer';
 
 	public static assert = (

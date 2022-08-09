@@ -1,6 +1,6 @@
-import Button from '@Bootstrap/Button';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import Button from '@/Bootstrap/Button';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ interface LockingAutoCompleteProps {
 }
 
 // Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.
-const LockingAutoComplete = React.memo(
+export const LockingAutoComplete = React.memo(
 	({
 		children,
 		text,
@@ -50,5 +50,3 @@ const LockingAutoComplete = React.memo(
 		);
 	},
 );
-
-export default LockingAutoComplete;

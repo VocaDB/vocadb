@@ -1,18 +1,17 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
-import VenueForEditContract from '@DataContracts/Venue/VenueForEditContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import UserRepository from '@Repositories/UserRepository';
-import VenueRepository from '@Repositories/VenueRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import UrlMapper from '@Shared/UrlMapper';
+import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
+import { EntryType } from '@/Models/EntryType';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
+import { NamesEditViewModel } from '@/ViewModels/Globalization/NamesEditViewModel';
+import { WebLinksEditViewModel } from '@/ViewModels/WebLinksEditViewModel';
 import ko, { Computed, Observable } from 'knockout';
 
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
-import NamesEditViewModel from '../Globalization/NamesEditViewModel';
-import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-export default class VenueEditViewModel {
+export class VenueEditViewModel {
 	public constructor(
 		private readonly repo: VenueRepository,
 		userRepository: UserRepository,

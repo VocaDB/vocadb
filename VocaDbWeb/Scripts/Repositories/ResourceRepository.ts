@@ -1,8 +1,8 @@
-import ResourcesContract from '@DataContracts/ResourcesContract';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
 
-export default class ResourceRepository {
+export class ResourceRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private baseUrl: string,

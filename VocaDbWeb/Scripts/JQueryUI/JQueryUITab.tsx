@@ -1,9 +1,10 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8e3f3c2b5f232e17829df3474b7b6e398f22ff3d/src/Tab.tsx
+import JQueryUITabContent from '@/JQueryUI/JQueryUITabContent';
+import JQueryUITabPane, {
+	JQueryUITabPaneProps,
+} from '@/JQueryUI/JQueryUITabPane';
 import Tabs from '@restart/ui/Tabs';
 import * as React from 'react';
-
-import JQueryUITabContent from './JQueryUITabContent';
-import JQueryUITabPane, { JQueryUITabPaneProps } from './JQueryUITabPane';
 
 export interface JQueryUITabProps extends Omit<JQueryUITabPaneProps, 'title'> {
 	title: React.ReactNode;

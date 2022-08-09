@@ -1,7 +1,7 @@
-import { AlbumToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { AlbumToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ interface AlbumLinkProps {
 	tooltip: boolean;
 }
 
-const AlbumLink = ({
+export const AlbumLink = ({
 	album,
 	tooltip = false,
 }: AlbumLinkProps): React.ReactElement => {
@@ -34,5 +34,3 @@ const AlbumLink = ({
 		</Link>
 	);
 };
-
-export default AlbumLink;

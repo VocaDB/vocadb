@@ -1,6 +1,6 @@
-import JQueryUICheckbox from '@JQueryUI/JQueryUICheckbox';
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import { ArtistRolesEditStore } from '@Stores/Artist/AlbumArtistRolesEditStore';
+import JQueryUICheckbox from '@/JQueryUI/JQueryUICheckbox';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { ArtistRolesEditStore } from '@/Stores/Artist/AlbumArtistRolesEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -10,7 +10,7 @@ interface ArtistRolesEditViewModelProps {
 	artistRolesEditStore: ArtistRolesEditStore;
 }
 
-const ArtistRolesEditViewModel = observer(
+export const ArtistRolesEditViewModel = observer(
 	({
 		artistRolesEditStore,
 	}: ArtistRolesEditViewModelProps): React.ReactElement => {
@@ -57,5 +57,3 @@ const ArtistRolesEditViewModel = observer(
 		);
 	},
 );
-
-export default ArtistRolesEditViewModel;

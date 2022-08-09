@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRootClose } from 'react-overlays';
 
-const useContextMenu = (
+export const useContextMenu = (
 	ref: React.MutableRefObject<HTMLElement>,
 ): {
 	show: boolean;
@@ -45,5 +45,3 @@ const useContextMenu = (
 
 	return { show, setShow, position, handleContextMenu };
 };
-
-export default useContextMenu;

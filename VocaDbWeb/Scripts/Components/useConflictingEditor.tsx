@@ -1,8 +1,8 @@
-import EntryEditDataContract from '@DataContracts/User/EntryEditDataContract';
-import EntryType from '@Models/EntryType';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
+import { EntryType } from '@/Models/EntryType';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 

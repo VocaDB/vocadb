@@ -1,13 +1,12 @@
+import { StarsMeta } from '@/Components/Shared/Partials/Shared/StarsMeta';
 import React from 'react';
-
-import StarsMeta from './StarsMeta';
 
 interface StarsMetaSpanProps {
 	current: number;
 	max: number;
 }
 
-const StarsMetaSpan = React.memo(
+export const StarsMetaSpan = React.memo(
 	({ current, max }: StarsMetaSpanProps): React.ReactElement => {
 		return (
 			<span title={`${Math.round(current * 100) / 100}`}>
@@ -16,5 +15,3 @@ const StarsMetaSpan = React.memo(
 		);
 	},
 );
-
-export default StarsMetaSpan;

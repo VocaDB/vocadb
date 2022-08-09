@@ -1,11 +1,11 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AlbumCollectionViewModel from '@ViewModels/User/AlbumCollectionViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AlbumCollectionViewModel } from '@/ViewModels/User/AlbumCollectionViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const UserAlbumCollection = (
+export const UserAlbumCollection = (
 	model: {
 		user: {
 			id: number;
@@ -33,5 +33,3 @@ const UserAlbumCollection = (
 		ko.applyBindings(vm);
 	});
 };
-
-export default UserAlbumCollection;

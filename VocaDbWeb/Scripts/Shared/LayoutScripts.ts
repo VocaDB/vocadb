@@ -1,12 +1,11 @@
-import EntryReportRepository from '@Repositories/EntryReportRepository';
-import UserRepository from '@Repositories/UserRepository';
-import TopBarViewModel from '@ViewModels/TopBarViewModel';
+import { EntryReportRepository } from '@/Repositories/EntryReportRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ui } from '@/Shared/MessagesTyped';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { TopBarViewModel } from '@/ViewModels/TopBarViewModel';
 
-import HttpClient from './HttpClient';
-import ui from './MessagesTyped';
-import UrlMapper from './UrlMapper';
-
-const SharedLayoutScripts = (model: {
+export const SharedLayoutScripts = (model: {
 	entryTypeTranslations: any;
 	getNewReportCount: boolean;
 	hasUnreadMessages: boolean;
@@ -49,5 +48,3 @@ const SharedLayoutScripts = (model: {
 		ko.applyBindings(topBarViewModel, $('#topBar')[0]);
 	}
 };
-
-export default SharedLayoutScripts;

@@ -1,18 +1,17 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import SongInListEditContract from '@DataContracts/Song/SongInListEditContract';
-import { SongAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import EntryType from '@Models/EntryType';
-import SongListRepository from '@Repositories/SongListRepository';
-import SongRepository from '@Repositories/SongRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
+import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { EntryType } from '@/Models/EntryType';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryViewModel } from '@/ViewModels/DeleteEntryViewModel';
 import $ from 'jquery';
 import ko, { Observable, ObservableArray } from 'knockout';
 import moment from 'moment';
-
-import DeleteEntryViewModel from '../DeleteEntryViewModel';
 
 export class SongInListEditViewModel {
 	public constructor(data: SongInListEditContract) {
@@ -31,7 +30,7 @@ export class SongInListEditViewModel {
 	public songInListId: number;
 }
 
-export default class SongListEditViewModel {
+export class SongListEditViewModel {
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly songListRepo: SongListRepository,

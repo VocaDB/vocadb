@@ -1,4 +1,4 @@
-export default class ImageHelper {
+export class ImageHelper {
 	public static readonly allowedExtensions = [
 		'.bmp',
 		'.gif',

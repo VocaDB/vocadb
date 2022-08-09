@@ -1,4 +1,4 @@
-enum NameMatchMode {
+export enum NameMatchMode {
 	// Automatically choose match mode based on query term length.
 	Auto,
 
@@ -16,5 +16,3 @@ enum NameMatchMode {
 	// Allow breaking the search string into words separated by whitespace.
 	Words,
 }
-
-export default NameMatchMode;

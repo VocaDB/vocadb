@@ -7,7 +7,7 @@ interface MomentJsTimeAgoProps {
 	children?: Date;
 }
 
-const MomentJsTimeAgo = ({
+export const MomentJsTimeAgo = ({
 	as: Component,
 	className,
 	children,
@@ -20,5 +20,3 @@ const MomentJsTimeAgo = ({
 		</Component>
 	);
 };
-
-export default MomentJsTimeAgo;

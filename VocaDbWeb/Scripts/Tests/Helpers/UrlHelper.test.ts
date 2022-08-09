@@ -1,4 +1,4 @@
-import UrlHelper from '@Helpers/UrlHelper';
+import { UrlHelper } from '@/Helpers/UrlHelper';
 
 test('MakeLink_Empty', () => {
 	const result = UrlHelper.makeLink('');

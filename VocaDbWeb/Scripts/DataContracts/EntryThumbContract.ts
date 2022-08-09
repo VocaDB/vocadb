@@ -1,5 +1,5 @@
 // Note: matches C# class EntryThumbForApiContract
-export default interface EntryThumbContract {
+export interface EntryThumbContract {
 	name?: string;
 
 	urlOriginal?: string;

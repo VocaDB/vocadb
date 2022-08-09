@@ -1,4 +1,4 @@
-export default interface LyricsForSongContract {
+export interface LyricsForSongContract {
 	cultureCode?: string;
 
 	id?: number;

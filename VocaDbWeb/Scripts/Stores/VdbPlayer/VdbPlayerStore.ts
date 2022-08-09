@@ -1,9 +1,8 @@
-import EntryContract from '@DataContracts/EntryContract';
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
+import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable } from 'mobx';
-
-import PlayQueueStore from './PlayQueueStore';
 
 export enum RepeatMode {
 	Off = 'Off',
@@ -16,7 +15,7 @@ export interface IVdbPlayerEntry {
 	pv: PVContract;
 }
 
-export default class VdbPlayerStore {
+export class VdbPlayerStore {
 	private static readonly autoplayServices = [
 		PVService.File,
 		PVService.LocalFile,

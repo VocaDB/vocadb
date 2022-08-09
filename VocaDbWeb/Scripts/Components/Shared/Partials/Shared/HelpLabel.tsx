@@ -9,7 +9,7 @@ interface HelpLabelProps {
 }
 
 // Displays label element with attached qTip tooltip
-const HelpLabel = ({
+export const HelpLabel = ({
 	label,
 	title,
 	forElem,
@@ -32,5 +32,3 @@ const HelpLabel = ({
 		</label>
 	);
 };
-
-export default HelpLabel;

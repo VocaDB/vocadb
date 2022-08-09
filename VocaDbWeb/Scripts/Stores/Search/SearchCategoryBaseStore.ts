@@ -1,8 +1,12 @@
-import EntryWithTagUsagesContract from '@DataContracts/Base/EntryWithTagUsagesContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
+import { EntryWithTagUsagesContract } from '@/DataContracts/Base/EntryWithTagUsagesContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchRouteParams } from '@/Stores/Search/SearchStore';
+import { TagFilter } from '@/Stores/Search/TagFilter';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {
@@ -15,11 +19,6 @@ import {
 } from 'mobx';
 import moment from 'moment';
 
-import AdvancedSearchFilters from './AdvancedSearchFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import { SearchRouteParams } from './SearchStore';
-import TagFilter from './TagFilter';
-
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
 > extends Omit<
@@ -31,7 +30,7 @@ export interface ISearchCategoryBaseStore<
 }
 
 // Base class for different types of searches.
-export default abstract class SearchCategoryBaseStore<
+export abstract class SearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams,
 	TEntry extends EntryWithTagUsagesContract
 > implements ISearchCategoryBaseStore<TRouteParams> {

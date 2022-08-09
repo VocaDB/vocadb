@@ -1,17 +1,17 @@
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import functions from '@Shared/GlobalFunctions';
-import React from 'react';
-
-import EntryAutoComplete, {
+import {
+	EntryAutoComplete,
 	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { functions } from '@/Shared/GlobalFunctions';
+import React from 'react';
 
 interface VenueAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onAcceptSelection: (entry: VenueForApiContract) => void;
 }
 
-const VenueAutoComplete = ({
+export const VenueAutoComplete = ({
 	onAcceptSelection,
 	...props
 }: VenueAutoCompleteProps): React.ReactElement => {
@@ -42,5 +42,3 @@ const VenueAutoComplete = ({
 		/>
 	);
 };
-
-export default VenueAutoComplete;

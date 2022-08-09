@@ -5,7 +5,7 @@ interface LargeShareLinksProps {
 	url: string;
 }
 
-const LargeShareLinks = ({
+export const LargeShareLinks = ({
 	title,
 	url,
 }: LargeShareLinksProps): React.ReactElement => {
@@ -79,5 +79,3 @@ const LargeShareLinks = ({
 		</>
 	);
 };
-
-export default LargeShareLinks;

@@ -5,7 +5,7 @@ interface ProfileIconKnockoutProps {
 	size: number;
 }
 
-const ProfileIconKnockout = React.memo(
+export const ProfileIconKnockout = React.memo(
 	({ icon, size }: ProfileIconKnockoutProps): React.ReactElement => {
 		return (
 			<div
@@ -24,5 +24,3 @@ const ProfileIconKnockout = React.memo(
 		);
 	},
 );
-
-export default ProfileIconKnockout;

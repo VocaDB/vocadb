@@ -1,9 +1,8 @@
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ImageSize from '@Models/Images/ImageSize';
+import { ProfileIconKnockout } from '@/Components/Shared/Partials/User/ProfileIconKnockout';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ImageSize } from '@/Models/Images/ImageSize';
 import React from 'react';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 const getImageUrl = (
 	size: ImageSize,
@@ -45,7 +44,7 @@ interface ProfileIconKnockout_ImageSizeProps {
 	size: number;
 }
 
-const ProfileIconKnockout_ImageSize = React.memo(
+export const ProfileIconKnockout_ImageSize = React.memo(
 	({
 		imageSize,
 		user,
@@ -61,5 +60,3 @@ const ProfileIconKnockout_ImageSize = React.memo(
 		);
 	},
 );
-
-export default ProfileIconKnockout_ImageSize;

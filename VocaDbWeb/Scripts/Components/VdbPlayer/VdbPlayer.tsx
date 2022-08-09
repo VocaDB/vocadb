@@ -1,20 +1,19 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Container from '@Bootstrap/Container';
-import PVContract from '@DataContracts/PVs/PVContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import { RepeatMode } from '@Stores/VdbPlayer/VdbPlayerStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Container from '@/Bootstrap/Container';
+import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
+import { IPVPlayer } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import EmbedPV from './EmbedPV';
-import IPVPlayer from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
-import { useVdbPlayer } from './VdbPlayerContext';
 
 const repeatIcons: Record<RepeatMode, string> = {
 	[RepeatMode.Off]: 'icon-ban-circle',
@@ -369,7 +368,7 @@ const PVPlayer = observer(
 	},
 );
 
-const VdbPlayer = observer(
+export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
@@ -412,5 +411,3 @@ const VdbPlayer = observer(
 		);
 	},
 );
-
-export default VdbPlayer;

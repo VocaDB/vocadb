@@ -1,7 +1,7 @@
-import AlbumType from '@Models/Albums/AlbumType';
-import ContentFocus from '@Models/ContentFocus';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ContentFocus } from '@/Models/ContentFocus';
 
-export default class AlbumHelper {
+export class AlbumHelper {
 	public static getContentFocus = (albumType: AlbumType): ContentFocus => {
 		switch (albumType) {
 			case AlbumType.Artbook:

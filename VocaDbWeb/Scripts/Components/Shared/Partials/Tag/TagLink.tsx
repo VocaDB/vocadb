@@ -1,6 +1,6 @@
-import { TagToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { TagToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ interface TagLinkProps {
 	tooltip?: boolean;
 }
 
-const TagLink = React.memo(
+export const TagLink = React.memo(
 	({ tag, tooltip }: TagLinkProps): React.ReactElement => {
 		return tooltip ? (
 			<TagToolTip
@@ -30,5 +30,3 @@ const TagLink = React.memo(
 		);
 	},
 );
-
-export default TagLink;

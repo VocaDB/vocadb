@@ -1,4 +1,4 @@
-enum SongType {
+export enum SongType {
 	Unspecified = 'Unspecified',
 	Original = 'Original',
 	Remaster = 'Remaster',
@@ -13,5 +13,3 @@ enum SongType {
 	Illustration = 'Illustration',
 	Other = 'Other',
 }
-
-export default SongType;

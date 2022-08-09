@@ -1,13 +1,12 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistForAlbumContract from '@DataContracts/ArtistForAlbumContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
-import AlbumRepository from '@Repositories/AlbumRepository';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import ko, { Computed, Observable, ObservableArray } from 'knockout';
 
 // View model for editing artist for album link.
-export default class ArtistForAlbumEditViewModel
-	implements IEditableArtistWithSupport {
+export class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
 	public artist: ArtistContract;
 
 	// Unique link Id.

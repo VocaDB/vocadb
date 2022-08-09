@@ -1,6 +1,6 @@
-import SongApiContract from '../Song/SongApiContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 
-export default interface ImportedSongInListContract {
+export interface ImportedSongInListContract {
 	matchedSong: SongApiContract;
 
 	name: string;

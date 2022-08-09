@@ -1,11 +1,12 @@
-import functions from '@Shared/GlobalFunctions';
-import ViewAuditLogViewModel, {
+import { functions } from '@/Shared/GlobalFunctions';
+import {
 	ViewAuditLogContract,
-} from '@ViewModels/Admin/ViewAuditLogViewModel';
+	ViewAuditLogViewModel,
+} from '@/ViewModels/Admin/ViewAuditLogViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
+export const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
 	$(document).ready(function () {
 		var json = model;
 		var vm = new ViewAuditLogViewModel(json);
@@ -33,5 +34,3 @@ const AdminViewAuditLog = (model: ViewAuditLogContract): void => {
 		);
 	});
 };
-
-export default AdminViewAuditLog;

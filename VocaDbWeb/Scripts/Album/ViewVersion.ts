@@ -1,10 +1,10 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import HttpClient from '@Shared/HttpClient';
-import ArchivedAlbumViewModel from '@ViewModels/Album/ArchivedAlbumViewModel';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { ArchivedAlbumViewModel } from '@/ViewModels/Album/ArchivedAlbumViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 
-const AlbumViewVersion = (model: {
+export const AlbumViewVersion = (model: {
 	album: {
 		id: number;
 	};
@@ -32,5 +32,3 @@ const AlbumViewVersion = (model: {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default AlbumViewVersion;

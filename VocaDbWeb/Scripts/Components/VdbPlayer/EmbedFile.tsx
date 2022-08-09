@@ -1,8 +1,7 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
-
-import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/61b8c54f3eca906a477101dab4fdd9b154be310e/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerFile.ts.
 class PVPlayerFile implements IPVPlayer {
@@ -106,7 +105,7 @@ interface EmbedFileProps {
 	options: IPVPlayerOptions;
 }
 
-const EmbedFile = React.memo(
+export const EmbedFile = React.memo(
 	({ playerRef, options }: EmbedFileProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedFile');
 
@@ -138,5 +137,3 @@ const EmbedFile = React.memo(
 		);
 	},
 );
-
-export default EmbedFile;

@@ -1,12 +1,12 @@
-import RepositoryFactory from '@Repositories/RepositoryFactory';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import RankingsViewModel from '@ViewModels/Song/RankingsViewModel';
+import { RepositoryFactory } from '@/Repositories/RepositoryFactory';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { RankingsViewModel } from '@/ViewModels/Song/RankingsViewModel';
 import $ from 'jquery';
 import ko from 'knockout';
 import moment from 'moment';
 
-const SongRankings = (): void => {
+export const SongRankings = (): void => {
 	moment.locale(vdb.values.culture);
 	ko.punches.enableAll();
 
@@ -25,5 +25,3 @@ const SongRankings = (): void => {
 		ko.applyBindings(viewModel);
 	});
 };
-
-export default SongRankings;

@@ -1,21 +1,20 @@
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { PVRepository } from '@/Repositories/PVRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import AdminRepository from './AdminRepository';
-import AlbumRepository from './AlbumRepository';
-import ArtistRepository from './ArtistRepository';
-import DiscussionRepository from './DiscussionRepository';
-import EntryRepository from './EntryRepository';
-import PVRepository from './PVRepository';
-import ReleaseEventRepository from './ReleaseEventRepository';
-import ResourceRepository from './ResourceRepository';
-import SongListRepository from './SongListRepository';
-import SongRepository from './SongRepository';
-import TagRepository from './TagRepository';
-import UserRepository from './UserRepository';
-import VenueRepository from './VenueRepository';
-
-export default class RepositoryFactory {
+export class RepositoryFactory {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,

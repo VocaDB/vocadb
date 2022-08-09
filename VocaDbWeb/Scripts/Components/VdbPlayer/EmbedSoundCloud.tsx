@@ -1,9 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { getScript } from '@/Components/VdbPlayer/getScript';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
-
-import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
-import getScript from './getScript';
 
 // Code from: https://github.com/VocaDB/vocadb/blob/e147650a8f1f85c8fa865d0ab562126c278527ec/VocaDbWeb/Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts.
 class PVPlayerSoundCloud implements IPVPlayer {
@@ -156,7 +155,7 @@ interface EmbedSoundCloudProps {
 	options: IPVPlayerOptions;
 }
 
-const EmbedSoundCloud = React.memo(
+export const EmbedSoundCloud = React.memo(
 	({ playerRef, options }: EmbedSoundCloudProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedSoundCloud');
 
@@ -189,5 +188,3 @@ const EmbedSoundCloud = React.memo(
 		);
 	},
 );
-
-export default EmbedSoundCloud;

@@ -1,19 +1,30 @@
-import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import SongRepository from '@Repositories/SongRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@Stores/Search/ArtistFilters';
-import TagFilters from '@Stores/Search/TagFilters';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
-import { SongListSortRule } from '@Stores/SongList/SongListsBaseStore';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import {
+	IRatedSongSearchItem,
+	SongVoteRating,
+} from '@/Stores/Search/SongSearchStore';
+import { TagFilter } from '@/Stores/Search/TagFilter';
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import { IRatedSongsAdapterStore } from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import { PlayListRepositoryForRatedSongsAdapter } from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -25,19 +36,6 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
-
-import PVPlayerStore from '../PVs/PVPlayerStore';
-import PVPlayersFactory from '../PVs/PVPlayersFactory';
-import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
-import {
-	IRatedSongSearchItem,
-	SongVoteRating,
-} from '../Search/SongSearchStore';
-import TagFilter from '../Search/TagFilter';
-import PlayListRepositoryForRatedSongsAdapter, {
-	IRatedSongsAdapterStore,
-} from '../Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import PlayListStore from '../Song/PlayList/PlayListStore';
 
 export enum RatedSongForUserSortRule {
 	None = 'None',
@@ -73,7 +71,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<RatedSongsSearchRouteParams> = require('./RatedSongsSearchRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class RatedSongsSearchStore
+export class RatedSongsSearchStore
 	implements
 		StoreWithPagination<RatedSongsSearchRouteParams>,
 		ISongSearchStore,

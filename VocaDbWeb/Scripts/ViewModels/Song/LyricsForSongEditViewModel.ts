@@ -1,14 +1,13 @@
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import TranslationType from '@Models/Globalization/TranslationType';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { TranslationType } from '@/Models/Globalization/TranslationType';
+import { BasicListEditViewModel } from '@/ViewModels/BasicListEditViewModel';
 import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import $ from 'jquery';
 import ko, { Observable } from 'knockout';
 import _ from 'lodash';
 
-import BasicListEditViewModel from '../BasicListEditViewModel';
-
-export default class LyricsForSongEditViewModel {
+export class LyricsForSongEditViewModel {
 	public constructor(contract?: LyricsForSongContract) {
 		if (contract) {
 			this.id = ko.observable(contract.id!);

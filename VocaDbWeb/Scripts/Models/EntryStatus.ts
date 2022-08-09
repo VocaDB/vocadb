@@ -1,4 +1,4 @@
-enum EntryStatus {
+export enum EntryStatus {
 	Draft = 0,
 
 	Finished = 1,
@@ -7,5 +7,3 @@ enum EntryStatus {
 
 	Locked = 4,
 }
-
-export default EntryStatus;

@@ -1,4 +1,4 @@
-import DateTimeHelper from '@Helpers/DateTimeHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 
 test('convertToLocal', () => {
 	var date = new Date(2016, 9, 3);

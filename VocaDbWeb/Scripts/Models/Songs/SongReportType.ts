@@ -1,4 +1,4 @@
-enum SongReportType {
+export enum SongReportType {
 	BrokenPV = 'BrokenPV',
 	InvalidInfo = 'InvalidInfo',
 	Duplicate = 'Duplicate',
@@ -6,9 +6,7 @@ enum SongReportType {
 	Other = 'Other',
 }
 
-export default SongReportType;
-
-export const reportTypesWithRequiredNotes = [
+export const songReportTypesWithRequiredNotes = [
 	SongReportType.BrokenPV,
 	SongReportType.InvalidInfo,
 	SongReportType.Other,

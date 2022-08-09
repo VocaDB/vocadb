@@ -1,4 +1,4 @@
-export default interface EntryTypeAndSubTypeContract {
+export interface EntryTypeAndSubTypeContract {
 	entryType: string;
 	hasSubType?: boolean;
 	hasValue?: boolean;

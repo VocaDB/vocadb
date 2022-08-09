@@ -1,6 +1,9 @@
-import WebhookContract, { WebhookEvents } from '@DataContracts/WebhookContract';
-import AdminRepository from '@Repositories/AdminRepository';
-import ui from '@Shared/MessagesTyped';
+import {
+	WebhookContract,
+	WebhookEvents,
+} from '@/DataContracts/WebhookContract';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { ui } from '@/Shared/MessagesTyped';
 import ko, { Computed, Observable } from 'knockout';
 import _ from 'lodash';
 
@@ -63,7 +66,7 @@ class WebhookEditViewModel {
 	public deleteWebhook = (): void => this.isDeleted(true);
 }
 
-export default class ManageWebhooksViewModel {
+export class ManageWebhooksViewModel {
 	public newUrl = ko.observable('');
 
 	public webhookEventsEditViewModel: WebhookEventsEditViewModel;

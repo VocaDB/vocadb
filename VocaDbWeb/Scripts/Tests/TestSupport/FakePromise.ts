@@ -1,4 +1,4 @@
-export default class FakePromise<T> {
+export class FakePromise<T> {
 	public constructor(private readonly value: T) {}
 
 	public then = (onfulfilled: (value: T) => T): T => {

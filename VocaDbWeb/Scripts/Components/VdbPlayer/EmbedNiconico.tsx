@@ -1,9 +1,8 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import qs from 'qs';
 import React from 'react';
-
-import IPVPlayer, { IPVPlayerOptions } from './IPVPlayer';
-import VdbPlayerConsole from './VdbPlayerConsole';
 
 declare namespace nico {
 	export interface NicoPlayer {
@@ -284,7 +283,7 @@ interface EmbedNiconicoProps {
 	options: IPVPlayerOptions;
 }
 
-const EmbedNiconico = React.memo(
+export const EmbedNiconico = React.memo(
 	({ playerRef, options }: EmbedNiconicoProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedNiconico');
 
@@ -325,5 +324,3 @@ const EmbedNiconico = React.memo(
 		);
 	},
 );
-
-export default EmbedNiconico;

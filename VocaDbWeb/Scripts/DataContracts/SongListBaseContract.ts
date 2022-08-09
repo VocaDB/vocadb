@@ -1,4 +1,4 @@
-export default interface SongListBaseContract {
+export interface SongListBaseContract {
 	featuredCategory?: string;
 
 	id: number;

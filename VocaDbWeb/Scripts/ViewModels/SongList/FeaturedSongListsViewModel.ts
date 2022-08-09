@@ -1,14 +1,13 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import ResourceRepository from '@Repositories/ResourceRepository';
-import SongListRepository from '@Repositories/SongListRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { SongListsBaseViewModel } from '@/ViewModels/SongList/SongListsBaseViewModel';
 import ko from 'knockout';
 
-import SongListsBaseViewModel from './SongListsBaseViewModel';
-
-export default class FeaturedSongListsViewModel {
+export class FeaturedSongListsViewModel {
 	public constructor(
 		values: GlobalValues,
 		listRepo: SongListRepository,

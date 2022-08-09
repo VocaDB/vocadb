@@ -1,17 +1,16 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { ProfileIconKnockout } from '@/Components/Shared/Partials/User/ProfileIconKnockout';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconNameAndTypeLinkKnockoutProps {
 	user: UserApiContract;
 	iconSize?: number;
 }
 
-const IconNameAndTypeLinkKnockout = React.memo(
+export const IconNameAndTypeLinkKnockout = React.memo(
 	({
 		user,
 		iconSize = 20,
@@ -34,5 +33,3 @@ const IconNameAndTypeLinkKnockout = React.memo(
 		);
 	},
 );
-
-export default IconNameAndTypeLinkKnockout;

@@ -1,13 +1,12 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import EntryMergeValidationHelper from '@Helpers/EntryMergeValidationHelper';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { EntryMergeValidationHelper } from '@/Helpers/EntryMergeValidationHelper';
+import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko from 'knockout';
 
-import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
-
-export default class ArtistMergeViewModel {
+export class ArtistMergeViewModel {
 	public constructor(values: GlobalValues, repo: ArtistRepository, id: number) {
 		this.target = new BasicEntryLinkViewModel<ArtistContract>(
 			null!,

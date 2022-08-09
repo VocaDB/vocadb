@@ -1,16 +1,15 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import PVService from '@Models/PVs/PVService';
+import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import PVServiceIcon from './PVServiceIcon';
 
 interface FormatPVLinkProps {
 	pv: PVContract;
 	type?: boolean;
 }
 
-const FormatPVLink = React.memo(
+export const FormatPVLink = React.memo(
 	({ pv, type = true }: FormatPVLinkProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources']);
 
@@ -25,5 +24,3 @@ const FormatPVLink = React.memo(
 		);
 	},
 );
-
-export default FormatPVLink;

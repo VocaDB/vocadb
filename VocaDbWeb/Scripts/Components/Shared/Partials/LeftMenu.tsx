@@ -1,11 +1,10 @@
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
+import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
+import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import MainNavigationItems from './MainNavigationItems';
-import PatreonLink from './PatreonLink';
 
 interface BannerLinkProps {
 	title: string;
@@ -75,12 +74,22 @@ const SocialLink = React.memo(
 	),
 );
 
-const LeftMenu = React.memo(
+export const LeftMenu = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
-			<div className="span2 menu">
+			<div
+				className="menu"
+				css={{
+					minWidth: 240,
+					flex: '0 1 0',
+					overflowY: 'auto',
+					position: 'sticky',
+					maxHeight: 'calc(100vh - 40px)',
+					top: 40,
+				}}
+			>
 				<div className="well">
 					<Link to="/">
 						<img
@@ -190,5 +199,3 @@ const LeftMenu = React.memo(
 		);
 	},
 );
-
-export default LeftMenu;

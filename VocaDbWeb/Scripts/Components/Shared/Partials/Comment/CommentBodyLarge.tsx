@@ -1,13 +1,12 @@
-import MomentJsTimeAgo from '@Components/KnockoutExtensions/MomentJsTimeAgo';
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
+import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
+import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import FormatMarkdown from '../Html/FormatMarkdown';
-import ProfileIcon from '../User/ProfileIcon';
-import UserLink from '../User/UserLink';
 
 const loginManager = new LoginManager(vdb.values);
 
@@ -17,7 +16,7 @@ interface CommentBodyLargeProps {
 	alwaysAllowDelete?: boolean;
 }
 
-const CommentBodyLarge = React.memo(
+export const CommentBodyLarge = React.memo(
 	({
 		contract,
 		allowDelete,
@@ -51,5 +50,3 @@ const CommentBodyLarge = React.memo(
 		);
 	},
 );
-
-export default CommentBodyLarge;

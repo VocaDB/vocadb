@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import _ from 'lodash';
 
-export default class AjaxHelper {
+export class AjaxHelper {
 	public static createUrl = (params: {
 		[key: string]: string[] | number[];
 	}): string | null => {

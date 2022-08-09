@@ -1,14 +1,16 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/f62da57493a63e40bd67b74f1414ac025c54d553/src/AccordionItem.tsx.
+import AccordionItemContext, {
+	AccordionItemContextValue,
+} from '@/Bootstrap/AccordionItemContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useMemo } from 'react';
-
-import AccordionItemContext, {
-	AccordionItemContextValue,
-} from './AccordionItemContext';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixRefForwardingComponent, BsPrefixProps } from './helpers';
 
 export interface AccordionItemProps
 	extends BsPrefixProps,

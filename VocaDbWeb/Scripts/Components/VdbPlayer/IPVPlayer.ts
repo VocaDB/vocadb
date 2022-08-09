@@ -1,4 +1,4 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 
 export interface IPVPlayerOptions {
 	onError?: (e: any) => void;
@@ -7,7 +7,7 @@ export interface IPVPlayerOptions {
 	onEnded?: () => void;
 }
 
-export default interface IPVPlayer {
+export interface IPVPlayer {
 	attach: () => Promise<void>;
 	detach: () => Promise<void>;
 	load: (pv: PVContract) => Promise<void>;
