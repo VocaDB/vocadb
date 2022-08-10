@@ -72,7 +72,11 @@ const AlbumCreateLayout = observer(
 
 							navigate(`/Album/Edit/${id}`);
 						} catch (error: any) {
-							showErrorMessage(t('ViewRes.Album:Create.UnableToCreateAlbum'));
+							showErrorMessage(
+								error.response && error.response.statusText
+									? error.response.statusText
+									: t('ViewRes.Album:Create.UnableToCreateAlbum'),
+							);
 
 							throw e;
 						}

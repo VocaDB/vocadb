@@ -391,7 +391,9 @@ const SongListEditLayout = observer(
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
 						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.statusText
+									? error.response.statusText
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

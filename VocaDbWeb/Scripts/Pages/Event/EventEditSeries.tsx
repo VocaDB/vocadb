@@ -209,7 +209,9 @@ const EventEditSeriesLayout = observer(
 							);
 						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.statusText
+									? error.response.statusText
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

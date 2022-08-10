@@ -86,7 +86,11 @@ const ArtistCreateLayout = observer(
 
 							navigate(`/Artist/Edit/${id}`);
 						} catch (error: any) {
-							showErrorMessage(t('ViewRes.Artist:Create.UnableToCreateArtist'));
+							showErrorMessage(
+								error.response && error.response.statusText
+									? error.response.statusText
+									: t('ViewRes.Artist:Create.UnableToCreateArtist'),
+							);
 
 							throw e;
 						}

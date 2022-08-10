@@ -82,7 +82,11 @@ const SongCreateLayout = observer(
 
 							navigate(`/Song/Edit/${id}`);
 						} catch (error: any) {
-							showErrorMessage(t('ViewRes.Song:Create.UnableToCreateSong'));
+							showErrorMessage(
+								error.response && error.response.statusText
+									? error.response.statusText
+									: t('ViewRes.Song:Create.UnableToCreateSong'),
+							);
 
 							throw e;
 						}
