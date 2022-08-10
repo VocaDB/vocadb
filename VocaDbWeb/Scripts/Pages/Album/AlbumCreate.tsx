@@ -18,6 +18,7 @@ import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumCreateStore } from '@/Stores/Album/AlbumCreateStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -73,8 +74,8 @@ const AlbumCreateLayout = observer(
 							navigate(`/Album/Edit/${id}`);
 						} catch (error: any) {
 							showErrorMessage(
-								error.response && error.response.statusText
-									? error.response.statusText
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
 									: t('ViewRes.Album:Create.UnableToCreateAlbum'),
 							);
 

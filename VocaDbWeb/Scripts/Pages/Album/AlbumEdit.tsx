@@ -55,6 +55,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -977,8 +978,8 @@ const AlbumEditLayout = observer(
 							navigate(EntryUrlMapper.details(EntryType.Album, id));
 						} catch (error: any) {
 							showErrorMessage(
-								error.response && error.response.statusText
-									? error.response.statusText
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
 									: 'Unable to save properties.' /* TODO: localize */,
 							);
 

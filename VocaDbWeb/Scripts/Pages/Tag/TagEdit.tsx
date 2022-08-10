@@ -37,6 +37,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { TagEditStore } from '@/Stores/Tag/TagEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -201,8 +202,8 @@ const TagEditLayout = observer(
 							navigate(EntryUrlMapper.details_tag(id));
 						} catch (error: any) {
 							showErrorMessage(
-								error.response && error.response.statusText
-									? error.response.statusText
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
 									: 'Unable to save properties.' /* TODO: localize */,
 							);
 

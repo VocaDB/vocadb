@@ -19,6 +19,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
 import classNames from 'classnames';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -87,8 +88,8 @@ const ArtistCreateLayout = observer(
 							navigate(`/Artist/Edit/${id}`);
 						} catch (error: any) {
 							showErrorMessage(
-								error.response && error.response.statusText
-									? error.response.statusText
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
 									: t('ViewRes.Artist:Create.UnableToCreateArtist'),
 							);
 

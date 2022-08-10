@@ -36,6 +36,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -391,8 +392,8 @@ const SongListEditLayout = observer(
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
 						} catch (error: any) {
 							showErrorMessage(
-								error.response && error.response.statusText
-									? error.response.statusText
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
 									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
