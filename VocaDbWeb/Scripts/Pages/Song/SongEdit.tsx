@@ -819,7 +819,7 @@ const SongEditLayout = observer(
 							const id = await songEditStore.submit(requestToken);
 
 							navigate(EntryUrlMapper.details(EntryType.Song, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

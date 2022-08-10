@@ -672,7 +672,7 @@ const ArtistEditLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details(EntryType.Artist, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

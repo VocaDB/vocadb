@@ -199,7 +199,7 @@ const TagEditLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details_tag(id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

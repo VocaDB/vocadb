@@ -975,7 +975,7 @@ const AlbumEditLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details(EntryType.Album, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

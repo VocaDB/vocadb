@@ -71,7 +71,7 @@ const AlbumCreateLayout = observer(
 							const id = await albumCreateStore.submit(requestToken);
 
 							navigate(`/Album/Edit/${id}`);
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(t('ViewRes.Album:Create.UnableToCreateAlbum'));
 
 							throw e;

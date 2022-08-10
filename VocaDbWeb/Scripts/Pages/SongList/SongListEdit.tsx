@@ -389,7 +389,7 @@ const SongListEditLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

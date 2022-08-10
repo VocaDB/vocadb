@@ -168,7 +168,7 @@ const VenueEditLayout = observer(
 							const id = await venueEditStore.submit(requestToken);
 
 							navigate(EntryUrlMapper.details(EntryType.Venue, id));
-						} catch {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

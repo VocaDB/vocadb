@@ -207,7 +207,7 @@ const EventEditSeriesLayout = observer(
 							navigate(
 								EntryUrlMapper.details(EntryType.ReleaseEventSeries, id),
 							);
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
 								'Unable to save properties.' /* TODO: localize */,
 							);

@@ -81,7 +81,7 @@ const SongCreateLayout = observer(
 							const id = await songCreateStore.submit(requestToken);
 
 							navigate(`/Song/Edit/${id}`);
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(t('ViewRes.Song:Create.UnableToCreateSong'));
 
 							throw e;
