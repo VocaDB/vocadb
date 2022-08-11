@@ -58,9 +58,15 @@ import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 
 const maxMediaSizeMB = 20;
 
@@ -819,7 +825,11 @@ const SongEditLayout = observer(
 
 							const id = await songEditStore.submit(requestToken);
 
-							navigate(EntryUrlMapper.details(EntryType.Song, id));
+							navigate(
+								`${EntryUrlMapper.details(EntryType.Song, id)}?${qs.stringify({
+									albumId: songEditStore.albumId,
+								})}`,
+							);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
@@ -923,6 +933,8 @@ const SongEdit = (): React.ReactElement => {
 	);
 
 	const { id } = useParams();
+	const [searchParams] = useSearchParams();
+	const albumId = searchParams.get('albumId');
 
 	const [model, setModel] = React.useState<{ songEditStore: SongEditStore }>();
 
@@ -942,6 +954,7 @@ const SongEdit = (): React.ReactElement => {
 						model,
 						loginManager.canBulkDeletePVs,
 						vdb.values.instrumentalTagId,
+						albumId ? Number(albumId) : undefined,
 					),
 				}),
 			)
@@ -953,7 +966,7 @@ const SongEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id]);
+	}, [artistRoleNames, id, albumId]);
 
 	return model ? <SongEditLayout songEditStore={model.songEditStore} /> : <></>;
 };
