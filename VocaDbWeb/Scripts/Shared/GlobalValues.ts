@@ -54,6 +54,4 @@ export interface GlobalValues {
 	bigBanners: MenuPageLink[];
 	smallBanners: MenuPageLink[];
 	socialLinks: MenuPageLink[];
-
-	requestToken?: string;
 }

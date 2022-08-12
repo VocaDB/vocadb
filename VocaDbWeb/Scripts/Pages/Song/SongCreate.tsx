@@ -18,12 +18,15 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { SongType } from '@/Models/Songs/SongType';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -32,7 +35,9 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
@@ -72,11 +77,17 @@ const SongCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-							const id = await songCreateStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
+
+							const id = await songCreateStore.submit(requestToken);
 
 							navigate(`/Song/Edit/${id}`);
-						} catch (e) {
-							showErrorMessage(t('ViewRes.Song:Create.UnableToCreateSong'));
+						} catch (error: any) {
+							showErrorMessage(
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: t('ViewRes.Song:Create.UnableToCreateSong'),
+							);
 
 							throw e;
 						}

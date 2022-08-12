@@ -89,11 +89,11 @@ export class VenueEditStore {
 		});
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action public submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.venueRepo.edit({
+			const id = await this.venueRepo.edit(requestToken, {
 				address: this.address,
 				addressCountryCode: this.addressCountryCode,
 				coordinates: this.coordinates,

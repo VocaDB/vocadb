@@ -13,9 +13,12 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumCreateStore } from '@/Stores/Album/AlbumCreateStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -23,7 +26,9 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
@@ -62,11 +67,17 @@ const AlbumCreateLayout = observer(
 						e.preventDefault();
 
 						try {
-							const id = await albumCreateStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
+
+							const id = await albumCreateStore.submit(requestToken);
 
 							navigate(`/Album/Edit/${id}`);
-						} catch (e) {
-							showErrorMessage(t('ViewRes.Album:Create.UnableToCreateAlbum'));
+						} catch (error: any) {
+							showErrorMessage(
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: t('ViewRes.Album:Create.UnableToCreateAlbum'),
+							);
 
 							throw e;
 						}

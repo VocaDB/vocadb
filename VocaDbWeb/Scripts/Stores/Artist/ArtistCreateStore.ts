@@ -86,12 +86,14 @@ export class ArtistCreateStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.artistRepo.create(
+				requestToken,
 				{
 					artistType: this.artistType,
 					description: this.description,

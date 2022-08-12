@@ -230,6 +230,7 @@ export class ArtistEditStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
 	): Promise<number> => {
@@ -237,6 +238,7 @@ export class ArtistEditStore {
 
 		try {
 			const id = await this.artistRepo.edit(
+				requestToken,
 				{
 					artistType: this.artistType,
 					associatedArtists: this.associatedArtists.map((a) => a.toContract()),

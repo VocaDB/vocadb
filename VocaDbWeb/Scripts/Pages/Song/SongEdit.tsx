@@ -44,6 +44,7 @@ import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import ArtistForSongEdit from '@/Pages/Song/Partials/ArtistForSongEdit';
 import LyricsForSongEdit from '@/Pages/Song/Partials/LyricsForSongEdit';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -53,6 +54,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -67,6 +69,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const pvRepo = new PVRepository(httpClient, urlMapper);
@@ -812,12 +815,16 @@ const SongEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const id = await songEditStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
+
+							const id = await songEditStore.submit(requestToken);
 
 							navigate(EntryUrlMapper.details(EntryType.Song, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

@@ -388,11 +388,11 @@ export class SongEditStore {
 		this.originalVersion.id = song.id;
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action public submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.songRepo.edit({
+			const id = await this.songRepo.edit(requestToken, {
 				artists: this.artistLinks.map((artistLink) => artistLink.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage,
 				deleted: false,

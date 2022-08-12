@@ -3,7 +3,6 @@ using System.Security.Claims;
 using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -281,21 +280,6 @@ namespace VocaDb.Web
 			// Before UseEndpoints, so that users are authenticated before accessing the endpoints.
 			app.UseAuthentication();
 			app.UseAuthorization();
-
-			// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#generate-antiforgery-tokens-with-iantiforgery.
-			var antiforgery = app.ApplicationServices.GetRequiredService<IAntiforgery>();
-			app.Use((context, next) =>
-			{
-				var requestPath = context.Request.Path.Value;
-
-				if (string.Equals(requestPath, "/", StringComparison.OrdinalIgnoreCase) || string.Equals(requestPath, "/index.html", StringComparison.OrdinalIgnoreCase))
-				{
-					var tokenSet = antiforgery.GetAndStoreTokens(context);
-					context.Response.Cookies.Append("XSRF-TOKEN", tokenSet.RequestToken!, new CookieOptions { HttpOnly = false });
-				}
-
-				return next(context);
-			});
 
 			app.UseVocaDbPrincipal();
 

@@ -72,8 +72,6 @@ namespace VocaDb.Web.Models.Shared
 		public MenuPageLink[] SmallBanners { get; init; }
 		public MenuPageLink[] SocialLinks { get; init; }
 
-		public string? RequestToken { get; init; }
-
 		public GlobalValues(VocaDbPage model)
 		{
 			AllowCustomArtistName = AppConfig.AllowCustomArtistName;

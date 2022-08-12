@@ -115,11 +115,14 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public edit = (contract: VenueForEditContract): Promise<number> => {
+	public edit = (
+		requestToken: string,
+		contract: VenueForEditContract,
+	): Promise<number> => {
 		return this.httpClient.post<number>(
 			this.urlMapper.mapRelative(`/api/venues/${contract.id}`),
 			contract,
-			{ headers: { requestVerificationToken: vdb.values.requestToken } },
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

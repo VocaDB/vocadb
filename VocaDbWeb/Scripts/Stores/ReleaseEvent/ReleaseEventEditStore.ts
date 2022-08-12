@@ -195,12 +195,14 @@ export class ReleaseEventEditStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.eventRepo.edit(
+				requestToken,
 				{
 					artists: this.artistLinkContracts,
 					category: this.category,

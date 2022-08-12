@@ -31,11 +31,13 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { TagEditStore } from '@/Stores/Tag/TagEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -47,6 +49,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 const allTagTargetTypes: TagTargetTypes[] = [
@@ -185,18 +188,23 @@ const TagEditLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const thumbPicUpload =
 								thumbPicUploadRef.current.files?.item(0) ?? undefined;
 
 							const id = await tagEditStore.submit(
+								requestToken,
 								categoryNameRef.current.value,
 								thumbPicUpload,
 							);
 
 							navigate(EntryUrlMapper.details_tag(id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

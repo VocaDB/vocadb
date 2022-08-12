@@ -550,7 +550,10 @@ export class SongRepository
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
 	};
 
-	public create = (contract: CreateSongContract): Promise<number> => {
+	public create = (
+		requestToken: string,
+		contract: CreateSongContract,
+	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -560,13 +563,16 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
-	public edit = (contract: SongForEditContract): Promise<number> => {
+	public edit = (
+		requestToken: string,
+		contract: SongForEditContract,
+	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -576,7 +582,7 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

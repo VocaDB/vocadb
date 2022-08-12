@@ -37,11 +37,13 @@ import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -54,6 +56,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface BasicInfoTabContentProps {
@@ -649,6 +652,8 @@ const ArtistEditLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const coverPicUpload =
 								coverPicUploadRef.current.files?.item(0) ?? undefined;
 
@@ -662,14 +667,17 @@ const ArtistEditLayout = observer(
 								.value();
 
 							const id = await artistEditStore.submit(
+								requestToken,
 								coverPicUpload,
 								pictureUpload,
 							);
 
 							navigate(EntryUrlMapper.details(EntryType.Artist, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

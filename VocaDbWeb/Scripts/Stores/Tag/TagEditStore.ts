@@ -122,6 +122,7 @@ export class TagEditStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		categoryName: string /* HACK */,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -129,6 +130,7 @@ export class TagEditStore {
 
 		try {
 			const id = await this.tagRepo.edit(
+				requestToken,
 				{
 					canDelete: false,
 					categoryName: categoryName,
