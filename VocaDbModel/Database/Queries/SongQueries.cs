@@ -1056,8 +1056,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				// Other properties
-				if (target.OriginalVersion == null)
-					target.OriginalVersion = source.OriginalVersion;
+				target.OriginalVersion ??= source.OriginalVersion;
 
 				var alternateVersions = source.AlternateVersions.ToArray();
 				foreach (var alternate in alternateVersions)
@@ -1077,6 +1076,8 @@ namespace VocaDb.Model.Database.Queries
 				{
 					target.PublishDate = source.PublishDate;
 				}
+
+				target.ReleaseEvent ??= source.ReleaseEvent;
 
 				// Create merge record
 				var mergeEntry = new SongMergeRecord(source, target);
