@@ -98,6 +98,7 @@ export class SongEditStore {
 		public readonly contract: SongForEditContract,
 		canBulkDeletePVs: boolean,
 		private readonly instrumentalTagId: number,
+		public readonly albumId?: number,
 	) {
 		makeObservable(this);
 
