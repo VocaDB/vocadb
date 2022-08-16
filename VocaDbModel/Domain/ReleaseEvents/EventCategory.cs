@@ -24,5 +24,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		/// </summary>
 		Convention = 1 << 5,
 		Other = 1 << 6,
+		/// <summary>
+		/// J-POP Cover Festival
+		/// </summary>
+		Festival = 1 << 7,
 	}
 }

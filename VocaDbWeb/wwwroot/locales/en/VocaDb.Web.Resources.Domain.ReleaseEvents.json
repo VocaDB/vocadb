@@ -18,8 +18,9 @@
     "Club": "Club",
     "Concert": "Concert",
     "Contest": "Contest",
-    "Convention": "Convention",
-    "Other": "Other",
+	"Festival": "Festival",
+	"Convention": "Convention",
+	"Other": "Other",
     "Unspecified": "Unspecified"
   },
   "EventSortRuleNames": {
