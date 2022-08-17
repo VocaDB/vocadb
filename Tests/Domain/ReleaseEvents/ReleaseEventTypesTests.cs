@@ -12,7 +12,8 @@ public class ArtistEventTypesTests
 	[DataRow(8, EventCategory.Concert)]
 	[DataRow(16, EventCategory.Contest)]
 	[DataRow(32, EventCategory.Convention)]
-	[DataRow(64, EventCategory.Festival)]
+	[DataRow(64, EventCategory.Other)]
+	[DataRow(128, EventCategory.Festival)]
 	[TestMethod]
 	public void Value(int expected, EventCategory actual)
 	{
