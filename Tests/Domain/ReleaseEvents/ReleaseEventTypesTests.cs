@@ -5,18 +5,18 @@ namespace VocaDb.Tests.Domain.ReleaseEvents;
 [TestClass]
 public class ArtistEventTypesTests
 {
-	[DataRow(0, EventCategory.Unspecified)]
-	[DataRow(1, EventCategory.AlbumRelease)]
-	[DataRow(2, EventCategory.Anniversary)]
-	[DataRow(4, EventCategory.Club)]
-	[DataRow(8, EventCategory.Concert)]
-	[DataRow(16, EventCategory.Contest)]
-	[DataRow(32, EventCategory.Convention)]
-	[DataRow(64, EventCategory.Other)]
-	[DataRow(128, EventCategory.Festival)]
+	[DataRow("Unspecified", nameof(EventCategory.Unspecified))]
+	[DataRow("AlbumRelease", nameof(EventCategory.AlbumRelease))]
+	[DataRow("Anniversary", nameof(EventCategory.Anniversary))]
+	[DataRow("Club", nameof(EventCategory.Club))]
+	[DataRow("Concert", nameof(EventCategory.Concert))]
+	[DataRow("Contest", nameof(EventCategory.Contest))]
+	[DataRow("Convention", nameof(EventCategory.Convention))]
+	[DataRow("Other", nameof(EventCategory.Other))]
+	[DataRow("Festival", nameof(EventCategory.Festival))]
 	[TestMethod]
-	public void Value(int expected, EventCategory actual)
+	public void Name(string expected, string actual)
 	{
-		((int) actual).Should().Be(expected);
+		actual.Should().Be(expected);
 	}
 }
