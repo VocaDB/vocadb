@@ -2,13 +2,13 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Container from '@/Bootstrap/Container';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
-import { IPVPlayer } from '@/Components/VdbPlayer/IPVPlayer';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
+import { PVPlayer } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -22,7 +22,7 @@ const repeatIcons: Record<RepeatMode, string> = {
 };
 
 interface VdbPlayerLeftControlsProps {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<PVPlayer>;
 }
 
 const VdbPlayerLeftControls = observer(
@@ -236,7 +236,7 @@ const VdbPlayerRightControls = observer(
 );
 
 interface VdbPlayerControlsProps {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<PVPlayer>;
 }
 
 const VdbPlayerControls = observer(
@@ -258,11 +258,11 @@ const VdbPlayerControls = observer(
 );
 
 interface PVPlayerProps {
-	playerRef: React.MutableRefObject<IPVPlayer>;
+	playerRef: React.MutableRefObject<PVPlayer>;
 	pv: PVContract;
 }
 
-const PVPlayer = observer(
+const EmbedPVWrapper = observer(
 	({ playerRef, pv }: PVPlayerProps): React.ReactElement => {
 		const vdbPlayer = useVdbPlayer();
 
@@ -273,7 +273,7 @@ const PVPlayer = observer(
 
 			player
 				.attach()
-				.then(() => player.load(pv))
+				.then(() => player.load(pv.pvId))
 				.then(player.play)
 				.catch((e) => {
 					VdbPlayerConsole.error(
@@ -374,7 +374,7 @@ export const VdbPlayer = observer(
 
 		const vdbPlayer = useVdbPlayer();
 
-		const playerRef = React.useRef<IPVPlayer>(undefined!);
+		const playerRef = React.useRef<PVPlayer>(undefined!);
 
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
@@ -407,7 +407,10 @@ export const VdbPlayer = observer(
 					}}
 				>
 					{vdbPlayer.selectedEntry && (
-						<PVPlayer playerRef={playerRef} pv={vdbPlayer.selectedEntry.pv} />
+						<EmbedPVWrapper
+							playerRef={playerRef}
+							pv={vdbPlayer.selectedEntry.pv}
+						/>
 					)}
 				</div>
 

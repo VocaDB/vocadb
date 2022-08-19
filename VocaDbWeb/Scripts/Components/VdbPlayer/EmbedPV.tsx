@@ -1,13 +1,13 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
 import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
-import { EmbedFile } from '@/Components/VdbPlayer/EmbedFile';
-import { EmbedNiconico } from '@/Components/VdbPlayer/EmbedNiconico';
-import { EmbedSoundCloud } from '@/Components/VdbPlayer/EmbedSoundCloud';
-import { EmbedYouTube } from '@/Components/VdbPlayer/EmbedYouTube';
-import { IPVPlayer, IPVPlayerOptions } from '@/Components/VdbPlayer/IPVPlayer';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
+import {
+	NostalgicDiva,
+	PVPlayer,
+	PVPlayerOptions,
+} from '@vocadb/nostalgic-diva';
 import _ from 'lodash';
 import React from 'react';
 
@@ -47,8 +47,8 @@ interface EmbedPVProps {
 	autoplay?: boolean;
 	enableApi?: boolean;
 	id?: string;
-	playerRef: React.MutableRefObject<IPVPlayer | undefined>;
-	options: IPVPlayerOptions;
+	playerRef: React.MutableRefObject<PVPlayer | undefined>;
+	options: PVPlayerOptions;
 }
 
 export const EmbedPV = React.memo(
@@ -64,7 +64,39 @@ export const EmbedPV = React.memo(
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
-		switch (PVService[pv.service as keyof typeof PVService]) {
+		const service = PVService[pv.service as keyof typeof PVService];
+
+		if (
+			(service === PVService.File || service === PVService.LocalFile) &&
+			isAudio(pv.url)
+		) {
+			return (
+				<div css={{ width: width, height: height }}>
+					<a href={pv.url}>
+						<img
+							style={{ maxWidth: '100%', maxHeight: '100%' }}
+							src={pv.thumbUrl}
+							alt={pv.name}
+						/>
+					</a>
+				</div>
+			);
+		}
+
+		switch (service) {
+			case PVService.File:
+			case PVService.LocalFile:
+			case PVService.NicoNicoDouga:
+			case PVService.SoundCloud:
+			case PVService.Youtube:
+				return (
+					<NostalgicDiva
+						service={pv.service as any}
+						playerRef={playerRef}
+						options={options}
+					/>
+				);
+
 			case PVService.Bandcamp:
 				// TODO: Remove.
 				playerRef.current = undefined;
@@ -85,36 +117,11 @@ export const EmbedPV = React.memo(
 
 				return <EmbedBili pv={pv} width={width} height={height} />;
 
-			case PVService.File:
-			case PVService.LocalFile:
-				return isAudio(pv.url) ? (
-					<EmbedFile playerRef={playerRef} options={options} />
-				) : (
-					<div css={{ width: width, height: height }}>
-						<a href={pv.url}>
-							<img
-								style={{ maxWidth: '100%', maxHeight: '100%' }}
-								src={pv.thumbUrl}
-								alt={pv.name}
-							/>
-						</a>
-					</div>
-				);
-
-			case PVService.NicoNicoDouga:
-				return <EmbedNiconico playerRef={playerRef} options={options} />;
-
 			case PVService.Piapro:
 				// TODO: Remove.
 				playerRef.current = undefined;
 
 				return <EmbedPiapro pv={pv} width={width} height={height} />;
-
-			case PVService.SoundCloud:
-				return <EmbedSoundCloud playerRef={playerRef} options={options} />;
-
-			case PVService.Youtube:
-				return <EmbedYouTube playerRef={playerRef} options={options} />;
 
 			case PVService.Vimeo:
 				// TODO: Remove.
