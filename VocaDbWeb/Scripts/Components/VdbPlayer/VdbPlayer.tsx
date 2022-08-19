@@ -266,24 +266,6 @@ const EmbedPVWrapper = observer(
 	({ playerRef, pv }: PVPlayerProps): React.ReactElement => {
 		const vdbPlayer = useVdbPlayer();
 
-		React.useEffect(() => {
-			const player = playerRef.current;
-
-			if (!player) return;
-
-			player
-				.attach()
-				.then(() => player.load(pv.pvId))
-				.then(player.play)
-				.catch((e) => {
-					VdbPlayerConsole.error(
-						'Failed to load PV',
-						JSON.parse(JSON.stringify(pv)),
-						e,
-					);
-				});
-		}, [playerRef, pv]);
-
 		const handleError = React.useCallback((e: any) => {
 			VdbPlayerConsole.error('error', e);
 		}, []);
@@ -355,6 +337,25 @@ const EmbedPVWrapper = observer(
 			[handleError, handlePlay, handlePause, handleEnded],
 		);
 
+		const handlePlayerChange = React.useCallback(
+			async (player?: PVPlayer) => {
+				try {
+					if (!player) return;
+
+					await player.load(pv.pvId);
+
+					player.play();
+				} catch (error) {
+					VdbPlayerConsole.error(
+						'Failed to load PV',
+						JSON.parse(JSON.stringify(pv)),
+						error,
+					);
+				}
+			},
+			[pv],
+		);
+
 		return (
 			<EmbedPV
 				pv={pv}
@@ -363,6 +364,7 @@ const EmbedPVWrapper = observer(
 				enableApi={true}
 				playerRef={playerRef}
 				options={options}
+				onPlayerChange={handlePlayerChange}
 			/>
 		);
 	},

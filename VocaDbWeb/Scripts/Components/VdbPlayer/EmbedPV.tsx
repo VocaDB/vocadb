@@ -49,6 +49,7 @@ interface EmbedPVProps {
 	id?: string;
 	playerRef: React.MutableRefObject<PVPlayer | undefined>;
 	options: PVPlayerOptions;
+	onPlayerChange?: (player?: PVPlayer) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -61,6 +62,7 @@ export const EmbedPV = React.memo(
 		id,
 		playerRef,
 		options,
+		onPlayerChange,
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
@@ -94,6 +96,7 @@ export const EmbedPV = React.memo(
 						service={pv.service as any}
 						playerRef={playerRef}
 						options={options}
+						onPlayerChange={onPlayerChange}
 					/>
 				);
 
