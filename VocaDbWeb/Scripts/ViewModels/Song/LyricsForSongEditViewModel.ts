@@ -79,7 +79,11 @@ export class LyricsForSongListEditViewModel extends BasicListEditViewModel<
 		var vm = this.items().find((i) => i.translationType() === translationType);
 		if (vm) _.remove(this.items(), vm);
 		else {
-			vm = new LyricsForSongEditViewModel({ translationType: translationType });
+			vm = new LyricsForSongEditViewModel({
+				source: '',
+				translationType: translationType,
+				url: '',
+			});
 		}
 		return vm;
 	};
