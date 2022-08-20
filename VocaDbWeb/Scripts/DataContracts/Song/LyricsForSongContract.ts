@@ -5,11 +5,11 @@ export interface LyricsForSongContract {
 
 	language?: string;
 
-	source?: string;
+	source: string;
 
 	translationType: string;
 
-	url?: string;
+	url: string;
 
 	value?: string;
 }
