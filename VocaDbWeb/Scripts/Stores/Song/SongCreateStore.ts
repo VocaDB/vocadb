@@ -213,11 +213,11 @@ export class SongCreateStore {
 		});
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action public submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.songRepo.create({
+			const id = await this.songRepo.create(requestToken, {
 				artists: this.artists.map(
 					(artist) =>
 						({

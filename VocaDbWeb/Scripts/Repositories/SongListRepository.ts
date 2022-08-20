@@ -158,6 +158,7 @@ export class SongListRepository {
 	};
 
 	public edit = (
+		requestToken: string,
 		contract: SongListForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -172,7 +173,7 @@ export class SongListRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

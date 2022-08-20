@@ -29,11 +29,13 @@ import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventSeriesEditStore } from '@/Stores/ReleaseEvent/ReleaseEventSeriesEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -46,6 +48,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventEditSeriesLayoutProps {
@@ -192,19 +195,24 @@ const EventEditSeriesLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const pictureUpload =
 								pictureUploadRef.current.files?.item(0) ?? undefined;
 
 							const id = await releaseEventSeriesEditStore.submit(
+								requestToken,
 								pictureUpload,
 							);
 
 							navigate(
 								EntryUrlMapper.details(EntryType.ReleaseEventSeries, id),
 							);
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

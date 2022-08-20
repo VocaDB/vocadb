@@ -489,6 +489,7 @@ export class AlbumEditStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
 	): Promise<number> => {
@@ -496,6 +497,7 @@ export class AlbumEditStore {
 
 		try {
 			const id = await this.albumRepo.edit(
+				requestToken,
 				{
 					artistLinks: this.artistLinks.map((artist) => artist.toContract()),
 					defaultNameLanguage: this.defaultNameLanguage,

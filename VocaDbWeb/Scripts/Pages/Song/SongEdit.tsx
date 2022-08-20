@@ -44,6 +44,7 @@ import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import ArtistForSongEdit from '@/Pages/Song/Partials/ArtistForSongEdit';
 import LyricsForSongEdit from '@/Pages/Song/Partials/LyricsForSongEdit';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -53,12 +54,19 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+	Link,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from 'react-router-dom';
 
 const maxMediaSizeMB = 20;
 
@@ -67,6 +75,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const pvRepo = new PVRepository(httpClient, urlMapper);
@@ -812,12 +821,20 @@ const SongEditLayout = observer(
 						e.preventDefault();
 
 						try {
-							const id = await songEditStore.submit();
+							const requestToken = await antiforgeryRepo.getToken();
 
-							navigate(EntryUrlMapper.details(EntryType.Song, id));
-						} catch (e) {
+							const id = await songEditStore.submit(requestToken);
+
+							navigate(
+								`${EntryUrlMapper.details(EntryType.Song, id)}?${qs.stringify({
+									albumId: songEditStore.albumId,
+								})}`,
+							);
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;
@@ -916,6 +933,8 @@ const SongEdit = (): React.ReactElement => {
 	);
 
 	const { id } = useParams();
+	const [searchParams] = useSearchParams();
+	const albumId = searchParams.get('albumId');
 
 	const [model, setModel] = React.useState<{ songEditStore: SongEditStore }>();
 
@@ -935,6 +954,7 @@ const SongEdit = (): React.ReactElement => {
 						model,
 						loginManager.canBulkDeletePVs,
 						vdb.values.instrumentalTagId,
+						albumId ? Number(albumId) : undefined,
 					),
 				}),
 			)
@@ -946,7 +966,7 @@ const SongEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id]);
+	}, [artistRoleNames, id, albumId]);
 
 	return model ? <SongEditLayout songEditStore={model.songEditStore} /> : <></>;
 };

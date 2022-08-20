@@ -259,6 +259,7 @@ export class ArtistRepository
 	};
 
 	public create = (
+		requestToken: string,
 		contract: CreateArtistContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -273,13 +274,14 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	public edit = (
+		requestToken: string,
 		contract: ArtistForEditContract,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -297,7 +299,7 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

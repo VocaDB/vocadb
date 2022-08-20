@@ -98,6 +98,7 @@ export class SongEditStore {
 		public readonly contract: SongForEditContract,
 		canBulkDeletePVs: boolean,
 		private readonly instrumentalTagId: number,
+		public readonly albumId?: number,
 	) {
 		makeObservable(this);
 
@@ -388,11 +389,11 @@ export class SongEditStore {
 		this.originalVersion.id = song.id;
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action public submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.songRepo.edit({
+			const id = await this.songRepo.edit(requestToken, {
 				artists: this.artistLinks.map((artistLink) => artistLink.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage,
 				deleted: false,

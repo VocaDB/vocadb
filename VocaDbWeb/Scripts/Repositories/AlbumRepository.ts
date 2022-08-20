@@ -333,7 +333,10 @@ export class AlbumRepository
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
 	};
 
-	public create = (contract: CreateAlbumContract): Promise<number> => {
+	public create = (
+		requestToken: string,
+		contract: CreateAlbumContract,
+	): Promise<number> => {
 		const formData = new FormData();
 		formData.append('contract', JSON.stringify(contract));
 
@@ -343,13 +346,14 @@ export class AlbumRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);
 	};
 
 	public edit = (
+		requestToken: string,
 		contract: AlbumForEditContract,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -367,7 +371,7 @@ export class AlbumRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

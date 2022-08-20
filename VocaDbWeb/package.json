@@ -66,6 +66,7 @@
         "decimal.js-light": "^2.5.1",
         "highcharts": "^10.0.0",
         "highcharts-react-official": "^3.1.0",
+        "http-status-codes": "^2.2.0",
         "i18next": "^20.3.2",
         "i18next-http-backend": "^1.2.6",
         "jquery": "^2.2.1",

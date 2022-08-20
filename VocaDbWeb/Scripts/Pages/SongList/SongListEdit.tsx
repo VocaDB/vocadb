@@ -29,12 +29,14 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -47,6 +49,7 @@ const loginManager = new LoginManager(vdb.values);
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
 const songListRepo = new SongListRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
@@ -376,15 +379,22 @@ const SongListEditLayout = observer(
 						e.preventDefault();
 
 						try {
+							const requestToken = await antiforgeryRepo.getToken();
+
 							const thumbPicUpload =
 								thumbPicUploadRef.current.files?.item(0) ?? undefined;
 
-							const id = await songListEditStore.submit(thumbPicUpload);
+							const id = await songListEditStore.submit(
+								requestToken,
+								thumbPicUpload,
+							);
 
 							navigate(EntryUrlMapper.details(EntryType.SongList, id));
-						} catch (e) {
+						} catch (error: any) {
 							showErrorMessage(
-								'Unable to save properties.' /* TODO: localize */,
+								error.response && error.response.status
+									? getReasonPhrase(error.response.status)
+									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
 							throw e;

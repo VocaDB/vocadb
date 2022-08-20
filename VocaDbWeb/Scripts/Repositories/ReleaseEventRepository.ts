@@ -226,6 +226,7 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	public edit = (
+		requestToken: string,
 		contract: ReleaseEventForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -240,7 +241,7 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);
@@ -257,6 +258,7 @@ export class ReleaseEventRepository extends BaseRepository {
 	};
 
 	public editSeries = (
+		requestToken: string,
 		contract: ReleaseEventSeriesForEditContract,
 		pictureUpload: File | undefined,
 	): Promise<number> => {
@@ -271,7 +273,7 @@ export class ReleaseEventRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

@@ -122,12 +122,14 @@ export class SongListEditStore {
 	};
 
 	@action public submit = async (
+		requestToken: string,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
 		this.submitting = true;
 
 		try {
 			const id = await this.songListRepo.edit(
+				requestToken,
 				{
 					author: undefined!,
 					description: this.description,

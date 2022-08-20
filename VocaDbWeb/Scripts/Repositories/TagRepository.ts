@@ -210,6 +210,7 @@ export class TagRepository extends BaseRepository {
 	};
 
 	public edit = (
+		requestToken: string,
 		contract: TagForEditContract,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {
@@ -224,7 +225,7 @@ export class TagRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					requestVerificationToken: vdb.values.requestToken,
+					requestVerificationToken: requestToken,
 				},
 			},
 		);

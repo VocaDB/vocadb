@@ -60,11 +60,11 @@ export class AlbumCreateStore {
 		_.pull(this.artists, artist);
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action public submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {
-			const id = await this.albumRepo.create({
+			const id = await this.albumRepo.create(requestToken, {
 				artists: this.artists,
 				discType: this.discType,
 				names: ([] as LocalizedStringContract[]).concat(
