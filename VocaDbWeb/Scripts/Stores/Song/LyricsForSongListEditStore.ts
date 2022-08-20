@@ -2,8 +2,9 @@ import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContrac
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { TranslationType } from '@/Models/Globalization/TranslationType';
 import { BasicListEditStore } from '@/Stores/BasicListEditStore';
+import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import _ from 'lodash';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export class LyricsForSongEditStore {
 	@observable public cultureCode: string;
@@ -36,6 +37,17 @@ export class LyricsForSongEditStore {
 			this.url = '';
 			this.value = '';
 		}
+
+		reaction(
+			() => this.url,
+			(url) => {
+				if (this.source) return;
+
+				const matcher = WebLinkMatcher.matchWebLink(url);
+
+				if (matcher) this.source = matcher.desc;
+			},
+		);
 
 		this.isNew = !contract;
 	}
