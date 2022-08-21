@@ -17,7 +17,7 @@ export class PlayQueueItem {
 
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
-	@observable public selectedIndex?: number;
+	@observable public selectedId?: number;
 
 	public constructor() {
 		makeObservable(this);
@@ -29,6 +29,15 @@ export class PlayQueueStore {
 
 	@computed public get hasMultipleItems(): boolean {
 		return this.items.length > 1;
+	}
+
+	@computed public get selectedIndex(): number | undefined {
+		return this.selectedId !== undefined
+			? this.items.findIndex((item) => item.id === this.selectedId)
+			: undefined;
+	}
+	public set selectedIndex(value: number | undefined) {
+		this.selectedId = value !== undefined ? this.items[value].id : undefined;
 	}
 
 	@computed public get hasPreviousItem(): boolean {
@@ -48,9 +57,7 @@ export class PlayQueueStore {
 	}
 
 	@computed public get selectedItem(): PlayQueueItem | undefined {
-		return this.selectedIndex !== undefined
-			? this.items[this.selectedIndex]
-			: undefined;
+		return this.items.find((item) => item.id === this.selectedId);
 	}
 
 	@computed public get isLastItem(): boolean {
@@ -65,21 +72,21 @@ export class PlayQueueStore {
 		this.items = [];
 	};
 
-	@action public playNext = (entry: EntryContract, pv: PVContract): void => {
+	@action public playNext = (item: PlayQueueItem): void => {
 		if (this.selectedIndex === undefined) return;
 
-		this.items.splice(this.selectedIndex + 1, 0, new PlayQueueItem(entry, pv));
+		this.items.splice(this.selectedIndex + 1, 0, item);
 	};
 
-	@action public play = (entry: EntryContract, pv: PVContract): void => {
+	@action public play = (item: PlayQueueItem): void => {
 		this.clear();
-		// selectedIndex must be set before playNext is called.
-		this.selectedIndex = 0;
-		this.playNext(entry, pv);
+		// selectedId must be set before playNext is called.
+		this.selectedId = item.id;
+		this.playNext(item);
 	};
 
-	@action public addToQueue = (entry: EntryContract, pv: PVContract): void => {
-		this.items.push(new PlayQueueItem(entry, pv));
+	@action public addToQueue = (item: PlayQueueItem): void => {
+		this.items.push(item);
 	};
 
 	@action public previous = (): void => {

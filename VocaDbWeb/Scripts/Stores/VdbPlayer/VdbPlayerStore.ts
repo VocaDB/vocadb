@@ -1,5 +1,3 @@
-import { EntryContract } from '@/DataContracts/EntryContract';
-import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
 import {
 	PlayQueueItem,
@@ -93,29 +91,29 @@ export class VdbPlayerStore {
 		this.playQueue.next();
 	};
 
-	public play = (entry: EntryContract, pv: PVContract): void => {
-		this.playQueue.play(entry, pv);
+	public play = (item: PlayQueueItem): void => {
+		this.playQueue.play(item);
 
 		if (!this.canAutoplay) {
 			this.expand();
 		}
 	};
 
-	public playNext = (entry: EntryContract, pv: PVContract): void => {
+	public playNext = (item: PlayQueueItem): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(entry, pv);
+			this.play(item);
 			return;
 		}
 
-		this.playQueue.playNext(entry, pv);
+		this.playQueue.playNext(item);
 	};
 
-	public addToQueue = (entry: EntryContract, pv: PVContract): void => {
+	public addToQueue = (item: PlayQueueItem): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(entry, pv);
+			this.play(item);
 			return;
 		}
 
-		this.playQueue.addToQueue(entry, pv);
+		this.playQueue.addToQueue(item);
 	};
 }
