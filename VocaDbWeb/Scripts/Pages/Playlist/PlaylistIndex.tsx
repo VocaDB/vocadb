@@ -1,14 +1,23 @@
-import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
+import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
+
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
+const pvServiceIcons = new PVServiceIcons(urlMapper);
 
 const PlaylistIndex = observer(
 	(): React.ReactElement => {
@@ -22,7 +31,7 @@ const PlaylistIndex = observer(
 
 		return (
 			<Layout title={title}>
-				<table>
+				<table className={classNames('table', 'table-striped')}>
 					<ReactSortable
 						tag="tbody"
 						list={vdbPlayer.playQueue.items}
@@ -31,48 +40,79 @@ const PlaylistIndex = observer(
 								vdbPlayer.playQueue.items = items;
 							})
 						}
-						handle=".handle"
 					>
 						{vdbPlayer.playQueue.items.map((item) => (
-							<tr className="ui-state-default" key={item.id}>
-								<td style={{ cursor: 'move' }} className="handle">
-									<span className="ui-icon ui-icon-arrowthick-2-n-s" />
+							<tr key={item.id}>
+								<td style={{ width: '80px' }}>
+									{item.entry.mainPicture && item.entry.mainPicture.urlThumb && (
+										<Link
+											to={EntryUrlMapper.details_entry(item.entry)}
+											title={item.entry.additionalNames}
+										>
+											{/* eslint-disable-next-line jsx-a11y/alt-text */}
+											<img
+												src={item.entry.mainPicture.urlThumb}
+												title="Cover picture" /* TODO: localize */
+												className="coverPicThumb img-rounded"
+												referrerPolicy="same-origin"
+											/>
+										</Link>
+									)}
 								</td>
 								<td>
-									<SafeAnchor
-										onClick={(): void => {
-											if (vdbPlayer.selectedItem === item) {
-												const player = playerRef.current;
+									<div className="pull-right">
+										<Button
+											onClick={(): void => {
+												if (vdbPlayer.selectedItem === item) {
+													const player = playerRef.current;
 
-												if (!player) return;
+													if (!player) return;
 
-												player.seekTo(0);
-												player.play();
-											} else {
-												vdbPlayer.play(item);
-											}
-										}}
-										href="#"
-										className="iconLink playLink"
-										title="Play" /* TODO: localize */
+													player.seekTo(0);
+													player.play();
+												} else {
+													vdbPlayer.play(item);
+												}
+											}}
+											href="#"
+										>
+											<i className="icon-play" /> Play{/* TODO: localize */}
+										</Button>{' '}
+										<Button
+											onClick={(): void => vdbPlayer.removeFromQueue(item)}
+											href="#"
+										>
+											<i className="icon-remove" /> {t('ViewRes:Shared.Remove')}
+										</Button>
+									</div>
+									<Link
+										to={EntryUrlMapper.details_entry(item.entry)}
+										title={item.entry.additionalNames}
 									>
-										Play{/* TODO: localize */}
-									</SafeAnchor>
-								</td>
-								<td>
-									<Link to={EntryUrlMapper.details_entry(item.entry)}>
 										{item.entry.name}
-									</Link>
-								</td>
-								<td>
-									<SafeAnchor
-										onClick={(): void => vdbPlayer.removeFromQueue(item)}
-										href="#"
-										className="iconLink removeLink"
-										title="Remove from playlist" /* TODO: localize */
-									>
-										{t('ViewRes:Shared.Remove')}
-									</SafeAnchor>
+									</Link>{' '}
+									{item.entry.songType && (
+										<>
+											{' '}
+											<SongTypeLabel songType={item.entry.songType} />
+										</>
+									)}{' '}
+									{pvServiceIcons
+										.getIconUrls(item.pv.service)
+										.map((icon, index) => (
+											<React.Fragment key={icon.service}>
+												{index > 0 && ' '}
+												{/* eslint-disable-next-line jsx-a11y/alt-text */}
+												<img src={icon.url} title={icon.service} />
+											</React.Fragment>
+										))}{' '}
+									<DraftIcon
+										status={
+											EntryStatus[item.entry.status as keyof typeof EntryStatus]
+										}
+									/>
+									<br />
+									<small className="extraInfo">{item.entry.artistString}</small>
 								</td>
 							</tr>
 						))}
