@@ -31,6 +31,9 @@
 .lockIcon {
 	background-image: url(../Icons/lock.png);
 }
+.playLink {
+	background-image: url(../Icons/control_play_blue.png);
+}
 .refreshLink {
 	background-image: url(../Icons/arrow_refresh.png);
 }

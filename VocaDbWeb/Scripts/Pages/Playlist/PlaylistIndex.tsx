@@ -39,6 +39,16 @@ const PlaylistIndex = observer(
 									<span className="ui-icon ui-icon-arrowthick-2-n-s" />
 								</td>
 								<td>
+									<SafeAnchor
+										onClick={(): void => vdbPlayer.play(item)}
+										href="#"
+										className="iconLink playLink"
+										title="Play" /* TODO: localize */
+									>
+										Play{/* TODO: localize */}
+									</SafeAnchor>
+								</td>
+								<td>
 									<Link to={EntryUrlMapper.details_entry(item.entry)}>
 										{item.entry.name}
 									</Link>
