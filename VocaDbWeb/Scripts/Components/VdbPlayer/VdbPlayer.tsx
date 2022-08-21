@@ -40,7 +40,7 @@ const VdbPlayerLeftControls = observer(
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
-				() => vdbPlayer.playQueueStore.selectedEntry,
+				() => vdbPlayer.playQueue.selectedEntry,
 				(selectedEntry, previousEntry) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedEntry?.pv.id === previousEntry?.pv.id) {
@@ -295,19 +295,19 @@ const EmbedPVWrapper = observer(
 
 				case RepeatMode.Off:
 				case RepeatMode.All:
-					if (vdbPlayer.playQueueStore.isLastEntry) {
+					if (vdbPlayer.playQueue.isLastEntry) {
 						switch (vdbPlayer.repeat) {
 							case RepeatMode.Off:
 								vdbPlayer.setPlaying(false);
 								break;
 
 							case RepeatMode.All:
-								if (vdbPlayer.playQueueStore.hasMultipleEntries) {
+								if (vdbPlayer.playQueue.hasMultipleEntries) {
 									// HACK: Prevent vdbPlayer.next from being called in the same context.
 									// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
 									// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
 									setTimeout(() => {
-										vdbPlayer.playQueueStore.goToFirst();
+										vdbPlayer.playQueue.goToFirst();
 									});
 								} else {
 									player.seekTo(0);

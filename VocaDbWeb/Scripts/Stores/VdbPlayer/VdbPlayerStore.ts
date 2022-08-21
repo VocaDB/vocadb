@@ -28,22 +28,22 @@ export class VdbPlayerStore {
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
 	@observable public expanded = false;
-	public readonly playQueueStore = new PlayQueueStore();
+	public readonly playQueue = new PlayQueueStore();
 
 	public constructor() {
 		makeObservable(this);
 	}
 
 	@computed public get hasPreviousEntry(): boolean {
-		return this.playQueueStore.hasPreviousEntry;
+		return this.playQueue.hasPreviousEntry;
 	}
 
 	@computed public get hasNextEntry(): boolean {
-		return this.playQueueStore.hasNextEntry;
+		return this.playQueue.hasNextEntry;
 	}
 
 	@computed public get selectedEntry(): IVdbPlayerEntry | undefined {
-		return this.playQueueStore.selectedEntry;
+		return this.playQueue.selectedEntry;
 	}
 
 	@computed public get canAutoplay(): boolean {
@@ -88,15 +88,15 @@ export class VdbPlayerStore {
 	};
 
 	public previous = (): void => {
-		this.playQueueStore.previous();
+		this.playQueue.previous();
 	};
 
 	public next = (): void => {
-		this.playQueueStore.next();
+		this.playQueue.next();
 	};
 
 	public play = (entry: IVdbPlayerEntry): void => {
-		this.playQueueStore.play(entry);
+		this.playQueue.play(entry);
 
 		if (!this.canAutoplay) {
 			this.expand();
@@ -104,20 +104,20 @@ export class VdbPlayerStore {
 	};
 
 	public playNext = (entry: IVdbPlayerEntry): void => {
-		if (this.playQueueStore.isEmpty) {
+		if (this.playQueue.isEmpty) {
 			this.play(entry);
 			return;
 		}
 
-		this.playQueueStore.playNext(entry);
+		this.playQueue.playNext(entry);
 	};
 
 	public addToQueue = (entry: IVdbPlayerEntry): void => {
-		if (this.playQueueStore.isEmpty) {
+		if (this.playQueue.isEmpty) {
 			this.play(entry);
 			return;
 		}
 
-		this.playQueueStore.addToQueue(entry);
+		this.playQueue.addToQueue(entry);
 	};
 }
