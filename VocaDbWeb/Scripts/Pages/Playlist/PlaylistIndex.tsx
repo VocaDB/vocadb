@@ -1,3 +1,4 @@
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
@@ -11,7 +12,7 @@ import { ReactSortable } from 'react-sortablejs';
 
 const PlaylistIndex = observer(
 	(): React.ReactElement => {
-		const { t, ready } = useTranslation(['ViewRes.Search']);
+		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
 		const title = t('ViewRes.Search:Index.Playlist');
 
@@ -41,6 +42,16 @@ const PlaylistIndex = observer(
 									<Link to={EntryUrlMapper.details_entry(item.entry)}>
 										{item.entry.name}
 									</Link>
+								</td>
+								<td>
+									<SafeAnchor
+										onClick={(): void => vdbPlayer.removeFromQueue(item)}
+										href="#"
+										className="iconLink removeLink"
+										title="Remove from playlist" /* TODO: localize */
+									>
+										{t('ViewRes:Shared.Remove')}
+									</SafeAnchor>
 								</td>
 							</tr>
 						))}

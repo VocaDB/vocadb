@@ -91,6 +91,10 @@ export class VdbPlayerStore {
 		this.playQueue.next();
 	};
 
+	public goToFirst = (): void => {
+		this.playQueue.goToFirst();
+	};
+
 	public play = (item: PlayQueueItem): void => {
 		this.playQueue.play(item);
 
@@ -114,6 +118,18 @@ export class VdbPlayerStore {
 			return;
 		}
 
-		this.playQueue.addToQueue(item);
+		this.playQueue.addItem(item);
+	};
+
+	public removeFromQueue = (item: PlayQueueItem): void => {
+		if (this.selectedItem === item) {
+			if (this.hasNextItem) {
+				this.next();
+			} else {
+				this.goToFirst();
+			}
+		}
+
+		this.playQueue.removeItem(item);
 	};
 }

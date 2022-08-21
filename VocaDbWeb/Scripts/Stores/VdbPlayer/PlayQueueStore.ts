@@ -1,5 +1,6 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class PlayQueueItem {
@@ -85,8 +86,12 @@ export class PlayQueueStore {
 		this.playNext(item);
 	};
 
-	@action public addToQueue = (item: PlayQueueItem): void => {
+	@action public addItem = (item: PlayQueueItem): void => {
 		this.items.push(item);
+	};
+
+	@action public removeItem = (item: PlayQueueItem): void => {
+		_.pull(this.items, item);
 	};
 
 	@action public previous = (): void => {
