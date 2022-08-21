@@ -41,7 +41,7 @@ export const EmbedPVPreview = React.memo(
 						backgroundPosition: 'center',
 						cursor: 'pointer',
 					}}
-					onClick={(): void => vdbPlayer.play({ entry: entry, pv: pv })}
+					onClick={(): void => vdbPlayer.play(entry, pv)}
 					onContextMenu={contextMenu.handleContextMenu}
 				/>
 
@@ -62,7 +62,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.play({ entry: entry, pv: pv });
+									vdbPlayer.play(entry, pv);
 								}}
 							>
 								Play{/* TODO: localize */}
@@ -74,7 +74,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.playNext({ entry: entry, pv: pv });
+									vdbPlayer.playNext(entry, pv);
 								}}
 							>
 								Play next{/* TODO: localize */}
@@ -86,7 +86,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.addToQueue({ entry: entry, pv: pv });
+									vdbPlayer.addToQueue(entry, pv);
 								}}
 							>
 								Add to play queue{/* TODO: localize */}

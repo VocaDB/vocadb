@@ -1,8 +1,22 @@
-import { IVdbPlayerEntry } from '@/Stores/VdbPlayer/VdbPlayerStore';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { action, computed, makeObservable, observable } from 'mobx';
 
+export class PlayQueueItem {
+	private static nextId = 1;
+
+	public readonly id: number;
+
+	public constructor(
+		public readonly entry: EntryContract,
+		public readonly pv: PVContract,
+	) {
+		this.id = PlayQueueItem.nextId++;
+	}
+}
+
 export class PlayQueueStore {
-	@observable public queue: IVdbPlayerEntry[] = [];
+	@observable public items: PlayQueueItem[] = [];
 	@observable public selectedIndex?: number;
 
 	public constructor() {
@@ -10,68 +24,68 @@ export class PlayQueueStore {
 	}
 
 	@computed public get isEmpty(): boolean {
-		return this.queue.length === 0;
+		return this.items.length === 0;
 	}
 
-	@computed public get hasMultipleEntries(): boolean {
-		return this.queue.length > 1;
+	@computed public get hasMultipleItems(): boolean {
+		return this.items.length > 1;
 	}
 
-	@computed public get hasPreviousEntry(): boolean {
+	@computed public get hasPreviousItem(): boolean {
 		return (
-			this.hasMultipleEntries &&
+			this.hasMultipleItems &&
 			this.selectedIndex !== undefined &&
 			this.selectedIndex > 0
 		);
 	}
 
-	@computed public get hasNextEntry(): boolean {
+	@computed public get hasNextItem(): boolean {
 		return (
-			this.hasMultipleEntries &&
+			this.hasMultipleItems &&
 			this.selectedIndex !== undefined &&
-			this.selectedIndex < this.queue.length - 1
+			this.selectedIndex < this.items.length - 1
 		);
 	}
 
-	@computed public get selectedEntry(): IVdbPlayerEntry | undefined {
+	@computed public get selectedItem(): PlayQueueItem | undefined {
 		return this.selectedIndex !== undefined
-			? this.queue[this.selectedIndex]
+			? this.items[this.selectedIndex]
 			: undefined;
 	}
 
-	@computed public get isLastEntry(): boolean {
+	@computed public get isLastItem(): boolean {
 		return (
 			this.selectedIndex !== undefined &&
-			this.selectedIndex === this.queue.length - 1
+			this.selectedIndex === this.items.length - 1
 		);
 	}
 
 	@action public clear = (): void => {
 		this.selectedIndex = undefined;
-		this.queue = [];
+		this.items = [];
 	};
 
-	@action public playNext = (entry: IVdbPlayerEntry): void => {
+	@action public playNext = (entry: EntryContract, pv: PVContract): void => {
 		if (this.selectedIndex === undefined) return;
 
-		this.queue.splice(this.selectedIndex + 1, 0, entry);
+		this.items.splice(this.selectedIndex + 1, 0, new PlayQueueItem(entry, pv));
 	};
 
-	@action public play = (entry: IVdbPlayerEntry): void => {
+	@action public play = (entry: EntryContract, pv: PVContract): void => {
 		this.clear();
 		// selectedIndex must be set before playNext is called.
 		this.selectedIndex = 0;
-		this.playNext(entry);
+		this.playNext(entry, pv);
 	};
 
-	@action public addToQueue = (entry: IVdbPlayerEntry): void => {
-		this.queue.push(entry);
+	@action public addToQueue = (entry: EntryContract, pv: PVContract): void => {
+		this.items.push(new PlayQueueItem(entry, pv));
 	};
 
 	@action public previous = (): void => {
 		if (this.selectedIndex === undefined) return;
 
-		if (!this.hasPreviousEntry) return;
+		if (!this.hasPreviousItem) return;
 
 		this.selectedIndex--;
 	};
@@ -79,7 +93,7 @@ export class PlayQueueStore {
 	@action public next = (): void => {
 		if (this.selectedIndex === undefined) return;
 
-		if (!this.hasNextEntry) return;
+		if (!this.hasNextItem) return;
 
 		this.selectedIndex++;
 	};

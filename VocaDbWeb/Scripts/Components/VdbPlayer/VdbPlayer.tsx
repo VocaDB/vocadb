@@ -40,7 +40,7 @@ const VdbPlayerLeftControls = observer(
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
-				() => vdbPlayer.playQueue.selectedEntry,
+				() => vdbPlayer.playQueue.selectedItem,
 				(selectedEntry, previousEntry) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedEntry?.pv.id === previousEntry?.pv.id) {
@@ -72,7 +72,7 @@ const VdbPlayerLeftControls = observer(
 					variant="inverse"
 					title="Previous" /* TODO: localize */
 					onClick={vdbPlayer.previous}
-					disabled={!vdbPlayer.hasPreviousEntry}
+					disabled={!vdbPlayer.hasPreviousItem}
 				>
 					<i className="icon-step-backward icon-white" />
 				</Button>
@@ -103,7 +103,7 @@ const VdbPlayerLeftControls = observer(
 					variant="inverse"
 					title="Next" /* TODO: localize */
 					onClick={vdbPlayer.next}
-					disabled={!vdbPlayer.hasNextEntry}
+					disabled={!vdbPlayer.hasNextItem}
 				>
 					<i className="icon-step-forward icon-white" />
 				</Button>
@@ -138,9 +138,9 @@ const VdbPlayerEntryInfo = observer(
 
 		return (
 			<div css={{ display: 'flex', alignItems: 'center' }}>
-				{vdbPlayer.selectedEntry && (
+				{vdbPlayer.selectedItem && (
 					<Link
-						to={EntryUrlMapper.details_entry(vdbPlayer.selectedEntry.entry)}
+						to={EntryUrlMapper.details_entry(vdbPlayer.selectedItem.entry)}
 						onClick={handleEntryLinkClick}
 						css={{ marginRight: 8 }}
 					>
@@ -149,7 +149,7 @@ const VdbPlayerEntryInfo = observer(
 								width: 64,
 								height: 36,
 								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundImage: `url(${vdbPlayer.selectedEntry.entry.mainPicture?.urlThumb})`,
+								backgroundImage: `url(${vdbPlayer.selectedItem.entry.mainPicture?.urlThumb})`,
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
 							}}
@@ -165,10 +165,10 @@ const VdbPlayerEntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					{vdbPlayer.selectedEntry && (
+					{vdbPlayer.selectedItem && (
 						<>
 							<Link
-								to={EntryUrlMapper.details_entry(vdbPlayer.selectedEntry.entry)}
+								to={EntryUrlMapper.details_entry(vdbPlayer.selectedItem.entry)}
 								onClick={handleEntryLinkClick}
 								css={css`
 									color: white;
@@ -184,7 +184,7 @@ const VdbPlayerEntryInfo = observer(
 									white-space: nowrap;
 								`}
 							>
-								{vdbPlayer.selectedEntry.entry.name}
+								{vdbPlayer.selectedItem.entry.name}
 							</Link>
 							<div css={{ display: 'flex' }}>
 								<span
@@ -195,7 +195,7 @@ const VdbPlayerEntryInfo = observer(
 										whiteSpace: 'nowrap',
 									}}
 								>
-									{vdbPlayer.selectedEntry.entry.artistString}
+									{vdbPlayer.selectedItem.entry.artistString}
 								</span>
 							</div>
 						</>
@@ -225,7 +225,7 @@ const VdbPlayerRightControls = observer(
 						variant="inverse"
 						title="Expand" /* TODO: localize */
 						onClick={vdbPlayer.expand}
-						disabled={!vdbPlayer.selectedEntry}
+						disabled={!vdbPlayer.selectedItem}
 					>
 						<i className="icon-resize-full icon-white" />
 					</Button>
@@ -295,14 +295,14 @@ const EmbedPVWrapper = observer(
 
 				case RepeatMode.Off:
 				case RepeatMode.All:
-					if (vdbPlayer.playQueue.isLastEntry) {
+					if (vdbPlayer.playQueue.isLastItem) {
 						switch (vdbPlayer.repeat) {
 							case RepeatMode.Off:
 								vdbPlayer.setPlaying(false);
 								break;
 
 							case RepeatMode.All:
-								if (vdbPlayer.playQueue.hasMultipleEntries) {
+								if (vdbPlayer.playQueue.hasMultipleItems) {
 									// HACK: Prevent vdbPlayer.next from being called in the same context.
 									// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
 									// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
@@ -408,10 +408,10 @@ export const VdbPlayer = observer(
 						backgroundColor: 'black',
 					}}
 				>
-					{vdbPlayer.selectedEntry && (
+					{vdbPlayer.selectedItem && (
 						<EmbedPVWrapper
 							playerRef={playerRef}
-							pv={vdbPlayer.selectedEntry.pv}
+							pv={vdbPlayer.selectedItem.pv}
 						/>
 					)}
 				</div>

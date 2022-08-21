@@ -1,18 +1,16 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
-import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	PlayQueueItem,
+	PlayQueueStore,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export enum RepeatMode {
 	Off = 'Off',
 	All = 'All',
 	One = 'One',
-}
-
-export interface IVdbPlayerEntry {
-	entry: EntryContract;
-	pv: PVContract;
 }
 
 export class VdbPlayerStore {
@@ -34,23 +32,23 @@ export class VdbPlayerStore {
 		makeObservable(this);
 	}
 
-	@computed public get hasPreviousEntry(): boolean {
-		return this.playQueue.hasPreviousEntry;
+	@computed public get hasPreviousItem(): boolean {
+		return this.playQueue.hasPreviousItem;
 	}
 
-	@computed public get hasNextEntry(): boolean {
-		return this.playQueue.hasNextEntry;
+	@computed public get hasNextItem(): boolean {
+		return this.playQueue.hasNextItem;
 	}
 
-	@computed public get selectedEntry(): IVdbPlayerEntry | undefined {
-		return this.playQueue.selectedEntry;
+	@computed public get selectedItem(): PlayQueueItem | undefined {
+		return this.playQueue.selectedItem;
 	}
 
 	@computed public get canAutoplay(): boolean {
 		return (
-			!!this.selectedEntry &&
+			!!this.selectedItem &&
 			VdbPlayerStore.autoplayServices.includes(
-				PVService[this.selectedEntry.pv.service as keyof typeof PVService],
+				PVService[this.selectedItem.pv.service as keyof typeof PVService],
 			)
 		);
 	}
@@ -95,29 +93,29 @@ export class VdbPlayerStore {
 		this.playQueue.next();
 	};
 
-	public play = (entry: IVdbPlayerEntry): void => {
-		this.playQueue.play(entry);
+	public play = (entry: EntryContract, pv: PVContract): void => {
+		this.playQueue.play(entry, pv);
 
 		if (!this.canAutoplay) {
 			this.expand();
 		}
 	};
 
-	public playNext = (entry: IVdbPlayerEntry): void => {
+	public playNext = (entry: EntryContract, pv: PVContract): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(entry);
+			this.play(entry, pv);
 			return;
 		}
 
-		this.playQueue.playNext(entry);
+		this.playQueue.playNext(entry, pv);
 	};
 
-	public addToQueue = (entry: IVdbPlayerEntry): void => {
+	public addToQueue = (entry: EntryContract, pv: PVContract): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(entry);
+			this.play(entry, pv);
 			return;
 		}
 
-		this.playQueue.addToQueue(entry);
+		this.playQueue.addToQueue(entry, pv);
 	};
 }
