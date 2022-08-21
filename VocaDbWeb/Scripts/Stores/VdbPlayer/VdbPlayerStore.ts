@@ -95,6 +95,10 @@ export class VdbPlayerStore {
 		this.playQueue.goToFirst();
 	};
 
+	public clear = (): void => {
+		this.playQueue.clear();
+	};
+
 	public play = (item: PlayQueueItem): void => {
 		this.playQueue.play(item);
 	};

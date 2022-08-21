@@ -1,9 +1,11 @@
 import Button from '@/Bootstrap/Button';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -30,7 +32,21 @@ const PlaylistIndex = observer(
 		const { vdbPlayer, playerRef } = useVdbPlayer();
 
 		return (
-			<Layout title={title}>
+			<Layout
+				title={title}
+				toolbar={
+					<>
+						<JQueryUIButton
+							as={SafeAnchor}
+							onClick={vdbPlayer.clear}
+							icons={{ primary: 'ui-icon-trash' }}
+							disabled={vdbPlayer.playQueue.isEmpty}
+						>
+							Clear{/* TODO: localize */}
+						</JQueryUIButton>
+					</>
+				}
+			>
 				<table
 					className="table"
 					css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
