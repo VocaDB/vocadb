@@ -95,8 +95,8 @@ export class VdbPlayerStore {
 		this.playQueue.goToFirst();
 	};
 
-	public play = (item: PlayQueueItem): void => {
-		this.playQueue.play(item);
+	public clearAndPlay = (item: PlayQueueItem): void => {
+		this.playQueue.clearAndPlay(item);
 
 		if (!this.canAutoplay) {
 			this.expand();
@@ -105,7 +105,7 @@ export class VdbPlayerStore {
 
 	public playNext = (item: PlayQueueItem): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(item);
+			this.clearAndPlay(item);
 			return;
 		}
 
@@ -114,7 +114,7 @@ export class VdbPlayerStore {
 
 	public addToQueue = (item: PlayQueueItem): void => {
 		if (this.playQueue.isEmpty) {
-			this.play(item);
+			this.clearAndPlay(item);
 			return;
 		}
 

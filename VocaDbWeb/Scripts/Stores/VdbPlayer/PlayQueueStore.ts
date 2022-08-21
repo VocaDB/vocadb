@@ -73,16 +73,20 @@ export class PlayQueueStore {
 		this.items = [];
 	};
 
+	@action public play = (item: PlayQueueItem): void => {
+		this.selectedId = item.id;
+	};
+
 	@action public playNext = (item: PlayQueueItem): void => {
 		if (this.selectedIndex === undefined) return;
 
 		this.items.splice(this.selectedIndex + 1, 0, item);
 	};
 
-	@action public play = (item: PlayQueueItem): void => {
+	@action public clearAndPlay = (item: PlayQueueItem): void => {
 		this.clear();
 		// selectedId must be set before playNext is called.
-		this.selectedId = item.id;
+		this.play(item);
 		this.playNext(item);
 	};
 

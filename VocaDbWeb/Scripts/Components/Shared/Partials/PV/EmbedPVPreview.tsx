@@ -42,7 +42,9 @@ export const EmbedPVPreview = React.memo(
 						backgroundPosition: 'center',
 						cursor: 'pointer',
 					}}
-					onClick={(): void => vdbPlayer.play(new PlayQueueItem(entry, pv))}
+					onClick={(): void =>
+						vdbPlayer.clearAndPlay(new PlayQueueItem(entry, pv))
+					}
 					onContextMenu={contextMenu.handleContextMenu}
 				/>
 
@@ -63,7 +65,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.play(new PlayQueueItem(entry, pv));
+									vdbPlayer.clearAndPlay(new PlayQueueItem(entry, pv));
 								}}
 							>
 								Play{/* TODO: localize */}
