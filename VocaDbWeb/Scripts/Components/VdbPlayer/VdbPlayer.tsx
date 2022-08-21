@@ -21,19 +21,15 @@ const repeatIcons: Record<RepeatMode, string> = {
 	[RepeatMode.One]: 'icon-repeat',
 };
 
-interface VdbPlayerLeftControlsProps {
-	playerRef: React.MutableRefObject<PVPlayer>;
-}
-
 const VdbPlayerLeftControls = observer(
-	({ playerRef }: VdbPlayerLeftControlsProps): React.ReactElement => {
-		const vdbPlayer = useVdbPlayer();
+	(): React.ReactElement => {
+		const { vdbPlayer, playerRef } = useVdbPlayer();
 
-		const handlePause = React.useCallback(() => playerRef.current.pause(), [
+		const handlePause = React.useCallback(() => playerRef.current?.pause(), [
 			playerRef,
 		]);
 
-		const handlePlay = React.useCallback(() => playerRef.current.play(), [
+		const handlePlay = React.useCallback(() => playerRef.current?.play(), [
 			playerRef,
 		]);
 
@@ -44,8 +40,12 @@ const VdbPlayerLeftControls = observer(
 				(selectedEntry, previousEntry) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedEntry?.pv.id === previousEntry?.pv.id) {
-						playerRef.current.seekTo(0);
-						playerRef.current.play();
+						const player = playerRef.current;
+
+						if (!player) return;
+
+						player.seekTo(0);
+						player.play();
 					}
 				},
 			);
@@ -130,7 +130,7 @@ const VdbPlayerLeftControls = observer(
 
 const VdbPlayerEntryInfo = observer(
 	(): React.ReactElement => {
-		const vdbPlayer = useVdbPlayer();
+		const { vdbPlayer } = useVdbPlayer();
 
 		const handleEntryLinkClick = React.useCallback(() => {
 			vdbPlayer.collapse();
@@ -208,7 +208,7 @@ const VdbPlayerEntryInfo = observer(
 
 const VdbPlayerRightControls = observer(
 	(): React.ReactElement => {
-		const vdbPlayer = useVdbPlayer();
+		const { vdbPlayer } = useVdbPlayer();
 
 		return (
 			<ButtonGroup css={{ marginLeft: 8 }}>
@@ -235,15 +235,11 @@ const VdbPlayerRightControls = observer(
 	},
 );
 
-interface VdbPlayerControlsProps {
-	playerRef: React.MutableRefObject<PVPlayer>;
-}
-
 const VdbPlayerControls = observer(
-	({ playerRef }: VdbPlayerControlsProps): React.ReactElement => {
+	(): React.ReactElement => {
 		return (
 			<div css={{ display: 'flex', height: 50, alignItems: 'center' }}>
-				<VdbPlayerLeftControls playerRef={playerRef} />
+				<VdbPlayerLeftControls />
 
 				<div css={{ flexGrow: 1 }}></div>
 
@@ -258,13 +254,12 @@ const VdbPlayerControls = observer(
 );
 
 interface PVPlayerProps {
-	playerRef: React.MutableRefObject<PVPlayer>;
 	pv: PVContract;
 }
 
 const EmbedPVWrapper = observer(
-	({ playerRef, pv }: PVPlayerProps): React.ReactElement => {
-		const vdbPlayer = useVdbPlayer();
+	({ pv }: PVPlayerProps): React.ReactElement => {
+		const { vdbPlayer, playerRef } = useVdbPlayer();
 
 		const handleError = React.useCallback((e: any) => {
 			VdbPlayerConsole.error('error', e);
@@ -374,9 +369,7 @@ export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		const vdbPlayer = useVdbPlayer();
-
-		const playerRef = React.useRef<PVPlayer>(undefined!);
+		const { vdbPlayer } = useVdbPlayer();
 
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
@@ -409,16 +402,13 @@ export const VdbPlayer = observer(
 					}}
 				>
 					{vdbPlayer.selectedItem && (
-						<EmbedPVWrapper
-							playerRef={playerRef}
-							pv={vdbPlayer.selectedItem.pv}
-						/>
+						<EmbedPVWrapper pv={vdbPlayer.selectedItem.pv} />
 					)}
 				</div>
 
 				<div>
 					<Container>
-						<VdbPlayerControls playerRef={playerRef} />
+						<VdbPlayerControls />
 					</Container>
 				</div>
 			</div>

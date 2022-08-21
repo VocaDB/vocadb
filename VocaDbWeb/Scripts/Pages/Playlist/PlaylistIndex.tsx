@@ -18,7 +18,7 @@ const PlaylistIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const vdbPlayer = useVdbPlayer();
+		const { vdbPlayer } = useVdbPlayer();
 
 		return (
 			<Layout title={title}>

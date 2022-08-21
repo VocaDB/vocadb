@@ -23,7 +23,7 @@ export const EmbedPVPreview = React.memo(
 		width = 560,
 		height = 315,
 	}: EmbedPVPreviewProps): React.ReactElement => {
-		const vdbPlayer = useVdbPlayer();
+		const { vdbPlayer } = useVdbPlayer();
 
 		const ref = React.useRef<HTMLUListElement>(undefined!);
 		const contextMenu = useContextMenu(ref);
