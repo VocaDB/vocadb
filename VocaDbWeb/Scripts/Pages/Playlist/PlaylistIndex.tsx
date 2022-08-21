@@ -31,7 +31,10 @@ const PlaylistIndex = observer(
 
 		return (
 			<Layout title={title}>
-				<table className={classNames('table', 'table-striped')}>
+				<table
+					className="table"
+					css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
+				>
 					<ReactSortable
 						tag="tbody"
 						list={vdbPlayer.playQueue.items}
@@ -42,7 +45,12 @@ const PlaylistIndex = observer(
 						}
 					>
 						{vdbPlayer.playQueue.items.map((item) => (
-							<tr key={item.id}>
+							<tr
+								className={classNames(
+									item === vdbPlayer.selectedItem && 'info',
+								)}
+								key={item.id}
+							>
 								<td style={{ width: '80px' }}>
 									{item.entry.mainPicture && item.entry.mainPicture.urlThumb && (
 										<Link
