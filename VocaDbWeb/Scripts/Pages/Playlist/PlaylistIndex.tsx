@@ -18,7 +18,7 @@ const PlaylistIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const { vdbPlayer } = useVdbPlayer();
+		const { vdbPlayer, playerRef } = useVdbPlayer();
 
 		return (
 			<Layout title={title}>
@@ -40,7 +40,18 @@ const PlaylistIndex = observer(
 								</td>
 								<td>
 									<SafeAnchor
-										onClick={(): void => vdbPlayer.play(item)}
+										onClick={(): void => {
+											if (vdbPlayer.selectedItem === item) {
+												const player = playerRef.current;
+
+												if (!player) return;
+
+												player.seekTo(0);
+												player.play();
+											} else {
+												vdbPlayer.play(item);
+											}
+										}}
 										href="#"
 										className="iconLink playLink"
 										title="Play" /* TODO: localize */

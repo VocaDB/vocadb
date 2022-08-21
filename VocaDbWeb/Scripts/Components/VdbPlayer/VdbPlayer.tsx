@@ -37,9 +37,9 @@ const VdbPlayerLeftControls = observer(
 			// Returns the disposer.
 			return reaction(
 				() => vdbPlayer.playQueue.selectedItem,
-				(selectedEntry, previousEntry) => {
+				(selectedItem, previousItem) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
-					if (selectedEntry?.pv.id === previousEntry?.pv.id) {
+					if (selectedItem?.pv.id === previousItem?.pv.id) {
 						const player = playerRef.current;
 
 						if (!player) return;
