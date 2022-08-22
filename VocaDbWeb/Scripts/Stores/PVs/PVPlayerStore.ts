@@ -30,8 +30,13 @@ export interface IPVPlayerSong {
 }
 
 export class PVPlayerStore {
-	public static autoplayPVServicesString =
-		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
+	public static autoplayPVServicesString = [
+		PVService[PVService.File],
+		PVService[PVService.LocalFile],
+		PVService[PVService.NicoNicoDouga],
+		PVService[PVService.SoundCloud],
+		PVService[PVService.Youtube],
+	].join(', ');
 
 	@observable public autoplay = false;
 	private readonly autoplayServices = [

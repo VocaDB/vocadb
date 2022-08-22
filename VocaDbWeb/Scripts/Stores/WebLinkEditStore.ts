@@ -30,13 +30,13 @@ export class WebLinkEditStore {
 		reaction(
 			() => this.url,
 			(url) => {
-				if (!this.description) {
-					const matcher = WebLinkMatcher.matchWebLink(url);
+				if (this.description) return;
 
-					if (matcher) {
-						this.description = matcher.desc;
-						this.category = matcher.cat;
-					}
+				const matcher = WebLinkMatcher.matchWebLink(url);
+
+				if (matcher) {
+					this.description = matcher.desc;
+					this.category = matcher.cat;
 				}
 			},
 		);
