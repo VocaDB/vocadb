@@ -9,6 +9,7 @@ import {
 } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVService } from '@/Models/PVs/PVService';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { IPVPlayerSong, PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -124,12 +125,12 @@ export class PlayListStore {
 
 	private pauseNotifications = false;
 
-	@action public updateResults = (
+	@action public updateResults = async (
 		clearResults: boolean = true,
 		songWithIndex?: number,
 	): Promise<void> => {
 		// Disable duplicate updates
-		if (this.pauseNotifications) return Promise.resolve();
+		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 		this.loading = true;
@@ -148,46 +149,53 @@ export class PlayListStore {
 
 		const services = this.pvPlayerStore.autoplay
 			? PVPlayerStore.autoplayPVServicesString
-			: 'Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File,LocalFile';
+			: [
+					PVService[PVService.Youtube],
+					PVService[PVService.SoundCloud],
+					PVService[PVService.NicoNicoDouga],
+					PVService[PVService.Bilibili],
+					PVService[PVService.Vimeo],
+					PVService[PVService.Piapro],
+					PVService[PVService.File],
+					PVService[PVService.LocalFile],
+			  ].join(',');
 
-		return this.songListRepo
-			.getSongs(
-				services,
-				pagingProperties,
-				SongOptionalFields.create(
-					SongOptionalField.AdditionalNames,
-					SongOptionalField.MainPicture,
-				),
-				this.values.languagePreference,
-			)
-			.then((result: PartialFindResultContract<ISongForPlayList>) => {
-				this.pauseNotifications = false;
+		const result = await this.songListRepo.getSongs(
+			services,
+			pagingProperties,
+			SongOptionalFields.create(
+				SongOptionalField.AdditionalNames,
+				SongOptionalField.MainPicture,
+			),
+			this.values.languagePreference,
+		);
 
-				runInAction(() => {
-					if (pagingProperties.getTotalCount)
-						this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-					for (const item of result.items) {
-						item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
-							item.song.pvServices,
-						);
-						this.page.push(item);
-					}
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
 
-					this.loading = false;
-				});
+			for (const item of result.items) {
+				item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
+					item.song.pvServices,
+				);
+				this.page.push(item);
+			}
 
-				if (
-					result.items &&
-					result.items.length &&
-					!this.pvPlayerStore.selectedSong
-				) {
-					const song = this.pvPlayerStore.shuffle
-						? result.items[Math.floor(Math.random() * result.items.length)]
-						: result.items[0];
-					this.playSong(song);
-				}
-			});
+			this.loading = false;
+		});
+
+		if (
+			result.items &&
+			result.items.length &&
+			!this.pvPlayerStore.selectedSong
+		) {
+			const song = this.pvPlayerStore.shuffle
+				? result.items[Math.floor(Math.random() * result.items.length)]
+				: result.items[0];
+			this.playSong(song);
+		}
 	};
 
 	public updateResultsWithTotalCount = (): Promise<void> =>
