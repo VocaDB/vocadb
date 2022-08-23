@@ -47,99 +47,141 @@ const PlaylistIndex = observer(
 					</>
 				}
 			>
-				<table
-					className="table"
-					css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
-				>
-					<ReactSortable
-						tag="tbody"
-						list={playQueue.items}
-						setList={(items): void =>
-							runInAction(() => {
-								playQueue.items = items;
-							})
-						}
+				{!playQueue.isEmpty && (
+					<table
+						className="table"
+						css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
 					>
-						{playQueue.items.map((item) => (
-							<tr
-								className={classNames(item === playQueue.currentItem && 'info')}
-								key={item.id}
-							>
-								<td style={{ width: '80px' }}>
-									{item.entry.mainPicture && item.entry.mainPicture.urlThumb && (
+						<thead>
+							<tr>
+								<th>
+									<input
+										type="checkbox"
+										checked={playQueue.allItemsSelected}
+										onChange={(e): void =>
+											runInAction(() => {
+												playQueue.allItemsSelected = e.target.checked;
+											})
+										}
+									/>
+								</th>
+								<th colSpan={2}>
+									{
+										playQueue.selectedItems.length > 0
+											? `${playQueue.selectedItems.length} item(s) selected` /* TODO: localize */
+											: 'Name' /* TODO: localize */
+									}
+								</th>
+							</tr>
+						</thead>
+						<ReactSortable
+							tag="tbody"
+							list={playQueue.items}
+							setList={(items): void =>
+								runInAction(() => {
+									playQueue.items = items;
+								})
+							}
+						>
+							{playQueue.items.map((item) => (
+								<tr
+									className={classNames(
+										item === playQueue.currentItem && 'info',
+									)}
+									key={item.id}
+								>
+									<td>
+										<input
+											type="checkbox"
+											checked={item.isSelected}
+											onChange={(e): void =>
+												runInAction(() => {
+													item.isSelected = e.target.checked;
+												})
+											}
+										/>
+									</td>
+									<td style={{ width: '80px' }}>
+										{item.entry.mainPicture && item.entry.mainPicture.urlThumb && (
+											<Link
+												to={EntryUrlMapper.details_entry(item.entry)}
+												title={item.entry.additionalNames}
+											>
+												{/* eslint-disable-next-line jsx-a11y/alt-text */}
+												<img
+													src={item.entry.mainPicture.urlThumb}
+													title="Cover picture" /* TODO: localize */
+													className="coverPicThumb img-rounded"
+													referrerPolicy="same-origin"
+												/>
+											</Link>
+										)}
+									</td>
+									<td>
+										<div className="pull-right">
+											<Button
+												onClick={(): void => {
+													if (playQueue.currentItem === item) {
+														const player = playerRef.current;
+
+														if (!player) return;
+
+														player.seekTo(0);
+														player.play();
+													} else {
+														playQueue.play(item);
+													}
+												}}
+												href="#"
+											>
+												<i className="icon-play" /> Play{/* TODO: localize */}
+											</Button>{' '}
+											<Button
+												onClick={(): void => playQueue.removeFromQueue(item)}
+												href="#"
+											>
+												<i className="icon-remove" />{' '}
+												{t('ViewRes:Shared.Remove')}
+											</Button>
+										</div>
 										<Link
 											to={EntryUrlMapper.details_entry(item.entry)}
 											title={item.entry.additionalNames}
 										>
-											{/* eslint-disable-next-line jsx-a11y/alt-text */}
-											<img
-												src={item.entry.mainPicture.urlThumb}
-												title="Cover picture" /* TODO: localize */
-												className="coverPicThumb img-rounded"
-												referrerPolicy="same-origin"
-											/>
-										</Link>
-									)}
-								</td>
-								<td>
-									<div className="pull-right">
-										<Button
-											onClick={(): void => {
-												if (playQueue.currentItem === item) {
-													const player = playerRef.current;
-
-													if (!player) return;
-
-													player.seekTo(0);
-													player.play();
-												} else {
-													playQueue.play(item);
-												}
-											}}
-											href="#"
-										>
-											<i className="icon-play" /> Play{/* TODO: localize */}
-										</Button>{' '}
-										<Button
-											onClick={(): void => playQueue.removeFromQueue(item)}
-											href="#"
-										>
-											<i className="icon-remove" /> {t('ViewRes:Shared.Remove')}
-										</Button>
-									</div>
-									<Link
-										to={EntryUrlMapper.details_entry(item.entry)}
-										title={item.entry.additionalNames}
-									>
-										{item.entry.name}
-									</Link>{' '}
-									{item.entry.songType && (
-										<>
-											{' '}
-											<SongTypeLabel songType={item.entry.songType} />
-										</>
-									)}{' '}
-									{pvServiceIcons
-										.getIconUrls(item.pv.service)
-										.map((icon, index) => (
-											<React.Fragment key={icon.service}>
-												{index > 0 && ' '}
-												{/* eslint-disable-next-line jsx-a11y/alt-text */}
-												<img src={icon.url} title={icon.service} />
-											</React.Fragment>
-										))}{' '}
-									<DraftIcon
-										status={
-											EntryStatus[item.entry.status as keyof typeof EntryStatus]
-										}
-									/>
-									<br />
-									<small className="extraInfo">{item.entry.artistString}</small>
-								</td>
-							</tr>
-						))}
-					</ReactSortable>
-				</table>
+											{item.entry.name}
+										</Link>{' '}
+										{item.entry.songType && (
+											<>
+												{' '}
+												<SongTypeLabel songType={item.entry.songType} />
+											</>
+										)}{' '}
+										{pvServiceIcons
+											.getIconUrls(item.pv.service)
+											.map((icon, index) => (
+												<React.Fragment key={icon.service}>
+													{index > 0 && ' '}
+													{/* eslint-disable-next-line jsx-a11y/alt-text */}
+													<img src={icon.url} title={icon.service} />
+												</React.Fragment>
+											))}{' '}
+										<DraftIcon
+											status={
+												EntryStatus[
+													item.entry.status as keyof typeof EntryStatus
+												]
+											}
+										/>
+										<br />
+										<small className="extraInfo">
+											{item.entry.artistString}
+										</small>
+									</td>
+								</tr>
+							))}
+						</ReactSortable>
+					</table>
+				)}
 			</Layout>
 		);
 	},

@@ -7,11 +7,15 @@ export class PlayQueueItem {
 	private static nextId = 1;
 
 	public readonly id: number;
+	// Do not use the name `selected`. See: https://github.com/SortableJS/react-sortablejs/issues/243.
+	@observable public isSelected = false;
 
 	public constructor(
 		public readonly entry: EntryContract,
 		public readonly pv: PVContract,
 	) {
+		makeObservable(this);
+
 		this.id = PlayQueueItem.nextId++;
 	}
 }
@@ -68,9 +72,28 @@ export class PlayQueueStore {
 		);
 	}
 
+	@computed public get selectedItems(): PlayQueueItem[] {
+		return this.items.filter((item) => item.isSelected);
+	}
+
+	@computed public get allItemsSelected(): boolean {
+		return this.selectedItems.length === this.items.length;
+	}
+	public set allItemsSelected(value: boolean) {
+		for (const item of this.items) {
+			item.isSelected = value;
+		}
+	}
+
 	@action public clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
+	};
+
+	@action public unselectAll = (): void => {
+		for (const item of this.items) {
+			item.isSelected = false;
+		}
 	};
 
 	@action public play = (item: PlayQueueItem): void => {
