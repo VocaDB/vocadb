@@ -100,55 +100,57 @@ export class PlayQueueStore {
 		this.currentId = item.id;
 	};
 
-	@action private _playNext = (item: PlayQueueItem): void => {
+	@action private _playNext = (...items: PlayQueueItem[]): void => {
 		if (this.currentIndex === undefined) return;
 
-		this.items.splice(this.currentIndex + 1, 0, item);
+		this.items.splice(this.currentIndex + 1, 0, ...items);
 	};
 
-	@action public clearAndPlay = (item: PlayQueueItem): void => {
+	@action public clearAndPlay = (...items: PlayQueueItem[]): void => {
 		this.clear();
-		// currentId must be set before _playNext is called.
-		this.play(item);
-		this._playNext(item);
+		// currentId must be set before playNext is called.
+		this.play(items[0]);
+		this._playNext(...items);
 	};
 
-	public playNext = (item: PlayQueueItem): void => {
+	public playNext = (...items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
-			this.clearAndPlay(item);
+			this.clearAndPlay(...items);
 			return;
 		}
 
-		this._playNext(item);
+		this._playNext(...items);
 	};
 
-	@action private addItem = (item: PlayQueueItem): void => {
-		this.items.push(item);
+	@action public addItems = (...items: PlayQueueItem[]): void => {
+		this.items.push(...items);
 	};
 
-	public addToQueue = (item: PlayQueueItem): void => {
+	public addToQueue = (...items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
-			this.clearAndPlay(item);
+			this.clearAndPlay(...items);
 			return;
 		}
 
-		this.addItem(item);
+		this.addItems(...items);
 	};
 
-	@action private removeItem = (item: PlayQueueItem): void => {
-		_.pull(this.items, item);
+	@action public removeItems = (...items: PlayQueueItem[]): void => {
+		_.pull(this.items, ...items);
 	};
 
-	public removeFromQueue = (item: PlayQueueItem): void => {
-		if (this.currentItem === item) {
-			if (this.hasNextItem) {
-				this.next();
-			} else {
-				this.goToFirst();
+	public removeFromQueue = (...items: PlayQueueItem[]): void => {
+		for (const item of items) {
+			if (this.currentItem === item) {
+				if (this.hasNextItem) {
+					this.next();
+				} else {
+					this.goToFirst();
+				}
 			}
-		}
 
-		this.removeItem(item);
+			this.removeItems(item);
+		}
 	};
 
 	@action public previous = (): void => {

@@ -10,6 +10,7 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -31,20 +32,83 @@ const PlaylistIndex = observer(
 
 		const { playQueue, playerRef } = useVdbPlayer();
 
+		const handleClickPlayNext = React.useCallback(() => {
+			playQueue.playNext(
+				...playQueue.selectedItems.map(
+					(item) => new PlayQueueItem(item.entry, item.pv),
+				),
+			);
+
+			playQueue.unselectAll();
+		}, [playQueue]);
+
+		const handleClickAddToPlayQueue = React.useCallback(() => {
+			const items =
+				playQueue.selectedItems.length > 0
+					? playQueue.selectedItems
+					: playQueue.items;
+
+			playQueue.addToQueue(
+				...items.map((item) => new PlayQueueItem(item.entry, item.pv)),
+			);
+
+			playQueue.unselectAll();
+		}, [playQueue]);
+
+		const handleClickRemove = React.useCallback(() => {
+			playQueue.removeFromQueue(...playQueue.selectedItems);
+
+			playQueue.unselectAll();
+		}, [playQueue]);
+
 		return (
 			<Layout
 				title={title}
 				toolbar={
-					<>
-						<JQueryUIButton
-							as={SafeAnchor}
-							onClick={playQueue.clear}
-							icons={{ primary: 'ui-icon-trash' }}
-							disabled={playQueue.isEmpty}
-						>
-							Clear{/* TODO: localize */}
-						</JQueryUIButton>
-					</>
+					playQueue.selectedItems.length > 0 ? (
+						<>
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={handleClickPlayNext}
+								icons={{ primary: 'ui-icon-play' }}
+							>
+								Play next{/* TODO: localize */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={handleClickAddToPlayQueue}
+								icons={{ primary: 'ui-icon-plus' }}
+							>
+								Add to play queue{/* TODO: localize */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={handleClickRemove}
+								icons={{ primary: ' ui-icon-close' }}
+							>
+								Remove{/* TODO: localize */}
+							</JQueryUIButton>
+						</>
+					) : (
+						<>
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={playQueue.clear}
+								icons={{ primary: 'ui-icon-trash' }}
+								disabled={playQueue.isEmpty}
+							>
+								Clear{/* TODO: localize */}
+							</JQueryUIButton>{' '}
+							<JQueryUIButton
+								as={SafeAnchor}
+								onClick={handleClickAddToPlayQueue}
+								icons={{ primary: 'ui-icon-plus' }}
+								disabled={playQueue.isEmpty}
+							>
+								Add to play queue{/* TODO: localize */}
+							</JQueryUIButton>
+						</>
+					)
 				}
 			>
 				{!playQueue.isEmpty && (
