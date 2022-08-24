@@ -23,7 +23,7 @@ const repeatIcons: Record<RepeatMode, string> = {
 
 const VdbPlayerLeftControls = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playerRef } = useVdbPlayer();
+		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
 		const handlePause = React.useCallback(() => playerRef.current?.pause(), [
 			playerRef,
@@ -36,7 +36,7 @@ const VdbPlayerLeftControls = observer(
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
-				() => vdbPlayer.playQueue.currentItem,
+				() => playQueue.currentItem,
 				(selectedItem, previousItem) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedItem?.pv.id === previousItem?.pv.id) {
@@ -49,7 +49,7 @@ const VdbPlayerLeftControls = observer(
 					}
 				},
 			);
-		}, [vdbPlayer, playerRef]);
+		}, [playQueue, playerRef]);
 
 		return (
 			<ButtonGroup>
@@ -71,8 +71,8 @@ const VdbPlayerLeftControls = observer(
 				<Button
 					variant="inverse"
 					title="Previous" /* TODO: localize */
-					onClick={vdbPlayer.previous}
-					disabled={!vdbPlayer.hasPreviousItem}
+					onClick={playQueue.previous}
+					disabled={!playQueue.hasPreviousItem}
 				>
 					<i className="icon-step-backward icon-white" />
 				</Button>
@@ -102,8 +102,8 @@ const VdbPlayerLeftControls = observer(
 				<Button
 					variant="inverse"
 					title="Next" /* TODO: localize */
-					onClick={vdbPlayer.next}
-					disabled={!vdbPlayer.hasNextItem}
+					onClick={playQueue.next}
+					disabled={!playQueue.hasNextItem}
 				>
 					<i className="icon-step-forward icon-white" />
 				</Button>
@@ -130,7 +130,7 @@ const VdbPlayerLeftControls = observer(
 
 const VdbPlayerEntryInfo = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer } = useVdbPlayer();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		const handleEntryLinkClick = React.useCallback(() => {
 			vdbPlayer.collapse();
@@ -138,9 +138,9 @@ const VdbPlayerEntryInfo = observer(
 
 		return (
 			<div css={{ display: 'flex', alignItems: 'center' }}>
-				{vdbPlayer.currentItem && (
+				{playQueue.currentItem && (
 					<Link
-						to={EntryUrlMapper.details_entry(vdbPlayer.currentItem.entry)}
+						to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
 						onClick={handleEntryLinkClick}
 						css={{ marginRight: 8 }}
 					>
@@ -149,7 +149,7 @@ const VdbPlayerEntryInfo = observer(
 								width: 64,
 								height: 36,
 								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundImage: `url(${vdbPlayer.currentItem.entry.mainPicture?.urlThumb})`,
+								backgroundImage: `url(${playQueue.currentItem.entry.mainPicture?.urlThumb})`,
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
 							}}
@@ -165,10 +165,10 @@ const VdbPlayerEntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					{vdbPlayer.currentItem && (
+					{playQueue.currentItem && (
 						<>
 							<Link
-								to={EntryUrlMapper.details_entry(vdbPlayer.currentItem.entry)}
+								to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
 								onClick={handleEntryLinkClick}
 								css={css`
 									color: white;
@@ -184,7 +184,7 @@ const VdbPlayerEntryInfo = observer(
 									white-space: nowrap;
 								`}
 							>
-								{vdbPlayer.currentItem.entry.name}
+								{playQueue.currentItem.entry.name}
 							</Link>
 							<div css={{ display: 'flex' }}>
 								<span
@@ -195,7 +195,7 @@ const VdbPlayerEntryInfo = observer(
 										whiteSpace: 'nowrap',
 									}}
 								>
-									{vdbPlayer.currentItem.entry.artistString}
+									{playQueue.currentItem.entry.artistString}
 								</span>
 							</div>
 						</>
@@ -208,7 +208,7 @@ const VdbPlayerEntryInfo = observer(
 
 const VdbPlayerRightControls = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer } = useVdbPlayer();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		return (
 			<ButtonGroup css={{ marginLeft: 8 }}>
@@ -225,7 +225,7 @@ const VdbPlayerRightControls = observer(
 						variant="inverse"
 						title="Expand" /* TODO: localize */
 						onClick={vdbPlayer.expand}
-						disabled={!vdbPlayer.currentItem}
+						disabled={!playQueue.currentItem}
 					>
 						<i className="icon-resize-full icon-white" />
 					</Button>
@@ -259,7 +259,7 @@ interface PVPlayerProps {
 
 const EmbedPVWrapper = observer(
 	({ pv }: PVPlayerProps): React.ReactElement => {
-		const { vdbPlayer, playerRef } = useVdbPlayer();
+		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
 		const handleError = React.useCallback((e: any) => {
 			VdbPlayerConsole.error('error', e);
@@ -290,19 +290,19 @@ const EmbedPVWrapper = observer(
 
 				case RepeatMode.Off:
 				case RepeatMode.All:
-					if (vdbPlayer.playQueue.isLastItem) {
+					if (playQueue.isLastItem) {
 						switch (vdbPlayer.repeat) {
 							case RepeatMode.Off:
 								vdbPlayer.setPlaying(false);
 								break;
 
 							case RepeatMode.All:
-								if (vdbPlayer.playQueue.hasMultipleItems) {
+								if (playQueue.hasMultipleItems) {
 									// HACK: Prevent vdbPlayer.next from being called in the same context.
 									// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
 									// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
 									setTimeout(() => {
-										vdbPlayer.goToFirst();
+										playQueue.goToFirst();
 									});
 								} else {
 									player.seekTo(0);
@@ -315,12 +315,12 @@ const EmbedPVWrapper = observer(
 						// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
 						// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
 						setTimeout(() => {
-							vdbPlayer.next();
+							playQueue.next();
 						});
 					}
 					break;
 			}
-		}, [vdbPlayer, playerRef]);
+		}, [vdbPlayer, playQueue, playerRef]);
 
 		const options = React.useMemo(
 			() => ({
@@ -369,7 +369,7 @@ export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		const { vdbPlayer } = useVdbPlayer();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
@@ -401,8 +401,8 @@ export const VdbPlayer = observer(
 						backgroundColor: 'black',
 					}}
 				>
-					{vdbPlayer.currentItem && (
-						<EmbedPVWrapper pv={vdbPlayer.currentItem.pv} />
+					{playQueue.currentItem && (
+						<EmbedPVWrapper pv={playQueue.currentItem.pv} />
 					)}
 				</div>
 

@@ -23,7 +23,7 @@ export const EmbedPVPreview = React.memo(
 		width = 560,
 		height = 315,
 	}: EmbedPVPreviewProps): React.ReactElement => {
-		const { vdbPlayer } = useVdbPlayer();
+		const { playQueue } = useVdbPlayer();
 
 		const ref = React.useRef<HTMLUListElement>(undefined!);
 		const contextMenu = useContextMenu(ref);
@@ -43,7 +43,7 @@ export const EmbedPVPreview = React.memo(
 						cursor: 'pointer',
 					}}
 					onClick={(): void =>
-						vdbPlayer.clearAndPlay(new PlayQueueItem(entry, pv))
+						playQueue.clearAndPlay(new PlayQueueItem(entry, pv))
 					}
 					onContextMenu={contextMenu.handleContextMenu}
 				/>
@@ -65,7 +65,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.clearAndPlay(new PlayQueueItem(entry, pv));
+									playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
 								}}
 							>
 								Play{/* TODO: localize */}
@@ -77,7 +77,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.playNext(new PlayQueueItem(entry, pv));
+									playQueue.playNext(new PlayQueueItem(entry, pv));
 								}}
 							>
 								Play next{/* TODO: localize */}
@@ -89,7 +89,7 @@ export const EmbedPVPreview = React.memo(
 								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
-									vdbPlayer.addToQueue(new PlayQueueItem(entry, pv));
+									playQueue.addToQueue(new PlayQueueItem(entry, pv));
 								}}
 							>
 								Add to play queue{/* TODO: localize */}

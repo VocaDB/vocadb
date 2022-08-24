@@ -29,7 +29,7 @@ const PlaylistIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const { vdbPlayer, playerRef } = useVdbPlayer();
+		const { playQueue, playerRef } = useVdbPlayer();
 
 		return (
 			<Layout
@@ -38,9 +38,9 @@ const PlaylistIndex = observer(
 					<>
 						<JQueryUIButton
 							as={SafeAnchor}
-							onClick={vdbPlayer.clear}
+							onClick={playQueue.clear}
 							icons={{ primary: 'ui-icon-trash' }}
-							disabled={vdbPlayer.playQueue.isEmpty}
+							disabled={playQueue.isEmpty}
 						>
 							Clear{/* TODO: localize */}
 						</JQueryUIButton>
@@ -53,16 +53,16 @@ const PlaylistIndex = observer(
 				>
 					<ReactSortable
 						tag="tbody"
-						list={vdbPlayer.playQueue.items}
+						list={playQueue.items}
 						setList={(items): void =>
 							runInAction(() => {
-								vdbPlayer.playQueue.items = items;
+								playQueue.items = items;
 							})
 						}
 					>
-						{vdbPlayer.playQueue.items.map((item) => (
+						{playQueue.items.map((item) => (
 							<tr
-								className={classNames(item === vdbPlayer.currentItem && 'info')}
+								className={classNames(item === playQueue.currentItem && 'info')}
 								key={item.id}
 							>
 								<td style={{ width: '80px' }}>
@@ -85,7 +85,7 @@ const PlaylistIndex = observer(
 									<div className="pull-right">
 										<Button
 											onClick={(): void => {
-												if (vdbPlayer.currentItem === item) {
+												if (playQueue.currentItem === item) {
 													const player = playerRef.current;
 
 													if (!player) return;
@@ -93,7 +93,7 @@ const PlaylistIndex = observer(
 													player.seekTo(0);
 													player.play();
 												} else {
-													vdbPlayer.play(item);
+													playQueue.play(item);
 												}
 											}}
 											href="#"
@@ -101,7 +101,7 @@ const PlaylistIndex = observer(
 											<i className="icon-play" /> Play{/* TODO: localize */}
 										</Button>{' '}
 										<Button
-											onClick={(): void => vdbPlayer.removeFromQueue(item)}
+											onClick={(): void => playQueue.removeFromQueue(item)}
 											href="#"
 										>
 											<i className="icon-remove" /> {t('ViewRes:Shared.Remove')}
