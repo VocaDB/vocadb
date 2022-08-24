@@ -38,15 +38,15 @@ export class VdbPlayerStore {
 		return this.playQueue.hasNextItem;
 	}
 
-	@computed public get selectedItem(): PlayQueueItem | undefined {
-		return this.playQueue.selectedItem;
+	@computed public get currentItem(): PlayQueueItem | undefined {
+		return this.playQueue.currentItem;
 	}
 
 	@computed public get canAutoplay(): boolean {
 		return (
-			!!this.selectedItem &&
+			!!this.currentItem &&
 			VdbPlayerStore.autoplayServices.includes(
-				PVService[this.selectedItem.pv.service as keyof typeof PVService],
+				PVService[this.currentItem.pv.service as keyof typeof PVService],
 			)
 		);
 	}
@@ -130,7 +130,7 @@ export class VdbPlayerStore {
 	};
 
 	public removeFromQueue = (item: PlayQueueItem): void => {
-		if (this.selectedItem === item) {
+		if (this.currentItem === item) {
 			if (this.hasNextItem) {
 				this.next();
 			} else {

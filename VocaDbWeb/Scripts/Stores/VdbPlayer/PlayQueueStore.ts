@@ -18,7 +18,7 @@ export class PlayQueueItem {
 
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
-	@observable public selectedId?: number;
+	@observable public currentId?: number;
 
 	public constructor() {
 		makeObservable(this);
@@ -32,60 +32,60 @@ export class PlayQueueStore {
 		return this.items.length > 1;
 	}
 
-	@computed public get selectedIndex(): number | undefined {
-		return this.selectedId !== undefined
-			? this.items.findIndex((item) => item.id === this.selectedId)
+	@computed public get currentIndex(): number | undefined {
+		return this.currentId !== undefined
+			? this.items.findIndex((item) => item.id === this.currentId)
 			: undefined;
 	}
-	public set selectedIndex(value: number | undefined) {
-		this.selectedId = value !== undefined ? this.items[value].id : undefined;
+	public set currentIndex(value: number | undefined) {
+		this.currentId = value !== undefined ? this.items[value].id : undefined;
 	}
 
 	@computed public get hasPreviousItem(): boolean {
 		return (
 			this.hasMultipleItems &&
-			this.selectedIndex !== undefined &&
-			this.selectedIndex > 0
+			this.currentIndex !== undefined &&
+			this.currentIndex > 0
 		);
 	}
 
 	@computed public get hasNextItem(): boolean {
 		return (
 			this.hasMultipleItems &&
-			this.selectedIndex !== undefined &&
-			this.selectedIndex < this.items.length - 1
+			this.currentIndex !== undefined &&
+			this.currentIndex < this.items.length - 1
 		);
 	}
 
-	@computed public get selectedItem(): PlayQueueItem | undefined {
-		return this.items.find((item) => item.id === this.selectedId);
+	@computed public get currentItem(): PlayQueueItem | undefined {
+		return this.items.find((item) => item.id === this.currentId);
 	}
 
 	@computed public get isLastItem(): boolean {
 		return (
-			this.selectedIndex !== undefined &&
-			this.selectedIndex === this.items.length - 1
+			this.currentIndex !== undefined &&
+			this.currentIndex === this.items.length - 1
 		);
 	}
 
 	@action public clear = (): void => {
-		this.selectedIndex = undefined;
+		this.currentIndex = undefined;
 		this.items = [];
 	};
 
 	@action public play = (item: PlayQueueItem): void => {
-		this.selectedId = item.id;
+		this.currentId = item.id;
 	};
 
 	@action public playNext = (item: PlayQueueItem): void => {
-		if (this.selectedIndex === undefined) return;
+		if (this.currentIndex === undefined) return;
 
-		this.items.splice(this.selectedIndex + 1, 0, item);
+		this.items.splice(this.currentIndex + 1, 0, item);
 	};
 
 	@action public clearAndPlay = (item: PlayQueueItem): void => {
 		this.clear();
-		// selectedId must be set before playNext is called.
+		// currentId must be set before playNext is called.
 		this.play(item);
 		this.playNext(item);
 	};
@@ -99,24 +99,24 @@ export class PlayQueueStore {
 	};
 
 	@action public previous = (): void => {
-		if (this.selectedIndex === undefined) return;
+		if (this.currentIndex === undefined) return;
 
 		if (!this.hasPreviousItem) return;
 
-		this.selectedIndex--;
+		this.currentIndex--;
 	};
 
 	@action public next = (): void => {
-		if (this.selectedIndex === undefined) return;
+		if (this.currentIndex === undefined) return;
 
 		if (!this.hasNextItem) return;
 
-		this.selectedIndex++;
+		this.currentIndex++;
 	};
 
 	@action public goToFirst = (): void => {
-		if (this.selectedIndex === undefined) return;
+		if (this.currentIndex === undefined) return;
 
-		this.selectedIndex = 0;
+		this.currentIndex = 0;
 	};
 }

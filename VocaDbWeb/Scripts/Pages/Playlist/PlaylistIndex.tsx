@@ -62,9 +62,7 @@ const PlaylistIndex = observer(
 					>
 						{vdbPlayer.playQueue.items.map((item) => (
 							<tr
-								className={classNames(
-									item === vdbPlayer.selectedItem && 'info',
-								)}
+								className={classNames(item === vdbPlayer.currentItem && 'info')}
 								key={item.id}
 							>
 								<td style={{ width: '80px' }}>
@@ -87,7 +85,7 @@ const PlaylistIndex = observer(
 									<div className="pull-right">
 										<Button
 											onClick={(): void => {
-												if (vdbPlayer.selectedItem === item) {
+												if (vdbPlayer.currentItem === item) {
 													const player = playerRef.current;
 
 													if (!player) return;

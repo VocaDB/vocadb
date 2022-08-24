@@ -36,7 +36,7 @@ const VdbPlayerLeftControls = observer(
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
-				() => vdbPlayer.playQueue.selectedItem,
+				() => vdbPlayer.playQueue.currentItem,
 				(selectedItem, previousItem) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedItem?.pv.id === previousItem?.pv.id) {
@@ -138,9 +138,9 @@ const VdbPlayerEntryInfo = observer(
 
 		return (
 			<div css={{ display: 'flex', alignItems: 'center' }}>
-				{vdbPlayer.selectedItem && (
+				{vdbPlayer.currentItem && (
 					<Link
-						to={EntryUrlMapper.details_entry(vdbPlayer.selectedItem.entry)}
+						to={EntryUrlMapper.details_entry(vdbPlayer.currentItem.entry)}
 						onClick={handleEntryLinkClick}
 						css={{ marginRight: 8 }}
 					>
@@ -149,7 +149,7 @@ const VdbPlayerEntryInfo = observer(
 								width: 64,
 								height: 36,
 								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundImage: `url(${vdbPlayer.selectedItem.entry.mainPicture?.urlThumb})`,
+								backgroundImage: `url(${vdbPlayer.currentItem.entry.mainPicture?.urlThumb})`,
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
 							}}
@@ -165,10 +165,10 @@ const VdbPlayerEntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					{vdbPlayer.selectedItem && (
+					{vdbPlayer.currentItem && (
 						<>
 							<Link
-								to={EntryUrlMapper.details_entry(vdbPlayer.selectedItem.entry)}
+								to={EntryUrlMapper.details_entry(vdbPlayer.currentItem.entry)}
 								onClick={handleEntryLinkClick}
 								css={css`
 									color: white;
@@ -184,7 +184,7 @@ const VdbPlayerEntryInfo = observer(
 									white-space: nowrap;
 								`}
 							>
-								{vdbPlayer.selectedItem.entry.name}
+								{vdbPlayer.currentItem.entry.name}
 							</Link>
 							<div css={{ display: 'flex' }}>
 								<span
@@ -195,7 +195,7 @@ const VdbPlayerEntryInfo = observer(
 										whiteSpace: 'nowrap',
 									}}
 								>
-									{vdbPlayer.selectedItem.entry.artistString}
+									{vdbPlayer.currentItem.entry.artistString}
 								</span>
 							</div>
 						</>
@@ -225,7 +225,7 @@ const VdbPlayerRightControls = observer(
 						variant="inverse"
 						title="Expand" /* TODO: localize */
 						onClick={vdbPlayer.expand}
-						disabled={!vdbPlayer.selectedItem}
+						disabled={!vdbPlayer.currentItem}
 					>
 						<i className="icon-resize-full icon-white" />
 					</Button>
@@ -401,8 +401,8 @@ export const VdbPlayer = observer(
 						backgroundColor: 'black',
 					}}
 				>
-					{vdbPlayer.selectedItem && (
-						<EmbedPVWrapper pv={vdbPlayer.selectedItem.pv} />
+					{vdbPlayer.currentItem && (
+						<EmbedPVWrapper pv={vdbPlayer.currentItem.pv} />
 					)}
 				</div>
 
