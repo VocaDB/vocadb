@@ -365,12 +365,8 @@ const EmbedPVWrapper = observer(
 	},
 );
 
-export const VdbPlayer = observer(
+const BottomBar = React.memo(
 	(): React.ReactElement => {
-		VdbPlayerConsole.debug('VdbPlayer');
-
-		const { vdbPlayer, playQueue } = useVdbPlayer();
-
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
 			document.body.style.paddingBottom = '50px';
@@ -386,7 +382,6 @@ export const VdbPlayer = observer(
 					position: 'fixed',
 					left: 0,
 					right: 0,
-					top: vdbPlayer.expanded ? 0 : undefined,
 					bottom: 0,
 					zIndex: 3939,
 					backgroundColor: 'rgb(39, 39, 39)',
@@ -394,24 +389,52 @@ export const VdbPlayer = observer(
 					flexDirection: 'column',
 				}}
 			>
-				<div
-					css={{
-						display: vdbPlayer.expanded ? undefined : 'none',
-						flexGrow: 1,
-						backgroundColor: 'black',
-					}}
-				>
-					{playQueue.currentItem && (
-						<EmbedPVWrapper pv={playQueue.currentItem.pv} />
-					)}
-				</div>
-
 				<div>
 					<Container>
 						<VdbPlayerControls />
 					</Container>
 				</div>
 			</div>
+		);
+	},
+);
+
+export const VdbPlayer = observer(
+	(): React.ReactElement => {
+		VdbPlayerConsole.debug('VdbPlayer');
+
+		const { vdbPlayer, playQueue } = useVdbPlayer();
+
+		return (
+			<>
+				<div
+					css={{
+						position: 'fixed',
+						left: 0,
+						right: 0,
+						top: vdbPlayer.expanded ? 0 : undefined,
+						bottom: 50,
+						zIndex: 3939,
+						backgroundColor: 'rgb(39, 39, 39)',
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
+					<div
+						css={{
+							display: vdbPlayer.expanded ? undefined : 'none',
+							flexGrow: 1,
+							backgroundColor: 'black',
+						}}
+					>
+						{playQueue.currentItem && (
+							<EmbedPVWrapper pv={playQueue.currentItem.pv} />
+						)}
+					</div>
+				</div>
+
+				<BottomBar />
+			</>
 		);
 	},
 );
