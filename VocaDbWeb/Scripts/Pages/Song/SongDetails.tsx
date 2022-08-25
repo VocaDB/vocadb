@@ -98,6 +98,7 @@ const SongDetailsLayout = observer(
 											entryType: EntryType[EntryType.Song],
 										}}
 										pv={primaryPV}
+										allowInline
 									/>
 								)}
 							</div>

@@ -551,6 +551,7 @@ const AlbumBasicInfo = observer(
 								entryType: EntryType[EntryType.Album],
 							}}
 							pv={model.primaryPV}
+							allowInline
 						/>
 					</div>
 				)}

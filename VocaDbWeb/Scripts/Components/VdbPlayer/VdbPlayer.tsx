@@ -372,12 +372,22 @@ const MiniPlayer = observer(
 		return (
 			<div
 				css={{
-					position: 'fixed',
-					right: 0,
-					bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
-					width: 16 * 25,
-					height: 9 * 25,
-					zIndex: 3939,
+					...(vdbPlayer.playerBounds === undefined
+						? {
+								position: 'fixed',
+								right: 0,
+								bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
+								width: 16 * 25,
+								height: 9 * 25,
+								zIndex: 3939,
+						  }
+						: {
+								position: 'absolute',
+								left: vdbPlayer.playerBounds.x,
+								top: vdbPlayer.playerBounds.y,
+								width: vdbPlayer.playerBounds.width,
+								height: vdbPlayer.playerBounds.height,
+						  }),
 					backgroundColor: 'rgb(39, 39, 39)',
 					display: 'flex',
 					flexDirection: 'column',

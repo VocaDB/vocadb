@@ -17,12 +17,25 @@ import { Link } from 'react-router-dom';
 const loginManager = new LoginManager(vdb.values);
 
 interface RatingBarProps {
-	pvRatingButtonsStore: PVRatingButtonsStore;
+	pvRatingButtonsStore: PVRatingButtonsStore | undefined;
 }
 
 const RatingBar = observer(
 	({ pvRatingButtonsStore }: RatingBarProps): React.ReactElement => {
 		const { t } = useTranslation(['AjaxRes', 'ViewRes.Song']);
+
+		if (!pvRatingButtonsStore) {
+			return (
+				<span className="ratingButtons">
+					<Button href="#" disabled variant="inverse">
+						{t('ViewRes.Song:Details.Like')}
+					</Button>{' '}
+					<Button href="#" disabled variant="inverse">
+						{t('ViewRes.Song:Details.AddToFavorites')}
+					</Button>
+				</span>
+			);
+		}
 
 		return pvRatingButtonsStore.isRated ? (
 			<Button
@@ -46,11 +59,9 @@ const RatingBar = observer(
 
 						showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 					}}
-					className={classNames(
-						(!loginManager.isLoggedIn ||
-							pvRatingButtonsStore.ratingInProgress) &&
-							'disabled',
-					)}
+					disabled={
+						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
+					}
 					variant="inverse"
 				>
 					{t('ViewRes.Song:Details.Like')}
@@ -62,11 +73,9 @@ const RatingBar = observer(
 
 						showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 					}}
-					className={classNames(
-						(!loginManager.isLoggedIn ||
-							pvRatingButtonsStore.ratingInProgress) &&
-							'disabled',
-					)}
+					disabled={
+						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
+					}
 					variant="inverse"
 				>
 					{t('ViewRes.Song:Details.AddToFavorites')}
@@ -116,11 +125,7 @@ export const PVContent = observer(
 					{selectedSong.additionalNames}
 				</span>
 				<div className="pull-right" id="rating-bar">
-					{pvPlayerStore.ratingButtonsStore && (
-						<RatingBar
-							pvRatingButtonsStore={pvPlayerStore.ratingButtonsStore}
-						/>
-					)}
+					<RatingBar pvRatingButtonsStore={pvPlayerStore.ratingButtonsStore} />
 				</div>
 				<div className="pv-embed-wrapper">
 					{primaryPV && (
@@ -129,6 +134,7 @@ export const PVContent = observer(
 							pv={primaryPV}
 							width={560}
 							height={340}
+							allowInline
 						/>
 					)}
 				</div>

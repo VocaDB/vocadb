@@ -4,6 +4,8 @@ import { useContextMenu } from '@/Components/useContextMenu';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { reaction } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 interface EmbedPVPreviewProps {
@@ -11,20 +13,62 @@ interface EmbedPVPreviewProps {
 	pv: PVContract;
 	width?: number;
 	height?: number;
+	allowInline?: boolean;
 }
 
-export const EmbedPVPreview = React.memo(
+export const EmbedPVPreview = observer(
 	({
 		entry,
 		pv,
 		width = 560,
 		height = 315,
+		allowInline,
 	}: EmbedPVPreviewProps): React.ReactElement => {
-		const { playQueue } = useVdbPlayer();
+		const embedPVPreviewRef = React.useRef<HTMLDivElement>(undefined!);
+		const { vdbPlayer, playQueue } = useVdbPlayer();
+
+		const handleResize = React.useCallback(() => {
+			if (!allowInline) return;
+
+			if (pv.id === playQueue.currentItem?.pv.id) {
+				const rect = embedPVPreviewRef.current.getBoundingClientRect();
+
+				vdbPlayer.setPlayerBounds({
+					x: rect.x + window.scrollX,
+					y: rect.y + window.scrollY,
+					width: rect.width,
+					height: rect.height,
+				});
+			} else {
+				vdbPlayer.setPlayerBounds(undefined);
+			}
+		}, [allowInline, pv, vdbPlayer, playQueue]);
 
 		const handleClick = React.useCallback(() => {
 			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
-		}, [entry, pv, playQueue]);
+
+			handleResize();
+		}, [entry, pv, playQueue, handleResize]);
+
+		React.useLayoutEffect(() => {
+			window.addEventListener('resize', handleResize);
+
+			handleResize();
+
+			return (): void => {
+				window.removeEventListener('resize', handleResize);
+			};
+		}, [handleResize]);
+
+		React.useLayoutEffect(() => {
+			return (): void => {
+				vdbPlayer.setPlayerBounds(undefined);
+			};
+		}, [vdbPlayer]);
+
+		React.useLayoutEffect(() => {
+			return reaction(() => playQueue.currentItem?.pv.id, handleResize);
+		}, [playQueue, handleResize]);
 
 		const contextMenuRef = React.useRef<HTMLUListElement>(undefined!);
 		const contextMenu = useContextMenu(contextMenuRef);
@@ -45,6 +89,7 @@ export const EmbedPVPreview = React.memo(
 					}}
 					onClick={handleClick}
 					onContextMenu={contextMenu.handleContextMenu}
+					ref={embedPVPreviewRef}
 				/>
 
 				{contextMenu.show && (

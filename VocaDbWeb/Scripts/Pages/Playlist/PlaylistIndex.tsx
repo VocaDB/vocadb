@@ -72,6 +72,7 @@ const PlaylistIndex = observer(
 								<EmbedPVPreview
 									entry={playQueue.currentItem.entry}
 									pv={playQueue.currentItem.pv}
+									allowInline
 								/>
 							</div>
 						)}

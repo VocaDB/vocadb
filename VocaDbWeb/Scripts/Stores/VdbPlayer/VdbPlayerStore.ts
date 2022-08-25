@@ -8,6 +8,13 @@ export enum RepeatMode {
 	One = 'One',
 }
 
+interface Rectangle {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
 export class VdbPlayerStore {
 	private static readonly autoplayServices = [
 		PVService.File,
@@ -23,6 +30,7 @@ export class VdbPlayerStore {
 	@observable public shuffle = false;
 	@observable public expanded = false;
 	public readonly playQueue = new PlayQueueStore();
+	@observable public playerBounds?: Rectangle;
 
 	public constructor() {
 		makeObservable(this);
@@ -77,5 +85,9 @@ export class VdbPlayerStore {
 
 	@action public collapse = (): void => {
 		this.expanded = false;
+	};
+
+	@action public setPlayerBounds = (value?: Rectangle): void => {
+		this.playerBounds = value;
 	};
 }

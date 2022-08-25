@@ -524,6 +524,7 @@ const EventDetailsLayout = observer(
 						<EmbedPVPreview
 							entry={{ ...event, entryType: EntryType[EntryType.ReleaseEvent] }}
 							pv={primaryPV}
+							allowInline
 						/>
 					</div>
 				)}

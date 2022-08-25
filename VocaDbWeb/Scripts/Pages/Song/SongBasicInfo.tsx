@@ -20,6 +20,7 @@ import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { SongLinkKnockout } from '@/Components/Shared/Partials/Song/SongLinkKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagList } from '@/Components/Shared/Partials/TagList';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
@@ -134,6 +135,16 @@ interface PVButtonProps {
 const PVButton = observer(
 	({ songDetailsStore, pv, showPVType }: PVButtonProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+
+		const { playQueue } = useVdbPlayer();
+
+		React.useLayoutEffect(() => {
+			if (pv.id !== playQueue.currentItem?.pv.id) return;
+
+			runInAction(() => {
+				songDetailsStore.selectedPvId = pv.id!;
+			});
+		}, [songDetailsStore, pv, playQueue]);
 
 		return (
 			<Button
