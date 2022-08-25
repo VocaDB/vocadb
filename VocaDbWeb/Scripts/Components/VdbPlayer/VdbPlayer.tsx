@@ -410,10 +410,10 @@ export const VdbPlayer = observer(
 				<div
 					css={{
 						position: 'fixed',
-						left: 0,
 						right: 0,
-						top: vdbPlayer.expanded ? 0 : undefined,
-						bottom: 50,
+						bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
+						width: 16 * 25,
+						height: 9 * 25,
 						zIndex: 3939,
 						backgroundColor: 'rgb(39, 39, 39)',
 						display: 'flex',
@@ -422,7 +422,6 @@ export const VdbPlayer = observer(
 				>
 					<div
 						css={{
-							display: vdbPlayer.expanded ? undefined : 'none',
 							flexGrow: 1,
 							backgroundColor: 'black',
 						}}
