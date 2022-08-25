@@ -433,7 +433,7 @@ export const VdbPlayer = observer(
 					</div>
 				</div>
 
-				<BottomBar />
+				{vdbPlayer.bottomBarVisible && <BottomBar />}
 			</>
 		);
 	},

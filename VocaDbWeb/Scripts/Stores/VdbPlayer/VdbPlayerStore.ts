@@ -17,6 +17,7 @@ export class VdbPlayerStore {
 		PVService.SoundCloud,
 	];
 
+	@observable public bottomBarVisible = true;
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
@@ -37,6 +38,14 @@ export class VdbPlayerStore {
 			)
 		);
 	}
+
+	@action public showBottomBar = (): void => {
+		this.bottomBarVisible = true;
+	};
+
+	@action public hideBottomBar = (): void => {
+		this.bottomBarVisible = false;
+	};
 
 	@action public setPlaying = (value: boolean): void => {
 		this.playing = value;
