@@ -60,8 +60,6 @@ export const PlayList = observer(
 												entryType: EntryType[EntryType.Song],
 											}}
 											pv={pvPlayerStore.primaryPV}
-											enableApi={true}
-											id="pv-player"
 										/>
 									</div>
 								)}

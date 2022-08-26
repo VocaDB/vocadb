@@ -11,9 +11,6 @@ interface EmbedPVPreviewProps {
 	pv: PVContract;
 	width?: number;
 	height?: number;
-	autoplay?: boolean;
-	enableApi?: boolean;
-	id?: string;
 }
 
 export const EmbedPVPreview = React.memo(
@@ -25,8 +22,12 @@ export const EmbedPVPreview = React.memo(
 	}: EmbedPVPreviewProps): React.ReactElement => {
 		const { playQueue } = useVdbPlayer();
 
-		const ref = React.useRef<HTMLUListElement>(undefined!);
-		const contextMenu = useContextMenu(ref);
+		const handleClick = React.useCallback(() => {
+			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
+		}, [entry, pv, playQueue]);
+
+		const contextMenuRef = React.useRef<HTMLUListElement>(undefined!);
+		const contextMenu = useContextMenu(contextMenuRef);
 
 		return (
 			<>
@@ -42,15 +43,13 @@ export const EmbedPVPreview = React.memo(
 						backgroundPosition: 'center',
 						cursor: 'pointer',
 					}}
-					onClick={(): void =>
-						playQueue.clearAndPlay(new PlayQueueItem(entry, pv))
-					}
+					onClick={handleClick}
 					onContextMenu={contextMenu.handleContextMenu}
 				/>
 
 				{contextMenu.show && (
 					<ul
-						ref={ref}
+						ref={contextMenuRef}
 						className="dropdown-menu"
 						role="menu"
 						css={{ display: 'block', position: 'fixed' }}

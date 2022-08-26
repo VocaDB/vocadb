@@ -1,6 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
@@ -65,50 +66,60 @@ const PlaylistIndex = observer(
 			<Layout
 				title={title}
 				toolbar={
-					playQueue.selectedItems.length > 0 ? (
-						<>
-							<JQueryUIButton
-								as={SafeAnchor}
-								onClick={handleClickPlayNext}
-								icons={{ primary: 'ui-icon-play' }}
-							>
-								Play next{/* TODO: localize */}
-							</JQueryUIButton>{' '}
-							<JQueryUIButton
-								as={SafeAnchor}
-								onClick={handleClickAddToPlayQueue}
-								icons={{ primary: 'ui-icon-plus' }}
-							>
-								Add to play queue{/* TODO: localize */}
-							</JQueryUIButton>{' '}
-							<JQueryUIButton
-								as={SafeAnchor}
-								onClick={handleClickRemove}
-								icons={{ primary: ' ui-icon-close' }}
-							>
-								Remove{/* TODO: localize */}
-							</JQueryUIButton>
-						</>
-					) : (
-						<>
-							<JQueryUIButton
-								as={SafeAnchor}
-								onClick={playQueue.clear}
-								icons={{ primary: 'ui-icon-trash' }}
-								disabled={playQueue.isEmpty}
-							>
-								Clear{/* TODO: localize */}
-							</JQueryUIButton>{' '}
-							<JQueryUIButton
-								as={SafeAnchor}
-								onClick={handleClickAddToPlayQueue}
-								icons={{ primary: 'ui-icon-plus' }}
-								disabled={playQueue.isEmpty}
-							>
-								Add to play queue{/* TODO: localize */}
-							</JQueryUIButton>
-						</>
-					)
+					<>
+						{playQueue.currentItem && (
+							<div id="pvPlayer" className="song-pv-player">
+								<EmbedPVPreview
+									entry={playQueue.currentItem.entry}
+									pv={playQueue.currentItem.pv}
+								/>
+							</div>
+						)}
+						{playQueue.selectedItems.length > 0 ? (
+							<>
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickPlayNext}
+									icons={{ primary: 'ui-icon-play' }}
+								>
+									Play next{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickAddToPlayQueue}
+									icons={{ primary: 'ui-icon-plus' }}
+								>
+									Add to play queue{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickRemove}
+									icons={{ primary: ' ui-icon-close' }}
+								>
+									Remove{/* TODO: localize */}
+								</JQueryUIButton>
+							</>
+						) : (
+							<>
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={playQueue.clear}
+									icons={{ primary: 'ui-icon-trash' }}
+									disabled={playQueue.isEmpty}
+								>
+									Clear{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickAddToPlayQueue}
+									icons={{ primary: 'ui-icon-plus' }}
+									disabled={playQueue.isEmpty}
+								>
+									Add to play queue{/* TODO: localize */}
+								</JQueryUIButton>
+							</>
+						)}
+					</>
 				}
 			>
 				{!playQueue.isEmpty && (

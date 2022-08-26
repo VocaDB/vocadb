@@ -125,6 +125,51 @@ const SongAlbumLink = React.memo(
 	},
 );
 
+interface PVButtonProps {
+	songDetailsStore: SongDetailsStore;
+	pv: PVContract;
+	showPVType: boolean;
+}
+
+const PVButton = observer(
+	({ songDetailsStore, pv, showPVType }: PVButtonProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+
+		return (
+			<Button
+				className={classNames(
+					'pvLink',
+					songDetailsStore.selectedPvId === pv.id && 'active',
+				)}
+				disabled={pv.disabled}
+				href="#"
+				id={`pv_${pv.id}`}
+				onClick={(): void =>
+					runInAction(() => {
+						songDetailsStore.selectedPvId = pv.id!;
+					})
+				}
+				title={
+					pv.publishDate && pv.author
+						? `${t('ViewRes.Song:Details.PVDescription', {
+								0: moment(pv.publishDate).format('l') /* REVIEW */,
+								1: pv.author,
+						  })}${
+								pv.disabled ? ` ${t('ViewRes.Song:Details.PVUnavailable')}` : ''
+						  }`
+						: undefined
+				}
+			>
+				<PVServiceIcon
+					service={PVService[pv.service as keyof typeof PVService]}
+				/>{' '}
+				{pv.name || pv.service}
+				{showPVType && <> ({t(`Resources:PVTypeNames.${pv.pvType}`)})</>}
+			</Button>
+		);
+	},
+);
+
 interface PVListProps {
 	songDetailsStore: SongDetailsStore;
 	pvs: PVContract[];
@@ -133,44 +178,17 @@ interface PVListProps {
 
 const PVList = observer(
 	({ songDetailsStore, pvs, showPVType }: PVListProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+		const { t } = useTranslation(['ViewRes.Song']);
 
 		return (
 			<>
 				{pvs.map((pv) => (
 					<React.Fragment key={pv.id}>
-						<Button
-							className={classNames(
-								'pvLink',
-								songDetailsStore.selectedPvId === pv.id && 'active',
-							)}
-							disabled={pv.disabled}
-							href="#"
-							id={`pv_${pv.id}`}
-							onClick={(): void =>
-								runInAction(() => {
-									songDetailsStore.selectedPvId = pv.id!;
-								})
-							}
-							title={
-								pv.publishDate && pv.author
-									? `${t('ViewRes.Song:Details.PVDescription', {
-											0: moment(pv.publishDate).format('l') /* REVIEW */,
-											1: pv.author,
-									  })}${
-											pv.disabled
-												? ` ${t('ViewRes.Song:Details.PVUnavailable')}`
-												: ''
-									  }`
-									: undefined
-							}
-						>
-							<PVServiceIcon
-								service={PVService[pv.service as keyof typeof PVService]}
-							/>{' '}
-							{pv.name || pv.service}
-							{showPVType && <> ({t(`Resources:PVTypeNames.${pv.pvType}`)})</>}
-						</Button>
+						<PVButton
+							songDetailsStore={songDetailsStore}
+							pv={pv}
+							showPVType={showPVType}
+						/>
 						{pv.service !== PVService[PVService.File] &&
 							pv.service !== PVService[PVService.LocalFile] && (
 								<>

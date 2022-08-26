@@ -3,11 +3,13 @@ import { VdbPlayerStore } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { PVPlayer } from '@vocadb/nostalgic-diva';
 import React from 'react';
 
-const VdbPlayerContext = React.createContext<{
+interface VdbPlayerContextProps {
 	vdbPlayer: VdbPlayerStore;
 	playQueue: PlayQueueStore;
 	playerRef: React.MutableRefObject<PVPlayer | undefined>;
-}>(undefined!);
+}
+
+const VdbPlayerContext = React.createContext<VdbPlayerContextProps>(undefined!);
 
 interface VdbPlayerProviderProps {
 	children?: React.ReactNode;
@@ -29,11 +31,7 @@ export const VdbPlayerProvider = ({
 	);
 };
 
-export const useVdbPlayer = (): {
-	vdbPlayer: VdbPlayerStore;
-	playQueue: PlayQueueStore;
-	playerRef: React.MutableRefObject<PVPlayer | undefined>;
-} => {
+export const useVdbPlayer = (): VdbPlayerContextProps => {
 	const vdbPlayerContext = React.useContext(VdbPlayerContext);
 
 	return vdbPlayerContext;

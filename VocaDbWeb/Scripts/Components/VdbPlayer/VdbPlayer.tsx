@@ -365,6 +365,39 @@ const EmbedPVWrapper = observer(
 	},
 );
 
+const MiniPlayer = observer(
+	(): React.ReactElement => {
+		const { vdbPlayer, playQueue } = useVdbPlayer();
+
+		return (
+			<div
+				css={{
+					position: 'fixed',
+					right: 0,
+					bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
+					width: 16 * 25,
+					height: 9 * 25,
+					zIndex: 3939,
+					backgroundColor: 'rgb(39, 39, 39)',
+					display: 'flex',
+					flexDirection: 'column',
+				}}
+			>
+				<div
+					css={{
+						flexGrow: 1,
+						backgroundColor: 'black',
+					}}
+				>
+					{playQueue.currentItem && (
+						<EmbedPVWrapper pv={playQueue.currentItem.pv} />
+					)}
+				</div>
+			</div>
+		);
+	},
+);
+
 const BottomBar = React.memo(
 	(): React.ReactElement => {
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
@@ -407,30 +440,7 @@ export const VdbPlayer = observer(
 
 		return (
 			<>
-				<div
-					css={{
-						position: 'fixed',
-						right: 0,
-						bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
-						width: 16 * 25,
-						height: 9 * 25,
-						zIndex: 3939,
-						backgroundColor: 'rgb(39, 39, 39)',
-						display: 'flex',
-						flexDirection: 'column',
-					}}
-				>
-					<div
-						css={{
-							flexGrow: 1,
-							backgroundColor: 'black',
-						}}
-					>
-						{playQueue.currentItem && (
-							<EmbedPVWrapper pv={playQueue.currentItem.pv} />
-						)}
-					</div>
-				</div>
+				{!playQueue.isEmpty && <MiniPlayer />}
 
 				{vdbPlayer.bottomBarVisible && <BottomBar />}
 			</>
