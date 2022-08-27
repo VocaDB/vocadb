@@ -188,6 +188,18 @@ const EventDetailsLayout = observer(
 				}
 				toolbar={
 					<>
+						{primaryPV && (
+							<div className="song-pv-player">
+								<EmbedPVPreview
+									entry={{
+										...event,
+										entryType: EntryType[EntryType.ReleaseEvent],
+									}}
+									pv={primaryPV}
+									allowInline
+								/>
+							</div>
+						)}
 						<JQueryUIButton
 							as={Link}
 							to={`/Event/Edit/${event.id}`}
@@ -517,16 +529,6 @@ const EventDetailsLayout = observer(
 							</React.Fragment>
 						))}
 					</>
-				)}
-
-				{primaryPV && (
-					<div className="song-pv-player">
-						<EmbedPVPreview
-							entry={{ ...event, entryType: EntryType[EntryType.ReleaseEvent] }}
-							pv={primaryPV}
-							allowInline
-						/>
-					</div>
 				)}
 
 				{(loginManager.isLoggedIn ||

@@ -16,7 +16,6 @@ import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { PersonalDescriptionMedia } from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
 import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
 import { LanguageFlag } from '@/Components/Shared/Partials/Html/LanguageFlag';
-import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { EntryPictureFileLink } from '@/Components/Shared/Partials/Shared/EntryPictureFileLink';
 import { FormatPVLink } from '@/Components/Shared/Partials/Shared/FormatPVLink';
@@ -542,19 +541,6 @@ const AlbumBasicInfo = observer(
 					model.contentFocus !== ContentFocus.Illustration && (
 						<p>{t('ViewRes.Album:Details.NoTracklist')}</p>
 					)}
-
-				{model.primaryPV && (
-					<div className="song-pv-player">
-						<EmbedPVPreview
-							entry={{
-								...model.contract,
-								entryType: EntryType[EntryType.Album],
-							}}
-							pv={model.primaryPV}
-							allowInline
-						/>
-					</div>
-				)}
 
 				{(model.canEditPersonalDescription /* TODO: Use LoginManager. */ ||
 					model.personalDescriptionText) && (
