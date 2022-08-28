@@ -13,7 +13,16 @@ namespace VocaDb.Web.Code
 			"Use the search, Luka!",
 			"shu-t up and enjoy",
 			"Now with 39% more Miku",
+			"Odds&Entries",
+			"Bells and candy canes for DECO*27ration",
+			"AiDee and password required for login",
 			"Our site uses Micookies",
+			"Do yuno Yunosuke?",
+			"MEIKO an account today",
+			"Got some assignments from UNI",
+			"CYBER SONGMAN, CYBER ALBUMMAN",
+			"CATS RULE THE WORLD",
+			"That Flower is called Lily",
 			"Passwords secured with HMIC"
 		};
 
