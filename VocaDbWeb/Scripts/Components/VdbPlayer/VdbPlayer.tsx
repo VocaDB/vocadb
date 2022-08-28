@@ -1,6 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Container from '@/Bootstrap/Container';
+import Dropdown from '@/Bootstrap/Dropdown';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
@@ -130,18 +131,13 @@ const VdbPlayerLeftControls = observer(
 
 const VdbPlayerEntryInfo = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue } = useVdbPlayer();
-
-		const handleEntryLinkClick = React.useCallback(() => {
-			vdbPlayer.collapse();
-		}, [vdbPlayer]);
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<div css={{ display: 'flex', alignItems: 'center' }}>
 				{playQueue.currentItem && (
 					<Link
 						to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
-						onClick={handleEntryLinkClick}
 						css={{ marginRight: 8 }}
 					>
 						<div
@@ -169,7 +165,6 @@ const VdbPlayerEntryInfo = observer(
 						<>
 							<Link
 								to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
-								onClick={handleEntryLinkClick}
 								css={css`
 									color: white;
 									&:hover {
@@ -211,26 +206,33 @@ const VdbPlayerRightControls = observer(
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		return (
-			<ButtonGroup css={{ marginLeft: 8 }}>
-				{vdbPlayer.expanded ? (
-					<Button
-						variant="inverse"
-						title="Collapse" /* TODO: localize */
-						onClick={vdbPlayer.collapse}
+			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
+				<Dropdown.Toggle variant="inverse">⋯</Dropdown.Toggle>
+				<Dropdown.Menu>
+					<Dropdown.Item as={Link} to="/playlist">
+						Show play queue{/* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={vdbPlayer.toggleShuffle}
+						disabled={!vdbPlayer.canAutoplay}
 					>
-						<i className="icon-resize-small icon-white" />
-					</Button>
-				) : (
-					<Button
-						variant="inverse"
-						title="Expand" /* TODO: localize */
-						onClick={vdbPlayer.expand}
-						disabled={!playQueue.currentItem}
+						{
+							`Shuffle: ${
+								vdbPlayer.shuffle ? 'On' : 'Off'
+							}` /* TODO: localize */
+						}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={vdbPlayer.toggleRepeat}
+						disabled={!vdbPlayer.canAutoplay}
 					>
-						<i className="icon-resize-full icon-white" />
-					</Button>
-				)}
-			</ButtonGroup>
+						{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item onClick={playQueue.clear} disabled={playQueue.isEmpty}>
+						Clear play queue{/* TODO: localize */}
+					</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
 		);
 	},
 );

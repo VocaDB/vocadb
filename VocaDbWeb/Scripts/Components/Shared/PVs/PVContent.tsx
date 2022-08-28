@@ -27,10 +27,20 @@ const RatingBar = observer(
 		if (!pvRatingButtonsStore) {
 			return (
 				<span className="ratingButtons">
-					<Button href="#" disabled variant="inverse">
+					<Button
+						href="#"
+						disabled
+						variant="inverse"
+						style={{ color: 'white' }}
+					>
 						{t('ViewRes.Song:Details.Like')}
 					</Button>{' '}
-					<Button href="#" disabled variant="inverse">
+					<Button
+						href="#"
+						disabled
+						variant="inverse"
+						style={{ color: 'white' }}
+					>
 						{t('ViewRes.Song:Details.AddToFavorites')}
 					</Button>
 				</span>
@@ -47,6 +57,7 @@ const RatingBar = observer(
 					'ratingButtons',
 				)}
 				variant="inverse"
+				style={{ color: 'white' }}
 			>
 				{t('ViewRes.Song:Details.RemoveFromFavorites')}
 			</Button>
@@ -63,6 +74,7 @@ const RatingBar = observer(
 						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
 					}
 					variant="inverse"
+					style={{ color: 'white' }}
 				>
 					{t('ViewRes.Song:Details.Like')}
 				</Button>{' '}
@@ -77,6 +89,7 @@ const RatingBar = observer(
 						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
 					}
 					variant="inverse"
+					style={{ color: 'white' }}
 				>
 					{t('ViewRes.Song:Details.AddToFavorites')}
 				</Button>
@@ -108,7 +121,10 @@ export const PVContent = observer(
 						className="pvViewer-songName"
 						title={selectedSong.additionalNames}
 					>
-						<Link to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}>
+						<Link
+							to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}
+							style={{ color: 'white' }}
+						>
 							{selectedSong.name}
 						</Link>
 					</span>{' '}
@@ -143,6 +159,7 @@ export const PVContent = observer(
 					variant="info"
 					className="songInfoButton pull-right"
 					to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}
+					style={{ color: 'white' }}
 				>
 					<i className="icon icon-info-sign" />{' '}
 					{t('ViewRes.Home:Index.ViewSongInfo')}

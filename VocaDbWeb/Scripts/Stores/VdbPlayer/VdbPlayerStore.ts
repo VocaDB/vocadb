@@ -28,7 +28,6 @@ export class VdbPlayerStore {
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
-	@observable public expanded = false;
 	public readonly playQueue = new PlayQueueStore();
 	@observable public playerBounds?: Rectangle;
 
@@ -77,14 +76,6 @@ export class VdbPlayerStore {
 
 	@action public toggleShuffle = (): void => {
 		this.shuffle = !this.shuffle;
-	};
-
-	@action public expand = (): void => {
-		this.expanded = true;
-	};
-
-	@action public collapse = (): void => {
-		this.expanded = false;
 	};
 
 	@action public setPlayerBounds = (value?: Rectangle): void => {

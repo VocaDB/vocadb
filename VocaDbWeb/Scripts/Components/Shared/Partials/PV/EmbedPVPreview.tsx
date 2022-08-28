@@ -106,7 +106,6 @@ export const EmbedPVPreview = observer(
 						<li>
 							<SafeAnchor
 								href="#"
-								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
 									playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
@@ -118,7 +117,6 @@ export const EmbedPVPreview = observer(
 						<li>
 							<SafeAnchor
 								href="#"
-								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
 									playQueue.playNext(new PlayQueueItem(entry, pv));
@@ -130,7 +128,6 @@ export const EmbedPVPreview = observer(
 						<li>
 							<SafeAnchor
 								href="#"
-								style={{ color: 'inherit', margin: 'inherit' }}
 								onClick={(): void => {
 									contextMenu.setShow(false);
 									playQueue.addToQueue(new PlayQueueItem(entry, pv));
