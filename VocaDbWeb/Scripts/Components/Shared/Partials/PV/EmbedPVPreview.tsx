@@ -1,6 +1,6 @@
-import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useContextMenu } from '@/Components/useContextMenu';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -50,6 +50,14 @@ export const EmbedPVPreview = observer(
 			handleResize();
 		}, [entry, pv, playQueue, handleResize]);
 
+		const handleClickPlayNext = React.useCallback(() => {
+			playQueue.playNext(new PlayQueueItem(entry, pv));
+		}, [entry, pv, playQueue]);
+
+		const handleClickAddToPlayQueue = React.useCallback(() => {
+			playQueue.addToQueue(new PlayQueueItem(entry, pv));
+		}, [entry, pv, playQueue]);
+
 		React.useLayoutEffect(() => {
 			window.addEventListener('resize', handleResize);
 
@@ -69,9 +77,6 @@ export const EmbedPVPreview = observer(
 		React.useLayoutEffect(() => {
 			return reaction(() => playQueue.currentItem?.pv.id, handleResize);
 		}, [playQueue, handleResize]);
-
-		const contextMenuRef = React.useRef<HTMLUListElement>(undefined!);
-		const contextMenu = useContextMenu(contextMenuRef);
 
 		return (
 			<div
@@ -94,55 +99,34 @@ export const EmbedPVPreview = observer(
 						cursor: 'pointer',
 					}}
 					onClick={handleClickPlay}
-					onContextMenu={contextMenu.handleContextMenu}
 					ref={embedPVPreviewRef}
 				/>
 
-				{contextMenu.show && (
-					<ul
-						ref={contextMenuRef}
-						className="dropdown-menu"
-						role="menu"
-						css={{ display: 'block', position: 'fixed' }}
-						style={{
-							left: contextMenu.position.x,
-							top: contextMenu.position.y,
-						}}
-					>
-						<li>
-							<SafeAnchor
-								href="#"
-								onClick={(): void => {
-									contextMenu.setShow(false);
-									playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
-								}}
+				{(vdbPlayer.playerBounds === undefined ||
+					pv.id !== playQueue.currentItem?.pv.id) && (
+					<>
+						<Dropdown
+							as={ButtonGroup}
+							css={{ position: 'absolute', right: 8, top: 8 }}
+						>
+							<Dropdown.Toggle
+								style={{ aspectRatio: '1', borderRadius: '50%' }}
 							>
-								Play{/* TODO: localize */}
-							</SafeAnchor>
-						</li>
-						<li>
-							<SafeAnchor
-								href="#"
-								onClick={(): void => {
-									contextMenu.setShow(false);
-									playQueue.playNext(new PlayQueueItem(entry, pv));
-								}}
-							>
-								Play next{/* TODO: localize */}
-							</SafeAnchor>
-						</li>
-						<li>
-							<SafeAnchor
-								href="#"
-								onClick={(): void => {
-									contextMenu.setShow(false);
-									playQueue.addToQueue(new PlayQueueItem(entry, pv));
-								}}
-							>
-								Add to play queue{/* TODO: localize */}
-							</SafeAnchor>
-						</li>
-					</ul>
+								⋯
+							</Dropdown.Toggle>
+							<Dropdown.Menu>
+								<Dropdown.Item onClick={handleClickPlay}>
+									Play{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Item onClick={handleClickPlayNext}>
+									Play next{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Item onClick={handleClickAddToPlayQueue}>
+									Add to play queue{/* TODO: localize */}
+								</Dropdown.Item>
+							</Dropdown.Menu>
+						</Dropdown>
+					</>
 				)}
 			</div>
 		);
