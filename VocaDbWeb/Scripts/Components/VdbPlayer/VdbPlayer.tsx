@@ -203,7 +203,31 @@ const VdbPlayerEntryInfo = observer(
 
 const VdbPlayerRightControls = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+
+		const handleClickSkipBack10Seconds = React.useCallback(() => {
+			const player = playerRef.current;
+
+			if (!player) return;
+
+			const currentTime = player.getCurrentTime();
+
+			if (currentTime === undefined) return;
+
+			player.seekTo(currentTime - 10);
+		}, [playerRef]);
+
+		const handleClickSkipForward30Seconds = React.useCallback(() => {
+			const player = playerRef.current;
+
+			if (!player) return;
+
+			const currentTime = player.getCurrentTime();
+
+			if (currentTime === undefined) return;
+
+			player.seekTo(currentTime + 30);
+		}, [playerRef]);
 
 		return (
 			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
@@ -211,6 +235,18 @@ const VdbPlayerRightControls = observer(
 				<Dropdown.Menu>
 					<Dropdown.Item as={Link} to="/playlist">
 						Show play queue{/* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={handleClickSkipBack10Seconds}
+						disabled={!vdbPlayer.canAutoplay}
+					>
+						Skip back 10 seconds{/* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={handleClickSkipForward30Seconds}
+						disabled={!vdbPlayer.canAutoplay}
+					>
+						Skip forward 30 seconds{/* TODO: localize */}
 					</Dropdown.Item>
 					<Dropdown.Item
 						onClick={vdbPlayer.toggleShuffle}
