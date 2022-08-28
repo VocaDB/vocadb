@@ -44,7 +44,7 @@ export const EmbedPVPreview = observer(
 			}
 		}, [allowInline, pv, vdbPlayer, playQueue]);
 
-		const handleClick = React.useCallback(() => {
+		const handleClickPlay = React.useCallback(() => {
 			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
 
 			handleResize();
@@ -74,20 +74,26 @@ export const EmbedPVPreview = observer(
 		const contextMenu = useContextMenu(contextMenuRef);
 
 		return (
-			<>
+			<div
+				className="pv-embed-preview"
+				css={{
+					display: 'inline-block',
+					position: 'relative',
+					width: width,
+					height: height,
+				}}
+			>
 				<div
-					className="pv-embed-preview"
 					css={{
-						display: 'inline-block',
-						width: width,
-						height: height,
+						width: '100%',
+						height: '100%',
 						backgroundColor: 'rgb(28, 28, 28)',
 						backgroundImage: `url(${entry.mainPicture?.urlOriginal})`,
 						backgroundSize: 'cover',
 						backgroundPosition: 'center',
 						cursor: 'pointer',
 					}}
-					onClick={handleClick}
+					onClick={handleClickPlay}
 					onContextMenu={contextMenu.handleContextMenu}
 					ref={embedPVPreviewRef}
 				/>
@@ -138,7 +144,7 @@ export const EmbedPVPreview = observer(
 						</li>
 					</ul>
 				)}
-			</>
+			</div>
 		);
 	},
 );
