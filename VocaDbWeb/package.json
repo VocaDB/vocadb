@@ -55,7 +55,7 @@
     "dependencies": {
         "@emotion/react": "^11.8.2",
         "@restart/ui": "^0.2.3",
-        "@vocadb/nostalgic-diva": "^1.0.0-rc.4",
+        "@vocadb/nostalgic-diva": "^1.0.0-rc.5",
         "@vocadb/route-sphere": "^1.0.0",
         "@vocadb/web-link-matcher": "^1.0.0",
         "ajv": "^8.6.2",

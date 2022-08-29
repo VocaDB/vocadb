@@ -26,27 +26,35 @@ const VdbPlayerLeftControls = observer(
 	(): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
-		const handlePause = React.useCallback(() => playerRef.current?.pause(), [
-			playerRef,
-		]);
+		const handlePause = React.useCallback(async () => {
+			const player = playerRef.current;
 
-		const handlePlay = React.useCallback(() => playerRef.current?.play(), [
-			playerRef,
-		]);
+			if (!player) return;
+
+			await player.pause();
+		}, [playerRef]);
+
+		const handlePlay = React.useCallback(async () => {
+			const player = playerRef.current;
+
+			if (!player) return;
+
+			await player.play();
+		}, [playerRef]);
 
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
 				() => playQueue.currentItem,
-				(selectedItem, previousItem) => {
+				async (selectedItem, previousItem) => {
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedItem?.pv.id === previousItem?.pv.id) {
 						const player = playerRef.current;
 
 						if (!player) return;
 
-						player.seekTo(0);
-						player.play();
+						await player.setCurrentTime(0);
+						await player.play();
 					}
 				},
 			);
@@ -205,28 +213,28 @@ const VdbPlayerRightControls = observer(
 	(): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
-		const handleClickSkipBack10Seconds = React.useCallback(() => {
+		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const player = playerRef.current;
 
 			if (!player) return;
 
-			const currentTime = player.getCurrentTime();
+			const currentTime = await player.getCurrentTime();
 
 			if (currentTime === undefined) return;
 
-			player.seekTo(currentTime - 10);
+			await player.setCurrentTime(currentTime - 10);
 		}, [playerRef]);
 
-		const handleClickSkipForward30Seconds = React.useCallback(() => {
+		const handleClickSkipForward30Seconds = React.useCallback(async () => {
 			const player = playerRef.current;
 
 			if (!player) return;
 
-			const currentTime = player.getCurrentTime();
+			const currentTime = await player.getCurrentTime();
 
 			if (currentTime === undefined) return;
 
-			player.seekTo(currentTime + 30);
+			await player.setCurrentTime(currentTime + 30);
 		}, [playerRef]);
 
 		return (
@@ -311,7 +319,7 @@ const EmbedPVWrapper = observer(
 			vdbPlayer,
 		]);
 
-		const handleEnded = React.useCallback(() => {
+		const handleEnded = React.useCallback(async () => {
 			VdbPlayerConsole.debug(
 				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
 			);
@@ -322,8 +330,8 @@ const EmbedPVWrapper = observer(
 
 			switch (vdbPlayer.repeat) {
 				case RepeatMode.One:
-					player.seekTo(0);
-					player.play();
+					await player.setCurrentTime(0);
+					await player.play();
 					break;
 
 				case RepeatMode.Off:
@@ -343,8 +351,8 @@ const EmbedPVWrapper = observer(
 										playQueue.goToFirst();
 									});
 								} else {
-									player.seekTo(0);
-									player.play();
+									await player.setCurrentTime(0);
+									await player.play();
 								}
 								break;
 						}
@@ -375,9 +383,8 @@ const EmbedPVWrapper = observer(
 				try {
 					if (!player) return;
 
-					await player.load(pv.pvId);
-
-					player.play();
+					await player.loadVideo(pv.pvId);
+					await player.play();
 				} catch (error) {
 					VdbPlayerConsole.error(
 						'Failed to load PV',

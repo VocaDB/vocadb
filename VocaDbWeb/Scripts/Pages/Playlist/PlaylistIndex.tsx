@@ -196,14 +196,14 @@ const PlaylistIndex = observer(
 									<td>
 										<div className="pull-right">
 											<Button
-												onClick={(): void => {
+												onClick={async (): Promise<void> => {
 													if (playQueue.currentItem === item) {
 														const player = playerRef.current;
 
 														if (!player) return;
 
-														player.seekTo(0);
-														player.play();
+														await player.setCurrentTime(0);
+														await player.play();
 													} else {
 														playQueue.play(item);
 													}
