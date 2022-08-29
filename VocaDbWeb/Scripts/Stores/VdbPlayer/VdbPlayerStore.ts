@@ -30,6 +30,7 @@ export class VdbPlayerStore {
 	@observable public shuffle = false;
 	public readonly playQueue = new PlayQueueStore();
 	@observable public playerBounds?: Rectangle;
+	@observable public percent = 0;
 
 	public constructor() {
 		makeObservable(this);
@@ -80,5 +81,9 @@ export class VdbPlayerStore {
 
 	@action public setPlayerBounds = (value?: Rectangle): void => {
 		this.playerBounds = value;
+	};
+
+	@action public setPercent = (value: number): void => {
+		this.percent = value;
 	};
 }

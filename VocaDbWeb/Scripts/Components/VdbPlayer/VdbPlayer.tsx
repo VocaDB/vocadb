@@ -9,7 +9,7 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
-import { PVPlayer } from '@vocadb/nostalgic-diva';
+import { PVPlayer, TimeEvent } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -281,10 +281,18 @@ const VdbPlayerRightControls = observer(
 	},
 );
 
+const controlsHeight = 48;
+
 const VdbPlayerControls = observer(
 	(): React.ReactElement => {
 		return (
-			<div css={{ display: 'flex', height: 50, alignItems: 'center' }}>
+			<div
+				css={{
+					display: 'flex',
+					height: controlsHeight,
+					alignItems: 'center',
+				}}
+			>
 				<VdbPlayerLeftControls />
 
 				<div css={{ flexGrow: 1 }}></div>
@@ -368,14 +376,22 @@ const EmbedPVWrapper = observer(
 			}
 		}, [vdbPlayer, playQueue, playerRef]);
 
+		const handleTimeUpdate = React.useCallback(
+			({ percent }: TimeEvent) => {
+				if (percent !== undefined) vdbPlayer.setPercent(percent);
+			},
+			[vdbPlayer],
+		);
+
 		const options = React.useMemo(
 			() => ({
 				onError: handleError,
 				onPlay: handlePlay,
 				onPause: handlePause,
 				onEnded: handleEnded,
+				onTimeUpdate: handleTimeUpdate,
 			}),
-			[handleError, handlePlay, handlePause, handleEnded],
+			[handleError, handlePlay, handlePause, handleEnded, handleTimeUpdate],
 		);
 
 		const handlePlayerChange = React.useCallback(
@@ -453,11 +469,66 @@ const MiniPlayer = observer(
 	},
 );
 
+const seekBarHeight = 8;
+
+const SeekBar = observer(
+	(): React.ReactElement => {
+		const { vdbPlayer, playerRef } = useVdbPlayer();
+
+		const ref = React.useRef<HTMLDivElement>(undefined!);
+
+		const handleClick = React.useCallback(
+			async (e: React.MouseEvent): Promise<void> => {
+				const player = playerRef.current;
+
+				if (!player) return;
+
+				const rect = ref.current.getBoundingClientRect();
+				const fraction = (e.clientX - rect.left) / rect.width;
+
+				const duration = await player.getDuration();
+
+				if (duration === undefined) return;
+
+				await player.setCurrentTime(duration * fraction);
+				await player.play();
+			},
+			[playerRef],
+		);
+
+		return (
+			<div
+				css={{
+					display: 'flex',
+					backgroundColor: 'rgb(157, 157, 157)',
+					width: '100%',
+					height: seekBarHeight,
+					cursor: 'pointer',
+					userSelect: 'none',
+				}}
+				onClick={handleClick}
+				ref={ref}
+			>
+				<div
+					css={{
+						backgroundColor: 'rgb(76, 194, 255)',
+					}}
+					style={{
+						width: `${vdbPlayer.percent * 100}%`,
+					}}
+				/>
+			</div>
+		);
+	},
+);
+
+export const bottomBarHeight = seekBarHeight + controlsHeight;
+
 const BottomBar = React.memo(
 	(): React.ReactElement => {
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
-			document.body.style.paddingBottom = '50px';
+			document.body.style.paddingBottom = `${bottomBarHeight}px`;
 
 			return (): void => {
 				document.body.style.paddingBottom = '';
@@ -477,7 +548,9 @@ const BottomBar = React.memo(
 					flexDirection: 'column',
 				}}
 			>
-				<div>
+				<div css={{ display: 'flex', flexDirection: 'column' }}>
+					<SeekBar />
+
 					<Container>
 						<VdbPlayerControls />
 					</Container>
