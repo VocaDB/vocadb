@@ -16,6 +16,10 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const seekBarHeight = 8;
+const controlsHeight = 48;
+export const bottomBarHeight = seekBarHeight + controlsHeight;
+
 const repeatIcons: Record<RepeatMode, string> = {
 	[RepeatMode.Off]: 'icon-ban-circle',
 	[RepeatMode.All]: 'icon-refresh',
@@ -281,8 +285,6 @@ const VdbPlayerRightControls = observer(
 	},
 );
 
-const controlsHeight = 48;
-
 const VdbPlayerControls = observer(
 	(): React.ReactElement => {
 		return (
@@ -437,7 +439,7 @@ const MiniPlayer = observer(
 						? {
 								position: 'fixed',
 								right: 0,
-								bottom: vdbPlayer.bottomBarVisible ? 50 : 0,
+								bottom: vdbPlayer.bottomBarVisible ? bottomBarHeight : 0,
 								width: 16 * 25,
 								height: 9 * 25,
 								zIndex: 3939,
@@ -468,8 +470,6 @@ const MiniPlayer = observer(
 		);
 	},
 );
-
-const seekBarHeight = 8;
 
 const SeekBar = observer(
 	(): React.ReactElement => {
@@ -521,8 +521,6 @@ const SeekBar = observer(
 		);
 	},
 );
-
-export const bottomBarHeight = seekBarHeight + controlsHeight;
 
 const BottomBar = React.memo(
 	(): React.ReactElement => {
