@@ -3,7 +3,7 @@ import Container from '@/Bootstrap/Container';
 import { AboutDisclaimer } from '@/Components/Shared/Partials/AboutDisclaimer';
 import { Header } from '@/Components/Shared/Partials/Header';
 import { LeftMenu } from '@/Components/Shared/Partials/LeftMenu';
-import { VdbPlayer } from '@/Components/VdbPlayer/VdbPlayer';
+import { miniPlayerHeight, VdbPlayer } from '@/Components/VdbPlayer/VdbPlayer';
 import { ScrollToTop } from '@vocadb/route-sphere';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -18,7 +18,10 @@ const App = (): React.ReactElement => {
 			<div css={{ display: 'flex' }}>
 				<LeftMenu />
 
-				<Container fluid css={{ flex: '1 1 100%' }}>
+				<Container
+					fluid
+					css={{ flex: '1 1 100%', paddingBottom: miniPlayerHeight }}
+				>
 					<div className="row-fluid">
 						<div className="span12 rightFrame well">
 							<React.Suspense fallback={null /* TODO */}>

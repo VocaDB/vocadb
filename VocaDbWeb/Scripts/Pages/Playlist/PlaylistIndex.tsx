@@ -56,6 +56,10 @@ const PlaylistIndex = observer(
 			playQueue.unselectAll();
 		}, [playQueue]);
 
+		const handleClickAddToNewSongList = React.useCallback(() => {
+			// TODO: Implement.
+		}, []);
+
 		const handleClickRemove = React.useCallback(() => {
 			playQueue.removeFromQueue(...playQueue.selectedItems);
 
@@ -94,6 +98,15 @@ const PlaylistIndex = observer(
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
+									onClick={handleClickAddToNewSongList}
+									icons={{ primary: 'ui-icon-plus' }}
+									disabled={true}
+									title="Coming soon!" /* TODO: Remove. */
+								>
+									Add to new song list{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
 									onClick={handleClickRemove}
 									icons={{ primary: ' ui-icon-close' }}
 								>
@@ -117,6 +130,15 @@ const PlaylistIndex = observer(
 									disabled={playQueue.isEmpty}
 								>
 									Add to play queue{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickAddToNewSongList}
+									icons={{ primary: 'ui-icon-plus' }}
+									disabled={true}
+									title="Coming soon!" /* TODO: Remove. */
+								>
+									Add to new song list{/* TODO: localize */}
 								</JQueryUIButton>
 							</>
 						)}

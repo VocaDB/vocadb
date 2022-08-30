@@ -183,11 +183,6 @@ export const MainNavigationItems = React.memo(
 						</Nav.Item>
 					</>
 				)}
-				<Nav.Item>
-					<Nav.Link as={Link} to="/playlist">
-						{t('ViewRes.Search:Index.Playlist')}
-					</Nav.Link>
-				</Nav.Item>
 			</Nav>
 		);
 	},

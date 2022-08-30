@@ -9,12 +9,16 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { PVPlayer, TimeEvent } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+export const miniPlayerWidth = 16 * 25;
+export const miniPlayerHeight = 9 * 25;
 
 const seekBarHeight = 8;
 const controlsHeight = 48;
@@ -26,7 +30,7 @@ const repeatIcons: Record<RepeatMode, string> = {
 	[RepeatMode.One]: 'icon-repeat',
 };
 
-const VdbPlayerLeftControls = observer(
+const PlayerCenterControls = observer(
 	(): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
@@ -46,38 +50,20 @@ const VdbPlayerLeftControls = observer(
 			await player.play();
 		}, [playerRef]);
 
-		React.useEffect(() => {
-			// Returns the disposer.
-			return reaction(
-				() => playQueue.currentItem,
-				async (selectedItem, previousItem) => {
-					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
-					if (selectedItem?.pv.id === previousItem?.pv.id) {
-						const player = playerRef.current;
-
-						if (!player) return;
-
-						await player.setCurrentTime(0);
-						await player.play();
-					}
-				},
-			);
-		}, [playQueue, playerRef]);
-
 		return (
 			<ButtonGroup>
 				<Button
 					variant="inverse"
 					title={
-						`Shuffle: ${vdbPlayer.shuffle ? 'On' : 'Off'}${
+						`Coming soon!` /* TODO: Remove. */ /* TODO: `Shuffle: ${vdbPlayer.shuffle ? 'On' : 'Off'}${
 							vdbPlayer.canAutoplay
 								? ''
 								: ' (Unavailable for this video service)'
-						}` /* TODO: localize */
+						}`*/ /* TODO: localize */
 					}
 					onClick={vdbPlayer.toggleShuffle}
-					disabled={!vdbPlayer.canAutoplay}
-					className={classNames(vdbPlayer.shuffle && 'active')}
+					disabled={true /* TODO: !vdbPlayer.canAutoplay */}
+					className={classNames('hidden-phone', vdbPlayer.shuffle && 'active')}
 				>
 					<i className="icon-random icon-white" />
 				</Button>
@@ -131,6 +117,7 @@ const VdbPlayerLeftControls = observer(
 					}
 					onClick={vdbPlayer.toggleRepeat}
 					disabled={!vdbPlayer.canAutoplay}
+					className="hidden-phone"
 				>
 					<i
 						className={classNames(repeatIcons[vdbPlayer.repeat], 'icon-white')}
@@ -141,12 +128,12 @@ const VdbPlayerLeftControls = observer(
 	},
 );
 
-const VdbPlayerEntryInfo = observer(
+const EntryInfo = observer(
 	(): React.ReactElement => {
 		const { playQueue } = useVdbPlayer();
 
 		return (
-			<div css={{ display: 'flex', alignItems: 'center' }}>
+			<div css={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				{playQueue.currentItem && (
 					<Link
 						to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
@@ -157,9 +144,11 @@ const VdbPlayerEntryInfo = observer(
 								width: 64,
 								height: 36,
 								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundImage: `url(${playQueue.currentItem.entry.mainPicture?.urlThumb})`,
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
+							}}
+							style={{
+								backgroundImage: `url(${playQueue.currentItem.entry.mainPicture?.urlThumb})`,
 							}}
 						/>
 					</Link>
@@ -213,7 +202,7 @@ const VdbPlayerEntryInfo = observer(
 	},
 );
 
-const VdbPlayerRightControls = observer(
+const PlayerRightControls = observer(
 	(): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
@@ -243,7 +232,17 @@ const VdbPlayerRightControls = observer(
 
 		return (
 			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
-				<Dropdown.Toggle variant="inverse">⋯</Dropdown.Toggle>
+				<Dropdown.Toggle variant="inverse">
+					<span
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<MoreHorizontal20Filled />
+					</span>
+				</Dropdown.Toggle>
 				<Dropdown.Menu>
 					<Dropdown.Item as={Link} to="/playlist">
 						Show play queue{/* TODO: localize */}
@@ -262,7 +261,9 @@ const VdbPlayerRightControls = observer(
 					</Dropdown.Item>
 					<Dropdown.Item
 						onClick={vdbPlayer.toggleShuffle}
-						disabled={!vdbPlayer.canAutoplay}
+						disabled={true /* TODO: !vdbPlayer.canAutoplay */}
+						className="visible-phone"
+						title="Coming soon!" /* TODO: Remove. */
 					>
 						{
 							`Shuffle: ${
@@ -273,6 +274,7 @@ const VdbPlayerRightControls = observer(
 					<Dropdown.Item
 						onClick={vdbPlayer.toggleRepeat}
 						disabled={!vdbPlayer.canAutoplay}
+						className="visible-phone"
 					>
 						{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
 					</Dropdown.Item>
@@ -285,7 +287,7 @@ const VdbPlayerRightControls = observer(
 	},
 );
 
-const VdbPlayerControls = observer(
+const PlayerControls = observer(
 	(): React.ReactElement => {
 		return (
 			<div
@@ -295,15 +297,41 @@ const VdbPlayerControls = observer(
 					alignItems: 'center',
 				}}
 			>
-				<VdbPlayerLeftControls />
-
-				<div css={{ flexGrow: 1 }}></div>
-
-				<div css={{ width: 220 }}>
-					<VdbPlayerEntryInfo />
+				<div
+					css={{
+						display: 'flex',
+						justifyContent: 'flex-start',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
+						height: '100%',
+					}}
+				>
+					<div css={{ maxWidth: '100%' }}>
+						<EntryInfo />
+					</div>
 				</div>
-
-				<VdbPlayerRightControls />
+				<div
+					css={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
+						height: '100%',
+					}}
+				>
+					<PlayerCenterControls />
+				</div>
+				<div
+					css={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+						alignItems: 'center',
+						width: 'calc(100% / 3)',
+						height: '100%',
+					}}
+				>
+					<PlayerRightControls />
+				</div>
 			</div>
 		);
 	},
@@ -440,8 +468,8 @@ const MiniPlayer = observer(
 								position: 'fixed',
 								right: 0,
 								bottom: vdbPlayer.bottomBarVisible ? bottomBarHeight : 0,
-								width: 16 * 25,
-								height: 9 * 25,
+								width: miniPlayerWidth,
+								height: miniPlayerHeight,
 								zIndex: 3939,
 						  }
 						: {
@@ -549,8 +577,8 @@ const BottomBar = React.memo(
 				<div css={{ display: 'flex', flexDirection: 'column' }}>
 					<SeekBar />
 
-					<Container>
-						<VdbPlayerControls />
+					<Container fluid>
+						<PlayerControls />
 					</Container>
 				</div>
 			</div>
@@ -562,7 +590,25 @@ export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+
+		React.useEffect(() => {
+			// Returns the disposer.
+			return reaction(
+				() => playQueue.currentItem,
+				async (selectedItem, previousItem) => {
+					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
+					if (selectedItem?.pv.id === previousItem?.pv.id) {
+						const player = playerRef.current;
+
+						if (!player) return;
+
+						await player.setCurrentTime(0);
+						await player.play();
+					}
+				},
+			);
+		}, [playQueue, playerRef]);
 
 		return (
 			<>

@@ -1,9 +1,11 @@
+import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -87,37 +89,69 @@ export const EmbedPVPreview = observer(
 					width: width,
 					height: height,
 				}}
+				ref={embedPVPreviewRef}
 			>
 				<div
 					css={{
 						width: '100%',
 						height: '100%',
 						backgroundColor: 'rgb(28, 28, 28)',
-						backgroundImage: `url(${entry.mainPicture?.urlOriginal})`,
 						backgroundSize: 'cover',
 						backgroundPosition: 'center',
-						cursor: 'pointer',
 					}}
-					onClick={handleClickPlay}
-					ref={embedPVPreviewRef}
+					style={{
+						backgroundImage: `url(${entry.mainPicture?.urlOriginal})`,
+					}}
 				/>
 
 				{(vdbPlayer.playerBounds === undefined ||
 					pv.id !== playQueue.currentItem?.pv.id) && (
 					<>
+						<Button
+							onClick={handleClickPlay}
+							css={{ position: 'absolute', left: 8, bottom: 8 }}
+							style={{
+								padding: 0,
+								width: 40,
+								height: 40,
+								borderRadius: '50%',
+							}}
+						>
+							<span
+								css={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+								}}
+							>
+								<Play20Filled />
+							</span>
+						</Button>
+
 						<Dropdown
 							as={ButtonGroup}
-							css={{ position: 'absolute', right: 8, top: 8 }}
+							drop="up"
+							css={{ position: 'absolute', right: 8, bottom: 8 }}
 						>
 							<Dropdown.Toggle
-								style={{ aspectRatio: '1', borderRadius: '50%' }}
+								style={{
+									padding: 0,
+									width: 40,
+									height: 40,
+									borderRadius: '50%',
+								}}
 							>
-								⋯
+								<span
+									css={{
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}
+								>
+									<MoreHorizontal20Filled />
+								</span>
 							</Dropdown.Toggle>
 							<Dropdown.Menu>
-								<Dropdown.Item onClick={handleClickPlay}>
-									Play{/* TODO: localize */}
-								</Dropdown.Item>
 								<Dropdown.Item onClick={handleClickPlayNext}>
 									Play next{/* TODO: localize */}
 								</Dropdown.Item>

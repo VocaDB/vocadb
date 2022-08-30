@@ -1,6 +1,6 @@
 import { PVService } from '@/Models/PVs/PVService';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export enum RepeatMode {
 	Off = 'Off',
@@ -34,6 +34,13 @@ export class VdbPlayerStore {
 
 	public constructor() {
 		makeObservable(this);
+
+		reaction(
+			() => this.playQueue.currentItem,
+			() => {
+				this.percent = 0;
+			},
+		);
 	}
 
 	@computed public get canAutoplay(): boolean {
