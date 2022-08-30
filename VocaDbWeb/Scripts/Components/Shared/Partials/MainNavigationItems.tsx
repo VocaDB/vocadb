@@ -10,7 +10,7 @@ const loginManager = new LoginManager(vdb.values);
 
 export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
+		const { t } = useTranslation(['ViewRes']);
 
 		return (
 			<Nav className="nav-list">
