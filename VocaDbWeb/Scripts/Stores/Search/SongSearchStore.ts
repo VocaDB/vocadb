@@ -104,7 +104,7 @@ export class SongSearchStore
 	private readonly pvServiceIcons: PVServiceIcons;
 	@observable public since?: number;
 	@observable public songType = SongType.Unspecified;
-	@observable public sort = SongSortRule.Name;
+	@observable public sort = SongSortRule.RatingScore;
 	@observable public unifyEntryTypesAndTags = false;
 	@observable public viewMode: 'Details' | 'PlayList' =
 		'Details' /* TODO: enum */;
@@ -387,7 +387,7 @@ export class SongSearchStore
 		// TODO: shuffle
 		this.since = value.since;
 		this.songType = value.songType ?? SongType.Unspecified;
-		this.sort = value.sort ?? SongSortRule.Name;
+		this.sort = value.sort ?? SongSortRule.RatingScore;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';

@@ -64,7 +64,7 @@ export class ArtistSongsStore
 	public set routeParams(value: ArtistSongsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
-		this.sort = value.sort ?? SongSortRule.Name;
+		this.sort = value.sort ?? SongSortRule.RatingScore;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
