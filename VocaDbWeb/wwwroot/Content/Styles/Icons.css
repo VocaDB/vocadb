@@ -1,19 +1,58 @@
-﻿.acceptLink, .acceptIcon { background-image: url(../Icons/accept.png); }
-.asteriskIcon { background-image: url(../Icons/asterisk_yellow.png); }
-.addLink	{ background-image: url(../Icons/add.png); }
-.deleteLink	{ background-image: url(../Icons/delete.png); }
-.draftIcon	{ background-image: url(../draft.png); }
-.editLink	{ background-image: url(../Icons/edit.png); }
-.errorIcon	{ background-image: url(../Icons/error.png); }
-.heartIcon	{ background-image: url(../Icons/heart.png); }
-.helpLink, .helpIcon { background-image: url(../Icons/help.png); }
-.lockLink, .lockIcon { background-image: url(../Icons/lock.png); }
-.refreshLink	{ background-image: url(../Icons/arrow_refresh.png); }
-.removeLink	{ background-image: url(../Icons/remove.png); }
-.searchLink	{ background-image: url(../Icons/search.png); }
-.starIcon	{ background-image: url(../Icons/star.png); }
-.tickLink, .tickIcon { background-image: url(../Icons/tick.png); }
-.wandIcon	{ background-image: url(../Icons/wand.png); }
+﻿.acceptLink,
+.acceptIcon {
+	background-image: url(../Icons/accept.png);
+}
+.asteriskIcon {
+	background-image: url(../Icons/asterisk_yellow.png);
+}
+.addLink {
+	background-image: url(../Icons/add.png);
+}
+.deleteLink {
+	background-image: url(../Icons/delete.png);
+}
+.draftIcon {
+	background-image: url(../draft.png);
+}
+.editLink {
+	background-image: url(../Icons/edit.png);
+}
+.errorIcon {
+	background-image: url(../Icons/error.png);
+}
+.heartIcon {
+	background-image: url(../Icons/heart.png);
+}
+.helpLink,
+.helpIcon {
+	background-image: url(../Icons/help.png);
+}
+.lockLink,
+.lockIcon {
+	background-image: url(../Icons/lock.png);
+}
+.playLink {
+	background-image: url(../Icons/control_play_blue.png);
+}
+.refreshLink {
+	background-image: url(../Icons/arrow_refresh.png);
+}
+.removeLink {
+	background-image: url(../Icons/remove.png);
+}
+.searchLink {
+	background-image: url(../Icons/search.png);
+}
+.starIcon {
+	background-image: url(../Icons/star.png);
+}
+.tickLink,
+.tickIcon {
+	background-image: url(../Icons/tick.png);
+}
+.wandIcon {
+	background-image: url(../Icons/wand.png);
+}
 
 span.icon {
 	background-position: 3px 7px;
@@ -35,7 +74,7 @@ span.icon-line {
 
 span.helpIcon {
 	display: inline-block;
-	width: 16px; 
+	width: 16px;
 	height: 16px;
 	cursor: help;
 }

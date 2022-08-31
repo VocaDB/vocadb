@@ -12,38 +12,30 @@ export class PVPlayerSoundCloud implements IPVPlayer {
 		public readonly songFinishedCallback?: () => void,
 	) {}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (!reset && this.player) {
-			readyCallback?.();
-			return;
-		}
+	public attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (!reset && this.player) {
+				resolve();
+				return;
+			}
 
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append(
-				$(
-					`<div id='${this.playerElementId}' src='${window.location.protocol}//w.soundcloud.com/player/' />`,
-				),
-			);
-		}
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(
+						`<div id='${this.playerElementId}' src='${window.location.protocol}//w.soundcloud.com/player/' />`,
+					),
+				);
+			}
 
-		this.player = SC.Widget(this.playerElementId);
-		this.player.bind(SC.Widget.Events.FINISH, () => {
-			if (this.player) this.songFinishedCallback?.();
-		});
-
-		this.player.bind(SC.Widget.Events.READY, () => {
-			readyCallback?.();
-		});
-
-		this.player.bind(SC.Widget.Events.ERROR, () => {
-			// Some delay, to let the user read the error message and to prevent infinite loop
-			setTimeout(() => {
+			this.player = SC.Widget(this.playerElementId);
+			this.player.bind(SC.Widget.Events.FINISH, () => {
 				if (this.player) this.songFinishedCallback?.();
-			}, 3000);
+			});
+
+			this.player.bind(SC.Widget.Events.READY, () => resolve());
+
+			this.player.bind(SC.Widget.Events.ERROR, () => reject());
 		});
 	};
 

@@ -55,13 +55,13 @@ const DropdownItem: BsPrefixRefForwardingComponent<
 		});
 
 		return (
-			<li>
+			<li className={classNames(disabled && 'disabled')}>
 				<Component
 					{...props}
 					ref={ref}
 					href={href}
 					disabled={disabled}
-					className={classNames(className, prefix, disabled && 'disabled')}
+					className={classNames(className, prefix)}
 					onClick={handleClick}
 				/>
 			</li>

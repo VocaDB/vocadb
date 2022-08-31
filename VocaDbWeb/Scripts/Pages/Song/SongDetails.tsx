@@ -3,7 +3,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { DeletedBanner } from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
-import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
@@ -91,7 +91,16 @@ const SongDetailsLayout = observer(
 					<>
 						{(model.originalPVs.length > 0 || model.otherPVs.length > 0) && (
 							<div id="pvPlayer" className="song-pv-player">
-								{primaryPV && <EmbedPV pv={primaryPV} />}
+								{primaryPV && (
+									<EmbedPVPreview
+										entry={{
+											...model.contract.song,
+											entryType: EntryType[EntryType.Song],
+										}}
+										pv={primaryPV}
+										allowInline
+									/>
+								)}
 							</div>
 						)}
 						{loginManager.isLoggedIn ? (

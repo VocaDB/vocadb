@@ -11,6 +11,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
@@ -65,6 +66,7 @@ namespace VocaDb.Model.DataContracts.Songs
 					MainPicture = new EntryThumbForApiContract
 					{
 						UrlThumb = thumb,
+						UrlOriginal = VideoServiceHelper.GetMaxSizeThumbUrl(song.PVs.ToList()) ?? thumb,
 					};
 				}
 			}

@@ -22,7 +22,6 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useScript } from '@/Components/useScript';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
@@ -124,9 +123,6 @@ const SongListDetailsLayout = observer(
 		useVocaDbTitle(pageTitle, ready);
 
 		useStoreWithPagination(songListStore);
-
-		useScript('/Scripts/soundcloud-api.js');
-		useScript('https://www.youtube.com/iframe_api');
 
 		const smallThumbUrl = UrlHelper.imageThumb(
 			songList.mainPicture,

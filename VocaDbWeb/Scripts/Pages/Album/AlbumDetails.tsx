@@ -3,6 +3,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { DeletedBanner } from '@/Components/Shared/Partials/EntryDetails/DeletedBanner';
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
@@ -85,6 +86,18 @@ const AlbumDetailsLayout = observer(
 				// TODO: head
 				toolbar={
 					<>
+						{model.primaryPV && (
+							<div className="song-pv-player">
+								<EmbedPVPreview
+									entry={{
+										...model.contract,
+										entryType: EntryType[EntryType.Album],
+									}}
+									pv={model.primaryPV}
+									allowInline
+								/>
+							</div>
+						)}
 						{albumDetailsStore.userHasAlbum ? (
 							<JQueryUIButton
 								as={SafeAnchor}

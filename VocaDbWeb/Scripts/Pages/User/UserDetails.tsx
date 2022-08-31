@@ -3,7 +3,6 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import { useScript } from '@/Components/useScript';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -59,9 +58,6 @@ const UserDetailsLayout = observer(
 		const title = user.name;
 
 		useVocaDbTitle(title, true);
-
-		useScript('/Scripts/soundcloud-api.js');
-		useScript('https://www.youtube.com/iframe_api');
 
 		const ownProfile =
 			loginManager.loggedUser &&

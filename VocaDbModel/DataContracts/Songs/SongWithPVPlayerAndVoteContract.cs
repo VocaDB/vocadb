@@ -21,6 +21,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		public PVService PVService { get; init; }
 
 		[DataMember]
-		public SongWithPVAndVoteContract Song { get; init; }
+		public SongWithPVAndVoteForApiContract Song { get; init; }
 	}
 }

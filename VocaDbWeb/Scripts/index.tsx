@@ -1,4 +1,5 @@
 import App from '@/App';
+import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import '@/i18n';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,7 +10,9 @@ const app = document.getElementById('app');
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<App />
+			<VdbPlayerProvider>
+				<App />
+			</VdbPlayerProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	app,

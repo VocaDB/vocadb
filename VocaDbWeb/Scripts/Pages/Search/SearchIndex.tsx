@@ -9,7 +9,6 @@ import {
 	SongSearchDropdown,
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
-import { useScript } from '@/Components/useScript';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
@@ -104,9 +103,6 @@ const SearchIndex = observer(
 		useVocaDbTitle(undefined, true);
 
 		useStoreWithPagination(searchStore);
-
-		useScript('/Scripts/soundcloud-api.js');
-		useScript('https://www.youtube.com/iframe_api');
 
 		return (
 			<Layout>

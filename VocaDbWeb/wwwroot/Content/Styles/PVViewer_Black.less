@@ -9,12 +9,6 @@
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;
 
-	a,
-	a:visited,
-	a:hover {
-		color: white;
-	}
-
 	// From https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php
 	// Maintain aspect ratio for the embed.
 	.pv-embed-wrapper {
@@ -27,7 +21,8 @@
 
 		iframe,
 		object,
-		embed {
+		embed,
+		.pv-embed-preview {
 			width: 100%;
 			height: 100%;
 			position: absolute;

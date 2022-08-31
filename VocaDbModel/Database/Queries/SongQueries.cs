@@ -664,9 +664,8 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
-#nullable disable
 
-			public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
+		public SongWithPVAndVoteForApiContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
 		{
 			return HandleQuery(session =>
 			{
@@ -682,9 +681,14 @@ namespace VocaDb.Model.Database.Queries
 				if (addHit)
 					AddSongHit(session, song, hostname);
 
-				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference, includePVs);
+				return new SongWithPVAndVoteForApiContract(
+					song: song,
+					vote: vote != null ? vote.Rating : SongVoteRating.Nothing,
+					languagePreference: PermissionContext.LanguagePreference
+				);
 			});
 		}
+#nullable disable
 
 		public SongForApiContract GetSongForApi(int songId, SongOptionalFields fields, ContentLanguagePreference? lang = null)
 		{

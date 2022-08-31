@@ -160,9 +160,3 @@ export class PVPlayerNico implements IPVPlayer {
 
 	public service = PVService.NicoNicoDouga;
 }
-
-declare global {
-	interface Window {
-		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
-	}
-}

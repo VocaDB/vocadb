@@ -57,6 +57,7 @@ declare namespace YT {
 		videoId?: string;
 		playerVars?: PlayerVars;
 		events?: Events;
+		host?: string;
 	}
 
 	interface VideoByIdParams {
@@ -81,7 +82,7 @@ declare namespace YT {
 
 	export class Player {
 		// Constructor
-		constructor(id: string, playerOptions: PlayerOptions);
+		constructor(id: string | HTMLElement, playerOptions: PlayerOptions);
 
 		// Queueing functions
 		loadVideoById(
@@ -117,7 +118,7 @@ declare namespace YT {
 		playVideo(): void;
 		pauseVideo(): void;
 		stopVideo(): void;
-		seekTo(seconds: number, allowSeekAhead: boolean): void;
+		seekTo(seconds: number, allowSeekAhead?: boolean): void;
 		clearVideo(): void;
 
 		// Playlist

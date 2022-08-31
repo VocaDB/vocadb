@@ -1,5 +1,5 @@
 import Button from '@/Bootstrap/Button';
-import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { EntryType } from '@/Models/EntryType';
@@ -54,10 +54,12 @@ export const PlayList = observer(
 
 								{pvPlayerStore.primaryPV && (
 									<div id="pv-player-wrapper">
-										<EmbedPV
+										<EmbedPVPreview
+											entry={{
+												...pvPlayerStore.selectedSong.song,
+												entryType: EntryType[EntryType.Song],
+											}}
 											pv={pvPlayerStore.primaryPV}
-											enableApi={true}
-											id="pv-player"
 										/>
 									</div>
 								)}

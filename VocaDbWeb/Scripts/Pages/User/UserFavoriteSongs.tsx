@@ -1,6 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useScript } from '@/Components/useScript';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
@@ -43,9 +42,6 @@ const UserFavoriteSongsLayout = ({
 	useVocaDbTitle(title, true);
 
 	useStoreWithPagination(ratedSongsStore);
-
-	useScript('/Scripts/soundcloud-api.js');
-	useScript('https://www.youtube.com/iframe_api');
 
 	return (
 		<Layout

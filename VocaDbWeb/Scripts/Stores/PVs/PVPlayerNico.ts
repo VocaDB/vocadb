@@ -56,12 +56,6 @@ declare namespace nico {
 	}
 }
 
-declare global {
-	interface Window {
-		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
-	}
-}
-
 /*
 		Note: I'm not terrible happy about the implementation for now.
 		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.
@@ -88,46 +82,47 @@ export class PVPlayerNico implements IPVPlayer {
 		});
 	}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append($(`<div id='${this.playerElementId}' />`));
-		}
+	public attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(`<div id='${this.playerElementId}' />`),
+				);
+			}
 
-		window.onNicoPlayerFactoryReady = (factory): void => {
-			PVPlayerNico.playerFactory = factory;
-			readyCallback?.();
-		};
+			window.onNicoPlayerFactoryReady = (factory): void => {
+				PVPlayerNico.playerFactory = factory;
+				resolve();
+			};
 
-		if (!PVPlayerNico.scriptLoaded) {
-			$.getScript('https://static.vocadb.net/script/nico/api.js').then(() => {
-				PVPlayerNico.scriptLoaded = true;
+			if (!PVPlayerNico.scriptLoaded) {
+				$.getScript('https://static.vocadb.net/script/nico/api.js').then(() => {
+					PVPlayerNico.scriptLoaded = true;
 
-				window.addEventListener('message', (e: nico.PlayerEvent) => {
-					if (e.data.eventName === 'playerStatusChange') {
-						if (e.data.data.playerStatus === nico.PlayerStatus.End) {
-							this.songFinishedCallback?.();
+					window.addEventListener('message', (e: nico.PlayerEvent) => {
+						if (e.data.eventName === 'playerStatusChange') {
+							if (e.data.data.playerStatus === nico.PlayerStatus.End) {
+								this.songFinishedCallback?.();
+							}
 						}
-					}
-					if (e.data.eventName === 'loadComplete') {
-						this.loadedPv = e.data.data.videoInfo.watchId;
-					}
-					if (e.data.eventName === 'error') {
-						const currentPv = this.loadedPv;
-						window.setTimeout(() => {
-							if (currentPv === this.loadedPv) this.songFinishedCallback?.();
-						}, 3900);
-					}
-				});
+						if (e.data.eventName === 'loadComplete') {
+							this.loadedPv = e.data.data.videoInfo.watchId;
+						}
+						if (e.data.eventName === 'error') {
+							const currentPv = this.loadedPv;
+							window.setTimeout(() => {
+								if (currentPv === this.loadedPv) this.songFinishedCallback?.();
+							}, 3900);
+						}
+					});
 
-				readyCallback?.();
-			});
-		} else {
-			readyCallback?.();
-		}
+					resolve();
+				});
+			} else {
+				resolve();
+			}
+		});
 	};
 
 	public detach = (): void => {

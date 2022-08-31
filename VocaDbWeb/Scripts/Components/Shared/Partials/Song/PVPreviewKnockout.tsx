@@ -1,7 +1,8 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
-import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
+import { EntryType } from '@/Models/EntryType';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -61,7 +62,17 @@ export const PVPreviewKnockout = observer(
 							)}
 					</div>
 				</div>
-				<div>{primaryPV && <EmbedPV pv={primaryPV} />}</div>
+				<div>
+					{primaryPV && (
+						<EmbedPVPreview
+							entry={{
+								...previewStore.selectedSong,
+								entryType: EntryType[EntryType.Song],
+							}}
+							pv={primaryPV}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	},

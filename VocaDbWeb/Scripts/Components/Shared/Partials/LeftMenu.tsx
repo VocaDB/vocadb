@@ -1,7 +1,10 @@
 import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
 import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
+import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -74,9 +77,11 @@ const SocialLink = React.memo(
 	),
 );
 
-export const LeftMenu = React.memo(
+export const LeftMenu = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+
+		const { vdbPlayer } = useVdbPlayer();
 
 		return (
 			<div
@@ -86,7 +91,9 @@ export const LeftMenu = React.memo(
 					flex: '0 1 0',
 					overflowY: 'auto',
 					position: 'sticky',
-					maxHeight: 'calc(100vh - 40px)',
+					maxHeight: vdbPlayer.bottomBarVisible
+						? `calc(100vh - ${40 + bottomBarHeight}px)`
+						: 'calc(100vh - 40px)',
 					top: 40,
 				}}
 			>

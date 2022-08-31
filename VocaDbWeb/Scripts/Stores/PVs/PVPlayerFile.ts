@@ -15,28 +15,27 @@ export class PVPlayerFile implements IPVPlayer {
 		this.service = service;
 	}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (!reset && this.player) {
-			readyCallback?.();
-			return;
-		}
+	public attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (!reset && this.player) {
+				resolve();
+				return;
+			}
 
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append(
-				$(`<audio id='${this.playerElementId}' />`),
-			);
-		}
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(`<audio id='${this.playerElementId}' />`),
+				);
+			}
 
-		this.player = $(`#${this.playerElementId}`)[0] as HTMLAudioElement;
-		this.player.onended = (): void => {
-			if (this.player) this.songFinishedCallback?.();
-		};
+			this.player = $(`#${this.playerElementId}`)[0] as HTMLAudioElement;
+			this.player.onended = (): void => {
+				if (this.player) this.songFinishedCallback?.();
+			};
 
-		readyCallback?.();
+			resolve();
+		});
 	};
 
 	public detach = (): void => {

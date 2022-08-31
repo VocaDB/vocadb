@@ -1,9 +1,17 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
-import { EmbedNico } from '@/Components/Shared/Partials/PV/EmbedNico';
 import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
+import {
+	NostalgicDiva,
+	PVPlayer,
+	PVPlayerOptions,
+} from '@vocadb/nostalgic-diva';
+import _ from 'lodash';
 import React from 'react';
+
+// TODO: Implement lazy loading.
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
 // TODO: Test.
@@ -27,7 +35,7 @@ const getExtension = (path?: string): string | undefined => {
 const isImage = (filename?: string): boolean => {
 	const imageExtensions = ['.jpg', '.png'];
 	const ext = getExtension(filename);
-	return !!ext && imageExtensions.includes(ext);
+	return _.includes(imageExtensions, ext);
 };
 
 const isAudio = (filename?: string): boolean => !isImage(filename);
@@ -39,6 +47,9 @@ interface EmbedPVProps {
 	autoplay?: boolean;
 	enableApi?: boolean;
 	id?: string;
+	playerRef: React.MutableRefObject<PVPlayer | undefined>;
+	options: PVPlayerOptions;
+	onPlayerChange?: (player?: PVPlayer) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -49,9 +60,50 @@ export const EmbedPV = React.memo(
 		autoplay = false,
 		enableApi = false,
 		id,
+		playerRef,
+		options,
+		onPlayerChange,
 	}: EmbedPVProps): React.ReactElement => {
-		switch (PVService[pv.service as keyof typeof PVService]) {
+		VdbPlayerConsole.debug('EmbedPV');
+
+		const service = PVService[pv.service as keyof typeof PVService];
+
+		if (
+			(service === PVService.File || service === PVService.LocalFile) &&
+			isAudio(pv.url)
+		) {
+			return (
+				<div css={{ width: width, height: height }}>
+					<a href={pv.url}>
+						<img
+							style={{ maxWidth: '100%', maxHeight: '100%' }}
+							src={pv.thumbUrl}
+							alt={pv.name}
+						/>
+					</a>
+				</div>
+			);
+		}
+
+		switch (service) {
+			case PVService.File:
+			case PVService.LocalFile:
+			case PVService.NicoNicoDouga:
+			case PVService.SoundCloud:
+			case PVService.Youtube:
+				return (
+					<NostalgicDiva
+						service={pv.service as any}
+						playerRef={playerRef}
+						options={options}
+						onPlayerChange={onPlayerChange}
+					/>
+				);
+
 			case PVService.Bandcamp:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -63,81 +115,21 @@ export const EmbedPV = React.memo(
 				);
 
 			case PVService.Bilibili:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <EmbedBili pv={pv} width={width} height={height} />;
 
-			case PVService.File:
-			case PVService.LocalFile:
-				return isAudio(pv.url) ? (
-					<audio
-						id={id}
-						controls
-						controlsList="nodownload"
-						src={pv.url}
-						css={{ width: width, height: height }}
-					/>
-				) : (
-					<div css={{ width: width, height: height }}>
-						<a href={pv.url}>
-							<img
-								style={{ maxWidth: '100%', maxHeight: '100%' }}
-								src={pv.thumbUrl}
-								alt={pv.name}
-							/>
-						</a>
-					</div>
-				);
-
-			case PVService.NicoNicoDouga:
-				return (
-					<EmbedNico
-						pvId={pv.pvId}
-						width={width}
-						height={height}
-						id={id}
-						enableApi={enableApi}
-					/>
-				);
-
 			case PVService.Piapro:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
-			case PVService.SoundCloud:
-				return (
-					// eslint-disable-next-line jsx-a11y/iframe-has-title
-					<iframe
-						id={id}
-						width={width}
-						height={typeof height === 'number' ? Math.min(height, 166) : height}
-						scrolling="no"
-						frameBorder="no"
-						src={`https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${
-							pv.pvId.split(' ')[0]
-						}&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700`}
-						key={pv.pvId}
-					/>
-				);
-
-			case PVService.Youtube:
-				return (
-					// eslint-disable-next-line jsx-a11y/iframe-has-title
-					<iframe
-						id={id}
-						width={width}
-						height={height}
-						src={`https://www.youtube.com/embed/${pv.pvId}?autoplay=${
-							autoplay ? 1 : 0
-						}&enablejsapi=${enableApi ? 1 : 0}&origin=${
-							enableApi && vdb.values.hostAddress
-						}`}
-						frameBorder="0"
-						// @ts-ignore
-						wmode="Opaque"
-						allowFullScreen
-						key={pv.pvId}
-					/>
-				);
-
 			case PVService.Vimeo:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -154,6 +146,9 @@ export const EmbedPV = React.memo(
 				);
 
 			case PVService.Creofuga:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -167,6 +162,9 @@ export const EmbedPV = React.memo(
 				);
 
 			default:
+				// TODO: Remove.
+				playerRef.current = undefined;
+
 				return <></>;
 		}
 	},

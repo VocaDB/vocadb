@@ -1,5 +1,5 @@
 import Button from '@/Bootstrap/Button';
-import { EmbedPV } from '@/Components/Shared/Partials/PV/EmbedPV';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { showSuccessMessage } from '@/Components/ui';
 import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { PVHelper } from '@/Helpers/PVHelper';
@@ -17,12 +17,35 @@ import { Link } from 'react-router-dom';
 const loginManager = new LoginManager(vdb.values);
 
 interface RatingBarProps {
-	pvRatingButtonsStore: PVRatingButtonsStore;
+	pvRatingButtonsStore: PVRatingButtonsStore | undefined;
 }
 
 const RatingBar = observer(
 	({ pvRatingButtonsStore }: RatingBarProps): React.ReactElement => {
 		const { t } = useTranslation(['AjaxRes', 'ViewRes.Song']);
+
+		if (!pvRatingButtonsStore) {
+			return (
+				<span className="ratingButtons">
+					<Button
+						href="#"
+						disabled
+						variant="inverse"
+						style={{ color: 'white' }}
+					>
+						{t('ViewRes.Song:Details.Like')}
+					</Button>{' '}
+					<Button
+						href="#"
+						disabled
+						variant="inverse"
+						style={{ color: 'white' }}
+					>
+						{t('ViewRes.Song:Details.AddToFavorites')}
+					</Button>
+				</span>
+			);
+		}
 
 		return pvRatingButtonsStore.isRated ? (
 			<Button
@@ -34,6 +57,7 @@ const RatingBar = observer(
 					'ratingButtons',
 				)}
 				variant="inverse"
+				style={{ color: 'white' }}
 			>
 				{t('ViewRes.Song:Details.RemoveFromFavorites')}
 			</Button>
@@ -46,12 +70,11 @@ const RatingBar = observer(
 
 						showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 					}}
-					className={classNames(
-						(!loginManager.isLoggedIn ||
-							pvRatingButtonsStore.ratingInProgress) &&
-							'disabled',
-					)}
+					disabled={
+						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
+					}
 					variant="inverse"
+					style={{ color: 'white' }}
 				>
 					{t('ViewRes.Song:Details.Like')}
 				</Button>{' '}
@@ -62,12 +85,11 @@ const RatingBar = observer(
 
 						showSuccessMessage(t('AjaxRes:Song.ThanksForRating'));
 					}}
-					className={classNames(
-						(!loginManager.isLoggedIn ||
-							pvRatingButtonsStore.ratingInProgress) &&
-							'disabled',
-					)}
+					disabled={
+						!loginManager.isLoggedIn || pvRatingButtonsStore.ratingInProgress
+					}
 					variant="inverse"
+					style={{ color: 'white' }}
 				>
 					{t('ViewRes.Song:Details.AddToFavorites')}
 				</Button>
@@ -99,7 +121,10 @@ export const PVContent = observer(
 						className="pvViewer-songName"
 						title={selectedSong.additionalNames}
 					>
-						<Link to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}>
+						<Link
+							to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}
+							style={{ color: 'white' }}
+						>
 							{selectedSong.name}
 						</Link>
 					</span>{' '}
@@ -116,20 +141,25 @@ export const PVContent = observer(
 					{selectedSong.additionalNames}
 				</span>
 				<div className="pull-right" id="rating-bar">
-					{pvPlayerStore.ratingButtonsStore && (
-						<RatingBar
-							pvRatingButtonsStore={pvPlayerStore.ratingButtonsStore}
-						/>
-					)}
+					<RatingBar pvRatingButtonsStore={pvPlayerStore.ratingButtonsStore} />
 				</div>
 				<div className="pv-embed-wrapper">
-					{primaryPV && <EmbedPV pv={primaryPV} width={560} height={340} />}
+					{primaryPV && (
+						<EmbedPVPreview
+							entry={{ ...selectedSong, entryType: EntryType[EntryType.Song] }}
+							pv={primaryPV}
+							width={560}
+							height={340}
+							allowInline
+						/>
+					)}
 				</div>
 				<Button
 					as={Link}
 					variant="info"
 					className="songInfoButton pull-right"
 					to={EntryUrlMapper.details(EntryType.Song, selectedSong.id)}
+					style={{ color: 'white' }}
 				>
 					<i className="icon icon-info-sign" />{' '}
 					{t('ViewRes.Home:Index.ViewSongInfo')}
