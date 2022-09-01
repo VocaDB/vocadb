@@ -3,17 +3,6 @@ import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';
 
-const useJQueryUICheckbox = (
-	el: React.RefObject<any>,
-	options: JQueryUI.ButtonOptions,
-): void => {
-	React.useLayoutEffect(() => {
-		const $el = $(el.current);
-		$el.button(options);
-		return (): void => $el.button('destroy');
-	});
-};
-
 type JQueryUICheckboxProps = {} & JQueryUI.ButtonOptions &
 	React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -27,7 +16,17 @@ const JQueryUICheckbox: BsPrefixRefForwardingComponent<
 			ref,
 			() => el.current,
 		);
-		useJQueryUICheckbox(el, { disabled: disabled, icons: icons });
+
+		const options = React.useMemo(
+			() => ({ disabled: disabled, icons: icons }),
+			[disabled, icons],
+		);
+
+		React.useLayoutEffect(() => {
+			const $el = $(el.current);
+			$el.button(options);
+			return (): void => $el.button('destroy');
+		}, [options]);
 
 		return (
 			<>
