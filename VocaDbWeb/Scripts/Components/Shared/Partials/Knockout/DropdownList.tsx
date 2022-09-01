@@ -74,7 +74,7 @@ export const UserLanguageCultureDropdownList = React.memo(
 		return (
 			<select {...props}>
 				{props.placeholder !== undefined && (
-					<option>{props.placeholder}</option>
+					<option value="">{props.placeholder}</option>
 				)}
 				{Object.entries(userLanguageCultures).map(([key, value]) => (
 					<option value={key} key={key}>
