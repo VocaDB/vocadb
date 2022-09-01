@@ -1,10 +1,14 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
-import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import {
+	EmbedPiapro,
+	getPiaproTimestamp,
+} from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
 import {
 	NostalgicDiva,
+	PVService as NostalgicDivaPVService,
 	PVPlayer,
 	PVPlayerOptions,
 } from '@vocadb/nostalgic-diva';
@@ -68,21 +72,36 @@ export const EmbedPV = React.memo(
 
 		const service = PVService[pv.service as keyof typeof PVService];
 
-		if (
-			(service === PVService.File || service === PVService.LocalFile) &&
-			isAudio(pv.url)
-		) {
-			return (
-				<div css={{ width: width, height: height }}>
-					<a href={pv.url}>
-						<img
-							style={{ maxWidth: '100%', maxHeight: '100%' }}
-							src={pv.thumbUrl}
-							alt={pv.name}
-						/>
-					</a>
-				</div>
-			);
+		switch (service) {
+			case PVService.File:
+			case PVService.LocalFile:
+				if (!isAudio(pv.url)) {
+					return (
+						<div css={{ width: width, height: height }}>
+							<a href={pv.url}>
+								<img
+									style={{ maxWidth: '100%', maxHeight: '100%' }}
+									src={pv.thumbUrl}
+									alt={pv.name}
+								/>
+							</a>
+						</div>
+					);
+				}
+
+				break;
+
+			case PVService.Piapro:
+				return getPiaproTimestamp(pv) !== undefined ? (
+					<NostalgicDiva
+						service={NostalgicDivaPVService.File}
+						playerRef={playerRef}
+						options={options}
+						onPlayerChange={onPlayerChange}
+					/>
+				) : (
+					<EmbedPiapro pv={pv} width={width} height={height} />
+				);
 		}
 
 		switch (service) {
@@ -93,7 +112,7 @@ export const EmbedPV = React.memo(
 			case PVService.Youtube:
 				return (
 					<NostalgicDiva
-						service={pv.service as any}
+						service={pv.service as NostalgicDivaPVService}
 						playerRef={playerRef}
 						options={options}
 						onPlayerChange={onPlayerChange}
@@ -119,12 +138,6 @@ export const EmbedPV = React.memo(
 				playerRef.current = undefined;
 
 				return <EmbedBili pv={pv} width={width} height={height} />;
-
-			case PVService.Piapro:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
-				return <EmbedPiapro pv={pv} width={width} height={height} />;
 
 			case PVService.Vimeo:
 				// TODO: Remove.

@@ -1,3 +1,4 @@
+import { getPiaproTimestamp } from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { PVService } from '@/Models/PVs/PVService';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
@@ -44,13 +45,17 @@ export class VdbPlayerStore {
 	}
 
 	@computed public get canAutoplay(): boolean {
-		return (
-			!!this.playQueue.currentItem &&
-			VdbPlayerStore.autoplayServices.includes(
-				PVService[
-					this.playQueue.currentItem.pv.service as keyof typeof PVService
-				],
-			)
+		const currentItem = this.playQueue.currentItem;
+
+		if (!currentItem) return false;
+
+		const { pv } = currentItem;
+
+		if (pv.service === PVService[PVService.Piapro])
+			return getPiaproTimestamp(pv) !== undefined;
+
+		return VdbPlayerStore.autoplayServices.includes(
+			PVService[pv.service as keyof typeof PVService],
 		);
 	}
 

@@ -5,6 +5,26 @@ interface PiaproMetadata {
 	Timestamp?: string;
 }
 
+export const getPiaproTimestamp = (pv: PVContract): string | undefined => {
+	const meta = pv.extendedMetadata
+		? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
+		: undefined;
+
+	return meta?.Timestamp;
+};
+
+export const getPiaproUrlWithTimestamp = (
+	pv: PVContract,
+): string | undefined => {
+	const timestamp = getPiaproTimestamp(pv);
+
+	if (timestamp === undefined) return undefined;
+
+	return `https://cdn.piapro.jp/mp3_a/${pv.pvId.slice(0, 2)}/${
+		pv.pvId
+	}_${timestamp}_audition.mp3`;
+};
+
 interface EmbedPiaproProps {
 	pv: PVContract;
 	width?: number | string;
@@ -13,20 +33,7 @@ interface EmbedPiaproProps {
 
 export const EmbedPiapro = React.memo(
 	({ pv, width, height }: EmbedPiaproProps): React.ReactElement => {
-		const meta = pv.extendedMetadata
-			? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
-			: undefined;
-
-		return meta && meta.Timestamp ? (
-			<audio
-				controls
-				controlsList="nodownload"
-				src={`https://cdn.piapro.jp/mp3_a/${pv.pvId.slice(0, 2)}/${pv.pvId}_${
-					meta.Timestamp
-				}_audition.mp3`}
-				css={{ width: width, height: height }}
-			/>
-		) : (
+		return (
 			// <object> embed instead of iframe because iframe doesn't work with flash disabled
 			<object
 				type="application/x-shockwave-flash"

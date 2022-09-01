@@ -2,10 +2,12 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Container from '@/Bootstrap/Container';
 import Dropdown from '@/Bootstrap/Dropdown';
+import { getPiaproUrlWithTimestamp } from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
@@ -431,7 +433,12 @@ const EmbedPVWrapper = observer(
 				try {
 					if (!player) return;
 
-					await player.loadVideo(pv.pvId);
+					const pvId =
+						pv.service === PVService[PVService.Piapro]
+							? getPiaproUrlWithTimestamp(pv)!
+							: pv.pvId;
+
+					await player.loadVideo(pvId);
 					await player.play();
 				} catch (error) {
 					VdbPlayerConsole.error(
