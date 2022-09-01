@@ -300,7 +300,8 @@ const EventEditSeriesLayout = observer(
 									value={releaseEventSeriesEditStore.category}
 									onChange={(e): void =>
 										runInAction(() => {
-											releaseEventSeriesEditStore.category = e.target.value;
+											releaseEventSeriesEditStore.category = e.target
+												.value as EventCategory;
 										})
 									}
 								/>
@@ -397,7 +398,7 @@ const EventEditSeriesLayout = observer(
 );
 
 const defaultModel: ReleaseEventSeriesForEditContract = {
-	category: EventCategory[EventCategory.Unspecified],
+	category: EventCategory.Unspecified,
 	defaultNameLanguage:
 		ContentLanguageSelection[ContentLanguageSelection.Unspecified],
 	deleted: false,

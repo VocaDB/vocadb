@@ -54,8 +54,8 @@ const EventSeriesDetailsLayout = ({
 	]);
 
 	const subtitle =
-		series.category === EventCategory[EventCategory.Unspecified] ||
-		series.category === EventCategory[EventCategory.Other]
+		series.category === EventCategory.Unspecified ||
+		series.category === EventCategory.Other
 			? t('ViewRes:Misc.EventSeries')
 			: t(
 					`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${series.category}`,

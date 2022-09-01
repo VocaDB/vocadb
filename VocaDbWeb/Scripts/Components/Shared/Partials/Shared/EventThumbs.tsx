@@ -11,7 +11,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const getCategory = (event: ReleaseEventContract): string => {
+const getCategory = (event: ReleaseEventContract): EventCategory => {
 	return event.series?.category ?? event.category;
 };
 
@@ -68,8 +68,8 @@ export const EventThumbs = ({
 							{event.name}
 						</Link>
 						<br />
-						{getCategory(event) !== EventCategory[EventCategory.Unspecified] &&
-							getCategory(event) !== EventCategory[EventCategory.Other] && (
+						{getCategory(event) !== EventCategory.Unspecified &&
+							getCategory(event) !== EventCategory.Other && (
 								<>
 									(
 									{t(

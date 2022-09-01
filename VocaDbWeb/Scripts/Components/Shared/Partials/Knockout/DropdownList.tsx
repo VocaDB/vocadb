@@ -23,15 +23,13 @@ export const ReleaseEventCategoryDropdownList = React.memo(
 
 		return (
 			<select {...props}>
-				{Object.values(EventCategory)
-					.filter((eventCategory) => isNaN(Number(eventCategory)))
-					.map((eventCategory) => (
-						<option value={eventCategory} key={eventCategory}>
-							{t(
-								`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${eventCategory}`,
-							)}
-						</option>
-					))}
+				{Object.values(EventCategory).map((eventCategory) => (
+					<option value={eventCategory} key={eventCategory}>
+						{t(
+							`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${eventCategory}`,
+						)}
+					</option>
+				))}
 			</select>
 		);
 	},

@@ -133,8 +133,8 @@ const EventDetailsLayout = observer(
 		]);
 
 		const subtitle =
-			event.inheritedCategory === EventCategory[EventCategory.Unspecified] ||
-			event.inheritedCategory === EventCategory[EventCategory.Other]
+			event.inheritedCategory === EventCategory.Unspecified ||
+			event.inheritedCategory === EventCategory.Other
 				? t('ViewRes.Event:Details.Event')
 				: t(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,

@@ -52,8 +52,8 @@ export const EventSeriesThumbs = ({
 						>
 							{event.name}
 						</Link>
-						{event.category !== EventCategory[EventCategory.Unspecified] &&
-							event.category !== EventCategory[EventCategory.Other] && (
+						{event.category !== EventCategory.Unspecified &&
+							event.category !== EventCategory.Other && (
 								<>
 									{' '}
 									(

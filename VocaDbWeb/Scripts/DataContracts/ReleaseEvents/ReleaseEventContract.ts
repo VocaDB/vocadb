@@ -7,6 +7,7 @@ import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
 
 // Matches ReleaseEventForApiContract
 export interface ReleaseEventContract {
@@ -14,7 +15,7 @@ export interface ReleaseEventContract {
 
 	artists: ArtistForEventContract[];
 
-	category: string;
+	category: EventCategory;
 
 	date?: string;
 

@@ -1,4 +1,5 @@
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -33,7 +34,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 						artists: [],
 						name: term!,
 						webLinks: [],
-						category: 'Unspecified',
+						category: EventCategory.Unspecified,
 						defaultNameLanguage: 'Undefined',
 					},
 				);

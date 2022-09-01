@@ -3,6 +3,7 @@ import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/Relea
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
@@ -41,7 +42,7 @@ export class EventArtistRolesEditStore extends ArtistRolesEditStore {
 export class ReleaseEventEditStore {
 	@observable public readonly artistLinks: ArtistForEventEditStore[];
 	public readonly artistRolesEditStore: EventArtistRolesEditStore;
-	@observable public category: string /* TODO: enum */;
+	@observable public category: EventCategory;
 	@observable public customName: boolean;
 	// Event date. This should always be in UTC.
 	@observable public date?: Date;

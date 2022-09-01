@@ -251,7 +251,8 @@ const BasicInfoTabContent = observer(
 										value={releaseEventEditStore.category}
 										onChange={(e): void =>
 											runInAction(() => {
-												releaseEventEditStore.category = e.target.value;
+												releaseEventEditStore.category = e.target
+													.value as EventCategory;
 											})
 										}
 									/>
@@ -802,7 +803,7 @@ const EventEditLayout = observer(
 
 const defaultModel: ReleaseEventForEditContract = {
 	artists: [],
-	category: EventCategory[EventCategory.Unspecified],
+	category: EventCategory.Unspecified,
 	customName: false,
 	defaultNameLanguage:
 		ContentLanguageSelection[ContentLanguageSelection.Unspecified],

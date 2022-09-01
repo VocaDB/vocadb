@@ -1,4 +1,5 @@
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
@@ -7,7 +8,7 @@ import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class ReleaseEventSeriesEditStore {
-	@observable public category: string /* TODO: enum */;
+	@observable public category: EventCategory;
 	@observable public defaultNameLanguage: string;
 	public readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.deleteSeries({

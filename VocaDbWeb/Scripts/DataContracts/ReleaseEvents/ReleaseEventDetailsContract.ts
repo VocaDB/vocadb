@@ -12,6 +12,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
 
 // Corresponds to the ReleaseEventDetailsForApiContract record class in C#.
 export interface ReleaseEventDetailsContract {
@@ -25,7 +26,7 @@ export interface ReleaseEventDetailsContract {
 	endDate?: Date;
 	eventAssociationType: string /* TODO: enum */;
 	id: number;
-	inheritedCategory: string /* TODO: enum */;
+	inheritedCategory: EventCategory;
 	inheritedCategoryTag?: TagBaseContract;
 	latestComments: CommentContract[];
 	mainPicture?: EntryThumbContract;

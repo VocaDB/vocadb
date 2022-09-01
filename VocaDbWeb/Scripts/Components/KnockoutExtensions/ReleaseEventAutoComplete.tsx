@@ -3,6 +3,7 @@ import {
 	EntryAutoCompleteParams,
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
 import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +35,7 @@ export const ReleaseEventAutoComplete = ({
 					artists: [],
 					name: term!,
 					webLinks: [],
-					category: 'Unspecified',
+					category: EventCategory.Unspecified,
 					defaultNameLanguage: 'Undefined',
 				},
 			);
