@@ -18,4 +18,4 @@ jobs:
     steps:
       - uses: dessant/lock-threads@v3
         with:
-          issue-inactive-days: 0
+          issue-inactive-days: 60
