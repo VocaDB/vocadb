@@ -1,6 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
+import { CookieConcentBanner } from '@/Components/Shared/Partials/PV/CookieConcentBanner';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
@@ -171,6 +172,10 @@ export const EmbedPVPreview = observer(
 		React.useLayoutEffect(() => {
 			return reaction(() => playQueue.currentItem?.pv.id, handleResize);
 		}, [playQueue, handleResize]);
+
+		if (true) {
+			return <CookieConcentBanner />;
+		}
 
 		return (
 			<div
