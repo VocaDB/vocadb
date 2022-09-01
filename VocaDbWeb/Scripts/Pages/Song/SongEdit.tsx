@@ -820,6 +820,14 @@ const SongEditLayout = observer(
 					onSubmit={async (e): Promise<void> => {
 						e.preventDefault();
 
+						if (
+							songEditStore.hasValidationErrors &&
+							songEditStore.status !== EntryStatus[EntryStatus.Draft] &&
+							window.confirm(t('ViewRes:EntryEdit.SaveWarning')) === false
+						) {
+							return;
+						}
+
 						try {
 							const requestToken = await antiforgeryRepo.getToken();
 
