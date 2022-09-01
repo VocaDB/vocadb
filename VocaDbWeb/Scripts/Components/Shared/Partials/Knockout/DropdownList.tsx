@@ -8,8 +8,26 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { PVType } from '@/Models/PVs/PVType';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+let nextEventCategoryOrder = 1;
+const eventCategoryOrders: Record<EventCategory, number> = {
+	[EventCategory.Unspecified]: nextEventCategoryOrder++,
+	[EventCategory.AlbumRelease]: nextEventCategoryOrder++,
+	[EventCategory.Anniversary]: nextEventCategoryOrder++,
+	[EventCategory.Club]: nextEventCategoryOrder++,
+	[EventCategory.Concert]: nextEventCategoryOrder++,
+	[EventCategory.Contest]: nextEventCategoryOrder++,
+	[EventCategory.Festival]: nextEventCategoryOrder++,
+	[EventCategory.Convention]: nextEventCategoryOrder++,
+	[EventCategory.Other]: nextEventCategoryOrder++,
+};
+
+const eventCategories = _.chain(Object.values(EventCategory))
+	.orderBy((eventCategory) => eventCategoryOrders[eventCategory])
+	.value();
 
 interface DropdownListProps
 	extends React.DetailedHTMLProps<
@@ -23,7 +41,7 @@ export const ReleaseEventCategoryDropdownList = React.memo(
 
 		return (
 			<select {...props}>
-				{Object.values(EventCategory).map((eventCategory) => (
+				{eventCategories.map((eventCategory) => (
 					<option value={eventCategory} key={eventCategory}>
 						{t(
 							`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${eventCategory}`,
