@@ -8,4 +8,5 @@ export enum EventCategory {
 	Contest = 1 << 4,
 	Convention = 1 << 5,
 	Other = 1 << 6,
+	Festival = 1 << 7,
 }
