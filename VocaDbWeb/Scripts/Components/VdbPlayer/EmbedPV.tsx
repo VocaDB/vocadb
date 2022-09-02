@@ -6,12 +6,8 @@ import {
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
-import {
-	NostalgicDiva,
-	PVService as NostalgicDivaPVService,
-	PVPlayer,
-	PVPlayerOptions,
-} from '@vocadb/nostalgic-diva';
+import { NostalgicDiva } from '@vocadb/nostalgic-diva';
+import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
 import _ from 'lodash';
 import React from 'react';
 
@@ -44,16 +40,23 @@ const isImage = (filename?: string): boolean => {
 
 const isAudio = (filename?: string): boolean => !isImage(filename);
 
+const playerTypes: Record<string, PlayerType> = {
+	[PVService[PVService.File]]: 'Audio',
+	[PVService[PVService.LocalFile]]: 'Audio',
+	[PVService[PVService.NicoNicoDouga]]: 'Niconico',
+	[PVService[PVService.Piapro]]: 'Audio',
+	[PVService[PVService.SoundCloud]]: 'SoundCloud',
+	[PVService[PVService.Vimeo]]: 'Vimeo',
+	[PVService[PVService.Youtube]]: 'YouTube',
+};
+
 interface EmbedPVProps {
 	pv: PVContract;
 	width?: number | string;
 	height?: number | string;
-	autoplay?: boolean;
-	enableApi?: boolean;
-	id?: string;
-	playerRef: React.MutableRefObject<PVPlayer | undefined>;
-	options: PVPlayerOptions;
-	onPlayerChange?: (player?: PVPlayer) => void;
+	playerRef: React.MutableRefObject<PlayerApi | undefined>;
+	options: PlayerOptions;
+	onPlayerChange?: (player?: PlayerApi) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -61,9 +64,6 @@ export const EmbedPV = React.memo(
 		pv,
 		width = 560,
 		height = 315,
-		autoplay = false,
-		enableApi = false,
-		id,
 		playerRef,
 		options,
 		onPlayerChange,
@@ -92,27 +92,24 @@ export const EmbedPV = React.memo(
 				break;
 
 			case PVService.Piapro:
-				return getPiaproTimestamp(pv) !== undefined ? (
-					<NostalgicDiva
-						service={NostalgicDivaPVService.File}
-						playerRef={playerRef}
-						options={options}
-						onPlayerChange={onPlayerChange}
-					/>
-				) : (
-					<EmbedPiapro pv={pv} width={width} height={height} />
-				);
+				if (getPiaproTimestamp(pv) === undefined) {
+					return <EmbedPiapro pv={pv} width={width} height={height} />;
+				}
+
+				break;
 		}
 
 		switch (service) {
 			case PVService.File:
 			case PVService.LocalFile:
 			case PVService.NicoNicoDouga:
+			case PVService.Piapro:
 			case PVService.SoundCloud:
+			case PVService.Vimeo:
 			case PVService.Youtube:
 				return (
 					<NostalgicDiva
-						service={pv.service as NostalgicDivaPVService}
+						type={playerTypes[pv.service]}
 						playerRef={playerRef}
 						options={options}
 						onPlayerChange={onPlayerChange}
@@ -138,25 +135,6 @@ export const EmbedPV = React.memo(
 				playerRef.current = undefined;
 
 				return <EmbedBili pv={pv} width={width} height={height} />;
-
-			case PVService.Vimeo:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
-				return (
-					// eslint-disable-next-line jsx-a11y/iframe-has-title
-					<iframe
-						src={`https://player.vimeo.com/video/${pv.pvId}`}
-						width={width}
-						height={height}
-						frameBorder="0"
-						// @ts-ignore
-						webkitAllowFullScreen
-						mozallowfullscreen
-						allowFullScreen
-						key={pv.pvId}
-					/>
-				);
 
 			case PVService.Creofuga:
 				// TODO: Remove.

@@ -12,7 +12,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import { PVPlayer, TimeEvent } from '@vocadb/nostalgic-diva';
+import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -429,7 +429,7 @@ const EmbedPVWrapper = observer(
 		);
 
 		const handlePlayerChange = React.useCallback(
-			async (player?: PVPlayer) => {
+			async (player?: PlayerApi) => {
 				try {
 					if (!player) return;
 
@@ -456,7 +456,6 @@ const EmbedPVWrapper = observer(
 				pv={pv}
 				width="100%"
 				height="100%"
-				enableApi={true}
 				playerRef={playerRef}
 				options={options}
 				onPlayerChange={handlePlayerChange}

@@ -1,12 +1,12 @@
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { VdbPlayerStore } from '@/Stores/VdbPlayer/VdbPlayerStore';
-import { PVPlayer } from '@vocadb/nostalgic-diva';
+import { PlayerApi } from '@vocadb/nostalgic-diva';
 import React from 'react';
 
 interface VdbPlayerContextProps {
 	vdbPlayer: VdbPlayerStore;
 	playQueue: PlayQueueStore;
-	playerRef: React.MutableRefObject<PVPlayer | undefined>;
+	playerRef: React.MutableRefObject<PlayerApi | undefined>;
 }
 
 const VdbPlayerContext = React.createContext<VdbPlayerContextProps>(undefined!);
@@ -20,7 +20,7 @@ export const VdbPlayerProvider = ({
 }: VdbPlayerProviderProps): React.ReactElement => {
 	const [vdbPlayer] = React.useState(() => new VdbPlayerStore());
 
-	const playerRef = React.useRef<PVPlayer>();
+	const playerRef = React.useRef<PlayerApi>();
 
 	return (
 		<VdbPlayerContext.Provider

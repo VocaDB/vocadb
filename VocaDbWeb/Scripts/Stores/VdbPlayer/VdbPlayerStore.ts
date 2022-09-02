@@ -21,6 +21,7 @@ export class VdbPlayerStore {
 		PVService.File,
 		PVService.LocalFile,
 		PVService.NicoNicoDouga,
+		PVService.Vimeo,
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
