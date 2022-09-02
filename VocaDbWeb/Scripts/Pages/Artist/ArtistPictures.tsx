@@ -39,7 +39,7 @@ const ArtistPictures = React.memo(
 				artistDetailsStore={artistDetailsStore}
 				tab="pictures"
 			>
-				<ul className="thumbs">
+				<div className="thumbs">
 					<ThumbItem
 						href={`/Artist/Picture/${artist.id}`}
 						thumbUrl={`/Artist/PictureThumb/${artist.id}`}
@@ -50,7 +50,7 @@ const ArtistPictures = React.memo(
 							<ArtistPictureThumbItem picture={picture} />
 						</React.Fragment>
 					))}
-				</ul>
+				</div>
 			</ArtistDetailsTabs>
 		);
 	},

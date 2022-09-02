@@ -23,7 +23,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	...props
 }: ThumbItemProps): React.ReactElement => {
 	return (
-		<li>
+		<div>
 			<Component {...props}>
 				<div className="pictureFrame">
 					{entry ? (
@@ -51,7 +51,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 					)}
 				</div>
 			</Component>
-			{caption && <p>{caption}</p>}
-		</li>
+			{caption && <span>{caption}</span>}
+		</div>
 	);
 };

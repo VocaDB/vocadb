@@ -38,11 +38,11 @@ interface AlbumThumbsProps {
 export const AlbumThumbs = React.memo(
 	({ albums, tooltip }: AlbumThumbsProps): React.ReactElement => {
 		return (
-			<ul className="smallThumbs">
+			<div className="smallThumbs">
 				{albums.map((album) => (
 					<AlbumThumbItem album={album} tooltip={tooltip} key={album.id} />
 				))}
-			</ul>
+			</div>
 		);
 	},
 );

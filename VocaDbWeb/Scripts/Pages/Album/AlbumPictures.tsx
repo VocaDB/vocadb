@@ -40,7 +40,7 @@ const AlbumPictures = React.memo(
 				albumDetailsStore={albumDetailsStore}
 				tab="pictures"
 			>
-				<ul className="thumbs">
+				<div className="thumbs">
 					<ThumbItem
 						href={`/Album/CoverPicture/${model.id}?${qs.stringify({
 							v: model.version,
@@ -51,7 +51,7 @@ const AlbumPictures = React.memo(
 					{model.pictures.map((picture, index) => (
 						<AlbumPictureThumbItem picture={picture} key={index} />
 					))}
-				</ul>
+				</div>
 			</AlbumDetailsTabs>
 		);
 	},
