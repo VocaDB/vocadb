@@ -166,26 +166,24 @@ const EntryInfo = observer(
 				>
 					{playQueue.currentItem && (
 						<>
-							<div>
-								<Link
-									to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
-									css={css`
+							<Link
+								to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
+								css={css`
+									color: white;
+									&:hover {
 										color: white;
-										&:hover {
-											color: white;
-										}
-										&:visited {
-											color: white;
-										}
-										font-weight: bold;
-										overflow: hidden;
-										text-overflow: ellipsis;
-										white-space: nowrap;
-									`}
-								>
-									{playQueue.currentItem.entry.name}
-								</Link>
-							</div>
+									}
+									&:visited {
+										color: white;
+									}
+									font-weight: bold;
+									overflow: hidden;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+								`}
+							>
+								{playQueue.currentItem.entry.name}
+							</Link>
 							<div css={{ display: 'flex' }}>
 								<span
 									css={{
