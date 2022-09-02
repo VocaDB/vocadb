@@ -7,31 +7,42 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+interface AlbumThumbItemProps {
+	album: AlbumForApiContract;
+	tooltip?: boolean;
+}
+
+const AlbumThumbItem = React.memo(
+	({ album, tooltip }: AlbumThumbItemProps): React.ReactElement => {
+		return (
+			<ThumbItem
+				as={Link}
+				to={EntryUrlMapper.details(EntryType.Album, album.id)}
+				thumbUrl={
+					UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
+					'/Content/unknown.png'
+				}
+				caption={album.name}
+				entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
+				tooltip={tooltip}
+			/>
+		);
+	},
+);
+
 interface AlbumThumbsProps {
 	albums: AlbumForApiContract[];
 	tooltip?: boolean;
 }
 
-export const AlbumThumbs = ({
-	albums,
-	tooltip,
-}: AlbumThumbsProps): React.ReactElement => {
-	return (
-		<ul className="smallThumbs">
-			{albums.map((album) => (
-				<ThumbItem
-					as={Link}
-					to={EntryUrlMapper.details(EntryType.Album, album.id)}
-					thumbUrl={
-						UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
-						'/Content/unknown.png'
-					}
-					caption={album.name}
-					entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
-					tooltip={tooltip}
-					key={album.id}
-				/>
-			))}
-		</ul>
-	);
-};
+export const AlbumThumbs = React.memo(
+	({ albums, tooltip }: AlbumThumbsProps): React.ReactElement => {
+		return (
+			<ul className="smallThumbs">
+				{albums.map((album) => (
+					<AlbumThumbItem album={album} tooltip={tooltip} key={album.id} />
+				))}
+			</ul>
+		);
+	},
+);
