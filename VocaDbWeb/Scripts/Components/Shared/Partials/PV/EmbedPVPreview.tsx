@@ -4,11 +4,23 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { EntryType } from '@/Models/EntryType';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+	SongOptionalField,
+} from '@/Repositories/AlbumRepository';
+import { HttpClient } from '@/Shared/HttpClient';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+
+const httpClient = new HttpClient();
+
+const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface EmbedPVPreviewButtonsProps {
 	onPlay: (method: PlayMethod) => void;
@@ -121,10 +133,34 @@ export const EmbedPVPreview = observer(
 		}, [allowInline, pv, vdbPlayer, playQueue]);
 
 		const handlePlay = React.useCallback(
-			(method: PlayMethod) => {
-				const item = new PlayQueueItem(entry, pv);
+			async (method: PlayMethod) => {
+				if (entry.entryType === EntryType[EntryType.Album]) {
+					const albumWithPVsAndTracks = await albumRepo.getOneWithComponents({
+						id: entry.id,
+						lang: vdb.values.languagePreference,
+						fields: [AlbumOptionalField.Tracks],
+						songFields: [SongOptionalField.PVs],
+					});
 
-				playQueue.play(method, item);
+					const tracks = albumWithPVsAndTracks.tracks ?? [];
+					const trackItems = tracks
+						.map((track) => track.song)
+						.filter((song) => !!song.pvs)
+						.map((song) => ({
+							entry: { ...song, entryType: EntryType[EntryType.Song] },
+							pv: PVHelper.primaryPV(song.pvs!),
+						}))
+						.filter(({ pv }) => !!pv)
+						.map(({ entry, pv }) => new PlayQueueItem(entry, pv!));
+
+					const items = [new PlayQueueItem(entry, pv)].concat(trackItems);
+
+					playQueue.play(method, ...items);
+				} else {
+					const item = new PlayQueueItem(entry, pv);
+
+					playQueue.play(method, item);
+				}
 
 				handleResize();
 			},
