@@ -138,14 +138,14 @@ div.thumbItem {
 	margin-left: 0;
 }
 
-.thumbs div {
+/*.thumbs div {
 	position: relative;
 	float: left;
 	width: 255px;
 	height: 300px;
 	margin: 0 9px 0 0;
 	overflow: hidden;
-}
+}*/
 
 .thumbs .pictureFrame {
 	position: relative;
@@ -160,14 +160,14 @@ div.thumbItem {
 	border-radius: 6px;
 }
 
-.smallThumbs div {
+/*.smallThumbs div {
 	position: relative;
 	float: left;
 	width: 155px;
 	height: 190px;
 	margin: 0 9px 0 0;
 	overflow: hidden;
-}
+}*/
 
 @media (max-width: 768px) {
 	.smallThumbs li {
