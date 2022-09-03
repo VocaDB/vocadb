@@ -1,6 +1,9 @@
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko from 'knockout';
@@ -47,7 +50,10 @@ export class DeletedAlbumsViewModel {
 				artistParticipationStatus: undefined,
 				childVoicebanks: undefined,
 				includeMembers: undefined,
-				fields: 'AdditionalNames,MainPicture',
+				fields: [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+				],
 				status: undefined,
 				deleted: true,
 				advancedFilters: undefined,

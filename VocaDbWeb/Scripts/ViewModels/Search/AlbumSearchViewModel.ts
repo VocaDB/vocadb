@@ -2,7 +2,10 @@ import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ResourcesManager } from '@/Models/ResourcesManager';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -102,8 +105,17 @@ export class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContr
 
 	public fields = ko.computed(() =>
 		this.showTags()
-			? 'AdditionalNames,MainPicture,ReleaseEvent,Tags'
-			: 'AdditionalNames,MainPicture,ReleaseEvent',
+			? [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+					AlbumOptionalField.Tags,
+			  ]
+			: [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+			  ],
 	);
 
 	public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {

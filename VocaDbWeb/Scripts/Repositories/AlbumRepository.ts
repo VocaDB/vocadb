@@ -25,6 +25,34 @@ import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
+export enum AlbumOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	Artists = 'Artists',
+	Description = 'Description',
+	Discs = 'Discs',
+	Identifiers = 'Identifiers',
+	MainPicture = 'MainPicture',
+	Names = 'Names',
+	PVs = 'PVs',
+	ReleaseEvent = 'ReleaseEvent',
+	Tags = 'Tags',
+	Tracks = 'Tracks',
+	WebLinks = 'WebLinks',
+}
+
+// TODO: Remove.
+export enum SongOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	Albums = 'Albums',
+	Artists = 'Artists',
+	Names = 'Names',
+	PVs = 'PVs',
+	Tags = 'Tags',
+	ThumbUrl = 'ThumbUrl',
+	WebLinks = 'WebLinks',
+	MainPicture = 'MainPicture',
+}
+
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
 export class AlbumRepository
@@ -164,7 +192,7 @@ export class AlbumRepository
 	}): Promise<AlbumContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumContract>(url, {
-			fields: 'AdditionalNames',
+			fields: AlbumOptionalField.AdditionalNames,
 			lang: lang,
 		});
 	};
@@ -173,15 +201,18 @@ export class AlbumRepository
 		id,
 		fields,
 		lang,
+		songFields,
 	}: {
 		id: number;
-		fields: string;
+		fields: AlbumOptionalField[];
 		lang: ContentLanguagePreference;
+		songFields?: SongOptionalField[];
 	}): Promise<AlbumForApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumForApiContract>(url, {
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
+			songFields: songFields?.join(','),
 		});
 	};
 
@@ -213,7 +244,7 @@ export class AlbumRepository
 		artistParticipationStatus?: string;
 		childVoicebanks?: boolean;
 		includeMembers?: boolean;
-		fields: string;
+		fields: AlbumOptionalField[];
 		status?: string;
 		deleted: boolean;
 		advancedFilters?: AdvancedSearchFilter[];
@@ -224,7 +255,7 @@ export class AlbumRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
