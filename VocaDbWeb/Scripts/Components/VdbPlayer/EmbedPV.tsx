@@ -1,10 +1,8 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
-import {
-	EmbedPiapro,
-	getPiaproTimestamp,
-} from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVHelper } from '@/Helpers/PVHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { NostalgicDiva } from '@vocadb/nostalgic-diva';
 import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
@@ -92,7 +90,7 @@ export const EmbedPV = React.memo(
 				break;
 
 			case PVService.Piapro:
-				if (getPiaproTimestamp(pv) === undefined) {
+				if (PVHelper.getPiaproTimestamp(pv) === undefined) {
 					return <EmbedPiapro pv={pv} width={width} height={height} />;
 				}
 
