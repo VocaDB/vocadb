@@ -17,7 +17,7 @@ const AlbumPictureThumbItem = React.memo(
 	({ picture }: AlbumPictureThumbItemProps): React.ReactElement => {
 		return (
 			<ThumbItem
-				href={UrlHelper.imageThumb(picture, ImageSize.Original)}
+				linkProps={{ href: UrlHelper.imageThumb(picture, ImageSize.Original) }}
 				thumbUrl={UrlHelper.imageThumb(picture, ImageSize.Thumb)}
 				caption={picture.name}
 			/>
@@ -42,9 +42,11 @@ const AlbumPictures = React.memo(
 			>
 				<div className="thumbs">
 					<ThumbItem
-						href={`/Album/CoverPicture/${model.id}?${qs.stringify({
-							v: model.version,
-						})}`}
+						linkProps={{
+							href: `/Album/CoverPicture/${model.id}?${qs.stringify({
+								v: model.version,
+							})}`,
+						}}
 						thumbUrl={UrlHelper.imageThumb(model.mainPicture, ImageSize.Thumb)}
 						caption={t('ViewRes.Album:Details.CoverPicture')}
 					/>

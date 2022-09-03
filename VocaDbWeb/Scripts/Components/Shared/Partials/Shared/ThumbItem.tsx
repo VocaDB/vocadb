@@ -4,7 +4,8 @@ import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import React from 'react';
 
 interface ThumbItemProps {
-	as?: React.ElementType;
+	linkAs?: React.ElementType;
+	linkProps?: Record<string, any>;
 	thumbUrl: string;
 	caption?: string;
 	entry?: EntryRefContract;
@@ -16,7 +17,8 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	'a',
 	ThumbItemProps
 > = ({
-	as: Component = 'a',
+	linkAs: LinkComponent = 'a',
+	linkProps,
 	thumbUrl,
 	caption,
 	entry,
@@ -26,8 +28,8 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 }: ThumbItemProps): React.ReactElement => {
 	return (
 		<div css={{ marginRight: 9, lineHeight: '18px' }}>
-			<div css={{ position: 'relative' }}>
-				<Component {...props}>
+			<div css={{ position: 'relative' }} {...props}>
+				<LinkComponent {...linkProps}>
 					<div className="pictureFrame">
 						{entry ? (
 							tooltip ? (
@@ -53,7 +55,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 							/>
 						)}
 					</div>
-				</Component>
+				</LinkComponent>
 
 				{children}
 			</div>

@@ -12,10 +12,15 @@ import React from 'react';
 
 interface EmbedPVPreviewButtonsProps {
 	onPlay: (method: PlayMethod) => void;
+	onToggle?: (
+		isOpen: boolean,
+		event: React.SyntheticEvent,
+		metadata: { source: 'select' | 'click' | 'rootClose' | 'keydown' },
+	) => void;
 }
 
 export const EmbedPVPreviewButtons = React.memo(
-	({ onPlay }: EmbedPVPreviewButtonsProps): React.ReactElement => {
+	({ onPlay, onToggle }: EmbedPVPreviewButtonsProps): React.ReactElement => {
 		return (
 			<>
 				<Button
@@ -43,6 +48,7 @@ export const EmbedPVPreviewButtons = React.memo(
 					as={ButtonGroup}
 					drop="up"
 					css={{ position: 'absolute', right: 8, bottom: 8 }}
+					onToggle={onToggle}
 				>
 					<Dropdown.Toggle
 						style={{

@@ -68,10 +68,13 @@ export const AlbumThumbItem = React.memo(
 			[album, playQueue],
 		);
 
+		const [hover, setHover] = React.useState(false);
+		const [isOpen, setIsOpen] = React.useState(false);
+
 		return (
 			<ThumbItem
-				as={Link}
-				to={EntryUrlMapper.details(EntryType.Album, album.id)}
+				linkAs={Link}
+				linkProps={{ to: EntryUrlMapper.details(EntryType.Album, album.id) }}
 				thumbUrl={
 					UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
 					'/Content/unknown.png'
@@ -79,8 +82,15 @@ export const AlbumThumbItem = React.memo(
 				caption={album.name}
 				entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
 				tooltip={tooltip}
+				onMouseEnter={(): void => setHover(true)}
+				onMouseLeave={(): void => setHover(false)}
 			>
-				<EmbedPVPreviewButtons onPlay={handlePlay} />
+				{(hover || isOpen) && (
+					<EmbedPVPreviewButtons
+						onPlay={handlePlay}
+						onToggle={(isOpen): void => setIsOpen(isOpen)}
+					/>
+				)}
 			</ThumbItem>
 		);
 	},

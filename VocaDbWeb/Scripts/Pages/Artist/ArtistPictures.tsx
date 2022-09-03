@@ -16,7 +16,7 @@ const ArtistPictureThumbItem = React.memo(
 	({ picture }: ArtistPictureThumbItemProps): React.ReactElement => {
 		return (
 			<ThumbItem
-				href={UrlHelper.imageThumb(picture, ImageSize.Original)}
+				linkProps={{ href: UrlHelper.imageThumb(picture, ImageSize.Original) }}
 				thumbUrl={UrlHelper.imageThumb(picture, ImageSize.Thumb)}
 				caption={picture.name}
 			/>
@@ -41,7 +41,7 @@ const ArtistPictures = React.memo(
 			>
 				<div className="thumbs">
 					<ThumbItem
-						href={`/Artist/Picture/${artist.id}`}
+						linkProps={{ href: `/Artist/Picture/${artist.id}` }}
 						thumbUrl={`/Artist/PictureThumb/${artist.id}`}
 						caption={t('ViewRes.Album:Details.CoverPicture')}
 					/>
