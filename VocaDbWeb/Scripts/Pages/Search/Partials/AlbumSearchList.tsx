@@ -1,11 +1,13 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import { AlbumToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
+import { ImageSize } from '@/Models/Images/ImageSize';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
 	AlbumSearchStore,
@@ -26,29 +28,22 @@ interface AlbumSearchListTilesProps {
 export const AlbumSearchListTiles = React.memo(
 	({ albums }: AlbumSearchListTilesProps): React.ReactElement => {
 		return (
-			<ul className="smallThumbs">
+			<div className="smallThumbs">
 				{albums.map((album) => (
-					<li key={album.id}>
-						<Link
-							to={EntryUrlMapper.details(EntryType.Album, album.id)}
-							title={album.additionalNames}
-						>
-							<div className="pictureFrame img-rounded">
-								<AlbumToolTip
-									as="img"
-									id={album.id}
-									src={
-										album.mainPicture?.urlSmallThumb ?? '/Content/unknown.png'
-									}
-									alt="Preview" /* TODO: localize */
-									className="coverPic img-rounded"
-								/>
-							</div>
-						</Link>
-						<p>{album.name}</p>
-					</li>
+					<ThumbItem
+						as={Link}
+						to={EntryUrlMapper.details(EntryType.Album, album.id)}
+						thumbUrl={
+							UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
+							'/Content/unknown.png'
+						}
+						caption={album.name}
+						entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
+						tooltip={true}
+						key={album.id}
+					/>
 				))}
-			</ul>
+			</div>
 		);
 	},
 );

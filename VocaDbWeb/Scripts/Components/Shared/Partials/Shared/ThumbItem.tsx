@@ -66,7 +66,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 					onAddToPlayQueue={handleAddToPlayQueue}
 				/>
 			</div>
-			{caption && <span>{caption}</span>}
+			{caption && <p css={{ display: 'flex', width: 150 }}>{caption}</p>}
 		</div>
 	);
 };
