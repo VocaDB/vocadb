@@ -145,7 +145,7 @@ export const EmbedPVPreview = observer(
 					const tracks = albumWithPVsAndTracks.tracks ?? [];
 					const trackItems = tracks
 						.map((track) => track.song)
-						.filter((song) => !!song.pvs)
+						.filter((song) => !!song && !!song.pvs)
 						.map((song) => ({
 							entry: { ...song, entryType: EntryType[EntryType.Song] },
 							pv: PVHelper.primaryPV(song.pvs!),
