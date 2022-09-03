@@ -152,7 +152,7 @@ div.thumbItem {
 	width: 250px;
 	height: 250px;
 	overflow: hidden;
-	cursor: pointer;
+	cursor: default;
 	border: 1px solid lightgray;
 }
 
@@ -180,7 +180,7 @@ div.thumbItem {
 	width: 150px;
 	height: 150px;
 	overflow: hidden;
-	cursor: pointer;
+	cursor: default;
 	border: 1px solid lightgray;
 }
 
