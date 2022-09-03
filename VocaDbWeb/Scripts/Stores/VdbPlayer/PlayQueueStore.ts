@@ -96,11 +96,11 @@ export class PlayQueueStore {
 		}
 	};
 
-	@action public play = (item: PlayQueueItem): void => {
+	@action public setCurrentItem = (item: PlayQueueItem): void => {
 		this.currentId = item.id;
 	};
 
-	@action private _playNext = (...items: PlayQueueItem[]): void => {
+	@action private setNextItems = (...items: PlayQueueItem[]): void => {
 		if (this.currentIndex === undefined) return;
 
 		this.items.splice(this.currentIndex + 1, 0, ...items);
@@ -108,9 +108,9 @@ export class PlayQueueStore {
 
 	@action public clearAndPlay = (...items: PlayQueueItem[]): void => {
 		this.clear();
-		// currentId must be set before playNext is called.
-		this.play(items[0]);
-		this._playNext(...items);
+		// currentId must be set before setNextItems is called.
+		this.setCurrentItem(items[0]);
+		this.setNextItems(...items);
 	};
 
 	public playNext = (...items: PlayQueueItem[]): void => {
@@ -119,27 +119,19 @@ export class PlayQueueStore {
 			return;
 		}
 
-		this._playNext(...items);
+		this.setNextItems(...items);
 	};
 
-	@action public addItems = (...items: PlayQueueItem[]): void => {
-		this.items.push(...items);
-	};
-
-	public addToQueue = (...items: PlayQueueItem[]): void => {
+	public addToPlayQueue = (...items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
 			this.clearAndPlay(...items);
 			return;
 		}
 
-		this.addItems(...items);
+		this.items.push(...items);
 	};
 
-	@action public removeItems = (...items: PlayQueueItem[]): void => {
-		_.pull(this.items, ...items);
-	};
-
-	public removeFromQueue = (...items: PlayQueueItem[]): void => {
+	public removeFromPlayQueue = (...items: PlayQueueItem[]): void => {
 		for (const item of items) {
 			if (this.currentItem === item) {
 				if (this.hasNextItem) {
@@ -149,7 +141,7 @@ export class PlayQueueStore {
 				}
 			}
 
-			this.removeItems(item);
+			_.pull(this.items, item);
 		}
 	};
 

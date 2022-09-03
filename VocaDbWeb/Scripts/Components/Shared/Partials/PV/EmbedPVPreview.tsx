@@ -129,7 +129,7 @@ export const EmbedPVPreview = observer(
 		}, [entry, pv, playQueue]);
 
 		const handleAddToPlayQueue = React.useCallback(() => {
-			playQueue.addToQueue(new PlayQueueItem(entry, pv));
+			playQueue.addToPlayQueue(new PlayQueueItem(entry, pv));
 		}, [entry, pv, playQueue]);
 
 		React.useLayoutEffect(() => {
