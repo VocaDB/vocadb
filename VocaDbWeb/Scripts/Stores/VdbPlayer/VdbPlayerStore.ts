@@ -1,5 +1,4 @@
-import { getPiaproTimestamp } from '@/Components/Shared/Partials/PV/EmbedPiapro';
-import { PVService } from '@/Models/PVs/PVService';
+import { PVHelper } from '@/Helpers/PVHelper';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
@@ -17,15 +16,6 @@ interface Rectangle {
 }
 
 export class VdbPlayerStore {
-	private static readonly autoplayServices = [
-		PVService.File,
-		PVService.LocalFile,
-		PVService.NicoNicoDouga,
-		PVService.Vimeo,
-		PVService.Youtube,
-		PVService.SoundCloud,
-	];
-
 	@observable public bottomBarVisible = true;
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
@@ -52,12 +42,7 @@ export class VdbPlayerStore {
 
 		const { pv } = currentItem;
 
-		if (pv.service === PVService[PVService.Piapro])
-			return getPiaproTimestamp(pv) !== undefined;
-
-		return VdbPlayerStore.autoplayServices.includes(
-			PVService[pv.service as keyof typeof PVService],
-		);
+		return PVHelper.canAutoplayPV(pv);
 	}
 
 	@action public showBottomBar = (): void => {
