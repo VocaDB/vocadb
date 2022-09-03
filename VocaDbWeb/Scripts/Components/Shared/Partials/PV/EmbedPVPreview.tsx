@@ -10,6 +10,78 @@ import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
+interface EmbedPVPreviewButtonsProps {
+	onPlay: () => void;
+	onPlayNext: () => void;
+	onAddToPlayQueue: () => void;
+}
+
+export const EmbedPVPreviewButtons = React.memo(
+	({
+		onPlay,
+		onPlayNext,
+		onAddToPlayQueue,
+	}: EmbedPVPreviewButtonsProps): React.ReactElement => {
+		return (
+			<>
+				<Button
+					onClick={onPlay}
+					css={{ position: 'absolute', left: 8, bottom: 8 }}
+					style={{
+						padding: 0,
+						width: 40,
+						height: 40,
+						borderRadius: '50%',
+					}}
+				>
+					<span
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<Play20Filled />
+					</span>
+				</Button>
+
+				<Dropdown
+					as={ButtonGroup}
+					drop="up"
+					css={{ position: 'absolute', right: 8, bottom: 8 }}
+				>
+					<Dropdown.Toggle
+						style={{
+							padding: 0,
+							width: 40,
+							height: 40,
+							borderRadius: '50%',
+						}}
+					>
+						<span
+							css={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<MoreHorizontal20Filled />
+						</span>
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						<Dropdown.Item onClick={onPlayNext}>
+							Play next{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item onClick={onAddToPlayQueue}>
+							Add to play queue{/* TODO: localize */}
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
+			</>
+		);
+	},
+);
+
 interface EmbedPVPreviewProps {
 	entry: EntryContract;
 	pv: PVContract;
@@ -46,17 +118,17 @@ export const EmbedPVPreview = observer(
 			}
 		}, [allowInline, pv, vdbPlayer, playQueue]);
 
-		const handleClickPlay = React.useCallback(() => {
+		const handlePlay = React.useCallback(() => {
 			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
 
 			handleResize();
 		}, [entry, pv, playQueue, handleResize]);
 
-		const handleClickPlayNext = React.useCallback(() => {
+		const handlePlayNext = React.useCallback(() => {
 			playQueue.playNext(new PlayQueueItem(entry, pv));
 		}, [entry, pv, playQueue]);
 
-		const handleClickAddToPlayQueue = React.useCallback(() => {
+		const handleAddToPlayQueue = React.useCallback(() => {
 			playQueue.addToQueue(new PlayQueueItem(entry, pv));
 		}, [entry, pv, playQueue]);
 
@@ -106,61 +178,11 @@ export const EmbedPVPreview = observer(
 
 				{(vdbPlayer.playerBounds === undefined ||
 					pv.id !== playQueue.currentItem?.pv.id) && (
-					<>
-						<Button
-							onClick={handleClickPlay}
-							css={{ position: 'absolute', left: 8, bottom: 8 }}
-							style={{
-								padding: 0,
-								width: 40,
-								height: 40,
-								borderRadius: '50%',
-							}}
-						>
-							<span
-								css={{
-									display: 'flex',
-									justifyContent: 'center',
-									alignItems: 'center',
-								}}
-							>
-								<Play20Filled />
-							</span>
-						</Button>
-
-						<Dropdown
-							as={ButtonGroup}
-							drop="up"
-							css={{ position: 'absolute', right: 8, bottom: 8 }}
-						>
-							<Dropdown.Toggle
-								style={{
-									padding: 0,
-									width: 40,
-									height: 40,
-									borderRadius: '50%',
-								}}
-							>
-								<span
-									css={{
-										display: 'flex',
-										justifyContent: 'center',
-										alignItems: 'center',
-									}}
-								>
-									<MoreHorizontal20Filled />
-								</span>
-							</Dropdown.Toggle>
-							<Dropdown.Menu>
-								<Dropdown.Item onClick={handleClickPlayNext}>
-									Play next{/* TODO: localize */}
-								</Dropdown.Item>
-								<Dropdown.Item onClick={handleClickAddToPlayQueue}>
-									Add to play queue{/* TODO: localize */}
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</>
+					<EmbedPVPreviewButtons
+						onPlay={handlePlay}
+						onPlayNext={handlePlayNext}
+						onAddToPlayQueue={handleAddToPlayQueue}
+					/>
 				)}
 			</div>
 		);
