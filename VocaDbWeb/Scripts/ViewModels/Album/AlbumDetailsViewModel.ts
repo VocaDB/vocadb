@@ -7,7 +7,10 @@ import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserFor
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { EntryType } from '@/Models/EntryType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -96,7 +99,7 @@ export class AlbumDetailsViewModel {
 				repo
 					.getOneWithComponents({
 						id: this.id,
-						fields: 'Artists',
+						fields: [AlbumOptionalField.Artists],
 						lang: values.languagePreference,
 					})
 					.then((result) => {

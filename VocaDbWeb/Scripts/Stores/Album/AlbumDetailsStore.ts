@@ -10,7 +10,10 @@ import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -314,7 +317,7 @@ export class AlbumDetailsStore {
 				albumRepo
 					.getOneWithComponents({
 						id: this.id,
-						fields: 'Artists',
+						fields: [AlbumOptionalField.Artists],
 						lang: values.languagePreference,
 					})
 					.then((result) => {

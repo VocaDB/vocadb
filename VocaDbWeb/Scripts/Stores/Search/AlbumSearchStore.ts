@@ -2,7 +2,10 @@ import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
@@ -66,10 +69,19 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): string {
+	@computed public get fields(): AlbumOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,ReleaseEvent,Tags'
-			: 'AdditionalNames,MainPicture,ReleaseEvent';
+			? [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+					AlbumOptionalField.Tags,
+			  ]
+			: [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+			  ];
 	}
 
 	public loadResults = (
