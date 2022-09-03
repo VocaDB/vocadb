@@ -49,7 +49,7 @@ const PlaylistIndex = observer(
 					? playQueue.selectedItems
 					: playQueue.items;
 
-			playQueue.addToQueue(
+			playQueue.addToPlayQueue(
 				...items.map((item) => new PlayQueueItem(item.entry, item.pv)),
 			);
 
@@ -61,7 +61,7 @@ const PlaylistIndex = observer(
 		}, []);
 
 		const handleClickRemove = React.useCallback(() => {
-			playQueue.removeFromQueue(...playQueue.selectedItems);
+			playQueue.removeFromPlayQueue(...playQueue.selectedItems);
 
 			playQueue.unselectAll();
 		}, [playQueue]);
@@ -227,7 +227,7 @@ const PlaylistIndex = observer(
 														await player.setCurrentTime(0);
 														await player.play();
 													} else {
-														playQueue.play(item);
+														playQueue.setCurrentItem(item);
 													}
 												}}
 												href="#"
@@ -235,7 +235,9 @@ const PlaylistIndex = observer(
 												<i className="icon-play" /> Play{/* TODO: localize */}
 											</Button>{' '}
 											<Button
-												onClick={(): void => playQueue.removeFromQueue(item)}
+												onClick={(): void =>
+													playQueue.removeFromPlayQueue(item)
+												}
 												href="#"
 											>
 												<i className="icon-remove" />{' '}
