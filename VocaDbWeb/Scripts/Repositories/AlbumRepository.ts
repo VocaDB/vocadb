@@ -9,6 +9,7 @@ import { CommentContract } from '@/DataContracts/CommentContract';
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
@@ -296,6 +297,24 @@ export class AlbumRepository
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
+		);
+	};
+
+	public getTracks = ({
+		id,
+		fields,
+		lang,
+	}: {
+		id: number;
+		fields: SongOptionalField[];
+		lang: ContentLanguagePreference;
+	}): Promise<SongInAlbumContract[]> => {
+		return this.httpClient.get<SongInAlbumContract[]>(
+			this.urlMapper.mapRelative(`/api/albums/${id}/tracks`),
+			{
+				fields: fields.join(','),
+				lang: lang,
+			},
 		);
 	};
 

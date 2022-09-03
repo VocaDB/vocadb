@@ -1,13 +1,11 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import { AlbumThumbItem } from '@/Components/Shared/Partials/Shared/AlbumThumbItem';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
-import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
-import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { ImageSize } from '@/Models/Images/ImageSize';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
 	AlbumSearchStore,
@@ -30,18 +28,7 @@ export const AlbumSearchListTiles = React.memo(
 		return (
 			<div className="smallThumbs">
 				{albums.map((album) => (
-					<ThumbItem
-						as={Link}
-						to={EntryUrlMapper.details(EntryType.Album, album.id)}
-						thumbUrl={
-							UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb) ??
-							'/Content/unknown.png'
-						}
-						caption={album.name}
-						entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
-						tooltip={true}
-						key={album.id}
-					/>
+					<AlbumThumbItem album={album} tooltip={true} key={album.id} />
 				))}
 			</div>
 		);

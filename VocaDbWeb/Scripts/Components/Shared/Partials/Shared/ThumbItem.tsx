@@ -1,6 +1,5 @@
 import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
-import { EmbedPVPreviewButtons } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import React from 'react';
 
@@ -10,6 +9,7 @@ interface ThumbItemProps {
 	caption?: string;
 	entry?: EntryRefContract;
 	tooltip?: boolean;
+	children?: React.ReactNode;
 }
 
 export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
@@ -21,16 +21,11 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	caption,
 	entry,
 	tooltip,
+	children,
 	...props
 }: ThumbItemProps): React.ReactElement => {
-	const handlePlay = React.useCallback(() => {}, []);
-
-	const handlePlayNext = React.useCallback(() => {}, []);
-
-	const handleAddToPlayQueue = React.useCallback(() => {}, []);
-
 	return (
-		<div css={{ marginRight: 9 }}>
+		<div css={{ marginRight: 9, lineHeight: '18px' }}>
 			<div css={{ position: 'relative' }}>
 				<Component {...props}>
 					<div className="pictureFrame">
@@ -60,11 +55,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 					</div>
 				</Component>
 
-				<EmbedPVPreviewButtons
-					onPlay={handlePlay}
-					onPlayNext={handlePlayNext}
-					onAddToPlayQueue={handleAddToPlayQueue}
-				/>
+				{children}
 			</div>
 			{caption && <p css={{ display: 'flex', width: 150 }}>{caption}</p>}
 		</div>

@@ -4,28 +4,22 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 interface EmbedPVPreviewButtonsProps {
-	onPlay: () => void;
-	onPlayNext: () => void;
-	onAddToPlayQueue: () => void;
+	onPlay: (method: PlayMethod) => void;
 }
 
 export const EmbedPVPreviewButtons = React.memo(
-	({
-		onPlay,
-		onPlayNext,
-		onAddToPlayQueue,
-	}: EmbedPVPreviewButtonsProps): React.ReactElement => {
+	({ onPlay }: EmbedPVPreviewButtonsProps): React.ReactElement => {
 		return (
 			<>
 				<Button
-					onClick={onPlay}
+					onClick={(): void => onPlay(PlayMethod.ClearAndPlay)}
 					css={{ position: 'absolute', left: 8, bottom: 8 }}
 					style={{
 						padding: 0,
@@ -69,10 +63,12 @@ export const EmbedPVPreviewButtons = React.memo(
 						</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Item onClick={onPlayNext}>
+						<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
 							Play next{/* TODO: localize */}
 						</Dropdown.Item>
-						<Dropdown.Item onClick={onAddToPlayQueue}>
+						<Dropdown.Item
+							onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
+						>
 							Add to play queue{/* TODO: localize */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
@@ -118,19 +114,16 @@ export const EmbedPVPreview = observer(
 			}
 		}, [allowInline, pv, vdbPlayer, playQueue]);
 
-		const handlePlay = React.useCallback(() => {
-			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
+		const handlePlay = React.useCallback(
+			(method: PlayMethod) => {
+				const item = new PlayQueueItem(entry, pv);
 
-			handleResize();
-		}, [entry, pv, playQueue, handleResize]);
+				playQueue.play(method, item);
 
-		const handlePlayNext = React.useCallback(() => {
-			playQueue.playNext(new PlayQueueItem(entry, pv));
-		}, [entry, pv, playQueue]);
-
-		const handleAddToPlayQueue = React.useCallback(() => {
-			playQueue.addToPlayQueue(new PlayQueueItem(entry, pv));
-		}, [entry, pv, playQueue]);
+				handleResize();
+			},
+			[entry, pv, playQueue, handleResize],
+		);
 
 		React.useLayoutEffect(() => {
 			window.addEventListener('resize', handleResize);
@@ -178,11 +171,7 @@ export const EmbedPVPreview = observer(
 
 				{(vdbPlayer.playerBounds === undefined ||
 					pv.id !== playQueue.currentItem?.pv.id) && (
-					<EmbedPVPreviewButtons
-						onPlay={handlePlay}
-						onPlayNext={handlePlayNext}
-						onAddToPlayQueue={handleAddToPlayQueue}
-					/>
+					<EmbedPVPreviewButtons onPlay={handlePlay} />
 				)}
 			</div>
 		);
