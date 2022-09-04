@@ -54,8 +54,8 @@ export const AlbumThumbItem = React.memo(
 				caption={album.name}
 				entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
 				tooltip={tooltip}
-				onMouseEnter={(): void => setHover(true)}
-				onMouseLeave={(): void => setHover(false)}
+				onPointerEnter={(): void => setHover(true)}
+				onPointerLeave={(): void => setHover(false)}
 			>
 				{(hover || isOpen) && (
 					<EmbedPVPreviewButtons
