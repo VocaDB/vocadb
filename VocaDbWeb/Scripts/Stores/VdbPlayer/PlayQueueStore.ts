@@ -20,6 +20,12 @@ export class PlayQueueItem {
 	}
 }
 
+export enum PlayMethod {
+	ClearAndPlay,
+	PlayNext,
+	AddToPlayQueue,
+}
+
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
@@ -129,6 +135,22 @@ export class PlayQueueStore {
 		}
 
 		this.items.push(...items);
+	};
+
+	public play = (method: PlayMethod, ...items: PlayQueueItem[]): void => {
+		switch (method) {
+			case PlayMethod.ClearAndPlay:
+				this.clearAndPlay(...items);
+				break;
+
+			case PlayMethod.PlayNext:
+				this.playNext(...items);
+				break;
+
+			case PlayMethod.AddToPlayQueue:
+				this.addToPlayQueue(...items);
+				break;
+		}
 	};
 
 	public removeFromPlayQueue = (...items: PlayQueueItem[]): void => {

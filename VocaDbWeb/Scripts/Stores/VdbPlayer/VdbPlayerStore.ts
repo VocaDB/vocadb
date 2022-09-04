@@ -1,4 +1,4 @@
-import { PVHelper } from '@/Helpers/PVHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
@@ -42,7 +42,7 @@ export class VdbPlayerStore {
 
 		const { pv } = currentItem;
 
-		return PVHelper.canAutoplayPV(pv);
+		return VideoServiceHelper.canAutoplayPV(pv);
 	}
 
 	@action public showBottomBar = (): void => {

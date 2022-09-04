@@ -86,7 +86,7 @@ img.smallCover {
 	max-height: 150px;
 }
 
-ul.smallThumbs div.pictureFrame img.coverPic {
+.smallThumbs .pictureFrame img.coverPic {
 	max-width: 150px;
 	max-height: 150px;
 }
@@ -128,63 +128,59 @@ div.thumbItem {
 	height: 250px;
 }
 
-ul.thumbs,
-ul.smallThumbs {
-	list-style: none;
-	display: block;
+.thumbs,
+.smallThumbs {
+	display: flex;
+	flex-wrap: wrap;
 	overflow: hidden;
 	font-size: 11px;
 	line-height: 1.181818em;
 	margin-left: 0;
 }
 
-ul.thumbs li {
+/*.thumbs div {
 	position: relative;
 	float: left;
-	display: inline;
 	width: 255px;
 	height: 300px;
 	margin: 0 9px 0 0;
 	overflow: hidden;
-}
+}*/
 
-ul.thumbs div.pictureFrame {
+.thumbs .pictureFrame {
 	position: relative;
-	display: block;
 	width: 250px;
 	height: 250px;
 	overflow: hidden;
-	cursor: pointer;
+	cursor: default;
 	border: 1px solid lightgray;
 }
 
-ul.thumbs div.pictureFrame.img-rounded {
+.thumbs .pictureFrame.img-rounded {
 	border-radius: 6px;
 }
 
-ul.smallThumbs li {
+/*.smallThumbs div {
 	position: relative;
 	float: left;
-	display: inline;
 	width: 155px;
 	height: 190px;
 	margin: 0 9px 0 0;
 	overflow: hidden;
-}
+}*/
 
 @media (max-width: 768px) {
-	ul.smallThumbs li {
+	.smallThumbs li {
 		margin-right: 5px;
 	}
 }
 
-ul.smallThumbs div.pictureFrame {
+.smallThumbs .pictureFrame {
 	position: relative;
-	display: block;
 	width: 150px;
 	height: 150px;
 	overflow: hidden;
-	cursor: pointer;
+	cursor: default;
 	border: 1px solid lightgray;
 }
 

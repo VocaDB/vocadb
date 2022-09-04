@@ -9,6 +9,7 @@ import { CommentContract } from '@/DataContracts/CommentContract';
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
@@ -52,6 +53,11 @@ export enum SongOptionalField {
 	WebLinks = 'WebLinks',
 	MainPicture = 'MainPicture',
 }
+
+export type AlbumWithPVsAndTracksContract = Required<
+	Pick<AlbumForApiContract, 'pvs' | 'tracks'>
+> &
+	Omit<AlbumForApiContract, 'pvs' | 'tracks'>;
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
@@ -216,6 +222,25 @@ export class AlbumRepository
 		});
 	};
 
+	public getOneWithPVsAndTracks = ({
+		id,
+		lang,
+	}: {
+		id: number;
+		lang: ContentLanguagePreference;
+	}): Promise<AlbumWithPVsAndTracksContract> => {
+		return this.getOneWithComponents({
+			id: id,
+			lang: lang,
+			fields: [
+				AlbumOptionalField.MainPicture,
+				AlbumOptionalField.PVs,
+				AlbumOptionalField.Tracks,
+			],
+			songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
+		}) as Promise<AlbumWithPVsAndTracksContract>;
+	};
+
 	public getList = ({
 		paging,
 		lang,
@@ -296,6 +321,24 @@ export class AlbumRepository
 	}): Promise<TagUsageForApiContract[]> => {
 		return this.httpClient.get<TagUsageForApiContract[]>(
 			this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
+		);
+	};
+
+	public getTracks = ({
+		id,
+		fields,
+		lang,
+	}: {
+		id: number;
+		fields: SongOptionalField[];
+		lang: ContentLanguagePreference;
+	}): Promise<SongInAlbumContract[]> => {
+		return this.httpClient.get<SongInAlbumContract[]>(
+			this.urlMapper.mapRelative(`/api/albums/${id}/tracks`),
+			{
+				fields: fields.join(','),
+				lang: lang,
+			},
 		);
 	};
 

@@ -4,11 +4,93 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { EntryType } from '@/Models/EntryType';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+
+const httpClient = new HttpClient();
+
+const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
+
+interface EmbedPVPreviewButtonsProps {
+	onPlay: (method: PlayMethod) => void;
+	onToggle?: (
+		isOpen: boolean,
+		event: React.SyntheticEvent,
+		metadata: { source: 'select' | 'click' | 'rootClose' | 'keydown' },
+	) => void;
+}
+
+export const EmbedPVPreviewButtons = React.memo(
+	({ onPlay, onToggle }: EmbedPVPreviewButtonsProps): React.ReactElement => {
+		return (
+			<>
+				<Button
+					onClick={(): void => onPlay(PlayMethod.ClearAndPlay)}
+					css={{ position: 'absolute', left: 8, bottom: 8 }}
+					style={{
+						padding: 0,
+						width: 40,
+						height: 40,
+						borderRadius: '50%',
+					}}
+				>
+					<span
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<Play20Filled />
+					</span>
+				</Button>
+
+				<Dropdown
+					as={ButtonGroup}
+					drop="up"
+					css={{ position: 'absolute', right: 8, bottom: 8 }}
+					onToggle={onToggle}
+				>
+					<Dropdown.Toggle
+						style={{
+							padding: 0,
+							width: 40,
+							height: 40,
+							borderRadius: '50%',
+						}}
+					>
+						<span
+							css={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<MoreHorizontal20Filled />
+						</span>
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
+							Play next{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
+						>
+							Add to play queue{/* TODO: localize */}
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
+			</>
+		);
+	},
+);
 
 interface EmbedPVPreviewProps {
 	entry: EntryContract;
@@ -46,19 +128,27 @@ export const EmbedPVPreview = observer(
 			}
 		}, [allowInline, pv, vdbPlayer, playQueue]);
 
-		const handleClickPlay = React.useCallback(() => {
-			playQueue.clearAndPlay(new PlayQueueItem(entry, pv));
+		const handlePlay = React.useCallback(
+			async (method: PlayMethod) => {
+				if (entry.entryType === EntryType[EntryType.Album]) {
+					const albumWithPVsAndTracks = await albumRepo.getOneWithPVsAndTracks({
+						id: entry.id,
+						lang: vdb.values.languagePreference,
+					});
 
-			handleResize();
-		}, [entry, pv, playQueue, handleResize]);
+					const items = AlbumHelper.createPlayQueueItems(albumWithPVsAndTracks);
 
-		const handleClickPlayNext = React.useCallback(() => {
-			playQueue.playNext(new PlayQueueItem(entry, pv));
-		}, [entry, pv, playQueue]);
+					playQueue.play(method, ...items);
+				} else {
+					const item = new PlayQueueItem(entry, pv);
 
-		const handleClickAddToPlayQueue = React.useCallback(() => {
-			playQueue.addToPlayQueue(new PlayQueueItem(entry, pv));
-		}, [entry, pv, playQueue]);
+					playQueue.play(method, item);
+				}
+
+				handleResize();
+			},
+			[entry, pv, playQueue, handleResize],
+		);
 
 		React.useLayoutEffect(() => {
 			window.addEventListener('resize', handleResize);
@@ -106,61 +196,7 @@ export const EmbedPVPreview = observer(
 
 				{(vdbPlayer.playerBounds === undefined ||
 					pv.id !== playQueue.currentItem?.pv.id) && (
-					<>
-						<Button
-							onClick={handleClickPlay}
-							css={{ position: 'absolute', left: 8, bottom: 8 }}
-							style={{
-								padding: 0,
-								width: 40,
-								height: 40,
-								borderRadius: '50%',
-							}}
-						>
-							<span
-								css={{
-									display: 'flex',
-									justifyContent: 'center',
-									alignItems: 'center',
-								}}
-							>
-								<Play20Filled />
-							</span>
-						</Button>
-
-						<Dropdown
-							as={ButtonGroup}
-							drop="up"
-							css={{ position: 'absolute', right: 8, bottom: 8 }}
-						>
-							<Dropdown.Toggle
-								style={{
-									padding: 0,
-									width: 40,
-									height: 40,
-									borderRadius: '50%',
-								}}
-							>
-								<span
-									css={{
-										display: 'flex',
-										justifyContent: 'center',
-										alignItems: 'center',
-									}}
-								>
-									<MoreHorizontal20Filled />
-								</span>
-							</Dropdown.Toggle>
-							<Dropdown.Menu>
-								<Dropdown.Item onClick={handleClickPlayNext}>
-									Play next{/* TODO: localize */}
-								</Dropdown.Item>
-								<Dropdown.Item onClick={handleClickAddToPlayQueue}>
-									Add to play queue{/* TODO: localize */}
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</>
+					<EmbedPVPreviewButtons onPlay={handlePlay} />
 				)}
 			</div>
 		);
