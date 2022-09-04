@@ -1,3 +1,4 @@
+import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { EntryBaseContract } from '@/DataContracts/EntryBaseContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
@@ -34,17 +35,11 @@ export const EntryLink = React.memo(
 		...props
 	}: EntryLinkProps): React.ReactElement => {
 		return tooltip ? (
-			/*<EntryToolTip
-				{...props}
-				as={Link}
-				value={entry}
-				to={EntryUrlMapper.details_entry(entry)}
-			>
-				{children ?? entry.defaultName}
-			</EntryToolTip>*/
-			<EntryLinkBase {...props} entry={entry}>
-				{children}
-			</EntryLinkBase>
+			<EntryToolTip entry={entry}>
+				<EntryLinkBase {...props} entry={entry}>
+					{children}
+				</EntryLinkBase>
+			</EntryToolTip>
 		) : (
 			<EntryLinkBase {...props} entry={entry}>
 				{children}

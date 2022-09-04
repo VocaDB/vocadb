@@ -1,27 +1,26 @@
+import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
-interface SongLinkBaseProps {
+interface SongLinkBaseProps extends Omit<LinkProps, 'to'> {
 	song: SongApiContract;
 	albumId?: number;
-	target?: string;
 }
 
 const SongLinkBase = ({
 	song,
 	albumId,
-	target,
+	...props
 }: SongLinkBaseProps): React.ReactElement => {
 	return (
 		<Link
+			{...props}
 			to={`${EntryUrlMapper.details_song(song)}?${qs.stringify({
 				albumId: albumId,
 			})}`}
-			title={song.additionalNames}
-			target={target}
 		>
 			{song.name}
 		</Link>
@@ -45,21 +44,16 @@ export const SongLink = React.memo(
 		target,
 	}: SongLinkProps): React.ReactElement => {
 		return tooltip ? (
-			/*<SongToolTip
-				as={Link}
-				to={`${EntryUrlMapper.details_song(song)}?${qs.stringify({
-					albumId: albumId,
-				})}`}
-				title={song.additionalNames}
-				id={song.id}
-				toolTipDomain={toolTipDomain}
-				target={target}
-			>
-				{song.name}
-			</SongToolTip>*/
-			<SongLinkBase song={song} albumId={albumId} target={target} />
+			<SongToolTip id={song.id}>
+				<SongLinkBase song={song} albumId={albumId} target={target} />
+			</SongToolTip>
 		) : (
-			<SongLinkBase song={song} albumId={albumId} target={target} />
+			<SongLinkBase
+				song={song}
+				albumId={albumId}
+				target={target}
+				title={song.additionalNames}
+			/>
 		);
 	},
 );

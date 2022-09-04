@@ -1,3 +1,4 @@
+import { AlbumToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -30,16 +31,9 @@ export const AlbumLink = ({
 	tooltip = false,
 }: AlbumLinkProps): React.ReactElement => {
 	return tooltip ? (
-		/*<AlbumToolTip
-			as={Link}
-			to={EntryUrlMapper.details(EntryType.Album, album.id)}
-			title={album.additionalNames}
-			id={album.id}
-			className="albumLink"
-		>
-			{album.name}
-		</AlbumToolTip>*/
-		<AlbumLinkBase album={album} />
+		<AlbumToolTip id={album.id}>
+			<AlbumLinkBase album={album} />
+		</AlbumToolTip>
 	) : (
 		<AlbumLinkBase album={album} />
 	);

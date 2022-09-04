@@ -1,3 +1,4 @@
+import { UserToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
@@ -34,17 +35,11 @@ export const UserLink = React.memo(
 		...props
 	}: UserLinkProps): React.ReactElement => {
 		return tooltip ? (
-			/*<UserToolTip
-				{...props}
-				as={Link}
-				to={EntryUrlMapper.details_user_byName(user.name)}
-				id={user.id}
-			>
-				{children ?? user.name}
-			</UserToolTip>*/
-			<UserLinkBase {...props} user={user}>
-				{children}
-			</UserLinkBase>
+			<UserToolTip id={user.id}>
+				<UserLinkBase {...props} user={user}>
+					{children}
+				</UserLinkBase>
+			</UserToolTip>
 		) : (
 			<UserLinkBase {...props} user={user}>
 				{children}

@@ -131,9 +131,17 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = ({ id }: { id: number }): Promise<ReleaseEventContract> => {
+	public getOne = ({
+		id,
+		fields,
+	}: {
+		id: number;
+		fields?: ReleaseEventOptionalField[];
+	}): Promise<ReleaseEventContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
-		return this.httpClient.get<ReleaseEventContract>(url);
+		return this.httpClient.get<ReleaseEventContract>(url, {
+			fields: fields?.join(','),
+		});
 	};
 
 	public getOneSeries = ({

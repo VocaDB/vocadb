@@ -1,11 +1,12 @@
+import { ArtistToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
-interface ArtistLinkBaseProps {
+interface ArtistLinkBaseProps extends Omit<LinkProps, 'to'> {
 	artist: ArtistContract;
 	children?: React.ReactNode;
 }
@@ -13,11 +14,12 @@ interface ArtistLinkBaseProps {
 const ArtistLinkBase = ({
 	artist,
 	children,
+	...props
 }: ArtistLinkBaseProps): React.ReactElement => {
 	return (
 		<Link
+			{...props}
 			to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
-			title={artist.additionalNames}
 			className="artistLink"
 		>
 			{children ?? artist.name}
@@ -45,18 +47,13 @@ export const ArtistLink = ({
 			{typeLabel && <ArtistTypeLabel artistType={artist.artistType} />}
 			{typeLabel && ' '}
 			{tooltip ? (
-				/*<ArtistToolTip
-					as={Link}
-					to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
-					title={artist.additionalNames}
-					id={artist.id}
-					className="artistLink"
-				>
-					{name ?? artist.name}
-				</ArtistToolTip>*/
-				<ArtistLinkBase artist={artist}>{name}</ArtistLinkBase>
+				<ArtistToolTip id={artist.id}>
+					<ArtistLinkBase artist={artist}>{name}</ArtistLinkBase>
+				</ArtistToolTip>
 			) : (
-				<ArtistLinkBase artist={artist}>{name}</ArtistLinkBase>
+				<ArtistLinkBase artist={artist} title={artist.additionalNames}>
+					{name}
+				</ArtistLinkBase>
 			)}
 			{releaseYear && artist.releaseDate && (
 				<>

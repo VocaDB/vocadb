@@ -1,3 +1,4 @@
+import { EventToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -28,14 +29,9 @@ export const EventLink = ({
 	tooltip,
 }: EventLinkProps): React.ReactElement => {
 	return tooltip ? (
-		/*<EventToolTip
-			as={Link}
-			to={EntryUrlMapper.details(EntryType[EntryType.ReleaseEvent], event.id)}
-			id={event.id}
-		>
-			{event.name}
-		</EventToolTip>*/
-		<EventLinkBase event={event} />
+		<EventToolTip id={event.id}>
+			<EventLinkBase event={event} />
+		</EventToolTip>
 	) : (
 		<EventLinkBase event={event} />
 	);
