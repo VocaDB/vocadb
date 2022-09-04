@@ -2,7 +2,7 @@ import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
 import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PVHelper } from '@/Helpers/PVHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { NostalgicDiva } from '@vocadb/nostalgic-diva';
 import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
@@ -90,7 +90,7 @@ export const EmbedPV = React.memo(
 				break;
 
 			case PVService.Piapro:
-				if (PVHelper.getPiaproTimestamp(pv) === undefined) {
+				if (VideoServiceHelper.getPiaproTimestamp(pv) === undefined) {
 					return <EmbedPiapro pv={pv} width={width} height={height} />;
 				}
 

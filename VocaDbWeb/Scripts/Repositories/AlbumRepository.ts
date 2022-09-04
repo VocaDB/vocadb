@@ -217,6 +217,25 @@ export class AlbumRepository
 		});
 	};
 
+	public getOneWithPVsAndTracks = ({
+		id,
+		lang,
+	}: {
+		id: number;
+		lang: ContentLanguagePreference;
+	}): Promise<AlbumForApiContract> => {
+		return this.getOneWithComponents({
+			id: id,
+			lang: lang,
+			fields: [
+				AlbumOptionalField.MainPicture,
+				AlbumOptionalField.PVs,
+				AlbumOptionalField.Tracks,
+			],
+			songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
+		});
+	};
+
 	public getList = ({
 		paging,
 		lang,

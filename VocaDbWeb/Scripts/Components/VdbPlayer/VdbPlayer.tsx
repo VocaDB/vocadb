@@ -6,7 +6,7 @@ import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PVHelper } from '@/Helpers/PVHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
@@ -433,7 +433,7 @@ const EmbedPVWrapper = observer(
 
 					const pvId =
 						pv.service === PVService[PVService.Piapro]
-							? PVHelper.getPiaproUrlWithTimestamp(pv)!
+							? VideoServiceHelper.getPiaproUrlWithTimestamp(pv)!
 							: pv.pvId;
 
 					await player.loadVideo(pvId);

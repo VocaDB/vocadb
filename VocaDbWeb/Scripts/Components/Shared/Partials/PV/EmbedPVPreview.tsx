@@ -4,13 +4,9 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PVHelper } from '@/Helpers/PVHelper';
+import { AlbumHelper } from '@/Helpers/AlbumHelper';
 import { EntryType } from '@/Models/EntryType';
-import {
-	AlbumOptionalField,
-	AlbumRepository,
-	SongOptionalField,
-} from '@/Repositories/AlbumRepository';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
@@ -135,25 +131,12 @@ export const EmbedPVPreview = observer(
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
 				if (entry.entryType === EntryType[EntryType.Album]) {
-					const albumWithPVsAndTracks = await albumRepo.getOneWithComponents({
+					const albumWithPVsAndTracks = await albumRepo.getOneWithPVsAndTracks({
 						id: entry.id,
 						lang: vdb.values.languagePreference,
-						fields: [AlbumOptionalField.MainPicture, AlbumOptionalField.Tracks],
-						songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 					});
 
-					const tracks = albumWithPVsAndTracks.tracks ?? [];
-					const trackItems = tracks
-						.map((track) => track.song)
-						.filter((song) => !!song && !!song.pvs)
-						.map((song) => ({
-							entry: { ...song, entryType: EntryType[EntryType.Song] },
-							pv: PVHelper.primaryPV(song.pvs!),
-						}))
-						.filter(({ pv }) => !!pv)
-						.map(({ entry, pv }) => new PlayQueueItem(entry, pv!));
-
-					const items = [new PlayQueueItem(entry, pv)].concat(trackItems);
+					const items = AlbumHelper.createPlayQueueItems(albumWithPVsAndTracks);
 
 					playQueue.play(method, ...items);
 				} else {

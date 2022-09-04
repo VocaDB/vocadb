@@ -1,6 +1,11 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import _ from 'lodash';
+
+interface PiaproMetadata {
+	Timestamp?: string;
+}
 
 export class VideoServiceHelper {
 	// TODO: Test.
@@ -20,12 +25,53 @@ export class VideoServiceHelper {
 		return acceptFirst ? _.first(allPVs) : undefined;
 	};
 
+	public static getPiaproTimestamp = (pv: PVContract): string | undefined => {
+		const meta = pv.extendedMetadata
+			? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
+			: undefined;
+
+		return meta?.Timestamp;
+	};
+
+	public static getPiaproUrlWithTimestamp = (
+		pv: PVContract,
+	): string | undefined => {
+		const timestamp = VideoServiceHelper.getPiaproTimestamp(pv);
+
+		if (timestamp === undefined) return undefined;
+
+		return `https://cdn.piapro.jp/mp3_a/${pv.pvId.slice(0, 2)}/${
+			pv.pvId
+		}_${timestamp}_audition.mp3`;
+	};
+
+	private static readonly autoplayServices = [
+		PVService.File,
+		PVService.LocalFile,
+		PVService.NicoNicoDouga,
+		PVService.Vimeo,
+		PVService.Youtube,
+		PVService.SoundCloud,
+	];
+
+	public static canAutoplayPV = (pv: PVContract): boolean => {
+		if (pv.service === PVService[PVService.Piapro])
+			return VideoServiceHelper.getPiaproTimestamp(pv) !== undefined;
+
+		return VideoServiceHelper.autoplayServices.includes(
+			PVService[pv.service as keyof typeof PVService],
+		);
+	};
+
 	// TODO: Test.
 	public static primaryPV = (
 		pvs: PVContract[],
 		preferredService?: string,
+		autoplay?: boolean,
 	): PVContract | undefined => {
-		const p = pvs.filter((pv) => !pv.disabled);
+		const p = autoplay
+			? pvs.filter((pv) => !pv.disabled && VideoServiceHelper.canAutoplayPV(pv))
+			: pvs.filter((pv) => !pv.disabled);
 
 		if (preferredService) {
 			return (

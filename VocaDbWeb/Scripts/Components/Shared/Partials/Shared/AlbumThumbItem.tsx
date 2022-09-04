@@ -2,18 +2,14 @@ import { EmbedPVPreviewButtons } from '@/Components/Shared/Partials/PV/EmbedPVPr
 import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
-import { PVHelper } from '@/Helpers/PVHelper';
+import { AlbumHelper } from '@/Helpers/AlbumHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import {
-	AlbumOptionalField,
-	AlbumRepository,
-	SongOptionalField,
-} from '@/Repositories/AlbumRepository';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
-import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -32,40 +28,12 @@ export const AlbumThumbItem = React.memo(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				const albumWithPVsAndTracks = await albumRepo.getOneWithComponents({
+				const albumWithPVsAndTracks = await albumRepo.getOneWithPVsAndTracks({
 					id: album.id,
 					lang: vdb.values.languagePreference,
-					fields: [
-						AlbumOptionalField.MainPicture,
-						AlbumOptionalField.PVs,
-						AlbumOptionalField.Tracks,
-					],
-					songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 				});
 
-				const primaryPV = PVHelper.primaryPV(albumWithPVsAndTracks.pvs ?? []);
-				const primaryPVItem = primaryPV
-					? new PlayQueueItem(
-							{
-								...albumWithPVsAndTracks,
-								entryType: EntryType[EntryType.Album],
-							},
-							primaryPV,
-					  )
-					: undefined;
-
-				const tracks = albumWithPVsAndTracks.tracks ?? [];
-				const trackItems = tracks
-					.map((track) => track.song)
-					.filter((song) => !!song && !!song.pvs)
-					.map((song) => ({
-						entry: { ...song, entryType: EntryType[EntryType.Song] },
-						pv: PVHelper.primaryPV(song.pvs!),
-					}))
-					.filter(({ pv }) => !!pv)
-					.map(({ entry, pv }) => new PlayQueueItem(entry, pv!));
-
-				const items = (primaryPVItem ? [primaryPVItem] : []).concat(trackItems);
+				const items = AlbumHelper.createPlayQueueItems(albumWithPVsAndTracks);
 
 				playQueue.play(method, ...items);
 			},
