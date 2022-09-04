@@ -138,8 +138,8 @@ export const EmbedPVPreview = observer(
 					const albumWithPVsAndTracks = await albumRepo.getOneWithComponents({
 						id: entry.id,
 						lang: vdb.values.languagePreference,
-						fields: [AlbumOptionalField.Tracks],
-						songFields: [SongOptionalField.PVs],
+						fields: [AlbumOptionalField.MainPicture, AlbumOptionalField.Tracks],
+						songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 					});
 
 					const tracks = albumWithPVsAndTracks.tracks ?? [];

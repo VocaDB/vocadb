@@ -35,8 +35,12 @@ export const AlbumThumbItem = React.memo(
 				const albumWithPVsAndTracks = await albumRepo.getOneWithComponents({
 					id: album.id,
 					lang: vdb.values.languagePreference,
-					fields: [AlbumOptionalField.PVs, AlbumOptionalField.Tracks],
-					songFields: [SongOptionalField.PVs],
+					fields: [
+						AlbumOptionalField.MainPicture,
+						AlbumOptionalField.PVs,
+						AlbumOptionalField.Tracks,
+					],
+					songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 				});
 
 				const primaryPV = PVHelper.primaryPV(albumWithPVsAndTracks.pvs ?? []);
