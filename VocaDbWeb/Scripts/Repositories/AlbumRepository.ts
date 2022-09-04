@@ -54,6 +54,11 @@ export enum SongOptionalField {
 	MainPicture = 'MainPicture',
 }
 
+export type AlbumWithPVsAndTracksContract = Required<
+	Pick<AlbumForApiContract, 'pvs' | 'tracks'>
+> &
+	Omit<AlbumForApiContract, 'pvs' | 'tracks'>;
+
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
 export class AlbumRepository
@@ -223,7 +228,7 @@ export class AlbumRepository
 	}: {
 		id: number;
 		lang: ContentLanguagePreference;
-	}): Promise<AlbumForApiContract> => {
+	}): Promise<AlbumWithPVsAndTracksContract> => {
 		return this.getOneWithComponents({
 			id: id,
 			lang: lang,
@@ -233,7 +238,7 @@ export class AlbumRepository
 				AlbumOptionalField.Tracks,
 			],
 			songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
-		});
+		}) as Promise<AlbumWithPVsAndTracksContract>;
 	};
 
 	public getList = ({

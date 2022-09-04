@@ -1,8 +1,8 @@
-import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryType } from '@/Models/EntryType';
+import { AlbumWithPVsAndTracksContract } from '@/Repositories/AlbumRepository';
 import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 
 export class AlbumHelper {
@@ -20,7 +20,7 @@ export class AlbumHelper {
 	};
 
 	public static createPlayQueueItems = (
-		albumWithPVsAndTracks: AlbumForApiContract,
+		albumWithPVsAndTracks: AlbumWithPVsAndTracksContract,
 	): PlayQueueItem[] => {
 		const primaryPV = PVHelper.primaryPV(albumWithPVsAndTracks.pvs ?? [], true);
 
