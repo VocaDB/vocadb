@@ -9,7 +9,9 @@ import {
 	SongSearchDropdown,
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -44,6 +46,7 @@ import '../../../wwwroot/Content/Styles/songlist.less';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
 const entryRepo = new EntryRepository(httpClient, vdb.values.baseAddress);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
@@ -103,6 +106,8 @@ const SearchIndex = observer(
 		useVocaDbTitle(undefined, true);
 
 		useStoreWithPagination(searchStore);
+
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<Layout>
@@ -207,36 +212,33 @@ const SearchIndex = observer(
 								<div className="inline-block">
 									<ButtonGroup>
 										<Button
-											className={classNames(
-												searchStore.songSearchStore.viewMode === 'Details' &&
-													'active',
-												'btn-nomargin',
-											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'Details';
-												})
-											}
-											href="#"
-											title={t('ViewRes.Search:Index.AlbumDetails')}
+											onClick={async (): Promise<void> => {
+												// TODO: Play.
+
+												const {
+													paging,
+													queryParams,
+												} = searchStore.songSearchStore;
+
+												const pagingProperties = paging.getPagingProperties();
+
+												const songs = await songRepo.getListWithPVs({
+													lang: vdb.values.languagePreference,
+													paging: pagingProperties,
+													queryParams: queryParams,
+												});
+
+												const items = PlayQueueHelper.createItemsFromSongs(
+													songs.items,
+												);
+
+												playQueue.clearAndPlay(...items);
+											}}
+											title="Play" /* TODO: localize */
+											className="btn-nomargin"
 										>
-											<i className="icon-th-list" />
-										</Button>
-										<Button
-											className={classNames(
-												searchStore.songSearchStore.viewMode === 'PlayList' &&
-													'active',
-												'btn-nomargin',
-											)}
-											onClick={(): void =>
-												runInAction(() => {
-													searchStore.songSearchStore.viewMode = 'PlayList';
-												})
-											}
-											href="#"
-											title={t('ViewRes.Search:Index.Playlist')}
-										>
-											<i className="icon-list" />
+											<i className="icon-play noMargin" /> Play
+											{/* TODO: localize */}
 										</Button>
 									</ButtonGroup>
 								</div>

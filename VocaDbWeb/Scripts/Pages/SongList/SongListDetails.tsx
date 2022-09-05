@@ -22,8 +22,10 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -132,6 +134,8 @@ const SongListDetailsLayout = observer(
 			songList.mainPicture,
 			ImageSize.Original,
 		);
+
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<Layout
@@ -307,28 +311,29 @@ const SongListDetailsLayout = observer(
 				<div className="clearfix well well-transparent">
 					<ButtonGroup className="songlist-mode-selection pull-left">
 						<Button
-							onClick={(): void =>
-								runInAction(() => {
-									songListStore.playlistMode = false;
-								})
-							}
-							className={classNames(!songListStore.playlistMode && 'active')}
-							href="#"
+							onClick={async (): Promise<void> => {
+								// TODO: Play.
+
+								const { paging, queryParams } = songListStore;
+
+								const pagingProperties = paging.getPagingProperties();
+
+								const songsInList = await songListRepo.getSongsWithPVs({
+									lang: vdb.values.languagePreference,
+									paging: pagingProperties,
+									queryParams: queryParams,
+								});
+
+								const items = PlayQueueHelper.createItemsFromSongs(
+									songsInList.items.map((songInList) => songInList.song),
+								);
+
+								playQueue.clearAndPlay(...items);
+							}}
+							title="Play" /* TODO: localize */
+							className="btn-nomargin"
 						>
-							<i className="icon-th-list noMargin" />{' '}
-							{t('ViewRes.SongList:Details.Details')}
-						</Button>
-						<Button
-							onClick={(): void =>
-								runInAction(() => {
-									songListStore.playlistMode = true;
-								})
-							}
-							className={classNames(songListStore.playlistMode && 'active')}
-							href="#"
-						>
-							<i className="icon-list noMargin" />{' '}
-							{t('ViewRes.SongList.Details:Playlist')}
+							<i className="icon-play noMargin" /> Play{/* TODO: localize */}
 						</Button>
 					</ButtonGroup>
 					{!songListStore.playlistMode && (
@@ -546,7 +551,7 @@ const SongListDetailsLayout = observer(
 											<td style={{ width: '33%' }}>
 												{item.song.tags && item.song.tags.length > 0 && (
 													<div>
-														<i className="icon icon-tags" />{' '}
+														<i className="icon icon-tags fix-icon-margin" />{' '}
 														{item.song.tags.map((tag, index) => (
 															<React.Fragment key={tag.tag.id}>
 																{index > 0 && ', '}

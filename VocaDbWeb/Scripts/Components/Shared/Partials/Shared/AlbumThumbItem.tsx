@@ -2,7 +2,7 @@ import { EmbedPVPreviewButtons } from '@/Components/Shared/Partials/PV/EmbedPVPr
 import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
-import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
@@ -33,7 +33,9 @@ export const AlbumThumbItem = React.memo(
 					lang: vdb.values.languagePreference,
 				});
 
-				const items = AlbumHelper.createPlayQueueItems(albumWithPVsAndTracks);
+				const items = PlayQueueHelper.createItemsFromAlbum(
+					albumWithPVsAndTracks,
+				);
 
 				playQueue.play(method, ...items);
 			},

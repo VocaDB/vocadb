@@ -11,12 +11,14 @@ import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
 import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { SongWithPVPlayerAndVoteContract } from '@/DataContracts/Song/SongWithPVPlayerAndVoteContract';
+import { SongWithPVsContract } from '@/DataContracts/Song/SongWithPVsContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
@@ -410,6 +412,31 @@ export class SongRepository
 			url,
 			data,
 		);
+	};
+
+	public getListWithPVs = async ({
+		lang,
+		paging,
+		queryParams,
+	}: {
+		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		queryParams: Parameters<SongRepository['getList']>[0]['queryParams'];
+	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
+		const { items } = await this.getList({
+			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
+			lang: lang,
+			paging: paging,
+			queryParams: queryParams,
+		});
+
+		const songs = items.map((song) => ({
+			...song,
+			entryType: EntryType[EntryType.Song],
+			pvs: song.pvs ?? [],
+		}));
+
+		return { items: songs, totalCount: songs.length };
 	};
 
 	public getOverTime = ({

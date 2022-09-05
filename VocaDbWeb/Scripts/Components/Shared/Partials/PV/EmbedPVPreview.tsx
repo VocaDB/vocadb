@@ -4,7 +4,7 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { EntryType } from '@/Models/EntryType';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -136,7 +136,9 @@ export const EmbedPVPreview = observer(
 						lang: vdb.values.languagePreference,
 					});
 
-					const items = AlbumHelper.createPlayQueueItems(albumWithPVsAndTracks);
+					const items = PlayQueueHelper.createItemsFromAlbum(
+						albumWithPVsAndTracks,
+					);
 
 					playQueue.play(method, ...items);
 				} else {

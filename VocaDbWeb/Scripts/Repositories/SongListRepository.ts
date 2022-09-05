@@ -3,8 +3,10 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { SongWithPVsContract } from '@/DataContracts/Song/SongWithPVsContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
@@ -142,6 +144,38 @@ export class SongListRepository {
 			url,
 			data,
 		);
+	};
+
+	public getSongsWithPVs = async ({
+		lang,
+		paging,
+		queryParams,
+	}: {
+		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		queryParams: Parameters<SongListRepository['getSongs']>[0]['queryParams'];
+	}): Promise<
+		PartialFindResultContract<
+			SongInListContract & { song: SongWithPVsContract }
+		>
+	> => {
+		const { items } = await this.getSongs({
+			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
+			lang: lang,
+			paging: paging,
+			queryParams: queryParams,
+		});
+
+		const songsInList = items.map((songInList) => ({
+			...songInList,
+			song: {
+				...songInList.song,
+				entryType: EntryType[EntryType.Song],
+				pvs: songInList.song.pvs ?? [],
+			},
+		}));
+
+		return { items: songsInList, totalCount: songsInList.length };
 	};
 
 	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {

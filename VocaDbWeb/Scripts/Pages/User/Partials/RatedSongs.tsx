@@ -5,7 +5,12 @@ import { RatedSongsSearchDropdown } from '@/Components/Shared/Partials/Knockout/
 import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/AdvancedFilters';
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -13,6 +18,11 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
+
+const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
+const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface RatedSongsProps {
 	ratedSongsStore: RatedSongsSearchStore;
@@ -26,6 +36,8 @@ const RatedSongs = observer(
 			'ViewRes.User',
 			'VocaDb.Web.Resources.Domain',
 		]);
+
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<>
@@ -45,34 +57,32 @@ const RatedSongs = observer(
 						<div className="inline-block">
 							<div className="btn-group">
 								<Button
-									onClick={(): void =>
-										runInAction(() => {
-											ratedSongsStore.viewMode = 'Details';
-										})
-									}
-									className={classNames(
-										ratedSongsStore.viewMode === 'Details' && 'active',
-										'btn-nomargin',
-									)}
-									href="#"
-									title={t('ViewRes.Search:Index.AlbumDetails')}
+									onClick={async (): Promise<void> => {
+										// TODO: Play.
+
+										const { paging, queryParams } = ratedSongsStore;
+
+										const pagingProperties = paging.getPagingProperties();
+
+										const songsForUser = await userRepo.getRatedSongsListWithPVs(
+											{
+												lang: vdb.values.languagePreference,
+												paging: pagingProperties,
+												queryParams: queryParams,
+											},
+										);
+
+										const items = PlayQueueHelper.createItemsFromSongs(
+											songsForUser.items.map((songForUser) => songForUser.song),
+										);
+
+										playQueue.clearAndPlay(...items);
+									}}
+									title="Play" /* TODO: localize */
+									className="btn-nomargin"
 								>
-									<i className="icon-th-list" />
-								</Button>
-								<Button
-									onClick={(): void =>
-										runInAction(() => {
-											ratedSongsStore.viewMode = 'PlayList';
-										})
-									}
-									className={classNames(
-										ratedSongsStore.viewMode === 'PlayList' && 'active',
-										'btn-nomargin',
-									)}
-									href="#"
-									title={t('ViewRes.Search:Index.Playlist')}
-								>
-									<i className="icon-list" />
+									<i className="icon-play noMargin" /> Play
+									{/* TODO: localize */}
 								</Button>
 							</div>
 						</div>{' '}

@@ -126,7 +126,7 @@ const ArtistSearchList = observer(
 									<td className="search-tags-column">
 										{artist.tags && artist.tags.length > 0 && (
 											<div>
-												<i className="icon icon-tags" />{' '}
+												<i className="icon icon-tags fix-icon-margin" />{' '}
 												{artist.tags.map((tag, index) => (
 													<React.Fragment key={tag.tag.id}>
 														{index > 0 && ', '}
