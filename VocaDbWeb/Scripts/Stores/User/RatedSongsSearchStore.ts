@@ -156,23 +156,21 @@ export class RatedSongsSearchStore
 		this.tagFilters.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public init = (): void => {
+	public init = async (): Promise<void> => {
 		if (this.isInit) return;
 
-		this.userRepo
-			.getSongLists({
-				userId: this.userId,
-				query: undefined,
-				paging: { start: 0, maxEntries: 50, getTotalCount: false },
-				tagIds: [],
-				sort: SongListSortRule.Name,
-				fields: undefined,
-			})
-			.then((songLists) =>
-				runInAction(() => {
-					this.songLists = songLists.items;
-				}),
-			);
+		const songLists = await this.userRepo.getSongLists({
+			userId: this.userId,
+			query: undefined,
+			paging: { start: 0, maxEntries: 50, getTotalCount: false },
+			tagIds: [],
+			sort: SongListSortRule.Name,
+			fields: undefined,
+		});
+
+		runInAction(() => {
+			this.songLists = songLists.items;
+		});
 
 		this.isInit = true;
 	};
@@ -186,6 +184,23 @@ export class RatedSongsSearchStore
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
+
+	@computed public get queryParams(): Parameters<
+		UserRepository['getRatedSongsList']
+	>[0]['queryParams'] {
+		return {
+			userId: this.userId,
+			query: this.searchTerm,
+			tagIds: this.tagFilters.tagIds,
+			artistIds: this.artistFilters.artistIds,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			rating: this.rating,
+			songListId: this.songListId,
+			advancedFilters: this.advancedFilters.filters,
+			groupByRating: this.groupByRating,
+			sort: this.sort,
+		};
+	}
 
 	public pauseNotifications = false;
 
@@ -201,30 +216,21 @@ export class RatedSongsSearchStore
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		if (this.viewMode === 'PlayList') {
-			this.playListStore.updateResultsWithTotalCount().then(() => {
-				this.pauseNotifications = false;
-				runInAction(() => {
-					this.loading = false;
-				});
+			await this.playListStore.updateResultsWithTotalCount();
+
+			this.pauseNotifications = false;
+			runInAction(() => {
+				this.loading = false;
 			});
 			return;
 		}
 
 		const result = await this.userRepo.getRatedSongsList({
-			userId: this.userId,
-			paging: pagingProperties,
-			lang: this.values.languagePreference,
-			query: this.searchTerm,
-			tagIds: this.tagFilters.tagIds,
-			artistIds: this.artistFilters.artistIds,
-			childVoicebanks: this.artistFilters.childVoicebanks,
-			rating: this.rating,
-			songListId: this.songListId,
-			advancedFilters: this.advancedFilters.filters,
-			groupByRating: this.groupByRating,
-			pvServices: undefined,
 			fields: this.fields,
-			sort: this.sort,
+			lang: this.values.languagePreference,
+			paging: pagingProperties,
+			pvServices: undefined,
+			queryParams: this.queryParams,
 		});
 
 		var songs: IRatedSongSearchItem[] = [];

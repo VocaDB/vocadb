@@ -3,8 +3,6 @@ import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
-import { SongOptionalField } from '@/Models/EntryOptionalFields';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { EntryType } from '@/Models/EntryType';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { ResourcesManager } from '@/Models/ResourcesManager';
@@ -12,7 +10,10 @@ import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -204,23 +205,25 @@ export class SongListViewModel {
 
 		this.songListRepo
 			.getSongs({
-				listId: this.listId,
-				query: this.query(),
-				songTypes:
-					this.songType() !== SongType.Unspecified
-						? [this.songType()]
-						: undefined,
-				tagIds: this.tagIds(),
-				childTags: this.childTags(),
-				artistIds: this.artistFilters.artistIds(),
-				artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
-				childVoicebanks: this.artistFilters.childVoicebanks(),
-				advancedFilters: this.advancedFilters.filters(),
-				pvServices: undefined,
-				paging: pagingProperties,
-				fields: new SongOptionalFields(fields),
-				sort: this.sort(),
+				fields: fields,
 				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: {
+					listId: this.listId,
+					query: this.query(),
+					songTypes:
+						this.songType() !== SongType.Unspecified
+							? [this.songType()]
+							: undefined,
+					tagIds: this.tagIds(),
+					childTags: this.childTags(),
+					artistIds: this.artistFilters.artistIds(),
+					artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+					childVoicebanks: this.artistFilters.childVoicebanks(),
+					advancedFilters: this.advancedFilters.filters(),
+					sort: this.sort(),
+				},
 			})
 			.then((result) => {
 				for (const item of result.items) {

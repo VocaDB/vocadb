@@ -45,10 +45,6 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 
 	public loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<TagApiContract>> => {
 		return this.tagRepo.getList({
 			queryParams: {
@@ -56,7 +52,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 				maxResults: pagingProperties.maxEntries,
 				getTotalCount: pagingProperties.getTotalCount,
 				lang: this.values.languagePreference,
-				query: searchTerm,
+				query: this.searchTerm,
 				sort: this.sort,
 				allowAliases: this.allowAliases,
 				categoryName: this.categoryName,

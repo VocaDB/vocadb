@@ -10,8 +10,16 @@ import { PVPlayersFactory } from '@/ViewModels/PVs/PVPlayersFactory';
 import ko, { Observable } from 'knockout';
 
 export class PVPlayerViewModel {
-	public static autoplayPVServicesString =
-		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
+	public static autoplayPVServices = [
+		PVService.File,
+		PVService.LocalFile,
+		PVService.NicoNicoDouga,
+		PVService.SoundCloud,
+		PVService.Youtube,
+	];
+	public static autoplayPVServicesString = PVPlayerViewModel.autoplayPVServices.join(
+		', ',
+	);
 
 	public constructor(
 		values: GlobalValues,
@@ -86,8 +94,7 @@ export class PVPlayerViewModel {
 					})
 					.then((result) => {
 						this.playerHtml(result.playerHtml);
-						this.playerService =
-							PVService[result.pvService as keyof typeof PVService];
+						this.playerService = result.pvService;
 						this.currentPlayer = this.players[result.pvService];
 
 						if (this.currentPlayer) {

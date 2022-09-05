@@ -1,10 +1,13 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 import {
 	IPlayListRepository,
@@ -40,48 +43,50 @@ export class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 	) {}
 
 	public getSongs = (
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.songRepo
 			.getList({
-				paging: paging,
-				lang: lang,
-				query: this.query(),
-				sort: this.sort(),
-				songTypes:
-					this.songType() !== SongType.Unspecified
-						? [this.songType()]
-						: undefined,
-				afterDate: this.afterDate(),
-				beforeDate: this.beforeDate(),
-				tagIds: this.tagIds(),
-				childTags: this.childTags(),
-				unifyTypesAndTags: this.unifyTypesAndTags(),
-				artistIds: this.artistIds(),
-				artistParticipationStatus: this.artistParticipationStatus(),
-				childVoicebanks: this.childVoicebanks(),
-				includeMembers: this.includeMembers(),
-				eventId: this.eventId(),
-				onlyWithPvs: this.onlyWithPvs(),
-				pvServices: pvServices,
-				since: this.since(),
-				minScore: this.minScore(),
-				userCollectionId: this.onlyRatedSongs()
-					? this.userCollectionId
-					: undefined,
-				parentSongId: this.parentVersionId(),
 				fields: this.fields(),
-				status: this.draftsOnly() ? 'Draft' : undefined,
-				advancedFilters: this.advancedFilters
-					? this.advancedFilters()
-					: undefined,
-				minMilliBpm: undefined,
-				maxMilliBpm: undefined,
-				minLength: undefined,
-				maxLength: undefined,
+				lang: lang,
+				paging: paging,
+				pvServices: pvServices,
+				queryParams: {
+					query: this.query(),
+					sort: this.sort(),
+					songTypes:
+						this.songType() !== SongType.Unspecified
+							? [this.songType()]
+							: undefined,
+					afterDate: this.afterDate(),
+					beforeDate: this.beforeDate(),
+					tagIds: this.tagIds(),
+					childTags: this.childTags(),
+					unifyTypesAndTags: this.unifyTypesAndTags(),
+					artistIds: this.artistIds(),
+					artistParticipationStatus: this.artistParticipationStatus(),
+					childVoicebanks: this.childVoicebanks(),
+					includeMembers: this.includeMembers(),
+					eventId: this.eventId(),
+					onlyWithPvs: this.onlyWithPvs(),
+					since: this.since(),
+					minScore: this.minScore(),
+					userCollectionId: this.onlyRatedSongs()
+						? this.userCollectionId
+						: undefined,
+					parentSongId: this.parentVersionId(),
+					status: this.draftsOnly() ? 'Draft' : undefined,
+					advancedFilters: this.advancedFilters
+						? this.advancedFilters()
+						: undefined,
+					minMilliBpm: undefined,
+					maxMilliBpm: undefined,
+					minLength: undefined,
+					maxLength: undefined,
+				},
 			})
 			.then((result: PartialFindResultContract<SongApiContract>) => {
 				var mapped = result.items.map((song, idx) => ({

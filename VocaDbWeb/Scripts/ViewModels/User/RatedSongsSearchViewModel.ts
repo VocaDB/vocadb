@@ -202,20 +202,22 @@ export class RatedSongsSearchViewModel {
 
 		this.userRepo
 			.getRatedSongsList({
-				userId: this.userId,
-				paging: pagingProperties,
-				lang: this.values.languagePreference,
-				query: this.searchTerm(),
-				tagIds: this.tagFilters.tagIds(),
-				artistIds: this.artistFilters.artistIds(),
-				childVoicebanks: this.artistFilters.childVoicebanks(),
-				rating: this.rating(),
-				songListId: this.songListId()!,
-				advancedFilters: this.advancedFilters.filters(),
-				groupByRating: this.groupByRating(),
-				pvServices: undefined,
 				fields: this.fields(),
-				sort: this.sort(),
+				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: {
+					userId: this.userId,
+					query: this.searchTerm(),
+					tagIds: this.tagFilters.tagIds(),
+					artistIds: this.artistFilters.artistIds(),
+					childVoicebanks: this.artistFilters.childVoicebanks(),
+					rating: this.rating(),
+					songListId: this.songListId()!,
+					advancedFilters: this.advancedFilters.filters(),
+					groupByRating: this.groupByRating(),
+					sort: this.sort(),
+				},
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {

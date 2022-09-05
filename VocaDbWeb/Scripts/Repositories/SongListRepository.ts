@@ -5,10 +5,11 @@ import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
@@ -82,36 +83,42 @@ export class SongListRepository {
 	};
 
 	public getSongs = ({
-		listId,
-		query,
-		songTypes,
-		tagIds,
-		childTags,
-		artistIds,
-		artistParticipationStatus,
-		childVoicebanks,
-		advancedFilters,
-		pvServices,
-		paging,
 		fields,
-		sort,
 		lang,
+		paging,
+		pvServices,
+		queryParams,
 	}: {
-		listId: number;
-		query: string;
-		songTypes?: SongType[];
-		tagIds: number[];
-		childTags: boolean;
-		artistIds: number[];
-		artistParticipationStatus: string;
-		childVoicebanks: boolean;
-		advancedFilters: AdvancedSearchFilter[];
-		pvServices?: string;
-		paging: PagingProperties;
-		fields: SongOptionalFields;
-		sort: string;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: {
+			listId: number;
+			query: string;
+			songTypes?: SongType[];
+			tagIds: number[];
+			childTags: boolean;
+			artistIds: number[];
+			artistParticipationStatus: string;
+			childVoicebanks: boolean;
+			advancedFilters: AdvancedSearchFilter[];
+			sort: string;
+		};
 	}): Promise<PartialFindResultContract<SongInListContract>> => {
+		const {
+			listId,
+			query,
+			songTypes,
+			tagIds,
+			childTags,
+			artistIds,
+			artistParticipationStatus,
+			childVoicebanks,
+			advancedFilters,
+			sort,
+		} = queryParams;
+
 		var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
 		var data = {
 			query: query,
@@ -122,11 +129,11 @@ export class SongListRepository {
 			artistParticipationStatus: artistParticipationStatus,
 			childVoicebanks: childVoicebanks,
 			advancedFilters: advancedFilters,
-			pvServices: pvServices,
+			pvServices: pvServices?.join(','),
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
-			fields: fields.fields,
+			fields: fields.join(','),
 			lang: lang,
 			sort: sort,
 		};

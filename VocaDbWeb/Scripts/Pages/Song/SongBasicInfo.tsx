@@ -171,10 +171,7 @@ const PVButton = observer(
 						: undefined
 				}
 			>
-				<PVServiceIcon
-					service={PVService[pv.service as keyof typeof PVService]}
-				/>{' '}
-				{pv.name || pv.service}
+				<PVServiceIcon service={pv.service} /> {pv.name || pv.service}
 				{showPVType && <> ({t(`Resources:PVTypeNames.${pv.pvType}`)})</>}
 			</Button>
 		);
@@ -200,8 +197,8 @@ const PVList = observer(
 							pv={pv}
 							showPVType={showPVType}
 						/>
-						{pv.service !== PVService[PVService.File] &&
-							pv.service !== PVService[PVService.LocalFile] && (
+						{pv.service !== PVService.File &&
+							pv.service !== PVService.LocalFile && (
 								<>
 									{' '}
 									&nbsp;
@@ -218,7 +215,7 @@ const PVList = observer(
 									</a>
 								</>
 							)}
-						{pv.service === PVService[PVService.NicoNicoDouga] && (
+						{pv.service === PVService.NicoNicoDouga && (
 							<>
 								{' '}
 								<a
@@ -251,14 +248,10 @@ const SongBasicInfo = observer(
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		const webLinks = React.useMemo(() => {
-			if (
-				model.contract.pvs.every(
-					(p) => p.service !== PVService[PVService.Youtube],
-				)
-			) {
+			if (model.contract.pvs.every((p) => p.service !== PVService.Youtube)) {
 				const nicoPV = VideoServiceHelper.primaryPV(
 					model.contract.pvs,
-					PVService[PVService.NicoNicoDouga],
+					PVService.NicoNicoDouga,
 				);
 				const query = encodeURIComponent(
 					nicoPV && nicoPV.name

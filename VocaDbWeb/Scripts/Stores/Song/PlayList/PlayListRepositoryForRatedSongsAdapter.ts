@@ -1,8 +1,9 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
@@ -33,28 +34,30 @@ export class PlayListRepositoryForRatedSongsAdapter
 	) {}
 
 	public getSongs(
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> {
 		return this.userRepo
 			.getRatedSongsList({
-				userId: this.ratedSongsAdapterStore.userId,
-				paging: paging,
-				lang: lang,
-				query: this.ratedSongsAdapterStore.searchTerm,
-				tagIds: this.ratedSongsAdapterStore.tagIds,
-				artistIds: this.ratedSongsAdapterStore.artistFilters.artistIds,
-				childVoicebanks: this.ratedSongsAdapterStore.artistFilters
-					.childVoicebanks,
-				rating: this.ratedSongsAdapterStore.rating,
-				songListId: this.ratedSongsAdapterStore.songListId,
-				advancedFilters: this.ratedSongsAdapterStore.advancedFilters.filters,
-				groupByRating: this.ratedSongsAdapterStore.groupByRating,
-				pvServices: pvServices,
 				fields: 'MainPicture' /* TODO: enum */,
-				sort: this.ratedSongsAdapterStore.sort,
+				lang: lang,
+				paging: paging,
+				pvServices: pvServices,
+				queryParams: {
+					userId: this.ratedSongsAdapterStore.userId,
+					query: this.ratedSongsAdapterStore.searchTerm,
+					tagIds: this.ratedSongsAdapterStore.tagIds,
+					artistIds: this.ratedSongsAdapterStore.artistFilters.artistIds,
+					childVoicebanks: this.ratedSongsAdapterStore.artistFilters
+						.childVoicebanks,
+					rating: this.ratedSongsAdapterStore.rating,
+					songListId: this.ratedSongsAdapterStore.songListId,
+					advancedFilters: this.ratedSongsAdapterStore.advancedFilters.filters,
+					groupByRating: this.ratedSongsAdapterStore.groupByRating,
+					sort: this.ratedSongsAdapterStore.sort,
+				},
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {

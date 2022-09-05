@@ -65,26 +65,22 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 
 	public loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ArtistContract>> => {
 		return this.artistRepo.getList({
 			paging: pagingProperties,
 			lang: this.values.languagePreference,
-			query: searchTerm,
+			query: this.searchTerm,
 			sort: this.sort,
 			artistTypes:
 				this.artistType !== ArtistType.Unknown ? [this.artistType] : undefined,
 			allowBaseVoicebanks: !this.onlyRootVoicebanks,
-			tags: tags,
-			childTags: childTags,
+			tags: this.tagIds,
+			childTags: this.childTags,
 			followedByUserId: this.onlyFollowedByMe
 				? this.values.loggedUserId
 				: undefined,
 			fields: this.fields,
-			status: status,
+			status: this.draftsOnly ? 'Draft' : undefined,
 			advancedFilters: this.advancedFilters.filters,
 		});
 	};

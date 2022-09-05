@@ -38,6 +38,7 @@ import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
@@ -510,7 +511,9 @@ const AlbumBasicInfo = observer(
 															<PVServiceIcons
 																services={song.song.pvServices
 																	.split(',')
-																	.map((service) => service.trim())}
+																	.map(
+																		(service) => service.trim() as PVService,
+																	)}
 															/>{' '}
 															<RatingIcon
 																rating={

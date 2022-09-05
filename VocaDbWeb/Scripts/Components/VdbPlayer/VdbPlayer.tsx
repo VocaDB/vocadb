@@ -432,7 +432,7 @@ const EmbedPVWrapper = observer(
 					if (!player) return;
 
 					const pvId =
-						pv.service === PVService[PVService.Piapro]
+						pv.service === PVService.Piapro
 							? VideoServiceHelper.getPiaproUrlWithTimestamp(pv)!
 							: pv.pvId;
 

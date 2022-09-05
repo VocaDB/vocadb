@@ -21,6 +21,7 @@ import {
 	CommonQueryParams,
 } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -39,19 +40,6 @@ export enum AlbumOptionalField {
 	Tags = 'Tags',
 	Tracks = 'Tracks',
 	WebLinks = 'WebLinks',
-}
-
-// TODO: Remove.
-export enum SongOptionalField {
-	AdditionalNames = 'AdditionalNames',
-	Albums = 'Albums',
-	Artists = 'Artists',
-	Names = 'Names',
-	PVs = 'PVs',
-	Tags = 'Tags',
-	ThumbUrl = 'ThumbUrl',
-	WebLinks = 'WebLinks',
-	MainPicture = 'MainPicture',
 }
 
 export type AlbumWithPVsAndTracksContract = Required<

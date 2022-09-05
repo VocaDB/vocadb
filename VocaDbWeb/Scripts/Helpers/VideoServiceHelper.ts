@@ -55,18 +55,16 @@ export class VideoServiceHelper {
 	];
 
 	public static canAutoplayPV = (pv: PVContract): boolean => {
-		if (pv.service === PVService[PVService.Piapro])
+		if (pv.service === PVService.Piapro)
 			return VideoServiceHelper.getPiaproTimestamp(pv) !== undefined;
 
-		return VideoServiceHelper.autoplayServices.includes(
-			PVService[pv.service as keyof typeof PVService],
-		);
+		return VideoServiceHelper.autoplayServices.includes(pv.service);
 	};
 
 	// TODO: Test.
 	public static primaryPV = (
 		pvs: PVContract[],
-		preferredService?: string,
+		preferredService?: PVService,
 		autoplay?: boolean,
 	): PVContract | undefined => {
 		const p = autoplay

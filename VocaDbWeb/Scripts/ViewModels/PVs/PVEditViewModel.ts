@@ -1,5 +1,6 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVService } from '@/Models/PVs/PVService';
 import ko, { Observable } from 'knockout';
 
 export class PVEditViewModel {
@@ -39,7 +40,7 @@ export class PVEditViewModel {
 
 	public pvId: string;
 
-	public service: string;
+	public service: PVService;
 
 	public publishDate: string;
 

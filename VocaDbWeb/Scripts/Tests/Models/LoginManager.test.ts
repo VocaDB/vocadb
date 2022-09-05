@@ -26,7 +26,7 @@ const createUser = ({
 		unreadMessagesCount: 0,
 		verifiedArtist: false,
 		ownedArtistEntries: [],
-		preferredVideoService: PVService[PVService.NicoNicoDouga],
+		preferredVideoService: PVService.NicoNicoDouga,
 		albumFormatString: '',
 		groupId: groupId,
 	};

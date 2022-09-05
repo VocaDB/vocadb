@@ -9,9 +9,7 @@ export class PVHelper {
 		if (!pvServices) return [];
 
 		var values = pvServices.split(',');
-		var services: PVService[] = values.map(
-			(val) => PVService[val.trim() as keyof typeof PVService],
-		);
+		var services: PVService[] = values.map((val) => val.trim() as PVService);
 
 		return services;
 	};

@@ -207,75 +207,74 @@ export class SongSearchStore
 		);
 	}
 
-	public loadResults = (
+	@computed public get queryParams(): Parameters<
+		SongRepository['getList']
+	>[0]['queryParams'] {
+		return {
+			query: this.searchTerm,
+			sort: this.sort,
+			songTypes:
+				this.songType !== SongType.Unspecified ? [this.songType] : undefined,
+			afterDate: this.afterDate,
+			beforeDate: this.beforeDate,
+			tagIds: this.tagIds,
+			childTags: this.childTags,
+			unifyTypesAndTags: this.unifyEntryTypesAndTags,
+			artistIds: this.artistFilters.artistIds,
+			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			includeMembers: this.artistFilters.includeMembers,
+			eventId: this.releaseEvent.id,
+			onlyWithPvs: this.pvsOnly,
+			since: this.since,
+			minScore: this.minScore,
+			userCollectionId: this.onlyRatedSongs
+				? this.values.loggedUserId
+				: undefined,
+			parentSongId: this.parentVersion.id,
+			status: this.draftsOnly ? 'Draft' : undefined,
+			advancedFilters: this.advancedFilters.filters,
+			minMilliBpm: this.minBpmFilter.milliBpm,
+			maxMilliBpm: this.maxBpmFilter.milliBpm,
+			minLength: this.minLengthFilter.length
+				? this.minLengthFilter.length
+				: undefined,
+			maxLength: this.maxLengthFilter.length
+				? this.maxLengthFilter.length
+				: undefined,
+		};
+	}
+
+	public loadResults = async (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ISongSearchItem>> => {
 		if (this.viewMode === 'PlayList') {
 			this.playListStore.updateResultsWithTotalCount();
-			return Promise.resolve({ items: [], totalCount: 0 });
+			return { items: [], totalCount: 0 };
 		} else {
-			return this.songRepo
-				.getList({
-					paging: pagingProperties,
-					lang: this.values.languagePreference,
-					query: searchTerm,
-					sort: this.sort,
-					songTypes:
-						this.songType !== SongType.Unspecified
-							? [this.songType]
-							: undefined,
-					afterDate: this.afterDate,
-					beforeDate: this.beforeDate,
-					tagIds: tags,
-					childTags: childTags,
-					unifyTypesAndTags: this.unifyEntryTypesAndTags,
-					artistIds: this.artistFilters.artistIds,
-					artistParticipationStatus: this.artistFilters
-						.artistParticipationStatus,
-					childVoicebanks: this.artistFilters.childVoicebanks,
-					includeMembers: this.artistFilters.includeMembers,
-					eventId: this.releaseEvent.id,
-					onlyWithPvs: this.pvsOnly,
-					pvServices: undefined,
-					since: this.since,
-					minScore: this.minScore,
-					userCollectionId: this.onlyRatedSongs
-						? this.values.loggedUserId
-						: undefined,
-					parentSongId: this.parentVersion.id,
-					fields: this.fields,
-					status: status,
-					advancedFilters: this.advancedFilters.filters,
-					minMilliBpm: this.minBpmFilter.milliBpm,
-					maxMilliBpm: this.maxBpmFilter.milliBpm,
-					minLength: this.minLengthFilter.length
-						? this.minLengthFilter.length
-						: undefined,
-					maxLength: this.maxLengthFilter.length
-						? this.maxLengthFilter.length
-						: undefined,
-				})
-				.then((result) => {
-					for (const song of result.items as ISongSearchItem[]) {
-						if (song.pvServices && song.pvServices !== 'Nothing') {
-							song.previewStore = new SongWithPreviewStore(
-								this.songRepo,
-								this.userRepo,
-								song.id,
-								song.pvServices,
-							);
-							// TODO: song.previewStore.ratingComplete = ui.showThankYouForRatingMessage;
-						} else {
-							song.previewStore = undefined;
-						}
-					}
+			const result = await this.songRepo.getList({
+				fields: this.fields,
+				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: this.queryParams,
+			});
 
-					return result;
-				});
+			for (const song of result.items as ISongSearchItem[]) {
+				if (song.pvServices && song.pvServices !== 'Nothing') {
+					song.previewStore = new SongWithPreviewStore(
+						this.songRepo,
+						this.userRepo,
+						song.id,
+						song.pvServices,
+					);
+					// TODO: song.previewStore.ratingComplete = ui.showThankYouForRatingMessage;
+				} else {
+					song.previewStore = undefined;
+				}
+			}
+
+			return result;
 		}
 	};
 

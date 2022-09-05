@@ -42,19 +42,15 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 
 	public loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<EntryContract>> => {
 		return this.entryRepo.getList({
 			paging: pagingProperties,
 			lang: this.values.languagePreference,
-			query: searchTerm,
-			tags: tags,
-			childTags: childTags,
+			query: this.searchTerm,
+			tags: this.tagIds,
+			childTags: this.childTags,
 			fields: this.fields,
-			status: status,
+			status: this.draftsOnly ? 'Draft' : undefined,
 		});
 	};
 

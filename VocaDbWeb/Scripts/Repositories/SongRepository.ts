@@ -31,6 +31,18 @@ import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
+export enum SongOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	Albums = 'Albums',
+	Artists = 'Artists',
+	Names = 'Names',
+	PVs = 'PVs',
+	Tags = 'Tags',
+	ThumbUrl = 'ThumbUrl',
+	WebLinks = 'WebLinks',
+	MainPicture = 'MainPicture',
+}
+
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
 export class SongRepository
@@ -295,64 +307,70 @@ export class SongRepository
 	}
 
 	public getList = ({
-		paging,
-		lang,
-		query,
-		sort,
-		songTypes,
-		afterDate,
-		beforeDate,
-		tagIds,
-		childTags,
-		unifyTypesAndTags,
-		artistIds,
-		artistParticipationStatus,
-		childVoicebanks,
-		includeMembers,
-		eventId,
-		onlyWithPvs,
-		pvServices,
-		since,
-		minScore,
-		userCollectionId,
-		parentSongId,
 		fields,
-		status,
-		advancedFilters,
-		minMilliBpm,
-		maxMilliBpm,
-		minLength,
-		maxLength,
+		lang,
+		paging,
+		pvServices,
+		queryParams,
 	}: {
-		paging: PagingProperties;
+		fields: string /* TODO: enum */;
 		lang: ContentLanguagePreference;
-		query: string;
-		sort: string;
-		songTypes?: SongType[];
-		afterDate?: Date;
-		beforeDate?: Date;
-		tagIds: number[];
-		childTags: boolean;
-		unifyTypesAndTags: boolean;
-		artistIds: number[];
-		artistParticipationStatus: string;
-		childVoicebanks: boolean;
-		includeMembers: boolean;
-		eventId?: number;
-		onlyWithPvs: boolean;
-		pvServices?: string;
-		since?: number;
-		minScore?: number;
-		userCollectionId?: number;
-		parentSongId?: number;
-		fields: string;
-		status?: string;
-		advancedFilters?: AdvancedSearchFilter[];
-		minMilliBpm?: number;
-		maxMilliBpm?: number;
-		minLength?: number;
-		maxLength?: number;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: {
+			query: string;
+			sort: string;
+			songTypes?: SongType[];
+			afterDate?: Date;
+			beforeDate?: Date;
+			tagIds: number[];
+			childTags: boolean;
+			unifyTypesAndTags: boolean;
+			artistIds: number[];
+			artistParticipationStatus: string;
+			childVoicebanks: boolean;
+			includeMembers: boolean;
+			eventId?: number;
+			onlyWithPvs: boolean;
+			since?: number;
+			minScore?: number;
+			userCollectionId?: number;
+			parentSongId?: number;
+			status?: string;
+			advancedFilters?: AdvancedSearchFilter[];
+			minMilliBpm?: number;
+			maxMilliBpm?: number;
+			minLength?: number;
+			maxLength?: number;
+		};
 	}): Promise<PartialFindResultContract<SongContract>> => {
+		const {
+			query,
+			sort,
+			songTypes,
+			afterDate,
+			beforeDate,
+			tagIds,
+			childTags,
+			unifyTypesAndTags,
+			artistIds,
+			artistParticipationStatus,
+			childVoicebanks,
+			includeMembers,
+			eventId,
+			onlyWithPvs,
+			since,
+			minScore,
+			userCollectionId,
+			parentSongId,
+			status,
+			advancedFilters,
+			minMilliBpm,
+			maxMilliBpm,
+			minLength,
+			maxLength,
+		} = queryParams;
+
 		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
 		var data = {
 			start: paging.start,
@@ -375,7 +393,7 @@ export class SongRepository
 			includeMembers: includeMembers || undefined,
 			releaseEventId: eventId,
 			onlyWithPvs: onlyWithPvs,
-			pvServices: pvServices,
+			pvServices: pvServices?.join(','),
 			since: since,
 			minScore: minScore,
 			userCollectionId: userCollectionId,

@@ -117,10 +117,6 @@ export abstract class SearchCategoryBaseStore<
 	// Method for loading a page of results.
 	public abstract loadResults: (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	) => Promise<PartialFindResultContract<TEntry>>;
 
 	@action public selectTag = (tag: TagBaseContract): void => {
@@ -143,13 +139,7 @@ export abstract class SearchCategoryBaseStore<
 
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
-		const result = await this.loadResults(
-			pagingProperties,
-			this.searchTerm,
-			this.tagIds,
-			this.childTags,
-			this.draftsOnly ? 'Draft' : undefined,
-		);
+		const result = await this.loadResults(pagingProperties);
 
 		if (this.showTags) {
 			for (const item of result.items) {

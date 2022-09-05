@@ -1,6 +1,7 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
@@ -19,7 +20,7 @@ export class PVEditStore {
 	public readonly lengthFormatted: string;
 	@observable public name: string;
 	public readonly pvId: string;
-	public readonly service: string;
+	public readonly service: PVService;
 	public readonly publishDate: string;
 	public readonly pvType: string;
 	public readonly thumbUrl: string;

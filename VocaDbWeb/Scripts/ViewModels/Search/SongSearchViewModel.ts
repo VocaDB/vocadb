@@ -202,39 +202,41 @@ export class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearch
 			} else {
 				return this.songRepo
 					.getList({
-						paging: pagingProperties,
-						lang: values.languagePreference,
-						query: searchTerm,
-						sort: this.sort(),
-						songTypes:
-							this.songType() !== SongType.Unspecified
-								? [this.songType()]
-								: undefined,
-						afterDate: this.afterDate(),
-						beforeDate: this.beforeDate(),
-						tagIds: tag,
-						childTags: childTags,
-						unifyTypesAndTags: this.unifyEntryTypesAndTags(),
-						artistIds: this.artistFilters.artistIds(),
-						artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
-						childVoicebanks: this.artistFilters.childVoicebanks(),
-						includeMembers: this.artistFilters.includeMembers(),
-						eventId: this.releaseEvent.id(),
-						onlyWithPvs: this.pvsOnly(),
-						pvServices: undefined,
-						since: this.since(),
-						minScore: this.minScore(),
-						userCollectionId: this.onlyRatedSongs()
-							? values.loggedUserId
-							: undefined,
-						parentSongId: this.parentVersion.id(),
 						fields: this.fields(),
-						status: status,
-						advancedFilters: this.advancedFilters.filters(),
-						minMilliBpm: this.minMilliBpm(),
-						maxMilliBpm: this.maxMilliBpm(),
-						minLength: this.minLength() ? this.minLength() : undefined,
-						maxLength: this.maxLength() ? this.maxLength() : undefined,
+						lang: values.languagePreference,
+						paging: pagingProperties,
+						pvServices: undefined,
+						queryParams: {
+							query: searchTerm,
+							sort: this.sort(),
+							songTypes:
+								this.songType() !== SongType.Unspecified
+									? [this.songType()]
+									: undefined,
+							afterDate: this.afterDate(),
+							beforeDate: this.beforeDate(),
+							tagIds: tag,
+							childTags: childTags,
+							unifyTypesAndTags: this.unifyEntryTypesAndTags(),
+							artistIds: this.artistFilters.artistIds(),
+							artistParticipationStatus: this.artistFilters.artistParticipationStatus(),
+							childVoicebanks: this.artistFilters.childVoicebanks(),
+							includeMembers: this.artistFilters.includeMembers(),
+							eventId: this.releaseEvent.id(),
+							onlyWithPvs: this.pvsOnly(),
+							since: this.since(),
+							minScore: this.minScore(),
+							userCollectionId: this.onlyRatedSongs()
+								? values.loggedUserId
+								: undefined,
+							parentSongId: this.parentVersion.id(),
+							status: status,
+							advancedFilters: this.advancedFilters.filters(),
+							minMilliBpm: this.minMilliBpm(),
+							maxMilliBpm: this.maxMilliBpm(),
+							minLength: this.minLength() ? this.minLength() : undefined,
+							maxLength: this.maxLength() ? this.maxLength() : undefined,
+						},
 					})
 					.then((result) => {
 						for (const song of result.items as ISongSearchItem[]) {

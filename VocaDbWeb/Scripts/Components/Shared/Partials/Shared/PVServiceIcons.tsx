@@ -3,21 +3,19 @@ import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
 interface PVServiceIconsProps {
-	services: string /* TODO: enum */[];
+	services: PVService[];
 }
 
 export const PVServiceIcons = React.memo(
 	({ services }: PVServiceIconsProps): React.ReactElement => {
 		return (
 			<>
-				{Object.keys(/* TODO: values */ PVService)
+				{Object.values(PVService)
 					.filter((service) => services.includes(service))
 					.map((service, index) => (
 						<React.Fragment key={service}>
 							{index > 0 && ' '}
-							<PVServiceIcon
-								service={PVService[service as keyof typeof PVService]}
-							/>
+							<PVServiceIcon service={service} />
 						</React.Fragment>
 					))}
 			</>

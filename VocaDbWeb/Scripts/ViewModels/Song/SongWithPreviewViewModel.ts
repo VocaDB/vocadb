@@ -25,7 +25,7 @@ export class SongWithPreviewViewModel {
 	// Event handler for the event when the song has been rated.
 	public ratingComplete!: () => void;
 
-	public switchPV: (pvService: string) => void;
+	public switchPV: (pvService: PVService) => void;
 
 	// Toggle preview status.
 	public togglePreview: () => void;
@@ -62,9 +62,9 @@ export class SongWithPreviewViewModel {
 			});
 		};
 
-		this.switchPV = (newService: string): void => {
+		this.switchPV = (newService: PVService): void => {
 			this.pvService(newService);
-			var service: PVService = PVService[newService as keyof typeof PVService];
+			var service: PVService = newService;
 			repository
 				.pvForSongAndService({ songId: songId, pvService: service })
 				.then((html) => this.previewHtml(html));

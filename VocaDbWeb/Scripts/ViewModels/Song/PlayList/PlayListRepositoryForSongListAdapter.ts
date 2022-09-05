@@ -1,9 +1,10 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 import {
 	IPlayListRepository,
@@ -28,30 +29,32 @@ export class PlayListRepositoryForSongListAdapter
 	) {}
 
 	public getSongs = (
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.songListRepo
 			.getSongs({
-				listId: this.songListId,
-				query: this.query(),
-				songTypes:
-					this.songType() !== SongType.Unspecified
-						? [this.songType()]
-						: undefined,
-				tagIds: this.tagIds(),
-				childTags: this.childTags(),
-				artistIds: this.artistIds(),
-				artistParticipationStatus: this.artistParticipationStatus(),
-				childVoicebanks: this.childVoicebanks(),
-				advancedFilters: this.advancedFilters(),
-				pvServices: pvServices,
-				paging: paging,
 				fields: fields,
-				sort: this.sort(),
 				lang: lang,
+				paging: paging,
+				pvServices: pvServices,
+				queryParams: {
+					listId: this.songListId,
+					query: this.query(),
+					songTypes:
+						this.songType() !== SongType.Unspecified
+							? [this.songType()]
+							: undefined,
+					tagIds: this.tagIds(),
+					childTags: this.childTags(),
+					artistIds: this.artistIds(),
+					artistParticipationStatus: this.artistParticipationStatus(),
+					childVoicebanks: this.childVoicebanks(),
+					advancedFilters: this.advancedFilters(),
+					sort: this.sort(),
+				},
 			})
 			.then((result) => {
 				var mapped = result.items.map((song, idx) => ({

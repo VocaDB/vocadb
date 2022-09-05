@@ -30,13 +30,16 @@ export interface IPVPlayerSong {
 }
 
 export class PVPlayerStore {
-	public static autoplayPVServicesString = [
-		PVService[PVService.File],
-		PVService[PVService.LocalFile],
-		PVService[PVService.NicoNicoDouga],
-		PVService[PVService.SoundCloud],
-		PVService[PVService.Youtube],
-	].join(', ');
+	public static autoplayPVServices = [
+		PVService.File,
+		PVService.LocalFile,
+		PVService.NicoNicoDouga,
+		PVService.SoundCloud,
+		PVService.Youtube,
+	];
+	public static autoplayPVServicesString = PVPlayerStore.autoplayPVServices.join(
+		', ',
+	);
 
 	@observable public autoplay = false;
 	private readonly autoplayServices = [
@@ -112,8 +115,7 @@ export class PVPlayerStore {
 									service: result.pvService,
 									pvType: '',
 								};
-								this.playerService =
-									PVService[result.pvService as keyof typeof PVService];
+								this.playerService = result.pvService;
 							});
 						});
 				}

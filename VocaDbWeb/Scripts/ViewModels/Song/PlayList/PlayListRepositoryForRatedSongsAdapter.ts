@@ -1,8 +1,9 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 import {
@@ -29,27 +30,29 @@ export class PlayListRepositoryForRatedSongsAdapter
 	) {}
 
 	public getSongs = (
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.userRepo
 			.getRatedSongsList({
-				userId: this.userId,
-				paging: paging,
-				lang: lang,
-				query: this.query(),
-				tagIds: this.tagIds(),
-				artistIds: this.artistIds(),
-				childVoicebanks: this.childVoicebanks(),
-				rating: this.rating(),
-				songListId: this.songListId()!,
-				advancedFilters: this.advancedFilters(),
-				groupByRating: this.groupByRating(),
-				pvServices: pvServices,
 				fields: 'ThumbUrl',
-				sort: this.sort(),
+				lang: lang,
+				paging: paging,
+				pvServices: pvServices,
+				queryParams: {
+					userId: this.userId,
+					query: this.query(),
+					tagIds: this.tagIds(),
+					artistIds: this.artistIds(),
+					childVoicebanks: this.childVoicebanks(),
+					rating: this.rating(),
+					songListId: this.songListId()!,
+					advancedFilters: this.advancedFilters(),
+					groupByRating: this.groupByRating(),
+					sort: this.sort(),
+				},
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {

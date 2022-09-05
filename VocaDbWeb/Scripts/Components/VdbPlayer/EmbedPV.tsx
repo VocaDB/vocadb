@@ -9,8 +9,6 @@ import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
 import _ from 'lodash';
 import React from 'react';
 
-// TODO: Implement lazy loading.
-
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
 // TODO: Test.
 const getExtension = (path?: string): string | undefined => {
@@ -38,14 +36,20 @@ const isImage = (filename?: string): boolean => {
 
 const isAudio = (filename?: string): boolean => !isImage(filename);
 
-const playerTypes: Record<string, PlayerType> = {
-	[PVService[PVService.File]]: 'Audio',
-	[PVService[PVService.LocalFile]]: 'Audio',
-	[PVService[PVService.NicoNicoDouga]]: 'Niconico',
-	[PVService[PVService.Piapro]]: 'Audio',
-	[PVService[PVService.SoundCloud]]: 'SoundCloud',
-	[PVService[PVService.Vimeo]]: 'Vimeo',
-	[PVService[PVService.Youtube]]: 'YouTube',
+const playerTypes: Record<
+	Exclude<
+		PVService,
+		PVService.Bilibili | PVService.Creofuga | PVService.Bandcamp
+	>,
+	PlayerType
+> = {
+	[PVService.File]: 'Audio',
+	[PVService.LocalFile]: 'Audio',
+	[PVService.NicoNicoDouga]: 'Niconico',
+	[PVService.Piapro]: 'Audio',
+	[PVService.SoundCloud]: 'SoundCloud',
+	[PVService.Vimeo]: 'Vimeo',
+	[PVService.Youtube]: 'YouTube',
 };
 
 interface EmbedPVProps {
@@ -68,7 +72,7 @@ export const EmbedPV = React.memo(
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
-		const service = PVService[pv.service as keyof typeof PVService];
+		const service = pv.service;
 
 		switch (service) {
 			case PVService.File:
@@ -107,7 +111,7 @@ export const EmbedPV = React.memo(
 			case PVService.Youtube:
 				return (
 					<NostalgicDiva
-						type={playerTypes[pv.service]}
+						type={playerTypes[service]}
 						playerRef={playerRef}
 						options={options}
 						onPlayerChange={onPlayerChange}

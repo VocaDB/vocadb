@@ -86,27 +86,21 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 
 	public loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<AlbumContract>> => {
-		const artistIds = this.artistFilters.artistIds;
-
 		return this.albumRepo.getList({
 			paging: pagingProperties,
 			lang: this.values.languagePreference,
-			query: searchTerm,
+			query: this.searchTerm,
 			sort: this.sort,
 			discTypes: [this.albumType],
-			tags: tags,
-			childTags: childTags,
-			artistIds: artistIds,
+			tags: this.tagIds,
+			childTags: this.childTags,
+			artistIds: this.artistFilters.artistIds,
 			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
 			childVoicebanks: this.artistFilters.childVoicebanks,
 			includeMembers: this.artistFilters.includeMembers,
 			fields: this.fields,
-			status: status,
+			status: this.draftsOnly ? 'Draft' : undefined,
 			deleted: false,
 			advancedFilters: this.advancedFilters.filters,
 		});

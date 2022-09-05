@@ -4,17 +4,16 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
-import {
-	SongOptionalField,
-	SongOptionalFields,
-} from '@/Models/EntryOptionalFields';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -149,10 +148,14 @@ export class SongListStore
 			{
 				getTagSelections: (): Promise<TagSelectionContract[]> =>
 					userRepo.getSongListTagSelections({ songListId: this.listId }),
-				saveTagSelections: (tags): Promise<void> =>
-					userRepo
-						.updateSongListTags({ songListId: this.listId, tags: tags })
-						.then(this.tagUsages.updateTagUsages),
+				saveTagSelections: async (tags): Promise<void> => {
+					const usages = await userRepo.updateSongListTags({
+						songListId: this.listId,
+						tags: tags,
+					});
+
+					this.tagUsages.updateTagUsages(usages);
+				},
 			},
 			EntryType.SongList,
 		);
@@ -251,6 +254,24 @@ export class SongListStore
 		return validate(data);
 	};
 
+	@computed public get queryParams(): Parameters<
+		SongListRepository['getSongs']
+	>[0]['queryParams'] {
+		return {
+			listId: this.listId,
+			query: this.query,
+			songTypes:
+				this.songType !== SongType.Unspecified ? [this.songType] : undefined,
+			tagIds: this.tagIds,
+			childTags: this.childTags,
+			artistIds: this.artistFilters.artistIds,
+			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			advancedFilters: this.advancedFilters.filters,
+			sort: this.sort,
+		};
+	}
+
 	private loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<SongInListContract>> => {
@@ -258,29 +279,16 @@ export class SongListStore
 			this.playlistStore.updateResultsWithTotalCount();
 			return Promise.resolve({ items: [], totalCount: 0 });
 		} else {
-			const fields = [
-				SongOptionalField.AdditionalNames,
-				SongOptionalField.MainPicture,
-			];
-
-			if (this.showTags) fields.push(SongOptionalField.Tags);
-
 			return this.songListRepo.getSongs({
-				listId: this.listId,
-				query: this.query,
-				songTypes:
-					this.songType !== SongType.Unspecified ? [this.songType] : undefined,
-				tagIds: this.tagIds,
-				childTags: this.childTags,
-				artistIds: this.artistFilters.artistIds,
-				artistParticipationStatus: this.artistFilters.artistParticipationStatus,
-				childVoicebanks: this.artistFilters.childVoicebanks,
-				advancedFilters: this.advancedFilters.filters,
-				pvServices: undefined,
-				paging: pagingProperties,
-				fields: new SongOptionalFields(fields),
-				sort: this.sort,
+				fields: [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.MainPicture,
+					...(this.showTags ? [SongOptionalField.Tags] : []),
+				],
 				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: this.queryParams,
 			});
 		}
 	};

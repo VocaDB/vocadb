@@ -3,11 +3,13 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVHelper } from '@/Helpers/PVHelper';
-import { SongOptionalField } from '@/Models/EntryOptionalFields';
-import { SongOptionalFields } from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { PVService } from '@/Models/PVs/PVService';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -168,17 +170,23 @@ export class PlayListViewModel {
 		}
 
 		var services = this.pvPlayerViewModel.autoplay()
-			? PVPlayerViewModel.autoplayPVServicesString
-			: 'Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File,LocalFile';
+			? PVPlayerViewModel.autoplayPVServices
+			: [
+					PVService.Youtube,
+					PVService.SoundCloud,
+					PVService.NicoNicoDouga,
+					PVService.Bilibili,
+					PVService.Vimeo,
+					PVService.Piapro,
+					PVService.File,
+					PVService.LocalFile,
+			  ];
 
 		return this.songListRepo
 			.getSongs(
 				services,
 				pagingProperties,
-				SongOptionalFields.create(
-					SongOptionalField.AdditionalNames,
-					SongOptionalField.ThumbUrl,
-				),
+				[SongOptionalField.AdditionalNames, SongOptionalField.ThumbUrl],
 				this.values.languagePreference,
 			)
 			.then((result: PartialFindResultContract<ISongForPlayList>) => {
@@ -222,9 +230,9 @@ export interface ISongForPlayList {
 
 export interface IPlayListRepository {
 	getSongs(
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>>;
 }

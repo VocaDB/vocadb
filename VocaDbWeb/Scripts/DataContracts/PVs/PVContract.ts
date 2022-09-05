@@ -1,3 +1,5 @@
+import { PVService } from '@/Models/PVs/PVService';
+
 export interface PVContract {
 	author?: string;
 
@@ -15,7 +17,7 @@ export interface PVContract {
 
 	pvId: string;
 
-	service: string;
+	service: PVService;
 
 	publishDate?: string;
 

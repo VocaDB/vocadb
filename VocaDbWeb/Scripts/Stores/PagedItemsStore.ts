@@ -24,11 +24,11 @@ export abstract class PagedItemsStore<TModel> {
 		this.hasMore = result.totalCount > this.start;
 	};
 
-	public loadMore = (): Promise<PartialFindResultContract<TModel>> => {
-		return this.loadMoreItems().then((result) => {
-			this.itemsLoaded(result);
-			return result;
-		});
+	public loadMore = async (): Promise<PartialFindResultContract<TModel>> => {
+		const result = await this.loadMoreItems();
+
+		this.itemsLoaded(result);
+		return result;
 	};
 
 	@action public clear = (): Promise<PartialFindResultContract<TModel>> => {

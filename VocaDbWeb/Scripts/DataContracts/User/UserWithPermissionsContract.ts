@@ -1,4 +1,5 @@
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { PVService } from '@/Models/PVs/PVService';
 import { UserGroup } from '@/Models/Users/UserGroup';
 
 // Corresponds to the ArtistForUserContract class in C#.
@@ -15,7 +16,7 @@ export interface UserWithPermissionsContract {
 	unreadMessagesCount: number;
 	verifiedArtist: boolean;
 	ownedArtistEntries: ArtistForUserContract[];
-	preferredVideoService: string /* TODO: enum */;
+	preferredVideoService: PVService;
 	albumFormatString: string;
 	groupId: UserGroup;
 }

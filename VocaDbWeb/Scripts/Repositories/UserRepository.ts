@@ -22,6 +22,7 @@ import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
@@ -408,36 +409,42 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	public getRatedSongsList = ({
-		userId,
-		paging,
-		lang,
-		query,
-		tagIds,
-		artistIds,
-		childVoicebanks,
-		rating,
-		songListId,
-		advancedFilters,
-		groupByRating,
-		pvServices,
 		fields,
-		sort,
+		lang,
+		paging,
+		pvServices,
+		queryParams,
 	}: {
-		userId: number;
-		paging: PagingProperties;
-		lang: ContentLanguagePreference;
-		query: string;
-		tagIds: number[];
-		artistIds: number[];
-		childVoicebanks: boolean;
-		rating: string;
-		songListId?: number;
-		advancedFilters: AdvancedSearchFilter[];
-		groupByRating: boolean;
-		pvServices?: string;
 		fields: string;
-		sort: string;
+		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: {
+			userId: number;
+			query: string;
+			tagIds: number[];
+			artistIds: number[];
+			childVoicebanks: boolean;
+			rating: string;
+			songListId?: number;
+			advancedFilters: AdvancedSearchFilter[];
+			groupByRating: boolean;
+			sort: string;
+		};
 	}): Promise<PartialFindResultContract<RatedSongForUserForApiContract>> => {
+		const {
+			userId,
+			query,
+			tagIds,
+			artistIds,
+			childVoicebanks,
+			rating,
+			songListId,
+			advancedFilters,
+			groupByRating,
+			sort,
+		} = queryParams;
+
 		var url = this.urlMapper.mapRelative(`/api/users/${userId}/ratedSongs`);
 		var data = {
 			start: paging.start,
@@ -451,7 +458,7 @@ export class UserRepository implements ICommentRepository {
 			songListId: songListId,
 			advancedFilters: advancedFilters,
 			groupByRating: groupByRating,
-			pvServices: pvServices,
+			pvServices: pvServices?.join(','),
 			fields: fields,
 			lang: lang,
 			nameMatchMode: 'Auto',

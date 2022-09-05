@@ -72,10 +72,6 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 
 	public loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		return this.eventRepo.getList({
 			queryParams: {
@@ -83,11 +79,11 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 				maxResults: pagingProperties.maxEntries,
 				getTotalCount: pagingProperties.getTotalCount,
 				lang: this.values.languagePreference,
-				query: searchTerm,
+				query: this.searchTerm,
 				sort: this.sort,
 				category: this.category === 'Unspecified' ? undefined : this.category,
-				childTags: childTags,
-				tagIds: tags,
+				tagIds: this.tagIds,
+				childTags: this.childTags,
 				userCollectionId: this.onlyMyEvents
 					? this.values.loggedUserId
 					: undefined,
@@ -96,7 +92,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 				includeMembers: this.artistFilters.includeMembers,
 				afterDate: this.afterDate,
 				beforeDate: this.beforeDate,
-				status: status,
+				status: this.draftsOnly ? 'Draft' : undefined,
 				fields: this.fields,
 			},
 		});

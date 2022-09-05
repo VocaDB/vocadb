@@ -3,13 +3,10 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVHelper } from '@/Helpers/PVHelper';
-import {
-	SongOptionalField,
-	SongOptionalFields,
-} from '@/Models/EntryOptionalFields';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { PVService } from '@/Models/PVs/PVService';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { IPVPlayerSong, PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -35,9 +32,9 @@ export interface ISongForPlayList {
 
 export interface IPlayListRepository {
 	getSongs(
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>>;
 }
@@ -148,25 +145,22 @@ export class PlayListStore {
 		}
 
 		const services = this.pvPlayerStore.autoplay
-			? PVPlayerStore.autoplayPVServicesString
+			? PVPlayerStore.autoplayPVServices
 			: [
-					PVService[PVService.Youtube],
-					PVService[PVService.SoundCloud],
-					PVService[PVService.NicoNicoDouga],
-					PVService[PVService.Bilibili],
-					PVService[PVService.Vimeo],
-					PVService[PVService.Piapro],
-					PVService[PVService.File],
-					PVService[PVService.LocalFile],
-			  ].join(',');
+					PVService.Youtube,
+					PVService.SoundCloud,
+					PVService.NicoNicoDouga,
+					PVService.Bilibili,
+					PVService.Vimeo,
+					PVService.Piapro,
+					PVService.File,
+					PVService.LocalFile,
+			  ];
 
 		const result = await this.songListRepo.getSongs(
 			services,
 			pagingProperties,
-			SongOptionalFields.create(
-				SongOptionalField.AdditionalNames,
-				SongOptionalField.MainPicture,
-			),
+			[SongOptionalField.AdditionalNames, SongOptionalField.MainPicture],
 			this.values.languagePreference,
 		);
 
