@@ -35,7 +35,7 @@ const PlaylistIndex = observer(
 
 		const handleClickPlayNext = React.useCallback(() => {
 			playQueue.playNext(
-				...playQueue.selectedItems.map(
+				playQueue.selectedItems.map(
 					(item) => new PlayQueueItem(item.entry, item.pv),
 				),
 			);
@@ -50,7 +50,7 @@ const PlaylistIndex = observer(
 					: playQueue.items;
 
 			playQueue.addToPlayQueue(
-				...items.map((item) => new PlayQueueItem(item.entry, item.pv)),
+				items.map((item) => new PlayQueueItem(item.entry, item.pv)),
 			);
 
 			playQueue.unselectAll();
@@ -61,7 +61,7 @@ const PlaylistIndex = observer(
 		}, []);
 
 		const handleClickRemove = React.useCallback(() => {
-			playQueue.removeFromPlayQueue(...playQueue.selectedItems);
+			playQueue.removeFromPlayQueue(playQueue.selectedItems);
 
 			playQueue.unselectAll();
 		}, [playQueue]);
@@ -236,7 +236,7 @@ const PlaylistIndex = observer(
 											</Button>{' '}
 											<Button
 												onClick={(): void =>
-													playQueue.removeFromPlayQueue(item)
+													playQueue.removeFromPlayQueue([item])
 												}
 												href="#"
 											>

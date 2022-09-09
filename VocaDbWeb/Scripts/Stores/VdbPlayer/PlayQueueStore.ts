@@ -106,54 +106,54 @@ export class PlayQueueStore {
 		this.currentId = item.id;
 	};
 
-	@action private setNextItems = (...items: PlayQueueItem[]): void => {
+	@action private setNextItems = (items: PlayQueueItem[]): void => {
 		if (this.currentIndex === undefined) return;
 
 		this.items.splice(this.currentIndex + 1, 0, ...items);
 	};
 
-	@action public clearAndPlay = (...items: PlayQueueItem[]): void => {
+	@action public clearAndPlay = (items: PlayQueueItem[]): void => {
 		this.clear();
 		// currentId must be set before setNextItems is called.
 		this.setCurrentItem(items[0]);
-		this.setNextItems(...items);
+		this.setNextItems(items);
 	};
 
-	public playNext = (...items: PlayQueueItem[]): void => {
+	public playNext = (items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
-			this.clearAndPlay(...items);
+			this.clearAndPlay(items);
 			return;
 		}
 
-		this.setNextItems(...items);
+		this.setNextItems(items);
 	};
 
-	public addToPlayQueue = (...items: PlayQueueItem[]): void => {
+	public addToPlayQueue = (items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
-			this.clearAndPlay(...items);
+			this.clearAndPlay(items);
 			return;
 		}
 
 		this.items.push(...items);
 	};
 
-	public play = (method: PlayMethod, ...items: PlayQueueItem[]): void => {
+	public play = (method: PlayMethod, items: PlayQueueItem[]): void => {
 		switch (method) {
 			case PlayMethod.ClearAndPlay:
-				this.clearAndPlay(...items);
+				this.clearAndPlay(items);
 				break;
 
 			case PlayMethod.PlayNext:
-				this.playNext(...items);
+				this.playNext(items);
 				break;
 
 			case PlayMethod.AddToPlayQueue:
-				this.addToPlayQueue(...items);
+				this.addToPlayQueue(items);
 				break;
 		}
 	};
 
-	public removeFromPlayQueue = (...items: PlayQueueItem[]): void => {
+	public removeFromPlayQueue = (items: PlayQueueItem[]): void => {
 		for (const item of items) {
 			if (this.currentItem === item) {
 				if (this.hasNextItem) {

@@ -37,7 +37,7 @@ export const AlbumThumbItem = React.memo(
 					albumWithPVsAndTracks,
 				);
 
-				playQueue.play(method, ...items);
+				playQueue.play(method, items);
 			},
 			[album, playQueue],
 		);

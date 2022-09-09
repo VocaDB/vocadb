@@ -76,7 +76,7 @@ const RatedSongs = observer(
 											songsForUser.items.map((songForUser) => songForUser.song),
 										);
 
-										playQueue.clearAndPlay(...items);
+										playQueue.clearAndPlay(items);
 									}}
 									title="Play" /* TODO: localize */
 									className="btn-nomargin"

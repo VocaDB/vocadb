@@ -140,11 +140,11 @@ export const EmbedPVPreview = observer(
 						albumWithPVsAndTracks,
 					);
 
-					playQueue.play(method, ...items);
+					playQueue.play(method, items);
 				} else {
 					const item = new PlayQueueItem(entry, pv);
 
-					playQueue.play(method, item);
+					playQueue.play(method, [item]);
 				}
 
 				handleResize();

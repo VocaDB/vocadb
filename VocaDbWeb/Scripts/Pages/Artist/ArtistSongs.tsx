@@ -65,7 +65,7 @@ const ArtistSongs = observer(
 										songs.items,
 									);
 
-									playQueue.clearAndPlay(...items);
+									playQueue.clearAndPlay(items);
 								}}
 								title="Play" /* TODO: localize */
 								className="btn-nomargin"
