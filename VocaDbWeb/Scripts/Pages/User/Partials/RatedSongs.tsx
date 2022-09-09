@@ -6,15 +6,12 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
-import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -26,6 +23,8 @@ const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const userRepo = new UserRepository(httpClient, urlMapper);
+
+const playQueueRepo = new PlayQueueRepositoryForRatedSongsAdapter(userRepo);
 
 interface RatedSongsProps {
 	ratedSongsStore: RatedSongsSearchStore;
@@ -61,31 +60,11 @@ const RatedSongs = observer(
 							<div className="btn-group">
 								<Button
 									onClick={async (): Promise<void> => {
-										const getPlayQueueItems = async (
-											pagingProperties: PagingProperties,
-										): Promise<PartialFindResultContract<PlayQueueItem>> => {
-											const songsForUser = await userRepo.getRatedSongsListWithPVs(
-												{
-													lang: vdb.values.languagePreference,
-													paging: pagingProperties,
-													queryParams: ratedSongsStore.queryParams,
-												},
-											);
+										const { paging, queryParams } = ratedSongsStore;
 
-											const items = PlayQueueHelper.createItemsFromSongs(
-												songsForUser.items.map(
-													(songForUser) => songForUser.song,
-												),
-											);
-
-											return {
-												items: items,
-												totalCount: songsForUser.totalCount,
-											};
-										};
-
-										const { items } = await getPlayQueueItems(
-											ratedSongsStore.paging.getPagingProperties(true),
+										const { items } = await playQueueRepo.getItems(
+											paging.getPagingProperties(true),
+											queryParams,
 										);
 
 										playQueue.clearAndPlay(items);

@@ -11,9 +11,6 @@ import {
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
-import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
-import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -36,7 +33,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -57,6 +54,8 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
+
+const playQueueRepo = new PlayQueueRepositoryForSongsAdapter(songRepo);
 
 const pvPlayersFactory = new PVPlayersFactory();
 
@@ -216,29 +215,14 @@ const SearchIndex = observer(
 									<ButtonGroup>
 										<Button
 											onClick={async (): Promise<void> => {
-												const getPlayQueueItems = async (
-													pagingProperties: PagingProperties,
-												): Promise<
-													PartialFindResultContract<PlayQueueItem>
-												> => {
-													const songs = await songRepo.getListWithPVs({
-														lang: vdb.values.languagePreference,
-														paging: pagingProperties,
-														queryParams:
-															searchStore.songSearchStore.queryParams,
-													});
+												const {
+													paging,
+													queryParams,
+												} = searchStore.songSearchStore;
 
-													const items = PlayQueueHelper.createItemsFromSongs(
-														songs.items,
-													);
-
-													return { items: items, totalCount: songs.totalCount };
-												};
-
-												const { items } = await getPlayQueueItems(
-													searchStore.songSearchStore.paging.getPagingProperties(
-														true,
-													),
+												const { items } = await playQueueRepo.getItems(
+													paging.getPagingProperties(true),
+													queryParams,
 												);
 
 												playQueue.clearAndPlay(items);
