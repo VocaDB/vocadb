@@ -220,7 +220,9 @@ const SearchIndex = observer(
 													queryParams,
 												} = searchStore.songSearchStore;
 
-												const pagingProperties = paging.getPagingProperties();
+												const pagingProperties = paging.getPagingProperties(
+													true,
+												);
 
 												const songs = await songRepo.getListWithPVs({
 													lang: vdb.values.languagePreference,

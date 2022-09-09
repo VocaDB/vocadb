@@ -486,7 +486,7 @@ export class UserRepository implements ICommentRepository {
 			RatedSongForUserForApiContract & { song: SongWithPVsContract }
 		>
 	> => {
-		const { items } = await this.getRatedSongsList({
+		const { items, totalCount } = await this.getRatedSongsList({
 			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
 			lang: lang,
 			paging: paging,
@@ -504,7 +504,7 @@ export class UserRepository implements ICommentRepository {
 				},
 			}));
 
-		return { items: songsForUser, totalCount: songsForUser.length };
+		return { items: songsForUser, totalCount: totalCount };
 	};
 
 	public getRatingsByGenre = ({

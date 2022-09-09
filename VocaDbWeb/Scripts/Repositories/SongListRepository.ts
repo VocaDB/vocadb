@@ -159,7 +159,7 @@ export class SongListRepository {
 			SongInListContract & { song: SongWithPVsContract }
 		>
 	> => {
-		const { items } = await this.getSongs({
+		const { items, totalCount } = await this.getSongs({
 			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 			lang: lang,
 			paging: paging,
@@ -175,7 +175,7 @@ export class SongListRepository {
 			},
 		}));
 
-		return { items: songsInList, totalCount: songsInList.length };
+		return { items: songsInList, totalCount: totalCount };
 	};
 
 	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {

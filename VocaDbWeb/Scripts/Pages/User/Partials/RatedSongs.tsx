@@ -62,7 +62,7 @@ const RatedSongs = observer(
 
 										const { paging, queryParams } = ratedSongsStore;
 
-										const pagingProperties = paging.getPagingProperties();
+										const pagingProperties = paging.getPagingProperties(true);
 
 										const songsForUser = await userRepo.getRatedSongsListWithPVs(
 											{

@@ -423,7 +423,7 @@ export class SongRepository
 		paging: PagingProperties;
 		queryParams: Parameters<SongRepository['getList']>[0]['queryParams'];
 	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
-		const { items } = await this.getList({
+		const { items, totalCount } = await this.getList({
 			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
 			lang: lang,
 			paging: paging,
@@ -436,7 +436,7 @@ export class SongRepository
 			pvs: song.pvs ?? [],
 		}));
 
-		return { items: songs, totalCount: songs.length };
+		return { items: songs, totalCount: totalCount };
 	};
 
 	public getOverTime = ({

@@ -316,7 +316,7 @@ const SongListDetailsLayout = observer(
 
 								const { paging, queryParams } = songListStore;
 
-								const pagingProperties = paging.getPagingProperties();
+								const pagingProperties = paging.getPagingProperties(true);
 
 								const songsInList = await songListRepo.getSongsWithPVs({
 									lang: vdb.values.languagePreference,

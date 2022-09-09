@@ -53,7 +53,7 @@ const ArtistSongs = observer(
 
 									const { paging, queryParams } = artistDetailsStore.songsStore;
 
-									const pagingProperties = paging.getPagingProperties();
+									const pagingProperties = paging.getPagingProperties(true);
 
 									const songs = await songRepo.getListWithPVs({
 										lang: vdb.values.languagePreference,
