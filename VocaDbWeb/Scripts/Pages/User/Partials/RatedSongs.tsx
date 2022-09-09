@@ -6,12 +6,15 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
+import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -58,22 +61,31 @@ const RatedSongs = observer(
 							<div className="btn-group">
 								<Button
 									onClick={async (): Promise<void> => {
-										// TODO: Play.
+										const getPlayQueueItems = async (
+											pagingProperties: PagingProperties,
+										): Promise<PartialFindResultContract<PlayQueueItem>> => {
+											const songsForUser = await userRepo.getRatedSongsListWithPVs(
+												{
+													lang: vdb.values.languagePreference,
+													paging: pagingProperties,
+													queryParams: ratedSongsStore.queryParams,
+												},
+											);
 
-										const { paging, queryParams } = ratedSongsStore;
+											const items = PlayQueueHelper.createItemsFromSongs(
+												songsForUser.items.map(
+													(songForUser) => songForUser.song,
+												),
+											);
 
-										const pagingProperties = paging.getPagingProperties(true);
+											return {
+												items: items,
+												totalCount: songsForUser.totalCount,
+											};
+										};
 
-										const songsForUser = await userRepo.getRatedSongsListWithPVs(
-											{
-												lang: vdb.values.languagePreference,
-												paging: pagingProperties,
-												queryParams: queryParams,
-											},
-										);
-
-										const items = PlayQueueHelper.createItemsFromSongs(
-											songsForUser.items.map((songForUser) => songForUser.song),
+										const { items } = await getPlayQueueItems(
+											ratedSongsStore.paging.getPagingProperties(true),
 										);
 
 										playQueue.clearAndPlay(items);

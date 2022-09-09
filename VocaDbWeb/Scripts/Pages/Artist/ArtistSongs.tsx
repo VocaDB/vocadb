@@ -3,12 +3,15 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
+import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -49,20 +52,26 @@ const ArtistSongs = observer(
 						<ButtonGroup>
 							<Button
 								onClick={async (): Promise<void> => {
-									// TODO: Play.
+									const getPlayQueueItems = async (
+										pagingProperties: PagingProperties,
+									): Promise<PartialFindResultContract<PlayQueueItem>> => {
+										const songs = await songRepo.getListWithPVs({
+											lang: vdb.values.languagePreference,
+											paging: pagingProperties,
+											queryParams: artistDetailsStore.songsStore.queryParams,
+										});
 
-									const { paging, queryParams } = artistDetailsStore.songsStore;
+										const items = PlayQueueHelper.createItemsFromSongs(
+											songs.items,
+										);
 
-									const pagingProperties = paging.getPagingProperties(true);
+										return { items: items, totalCount: songs.totalCount };
+									};
 
-									const songs = await songRepo.getListWithPVs({
-										lang: vdb.values.languagePreference,
-										paging: pagingProperties,
-										queryParams: queryParams,
-									});
-
-									const items = PlayQueueHelper.createItemsFromSongs(
-										songs.items,
+									const { items } = await getPlayQueueItems(
+										artistDetailsStore.songsStore.paging.getPagingProperties(
+											true,
+										),
 									);
 
 									playQueue.clearAndPlay(items);
