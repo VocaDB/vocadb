@@ -52,15 +52,15 @@ const ArtistSongs = observer(
 						<ButtonGroup>
 							<Button
 								onClick={async (): Promise<void> => {
-									const { paging, queryParams } = artistDetailsStore.songsStore;
+									const { queryParams } = artistDetailsStore.songsStore;
 
-									const { items } = await playQueueRepo.getItems(
-										VideoServiceHelper.autoplayServices,
-										paging.getPagingProperties(true),
-										queryParams,
+									await playQueue.startAutoplay((offset, limit) =>
+										playQueueRepo.getItems(
+											VideoServiceHelper.autoplayServices,
+											{ getTotalCount: true, maxEntries: limit, start: offset },
+											queryParams,
+										),
 									);
-
-									playQueue.clearAndPlay(items);
 								}}
 								title="Play" /* TODO: localize */
 								className="btn-nomargin"

@@ -282,6 +282,14 @@ const PlaylistIndex = observer(
 						</ReactSortable>
 					</table>
 				)}
+
+				{playQueue.hasMoreItems && (
+					<h3>
+						<SafeAnchor onClick={playQueue.loadMoreItems}>
+							{t('ViewRes:Shared.ShowMore')}
+						</SafeAnchor>
+					</h3>
+				)}
 			</Layout>
 		);
 	},

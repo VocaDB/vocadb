@@ -1,5 +1,6 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -29,6 +30,13 @@ export enum PlayMethod {
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
+
+	private autoplayCallback?: (
+		offset: number,
+		limit: number,
+	) => Promise<PartialFindResultContract<PlayQueueItem>>;
+	private offset = 0;
+	@observable public hasMoreItems = false;
 
 	public constructor() {
 		makeObservable(this);
@@ -61,9 +69,10 @@ export class PlayQueueStore {
 
 	@computed public get hasNextItem(): boolean {
 		return (
-			this.hasMultipleItems &&
-			this.currentIndex !== undefined &&
-			this.currentIndex < this.items.length - 1
+			this.hasMoreItems ||
+			(this.hasMultipleItems &&
+				this.currentIndex !== undefined &&
+				this.currentIndex < this.items.length - 1)
 		);
 	}
 
@@ -94,6 +103,10 @@ export class PlayQueueStore {
 	@action public clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
+
+		this.autoplayCallback = undefined;
+		this.offset = 0;
+		this.hasMoreItems = false;
 	};
 
 	@action public unselectAll = (): void => {
@@ -102,8 +115,8 @@ export class PlayQueueStore {
 		}
 	};
 
-	@action public setCurrentItem = (item: PlayQueueItem): void => {
-		this.currentId = item.id;
+	@action public setCurrentItem = (item: PlayQueueItem | undefined): void => {
+		this.currentId = item?.id;
 	};
 
 	@action private setNextItems = (items: PlayQueueItem[]): void => {
@@ -114,8 +127,10 @@ export class PlayQueueStore {
 
 	@action public clearAndPlay = (items: PlayQueueItem[]): void => {
 		this.clear();
+
 		// currentId must be set before setNextItems is called.
 		this.setCurrentItem(items[0]);
+
 		this.setNextItems(items);
 	};
 
@@ -177,10 +192,28 @@ export class PlayQueueStore {
 		this.currentIndex--;
 	};
 
+	@action public loadMoreItems = async (): Promise<void> => {
+		if (!this.autoplayCallback) return;
+
+		const limit = 30;
+		const { items, totalCount } = await this.autoplayCallback(
+			this.offset,
+			limit,
+		);
+
+		this.items.push(...items);
+		this.offset += limit;
+		this.hasMoreItems = this.offset < totalCount;
+	};
+
 	@action public next = async (): Promise<void> => {
 		if (this.currentIndex === undefined) return;
 
 		if (!this.hasNextItem) return;
+
+		if (this.isLastItem && this.hasMoreItems) {
+			await this.loadMoreItems?.();
+		}
 
 		this.currentIndex++;
 	};
@@ -189,5 +222,20 @@ export class PlayQueueStore {
 		if (this.currentIndex === undefined) return;
 
 		this.currentIndex = 0;
+	};
+
+	@action public startAutoplay = async (
+		autoplayCallback: (
+			offset: number,
+			limit: number,
+		) => Promise<PartialFindResultContract<PlayQueueItem>>,
+	): Promise<void> => {
+		this.clear();
+
+		this.autoplayCallback = autoplayCallback;
+
+		await this.loadMoreItems();
+
+		this.setCurrentItem(this.items[0]);
 	};
 }
