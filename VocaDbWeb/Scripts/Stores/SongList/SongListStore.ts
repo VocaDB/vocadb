@@ -9,7 +9,10 @@ import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
+import {
+	SongListGetSongsQueryParams,
+	SongListRepository,
+} from '@/Repositories/SongListRepository';
 import {
 	SongOptionalField,
 	SongRepository,
@@ -254,9 +257,7 @@ export class SongListStore
 		return validate(data);
 	};
 
-	@computed public get queryParams(): Parameters<
-		SongListRepository['getSongs']
-	>[0]['queryParams'] {
+	@computed public get queryParams(): SongListGetSongsQueryParams {
 		return {
 			listId: this.listId,
 			query: this.query,

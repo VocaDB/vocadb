@@ -16,6 +16,19 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
+export interface SongListGetSongsQueryParams {
+	listId: number;
+	query: string;
+	songTypes?: SongType[];
+	tagIds: number[];
+	childTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	advancedFilters: AdvancedSearchFilter[];
+	sort: string;
+}
+
 export class SongListRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
@@ -95,18 +108,7 @@ export class SongListRepository {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
-		queryParams: {
-			listId: number;
-			query: string;
-			songTypes?: SongType[];
-			tagIds: number[];
-			childTags: boolean;
-			artistIds: number[];
-			artistParticipationStatus: string;
-			childVoicebanks: boolean;
-			advancedFilters: AdvancedSearchFilter[];
-			sort: string;
-		};
+		queryParams: SongListGetSongsQueryParams;
 	}): Promise<PartialFindResultContract<SongInListContract>> => {
 		const {
 			listId,
@@ -153,7 +155,7 @@ export class SongListRepository {
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
-		queryParams: Parameters<SongListRepository['getSongs']>[0]['queryParams'];
+		queryParams: SongListGetSongsQueryParams;
 	}): Promise<
 		PartialFindResultContract<
 			SongInListContract & { song: SongWithPVsContract }

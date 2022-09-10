@@ -45,6 +45,33 @@ export enum SongOptionalField {
 	MainPicture = 'MainPicture',
 }
 
+export interface SongGetListQueryParams {
+	query: string;
+	sort: string;
+	songTypes?: SongType[];
+	afterDate?: Date;
+	beforeDate?: Date;
+	tagIds: number[];
+	childTags: boolean;
+	unifyTypesAndTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	includeMembers: boolean;
+	eventId?: number;
+	onlyWithPvs: boolean;
+	since?: number;
+	minScore?: number;
+	userCollectionId?: number;
+	parentSongId?: number;
+	status?: string;
+	advancedFilters?: AdvancedSearchFilter[];
+	minMilliBpm?: number;
+	maxMilliBpm?: number;
+	minLength?: number;
+	maxLength?: number;
+}
+
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
 export class SongRepository
@@ -319,32 +346,7 @@ export class SongRepository
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
-		queryParams: {
-			query: string;
-			sort: string;
-			songTypes?: SongType[];
-			afterDate?: Date;
-			beforeDate?: Date;
-			tagIds: number[];
-			childTags: boolean;
-			unifyTypesAndTags: boolean;
-			artistIds: number[];
-			artistParticipationStatus: string;
-			childVoicebanks: boolean;
-			includeMembers: boolean;
-			eventId?: number;
-			onlyWithPvs: boolean;
-			since?: number;
-			minScore?: number;
-			userCollectionId?: number;
-			parentSongId?: number;
-			status?: string;
-			advancedFilters?: AdvancedSearchFilter[];
-			minMilliBpm?: number;
-			maxMilliBpm?: number;
-			minLength?: number;
-			maxLength?: number;
-		};
+		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongContract>> => {
 		const {
 			query,
@@ -421,7 +423,7 @@ export class SongRepository
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
-		queryParams: Parameters<SongRepository['getList']>[0]['queryParams'];
+		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
 		const { items, totalCount } = await this.getList({
 			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,

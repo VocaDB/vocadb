@@ -38,6 +38,19 @@ export enum UserInboxType {
 	Notifications,
 }
 
+export interface UserGetRatedSongsListQueryParams {
+	userId: number;
+	query: string;
+	tagIds: number[];
+	artistIds: number[];
+	childVoicebanks: boolean;
+	rating: string;
+	songListId?: number;
+	advancedFilters: AdvancedSearchFilter[];
+	groupByRating: boolean;
+	sort: string;
+}
+
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
 export class UserRepository implements ICommentRepository {
@@ -420,18 +433,7 @@ export class UserRepository implements ICommentRepository {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
-		queryParams: {
-			userId: number;
-			query: string;
-			tagIds: number[];
-			artistIds: number[];
-			childVoicebanks: boolean;
-			rating: string;
-			songListId?: number;
-			advancedFilters: AdvancedSearchFilter[];
-			groupByRating: boolean;
-			sort: string;
-		};
+		queryParams: UserGetRatedSongsListQueryParams;
 	}): Promise<PartialFindResultContract<RatedSongForUserForApiContract>> => {
 		const {
 			userId,
@@ -478,9 +480,7 @@ export class UserRepository implements ICommentRepository {
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
-		queryParams: Parameters<
-			UserRepository['getRatedSongsList']
-		>[0]['queryParams'];
+		queryParams: UserGetRatedSongsListQueryParams;
 	}): Promise<
 		PartialFindResultContract<
 			RatedSongForUserForApiContract & { song: SongWithPVsContract }

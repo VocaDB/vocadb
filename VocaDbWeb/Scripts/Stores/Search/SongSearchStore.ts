@@ -8,7 +8,10 @@ import { SongType } from '@/Models/Songs/SongType';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongGetListQueryParams,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -207,9 +210,7 @@ export class SongSearchStore
 		);
 	}
 
-	@computed public get queryParams(): Parameters<
-		SongRepository['getList']
-	>[0]['queryParams'] {
+	@computed public get queryParams(): SongGetListQueryParams {
 		return {
 			query: this.searchTerm,
 			sort: this.sort,
