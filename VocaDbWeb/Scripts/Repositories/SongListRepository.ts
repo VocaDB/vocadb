@@ -3,8 +3,10 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { SongWithPVsContract } from '@/DataContracts/Song/SongWithPVsContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
@@ -13,6 +15,19 @@ import { SongOptionalField } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+
+export interface SongListGetSongsQueryParams {
+	listId: number;
+	query: string;
+	songTypes?: SongType[];
+	tagIds: number[];
+	childTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	advancedFilters: AdvancedSearchFilter[];
+	sort: string;
+}
 
 export class SongListRepository {
 	public constructor(
@@ -93,18 +108,7 @@ export class SongListRepository {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
-		queryParams: {
-			listId: number;
-			query: string;
-			songTypes?: SongType[];
-			tagIds: number[];
-			childTags: boolean;
-			artistIds: number[];
-			artistParticipationStatus: string;
-			childVoicebanks: boolean;
-			advancedFilters: AdvancedSearchFilter[];
-			sort: string;
-		};
+		queryParams: SongListGetSongsQueryParams;
 	}): Promise<PartialFindResultContract<SongInListContract>> => {
 		const {
 			listId,
@@ -142,6 +146,41 @@ export class SongListRepository {
 			url,
 			data,
 		);
+	};
+
+	public getSongsWithPVs = async ({
+		lang,
+		paging,
+		pvServices,
+		queryParams,
+	}: {
+		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: SongListGetSongsQueryParams;
+	}): Promise<
+		PartialFindResultContract<
+			SongInListContract & { song: SongWithPVsContract }
+		>
+	> => {
+		const { items, totalCount } = await this.getSongs({
+			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
+			lang: lang,
+			paging: paging,
+			pvServices: pvServices,
+			queryParams: queryParams,
+		});
+
+		const songsInList = items.map((songInList) => ({
+			...songInList,
+			song: {
+				...songInList.song,
+				entryType: EntryType[EntryType.Song],
+				pvs: songInList.song.pvs ?? [],
+			},
+		}));
+
+		return { items: songsInList, totalCount: totalCount };
 	};
 
 	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {

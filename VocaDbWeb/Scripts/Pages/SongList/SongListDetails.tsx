@@ -22,9 +22,11 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
@@ -42,6 +44,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
+import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -66,6 +69,8 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
+
+const playQueueRepo = new PlayQueueRepositoryForSongListAdapter(songListRepo);
 
 const pvPlayersFactory = new PVPlayersFactory();
 
@@ -132,6 +137,8 @@ const SongListDetailsLayout = observer(
 			songList.mainPicture,
 			ImageSize.Original,
 		);
+
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<Layout
@@ -307,28 +314,21 @@ const SongListDetailsLayout = observer(
 				<div className="clearfix well well-transparent">
 					<ButtonGroup className="songlist-mode-selection pull-left">
 						<Button
-							onClick={(): void =>
-								runInAction(() => {
-									songListStore.playlistMode = false;
-								})
-							}
-							className={classNames(!songListStore.playlistMode && 'active')}
-							href="#"
+							onClick={async (): Promise<void> => {
+								const { queryParams } = songListStore;
+
+								await playQueue.startAutoplay((offset, limit) =>
+									playQueueRepo.getItems(
+										VideoServiceHelper.autoplayServices,
+										{ getTotalCount: true, maxEntries: limit, start: offset },
+										queryParams,
+									),
+								);
+							}}
+							title="Play" /* TODO: localize */
+							className="btn-nomargin"
 						>
-							<i className="icon-th-list noMargin" />{' '}
-							{t('ViewRes.SongList:Details.Details')}
-						</Button>
-						<Button
-							onClick={(): void =>
-								runInAction(() => {
-									songListStore.playlistMode = true;
-								})
-							}
-							className={classNames(songListStore.playlistMode && 'active')}
-							href="#"
-						>
-							<i className="icon-list noMargin" />{' '}
-							{t('ViewRes.SongList.Details:Playlist')}
+							<i className="icon-play noMargin" /> Play{/* TODO: localize */}
 						</Button>
 					</ButtonGroup>
 					{!songListStore.playlistMode && (
@@ -546,7 +546,7 @@ const SongListDetailsLayout = observer(
 											<td style={{ width: '33%' }}>
 												{item.song.tags && item.song.tags.length > 0 && (
 													<div>
-														<i className="icon icon-tags" />{' '}
+														<i className="icon icon-tags fix-icon-margin" />{' '}
 														{item.song.tags.map((tag, index) => (
 															<React.Fragment key={tag.tag.id}>
 																{index > 0 && ', '}

@@ -400,8 +400,8 @@ const EmbedPVWrapper = observer(
 						// HACK: Prevent vdbPlayer.next from being called in the same context.
 						// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
 						// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
-						setTimeout(() => {
-							playQueue.next();
+						setTimeout(async () => {
+							await playQueue.next();
 						});
 					}
 					break;

@@ -11,12 +11,14 @@ import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
 import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { SongWithPVPlayerAndVoteContract } from '@/DataContracts/Song/SongWithPVPlayerAndVoteContract';
+import { SongWithPVsContract } from '@/DataContracts/Song/SongWithPVsContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
@@ -41,6 +43,33 @@ export enum SongOptionalField {
 	ThumbUrl = 'ThumbUrl',
 	WebLinks = 'WebLinks',
 	MainPicture = 'MainPicture',
+}
+
+export interface SongGetListQueryParams {
+	query: string;
+	sort: string;
+	songTypes?: SongType[];
+	afterDate?: Date;
+	beforeDate?: Date;
+	tagIds: number[];
+	childTags: boolean;
+	unifyTypesAndTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	includeMembers: boolean;
+	eventId?: number;
+	onlyWithPvs: boolean;
+	since?: number;
+	minScore?: number;
+	userCollectionId?: number;
+	parentSongId?: number;
+	status?: string;
+	advancedFilters?: AdvancedSearchFilter[];
+	minMilliBpm?: number;
+	maxMilliBpm?: number;
+	minLength?: number;
+	maxLength?: number;
 }
 
 // Repository for managing songs and related objects.
@@ -317,32 +346,7 @@ export class SongRepository
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
-		queryParams: {
-			query: string;
-			sort: string;
-			songTypes?: SongType[];
-			afterDate?: Date;
-			beforeDate?: Date;
-			tagIds: number[];
-			childTags: boolean;
-			unifyTypesAndTags: boolean;
-			artistIds: number[];
-			artistParticipationStatus: string;
-			childVoicebanks: boolean;
-			includeMembers: boolean;
-			eventId?: number;
-			onlyWithPvs: boolean;
-			since?: number;
-			minScore?: number;
-			userCollectionId?: number;
-			parentSongId?: number;
-			status?: string;
-			advancedFilters?: AdvancedSearchFilter[];
-			minMilliBpm?: number;
-			maxMilliBpm?: number;
-			minLength?: number;
-			maxLength?: number;
-		};
+		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongContract>> => {
 		const {
 			query,
@@ -410,6 +414,34 @@ export class SongRepository
 			url,
 			data,
 		);
+	};
+
+	public getListWithPVs = async ({
+		lang,
+		paging,
+		pvServices,
+		queryParams,
+	}: {
+		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: SongGetListQueryParams;
+	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
+		const { items, totalCount } = await this.getList({
+			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
+			lang: lang,
+			paging: paging,
+			pvServices: pvServices,
+			queryParams: queryParams,
+		});
+
+		const songs = items.map((song) => ({
+			...song,
+			entryType: EntryType[EntryType.Song],
+			pvs: song.pvs ?? [],
+		}));
+
+		return { items: songs, totalCount: totalCount };
 	};
 
 	public getOverTime = ({

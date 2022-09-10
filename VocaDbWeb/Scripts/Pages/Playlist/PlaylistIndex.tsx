@@ -35,7 +35,7 @@ const PlaylistIndex = observer(
 
 		const handleClickPlayNext = React.useCallback(() => {
 			playQueue.playNext(
-				...playQueue.selectedItems.map(
+				playQueue.selectedItems.map(
 					(item) => new PlayQueueItem(item.entry, item.pv),
 				),
 			);
@@ -50,7 +50,7 @@ const PlaylistIndex = observer(
 					: playQueue.items;
 
 			playQueue.addToPlayQueue(
-				...items.map((item) => new PlayQueueItem(item.entry, item.pv)),
+				items.map((item) => new PlayQueueItem(item.entry, item.pv)),
 			);
 
 			playQueue.unselectAll();
@@ -60,8 +60,8 @@ const PlaylistIndex = observer(
 			// TODO: Implement.
 		}, []);
 
-		const handleClickRemove = React.useCallback(() => {
-			playQueue.removeFromPlayQueue(...playQueue.selectedItems);
+		const handleClickRemove = React.useCallback(async () => {
+			await playQueue.removeFromPlayQueue(playQueue.selectedItems);
 
 			playQueue.unselectAll();
 		}, [playQueue]);
@@ -235,8 +235,8 @@ const PlaylistIndex = observer(
 												<i className="icon-play" /> Play{/* TODO: localize */}
 											</Button>{' '}
 											<Button
-												onClick={(): void =>
-													playQueue.removeFromPlayQueue(item)
+												onClick={async (): Promise<void> =>
+													await playQueue.removeFromPlayQueue([item])
 												}
 												href="#"
 											>
@@ -281,6 +281,14 @@ const PlaylistIndex = observer(
 							))}
 						</ReactSortable>
 					</table>
+				)}
+
+				{playQueue.hasMoreItems && (
+					<h3>
+						<SafeAnchor onClick={playQueue.loadMoreItems}>
+							{t('ViewRes:Shared.ShowMore')}
+						</SafeAnchor>
+					</h3>
 				)}
 			</Layout>
 		);

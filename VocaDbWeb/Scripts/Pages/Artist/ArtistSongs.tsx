@@ -1,17 +1,25 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
+import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
-import classNames from 'classnames';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+
+const httpClient = new HttpClient();
+
+const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
+
+const playQueueRepo = new PlayQueueRepositoryForSongsAdapter(songRepo);
 
 interface ArtistSongsProps {
 	artist: ArtistDetailsContract;
@@ -20,8 +28,6 @@ interface ArtistSongsProps {
 
 const ArtistSongs = observer(
 	({ artist, artistDetailsStore }: ArtistSongsProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.Artist']);
-
 		const { id } = useParams();
 
 		React.useEffect(() => {
@@ -29,6 +35,8 @@ const ArtistSongs = observer(
 		}, [id, artistDetailsStore]);
 
 		useStoreWithPagination(artistDetailsStore.songsStore);
+
+		const { playQueue } = useVdbPlayer();
 
 		return (
 			<ArtistDetailsTabs
@@ -43,38 +51,21 @@ const ArtistSongs = observer(
 						/>{' '}
 						<ButtonGroup>
 							<Button
-								onClick={(): void =>
-									runInAction(() => {
-										artistDetailsStore.songsStore.viewMode = 'Details';
-									})
-								}
-								className={classNames(
-									'btn-nomargin',
-									artistDetailsStore.songsStore.viewMode === 'Details' &&
-										'active',
-								)}
-								href="#"
-								title={t('ViewRes.Artist:Details.ViewModeDetails')}
+								onClick={async (): Promise<void> => {
+									const { queryParams } = artistDetailsStore.songsStore;
+
+									await playQueue.startAutoplay((offset, limit) =>
+										playQueueRepo.getItems(
+											VideoServiceHelper.autoplayServices,
+											{ getTotalCount: true, maxEntries: limit, start: offset },
+											queryParams,
+										),
+									);
+								}}
+								title="Play" /* TODO: localize */
+								className="btn-nomargin"
 							>
-								<i className="icon-th-list noMargin" />{' '}
-								{t('ViewRes.Artist:Details.ViewModeDetails')}
-							</Button>
-							<Button
-								onClick={(): void =>
-									runInAction(() => {
-										artistDetailsStore.songsStore.viewMode = 'PlayList';
-									})
-								}
-								className={classNames(
-									'btn-nomargin',
-									artistDetailsStore.songsStore.viewMode === 'PlayList' &&
-										'active',
-								)}
-								href="#"
-								title={t('ViewRes.Artist:Details.ViewModePlayList')}
-							>
-								<i className="icon-list noMargin" />{' '}
-								{t('ViewRes.Artist:Details.ViewModePlayList')}
+								<i className="icon-play noMargin" /> Play{/* TODO: localize */}
 							</Button>
 						</ButtonGroup>
 					</div>

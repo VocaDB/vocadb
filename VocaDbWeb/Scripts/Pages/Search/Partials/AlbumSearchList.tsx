@@ -165,7 +165,7 @@ const AlbumSearchList = observer(
 										<td className="search-tags-column">
 											{album.tags && album.tags.length > 0 && (
 												<div>
-													<i className="icon icon-tags" />{' '}
+													<i className="icon icon-tags fix-icon-margin" />{' '}
 													{album.tags.map((tag, index) => (
 														<React.Fragment key={tag.tag.id}>
 															{index > 0 && ', '}

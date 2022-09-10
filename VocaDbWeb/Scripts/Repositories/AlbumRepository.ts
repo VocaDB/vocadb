@@ -3,6 +3,7 @@ import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { AlbumWithPVsAndTracksContract } from '@/DataContracts/Album/AlbumWithPVsAndTracksContract';
 import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
@@ -15,6 +16,7 @@ import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserFor
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import {
 	BaseRepository,
@@ -41,11 +43,6 @@ export enum AlbumOptionalField {
 	Tracks = 'Tracks',
 	WebLinks = 'WebLinks',
 }
-
-export type AlbumWithPVsAndTracksContract = Required<
-	Pick<AlbumForApiContract, 'pvs' | 'tracks'>
-> &
-	Omit<AlbumForApiContract, 'pvs' | 'tracks'>;
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
@@ -210,14 +207,14 @@ export class AlbumRepository
 		});
 	};
 
-	public getOneWithPVsAndTracks = ({
+	public getOneWithPVsAndTracks = async ({
 		id,
 		lang,
 	}: {
 		id: number;
 		lang: ContentLanguagePreference;
 	}): Promise<AlbumWithPVsAndTracksContract> => {
-		return this.getOneWithComponents({
+		const album = await this.getOneWithComponents({
 			id: id,
 			lang: lang,
 			fields: [
@@ -226,7 +223,24 @@ export class AlbumRepository
 				AlbumOptionalField.Tracks,
 			],
 			songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
-		}) as Promise<AlbumWithPVsAndTracksContract>;
+		});
+
+		return {
+			...album,
+			entryType: EntryType[EntryType.Album],
+			pvs: album.pvs ?? [],
+			tracks:
+				album.tracks
+					?.filter(({ song }) => !!song)
+					.map((track) => ({
+						...track,
+						song: {
+							...track.song!,
+							entryType: EntryType[EntryType.Song],
+							pvs: track.song!.pvs ?? [],
+						},
+					})) ?? [],
+		};
 	};
 
 	public getList = ({

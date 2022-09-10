@@ -5,7 +5,10 @@ import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import {
+	UserGetRatedSongsListQueryParams,
+	UserRepository,
+} from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -185,9 +188,7 @@ export class RatedSongsSearchStore
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	@computed public get queryParams(): Parameters<
-		UserRepository['getRatedSongsList']
-	>[0]['queryParams'] {
+	@computed public get queryParams(): UserGetRatedSongsListQueryParams {
 		return {
 			userId: this.userId,
 			query: this.searchTerm,
