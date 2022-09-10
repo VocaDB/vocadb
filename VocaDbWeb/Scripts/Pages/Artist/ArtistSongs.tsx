@@ -3,6 +3,7 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -54,6 +55,7 @@ const ArtistSongs = observer(
 									const { paging, queryParams } = artistDetailsStore.songsStore;
 
 									const { items } = await playQueueRepo.getItems(
+										VideoServiceHelper.autoplayServices,
 										paging.getPagingProperties(true),
 										queryParams,
 									);

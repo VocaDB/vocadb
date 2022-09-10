@@ -26,6 +26,7 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
@@ -317,6 +318,7 @@ const SongListDetailsLayout = observer(
 								const { paging, queryParams } = songListStore;
 
 								const { items } = await playQueueRepo.getItems(
+									VideoServiceHelper.autoplayServices,
 									paging.getPagingProperties(true),
 									queryParams,
 								);

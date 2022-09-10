@@ -1,6 +1,7 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
+import { PVService } from '@/Models/PVs/PVService';
 import {
 	UserGetRatedSongsListQueryParams,
 	UserRepository,
@@ -13,12 +14,14 @@ export class PlayQueueRepositoryForRatedSongsAdapter
 	public constructor(private readonly userRepo: UserRepository) {}
 
 	public getItems = async (
+		pvServices: PVService[],
 		pagingProperties: PagingProperties,
 		queryParams: UserGetRatedSongsListQueryParams,
 	): Promise<PartialFindResultContract<PlayQueueItem>> => {
 		const songsForUser = await this.userRepo.getRatedSongsListWithPVs({
 			lang: vdb.values.languagePreference,
 			paging: pagingProperties,
+			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 

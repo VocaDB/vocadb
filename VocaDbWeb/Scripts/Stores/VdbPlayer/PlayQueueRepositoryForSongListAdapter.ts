@@ -1,6 +1,7 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
+import { PVService } from '@/Models/PVs/PVService';
 import {
 	SongListGetSongsQueryParams,
 	SongListRepository,
@@ -13,12 +14,14 @@ export class PlayQueueRepositoryForSongListAdapter
 	public constructor(private readonly songListRepo: SongListRepository) {}
 
 	public getItems = async (
+		pvServices: PVService[],
 		pagingProperties: PagingProperties,
 		queryParams: SongListGetSongsQueryParams,
 	): Promise<PartialFindResultContract<PlayQueueItem>> => {
 		const songsInList = await this.songListRepo.getSongsWithPVs({
 			lang: vdb.values.languagePreference,
 			paging: pagingProperties,
+			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 

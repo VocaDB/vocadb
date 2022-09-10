@@ -45,7 +45,7 @@ export class VideoServiceHelper {
 		}_${timestamp}_audition.mp3`;
 	};
 
-	private static readonly autoplayServices = [
+	public static readonly autoplayServices = [
 		PVService.File,
 		PVService.LocalFile,
 		PVService.NicoNicoDouga,

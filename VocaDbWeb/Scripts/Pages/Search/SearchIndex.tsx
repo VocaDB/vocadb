@@ -11,6 +11,7 @@ import {
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -221,6 +222,7 @@ const SearchIndex = observer(
 												} = searchStore.songSearchStore;
 
 												const { items } = await playQueueRepo.getItems(
+													VideoServiceHelper.autoplayServices,
 													paging.getPagingProperties(true),
 													queryParams,
 												);

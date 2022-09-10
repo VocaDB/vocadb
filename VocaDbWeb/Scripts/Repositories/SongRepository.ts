@@ -419,16 +419,19 @@ export class SongRepository
 	public getListWithPVs = async ({
 		lang,
 		paging,
+		pvServices,
 		queryParams,
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
+		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
 		const { items, totalCount } = await this.getList({
 			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
 			lang: lang,
 			paging: paging,
+			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 

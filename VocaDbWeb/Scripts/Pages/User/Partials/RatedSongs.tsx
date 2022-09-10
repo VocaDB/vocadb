@@ -6,6 +6,7 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -63,6 +64,7 @@ const RatedSongs = observer(
 										const { paging, queryParams } = ratedSongsStore;
 
 										const { items } = await playQueueRepo.getItems(
+											VideoServiceHelper.autoplayServices,
 											paging.getPagingProperties(true),
 											queryParams,
 										);

@@ -476,10 +476,12 @@ export class UserRepository implements ICommentRepository {
 	public getRatedSongsListWithPVs = async ({
 		lang,
 		paging,
+		pvServices,
 		queryParams,
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
+		pvServices?: PVService[];
 		queryParams: UserGetRatedSongsListQueryParams;
 	}): Promise<
 		PartialFindResultContract<
@@ -490,6 +492,7 @@ export class UserRepository implements ICommentRepository {
 			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
 			lang: lang,
 			paging: paging,
+			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 

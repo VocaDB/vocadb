@@ -151,10 +151,12 @@ export class SongListRepository {
 	public getSongsWithPVs = async ({
 		lang,
 		paging,
+		pvServices,
 		queryParams,
 	}: {
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
+		pvServices?: PVService[];
 		queryParams: SongListGetSongsQueryParams;
 	}): Promise<
 		PartialFindResultContract<
@@ -165,6 +167,7 @@ export class SongListRepository {
 			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 			lang: lang,
 			paging: paging,
+			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 
