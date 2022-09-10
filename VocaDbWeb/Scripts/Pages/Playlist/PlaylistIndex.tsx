@@ -60,8 +60,8 @@ const PlaylistIndex = observer(
 			// TODO: Implement.
 		}, []);
 
-		const handleClickRemove = React.useCallback(() => {
-			playQueue.removeFromPlayQueue(playQueue.selectedItems);
+		const handleClickRemove = React.useCallback(async () => {
+			await playQueue.removeFromPlayQueue(playQueue.selectedItems);
 
 			playQueue.unselectAll();
 		}, [playQueue]);
@@ -235,8 +235,8 @@ const PlaylistIndex = observer(
 												<i className="icon-play" /> Play{/* TODO: localize */}
 											</Button>{' '}
 											<Button
-												onClick={(): void =>
-													playQueue.removeFromPlayQueue([item])
+												onClick={async (): Promise<void> =>
+													await playQueue.removeFromPlayQueue([item])
 												}
 												href="#"
 											>

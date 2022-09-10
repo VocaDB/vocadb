@@ -153,11 +153,13 @@ export class PlayQueueStore {
 		}
 	};
 
-	public removeFromPlayQueue = (items: PlayQueueItem[]): void => {
+	public removeFromPlayQueue = async (
+		items: PlayQueueItem[],
+	): Promise<void> => {
 		for (const item of items) {
 			if (this.currentItem === item) {
 				if (this.hasNextItem) {
-					this.next();
+					await this.next();
 				} else {
 					this.goToFirst();
 				}
@@ -175,7 +177,7 @@ export class PlayQueueStore {
 		this.currentIndex--;
 	};
 
-	@action public next = (): void => {
+	@action public next = async (): Promise<void> => {
 		if (this.currentIndex === undefined) return;
 
 		if (!this.hasNextItem) return;
