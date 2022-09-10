@@ -55,7 +55,7 @@ export class AlbumDisc {
 		this.totalLengthSeconds = this.songs.every(
 			(s) => s.song && s.song.lengthSeconds > 0,
 		)
-			? _.sumBy(this.songs, (s) => s.song.lengthSeconds)
+			? _.sumBy(this.songs, (s) => s.song!.lengthSeconds)
 			: 0;
 	}
 }

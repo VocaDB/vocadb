@@ -5,6 +5,6 @@ export interface SongInAlbumContract {
 	id: number;
 	name: string;
 	rating?: string;
-	song: SongApiContract;
+	song?: SongApiContract;
 	trackNumber: number;
 }

@@ -230,14 +230,16 @@ export class AlbumRepository
 			entryType: EntryType[EntryType.Album],
 			pvs: album.pvs ?? [],
 			tracks:
-				album.tracks?.map((track) => ({
-					...track,
-					song: {
-						...track.song,
-						entryType: EntryType[EntryType.Song],
-						pvs: track.song.pvs ?? [],
-					},
-				})) ?? [],
+				album.tracks
+					?.filter(({ song }) => !!song)
+					.map((track) => ({
+						...track,
+						song: {
+							...track.song!,
+							entryType: EntryType[EntryType.Song],
+							pvs: track.song!.pvs ?? [],
+						},
+					})) ?? [],
 		};
 	};
 
