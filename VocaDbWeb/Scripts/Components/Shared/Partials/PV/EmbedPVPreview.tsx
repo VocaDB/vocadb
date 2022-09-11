@@ -7,6 +7,7 @@ import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { EntryType } from '@/Models/EntryType';
+import { PVService } from '@/Models/PVs/PVService';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -173,8 +174,11 @@ export const EmbedPVPreview = observer(
 			return reaction(() => playQueue.currentItem?.pv.id, handleResize);
 		}, [playQueue, handleResize]);
 
-		if (true) {
-			return <CookieConcentBanner />;
+		if (
+			pv.service !== PVService.File &&
+			pv.service !== PVService.LocalFile /* TODO */
+		) {
+			return <CookieConcentBanner service={pv.service} />;
 		}
 
 		return (

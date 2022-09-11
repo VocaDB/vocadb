@@ -1,13 +1,44 @@
 import Button from '@/Bootstrap/Button';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
+type AutoplayPVService = Exclude<
+	PVService,
+	PVService.File | PVService.LocalFile
+>;
+
+const domainNames: Record<AutoplayPVService, string> = {
+	[PVService.Bandcamp]: 'bandcamp.com',
+	[PVService.Bilibili]: 'bilibili.tv',
+	[PVService.Creofuga]: 'creofuga.net',
+	[PVService.NicoNicoDouga]: 'nicovideo.jp',
+	[PVService.Piapro]: 'piapro.jp',
+	[PVService.SoundCloud]: 'soundcloud.com',
+	[PVService.Vimeo]: 'vimeo.com',
+	[PVService.Youtube]: 'youtube.com',
+};
+
+const termsOfServiceUrls: Record<AutoplayPVService, string> = {
+	[PVService.Bandcamp]: 'https://bandcamp.com/terms_of_use',
+	[PVService.Bilibili]: 'https://www.bilibili.tv/en/user-agreement',
+	[PVService.Creofuga]: 'https://creofuga.net/',
+	[PVService.NicoNicoDouga]:
+		'https://account.nicovideo.jp/rules/account?language=en-us',
+	[PVService.Piapro]: 'https://piapro.jp/user_agreement/',
+	[PVService.SoundCloud]: 'https://soundcloud.com/terms-of-use',
+	[PVService.Vimeo]: 'https://vimeo.com/terms/',
+	[PVService.Youtube]: 'https://www.youtube.com/t/terms',
+};
+
 interface CookieConcentBannerProps {
+	service: AutoplayPVService;
 	width?: number;
 	height?: number;
 }
 
 export const CookieConcentBanner = React.memo(
 	({
+		service,
 		width = 560,
 		height = 315,
 	}: CookieConcentBannerProps): React.ReactElement => {
@@ -44,10 +75,15 @@ export const CookieConcentBanner = React.memo(
 					>
 						This content is hosted by a third party. By showing the external
 						content you accept the{' '}
-						<a href="#" style={{ color: '#5fb3fb' }}>
+						<a
+							href={termsOfServiceUrls[service]}
+							target="_blank"
+							rel="noreferrer"
+							style={{ color: '#5fb3fb' }}
+						>
 							terms and conditions
 						</a>{' '}
-						of youtube.com.
+						of {domainNames[service]}.
 					</div>
 					<div>
 						<Button variant="primary">
