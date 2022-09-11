@@ -2,12 +2,12 @@ import Button from '@/Bootstrap/Button';
 import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
-type AutoplayPVService = Exclude<
+type ThirdPartyPVService = Exclude<
 	PVService,
 	PVService.File | PVService.LocalFile
 >;
 
-const domainNames: Record<AutoplayPVService, string> = {
+const domainNames: Record<ThirdPartyPVService, string> = {
 	[PVService.Bandcamp]: 'bandcamp.com',
 	[PVService.Bilibili]: 'bilibili.tv',
 	[PVService.Creofuga]: 'creofuga.net',
@@ -18,7 +18,7 @@ const domainNames: Record<AutoplayPVService, string> = {
 	[PVService.Youtube]: 'youtube.com',
 };
 
-const termsOfServiceUrls: Record<AutoplayPVService, string> = {
+const termsOfServiceUrls: Record<ThirdPartyPVService, string> = {
 	[PVService.Bandcamp]: 'https://bandcamp.com/terms_of_use',
 	[PVService.Bilibili]: 'https://www.bilibili.tv/en/user-agreement',
 	[PVService.Creofuga]: 'https://creofuga.net/',
@@ -31,7 +31,7 @@ const termsOfServiceUrls: Record<AutoplayPVService, string> = {
 };
 
 interface CookieConcentBannerProps {
-	service: AutoplayPVService;
+	service: ThirdPartyPVService;
 	width?: number;
 	height?: number;
 }
