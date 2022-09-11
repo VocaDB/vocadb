@@ -1,5 +1,6 @@
 import { EmbedBili } from '@/Components/Shared/Partials/PV/EmbedBili';
 import { EmbedPiapro } from '@/Components/Shared/Partials/PV/EmbedPiapro';
+import { CookieConsentBanner } from '@/Components/VdbPlayer/CookieConsentBanner';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
@@ -52,6 +53,34 @@ const playerTypes: Record<
 	[PVService.Youtube]: 'YouTube',
 };
 
+const useAcceptCookies = (
+	service: PVService,
+): {
+	accepted: boolean;
+	handleLoadVideo: () => void;
+	handleDoNotAskAgain: () => void;
+} => {
+	const [accepted, setAccepted] = React.useState(false);
+
+	const key = `${service}.acceptCookies`;
+
+	React.useEffect(() => {
+		const item = window.localStorage.getItem(key);
+
+		setAccepted(item === 'true');
+	}, [key]);
+
+	const handleLoadVideo = React.useCallback(() => setAccepted(true), []);
+
+	const handleDoNotAskAgain = React.useCallback(() => {
+		window.localStorage.setItem(key, JSON.stringify(true));
+
+		setAccepted(true);
+	}, [key]);
+
+	return { accepted, handleLoadVideo, handleDoNotAskAgain };
+};
+
 interface EmbedPVProps {
 	pv: PVContract;
 	width?: number | string;
@@ -74,11 +103,25 @@ export const EmbedPV = React.memo(
 
 		const service = pv.service;
 
-		/*if (service !== PVService.File && service !== PVService.LocalFile) {
+		const { accepted, handleLoadVideo, handleDoNotAskAgain } = useAcceptCookies(
+			service,
+		);
+
+		if (
+			!accepted &&
+			service !== PVService.File &&
+			service !== PVService.LocalFile
+		) {
 			return (
-				<CookieConsentBanner service={service} width={width} height={height} />
+				<CookieConsentBanner
+					service={service}
+					width={width}
+					height={height}
+					onLoadVideo={handleLoadVideo}
+					onDoNotAskAgain={handleDoNotAskAgain}
+				/>
 			);
-		}*/
+		}
 
 		switch (service) {
 			case PVService.File:

@@ -34,6 +34,8 @@ interface CookieConsentBannerProps {
 	service: ThirdPartyPVService;
 	width?: string | number;
 	height?: string | number;
+	onLoadVideo: () => void;
+	onDoNotAskAgain: () => void;
 }
 
 export const CookieConsentBanner = React.memo(
@@ -41,6 +43,8 @@ export const CookieConsentBanner = React.memo(
 		service,
 		width = 560,
 		height = 315,
+		onLoadVideo,
+		onDoNotAskAgain,
 	}: CookieConsentBannerProps): React.ReactElement => {
 		return (
 			<div
@@ -86,11 +90,13 @@ export const CookieConsentBanner = React.memo(
 						of {domainNames[service]}.
 					</div>
 					<div>
-						<Button variant="primary">
+						<Button onClick={onLoadVideo} variant="primary">
 							<i className="icon-play icon-white" /> Load video
 							{/* TODO: localize */}
 						</Button>{' '}
-						<Button>Don't ask again{/* TODO: localize */}</Button>
+						<Button onClick={onDoNotAskAgain}>
+							Don't ask again{/* TODO: localize */}
+						</Button>
 					</div>
 				</div>
 			</div>
