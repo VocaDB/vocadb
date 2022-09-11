@@ -30,18 +30,18 @@ const termsOfServiceUrls: Record<ThirdPartyPVService, string> = {
 	[PVService.Youtube]: 'https://www.youtube.com/t/terms',
 };
 
-interface CookieConcentBannerProps {
+interface CookieConsentBannerProps {
 	service: ThirdPartyPVService;
 	width?: number;
 	height?: number;
 }
 
-export const CookieConcentBanner = React.memo(
+export const CookieConsentBanner = React.memo(
 	({
 		service,
 		width = 560,
 		height = 315,
-	}: CookieConcentBannerProps): React.ReactElement => {
+	}: CookieConsentBannerProps): React.ReactElement => {
 		return (
 			<div
 				className="pv-embed-preview"

@@ -1,7 +1,7 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
-import { CookieConcentBanner } from '@/Components/Shared/Partials/PV/CookieConcentBanner';
+import { CookieConsentBanner } from '@/Components/Shared/Partials/PV/CookieConsentBanner';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
@@ -178,7 +178,7 @@ export const EmbedPVPreview = observer(
 			pv.service !== PVService.File &&
 			pv.service !== PVService.LocalFile /* TODO */
 		) {
-			return <CookieConcentBanner service={pv.service} />;
+			return <CookieConsentBanner service={pv.service} />;
 		}
 
 		return (
