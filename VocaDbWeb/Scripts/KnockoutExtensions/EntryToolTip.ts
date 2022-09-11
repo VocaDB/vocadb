@@ -23,7 +23,7 @@ export function initToolTip(
 	params?: any,
 	foreignDomain?: string,
 ): void {
-	const whitelistedDomains = [
+	const allowedDomains = [
 		'http://vocadb.net',
 		'https://vocadb.net',
 		'http://utaitedb.net',
@@ -32,7 +32,7 @@ export function initToolTip(
 	];
 	const url =
 		foreignDomain &&
-		whitelistedDomains.some((domain) =>
+		allowedDomains.some((domain) =>
 			foreignDomain.toLocaleLowerCase().includes(domain),
 		)
 			? functions.mergeUrls(foreignDomain, relativeUrl)

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import 'qtip2';
 import React from 'react';
 
-const whitelistedDomains = [
+const allowedDomains = [
 	'http://vocadb.net',
 	'https://vocadb.net',
 	'http://utaitedb.net',
@@ -42,7 +42,7 @@ const ToolTip = React.forwardRef<HTMLElement, ToolTipProps>(
 		React.useEffect(() => {
 			const url =
 				foreignDomain &&
-				whitelistedDomains.some((domain) =>
+				allowedDomains.some((domain) =>
 					foreignDomain.toLocaleLowerCase().includes(domain),
 				)
 					? functions.mergeUrls(foreignDomain, relativeUrl)
