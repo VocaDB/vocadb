@@ -376,7 +376,7 @@ const EmbedPVWrapper = observer(
 
 				case RepeatMode.Off:
 				case RepeatMode.All:
-					if (playQueue.isLastItem) {
+					if (playQueue.isLastItem && !playQueue.hasMoreItems) {
 						switch (vdbPlayer.repeat) {
 							case RepeatMode.Off:
 								vdbPlayer.setPlaying(false);
