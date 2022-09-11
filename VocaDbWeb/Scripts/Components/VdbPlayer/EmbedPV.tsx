@@ -74,6 +74,12 @@ export const EmbedPV = React.memo(
 
 		const service = pv.service;
 
+		/*if (service !== PVService.File && service !== PVService.LocalFile) {
+			return (
+				<CookieConsentBanner service={service} width={width} height={height} />
+			);
+		}*/
+
 		switch (service) {
 			case PVService.File:
 			case PVService.LocalFile:

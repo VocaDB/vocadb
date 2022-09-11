@@ -32,8 +32,8 @@ const termsOfServiceUrls: Record<ThirdPartyPVService, string> = {
 
 interface CookieConsentBannerProps {
 	service: ThirdPartyPVService;
-	width?: number;
-	height?: number;
+	width?: string | number;
+	height?: string | number;
 }
 
 export const CookieConsentBanner = React.memo(
