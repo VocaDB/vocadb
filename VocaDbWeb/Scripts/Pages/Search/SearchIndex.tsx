@@ -216,6 +216,7 @@ const SearchIndex = observer(
 									<ButtonGroup>
 										<Button
 											onClick={async (): Promise<void> => {
+												// Access queryParams here, not in the function body.
 												const { queryParams } = searchStore.songSearchStore;
 
 												await playQueue.startAutoplay((offset, limit) =>

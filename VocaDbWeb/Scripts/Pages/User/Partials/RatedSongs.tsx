@@ -61,6 +61,7 @@ const RatedSongs = observer(
 							<div className="btn-group">
 								<Button
 									onClick={async (): Promise<void> => {
+										// Access queryParams here, not in the function body.
 										const { queryParams } = ratedSongsStore;
 
 										await playQueue.startAutoplay((offset, limit) =>

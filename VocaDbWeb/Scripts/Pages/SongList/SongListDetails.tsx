@@ -315,6 +315,7 @@ const SongListDetailsLayout = observer(
 					<ButtonGroup className="songlist-mode-selection pull-left">
 						<Button
 							onClick={async (): Promise<void> => {
+								// Access queryParams here, not in the function body.
 								const { queryParams } = songListStore;
 
 								await playQueue.startAutoplay((offset, limit) =>
