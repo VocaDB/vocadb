@@ -3,7 +3,6 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
-import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { CoverArtistMessage } from '@/Components/Shared/KnockoutPartials/CoverArtistMessage';
 import { DuplicateEntriesMessage } from '@/Components/Shared/KnockoutPartials/DuplicateEntriesMessage';
@@ -11,6 +10,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
 import { SongTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
+import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
@@ -22,7 +22,6 @@ import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
@@ -290,19 +289,16 @@ const SongCreateLayout = observer(
 																(originalSongSuggestion, index) => (
 																	<tr key={index}>
 																		<td>
-																			<EntryToolTip
-																				as={Link}
-																				value={originalSongSuggestion.entry}
-																				to={EntryUrlMapper.details_entry(
-																					originalSongSuggestion.entry,
-																				)}
+																			<EntryLink
+																				entry={originalSongSuggestion.entry}
+																				tooltip
 																				/* TODO: target="_blank" */
 																			>
 																				{
 																					originalSongSuggestion.entry.name
 																						.displayName
 																				}
-																			</EntryToolTip>{' '}
+																			</EntryLink>{' '}
 																			(
 																			<span>
 																				{

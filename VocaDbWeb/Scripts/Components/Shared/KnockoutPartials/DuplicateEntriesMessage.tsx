@@ -1,11 +1,9 @@
 import Alert from '@/Bootstrap/Alert';
-import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
 import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 interface DuplicateEntriesMessageProps {
 	dupeEntries: DuplicateEntryResultContract[];
@@ -23,14 +21,13 @@ export const DuplicateEntriesMessage = React.memo(
 				<ul>
 					{dupeEntries.map((entry, index) => (
 						<li key={index}>
-							<EntryToolTip
-								as={Link}
-								value={entry.entry}
-								to={EntryUrlMapper.details_entry(entry.entry)}
+							<EntryLink
+								entry={entry.entry}
+								tooltip
 								/* TODO: target="_blank" */
 							>
 								{entry.entry.name.displayName}
-							</EntryToolTip>{' '}
+							</EntryLink>{' '}
 							(<span>{entry.entry.entryTypeName}</span>)
 							{entry.entry.artistString && (
 								<div>

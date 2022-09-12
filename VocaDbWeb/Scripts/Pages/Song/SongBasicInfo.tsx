@@ -1,9 +1,5 @@
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import {
-	TagToolTip,
-	EventToolTip,
-} from '@/Components/KnockoutExtensions/EntryToolTip';
 import { AlbumLink } from '@/Components/Shared/Partials/Album/AlbumLink';
 import {
 	ArtistList,
@@ -13,12 +9,14 @@ import { LatestCommentsKnockout } from '@/Components/Shared/Partials/Comment/Lat
 import { EnglishTranslatedString } from '@/Components/Shared/Partials/EnglishTranslatedString';
 import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
 import { PersonalDescriptionMedia } from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
+import { EventLink } from '@/Components/Shared/Partials/Event/EventLink';
 import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { SongLinkKnockout } from '@/Components/Shared/Partials/Song/SongLinkKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
@@ -381,15 +379,11 @@ const SongBasicInfo = observer(
 							<td>
 								<SongTypeLabel songType={model.songType} />{' '}
 								{model.songTypeTag ? (
-									<TagToolTip
-										as={Link}
-										to={EntryUrlMapper.details_tag_contract(model.songTypeTag)!}
-										id={model.songTypeTag.id}
-									>
+									<TagLink tag={model.songTypeTag} tooltip>
 										{t(
 											`VocaDb.Model.Resources.Songs:SongTypeNames.${model.songType}`,
 										)}
-									</TagToolTip>
+									</TagLink>
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
@@ -620,17 +614,7 @@ const SongBasicInfo = observer(
 							<tr>
 								<td>{t('ViewRes.Song:Details.ReleaseEvent')}</td>
 								<td>
-									<EventToolTip
-										as={Link}
-										to={EntryUrlMapper.details(
-											EntryType.ReleaseEvent,
-											model.releaseEvent.id,
-											model.releaseEvent.urlSlug,
-										)}
-										id={model.releaseEvent.id}
-									>
-										{model.releaseEvent.name}
-									</EventToolTip>
+									<EventLink event={model.releaseEvent} tooltip />
 								</td>
 							</tr>
 						)}

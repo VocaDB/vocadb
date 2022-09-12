@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 
 interface TagLinkProps {
 	tag: TagBaseContract;
+	children?: React.ReactNode;
 	tooltip?: boolean;
 }
 
 export const TagLink = React.memo(
-	({ tag, tooltip }: TagLinkProps): React.ReactElement => {
+	({ tag, children, tooltip }: TagLinkProps): React.ReactElement => {
 		return tooltip ? (
 			<TagToolTip
 				as={Link}
@@ -18,14 +19,14 @@ export const TagLink = React.memo(
 				title={tag.additionalNames}
 				id={tag.id}
 			>
-				{tag.name}
+				{children ?? tag.name}
 			</TagToolTip>
 		) : (
 			<Link
 				to={EntryUrlMapper.details_tag_contract(tag)!}
 				title={tag.additionalNames}
 			>
-				{tag.name}
+				{children ?? tag.name}
 			</Link>
 		);
 	},

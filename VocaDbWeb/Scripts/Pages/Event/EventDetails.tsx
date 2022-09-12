@@ -3,7 +3,6 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import { TagToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { Layout } from '@/Components/Shared/Layout';
 import { AlbumGrid } from '@/Components/Shared/Partials/Album/AlbumGrid';
@@ -20,6 +19,7 @@ import { FormatPVLink } from '@/Components/Shared/Partials/Shared/FormatPVLink';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { SongIconLink } from '@/Components/Shared/Partials/Song/SongIconLink';
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
@@ -300,19 +300,11 @@ const EventDetailsLayout = observer(
 							<p>
 								{t('ViewRes.Event:Details.Category')}:{' '}
 								{event.inheritedCategoryTag ? (
-									<TagToolTip
-										as={Link}
-										to={
-											EntryUrlMapper.details_tag_contract(
-												event.inheritedCategoryTag,
-											)!
-										}
-										id={event.inheritedCategoryTag.id}
-									>
+									<TagLink tag={event.inheritedCategoryTag} tooltip>
 										{t(
 											`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 										)}
-									</TagToolTip>
+									</TagLink>
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({

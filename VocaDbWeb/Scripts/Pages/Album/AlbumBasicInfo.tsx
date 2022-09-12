@@ -1,9 +1,5 @@
 import Carousel from '@/Bootstrap/Carousel';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import {
-	TagToolTip,
-	EventToolTip,
-} from '@/Components/KnockoutExtensions/EntryToolTip';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { CoverLink } from '@/Components/Shared/Partials/Album/CoverLink';
 import {
@@ -14,6 +10,7 @@ import { LatestCommentsKnockout } from '@/Components/Shared/Partials/Comment/Lat
 import { EnglishTranslatedString } from '@/Components/Shared/Partials/EnglishTranslatedString';
 import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/ExternalLinksRows';
 import { PersonalDescriptionMedia } from '@/Components/Shared/Partials/EntryDetails/PersonalDescriptionMedia';
+import { EventLink } from '@/Components/Shared/Partials/Event/EventLink';
 import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
 import { LanguageFlag } from '@/Components/Shared/Partials/Html/LanguageFlag';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
@@ -26,6 +23,7 @@ import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/Universa
 import { RatingIcon } from '@/Components/Shared/Partials/Song/RatingIcon';
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
@@ -252,17 +250,11 @@ const AlbumBasicInfo = observer(
 								<td>{t('ViewRes:Shared.Type')}</td>
 								<td>
 									{model.discTypeTag ? (
-										<TagToolTip
-											as={Link}
-											to={
-												EntryUrlMapper.details_tag_contract(model.discTypeTag)!
-											}
-											id={model.discTypeTag.id}
-										>
+										<TagLink tag={model.discTypeTag} tooltip>
 											{t(
 												`VocaDb.Model.Resources.Albums:DiscTypeNames.${model.discType}`,
 											)}
-										</TagToolTip>
+										</TagLink>
 									) : (
 										<a
 											href={`/Tag/DetailsByEntryType?${qs.stringify({
@@ -366,17 +358,7 @@ const AlbumBasicInfo = observer(
 								<tr>
 									<td>{t('ViewRes.Album:Details.ReleaseEvent')}</td>
 									<td>
-										<EventToolTip
-											as={Link}
-											to={EntryUrlMapper.details(
-												EntryType.ReleaseEvent,
-												model.releaseEvent.id,
-												model.releaseEvent.urlSlug,
-											)}
-											id={model.releaseEvent.id}
-										>
-											{model.releaseEvent.name}
-										</EventToolTip>
+										<EventLink event={model.releaseEvent} tooltip />
 									</td>
 								</tr>
 							)}

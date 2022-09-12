@@ -1,5 +1,4 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import { TagToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { AlbumThumbs } from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import { ArtistGrid } from '@/Components/Shared/Partials/Artist/ArtistGrid';
 import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
@@ -11,6 +10,7 @@ import { ExternalLinksRows } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
@@ -232,19 +232,11 @@ const ArtistBasicInfo = observer(
 								<td>
 									<ArtistTypeLabel artistType={artist.artistType} />{' '}
 									{artist.artistTypeTag ? (
-										<TagToolTip
-											as={Link}
-											to={
-												EntryUrlMapper.details_tag_contract(
-													artist.artistTypeTag,
-												)!
-											}
-											id={artist.artistTypeTag.id}
-										>
+										<TagLink tag={artist.artistTypeTag} tooltip>
 											{t(
 												`VocaDb.Model.Resources:ArtistTypeNames.${artist.artistType}`,
 											)}
-										</TagToolTip>
+										</TagLink>
 									) : (
 										<a
 											href={`/Tag/DetailsByEntryType?${qs.stringify({

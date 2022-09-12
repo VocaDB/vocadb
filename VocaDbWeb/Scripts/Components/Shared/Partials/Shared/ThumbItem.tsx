@@ -1,5 +1,5 @@
 import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
-import { EntryToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
 import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import React from 'react';
 
@@ -29,33 +29,32 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	return (
 		<div css={{ marginRight: 9, lineHeight: '18px' }}>
 			<div css={{ position: 'relative' }} {...props}>
-				<LinkComponent {...linkProps}>
-					<div className="pictureFrame">
-						{entry ? (
-							tooltip ? (
-								<EntryToolTip
-									as="img"
-									src={thumbUrl}
-									alt="Preview" /* TODO: localize */
-									className="coverPic"
-									value={entry}
-								/>
-							) : (
-								<img
-									src={thumbUrl}
-									alt="Preview" /* TODO: localize */
-									className="coverPic"
-								/>
-							)
-						) : (
+				<div className="pictureFrame">
+					{entry ? (
+						<EntryLink
+							entry={entry}
+							tooltip={tooltip}
+							css={{ display: 'block', width: '100%', height: '100%' }}
+						>
 							<img
 								src={thumbUrl}
 								alt="Preview" /* TODO: localize */
 								className="coverPic"
 							/>
-						)}
-					</div>
-				</LinkComponent>
+						</EntryLink>
+					) : (
+						<LinkComponent
+							{...linkProps}
+							css={{ display: 'block', width: '100%', height: '100%' }}
+						>
+							<img
+								src={thumbUrl}
+								alt="Preview" /* TODO: localize */
+								className="coverPic"
+							/>
+						</LinkComponent>
+					)}
+				</div>
 
 				{children}
 			</div>
