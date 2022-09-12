@@ -1,7 +1,22 @@
-import { SongToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import React from 'react';
+
+interface SongLinkKnockoutBaseProps {
+	song: SongApiContract;
+	extUrl?: string;
+}
+
+const SongLinkKnockoutBase = ({
+	song,
+	extUrl,
+}: SongLinkKnockoutBaseProps): React.ReactElement => {
+	return (
+		<a href={extUrl} title={song.additionalNames} className="extLink">
+			{song.name}
+		</a>
+	);
+};
 
 interface SongLinkKnockoutProps {
 	song: SongApiContract;
@@ -21,7 +36,7 @@ export const SongLinkKnockout = React.memo(
 	}: SongLinkKnockoutProps): React.ReactElement => {
 		return extUrl ? (
 			tooltip ? (
-				<SongToolTip
+				/*<SongToolTip
 					as="a"
 					href={extUrl}
 					title={song.additionalNames}
@@ -30,11 +45,10 @@ export const SongLinkKnockout = React.memo(
 					className="extLink"
 				>
 					{song.name}
-				</SongToolTip>
+				</SongToolTip>*/
+				<SongLinkKnockoutBase song={song} extUrl={extUrl} />
 			) : (
-				<a href={extUrl} title={song.additionalNames} className="extLink">
-					{song.name}
-				</a>
+				<SongLinkKnockoutBase song={song} extUrl={extUrl} />
 			)
 		) : (
 			<SongLink
