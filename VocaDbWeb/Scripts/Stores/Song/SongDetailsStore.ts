@@ -11,7 +11,10 @@ import { LoginManager } from '@/Models/LoginManager';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -270,7 +273,7 @@ export class SongDetailsStore {
 				songRepo
 					.getOneWithComponents({
 						id: this.id,
-						fields: 'Artists',
+						fields: [SongOptionalField.Artists],
 						lang: values.languagePreference,
 					})
 					.then((result) => {
@@ -363,7 +366,7 @@ export class SongDetailsStore {
 		songRepo
 			.getOneWithComponents({
 				id: id,
-				fields: 'None',
+				fields: [],
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {

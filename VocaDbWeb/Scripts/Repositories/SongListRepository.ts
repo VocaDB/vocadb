@@ -29,6 +29,13 @@ export interface SongListGetSongsQueryParams {
 	sort: string;
 }
 
+export enum SongListOptionalField {
+	'Description' = 'Description',
+	'Events' = 'Events',
+	'MainPicture' = 'MainPicture',
+	'Tags' = 'Tags',
+}
+
 export class SongListRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
@@ -69,7 +76,7 @@ export class SongListRepository {
 		category: string;
 		paging: PagingProperties;
 		tagIds: number[];
-		fields: string;
+		fields: SongListOptionalField[];
 		sort: string;
 	}): Promise<PartialFindResultContract<SongListContract>> => {
 		var url = this.urlMapper.mapRelative('/api/songLists/featured');
@@ -82,7 +89,7 @@ export class SongListRepository {
 				getTotalCount: paging.getTotalCount,
 				maxResults: paging.maxEntries,
 				tagId: tagIds,
-				fields: fields,
+				fields: fields.join(','),
 				sort: sort,
 			},
 		);

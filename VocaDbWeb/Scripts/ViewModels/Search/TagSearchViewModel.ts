@@ -1,6 +1,6 @@
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { TagOptionalField, TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
 import { SearchViewModel } from '@/ViewModels/Search/SearchViewModel';
@@ -35,7 +35,10 @@ export class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContra
 					sort: this.sort(),
 					allowAliases: this.allowAliases(),
 					categoryName: this.categoryName(),
-					fields: 'AdditionalNames,MainPicture',
+					fields: [
+						TagOptionalField.AdditionalNames,
+						TagOptionalField.MainPicture,
+					],
 				},
 			});
 	}

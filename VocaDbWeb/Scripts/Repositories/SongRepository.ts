@@ -299,12 +299,12 @@ export class SongRepository
 		lang,
 	}: {
 		id: number;
-		fields: string;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
 	}): Promise<SongApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 		});
 	};
@@ -318,7 +318,7 @@ export class SongRepository
 	}): Promise<SongContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongContract>(url, {
-			fields: 'AdditionalNames',
+			fields: [SongOptionalField.AdditionalNames].join(','),
 			lang: lang,
 		});
 	};
@@ -342,7 +342,7 @@ export class SongRepository
 		pvServices,
 		queryParams,
 	}: {
-		fields: string /* TODO: enum */;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
@@ -381,7 +381,7 @@ export class SongRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -428,7 +428,7 @@ export class SongRepository
 		queryParams: SongGetListQueryParams;
 	}): Promise<PartialFindResultContract<SongWithPVsContract>> => {
 		const { items, totalCount } = await this.getList({
-			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
+			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 			lang: lang,
 			paging: paging,
 			pvServices: pvServices,

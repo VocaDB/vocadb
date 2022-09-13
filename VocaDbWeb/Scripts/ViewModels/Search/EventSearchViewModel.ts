@@ -1,7 +1,10 @@
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import {
+	ReleaseEventOptionalField,
+	ReleaseEventRepository,
+} from '@/Repositories/ReleaseEventRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilters } from '@/ViewModels/Search/ArtistFilters';
 import { SearchCategoryBaseViewModel } from '@/ViewModels/Search/SearchCategoryBaseViewModel';
@@ -85,8 +88,19 @@ export class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEve
 
 	public fields = ko.computed(() =>
 		this.searchViewModel.showTags()
-			? 'AdditionalNames,MainPicture,Series,Venue,Tags'
-			: 'AdditionalNames,MainPicture,Series,Venue',
+			? [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+					ReleaseEventOptionalField.Tags,
+			  ]
+			: [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+			  ],
 	);
 
 	public getCategoryName = (event: ReleaseEventContract): string => {

@@ -3,7 +3,10 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import {
 	UserGetRatedSongsListQueryParams,
@@ -149,10 +152,14 @@ export class RatedSongsSearchStore
 		this.tagFilters.addTags(value);
 	}
 
-	@computed public get fields(): string {
-		return `AdditionalNames,MainPicture${
-			this.showTags ? ',Tags' : ''
-		}` /* TODO: enum */;
+	@computed public get fields(): SongOptionalField[] {
+		return this.showTags
+			? [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.MainPicture,
+					SongOptionalField.Tags,
+			  ]
+			: [SongOptionalField.AdditionalNames, SongOptionalField.MainPicture];
 	}
 
 	@action public selectTag = (tag: TagBaseContract): void => {

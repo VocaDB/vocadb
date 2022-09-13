@@ -55,7 +55,6 @@ export class TagFilters {
 			this.tagRepo
 				.getById({
 					id: selectedTagId,
-					fields: undefined,
 					lang: this.values.languagePreference,
 				})
 				.then((tag) => {

@@ -41,7 +41,7 @@ export class PlayListRepositoryForRatedSongsAdapter
 	): Promise<PartialFindResultContract<ISongForPlayList>> {
 		return this.userRepo
 			.getRatedSongsList({
-				fields: 'MainPicture' /* TODO: enum */,
+				fields: [SongOptionalField.MainPicture],
 				lang: lang,
 				paging: paging,
 				pvServices: pvServices,

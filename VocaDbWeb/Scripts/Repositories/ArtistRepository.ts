@@ -22,6 +22,18 @@ import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
+export enum ArtistOptionalField {
+	'AdditionalNames' = 'AdditionalNames',
+	'ArtistLinks' = 'ArtistLinks',
+	'ArtistLinksReverse' = 'ArtistLinksReverse',
+	'BaseVoicebank' = 'BaseVoicebank',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Tags' = 'Tags',
+	'WebLinks' = 'WebLinks',
+}
+
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
 export class ArtistRepository
@@ -142,7 +154,7 @@ export class ArtistRepository
 	}): Promise<ArtistContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistContract>(url, {
-			fields: 'AdditionalNames',
+			fields: [ArtistOptionalField.AdditionalNames].join(','),
 			lang: lang,
 		});
 	};
@@ -153,12 +165,12 @@ export class ArtistRepository
 		lang,
 	}: {
 		id: number;
-		fields: string;
+		fields: ArtistOptionalField[];
 		lang: ContentLanguagePreference;
 	}): Promise<ArtistApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistApiContract>(url, {
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 		});
 	};
@@ -186,7 +198,7 @@ export class ArtistRepository
 		tags: number[];
 		childTags: boolean;
 		followedByUserId?: number;
-		fields: string;
+		fields: ArtistOptionalField[];
 		status?: string;
 		advancedFilters: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
@@ -196,7 +208,7 @@ export class ArtistRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,

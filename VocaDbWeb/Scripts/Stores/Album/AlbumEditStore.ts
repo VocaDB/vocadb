@@ -9,7 +9,10 @@ import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -318,8 +321,7 @@ export class AlbumEditStore {
 		if (songId) {
 			const song = await this.songRepo.getOneWithComponents({
 				id: songId,
-				fields: ['AdditionalNames', 'Artists'] /* TODO: enum */
-					.join(','),
+				fields: [SongOptionalField.AdditionalNames, SongOptionalField.Artists],
 				lang: this.values.languagePreference,
 			});
 

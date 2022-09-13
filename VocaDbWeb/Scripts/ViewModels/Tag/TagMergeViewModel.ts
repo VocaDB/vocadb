@@ -8,7 +8,7 @@ import ko from 'knockout';
 export class TagMergeViewModel {
 	public constructor(tagRepo: TagRepository, private base: TagBaseContract) {
 		this.target = new BasicEntryLinkViewModel<TagBaseContract>(null!, (id) =>
-			tagRepo.getById({ id: id, fields: undefined, lang: undefined }),
+			tagRepo.getById({ id: id, lang: undefined }),
 		);
 
 		ko.computed(() => {

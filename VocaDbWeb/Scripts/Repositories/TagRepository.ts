@@ -21,6 +21,18 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
+export enum TagOptionalField {
+	'AliasedTo' = 'AliasedTo',
+	'AdditionalNames' = 'AdditionalNames',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Parent' = 'Parent',
+	'RelatedTags' = 'RelatedTags',
+	'TranslatedDescription' = 'TranslatedDescription',
+	'WebLinks' = 'WebLinks',
+}
+
 export class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;
 
@@ -62,12 +74,12 @@ export class TagRepository extends BaseRepository {
 		lang,
 	}: {
 		id: number;
-		fields?: string;
+		fields?: TagOptionalField[];
 		lang?: ContentLanguagePreference;
 	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
 		return this.httpClient.get<TagApiContract>(url, {
-			fields: fields || undefined,
+			fields: fields?.join(','),
 			lang: lang,
 		});
 	};
@@ -94,7 +106,7 @@ export class TagRepository extends BaseRepository {
 			`/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
 		);
 		return this.httpClient.get<TagApiContract>(url, {
-			fields: 'Description',
+			fields: [TagOptionalField.Description].join(','),
 			lang: lang,
 		});
 	};
@@ -112,7 +124,7 @@ export class TagRepository extends BaseRepository {
 			getTotalCount: queryParams.getTotalCount,
 			maxResults: queryParams.maxResults,
 			query: queryParams.query,
-			fields: queryParams.fields || undefined,
+			fields: queryParams.fields?.join(','),
 			nameMatchMode: NameMatchMode[nameMatchMode],
 			allowAliases: queryParams.allowAliases,
 			categoryName: queryParams.categoryName,
@@ -238,7 +250,7 @@ export interface TagQueryParams extends CommonQueryParams {
 	categoryName?: string;
 
 	// Comma-separated list of optional fields
-	fields?: string;
+	fields?: TagOptionalField[];
 
 	sort?: string;
 }

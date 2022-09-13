@@ -16,6 +16,19 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
+export enum ReleaseEventOptionalField {
+	'AdditionalNames' = 'AdditionalNames',
+	'Artists' = 'Artists',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Series' = 'Series',
+	'SongList' = 'SongList',
+	'Tags' = 'Tags',
+	'Venue' = 'Venue',
+	'WebLinks' = 'WebLinks',
+}
+
 export class ReleaseEventRepository extends BaseRepository {
 	public constructor(
 		private readonly httpClient: HttpClient,
@@ -98,7 +111,7 @@ export class ReleaseEventRepository extends BaseRepository {
 			category: queryParams.category || undefined,
 			tagId: queryParams.tagIds,
 			childTags: queryParams.childTags,
-			fields: queryParams.fields || undefined,
+			fields: queryParams.fields?.join(','),
 			userCollectionId: queryParams.userCollectionId || undefined,
 			artistId: queryParams.artistId || undefined,
 			childVoicebanks: queryParams.childVoicebanks || undefined,
@@ -294,7 +307,7 @@ export interface EventQueryParams extends CommonQueryParams {
 	childVoicebanks?: boolean;
 
 	// Comma-separated list of optional fields
-	fields?: string;
+	fields?: ReleaseEventOptionalField[];
 
 	includeMembers?: boolean;
 

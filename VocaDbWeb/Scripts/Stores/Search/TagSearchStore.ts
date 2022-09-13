@@ -1,7 +1,7 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { TagOptionalField, TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
@@ -56,7 +56,10 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 				sort: this.sort,
 				allowAliases: this.allowAliases,
 				categoryName: this.categoryName,
-				fields: 'AdditionalNames,MainPicture',
+				fields: [
+					TagOptionalField.AdditionalNames,
+					TagOptionalField.MainPicture,
+				],
 			},
 		});
 	};

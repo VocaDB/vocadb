@@ -1,5 +1,6 @@
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { SongListOptionalField } from '@/Repositories/SongListRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
@@ -62,8 +63,10 @@ export abstract class SongListsBaseStore extends PagedItemsStore<SongListContrac
 		this.tagFilters.addTags(value);
 	}
 
-	@computed public get fields(): string {
-		return 'MainPicture' + (this.showTags ? ',Tags' : '');
+	@computed public get fields(): SongListOptionalField[] {
+		return this.showTags
+			? [SongListOptionalField.MainPicture, SongListOptionalField.Tags]
+			: [SongListOptionalField.MainPicture];
 	}
 
 	public isFirstForYear = (

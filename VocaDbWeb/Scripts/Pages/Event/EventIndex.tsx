@@ -4,7 +4,10 @@ import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { LoginManager } from '@/Models/LoginManager';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import {
+	ReleaseEventOptionalField,
+	ReleaseEventRepository,
+} from '@/Repositories/ReleaseEventRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
@@ -104,7 +107,12 @@ const EventIndex = (): React.ReactElement => {
 			.getList({
 				queryParams: {
 					lang: vdb.values.languagePreference,
-					fields: 'AdditionalNames,MainPicture,Series,Venue',
+					fields: [
+						ReleaseEventOptionalField.AdditionalNames,
+						ReleaseEventOptionalField.MainPicture,
+						ReleaseEventOptionalField.Series,
+						ReleaseEventOptionalField.Venue,
+					],
 					afterDate: moment().subtract(2, 'days').toDate(),
 					start: 0,
 					maxResults: 15,

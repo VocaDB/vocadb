@@ -1,6 +1,9 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
-import { UserRepository } from '@/Repositories/UserRepository';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StoreWithPagination } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
@@ -103,7 +106,7 @@ export class ListUsersStore
 			onlyVerified: this.onlyVerifiedArtists,
 			knowsLanguage: this.knowsLanguage,
 			nameMatchMode: 'Auto' /* TODO: enum */,
-			fields: 'MainPicture' /* TODO: enum */,
+			fields: [UserOptionalField.MainPicture],
 		});
 
 		this.pauseNotifications = false;

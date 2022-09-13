@@ -12,7 +12,10 @@ import { EntryType } from '@/Models/EntryType';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -131,7 +134,7 @@ export class SongDetailsViewModel {
 		repo
 			.getOneWithComponents({
 				id: id,
-				fields: 'None',
+				fields: [],
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {
@@ -245,7 +248,7 @@ export class SongDetailsViewModel {
 				repository
 					.getOneWithComponents({
 						id: this.id,
-						fields: 'Artists',
+						fields: [SongOptionalField.Artists],
 						lang: values.languagePreference,
 					})
 					.then((result) => {
