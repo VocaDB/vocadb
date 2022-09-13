@@ -26,7 +26,11 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { AlbumOptionalField } from '@/Repositories/AlbumRepository';
+import { ArtistOptionalField } from '@/Repositories/ArtistRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { SongListOptionalField } from '@/Repositories/SongListRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
@@ -49,6 +53,12 @@ export interface UserGetRatedSongsListQueryParams {
 	advancedFilters: AdvancedSearchFilter[];
 	groupByRating: boolean;
 	sort: string;
+}
+
+export enum UserOptionalField {
+	'KnownLanguages' = 'KnownLanguages',
+	'MainPicture' = 'MainPicture',
+	'OldUsernames' = 'OldUsernames',
 }
 
 // Repository for managing users and related objects.
@@ -232,7 +242,11 @@ export class UserRepository implements ICommentRepository {
 			artistId: artistId,
 			purchaseStatuses: purchaseStatuses,
 			releaseEventId: releaseEventId || undefined,
-			fields: 'AdditionalNames,MainPicture,ReleaseEvent',
+			fields: [
+				AlbumOptionalField.AdditionalNames,
+				AlbumOptionalField.MainPicture,
+				AlbumOptionalField.ReleaseEvent,
+			].join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -300,7 +314,10 @@ export class UserRepository implements ICommentRepository {
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			tagId: tagIds,
-			fields: 'AdditionalNames,MainPicture',
+			fields: [
+				ArtistOptionalField.AdditionalNames,
+				ArtistOptionalField.MainPicture,
+			].join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			artistType: artistType,
@@ -330,7 +347,7 @@ export class UserRepository implements ICommentRepository {
 		onlyVerified: boolean;
 		knowsLanguage?: string;
 		nameMatchMode: string;
-		fields?: string;
+		fields?: UserOptionalField[];
 	}): Promise<PartialFindResultContract<UserApiContract>> => {
 		var url = this.urlMapper.mapRelative('/api/users');
 		var data = {
@@ -344,7 +361,7 @@ export class UserRepository implements ICommentRepository {
 			onlyVerified: onlyVerified,
 			knowsLanguage: knowsLanguage,
 			groups: groups || undefined,
-			fields: fields || undefined,
+			fields: fields?.join(','),
 		};
 
 		return this.httpClient.get<PartialFindResultContract<UserApiContract>>(
@@ -358,11 +375,11 @@ export class UserRepository implements ICommentRepository {
 		fields,
 	}: {
 		id: number;
-		fields?: string;
+		fields?: UserOptionalField[];
 	}): Promise<UserApiContract> => {
 		var url = this.urlMapper.mapRelative(`/api/users/${id}`);
 		return this.httpClient.get<UserApiContract>(url, {
-			fields: fields || undefined,
+			fields: fields?.join(','),
 		});
 	};
 
@@ -429,7 +446,7 @@ export class UserRepository implements ICommentRepository {
 		pvServices,
 		queryParams,
 	}: {
-		fields: string;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
@@ -462,7 +479,7 @@ export class UserRepository implements ICommentRepository {
 			advancedFilters: advancedFilters,
 			groupByRating: groupByRating,
 			pvServices: pvServices?.join(','),
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -489,7 +506,7 @@ export class UserRepository implements ICommentRepository {
 		>
 	> => {
 		const { items, totalCount } = await this.getRatedSongsList({
-			fields: ['MainPicture', 'PVs'].join(',') /* TODO: enum */,
+			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
 			lang: lang,
 			paging: paging,
 			pvServices: pvServices,
@@ -534,7 +551,7 @@ export class UserRepository implements ICommentRepository {
 		paging: PagingProperties;
 		tagIds: number[];
 		sort: string;
-		fields?: string;
+		fields?: SongListOptionalField[];
 	}): Promise<PartialFindResultContract<SongListContract>> => {
 		var url = this.urlMapper.mapRelative(`/api/users/${userId}/songLists`);
 		return this.httpClient.get<PartialFindResultContract<SongListContract>>(
@@ -546,7 +563,7 @@ export class UserRepository implements ICommentRepository {
 				maxResults: paging.maxEntries,
 				tagId: tagIds,
 				sort: sort,
-				fields: fields,
+				fields: fields?.join(','),
 			},
 		);
 	};

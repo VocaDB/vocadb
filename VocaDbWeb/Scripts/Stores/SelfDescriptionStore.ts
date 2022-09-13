@@ -1,6 +1,9 @@
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import {
+	ArtistOptionalField,
+	ArtistRepository,
+} from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
@@ -26,7 +29,7 @@ export class SelfDescriptionStore {
 		this.author = new BasicEntryLinkStore<ArtistApiContract>((artistId) =>
 			artistRepo.getOneWithComponents({
 				id: artistId,
-				fields: 'MainPicture',
+				fields: [ArtistOptionalField.MainPicture],
 				lang: values.languagePreference,
 			}),
 		);

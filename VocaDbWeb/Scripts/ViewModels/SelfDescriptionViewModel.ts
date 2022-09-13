@@ -1,6 +1,9 @@
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import {
+	ArtistOptionalField,
+	ArtistRepository,
+} from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkViewModel } from '@/ViewModels/BasicEntryLinkViewModel';
 import ko, { Observable } from 'knockout';
@@ -19,7 +22,7 @@ export class SelfDescriptionViewModel {
 			(artistId) =>
 				artistRepo.getOneWithComponents({
 					id: artistId,
-					fields: 'MainPicture',
+					fields: [ArtistOptionalField.MainPicture],
 					lang: values.languagePreference,
 				}),
 		);

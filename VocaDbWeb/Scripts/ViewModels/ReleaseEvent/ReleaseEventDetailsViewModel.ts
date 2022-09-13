@@ -6,7 +6,10 @@ import { EntryType } from '@/Models/EntryType';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { CommentRepository } from '@/Repositories/CommentRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
 import { ui } from '@/Shared/MessagesTyped';
@@ -118,7 +121,10 @@ export class ReleaseEventDetailsViewModel {
 		});
 		this.eventAssociationType(UserEventRelationshipType.Attending);
 		this.userRepo
-			.getOne({ id: this.values.loggedUserId, fields: 'MainPicture' })
+			.getOne({
+				id: this.values.loggedUserId,
+				fields: [UserOptionalField.MainPicture],
+			})
 			.then((user) => {
 				this.usersAttending.push(user);
 			});

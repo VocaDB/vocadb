@@ -2,6 +2,7 @@ import { ResourcesContract } from '@/DataContracts/ResourcesContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
+import { SongListOptionalField } from '@/Repositories/SongListRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { PagedItemsViewModel } from '@/ViewModels/PagedItemsViewModel';
@@ -88,6 +89,8 @@ export class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract
 	public tagFilters: TagFilters;
 
 	public fields = ko.computed(() => {
-		return 'MainPicture' + (this.showTags() ? ',Tags' : '');
+		return this.showTags()
+			? [SongListOptionalField.MainPicture, SongListOptionalField.Tags]
+			: [SongListOptionalField.MainPicture];
 	});
 }

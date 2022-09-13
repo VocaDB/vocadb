@@ -2,7 +2,10 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import {
+	ReleaseEventOptionalField,
+	ReleaseEventRepository,
+} from '@/Repositories/ReleaseEventRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
@@ -64,10 +67,21 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): string {
+	@computed public get fields(): ReleaseEventOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Series,Venue,Tags'
-			: 'AdditionalNames,MainPicture,Series,Venue';
+			? [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+					ReleaseEventOptionalField.Tags,
+			  ]
+			: [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+			  ];
 	}
 
 	public loadResults = (

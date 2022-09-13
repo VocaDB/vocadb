@@ -9,7 +9,10 @@ import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ui } from '@/Shared/MessagesTyped';
@@ -328,10 +331,14 @@ export class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearch
 		)!;
 	};
 
-	public fields = ko.computed<string>(() =>
+	public fields = ko.computed<SongOptionalField[]>(() =>
 		this.showTags()
-			? 'AdditionalNames,ThumbUrl,Tags'
-			: 'AdditionalNames,ThumbUrl',
+			? [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.ThumbUrl,
+					SongOptionalField.Tags,
+			  ]
+			: [SongOptionalField.AdditionalNames, SongOptionalField.ThumbUrl],
 	);
 
 	public getPVServiceIcons = (

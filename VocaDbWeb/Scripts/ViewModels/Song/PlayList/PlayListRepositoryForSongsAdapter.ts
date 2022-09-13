@@ -37,7 +37,7 @@ export class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 		private onlyRatedSongs: Observable<boolean>,
 		private userCollectionId: number,
 		private parentVersionId: Computed<number>,
-		private fields: Computed<string>,
+		private fields: Computed<SongOptionalField[]>,
 		private draftsOnly: Observable<boolean>,
 		private advancedFilters: ObservableArray<AdvancedSearchFilter>,
 	) {}

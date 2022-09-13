@@ -1,4 +1,4 @@
-import { TagRepository } from '@/Repositories/TagRepository';
+import { TagOptionalField, TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -24,8 +24,14 @@ export const TagEdit = (model: { id: number }): void => {
 		tagRepo
 			.getById({
 				id: model.id,
-				fields:
-					'AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks',
+				fields: [
+					TagOptionalField.AliasedTo,
+					TagOptionalField.TranslatedDescription,
+					TagOptionalField.Names,
+					TagOptionalField.Parent,
+					TagOptionalField.RelatedTags,
+					TagOptionalField.WebLinks,
+				],
 				lang: vdb.values.languagePreference,
 			})
 			.then(function (contract) {

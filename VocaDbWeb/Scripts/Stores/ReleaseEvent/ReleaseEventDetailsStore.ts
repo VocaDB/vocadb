@@ -7,7 +7,10 @@ import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { CommentRepository } from '@/Repositories/CommentRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
@@ -120,7 +123,7 @@ export class ReleaseEventDetailsStore {
 		this.userRepo
 			.getOne({
 				id: this.loginManager.loggedUserId,
-				fields: 'MainPicture',
+				fields: [UserOptionalField.MainPicture],
 			})
 			.then((user) => {
 				runInAction(() => {

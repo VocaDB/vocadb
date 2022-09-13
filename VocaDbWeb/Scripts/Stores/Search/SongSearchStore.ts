@@ -10,6 +10,7 @@ import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import {
 	SongGetListQueryParams,
+	SongOptionalField,
 	SongRepository,
 } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -197,10 +198,14 @@ export class SongSearchStore
 		);
 	}
 
-	@computed public get fields(): string {
+	@computed public get fields(): SongOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Tags'
-			: 'AdditionalNames,MainPicture' /* TODO: enum */;
+			? [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.MainPicture,
+					SongOptionalField.Tags,
+			  ]
+			: [SongOptionalField.AdditionalNames, SongOptionalField.MainPicture];
 	}
 
 	@computed public get showUnifyEntryTypesAndTags(): boolean {

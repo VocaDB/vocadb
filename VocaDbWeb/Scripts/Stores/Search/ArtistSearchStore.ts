@@ -3,7 +3,10 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistType } from '@/Models/Artists/ArtistType';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import {
+	ArtistOptionalField,
+	ArtistRepository,
+} from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
@@ -57,10 +60,14 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	@computed public get fields(): string {
+	@computed public get fields(): ArtistOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Tags'
-			: 'AdditionalNames,MainPicture';
+			? [
+					ArtistOptionalField.AdditionalNames,
+					ArtistOptionalField.MainPicture,
+					ArtistOptionalField.Tags,
+			  ]
+			: [ArtistOptionalField.AdditionalNames, ArtistOptionalField.MainPicture];
 	}
 
 	public loadResults = (

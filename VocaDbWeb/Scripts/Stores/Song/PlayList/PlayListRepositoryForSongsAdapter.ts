@@ -35,7 +35,7 @@ export interface ISongsAdapterStore {
 	minScore?: number;
 	onlyRatedSongs: boolean;
 	parentVersion: BasicEntryLinkStore<SongContract>;
-	fields: string;
+	fields: SongOptionalField[];
 	draftsOnly: boolean;
 	advancedFilters: AdvancedSearchFilters;
 }

@@ -1,7 +1,10 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ResourcesManager } from '@/Models/ResourcesManager';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingViewModel } from '@/ViewModels/ServerSidePagingViewModel';
 import ko, { Observable } from 'knockout';
@@ -75,7 +78,7 @@ export class ListUsersViewModel {
 				onlyVerified: this.onlyVerifiedArtists(),
 				knowsLanguage: this.knowsLanguage(),
 				nameMatchMode: 'Auto',
-				fields: 'MainPicture',
+				fields: [UserOptionalField.MainPicture],
 			})
 			.then((result) => {
 				this.pauseNotifications = false;

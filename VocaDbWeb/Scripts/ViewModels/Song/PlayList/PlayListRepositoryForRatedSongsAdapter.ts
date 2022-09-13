@@ -37,7 +37,7 @@ export class PlayListRepositoryForRatedSongsAdapter
 	): Promise<PartialFindResultContract<ISongForPlayList>> =>
 		this.userRepo
 			.getRatedSongsList({
-				fields: 'ThumbUrl',
+				fields: [SongOptionalField.ThumbUrl],
 				lang: lang,
 				paging: paging,
 				pvServices: pvServices,

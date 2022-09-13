@@ -6,7 +6,10 @@ import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongFo
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ResourceRepository } from '@/Repositories/ResourceRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -135,7 +138,13 @@ export class RatedSongsSearchViewModel {
 	public viewMode = ko.observable('Details');
 
 	public fields = ko.computed(() => {
-		return 'AdditionalNames,ThumbUrl' + (this.showTags() ? ',Tags' : '');
+		return this.showTags()
+			? [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.ThumbUrl,
+					SongOptionalField.Tags,
+			  ]
+			: [SongOptionalField.AdditionalNames, SongOptionalField.ThumbUrl];
 	});
 
 	public formatDate = (dateStr: string): string => {

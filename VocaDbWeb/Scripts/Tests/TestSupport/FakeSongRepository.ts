@@ -2,7 +2,10 @@ import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultCo
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 import _ from 'lodash';
@@ -71,7 +74,7 @@ export class FakeSongRepository extends SongRepository {
 			lang,
 		}: {
 			id: number;
-			fields: string;
+			fields: SongOptionalField[];
 			lang: ContentLanguagePreference;
 		}): Promise<SongApiContract> => {
 			return FakePromise.resolve(this.song);

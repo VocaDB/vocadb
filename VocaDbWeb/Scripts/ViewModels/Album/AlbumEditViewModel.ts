@@ -12,7 +12,10 @@ import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { IDialogService } from '@/Shared/DialogService';
 import { GlobalValues } from '@/Shared/GlobalValues';
@@ -336,7 +339,10 @@ export class AlbumEditViewModel {
 				songRepository
 					.getOneWithComponents({
 						id: songId,
-						fields: 'AdditionalNames,Artists',
+						fields: [
+							SongOptionalField.AdditionalNames,
+							SongOptionalField.Artists,
+						],
 						lang: values.languagePreference,
 					})
 					.then((song) => {
