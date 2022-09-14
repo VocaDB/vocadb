@@ -15,20 +15,20 @@ export class PlayQueueRepositoryForSongListAdapter
 
 	public getItems = async (
 		pvServices: PVService[],
-		pagingProperties: PagingProperties,
+		pagingProps: PagingProperties,
 		queryParams: SongListGetSongsQueryParams,
 	): Promise<PartialFindResultContract<PlayQueueItem>> => {
-		const songsInList = await this.songListRepo.getSongsWithPVs({
+		const { items, totalCount } = await this.songListRepo.getSongsWithPVs({
 			lang: vdb.values.languagePreference,
-			paging: pagingProperties,
+			paging: pagingProps,
 			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 
-		const items = PlayQueueHelper.createItemsFromSongs(
-			songsInList.items.map((songInList) => songInList.song),
+		const playQueueItems = PlayQueueHelper.createItemsFromSongs(
+			items.map((songInList) => songInList.song),
 		);
 
-		return { items: items, totalCount: songsInList.totalCount };
+		return { items: playQueueItems, totalCount: totalCount };
 	};
 }

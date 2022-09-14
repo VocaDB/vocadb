@@ -339,7 +339,7 @@ export class UserRepository implements ICommentRepository {
 		nameMatchMode,
 		fields,
 	}: {
-		paging: PagingProperties;
+		paging?: PagingProperties;
 		query: string;
 		sort?: string;
 		groups?: string;
@@ -351,9 +351,9 @@ export class UserRepository implements ICommentRepository {
 	}): Promise<PartialFindResultContract<UserApiContract>> => {
 		var url = this.urlMapper.mapRelative('/api/users');
 		var data = {
-			start: paging.start,
-			getTotalCount: paging.getTotalCount,
-			maxResults: paging.maxEntries,
+			start: paging?.start,
+			getTotalCount: paging?.getTotalCount,
+			maxResults: paging?.maxEntries,
 			query: query,
 			nameMatchMode: nameMatchMode,
 			sort: sort,
@@ -389,7 +389,6 @@ export class UserRepository implements ICommentRepository {
 		username: string;
 	}): Promise<UserApiContract | null> => {
 		const result = await this.getList({
-			paging: {},
 			query: username,
 			sort: undefined,
 			groups: undefined,

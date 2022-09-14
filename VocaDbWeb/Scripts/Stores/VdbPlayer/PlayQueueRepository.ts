@@ -6,7 +6,7 @@ import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 export interface PlayQueueRepository<TQueryParams> {
 	getItems(
 		pvServices: PVService[],
-		pagingProperties: PagingProperties,
+		pagingProps: PagingProperties,
 		queryParams: TQueryParams,
 	): Promise<PartialFindResultContract<PlayQueueItem>>;
 }
