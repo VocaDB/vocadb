@@ -31,7 +31,7 @@ export const AlbumLink = ({
 	tooltip = false,
 }: AlbumLinkProps): React.ReactElement => {
 	return tooltip ? (
-		<AlbumToolTip id={album.id}>
+		<AlbumToolTip id={album.id} withCover>
 			<AlbumLinkBase album={album} />
 		</AlbumToolTip>
 	) : (

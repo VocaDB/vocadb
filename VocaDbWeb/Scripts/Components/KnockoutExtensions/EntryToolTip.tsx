@@ -1,3 +1,4 @@
+import { AlbumPopupContent } from '@/Components/Shared/AlbumPopupContent';
 import { AlbumWithCoverPopupContent } from '@/Components/Shared/AlbumWithCoverPopupContent';
 import { ArtistPopupContent } from '@/Components/Shared/ArtistPopupContent';
 import { EventPopupContent } from '@/Components/Shared/EventPopupContent';
@@ -12,7 +13,10 @@ import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVot
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
 import {
 	ArtistOptionalField,
 	ArtistRepository,
@@ -69,10 +73,11 @@ const QTip = React.forwardRef<HTMLDivElement>(
 interface AlbumToolTipProps {
 	id: number;
 	children?: React.ReactNode;
+	withCover?: boolean;
 }
 
 export const AlbumToolTip = React.memo(
-	({ id, children }: AlbumToolTipProps): React.ReactElement => {
+	({ id, children, withCover }: AlbumToolTipProps): React.ReactElement => {
 		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
 		const containerRef = React.useRef<HTMLDivElement>(undefined!);
 
@@ -86,7 +91,14 @@ export const AlbumToolTip = React.memo(
 			if (!show) return;
 
 			albumRepo
-				.getOne({ id: id, lang: vdb.values.languagePreference })
+				.getOneWithComponents({
+					id: id,
+					fields: [
+						AlbumOptionalField.AdditionalNames,
+						AlbumOptionalField.MainPicture,
+					],
+					lang: vdb.values.languagePreference,
+				})
 				.then((album) => setAlbum(album));
 		}, [album, show, id]);
 
@@ -111,7 +123,11 @@ export const AlbumToolTip = React.memo(
 					>
 						{({ props }): React.ReactElement => (
 							<QTip {...props}>
-								<AlbumWithCoverPopupContent album={album} />
+								{withCover ? (
+									<AlbumWithCoverPopupContent album={album} />
+								) : (
+									<AlbumPopupContent album={album} />
+								)}
 							</QTip>
 						)}
 					</Overlay>
