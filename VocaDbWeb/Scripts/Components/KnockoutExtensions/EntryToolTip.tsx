@@ -1,14 +1,14 @@
 import { AlbumPopupContent } from '@/Components/Shared/AlbumPopupContent';
 import { ArtistPopupContent } from '@/Components/Shared/ArtistPopupContent';
 import { EventPopupContent } from '@/Components/Shared/EventPopupContent';
-import { SongPopupContent } from '@/Components/Shared/SongPopupContent';
+import { SongWithVotePopupContent } from '@/Components/Shared/SongWithVotePopupContent';
 import { TagPopupContent } from '@/Components/Shared/TagPopupContent';
 import { UserPopupContent } from '@/Components/Shared/UserPopupContent';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { EntryType } from '@/Models/EntryType';
@@ -267,7 +267,7 @@ export const SongToolTip = React.memo(
 
 		const [show, setShow] = React.useState(false);
 
-		const [song, setSong] = React.useState<SongContract>();
+		const [song, setSong] = React.useState<SongWithPVAndVoteContract>();
 
 		React.useEffect(() => {
 			if (song) return;
@@ -292,7 +292,16 @@ export const SongToolTip = React.memo(
 					],
 					lang: vdb.values.languagePreference,
 				})
-				.then((song) => setSong(song));
+				.then(async (song) => {
+					const vote = vdb.values.loggedUser
+						? await userRepo.getSongRating({
+								userId: vdb.values.loggedUser.id,
+								songId: song.id,
+						  })
+						: 'Nothing';
+
+					setSong({ ...song, pvs: [], vote: vote });
+				});
 		}, [song, show, id, foreignDomain]);
 
 		return (
@@ -316,7 +325,7 @@ export const SongToolTip = React.memo(
 					>
 						{({ props }): React.ReactElement => (
 							<QTip {...props}>
-								<SongPopupContent song={song} />
+								<SongWithVotePopupContent song={song} />
 							</QTip>
 						)}
 					</Overlay>
