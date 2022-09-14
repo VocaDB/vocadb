@@ -294,17 +294,19 @@ export class SongRepository
 	private getJSON: <T>(relative: string, params: any) => Promise<T>;
 
 	public getOneWithComponents = ({
+		baseUrl,
 		id,
 		fields,
 		lang,
 	}: {
+		baseUrl?: string;
 		id: number;
-		fields: SongOptionalField[];
+		fields?: SongOptionalField[];
 		lang: ContentLanguagePreference;
 	}): Promise<SongApiContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
+		var url = functions.mergeUrls(baseUrl ?? this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 		});
 	};

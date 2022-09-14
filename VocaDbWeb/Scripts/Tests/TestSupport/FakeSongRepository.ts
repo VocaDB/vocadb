@@ -74,7 +74,7 @@ export class FakeSongRepository extends SongRepository {
 			lang,
 		}: {
 			id: number;
-			fields: SongOptionalField[];
+			fields?: SongOptionalField[];
 			lang: ContentLanguagePreference;
 		}): Promise<SongApiContract> => {
 			return FakePromise.resolve(this.song);

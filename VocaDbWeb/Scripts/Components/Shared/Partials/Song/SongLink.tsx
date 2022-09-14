@@ -31,7 +31,6 @@ interface SongLinkProps {
 	song: SongApiContract;
 	albumId?: number;
 	tooltip?: boolean;
-	toolTipDomain?: string;
 	target?: string;
 }
 
@@ -40,7 +39,6 @@ export const SongLink = React.memo(
 		song,
 		albumId,
 		tooltip = false,
-		toolTipDomain,
 		target,
 	}: SongLinkProps): React.ReactElement => {
 		return tooltip ? (

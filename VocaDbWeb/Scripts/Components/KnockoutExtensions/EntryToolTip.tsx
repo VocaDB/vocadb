@@ -246,13 +246,22 @@ export const EventToolTip = React.memo(
 	},
 );
 
+const allowedDomains = [
+	'http://vocadb.net',
+	'https://vocadb.net',
+	'http://utaitedb.net',
+	'https://utaitedb.net',
+	'https://touhoudb.com',
+];
+
 interface SongToolTipProps {
 	id: number;
 	children?: React.ReactNode;
+	foreignDomain?: string;
 }
 
 export const SongToolTip = React.memo(
-	({ id, children }: SongToolTipProps): React.ReactElement => {
+	({ id, children, foreignDomain }: SongToolTipProps): React.ReactElement => {
 		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
 		const containerRef = React.useRef<HTMLDivElement>(undefined!);
 
@@ -265,8 +274,17 @@ export const SongToolTip = React.memo(
 
 			if (!show) return;
 
+			const baseUrl =
+				foreignDomain &&
+				allowedDomains.some((domain) =>
+					foreignDomain.toLocaleLowerCase().includes(domain),
+				)
+					? foreignDomain
+					: undefined;
+
 			songRepo
 				.getOneWithComponents({
+					baseUrl: baseUrl,
 					id: id,
 					fields: [
 						SongOptionalField.AdditionalNames,
@@ -275,7 +293,7 @@ export const SongToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((song) => setSong(song));
-		}, [song, show, id]);
+		}, [song, show, id, foreignDomain]);
 
 		return (
 			<span ref={containerRef}>
