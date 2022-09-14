@@ -1,7 +1,5 @@
 export interface PagingProperties {
-	getTotalCount?: boolean;
-
-	maxEntries?: number;
-
-	start?: number;
+	getTotalCount: boolean;
+	maxEntries: number;
+	start: number;
 }

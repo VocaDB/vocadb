@@ -235,8 +235,8 @@ const PlaylistIndex = observer(
 												<i className="icon-play" /> Play{/* TODO: localize */}
 											</Button>{' '}
 											<Button
-												onClick={async (): Promise<void> =>
-													await playQueue.removeFromPlayQueue([item])
+												onClick={(): Promise<void> =>
+													playQueue.removeFromPlayQueue([item])
 												}
 												href="#"
 											>
@@ -285,7 +285,7 @@ const PlaylistIndex = observer(
 
 				{playQueue.hasMoreItems && (
 					<h3>
-						<SafeAnchor onClick={playQueue.loadMoreItems}>
+						<SafeAnchor onClick={playQueue.loadMore}>
 							{t('ViewRes:Shared.ShowMore')}
 						</SafeAnchor>
 					</h3>

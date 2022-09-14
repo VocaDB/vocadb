@@ -55,10 +55,10 @@ const ArtistSongs = observer(
 									// Access queryParams here, not in the function body.
 									const { queryParams } = artistDetailsStore.songsStore;
 
-									await playQueue.startAutoplay((offset, limit) =>
+									await playQueue.startAutoplay((pagingProps) =>
 										playQueueRepo.getItems(
 											VideoServiceHelper.autoplayServices,
-											{ getTotalCount: true, maxEntries: limit, start: offset },
+											pagingProps,
 											queryParams,
 										),
 									);

@@ -1,8 +1,15 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import _ from 'lodash';
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+	action,
+	computed,
+	makeObservable,
+	observable,
+	runInAction,
+} from 'mobx';
 
 export class PlayQueueItem {
 	private static nextId = 1;
@@ -27,15 +34,17 @@ export enum PlayMethod {
 	AddToPlayQueue,
 }
 
+type AutoplayCallback = (
+	pagingProps: PagingProperties,
+) => Promise<PartialFindResultContract<PlayQueueItem>>;
+
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
 
-	private autoplayCallback?: (
-		offset: number,
-		limit: number,
-	) => Promise<PartialFindResultContract<PlayQueueItem>>;
-	private offset = 0;
+	private autoplayCallback?: AutoplayCallback;
+	private totalCount = 0;
+	private start = 0;
 	@observable public hasMoreItems = false;
 
 	public constructor() {
@@ -56,7 +65,10 @@ export class PlayQueueStore {
 			: undefined;
 	}
 	public set currentIndex(value: number | undefined) {
-		this.currentId = value !== undefined ? this.items[value].id : undefined;
+		this.currentId =
+			value !== undefined
+				? this.items[value] /* TODO: Replace with this.items.at(value) */?.id
+				: undefined;
 	}
 
 	@computed public get hasPreviousItem(): boolean {
@@ -105,7 +117,8 @@ export class PlayQueueStore {
 		this.items = [];
 
 		this.autoplayCallback = undefined;
-		this.offset = 0;
+		this.totalCount = 0;
+		this.start = 0;
 		this.hasMoreItems = false;
 	};
 
@@ -143,7 +156,7 @@ export class PlayQueueStore {
 		this.setNextItems(items);
 	};
 
-	public addToPlayQueue = (items: PlayQueueItem[]): void => {
+	@action public addToPlayQueue = (items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
 			this.clearAndPlay(items);
 			return;
@@ -168,22 +181,6 @@ export class PlayQueueStore {
 		}
 	};
 
-	public removeFromPlayQueue = async (
-		items: PlayQueueItem[],
-	): Promise<void> => {
-		for (const item of items) {
-			if (this.currentItem === item) {
-				if (this.hasNextItem) {
-					await this.next();
-				} else {
-					this.goToFirst();
-				}
-			}
-
-			_.pull(this.items, item);
-		}
-	};
-
 	@action public previous = (): void => {
 		if (this.currentIndex === undefined) return;
 
@@ -192,18 +189,30 @@ export class PlayQueueStore {
 		this.currentIndex--;
 	};
 
-	@action public loadMoreItems = async (): Promise<void> => {
+	private loadMoreItems = async (getTotalCount: boolean): Promise<void> => {
 		if (!this.autoplayCallback) return;
 
-		const limit = 30;
-		const { items, totalCount } = await this.autoplayCallback(
-			this.offset,
-			limit,
-		);
+		const pagingProps = {
+			getTotalCount: getTotalCount,
+			maxEntries: 30,
+			start: this.start,
+		};
 
-		this.items.push(...items);
-		this.offset += limit;
-		this.hasMoreItems = this.offset < totalCount;
+		const { items, totalCount } = await this.autoplayCallback(pagingProps);
+
+		if (getTotalCount) this.totalCount = totalCount;
+
+		runInAction(() => {
+			this.items.push(...items);
+			this.start += pagingProps.maxEntries;
+			this.hasMoreItems = this.start < this.totalCount;
+		});
+	};
+
+	public loadMore = async (): Promise<void> => {
+		if (!this.hasMoreItems) return;
+
+		await this.loadMoreItems(false);
 	};
 
 	@action public next = async (): Promise<void> => {
@@ -211,8 +220,8 @@ export class PlayQueueStore {
 
 		if (!this.hasNextItem) return;
 
-		if (this.isLastItem && this.hasMoreItems) {
-			await this.loadMoreItems?.();
+		if (this.isLastItem) {
+			await this.loadMore();
 		}
 
 		this.currentIndex++;
@@ -224,17 +233,54 @@ export class PlayQueueStore {
 		this.currentIndex = 0;
 	};
 
+	@action public removeFromPlayQueue = async (
+		items: PlayQueueItem[],
+	): Promise<void> => {
+		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
+		// so that the current index can be set properly even if the current item was removed.
+
+		// Capture the current item.
+		const { currentItem } = this;
+
+		// First, remove items that are not equal to the current one.
+		_.pull(this.items, ...items.filter((item) => item !== currentItem));
+
+		// Capture the current index.
+		const { currentIndex, isLastItem } = this;
+
+		// Then, remove the current item if any.
+		_.pull(
+			this.items,
+			items.find((item) => item === currentItem),
+		);
+
+		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
+		if (this.currentItem !== currentItem) {
+			if (isLastItem) {
+				if (this.hasMoreItems) {
+					await this.loadMore();
+
+					// Set the current index to the captured one.
+					this.currentIndex = currentIndex;
+				} else {
+					// Start over the playlist from the beginning.
+					this.goToFirst();
+				}
+			} else {
+				// Set the current index to the captured one.
+				this.currentIndex = currentIndex;
+			}
+		}
+	};
+
 	@action public startAutoplay = async (
-		autoplayCallback: (
-			offset: number,
-			limit: number,
-		) => Promise<PartialFindResultContract<PlayQueueItem>>,
+		autoplayCallback: AutoplayCallback,
 	): Promise<void> => {
 		this.clear();
 
 		this.autoplayCallback = autoplayCallback;
 
-		await this.loadMoreItems();
+		await this.loadMoreItems(true);
 
 		this.setCurrentItem(this.items[0]);
 	};
