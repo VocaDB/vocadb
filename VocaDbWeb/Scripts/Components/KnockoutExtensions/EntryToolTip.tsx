@@ -1,4 +1,4 @@
-import { AlbumPopupContent } from '@/Components/Shared/AlbumPopupContent';
+import { AlbumWithCoverPopupContent } from '@/Components/Shared/AlbumWithCoverPopupContent';
 import { ArtistPopupContent } from '@/Components/Shared/ArtistPopupContent';
 import { EventPopupContent } from '@/Components/Shared/EventPopupContent';
 import { SongWithVotePopupContent } from '@/Components/Shared/SongWithVotePopupContent';
@@ -111,7 +111,7 @@ export const AlbumToolTip = React.memo(
 					>
 						{({ props }): React.ReactElement => (
 							<QTip {...props}>
-								<AlbumPopupContent album={album} />
+								<AlbumWithCoverPopupContent album={album} />
 							</QTip>
 						)}
 					</Overlay>
