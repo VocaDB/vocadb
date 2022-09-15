@@ -217,7 +217,10 @@ const TagEditLayout = observer(
 					/>
 
 					<div className="editor-label">
-						<HelpLabel label="Default language" /* TODO: localize */ title="" />
+						<HelpLabel
+							label="Default language" /* TODO: localize */
+							dangerouslySetInnerHTML={{ __html: '' }}
+						/>
 					</div>
 					<div className="editor-field">
 						<LanguageSelectionDropdownList
@@ -231,7 +234,10 @@ const TagEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<HelpLabel label="Names" /* TODO: localize */ title="" />{' '}
+						<HelpLabel
+							label="Names" /* TODO: localize */
+							dangerouslySetInnerHTML={{ __html: '' }}
+						/>{' '}
 						<RequiredField />
 					</div>
 					<div className="editor-field">
@@ -256,7 +262,10 @@ const TagEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label="Parent" /* TODO: localize */
-							title="Parent tag groups related tags under one parent. Child tags are still considered separate." /* TODO: localize */
+							dangerouslySetInnerHTML={{
+								__html:
+									'Parent tag groups related tags under one parent. Child tags are still considered separate.' /* TODO: localize */,
+							}}
 						/>
 					</div>
 					<div className="editor-field">
@@ -382,7 +391,9 @@ const TagEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label={t('ViewRes:EntryEdit.WebLinks')}
-							title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+							dangerouslySetInnerHTML={{
+								__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+							}}
 						/>
 					</div>
 					<div className="editor-field">
@@ -394,7 +405,9 @@ const TagEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label={t('ViewRes:EntryEdit.Status')}
-							title={t('Resources:CommonMessages.EntryStatusExplanation')}
+							dangerouslySetInnerHTML={{
+								__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+							}}
 						/>
 					</div>
 					<div className="editor-field">

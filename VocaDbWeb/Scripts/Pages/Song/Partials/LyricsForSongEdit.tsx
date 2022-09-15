@@ -72,7 +72,10 @@ const LyricsForSongEdit = observer(
 								<p>
 									<HelpLabel
 										label={t('ViewRes.Song:Edit.LyLanguage')}
-										title="If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* TODO: localize */
+										dangerouslySetInnerHTML={{
+											__html:
+												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* TODO: localize */,
+										}}
 									/>{' '}
 									<UserLanguageCultureDropdownList
 										placeholder={t(
@@ -90,7 +93,10 @@ const LyricsForSongEdit = observer(
 							<div>
 								<HelpLabel
 									label="Source" /* TODO: localize */
-									title="You can fill either label, URL or both" /* TODO: localize */
+									dangerouslySetInnerHTML={{
+										__html:
+											'You can fill either label, URL or both' /* TODO: localize */,
+									}}
 								/>{' '}
 								<div className="inline input-prepend">
 									<span className="add-on" title="Label" /* TODO: localize */>

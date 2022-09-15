@@ -264,7 +264,9 @@ const SongCreateLayout = observer(
 									<div className="editor-label">
 										<HelpLabel
 											label={t('ViewRes.Song:Edit.BaOriginalVersion')}
-											title={t('ViewRes.Song:Edit.BaOriginalVersionHelp')}
+											dangerouslySetInnerHTML={{
+												__html: t('ViewRes.Song:Edit.BaOriginalVersionHelp'),
+											}}
 										/>
 									</div>
 									<div className="editor-field">

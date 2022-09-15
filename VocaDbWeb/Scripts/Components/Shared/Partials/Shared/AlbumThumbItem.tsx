@@ -42,8 +42,26 @@ export const AlbumThumbItem = React.memo(
 			[album, playQueue],
 		);
 
+		const thumbItemRef = React.useRef<HTMLAnchorElement>(undefined!);
+
 		const [hover, setHover] = React.useState(false);
 		const [isOpen, setIsOpen] = React.useState(false);
+
+		// HACK: https://github.com/facebook/react/issues/6807#issuecomment-1240312500.
+		React.useLayoutEffect(() => {
+			const handleMouseEnter = (): void => setHover(true);
+			const handleMouseLeave = (): void => setHover(false);
+
+			const thumbItem = thumbItemRef.current;
+
+			thumbItem.addEventListener('mouseenter', handleMouseEnter);
+			thumbItem.addEventListener('mouseleave', handleMouseLeave);
+
+			return (): void => {
+				thumbItem.removeEventListener('mouseenter', handleMouseEnter);
+				thumbItem.removeEventListener('mouseleave', handleMouseLeave);
+			};
+		}, []);
 
 		return (
 			<ThumbItem
@@ -56,8 +74,7 @@ export const AlbumThumbItem = React.memo(
 				caption={album.name}
 				entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
 				tooltip={tooltip}
-				onMouseEnter={(): void => setHover(true)}
-				onMouseLeave={(): void => setHover(false)}
+				ref={thumbItemRef}
 			>
 				{(hover || isOpen) && (
 					<EmbedPVPreviewButtons

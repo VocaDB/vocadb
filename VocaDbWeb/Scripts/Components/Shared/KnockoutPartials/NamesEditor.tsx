@@ -115,7 +115,9 @@ export const NamesEditor = observer(
 				{showAliases && (
 					<>
 						<HelpLabel
-							title={t('ViewRes:EntryEdit.AliasesDesc')}
+							dangerouslySetInnerHTML={{
+								__html: t('ViewRes:EntryEdit.AliasesDesc'),
+							}}
 							label={t('ViewRes:EntryEdit.Aliases')}
 						/>
 

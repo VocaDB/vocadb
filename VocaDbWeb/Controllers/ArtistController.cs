@@ -162,15 +162,6 @@ namespace VocaDb.Web.Controllers
 			return Picture(artist);
 		}
 
-		public ActionResult PopupContent(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NoId();
-
-			var artist = Service.GetArtist(id);
-			return PartialView("ArtistPopupContent", artist);
-		}
-
 		[Authorize]
 		public ActionResult Create()
 		{

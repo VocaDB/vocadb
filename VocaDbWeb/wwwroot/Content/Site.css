@@ -132,7 +132,6 @@ div.thumbItem {
 .smallThumbs {
 	display: flex;
 	flex-wrap: wrap;
-	overflow: hidden;
 	font-size: 11px;
 	line-height: 1.181818em;
 	margin-left: 0;
@@ -147,7 +146,7 @@ div.thumbItem {
 	overflow: hidden;
 }*/
 
-.thumbs .pictureFrame {
+.thumbs .pictureFrame a {
 	position: relative;
 	width: 250px;
 	height: 250px;
@@ -175,7 +174,7 @@ div.thumbItem {
 	}
 }
 
-.smallThumbs .pictureFrame {
+.smallThumbs .pictureFrame a {
 	position: relative;
 	width: 150px;
 	height: 150px;

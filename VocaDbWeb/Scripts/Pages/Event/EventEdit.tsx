@@ -197,7 +197,9 @@ const BasicInfoTabContent = observer(
 						<div className="editor-label">
 							<HelpLabel
 								label={t('ViewRes:EntryEdit.DefaultLanguageSelection')}
-								title={t('ViewRes:EntryEdit.DefaultLanguageHelp')}
+								dangerouslySetInnerHTML={{
+									__html: t('ViewRes:EntryEdit.DefaultLanguageHelp'),
+								}}
 							/>
 						</div>
 						<div className="editor-field">
@@ -265,7 +267,10 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label="Date" /* TODO: localize */
-						title="Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* TODO: localize */
+						dangerouslySetInnerHTML={{
+							__html:
+								"Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* TODO: localize */,
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -299,7 +304,10 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label="Setlist" /* TODO: localize */
-						title="If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here." /* TODO: localize */
+						dangerouslySetInnerHTML={{
+							__html:
+								'If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.' /* TODO: localize */,
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -321,7 +329,10 @@ const BasicInfoTabContent = observer(
 						<div className="editor-label">
 							<HelpLabel
 								label="Venue name" /* TODO: localize */
-								title="Can be either a physical location such as concert hall, or a virtual location (website)." /* TODO: localize */
+								dangerouslySetInnerHTML={{
+									__html:
+										'Can be either a physical location such as concert hall, or a virtual location (website).' /* TODO: localize */,
+								}}
 							/>
 						</div>
 						<div className="editor-field">
@@ -378,7 +389,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.WebLinks')}
-						title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -390,7 +403,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.Status')}
-						title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						dangerouslySetInnerHTML={{
+							__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">

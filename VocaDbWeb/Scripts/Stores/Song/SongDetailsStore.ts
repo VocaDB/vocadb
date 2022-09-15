@@ -366,7 +366,6 @@ export class SongDetailsStore {
 		songRepo
 			.getOneWithComponents({
 				id: id,
-				fields: [],
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {

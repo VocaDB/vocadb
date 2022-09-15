@@ -4,6 +4,23 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
+interface UserLinkBaseProps extends Omit<LinkProps, 'to'> {
+	user: UserBaseContract;
+	children?: React.ReactNode;
+}
+
+const UserLinkBase = ({
+	user,
+	children,
+	...props
+}: UserLinkBaseProps): React.ReactElement => {
+	return (
+		<Link {...props} to={EntryUrlMapper.details_user_byName(user.name)}>
+			{children ?? user.name}
+		</Link>
+	);
+};
+
 interface UserLinkProps extends Omit<LinkProps, 'to'> {
 	user: UserBaseContract;
 	children?: React.ReactNode;
@@ -18,18 +35,15 @@ export const UserLink = React.memo(
 		...props
 	}: UserLinkProps): React.ReactElement => {
 		return tooltip ? (
-			<UserToolTip
-				{...props}
-				as={Link}
-				to={EntryUrlMapper.details_user_byName(user.name)}
-				id={user.id}
-			>
-				{children ?? user.name}
+			<UserToolTip id={user.id}>
+				<UserLinkBase {...props} user={user}>
+					{children}
+				</UserLinkBase>
 			</UserToolTip>
 		) : (
-			<Link {...props} to={EntryUrlMapper.details_user_byName(user.name)}>
-				{children ?? user.name}
-			</Link>
+			<UserLinkBase {...props} user={user}>
+				{children}
+			</UserLinkBase>
 		);
 	},
 );

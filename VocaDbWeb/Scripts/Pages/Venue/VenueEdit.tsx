@@ -186,7 +186,9 @@ const VenueEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label={t('ViewRes:EntryEdit.DefaultLanguageSelection')}
-							title={t('ViewRes:EntryEdit.DefaultLanguageHelp')}
+							dangerouslySetInnerHTML={{
+								__html: t('ViewRes:EntryEdit.DefaultLanguageHelp'),
+							}}
 						/>
 					</div>
 					<div className="editor-field">
@@ -323,7 +325,9 @@ const VenueEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label={t('ViewRes:EntryEdit.WebLinks')}
-							title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+							dangerouslySetInnerHTML={{
+								__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+							}}
 						/>
 					</div>
 					<div className="editor-field">
@@ -335,7 +339,9 @@ const VenueEditLayout = observer(
 					<div className="editor-label">
 						<HelpLabel
 							label={t('ViewRes:EntryEdit.Status')}
-							title={t('Resources:CommonMessages.EntryStatusExplanation')}
+							dangerouslySetInnerHTML={{
+								__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+							}}
 						/>
 					</div>
 					<div className="editor-field">

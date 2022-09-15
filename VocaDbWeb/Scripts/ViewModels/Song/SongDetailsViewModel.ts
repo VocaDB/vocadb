@@ -134,7 +134,6 @@ export class SongDetailsViewModel {
 		repo
 			.getOneWithComponents({
 				id: id,
-				fields: [],
 				lang: this.values.languagePreference,
 			})
 			.then((song) => {

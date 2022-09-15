@@ -99,7 +99,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.DefaultLanguageSelection')}
-						title={t('ViewRes:EntryEdit.DefaultLanguageHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.DefaultLanguageHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -116,16 +118,20 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Song:Edit.BaNames')}
-						title={t('ViewRes:EntryEdit.NameHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.NameHelp'),
+						}}
 					/>{' '}
 					<RequiredField />
 					{songEditStore.validationError_unspecifiedNames && (
 						<>
 							{' '}
 							<ValidationErrorIcon
-								title={t(
-									'VocaDb.Model.Resources:SongValidationErrors.UnspecifiedNames',
-								)}
+								dangerouslySetInnerHTML={{
+									__html: t(
+										'VocaDb.Model.Resources:SongValidationErrors.UnspecifiedNames',
+									),
+								}}
 							/>
 						</>
 					)}
@@ -161,9 +167,11 @@ const BasicInfoTabContent = observer(
 								<>
 									{' '}
 									<ValidationErrorIcon
-										title={t(
-											'VocaDb.Model.Resources:SongValidationErrors.NeedType',
-										)}
+										dangerouslySetInnerHTML={{
+											__html: t(
+												'VocaDb.Model.Resources:SongValidationErrors.NeedType',
+											),
+										}}
 									/>
 								</>
 							)}
@@ -176,7 +184,9 @@ const BasicInfoTabContent = observer(
 						<div className="editor-label">
 							<HelpLabel
 								label={t('ViewRes.Song:Edit.BaOriginalVersion')}
-								title={t('ViewRes.Song:Edit.BaOriginalVersionHelp')}
+								dangerouslySetInnerHTML={{
+									__html: t('ViewRes.Song:Edit.BaOriginalVersionHelp'),
+								}}
 							/>
 						</div>
 						<div className="editor-field">
@@ -312,7 +322,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Song:Edit.BaPublishDate')}
-						title={t('ViewRes.Song:Edit.BaPublishDateHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes.Song:Edit.BaPublishDateHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -383,7 +395,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.WebLinks')}
-						title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -395,7 +409,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.Status')}
-						title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						dangerouslySetInnerHTML={{
+							__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -535,7 +551,9 @@ const PVsTabContent = observer(
 								<th>
 									<HelpLabel
 										label={t('ViewRes.Song:Edit.PvStatus')}
-										title={t('ViewRes.Song:Edit.PvStatusHelp')}
+										dangerouslySetInnerHTML={{
+											__html: t('ViewRes.Song:Edit.PvStatusHelp'),
+										}}
 									/>
 								</th>
 								<th />

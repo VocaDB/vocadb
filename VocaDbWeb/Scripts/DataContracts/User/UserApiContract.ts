@@ -4,10 +4,8 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 
 export interface UserApiContract extends UserBaseContract {
 	active?: boolean;
-
 	groupId?: UserGroup;
-
 	mainPicture?: EntryThumbContract;
-
 	memberSince?: Date;
+	verifiedArtist?: boolean;
 }
