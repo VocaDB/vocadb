@@ -473,7 +473,7 @@ const MiniPlayer = observer(
 						? {
 								position: 'fixed',
 								right: 0,
-								bottom: vdbPlayer.bottomBarVisible ? bottomBarHeight : 0,
+								bottom: vdbPlayer.bottomBarEnabled ? bottomBarHeight : 0,
 								width: miniPlayerWidth,
 								height: miniPlayerHeight,
 								zIndex: 3939,
@@ -592,9 +592,30 @@ const BottomBar = React.memo(
 	},
 );
 
+const useBottomBarEnabled = (): void => {
+	const { vdbPlayer } = useVdbPlayer();
+
+	const key = 'bottomBar.enabled';
+
+	React.useLayoutEffect(() => {
+		vdbPlayer.bottomBarEnabled = window.localStorage.getItem(key) !== 'false';
+	}, [vdbPlayer]);
+
+	React.useLayoutEffect(() => {
+		return reaction(
+			() => vdbPlayer.bottomBarEnabled,
+			(bottomBarEnabled) => {
+				window.localStorage.setItem(key, JSON.stringify(bottomBarEnabled));
+			},
+		);
+	}, [vdbPlayer]);
+};
+
 export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
+
+		useBottomBarEnabled();
 
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
@@ -620,7 +641,7 @@ export const VdbPlayer = observer(
 			<>
 				{!playQueue.isEmpty && <MiniPlayer />}
 
-				{vdbPlayer.bottomBarVisible && <BottomBar />}
+				{vdbPlayer.bottomBarEnabled && <BottomBar />}
 			</>
 		);
 	},

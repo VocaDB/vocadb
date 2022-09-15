@@ -281,7 +281,7 @@ export const GlobalSearchBox = observer(
 							</Dropdown.Item>
 						))}
 						<Dropdown.Divider />
-						{vdbPlayer.bottomBarVisible ? (
+						{vdbPlayer.bottomBarEnabled ? (
 							<Dropdown.Item onClick={vdbPlayer.hideBottomBar}>
 								Hide bottom bar{/* TODO: localize */}
 							</Dropdown.Item>

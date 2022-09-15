@@ -16,7 +16,7 @@ interface Rectangle {
 }
 
 export class VdbPlayerStore {
-	@observable public bottomBarVisible = true;
+	@observable public bottomBarEnabled = true;
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
@@ -46,11 +46,11 @@ export class VdbPlayerStore {
 	}
 
 	@action public showBottomBar = (): void => {
-		this.bottomBarVisible = true;
+		this.bottomBarEnabled = true;
 	};
 
 	@action public hideBottomBar = (): void => {
-		this.bottomBarVisible = false;
+		this.bottomBarEnabled = false;
 	};
 
 	@action public setPlaying = (value: boolean): void => {

@@ -91,7 +91,7 @@ export const LeftMenu = observer(
 					flex: '0 1 0',
 					overflowY: 'auto',
 					position: 'sticky',
-					maxHeight: vdbPlayer.bottomBarVisible
+					maxHeight: vdbPlayer.bottomBarEnabled
 						? `calc(100vh - ${40 + bottomBarHeight}px)`
 						: 'calc(100vh - 40px)',
 					top: 40,
