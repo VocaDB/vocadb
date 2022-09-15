@@ -192,20 +192,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
-		public ActionResult PopupContent(
-			int id = InvalidId,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			string culture = InterfaceLanguage.DefaultCultureCode)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var tag = _queries.LoadTag(id, t => new TagForApiContract(t, _entryThumbPersister,
-				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
-			return PartialView("_TagPopupContent", tag);
-		}
-
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
 			_queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);

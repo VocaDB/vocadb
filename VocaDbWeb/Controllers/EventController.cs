@@ -164,18 +164,6 @@ namespace VocaDb.Web.Controllers
 			return View(releaseEvent);
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
-		public ActionResult PopupContent(
-			int id = InvalidId,
-			string culture = InterfaceLanguage.DefaultCultureCode)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var releaseEvent = _queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
-			return PartialView("_EventPopupContent", releaseEvent);
-		}
-
 		[Authorize]
 		public ActionResult RemoveTagUsage(long id)
 		{

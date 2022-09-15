@@ -291,13 +291,6 @@ namespace VocaDb.Web.Controllers
 			return PartialView(ownedArtist);
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
-		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode)
-		{
-			var user = Service.GetUser(id);
-			return PartialView("_UserPopupContent", user);
-		}
-
 #nullable enable
 		public ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{

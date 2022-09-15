@@ -107,24 +107,6 @@ namespace VocaDb.Web.Controllers
 			return LowercaseJson(contracts);
 		}
 
-		public ActionResult PopupContent(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var album = Service.GetAlbum(id);
-			return PartialView("AlbumPopupContent", album);
-		}
-
-		public ActionResult PopupWithCoverContent(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var album = Service.GetAlbum(id);
-			return PartialView("AlbumWithCoverPopupContent", album);
-		}
-
 		//
 		// GET: /Album/Details/5
 

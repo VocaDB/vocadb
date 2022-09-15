@@ -220,34 +220,6 @@ namespace VocaDb.Web.Controllers
 			return LowercaseJson(pv);
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContent(int id = InvalidId)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var song = _queries.GetSong(id);
-			return PartialView("SongPopupContent", song);
-		}
-
-		[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 3600)]
-		public async Task<ActionResult> PopupContentWithVote(int id = InvalidId, int? version = null, string callback = null)
-		{
-			if (id == InvalidId)
-				return NotFound();
-
-			var song = _queries.GetSongWithPVAndVote(id, false, includePVs: false);
-
-			if (string.IsNullOrEmpty(callback))
-			{
-				return PartialView("_SongWithVotePopupContent", song);
-			}
-			else
-			{
-				return Json(await RenderPartialViewToStringAsync("_SongWithVotePopupContent", song), callback);
-			}
-		}
-
 		public async Task<FeedResult> Feed(IndexRouteParams indexParams)
 		{
 			WebHelper.VerifyUserAgent(Request);
