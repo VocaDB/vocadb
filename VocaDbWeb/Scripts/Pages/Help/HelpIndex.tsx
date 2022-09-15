@@ -266,17 +266,6 @@ const AboutVocaloid = React.memo(
 	(): React.ReactElement => {
 		return (
 			<HelpIndexTabs tab="aboutvocaloid">
-				{/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-				<iframe
-					className="aboutvocaloid-ytiframe"
-					width="560"
-					height="315"
-					src="https://www.youtube.com/embed/VOE03b4XPNE"
-					frameBorder={0}
-					// @ts-ignore
-					align="right"
-					allowFullScreen
-				></iframe>
 				<h4 id="vocaloidlinks">Main description</h4>
 				<a href="https://en.wikipedia.org/wiki/Vocaloid" title="">
 					Wikipedia article
