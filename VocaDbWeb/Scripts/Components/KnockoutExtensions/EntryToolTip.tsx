@@ -14,6 +14,7 @@ import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVot
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { EntryType } from '@/Models/EntryType';
+import { QTipToolTip } from '@/QTip/QTipToolTip';
 import {
 	AlbumOptionalField,
 	AlbumRepository,
@@ -48,26 +49,6 @@ const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
-
-type QTipProps = React.HTMLAttributes<HTMLDivElement>;
-
-const QTip = React.forwardRef<HTMLDivElement, QTipProps>(
-	({ children, ...props }: QTipProps, ref): React.ReactElement => {
-		return (
-			<div
-				ref={ref}
-				className="qtip qtip-default tooltip-wide qtip-pos-tl qtip-focus"
-				style={{
-					...props.style,
-					display: 'block',
-					zIndex: 15001,
-				}}
-			>
-				<div className="qtip-content">{children}</div>
-			</div>
-		);
-	},
-);
 
 interface AlbumToolTipProps {
 	id: number;
@@ -106,13 +87,13 @@ export const AlbumToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					album ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							{withCover ? (
 								<AlbumWithCoverPopupContent album={album} />
 							) : (
 								<AlbumPopupContent album={album} />
 							)}
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)
@@ -161,9 +142,9 @@ export const ArtistToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					artist ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							<ArtistPopupContent artist={artist} />
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)
@@ -213,9 +194,9 @@ export const EventToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					event ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							<EventPopupContent event={event} />
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)
@@ -291,9 +272,9 @@ export const SongToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					song ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							<SongWithVotePopupContent song={song} />
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)
@@ -343,9 +324,9 @@ export const TagToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					tag ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							<TagPopupContent tag={tag} />
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)
@@ -387,9 +368,9 @@ export const UserToolTip = React.memo(
 				offset={[0, 8]}
 				overlay={
 					user ? (
-						<QTip style={{ opacity: 1 }}>
+						<QTipToolTip style={{ opacity: 1 }}>
 							<UserPopupContent user={user} />
-						</QTip>
+						</QTipToolTip>
 					) : (
 						<></>
 					)

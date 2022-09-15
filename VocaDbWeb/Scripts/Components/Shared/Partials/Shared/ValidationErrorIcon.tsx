@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import 'qtip2';
+import OverlayTrigger from '@/Bootstrap/OverlayTrigger';
+import { QTipToolTip } from '@/QTip/QTipToolTip';
 import React from 'react';
 
 interface ValidationErrorIconProps {
@@ -10,17 +10,17 @@ interface ValidationErrorIconProps {
 export const ValidationErrorIcon = ({
 	title,
 }: ValidationErrorIconProps): React.ReactElement => {
-	const el = React.useRef<HTMLLabelElement>(undefined!);
-
-	React.useEffect(() => {
-		$(el.current).qtip({
-			style: { classes: 'tooltip-wider' },
-		});
-
-		return (): void => {
-			$('.qtip').remove();
-		};
-	}, []);
-
-	return <span className="icon errorIcon" title={title} ref={el} />;
+	return (
+		<OverlayTrigger
+			placement="bottom-start"
+			delay={{ show: 250, hide: 0 }}
+			flip
+			offset={[0, 8]}
+			overlay={<QTipToolTip style={{ opacity: 1 }}>{title}</QTipToolTip>}
+		>
+			<span>
+				<span className="icon errorIcon" />
+			</span>
+		</OverlayTrigger>
+	);
 };

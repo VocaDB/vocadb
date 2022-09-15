@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import 'qtip2';
+import OverlayTrigger from '@/Bootstrap/OverlayTrigger';
+import { QTipToolTip } from '@/QTip/QTipToolTip';
 import React from 'react';
 
 interface HelpLabelProps {
@@ -14,21 +14,19 @@ export const HelpLabel = ({
 	title,
 	forElem,
 }: HelpLabelProps): React.ReactElement => {
-	const el = React.useRef<HTMLLabelElement>(undefined!);
-
-	React.useEffect(() => {
-		$(el.current).qtip({
-			style: { classes: 'tooltip-wider' },
-		});
-
-		return (): void => {
-			$('.qtip').remove();
-		};
-	}, []);
-
 	return (
-		<label className="helpTip" title={title} htmlFor={forElem ?? ''} ref={el}>
-			{label}
-		</label>
+		<OverlayTrigger
+			placement="bottom-start"
+			delay={{ show: 250, hide: 0 }}
+			flip
+			offset={[0, 8]}
+			overlay={<QTipToolTip style={{ opacity: 1 }}>{title}</QTipToolTip>}
+		>
+			<span>
+				<label className="helpTip" htmlFor={forElem ?? ''}>
+					{label}
+				</label>
+			</span>
+		</OverlayTrigger>
 	);
 };
