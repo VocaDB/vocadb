@@ -1,3 +1,4 @@
+import OverlayTrigger from '@/Bootstrap/OverlayTrigger';
 import { AlbumPopupContent } from '@/Components/Shared/AlbumPopupContent';
 import { AlbumWithCoverPopupContent } from '@/Components/Shared/AlbumWithCoverPopupContent';
 import { ArtistPopupContent } from '@/Components/Shared/ArtistPopupContent';
@@ -37,7 +38,6 @@ import {
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
-import Overlay from 'react-overlays/Overlay';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -51,11 +51,10 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 
 type QTipProps = React.HTMLAttributes<HTMLDivElement>;
 
-const QTip = React.forwardRef<HTMLDivElement>(
+const QTip = React.forwardRef<HTMLDivElement, QTipProps>(
 	({ children, ...props }: QTipProps, ref): React.ReactElement => {
 		return (
 			<div
-				{...props}
 				ref={ref}
 				className="qtip qtip-default tooltip-wide qtip-pos-tl qtip-focus"
 				style={{
@@ -78,9 +77,6 @@ interface AlbumToolTipProps {
 
 export const AlbumToolTip = React.memo(
 	({ id, children, withCover }: AlbumToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [album, setAlbum] = React.useState<AlbumContract>();
@@ -103,36 +99,28 @@ export const AlbumToolTip = React.memo(
 		}, [album, show, id]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && album && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								{withCover ? (
-									<AlbumWithCoverPopupContent album={album} />
-								) : (
-									<AlbumPopupContent album={album} />
-								)}
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					album ? (
+						<QTip style={{ opacity: 1 }}>
+							{withCover ? (
+								<AlbumWithCoverPopupContent album={album} />
+							) : (
+								<AlbumPopupContent album={album} />
+							)}
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
@@ -144,9 +132,6 @@ interface ArtistToolTipProps {
 
 export const ArtistToolTip = React.memo(
 	({ id, children }: ArtistToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [artist, setArtist] = React.useState<ArtistContract>();
@@ -169,32 +154,24 @@ export const ArtistToolTip = React.memo(
 		}, [artist, show, id]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && artist && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								<ArtistPopupContent artist={artist} />
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					artist ? (
+						<QTip style={{ opacity: 1 }}>
+							<ArtistPopupContent artist={artist} />
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
@@ -206,9 +183,6 @@ interface EventToolTipProps {
 
 export const EventToolTip = React.memo(
 	({ id, children }: EventToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [event, setEvent] = React.useState<ReleaseEventContract>();
@@ -232,32 +206,24 @@ export const EventToolTip = React.memo(
 		}, [event, show, id]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && event && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								<EventPopupContent event={event} />
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					event ? (
+						<QTip style={{ opacity: 1 }}>
+							<EventPopupContent event={event} />
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
@@ -278,9 +244,6 @@ interface SongToolTipProps {
 
 export const SongToolTip = React.memo(
 	({ id, children, foreignDomain }: SongToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [song, setSong] = React.useState<SongWithPVAndVoteContract>();
@@ -321,32 +284,24 @@ export const SongToolTip = React.memo(
 		}, [song, show, id, foreignDomain]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && song && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								<SongWithVotePopupContent song={song} />
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					song ? (
+						<QTip style={{ opacity: 1 }}>
+							<SongWithVotePopupContent song={song} />
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
@@ -358,9 +313,6 @@ interface TagToolTipProps {
 
 export const TagToolTip = React.memo(
 	({ id, children }: TagToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [tag, setTag] = React.useState<TagApiContract>();
@@ -384,32 +336,24 @@ export const TagToolTip = React.memo(
 		}, [tag, show, id]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && tag && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								<TagPopupContent tag={tag} />
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					tag ? (
+						<QTip style={{ opacity: 1 }}>
+							<TagPopupContent tag={tag} />
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
@@ -421,9 +365,6 @@ interface UserToolTipProps {
 
 export const UserToolTip = React.memo(
 	({ id, children }: UserToolTipProps): React.ReactElement => {
-		const triggerRef = React.useRef<HTMLDivElement>(undefined!);
-		const containerRef = React.useRef<HTMLDivElement>(undefined!);
-
 		const [show, setShow] = React.useState(false);
 
 		const [user, setUser] = React.useState<UserApiContract>();
@@ -439,32 +380,24 @@ export const UserToolTip = React.memo(
 		}, [user, show, id]);
 
 		return (
-			<span ref={containerRef}>
-				<span
-					ref={triggerRef}
-					onMouseEnter={(): void => setShow(true)}
-					onMouseLeave={(): void => setShow(false)}
-				>
-					{children}
-				</span>
-				{show && user && (
-					<Overlay
-						show={show}
-						offset={[0, 8]}
-						onHide={(): void => setShow(false)}
-						placement="bottom-start"
-						container={containerRef}
-						target={triggerRef}
-						flip
-					>
-						{({ props }): React.ReactElement => (
-							<QTip {...props}>
-								<UserPopupContent user={user} />
-							</QTip>
-						)}
-					</Overlay>
-				)}
-			</span>
+			<OverlayTrigger
+				placement="bottom-start"
+				delay={{ show: 250, hide: 0 }}
+				flip
+				offset={[0, 8]}
+				overlay={
+					user ? (
+						<QTip style={{ opacity: 1 }}>
+							<UserPopupContent user={user} />
+						</QTip>
+					) : (
+						<></>
+					)
+				}
+				onToggle={(nextShow): void => setShow(nextShow)}
+			>
+				<span>{children}</span>
+			</OverlayTrigger>
 		);
 	},
 );
