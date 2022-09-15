@@ -131,13 +131,19 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Album:Edit.BaNames')}
-						title={t('ViewRes:EntryEdit.NameHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.NameHelp'),
+						}}
 					/>{' '}
 					<RequiredField />
 					{albumEditStore.validationError_unspecifiedNames && (
 						<>
 							{' '}
-							<ValidationErrorIcon title={t('ViewRes:EntryEdit.NameHelp')} />
+							<ValidationErrorIcon
+								dangerouslySetInnerHTML={{
+									__html: t('ViewRes:EntryEdit.NameHelp'),
+								}}
+							/>
 						</>
 					)}
 				</div>
@@ -191,7 +197,7 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Album:Edit.BaDiscType')}
-						title={discTypeDescriptions}
+						dangerouslySetInnerHTML={{ __html: discTypeDescriptions }}
 					/>
 				</div>
 				<div className="editor-field">
@@ -208,9 +214,11 @@ const BasicInfoTabContent = observer(
 							<>
 								{' '}
 								<ValidationErrorIcon
-									title={t(
-										'VocaDb.Model.Resources:AlbumValidationErrors.NeedType',
-									)}
+									dangerouslySetInnerHTML={{
+										__html: t(
+											'VocaDb.Model.Resources:AlbumValidationErrors.NeedType',
+										),
+									}}
 								/>
 							</>
 						)}
@@ -256,9 +264,11 @@ const BasicInfoTabContent = observer(
 										<>
 											{' '}
 											<ValidationErrorIcon
-												title={t(
-													'VocaDb.Model.Resources:AlbumValidationErrors.NeedReleaseYear',
-												)}
+												dangerouslySetInnerHTML={{
+													__html: t(
+														'VocaDb.Model.Resources:AlbumValidationErrors.NeedReleaseYear',
+													),
+												}}
 											/>
 										</>
 									)}
@@ -332,9 +342,10 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Album:Edit.BaCatNum')}
-						title={
-							'Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.' /* TODO: localize */
-						}
+						dangerouslySetInnerHTML={{
+							__html:
+								'Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.' /* TODO: localize */,
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -352,7 +363,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Album:Edit.BaBarcode')}
-						title={`Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='/Content/barcode.png' />`} /* TODO: localize */
+						dangerouslySetInnerHTML={{
+							__html: `Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='/Content/barcode.png' />` /* TODO: localize */,
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -391,7 +404,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.WebLinks')}
-						title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -403,7 +418,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.Status')}
-						title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						dangerouslySetInnerHTML={{
+							__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">

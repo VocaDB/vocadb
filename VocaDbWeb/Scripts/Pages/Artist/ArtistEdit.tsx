@@ -92,16 +92,20 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.Artist:Edit.BaNames')}
-						title={t('ViewRes:EntryEdit.NameHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.NameHelp'),
+						}}
 					/>{' '}
 					<RequiredField />
 					{artistEditStore.validationError_unspecifiedNames && (
 						<>
 							{' '}
 							<ValidationErrorIcon
-								title={t(
-									'VocaDb.Model.Resources:ArtistValidationErrors.UnspecifiedNames',
-								)}
+								dangerouslySetInnerHTML={{
+									__html: t(
+										'VocaDb.Model.Resources:ArtistValidationErrors.UnspecifiedNames',
+									),
+								}}
 							/>
 						</>
 					)}
@@ -153,9 +157,11 @@ const BasicInfoTabContent = observer(
 						<>
 							{' '}
 							<ValidationErrorIcon
-								title={t(
-									'VocaDb.Model.Resources:ArtistValidationErrors.NeedReferences',
-								)}
+								dangerouslySetInnerHTML={{
+									__html: t(
+										'VocaDb.Model.Resources:ArtistValidationErrors.NeedReferences',
+									),
+								}}
 							/>
 						</>
 					)}
@@ -182,9 +188,11 @@ const BasicInfoTabContent = observer(
 						<>
 							{' '}
 							<ValidationErrorIcon
-								title={t(
-									'VocaDb.Model.Resources:ArtistValidationErrors.NeedType',
-								)}
+								dangerouslySetInnerHTML={{
+									__html: t(
+										'VocaDb.Model.Resources:ArtistValidationErrors.NeedType',
+									),
+								}}
 							/>
 						</>
 					)}
@@ -195,7 +203,10 @@ const BasicInfoTabContent = observer(
 						<div className="editor-label">
 							<HelpLabel
 								label="Associated artists" /* TODO: localize */
-								title="Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* TODO: localize */
+								dangerouslySetInnerHTML={{
+									__html:
+										"Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* TODO: localize */,
+								}}
 							/>
 						</div>
 						<div className="editor-field">
@@ -212,7 +223,10 @@ const BasicInfoTabContent = observer(
 										<td>
 											<HelpLabel
 												label="Illustrator" /* TODO: localize */
-												title="Person who illustrated the character design. This is inherited to derived voicebanks." /* TODO: localize */
+												dangerouslySetInnerHTML={{
+													__html:
+														'Person who illustrated the character design. This is inherited to derived voicebanks.' /* TODO: localize */,
+												}}
 											/>
 										</td>
 										<td>
@@ -242,7 +256,10 @@ const BasicInfoTabContent = observer(
 										<td>
 											<HelpLabel
 												label="Voice provider" /* TODO: localize */
-												title="Person who provided their voice for this voicebank. This is inherited to derived voicebanks." /* TODO: localize */
+												dangerouslySetInnerHTML={{
+													__html:
+														'Person who provided their voice for this voicebank. This is inherited to derived voicebanks.' /* TODO: localize */,
+												}}
 											/>
 										</td>
 										<td>
@@ -447,7 +464,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.WebLinks')}
-						title={t('ViewRes:EntryEdit.ExternalLinksQuickHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes:EntryEdit.ExternalLinksQuickHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -459,7 +478,9 @@ const BasicInfoTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes:EntryEdit.Status')}
-						title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						dangerouslySetInnerHTML={{
+							__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">

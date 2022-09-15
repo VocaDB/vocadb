@@ -134,7 +134,9 @@ const PropertiesTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.SongList:Edit.EventDate')}
-						title={t('ViewRes.SongList:Edit.EventDateHelp')}
+						dangerouslySetInnerHTML={{
+							__html: t('ViewRes.SongList:Edit.EventDateHelp'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
@@ -179,7 +181,9 @@ const PropertiesTabContent = observer(
 				<div className="editor-label">
 					<HelpLabel
 						label={t('ViewRes.SongList:Edit.Status')}
-						title={t('Resources:CommonMessages.EntryStatusExplanation')}
+						dangerouslySetInnerHTML={{
+							__html: t('Resources:CommonMessages.EntryStatusExplanation'),
+						}}
 					/>
 				</div>
 				<div className="editor-field">
