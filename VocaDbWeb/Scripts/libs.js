@@ -25,8 +25,6 @@ require('knockout-punches');
 
 window._ = require('lodash');
 
-require('qtip2');
-
 window.marked = require('marked');
 
 window.moment = require('moment');
