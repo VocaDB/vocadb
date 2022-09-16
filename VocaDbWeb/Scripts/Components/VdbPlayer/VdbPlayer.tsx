@@ -9,6 +9,10 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import {
+	PlayQueueItem,
+	PlayQueueItemContract,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
@@ -592,32 +596,93 @@ const BottomBar = React.memo(
 	},
 );
 
-const useBottomBarEnabled = (): void => {
+const useBottomBarStateHandler = (): void => {
 	const { vdbPlayer } = useVdbPlayer();
 
-	const key = 'bottomBar.enabled';
+	const enabledKey = 'bottomBar.enabled';
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		runInAction(() => {
-			vdbPlayer.bottomBarEnabled = window.localStorage.getItem(key) !== 'false';
+			vdbPlayer.bottomBarEnabled =
+				window.localStorage.getItem(enabledKey) !== 'false';
 		});
 	}, [vdbPlayer]);
 
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		return reaction(
 			() => vdbPlayer.bottomBarEnabled,
 			(bottomBarEnabled) => {
-				window.localStorage.setItem(key, JSON.stringify(bottomBarEnabled));
+				window.localStorage.setItem(
+					enabledKey,
+					JSON.stringify(bottomBarEnabled),
+				);
 			},
 		);
 	}, [vdbPlayer]);
+};
+
+const usePlaylistStateHandler = (): void => {
+	const { playQueue } = useVdbPlayer();
+
+	const itemsKey = 'playlist.items';
+	const currentIndexKey = 'playlist.currentIndex';
+
+	React.useEffect(() => {
+		try {
+			const serializedItemContracts = window.localStorage.getItem(itemsKey);
+
+			if (serializedItemContracts) {
+				const itemContracts = JSON.parse(
+					serializedItemContracts,
+				) as PlayQueueItemContract[];
+
+				runInAction(() => {
+					playQueue.items = itemContracts.map(
+						({ entry, pv }) => new PlayQueueItem(entry, pv),
+					);
+
+					playQueue.currentIndex = Number(
+						window.localStorage.getItem(currentIndexKey),
+					);
+				});
+			}
+		} catch (error) {
+			/* ignore */
+		}
+	}, [playQueue]);
+
+	React.useEffect(() => {
+		return reaction(
+			() => playQueue.items.map((item) => item),
+			(items) => {
+				window.localStorage.setItem(
+					itemsKey,
+					JSON.stringify(items.map((item) => item.toContract())),
+				);
+			},
+		);
+	}, [playQueue]);
+
+	React.useEffect(() => {
+		return reaction(
+			() => playQueue.currentIndex,
+			(currentIndex) => {
+				window.localStorage.setItem(
+					currentIndexKey,
+					JSON.stringify(currentIndex),
+				);
+			},
+		);
+	}, [playQueue]);
 };
 
 export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		useBottomBarEnabled();
+		useBottomBarStateHandler();
+
+		usePlaylistStateHandler();
 
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 

@@ -11,6 +11,11 @@ import {
 	runInAction,
 } from 'mobx';
 
+export interface PlayQueueItemContract {
+	entry: EntryContract;
+	pv: PVContract;
+}
+
 export class PlayQueueItem {
 	private static nextId = 1;
 
@@ -26,6 +31,10 @@ export class PlayQueueItem {
 
 		this.id = PlayQueueItem.nextId++;
 	}
+
+	public toContract = (): PlayQueueItemContract => {
+		return { entry: this.entry, pv: this.pv };
+	};
 }
 
 export enum PlayMethod {
