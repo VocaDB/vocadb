@@ -52,16 +52,15 @@ const ArtistSongs = observer(
 						<ButtonGroup>
 							<Button
 								onClick={async (): Promise<void> => {
-									// Access queryParams here, not in the function body.
-									const { queryParams } = artistDetailsStore.songsStore;
-
-									await playQueue.startAutoplay((pagingProps) =>
-										playQueueRepo.getItems(
-											VideoServiceHelper.autoplayServices,
-											pagingProps,
-											queryParams,
-										),
-									);
+									await playQueue.startAutoplay({
+										queryParams: artistDetailsStore.songsStore.queryParams,
+										callback: (pagingProps, queryParams) =>
+											playQueueRepo.getItems(
+												VideoServiceHelper.autoplayServices,
+												pagingProps,
+												queryParams,
+											),
+									});
 								}}
 								title="Play" /* TODO: localize */
 								className="btn-nomargin"

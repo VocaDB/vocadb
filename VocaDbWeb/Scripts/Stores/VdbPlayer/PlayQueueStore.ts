@@ -43,15 +43,21 @@ export enum PlayMethod {
 	AddToPlayQueue,
 }
 
-type AutoplayCallback = (
+type AutoplayCallback<TQueryParams> = (
 	pagingProps: PagingProperties,
+	queryParams: TQueryParams,
 ) => Promise<PartialFindResultContract<PlayQueueItem>>;
+
+interface AutoplayContext<TQueryParams> {
+	queryParams: TQueryParams;
+	callback: AutoplayCallback<TQueryParams>;
+}
 
 export class PlayQueueStore {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
 
-	private autoplayCallback?: AutoplayCallback;
+	private autoplayContext?: AutoplayContext<any>;
 	private totalCount = 0;
 	private start = 0;
 	@observable public hasMoreItems = false;
@@ -125,7 +131,7 @@ export class PlayQueueStore {
 		this.currentIndex = undefined;
 		this.items = [];
 
-		this.autoplayCallback = undefined;
+		this.autoplayContext = undefined;
 		this.totalCount = 0;
 		this.start = 0;
 		this.hasMoreItems = false;
@@ -199,7 +205,9 @@ export class PlayQueueStore {
 	};
 
 	private loadMoreItems = async (getTotalCount: boolean): Promise<void> => {
-		if (!this.autoplayCallback) return;
+		if (!this.autoplayContext) return;
+
+		const { callback, queryParams } = this.autoplayContext;
 
 		const pagingProps = {
 			getTotalCount: getTotalCount,
@@ -207,7 +215,7 @@ export class PlayQueueStore {
 			start: this.start,
 		};
 
-		const { items, totalCount } = await this.autoplayCallback(pagingProps);
+		const { items, totalCount } = await callback(pagingProps, queryParams);
 
 		if (getTotalCount) this.totalCount = totalCount;
 
@@ -282,12 +290,12 @@ export class PlayQueueStore {
 		}
 	};
 
-	@action public startAutoplay = async (
-		autoplayCallback: AutoplayCallback,
+	@action public startAutoplay = async <TQueryParams>(
+		autoplayContext: AutoplayContext<TQueryParams>,
 	): Promise<void> => {
 		this.clear();
 
-		this.autoplayCallback = autoplayCallback;
+		this.autoplayContext = autoplayContext;
 
 		await this.loadMoreItems(true);
 
