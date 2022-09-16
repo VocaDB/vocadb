@@ -14,7 +14,7 @@ import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
-import { reaction } from 'mobx';
+import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -598,7 +598,9 @@ const useBottomBarEnabled = (): void => {
 	const key = 'bottomBar.enabled';
 
 	React.useLayoutEffect(() => {
-		vdbPlayer.bottomBarEnabled = window.localStorage.getItem(key) !== 'false';
+		runInAction(() => {
+			vdbPlayer.bottomBarEnabled = window.localStorage.getItem(key) !== 'false';
+		});
 	}, [vdbPlayer]);
 
 	React.useLayoutEffect(() => {
