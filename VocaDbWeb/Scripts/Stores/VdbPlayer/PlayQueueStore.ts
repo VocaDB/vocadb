@@ -1,7 +1,13 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
+import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
+import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
 import _ from 'lodash';
 import {
 	action,
@@ -50,15 +56,37 @@ export enum PlayMethod {
 	AddToPlayQueue,
 }
 
-type AutoplayCallback<TQueryParams> = (
-	pagingProps: PagingProperties,
-	queryParams: TQueryParams,
-) => Promise<PartialFindResultContract<PlayQueueItem>>;
+export enum PlayQueueRepositoryType {
+	RatedSongs = 'RatedSongs',
+	SongList = 'SongList',
+	Songs = 'Songs',
+}
+
+export class PlayQueueRepositoryFactory {
+	public constructor(
+		private readonly songListRepo: SongListRepository,
+		private readonly songRepo: SongRepository,
+		private readonly userRepo: UserRepository,
+	) {}
+
+	public create = (type: PlayQueueRepositoryType): PlayQueueRepository<any> => {
+		switch (type) {
+			case PlayQueueRepositoryType.RatedSongs:
+				return new PlayQueueRepositoryForRatedSongsAdapter(this.userRepo);
+
+			case PlayQueueRepositoryType.SongList:
+				return new PlayQueueRepositoryForSongListAdapter(this.songListRepo);
+
+			case PlayQueueRepositoryType.Songs:
+				return new PlayQueueRepositoryForSongsAdapter(this.songRepo);
+		}
+	};
+}
 
 export class AutoplayContext<TQueryParams> {
 	public constructor(
+		public readonly repositoryType: PlayQueueRepositoryType,
 		public readonly queryParams: TQueryParams,
-		public readonly callback: AutoplayCallback<TQueryParams>,
 	) {}
 }
 
@@ -71,7 +99,9 @@ export class PlayQueueStore {
 	private start = 0;
 	@observable public hasMoreItems = false;
 
-	public constructor() {
+	public constructor(
+		private readonly playQueueRepoFactory: PlayQueueRepositoryFactory,
+	) {
 		makeObservable(this);
 	}
 
@@ -216,7 +246,7 @@ export class PlayQueueStore {
 	private loadMoreItems = async (getTotalCount: boolean): Promise<void> => {
 		if (!this.autoplayContext) return;
 
-		const { callback, queryParams } = this.autoplayContext;
+		const { repositoryType, queryParams } = this.autoplayContext;
 
 		const pagingProps = {
 			getTotalCount: getTotalCount,
@@ -224,7 +254,13 @@ export class PlayQueueStore {
 			start: this.start,
 		};
 
-		const { items, totalCount } = await callback(pagingProps, queryParams);
+		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
+
+		const { items, totalCount } = await playQueueRepo.getItems(
+			VideoServiceHelper.autoplayServices,
+			pagingProps,
+			queryParams,
+		);
 
 		if (getTotalCount) this.totalCount = totalCount;
 

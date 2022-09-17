@@ -11,7 +11,6 @@ import {
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -34,8 +33,10 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
-import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
-import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	AutoplayContext,
+	PlayQueueRepositoryType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -56,8 +57,6 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
-
-const playQueueRepo = new PlayQueueRepositoryForSongsAdapter(songRepo);
 
 const pvPlayersFactory = new PVPlayersFactory();
 
@@ -219,13 +218,8 @@ const SearchIndex = observer(
 											onClick={async (): Promise<void> => {
 												await playQueue.startAutoplay(
 													new AutoplayContext(
+														PlayQueueRepositoryType.Songs,
 														searchStore.songSearchStore.queryParams,
-														(pagingProps, queryParams) =>
-															playQueueRepo.getItems(
-																VideoServiceHelper.autoplayServices,
-																pagingProps,
-																queryParams,
-															),
 													),
 												);
 											}}

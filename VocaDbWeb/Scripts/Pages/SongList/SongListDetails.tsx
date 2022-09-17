@@ -26,7 +26,6 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
@@ -44,8 +43,10 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
-import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
-import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	AutoplayContext,
+	PlayQueueRepositoryType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -70,8 +71,6 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-
-const playQueueRepo = new PlayQueueRepositoryForSongListAdapter(songListRepo);
 
 const pvPlayersFactory = new PVPlayersFactory();
 
@@ -318,13 +317,8 @@ const SongListDetailsLayout = observer(
 							onClick={async (): Promise<void> => {
 								await playQueue.startAutoplay(
 									new AutoplayContext(
+										PlayQueueRepositoryType.SongList,
 										songListStore.queryParams,
-										(pagingProps, queryParams) =>
-											playQueueRepo.getItems(
-												VideoServiceHelper.autoplayServices,
-												pagingProps,
-												queryParams,
-											),
 									),
 								);
 							}}

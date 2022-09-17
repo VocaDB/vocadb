@@ -3,24 +3,17 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { SongSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
-import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
-import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	AutoplayContext,
+	PlayQueueRepositoryType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useParams } from 'react-router';
-
-const httpClient = new HttpClient();
-
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-
-const playQueueRepo = new PlayQueueRepositoryForSongsAdapter(songRepo);
 
 interface ArtistSongsProps {
 	artist: ArtistDetailsContract;
@@ -55,13 +48,8 @@ const ArtistSongs = observer(
 								onClick={async (): Promise<void> => {
 									await playQueue.startAutoplay(
 										new AutoplayContext(
+											PlayQueueRepositoryType.Songs,
 											songsStore.queryParams,
-											(pagingProps, queryParams) =>
-												playQueueRepo.getItems(
-													VideoServiceHelper.autoplayServices,
-													pagingProps,
-													queryParams,
-												),
 										),
 									);
 								}}

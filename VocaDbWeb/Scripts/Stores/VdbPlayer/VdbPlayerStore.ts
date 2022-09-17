@@ -1,5 +1,8 @@
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
-import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	PlayQueueRepositoryFactory,
+	PlayQueueStore,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export enum RepeatMode {
@@ -20,12 +23,14 @@ export class VdbPlayerStore {
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
-	public readonly playQueue = new PlayQueueStore();
+	public readonly playQueue: PlayQueueStore;
 	@observable public playerBounds?: Rectangle;
 	@observable public percent = 0;
 
-	public constructor() {
+	public constructor(playQueueRepoFactory: PlayQueueRepositoryFactory) {
 		makeObservable(this);
+
+		this.playQueue = new PlayQueueStore(playQueueRepoFactory);
 
 		reaction(
 			() => this.playQueue.currentItem,

@@ -6,27 +6,18 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/SongVoteRatingsRadioKnockout';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
-import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	AutoplayContext,
+	PlayQueueRepositoryType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const playQueueRepo = new PlayQueueRepositoryForRatedSongsAdapter(userRepo);
 
 interface RatedSongsProps {
 	ratedSongsStore: RatedSongsSearchStore;
@@ -64,13 +55,8 @@ const RatedSongs = observer(
 									onClick={async (): Promise<void> => {
 										await playQueue.startAutoplay(
 											new AutoplayContext(
+												PlayQueueRepositoryType.RatedSongs,
 												ratedSongsStore.queryParams,
-												(pagingProps, queryParams) =>
-													playQueueRepo.getItems(
-														VideoServiceHelper.autoplayServices,
-														pagingProps,
-														queryParams,
-													),
 											),
 										);
 									}}
