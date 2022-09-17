@@ -5,20 +5,18 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { useBottomBarStateHandler } from '@/Components/VdbPlayer/useBottomBarStateHandler';
+import { usePlaylistStateHandler } from '@/Components/VdbPlayer/usePlaylistStateHandler';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import {
-	PlayQueueItem,
-	PlayQueueItemContract,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
-import { reaction, runInAction } from 'mobx';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -595,107 +593,6 @@ const BottomBar = React.memo(
 		);
 	},
 );
-
-const useBottomBarStateHandler = (): void => {
-	const { vdbPlayer } = useVdbPlayer();
-
-	const enabledKey = 'bottomBar.enabled';
-
-	React.useEffect(() => {
-		runInAction(() => {
-			vdbPlayer.bottomBarEnabled =
-				window.localStorage.getItem(enabledKey) !== 'false';
-		});
-	}, [vdbPlayer]);
-
-	React.useEffect(() => {
-		return reaction(
-			() => vdbPlayer.bottomBarEnabled,
-			(bottomBarEnabled) => {
-				window.localStorage.setItem(
-					enabledKey,
-					JSON.stringify(bottomBarEnabled),
-				);
-			},
-		);
-	}, [vdbPlayer]);
-};
-
-const usePlaylistStateHandler = (): void => {
-	const { playQueue } = useVdbPlayer();
-
-	const itemsKey = 'playlist.items';
-	const currentIndexKey = 'playlist.currentIndex';
-	const totalCountKey = 'playlist.totalCount';
-	const pageKey = 'playlist.page';
-
-	React.useEffect(() => {
-		try {
-			const serializedItemContracts = window.localStorage.getItem(itemsKey);
-
-			if (serializedItemContracts) {
-				const itemContracts = JSON.parse(
-					serializedItemContracts,
-				) as PlayQueueItemContract[];
-
-				runInAction(() => {
-					playQueue.items = itemContracts.map(PlayQueueItem.fromContract);
-					playQueue.currentIndex = Number(
-						window.localStorage.getItem(currentIndexKey),
-					);
-
-					playQueue.totalCount =
-						Number(window.localStorage.getItem(totalCountKey)) || 0;
-					playQueue.page = Number(window.localStorage.getItem(pageKey)) || 1;
-				});
-			}
-		} catch (error) {
-			/* ignore */
-		}
-	}, [playQueue]);
-
-	React.useEffect(() => {
-		return reaction(
-			() => playQueue.items.map((item) => item),
-			(items) => {
-				window.localStorage.setItem(
-					itemsKey,
-					JSON.stringify(items.map((item) => item.toContract())),
-				);
-			},
-		);
-	}, [playQueue]);
-
-	React.useEffect(() => {
-		return reaction(
-			() => playQueue.currentIndex,
-			(currentIndex) => {
-				window.localStorage.setItem(
-					currentIndexKey,
-					JSON.stringify(currentIndex),
-				);
-			},
-		);
-	}, [playQueue]);
-
-	React.useEffect(() => {
-		return reaction(
-			() => playQueue.totalCount,
-			(totalItems) => {
-				window.localStorage.setItem(totalCountKey, JSON.stringify(totalItems));
-			},
-		);
-	}, [playQueue]);
-
-	React.useEffect(() => {
-		return reaction(
-			() => playQueue.page,
-			(page) => {
-				window.localStorage.setItem(pageKey, JSON.stringify(page));
-			},
-		);
-	}, [playQueue]);
-};
 
 export const VdbPlayer = observer(
 	(): React.ReactElement => {
