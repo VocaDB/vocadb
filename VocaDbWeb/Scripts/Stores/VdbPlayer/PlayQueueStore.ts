@@ -32,6 +32,13 @@ export class PlayQueueItem {
 		this.id = PlayQueueItem.nextId++;
 	}
 
+	public static fromContract = ({
+		entry,
+		pv,
+	}: PlayQueueItemContract): PlayQueueItem => {
+		return new PlayQueueItem(entry, pv);
+	};
+
 	public toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pv: this.pv };
 	};
@@ -48,9 +55,11 @@ type AutoplayCallback<TQueryParams> = (
 	queryParams: TQueryParams,
 ) => Promise<PartialFindResultContract<PlayQueueItem>>;
 
-interface AutoplayContext<TQueryParams> {
-	queryParams: TQueryParams;
-	callback: AutoplayCallback<TQueryParams>;
+export class AutoplayContext<TQueryParams> {
+	public constructor(
+		public readonly queryParams: TQueryParams,
+		public readonly callback: AutoplayCallback<TQueryParams>,
+	) {}
 }
 
 export class PlayQueueStore {

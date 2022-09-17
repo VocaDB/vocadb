@@ -10,6 +10,7 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -30,11 +31,13 @@ const ArtistSongs = observer(
 	({ artist, artistDetailsStore }: ArtistSongsProps): React.ReactElement => {
 		const { id } = useParams();
 
-		React.useEffect(() => {
-			artistDetailsStore.songsStore.artistFilters.artistIds = [Number(id)];
-		}, [id, artistDetailsStore]);
+		const songsStore = artistDetailsStore.songsStore;
 
-		useStoreWithPagination(artistDetailsStore.songsStore);
+		React.useEffect(() => {
+			songsStore.artistFilters.artistIds = [Number(id)];
+		}, [id, songsStore]);
+
+		useStoreWithPagination(songsStore);
 
 		const { playQueue } = useVdbPlayer();
 
@@ -46,21 +49,21 @@ const ArtistSongs = observer(
 			>
 				<div className="clearfix">
 					<div className="pull-right">
-						<SongSearchDropdown
-							songSearchStore={artistDetailsStore.songsStore}
-						/>{' '}
+						<SongSearchDropdown songSearchStore={songsStore} />{' '}
 						<ButtonGroup>
 							<Button
 								onClick={async (): Promise<void> => {
-									await playQueue.startAutoplay({
-										queryParams: artistDetailsStore.songsStore.queryParams,
-										callback: (pagingProps, queryParams) =>
-											playQueueRepo.getItems(
-												VideoServiceHelper.autoplayServices,
-												pagingProps,
-												queryParams,
-											),
-									});
+									await playQueue.startAutoplay(
+										new AutoplayContext(
+											songsStore.queryParams,
+											(pagingProps, queryParams) =>
+												playQueueRepo.getItems(
+													VideoServiceHelper.autoplayServices,
+													pagingProps,
+													queryParams,
+												),
+										),
+									);
 								}}
 								title="Play" /* TODO: localize */
 								className="btn-nomargin"
@@ -71,7 +74,7 @@ const ArtistSongs = observer(
 					</div>
 				</div>
 				<div>
-					<SongSearchList songSearchStore={artistDetailsStore.songsStore} />
+					<SongSearchList songSearchStore={songsStore} />
 				</div>
 			</ArtistDetailsTabs>
 		);

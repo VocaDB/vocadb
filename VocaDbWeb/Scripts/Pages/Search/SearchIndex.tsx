@@ -35,6 +35,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
 import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -216,15 +217,17 @@ const SearchIndex = observer(
 									<ButtonGroup>
 										<Button
 											onClick={async (): Promise<void> => {
-												await playQueue.startAutoplay({
-													queryParams: searchStore.songSearchStore.queryParams,
-													callback: (pagingProps, queryParams) =>
-														playQueueRepo.getItems(
-															VideoServiceHelper.autoplayServices,
-															pagingProps,
-															queryParams,
-														),
-												});
+												await playQueue.startAutoplay(
+													new AutoplayContext(
+														searchStore.songSearchStore.queryParams,
+														(pagingProps, queryParams) =>
+															playQueueRepo.getItems(
+																VideoServiceHelper.autoplayServices,
+																pagingProps,
+																queryParams,
+															),
+													),
+												);
 											}}
 											title="Play" /* TODO: localize */
 											className="btn-nomargin"

@@ -13,6 +13,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -61,15 +62,17 @@ const RatedSongs = observer(
 							<div className="btn-group">
 								<Button
 									onClick={async (): Promise<void> => {
-										await playQueue.startAutoplay({
-											queryParams: ratedSongsStore.queryParams,
-											callback: (pagingProps, queryParams) =>
-												playQueueRepo.getItems(
-													VideoServiceHelper.autoplayServices,
-													pagingProps,
-													queryParams,
-												),
-										});
+										await playQueue.startAutoplay(
+											new AutoplayContext(
+												ratedSongsStore.queryParams,
+												(pagingProps, queryParams) =>
+													playQueueRepo.getItems(
+														VideoServiceHelper.autoplayServices,
+														pagingProps,
+														queryParams,
+													),
+											),
+										);
 									}}
 									title="Play" /* TODO: localize */
 									className="btn-nomargin"

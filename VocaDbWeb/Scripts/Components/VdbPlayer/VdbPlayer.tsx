@@ -637,9 +637,7 @@ const usePlaylistStateHandler = (): void => {
 				) as PlayQueueItemContract[];
 
 				runInAction(() => {
-					playQueue.items = itemContracts.map(
-						({ entry, pv }) => new PlayQueueItem(entry, pv),
-					);
+					playQueue.items = itemContracts.map(PlayQueueItem.fromContract);
 
 					playQueue.currentIndex = Number(
 						window.localStorage.getItem(currentIndexKey),

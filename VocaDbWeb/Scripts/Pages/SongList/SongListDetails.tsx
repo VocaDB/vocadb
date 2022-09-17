@@ -45,6 +45,7 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useStoreWithPagination } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -315,15 +316,17 @@ const SongListDetailsLayout = observer(
 					<ButtonGroup className="songlist-mode-selection pull-left">
 						<Button
 							onClick={async (): Promise<void> => {
-								await playQueue.startAutoplay({
-									queryParams: songListStore.queryParams,
-									callback: (pagingProps, queryParams) =>
-										playQueueRepo.getItems(
-											VideoServiceHelper.autoplayServices,
-											pagingProps,
-											queryParams,
-										),
-								});
+								await playQueue.startAutoplay(
+									new AutoplayContext(
+										songListStore.queryParams,
+										(pagingProps, queryParams) =>
+											playQueueRepo.getItems(
+												VideoServiceHelper.autoplayServices,
+												pagingProps,
+												queryParams,
+											),
+									),
+								);
 							}}
 							title="Play" /* TODO: localize */
 							className="btn-nomargin"
