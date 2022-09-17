@@ -626,6 +626,8 @@ const usePlaylistStateHandler = (): void => {
 
 	const itemsKey = 'playlist.items';
 	const currentIndexKey = 'playlist.currentIndex';
+	const totalCountKey = 'playlist.totalCount';
+	const pageKey = 'playlist.page';
 
 	React.useEffect(() => {
 		try {
@@ -638,10 +640,13 @@ const usePlaylistStateHandler = (): void => {
 
 				runInAction(() => {
 					playQueue.items = itemContracts.map(PlayQueueItem.fromContract);
-
 					playQueue.currentIndex = Number(
 						window.localStorage.getItem(currentIndexKey),
 					);
+
+					playQueue.totalCount =
+						Number(window.localStorage.getItem(totalCountKey)) || 0;
+					playQueue.page = Number(window.localStorage.getItem(pageKey)) || 1;
 				});
 			}
 		} catch (error) {
@@ -669,6 +674,24 @@ const usePlaylistStateHandler = (): void => {
 					currentIndexKey,
 					JSON.stringify(currentIndex),
 				);
+			},
+		);
+	}, [playQueue]);
+
+	React.useEffect(() => {
+		return reaction(
+			() => playQueue.totalCount,
+			(totalItems) => {
+				window.localStorage.setItem(totalCountKey, JSON.stringify(totalItems));
+			},
+		);
+	}, [playQueue]);
+
+	React.useEffect(() => {
+		return reaction(
+			() => playQueue.page,
+			(page) => {
+				window.localStorage.setItem(pageKey, JSON.stringify(page));
 			},
 		);
 	}, [playQueue]);

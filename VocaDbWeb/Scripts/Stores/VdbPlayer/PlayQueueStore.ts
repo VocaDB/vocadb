@@ -169,6 +169,20 @@ export class PlayQueueStore {
 		}
 	}
 
+	@computed public get totalCount(): number {
+		return this.paging.totalItems;
+	}
+	public set totalCount(value: number) {
+		this.paging.totalItems = value;
+	}
+
+	@computed public get page(): number {
+		return this.paging.page;
+	}
+	public set page(value: number) {
+		this.paging.page = value;
+	}
+
 	@action public clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
