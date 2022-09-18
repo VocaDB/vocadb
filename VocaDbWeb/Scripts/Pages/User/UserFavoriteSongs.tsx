@@ -12,7 +12,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ const UserFavoriteSongsLayout = ({
 
 	useVocaDbTitle(title, true);
 
-	useStoreWithPagination(ratedSongsStore);
+	useStoreWithUpdateResults(ratedSongsStore);
 
 	return (
 		<Layout

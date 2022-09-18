@@ -1,6 +1,9 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongRepository } from '@/Repositories/SongRepository';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -8,6 +11,8 @@ interface SongLyricsRouteParams {
 	albumId?: number;
 	lyricsId?: number;
 }
+
+const clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -47,8 +52,6 @@ export class SongLyricsStore
 		return validate(data);
 	};
 
-	public clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
-
 	private pauseNotifications = false;
 
 	public updateResults = async (clearResults: boolean): Promise<void> => {
@@ -66,5 +69,11 @@ export class SongLyricsStore
 		runInAction(() => {
 			this.selectedLyrics = lyrics;
 		});
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<SongLyricsRouteParams>,
+	): void => {
+		this.updateResults(event.intersects(clearResultsByQueryKeys));
 	};
 }

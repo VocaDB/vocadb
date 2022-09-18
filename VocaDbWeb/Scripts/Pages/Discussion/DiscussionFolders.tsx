@@ -3,7 +3,7 @@ import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolder from '@/Pages/Discussion/Partials/ViewFolder';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ const DiscussionFolders = observer(
 			discussionIndexStore.selectFolderById(Number(folderId));
 		}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
 
-		useStoreWithPagination(discussionIndexStore);
+		useStoreWithUpdateResults(discussionIndexStore);
 
 		React.useEffect(() => {
 			discussionIndexStore.updateResults(true);

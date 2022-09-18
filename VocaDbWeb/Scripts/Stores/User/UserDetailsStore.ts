@@ -20,7 +20,10 @@ import {
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
@@ -30,6 +33,12 @@ interface UserSongListsRouteParams {
 	sort?: SongListSortRule;
 	tagId?: number | number[];
 }
+
+const clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -63,12 +72,6 @@ export class UserSongListsStore
 		});
 	};
 
-	public clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
 	public validateRouteParams = (
 		data: any,
 	): data is UserSongListsRouteParams => {
@@ -85,6 +88,12 @@ export class UserSongListsStore
 		await this.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<UserSongListsRouteParams>,
+	): void => {
+		this.updateResults(event.intersects(clearResultsByQueryKeys));
 	};
 }
 

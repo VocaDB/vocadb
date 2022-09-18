@@ -5,7 +5,10 @@ import {
 	AlbumSortRule,
 } from '@/Stores/Search/AlbumSearchStore';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
 export interface ArtistAlbumsRouteParams {
@@ -14,6 +17,12 @@ export interface ArtistAlbumsRouteParams {
 	sort?: AlbumSortRule;
 	viewMode?: string /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof ArtistAlbumsRouteParams)[] = [
+	'pageSize',
+
+	'sort',
+];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -24,7 +33,7 @@ const validate = ajv.compile(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements StoreWithPagination<ArtistAlbumsRouteParams> {
+	implements StoreWithUpdateResults<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -33,12 +42,6 @@ export class ArtistAlbumsStore
 			undefined!,
 		);
 	}
-
-	public readonly clearResultsByQueryKeys: (keyof ArtistAlbumsRouteParams)[] = [
-		'pageSize',
-
-		'sort',
-	];
 
 	public get routeParams(): ArtistAlbumsRouteParams {
 		return {
@@ -57,5 +60,15 @@ export class ArtistAlbumsStore
 
 	public validateRouteParams = (data: any): data is ArtistAlbumsRouteParams => {
 		return validate(data);
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<ArtistAlbumsRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

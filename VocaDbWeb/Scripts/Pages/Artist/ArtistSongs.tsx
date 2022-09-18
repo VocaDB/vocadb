@@ -10,7 +10,7 @@ import {
 	AutoplayContext,
 	PlayQueueRepositoryType,
 } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useParams } from 'react-router';
@@ -30,7 +30,7 @@ const ArtistSongs = observer(
 			songsStore.artistFilters.artistIds = [Number(id)];
 		}, [id, songsStore]);
 
-		useStoreWithPagination(songsStore);
+		useStoreWithUpdateResults(songsStore);
 
 		const { playQueue } = useVdbPlayer();
 

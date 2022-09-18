@@ -18,7 +18,10 @@ import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -43,6 +46,19 @@ interface AlbumCollectionRouteParams {
 	mediaType?: MediaType;
 }
 
+const clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+
+	'advancedFilters',
+	'discType',
+	'artistId',
+	'collectionStatus',
+	'eventId',
+	'mediaType',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -51,7 +67,7 @@ const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumColle
 const validate = ajv.compile(schema);
 
 export class AlbumCollectionStore
-	implements StoreWithPagination<AlbumCollectionRouteParams> {
+	implements StoreWithUpdateResults<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;
@@ -158,19 +174,6 @@ export class AlbumCollectionStore
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-
-		'advancedFilters',
-		'discType',
-		'artistId',
-		'collectionStatus',
-		'eventId',
-		'mediaType',
-	];
-
 	@computed.struct public get routeParams(): AlbumCollectionRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -213,7 +216,13 @@ export class AlbumCollectionStore
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<AlbumCollectionRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

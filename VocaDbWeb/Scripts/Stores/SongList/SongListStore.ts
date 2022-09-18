@@ -40,7 +40,10 @@ import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -68,6 +71,21 @@ interface SongListRouteParams {
 	tagId?: number[];
 }
 
+const clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childTags',
+	'childVoicebanks',
+	'pageSize',
+	'songType',
+	'tagId',
+
+	'sort',
+	'playlistMode',
+	'query',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -76,7 +94,7 @@ const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRoutePara
 const validate = ajv.compile(schema);
 
 export class SongListStore
-	implements ISongListStore, StoreWithPagination<SongListRouteParams> {
+	implements ISongListStore, StoreWithUpdateResults<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;
 	public readonly comments: EditableCommentsStore;
@@ -196,21 +214,6 @@ export class SongListStore
 	public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
-
-	public clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childTags',
-		'childVoicebanks',
-		'pageSize',
-		'songType',
-		'tagId',
-
-		'sort',
-		'playlistMode',
-		'query',
-	];
 
 	@computed.struct public get routeParams(): SongListRouteParams {
 		return {
@@ -341,7 +344,13 @@ export class SongListStore
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<SongListRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

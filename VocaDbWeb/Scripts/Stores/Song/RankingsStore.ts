@@ -9,7 +9,10 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -18,6 +21,12 @@ interface RankingsRouteParams {
 	durationHours?: number;
 	vocalistSelection?: string;
 }
+
+const clearResultsByQueryKeys: (keyof RankingsRouteParams)[] = [
+	'dateFilterType',
+	'durationHours',
+	'vocalistSelection',
+];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -89,12 +98,6 @@ export class RankingsStore
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	public clearResultsByQueryKeys: (keyof RankingsRouteParams)[] = [
-		'dateFilterType',
-		'durationHours',
-		'vocalistSelection',
-	];
-
 	@computed.struct public get routeParams(): RankingsRouteParams {
 		return {
 			dateFilterType: this.dateFilterType,
@@ -122,5 +125,11 @@ export class RankingsStore
 		await this.getSongs();
 
 		this.pauseNotifications = false;
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<RankingsRouteParams>,
+	): void => {
+		this.updateResults(event.intersects(clearResultsByQueryKeys));
 	};
 }

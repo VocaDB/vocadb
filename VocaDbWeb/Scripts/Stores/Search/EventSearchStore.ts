@@ -11,6 +11,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the EventSortRule enum in C#.
@@ -41,6 +42,24 @@ export interface EventSearchRouteParams {
 	tag?: string;
 	tagId?: number | number[];
 }
+
+const clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'afterDate',
+	'beforeDate',
+	'artistId',
+	'childVoicebanks',
+	'includeMembers',
+	'eventCategory',
+	'onlyMyEvents',
+	'sort',
+];
 
 export class EventSearchStore extends SearchCategoryBaseStore<
 	EventSearchRouteParams,
@@ -112,24 +131,6 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'afterDate',
-		'beforeDate',
-		'artistId',
-		'childVoicebanks',
-		'includeMembers',
-		'eventCategory',
-		'onlyMyEvents',
-		'sort',
-	];
-
 	@computed.struct public get routeParams(): EventSearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,
@@ -165,4 +166,14 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? EventSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<EventSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

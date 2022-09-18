@@ -2,7 +2,7 @@ import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import React from 'react';
 
 interface UserSongsProps {
@@ -18,7 +18,7 @@ const UserSongs = ({
 		userDetailsStore.ratedSongsStore.init();
 	}, [userDetailsStore]);
 
-	useStoreWithPagination(userDetailsStore.ratedSongsStore);
+	useStoreWithUpdateResults(userDetailsStore.ratedSongsStore);
 
 	return (
 		<>

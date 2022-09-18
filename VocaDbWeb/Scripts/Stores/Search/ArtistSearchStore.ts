@@ -12,6 +12,7 @@ import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the ArtistSortRule enum in C#.
@@ -40,6 +41,21 @@ export interface ArtistSearchRouteParams {
 	tag?: string;
 	tagId?: number | number[];
 }
+
+const clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'sort',
+	'artistType',
+	'onlyFollowedByMe',
+	// TODO: onlyRootVoicebanks
+];
 
 export class ArtistSearchStore extends SearchCategoryBaseStore<
 	ArtistSearchRouteParams,
@@ -96,21 +112,6 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
-	public readonly clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'sort',
-		'artistType',
-		'onlyFollowedByMe',
-		// TODO: onlyRootVoicebanks
-	];
-
 	@computed.struct public get routeParams(): ArtistSearchRouteParams {
 		return {
 			searchType: SearchType.Artist,
@@ -143,4 +144,14 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? ArtistSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<ArtistSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

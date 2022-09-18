@@ -13,6 +13,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the AlbumSortRule enum in C#.
@@ -46,6 +47,23 @@ export interface AlbumSearchRouteParams {
 	tagId?: number | number[];
 	viewMode?: string /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'sort',
+	'discType',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+];
 
 export class AlbumSearchStore extends SearchCategoryBaseStore<
 	AlbumSearchRouteParams,
@@ -115,23 +133,6 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		return ratings;
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'sort',
-		'discType',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-	];
-
 	@computed.struct public get routeParams(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
@@ -173,4 +174,14 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<AlbumSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

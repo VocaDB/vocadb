@@ -8,7 +8,10 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -39,6 +42,12 @@ interface CommentListRouteParams {
 	userId?: number;
 }
 
+const clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
+	'entryType',
+	'sort',
+	'userId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -66,12 +75,6 @@ export class CommentListStore
 			userRepo.getOne({ id: entryId }),
 		);
 	}
-
-	public clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
-		'entryType',
-		'sort',
-		'userId',
-	];
 
 	@computed.struct public get routeParams(): CommentListRouteParams {
 		return {
@@ -155,5 +158,11 @@ export class CommentListStore
 		await this.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<CommentListRouteParams>,
+	): void => {
+		this.updateResults(event.intersects(clearResultsByQueryKeys));
 	};
 }

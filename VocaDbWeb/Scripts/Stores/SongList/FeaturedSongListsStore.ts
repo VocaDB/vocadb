@@ -8,7 +8,10 @@ import {
 	SongListsBaseStore,
 	SongListSortRule,
 } from '@/Stores/SongList/SongListsBaseStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -53,6 +56,12 @@ interface FeaturedSongListsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -93,12 +102,6 @@ export class FeaturedSongListsStore
 		this.category = categoryName;
 	};
 
-	public clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
 	private get currentCategoryStore(): FeaturedSongListCategoryStore {
 		return this.categories[this.category];
 	}
@@ -136,5 +139,11 @@ export class FeaturedSongListsStore
 		await this.currentCategoryStore.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<FeaturedSongListsRouteParams>,
+	): void => {
+		this.updateResults(event.intersects(clearResultsByQueryKeys));
 	};
 }

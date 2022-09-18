@@ -47,7 +47,7 @@ import {
 	AutoplayContext,
 	PlayQueueRepositoryType,
 } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -127,7 +127,7 @@ const SongListDetailsLayout = observer(
 
 		useVocaDbTitle(pageTitle, ready);
 
-		useStoreWithPagination(songListStore);
+		useStoreWithUpdateResults(songListStore);
 
 		const smallThumbUrl = UrlHelper.imageThumb(
 			songList.mainPicture,

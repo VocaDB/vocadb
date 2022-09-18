@@ -32,6 +32,7 @@ import {
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -90,6 +91,38 @@ export interface SongSearchRouteParams {
 	unifyEntryTypesAndTags?: boolean;
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+	'dateYear',
+	'dateMonth',
+	'dateDay',
+	'eventId',
+	'minScore',
+	'onlyRatedSongs',
+	'parentVersionId',
+	'onlyWithPVs',
+	'since',
+	'songType',
+	'sort',
+	'unifyEntryTypesAndTags',
+	'viewMode',
+	'minMilliBpm',
+	'maxMilliBpm',
+	'minLength',
+	'maxLength',
+];
 
 export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
@@ -290,38 +323,6 @@ export class SongSearchStore
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-		'dateYear',
-		'dateMonth',
-		'dateDay',
-		'eventId',
-		'minScore',
-		'onlyRatedSongs',
-		'parentVersionId',
-		'onlyWithPVs',
-		'since',
-		'songType',
-		'sort',
-		'unifyEntryTypesAndTags',
-		'viewMode',
-		'minMilliBpm',
-		'maxMilliBpm',
-		'minLength',
-		'maxLength',
-	];
-
 	@computed.struct public get routeParams(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
@@ -397,4 +398,14 @@ export class SongSearchStore
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<SongSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

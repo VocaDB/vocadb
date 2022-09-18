@@ -5,7 +5,7 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ListUsersStore } from '@/Stores/User/ListUsersStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -21,7 +21,7 @@ const UserIndex = (): React.ReactElement => {
 
 	useVocaDbTitle(title, ready);
 
-	useStoreWithPagination(listUsersStore);
+	useStoreWithUpdateResults(listUsersStore);
 
 	return (
 		<Layout title={title}>

@@ -7,6 +7,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable } from 'mobx';
 
 export interface AnythingSearchRouteParams {
@@ -19,6 +20,14 @@ export interface AnythingSearchRouteParams {
 	tag?: string;
 	tagId?: number | number[];
 }
+
+const clearResultsByQueryKeys: (keyof AnythingSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'draftsOnly',
+	'searchType',
+];
 
 export class AnythingSearchStore extends SearchCategoryBaseStore<
 	AnythingSearchRouteParams,
@@ -58,14 +67,6 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof AnythingSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'draftsOnly',
-		'searchType',
-	];
-
 	@computed.struct public get routeParams(): AnythingSearchRouteParams {
 		return {
 			searchType: SearchType.Anything,
@@ -85,4 +86,14 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<AnythingSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

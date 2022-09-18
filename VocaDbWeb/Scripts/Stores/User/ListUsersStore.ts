@@ -5,7 +5,10 @@ import {
 	UserRepository,
 } from '@/Repositories/UserRepository';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -27,6 +30,15 @@ export interface ListUsersRouteParams {
 	sort?: UserSortRule;
 }
 
+const clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
+	'disabledUsers',
+	'groupId',
+	'knowsLanguage',
+	'onlyVerifiedArtists',
+	'pageSize',
+	'filter',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -35,7 +47,7 @@ const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRoutePa
 const validate = ajv.compile(schema);
 
 export class ListUsersStore
-	implements StoreWithPagination<ListUsersRouteParams> {
+	implements StoreWithUpdateResults<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -49,15 +61,6 @@ export class ListUsersStore
 	public constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
-
-	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
-		'disabledUsers',
-		'groupId',
-		'knowsLanguage',
-		'onlyVerifiedArtists',
-		'pageSize',
-		'filter',
-	];
 
 	@computed.struct public get routeParams(): ListUsersRouteParams {
 		return {
@@ -125,7 +128,13 @@ export class ListUsersStore
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<ListUsersRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

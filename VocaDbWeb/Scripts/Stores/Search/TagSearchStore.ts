@@ -6,6 +6,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the TagSortRule enum in C#.
@@ -24,6 +25,16 @@ export interface TagSearchRouteParams {
 	searchType?: SearchType.Tag;
 	sort?: TagSortRule;
 }
+
+const clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'searchType',
+
+	// TODO: allowAliases
+	'categoryName',
+	'sort',
+];
 
 export class TagSearchStore extends SearchCategoryBaseStore<
 	TagSearchRouteParams,
@@ -64,16 +75,6 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'searchType',
-
-		// TODO: allowAliases
-		'categoryName',
-		'sort',
-	];
-
 	@computed.struct public get routeParams(): TagSearchRouteParams {
 		return {
 			searchType: SearchType.Tag,
@@ -91,4 +92,14 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
+
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<TagSearchRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

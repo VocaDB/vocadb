@@ -38,7 +38,10 @@ import {
 	TagSearchStore,
 } from '@/Stores/Search/TagSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
 import {
@@ -75,7 +78,7 @@ const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.s
 const validate = ajv.compile(schema);
 
 export class SearchStore
-	implements ICommonSearchStore, StoreWithPagination<SearchRouteParams> {
+	implements ICommonSearchStore, StoreWithUpdateResults<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -218,10 +221,6 @@ export class SearchStore
 		return this.currentCategoryStore.paging;
 	}
 
-	public get clearResultsByQueryKeys(): (keyof SearchRouteParams)[] {
-		return this.currentCategoryStore.clearResultsByQueryKeys;
-	}
-
 	@computed public get routeParams(): SearchRouteParams {
 		return this.currentCategoryStore.routeParams;
 	}
@@ -243,7 +242,9 @@ export class SearchStore
 		return this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<SearchRouteParams>,
+	): void => {
+		this.currentCategoryStore.onRouteParamsChange(event);
 	};
 }

@@ -5,7 +5,10 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -22,6 +25,12 @@ export interface FollowedArtistsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
+	'pageSize',
+	'tagId',
+	'artistType',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -30,7 +39,7 @@ const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedAr
 const validate = ajv.compile(schema);
 
 export class FollowedArtistsStore
-	implements StoreWithPagination<FollowedArtistsRouteParams> {
+	implements StoreWithUpdateResults<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
@@ -87,12 +96,6 @@ export class FollowedArtistsStore
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
-		'pageSize',
-		'tagId',
-		'artistType',
-	];
-
 	@computed.struct public get routeParams(): FollowedArtistsRouteParams {
 		return {
 			artistType: this.artistType,
@@ -114,7 +117,13 @@ export class FollowedArtistsStore
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<FollowedArtistsRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

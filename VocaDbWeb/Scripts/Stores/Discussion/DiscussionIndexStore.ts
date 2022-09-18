@@ -5,7 +5,10 @@ import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	RouteParamsChangeEvent,
+	StoreWithUpdateResults,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -20,6 +23,8 @@ interface DiscussionIndexRouteParams {
 	page?: number;
 }
 
+const clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -28,7 +33,7 @@ const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export class DiscussionIndexStore
-	implements StoreWithPagination<DiscussionIndexRouteParams> {
+	implements StoreWithUpdateResults<DiscussionIndexRouteParams> {
 	@observable public folders: DiscussionFolderContract[] = [];
 	@observable public newTopic: DiscussionTopicEditStore;
 	public readonly paging = new ServerSidePagingStore(30); // Paging store
@@ -169,8 +174,6 @@ export class DiscussionIndexStore
 		return this.discussionRepo.deleteTopic({ topicId: topic.id });
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
-
 	@computed.struct public get routeParams(): DiscussionIndexRouteParams {
 		return {
 			page: this.paging.page,
@@ -198,7 +201,13 @@ export class DiscussionIndexStore
 		this.pauseNotifications = false;
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onRouteParamsChange = (
+		event: RouteParamsChangeEvent<DiscussionIndexRouteParams>,
+	): void => {
+		const clearResults = event.intersects(clearResultsByQueryKeys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }
