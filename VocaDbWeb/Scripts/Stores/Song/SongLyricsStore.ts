@@ -32,8 +32,6 @@ export class SongLyricsStore
 		this.selectedLyricsId = lyricsId;
 	}
 
-	public popState = false;
-
 	@computed.struct public get routeParams(): SongLyricsRouteParams {
 		return {
 			albumId: this.albumId,

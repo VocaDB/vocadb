@@ -93,8 +93,6 @@ export class FeaturedSongListsStore
 		this.category = categoryName;
 	};
 
-	public popState = false;
-
 	public clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
 		'filter',
 		'sort',

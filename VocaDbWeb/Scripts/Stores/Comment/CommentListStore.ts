@@ -67,8 +67,6 @@ export class CommentListStore
 		);
 	}
 
-	public popState = false;
-
 	public clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
 		'entryType',
 		'sort',

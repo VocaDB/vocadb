@@ -197,8 +197,6 @@ export class SongListStore
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
 
-	public popState = false;
-
 	public clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
 		'advancedFilters',
 		'artistId',

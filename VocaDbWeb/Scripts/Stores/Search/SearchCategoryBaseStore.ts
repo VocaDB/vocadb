@@ -21,10 +21,7 @@ import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
-> extends Omit<
-		StoreWithPagination<TRouteParams>,
-		'popState' | 'validateRouteParams'
-	> {
+> extends Omit<StoreWithPagination<TRouteParams>, 'validateRouteParams'> {
 	paging: ServerSidePagingStore;
 	updateResultsWithTotalCount: () => Promise<void>;
 }

@@ -169,8 +169,6 @@ export class DiscussionIndexStore
 		return this.discussionRepo.deleteTopic({ topicId: topic.id });
 	};
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
 
 	@computed.struct public get routeParams(): DiscussionIndexRouteParams {

@@ -44,8 +44,6 @@ export class ArtistSongsStore
 		);
 	}
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof ArtistSongsRouteParams)[] = [
 		'pageSize',
 

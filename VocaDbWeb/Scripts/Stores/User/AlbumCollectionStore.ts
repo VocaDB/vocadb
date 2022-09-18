@@ -158,8 +158,6 @@ export class AlbumCollectionStore
 		});
 	};
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
 		'pageSize',
 		'filter',

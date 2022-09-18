@@ -92,8 +92,6 @@ export class DiscussionTopicStore
 			});
 	};
 
-	public popState = false;
-
 	@computed.struct public get routeParams(): DiscussionTopicRouteParams {
 		return {
 			page: this.comments.paging.page,

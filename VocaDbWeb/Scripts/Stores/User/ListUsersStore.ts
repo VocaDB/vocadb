@@ -50,8 +50,6 @@ export class ListUsersStore
 		makeObservable(this);
 	}
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
 		'disabledUsers',
 		'groupId',

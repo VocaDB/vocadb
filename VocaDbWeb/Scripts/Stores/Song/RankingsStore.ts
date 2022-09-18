@@ -89,8 +89,6 @@ export class RankingsStore
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	public popState = false;
-
 	public clearResultsByQueryKeys: (keyof RankingsRouteParams)[] = [
 		'dateFilterType',
 		'durationHours',

@@ -214,8 +214,6 @@ export class SearchStore
 		return this.getCategoryStore(this.searchType);
 	}
 
-	public popState = false;
-
 	public get paging(): ServerSidePagingStore {
 		return this.currentCategoryStore.paging;
 	}

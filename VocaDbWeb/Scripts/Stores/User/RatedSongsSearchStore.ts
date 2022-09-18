@@ -282,8 +282,6 @@ export class RatedSongsSearchStore
 		return this.updateResults(false);
 	};
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof RatedSongsSearchRouteParams)[] = [
 		'pageSize',
 		'filter',

@@ -63,8 +63,6 @@ export class UserSongListsStore
 		});
 	};
 
-	public popState = false;
-
 	public clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
 		'filter',
 		'sort',

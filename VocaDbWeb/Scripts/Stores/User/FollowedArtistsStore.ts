@@ -87,8 +87,6 @@ export class FollowedArtistsStore
 		});
 	};
 
-	public popState = false;
-
 	public readonly clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
 		'pageSize',
 		'tagId',
