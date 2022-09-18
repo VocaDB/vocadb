@@ -7,10 +7,7 @@ import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import {
-	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
-} from '@vocadb/route-sphere';
+import { RouteParamsChangeEvent, RouteParamsStore } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {
 	action,
@@ -24,7 +21,7 @@ import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
-> extends Omit<StoreWithUpdateResults<TRouteParams>, 'validateRouteParams'> {
+> extends Omit<RouteParamsStore<TRouteParams>, 'validateRouteParams'> {
 	paging: ServerSidePagingStore;
 	updateResults(clearResults: boolean): Promise<void>;
 	updateResultsWithTotalCount(): Promise<void>;

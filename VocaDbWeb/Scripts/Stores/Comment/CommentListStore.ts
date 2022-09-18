@@ -11,7 +11,7 @@ import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
@@ -57,7 +57,7 @@ const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRou
 const validate = ajv.compile(schema);
 
 export class CommentListStore
-	implements StoreWithUpdateResults<CommentListRouteParams> {
+	implements RouteParamsStore<CommentListRouteParams> {
 	@observable public entries: EntryWithCommentsContract[] = [];
 	@observable public entryType = EntryType[EntryType.Undefined];
 	@observable public lastEntryDate?: Date;

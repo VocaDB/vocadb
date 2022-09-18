@@ -23,7 +23,7 @@ import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
@@ -50,7 +50,7 @@ const validate = ajv.compile(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements StoreWithUpdateResults<UserSongListsRouteParams> {
+	implements RouteParamsStore<UserSongListsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		private readonly userId: number,

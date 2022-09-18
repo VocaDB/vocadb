@@ -37,7 +37,7 @@ import {
 	AutoplayContext,
 	PlayQueueRepositoryType,
 } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
+import { useLocationStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -108,7 +108,7 @@ const SearchIndex = observer(
 
 		useVocaDbTitle(undefined, true);
 
-		useStoreWithUpdateResults(searchStore);
+		useLocationStore(searchStore);
 
 		const { playQueue } = useVdbPlayer();
 

@@ -8,7 +8,7 @@ import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -47,8 +47,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export class ListUsersStore
-	implements StoreWithUpdateResults<ListUsersRouteParams> {
+export class ListUsersStore implements RouteParamsStore<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;

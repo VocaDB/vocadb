@@ -5,7 +5,7 @@ import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
-import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
+import { useLocationStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -26,7 +26,7 @@ const SongLyrics = observer(
 			'VocaDb.Web.Resources.Domain.Globalization',
 		]);
 
-		useStoreWithUpdateResults(songDetailsStore.lyricsStore);
+		useLocationStore(songDetailsStore.lyricsStore);
 
 		return (
 			<SongDetailsTabs

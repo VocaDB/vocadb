@@ -14,7 +14,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
-import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
+import { useLocationStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -44,7 +44,7 @@ const SongRankings = observer(
 
 		useVocaDbTitle(vdb.resources.song.rankingsTitle, true);
 
-		useStoreWithUpdateResults(rankingsStore);
+		useLocationStore(rankingsStore);
 
 		return (
 			<Layout

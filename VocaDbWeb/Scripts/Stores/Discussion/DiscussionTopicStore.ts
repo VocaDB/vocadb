@@ -4,7 +4,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
-import { StoreWithRouteParams } from '@vocadb/route-sphere';
+import { RouteParamsStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -26,7 +26,7 @@ const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export class DiscussionTopicStore
-	implements StoreWithRouteParams<DiscussionTopicRouteParams> {
+	implements RouteParamsStore<DiscussionTopicRouteParams> {
 	@observable public comments: EditableCommentsStore;
 	@observable public contract: DiscussionTopicContract;
 	@observable public editStore?: DiscussionTopicEditStore = undefined;

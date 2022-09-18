@@ -14,7 +14,7 @@ import {
 	CommentListStore,
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
-import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
+import { useLocationStore } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -139,7 +139,7 @@ const CommentIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		useStoreWithUpdateResults(commentListStore);
+		useLocationStore(commentListStore);
 
 		return (
 			<Layout title={title}>

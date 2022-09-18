@@ -21,7 +21,7 @@ import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -68,7 +68,7 @@ const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumColle
 const validate = ajv.compile(schema);
 
 export class AlbumCollectionStore
-	implements StoreWithUpdateResults<AlbumCollectionRouteParams> {
+	implements RouteParamsStore<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;

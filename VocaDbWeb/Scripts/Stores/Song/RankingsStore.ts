@@ -12,7 +12,7 @@ import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -36,8 +36,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export class RankingsStore
-	implements StoreWithUpdateResults<RankingsRouteParams> {
+export class RankingsStore implements RouteParamsStore<RankingsRouteParams> {
 	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
 	@observable public durationHours?: number;
 	private readonly pvServiceIcons: PVServiceIcons;

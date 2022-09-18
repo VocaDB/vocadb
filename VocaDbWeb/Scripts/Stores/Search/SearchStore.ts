@@ -38,10 +38,7 @@ import {
 	TagSearchStore,
 } from '@/Stores/Search/TagSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import {
-	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
-} from '@vocadb/route-sphere';
+import { RouteParamsChangeEvent, RouteParamsStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
 import {
@@ -78,7 +75,7 @@ const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.s
 const validate = ajv.compile(schema);
 
 export class SearchStore
-	implements ICommonSearchStore, StoreWithUpdateResults<SearchRouteParams> {
+	implements ICommonSearchStore, RouteParamsStore<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -245,6 +242,6 @@ export class SearchStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<SearchRouteParams>,
 	): void => {
-		this.currentCategoryStore.onRouteParamsChange(event);
+		this.currentCategoryStore.onRouteParamsChange?.(event);
 	};
 }

@@ -11,7 +11,7 @@ import {
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
@@ -71,7 +71,7 @@ const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./Featured
 const validate = ajv.compile(schema);
 
 export class FeaturedSongListsStore
-	implements StoreWithUpdateResults<FeaturedSongListsRouteParams> {
+	implements RouteParamsStore<FeaturedSongListsRouteParams> {
 	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
 	@observable public category = SongListFeaturedCategory.Concerts;
 

@@ -8,7 +8,7 @@ import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
@@ -35,7 +35,7 @@ const validate = ajv.compile(schema);
 
 export class ArtistSongsStore
 	extends SongSearchStore
-	implements StoreWithUpdateResults<ArtistSongsRouteParams> {
+	implements RouteParamsStore<ArtistSongsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,

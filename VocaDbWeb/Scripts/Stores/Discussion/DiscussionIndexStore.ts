@@ -8,7 +8,7 @@ import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -34,7 +34,7 @@ const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export class DiscussionIndexStore
-	implements StoreWithUpdateResults<DiscussionIndexRouteParams> {
+	implements RouteParamsStore<DiscussionIndexRouteParams> {
 	@observable public folders: DiscussionFolderContract[] = [];
 	@observable public newTopic: DiscussionTopicEditStore;
 	public readonly paging = new ServerSidePagingStore(30); // Paging store

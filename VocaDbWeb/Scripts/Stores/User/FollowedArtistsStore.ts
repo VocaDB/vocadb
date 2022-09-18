@@ -8,7 +8,7 @@ import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -40,7 +40,7 @@ const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedAr
 const validate = ajv.compile(schema);
 
 export class FollowedArtistsStore
-	implements StoreWithUpdateResults<FollowedArtistsRouteParams> {
+	implements RouteParamsStore<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items

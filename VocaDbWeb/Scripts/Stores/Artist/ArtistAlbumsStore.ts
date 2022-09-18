@@ -8,7 +8,7 @@ import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
@@ -34,7 +34,7 @@ const validate = ajv.compile(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements StoreWithUpdateResults<ArtistAlbumsRouteParams> {
+	implements RouteParamsStore<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),

@@ -3,7 +3,7 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -23,7 +23,7 @@ const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRoute
 const validate = ajv.compile(schema);
 
 export class SongLyricsStore
-	implements StoreWithUpdateResults<SongLyricsRouteParams> {
+	implements RouteParamsStore<SongLyricsRouteParams> {
 	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;
 	@observable public selectedLyricsId: number;

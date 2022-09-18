@@ -34,7 +34,7 @@ import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -99,7 +99,7 @@ const validate = ajv.compile(schema);
 
 export class RatedSongsSearchStore
 	implements
-		StoreWithUpdateResults<RatedSongsSearchRouteParams>,
+		RouteParamsStore<RatedSongsSearchRouteParams>,
 		ISongSearchStore,
 		IRatedSongsAdapterStore {
 	public readonly advancedFilters = new AdvancedSearchFilters();

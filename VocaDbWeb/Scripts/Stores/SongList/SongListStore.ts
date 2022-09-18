@@ -43,7 +43,7 @@ import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import {
 	includesAny,
 	RouteParamsChangeEvent,
-	StoreWithUpdateResults,
+	RouteParamsStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -95,7 +95,7 @@ const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRoutePara
 const validate = ajv.compile(schema);
 
 export class SongListStore
-	implements ISongListStore, StoreWithUpdateResults<SongListRouteParams> {
+	implements ISongListStore, RouteParamsStore<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;
 	public readonly comments: EditableCommentsStore;
