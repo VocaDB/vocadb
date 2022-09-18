@@ -9,6 +9,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -163,6 +164,8 @@ export class CommentListStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<CommentListRouteParams>,
 	): void => {
-		this.updateResults(event.intersects(clearResultsByQueryKeys));
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

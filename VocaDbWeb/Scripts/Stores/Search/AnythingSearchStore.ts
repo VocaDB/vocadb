@@ -7,7 +7,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable } from 'mobx';
 
 export interface AnythingSearchRouteParams {
@@ -90,7 +90,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<AnythingSearchRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

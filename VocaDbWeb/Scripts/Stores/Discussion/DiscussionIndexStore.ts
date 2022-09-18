@@ -6,6 +6,7 @@ import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEdi
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -204,7 +205,7 @@ export class DiscussionIndexStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<DiscussionIndexRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

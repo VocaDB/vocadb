@@ -6,6 +6,7 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -76,7 +77,7 @@ export class ArtistSongsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<ArtistSongsRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

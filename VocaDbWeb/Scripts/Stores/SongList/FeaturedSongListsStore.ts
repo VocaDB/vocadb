@@ -9,6 +9,7 @@ import {
 	SongListSortRule,
 } from '@/Stores/SongList/SongListsBaseStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -144,6 +145,8 @@ export class FeaturedSongListsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<FeaturedSongListsRouteParams>,
 	): void => {
-		this.updateResults(event.intersects(clearResultsByQueryKeys));
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

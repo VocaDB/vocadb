@@ -6,6 +6,7 @@ import {
 } from '@/Stores/Search/AlbumSearchStore';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -65,7 +66,7 @@ export class ArtistAlbumsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<ArtistAlbumsRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

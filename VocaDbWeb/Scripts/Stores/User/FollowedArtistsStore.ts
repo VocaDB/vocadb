@@ -6,6 +6,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -120,7 +121,7 @@ export class FollowedArtistsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<FollowedArtistsRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

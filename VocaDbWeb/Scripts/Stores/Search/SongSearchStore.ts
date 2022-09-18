@@ -32,7 +32,7 @@ import {
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
-import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -402,7 +402,7 @@ export class SongSearchStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<SongSearchRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

@@ -21,6 +21,7 @@ import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -93,7 +94,9 @@ export class UserSongListsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<UserSongListsRouteParams>,
 	): void => {
-		this.updateResults(event.intersects(clearResultsByQueryKeys));
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }
 

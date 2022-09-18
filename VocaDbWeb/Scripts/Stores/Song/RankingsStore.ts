@@ -10,6 +10,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -130,6 +131,8 @@ export class RankingsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<RankingsRouteParams>,
 	): void => {
-		this.updateResults(event.intersects(clearResultsByQueryKeys));
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

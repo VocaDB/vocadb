@@ -32,6 +32,7 @@ import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -357,7 +358,7 @@ export class RatedSongsSearchStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<RatedSongsSearchRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

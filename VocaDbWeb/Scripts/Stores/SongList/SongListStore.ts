@@ -41,6 +41,7 @@ import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -347,7 +348,7 @@ export class SongListStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<SongListRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

@@ -11,7 +11,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the EventSortRule enum in C#.
@@ -170,7 +170,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<EventSearchRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

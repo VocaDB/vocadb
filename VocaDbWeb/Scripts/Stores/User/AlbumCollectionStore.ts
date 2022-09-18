@@ -19,6 +19,7 @@ import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -219,7 +220,7 @@ export class AlbumCollectionStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<AlbumCollectionRouteParams>,
 	): void => {
-		const clearResults = event.intersects(clearResultsByQueryKeys);
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
 		if (!event.popState && clearResults) this.paging.goToFirstPage();
 

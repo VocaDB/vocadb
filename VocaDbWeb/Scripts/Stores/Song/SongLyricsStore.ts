@@ -1,6 +1,7 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongRepository } from '@/Repositories/SongRepository';
 import {
+	includesAny,
 	RouteParamsChangeEvent,
 	StoreWithUpdateResults,
 } from '@vocadb/route-sphere';
@@ -74,6 +75,8 @@ export class SongLyricsStore
 	public onRouteParamsChange = (
 		event: RouteParamsChangeEvent<SongLyricsRouteParams>,
 	): void => {
-		this.updateResults(event.intersects(clearResultsByQueryKeys));
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }
