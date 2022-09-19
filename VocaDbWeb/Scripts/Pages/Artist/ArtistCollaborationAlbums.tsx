@@ -3,7 +3,7 @@ import { AlbumOptions } from '@/Pages/Artist/ArtistDetails';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
-import { useLocationStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useParams } from 'react-router';
@@ -26,7 +26,7 @@ const ArtistCollaborationAlbums = observer(
 			];
 		}, [id, artistDetailsStore]);
 
-		useLocationStore(artistDetailsStore.collaborationAlbumsStore);
+		useLocationStateStore(artistDetailsStore.collaborationAlbumsStore);
 
 		return (
 			<ArtistDetailsTabs

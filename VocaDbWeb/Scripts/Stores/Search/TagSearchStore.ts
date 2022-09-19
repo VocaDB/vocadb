@@ -6,7 +6,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the TagSortRule enum in C#.
@@ -75,7 +75,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	@computed.struct public get routeParams(): TagSearchRouteParams {
+	@computed.struct public get locationState(): TagSearchRouteParams {
 		return {
 			searchType: SearchType.Tag,
 			categoryName: this.categoryName,
@@ -85,7 +85,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 			sort: this.sort,
 		};
 	}
-	public set routeParams(value: TagSearchRouteParams) {
+	public set locationState(value: TagSearchRouteParams) {
 		this.categoryName = value.categoryName;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
@@ -93,8 +93,8 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<TagSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<TagSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

@@ -32,7 +32,7 @@ import {
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -323,7 +323,7 @@ export class SongSearchStore
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	@computed.struct public get routeParams(): SongSearchRouteParams {
+	@computed.struct public get locationState(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -363,7 +363,7 @@ export class SongSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: SongSearchRouteParams) {
+	public set locationState(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -399,8 +399,8 @@ export class SongSearchStore
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<SongSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

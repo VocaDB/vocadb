@@ -2,8 +2,8 @@ import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContrac
 import { SongRepository } from '@/Repositories/SongRepository';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -23,7 +23,7 @@ const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRoute
 const validate = ajv.compile(schema);
 
 export class SongLyricsStore
-	implements RouteParamsStore<SongLyricsRouteParams> {
+	implements LocationStateStore<SongLyricsRouteParams> {
 	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;
 	@observable public selectedLyricsId: number;
@@ -38,18 +38,18 @@ export class SongLyricsStore
 		this.selectedLyricsId = lyricsId;
 	}
 
-	@computed.struct public get routeParams(): SongLyricsRouteParams {
+	@computed.struct public get locationState(): SongLyricsRouteParams {
 		return {
 			albumId: this.albumId,
 			lyricsId: this.selectedLyricsId,
 		};
 	}
-	public set routeParams(value: SongLyricsRouteParams) {
+	public set locationState(value: SongLyricsRouteParams) {
 		this.albumId = value.albumId;
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 
-	public validateRouteParams = (data: any): data is SongLyricsRouteParams => {
+	public validateLocationState = (data: any): data is SongLyricsRouteParams => {
 		return validate(data);
 	};
 
@@ -72,8 +72,8 @@ export class SongLyricsStore
 		});
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<SongLyricsRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongLyricsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

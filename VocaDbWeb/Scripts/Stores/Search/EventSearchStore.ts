@@ -11,7 +11,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the EventSortRule enum in C#.
@@ -131,7 +131,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	@computed.struct public get routeParams(): EventSearchRouteParams {
+	@computed.struct public get locationState(): EventSearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,
 			afterDate: this.afterDate?.toISOString(),
@@ -149,7 +149,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: EventSearchRouteParams) {
+	public set locationState(value: EventSearchRouteParams) {
 		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -167,8 +167,8 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<EventSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<EventSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

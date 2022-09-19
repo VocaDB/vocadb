@@ -7,7 +7,7 @@ import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { RouteParamsChangeEvent, RouteParamsStore } from '@vocadb/route-sphere';
+import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {
 	action,
@@ -21,7 +21,7 @@ import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
-> extends Omit<RouteParamsStore<TRouteParams>, 'validateRouteParams'> {
+> extends Omit<LocationStateStore<TRouteParams>, 'validateLocationState'> {
 	paging: ServerSidePagingStore;
 	updateResults(clearResults: boolean): Promise<void>;
 	updateResultsWithTotalCount(): Promise<void>;
@@ -121,7 +121,7 @@ export abstract class SearchCategoryBaseStore<
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public abstract routeParams: TRouteParams;
+	public abstract locationState: TRouteParams;
 
 	private pauseNotifications = false;
 
@@ -170,8 +170,8 @@ export abstract class SearchCategoryBaseStore<
 		return this.updateResults(false);
 	};
 
-	public abstract onRouteParamsChange({
+	public abstract onLocationStateChange({
 		keys,
 		popState,
-	}: RouteParamsChangeEvent<TRouteParams>): void;
+	}: StateChangeEvent<TRouteParams>): void;
 }

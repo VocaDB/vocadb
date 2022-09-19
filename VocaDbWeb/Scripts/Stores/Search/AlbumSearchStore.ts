@@ -13,7 +13,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the AlbumSortRule enum in C#.
@@ -133,7 +133,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		return ratings;
 	};
 
-	@computed.struct public get routeParams(): AlbumSearchRouteParams {
+	@computed.struct public get locationState(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -156,7 +156,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: AlbumSearchRouteParams) {
+	public set locationState(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -175,8 +175,8 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<AlbumSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<AlbumSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

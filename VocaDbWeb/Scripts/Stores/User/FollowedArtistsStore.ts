@@ -7,8 +7,8 @@ import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -40,7 +40,7 @@ const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedAr
 const validate = ajv.compile(schema);
 
 export class FollowedArtistsStore
-	implements RouteParamsStore<FollowedArtistsRouteParams> {
+	implements LocationStateStore<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
@@ -97,7 +97,7 @@ export class FollowedArtistsStore
 		});
 	};
 
-	@computed.struct public get routeParams(): FollowedArtistsRouteParams {
+	@computed.struct public get locationState(): FollowedArtistsRouteParams {
 		return {
 			artistType: this.artistType,
 			page: this.paging.page,
@@ -105,21 +105,21 @@ export class FollowedArtistsStore
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: FollowedArtistsRouteParams) {
+	public set locationState(value: FollowedArtistsRouteParams) {
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is FollowedArtistsRouteParams => {
 		return validate(data);
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<FollowedArtistsRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<FollowedArtistsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

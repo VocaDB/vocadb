@@ -22,8 +22,8 @@ import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
@@ -50,7 +50,7 @@ const validate = ajv.compile(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements RouteParamsStore<UserSongListsRouteParams> {
+	implements LocationStateStore<UserSongListsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		private readonly userId: number,
@@ -73,7 +73,7 @@ export class UserSongListsStore
 		});
 	};
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is UserSongListsRouteParams => {
 		return validate(data);
@@ -91,8 +91,8 @@ export class UserSongListsStore
 		this.pauseNotifications = false;
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<UserSongListsRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<UserSongListsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

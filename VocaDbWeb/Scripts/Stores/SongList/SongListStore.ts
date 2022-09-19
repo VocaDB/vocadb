@@ -42,8 +42,8 @@ import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -95,7 +95,7 @@ const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRoutePara
 const validate = ajv.compile(schema);
 
 export class SongListStore
-	implements ISongListStore, RouteParamsStore<SongListRouteParams> {
+	implements ISongListStore, LocationStateStore<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;
 	public readonly comments: EditableCommentsStore;
@@ -216,7 +216,7 @@ export class SongListStore
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
 
-	@computed.struct public get routeParams(): SongListRouteParams {
+	@computed.struct public get locationState(): SongListRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -237,7 +237,7 @@ export class SongListStore
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SongListRouteParams) {
+	public set locationState(value: SongListRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -255,7 +255,7 @@ export class SongListStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (data: any): data is SongListRouteParams => {
+	public validateLocationState = (data: any): data is SongListRouteParams => {
 		return validate(data);
 	};
 
@@ -345,8 +345,8 @@ export class SongListStore
 		return this.updateResults(false);
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<SongListRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongListRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

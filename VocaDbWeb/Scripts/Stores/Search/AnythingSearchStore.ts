@@ -7,7 +7,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable } from 'mobx';
 
 export interface AnythingSearchRouteParams {
@@ -67,7 +67,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
 
-	@computed.struct public get routeParams(): AnythingSearchRouteParams {
+	@computed.struct public get locationState(): AnythingSearchRouteParams {
 		return {
 			searchType: SearchType.Anything,
 			childTags: this.childTags,
@@ -78,7 +78,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: AnythingSearchRouteParams) {
+	public set locationState(value: AnythingSearchRouteParams) {
 		this.childTags = value.childTags ?? false;
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';
@@ -87,8 +87,8 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<AnythingSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<AnythingSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

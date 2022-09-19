@@ -7,8 +7,8 @@ import {
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
@@ -34,7 +34,7 @@ const validate = ajv.compile(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements RouteParamsStore<ArtistAlbumsRouteParams> {
+	implements LocationStateStore<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -44,7 +44,7 @@ export class ArtistAlbumsStore
 		);
 	}
 
-	public get routeParams(): ArtistAlbumsRouteParams {
+	public get locationState(): ArtistAlbumsRouteParams {
 		return {
 			page: this.paging.page,
 			pageSize: this.paging.pageSize,
@@ -52,19 +52,21 @@ export class ArtistAlbumsStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: ArtistAlbumsRouteParams) {
+	public set locationState(value: ArtistAlbumsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? AlbumSortRule.Name;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateRouteParams = (data: any): data is ArtistAlbumsRouteParams => {
+	public validateLocationState = (
+		data: any,
+	): data is ArtistAlbumsRouteParams => {
 		return validate(data);
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<ArtistAlbumsRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<ArtistAlbumsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

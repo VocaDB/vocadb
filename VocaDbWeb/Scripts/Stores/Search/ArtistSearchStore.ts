@@ -12,7 +12,7 @@ import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import { includesAny, RouteParamsChangeEvent } from '@vocadb/route-sphere';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the ArtistSortRule enum in C#.
@@ -112,7 +112,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
-	@computed.struct public get routeParams(): ArtistSearchRouteParams {
+	@computed.struct public get locationState(): ArtistSearchRouteParams {
 		return {
 			searchType: SearchType.Artist,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -132,7 +132,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: ArtistSearchRouteParams) {
+	public set locationState(value: ArtistSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.childTags = value.childTags ?? false;
@@ -145,8 +145,8 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<ArtistSearchRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<ArtistSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

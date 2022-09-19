@@ -8,7 +8,7 @@ import {
 	UserDetailsStore,
 	UserSongListsStore,
 } from '@/Stores/User/UserDetailsStore';
-import { useLocationStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ const SongLists = observer(
 	({ user, songLists }: SongListsProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.User']);
 
-		useLocationStore(songLists);
+		useLocationStateStore(songLists);
 
 		const ownProfile =
 			loginManager.loggedUser &&

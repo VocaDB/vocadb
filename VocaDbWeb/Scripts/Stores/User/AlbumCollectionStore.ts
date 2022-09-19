@@ -20,8 +20,8 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
@@ -68,7 +68,7 @@ const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumColle
 const validate = ajv.compile(schema);
 
 export class AlbumCollectionStore
-	implements RouteParamsStore<AlbumCollectionRouteParams> {
+	implements LocationStateStore<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;
@@ -175,7 +175,7 @@ export class AlbumCollectionStore
 		});
 	};
 
-	@computed.struct public get routeParams(): AlbumCollectionRouteParams {
+	@computed.struct public get locationState(): AlbumCollectionRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -196,7 +196,7 @@ export class AlbumCollectionStore
 			mediaType: this.mediaType,
 		};
 	}
-	public set routeParams(value: AlbumCollectionRouteParams) {
+	public set locationState(value: AlbumCollectionRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artist.id = value.artistId;
 		this.collectionStatus = value.collectionStatus ?? '';
@@ -211,14 +211,14 @@ export class AlbumCollectionStore
 		this.mediaType = value.mediaType;
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is AlbumCollectionRouteParams => {
 		return validate(data);
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<AlbumCollectionRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<AlbumCollectionRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

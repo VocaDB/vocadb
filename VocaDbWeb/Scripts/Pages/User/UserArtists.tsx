@@ -13,7 +13,7 @@ import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
-import { useLocationStore } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -33,7 +33,7 @@ const FollowedArtists = observer(
 			'VocaDb.Model.Resources',
 		]);
 
-		useLocationStore(followedArtistsStore);
+		useLocationStateStore(followedArtistsStore);
 
 		return (
 			<>

@@ -10,8 +10,8 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
@@ -57,7 +57,7 @@ const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRou
 const validate = ajv.compile(schema);
 
 export class CommentListStore
-	implements RouteParamsStore<CommentListRouteParams> {
+	implements LocationStateStore<CommentListRouteParams> {
 	@observable public entries: EntryWithCommentsContract[] = [];
 	@observable public entryType = EntryType[EntryType.Undefined];
 	@observable public lastEntryDate?: Date;
@@ -77,20 +77,22 @@ export class CommentListStore
 		);
 	}
 
-	@computed.struct public get routeParams(): CommentListRouteParams {
+	@computed.struct public get locationState(): CommentListRouteParams {
 		return {
 			entryType: this.entryType,
 			sort: this.sort,
 			userId: this.user.id,
 		};
 	}
-	public set routeParams(value: CommentListRouteParams) {
+	public set locationState(value: CommentListRouteParams) {
 		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
 		this.sort = value.sort ?? CommentSortRule.CreateDateDescending;
 		this.user.id = value.userId;
 	}
 
-	public validateRouteParams = (data: any): data is CommentListRouteParams => {
+	public validateLocationState = (
+		data: any,
+	): data is CommentListRouteParams => {
 		return validate(data);
 	};
 
@@ -161,8 +163,8 @@ export class CommentListStore
 		this.pauseNotifications = false;
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<CommentListRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<CommentListRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 

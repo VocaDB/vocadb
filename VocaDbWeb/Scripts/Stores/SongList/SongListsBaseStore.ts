@@ -93,14 +93,14 @@ export abstract class SongListsBaseStore extends PagedItemsStore<SongListContrac
 		this.tagFilters.tags = [TagFilter.fromContract(tag)];
 	};
 
-	@computed.struct public get routeParams(): SongListsBaseRouteParams {
+	@computed.struct public get locationState(): SongListsBaseRouteParams {
 		return {
 			filter: this.query,
 			sort: this.sort,
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SongListsBaseRouteParams) {
+	public set locationState(value: SongListsBaseRouteParams) {
 		this.query = value.filter ?? '';
 		this.sort = value.sort || SongListSortRule.Date;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);

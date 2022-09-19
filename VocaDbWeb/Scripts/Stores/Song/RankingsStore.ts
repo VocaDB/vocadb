@@ -11,8 +11,8 @@ import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import {
 	includesAny,
-	RouteParamsChangeEvent,
-	RouteParamsStore,
+	StateChangeEvent,
+	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
@@ -36,7 +36,7 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export class RankingsStore implements RouteParamsStore<RankingsRouteParams> {
+export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
 	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
 	@observable public durationHours?: number;
 	private readonly pvServiceIcons: PVServiceIcons;
@@ -98,20 +98,20 @@ export class RankingsStore implements RouteParamsStore<RankingsRouteParams> {
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	@computed.struct public get routeParams(): RankingsRouteParams {
+	@computed.struct public get locationState(): RankingsRouteParams {
 		return {
 			dateFilterType: this.dateFilterType,
 			durationHours: this.durationHours,
 			vocalistSelection: this.vocalistSelection,
 		};
 	}
-	public set routeParams(value: RankingsRouteParams) {
+	public set locationState(value: RankingsRouteParams) {
 		this.dateFilterType = value.dateFilterType ?? 'CreateDate';
 		this.durationHours = value.durationHours;
 		this.vocalistSelection = value.vocalistSelection;
 	}
 
-	public validateRouteParams = (data: any): data is RankingsRouteParams => {
+	public validateLocationState = (data: any): data is RankingsRouteParams => {
 		return validate(data);
 	};
 
@@ -127,8 +127,8 @@ export class RankingsStore implements RouteParamsStore<RankingsRouteParams> {
 		this.pauseNotifications = false;
 	};
 
-	public onRouteParamsChange = (
-		event: RouteParamsChangeEvent<RankingsRouteParams>,
+	public onLocationStateChange = (
+		event: StateChangeEvent<RankingsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
 
