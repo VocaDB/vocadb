@@ -250,12 +250,13 @@ const PlaylistIndex = observer(
 										>
 											{item.entry.name}
 										</Link>{' '}
-										{item.entry.songType && (
-											<>
-												{' '}
-												<SongTypeLabel songType={item.entry.songType} />
-											</>
-										)}{' '}
+										{item.entry.entryType === 'Song' /* TODO: enum */ &&
+											item.entry.songType && (
+												<>
+													{' '}
+													<SongTypeLabel songType={item.entry.songType} />
+												</>
+											)}{' '}
 										{pvServiceIcons
 											.getIconUrls(item.pv.service)
 											.map((icon, index) => (

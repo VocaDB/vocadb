@@ -1,113 +1,6 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"definitions": {
-		"EntryContract": {
-			"properties": {
-				"additionalNames": {
-					"type": "string"
-				},
-				"artistString": {
-					"type": "string"
-				},
-				"artistType": {
-					"enum": [
-						"Animator",
-						"Band",
-						"CeVIO",
-						"Character",
-						"Circle",
-						"CoverArtist",
-						"Illustrator",
-						"Label",
-						"Lyricist",
-						"OtherGroup",
-						"OtherIndividual",
-						"OtherVocalist",
-						"OtherVoiceSynthesizer",
-						"Producer",
-						"SynthesizerV",
-						"UTAU",
-						"Unknown",
-						"Utaite",
-						"Vocalist",
-						"Vocaloid"
-					],
-					"type": "string"
-				},
-				"discType": {
-					"enum": [
-						"Album",
-						"Artbook",
-						"Compilation",
-						"EP",
-						"Fanmade",
-						"Game",
-						"Instrumental",
-						"Other",
-						"Single",
-						"SplitAlbum",
-						"Unknown",
-						"Video"
-					],
-					"type": "string"
-				},
-				"entryType": {
-					"type": "string"
-				},
-				"eventCategory": {
-					"type": "string"
-				},
-				"id": {
-					"type": "number"
-				},
-				"mainPicture": {
-					"$ref": "#/definitions/EntryThumbContract"
-				},
-				"name": {
-					"type": "string"
-				},
-				"releaseEventSeriesName": {
-					"type": "string"
-				},
-				"songListFeaturedCategory": {
-					"type": "string"
-				},
-				"songType": {
-					"enum": [
-						"Arrangement",
-						"Cover",
-						"DramaPV",
-						"Illustration",
-						"Instrumental",
-						"Live",
-						"Mashup",
-						"MusicPV",
-						"Original",
-						"Other",
-						"Remaster",
-						"Remix",
-						"Unspecified"
-					],
-					"type": "string"
-				},
-				"status": {
-					"type": "string"
-				},
-				"tagCategoryName": {
-					"type": "string"
-				},
-				"tags": {
-					"items": {
-						"$ref": "#/definitions/TagUsageForApiContract"
-					},
-					"type": "array"
-				},
-				"urlSlug": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"EntryThumbContract": {
 			"properties": {
 				"name": {
@@ -123,48 +16,6 @@
 					"type": "string"
 				},
 				"urlTinyThumb": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"PVContract": {
-			"properties": {
-				"author": {
-					"type": "string"
-				},
-				"createdBy": {
-					"type": "number"
-				},
-				"disabled": {
-					"type": "boolean"
-				},
-				"extendedMetadata": {},
-				"id": {
-					"type": "number"
-				},
-				"length": {
-					"type": "number"
-				},
-				"name": {
-					"type": "string"
-				},
-				"publishDate": {
-					"type": "string"
-				},
-				"pvId": {
-					"type": "string"
-				},
-				"pvType": {
-					"type": "string"
-				},
-				"service": {
-					"$ref": "#/definitions/PVService"
-				},
-				"thumbUrl": {
-					"type": "string"
-				},
-				"url": {
 					"type": "string"
 				}
 			},
@@ -188,10 +39,43 @@
 		"PlayQueueItemContract": {
 			"properties": {
 				"entry": {
-					"$ref": "#/definitions/EntryContract"
+					"anyOf": [
+						{
+							"allOf": [
+								{
+									"properties": {
+										"entryType": {
+											"enum": ["Album"],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								{
+									"$ref": "#/definitions/Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>"
+								}
+							]
+						},
+						{
+							"allOf": [
+								{
+									"properties": {
+										"entryType": {
+											"enum": ["Song"],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								{
+									"$ref": "#/definitions/Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>"
+								}
+							]
+						}
+					]
 				},
 				"pv": {
-					"$ref": "#/definitions/PVContract"
+					"$ref": "#/definitions/Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>"
 				}
 			},
 			"type": "object"
@@ -199,36 +83,89 @@
 		"Record<string,any>": {
 			"type": "object"
 		},
-		"TagBaseContract": {
+		"Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>": {
 			"properties": {
 				"additionalNames": {
 					"type": "string"
 				},
-				"categoryName": {
+				"artistString": {
 					"type": "string"
 				},
 				"id": {
 					"type": "number"
 				},
+				"mainPicture": {
+					"$ref": "#/definitions/EntryThumbContract"
+				},
 				"name": {
 					"type": "string"
 				},
-				"urlSlug": {
+				"status": {
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"TagUsageForApiContract": {
+		"Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>": {
 			"properties": {
-				"count": {
+				"id": {
 					"type": "number"
 				},
-				"tag": {
-					"$ref": "#/definitions/TagBaseContract"
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"type": "string"
+				},
+				"service": {
+					"$ref": "#/definitions/PVService"
 				}
 			},
 			"type": "object"
+		},
+		"Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"artistString": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"mainPicture": {
+					"$ref": "#/definitions/EntryThumbContract"
+				},
+				"name": {
+					"type": "string"
+				},
+				"songType": {
+					"$ref": "#/definitions/SongType"
+				},
+				"status": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"SongType": {
+			"enum": [
+				"Arrangement",
+				"Cover",
+				"DramaPV",
+				"Illustration",
+				"Instrumental",
+				"Live",
+				"Mashup",
+				"MusicPV",
+				"Original",
+				"Other",
+				"Remaster",
+				"Remix",
+				"Unspecified"
+			],
+			"type": "string"
 		}
 	},
 	"properties": {

@@ -1,5 +1,7 @@
-import { EntryContract } from '@/DataContracts/EntryContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -20,9 +22,50 @@ import {
 	runInAction,
 } from 'mobx';
 
+export type PlayQueueEntryThumbContract = Required<
+	Pick<EntryThumbContract, 'urlThumb'>
+>;
+
+export type PlayQueueAlbumContract = {
+	entryType: 'Album' /* TODO: enum */;
+} & Required<
+	Pick<
+		AlbumContract,
+		| 'id'
+		| 'name'
+		| 'status'
+		| 'additionalNames'
+		| 'artistString'
+		| 'mainPicture'
+	>
+>;
+
+export type PlayQueueSongContract = {
+	entryType: 'Song' /* TODO: enum */;
+} & Required<
+	Pick<
+		SongContract,
+		| 'id'
+		| 'name'
+		| 'status'
+		| 'additionalNames'
+		| 'artistString'
+		| 'mainPicture'
+		| 'songType'
+	>
+>;
+
+export type PlayQueueEntryContract =
+	| PlayQueueAlbumContract
+	| PlayQueueSongContract;
+
+export type PlayQueuePVContract = Required<
+	Pick<PVContract, 'id' | 'service' | 'pvId' | 'pvType'>
+>;
+
 export interface PlayQueueItemContract {
-	entry: EntryContract;
-	pv: PVContract;
+	entry: PlayQueueEntryContract;
+	pv: PlayQueuePVContract;
 }
 
 export class PlayQueueItem {
@@ -33,8 +76,8 @@ export class PlayQueueItem {
 	@observable public isSelected = false;
 
 	public constructor(
-		public readonly entry: EntryContract,
-		public readonly pv: PVContract,
+		public readonly entry: PlayQueueEntryContract,
+		public readonly pv: PlayQueuePVContract,
 	) {
 		makeObservable(this);
 
