@@ -9,6 +9,8 @@ import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
 import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
 import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
+import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
 	action,
@@ -91,7 +93,24 @@ export class AutoplayContext<TQueryParams> {
 	) {}
 }
 
-export class PlayQueueStore {
+interface PlayQueueLocalStorageState {
+	items?: PlayQueueItemContract[];
+	currentIndex?: number;
+	repositoryType?: PlayQueueRepositoryType;
+	queryParams?: Record<string, any>;
+	totalCount?: number;
+	page?: number;
+}
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<PlayQueueLocalStorageState> = require('./PlayQueueLocalStorageState.schema');
+const validate = ajv.compile(schema);
+
+export class PlayQueueStore
+	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
 
@@ -167,20 +186,6 @@ export class PlayQueueStore {
 		for (const item of this.items) {
 			item.isSelected = value;
 		}
-	}
-
-	@computed public get totalCount(): number {
-		return this.paging.totalItems;
-	}
-	public set totalCount(value: number) {
-		this.paging.totalItems = value;
-	}
-
-	@computed public get page(): number {
-		return this.paging.page;
-	}
-	public set page(value: number) {
-		this.paging.page = value;
 	}
 
 	@action public clear = (): void => {
@@ -365,5 +370,32 @@ export class PlayQueueStore {
 		await this.updateResultsWithTotalCount();
 
 		this.setCurrentItem(this.items[0]);
+	};
+
+	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
+		return {
+			items: this.items.map((item) => item.toContract()),
+			currentIndex: this.currentIndex,
+			repositoryType: this.autoplayContext?.repositoryType,
+			queryParams: this.autoplayContext?.queryParams,
+			totalCount: this.paging.totalItems,
+			page: this.paging.page,
+		};
+	}
+	public set localStorageState(value: PlayQueueLocalStorageState) {
+		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
+		this.currentIndex = value.currentIndex;
+		this.autoplayContext =
+			value.repositoryType && value.queryParams
+				? new AutoplayContext(value.repositoryType, value.queryParams)
+				: undefined;
+		this.paging.totalItems = value.totalCount ?? 0;
+		this.paging.page = value.page ?? 1;
+	}
+
+	public validateLocalStorageState = (
+		localStorageState: any,
+	): localStorageState is PlayQueueLocalStorageState => {
+		return validate(localStorageState);
 	};
 }

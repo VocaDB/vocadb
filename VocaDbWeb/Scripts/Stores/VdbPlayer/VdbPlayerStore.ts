@@ -3,6 +3,8 @@ import {
 	PlayQueueRepositoryFactory,
 	PlayQueueStore,
 } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export enum RepeatMode {
@@ -18,7 +20,19 @@ interface Rectangle {
 	height: number;
 }
 
-export class VdbPlayerStore {
+interface VdbPlayerLocalStorageState {
+	bottomBarEnabled?: boolean;
+}
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<VdbPlayerLocalStorageState> = require('./VdbPlayerLocalStorageState.schema');
+const validate = ajv.compile(schema);
+
+export class VdbPlayerStore
+	implements LocalStorageStateStore<VdbPlayerLocalStorageState> {
 	@observable public bottomBarEnabled = true;
 	@observable public playing = false;
 	@observable public repeat = RepeatMode.Off;
@@ -88,5 +102,20 @@ export class VdbPlayerStore {
 
 	@action public setPercent = (value: number): void => {
 		this.percent = value;
+	};
+
+	@computed.struct public get localStorageState(): VdbPlayerLocalStorageState {
+		return {
+			bottomBarEnabled: this.bottomBarEnabled,
+		};
+	}
+	public set localStorageState(value: VdbPlayerLocalStorageState) {
+		this.bottomBarEnabled = value.bottomBarEnabled ?? true;
+	}
+
+	public validateLocalStorageState = (
+		localStorageState: any,
+	): localStorageState is VdbPlayerLocalStorageState => {
+		return validate(localStorageState);
 	};
 }

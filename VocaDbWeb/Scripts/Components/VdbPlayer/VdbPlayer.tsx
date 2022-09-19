@@ -5,8 +5,6 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useBottomBarStateHandler } from '@/Components/VdbPlayer/useBottomBarStateHandler';
-import { usePlaylistStateHandler } from '@/Components/VdbPlayer/usePlaylistStateHandler';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
@@ -15,6 +13,7 @@ import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
+import { useLocalStorageStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -598,11 +597,10 @@ export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		useBottomBarStateHandler();
-
-		usePlaylistStateHandler();
-
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+
+		useLocalStorageStateStore('VdbPlayerStore', vdbPlayer);
+		useLocalStorageStateStore('PlayQueueStore', playQueue);
 
 		React.useEffect(() => {
 			// Returns the disposer.

@@ -1,0 +1,259 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"EntryContract": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"artistString": {
+					"type": "string"
+				},
+				"artistType": {
+					"enum": [
+						"Animator",
+						"Band",
+						"CeVIO",
+						"Character",
+						"Circle",
+						"CoverArtist",
+						"Illustrator",
+						"Label",
+						"Lyricist",
+						"OtherGroup",
+						"OtherIndividual",
+						"OtherVocalist",
+						"OtherVoiceSynthesizer",
+						"Producer",
+						"SynthesizerV",
+						"UTAU",
+						"Unknown",
+						"Utaite",
+						"Vocalist",
+						"Vocaloid"
+					],
+					"type": "string"
+				},
+				"discType": {
+					"enum": [
+						"Album",
+						"Artbook",
+						"Compilation",
+						"EP",
+						"Fanmade",
+						"Game",
+						"Instrumental",
+						"Other",
+						"Single",
+						"SplitAlbum",
+						"Unknown",
+						"Video"
+					],
+					"type": "string"
+				},
+				"entryType": {
+					"type": "string"
+				},
+				"eventCategory": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"mainPicture": {
+					"$ref": "#/definitions/EntryThumbContract"
+				},
+				"name": {
+					"type": "string"
+				},
+				"releaseEventSeriesName": {
+					"type": "string"
+				},
+				"songListFeaturedCategory": {
+					"type": "string"
+				},
+				"songType": {
+					"enum": [
+						"Arrangement",
+						"Cover",
+						"DramaPV",
+						"Illustration",
+						"Instrumental",
+						"Live",
+						"Mashup",
+						"MusicPV",
+						"Original",
+						"Other",
+						"Remaster",
+						"Remix",
+						"Unspecified"
+					],
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"tagCategoryName": {
+					"type": "string"
+				},
+				"tags": {
+					"items": {
+						"$ref": "#/definitions/TagUsageForApiContract"
+					},
+					"type": "array"
+				},
+				"urlSlug": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"EntryThumbContract": {
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"urlOriginal": {
+					"type": "string"
+				},
+				"urlSmallThumb": {
+					"type": "string"
+				},
+				"urlThumb": {
+					"type": "string"
+				},
+				"urlTinyThumb": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"PVContract": {
+			"properties": {
+				"author": {
+					"type": "string"
+				},
+				"createdBy": {
+					"type": "number"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"extendedMetadata": {},
+				"id": {
+					"type": "number"
+				},
+				"length": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"publishDate": {
+					"type": "string"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"type": "string"
+				},
+				"service": {
+					"$ref": "#/definitions/PVService"
+				},
+				"thumbUrl": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"PVService": {
+			"enum": [
+				"Bandcamp",
+				"Bilibili",
+				"Creofuga",
+				"File",
+				"LocalFile",
+				"NicoNicoDouga",
+				"Piapro",
+				"SoundCloud",
+				"Vimeo",
+				"Youtube"
+			],
+			"type": "string"
+		},
+		"PlayQueueItemContract": {
+			"properties": {
+				"entry": {
+					"$ref": "#/definitions/EntryContract"
+				},
+				"pv": {
+					"$ref": "#/definitions/PVContract"
+				}
+			},
+			"type": "object"
+		},
+		"Record<string,any>": {
+			"type": "object"
+		},
+		"TagBaseContract": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"categoryName": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"urlSlug": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"TagUsageForApiContract": {
+			"properties": {
+				"count": {
+					"type": "number"
+				},
+				"tag": {
+					"$ref": "#/definitions/TagBaseContract"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"properties": {
+		"currentIndex": {
+			"type": "number"
+		},
+		"items": {
+			"items": {
+				"$ref": "#/definitions/PlayQueueItemContract"
+			},
+			"type": "array"
+		},
+		"page": {
+			"type": "number"
+		},
+		"queryParams": {
+			"$ref": "#/definitions/Record<string,any>"
+		},
+		"repositoryType": {
+			"enum": ["RatedSongs", "SongList", "Songs"],
+			"type": "string"
+		},
+		"totalCount": {
+			"type": "number"
+		}
+	},
+	"type": "object"
+}
