@@ -2,20 +2,102 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
+import { SongType } from '@/Models/Songs/SongType';
 import { AlbumOptionalField } from '@/Repositories/AlbumRepository';
 import { ReleaseEventOptionalField } from '@/Repositories/ReleaseEventRepository';
-import { SongListGetSongsQueryParams } from '@/Repositories/SongListRepository';
+import {
+	SongListGetSongsQueryParams,
+	SongListRepository,
+} from '@/Repositories/SongListRepository';
 import {
 	SongGetListQueryParams,
 	SongOptionalField,
+	SongRepository,
 } from '@/Repositories/SongRepository';
-import { UserGetRatedSongsListQueryParams } from '@/Repositories/UserRepository';
-import { PlayQueueSongContract } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	UserGetRatedSongsListQueryParams,
+	UserRepository,
+} from '@/Repositories/UserRepository';
+import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
+import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
+import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
 
 export type PlayQueueRepositoryQueryParams =
 	| UserGetRatedSongsListQueryParams
 	| SongListGetSongsQueryParams
 	| SongGetListQueryParams;
+
+// TODO: Remove.
+export enum EntryType {
+	Album = 'Album',
+	ReleaseEvent = 'ReleaseEvent',
+	Song = 'Song',
+}
+
+// TODO: Remove.
+export enum EntryStatus {
+	Draft = 'Draft',
+	Finished = 'Finished',
+	Approved = 'Approved',
+	Locked = 'Locked',
+}
+
+// TODO: Remove.
+export enum PVType {
+	Original = 'Original',
+	Reprint = 'Reprint',
+	Other = 'Other',
+}
+
+export interface PlayQueuePVContract {
+	id: number;
+	service: PVService;
+	pvId: string;
+	pvType: PVType;
+}
+
+export interface PlayQueueAlbumContract {
+	entryType: EntryType.Album;
+	id: number;
+	name: string;
+	status: EntryStatus;
+	additionalNames: string;
+	urlThumb: string;
+	pvs: PlayQueuePVContract[];
+	artistString: string;
+}
+
+export interface PlayQueueReleaseEventContract {
+	entryType: EntryType.ReleaseEvent;
+	id: number;
+	name: string;
+	status: EntryStatus;
+	additionalNames: string;
+	urlThumb: string;
+	pvs: PlayQueuePVContract[];
+}
+
+export interface PlayQueueSongContract {
+	entryType: EntryType.Song;
+	id: number;
+	name: string;
+	status: EntryStatus;
+	additionalNames: string;
+	urlThumb: string;
+	pvs: PlayQueuePVContract[];
+	artistString: string;
+	songType: SongType;
+}
+
+export type PlayQueueEntryContract =
+	| PlayQueueAlbumContract
+	| PlayQueueReleaseEventContract
+	| PlayQueueSongContract;
+
+export interface PlayQueueItemContract {
+	entry: PlayQueueEntryContract;
+	pvId: number;
+}
 
 export abstract class PlayQueueRepository<
 	TQueryParams extends PlayQueueRepositoryQueryParams
@@ -50,4 +132,33 @@ export abstract class PlayQueueRepository<
 		pvServices?: PVService[];
 		queryParams: TQueryParams;
 	}): Promise<PartialFindResultContract<PlayQueueSongContract>>;
+}
+
+export enum PlayQueueRepositoryType {
+	RatedSongs = 'RatedSongs',
+	SongList = 'SongList',
+	Songs = 'Songs',
+}
+
+export class PlayQueueRepositoryFactory {
+	public constructor(
+		private readonly songListRepo: SongListRepository,
+		private readonly songRepo: SongRepository,
+		private readonly userRepo: UserRepository,
+	) {}
+
+	public create = (
+		type: PlayQueueRepositoryType,
+	): PlayQueueRepository<PlayQueueRepositoryQueryParams> => {
+		switch (type) {
+			case PlayQueueRepositoryType.RatedSongs:
+				return new PlayQueueRepositoryForRatedSongsAdapter(this.userRepo);
+
+			case PlayQueueRepositoryType.SongList:
+				return new PlayQueueRepositoryForSongListAdapter(this.songListRepo);
+
+			case PlayQueueRepositoryType.Songs:
+				return new PlayQueueRepositoryForSongsAdapter(this.songRepo);
+		}
+	};
 }

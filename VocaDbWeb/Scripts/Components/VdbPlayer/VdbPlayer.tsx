@@ -9,7 +9,7 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';

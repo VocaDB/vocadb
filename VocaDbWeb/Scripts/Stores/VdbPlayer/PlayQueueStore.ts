@@ -2,22 +2,26 @@ import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
-import { PVService } from '@/Models/PVs/PVService';
-import { SongType } from '@/Models/Songs/SongType';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
+	EntryStatus,
+	EntryType,
+	PlayQueueAlbumContract,
+	PlayQueueEntryContract,
+	PlayQueueItemContract,
+	PlayQueuePVContract,
+	PlayQueueReleaseEventContract,
 	PlayQueueRepository,
+	PlayQueueRepositoryFactory,
 	PlayQueueRepositoryQueryParams,
+	PlayQueueRepositoryType,
+	PlayQueueSongContract,
+	PVType,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
-import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
-import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
@@ -29,84 +33,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-// TODO: Remove.
-export enum EntryType {
-	Album = 'Album',
-	ReleaseEvent = 'ReleaseEvent',
-	Song = 'Song',
-}
-
-// TODO: Remove.
-export enum EntryStatus {
-	Draft = 'Draft',
-	Finished = 'Finished',
-	Approved = 'Approved',
-	Locked = 'Locked',
-}
-
-// TODO: Remove.
-export enum PVType {
-	Original = 'Original',
-	Reprint = 'Reprint',
-	Other = 'Other',
-}
-
-interface PlayQueuePVContract {
-	id: number;
-	service: PVService;
-	pvId: string;
-	pvType: PVType;
-}
-
-interface PlayQueueAlbumContract {
-	entryType: EntryType.Album;
-	id: number;
-	name: string;
-	status: EntryStatus;
-	additionalNames: string;
-	urlThumb: string;
-	pvs: PlayQueuePVContract[];
-	artistString: string;
-}
-
-interface PlayQueueReleaseEventContract {
-	entryType: EntryType.ReleaseEvent;
-	id: number;
-	name: string;
-	status: EntryStatus;
-	additionalNames: string;
-	urlThumb: string;
-	pvs: PlayQueuePVContract[];
-}
-
-export interface PlayQueueSongContract {
-	entryType: EntryType.Song;
-	id: number;
-	name: string;
-	status: EntryStatus;
-	additionalNames: string;
-	urlThumb: string;
-	pvs: PlayQueuePVContract[];
-	artistString: string;
-	songType: SongType;
-}
-
-export type PlayQueueEntryContract =
-	| PlayQueueAlbumContract
-	| PlayQueueReleaseEventContract
-	| PlayQueueSongContract;
-
-interface PlayQueueItemContract {
-	entry: PlayQueueEntryContract;
-	pvId: number;
-}
-
-export enum PlayQueueRepositoryType {
-	RatedSongs = 'RatedSongs',
-	SongList = 'SongList',
-	Songs = 'Songs',
-}
 
 export interface PlayQueueLocalStorageState {
 	items?: PlayQueueItemContract[];
@@ -154,29 +80,6 @@ export class PlayQueueItem {
 
 	public toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pvId: this.pvId };
-	};
-}
-
-export class PlayQueueRepositoryFactory {
-	public constructor(
-		private readonly songListRepo: SongListRepository,
-		private readonly songRepo: SongRepository,
-		private readonly userRepo: UserRepository,
-	) {}
-
-	public create = (
-		type: PlayQueueRepositoryType,
-	): PlayQueueRepository<PlayQueueRepositoryQueryParams> => {
-		switch (type) {
-			case PlayQueueRepositoryType.RatedSongs:
-				return new PlayQueueRepositoryForRatedSongsAdapter(this.userRepo);
-
-			case PlayQueueRepositoryType.SongList:
-				return new PlayQueueRepositoryForSongListAdapter(this.songListRepo);
-
-			case PlayQueueRepositoryType.Songs:
-				return new PlayQueueRepositoryForSongsAdapter(this.songRepo);
-		}
 	};
 }
 

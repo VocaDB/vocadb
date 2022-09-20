@@ -8,10 +8,8 @@ import { SongVoteRatingsRadioKnockout } from '@/Components/Shared/Partials/User/
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import {
-	AutoplayContext,
-	PlayQueueRepositoryType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';

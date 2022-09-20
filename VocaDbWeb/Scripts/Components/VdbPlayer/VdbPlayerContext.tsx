@@ -5,10 +5,8 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import {
-	PlayQueueRepositoryFactory,
-	PlayQueueStore,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryFactory } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { VdbPlayerStore } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { PlayerApi } from '@vocadb/nostalgic-diva';
 import React from 'react';

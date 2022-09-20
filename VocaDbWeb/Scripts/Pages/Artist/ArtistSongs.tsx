@@ -6,10 +6,8 @@ import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContr
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
-import {
-	AutoplayContext,
-	PlayQueueRepositoryType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

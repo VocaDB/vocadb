@@ -12,7 +12,7 @@ import {
 	EntryType,
 	PlayQueueSongContract,
 	PVType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+} from '@/Stores/VdbPlayer/PlayQueueRepository';
 
 export class PlayQueueRepositoryForRatedSongsAdapter
 	implements PlayQueueRepository<UserGetRatedSongsListQueryParams> {

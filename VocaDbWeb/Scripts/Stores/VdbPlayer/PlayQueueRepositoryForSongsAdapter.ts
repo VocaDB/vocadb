@@ -6,13 +6,13 @@ import {
 	SongGetListQueryParams,
 	SongRepository,
 } from '@/Repositories/SongRepository';
-import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import {
 	EntryStatus,
 	EntryType,
+	PlayQueueRepository,
 	PlayQueueSongContract,
 	PVType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+} from '@/Stores/VdbPlayer/PlayQueueRepository';
 
 export class PlayQueueRepositoryForSongsAdapter
 	implements PlayQueueRepository<SongGetListQueryParams> {

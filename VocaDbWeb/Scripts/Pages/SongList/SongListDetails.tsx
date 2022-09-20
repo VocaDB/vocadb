@@ -43,10 +43,8 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
-import {
-	AutoplayContext,
-	PlayQueueRepositoryType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';

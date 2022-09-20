@@ -3,10 +3,8 @@ import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import {
-	PlayQueueRepositoryFactory,
-	PlayQueueStore,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryFactory } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';

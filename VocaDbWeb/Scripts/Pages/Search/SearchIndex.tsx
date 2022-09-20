@@ -33,10 +33,8 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
-import {
-	AutoplayContext,
-	PlayQueueRepositoryType,
-} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
