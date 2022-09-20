@@ -207,6 +207,8 @@ interface PVServiceDropdownProps {
 
 const PVServiceDropdown = observer(
 	({ item }: PVServiceDropdownProps): React.ReactElement => {
+		const { playQueue } = useVdbPlayer();
+
 		return (
 			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
 				<Dropdown.Toggle variant="inverse">
@@ -215,10 +217,10 @@ const PVServiceDropdown = observer(
 				<Dropdown.Menu>
 					{item.entry.pvs.map((pv) => (
 						<Dropdown.Item
-							onClick={(): void => {
+							onClick={async (): Promise<void> => {
 								if (pv.id === item.pv.id) return;
 
-								// TODO: Implement.
+								playQueue.switchPV(pv);
 							}}
 							key={pv.id}
 						>

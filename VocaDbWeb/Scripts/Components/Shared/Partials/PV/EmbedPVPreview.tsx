@@ -121,11 +121,11 @@ export const EmbedPVPreview = observer(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				await playQueue.loadItemsAndPlay(method, entry);
+				await playQueue.loadItemsAndPlay(method, entry, pv);
 
 				handleResize();
 			},
-			[entry, playQueue, handleResize],
+			[entry, pv, playQueue, handleResize],
 		);
 
 		React.useLayoutEffect(() => {

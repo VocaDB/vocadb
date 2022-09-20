@@ -272,10 +272,11 @@ export class PlayQueueStore
 
 	private static createItemsFromSongs = (
 		songs: PlayQueueSongContract[],
+		autoplay: boolean,
 	): PlayQueueItem[] => {
 		return songs
 			.map((song) => {
-				const primaryPV = PVHelper.primaryPV(song.pvs, true);
+				const primaryPV = PVHelper.primaryPV(song.pvs, autoplay);
 				return primaryPV ? new PlayQueueItem(song, primaryPV.id) : undefined;
 			})
 			.filter((item) => !!item)
@@ -330,16 +331,17 @@ export class PlayQueueStore
 
 	private loadItemsFromAlbum = async (
 		entry: EntryContract,
+		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		const { album, songs } = await this.getAlbumAndSongs({
 			id: entry.id,
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = PVHelper.primaryPV(album.pvs, true);
+		const primaryPV = pv ?? PVHelper.primaryPV(album.pvs, false);
 		return [
 			...(primaryPV ? [new PlayQueueItem(album, primaryPV.id)] : []),
-			...PlayQueueStore.createItemsFromSongs(songs),
+			...PlayQueueStore.createItemsFromSongs(songs, true),
 		];
 	};
 
@@ -366,12 +368,13 @@ export class PlayQueueStore
 
 	private loadItemsFromEvent = async (
 		entry: EntryContract,
+		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		const event = await this.getEvent({
 			id: entry.id,
 		});
 
-		const primaryPV = PVHelper.primaryPV(event.pvs, true);
+		const primaryPV = pv ?? PVHelper.primaryPV(event.pvs, false);
 		return primaryPV ? [new PlayQueueItem(event, primaryPV.id)] : [];
 	};
 
@@ -403,27 +406,30 @@ export class PlayQueueStore
 
 	private loadItemsFromSong = async (
 		entry: EntryContract,
+		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		const song = await this.getSong({
 			id: entry.id,
 			lang: this.values.languagePreference,
 		});
 
-		return PlayQueueStore.createItemsFromSongs([song]);
+		const primaryPV = pv ?? PVHelper.primaryPV(song.pvs, false);
+		return primaryPV ? [new PlayQueueItem(song, primaryPV.id)] : [];
 	};
 
 	private loadItems = async (
 		entry: EntryContract,
+		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		switch (entry.entryType) {
 			case EntryType[EntryType.Album]:
-				return this.loadItemsFromAlbum(entry);
+				return this.loadItemsFromAlbum(entry, pv);
 
 			case EntryType[EntryType.ReleaseEvent]:
-				return this.loadItemsFromEvent(entry);
+				return this.loadItemsFromEvent(entry, pv);
 
 			case EntryType[EntryType.Song]:
-				return this.loadItemsFromSong(entry);
+				return this.loadItemsFromSong(entry, pv);
 
 			default:
 				throw new Error(`Unsupported entry type: ${entry.entryType}`);
@@ -433,8 +439,9 @@ export class PlayQueueStore
 	public loadItemsAndPlay = async (
 		method: PlayMethod,
 		entry: EntryContract,
+		pv?: PVContract,
 	): Promise<void> => {
-		const items = await this.loadItems(entry);
+		const items = await this.loadItems(entry, pv);
 
 		this.play(method, items);
 	};
@@ -460,7 +467,7 @@ export class PlayQueueStore
 			queryParams: queryParams,
 		});
 
-		const songItems = PlayQueueStore.createItemsFromSongs(songs);
+		const songItems = PlayQueueStore.createItemsFromSongs(songs, true);
 
 		runInAction(() => {
 			this.items.push(...songItems);
@@ -561,6 +568,16 @@ export class PlayQueueStore
 		await this.updateResultsWithTotalCount();
 
 		this.setCurrentItem(this.items[0]);
+	};
+
+	@action public switchPV = (pv: PVContract): void => {
+		const { currentIndex } = this;
+		if (currentIndex === undefined) return;
+
+		const currentItem = this.items[currentIndex];
+		const newItem = new PlayQueueItem(currentItem.entry, pv.id);
+		this.items[currentIndex] = newItem;
+		this.currentId = newItem.id;
 	};
 
 	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
