@@ -2,6 +2,7 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Container from '@/Bootstrap/Container';
 import Dropdown from '@/Bootstrap/Dropdown';
+import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
@@ -10,6 +11,7 @@ import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
@@ -199,6 +201,41 @@ const EntryInfo = observer(
 	},
 );
 
+interface PVServiceDropdownProps {
+	item: PlayQueueItem;
+}
+
+const PVServiceDropdown = observer(
+	({ item }: PVServiceDropdownProps): React.ReactElement => {
+		return (
+			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
+				<Dropdown.Toggle variant="inverse">
+					<PVServiceIcon service={item.pv.service} />
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
+					{item.entry.pvs.map((pv) => (
+						<Dropdown.Item
+							onClick={(): void => {
+								if (pv.id === item.pv.id) return;
+
+								// TODO: Implement.
+							}}
+							key={pv.id}
+						>
+							{pv.id === item.pv.id ? (
+								<i className="menuIcon icon-ok" />
+							) : (
+								<i className="menuIcon icon-" />
+							)}{' '}
+							<PVServiceIcon service={pv.service} /> {pv.service}
+						</Dropdown.Item>
+					))}
+				</Dropdown.Menu>
+			</Dropdown>
+		);
+	},
+);
+
 const PlayerRightControls = observer(
 	(): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
@@ -224,58 +261,66 @@ const PlayerRightControls = observer(
 		}, [playerRef]);
 
 		return (
-			<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
-				<Dropdown.Toggle variant="inverse">
-					<span
-						css={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-					>
-						<MoreHorizontal20Filled />
-					</span>
-				</Dropdown.Toggle>
-				<Dropdown.Menu>
-					<Dropdown.Item as={Link} to="/playlist">
-						Show play queue{/* TODO: localize */}
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={handleClickSkipBack10Seconds}
-						disabled={!vdbPlayer.canAutoplay}
-					>
-						Skip back 10 seconds{/* TODO: localize */}
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={handleClickSkipForward30Seconds}
-						disabled={!vdbPlayer.canAutoplay}
-					>
-						Skip forward 30 seconds{/* TODO: localize */}
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={vdbPlayer.toggleShuffle}
-						disabled={true /* TODO: !vdbPlayer.canAutoplay */}
-						className="visible-phone"
-						title="Coming soon!" /* TODO: Remove. */
-					>
-						{
-							`Shuffle: ${
-								vdbPlayer.shuffle ? 'On' : 'Off'
-							}` /* TODO: localize */
-						}
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={vdbPlayer.toggleRepeat}
-						disabled={!vdbPlayer.canAutoplay}
-						className="visible-phone"
-					>
-						{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
-					</Dropdown.Item>
-					<Dropdown.Item onClick={playQueue.clear} disabled={playQueue.isEmpty}>
-						Clear play queue{/* TODO: localize */}
-					</Dropdown.Item>
-				</Dropdown.Menu>
-			</Dropdown>
+			<>
+				{playQueue.currentItem && (
+					<PVServiceDropdown item={playQueue.currentItem} />
+				)}{' '}
+				<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
+					<Dropdown.Toggle variant="inverse">
+						<span
+							css={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<MoreHorizontal20Filled />
+						</span>
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+						<Dropdown.Item as={Link} to="/playlist">
+							Show play queue{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={handleClickSkipBack10Seconds}
+							disabled={!vdbPlayer.canAutoplay}
+						>
+							Skip back 10 seconds{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={handleClickSkipForward30Seconds}
+							disabled={!vdbPlayer.canAutoplay}
+						>
+							Skip forward 30 seconds{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={vdbPlayer.toggleShuffle}
+							disabled={true /* TODO: !vdbPlayer.canAutoplay */}
+							className="visible-phone"
+							title="Coming soon!" /* TODO: Remove. */
+						>
+							{
+								`Shuffle: ${
+									vdbPlayer.shuffle ? 'On' : 'Off'
+								}` /* TODO: localize */
+							}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={vdbPlayer.toggleRepeat}
+							disabled={!vdbPlayer.canAutoplay}
+							className="visible-phone"
+						>
+							{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={playQueue.clear}
+							disabled={playQueue.isEmpty}
+						>
+							Clear play queue{/* TODO: localize */}
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
+			</>
 		);
 	},
 );
