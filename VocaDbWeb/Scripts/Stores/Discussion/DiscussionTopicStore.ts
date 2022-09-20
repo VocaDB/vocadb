@@ -4,7 +4,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
-import { StoreWithRouteParams } from '@vocadb/route-sphere';
+import { LocationStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -26,7 +26,7 @@ const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export class DiscussionTopicStore
-	implements StoreWithRouteParams<DiscussionTopicRouteParams> {
+	implements LocationStateStore<DiscussionTopicRouteParams> {
 	@observable public comments: EditableCommentsStore;
 	@observable public contract: DiscussionTopicContract;
 	@observable public editStore?: DiscussionTopicEditStore = undefined;
@@ -92,18 +92,16 @@ export class DiscussionTopicStore
 			});
 	};
 
-	public popState = false;
-
-	@computed.struct public get routeParams(): DiscussionTopicRouteParams {
+	@computed.struct public get locationState(): DiscussionTopicRouteParams {
 		return {
 			page: this.comments.paging.page,
 		};
 	}
-	public set routeParams(value: DiscussionTopicRouteParams) {
+	public set locationState(value: DiscussionTopicRouteParams) {
 		this.comments.paging.page = value.page ?? 1;
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is DiscussionTopicRouteParams => {
 		return validate(data);

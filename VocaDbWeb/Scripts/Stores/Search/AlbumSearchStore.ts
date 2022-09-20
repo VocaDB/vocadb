@@ -13,6 +13,7 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the AlbumSortRule enum in C#.
@@ -46,6 +47,23 @@ export interface AlbumSearchRouteParams {
 	tagId?: number | number[];
 	viewMode?: string /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'sort',
+	'discType',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+];
 
 export class AlbumSearchStore extends SearchCategoryBaseStore<
 	AlbumSearchRouteParams,
@@ -115,24 +133,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		return ratings;
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'sort',
-		'discType',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-	];
-
-	@computed.struct public get routeParams(): AlbumSearchRouteParams {
+	@computed.struct public get locationState(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -155,7 +156,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: AlbumSearchRouteParams) {
+	public set locationState(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -173,4 +174,14 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<AlbumSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

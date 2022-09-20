@@ -5,7 +5,11 @@ import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -20,6 +24,8 @@ interface DiscussionIndexRouteParams {
 	page?: number;
 }
 
+const clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -28,7 +34,7 @@ const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./Discussion
 const validate = ajv.compile(schema);
 
 export class DiscussionIndexStore
-	implements StoreWithPagination<DiscussionIndexRouteParams> {
+	implements LocationStateStore<DiscussionIndexRouteParams> {
 	@observable public folders: DiscussionFolderContract[] = [];
 	@observable public newTopic: DiscussionTopicEditStore;
 	public readonly paging = new ServerSidePagingStore(30); // Paging store
@@ -169,20 +175,16 @@ export class DiscussionIndexStore
 		return this.discussionRepo.deleteTopic({ topicId: topic.id });
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
-
-	@computed.struct public get routeParams(): DiscussionIndexRouteParams {
+	@computed.struct public get locationState(): DiscussionIndexRouteParams {
 		return {
 			page: this.paging.page,
 		};
 	}
-	public set routeParams(value: DiscussionIndexRouteParams) {
+	public set locationState(value: DiscussionIndexRouteParams) {
 		this.paging.page = value.page ?? 1;
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is DiscussionIndexRouteParams => {
 		return validate(data);
@@ -200,7 +202,13 @@ export class DiscussionIndexStore
 		this.pauseNotifications = false;
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<DiscussionIndexRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

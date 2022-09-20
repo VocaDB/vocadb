@@ -20,7 +20,11 @@ import {
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
@@ -31,6 +35,12 @@ interface UserSongListsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -40,7 +50,7 @@ const validate = ajv.compile(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements StoreWithUpdateResults<UserSongListsRouteParams> {
+	implements LocationStateStore<UserSongListsRouteParams> {
 	public constructor(
 		values: GlobalValues,
 		private readonly userId: number,
@@ -63,15 +73,7 @@ export class UserSongListsStore
 		});
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is UserSongListsRouteParams => {
 		return validate(data);
@@ -87,6 +89,14 @@ export class UserSongListsStore
 		await this.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<UserSongListsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }
 

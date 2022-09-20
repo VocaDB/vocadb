@@ -13,7 +13,7 @@ import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -33,7 +33,7 @@ const FollowedArtists = observer(
 			'VocaDb.Model.Resources',
 		]);
 
-		useStoreWithPagination(followedArtistsStore);
+		useLocationStateStore(followedArtistsStore);
 
 		return (
 			<>

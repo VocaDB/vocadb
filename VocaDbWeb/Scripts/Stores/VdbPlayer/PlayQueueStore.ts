@@ -1,7 +1,18 @@
-import { EntryContract } from '@/DataContracts/EntryContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueRepositoryForRatedSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForRatedSongsAdapter';
+import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
+import { PlayQueueRepositoryForSongsAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongsAdapter';
+import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
 	action,
@@ -11,6 +22,52 @@ import {
 	runInAction,
 } from 'mobx';
 
+export type PlayQueueEntryThumbContract = Required<
+	Pick<EntryThumbContract, 'urlThumb'>
+>;
+
+export type PlayQueueAlbumContract = {
+	entryType: 'Album' /* TODO: enum */;
+} & Required<
+	Pick<
+		AlbumContract,
+		| 'id'
+		| 'name'
+		| 'status'
+		| 'additionalNames'
+		| 'artistString'
+		| 'mainPicture'
+	>
+>;
+
+export type PlayQueueSongContract = {
+	entryType: 'Song' /* TODO: enum */;
+} & Required<
+	Pick<
+		SongContract,
+		| 'id'
+		| 'name'
+		| 'status'
+		| 'additionalNames'
+		| 'artistString'
+		| 'mainPicture'
+		| 'songType'
+	>
+>;
+
+export type PlayQueueEntryContract =
+	| PlayQueueAlbumContract
+	| PlayQueueSongContract;
+
+export type PlayQueuePVContract = Required<
+	Pick<PVContract, 'id' | 'service' | 'pvId' | 'pvType'>
+>;
+
+export interface PlayQueueItemContract {
+	entry: PlayQueueEntryContract;
+	pv: PlayQueuePVContract;
+}
+
 export class PlayQueueItem {
 	private static nextId = 1;
 
@@ -19,13 +76,24 @@ export class PlayQueueItem {
 	@observable public isSelected = false;
 
 	public constructor(
-		public readonly entry: EntryContract,
-		public readonly pv: PVContract,
+		public readonly entry: PlayQueueEntryContract,
+		public readonly pv: PlayQueuePVContract,
 	) {
 		makeObservable(this);
 
 		this.id = PlayQueueItem.nextId++;
 	}
+
+	public static fromContract = ({
+		entry,
+		pv,
+	}: PlayQueueItemContract): PlayQueueItem => {
+		return new PlayQueueItem(entry, pv);
+	};
+
+	public toContract = (): PlayQueueItemContract => {
+		return { entry: this.entry, pv: this.pv };
+	};
 }
 
 export enum PlayMethod {
@@ -34,20 +102,67 @@ export enum PlayMethod {
 	AddToPlayQueue,
 }
 
-type AutoplayCallback = (
-	pagingProps: PagingProperties,
-) => Promise<PartialFindResultContract<PlayQueueItem>>;
+export enum PlayQueueRepositoryType {
+	RatedSongs = 'RatedSongs',
+	SongList = 'SongList',
+	Songs = 'Songs',
+}
 
-export class PlayQueueStore {
+export class PlayQueueRepositoryFactory {
+	public constructor(
+		private readonly songListRepo: SongListRepository,
+		private readonly songRepo: SongRepository,
+		private readonly userRepo: UserRepository,
+	) {}
+
+	public create = (type: PlayQueueRepositoryType): PlayQueueRepository<any> => {
+		switch (type) {
+			case PlayQueueRepositoryType.RatedSongs:
+				return new PlayQueueRepositoryForRatedSongsAdapter(this.userRepo);
+
+			case PlayQueueRepositoryType.SongList:
+				return new PlayQueueRepositoryForSongListAdapter(this.songListRepo);
+
+			case PlayQueueRepositoryType.Songs:
+				return new PlayQueueRepositoryForSongsAdapter(this.songRepo);
+		}
+	};
+}
+
+export class AutoplayContext<TQueryParams> {
+	public constructor(
+		public readonly repositoryType: PlayQueueRepositoryType,
+		public readonly queryParams: TQueryParams,
+	) {}
+}
+
+interface PlayQueueLocalStorageState {
+	items?: PlayQueueItemContract[];
+	currentIndex?: number;
+	repositoryType?: PlayQueueRepositoryType;
+	queryParams?: Record<string, any>;
+	totalCount?: number;
+	page?: number;
+}
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<PlayQueueLocalStorageState> = require('./PlayQueueLocalStorageState.schema');
+const validate = ajv.compile(schema);
+
+export class PlayQueueStore
+	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
 
-	private autoplayCallback?: AutoplayCallback;
-	private totalCount = 0;
-	private start = 0;
-	@observable public hasMoreItems = false;
+	private autoplayContext?: AutoplayContext<any>;
+	private readonly paging = new ServerSidePagingStore(30);
 
-	public constructor() {
+	public constructor(
+		private readonly playQueueRepoFactory: PlayQueueRepositoryFactory,
+	) {
 		makeObservable(this);
 	}
 
@@ -77,6 +192,10 @@ export class PlayQueueStore {
 			this.currentIndex !== undefined &&
 			this.currentIndex > 0
 		);
+	}
+
+	@computed public get hasMoreItems(): boolean {
+		return !this.paging.isLastPage;
 	}
 
 	@computed public get hasNextItem(): boolean {
@@ -116,10 +235,9 @@ export class PlayQueueStore {
 		this.currentIndex = undefined;
 		this.items = [];
 
-		this.autoplayCallback = undefined;
-		this.totalCount = 0;
-		this.start = 0;
-		this.hasMoreItems = false;
+		this.autoplayContext = undefined;
+		this.paging.page = 1;
+		this.paging.totalItems = 0;
 	};
 
 	@action public unselectAll = (): void => {
@@ -189,30 +307,42 @@ export class PlayQueueStore {
 		this.currentIndex--;
 	};
 
-	private loadMoreItems = async (getTotalCount: boolean): Promise<void> => {
-		if (!this.autoplayCallback) return;
+	private updateResults = async (getTotalCount: boolean): Promise<void> => {
+		if (!this.autoplayContext) return;
 
-		const pagingProps = {
-			getTotalCount: getTotalCount,
-			maxEntries: 30,
-			start: this.start,
-		};
+		const { repositoryType, queryParams } = this.autoplayContext;
 
-		const { items, totalCount } = await this.autoplayCallback(pagingProps);
+		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
 
-		if (getTotalCount) this.totalCount = totalCount;
+		const pagingProps = this.paging.getPagingProperties(getTotalCount);
+
+		const { items, totalCount } = await playQueueRepo.getItems(
+			VideoServiceHelper.autoplayServices,
+			pagingProps,
+			queryParams,
+		);
 
 		runInAction(() => {
 			this.items.push(...items);
-			this.start += pagingProps.maxEntries;
-			this.hasMoreItems = this.start < this.totalCount;
+
+			if (getTotalCount) this.paging.totalItems = totalCount;
 		});
+	};
+
+	public updateResultsWithoutTotalCount = (): Promise<void> => {
+		return this.updateResults(false);
+	};
+
+	public updateResultsWithTotalCount = (): Promise<void> => {
+		return this.updateResults(true);
 	};
 
 	public loadMore = async (): Promise<void> => {
 		if (!this.hasMoreItems) return;
 
-		await this.loadMoreItems(false);
+		this.paging.nextPage();
+
+		await this.updateResultsWithoutTotalCount();
 	};
 
 	@action public next = async (): Promise<void> => {
@@ -220,7 +350,7 @@ export class PlayQueueStore {
 
 		if (!this.hasNextItem) return;
 
-		if (this.isLastItem) {
+		if (this.isLastItem && this.hasMoreItems) {
 			await this.loadMore();
 		}
 
@@ -273,15 +403,42 @@ export class PlayQueueStore {
 		}
 	};
 
-	@action public startAutoplay = async (
-		autoplayCallback: AutoplayCallback,
+	@action public startAutoplay = async <TQueryParams>(
+		autoplayContext: AutoplayContext<TQueryParams>,
 	): Promise<void> => {
 		this.clear();
 
-		this.autoplayCallback = autoplayCallback;
+		this.autoplayContext = autoplayContext;
 
-		await this.loadMoreItems(true);
+		await this.updateResultsWithTotalCount();
 
 		this.setCurrentItem(this.items[0]);
+	};
+
+	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
+		return {
+			items: this.items.map((item) => item.toContract()),
+			currentIndex: this.currentIndex,
+			repositoryType: this.autoplayContext?.repositoryType,
+			queryParams: this.autoplayContext?.queryParams,
+			totalCount: this.paging.totalItems,
+			page: this.paging.page,
+		};
+	}
+	public set localStorageState(value: PlayQueueLocalStorageState) {
+		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
+		this.currentIndex = value.currentIndex;
+		this.autoplayContext =
+			value.repositoryType && value.queryParams
+				? new AutoplayContext(value.repositoryType, value.queryParams)
+				: undefined;
+		this.paging.totalItems = value.totalCount ?? 0;
+		this.paging.page = value.page ?? 1;
+	}
+
+	public validateLocalStorageState = (
+		localStorageState: any,
+	): localStorageState is PlayQueueLocalStorageState => {
+		return validate(localStorageState);
 	};
 }

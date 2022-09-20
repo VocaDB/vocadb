@@ -13,8 +13,9 @@ import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
+import { useLocalStorageStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
-import { reaction, runInAction } from 'mobx';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -592,34 +593,14 @@ const BottomBar = React.memo(
 	},
 );
 
-const useBottomBarEnabled = (): void => {
-	const { vdbPlayer } = useVdbPlayer();
-
-	const key = 'bottomBar.enabled';
-
-	React.useLayoutEffect(() => {
-		runInAction(() => {
-			vdbPlayer.bottomBarEnabled = window.localStorage.getItem(key) !== 'false';
-		});
-	}, [vdbPlayer]);
-
-	React.useLayoutEffect(() => {
-		return reaction(
-			() => vdbPlayer.bottomBarEnabled,
-			(bottomBarEnabled) => {
-				window.localStorage.setItem(key, JSON.stringify(bottomBarEnabled));
-			},
-		);
-	}, [vdbPlayer]);
-};
-
 export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		useBottomBarEnabled();
-
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+
+		useLocalStorageStateStore('VdbPlayerStore', vdbPlayer);
+		useLocalStorageStateStore('PlayQueueStore', playQueue);
 
 		React.useEffect(() => {
 			// Returns the disposer.

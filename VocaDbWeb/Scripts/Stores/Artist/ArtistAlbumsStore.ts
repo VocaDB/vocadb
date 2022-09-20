@@ -5,7 +5,11 @@ import {
 	AlbumSortRule,
 } from '@/Stores/Search/AlbumSearchStore';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
 export interface ArtistAlbumsRouteParams {
@@ -14,6 +18,12 @@ export interface ArtistAlbumsRouteParams {
 	sort?: AlbumSortRule;
 	viewMode?: string /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof ArtistAlbumsRouteParams)[] = [
+	'pageSize',
+
+	'sort',
+];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -24,7 +34,7 @@ const validate = ajv.compile(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
-	implements StoreWithPagination<ArtistAlbumsRouteParams> {
+	implements LocationStateStore<ArtistAlbumsRouteParams> {
 	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -34,15 +44,7 @@ export class ArtistAlbumsStore
 		);
 	}
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof ArtistAlbumsRouteParams)[] = [
-		'pageSize',
-
-		'sort',
-	];
-
-	public get routeParams(): ArtistAlbumsRouteParams {
+	public get locationState(): ArtistAlbumsRouteParams {
 		return {
 			page: this.paging.page,
 			pageSize: this.paging.pageSize,
@@ -50,14 +52,26 @@ export class ArtistAlbumsStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: ArtistAlbumsRouteParams) {
+	public set locationState(value: ArtistAlbumsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? AlbumSortRule.Name;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateRouteParams = (data: any): data is ArtistAlbumsRouteParams => {
+	public validateLocationState = (
+		data: any,
+	): data is ArtistAlbumsRouteParams => {
 		return validate(data);
+	};
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<ArtistAlbumsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

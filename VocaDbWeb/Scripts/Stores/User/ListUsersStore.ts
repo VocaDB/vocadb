@@ -5,7 +5,11 @@ import {
 	UserRepository,
 } from '@/Repositories/UserRepository';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -27,6 +31,15 @@ export interface ListUsersRouteParams {
 	sort?: UserSortRule;
 }
 
+const clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
+	'disabledUsers',
+	'groupId',
+	'knowsLanguage',
+	'onlyVerifiedArtists',
+	'pageSize',
+	'filter',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -35,7 +48,7 @@ const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRoutePa
 const validate = ajv.compile(schema);
 
 export class ListUsersStore
-	implements StoreWithPagination<ListUsersRouteParams> {
+	implements LocationStateStore<ListUsersRouteParams> {
 	@observable public disabledUsers = false;
 	@observable public group = UserGroup.Nothing;
 	@observable public loading = false;
@@ -50,18 +63,7 @@ export class ListUsersStore
 		makeObservable(this);
 	}
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
-		'disabledUsers',
-		'groupId',
-		'knowsLanguage',
-		'onlyVerifiedArtists',
-		'pageSize',
-		'filter',
-	];
-
-	@computed.struct public get routeParams(): ListUsersRouteParams {
+	@computed.struct public get locationState(): ListUsersRouteParams {
 		return {
 			disabledUsers: this.disabledUsers,
 			filter: this.searchTerm,
@@ -73,7 +75,7 @@ export class ListUsersStore
 			sort: this.sort,
 		};
 	}
-	public set routeParams(value: ListUsersRouteParams) {
+	public set locationState(value: ListUsersRouteParams) {
 		this.disabledUsers = value.disabledUsers ?? false;
 		this.searchTerm = value.filter ?? '';
 		this.group = value.groupId ?? UserGroup.Nothing;
@@ -84,7 +86,7 @@ export class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	public validateRouteParams = (data: any): data is ListUsersRouteParams => {
+	public validateLocationState = (data: any): data is ListUsersRouteParams => {
 		return validate(data);
 	};
 
@@ -127,7 +129,13 @@ export class ListUsersStore
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<ListUsersRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

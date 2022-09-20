@@ -6,6 +6,7 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 
 // Corresponds to the TagSortRule enum in C#.
@@ -24,6 +25,16 @@ export interface TagSearchRouteParams {
 	searchType?: SearchType.Tag;
 	sort?: TagSortRule;
 }
+
+const clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'searchType',
+
+	// TODO: allowAliases
+	'categoryName',
+	'sort',
+];
 
 export class TagSearchStore extends SearchCategoryBaseStore<
 	TagSearchRouteParams,
@@ -64,17 +75,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof TagSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'searchType',
-
-		// TODO: allowAliases
-		'categoryName',
-		'sort',
-	];
-
-	@computed.struct public get routeParams(): TagSearchRouteParams {
+	@computed.struct public get locationState(): TagSearchRouteParams {
 		return {
 			searchType: SearchType.Tag,
 			categoryName: this.categoryName,
@@ -84,11 +85,21 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 			sort: this.sort,
 		};
 	}
-	public set routeParams(value: TagSearchRouteParams) {
+	public set locationState(value: TagSearchRouteParams) {
 		this.categoryName = value.categoryName;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<TagSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

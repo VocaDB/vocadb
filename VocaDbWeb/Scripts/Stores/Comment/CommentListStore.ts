@@ -8,7 +8,11 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import _ from 'lodash';
 import {
@@ -39,6 +43,12 @@ interface CommentListRouteParams {
 	userId?: number;
 }
 
+const clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
+	'entryType',
+	'sort',
+	'userId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -47,7 +57,7 @@ const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRou
 const validate = ajv.compile(schema);
 
 export class CommentListStore
-	implements StoreWithUpdateResults<CommentListRouteParams> {
+	implements LocationStateStore<CommentListRouteParams> {
 	@observable public entries: EntryWithCommentsContract[] = [];
 	@observable public entryType = EntryType[EntryType.Undefined];
 	@observable public lastEntryDate?: Date;
@@ -67,28 +77,22 @@ export class CommentListStore
 		);
 	}
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
-		'entryType',
-		'sort',
-		'userId',
-	];
-
-	@computed.struct public get routeParams(): CommentListRouteParams {
+	@computed.struct public get locationState(): CommentListRouteParams {
 		return {
 			entryType: this.entryType,
 			sort: this.sort,
 			userId: this.user.id,
 		};
 	}
-	public set routeParams(value: CommentListRouteParams) {
+	public set locationState(value: CommentListRouteParams) {
 		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
 		this.sort = value.sort ?? CommentSortRule.CreateDateDescending;
 		this.user.id = value.userId;
 	}
 
-	public validateRouteParams = (data: any): data is CommentListRouteParams => {
+	public validateLocationState = (
+		data: any,
+	): data is CommentListRouteParams => {
 		return validate(data);
 	};
 
@@ -157,5 +161,13 @@ export class CommentListStore
 		await this.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<CommentListRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

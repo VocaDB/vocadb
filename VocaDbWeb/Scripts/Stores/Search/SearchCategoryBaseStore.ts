@@ -7,7 +7,7 @@ import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
 import _ from 'lodash';
 import {
 	action,
@@ -21,12 +21,10 @@ import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
-> extends Omit<
-		StoreWithPagination<TRouteParams>,
-		'popState' | 'validateRouteParams'
-	> {
+> extends Omit<LocationStateStore<TRouteParams>, 'validateLocationState'> {
 	paging: ServerSidePagingStore;
-	updateResultsWithTotalCount: () => Promise<void>;
+	updateResults(clearResults: boolean): Promise<void>;
+	updateResultsWithTotalCount(): Promise<void>;
 }
 
 // Base class for different types of searches.
@@ -123,8 +121,7 @@ export abstract class SearchCategoryBaseStore<
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public abstract clearResultsByQueryKeys: (keyof TRouteParams)[];
-	public abstract routeParams: TRouteParams;
+	public abstract locationState: TRouteParams;
 
 	private pauseNotifications = false;
 
@@ -173,7 +170,8 @@ export abstract class SearchCategoryBaseStore<
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
-	};
+	public abstract onLocationStateChange({
+		keys,
+		popState,
+	}: StateChangeEvent<TRouteParams>): void;
 }

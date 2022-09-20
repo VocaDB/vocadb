@@ -6,7 +6,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
-import { useStoreWithRouteParams } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ const ViewTopic = observer(
 		const { t } = useTranslation(['ViewRes']);
 		const navigate = useNavigate();
 
-		useStoreWithRouteParams(discussionTopicStore);
+		useLocationStateStore(discussionTopicStore);
 
 		return (
 			<div>

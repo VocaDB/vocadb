@@ -5,7 +5,11 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -22,6 +26,12 @@ export interface FollowedArtistsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
+	'pageSize',
+	'tagId',
+	'artistType',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -30,7 +40,7 @@ const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedAr
 const validate = ajv.compile(schema);
 
 export class FollowedArtistsStore
-	implements StoreWithPagination<FollowedArtistsRouteParams> {
+	implements LocationStateStore<FollowedArtistsRouteParams> {
 	@observable public artistType = ArtistType.Unknown;
 	@observable public loading = true; // Currently loading for data
 	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
@@ -87,15 +97,7 @@ export class FollowedArtistsStore
 		});
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
-		'pageSize',
-		'tagId',
-		'artistType',
-	];
-
-	@computed.struct public get routeParams(): FollowedArtistsRouteParams {
+	@computed.struct public get locationState(): FollowedArtistsRouteParams {
 		return {
 			artistType: this.artistType,
 			page: this.paging.page,
@@ -103,20 +105,26 @@ export class FollowedArtistsStore
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: FollowedArtistsRouteParams) {
+	public set locationState(value: FollowedArtistsRouteParams) {
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is FollowedArtistsRouteParams => {
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<FollowedArtistsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

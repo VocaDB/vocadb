@@ -1,7 +1,28 @@
-import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	PlayQueueRepositoryFactory,
+	PlayQueueStore,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 import { VdbPlayerStore } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { PlayerApi } from '@vocadb/nostalgic-diva';
 import React from 'react';
+
+const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
+const songListRepo = new SongListRepository(httpClient, urlMapper);
+const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
+const userRepo = new UserRepository(httpClient, urlMapper);
+
+const playQueueRepoFactory = new PlayQueueRepositoryFactory(
+	songListRepo,
+	songRepo,
+	userRepo,
+);
 
 interface VdbPlayerContextProps {
 	vdbPlayer: VdbPlayerStore;
@@ -18,7 +39,9 @@ interface VdbPlayerProviderProps {
 export const VdbPlayerProvider = ({
 	children,
 }: VdbPlayerProviderProps): React.ReactElement => {
-	const [vdbPlayer] = React.useState(() => new VdbPlayerStore());
+	const [vdbPlayer] = React.useState(
+		() => new VdbPlayerStore(playQueueRepoFactory),
+	);
 
 	const playerRef = React.useRef<PlayerApi>();
 

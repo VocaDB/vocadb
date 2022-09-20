@@ -11,7 +11,7 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { FeaturedSongListsStore } from '@/Stores/SongList/FeaturedSongListsStore';
-import { useStoreWithUpdateResults } from '@vocadb/route-sphere';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -49,7 +49,7 @@ const SongListFeatured = observer(
 
 		useVocaDbTitle(title, ready);
 
-		useStoreWithUpdateResults(featuredSongListsStore);
+		useLocationStateStore(featuredSongListsStore);
 
 		return (
 			<Layout

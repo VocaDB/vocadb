@@ -142,7 +142,24 @@ export const EmbedPVPreview = observer(
 
 					playQueue.play(method, items);
 				} else {
-					const item = new PlayQueueItem(entry, pv);
+					const item = new PlayQueueItem(
+						{
+							entryType: 'Song' /* TODO: enum */,
+							id: entry.id,
+							name: entry.name,
+							status: entry.status!,
+							additionalNames: entry.additionalNames!,
+							artistString: entry.artistString!,
+							mainPicture: { urlThumb: entry.mainPicture?.urlThumb! },
+							songType: entry.songType!,
+						},
+						{
+							id: pv.id!,
+							service: pv.service,
+							pvId: pv.pvId,
+							pvType: pv.pvType,
+						},
+					);
 
 					playQueue.play(method, [item]);
 				}

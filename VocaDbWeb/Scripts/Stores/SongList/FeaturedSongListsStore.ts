@@ -8,7 +8,11 @@ import {
 	SongListsBaseStore,
 	SongListSortRule,
 } from '@/Stores/SongList/SongListsBaseStore';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -53,6 +57,12 @@ interface FeaturedSongListsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -61,7 +71,7 @@ const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./Featured
 const validate = ajv.compile(schema);
 
 export class FeaturedSongListsStore
-	implements StoreWithUpdateResults<FeaturedSongListsRouteParams> {
+	implements LocationStateStore<FeaturedSongListsRouteParams> {
 	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
 	@observable public category = SongListFeaturedCategory.Concerts;
 
@@ -93,19 +103,11 @@ export class FeaturedSongListsStore
 		this.category = categoryName;
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
 	private get currentCategoryStore(): FeaturedSongListCategoryStore {
 		return this.categories[this.category];
 	}
 
-	@computed.struct public get routeParams(): FeaturedSongListsRouteParams {
+	@computed.struct public get locationState(): FeaturedSongListsRouteParams {
 		return {
 			categoryName: this.category,
 			filter: this.currentCategoryStore.query,
@@ -113,7 +115,7 @@ export class FeaturedSongListsStore
 			tagId: this.currentCategoryStore.tagIds,
 		};
 	}
-	public set routeParams(value: FeaturedSongListsRouteParams) {
+	public set locationState(value: FeaturedSongListsRouteParams) {
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
 		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
@@ -122,7 +124,7 @@ export class FeaturedSongListsStore
 		);
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is FeaturedSongListsRouteParams => {
 		return validate(data);
@@ -138,5 +140,13 @@ export class FeaturedSongListsStore
 		await this.currentCategoryStore.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<FeaturedSongListsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

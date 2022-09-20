@@ -31,7 +31,11 @@ import { PlayListRepositoryForRatedSongsAdapter } from '@/Stores/Song/PlayList/P
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -70,6 +74,22 @@ interface RatedSongsSearchRouteParams {
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
+const clearResultsByQueryKeys: (keyof RatedSongsSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+	'rating',
+	'songListId',
+	'sort',
+	'viewMode',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -79,7 +99,7 @@ const validate = ajv.compile(schema);
 
 export class RatedSongsSearchStore
 	implements
-		StoreWithPagination<RatedSongsSearchRouteParams>,
+		LocationStateStore<RatedSongsSearchRouteParams>,
 		ISongSearchStore,
 		IRatedSongsAdapterStore {
 	public readonly advancedFilters = new AdvancedSearchFilters();
@@ -282,25 +302,7 @@ export class RatedSongsSearchStore
 		return this.updateResults(false);
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof RatedSongsSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-		'rating',
-		'songListId',
-		'sort',
-		'viewMode',
-	];
-
-	@computed.struct public get routeParams(): RatedSongsSearchRouteParams {
+	@computed.struct public get locationState(): RatedSongsSearchRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -325,7 +327,7 @@ export class RatedSongsSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: RatedSongsSearchRouteParams) {
+	public set locationState(value: RatedSongsSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -347,13 +349,19 @@ export class RatedSongsSearchStore
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is RatedSongsSearchRouteParams => {
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<RatedSongsSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

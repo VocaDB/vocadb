@@ -40,7 +40,11 @@ import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -68,6 +72,21 @@ interface SongListRouteParams {
 	tagId?: number[];
 }
 
+const clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childTags',
+	'childVoicebanks',
+	'pageSize',
+	'songType',
+	'tagId',
+
+	'sort',
+	'playlistMode',
+	'query',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -76,7 +95,7 @@ const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRoutePara
 const validate = ajv.compile(schema);
 
 export class SongListStore
-	implements ISongListStore, StoreWithPagination<SongListRouteParams> {
+	implements ISongListStore, LocationStateStore<SongListRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	public readonly artistFilters: ArtistFilters;
 	public readonly comments: EditableCommentsStore;
@@ -197,24 +216,7 @@ export class SongListStore
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childTags',
-		'childVoicebanks',
-		'pageSize',
-		'songType',
-		'tagId',
-
-		'sort',
-		'playlistMode',
-		'query',
-	];
-
-	@computed.struct public get routeParams(): SongListRouteParams {
+	@computed.struct public get locationState(): SongListRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -235,7 +237,7 @@ export class SongListStore
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SongListRouteParams) {
+	public set locationState(value: SongListRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -253,7 +255,7 @@ export class SongListStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (data: any): data is SongListRouteParams => {
+	public validateLocationState = (data: any): data is SongListRouteParams => {
 		return validate(data);
 	};
 
@@ -343,7 +345,13 @@ export class SongListStore
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongListRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

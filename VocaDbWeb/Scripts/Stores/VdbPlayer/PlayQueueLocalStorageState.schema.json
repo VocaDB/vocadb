@@ -1,0 +1,196 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"EntryThumbContract": {
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"urlOriginal": {
+					"type": "string"
+				},
+				"urlSmallThumb": {
+					"type": "string"
+				},
+				"urlThumb": {
+					"type": "string"
+				},
+				"urlTinyThumb": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"PVService": {
+			"enum": [
+				"Bandcamp",
+				"Bilibili",
+				"Creofuga",
+				"File",
+				"LocalFile",
+				"NicoNicoDouga",
+				"Piapro",
+				"SoundCloud",
+				"Vimeo",
+				"Youtube"
+			],
+			"type": "string"
+		},
+		"PlayQueueItemContract": {
+			"properties": {
+				"entry": {
+					"anyOf": [
+						{
+							"allOf": [
+								{
+									"properties": {
+										"entryType": {
+											"enum": ["Album"],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								{
+									"$ref": "#/definitions/Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>"
+								}
+							]
+						},
+						{
+							"allOf": [
+								{
+									"properties": {
+										"entryType": {
+											"enum": ["Song"],
+											"type": "string"
+										}
+									},
+									"type": "object"
+								},
+								{
+									"$ref": "#/definitions/Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>"
+								}
+							]
+						}
+					]
+				},
+				"pv": {
+					"$ref": "#/definitions/Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>"
+				}
+			},
+			"type": "object"
+		},
+		"Record<string,any>": {
+			"type": "object"
+		},
+		"Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"artistString": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"mainPicture": {
+					"$ref": "#/definitions/EntryThumbContract"
+				},
+				"name": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>": {
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"type": "string"
+				},
+				"service": {
+					"$ref": "#/definitions/PVService"
+				}
+			},
+			"type": "object"
+		},
+		"Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"artistString": {
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"mainPicture": {
+					"$ref": "#/definitions/EntryThumbContract"
+				},
+				"name": {
+					"type": "string"
+				},
+				"songType": {
+					"$ref": "#/definitions/SongType"
+				},
+				"status": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"SongType": {
+			"enum": [
+				"Arrangement",
+				"Cover",
+				"DramaPV",
+				"Illustration",
+				"Instrumental",
+				"Live",
+				"Mashup",
+				"MusicPV",
+				"Original",
+				"Other",
+				"Remaster",
+				"Remix",
+				"Unspecified"
+			],
+			"type": "string"
+		}
+	},
+	"properties": {
+		"currentIndex": {
+			"type": "number"
+		},
+		"items": {
+			"items": {
+				"$ref": "#/definitions/PlayQueueItemContract"
+			},
+			"type": "array"
+		},
+		"page": {
+			"type": "number"
+		},
+		"queryParams": {
+			"$ref": "#/definitions/Record<string,any>"
+		},
+		"repositoryType": {
+			"enum": ["RatedSongs", "SongList", "Songs"],
+			"type": "string"
+		},
+		"totalCount": {
+			"type": "number"
+		}
+	},
+	"type": "object"
+}

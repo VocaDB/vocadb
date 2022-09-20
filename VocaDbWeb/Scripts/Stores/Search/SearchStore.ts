@@ -38,7 +38,7 @@ import {
 	TagSearchStore,
 } from '@/Stores/Search/TagSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
 import {
@@ -75,7 +75,7 @@ const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.s
 const validate = ajv.compile(schema);
 
 export class SearchStore
-	implements ICommonSearchStore, StoreWithPagination<SearchRouteParams> {
+	implements ICommonSearchStore, LocationStateStore<SearchRouteParams> {
 	public readonly albumSearchStore: AlbumSearchStore;
 	public readonly anythingSearchStore: AnythingSearchStore;
 	public readonly artistSearchStore: ArtistSearchStore;
@@ -214,26 +214,20 @@ export class SearchStore
 		return this.getCategoryStore(this.searchType);
 	}
 
-	public popState = false;
-
 	public get paging(): ServerSidePagingStore {
 		return this.currentCategoryStore.paging;
 	}
 
-	public get clearResultsByQueryKeys(): (keyof SearchRouteParams)[] {
-		return this.currentCategoryStore.clearResultsByQueryKeys;
+	@computed public get locationState(): SearchRouteParams {
+		return this.currentCategoryStore.locationState;
 	}
-
-	@computed public get routeParams(): SearchRouteParams {
-		return this.currentCategoryStore.routeParams;
-	}
-	public set routeParams(value: SearchRouteParams) {
+	public set locationState(value: SearchRouteParams) {
 		value.searchType ??= SearchType.Anything;
 		this.searchType = value.searchType;
-		this.currentCategoryStore.routeParams = value;
+		this.currentCategoryStore.locationState = value;
 	}
 
-	public validateRouteParams = (data: any): data is SearchRouteParams => {
+	public validateLocationState = (data: any): data is SearchRouteParams => {
 		return validate(data);
 	};
 
@@ -245,7 +239,9 @@ export class SearchStore
 		return this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<SearchRouteParams>,
+	): void => {
+		this.currentCategoryStore.onLocationStateChange?.(event);
 	};
 }

@@ -1,6 +1,10 @@
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongRepository } from '@/Repositories/SongRepository';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -8,6 +12,8 @@ interface SongLyricsRouteParams {
 	albumId?: number;
 	lyricsId?: number;
 }
+
+const clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -17,7 +23,7 @@ const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRoute
 const validate = ajv.compile(schema);
 
 export class SongLyricsStore
-	implements StoreWithUpdateResults<SongLyricsRouteParams> {
+	implements LocationStateStore<SongLyricsRouteParams> {
 	@observable public albumId?: number;
 	@observable public selectedLyrics?: LyricsForSongContract;
 	@observable public selectedLyricsId: number;
@@ -32,24 +38,20 @@ export class SongLyricsStore
 		this.selectedLyricsId = lyricsId;
 	}
 
-	public popState = false;
-
-	@computed.struct public get routeParams(): SongLyricsRouteParams {
+	@computed.struct public get locationState(): SongLyricsRouteParams {
 		return {
 			albumId: this.albumId,
 			lyricsId: this.selectedLyricsId,
 		};
 	}
-	public set routeParams(value: SongLyricsRouteParams) {
+	public set locationState(value: SongLyricsRouteParams) {
 		this.albumId = value.albumId;
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 
-	public validateRouteParams = (data: any): data is SongLyricsRouteParams => {
+	public validateLocationState = (data: any): data is SongLyricsRouteParams => {
 		return validate(data);
 	};
-
-	public clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
 
 	private pauseNotifications = false;
 
@@ -68,5 +70,13 @@ export class SongLyricsStore
 		runInAction(() => {
 			this.selectedLyrics = lyrics;
 		});
+	};
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongLyricsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

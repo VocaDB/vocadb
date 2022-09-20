@@ -32,6 +32,7 @@ import {
 } from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 
@@ -90,6 +91,38 @@ export interface SongSearchRouteParams {
 	unifyEntryTypesAndTags?: boolean;
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
+
+const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+	'dateYear',
+	'dateMonth',
+	'dateDay',
+	'eventId',
+	'minScore',
+	'onlyRatedSongs',
+	'parentVersionId',
+	'onlyWithPVs',
+	'since',
+	'songType',
+	'sort',
+	'unifyEntryTypesAndTags',
+	'viewMode',
+	'minMilliBpm',
+	'maxMilliBpm',
+	'minLength',
+	'maxLength',
+];
 
 export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
@@ -290,39 +323,7 @@ export class SongSearchStore
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-		'dateYear',
-		'dateMonth',
-		'dateDay',
-		'eventId',
-		'minScore',
-		'onlyRatedSongs',
-		'parentVersionId',
-		'onlyWithPVs',
-		'since',
-		'songType',
-		'sort',
-		'unifyEntryTypesAndTags',
-		'viewMode',
-		'minMilliBpm',
-		'maxMilliBpm',
-		'minLength',
-		'maxLength',
-	];
-
-	@computed.struct public get routeParams(): SongSearchRouteParams {
+	@computed.struct public get locationState(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -362,7 +363,7 @@ export class SongSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: SongSearchRouteParams) {
+	public set locationState(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -397,4 +398,14 @@ export class SongSearchStore
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	public onLocationStateChange = (
+		event: StateChangeEvent<SongSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

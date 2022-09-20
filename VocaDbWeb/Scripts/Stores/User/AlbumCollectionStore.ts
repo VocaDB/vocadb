@@ -18,7 +18,11 @@ import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -43,6 +47,19 @@ interface AlbumCollectionRouteParams {
 	mediaType?: MediaType;
 }
 
+const clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+
+	'advancedFilters',
+	'discType',
+	'artistId',
+	'collectionStatus',
+	'eventId',
+	'mediaType',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -51,7 +68,7 @@ const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumColle
 const validate = ajv.compile(schema);
 
 export class AlbumCollectionStore
-	implements StoreWithPagination<AlbumCollectionRouteParams> {
+	implements LocationStateStore<AlbumCollectionRouteParams> {
 	public readonly advancedFilters = new AdvancedSearchFilters();
 	@observable public albumType = AlbumType.Unknown;
 	public readonly artist: BasicEntryLinkStore<ArtistContract>;
@@ -158,22 +175,7 @@ export class AlbumCollectionStore
 		});
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-
-		'advancedFilters',
-		'discType',
-		'artistId',
-		'collectionStatus',
-		'eventId',
-		'mediaType',
-	];
-
-	@computed.struct public get routeParams(): AlbumCollectionRouteParams {
+	@computed.struct public get locationState(): AlbumCollectionRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -194,7 +196,7 @@ export class AlbumCollectionStore
 			mediaType: this.mediaType,
 		};
 	}
-	public set routeParams(value: AlbumCollectionRouteParams) {
+	public set locationState(value: AlbumCollectionRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artist.id = value.artistId;
 		this.collectionStatus = value.collectionStatus ?? '';
@@ -209,13 +211,19 @@ export class AlbumCollectionStore
 		this.mediaType = value.mediaType;
 	}
 
-	public validateRouteParams = (
+	public validateLocationState = (
 		data: any,
 	): data is AlbumCollectionRouteParams => {
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	public onLocationStateChange = (
+		event: StateChangeEvent<AlbumCollectionRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

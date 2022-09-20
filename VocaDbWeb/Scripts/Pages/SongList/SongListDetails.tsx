@@ -26,7 +26,6 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
@@ -44,8 +43,11 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
-import { PlayQueueRepositoryForSongListAdapter } from '@/Stores/VdbPlayer/PlayQueueRepositoryForSongListAdapter';
-import { useStoreWithPagination } from '@vocadb/route-sphere';
+import {
+	AutoplayContext,
+	PlayQueueRepositoryType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -69,8 +71,6 @@ const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-
-const playQueueRepo = new PlayQueueRepositoryForSongListAdapter(songListRepo);
 
 const pvPlayersFactory = new PVPlayersFactory();
 
@@ -127,7 +127,7 @@ const SongListDetailsLayout = observer(
 
 		useVocaDbTitle(pageTitle, ready);
 
-		useStoreWithPagination(songListStore);
+		useLocationStateStore(songListStore);
 
 		const smallThumbUrl = UrlHelper.imageThumb(
 			songList.mainPicture,
@@ -315,14 +315,10 @@ const SongListDetailsLayout = observer(
 					<ButtonGroup className="songlist-mode-selection pull-left">
 						<Button
 							onClick={async (): Promise<void> => {
-								// Access queryParams here, not in the function body.
-								const { queryParams } = songListStore;
-
-								await playQueue.startAutoplay((pagingProps) =>
-									playQueueRepo.getItems(
-										VideoServiceHelper.autoplayServices,
-										pagingProps,
-										queryParams,
+								await playQueue.startAutoplay(
+									new AutoplayContext(
+										PlayQueueRepositoryType.SongList,
+										songListStore.queryParams,
 									),
 								);
 							}}
