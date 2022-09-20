@@ -1,7 +1,6 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
-import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
@@ -11,45 +10,25 @@ import _ from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PVEditStore {
-	public readonly author: string;
-	public readonly createdBy: number;
 	@observable public disabled: boolean;
-	public readonly extendedMetadata: string;
-	public readonly id: number;
-	public readonly length: number;
 	public readonly lengthFormatted: string;
 	@observable public name: string;
-	public readonly pvId: string;
-	public readonly service: PVService;
-	public readonly publishDate: string;
-	public readonly pvType: string;
-	public readonly thumbUrl: string;
-	public readonly url: string;
+	public readonly pvType: PVType;
 
-	public constructor(contract: PVContract, pvType?: string) {
+	public constructor(public readonly contract: PVContract, pvType?: PVType) {
 		makeObservable(this);
 
-		this.author = contract.author!;
-		this.createdBy = contract.createdBy!;
 		this.disabled = contract.disabled!;
-		this.extendedMetadata = contract.extendedMetadata;
-		this.id = contract.id!;
-		this.length = contract.length!;
-		this.pvId = contract.pvId;
-		this.service = contract.service;
-		this.publishDate = contract.publishDate!;
 		this.pvType = pvType || contract.pvType;
-		this.thumbUrl = contract.thumbUrl!;
-		this.url = contract.url!;
 
 		this.name = contract.name!;
-		this.lengthFormatted = DateTimeHelper.formatFromSeconds(this.length);
+		this.lengthFormatted = DateTimeHelper.formatFromSeconds(contract.length!);
 	}
 }
 
 export class PVListEditStore {
 	@observable public isPossibleInstrumental = false;
-	@observable public newPvType = PVType[PVType.Original];
+	@observable public newPvType = PVType.Original;
 	@observable public newPvUrl = '';
 	@observable public pvs: PVEditStore[];
 	public readonly pvServiceIcons: PVServiceIcons;
@@ -116,7 +95,12 @@ export class PVListEditStore {
 	};
 
 	public toContracts = (): PVContract[] => {
-		return this.pvs;
+		return this.pvs.map((pv) => ({
+			...pv.contract,
+			disabled: pv.disabled,
+			name: pv.name,
+			pvType: pv.pvType,
+		}));
 	};
 
 	public uploadMedia = async (uploadMedia: File): Promise<void> => {
@@ -131,7 +115,7 @@ export class PVListEditStore {
 			type: 'POST',
 			success: (result) =>
 				runInAction(() => {
-					this.pvs.push(new PVEditStore(result, 'Original'));
+					this.pvs.push(new PVEditStore(result, PVType.Original));
 				}),
 			error: (result) => {
 				const text =

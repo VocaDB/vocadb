@@ -11,7 +11,6 @@ import {
 	EntryType,
 	PlayQueueRepository,
 	PlayQueueSongContract,
-	PVType,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
 
 export class PlayQueueRepositoryForSongsAdapter
@@ -44,13 +43,7 @@ export class PlayQueueRepositoryForSongsAdapter
 			status: song.status as EntryStatus /* TODO: enum */,
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
-			pvs:
-				song.pvs?.map((pv) => ({
-					id: pv.id ?? 0,
-					service: pv.service,
-					pvId: pv.pvId,
-					pvType: pv.pvType as PVType /* TODO: enum */,
-				})) ?? [],
+			pvs: song.pvs ?? [],
 			artistString: song.artistString,
 			songType: song.songType,
 		}));

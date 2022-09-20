@@ -1,3 +1,4 @@
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
@@ -42,20 +43,6 @@ export enum EntryStatus {
 	Locked = 'Locked',
 }
 
-// TODO: Remove.
-export enum PVType {
-	Original = 'Original',
-	Reprint = 'Reprint',
-	Other = 'Other',
-}
-
-export interface PlayQueuePVContract {
-	id: number;
-	service: PVService;
-	pvId: string;
-	pvType: PVType;
-}
-
 export interface PlayQueueAlbumContract {
 	entryType: EntryType.Album;
 	id: number;
@@ -63,7 +50,7 @@ export interface PlayQueueAlbumContract {
 	status: EntryStatus;
 	additionalNames: string;
 	urlThumb: string;
-	pvs: PlayQueuePVContract[];
+	pvs: PVContract[];
 	artistString: string;
 }
 
@@ -74,7 +61,7 @@ export interface PlayQueueReleaseEventContract {
 	status: EntryStatus;
 	additionalNames: string;
 	urlThumb: string;
-	pvs: PlayQueuePVContract[];
+	pvs: PVContract[];
 }
 
 export interface PlayQueueSongContract {
@@ -84,7 +71,7 @@ export interface PlayQueueSongContract {
 	status: EntryStatus;
 	additionalNames: string;
 	urlThumb: string;
-	pvs: PlayQueuePVContract[];
+	pvs: PVContract[];
 	artistString: string;
 	songType: SongType;
 }
@@ -97,6 +84,12 @@ export type PlayQueueEntryContract =
 export interface PlayQueueItemContract {
 	entry: PlayQueueEntryContract;
 	pvId: number;
+}
+
+export enum PlayQueueRepositoryType {
+	RatedSongs = 'RatedSongs',
+	SongList = 'SongList',
+	Songs = 'Songs',
 }
 
 export abstract class PlayQueueRepository<
@@ -132,12 +125,6 @@ export abstract class PlayQueueRepository<
 		pvServices?: PVService[];
 		queryParams: TQueryParams;
 	}): Promise<PartialFindResultContract<PlayQueueSongContract>>;
-}
-
-export enum PlayQueueRepositoryType {
-	RatedSongs = 'RatedSongs',
-	SongList = 'SongList',
-	Songs = 'Songs',
 }
 
 export class PlayQueueRepositoryFactory {

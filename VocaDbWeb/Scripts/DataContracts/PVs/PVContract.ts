@@ -1,29 +1,27 @@
 import { PVService } from '@/Models/PVs/PVService';
+import { PVType } from '@/Models/PVs/PVType';
 
-export interface PVContract {
+interface PVContractBase {
 	author?: string;
-
 	createdBy?: number;
-
 	disabled?: boolean;
-
-	extendedMetadata?: any;
-
-	id?: number;
-
+	id: number;
 	length?: number;
-
 	name?: string;
-
 	pvId: string;
-
-	service: PVService;
-
 	publishDate?: string;
-
-	pvType: string;
-
+	pvType: PVType;
 	thumbUrl?: string;
-
 	url?: string;
 }
+
+export interface PiaproPVContract extends PVContractBase {
+	service: PVService.Piapro;
+	extendedMetadata?: { json?: string };
+}
+
+interface DefaultPVContract extends PVContractBase {
+	service: Exclude<PVService, PiaproPVContract['service']>;
+}
+
+export type PVContract = PiaproPVContract | DefaultPVContract;

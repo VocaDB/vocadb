@@ -457,9 +457,9 @@ export class SongEditViewModel {
 		this.firstPvDate = ko.computed(() => {
 			var val = _.chain(this.pvs.pvs())
 				.filter(
-					(pv) => !!pv.publishDate && pv.pvType === PVType[PVType.Original],
+					(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
 				)
-				.map((pv) => moment(pv.publishDate))
+				.map((pv) => moment(pv.contract.publishDate))
 				.sortBy((p) => p)
 				.head()
 				.value();

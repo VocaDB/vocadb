@@ -194,12 +194,10 @@ export class SongDetailsForApi {
 				: contract.subjectsFromParents;
 
 		this.originalPVs = contract.pvs.filter(
-			(pv) => pv.pvType === PVType[PVType.Original],
+			(pv) => pv.pvType === PVType.Original,
 		);
 
-		this.otherPVs = contract.pvs.filter(
-			(pv) => pv.pvType !== PVType[PVType.Original],
-		);
+		this.otherPVs = contract.pvs.filter((pv) => pv.pvType !== PVType.Original);
 
 		this.primaryPV = PVHelper.primaryPV(contract.pvs);
 

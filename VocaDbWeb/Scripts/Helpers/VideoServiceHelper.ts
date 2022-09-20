@@ -1,4 +1,4 @@
-import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { PiaproPVContract, PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import _ from 'lodash';
@@ -25,16 +25,19 @@ export class VideoServiceHelper {
 		return acceptFirst ? _.first(allPVs) : undefined;
 	};
 
-	public static getPiaproTimestamp = (pv: PVContract): string | undefined => {
-		const meta = pv.extendedMetadata
-			? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
-			: undefined;
+	public static getPiaproTimestamp = (
+		pv: PiaproPVContract,
+	): string | undefined => {
+		const meta =
+			pv.extendedMetadata && pv.extendedMetadata.json
+				? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
+				: undefined;
 
 		return meta?.Timestamp;
 	};
 
 	public static getPiaproUrlWithTimestamp = (
-		pv: PVContract,
+		pv: PiaproPVContract,
 	): string | undefined => {
 		const timestamp = VideoServiceHelper.getPiaproTimestamp(pv);
 
@@ -78,19 +81,19 @@ export class VideoServiceHelper {
 					p.filter((p) => p.service === preferredService),
 					true,
 					[
-						(p): boolean => p.pvType === PVType[PVType.Original],
-						(p): boolean => p.pvType === PVType[PVType.Reprint],
+						(p): boolean => p.pvType === PVType.Original,
+						(p): boolean => p.pvType === PVType.Reprint,
 					],
 				) ??
 				VideoServiceHelper.getPV(p, true, [
-					(p): boolean => p.pvType === PVType[PVType.Original],
-					(p): boolean => p.pvType === PVType[PVType.Reprint],
+					(p): boolean => p.pvType === PVType.Original,
+					(p): boolean => p.pvType === PVType.Reprint,
 				])
 			);
 		} else {
 			return VideoServiceHelper.getPV(p, true, [
-				(p): boolean => p.pvType === PVType[PVType.Original],
-				(p): boolean => p.pvType === PVType[PVType.Reprint],
+				(p): boolean => p.pvType === PVType.Original,
+				(p): boolean => p.pvType === PVType.Reprint,
 			]);
 		}
 	};

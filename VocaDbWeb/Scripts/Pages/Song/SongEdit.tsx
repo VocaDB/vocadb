@@ -39,6 +39,7 @@ import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
+import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
@@ -596,7 +597,7 @@ const PVsTabContent = observer(
 						value={songEditStore.pvs.newPvType}
 						onChange={(e): void =>
 							runInAction(() => {
-								songEditStore.pvs.newPvType = e.target.value;
+								songEditStore.pvs.newPvType = e.target.value as PVType;
 							})
 						}
 						className="input-xlarge"

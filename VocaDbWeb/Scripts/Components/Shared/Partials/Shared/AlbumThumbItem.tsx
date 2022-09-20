@@ -21,10 +21,10 @@ export const AlbumThumbItem = React.memo(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				await playQueue.loadItemsAndPlay(
-					{ ...album, entryType: EntryType[EntryType.Album] },
-					method,
-				);
+				await playQueue.loadItemsAndPlay(method, {
+					...album,
+					entryType: EntryType[EntryType.Album],
+				});
 			},
 			[album, playQueue],
 		);

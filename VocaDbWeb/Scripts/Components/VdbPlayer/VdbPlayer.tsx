@@ -342,8 +342,8 @@ const EmbedPVWrapper = observer(
 	({ pv }: PVPlayerProps): React.ReactElement => {
 		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
 
-		const handleError = React.useCallback((e: any) => {
-			VdbPlayerConsole.error('error', e);
+		const handleError = React.useCallback((event: any) => {
+			VdbPlayerConsole.error('error', event);
 		}, []);
 
 		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
@@ -598,11 +598,13 @@ export const VdbPlayer = observer(
 			return reaction(
 				() => playQueue.currentItem,
 				async (selectedItem, previousItem) => {
-					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
-					if (selectedItem?.pv.id === previousItem?.pv.id) {
-						const player = playerRef.current;
-						if (!player) return;
+					if (!selectedItem || !previousItem) return;
 
+					const player = playerRef.current;
+					if (!player) return;
+
+					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
+					if (selectedItem.pv.id === previousItem.pv.id) {
 						await player.setCurrentTime(0);
 						await player.play();
 					}

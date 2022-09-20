@@ -19,11 +19,53 @@
 			"required": ["filterType", "param"],
 			"type": "object"
 		},
+		"DefaultPVContract": {
+			"properties": {
+				"author": {
+					"type": "string"
+				},
+				"createdBy": {
+					"type": "number"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"id": {
+					"type": "number"
+				},
+				"length": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"publishDate": {
+					"type": "string"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"$ref": "#/definitions/PVType"
+				},
+				"service": {
+					"$ref": "#/definitions/Exclude"
+				},
+				"thumbUrl": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"required": ["id", "pvId", "pvType", "service"],
+			"type": "object"
+		},
 		"EntryStatus": {
 			"enum": ["Approved", "Draft", "Finished", "Locked"],
 			"type": "string"
 		},
-		"PVService": {
+		"Exclude": {
 			"enum": [
 				"Bandcamp",
 				"Bilibili",
@@ -31,7 +73,6 @@
 				"File",
 				"LocalFile",
 				"NicoNicoDouga",
-				"Piapro",
 				"SoundCloud",
 				"Vimeo",
 				"Youtube"
@@ -41,6 +82,57 @@
 		"PVType": {
 			"enum": ["Original", "Other", "Reprint"],
 			"type": "string"
+		},
+		"PiaproPVContract": {
+			"properties": {
+				"author": {
+					"type": "string"
+				},
+				"createdBy": {
+					"type": "number"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"extendedMetadata": {
+					"properties": {
+						"json": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"id": {
+					"type": "number"
+				},
+				"length": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"publishDate": {
+					"type": "string"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"$ref": "#/definitions/PVType"
+				},
+				"service": {
+					"enum": ["Piapro"],
+					"type": "string"
+				},
+				"thumbUrl": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"required": ["id", "pvId", "pvType", "service"],
+			"type": "object"
 		},
 		"PlayQueueAlbumContract": {
 			"properties": {
@@ -62,7 +154,14 @@
 				},
 				"pvs": {
 					"items": {
-						"$ref": "#/definitions/PlayQueuePVContract"
+						"anyOf": [
+							{
+								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/DefaultPVContract"
+							}
+						]
 					},
 					"type": "array"
 				},
@@ -107,24 +206,6 @@
 			"required": ["entry", "pvId"],
 			"type": "object"
 		},
-		"PlayQueuePVContract": {
-			"properties": {
-				"id": {
-					"type": "number"
-				},
-				"pvId": {
-					"type": "string"
-				},
-				"pvType": {
-					"$ref": "#/definitions/PVType"
-				},
-				"service": {
-					"$ref": "#/definitions/PVService"
-				}
-			},
-			"required": ["id", "pvId", "pvType", "service"],
-			"type": "object"
-		},
 		"PlayQueueReleaseEventContract": {
 			"properties": {
 				"additionalNames": {
@@ -142,7 +223,14 @@
 				},
 				"pvs": {
 					"items": {
-						"$ref": "#/definitions/PlayQueuePVContract"
+						"anyOf": [
+							{
+								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/DefaultPVContract"
+							}
+						]
 					},
 					"type": "array"
 				},
@@ -184,7 +272,14 @@
 				},
 				"pvs": {
 					"items": {
-						"$ref": "#/definitions/PlayQueuePVContract"
+						"anyOf": [
+							{
+								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/DefaultPVContract"
+							}
+						]
 					},
 					"type": "array"
 				},

@@ -1,6 +1,7 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVType } from '@/Models/PVs/PVType';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -64,7 +65,7 @@ export class PVListEditViewModel {
 		);
 	};
 
-	public newPvType = ko.observable('Original');
+	public newPvType = ko.observable(PVType.Original);
 
 	public newPvUrl = ko.observable('');
 
@@ -77,7 +78,12 @@ export class PVListEditViewModel {
 	};
 
 	public toContracts: () => PVContract[] = () => {
-		return ko.toJS(this.pvs());
+		return this.pvs().map((pv) => ({
+			...pv.contract,
+			disabled: pv.disabled(),
+			name: pv.name(),
+			pvType: pv.pvType,
+		}));
 	};
 
 	public uploadMedia = (): void => {
@@ -92,7 +98,7 @@ export class PVListEditViewModel {
 			contentType: false,
 			type: 'POST',
 			success: (result) => {
-				this.pvs.push(new PVEditViewModel(result, 'Original'));
+				this.pvs.push(new PVEditViewModel(result, PVType.Original));
 			},
 			error: (result) => {
 				var text = result.status === 404 ? 'File too large' : result.statusText;

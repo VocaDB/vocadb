@@ -113,8 +113,7 @@ export class PVPlayerStore {
 								this.primaryPV = {
 									pvId: result.pvId,
 									service: result.pvService,
-									pvType: '',
-								};
+								} as PVContract;
 								this.playerService = result.pvService;
 							});
 						});

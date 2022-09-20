@@ -108,7 +108,6 @@ export const EmbedPVPreview = observer(
 
 			if (pv.id === playQueue.currentItem?.pv.id) {
 				const rect = embedPVPreviewRef.current.getBoundingClientRect();
-
 				vdbPlayer.setPlayerBounds({
 					x: rect.x + window.scrollX,
 					y: rect.y + window.scrollY,
@@ -122,7 +121,7 @@ export const EmbedPVPreview = observer(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				await playQueue.loadItemsAndPlay(entry, method);
+				await playQueue.loadItemsAndPlay(method, entry);
 
 				handleResize();
 			},
@@ -131,7 +130,6 @@ export const EmbedPVPreview = observer(
 
 		React.useLayoutEffect(() => {
 			window.addEventListener('resize', handleResize);
-
 			handleResize();
 
 			return (): void => {

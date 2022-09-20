@@ -281,8 +281,10 @@ export class SongEditStore {
 
 	@computed public get firstPvDate(): Moment {
 		return _.chain(this.pvs.pvs)
-			.filter((pv) => !!pv.publishDate && pv.pvType === PVType[PVType.Original])
-			.map((pv) => moment(pv.publishDate))
+			.filter(
+				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
+			)
+			.map((pv) => moment(pv.contract.publishDate))
 			.sortBy((p) => p)
 			.head()
 			.value();

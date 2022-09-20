@@ -1,5 +1,4 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
-import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { runInAction } from 'mobx';
@@ -17,17 +16,17 @@ export const PVEdit = observer(
 	({ pvListEditStore, pvEditStore }: PVEditProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
+		const { contract } = pvEditStore;
+
 		return (
 			<tr>
 				<td>
-					<a href={pvEditStore.url}>
+					<a href={contract.url}>
 						<img
-							src={pvListEditStore.pvServiceIcons.getIconUrl(
-								pvEditStore.service,
-							)}
-							alt={pvEditStore.service}
+							src={pvListEditStore.pvServiceIcons.getIconUrl(contract.service)}
+							alt={contract.service}
 						/>{' '}
-						{pvEditStore.service}
+						{contract.service}
 					</a>
 				</td>
 				<td>{t(`Resources:PVTypeNames.${pvEditStore.pvType}`)}</td>
@@ -45,26 +44,26 @@ export const PVEdit = observer(
 						className="input-xlarge"
 					/>
 				</td>
-				<td>{DateTimeHelper.formatFromSeconds(pvEditStore.length)}</td>
+				<td>{pvEditStore.lengthFormatted}</td>
 				{pvListEditStore.showPublishDates && (
 					<td>
 						{pvListEditStore.showPublishDates && (
-							<>{moment(pvEditStore.publishDate).format('l')}</>
+							<>{moment(contract.publishDate).format('l')}</>
 						)}
 					</td>
 				)}
 				<td>
-					{pvEditStore.author && pvListEditStore.canBulkDeletePVs ? (
-						<a href={`/Admin/PVsByAuthor?author=${pvEditStore.author}`}>
-							{pvEditStore.author}
+					{contract.author && pvListEditStore.canBulkDeletePVs ? (
+						<a href={`/Admin/PVsByAuthor?author=${contract.author}`}>
+							{contract.author}
 						</a>
 					) : (
-						pvEditStore.author
+						contract.author
 					)}
 				</td>
 				{pvListEditStore.allowDisabled && (
 					<td>
-						{pvEditStore.pvType === PVType[PVType.Original] && (
+						{pvEditStore.pvType === PVType.Original && (
 							<span>
 								<input
 									type="checkbox"

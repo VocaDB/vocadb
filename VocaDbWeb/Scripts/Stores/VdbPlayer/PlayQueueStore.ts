@@ -1,4 +1,5 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
@@ -13,14 +14,12 @@ import {
 	PlayQueueAlbumContract,
 	PlayQueueEntryContract,
 	PlayQueueItemContract,
-	PlayQueuePVContract,
 	PlayQueueReleaseEventContract,
 	PlayQueueRepository,
 	PlayQueueRepositoryFactory,
 	PlayQueueRepositoryQueryParams,
 	PlayQueueRepositoryType,
 	PlayQueueSongContract,
-	PVType,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
@@ -67,7 +66,7 @@ export class PlayQueueItem {
 		this.id = PlayQueueItem.nextId++;
 	}
 
-	public get pv(): PlayQueuePVContract {
+	public get pv(): PVContract {
 		return this.entry.pvs.find((pv) => pv.id === this.pvId)!;
 	}
 
@@ -271,28 +270,12 @@ export class PlayQueueStore
 		}
 	};
 
-	private static primaryPV = (
-		pvs: PlayQueuePVContract[],
-		autoplay: boolean,
-	): PlayQueuePVContract | undefined => {
-		const pv = PVHelper.primaryPV(pvs, autoplay);
-
-		return pv
-			? {
-					id: pv.id ?? 0,
-					service: pv.service,
-					pvId: pv.pvId,
-					pvType: pv.pvType as PVType /* TODO: enum */,
-			  }
-			: undefined;
-	};
-
 	private static createItemsFromSongs = (
 		songs: PlayQueueSongContract[],
 	): PlayQueueItem[] => {
 		return songs
 			.map((song) => {
-				const primaryPV = PlayQueueStore.primaryPV(song.pvs, true);
+				const primaryPV = PVHelper.primaryPV(song.pvs, true);
 				return primaryPV ? new PlayQueueItem(song, primaryPV.id) : undefined;
 			})
 			.filter((item) => !!item)
@@ -324,13 +307,7 @@ export class PlayQueueStore
 				status: album.status as EntryStatus /* TODO: enum */,
 				additionalNames: album.additionalNames,
 				urlThumb: album.mainPicture?.urlThumb ?? '',
-				pvs:
-					album.pvs?.map((pv) => ({
-						id: pv.id ?? 0,
-						service: pv.service,
-						pvId: pv.pvId,
-						pvType: pv.pvType as PVType /* TODO: enum */,
-					})) ?? [],
+				pvs: album.pvs ?? [],
 				artistString: album.artistString,
 			},
 			songs:
@@ -344,13 +321,7 @@ export class PlayQueueStore
 						status: song.status as EntryStatus /* TODO: enum */,
 						additionalNames: song.additionalNames,
 						urlThumb: song.mainPicture?.urlThumb ?? '',
-						pvs:
-							song.pvs?.map((pv) => ({
-								id: pv.id ?? 0,
-								service: pv.service,
-								pvId: pv.pvId,
-								pvType: pv.pvType as PVType /* TODO: enum */,
-							})) ?? [],
+						pvs: song.pvs ?? [],
 						artistString: song.artistString,
 						songType: song.songType,
 					})) ?? [],
@@ -365,7 +336,7 @@ export class PlayQueueStore
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = PlayQueueStore.primaryPV(album.pvs, true);
+		const primaryPV = PVHelper.primaryPV(album.pvs, true);
 		return [
 			...(primaryPV ? [new PlayQueueItem(album, primaryPV.id)] : []),
 			...PlayQueueStore.createItemsFromSongs(songs),
@@ -389,13 +360,7 @@ export class PlayQueueStore
 			status: event.status as EntryStatus /* TODO: enum */,
 			additionalNames: event.additionalNames ?? '',
 			urlThumb: event.mainPicture?.urlThumb ?? '',
-			pvs:
-				event.pvs?.map((pv) => ({
-					id: pv.id ?? 0,
-					service: pv.service,
-					pvId: pv.pvId,
-					pvType: pv.pvType as PVType /* TODO: enum */,
-				})) ?? [],
+			pvs: event.pvs ?? [],
 		};
 	};
 
@@ -406,7 +371,7 @@ export class PlayQueueStore
 			id: entry.id,
 		});
 
-		const primaryPV = PlayQueueStore.primaryPV(event.pvs, true);
+		const primaryPV = PVHelper.primaryPV(event.pvs, true);
 		return primaryPV ? [new PlayQueueItem(event, primaryPV.id)] : [];
 	};
 
@@ -430,13 +395,7 @@ export class PlayQueueStore
 			status: song.status as EntryStatus /* TODO: enum */,
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
-			pvs:
-				song.pvs?.map((pv) => ({
-					id: pv.id ?? 0,
-					service: pv.service,
-					pvId: pv.pvId,
-					pvType: pv.pvType as PVType /* TODO: enum */,
-				})) ?? [],
+			pvs: song.pvs ?? [],
 			artistString: song.artistString,
 			songType: song.songType,
 		};
@@ -472,8 +431,8 @@ export class PlayQueueStore
 	};
 
 	public loadItemsAndPlay = async (
-		entry: EntryContract,
 		method: PlayMethod,
+		entry: EntryContract,
 	): Promise<void> => {
 		const items = await this.loadItems(entry);
 

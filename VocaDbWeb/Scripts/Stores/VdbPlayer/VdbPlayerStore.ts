@@ -70,11 +70,9 @@ export class VdbPlayerStore
 
 	@computed public get canAutoplay(): boolean {
 		const currentItem = this.playQueue.currentItem;
-
 		if (!currentItem) return false;
 
 		const { pv } = currentItem;
-
 		return VideoServiceHelper.canAutoplayPV(pv);
 	}
 

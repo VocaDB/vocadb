@@ -2,6 +2,7 @@ import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { PVService } from '@/Models/PVs/PVService';
+import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -122,22 +123,30 @@ test('firstPvDate no PV', () => {
 
 test('firstPvDate with PVs', () => {
 	data.pvs = [
-		{ pvType: 'Original', pvId: '3', service: PVService.Youtube },
 		{
+			id: 0,
+			pvType: PVType.Original,
+			pvId: '3',
+			service: PVService.Youtube,
+		},
+		{
+			id: 0,
 			publishDate: '2039-03-08',
-			pvType: 'Reprint',
+			pvType: PVType.Reprint,
 			pvId: '39',
 			service: PVService.Youtube,
 		},
 		{
+			id: 0,
 			publishDate: '2039-03-09',
-			pvType: 'Original',
+			pvType: PVType.Original,
 			pvId: '3939',
 			service: PVService.Youtube,
 		},
 		{
+			id: 0,
 			publishDate: '2039-03-10',
-			pvType: 'Original',
+			pvType: PVType.Original,
 			pvId: '3939',
 			service: PVService.Youtube,
 		},
