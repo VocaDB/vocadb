@@ -4,19 +4,11 @@ import Dropdown from '@/Bootstrap/Dropdown';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
-import { EntryType } from '@/Models/EntryType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const httpClient = new HttpClient();
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface EmbedPVPreviewButtonsProps {
 	onPlay: (method: PlayMethod) => void;
@@ -130,43 +122,11 @@ export const EmbedPVPreview = observer(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				if (entry.entryType === EntryType[EntryType.Album]) {
-					const albumWithPVsAndTracks = await albumRepo.getOneWithPVsAndTracks({
-						id: entry.id,
-						lang: vdb.values.languagePreference,
-					});
-
-					const items = PlayQueueHelper.createItemsFromAlbum(
-						albumWithPVsAndTracks,
-					);
-
-					playQueue.play(method, items);
-				} else {
-					const item = new PlayQueueItem(
-						{
-							entryType: 'Song' /* TODO: enum */,
-							id: entry.id,
-							name: entry.name,
-							status: entry.status!,
-							additionalNames: entry.additionalNames!,
-							artistString: entry.artistString!,
-							mainPicture: { urlThumb: entry.mainPicture?.urlThumb! },
-							songType: entry.songType!,
-						},
-						{
-							id: pv.id!,
-							service: pv.service,
-							pvId: pv.pvId,
-							pvType: pv.pvType,
-						},
-					);
-
-					playQueue.play(method, [item]);
-				}
+				await playQueue.loadItemsAndPlay(entry, method);
 
 				handleResize();
 			},
-			[entry, pv, playQueue, handleResize],
+			[entry, playQueue, handleResize],
 		);
 
 		React.useLayoutEffect(() => {

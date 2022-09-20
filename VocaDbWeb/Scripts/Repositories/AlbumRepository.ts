@@ -3,7 +3,6 @@ import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
 import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
-import { AlbumWithPVsAndTracksContract } from '@/DataContracts/Album/AlbumWithPVsAndTracksContract';
 import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { CommentContract } from '@/DataContracts/CommentContract';
@@ -16,7 +15,6 @@ import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserFor
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
-import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import {
 	BaseRepository,
@@ -205,42 +203,6 @@ export class AlbumRepository
 			lang: lang,
 			songFields: songFields?.join(','),
 		});
-	};
-
-	public getOneWithPVsAndTracks = async ({
-		id,
-		lang,
-	}: {
-		id: number;
-		lang: ContentLanguagePreference;
-	}): Promise<AlbumWithPVsAndTracksContract> => {
-		const album = await this.getOneWithComponents({
-			id: id,
-			lang: lang,
-			fields: [
-				AlbumOptionalField.MainPicture,
-				AlbumOptionalField.PVs,
-				AlbumOptionalField.Tracks,
-			],
-			songFields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
-		});
-
-		return {
-			...album,
-			entryType: EntryType[EntryType.Album],
-			pvs: album.pvs ?? [],
-			tracks:
-				album.tracks
-					?.filter(({ song }) => !!song)
-					.map((track) => ({
-						...track,
-						song: {
-							...track.song!,
-							entryType: EntryType[EntryType.Song],
-							pvs: track.song!.pvs ?? [],
-						},
-					})) ?? [],
-		};
 	};
 
 	public getList = ({

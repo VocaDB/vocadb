@@ -1,4 +1,8 @@
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
 import {
 	PlayQueueRepositoryFactory,
 	PlayQueueStore,
@@ -41,10 +45,22 @@ export class VdbPlayerStore
 	@observable public playerBounds?: Rectangle;
 	@observable public percent = 0;
 
-	public constructor(playQueueRepoFactory: PlayQueueRepositoryFactory) {
+	public constructor(
+		values: GlobalValues,
+		albumRepo: AlbumRepository,
+		eventRepo: ReleaseEventRepository,
+		songRepo: SongRepository,
+		playQueueRepoFactory: PlayQueueRepositoryFactory,
+	) {
 		makeObservable(this);
 
-		this.playQueue = new PlayQueueStore(playQueueRepoFactory);
+		this.playQueue = new PlayQueueStore(
+			values,
+			albumRepo,
+			eventRepo,
+			songRepo,
+			playQueueRepoFactory,
+		);
 
 		reaction(
 			() => this.playQueue.currentItem,

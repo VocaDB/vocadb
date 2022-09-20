@@ -1,34 +1,64 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
-import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import {
 	UserGetRatedSongsListQueryParams,
 	UserRepository,
 } from '@/Repositories/UserRepository';
 import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import {
+	EntryStatus,
+	EntryType,
+	PlayQueueSongContract,
+	PVType,
+} from '@/Stores/VdbPlayer/PlayQueueStore';
 
 export class PlayQueueRepositoryForRatedSongsAdapter
 	implements PlayQueueRepository<UserGetRatedSongsListQueryParams> {
 	public constructor(private readonly userRepo: UserRepository) {}
 
-	public getItems = async (
-		pvServices: PVService[],
-		pagingProps: PagingProperties,
-		queryParams: UserGetRatedSongsListQueryParams,
-	): Promise<PartialFindResultContract<PlayQueueItem>> => {
-		const { items, totalCount } = await this.userRepo.getRatedSongsListWithPVs({
-			lang: vdb.values.languagePreference,
+	public getSongs = async ({
+		lang,
+		pagingProps,
+		pvServices,
+		queryParams,
+	}: {
+		lang: ContentLanguagePreference;
+		pagingProps: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: UserGetRatedSongsListQueryParams;
+	}): Promise<PartialFindResultContract<PlayQueueSongContract>> => {
+		const { items, totalCount } = await this.userRepo.getRatedSongsList({
+			fields: PlayQueueRepository.songOptionalFields,
+			lang: lang,
 			paging: pagingProps,
 			pvServices: pvServices,
 			queryParams: queryParams,
 		});
 
-		const playQueueItems = PlayQueueHelper.createItemsFromSongs(
-			items.map((songForUser) => songForUser.song),
-		);
+		const songs = items
+			.map(({ song }) => song)
+			.filter((song) => !!song)
+			.map((song) => song!)
+			.map((song) => ({
+				entryType: EntryType.Song as const /* TODO: enum */,
+				id: song.id,
+				name: song.name,
+				status: song.status as EntryStatus /* TODO: enum */,
+				additionalNames: song.additionalNames,
+				urlThumb: song.mainPicture?.urlThumb ?? '',
+				pvs:
+					song.pvs?.map((pv) => ({
+						id: pv.id ?? 0,
+						service: pv.service,
+						pvId: pv.pvId,
+						pvType: pv.pvType as PVType /* TODO: enum */,
+					})) ?? [],
+				artistString: song.artistString,
+				songType: song.songType,
+			}));
 
-		return { items: playQueueItems, totalCount: totalCount };
+		return { items: songs, totalCount: totalCount };
 	};
 }

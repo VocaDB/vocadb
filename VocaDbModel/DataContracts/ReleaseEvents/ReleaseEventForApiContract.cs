@@ -1,6 +1,8 @@
 #nullable disable
 
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Venues;
@@ -68,6 +70,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			if (fields.HasFlag(ReleaseEventOptionalFields.Names))
 			{
 				Names = rel.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+			}
+
+			if (fields.HasFlag(ReleaseEventOptionalFields.PVs))
+			{
+				PVs = rel.PVs.Select(p => new PVContract(pv: p)).ToArray();
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries)
@@ -146,6 +153,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; init; }
 
+		[DataMember]
+		[JsonProperty("pvs")]
+		public PVContract[] PVs { get; init; }
+
 		[DataMember(EmitDefaultValue = false)]
 		public ReleaseEventSeriesContract Series { get; init; }
 
@@ -197,5 +208,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		Tags = 1 << 7,
 		Venue = 1 << 8,
 		WebLinks = 1 << 9,
+		PVs = 1 << 10,
 	}
 }

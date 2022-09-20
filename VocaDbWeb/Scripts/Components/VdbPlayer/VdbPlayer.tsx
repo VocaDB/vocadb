@@ -9,6 +9,7 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
@@ -39,7 +40,6 @@ const PlayerCenterControls = observer(
 
 		const handlePause = React.useCallback(async () => {
 			const player = playerRef.current;
-
 			if (!player) return;
 
 			await player.pause();
@@ -47,7 +47,6 @@ const PlayerCenterControls = observer(
 
 		const handlePlay = React.useCallback(async () => {
 			const player = playerRef.current;
-
 			if (!player) return;
 
 			await player.play();
@@ -131,31 +130,28 @@ const PlayerCenterControls = observer(
 	},
 );
 
-const EntryInfo = observer(
-	(): React.ReactElement => {
-		const { playQueue } = useVdbPlayer();
+interface EntryInfoProps {
+	entry: PlayQueueEntryContract;
+}
 
+const EntryInfo = observer(
+	({ entry }: EntryInfoProps): React.ReactElement => {
 		return (
 			<div css={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-				{playQueue.currentItem && (
-					<Link
-						to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
-						css={{ marginRight: 8 }}
-					>
-						<div
-							css={{
-								width: 64,
-								height: 36,
-								backgroundColor: 'rgb(28, 28, 28)',
-								backgroundSize: 'cover',
-								backgroundPosition: 'center',
-							}}
-							style={{
-								backgroundImage: `url(${playQueue.currentItem.entry.mainPicture?.urlThumb})`,
-							}}
-						/>
-					</Link>
-				)}
+				<Link to={EntryUrlMapper.details_entry(entry)} css={{ marginRight: 8 }}>
+					<div
+						css={{
+							width: 64,
+							height: 36,
+							backgroundColor: 'rgb(28, 28, 28)',
+							backgroundSize: 'cover',
+							backgroundPosition: 'center',
+						}}
+						style={{
+							backgroundImage: `url(${entry.urlThumb})`,
+						}}
+					/>
+				</Link>
 
 				<div
 					css={{
@@ -165,39 +161,37 @@ const EntryInfo = observer(
 						flexDirection: 'column',
 					}}
 				>
-					{playQueue.currentItem && (
-						<>
-							<Link
-								to={EntryUrlMapper.details_entry(playQueue.currentItem.entry)}
-								css={css`
-									color: white;
-									&:hover {
-										color: white;
-									}
-									&:visited {
-										color: white;
-									}
-									font-weight: bold;
-									overflow: hidden;
-									text-overflow: ellipsis;
-									white-space: nowrap;
-								`}
+					<Link
+						to={EntryUrlMapper.details_entry(entry)}
+						css={css`
+							color: white;
+							&:hover {
+								color: white;
+							}
+							&:visited {
+								color: white;
+							}
+							font-weight: bold;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+						`}
+					>
+						{entry.name}
+					</Link>
+					{(entry.entryType === 'Album' || entry.entryType === 'Song') && (
+						<div css={{ display: 'flex' }}>
+							<span
+								css={{
+									color: '#999999',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+									whiteSpace: 'nowrap',
+								}}
 							>
-								{playQueue.currentItem.entry.name}
-							</Link>
-							<div css={{ display: 'flex' }}>
-								<span
-									css={{
-										color: '#999999',
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-										whiteSpace: 'nowrap',
-									}}
-								>
-									{playQueue.currentItem.entry.artistString}
-								</span>
-							</div>
-						</>
+								{entry.artistString}
+							</span>
+						</div>
 					)}
 				</div>
 			</div>
@@ -211,11 +205,9 @@ const PlayerRightControls = observer(
 
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const player = playerRef.current;
-
 			if (!player) return;
 
 			const currentTime = await player.getCurrentTime();
-
 			if (currentTime === undefined) return;
 
 			await player.setCurrentTime(currentTime - 10);
@@ -223,11 +215,9 @@ const PlayerRightControls = observer(
 
 		const handleClickSkipForward30Seconds = React.useCallback(async () => {
 			const player = playerRef.current;
-
 			if (!player) return;
 
 			const currentTime = await player.getCurrentTime();
-
 			if (currentTime === undefined) return;
 
 			await player.setCurrentTime(currentTime + 30);
@@ -292,6 +282,8 @@ const PlayerRightControls = observer(
 
 const PlayerControls = observer(
 	(): React.ReactElement => {
+		const { playQueue } = useVdbPlayer();
+
 		return (
 			<div
 				css={{
@@ -310,7 +302,9 @@ const PlayerControls = observer(
 					}}
 				>
 					<div css={{ maxWidth: '100%' }}>
-						<EntryInfo />
+						{playQueue.currentItem && playQueue.currentItem.entry && (
+							<EntryInfo entry={playQueue.currentItem.entry} />
+						)}
 					</div>
 				</div>
 				<div
@@ -366,7 +360,6 @@ const EmbedPVWrapper = observer(
 			);
 
 			const player = playerRef.current;
-
 			if (!player) return;
 
 			switch (vdbPlayer.repeat) {
@@ -515,14 +508,12 @@ const SeekBar = observer(
 		const handleClick = React.useCallback(
 			async (e: React.MouseEvent): Promise<void> => {
 				const player = playerRef.current;
-
 				if (!player) return;
 
 				const rect = ref.current.getBoundingClientRect();
 				const fraction = (e.clientX - rect.left) / rect.width;
 
 				const duration = await player.getDuration();
-
 				if (duration === undefined) return;
 
 				await player.setCurrentTime(duration * fraction);
@@ -610,7 +601,6 @@ export const VdbPlayer = observer(
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedItem?.pv.id === previousItem?.pv.id) {
 						const player = playerRef.current;
-
 						if (!player) return;
 
 						await player.setCurrentTime(0);

@@ -3,7 +3,6 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
-import { SongWithPVsContract } from '@/DataContracts/Song/SongWithPVsContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
@@ -487,43 +486,6 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.get<
 			PartialFindResultContract<RatedSongForUserForApiContract>
 		>(url, data);
-	};
-
-	public getRatedSongsListWithPVs = async ({
-		lang,
-		paging,
-		pvServices,
-		queryParams,
-	}: {
-		lang: ContentLanguagePreference;
-		paging: PagingProperties;
-		pvServices?: PVService[];
-		queryParams: UserGetRatedSongsListQueryParams;
-	}): Promise<
-		PartialFindResultContract<
-			RatedSongForUserForApiContract & { song: SongWithPVsContract }
-		>
-	> => {
-		const { items, totalCount } = await this.getRatedSongsList({
-			fields: [SongOptionalField.MainPicture, SongOptionalField.PVs],
-			lang: lang,
-			paging: paging,
-			pvServices: pvServices,
-			queryParams: queryParams,
-		});
-
-		const songsForUser = items
-			.filter((songForUser) => !!songForUser.song)
-			.map((songForUser) => ({
-				...songForUser,
-				song: {
-					...songForUser.song!,
-					entryType: EntryType[EntryType.Song],
-					pvs: songForUser.song!.pvs ?? [],
-				},
-			}));
-
-		return { items: songsForUser, totalCount: totalCount };
 	};
 
 	public getRatingsByGenre = ({

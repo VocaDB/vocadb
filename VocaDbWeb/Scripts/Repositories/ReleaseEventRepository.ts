@@ -27,6 +27,7 @@ export enum ReleaseEventOptionalField {
 	'Tags' = 'Tags',
 	'Venue' = 'Venue',
 	'WebLinks' = 'WebLinks',
+	'PVs' = 'PVs',
 }
 
 export class ReleaseEventRepository extends BaseRepository {

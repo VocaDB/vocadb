@@ -2,20 +2,13 @@ import { EmbedPVPreviewButtons } from '@/Components/Shared/Partials/PV/EmbedPVPr
 import { ThumbItem } from '@/Components/Shared/Partials/Shared/ThumbItem';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
-import { PlayQueueHelper } from '@/Helpers/PlayQueueHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumThumbItemProps {
 	album: AlbumForApiContract;
@@ -28,16 +21,10 @@ export const AlbumThumbItem = React.memo(
 
 		const handlePlay = React.useCallback(
 			async (method: PlayMethod) => {
-				const albumWithPVsAndTracks = await albumRepo.getOneWithPVsAndTracks({
-					id: album.id,
-					lang: vdb.values.languagePreference,
-				});
-
-				const items = PlayQueueHelper.createItemsFromAlbum(
-					albumWithPVsAndTracks,
+				await playQueue.loadItemsAndPlay(
+					{ ...album, entryType: EntryType[EntryType.Album] },
+					method,
 				);
-
-				playQueue.play(method, items);
 			},
 			[album, playQueue],
 		);

@@ -1,25 +1,27 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"definitions": {
-		"EntryThumbContract": {
+		"AdvancedSearchFilter": {
 			"properties": {
-				"name": {
+				"description": {
 					"type": "string"
 				},
-				"urlOriginal": {
+				"filterType": {
 					"type": "string"
 				},
-				"urlSmallThumb": {
-					"type": "string"
+				"negate": {
+					"type": "boolean"
 				},
-				"urlThumb": {
-					"type": "string"
-				},
-				"urlTinyThumb": {
+				"param": {
 					"type": "string"
 				}
 			},
+			"required": ["filterType", "param"],
 			"type": "object"
+		},
+		"EntryStatus": {
+			"enum": ["Approved", "Draft", "Finished", "Locked"],
+			"type": "string"
 		},
 		"PVService": {
 			"enum": [
@@ -36,54 +38,11 @@
 			],
 			"type": "string"
 		},
-		"PlayQueueItemContract": {
-			"properties": {
-				"entry": {
-					"anyOf": [
-						{
-							"allOf": [
-								{
-									"properties": {
-										"entryType": {
-											"enum": ["Album"],
-											"type": "string"
-										}
-									},
-									"type": "object"
-								},
-								{
-									"$ref": "#/definitions/Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>"
-								}
-							]
-						},
-						{
-							"allOf": [
-								{
-									"properties": {
-										"entryType": {
-											"enum": ["Song"],
-											"type": "string"
-										}
-									},
-									"type": "object"
-								},
-								{
-									"$ref": "#/definitions/Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>"
-								}
-							]
-						}
-					]
-				},
-				"pv": {
-					"$ref": "#/definitions/Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>"
-				}
-			},
-			"type": "object"
+		"PVType": {
+			"enum": ["Original", "Other", "Reprint"],
+			"type": "string"
 		},
-		"Record<string,any>": {
-			"type": "object"
-		},
-		"Required<Pick<AlbumContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\">>": {
+		"PlayQueueAlbumContract": {
 			"properties": {
 				"additionalNames": {
 					"type": "string"
@@ -91,22 +50,64 @@
 				"artistString": {
 					"type": "string"
 				},
+				"entryType": {
+					"enum": ["Album"],
+					"type": "string"
+				},
 				"id": {
 					"type": "number"
-				},
-				"mainPicture": {
-					"$ref": "#/definitions/EntryThumbContract"
 				},
 				"name": {
 					"type": "string"
 				},
+				"pvs": {
+					"items": {
+						"$ref": "#/definitions/PlayQueuePVContract"
+					},
+					"type": "array"
+				},
 				"status": {
+					"$ref": "#/definitions/EntryStatus"
+				},
+				"urlThumb": {
 					"type": "string"
 				}
 			},
+			"required": [
+				"additionalNames",
+				"artistString",
+				"entryType",
+				"id",
+				"name",
+				"pvs",
+				"status",
+				"urlThumb"
+			],
 			"type": "object"
 		},
-		"Required<Pick<PVContract,\"id\"|\"service\"|\"pvId\"|\"pvType\">>": {
+		"PlayQueueItemContract": {
+			"properties": {
+				"entry": {
+					"anyOf": [
+						{
+							"$ref": "#/definitions/PlayQueueAlbumContract"
+						},
+						{
+							"$ref": "#/definitions/PlayQueueReleaseEventContract"
+						},
+						{
+							"$ref": "#/definitions/PlayQueueSongContract"
+						}
+					]
+				},
+				"pvId": {
+					"type": "number"
+				}
+			},
+			"required": ["entry", "pvId"],
+			"type": "object"
+		},
+		"PlayQueuePVContract": {
 			"properties": {
 				"id": {
 					"type": "number"
@@ -115,15 +116,55 @@
 					"type": "string"
 				},
 				"pvType": {
-					"type": "string"
+					"$ref": "#/definitions/PVType"
 				},
 				"service": {
 					"$ref": "#/definitions/PVService"
 				}
 			},
+			"required": ["id", "pvId", "pvType", "service"],
 			"type": "object"
 		},
-		"Required<Pick<SongContract,\"name\"|\"id\"|\"status\"|\"additionalNames\"|\"artistString\"|\"mainPicture\"|\"songType\">>": {
+		"PlayQueueReleaseEventContract": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"entryType": {
+					"enum": ["ReleaseEvent"],
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"pvs": {
+					"items": {
+						"$ref": "#/definitions/PlayQueuePVContract"
+					},
+					"type": "array"
+				},
+				"status": {
+					"$ref": "#/definitions/EntryStatus"
+				},
+				"urlThumb": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"additionalNames",
+				"entryType",
+				"id",
+				"name",
+				"pvs",
+				"status",
+				"urlThumb"
+			],
+			"type": "object"
+		},
+		"PlayQueueSongContract": {
 			"properties": {
 				"additionalNames": {
 					"type": "string"
@@ -131,22 +172,204 @@
 				"artistString": {
 					"type": "string"
 				},
+				"entryType": {
+					"enum": ["Song"],
+					"type": "string"
+				},
 				"id": {
 					"type": "number"
 				},
-				"mainPicture": {
-					"$ref": "#/definitions/EntryThumbContract"
-				},
 				"name": {
 					"type": "string"
+				},
+				"pvs": {
+					"items": {
+						"$ref": "#/definitions/PlayQueuePVContract"
+					},
+					"type": "array"
 				},
 				"songType": {
 					"$ref": "#/definitions/SongType"
 				},
 				"status": {
+					"$ref": "#/definitions/EntryStatus"
+				},
+				"urlThumb": {
 					"type": "string"
 				}
 			},
+			"required": [
+				"additionalNames",
+				"artistString",
+				"entryType",
+				"id",
+				"name",
+				"pvs",
+				"songType",
+				"status",
+				"urlThumb"
+			],
+			"type": "object"
+		},
+		"SongGetListQueryParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/AdvancedSearchFilter"
+					},
+					"type": "array"
+				},
+				"afterDate": {
+					"format": "date-time",
+					"type": "string"
+				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"artistParticipationStatus": {
+					"type": "string"
+				},
+				"beforeDate": {
+					"format": "date-time",
+					"type": "string"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"eventId": {
+					"type": "number"
+				},
+				"includeMembers": {
+					"type": "boolean"
+				},
+				"maxLength": {
+					"type": "number"
+				},
+				"maxMilliBpm": {
+					"type": "number"
+				},
+				"minLength": {
+					"type": "number"
+				},
+				"minMilliBpm": {
+					"type": "number"
+				},
+				"minScore": {
+					"type": "number"
+				},
+				"onlyWithPvs": {
+					"type": "boolean"
+				},
+				"parentSongId": {
+					"type": "number"
+				},
+				"query": {
+					"type": "string"
+				},
+				"since": {
+					"type": "number"
+				},
+				"songTypes": {
+					"items": {
+						"$ref": "#/definitions/SongType"
+					},
+					"type": "array"
+				},
+				"sort": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"unifyTypesAndTags": {
+					"type": "boolean"
+				},
+				"userCollectionId": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"artistIds",
+				"artistParticipationStatus",
+				"childTags",
+				"childVoicebanks",
+				"includeMembers",
+				"onlyWithPvs",
+				"query",
+				"sort",
+				"tagIds",
+				"unifyTypesAndTags"
+			],
+			"type": "object"
+		},
+		"SongListGetSongsQueryParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/AdvancedSearchFilter"
+					},
+					"type": "array"
+				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"artistParticipationStatus": {
+					"type": "string"
+				},
+				"childTags": {
+					"type": "boolean"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"listId": {
+					"type": "number"
+				},
+				"query": {
+					"type": "string"
+				},
+				"songTypes": {
+					"items": {
+						"$ref": "#/definitions/SongType"
+					},
+					"type": "array"
+				},
+				"sort": {
+					"type": "string"
+				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"required": [
+				"advancedFilters",
+				"artistIds",
+				"artistParticipationStatus",
+				"childTags",
+				"childVoicebanks",
+				"listId",
+				"query",
+				"sort",
+				"tagIds"
+			],
 			"type": "object"
 		},
 		"SongType": {
@@ -166,6 +389,61 @@
 				"Unspecified"
 			],
 			"type": "string"
+		},
+		"UserGetRatedSongsListQueryParams": {
+			"properties": {
+				"advancedFilters": {
+					"items": {
+						"$ref": "#/definitions/AdvancedSearchFilter"
+					},
+					"type": "array"
+				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"childVoicebanks": {
+					"type": "boolean"
+				},
+				"groupByRating": {
+					"type": "boolean"
+				},
+				"query": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "string"
+				},
+				"songListId": {
+					"type": "number"
+				},
+				"sort": {
+					"type": "string"
+				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"userId": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"advancedFilters",
+				"artistIds",
+				"childVoicebanks",
+				"groupByRating",
+				"query",
+				"rating",
+				"sort",
+				"tagIds",
+				"userId"
+			],
+			"type": "object"
 		}
 	},
 	"properties": {
@@ -182,7 +460,17 @@
 			"type": "number"
 		},
 		"queryParams": {
-			"$ref": "#/definitions/Record<string,any>"
+			"anyOf": [
+				{
+					"$ref": "#/definitions/UserGetRatedSongsListQueryParams"
+				},
+				{
+					"$ref": "#/definitions/SongListGetSongsQueryParams"
+				},
+				{
+					"$ref": "#/definitions/SongGetListQueryParams"
+				}
+			]
 		},
 		"repositoryType": {
 			"enum": ["RatedSongs", "SongList", "Songs"],

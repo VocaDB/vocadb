@@ -1,3 +1,5 @@
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -14,6 +16,8 @@ import React from 'react';
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
+const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
+const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const songListRepo = new SongListRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
@@ -40,7 +44,14 @@ export const VdbPlayerProvider = ({
 	children,
 }: VdbPlayerProviderProps): React.ReactElement => {
 	const [vdbPlayer] = React.useState(
-		() => new VdbPlayerStore(playQueueRepoFactory),
+		() =>
+			new VdbPlayerStore(
+				vdb.values,
+				albumRepo,
+				eventRepo,
+				songRepo,
+				playQueueRepoFactory,
+			),
 	);
 
 	const playerRef = React.useRef<PlayerApi>();

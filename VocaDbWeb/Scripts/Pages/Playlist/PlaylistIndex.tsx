@@ -11,7 +11,6 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -33,38 +32,9 @@ const PlaylistIndex = observer(
 
 		const { playQueue, playerRef } = useVdbPlayer();
 
-		const handleClickPlayNext = React.useCallback(() => {
-			playQueue.playNext(
-				playQueue.selectedItems.map(
-					(item) => new PlayQueueItem(item.entry, item.pv),
-				),
-			);
-
-			playQueue.unselectAll();
-		}, [playQueue]);
-
-		const handleClickAddToPlayQueue = React.useCallback(() => {
-			const items =
-				playQueue.selectedItems.length > 0
-					? playQueue.selectedItems
-					: playQueue.items;
-
-			playQueue.addToPlayQueue(
-				items.map((item) => new PlayQueueItem(item.entry, item.pv)),
-			);
-
-			playQueue.unselectAll();
-		}, [playQueue]);
-
 		const handleClickAddToNewSongList = React.useCallback(() => {
 			// TODO: Implement.
 		}, []);
-
-		const handleClickRemove = React.useCallback(async () => {
-			await playQueue.removeFromPlayQueue(playQueue.selectedItems);
-
-			playQueue.unselectAll();
-		}, [playQueue]);
 
 		return (
 			<Layout
@@ -84,14 +54,14 @@ const PlaylistIndex = observer(
 							<>
 								<JQueryUIButton
 									as={SafeAnchor}
-									onClick={handleClickPlayNext}
+									onClick={playQueue.playSelectedItemsNext}
 									icons={{ primary: 'ui-icon-play' }}
 								>
 									Play next{/* TODO: localize */}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
-									onClick={handleClickAddToPlayQueue}
+									onClick={playQueue.addSelectedItemsToPlayQueue}
 									icons={{ primary: 'ui-icon-plus' }}
 								>
 									Add to play queue{/* TODO: localize */}
@@ -107,7 +77,7 @@ const PlaylistIndex = observer(
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
-									onClick={handleClickRemove}
+									onClick={playQueue.removeSelectedItemsFromPlayQueue}
 									icons={{ primary: ' ui-icon-close' }}
 								>
 									Remove{/* TODO: localize */}
@@ -125,7 +95,7 @@ const PlaylistIndex = observer(
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
-									onClick={handleClickAddToPlayQueue}
+									onClick={playQueue.addSelectedItemsToPlayQueue}
 									icons={{ primary: 'ui-icon-plus' }}
 									disabled={playQueue.isEmpty}
 								>
@@ -200,14 +170,14 @@ const PlaylistIndex = observer(
 										/>
 									</td>
 									<td style={{ width: '80px' }}>
-										{item.entry.mainPicture && item.entry.mainPicture.urlThumb && (
+										{item.entry.urlThumb && (
 											<Link
 												to={EntryUrlMapper.details_entry(item.entry)}
 												title={item.entry.additionalNames}
 											>
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
-													src={item.entry.mainPicture.urlThumb}
+													src={item.entry.urlThumb}
 													title="Cover picture" /* TODO: localize */
 													className="coverPicThumb img-rounded"
 													referrerPolicy="same-origin"
@@ -273,10 +243,15 @@ const PlaylistIndex = observer(
 												]
 											}
 										/>
-										<br />
-										<small className="extraInfo">
-											{item.entry.artistString}
-										</small>
+										{(item.entry.entryType === 'Album' ||
+											item.entry.entryType === 'Song') && (
+											<>
+												<br />
+												<small className="extraInfo">
+													{item.entry.artistString}
+												</small>
+											</>
+										)}
 									</td>
 								</tr>
 							))}
