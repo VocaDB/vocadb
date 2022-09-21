@@ -25,12 +25,14 @@ const playQueueRepoFactory = new PlayQueueRepositoryFactory(
 	userRepo,
 );
 
-interface VdbPlayerContextProps {
+export interface VdbPlayerContextProps {
 	vdbPlayer: VdbPlayerStore;
 	playQueue: PlayQueueStore;
 }
 
-const VdbPlayerContext = React.createContext<VdbPlayerContextProps>(undefined!);
+export const VdbPlayerContext = React.createContext<VdbPlayerContextProps>(
+	undefined!,
+);
 
 interface VdbPlayerProviderProps {
 	children?: React.ReactNode;
@@ -60,7 +62,5 @@ export const VdbPlayerProvider = ({
 };
 
 export const useVdbPlayer = (): VdbPlayerContextProps => {
-	const vdbPlayerContext = React.useContext(VdbPlayerContext);
-
-	return vdbPlayerContext;
+	return React.useContext(VdbPlayerContext);
 };

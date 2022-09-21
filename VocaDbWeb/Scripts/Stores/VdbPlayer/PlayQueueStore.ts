@@ -56,14 +56,18 @@ export class PlayQueueItem {
 	public readonly id: number;
 	// Do not use the name `selected`. See: https://github.com/SortableJS/react-sortablejs/issues/243.
 	@observable public isSelected = false;
+	private startTime?: number;
+	@observable public currentTime = 0;
 
 	public constructor(
 		public readonly entry: PlayQueueEntryContract,
 		public readonly pvId: number,
+		startTime?: number,
 	) {
 		makeObservable(this);
 
 		this.id = PlayQueueItem.nextId++;
+		this.startTime = startTime;
 	}
 
 	public static fromContract = ({
@@ -76,6 +80,16 @@ export class PlayQueueItem {
 	public get pv(): PVContract {
 		return this.entry.pvs.find((pv) => pv.id === this.pvId)!;
 	}
+
+	public getAndClearStartTime = (): number | undefined => {
+		const startTime = this.startTime;
+		this.startTime = undefined;
+		return startTime;
+	};
+
+	@action public setCurrentTime = (value: number): void => {
+		this.currentTime = value;
+	};
 
 	public toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pvId: this.pvId };
@@ -158,6 +172,15 @@ export class PlayQueueStore
 
 	@computed public get currentItem(): PlayQueueItem | undefined {
 		return this.items.find((item) => item.id === this.currentId);
+	}
+
+	@computed public get currentTime(): number | undefined {
+		return this.currentItem?.currentTime;
+	}
+	public set currentTime(value: number | undefined) {
+		if (!this.currentItem || value === undefined) return;
+
+		this.currentItem.currentTime = value;
 	}
 
 	@computed public get isLastItem(): boolean {
@@ -574,8 +597,8 @@ export class PlayQueueStore
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
 
-		const currentItem = this.items[currentIndex];
-		const newItem = new PlayQueueItem(currentItem.entry, pv.id);
+		const { entry, currentTime } = this.items[currentIndex];
+		const newItem = new PlayQueueItem(entry, pv.id, currentTime);
 		this.items[currentIndex] = newItem;
 		this.currentId = newItem.id;
 	};

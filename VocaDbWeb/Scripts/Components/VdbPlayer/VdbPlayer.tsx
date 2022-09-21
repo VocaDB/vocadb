@@ -15,7 +15,12 @@ import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import { PlayerApi, TimeEvent, useNostalgicDiva } from '@vocadb/nostalgic-diva';
+import {
+	PlayerApi,
+	PlayerOptions,
+	TimeEvent,
+	useNostalgicDiva,
+} from '@vocadb/nostalgic-diva';
 import { useLocalStorageStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
@@ -241,18 +246,18 @@ const PlayerRightControls = observer(
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
-			const currentTime = await diva.getCurrentTime();
+			const { currentTime } = playQueue;
 			if (currentTime !== undefined) {
 				await diva.setCurrentTime(currentTime - 10);
 			}
-		}, [diva]);
+		}, [diva, playQueue]);
 
 		const handleClickSkipForward30Seconds = React.useCallback(async () => {
-			const currentTime = await diva.getCurrentTime();
+			const { currentTime } = playQueue;
 			if (currentTime !== undefined) {
 				await diva.setCurrentTime(currentTime + 30);
 			}
-		}, [diva]);
+		}, [diva, playQueue]);
 
 		return (
 			<>
@@ -414,38 +419,41 @@ const EmbedPVWrapper = observer(
 
 							case RepeatMode.All:
 								if (playQueue.hasMultipleItems) {
-									// HACK: Prevent vdbPlayer.next from being called in the same context.
-									// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
-									// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
-									setTimeout(() => {
-										playQueue.goToFirst();
-									});
+									playQueue.goToFirst();
 								} else {
 									await diva.setCurrentTime(0);
 								}
 								break;
 						}
 					} else {
-						// HACK: Prevent vdbPlayer.next from being called in the same context.
-						// EmbedFile, EmbedNiconico, EmbedSoundCloud, EmbedYouTube and etc. must be rendered only after the `pv` prop has changed.
-						// Otherwise, the same PV may be played twice when switching between video services (e.g. Niconico => YouTube).
-						setTimeout(async () => {
-							await playQueue.next();
-						});
+						await playQueue.next();
 					}
 					break;
 			}
 		}, [diva, vdbPlayer, playQueue]);
 
 		const handleTimeUpdate = React.useCallback(
-			({ percent }: TimeEvent) => {
-				if (percent !== undefined) vdbPlayer.setPercent(percent);
+			async ({ percent, seconds }: TimeEvent) => {
+				if (percent !== undefined) {
+					vdbPlayer.setPercent(percent);
+				}
+
+				if (seconds !== undefined) {
+					if (seconds > 0) {
+						const startTime = playQueue.currentItem?.getAndClearStartTime();
+						if (startTime !== undefined) {
+							await diva.setCurrentTime(startTime);
+						}
+					}
+
+					playQueue.currentTime = seconds;
+				}
 			},
-			[vdbPlayer],
+			[diva, vdbPlayer, playQueue],
 		);
 
 		const options = React.useMemo(
-			() => ({
+			(): PlayerOptions => ({
 				onError: handleError,
 				onPlay: handlePlay,
 				onPause: handlePause,
