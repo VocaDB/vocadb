@@ -215,23 +215,25 @@ const PVServiceDropdown = observer(
 					<PVServiceIcon service={item.pv.service} />
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
-					{item.entry.pvs.map((pv) => (
-						<Dropdown.Item
-							onClick={async (): Promise<void> => {
-								if (pv.id === item.pv.id) return;
+					{item.entry.pvs
+						.filter((pv) => !pv.disabled)
+						.map((pv) => (
+							<Dropdown.Item
+								onClick={async (): Promise<void> => {
+									if (pv.id === item.pv.id) return;
 
-								playQueue.switchPV(pv);
-							}}
-							key={pv.id}
-						>
-							{pv.id === item.pv.id ? (
-								<i className="menuIcon icon-ok" />
-							) : (
-								<i className="menuIcon icon-" />
-							)}{' '}
-							<PVServiceIcon service={pv.service} /> {pv.service}
-						</Dropdown.Item>
-					))}
+									playQueue.switchPV(pv);
+								}}
+								key={pv.id}
+							>
+								{pv.id === item.pv.id ? (
+									<i className="menuIcon icon-ok" />
+								) : (
+									<i className="menuIcon icon-" />
+								)}{' '}
+								<PVServiceIcon service={pv.service} /> {pv.service}
+							</Dropdown.Item>
+						))}
 				</Dropdown.Menu>
 			</Dropdown>
 		);
