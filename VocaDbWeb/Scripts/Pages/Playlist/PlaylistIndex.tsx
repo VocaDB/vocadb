@@ -11,6 +11,7 @@ import { EntryStatus } from '@/Models/EntryStatus';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -30,7 +31,8 @@ const PlaylistIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const { playQueue, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { playQueue } = useVdbPlayer();
 
 		const handleClickAddToNewSongList = React.useCallback(() => {
 			// TODO: Implement.
@@ -190,12 +192,7 @@ const PlaylistIndex = observer(
 											<Button
 												onClick={async (): Promise<void> => {
 													if (playQueue.currentItem === item) {
-														const player = playerRef.current;
-
-														if (!player) return;
-
-														await player.setCurrentTime(0);
-														await player.play();
+														await diva.setCurrentTime(0);
 													} else {
 														playQueue.setCurrentItem(item);
 													}

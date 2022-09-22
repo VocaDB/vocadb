@@ -66,16 +66,16 @@ export class PlayQueueItem {
 		this.id = PlayQueueItem.nextId++;
 	}
 
-	public get pv(): PVContract {
-		return this.entry.pvs.find((pv) => pv.id === this.pvId)!;
-	}
-
 	public static fromContract = ({
 		entry,
 		pvId,
 	}: PlayQueueItemContract): PlayQueueItem => {
 		return new PlayQueueItem(entry, pvId);
 	};
+
+	public get pv(): PVContract {
+		return this.entry.pvs.find((pv) => pv.id === this.pvId)!;
+	}
 
 	public toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pvId: this.pvId };

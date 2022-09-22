@@ -15,7 +15,7 @@ import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
-import { PlayerApi, TimeEvent } from '@vocadb/nostalgic-diva';
+import { PlayerApi, TimeEvent, useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import { useLocalStorageStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { reaction } from 'mobx';
@@ -38,21 +38,16 @@ const repeatIcons: Record<RepeatMode, string> = {
 
 const PlayerCenterControls = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		const handlePause = React.useCallback(async () => {
-			const player = playerRef.current;
-			if (!player) return;
-
-			await player.pause();
-		}, [playerRef]);
+			await diva.pause();
+		}, [diva]);
 
 		const handlePlay = React.useCallback(async () => {
-			const player = playerRef.current;
-			if (!player) return;
-
-			await player.play();
-		}, [playerRef]);
+			await diva.play();
+		}, [diva]);
 
 		return (
 			<ButtonGroup>
@@ -242,27 +237,22 @@ const PVServiceDropdown = observer(
 
 const PlayerRightControls = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
-			const player = playerRef.current;
-			if (!player) return;
-
-			const currentTime = await player.getCurrentTime();
-			if (currentTime === undefined) return;
-
-			await player.setCurrentTime(currentTime - 10);
-		}, [playerRef]);
+			const currentTime = await diva.getCurrentTime();
+			if (currentTime !== undefined) {
+				await diva.setCurrentTime(currentTime - 10);
+			}
+		}, [diva]);
 
 		const handleClickSkipForward30Seconds = React.useCallback(async () => {
-			const player = playerRef.current;
-			if (!player) return;
-
-			const currentTime = await player.getCurrentTime();
-			if (currentTime === undefined) return;
-
-			await player.setCurrentTime(currentTime + 30);
-		}, [playerRef]);
+			const currentTime = await diva.getCurrentTime();
+			if (currentTime !== undefined) {
+				await diva.setCurrentTime(currentTime + 30);
+			}
+		}, [diva]);
 
 		return (
 			<>
@@ -389,7 +379,8 @@ interface PVPlayerProps {
 
 const EmbedPVWrapper = observer(
 	({ pv }: PVPlayerProps): React.ReactElement => {
-		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		const handleError = React.useCallback((event: any) => {
 			VdbPlayerConsole.error('error', event);
@@ -408,13 +399,9 @@ const EmbedPVWrapper = observer(
 				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
 			);
 
-			const player = playerRef.current;
-			if (!player) return;
-
 			switch (vdbPlayer.repeat) {
 				case RepeatMode.One:
-					await player.setCurrentTime(0);
-					await player.play();
+					await diva.setCurrentTime(0);
 					break;
 
 				case RepeatMode.Off:
@@ -434,8 +421,7 @@ const EmbedPVWrapper = observer(
 										playQueue.goToFirst();
 									});
 								} else {
-									await player.setCurrentTime(0);
-									await player.play();
+									await diva.setCurrentTime(0);
 								}
 								break;
 						}
@@ -449,7 +435,7 @@ const EmbedPVWrapper = observer(
 					}
 					break;
 			}
-		}, [vdbPlayer, playQueue, playerRef]);
+		}, [diva, vdbPlayer, playQueue]);
 
 		const handleTimeUpdate = React.useCallback(
 			({ percent }: TimeEvent) => {
@@ -497,7 +483,6 @@ const EmbedPVWrapper = observer(
 				pv={pv}
 				width="100%"
 				height="100%"
-				playerRef={playerRef}
 				options={options}
 				onPlayerChange={handlePlayerChange}
 			/>
@@ -550,25 +535,21 @@ const MiniPlayer = observer(
 
 const SeekBar = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { vdbPlayer } = useVdbPlayer();
 
 		const ref = React.useRef<HTMLDivElement>(undefined!);
 
 		const handleClick = React.useCallback(
 			async (e: React.MouseEvent): Promise<void> => {
-				const player = playerRef.current;
-				if (!player) return;
-
-				const rect = ref.current.getBoundingClientRect();
-				const fraction = (e.clientX - rect.left) / rect.width;
-
-				const duration = await player.getDuration();
-				if (duration === undefined) return;
-
-				await player.setCurrentTime(duration * fraction);
-				await player.play();
+				const duration = await diva.getDuration();
+				if (duration !== undefined) {
+					const rect = ref.current.getBoundingClientRect();
+					const fraction = (e.clientX - rect.left) / rect.width;
+					await diva.setCurrentTime(duration * fraction);
+				}
 			},
-			[playerRef],
+			[diva],
 		);
 
 		return (
@@ -637,7 +618,8 @@ export const VdbPlayer = observer(
 	(): React.ReactElement => {
 		VdbPlayerConsole.debug('VdbPlayer');
 
-		const { vdbPlayer, playQueue, playerRef } = useVdbPlayer();
+		const diva = useNostalgicDiva();
+		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		useLocalStorageStateStore('VdbPlayerStore', vdbPlayer);
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
@@ -649,17 +631,13 @@ export const VdbPlayer = observer(
 				async (selectedItem, previousItem) => {
 					if (!selectedItem || !previousItem) return;
 
-					const player = playerRef.current;
-					if (!player) return;
-
 					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 					if (selectedItem.pv.id === previousItem.pv.id) {
-						await player.setCurrentTime(0);
-						await player.play();
+						await diva.setCurrentTime(0);
 					}
 				},
 			);
-		}, [playQueue, playerRef]);
+		}, [diva, playQueue]);
 
 		return (
 			<>
