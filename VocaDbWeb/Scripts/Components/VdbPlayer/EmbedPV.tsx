@@ -4,8 +4,12 @@ import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
-import { NostalgicDiva } from '@vocadb/nostalgic-diva';
-import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
+import {
+	IPlayerApi,
+	NostalgicDiva,
+	PlayerOptions,
+	PlayerType,
+} from '@vocadb/nostalgic-diva';
 import _ from 'lodash';
 import React from 'react';
 
@@ -56,9 +60,8 @@ interface EmbedPVProps {
 	pv: PVContract;
 	width?: number | string;
 	height?: number | string;
-	playerRef: React.MutableRefObject<PlayerApi | undefined>;
 	options: PlayerOptions;
-	onPlayerChange?: (player?: PlayerApi) => void;
+	onPlayerChange?: (player?: IPlayerApi) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -66,7 +69,6 @@ export const EmbedPV = React.memo(
 		pv,
 		width = 560,
 		height = 315,
-		playerRef,
 		options,
 		onPlayerChange,
 	}: EmbedPVProps): React.ReactElement => {
@@ -112,16 +114,12 @@ export const EmbedPV = React.memo(
 				return (
 					<NostalgicDiva
 						type={playerTypes[service]}
-						playerRef={playerRef}
 						options={options}
 						onPlayerChange={onPlayerChange}
 					/>
 				);
 
 			case PVService.Bandcamp:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -133,15 +131,9 @@ export const EmbedPV = React.memo(
 				);
 
 			case PVService.Bilibili:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
 				return <EmbedBili pv={pv} width={width} height={height} />;
 
 			case PVService.Creofuga:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
 				return (
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
@@ -155,9 +147,6 @@ export const EmbedPV = React.memo(
 				);
 
 			default:
-				// TODO: Remove.
-				playerRef.current = undefined;
-
 				return <></>;
 		}
 	},
