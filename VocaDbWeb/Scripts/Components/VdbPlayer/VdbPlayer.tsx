@@ -629,7 +629,6 @@ export const VdbPlayer = observer(
 		const diva = useNostalgicDiva();
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
-		useLocalStorageStateStore('VdbPlayerStore', vdbPlayer);
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
 
 		React.useEffect(() => {
