@@ -245,6 +245,10 @@ const PlayerRightControls = observer(
 		const diva = useNostalgicDiva();
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
+		const handleClickSkipIntro = React.useCallback(async () => {
+			// TODO: Implement "Skip intro".
+		}, []);
+
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const { currentTime } = playQueue;
 			if (currentTime !== undefined) {
@@ -262,8 +266,25 @@ const PlayerRightControls = observer(
 		return (
 			<>
 				{playQueue.currentItem && (
-					<PVServiceDropdown item={playQueue.currentItem} />
-				)}{' '}
+					<>
+						<ButtonGroup>
+							<Button
+								onClick={handleClickSkipIntro}
+								disabled={!vdbPlayer.canAutoplay}
+								variant="inverse"
+								title="Skip intro" /* TODO: localize */
+							>
+								<img
+									src="" /* TODO: Implement "Skip intro". */
+									alt="Skip intro" /* TODO: localize */
+									width={16}
+									height={16}
+								/>
+							</Button>
+						</ButtonGroup>
+						<PVServiceDropdown item={playQueue.currentItem} />
+					</>
+				)}
 				<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
 					<Dropdown.Toggle variant="inverse">
 						<span
