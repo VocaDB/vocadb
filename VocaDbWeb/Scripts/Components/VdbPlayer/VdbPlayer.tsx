@@ -16,7 +16,7 @@ import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
-	PlayerApi,
+	IPlayerApi,
 	PlayerOptions,
 	TimeEvent,
 	useNostalgicDiva,
@@ -464,7 +464,7 @@ const EmbedPVWrapper = observer(
 		);
 
 		const handlePlayerChange = React.useCallback(
-			async (player?: PlayerApi) => {
+			async (player?: IPlayerApi) => {
 				try {
 					if (!player) return;
 

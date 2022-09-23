@@ -4,8 +4,12 @@ import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
-import { NostalgicDiva } from '@vocadb/nostalgic-diva';
-import { PlayerApi, PlayerOptions, PlayerType } from '@vocadb/nostalgic-diva';
+import {
+	IPlayerApi,
+	NostalgicDiva,
+	PlayerOptions,
+	PlayerType,
+} from '@vocadb/nostalgic-diva';
 import _ from 'lodash';
 import React from 'react';
 
@@ -57,7 +61,7 @@ interface EmbedPVProps {
 	width?: number | string;
 	height?: number | string;
 	options: PlayerOptions;
-	onPlayerChange?: (player?: PlayerApi) => void;
+	onPlayerChange?: (player?: IPlayerApi) => void;
 }
 
 export const EmbedPV = React.memo(
