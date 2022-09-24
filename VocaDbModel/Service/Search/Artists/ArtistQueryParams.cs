@@ -22,8 +22,15 @@ namespace VocaDb.Model.Service.Search.Artists
 		/// <param name="nameMatchMode">Mode for name maching. Ignored when query string is null or empty.</param>
 		/// <param name="sortRule">Sort rule for results.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
-		public ArtistQueryParams(ArtistSearchTextQuery textQuery, ArtistType[]? songTypes, int start, int maxResults,
-			bool getTotalCount, ArtistSortRule sortRule, bool moveExactToTop)
+		public ArtistQueryParams(
+			ArtistSearchTextQuery textQuery,
+			ArtistType[]? songTypes,
+			int start,
+			int maxResults,
+			bool getTotalCount,
+			ArtistSortRule sortRule,
+			bool moveExactToTop
+		)
 		{
 			Common = CommonSearchParams.Create(textQuery, true, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
