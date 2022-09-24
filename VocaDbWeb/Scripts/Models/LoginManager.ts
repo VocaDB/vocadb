@@ -45,7 +45,7 @@ export enum PermissionToken {
 	ViewHiddenRatings = '47bcc523-5667-403d-bd20-d2728e1f9c5f',
 	ViewHiddenRevisions = 'c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d',
 	ManageWebhooks = '838dde1d-51ba-423b-ad8e-c1e2c2024a37',
-	CreateXmlDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
+	CreateDatabaseDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
 }
 
 // Corresponds to the LoginManager and EntryPermissionManager classes in C#.

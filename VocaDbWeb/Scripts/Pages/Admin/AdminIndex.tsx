@@ -95,8 +95,8 @@ const AdminIndex = (): React.ReactElement => {
 						</a>
 					</p>
 					<p>
-						<a href="/Admin/CreateXmlDump">
-							Create XML dump{/* TODO: localize */}
+						<a href="/Admin/CreateJsonDump">
+							Create JSON dump{/* TODO: localize */}
 						</a>
 					</p>
 					<p>

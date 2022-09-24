@@ -237,7 +237,7 @@ namespace VocaDb.Web.Controllers
 			return File(pictureData.Bytes, pictureData.Mime);
 		}
 
-		protected ActionResult LowercaseJson(object obj) => Content(JsonHelpers.Serialize(obj), "application/json");
+		protected ActionResult LowercaseJson(object obj) => Content(JsonHelper.Serialize(obj), "application/json");
 
 		protected new ActionResult Json(object obj)
 		{
