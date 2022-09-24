@@ -15,11 +15,13 @@ namespace VocaDb.Model.Service.Search.SongSearch
 {
 	public class SongSearch
 	{
+#nullable enable
 		private readonly IEntryUrlParser _entryUrlParser;
 		private readonly ContentLanguagePreference _languagePreference;
 		private readonly IDatabaseContext _querySource;
 
 		private ContentLanguagePreference LanguagePreference => _languagePreference;
+#nullable disable
 
 		private IQueryable<Song> CreateQuery(
 			SongQueryParams queryParams,
@@ -210,6 +212,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			};
 		}
 
+#nullable enable
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
 		{
 			_querySource = querySource;
@@ -217,7 +220,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			_entryUrlParser = entryUrlParser;
 		}
 
-#nullable enable
 		/// <summary>
 		/// Finds songs based on criteria.
 		/// </summary>

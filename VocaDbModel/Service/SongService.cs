@@ -20,6 +20,7 @@ namespace VocaDb.Model.Service
 {
 	public class SongService : ServiceBase
 	{
+#nullable enable
 		private readonly IEntryUrlParser _entryUrlParser;
 		private readonly IUserIconFactory _userIconFactory;
 
@@ -94,6 +95,7 @@ namespace VocaDb.Model.Service
 				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted, notes);
 			}, PermissionToken.Nothing, skipLog: true);
 		}
+#nullable disable
 
 		public T FindFirst<T>(Func<Song, ISession, T> fac, string[] query, NameMatchMode nameMatchMode)
 			where T : class
