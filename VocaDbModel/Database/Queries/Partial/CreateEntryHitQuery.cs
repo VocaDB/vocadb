@@ -30,33 +30,31 @@ namespace VocaDb.Model.Database.Queries.Partial
 			if (agentNum == 0)
 				return;
 
-			using (var tx = ctx.BeginTransaction(IsolationLevel.ReadUncommitted))
+			using var tx = ctx.BeginTransaction(IsolationLevel.ReadUncommitted);
+			var entryId = entry.Id;
+			var isHit = ctx.Query<THit>().Any(h => h.Entry.Id == entryId && h.Agent == agentNum);
+
+			if (!isHit)
 			{
-				var entryId = entry.Id;
-				var isHit = ctx.Query<THit>().Any(h => h.Entry.Id == entryId && h.Agent == agentNum);
-
-				if (!isHit)
+				var hit = factory(entry, agentNum);
+				try
 				{
-					var hit = factory(entry, agentNum);
-					try
-					{
-						ctx.Save(hit);
-					}
-					catch (GenericADOException x)
-					{
-						// This can happen if the uniqueness constraint is violated. We could use pessimistic locking, but it's not important enough here.
-						s_log.Warn("Unable to save hit for {0}: {1}", entry, x.Message);
-						return;
-					}
+					ctx.Save(hit);
+				}
+				catch (GenericADOException x)
+				{
+					// This can happen if the uniqueness constraint is violated. We could use pessimistic locking, but it's not important enough here.
+					s_log.Warn("Unable to save hit for {0}: {1}", entry, x.Message);
+					return;
+				}
 
-					try
-					{
-						tx.Commit();
-					}
-					catch (TransactionException x)
-					{
-						s_log.Warn(x, "Unable to save hit for {0}", entry);
-					}
+				try
+				{
+					tx.Commit();
+				}
+				catch (TransactionException x)
+				{
+					s_log.Warn(x, "Unable to save hit for {0}", entry);
 				}
 			}
 		}

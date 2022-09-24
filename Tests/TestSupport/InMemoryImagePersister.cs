@@ -51,11 +51,9 @@ namespace VocaDb.Tests.TestSupport
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Image image)
 		{
-			using (var stream = new MemoryStream())
-			{
-				image.Save(stream, GetImageFormat(picture));
-				Write(picture, size, stream);
-			}
+			using var stream = new MemoryStream();
+			image.Save(stream, GetImageFormat(picture));
+			Write(picture, size, stream);
 		}
 	}
 

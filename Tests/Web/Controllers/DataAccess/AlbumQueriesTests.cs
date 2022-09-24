@@ -84,10 +84,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private async Task<AlbumForEditForApiContract> CallUpdate(Stream image)
 		{
 			var contract = new AlbumForEditForApiContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
-			using (var stream = image)
-			{
-				return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
-			}
+			using var stream = image;
+			return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
 		}
 
 		private void Save<T>(params T[] entity) where T : class, IDatabaseObject

@@ -40,10 +40,8 @@ namespace VocaDb.Model.Domain.Images
 	{
 		public static byte[] ReadBytes(this IEntryImagePersister persister, IEntryImageInformation imageInfo, ImageSize size)
 		{
-			using (var stream = persister.GetReadStream(imageInfo, size))
-			{
-				return StreamHelper.ReadStream(stream);
-			}
+			using var stream = persister.GetReadStream(imageInfo, size);
+			return StreamHelper.ReadStream(stream);
 		}
 	}
 }

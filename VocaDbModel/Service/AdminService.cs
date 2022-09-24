@@ -92,10 +92,8 @@ namespace VocaDb.Model.Service
 						if (artist.Picture.Bytes == null || imagePersister.HasImage(data, ImageSize.Thumb))
 							continue;
 
-						using (var stream = new MemoryStream(artist.Picture.Bytes))
-						{
-							thumbGenerator.GenerateThumbsAndMoveImage(stream, data, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-						}
+						using var stream = new MemoryStream(artist.Picture.Bytes);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, data, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 					}
 				});
 			}

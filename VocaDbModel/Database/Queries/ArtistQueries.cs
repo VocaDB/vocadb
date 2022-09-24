@@ -601,11 +601,9 @@ namespace VocaDb.Model.Database.Queries
 					if (versionWithPic.Picture != null)
 					{
 						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes))
-						{
-							var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-						}
+						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
+						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 					}
 				}
 				else

@@ -69,14 +69,12 @@ namespace VocaDb.Model.Service.VideoServices
 
 			var path = Path.Combine(AppConfig.StaticContentPath + "\\media-thumb\\", pvId);
 
-			using (var stream = new FileStream(oldFull, FileMode.Open))
-			using (var original = ImageHelper.OpenImage(stream))
-			{
-				var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
-				thumb.Save(path);
-				pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
-				pv.Song.UpdateThumbUrl();
-			}
+			using var stream = new FileStream(oldFull, FileMode.Open);
+			using var original = ImageHelper.OpenImage(stream);
+			var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
+			thumb.Save(path);
+			pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
+			pv.Song.UpdateThumbUrl();
 		}
 
 		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId)

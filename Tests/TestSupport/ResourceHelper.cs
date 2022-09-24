@@ -16,21 +16,17 @@ namespace VocaDb.Tests.TestSupport
 
 		public static string ReadTextFile(string fileName)
 		{
-			using (var stream = GetFileStream(fileName))
-			using (var reader = new StreamReader(stream))
-			{
-				return reader.ReadToEnd();
-			}
+			using var stream = GetFileStream(fileName);
+			using var reader = new StreamReader(stream);
+			return reader.ReadToEnd();
 		}
 
 		public static HtmlDocument ReadHtmlDocument(string fileName, Encoding encoding = null)
 		{
-			using (var stream = GetFileStream(fileName))
-			{
-				var doc = new HtmlDocument();
-				doc.Load(stream, encoding ?? Encoding.Default);
-				return doc;
-			}
+			using var stream = GetFileStream(fileName);
+			var doc = new HtmlDocument();
+			doc.Load(stream, encoding ?? Encoding.Default);
+			return doc;
 		}
 
 		public static Stream TestImage()

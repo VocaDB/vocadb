@@ -34,10 +34,8 @@ namespace VocaDb.Tests.Domain.Images
 
 		private void AddImage(IEntryImageInformation imageInfo, ImageSize size)
 		{
-			using (var stream = ResourceHelper.TestImage())
-			{
-				_imageStore.Write(imageInfo, size, stream);
-			}
+			using var stream = ResourceHelper.TestImage();
+			_imageStore.Write(imageInfo, size, stream);
 		}
 
 		private void AssertImageDatabase(VocaDbUrl url, IEntryImageInformation imageInfo, ImageSize size, string because = "")

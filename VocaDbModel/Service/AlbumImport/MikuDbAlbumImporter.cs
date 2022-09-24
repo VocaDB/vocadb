@@ -259,17 +259,13 @@ namespace VocaDb.Model.Service.AlbumImport
 				var fullUrl = url.Replace("-250x250", string.Empty);
 
 				request = WebRequest.Create(fullUrl);
-				using (var response = (HttpWebResponse)request.GetResponse())
+				using var response = (HttpWebResponse)request.GetResponse();
+				if (response.StatusCode != HttpStatusCode.NotFound)
 				{
-					if (response.StatusCode != HttpStatusCode.NotFound)
-					{
-						using (var stream = response.GetResponseStream())
-						{
-							var buf = StreamHelper.ReadStream(stream, response.ContentLength);
+					using var stream = response.GetResponseStream();
+					var buf = StreamHelper.ReadStream(stream, response.ContentLength);
 
-							return new PictureDataContract(buf, response.ContentType);
-						}
-					}
+					return new PictureDataContract(buf, response.ContentType);
 				}
 			}
 

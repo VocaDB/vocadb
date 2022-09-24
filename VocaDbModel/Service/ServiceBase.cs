@@ -167,10 +167,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					func(session);
-				}
+				using var session = OpenSession();
+				func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -188,10 +186,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					return func(session);
-				}
+				using var session = OpenSession();
+				return func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -209,10 +205,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					return await func(session);
-				}
+				using var session = OpenSession();
+				return await func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -230,13 +224,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					var val = func(session);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				var val = func(session);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -249,13 +241,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					var val = func(session, tx);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				var val = func(session, tx);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -268,13 +258,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel))
-				{
-					var val = func(session);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction(isolationLevel);
+				var val = func(session);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -287,12 +275,10 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					func(session);
-					tx.Commit();
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				func(session);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{
@@ -305,12 +291,10 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel))
-				{
-					func(session);
-					tx.Commit();
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction(isolationLevel);
+				func(session);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{

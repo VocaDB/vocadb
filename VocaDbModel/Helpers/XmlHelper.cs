@@ -34,16 +34,12 @@ public static class XmlHelper
 
 		doc.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
-		using (var stream = new MemoryStream())
-		{
-			doc.Save(stream);
-			stream.Seek(0, SeekOrigin.Begin);
+		using var stream = new MemoryStream();
+		doc.Save(stream);
+		stream.Seek(0, SeekOrigin.Begin);
 
-			using (var reader = new StreamReader(stream))
-			{
-				return reader.ReadToEnd();
-			}
-		}
+		using var reader = new StreamReader(stream);
+		return reader.ReadToEnd();
 	}
 
 	/// <summary>

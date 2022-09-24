@@ -41,12 +41,10 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-				using (var stream = response.GetResponseStream())
-				{
-					var doc = new HtmlDocument();
-					doc.Load(stream, enc);
-					return func(doc, url);
-				}
+				using var stream = response.GetResponseStream();
+				var doc = new HtmlDocument();
+				doc.Load(stream, enc);
+				return func(doc, url);
 			}
 			finally
 			{
