@@ -1,7 +1,6 @@
 #nullable disable
 
 using NHibernate;
-using NLog;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -16,17 +15,11 @@ using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
-using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service
 {
 	public class SongService : ServiceBase
 	{
-#pragma warning disable 169
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-#pragma warning restore 169
-
-		private readonly VdbConfigManager _config;
 		private readonly IEntryUrlParser _entryUrlParser;
 		private readonly IUserIconFactory _userIconFactory;
 
@@ -44,13 +37,11 @@ namespace VocaDb.Model.Service
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			IEntryUrlParser entryUrlParser,
-			VdbConfigManager config,
 			IUserIconFactory userIconFactory
 		)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
-			_config = config;
 			_userIconFactory = userIconFactory;
 		}
 
@@ -131,8 +122,6 @@ namespace VocaDb.Model.Service
 				return null;
 			});
 		}
-
-		private IEntryTypeTagRepository GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
 
 		public PartialFindResult<T> Find<T>(Func<Song, T> fac, SongQueryParams queryParams)
 			where T : class
