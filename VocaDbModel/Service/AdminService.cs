@@ -175,15 +175,15 @@ namespace VocaDb.Model.Service
 		}
 
 #nullable enable
-		public void CreateXmlDump()
+		public void CreateJsonDump()
 		{
-			PermissionContext.VerifyPermission(PermissionToken.CreateXmlDump);
+			PermissionContext.VerifyPermission(PermissionToken.CreateDatabaseDump);
 
 			HandleQuery(session =>
 			{
-				AuditLog("creating XML dump", session);
+				AuditLog("creating JSON dump", session);
 
-				var dumper = new XmlDumper();
+				var dumper = new DatabaseDumper();
 				var path = Path.Combine(AppConfig.DbDumpFolder, "dump.zip");
 				dumper.Create(path, session);
 			});

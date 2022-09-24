@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Users
 			s_mod,
 			PermissionToken.Admin,
 			PermissionToken.ManageWebhooks,
-			PermissionToken.CreateXmlDump
+			PermissionToken.CreateDatabaseDump
 		);
 
 		private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {

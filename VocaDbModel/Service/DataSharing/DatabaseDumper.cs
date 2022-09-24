@@ -126,7 +126,7 @@ public sealed class JsonPackageCreator : IPackageCreator
 	}
 }
 
-public sealed class XmlDumper
+public sealed class DatabaseDumper
 {
 	private sealed class Loader
 	{

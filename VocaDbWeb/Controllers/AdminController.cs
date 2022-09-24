@@ -114,9 +114,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult CreateXmlDump()
+		public ActionResult CreateJsonDump()
 		{
-			Service.CreateXmlDump();
+			Service.CreateJsonDump();
 
 			TempData.SetStatusMessage("Dump created");
 
