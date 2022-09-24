@@ -1,7 +1,6 @@
 #nullable disable
 
 using NHibernate;
-using NLog;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -16,17 +15,12 @@ using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
-using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service
 {
 	public class SongService : ServiceBase
 	{
-#pragma warning disable 169
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-#pragma warning restore 169
-
-		private readonly VdbConfigManager _config;
+#nullable enable
 		private readonly IEntryUrlParser _entryUrlParser;
 		private readonly IUserIconFactory _userIconFactory;
 
@@ -44,13 +38,11 @@ namespace VocaDb.Model.Service
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			IEntryUrlParser entryUrlParser,
-			VdbConfigManager config,
 			IUserIconFactory userIconFactory
 		)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
-			_config = config;
 			_userIconFactory = userIconFactory;
 		}
 
@@ -103,6 +95,7 @@ namespace VocaDb.Model.Service
 				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted, notes);
 			}, PermissionToken.Nothing, skipLog: true);
 		}
+#nullable disable
 
 		public T FindFirst<T>(Func<Song, ISession, T> fac, string[] query, NameMatchMode nameMatchMode)
 			where T : class
@@ -131,8 +124,6 @@ namespace VocaDb.Model.Service
 				return null;
 			});
 		}
-
-		private IEntryTypeTagRepository GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
 
 		public PartialFindResult<T> Find<T>(Func<Song, T> fac, SongQueryParams queryParams)
 			where T : class
@@ -198,7 +189,7 @@ namespace VocaDb.Model.Service
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -229,7 +220,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query),
-					new SongType[] { }, 0, 10, false,
+					Array.Empty<SongType>(), 0, 10, false,
 					SongSortRule.Name, false, true, null)
 				{
 					AdvancedFilters = new[] { new AdvancedSearchFilter { FilterType = AdvancedFilterType.Lyrics, Param = AdvancedSearchFilter.Any } }
@@ -380,17 +371,12 @@ namespace VocaDb.Model.Service
 	public enum SongSortRule
 	{
 		None,
-
 		Name,
-
 		AdditionDate,
-
 		PublishDate,
-
 		FavoritedTimes,
-
 		RatingScore,
-
-		TagUsageCount
+		TagUsageCount,
+		SongType,
 	}
 }

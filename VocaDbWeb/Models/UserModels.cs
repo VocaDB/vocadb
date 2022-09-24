@@ -263,7 +263,7 @@ namespace VocaDb.Web.Models
 				EmailOptions = EmailOptions,
 				Language = InterfaceLanguageSelection ?? string.Empty,
 				Location = Location ?? string.Empty,
-				KnownLanguages = KnownLanguages ?? new UserKnownLanguageContract[0],
+				KnownLanguages = KnownLanguages ?? Array.Empty<UserKnownLanguageContract>(),
 				OldPass = OldPass,
 				PreferredVideoService = PreferredVideoService,
 				PublicAlbumCollection = PublicAlbumCollection,

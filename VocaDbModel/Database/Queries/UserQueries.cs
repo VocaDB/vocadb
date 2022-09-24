@@ -234,7 +234,7 @@ namespace VocaDb.Model.Database.Queries
 			details.ArtistCount = cachedStats.ArtistCount;
 			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
 			details.FavoriteTags = cachedStats.FavoriteTags != null ? session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray()
-				.Select(t => new TagBaseContract(t, LanguagePreference, true)).ToArray() : new TagBaseContract[0];
+				.Select(t => new TagBaseContract(t, LanguagePreference, true)).ToArray() : Array.Empty<TagBaseContract>();
 			details.CommentCount = cachedStats.CommentCount;
 			details.EditCount = cachedStats.EditCount;
 			details.SubmitCount = cachedStats.SubmitCount;
@@ -1047,7 +1047,7 @@ namespace VocaDb.Model.Database.Queries
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults, bool allowDisabled)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{

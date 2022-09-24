@@ -55,7 +55,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 			}
 			else
 			{
-				names = new LocalizedStringContract[0];
+				names = Array.Empty<LocalizedStringContract>();
 				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, ContentLanguageSelection.Unspecified, false);
 			}
 

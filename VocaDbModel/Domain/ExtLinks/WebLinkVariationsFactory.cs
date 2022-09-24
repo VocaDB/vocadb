@@ -38,7 +38,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 			var trimmed = originalUrl?.Trim();
 
 			if (string.IsNullOrEmpty(trimmed))
-				return new string[0];
+				return Array.Empty<string>();
 
 			var variations = Enumerable.Repeat(trimmed, 1);
 

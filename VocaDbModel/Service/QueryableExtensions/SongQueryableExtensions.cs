@@ -39,12 +39,13 @@ public static class SongQueryableExtensions
 	) =>
 		sortRule switch
 		{
-			SongSortRule.Name => query.OrderBySongType().ThenByEntryName(languagePreference),
+			SongSortRule.Name => query.OrderByEntryName(languagePreference),
 			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
 			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
 			SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
 			SongSortRule.RatingScore => query.OrderByDescending(a => a.RatingScore),
 			SongSortRule.TagUsageCount => query.OrderByTagUsage(tagId),
+			SongSortRule.SongType => query.OrderBySongType().ThenByEntryName(languagePreference),
 			_ => query,
 		};
 

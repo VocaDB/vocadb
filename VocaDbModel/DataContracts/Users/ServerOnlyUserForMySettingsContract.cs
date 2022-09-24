@@ -10,7 +10,7 @@ namespace VocaDb.Model.DataContracts.Users
 		public ServerOnlyUserForMySettingsContract()
 		{
 			AboutMe = Location = string.Empty;
-			WebLinks = new WebLinkContract[] { };
+			WebLinks = Array.Empty<WebLinkContract>();
 		}
 
 		public ServerOnlyUserForMySettingsContract(User user)

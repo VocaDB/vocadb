@@ -120,8 +120,8 @@ namespace VocaDb.Web.Controllers.Api
 		)
 		{
 			return await _queries.FindDuplicates(
-				(term ?? new string[0]).Where(p => p != null).ToArray(),
-				(pv ?? new string[0]).Where(p => p != null).ToArray(),
+				(term ?? Array.Empty<string>()).Where(p => p != null).ToArray(),
+				(pv ?? Array.Empty<string>()).Where(p => p != null).ToArray(),
 				artistIds,
 				getPVInfo
 			);

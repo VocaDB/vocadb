@@ -3,6 +3,7 @@ import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParam
 import { EntryAutoCompleteParams } from '@/Shared/EntryAutoComplete';
 import { initEntrySearch } from '@/Shared/EntryAutoComplete';
 import { functions } from '@/Shared/GlobalFunctions';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import ko from 'knockout';
 
 declare global {
@@ -38,6 +39,7 @@ export function artistAutoComplete(
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,
+		sort: ArtistSortRule.SongRating,
 	};
 	if (properties.extraQueryParams)
 		jQuery.extend(queryParams, properties.extraQueryParams);

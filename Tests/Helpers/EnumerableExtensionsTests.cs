@@ -19,7 +19,7 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void MinOrNull_Empty_NotNullable()
 		{
-			new int[0].MinOrNull().Should().BeNull();
+			Array.Empty<int>().MinOrNull().Should().BeNull();
 		}
 	}
 }

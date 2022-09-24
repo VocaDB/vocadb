@@ -196,6 +196,7 @@ namespace VocaDb.Model.Domain.Songs
 			return AddSong(song, order, string.Empty);
 		}
 
+#nullable enable
 		public virtual SongInList AddSong(Song song, int order, string notes)
 		{
 			ParamIs.NotNull(() => song);
@@ -204,6 +205,7 @@ namespace VocaDb.Model.Domain.Songs
 			AllSongs.Add(link);
 			return link;
 		}
+#nullable disable
 
 		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{

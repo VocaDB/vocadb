@@ -79,7 +79,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			result.Items.Length.Should().Be(6, "Number of results");
 			result.TotalCount.Should().Be(7, "Total result count");
-			AssertHasSong(result, Db.Song2);
+			AssertHasSong(result, Db.Song);
 		}
 
 		/// <summary>
@@ -95,11 +95,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			result.Items.Length.Should().Be(7, "Number of results");
 			result.TotalCount.Should().Be(7, "Total result count");
-			// Prefer original song entries. See GH#949.
-			result.Items[0].DefaultName.Should().Be("Nebula");
-			result.Items[1].DefaultName.Should().Be("Tears of Palm");
-			result.Items[2].DefaultName.Should().Be("Azalea");
-			result.Items[3].DefaultName.Should().Be("Crystal Tears");
+			result.Items[0].DefaultName.Should().Be("Azalea");
+			result.Items[1].DefaultName.Should().Be("Crystal Tears");
 		}
 
 		/// <summary>

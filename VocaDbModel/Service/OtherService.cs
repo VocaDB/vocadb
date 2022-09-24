@@ -304,7 +304,7 @@ namespace VocaDb.Model.Service
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			var artistTextQuery = ArtistSearchTextQuery.Create(textQuery);
 			var tagTextQuery = TagSearchTextQuery.Create(textQuery);

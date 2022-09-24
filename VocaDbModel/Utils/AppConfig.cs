@@ -197,7 +197,7 @@ namespace VocaDb.Model.Utils
 			get
 			{
 				var val = Val("PreferredNicoArtistTypes");
-				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : new ArtistType[0];
+				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : Array.Empty<ArtistType>();
 			}
 		}
 

@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var ids = new ImportedAlbumOptions(album);
-			var selectedSongIds = (album.Tracks != null ? album.Tracks.Where(t => t.Selected).Select(t => t.ExistingSong.Id).ToArray() : new int[] { });
+			var selectedSongIds = (album.Tracks != null ? album.Tracks.Where(t => t.Selected).Select(t => t.ExistingSong.Id).ToArray() : Array.Empty<int>());
 
 			Service.AcceptImportedAlbum(ids, selectedSongIds);
 

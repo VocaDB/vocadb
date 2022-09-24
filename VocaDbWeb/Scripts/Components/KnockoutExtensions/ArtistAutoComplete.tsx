@@ -5,6 +5,7 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { functions } from '@/Shared/GlobalFunctions';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,6 +39,7 @@ export const ArtistAutoComplete = ({
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,
+		sort: ArtistSortRule.ArtistType,
 	};
 	if (properties.extraQueryParams)
 		$.extend(queryParams, properties.extraQueryParams);

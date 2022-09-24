@@ -86,7 +86,7 @@ namespace VocaDb.Model.Service.Helpers
 			catch (GenericADOException x)
 			{
 				s_log.Error(x, "Unable to send notifications");
-				return new User[0];
+				return Array.Empty<User>();
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace VocaDb.Model.Service.Helpers
 			if (!userIds.Any())
 			{
 				s_log.Info("No users found - skipping.");
-				return new User[0];
+				return Array.Empty<User>();
 			}
 
 			var entryTypeNames = _enumTranslations.Translations<EntryType>();

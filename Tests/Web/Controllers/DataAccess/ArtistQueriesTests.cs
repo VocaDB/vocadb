@@ -193,7 +193,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_Link()
 		{
-			var result = _queries.FindDuplicates(new string[0], "http://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(1, "Number of results");
@@ -203,7 +203,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_DifferentScheme()
 		{
-			var result = _queries.FindDuplicates(new string[0], "https://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "https://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(1, "Number of results");
@@ -223,7 +223,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void FindDuplicates_Link_IgnoreDeleted()
 		{
 			_artist.Deleted = true;
-			var result = _queries.FindDuplicates(new string[0], "http://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(0, "Number of results");
@@ -232,7 +232,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_Link_IgnoreInvalidLink()
 		{
-			var result = _queries.FindDuplicates(new string[0], "Miku!");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "Miku!");
 			result?.Length.Should().Be(0, "Number of results");
 		}
 

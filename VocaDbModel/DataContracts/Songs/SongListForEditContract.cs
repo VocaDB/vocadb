@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public SongListForEditContract()
 		{
-			SongLinks = new SongInListEditContract[] { };
+			SongLinks = Array.Empty<SongInListEditContract>();
 			UpdateNotes = string.Empty;
 		}
 

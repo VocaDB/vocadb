@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongQueryParams()
 		{
-			IgnoredIds = new int[] { };
-			SongTypes = new SongType[] { };
+			IgnoredIds = Array.Empty<int>();
+			SongTypes = Array.Empty<SongType>();
 		}
 
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
@@ -84,7 +84,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			[MemberNotNull(nameof(_ignoredIds))]
 			init
 			{
-				_ignoredIds = value ?? new int[] { };
+				_ignoredIds = value ?? Array.Empty<int>();
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			[MemberNotNull(nameof(_songTypes))]
 			init
 			{
-				_songTypes = value ?? new SongType[] { };
+				_songTypes = value ?? Array.Empty<SongType>();
 			}
 		}
 

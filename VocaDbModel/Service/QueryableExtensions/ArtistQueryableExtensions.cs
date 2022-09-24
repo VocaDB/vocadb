@@ -40,6 +40,27 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return queryable.Where(n => types.Contains(n.Artist.ArtistType));
 		}
 
+		private static IQueryable<Artist> OrderBySongRating(this IQueryable<Artist> criteria)
+		{
+			return criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore));
+		}
+
+		private static IQueryable<Artist> ThenBySongRating(this IOrderedQueryable<Artist> criteria)
+		{
+			return criteria.ThenByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore));
+		}
+
+		private static IOrderedQueryable<Artist> OrderByArtistType(this IQueryable<Artist> query)
+		{
+			return query.OrderByDescending(a =>
+				a.ArtistType == ArtistType.Vocaloid ||
+				a.ArtistType == ArtistType.UTAU ||
+				a.ArtistType == ArtistType.CeVIO ||
+				a.ArtistType == ArtistType.OtherVoiceSynthesizer ||
+				a.ArtistType == ArtistType.SynthesizerV
+			);
+		}
+
 		public static IQueryable<Artist> OrderBy(
 			this IQueryable<Artist> criteria,
 			ArtistSortRule sortRule,
@@ -53,8 +74,9 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDate),
 				ArtistSortRule.ReleaseDate => OrderByReleaseDate(criteria, SortDirection.Descending),
 				ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.AllSongs.Count(s => !s.Song.Deleted)),
-				ArtistSortRule.SongRating => criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore)),
+				ArtistSortRule.SongRating => criteria.OrderBySongRating(),
 				ArtistSortRule.FollowerCount => criteria.OrderByDescending(a => a.Users.Count),
+				ArtistSortRule.ArtistType => criteria.OrderByArtistType().ThenBySongRating(),
 				_ => criteria,
 			};
 		}

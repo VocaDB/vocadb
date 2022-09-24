@@ -59,7 +59,7 @@ namespace VocaDb.Web.Controllers
 
 			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers)
 				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray()
-				: new string[0]);
+				: Array.Empty<string>());
 
 			var cutoffDays = (string.IsNullOrEmpty(model.UserName) ? 365 : 0);
 
@@ -141,7 +141,7 @@ namespace VocaDb.Web.Controllers
 
 			TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
 
-			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, new PVForSongContract[] { }));
+			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, Array.Empty<PVForSongContract>()));
 		}
 
 		//

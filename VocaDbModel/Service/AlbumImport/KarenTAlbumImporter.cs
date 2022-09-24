@@ -136,7 +136,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			if (match.Groups[2].Value == "- off vocal")
 			{
 				// TODO: set song type to instrumental
-				vocalists = new string[0];
+				vocalists = Array.Empty<string>();
 			}
 			else
 			{

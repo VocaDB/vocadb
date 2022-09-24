@@ -25,7 +25,7 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_Nothing()
 		{
-			var result = VideoServiceHelper.GetThumbUrl(new IPVWithThumbnail[0]);
+			var result = VideoServiceHelper.GetThumbUrl(Array.Empty<IPVWithThumbnail>());
 
 			result.Should().Be(string.Empty, "result");
 		}

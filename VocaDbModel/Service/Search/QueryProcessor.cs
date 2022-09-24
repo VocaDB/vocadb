@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.Search
 			Func<IQueryable<T>, IQueryable<T>> orderBy)
 		{
 			if (!queryPlan.Any())
-				return new PartialFindResult<T>(new T[] { }, 0);
+				return new PartialFindResult<T>(Array.Empty<T>(), 0);
 
 			IQueryable<T> entries = null;
 
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.Search
 			}
 
 			if (entries == null)
-				return new PartialFindResult<T>(new T[] { }, 0);
+				return new PartialFindResult<T>(Array.Empty<T>(), 0);
 
 			/*var queryResult =
 				(orderBy != null ? orderBy(entries) : entries)				

@@ -66,7 +66,7 @@ namespace VocaDb.Tests.Database.Queries
 		[TestMethod]
 		public void AddZeros_NoPoints()
 		{
-			var points = new CountPerDayContract[0];
+			var points = Array.Empty<CountPerDayContract>();
 
 			var result = points.AddZeros(true, TimeUnit.Day);
 
