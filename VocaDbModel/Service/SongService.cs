@@ -371,17 +371,12 @@ namespace VocaDb.Model.Service
 	public enum SongSortRule
 	{
 		None,
-
 		Name,
-
 		AdditionDate,
-
 		PublishDate,
-
 		FavoritedTimes,
-
 		RatingScore,
-
-		TagUsageCount
+		TagUsageCount,
+		SongType,
 	}
 }

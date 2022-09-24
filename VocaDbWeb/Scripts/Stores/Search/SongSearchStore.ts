@@ -55,6 +55,7 @@ export enum SongSortRule {
 	FavoritedTimes = 'FavoritedTimes',
 	RatingScore = 'RatingScore',
 	TagUsageCount = 'TagUsageCount',
+	SongType = 'SongType',
 }
 
 export interface SongSearchRouteParams {
