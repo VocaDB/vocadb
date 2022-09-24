@@ -16,13 +16,18 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.DataSharing;
 
-public sealed class PackageCreator
+public interface IPackageCreator
+{
+	void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac);
+}
+
+public sealed class XmlPackageCreator : IPackageCreator
 {
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 	private readonly Package _package;
 	private readonly Action _cleanup;
 
-	public PackageCreator(Package package, Action cleanup)
+	public XmlPackageCreator(Package package, Action cleanup)
 	{
 		_package = package;
 		_cleanup = cleanup;
@@ -72,7 +77,7 @@ public sealed class XmlDumper
 	private sealed class Loader
 	{
 		private const int MaxEntries = 100;
-		private readonly PackageCreator _packageCreator;
+		private readonly IPackageCreator _packageCreator;
 		private readonly ISession _session;
 
 		private static TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
@@ -85,10 +90,10 @@ public sealed class XmlDumper
 			return session.Query<TEntry>().Skip(first).Take(max).ToArray();
 		}
 
-		public Loader(ISession session, Package package)
+		public Loader(ISession session, IPackageCreator packageCreator)
 		{
 			_session = session;
-			_packageCreator = new PackageCreator(package, session.Clear);
+			_packageCreator = packageCreator;
 		}
 
 		public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
@@ -105,7 +110,8 @@ public sealed class XmlDumper
 	public void Create(string path, ISession session)
 	{
 		using var package = Package.Open(path, FileMode.Create);
-		var loader = new Loader(session, package);
+		var packageCreator = new XmlPackageCreator(package, session.Clear);
+		var loader = new Loader(session, packageCreator);
 		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
 		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
 		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContract(a, new SongDiff()));
