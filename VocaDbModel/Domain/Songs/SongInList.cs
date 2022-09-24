@@ -1,111 +1,110 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace VocaDb.Model.Domain.Songs
+namespace VocaDb.Model.Domain.Songs;
+
+public class SongInList : IEntryWithIntId, ISongLink
 {
-	public class SongInList : IEntryWithIntId, ISongLink
-	{
-		private SongList _list;
-		private string _notes;
-		private Song _song;
+	private SongList _list;
+	private string _notes;
+	private Song _song;
 
 #nullable disable
-		public SongInList()
-		{
-			Notes = string.Empty;
-		}
+	public SongInList()
+	{
+		Notes = string.Empty;
+	}
 #nullable enable
 
-		public SongInList(Song song, SongList list, int order, string notes)
-			: this()
+	public SongInList(Song song, SongList list, int order, string notes)
+		: this()
+	{
+		Song = song;
+		List = list;
+		Order = order;
+		Notes = notes;
+	}
+
+	public virtual int Id { get; set; }
+
+	public virtual Song Song
+	{
+		get => _song;
+		[MemberNotNull(nameof(_song))]
+		set
 		{
-			Song = song;
-			List = list;
-			Order = order;
-			Notes = notes;
+			ParamIs.NotNull(() => value);
+			_song = value;
 		}
+	}
 
-		public virtual int Id { get; set; }
-
-		public virtual Song Song
+	public virtual SongList List
+	{
+		get => _list;
+		[MemberNotNull(nameof(_list))]
+		set
 		{
-			get => _song;
-			[MemberNotNull(nameof(_song))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_song = value;
-			}
+			ParamIs.NotNull(() => value);
+			_list = value;
 		}
+	}
 
-		public virtual SongList List
+	public virtual string Notes
+	{
+		get => _notes;
+		[MemberNotNull(nameof(_notes))]
+		set
 		{
-			get => _list;
-			[MemberNotNull(nameof(_list))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_list = value;
-			}
+			ParamIs.NotNull(() => value);
+			_notes = value;
 		}
+	}
 
-		public virtual string Notes
-		{
-			get => _notes;
-			[MemberNotNull(nameof(_notes))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_notes = value;
-			}
-		}
+	public virtual int Order { get; set; }
 
-		public virtual int Order { get; set; }
+	public virtual void ChangeSong(Song target)
+	{
+		ParamIs.NotNull(() => target);
 
-		public virtual void ChangeSong(Song target)
-		{
-			ParamIs.NotNull(() => target);
+		if (target.Equals(Song))
+			return;
 
-			if (target.Equals(Song))
-				return;
+		Song.AllListLinks.Remove(this);
+		target.AllListLinks.Add(this);
+		Song = target;
+	}
 
-			Song.AllListLinks.Remove(this);
-			target.AllListLinks.Add(this);
-			Song = target;
-		}
+	public virtual bool Equals(SongInList? another)
+	{
+		if (another == null)
+			return false;
 
-		public virtual bool Equals(SongInList? another)
-		{
-			if (another == null)
-				return false;
+		if (ReferenceEquals(this, another))
+			return true;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		if (Id == 0)
+			return false;
 
-			if (Id == 0)
-				return false;
+		return Id == another.Id;
+	}
 
-			return Id == another.Id;
-		}
+	public virtual void Delete()
+	{
+		List.AllSongs.Remove(this);
+		Song.AllListLinks.Remove(this);
+	}
 
-		public virtual void Delete()
-		{
-			List.AllSongs.Remove(this);
-			Song.AllListLinks.Remove(this);
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as SongInList);
+	}
 
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as SongInList);
-		}
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
 
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
-
-		public override string ToString()
-		{
-			return $"{Song} in {List}";
-		}
+	public override string ToString()
+	{
+		return $"{Song} in {List}";
 	}
 }
