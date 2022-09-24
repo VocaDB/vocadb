@@ -1,4 +1,4 @@
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Domain.Songs
 {
@@ -8,10 +8,12 @@ namespace VocaDb.Model.Domain.Songs
 		private string _notes;
 		private Song _song;
 
+#nullable disable
 		public SongInList()
 		{
 			Notes = string.Empty;
 		}
+#nullable enable
 
 		public SongInList(Song song, SongList list, int order, string notes)
 			: this()
@@ -27,6 +29,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual Song Song
 		{
 			get => _song;
+			[MemberNotNull(nameof(_song))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -37,6 +40,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual SongList List
 		{
 			get => _list;
+			[MemberNotNull(nameof(_list))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -47,6 +51,7 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual string Notes
 		{
 			get => _notes;
+			[MemberNotNull(nameof(_notes))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -56,7 +61,6 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual int Order { get; set; }
 
-#nullable enable
 		public virtual void ChangeSong(Song target)
 		{
 			ParamIs.NotNull(() => target);
@@ -82,7 +86,6 @@ namespace VocaDb.Model.Domain.Songs
 
 			return Id == another.Id;
 		}
-#nullable disable
 
 		public virtual void Delete()
 		{
@@ -90,7 +93,6 @@ namespace VocaDb.Model.Domain.Songs
 			Song.AllListLinks.Remove(this);
 		}
 
-#nullable enable
 		public override bool Equals(object? obj)
 		{
 			return Equals(obj as SongInList);
@@ -105,6 +107,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return $"{Song} in {List}";
 		}
-#nullable disable
 	}
 }
