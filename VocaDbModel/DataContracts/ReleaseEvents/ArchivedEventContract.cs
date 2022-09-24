@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -48,9 +46,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			return data;
 		}
 
+#nullable disable
 		public ArchivedEventContract() { }
-
 #nullable enable
+
 		public ArchivedEventContract(ReleaseEvent ev, ReleaseEventDiff diff)
 		{
 			ParamIs.NotNull(() => ev);
@@ -72,10 +71,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			VenueName = ev.VenueName;
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
-#nullable disable
 
 		[DataMember]
-		public ArchivedArtistForEventContract[] Artists { get; set; }
+		public ArchivedArtistForEventContract[]? Artists { get; set; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }
@@ -90,36 +88,36 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public int Id { get; set; }
 
 		[DataMember]
-		public string MainPictureMime { get; set; }
+		public string? MainPictureMime { get; set; }
 
 		[DataMember]
-		public string Name { get; init; }
+		public string? Name { get; init; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
-		public ArchivedPVContract[] PVs { get; set; }
+		public ArchivedPVContract[]? PVs { get; set; }
 
 		[DataMember]
-		public ObjectRefContract Series { get; set; }
+		public ObjectRefContract? Series { get; set; }
 
 		[DataMember]
 		public int SeriesNumber { get; set; }
 
 		[DataMember]
-		public ObjectRefContract SongList { get; set; }
+		public ObjectRefContract? SongList { get; set; }
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ObjectRefContract Venue { get; set; }
+		public ObjectRefContract? Venue { get; set; }
 
 		[DataMember]
-		public string VenueName { get; set; }
+		public string? VenueName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 	}
 }

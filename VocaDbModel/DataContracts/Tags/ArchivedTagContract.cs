@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Utils;
@@ -9,8 +7,12 @@ namespace VocaDb.Model.DataContracts.Tags
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedTagContract
 	{
-		private static void DoIfExists(ArchivedTagVersion version, TagEditableFields field,
-			XmlCache<ArchivedTagContract> xmlCache, Action<ArchivedTagContract> func)
+		private static void DoIfExists(
+			ArchivedTagVersion version,
+			TagEditableFields field,
+			XmlCache<ArchivedTagContract> xmlCache,
+			Action<ArchivedTagContract> func
+		)
 		{
 			var versionWithField = version.GetLatestVersionWithField(field);
 
@@ -46,12 +48,13 @@ namespace VocaDb.Model.DataContracts.Tags
 			return data;
 		}
 
+#nullable disable
 		public ArchivedTagContract()
 		{
 			Targets = TagTargetTypes.All;
 		}
-
 #nullable enable
+
 		public ArchivedTagContract(Tag tag, TagDiff diff) : this()
 		{
 			ParamIs.NotNull(() => tag);
@@ -69,16 +72,15 @@ namespace VocaDb.Model.DataContracts.Tags
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
-#nullable disable
 
 		[DataMember]
 		public string CategoryName { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		[DataMember]
-		public string DescriptionEng { get; set; }
+		public string? DescriptionEng { get; set; }
 
 		[DataMember]
 		public bool HideFromSuggestions { get; set; }
@@ -87,24 +89,24 @@ namespace VocaDb.Model.DataContracts.Tags
 		public int Id { get; set; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
-		public ObjectRefContract Parent { get; set; }
+		public ObjectRefContract? Parent { get; set; }
 
 		[DataMember]
-		public ObjectRefContract[] RelatedTags { get; set; }
+		public ObjectRefContract[]? RelatedTags { get; set; }
 
 		[DataMember]
 		public TagTargetTypes Targets { get; set; }
 
 		[DataMember]
-		public string ThumbMime { get; init; }
+		public string? ThumbMime { get; init; }
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 	}
 }

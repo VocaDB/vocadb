@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -12,8 +10,12 @@ namespace VocaDb.Model.DataContracts.Songs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedSongContract
 	{
-		private static void DoIfExists(ArchivedSongVersion version, SongEditableFields field,
-			XmlCache<ArchivedSongContract> xmlCache, Action<ArchivedSongContract> func)
+		private static void DoIfExists(
+			ArchivedSongVersion version,
+			SongEditableFields field,
+			XmlCache<ArchivedSongContract> xmlCache,
+			Action<ArchivedSongContract> func
+		)
 		{
 			var versionWithField = version.GetLatestVersionWithField(field);
 
@@ -81,40 +83,40 @@ namespace VocaDb.Model.DataContracts.Songs
 			return data;
 		}
 
+#nullable disable
 		public ArchivedSongContract() { }
-
 #nullable enable
+
 		public ArchivedSongContract(Song song, SongDiff diff)
 		{
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNull(() => diff);
 
 			Albums = diff.IncludeAlbums ? song.Albums.Select(a => new AlbumForSongRefContract(a)).ToArray() : null;
-			Artists = (diff.IncludeArtists ? song.Artists.Select(a => new ArchivedArtistForSongContract(a)).ToArray() : null);
+			Artists = diff.IncludeArtists ? song.Artists.Select(a => new ArchivedArtistForSongContract(a)).ToArray() : null;
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
-			Lyrics = (diff.IncludeLyrics ? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray() : null);
-			Names = (diff.IncludeNames ? song.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
+			Lyrics = diff.IncludeLyrics ? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray() : null;
+			Names = diff.IncludeNames ? song.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			NicoId = song.NicoId;
 			Notes = song.Notes.Original;
 			NotesEng = song.Notes.English;
 			OriginalVersion = ObjectRefContract.Create(song.OriginalVersion);
 			PublishDate = song.PublishDate;
-			PVs = (diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
+			PVs = diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null;
 			ReleaseEvent = ObjectRefContract.Create(song.ReleaseEvent);
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
-			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
+			WebLinks = diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 			MinMilliBpm = song.MinMilliBpm;
 			MaxMilliBpm = song.MaxMilliBpm;
 		}
-#nullable disable
 
 		[DataMember]
-		public AlbumForSongRefContract[] Albums { get; set; }
+		public AlbumForSongRefContract[]? Albums { get; set; }
 
 		[DataMember]
-		public ArchivedArtistForSongContract[] Artists { get; set; }
+		public ArchivedArtistForSongContract[]? Artists { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -123,10 +125,10 @@ namespace VocaDb.Model.DataContracts.Songs
 		public int LengthSeconds { get; set; }
 
 		[DataMember]
-		public LyricsForSongContract[] Lyrics { get; set; }
+		public LyricsForSongContract[]? Lyrics { get; set; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
 		public string NicoId { get; set; }
@@ -138,16 +140,16 @@ namespace VocaDb.Model.DataContracts.Songs
 		public string NotesEng { get; set; }
 
 		[DataMember]
-		public ObjectRefContract OriginalVersion { get; set; }
+		public ObjectRefContract? OriginalVersion { get; set; }
 
 		[DataMember]
 		public DateTime? PublishDate { get; set; }
 
 		[DataMember]
-		public ArchivedPVContract[] PVs { get; set; }
+		public ArchivedPVContract[]? PVs { get; set; }
 
 		[DataMember]
-		public ObjectRefContract ReleaseEvent { get; set; }
+		public ObjectRefContract? ReleaseEvent { get; set; }
 
 		[DataMember]
 		public SongType SongType { get; set; }
@@ -156,7 +158,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 
 		[DataMember]
 		public int? MinMilliBpm { get; set; }

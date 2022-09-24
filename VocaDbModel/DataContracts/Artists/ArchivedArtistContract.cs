@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
@@ -9,8 +7,12 @@ namespace VocaDb.Model.DataContracts.Artists
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedArtistContract
 	{
-		private static void DoIfExists(ArchivedArtistVersion version, ArtistEditableFields field,
-			XmlCache<ArchivedArtistContract> xmlCache, Action<ArchivedArtistContract> func)
+		private static void DoIfExists(
+			ArchivedArtistVersion version,
+			ArtistEditableFields field,
+			XmlCache<ArchivedArtistContract> xmlCache,
+			Action<ArchivedArtistContract> func
+		)
 		{
 			var versionWithField = version.GetLatestVersionWithField(field);
 
@@ -48,7 +50,9 @@ namespace VocaDb.Model.DataContracts.Artists
 			return data;
 		}
 
+#nullable disable
 		public ArchivedArtistContract() { }
+#nullable enable
 
 		public ArchivedArtistContract(Artist artist, ArtistDiff diff)
 		{
@@ -57,29 +61,29 @@ namespace VocaDb.Model.DataContracts.Artists
 			ArtistType = artist.ArtistType;
 			BaseVoicebank = ObjectRefContract.Create(artist.BaseVoicebank);
 			Id = artist.Id;
-			Description = (diff.IncludeDescription ? artist.Description.Original : null);
-			DescriptionEng = (diff.IncludeDescription ? artist.Description.English : null);
+			Description = diff.IncludeDescription ? artist.Description.Original : null;
+			DescriptionEng = diff.IncludeDescription ? artist.Description.English : null;
 			Groups = artist.Groups.Select(g => new ArchivedArtistForArtistContract(g)).ToArray();
 			MainPictureMime = artist.PictureMime;
 			Members = artist.Members.Select(m => new ObjectRefContract(m.Member)).ToArray();
-			Names = (diff.IncludeNames ? artist.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
-			Pictures = (diff.IncludePictures ? artist.Pictures.Select(p => new ArchivedEntryPictureFileContract(p)).ToArray() : null);
+			Names = diff.IncludeNames ? artist.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
+			Pictures = diff.IncludePictures ? artist.Pictures.Select(p => new ArchivedEntryPictureFileContract(p)).ToArray() : null;
 			ReleaseDate = artist.ReleaseDate;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
-			WebLinks = (diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
+			WebLinks = diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
 
 		[DataMember]
 		public ArtistType ArtistType { get; set; }
 
 		[DataMember]
-		public ObjectRefContract BaseVoicebank { get; set; }
+		public ObjectRefContract? BaseVoicebank { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		[DataMember]
-		public string DescriptionEng { get; set; }
+		public string? DescriptionEng { get; set; }
 
 		[DataMember]
 		public ArchivedArtistForArtistContract[] Groups { get; set; }
@@ -88,16 +92,16 @@ namespace VocaDb.Model.DataContracts.Artists
 		public int Id { get; set; }
 
 		[DataMember]
-		public string MainPictureMime { get; set; }
+		public string? MainPictureMime { get; set; }
 
 		[DataMember]
 		public ObjectRefContract[] Members { get; set; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
-		public ArchivedEntryPictureFileContract[] Pictures { get; set; }
+		public ArchivedEntryPictureFileContract[]? Pictures { get; set; }
 
 		[DataMember]
 		public DateTime? ReleaseDate { get; set; }
@@ -106,6 +110,6 @@ namespace VocaDb.Model.DataContracts.Artists
 		public TranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 	}
 }

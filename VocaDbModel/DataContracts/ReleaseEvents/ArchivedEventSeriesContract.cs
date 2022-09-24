@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Utils;
@@ -9,8 +7,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedEventSeriesContract
 	{
-		private static void DoIfExists(ArchivedReleaseEventSeriesVersion version, ReleaseEventSeriesEditableFields field,
-			XmlCache<ArchivedEventSeriesContract> xmlCache, Action<ArchivedEventSeriesContract> func)
+		private static void DoIfExists(
+			ArchivedReleaseEventSeriesVersion version,
+			ReleaseEventSeriesEditableFields field,
+			XmlCache<ArchivedEventSeriesContract> xmlCache,
+			Action<ArchivedEventSeriesContract> func
+		)
 		{
 			var versionWithField = version.GetLatestVersionWithField(field);
 
@@ -39,9 +41,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			return data;
 		}
 
+#nullable disable
 		public ArchivedEventSeriesContract() { }
-
 #nullable enable
+
 		public ArchivedEventSeriesContract(ReleaseEventSeries series, ReleaseEventSeriesDiff diff)
 		{
 			ParamIs.NotNull(() => series);
@@ -54,10 +57,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			TranslatedName = new ArchivedTranslatedStringContract(series.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
-#nullable disable
 
 		[DataMember]
-		public string[] Aliases { get; init; }
+		public string[]? Aliases { get; init; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }
@@ -72,12 +74,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public string MainPictureMime { get; set; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 	}
 }

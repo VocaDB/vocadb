@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -80,43 +78,43 @@ namespace VocaDb.Model.DataContracts.Albums
 			return data;
 		}
 
+#nullable disable
 		public ArchivedAlbumContract() { }
-
 #nullable enable
+
 		public ArchivedAlbumContract(Album album, AlbumDiff diff)
 		{
 			ParamIs.NotNull(() => album);
 			ParamIs.NotNull(() => diff);
 
-			Artists = (diff.IncludeArtists ? album.Artists.Select(a => new ArchivedArtistForAlbumContract(a)).ToArray() : null);
-			Description = (diff.IncludeDescription ? album.Description.Original : null);
-			DescriptionEng = (diff.IncludeDescription ? album.Description.English : null);
+			Artists = diff.IncludeArtists ? album.Artists.Select(a => new ArchivedArtistForAlbumContract(a)).ToArray() : null;
+			Description = diff.IncludeDescription ? album.Description.Original : null;
+			DescriptionEng = diff.IncludeDescription ? album.Description.English : null;
 			DiscType = album.DiscType;
-			Discs = (diff.IncludeDiscs ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray() : null);
+			Discs = diff.IncludeDiscs ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray() : null;
 			Id = album.Id;
 			Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
 			MainPictureMime = album.CoverPictureMime;
-			OriginalRelease = (album.OriginalRelease != null && !album.OriginalRelease.IsEmpty ? new ArchivedAlbumReleaseContract(album.OriginalRelease) : null);
-			Pictures = (diff.IncludePictures ? album.Pictures.Select(p => new ArchivedEntryPictureFileContract(p)).ToArray() : null);
-			PVs = (diff.IncludePVs ? album.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
-			Names = (diff.IncludeNames ? album.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
-			Songs = (diff.IncludeTracks ? album.Songs.Select(s => new SongInAlbumRefContract(s)).ToArray() : null);
+			OriginalRelease = album.OriginalRelease != null && !album.OriginalRelease.IsEmpty ? new ArchivedAlbumReleaseContract(album.OriginalRelease) : null;
+			Pictures = diff.IncludePictures ? album.Pictures.Select(p => new ArchivedEntryPictureFileContract(p)).ToArray() : null;
+			PVs = diff.IncludePVs ? album.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null;
+			Names = diff.IncludeNames ? album.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
+			Songs = diff.IncludeTracks ? album.Songs.Select(s => new SongInAlbumRefContract(s)).ToArray() : null;
 			TranslatedName = new TranslatedStringContract(album.TranslatedName);
-			WebLinks = (diff.IncludeWebLinks ? album.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
+			WebLinks = diff.IncludeWebLinks ? album.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
-#nullable disable
 
 		[DataMember]
-		public ArchivedArtistForAlbumContract[] Artists { get; set; }
+		public ArchivedArtistForAlbumContract[]? Artists { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		[DataMember]
-		public string DescriptionEng { get; set; }
+		public string? DescriptionEng { get; set; }
 
 		[DataMember]
-		public AlbumDiscPropertiesContract[] Discs { get; set; }
+		public AlbumDiscPropertiesContract[]? Discs { get; set; }
 
 		[DataMember]
 		public DiscType DiscType { get; set; }
@@ -128,27 +126,27 @@ namespace VocaDb.Model.DataContracts.Albums
 		public AlbumIdentifierContract[] Identifiers { get; set; }
 
 		[DataMember]
-		public string MainPictureMime { get; set; }
+		public string? MainPictureMime { get; set; }
 
 		[DataMember]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[]? Names { get; set; }
 
 		[DataMember]
-		public ArchivedAlbumReleaseContract OriginalRelease { get; set; }
+		public ArchivedAlbumReleaseContract? OriginalRelease { get; set; }
 
 		[DataMember]
-		public ArchivedEntryPictureFileContract[] Pictures { get; set; }
+		public ArchivedEntryPictureFileContract[]? Pictures { get; set; }
 
 		[DataMember]
-		public ArchivedPVContract[] PVs { get; set; }
+		public ArchivedPVContract[]? PVs { get; set; }
 
 		[DataMember]
-		public SongInAlbumRefContract[] Songs { get; set; }
+		public SongInAlbumRefContract[]? Songs { get; set; }
 
 		[DataMember]
 		public TranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[]? WebLinks { get; set; }
 	}
 }
