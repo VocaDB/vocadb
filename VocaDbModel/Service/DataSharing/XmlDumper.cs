@@ -1,4 +1,5 @@
 using System.IO.Packaging;
+using System.Net.Mime;
 using NHibernate;
 using NLog;
 using VocaDb.Model.DataContracts.Albums;
@@ -44,7 +45,7 @@ public sealed class XmlPackageCreator : IPackageCreator
 			return;
 		}
 
-		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
+		var packagePart = _package.CreatePart(partUri, MediaTypeNames.Text.Xml, CompressionOption.Normal);
 
 		var data = XmlHelper.SerializeToXml(contract);
 
@@ -95,12 +96,13 @@ public sealed class JsonPackageCreator : IPackageCreator
 			return;
 		}
 
-		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
+		var packagePart = _package.CreatePart(partUri, MediaTypeNames.Application.Json, CompressionOption.Normal);
 
-		var data = XmlHelper.SerializeToXml(contract);
+		var data = JsonHelper.Serialize(contract);
 
 		using var stream = packagePart.GetStream();
-		data.Save(stream);
+		using var writer = new StreamWriter(stream);
+		writer.Write(data);
 	}
 
 	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
