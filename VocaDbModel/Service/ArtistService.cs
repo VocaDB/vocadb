@@ -314,31 +314,25 @@ namespace VocaDb.Model.Service
 		/// Not sorted (random order)
 		/// </summary>
 		None,
-
 		/// <summary>
 		/// Sort by name (ascending)
 		/// </summary>
 		Name,
-
 		/// <summary>
 		/// Sort by addition date (descending)
 		/// </summary>
 		AdditionDate,
-
 		/// <summary>
 		/// Sort by addition date (ascending)
 		/// </summary>
 		AdditionDateAsc,
-
 		/// <summary>
 		/// Release date (only for voicebanks)
 		/// </summary>
 		ReleaseDate,
-
 		SongCount,
-
 		SongRating,
-
-		FollowerCount
+		FollowerCount,
+		ArtistType,
 	}
 }

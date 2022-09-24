@@ -40,6 +40,11 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return queryable.Where(n => types.Contains(n.Artist.ArtistType));
 		}
 
+		private static IQueryable<Artist> OrderBySongRating(this IQueryable<Artist> criteria)
+		{
+			return criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore));
+		}
+
 		public static IQueryable<Artist> OrderBy(
 			this IQueryable<Artist> criteria,
 			ArtistSortRule sortRule,
@@ -53,8 +58,9 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDate),
 				ArtistSortRule.ReleaseDate => OrderByReleaseDate(criteria, SortDirection.Descending),
 				ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.AllSongs.Count(s => !s.Song.Deleted)),
-				ArtistSortRule.SongRating => criteria.OrderByDescending(a => a.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore)),
+				ArtistSortRule.SongRating => criteria.OrderBySongRating(),
 				ArtistSortRule.FollowerCount => criteria.OrderByDescending(a => a.Users.Count),
+				ArtistSortRule.ArtistType => criteria.OrderBySongRating(),
 				_ => criteria,
 			};
 		}

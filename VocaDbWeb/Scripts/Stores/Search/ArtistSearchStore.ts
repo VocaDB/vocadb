@@ -25,6 +25,7 @@ export enum ArtistSortRule {
 	SongCount = 'SongCount',
 	SongRating = 'SongRating',
 	FollowerCount = 'FollowerCount',
+	ArtistType = 'ArtistType',
 }
 
 export interface ArtistSearchRouteParams {

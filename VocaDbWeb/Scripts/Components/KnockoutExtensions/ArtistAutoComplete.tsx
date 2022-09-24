@@ -39,7 +39,7 @@ export const ArtistAutoComplete = ({
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,
-		sort: ArtistSortRule.SongRating,
+		sort: ArtistSortRule.ArtistType,
 	};
 	if (properties.extraQueryParams)
 		$.extend(queryParams, properties.extraQueryParams);
