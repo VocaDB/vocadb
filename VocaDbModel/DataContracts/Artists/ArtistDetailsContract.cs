@@ -33,12 +33,12 @@ namespace VocaDb.Model.DataContracts.Artists
 			Description = artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
-			LatestAlbums = new AlbumForApiContract[] { };
-			LatestSongs = new SongForApiContract[] { };
+			LatestAlbums = Array.Empty<AlbumForApiContract>();
+			LatestSongs = Array.Empty<SongForApiContract>();
 			OwnerUsers = artist.OwnerUsers.Select(u => new UserForApiContract(u.User, userIconFactory, UserOptionalFields.MainPicture)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
-			TopAlbums = new AlbumForApiContract[] { };
-			TopSongs = new SongForApiContract[] { };
+			TopAlbums = Array.Empty<AlbumForApiContract>();
+			TopSongs = Array.Empty<SongForApiContract>();
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			CharacterDesigner = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
@@ -63,7 +63,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			}
 			else
 			{
-				ChildVoicebanks = new ArtistContract[0];
+				ChildVoicebanks = Array.Empty<ArtistContract>();
 			}
 
 			Groups = artist.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.ManyToOne)
@@ -170,7 +170,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		public AlbumForApiContract[] LatestAlbums { get; set; }
 
 		[DataMember]
-		public ReleaseEventForApiContract[] LatestEvents { get; set; } = new ReleaseEventForApiContract[0];
+		public ReleaseEventForApiContract[] LatestEvents { get; set; } = global::System.Array.Empty<global::VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract>();
 
 		[DataMember]
 		public SongForApiContract[] LatestSongs { get; set; }

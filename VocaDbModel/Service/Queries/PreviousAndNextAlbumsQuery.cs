@@ -81,7 +81,7 @@ namespace VocaDb.Model.Service.Queries
 			}
 
 			if (mainArtist == null)
-				return new Album[0];
+				return Array.Empty<Album>();
 
 			if (album.OriginalReleaseDate.IsEmpty)
 			{

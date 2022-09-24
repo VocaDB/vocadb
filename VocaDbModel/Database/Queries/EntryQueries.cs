@@ -119,8 +119,8 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 			var entryNames = artistNames
 				.Concat(albumNames)
 				.Concat(songNames)
-				.Concat(tagNames ?? new DataContracts.EntryBaseContract[0])
-				.Concat(eventNames ?? new DataContracts.EntryBaseContract[0])
+				.Concat(tagNames ?? Array.Empty<DataContracts.EntryBaseContract>())
+				.Concat(eventNames ?? Array.Empty<DataContracts.EntryBaseContract>())
 				.OrderBy(e => e.DefaultName)
 				.Skip(start)
 				.Take(maxResults)
@@ -129,34 +129,34 @@ public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 			var artistIds = entryNames.Where(e => e.EntryType == EntryType.Artist).Select(a => a.Id).ToArray();
 			var albumIds = entryNames.Where(e => e.EntryType == EntryType.Album).Select(a => a.Id).ToArray();
 			var songIds = entryNames.Where(e => e.EntryType == EntryType.Song).Select(a => a.Id).ToArray();
-			var searchedTagIds = searchTags ? entryNames.Where(e => e.EntryType == EntryType.Tag).Select(a => a.Id).ToArray() : new int[0];
-			var eventIds = searchEvents ? entryNames.Where(e => e.EntryType == EntryType.ReleaseEvent).Select(a => a.Id).ToArray() : new int[0];
+			var searchedTagIds = searchTags ? entryNames.Where(e => e.EntryType == EntryType.Tag).Select(a => a.Id).ToArray() : Array.Empty<int>();
+			var eventIds = searchEvents ? entryNames.Where(e => e.EntryType == EntryType.ReleaseEvent).Select(a => a.Id).ToArray() : Array.Empty<int>();
 
 			// Get the actual entries in the page
 			var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
 				.Where(a => artistIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
+				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : Array.Empty<EntryForApiContract>();
 
 			var albums = albumIds.Any() ? ctx.OfType<Album>().Query()
 				.Where(a => albumIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
+				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : Array.Empty<EntryForApiContract>();
 
 			var songs = songIds.Any() ? ctx.OfType<Song>().Query()
 				.Where(a => songIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, fields)) : new EntryForApiContract[0];
+				.Select(a => new EntryForApiContract(a, lang, fields)) : Array.Empty<EntryForApiContract>();
 
 			var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 				.Where(a => searchedTagIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
+				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : Array.Empty<EntryForApiContract>();
 
 			var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 				.Where(a => eventIds.Contains(a.Id))
 				.ToArray()
-				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
+				.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : Array.Empty<EntryForApiContract>();
 
 			// Merge and sort the final list
 			var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags).Concat(events);

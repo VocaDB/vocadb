@@ -91,7 +91,7 @@ namespace VocaDb.Tests.Domain.PVs
 		public void Sync_Contracts_Removed()
 		{
 			_manager.PVs.Add(CreatePV(_pvContract));
-			var newLinks = new PVContract[] { };
+			var newLinks = Array.Empty<PVContract>();
 
 			var result = _manager.Sync(newLinks, CreatePV);
 

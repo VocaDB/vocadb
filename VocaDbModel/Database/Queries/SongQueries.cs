@@ -71,7 +71,7 @@ namespace VocaDb.Model.Database.Queries
 		private Tag[] AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IDatabaseContext<Song> ctx)
 		{
 			if (pvResult.Tags == null || !pvResult.Tags.Any())
-				return new Tag[0];
+				return Array.Empty<Tag>();
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var tags = MapTags(ctx, pvResult.Tags);
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 
 			if (!songIds.Any())
-				return new Song[0];
+				return Array.Empty<Song>();
 
 			return ctx.Query()
 				.Where(s => songIds.Contains(s.Id))
@@ -343,7 +343,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return _repository.HandleTransactionAsync(async ctx =>
 			{
-				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
+				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? Array.Empty<VideoUrlParseResult>();
 				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
 				ctx.AuditLogger.SysLog($"creating a new song with name '{contract.Names.First().Value}'");
@@ -846,7 +846,7 @@ namespace VocaDb.Model.Database.Queries
 			if (names == null || !names.Any())
 				return Enumerable.Empty<ValueTuple<Song, SongMatchProperty>>();
 
-			var nameMatchIds = new int[0];
+			var nameMatchIds = Array.Empty<int>();
 
 			var totalCount = 10;
 			var nameQuery = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
@@ -879,7 +879,7 @@ namespace VocaDb.Model.Database.Queries
 			}
 
 			var nameMatches = (nameMatchIds.Any() ? CollectionHelper.SortByIds(ctx.Query().Where(s => nameMatchIds.Contains(s.Id)).ToArray(), nameMatchIds)
-				.Select(d => (d, SongMatchProperty.Title)) : new ValueTuple<Song, SongMatchProperty>[] { });
+				.Select(d => (d, SongMatchProperty.Title)) : Array.Empty<(Song, SongMatchProperty)>());
 
 			return nameMatches;
 		}

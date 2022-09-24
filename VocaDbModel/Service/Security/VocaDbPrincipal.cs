@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.Security
 		private readonly ServerOnlyUserWithPermissionsContract _user;
 
 		public VocaDbPrincipal(IIdentity identity, ServerOnlyUserWithPermissionsContract user)
-			: base(identity, new string[] { })
+			: base(identity, Array.Empty<string>())
 		{
 			_user = user;
 		}

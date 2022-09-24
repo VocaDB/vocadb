@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			if (getPVs)
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			else
-				PVs = new PVContract[] { };
+				PVs = Array.Empty<PVContract>();
 		}
 
 		[DataMember]

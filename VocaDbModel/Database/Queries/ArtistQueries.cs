@@ -298,7 +298,7 @@ namespace VocaDb.Model.Database.Queries
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
 
 			if (!names.Any() && string.IsNullOrEmpty(url))
-				return new EntryRefWithCommonPropertiesContract[] { };
+				return Array.Empty<EntryRefWithCommonPropertiesContract>();
 
 			return HandleQuery(session =>
 			{
@@ -309,7 +309,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(n => n.Artist)
 					.Take(10)
 					.ToArray()
-					.Distinct() : new Artist[] { });
+					.Distinct() : Array.Empty<Artist>());
 
 				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()
 					.Where(w => !w.Entry.Deleted)
@@ -317,7 +317,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
-					.Distinct() : new Artist[] { };
+					.Distinct() : Array.Empty<Artist>();
 
 				return nameMatches.Union(linkMatches)
 					.Select(n => new EntryRefWithCommonPropertiesContract(n, PermissionContext.LanguagePreference))

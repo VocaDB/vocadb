@@ -60,7 +60,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private Task<NewSongCheckResultContract> CallFindDuplicates(string[] anyName = null, string[] anyPv = null, int[] artistIds = null, bool getPvInfo = true)
 		{
-			return _queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], artistIds ?? new int[0], getPvInfo);
+			return _queries.FindDuplicates(anyName ?? Array.Empty<string>(), anyPv ?? Array.Empty<string>(), artistIds ?? Array.Empty<int>(), getPvInfo);
 		}
 
 		private async Task<(bool created, SongReport report)> CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null)
@@ -324,7 +324,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Create_NoPV()
 		{
-			_newSongContract.PVUrls = new string[0];
+			_newSongContract.PVUrls = Array.Empty<string>();
 
 			var result = await CallCreate();
 
@@ -562,7 +562,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_pvParser.MatchedPVs.Add("https://youtu.be/aJKY_EeAeYc",
 				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc", titleParseResult));
 
-			var result = await CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
+			var result = await CallFindDuplicates(Array.Empty<string>(), new[] { "https://youtu.be/aJKY_EeAeYc" });
 
 			result.Title.Should().Be("Clean Tears - Ruby", "Title"); // Title from PV
 			result.Artists.Length.Should().Be(1, "Number of matched artists");
@@ -794,7 +794,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			// Remove all artists
 			var contract = Contract();
-			contract.Artists = new ArtistForSongContract[0];
+			contract.Artists = Array.Empty<ArtistForSongContract>();
 			await _queries.UpdateBasicProperties(contract);
 
 			var latestVersionBeforeRevert = _song.ArchivedVersionsManager.GetLatestVersion();

@@ -120,7 +120,7 @@ namespace VocaDb.Model.Database.Queries
 			catch (Exception x) when (x is SqlException or GenericADOException)
 			{
 				s_log.Warn(x, "Unable to get tag usages");
-				topUsages = new TEntry[0];
+				topUsages = Array.Empty<TEntry>();
 				usageCount = 0;
 			}
 

@@ -30,7 +30,7 @@ namespace VocaDb.Tests.Domain.Albums
 
 		private SongInAlbumEditContract CreateSongInAlbumEditContract(int id, string name, int trackNum)
 		{
-			return new SongInAlbumEditContract { SongInAlbumId = id, IsCustomTrack = true, SongName = name, TrackNumber = trackNum, DiscNumber = 1, Artists = new ArtistContract[0] };
+			return new SongInAlbumEditContract { SongInAlbumId = id, IsCustomTrack = true, SongName = name, TrackNumber = trackNum, DiscNumber = 1, Artists = Array.Empty<ArtistContract>() };
 		}
 
 		private Task<List<Artist>> GetArtists(ArtistContract[] contracts)
@@ -180,7 +180,7 @@ namespace VocaDb.Tests.Domain.Albums
 		public async Task SyncSongs_Removed()
 		{
 			_album.AddSong(_song1, 1, 1);
-			var newSongs = new SongInAlbumEditContract[0];
+			var newSongs = Array.Empty<SongInAlbumEditContract>();
 
 			var result = await SyncSongs(newSongs);
 

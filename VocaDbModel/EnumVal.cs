@@ -88,7 +88,7 @@ namespace VocaDb.Model
 		public static T[] ParseMultiple(string? value)
 		{
 			if (string.IsNullOrEmpty(value))
-				return new T[0];
+				return Array.Empty<T>();
 
 			return ParseAll(value.Split(','));
 		}

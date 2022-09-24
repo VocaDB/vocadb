@@ -11,7 +11,7 @@ public sealed record ArtistQueryParams
 {
 	public ArtistQueryParams()
 	{
-		ArtistTypes = new ArtistType[] { };
+		ArtistTypes = Array.Empty<ArtistType>();
 	}
 
 	/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
@@ -35,7 +35,7 @@ public sealed record ArtistQueryParams
 		Common = CommonSearchParams.Create(textQuery, true, moveExactToTop);
 		Paging = new PagingProperties(start, maxResults, getTotalCount);
 
-		ArtistTypes = songTypes ?? new ArtistType[] { };
+		ArtistTypes = songTypes ?? Array.Empty<ArtistType>();
 		SortRule = sortRule;
 	}
 

@@ -235,7 +235,7 @@ namespace VocaDb.Web.Controllers
 
 			var textQuery = SearchTextQuery.Create(filter, matchMode);
 			var queryParams = new SongQueryParams(textQuery,
-				songType != SongType.Unspecified ? new[] { songType } : new SongType[] { },
+				songType != SongType.Unspecified ? new[] { songType } : Array.Empty<SongType>(),
 				0, pageSize, false, sortRule, false, false, null)
 			{
 				ArtistParticipation = {

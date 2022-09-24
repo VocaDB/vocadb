@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service
 		public string[] FindNames(ArtistSearchTextQuery textQuery, int maxResults)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{

@@ -189,7 +189,7 @@ namespace VocaDb.Model.Service
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -220,7 +220,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query),
-					new SongType[] { }, 0, 10, false,
+					Array.Empty<SongType>(), 0, 10, false,
 					SongSortRule.Name, false, true, null)
 				{
 					AdvancedFilters = new[] { new AdvancedSearchFilter { FilterType = AdvancedFilterType.Lyrics, Param = AdvancedSearchFilter.Any } }

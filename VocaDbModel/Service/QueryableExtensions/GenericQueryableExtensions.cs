@@ -38,7 +38,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				return query;
 
 			if (allowEmpty && paging.MaxEntries <= 0)
-				return new T[0].AsQueryable();
+				return Array.Empty<T>().AsQueryable();
 
 			var start = Math.Max(paging.Start, 0);
 			var maxEntries = Math.Max(paging.MaxEntries, 1); // Take for database must be >= 1

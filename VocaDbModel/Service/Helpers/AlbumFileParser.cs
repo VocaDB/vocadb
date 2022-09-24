@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service.Helpers
 				}
 				else
 				{
-					track.VocalistNames = new string[] { };
+					track.VocalistNames = Array.Empty<string>();
 				}
 
 				artists.AddRange(GetArtistNames(artist));

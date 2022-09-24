@@ -10,8 +10,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ReleaseEventSeriesForEditContract()
 		{
-			Names = new LocalizedStringWithIdContract[] { };
-			WebLinks = new WebLinkContract[0];
+			Names = Array.Empty<LocalizedStringWithIdContract>();
+			WebLinks = Array.Empty<WebLinkContract>();
 		}
 
 		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference) : base(series, languagePreference)

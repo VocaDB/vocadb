@@ -444,7 +444,7 @@ namespace VocaDb.Model.Service
 	{
 		public PartialFindResult()
 		{
-			Items = new T[] { };
+			Items = Array.Empty<T>();
 		}
 
 		public PartialFindResult(T[] items, int totalCount)

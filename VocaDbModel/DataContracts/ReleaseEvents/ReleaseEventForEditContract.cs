@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ReleaseEventForEditContract()
 		{
-			Names = new LocalizedStringWithIdContract[0];
+			Names = Array.Empty<LocalizedStringWithIdContract>();
 		}
 
 		public ReleaseEventForEditContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) :

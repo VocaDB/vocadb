@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 	{
 		public NewSongCheckResultContract()
 		{
-			Matches = new DuplicateEntryResultContract<SongMatchProperty>[] { };
+			Matches = Array.Empty<DuplicateEntryResultContract<SongMatchProperty>>();
 		}
 
 		public NewSongCheckResultContract(DuplicateEntryResultContract<SongMatchProperty>[] matches, NicoTitleParseResult titleParseResult, ContentLanguagePreference languagePreference)

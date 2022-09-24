@@ -70,7 +70,7 @@ namespace VocaDb.Model.Service
 
 			var imagePersister = new ServerEntryThumbPersister();
 			var thumbGenerator = new ImageThumbGenerator(imagePersister);
-			var artistIds = new int[0];
+			var artistIds = Array.Empty<int>();
 
 			HandleQuery(session =>
 			{
@@ -239,7 +239,7 @@ namespace VocaDb.Model.Service
 		public string[] FindPVAuthorNames(string term)
 		{
 			if (string.IsNullOrEmpty(term))
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -357,7 +357,7 @@ namespace VocaDb.Model.Service
 		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults)
 		{
 			if (string.IsNullOrEmpty(author))
-				return new PVForSongContract[] { };
+				return Array.Empty<PVForSongContract>();
 
 			return HandleQuery(session =>
 			{

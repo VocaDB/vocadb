@@ -9,9 +9,9 @@ namespace VocaDb.Model.DataContracts.MikuDb
 	{
 		public ImportedAlbumDataContract()
 		{
-			ArtistNames = new string[] { };
-			Tracks = new ImportedAlbumTrack[] { };
-			VocalistNames = new string[] { };
+			ArtistNames = Array.Empty<string>();
+			Tracks = Array.Empty<ImportedAlbumTrack>();
+			VocalistNames = Array.Empty<string>();
 		}
 
 		[DataMember]

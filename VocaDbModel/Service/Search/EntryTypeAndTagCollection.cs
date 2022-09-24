@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.Search
 		public static EntryTypeAndTagCollection<TSubType> Create(
 			EntryType entryType, int tagId, IDatabaseContext ctx, bool allowAllTags = false)
 		{
-			return Create(entryType, new TSubType[0], new int[] { tagId }, ctx, allowAllTags);
+			return Create(entryType, Array.Empty<TSubType>(), new int[] { tagId }, ctx, allowAllTags);
 		}
 
 		public static EntryTypeAndTagCollection<TSubType> Create(
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Service.Search
 			else
 			{
 				allTypes = subTypes.ToArray();
-				songTypeTagIds = new int[0];
+				songTypeTagIds = Array.Empty<int>();
 			}
 
 			if (subTypes.Any())
