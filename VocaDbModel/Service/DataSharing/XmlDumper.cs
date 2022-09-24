@@ -16,9 +16,60 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.DataSharing;
 
-public class XmlDumper
+public sealed class PackageCreator
 {
-	public class Loader
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private readonly Package _package;
+	private readonly Action _cleanup;
+
+	public PackageCreator(Package package, Action cleanup)
+	{
+		_package = package;
+		_cleanup = cleanup;
+	}
+
+	private void DumpXml<T>(T[] contract, int id, string folder)
+	{
+		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
+
+		if (_package.PartExists(partUri))
+		{
+			s_log.Warn("Duplicate path: {0}", partUri);
+			return;
+		}
+
+		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
+
+		var data = XmlHelper.SerializeToXml(contract);
+
+		using var stream = packagePart.GetStream();
+		data.Save(stream);
+	}
+
+	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
+	{
+		bool run = true;
+		int start = 0;
+
+		while (run)
+		{
+			var entries = loadFunc(start);
+			var contracts = entries.Select(fac).ToArray();
+			DumpXml(contracts, start, folder);
+
+			start += contracts.Length;
+			run = entries.Any();
+
+			// Cleanup
+			_cleanup();
+			GC.Collect();
+		}
+	}
+}
+
+public sealed class XmlDumper
+{
+	private sealed class Loader
 	{
 		private const int MaxEntries = 100;
 		private readonly PackageCreator _packageCreator;
@@ -61,56 +112,5 @@ public class XmlDumper
 		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a, new ReleaseEventSeriesDiff()));
 		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a, new ReleaseEventDiff()));
 		loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
-	}
-}
-
-public class PackageCreator
-{
-	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-	private readonly Package _package;
-	private readonly Action _cleanup;
-
-	public PackageCreator(Package package, Action cleanup)
-	{
-		_package = package;
-		_cleanup = cleanup;
-	}
-
-	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
-	{
-		bool run = true;
-		int start = 0;
-
-		while (run)
-		{
-			var entries = loadFunc(start);
-			var contracts = entries.Select(fac).ToArray();
-			DumpXml(contracts, start, folder);
-
-			start += contracts.Length;
-			run = entries.Any();
-
-			// Cleanup
-			_cleanup();
-			GC.Collect();
-		}
-	}
-
-	private void DumpXml<T>(T[] contract, int id, string folder)
-	{
-		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
-
-		if (_package.PartExists(partUri))
-		{
-			s_log.Warn("Duplicate path: {0}", partUri);
-			return;
-		}
-
-		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
-
-		var data = XmlHelper.SerializeToXml(contract);
-
-		using var stream = packagePart.GetStream();
-		data.Save(stream);
 	}
 }
