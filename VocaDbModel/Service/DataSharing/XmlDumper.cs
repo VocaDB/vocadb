@@ -21,6 +21,7 @@ public interface IPackageCreator
 	void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac);
 }
 
+[Obsolete]
 public sealed class XmlPackageCreator : IPackageCreator
 {
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -72,6 +73,57 @@ public sealed class XmlPackageCreator : IPackageCreator
 	}
 }
 
+public sealed class JsonPackageCreator : IPackageCreator
+{
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private readonly Package _package;
+	private readonly Action _cleanup;
+
+	public JsonPackageCreator(Package package, Action cleanup)
+	{
+		_package = package;
+		_cleanup = cleanup;
+	}
+
+	private void DumpJson<T>(T[] contract, int id, string folder)
+	{
+		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.json", UriKind.Relative));
+
+		if (_package.PartExists(partUri))
+		{
+			s_log.Warn("Duplicate path: {0}", partUri);
+			return;
+		}
+
+		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
+
+		var data = XmlHelper.SerializeToXml(contract);
+
+		using var stream = packagePart.GetStream();
+		data.Save(stream);
+	}
+
+	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
+	{
+		bool run = true;
+		int start = 0;
+
+		while (run)
+		{
+			var entries = loadFunc(start);
+			var contracts = entries.Select(fac).ToArray();
+			DumpJson(contracts, start, folder);
+
+			start += contracts.Length;
+			run = entries.Any();
+
+			// Cleanup
+			_cleanup();
+			GC.Collect();
+		}
+	}
+}
+
 public sealed class XmlDumper
 {
 	private sealed class Loader
@@ -110,7 +162,7 @@ public sealed class XmlDumper
 	public void Create(string path, ISession session)
 	{
 		using var package = Package.Open(path, FileMode.Create);
-		var packageCreator = new XmlPackageCreator(package, session.Clear);
+		var packageCreator = new JsonPackageCreator(package, session.Clear);
 		var loader = new Loader(session, packageCreator);
 		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
 		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
