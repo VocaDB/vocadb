@@ -14,104 +14,103 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Service.DataSharing
+namespace VocaDb.Model.Service.DataSharing;
+
+public class XmlDumper
 {
-	public class XmlDumper
+	public class Loader
 	{
-		public class Loader
+		private const int MaxEntries = 100;
+		private readonly PackageCreator _packageCreator;
+		private readonly ISession _session;
+
+		private static TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
 		{
-			private const int MaxEntries = 100;
-			private readonly PackageCreator _packageCreator;
-			private readonly ISession _session;
-
-			private static TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
-			{
-				return session.Query<TEntry>().Where(a => !a.Deleted).Skip(first).Take(max).ToArray();
-			}
-
-			private static TEntry[] Load<TEntry>(ISession session, int first, int max) where TEntry : IEntryWithIntId
-			{
-				return session.Query<TEntry>().Skip(first).Take(max).ToArray();
-			}
-
-			public Loader(ISession session, Package package)
-			{
-				_session = session;
-				_packageCreator = new PackageCreator(package, session.Clear);
-			}
-
-			public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
-			{
-				_packageCreator.Dump(start => LoadSkipDeleted<TEntry>(_session, start, MaxEntries), folder, fac);
-			}
-
-			public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
-			{
-				_packageCreator.Dump(start => Load<TEntry>(_session, start, MaxEntries), folder, fac);
-			}
+			return session.Query<TEntry>().Where(a => !a.Deleted).Skip(first).Take(max).ToArray();
 		}
 
-		public void Create(string path, ISession session)
+		private static TEntry[] Load<TEntry>(ISession session, int first, int max) where TEntry : IEntryWithIntId
 		{
-			using var package = Package.Open(path, FileMode.Create);
-			var loader = new Loader(session, package);
-			loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
-			loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
-			loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContract(a, new SongDiff()));
-			loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a, new ReleaseEventSeriesDiff()));
-			loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a, new ReleaseEventDiff()));
-			loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
+			return session.Query<TEntry>().Skip(first).Take(max).ToArray();
+		}
+
+		public Loader(ISession session, Package package)
+		{
+			_session = session;
+			_packageCreator = new PackageCreator(package, session.Clear);
+		}
+
+		public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
+		{
+			_packageCreator.Dump(start => LoadSkipDeleted<TEntry>(_session, start, MaxEntries), folder, fac);
+		}
+
+		public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
+		{
+			_packageCreator.Dump(start => Load<TEntry>(_session, start, MaxEntries), folder, fac);
 		}
 	}
 
-	public class PackageCreator
+	public void Create(string path, ISession session)
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-		private readonly Package _package;
-		private readonly Action _cleanup;
+		using var package = Package.Open(path, FileMode.Create);
+		var loader = new Loader(session, package);
+		loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
+		loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
+		loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContract(a, new SongDiff()));
+		loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a, new ReleaseEventSeriesDiff()));
+		loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a, new ReleaseEventDiff()));
+		loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
+	}
+}
 
-		public PackageCreator(Package package, Action cleanup)
+public class PackageCreator
+{
+	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+	private readonly Package _package;
+	private readonly Action _cleanup;
+
+	public PackageCreator(Package package, Action cleanup)
+	{
+		_package = package;
+		_cleanup = cleanup;
+	}
+
+	public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
+	{
+		bool run = true;
+		int start = 0;
+
+		while (run)
 		{
-			_package = package;
-			_cleanup = cleanup;
+			var entries = loadFunc(start);
+			var contracts = entries.Select(fac).ToArray();
+			DumpXml(contracts, start, folder);
+
+			start += contracts.Length;
+			run = entries.Any();
+
+			// Cleanup
+			_cleanup();
+			GC.Collect();
+		}
+	}
+
+	private void DumpXml<T>(T[] contract, int id, string folder)
+	{
+		var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
+
+		if (_package.PartExists(partUri))
+		{
+			s_log.Warn("Duplicate path: {0}", partUri);
+			return;
 		}
 
-		public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
-		{
-			bool run = true;
-			int start = 0;
+		var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
 
-			while (run)
-			{
-				var entries = loadFunc(start);
-				var contracts = entries.Select(fac).ToArray();
-				DumpXml(contracts, start, folder);
+		var data = XmlHelper.SerializeToXml(contract);
 
-				start += contracts.Length;
-				run = entries.Any();
-
-				// Cleanup
-				_cleanup();
-				GC.Collect();
-			}
-		}
-
-		private void DumpXml<T>(T[] contract, int id, string folder)
-		{
-			var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
-
-			if (_package.PartExists(partUri))
-			{
-				s_log.Warn("Duplicate path: {0}", partUri);
-				return;
-			}
-
-			var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
-
-			var data = XmlHelper.SerializeToXml(contract);
-
-			using var stream = packagePart.GetStream();
-			data.Save(stream);
-		}
+		using var stream = packagePart.GetStream();
+		data.Save(stream);
 	}
 }
