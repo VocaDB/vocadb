@@ -2,15 +2,11 @@
 
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
@@ -21,15 +17,8 @@ namespace VocaDb.Web.Controllers
 {
 	public class ExtController : ControllerBase
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-
-		private readonly AlbumService _albumService;
-		private readonly ArtistService _artistService;
-		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 		private readonly IEntryUrlParser _entryUrlParser;
-		private readonly EventQueries _eventQueries;
 		private readonly SongQueries _songService;
-		private readonly TagQueries _tagQueries;
 		private readonly PVHelper _pvHelper;
 
 		protected ActionResult Object<T>(T obj, DataFormat format) where T : class
@@ -53,22 +42,12 @@ namespace VocaDb.Web.Controllers
 
 		public ExtController(
 			IEntryUrlParser entryUrlParser,
-			IAggregatedEntryImageUrlFactory entryThumbPersister,
-			AlbumService albumService,
-			ArtistService artistService,
-			EventQueries eventQueries,
 			SongQueries songService,
-			TagQueries tagQueries,
 			PVHelper pvHelper
 		)
 		{
 			_entryUrlParser = entryUrlParser;
-			_entryThumbPersister = entryThumbPersister;
-			_albumService = albumService;
-			_artistService = artistService;
-			_eventQueries = eventQueries;
 			_songService = songService;
-			_tagQueries = tagQueries;
 			_pvHelper = pvHelper;
 		}
 
