@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.IO.Packaging;
 using NHibernate;
 using NLog;
@@ -26,13 +24,12 @@ namespace VocaDb.Model.Service.DataSharing
 			private readonly PackageCreator _packageCreator;
 			private readonly ISession _session;
 
-
-			private TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
+			private static TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
 			{
 				return session.Query<TEntry>().Where(a => !a.Deleted).Skip(first).Take(max).ToArray();
 			}
 
-			private TEntry[] Load<TEntry>(ISession session, int first, int max) where TEntry : IEntryWithIntId
+			private static TEntry[] Load<TEntry>(ISession session, int first, int max) where TEntry : IEntryWithIntId
 			{
 				return session.Query<TEntry>().Skip(first).Take(max).ToArray();
 			}

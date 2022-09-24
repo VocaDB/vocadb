@@ -149,7 +149,9 @@ namespace VocaDb.Model.Utils
 
 		public static string BrandedStringsAssembly => Val("BrandedStringsAssembly");
 
-		public static string DbDumpFolder => Val("DbDumpFolder");
+#nullable enable
+		public static string? DbDumpFolder => Val("DbDumpFolder");
+#nullable disable
 
 		/// <summary>
 		/// Enable inheriting artists for certain situations.
