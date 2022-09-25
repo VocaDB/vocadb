@@ -182,7 +182,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Entry edits - " + user.Name;
 
-			return View(user);
+			return View("React/Index");
 		}
 
 		public ActionResult FavoriteSongs(int id = InvalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)

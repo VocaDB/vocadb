@@ -215,13 +215,13 @@ const UserOverview = observer(
 						<h4 className="withMargin">{t('ViewRes.User:Details.StatsTab')}</h4>
 						<span>
 							{canSeeDetailedStats ? (
-								<a
-									href={`/User/EntryEdits/${user.id}?${qs.stringify({
+								<Link
+									to={`/User/EntryEdits/${user.id}?${qs.stringify({
 										onlySubmissions: true,
 									})}`}
 								>
 									{submitText}
-								</a>
+								</Link>
 							) : (
 								submitText
 							)}
@@ -229,13 +229,13 @@ const UserOverview = observer(
 						<br />
 						<span>
 							{canSeeDetailedStats ? (
-								<a
-									href={`/User/EntryEdits/${user.id}?${qs.stringify({
+								<Link
+									to={`/User/EntryEdits/${user.id}?${qs.stringify({
 										onlySubmissions: false,
 									})}`}
 								>
 									{editText}
-								</a>
+								</Link>
 							) : (
 								editText
 							)}

@@ -90,9 +90,7 @@ export class ActivityEntryListViewModel {
 			return activityFeedEventNames![
 				activityEntry.editEvent + activityEntry.entry.entryType
 			];
-		} else if (
-			activityEntry.editEvent === EntryEditEvent[EntryEditEvent.Created]
-		) {
+		} else if (activityEntry.editEvent === EntryEditEvent.Created) {
 			return activityFeedEventNames!['CreatedNew'].replace(
 				'{0}',
 				activityFeedEventNames!['Entry' + activityEntry.entry.entryType],
