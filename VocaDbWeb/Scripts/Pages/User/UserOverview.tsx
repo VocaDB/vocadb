@@ -16,6 +16,7 @@ import {
 	UserKnownLanguageContract,
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { LoginManager, PermissionToken } from '@/Models/LoginManager';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -217,7 +218,7 @@ const UserOverview = observer(
 							{canSeeDetailedStats ? (
 								<Link
 									to={`/User/EntryEdits/${user.id}?${qs.stringify({
-										onlySubmissions: true,
+										entryEditEvent: EntryEditEvent.Created,
 									})}`}
 								>
 									{submitText}
@@ -231,7 +232,7 @@ const UserOverview = observer(
 							{canSeeDetailedStats ? (
 								<Link
 									to={`/User/EntryEdits/${user.id}?${qs.stringify({
-										onlySubmissions: false,
+										entryEditEvent: undefined,
 									})}`}
 								>
 									{editText}
