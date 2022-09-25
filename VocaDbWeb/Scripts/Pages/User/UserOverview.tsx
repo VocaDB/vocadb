@@ -16,6 +16,7 @@ import {
 	UserKnownLanguageContract,
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { LoginManager, PermissionToken } from '@/Models/LoginManager';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -215,13 +216,13 @@ const UserOverview = observer(
 						<h4 className="withMargin">{t('ViewRes.User:Details.StatsTab')}</h4>
 						<span>
 							{canSeeDetailedStats ? (
-								<a
-									href={`/User/EntryEdits/${user.id}?${qs.stringify({
-										onlySubmissions: true,
+								<Link
+									to={`/User/EntryEdits/${user.id}?${qs.stringify({
+										entryEditEvent: EntryEditEvent.Created,
 									})}`}
 								>
 									{submitText}
-								</a>
+								</Link>
 							) : (
 								submitText
 							)}
@@ -229,13 +230,13 @@ const UserOverview = observer(
 						<br />
 						<span>
 							{canSeeDetailedStats ? (
-								<a
-									href={`/User/EntryEdits/${user.id}?${qs.stringify({
-										onlySubmissions: false,
+								<Link
+									to={`/User/EntryEdits/${user.id}?${qs.stringify({
+										entryEditEvent: undefined,
 									})}`}
 								>
 									{editText}
-								</a>
+								</Link>
 							) : (
 								editText
 							)}

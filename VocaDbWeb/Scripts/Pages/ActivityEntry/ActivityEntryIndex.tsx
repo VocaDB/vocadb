@@ -34,6 +34,10 @@ const ActivityEntryIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
+		React.useEffect(() => {
+			activityEntryListStore.loadMore();
+		}, []);
+
 		return (
 			<Layout title={title}>
 				<ul className="nav nav-pills">

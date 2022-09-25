@@ -8,6 +8,7 @@ import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const UserIndex = React.lazy(() => import('./UserIndex'));
+const UserEntryEdits = React.lazy(() => import('./UserEntryEdits'));
 const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
 
 const httpClient = new HttpClient();
@@ -49,6 +50,7 @@ const UserRoutes = (): React.ReactElement => {
 		<Routes>
 			<Route path="" element={<UserIndex />} />
 			<Route path="Details/:id" element={<UserDetailsNavigate />} />
+			<Route path="EntryEdits/:id" element={<UserEntryEdits />} />
 			<Route path="FavoriteSongs/:id" element={<UserFavoriteSongs />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>

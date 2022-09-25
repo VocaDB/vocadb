@@ -265,3 +265,30 @@ export const PVTypeDescriptionsDropdownList = React.memo(
 		);
 	},
 );
+
+const activityEntryTargetTypes: string[] = [
+	EntryType[EntryType.Undefined],
+	EntryType[EntryType.Album],
+	EntryType[EntryType.Artist],
+	EntryType[EntryType.ReleaseEvent],
+	EntryType[EntryType.Song],
+	EntryType[EntryType.SongList],
+	EntryType[EntryType.Tag],
+	EntryType[EntryType.Venue],
+];
+
+export const ActivityEntryTargetTypeDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation('VocaDb.Web.Resources.Domain');
+
+		return (
+			<select {...props}>
+				{Object.values(activityEntryTargetTypes).map((entryType) => (
+					<option value={entryType} key={entryType}>
+						{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
