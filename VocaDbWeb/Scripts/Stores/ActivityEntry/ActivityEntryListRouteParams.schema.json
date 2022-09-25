@@ -1,11 +1,12 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"properties": {
-		"entryType": {
+		"entryEditEvent": {
+			"enum": ["Created", "Updated"],
 			"type": "string"
 		},
-		"onlySubmissions": {
-			"type": "boolean"
+		"entryType": {
+			"type": "string"
 		},
 		"sort": {
 			"enum": ["CreateDate", "CreateDateDescending"],

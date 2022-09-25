@@ -26,14 +26,14 @@ export enum ActivityEntrySortRule {
 }
 
 interface ActivityEntryListRouteParams {
+	entryEditEvent?: EntryEditEvent;
 	entryType?: string /* TODO: enum */;
-	onlySubmissions?: boolean;
 	sort?: ActivityEntrySortRule;
 }
 
 const clearResultsByQueryKeys: (keyof ActivityEntryListRouteParams)[] = [
+	'entryEditEvent',
 	'entryType',
-	'onlySubmissions',
 	'sort',
 ];
 
@@ -46,8 +46,8 @@ const validate = ajv.compile(schema);
 
 export class ActivityEntryListStore
 	implements LocationStateStore<ActivityEntryListRouteParams> {
-	@observable public additionsOnly = false;
 	@observable public entries: ActivityEntryContract[] = [];
+	@observable public entryEditEvent?: EntryEditEvent;
 	@observable public entryType =
 		EntryType[EntryType.Undefined]; /* TODO: enum */
 	private lastEntryDate?: Date;
@@ -67,14 +67,14 @@ export class ActivityEntryListStore
 
 	@computed.struct public get locationState(): ActivityEntryListRouteParams {
 		return {
+			entryEditEvent: this.entryEditEvent,
 			entryType: this.entryType,
-			onlySubmissions: this.additionsOnly,
 			sort: this.sort,
 		};
 	}
 	public set locationState(value: ActivityEntryListRouteParams) {
+		this.entryEditEvent = value.entryEditEvent;
 		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
-		this.additionsOnly = value.onlySubmissions ?? false;
 		this.sort = value.sort ?? ActivityEntrySortRule.CreateDateDescending;
 	}
 
@@ -101,7 +101,7 @@ export class ActivityEntryListStore
 					? this.lastEntryDate.toISOString()
 					: undefined,
 			userId: this.userId,
-			editEvent: this.additionsOnly ? EntryEditEvent.Created : undefined,
+			editEvent: this.entryEditEvent,
 			entryType: this.entryType,
 			sortRule: this.sort,
 		});

@@ -1,4 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
+import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
@@ -6,6 +7,7 @@ import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -100,19 +102,48 @@ const UserEntryEditsLayout = observer(
 					</div>
 
 					<div className="control-group">
+						<div className="control-label">
+							Edit event{/* TODO: localize */}
+						</div>
 						<div className="controls">
-							<label className="checkbox">
-								<input
-									type="checkbox"
-									checked={activityEntryListStore.additionsOnly}
-									onChange={(): void =>
-										runInAction(() => {
-											activityEntryListStore.additionsOnly = !activityEntryListStore.additionsOnly;
-										})
-									}
-								/>{' '}
-								{t('ViewRes.User:EntryEdits.OnlyAdditions')}
-							</label>
+							<Button
+								disabled={activityEntryListStore.entryEditEvent === undefined}
+								onClick={(): void =>
+									runInAction(() => {
+										activityEntryListStore.entryEditEvent = undefined;
+									})
+								}
+							>
+								All{/* TODO: localize */}
+							</Button>{' '}
+							<Button
+								disabled={
+									activityEntryListStore.entryEditEvent ===
+									EntryEditEvent.Created
+								}
+								onClick={(): void =>
+									runInAction(() => {
+										activityEntryListStore.entryEditEvent =
+											EntryEditEvent.Created;
+									})
+								}
+							>
+								Only additions{/* TODO: localize */}
+							</Button>{' '}
+							<Button
+								disabled={
+									activityEntryListStore.entryEditEvent ===
+									EntryEditEvent.Updated
+								}
+								onClick={(): void =>
+									runInAction(() => {
+										activityEntryListStore.entryEditEvent =
+											EntryEditEvent.Updated;
+									})
+								}
+							>
+								Only edits{/* TODO: localize */}
+							</Button>
 						</div>
 					</div>
 				</div>
