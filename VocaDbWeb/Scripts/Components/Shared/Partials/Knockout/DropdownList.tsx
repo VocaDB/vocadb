@@ -1,12 +1,16 @@
+import { cultures } from '@/Components/cultures';
 import { regions } from '@/Components/regions';
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
+import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import _ from 'lodash';
 import React from 'react';
@@ -69,6 +73,23 @@ export const UserGroupDropdownList = React.memo(
 	},
 );
 
+export const CultureDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		return (
+			<select {...props}>
+				{props.placeholder !== undefined && (
+					<option value="">{props.placeholder}</option>
+				)}
+				{Object.entries(cultures).map(([key, value]) => (
+					<option value={key} key={key}>
+						{value.nativeName} ({value.englishName /* TODO: localize */})
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
 export const UserLanguageCultureDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
 		return (
@@ -79,6 +100,28 @@ export const UserLanguageCultureDropdownList = React.memo(
 				{Object.entries(userLanguageCultures).map(([key, value]) => (
 					<option value={key} key={key}>
 						{value.nativeName} ({value.englishName /* TODO: localize */})
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const UserLanguageProficiencyDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Users']);
+
+		return (
+			<select {...props}>
+				{props.placeholder !== undefined && (
+					<option value="">{props.placeholder}</option>
+				)}
+				{Object.values(UserLanguageProficiency).map((value) => (
+					<option value={value} key={value}>
+						{t(
+							`VocaDb.Web.Resources.Domain.Users:UserLanguageProficiencyNames.${value}`,
+							'',
+						)}
 					</option>
 				))}
 			</select>
@@ -126,6 +169,26 @@ export const LanguageSelectionDropdownList = React.memo(
 						<option value={languageSelection} key={languageSelection}>
 							{t(
 								`Resources:ContentLanguageSelectionNames.${languageSelection}`,
+							)}
+						</option>
+					))}
+			</select>
+		);
+	},
+);
+
+export const LanguagePreferenceDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(ContentLanguagePreference)
+					.filter((languagePreference) => isNaN(Number(languagePreference)))
+					.map((languagePreference) => (
+						<option value={languagePreference} key={languagePreference}>
+							{t(
+								`Resources:ContentLanguageSelectionNames.${languagePreference}`,
 							)}
 						</option>
 					))}
@@ -286,6 +349,22 @@ export const ActivityEntryTargetTypeDropdownList = React.memo(
 				{Object.values(activityEntryTargetTypes).map((entryType) => (
 					<option value={entryType} key={entryType}>
 						{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
+					</option>
+				))}
+			</select>
+		);
+	},
+);
+
+export const EmailOptionsDropdownList = React.memo(
+	(props: DropdownListProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<select {...props}>
+				{Object.values(UserEmailOptions).map((userEmailOption) => (
+					<option value={userEmailOption} key={userEmailOption}>
+						{t(`Resources:UserEmailOptionsNames.${userEmailOption}`)}
 					</option>
 				))}
 			</select>

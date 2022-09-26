@@ -237,7 +237,7 @@ export const GlobalSearchBox = observer(
 								>
 									{t('ViewRes:TopBar.MySongs')}
 								</Dropdown.Item>
-								<Dropdown.Item href={'/User/MySettings'}>
+								<Dropdown.Item as={Link} to="/User/MySettings">
 									{t('ViewRes.User:Details.MySettings')}
 								</Dropdown.Item>
 								{loginManager.canManageEntryReports && (

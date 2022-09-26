@@ -80,8 +80,8 @@ const UserDetailsLayout = observer(
 						{ownProfile && (
 							<>
 								<JQueryUIButton
-									as="a"
-									href="/User/MySettings"
+									as={Link}
+									to="/User/MySettings"
 									icons={{ primary: 'ui-icon-wrench' }}
 								>
 									{t('ViewRes.User:Details.MySettings')}
@@ -228,7 +228,7 @@ const UserDetailsLayout = observer(
 							i18nKey="ViewRes.User:Details.KnownLanguagesMessage"
 							components={{
 								// eslint-disable-next-line jsx-a11y/anchor-has-content
-								a: <a href="/User/MySettings#profile" />,
+								a: <Link to="/User/MySettings#profile" />,
 							}}
 						/>
 					</Alert>

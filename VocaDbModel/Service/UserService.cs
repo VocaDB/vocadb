@@ -185,11 +185,6 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session => new ServerOnlyUserContract(session.Load<User>(id), getPublicCollection));
 		}
 
-		public ServerOnlyUserForMySettingsContract GetUserForMySettings(int id)
-		{
-			return HandleQuery(session => new ServerOnlyUserForMySettingsContract(session.Load<User>(id)));
-		}
-
 		public ServerOnlyUserWithPermissionsContract GetUserWithPermissions(int id)
 		{
 			return HandleQuery(session => new ServerOnlyUserWithPermissionsContract(session.Load<User>(id), LanguagePreference));

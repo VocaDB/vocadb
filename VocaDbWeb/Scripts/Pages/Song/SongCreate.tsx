@@ -88,7 +88,7 @@ const SongCreateLayout = observer(
 									: t('ViewRes.Song:Create.UnableToCreateSong'),
 							);
 
-							throw e;
+							throw error;
 						}
 					}}
 				>

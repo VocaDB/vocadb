@@ -207,7 +207,7 @@ const TagEditLayout = observer(
 									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
-							throw e;
+							throw error;
 						}
 					}}
 				>

@@ -49,6 +49,7 @@ namespace VocaDb.Web.Models.Shared
 		public string? BlogUrl { get; init; }
 		public string? PatreonLink { get; init; }
 		public string? SitewideAnnouncement { get; init; }
+		public string[] Stylesheets { get; init; }
 
 		public string AmazonComAffiliateId { get; init; }
 		public string AmazonJpAffiliateId { get; init; }
@@ -92,6 +93,7 @@ namespace VocaDb.Web.Models.Shared
 			BlogUrl = model.Config.SiteSettings.BlogUrl.EmptyToNull();
 			PatreonLink = model.Config.SiteSettings.PatreonLink.EmptyToNull();
 			SitewideAnnouncement = model.Config.SiteSettings.SitewideAnnouncement.EmptyToNull();
+			Stylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
 			AmazonComAffiliateId = model.Config.Affiliates.AmazonComAffiliateId;
 			AmazonJpAffiliateId = model.Config.Affiliates.amazonJpAffiliateId;

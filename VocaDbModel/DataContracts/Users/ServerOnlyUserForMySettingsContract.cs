@@ -5,6 +5,7 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.DataContracts.Users
 {
+	[Obsolete]
 	public class ServerOnlyUserForMySettingsContract : ServerOnlyUserContract
 	{
 		public ServerOnlyUserForMySettingsContract()

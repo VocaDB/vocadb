@@ -1000,7 +1000,7 @@ const AlbumEditLayout = observer(
 									: 'Unable to save properties.' /* TODO: localize */,
 							);
 
-							throw e;
+							throw error;
 						}
 					}}
 				>

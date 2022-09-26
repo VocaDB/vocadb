@@ -1,6 +1,9 @@
 #nullable disable
 
 using AspNetCore.CacheOutput;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +27,16 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
+using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -55,6 +61,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly UserService _service;
 		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly LoginManager _loginManager;
 
 		public UserApiController(
 			UserQueries queries,
@@ -62,7 +69,8 @@ namespace VocaDb.Web.Controllers.Api
 			UserService service,
 			IUserPermissionContext permissionContext,
 			IAggregatedEntryImageUrlFactory thumbPersister,
-			IUserIconFactory userIconFactory
+			IUserIconFactory userIconFactory,
+			LoginManager loginManager
 		)
 		{
 			_queries = queries;
@@ -71,6 +79,7 @@ namespace VocaDb.Web.Controllers.Api
 			_permissionContext = permissionContext;
 			_thumbPersister = thumbPersister;
 			_userIconFactory = userIconFactory;
+			_loginManager = loginManager;
 		}
 
 		[Authorize]
@@ -884,6 +893,87 @@ namespace VocaDb.Web.Controllers.Api
 		public UserDetailsForApiContract? GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
 		{
 			return _queries.GetUserDetailsForApi(name);
+		}
+
+		[HttpGet("current/for-my-settings")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ServerOnlyUserForMySettingsForApiContract GetUserForMySettings()
+		{
+			return _queries.GetUserForMySettings();
+		}
+
+		[HttpPost("current/my-settings")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<string>> UpdateMySettings(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] ServerOnlyUpdateUserSettingsForApiContract contract,
+			IFormFile? pictureUpload = null
+		)
+		{
+			var user = _permissionContext.LoggedUser;
+
+			if (user is null || user.Id != contract.Id)
+				return Forbid();
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			try
+			{
+				var pictureData = ControllerBase.ParsePicture(this, pictureUpload, "pictureUpload", ImagePurpose.Main);
+
+				var newUser = await _queries.UpdateUserSettings(contract, pictureData);
+				_loginManager.SetLoggedUser(newUser);
+				_permissionContext.LanguagePreferenceSetting.Value = contract.DefaultLanguageSelection;
+
+				// Updating username currently requires signing in again
+				if (newUser.Name != user.Name)
+				{
+					await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+				}
+
+				return newUser.Name;
+			}
+			catch (InvalidPasswordException x)
+			{
+				ModelState.AddModelError("OldPass", x.Message);
+				return ValidationProblem(ModelState);
+			}
+			catch (UserEmailAlreadyExistsException)
+			{
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.EmailTaken);
+				return ValidationProblem(ModelState);
+			}
+			catch (InvalidEmailFormatException)
+			{
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
+				return ValidationProblem(ModelState);
+			}
+			catch (InvalidUserNameException)
+			{
+				ModelState.AddModelError("Username", "Username is invalid. Username may contain alphanumeric characters and underscores.");
+				return ValidationProblem(ModelState);
+			}
+			catch (UserNameAlreadyExistsException)
+			{
+				ModelState.AddModelError("Username", "Username is already in use.");
+				return ValidationProblem(ModelState);
+			}
+			catch (UserNameTooSoonException)
+			{
+				ModelState.AddModelError("Username", "Username may only be changed once per year. If necessary, contact a staff member.");
+				return ValidationProblem(ModelState);
+			}
+			catch (ValidationException x)
+			{
+				foreach (var error in x.Errors)
+					ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				return ValidationProblem(ModelState);
+			}
 		}
 #nullable disable
 	}

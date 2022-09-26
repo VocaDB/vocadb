@@ -93,7 +93,7 @@ const ArtistCreateLayout = observer(
 									: t('ViewRes.Artist:Create.UnableToCreateArtist'),
 							);
 
-							throw e;
+							throw error;
 						}
 					}}
 				>

@@ -43,6 +43,7 @@
     <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
     <PackageReference Include="Discord.Net.Webhook" Version="2.3.1" />
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.9.2" />
     <PackageReference Include="HtmlSanitizer" Version="7.1.512" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />

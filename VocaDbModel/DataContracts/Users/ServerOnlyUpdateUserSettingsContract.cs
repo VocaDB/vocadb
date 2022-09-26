@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb, Name = "UpdateUserSettingsContract")]
 	public class ServerOnlyUpdateUserSettingsContract : ServerOnlyUserContract
 	{
