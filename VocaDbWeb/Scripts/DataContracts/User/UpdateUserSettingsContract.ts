@@ -17,6 +17,7 @@ export interface UpdateUserSettingsContract {
 	location: string;
 	name: string;
 	newPass: string;
+	newPassAgain: string;
 	oldPass: string;
 	preferredVideoService: string /* TODO: enum */;
 	publicAlbumCollection: boolean;

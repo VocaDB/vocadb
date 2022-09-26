@@ -124,6 +124,7 @@ export class MySettingsStore {
 					location: this.location,
 					name: this.username,
 					newPass: this.newPass,
+					newPassAgain: this.newPassAgain,
 					oldPass: this.oldPass,
 					preferredVideoService: this.preferredVideoService,
 					publicAlbumCollection: this.publicAlbumCollection,
