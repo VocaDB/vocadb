@@ -1,6 +1,5 @@
 using System.Runtime.Caching;
 using System.Security.Claims;
-using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -284,9 +283,6 @@ namespace VocaDb.Web
 			app.UseVocaDbPrincipal();
 
 			app.UseResponseCaching();
-
-			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
-			app.UseCacheOutput();
 
 			// Code from: https://stackoverflow.com/questions/54271639/how-can-i-redirect-a-user-when-a-specific-exception-is-cought-with-asp-net-core/54275293#54275293
 			app.Use(async (context, next) =>
