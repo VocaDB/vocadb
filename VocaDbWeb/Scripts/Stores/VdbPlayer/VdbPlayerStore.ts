@@ -68,6 +68,21 @@ export class VdbPlayerStore
 		);
 	}
 
+	@computed.struct public get localStorageState(): VdbPlayerLocalStorageState {
+		return {
+			bottomBarEnabled: this.bottomBarEnabled,
+		};
+	}
+	public set localStorageState(value: VdbPlayerLocalStorageState) {
+		this.bottomBarEnabled = value.bottomBarEnabled ?? true;
+	}
+
+	public validateLocalStorageState = (
+		localStorageState: any,
+	): localStorageState is VdbPlayerLocalStorageState => {
+		return validate(localStorageState);
+	};
+
 	@computed public get canAutoplay(): boolean {
 		const currentItem = this.playQueue.currentItem;
 		if (!currentItem) return false;
@@ -114,20 +129,5 @@ export class VdbPlayerStore
 
 	@action public setPercent = (value: number): void => {
 		this.percent = value;
-	};
-
-	@computed.struct public get localStorageState(): VdbPlayerLocalStorageState {
-		return {
-			bottomBarEnabled: this.bottomBarEnabled,
-		};
-	}
-	public set localStorageState(value: VdbPlayerLocalStorageState) {
-		this.bottomBarEnabled = value.bottomBarEnabled ?? true;
-	}
-
-	public validateLocalStorageState = (
-		localStorageState: any,
-	): localStorageState is VdbPlayerLocalStorageState => {
-		return validate(localStorageState);
 	};
 }

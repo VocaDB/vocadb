@@ -58,15 +58,9 @@ const PlayerCenterControls = observer(
 			<ButtonGroup>
 				<Button
 					variant="inverse"
-					title={
-						`Coming soon!` /* TODO: Remove. */ /* TODO: `Shuffle: ${vdbPlayer.shuffle ? 'On' : 'Off'}${
-							vdbPlayer.canAutoplay
-								? ''
-								: ' (Unavailable for this video service)'
-						}`*/ /* TODO: localize */
-					}
+					title={`Coming soon!` /* TODO: Remove. */}
 					onClick={vdbPlayer.toggleShuffle}
-					disabled={true /* TODO: !vdbPlayer.canAutoplay */}
+					disabled={true /* TODO: Remove. */}
 					className={classNames('hidden-phone', vdbPlayer.shuffle && 'active')}
 				>
 					<i className="icon-random icon-white" />
@@ -112,15 +106,8 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title={
-						`Repeat: ${vdbPlayer.repeat}${
-							vdbPlayer.canAutoplay
-								? ''
-								: ' (Unavailable for this video service)'
-						}` /* TODO: localize */
-					}
+					title={`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
 					onClick={vdbPlayer.toggleRepeat}
-					disabled={!vdbPlayer.canAutoplay}
 					className="hidden-phone"
 				>
 					<i
@@ -294,7 +281,7 @@ const PlayerRightControls = observer(
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={vdbPlayer.toggleShuffle}
-							disabled={true /* TODO: !vdbPlayer.canAutoplay */}
+							disabled={true /* TODO: Remove. */}
 							className="visible-phone"
 							title="Coming soon!" /* TODO: Remove. */
 						>
@@ -306,7 +293,6 @@ const PlayerRightControls = observer(
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={vdbPlayer.toggleRepeat}
-							disabled={!vdbPlayer.canAutoplay}
 							className="visible-phone"
 						>
 							{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}

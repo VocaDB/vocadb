@@ -129,6 +129,33 @@ export class PlayQueueStore
 		makeObservable(this);
 	}
 
+	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
+		return {
+			items: this.items.map((item) => item.toContract()),
+			currentIndex: this.currentIndex,
+			repositoryType: this.autoplayContext?.repositoryType,
+			queryParams: this.autoplayContext?.queryParams,
+			totalCount: this.paging.totalItems,
+			page: this.paging.page,
+		};
+	}
+	public set localStorageState(value: PlayQueueLocalStorageState) {
+		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
+		this.currentIndex = value.currentIndex;
+		this.autoplayContext =
+			value.repositoryType && value.queryParams
+				? new AutoplayContext(value.repositoryType, value.queryParams)
+				: undefined;
+		this.paging.totalItems = value.totalCount ?? 0;
+		this.paging.page = value.page ?? 1;
+	}
+
+	public validateLocalStorageState = (
+		localStorageState: any,
+	): localStorageState is PlayQueueLocalStorageState => {
+		return validate(localStorageState);
+	};
+
 	@computed public get isEmpty(): boolean {
 		return this.items.length === 0;
 	}
@@ -601,32 +628,5 @@ export class PlayQueueStore
 		const newItem = new PlayQueueItem(entry, pv.id, currentTime);
 		this.items[currentIndex] = newItem;
 		this.currentId = newItem.id;
-	};
-
-	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
-		return {
-			items: this.items.map((item) => item.toContract()),
-			currentIndex: this.currentIndex,
-			repositoryType: this.autoplayContext?.repositoryType,
-			queryParams: this.autoplayContext?.queryParams,
-			totalCount: this.paging.totalItems,
-			page: this.paging.page,
-		};
-	}
-	public set localStorageState(value: PlayQueueLocalStorageState) {
-		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
-		this.currentIndex = value.currentIndex;
-		this.autoplayContext =
-			value.repositoryType && value.queryParams
-				? new AutoplayContext(value.repositoryType, value.queryParams)
-				: undefined;
-		this.paging.totalItems = value.totalCount ?? 0;
-		this.paging.page = value.page ?? 1;
-	}
-
-	public validateLocalStorageState = (
-		localStorageState: any,
-	): localStorageState is PlayQueueLocalStorageState => {
-		return validate(localStorageState);
 	};
 }
