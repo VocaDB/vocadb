@@ -23,7 +23,11 @@ try
 	// Code from: https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-6#3-update-programcs.
 	builder.Logging.ClearProviders();
 	builder.Logging.SetMinimumLevel(LogLevel.Trace);
-	builder.Host.UseNLog();
+	builder.Host.UseNLog(new NLogAspNetCoreOptions
+	{
+		// See: https://nlog-project.org/2021/08/25/nlog-5-0-preview1-ready.html#nlogextensionslogging-without-any-filter.
+		RemoveLoggerFactoryFilter = false,
+	});
 
 	var app = builder.Build();
 
