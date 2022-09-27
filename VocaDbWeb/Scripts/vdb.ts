@@ -20,7 +20,6 @@ import '@/KnockoutExtensions/ConfirmClick';
 import '@/KnockoutExtensions/Dialog';
 import '@/KnockoutExtensions/jqButton';
 import '@/KnockoutExtensions/jqButtonset';
-import '@/KnockoutExtensions/Markdown';
 import '@/KnockoutExtensions/ToggleClick';
 import '@/KnockoutExtensions/Song/SongTypeLabel';
 import '@/KnockoutExtensions/Bootstrap/Tooltip';

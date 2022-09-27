@@ -21,15 +21,6 @@ export class HtmlHelper {
 		);
 	}
 
-	public static formatMarkdown(
-		value: string,
-		callback?: (err: any, content: string) => void,
-	): void {
-		if (!value) callback!(null, '');
-		// Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
-		marked(value, { gfm: true, breaks: true, sanitize: true }, callback);
-	}
-
 	public static htmlEncode(value: string): string {
 		//create a in-memory div, set it's inner text(which jQuery automatically encodes)
 		//then grab the encoded contents back out. The div never exists on the page.
