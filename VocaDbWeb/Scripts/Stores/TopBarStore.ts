@@ -1,4 +1,3 @@
-import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
@@ -41,25 +40,21 @@ export class TopBarStore {
 		return this.reportCount > 0;
 	}
 
-	public ensureMessagesLoaded = (): void => {
+	public ensureMessagesLoaded = async (): Promise<void> => {
 		if (this.isLoaded) return;
 
-		this.userRepo
-			.getMessageSummaries({
-				userId: this.loginManager.loggedUserId,
-				inbox: undefined,
-				paging: { maxEntries: 3, start: 0, getTotalCount: false },
-				unread: true,
-				anotherUserId: undefined,
-				iconSize: 40,
-			})
-			.then(
-				(messages: PartialFindResultContract<UserMessageSummaryContract>) => {
-					runInAction(() => {
-						this.unreadMessages = messages.items;
-						this.isLoaded = true;
-					});
-				},
-			);
+		const messages = await this.userRepo.getMessageSummaries({
+			userId: this.loginManager.loggedUserId,
+			inbox: undefined,
+			paging: { maxEntries: 3, start: 0, getTotalCount: false },
+			unread: true,
+			anotherUserId: undefined,
+			iconSize: 40,
+		});
+
+		runInAction(() => {
+			this.unreadMessages = messages.items;
+			this.isLoaded = true;
+		});
 	};
 }

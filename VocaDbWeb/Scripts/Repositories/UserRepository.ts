@@ -37,10 +37,9 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
 
 export enum UserInboxType {
-	Nothing,
-	Received,
-	Sent,
-	Notifications,
+	Received = 'Received',
+	Sent = 'Sent',
+	Notifications = 'Notifications',
 }
 
 export interface UserGetRatedSongsListQueryParams {
@@ -388,7 +387,7 @@ export class UserRepository implements ICommentRepository {
 		username,
 	}: {
 		username: string;
-	}): Promise<UserApiContract | null> => {
+	}): Promise<UserApiContract | undefined> => {
 		const result = await this.getList({
 			query: username,
 			sort: undefined,
@@ -399,7 +398,7 @@ export class UserRepository implements ICommentRepository {
 			nameMatchMode: 'Exact',
 			fields: undefined,
 		});
-		return result.items.length === 1 ? result.items[0] : null;
+		return result.items.length === 1 ? result.items[0] : undefined;
 	};
 
 	public getMessage = ({

@@ -88,8 +88,8 @@ const UserDetailsLayout = observer(
 								</JQueryUIButton>{' '}
 								&nbsp;{' '}
 								<JQueryUIButton
-									as="a"
-									href="/User/Messages"
+									as={Link}
+									to="/User/Messages"
 									icons={{ primary: 'ui-icon-mail-closed' }}
 								>
 									{t('ViewRes.User:Details.Messages')}
@@ -104,8 +104,8 @@ const UserDetailsLayout = observer(
 								<>
 									{' '}
 									<JQueryUIButton
-										as="a"
-										href={`/User/Messages?${qs.stringify({
+										as={Link}
+										to={`/User/Messages?${qs.stringify({
 											receiverName: user.name,
 										})}#composeTab`}
 										icons={{ primary: 'ui-icon-mail-closed' }}

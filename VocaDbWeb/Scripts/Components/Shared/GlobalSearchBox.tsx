@@ -18,6 +18,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -313,7 +314,11 @@ export const GlobalSearchBox = observer(
 									)}
 								{topBarStore.unreadMessages.map((unreadMessage) => (
 									<Dropdown.Item
-										href={`/User/Messages?messageId=${unreadMessage.id}`}
+										as={Link}
+										to={`/User/Messages?${qs.stringify({
+											messageId: unreadMessage.id,
+											inboxType: unreadMessage.inbox,
+										})}`}
 										key={unreadMessage.id}
 									>
 										<div className="media">
@@ -352,7 +357,7 @@ export const GlobalSearchBox = observer(
 										</Dropdown.ItemText>
 									)}
 								<Dropdown.Divider />
-								<Dropdown.Item href={'/User/Messages'}>
+								<Dropdown.Item as={Link} to="/User/Messages">
 									{t('ViewRes:TopBar.ViewAllMessages')}
 								</Dropdown.Item>
 							</Dropdown.Menu>
