@@ -225,30 +225,30 @@ const UserMessages = observer(
 		const receiverName = searchParams.get('receiverName');
 
 		React.useEffect(() => {
-			if (messageId) {
-				const isNotification = inbox === 'Notifications';
-				const userMessageFolderStore = isNotification
-					? userMessagesStore.notifications
-					: userMessagesStore.receivedMessages;
+			if (!messageId) return;
 
-				userMessageFolderStore.init(() => {
-					userMessagesStore.selectMessageById(
-						Number(messageId),
-						userMessageFolderStore,
-					);
-				});
-			}
+			const isNotification = inbox === 'Notifications';
+			const userMessageFolderStore = isNotification
+				? userMessagesStore.notifications
+				: userMessagesStore.receivedMessages;
+
+			userMessageFolderStore.init(() => {
+				userMessagesStore.selectMessageById(
+					Number(messageId),
+					userMessageFolderStore,
+				);
+			});
 		}, [messageId, inbox]);
 
 		React.useEffect(() => {
-			if (receiverName) {
-				userMessagesStore.selectTab('composeTab');
-				userRepo.getOneByName({ username: receiverName }).then((result) =>
-					runInAction(() => {
-						userMessagesStore.newMessageStore.receiver.id = result?.id;
-					}),
-				);
-			}
+			if (!receiverName) return;
+
+			userMessagesStore.selectTab('composeTab');
+			userRepo.getOneByName({ username: receiverName }).then((result) =>
+				runInAction(() => {
+					userMessagesStore.newMessageStore.receiver.id = result?.id;
+				}),
+			);
 		}, [receiverName]);
 
 		return (
