@@ -172,7 +172,7 @@ const TagEditLayout = observer(
 				)}
 
 				<EntryValidationMessage
-					draft={contract.status === EntryStatus[EntryStatus.Draft]}
+					draft={contract.status === EntryStatus.Draft}
 					validationMessages={([] as string[]).concat(
 						tagEditStore.validationError_needDescription
 							? t(
@@ -416,7 +416,7 @@ const TagEditLayout = observer(
 							value={tagEditStore.status}
 							onChange={(e): void =>
 								runInAction(() => {
-									tagEditStore.status = e.target.value;
+									tagEditStore.status = e.target.value as EntryStatus;
 								})
 							}
 						/>

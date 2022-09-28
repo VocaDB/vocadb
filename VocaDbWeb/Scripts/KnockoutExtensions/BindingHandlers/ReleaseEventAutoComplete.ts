@@ -36,6 +36,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 						webLinks: [],
 						category: EventCategory.Unspecified,
 						defaultNameLanguage: 'Undefined',
+						status: null!,
 					},
 				);
 			},

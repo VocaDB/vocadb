@@ -1,6 +1,7 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
@@ -33,14 +34,6 @@ export enum EntryType {
 	Album = 'Album',
 	ReleaseEvent = 'ReleaseEvent',
 	Song = 'Song',
-}
-
-// TODO: Remove.
-export enum EntryStatus {
-	Draft = 'Draft',
-	Finished = 'Finished',
-	Approved = 'Approved',
-	Locked = 'Locked',
 }
 
 export interface PlayQueueAlbumContract {

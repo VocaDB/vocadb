@@ -421,7 +421,7 @@ const BasicInfoTabContent = observer(
 						value={songEditStore.status}
 						onChange={(e): void =>
 							runInAction(() => {
-								songEditStore.status = e.target.value;
+								songEditStore.status = e.target.value as EntryStatus;
 							})
 						}
 					/>
@@ -797,7 +797,7 @@ const SongEditLayout = observer(
 				)}
 
 				<EntryValidationMessage
-					draft={contract.status === EntryStatus[EntryStatus.Draft]}
+					draft={contract.status === EntryStatus.Draft}
 					validationMessages={([] as string[]).concat(
 						songEditStore.validationError_duplicateArtist
 							? t('VocaDb.Model.Resources:SongValidationErrors.DuplicateArtist')
@@ -841,7 +841,7 @@ const SongEditLayout = observer(
 
 						if (
 							songEditStore.hasValidationErrors &&
-							songEditStore.status !== EntryStatus[EntryStatus.Draft] &&
+							songEditStore.status !== EntryStatus.Draft &&
 							window.confirm(t('ViewRes:EntryEdit.SaveWarning')) === false
 						) {
 							return;

@@ -6,6 +6,7 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { SongType } from '@/Models/Songs/SongType';
 
 // Corresponds to the SongForEditForApiContract record class in C#.
@@ -31,7 +32,7 @@ export interface SongForEditContract {
 	pvs: PVContract[];
 	releaseEvent?: ReleaseEventContract;
 	songType: SongType;
-	status: string;
+	status: EntryStatus;
 	tags: number[];
 	updateNotes?: string;
 	webLinks: WebLinkContract[];

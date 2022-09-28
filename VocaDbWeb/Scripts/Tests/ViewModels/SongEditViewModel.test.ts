@@ -1,6 +1,7 @@
 import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
@@ -55,7 +56,7 @@ beforeEach(() => {
 		originalVersion: null!,
 		pvs: [],
 		songType: SongType.Original,
-		status: 'Draft',
+		status: EntryStatus.Draft,
 		tags: [],
 		webLinks: [webLinkData],
 	};

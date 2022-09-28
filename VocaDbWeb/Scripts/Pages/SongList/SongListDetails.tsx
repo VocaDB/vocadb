@@ -212,7 +212,7 @@ const SongListDetailsLayout = observer(
 				}
 			>
 				{songList.featuredCategory !== 'Nothing' &&
-					songList.status === EntryStatus[EntryStatus.Draft] &&
+					songList.status === EntryStatus.Draft &&
 					!songList.deleted && <DraftMessage section="" />}
 
 				{songList.deleted && <DeletedBanner />}

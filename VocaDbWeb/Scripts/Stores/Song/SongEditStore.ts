@@ -4,6 +4,7 @@ import { SongContract } from '@/DataContracts/Song/SongContract';
 import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { SongHelper } from '@/Helpers/SongHelper';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
@@ -81,7 +82,7 @@ export class SongEditStore {
 	public readonly pvs: PVListEditStore;
 	public readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
 	@observable public songType: SongType;
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	private readonly tags: number[];
 	@observable public updateNotes = '';

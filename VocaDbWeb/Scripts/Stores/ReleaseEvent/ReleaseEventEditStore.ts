@@ -2,6 +2,7 @@ import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForE
 import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
@@ -64,7 +65,7 @@ export class ReleaseEventEditStore {
 	@observable public seriesNumber: string;
 	@observable public seriesSuffix: string;
 	public readonly songList: BasicEntryLinkStore<SongListBaseContract>;
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	public readonly trashStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.delete({

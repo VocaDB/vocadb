@@ -3,6 +3,7 @@ import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
@@ -144,7 +145,7 @@ export class AlbumEditStore {
 	public readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
 	@observable public releaseMonth?: number;
 	@observable public releaseYear?: number;
-	@observable public status: string;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	// Buttons for the track properties dialog.
 	// Whether the track properties dialog should be visible.

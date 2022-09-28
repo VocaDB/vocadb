@@ -5,6 +5,7 @@ import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditCon
 import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -128,7 +129,7 @@ beforeEach(() => {
 		ratingScore: 0,
 		songType: SongType.Original,
 		createDate: null!,
-		status: 'Finished',
+		status: EntryStatus.Finished,
 	};
 	songRep.song = song;
 
@@ -183,7 +184,7 @@ beforeEach(() => {
 		pictures: [],
 		pvs: [],
 		songs: [songInAlbum, customTrack],
-		status: 'Draft',
+		status: EntryStatus.Draft,
 		webLinks: [webLinkData],
 	};
 });

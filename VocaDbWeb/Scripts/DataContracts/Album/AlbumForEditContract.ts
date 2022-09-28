@@ -8,6 +8,7 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 // Corresponds to the AlbumForEditForApiContract record class in C#.
 export interface AlbumForEditContract {
@@ -27,7 +28,7 @@ export interface AlbumForEditContract {
 	pictures: EntryPictureFileContract[];
 	pvs: PVContract[];
 	songs: SongInAlbumEditContract[];
-	status: string;
+	status: EntryStatus;
 	updateNotes?: string;
 	webLinks: WebLinkContract[];
 }

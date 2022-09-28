@@ -4,6 +4,7 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 
@@ -26,7 +27,7 @@ export interface ReleaseEventForEditContract {
 	seriesNumber: number;
 	seriesSuffix: string;
 	songList?: SongListBaseContract;
-	status: string /* TODO: enum */;
+	status: EntryStatus;
 	venue?: IEntryWithIdAndName;
 	venueName?: string;
 	webLinks: WebLinkContract[];

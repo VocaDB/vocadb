@@ -4,6 +4,7 @@ import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContr
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -76,7 +77,7 @@ export class ArtistEditStore {
 	@observable public newAssociatedArtistType = ArtistLinkType.CharacterDesigner;
 	public readonly pictures: EntryPictureFileListEditStore;
 	@observable public releaseDate?: Date;
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	@observable public updateNotes = '';
 	@observable public validationExpanded = false;

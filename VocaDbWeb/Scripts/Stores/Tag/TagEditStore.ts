@@ -1,5 +1,6 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { TagRepository } from '@/Repositories/TagRepository';
@@ -47,7 +48,7 @@ export class TagEditStore {
 	public readonly names: NamesEditStore;
 	@observable public parent: BasicEntryLinkStore<TagBaseContract>;
 	@observable public relatedTags: TagBaseContract[];
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	@observable public targets: EntryType;
 	public readonly trashStore = new DeleteEntryStore(

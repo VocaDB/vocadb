@@ -350,7 +350,7 @@ const VenueEditLayout = observer(
 							value={venueEditStore.status}
 							onChange={(e): void =>
 								runInAction(() => {
-									venueEditStore.status = e.target.value;
+									venueEditStore.status = e.target.value as EntryStatus;
 								})
 							}
 						/>
@@ -392,7 +392,7 @@ const defaultModel: VenueForEditContract = {
 	id: 0,
 	name: '',
 	names: [],
-	status: EntryStatus[EntryStatus.Draft],
+	status: EntryStatus.Draft,
 	webLinks: [],
 };
 

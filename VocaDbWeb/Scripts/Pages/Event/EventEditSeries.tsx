@@ -371,7 +371,8 @@ const EventEditSeriesLayout = observer(
 							value={releaseEventSeriesEditStore.status}
 							onChange={(e): void =>
 								runInAction(() => {
-									releaseEventSeriesEditStore.status = e.target.value;
+									releaseEventSeriesEditStore.status = e.target
+										.value as EntryStatus;
 								})
 							}
 						/>
@@ -412,7 +413,7 @@ const defaultModel: ReleaseEventSeriesForEditContract = {
 	id: 0,
 	name: '',
 	names: [],
-	status: EntryStatus[EntryStatus.Draft],
+	status: EntryStatus.Draft,
 	webLinks: [],
 };
 

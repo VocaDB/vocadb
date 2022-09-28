@@ -417,7 +417,7 @@ const BasicInfoTabContent = observer(
 						value={releaseEventEditStore.status}
 						onChange={(e): void =>
 							runInAction(() => {
-								releaseEventEditStore.status = e.target.value;
+								releaseEventEditStore.status = e.target.value as EntryStatus;
 							})
 						}
 					/>
@@ -830,7 +830,7 @@ const defaultModel: ReleaseEventForEditContract = {
 	pvs: [],
 	seriesNumber: 0,
 	seriesSuffix: '',
-	status: EntryStatus[EntryStatus.Draft] /* TODO: enum */,
+	status: EntryStatus.Draft,
 	venueName: '',
 	webLinks: [],
 };

@@ -7,6 +7,7 @@ import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
 
 // Matches ReleaseEventForApiContract
@@ -25,7 +26,7 @@ export interface ReleaseEventContract {
 	pvs?: PVContract[];
 	series?: EventSeriesContract;
 	songList?: SongListBaseContract;
-	status?: string;
+	status: EntryStatus;
 	tags?: TagUsageForApiContract[];
 	urlSlug?: string;
 	venue?: VenueForApiContract;

@@ -7,7 +7,6 @@ import {
 	SongRepository,
 } from '@/Repositories/SongRepository';
 import {
-	EntryStatus,
 	EntryType,
 	PlayQueueRepository,
 	PlayQueueSongContract,
@@ -40,7 +39,7 @@ export class PlayQueueRepositoryForSongsAdapter
 			entryType: EntryType.Song as const /* TODO: enum */,
 			id: song.id,
 			name: song.name,
-			status: song.status as EntryStatus /* TODO: enum */,
+			status: song.status,
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
 			pvs: song.pvs ?? [],

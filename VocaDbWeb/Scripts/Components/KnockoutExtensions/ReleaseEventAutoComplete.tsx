@@ -37,6 +37,7 @@ export const ReleaseEventAutoComplete = ({
 					webLinks: [],
 					category: EventCategory.Unspecified,
 					defaultNameLanguage: 'Undefined',
+					status: null!,
 				},
 			);
 		},

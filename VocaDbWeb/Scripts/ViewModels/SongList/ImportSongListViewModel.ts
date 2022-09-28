@@ -2,6 +2,7 @@ import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditCon
 import { ImportedSongInListContract } from '@/DataContracts/SongList/ImportedSongInListContract';
 import { ImportedSongListContract } from '@/DataContracts/SongList/ImportedSongListContract';
 import { PartialImportedSongs } from '@/DataContracts/SongList/PartialImportedSongs';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -86,7 +87,7 @@ export class ImportSongListViewModel {
 			name: this.name(),
 			description: this.description(),
 			featuredCategory: SongListFeaturedCategory.Nothing,
-			status: 'Finished',
+			status: EntryStatus.Finished,
 			songLinks: songs,
 		};
 

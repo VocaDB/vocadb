@@ -8,7 +8,6 @@ import {
 } from '@/Repositories/SongListRepository';
 import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import {
-	EntryStatus,
 	EntryType,
 	PlayQueueSongContract,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -44,7 +43,7 @@ export class PlayQueueRepositoryForSongListAdapter
 				entryType: EntryType.Song as const /* TODO: enum */,
 				id: song.id,
 				name: song.name,
-				status: song.status as EntryStatus /* TODO: enum */,
+				status: song.status,
 				additionalNames: song.additionalNames,
 				urlThumb: song.mainPicture?.urlThumb ?? '',
 				pvs: song.pvs ?? [],

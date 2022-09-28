@@ -8,6 +8,7 @@ import { KnockoutHelper } from '@/Helpers/KnockoutHelper';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
@@ -60,7 +61,7 @@ export class SongEditViewModel {
 	public showLyricsNote: Computed<boolean>;
 	public songType: Computed<SongType>;
 	public songTypeStr: Observable<SongType>;
-	public status: Observable<string>;
+	public status: Observable<EntryStatus>;
 	public submittedJson = ko.observable('');
 	public submitting = ko.observable(false);
 	public suggestedPublishDate: Computed<PotentialDate>;

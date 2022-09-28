@@ -14,6 +14,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 interface SharedAlbumStatsContract {
 	latestReview?: AlbumReviewContract;
@@ -53,7 +54,7 @@ export interface AlbumDetailsContract {
 	ratingCount: number;
 	songs: SongInAlbumContract[];
 	stats: SharedAlbumStatsContract;
-	status: string /* TODO: enum */;
+	status: EntryStatus;
 	tags: TagUsageForApiContract[];
 	totalLengthSeconds: number;
 	version: number;

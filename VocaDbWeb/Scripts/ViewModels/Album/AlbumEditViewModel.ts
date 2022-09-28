@@ -6,6 +6,7 @@ import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { SongAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { SongType } from '@/Models/Songs/SongType';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
@@ -196,7 +197,7 @@ export class AlbumEditViewModel {
 	// Copies modified state from track properties view model to the single track being edited.
 	public saveTrackProperties: () => void;
 
-	public status: Observable<string>;
+	public status: Observable<EntryStatus>;
 
 	public submit = (): boolean => {
 		if (

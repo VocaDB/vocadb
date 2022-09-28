@@ -33,7 +33,7 @@ export class VenueEditStore {
 	@observable public longitude?: number;
 	public readonly name: string;
 	public readonly names: NamesEditStore;
-	@observable public status = EntryStatus[EntryStatus.Draft];
+	@observable public status = EntryStatus.Draft;
 	@observable public submitting = false;
 	public readonly trashStore = new DeleteEntryStore((notes) =>
 		this.venueRepo.delete({

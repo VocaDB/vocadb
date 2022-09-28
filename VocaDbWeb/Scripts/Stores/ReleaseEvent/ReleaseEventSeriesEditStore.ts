@@ -1,4 +1,5 @@
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
@@ -21,7 +22,7 @@ export class ReleaseEventSeriesEditStore {
 	@observable public duplicateName?: string;
 	@observable public errors?: Record<string, string[]>;
 	public readonly names: NamesEditStore;
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	public readonly trashStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.deleteSeries({

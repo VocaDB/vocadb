@@ -86,7 +86,7 @@ export class SongDetailsForApi {
 		this.commentCount = contract.commentCount;
 		this.createDate = contract.createDate;
 		this.deleted = contract.deleted;
-		this.draft = contract.song.status === EntryStatus[EntryStatus.Draft];
+		this.draft = contract.song.status === EntryStatus.Draft;
 		this.favoritedTimes = contract.song.favoritedTimes!;
 		this.hits = contract.hits;
 		this.id = contract.song.id;

@@ -1,6 +1,7 @@
 import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 // Corresponds to the VenueForEditForApiContract record class in C#.
 export interface VenueForEditContract {
@@ -13,6 +14,6 @@ export interface VenueForEditContract {
 	id: number;
 	name: string;
 	names: LocalizedStringWithIdContract[];
-	status: string /* TODO: enum */;
+	status: EntryStatus;
 	webLinks: WebLinkContract[];
 }

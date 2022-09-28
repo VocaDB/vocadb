@@ -5,6 +5,7 @@ import { TranslatedEnumField } from '@/DataContracts/TranslatedEnumField';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistAutoCompleteParams } from '@/KnockoutExtensions/AutoCompleteParams';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -123,7 +124,7 @@ export class ArtistEditViewModel {
 		this.groups.remove(group);
 	};
 
-	public status: Observable<string>;
+	public status: Observable<EntryStatus>;
 
 	public submit = (): boolean => {
 		if (

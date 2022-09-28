@@ -126,7 +126,7 @@ export class AlbumDetailsForApi {
 		this.description = contract.description;
 		this.discType = contract.discType;
 		this.discTypeTag = contract.discTypeTag;
-		this.draft = contract.status === EntryStatus[EntryStatus.Draft];
+		this.draft = contract.status === EntryStatus.Draft;
 		this.hits = contract.hits;
 		this.id = contract.id;
 		this.latestComments = contract.latestComments;

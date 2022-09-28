@@ -5,6 +5,7 @@ import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/E
 import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 // Corresponds to the ArtistForEditForApiContract record class in C#.
 export interface ArtistForEditContract {
@@ -23,7 +24,7 @@ export interface ArtistForEditContract {
 	pictureMime?: string;
 	pictures: EntryPictureFileContract[];
 	releaseDate?: string;
-	status: string;
+	status: EntryStatus;
 	updateNotes: string;
 	voiceProvider?: ArtistContract;
 	webLinks: WebLinkContract[];

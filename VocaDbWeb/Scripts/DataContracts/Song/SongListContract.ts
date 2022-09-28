@@ -5,30 +5,21 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 
 export interface SongListContract
 	extends SongListBaseContract,
 		EntryWithTagUsagesContract {
 	author: UserBaseContract;
-
 	deleted?: boolean;
-
 	description: string;
-
 	eventDate?: string;
-
 	events?: ReleaseEventContract[];
-
 	featuredCategory: SongListFeaturedCategory;
-
 	latestComments?: CommentContract[];
-
 	mainPicture?: EntryThumbContract;
-
-	status: string;
-
+	status: EntryStatus;
 	tags?: TagUsageForApiContract[];
-
 	version?: number;
 }

@@ -192,7 +192,7 @@ const PropertiesTabContent = observer(
 						value={songListEditStore.status}
 						onChange={(e): void =>
 							runInAction(() => {
-								songListEditStore.status = e.target.value;
+								songListEditStore.status = e.target.value as EntryStatus;
 							})
 						}
 					/>
@@ -474,7 +474,7 @@ const defaultModel: SongListForEditContract = {
 	featuredCategory: SongListFeaturedCategory.Nothing /* TODO: enum */,
 	id: 0,
 	songLinks: [],
-	status: EntryStatus[EntryStatus.Draft] /* TODO: enum */,
+	status: EntryStatus.Draft,
 };
 
 const SongListEdit = (): React.ReactElement => {

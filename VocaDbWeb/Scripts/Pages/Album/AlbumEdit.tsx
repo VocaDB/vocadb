@@ -429,7 +429,7 @@ const BasicInfoTabContent = observer(
 						value={albumEditStore.status}
 						onChange={(e): void =>
 							runInAction(() => {
-								albumEditStore.status = e.target.value;
+								albumEditStore.status = e.target.value as EntryStatus;
 							})
 						}
 					/>
@@ -930,7 +930,7 @@ const AlbumEditLayout = observer(
 				)}
 
 				<EntryValidationMessage
-					draft={contract.status === EntryStatus[EntryStatus.Draft]}
+					draft={contract.status === EntryStatus.Draft}
 					validationMessages={([] as string[]).concat(
 						albumEditStore.validationError_duplicateArtist
 							? t(

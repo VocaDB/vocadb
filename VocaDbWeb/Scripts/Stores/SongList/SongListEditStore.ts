@@ -1,6 +1,7 @@
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { SongInListEditContract } from '@/DataContracts/Song/SongInListEditContract';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -51,7 +52,7 @@ export class SongListEditStore {
 	@observable public featuredCategory: SongListFeaturedCategory;
 	@observable public name: string;
 	@observable public songLinks: SongInListEditStore[];
-	@observable public status: string /* TODO: enum */;
+	@observable public status: EntryStatus;
 	@observable public submitting = false;
 	public readonly trashStore = new DeleteEntryStore((notes) =>
 		this.songListRepo.delete({

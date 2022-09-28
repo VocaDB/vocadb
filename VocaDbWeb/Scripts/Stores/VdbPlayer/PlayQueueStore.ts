@@ -9,7 +9,6 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
-	EntryStatus,
 	EntryType,
 	PlayQueueAlbumContract,
 	PlayQueueEntryContract,
@@ -369,7 +368,7 @@ export class PlayQueueStore
 				entryType: EntryType.Album,
 				id: album.id,
 				name: album.name,
-				status: album.status as EntryStatus /* TODO: enum */,
+				status: album.status,
 				additionalNames: album.additionalNames,
 				urlThumb: album.mainPicture?.urlThumb ?? '',
 				pvs: album.pvs ?? [],
@@ -383,7 +382,7 @@ export class PlayQueueStore
 						entryType: EntryType.Song,
 						id: song.id,
 						name: song.name,
-						status: song.status as EntryStatus /* TODO: enum */,
+						status: song.status,
 						additionalNames: song.additionalNames,
 						urlThumb: song.mainPicture?.urlThumb ?? '',
 						pvs: song.pvs ?? [],
@@ -423,7 +422,7 @@ export class PlayQueueStore
 			entryType: EntryType.ReleaseEvent,
 			id: event.id,
 			name: event.name,
-			status: event.status as EntryStatus /* TODO: enum */,
+			status: event.status,
 			additionalNames: event.additionalNames ?? '',
 			urlThumb: event.mainPicture?.urlThumb ?? '',
 			pvs: event.pvs ?? [],
@@ -459,7 +458,7 @@ export class PlayQueueStore
 			entryType: EntryType.Song,
 			id: song.id,
 			name: song.name,
-			status: song.status as EntryStatus /* TODO: enum */,
+			status: song.status,
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
 			pvs: song.pvs ?? [],

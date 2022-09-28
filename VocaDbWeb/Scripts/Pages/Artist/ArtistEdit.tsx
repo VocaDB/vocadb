@@ -489,7 +489,7 @@ const BasicInfoTabContent = observer(
 						value={artistEditStore.status}
 						onChange={(e): void =>
 							runInAction(() => {
-								artistEditStore.status = e.target.value;
+								artistEditStore.status = e.target.value as EntryStatus;
 							})
 						}
 					/>
@@ -637,7 +637,7 @@ const ArtistEditLayout = observer(
 				)}
 
 				<EntryValidationMessage
-					draft={contract.status === EntryStatus[EntryStatus.Draft]}
+					draft={contract.status === EntryStatus.Draft}
 					validationMessages={([] as string[])
 						.concat(
 							artistEditStore.validationError_unnecessaryPName
