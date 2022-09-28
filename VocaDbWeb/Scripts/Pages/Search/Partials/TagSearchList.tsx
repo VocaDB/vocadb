@@ -2,7 +2,6 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagSearchStore, TagSortRule } from '@/Stores/Search/TagSearchStore';
 import classNames from 'classnames';
@@ -94,9 +93,7 @@ const TagSearchList = observer(
 									<Link to={EntryUrlMapper.details_tag(tag.id, tag.urlSlug)}>
 										{tag.name}
 									</Link>{' '}
-									<DraftIcon
-										status={EntryStatus[tag.status as keyof typeof EntryStatus]}
-									/>
+									<DraftIcon status={tag.status} />
 									<br />
 									<small className="extraInfo">{tag.additionalNames}</small>
 								</td>

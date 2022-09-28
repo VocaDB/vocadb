@@ -3,7 +3,6 @@ import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
@@ -164,11 +163,7 @@ const EventSearchList = observer(
 									>
 										{event.name}
 									</Link>{' '}
-									<DraftIcon
-										status={
-											EntryStatus[event.status as keyof typeof EntryStatus]
-										}
-									/>
+									<DraftIcon status={event.status} />
 									<br />
 									<small className="extraInfo">{categoryName(event)}</small>
 								</td>

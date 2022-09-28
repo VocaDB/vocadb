@@ -181,7 +181,12 @@ test('suggestedPublishDate with album date', () => {
 test('validationError_duplicateArtist', () => {
 	var target = createViewModel();
 	var artist = new ArtistForAlbumEditViewModel(null!, {
-		artist: { id: 1, name: '164', artistType: ArtistType.Unknown },
+		artist: {
+			id: 1,
+			name: '164',
+			artistType: ArtistType.Unknown,
+			status: undefined!,
+		},
 		roles: '',
 	});
 
@@ -201,6 +206,7 @@ test('validationError_duplicateArtist support', () => {
 		id: 39,
 		name: 'Clean Tears',
 		artistType: ArtistType.Unknown,
+		status: undefined!,
 	};
 	target.artistLinks.push(
 		new ArtistForAlbumEditViewModel(null!, {

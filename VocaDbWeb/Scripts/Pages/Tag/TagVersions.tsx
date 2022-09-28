@@ -5,7 +5,6 @@ import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntr
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -57,7 +56,7 @@ const TagVersionsLayout = ({
 		>
 			<CurrentVersionMessage
 				version={model.entry.version}
-				status={EntryStatus[model.entry.status as keyof typeof EntryStatus]}
+				status={model.entry.status}
 			/>
 
 			<ArchivedObjectVersions

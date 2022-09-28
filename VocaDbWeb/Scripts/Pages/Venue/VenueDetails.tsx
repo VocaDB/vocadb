@@ -10,7 +10,6 @@ import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntrySta
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import {
@@ -107,9 +106,7 @@ const VenueDetailsLayout = ({
 					>
 						{t('ViewRes:EntryDetails.ReportAnError')}
 					</JQueryUIButton>{' '}
-					<EntryStatusMessage
-						status={EntryStatus[venue.status as keyof typeof EntryStatus]}
-					/>
+					<EntryStatusMessage status={venue.status} />
 				</>
 			}
 		>

@@ -5,7 +5,6 @@ import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntr
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { VenueRepository } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -59,7 +58,7 @@ const VenueVersionsLayout = ({
 		>
 			<CurrentVersionMessage
 				version={model.entry.version}
-				status={EntryStatus[model.entry.status as keyof typeof EntryStatus]}
+				status={model.entry.status}
 			/>
 
 			<ArchivedObjectVersions

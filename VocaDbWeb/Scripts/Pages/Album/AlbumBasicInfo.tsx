@@ -33,7 +33,6 @@ import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { ContentFocus } from '@/Models/ContentFocus';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
@@ -473,14 +472,7 @@ const AlbumBasicInfo = observer(
 																` (${DateTimeHelper.formatFromSeconds(
 																	song.song.lengthSeconds,
 																)})`}{' '}
-															&nbsp;{' '}
-															<DraftIcon
-																status={
-																	EntryStatus[
-																		song.song.status as keyof typeof EntryStatus
-																	]
-																}
-															/>
+															&nbsp; <DraftIcon status={song.song.status} />
 															{song.song.songType !== SongType.Original &&
 																song.song.songType !== SongType.Unspecified && (
 																	<>

@@ -52,7 +52,7 @@ export class TagsEditStore {
 		} else {
 			this.selections.push(
 				new TagSelectionStore({
-					tag: { name: tagName, id: undefined! },
+					tag: { name: tagName, id: undefined!, status: undefined! },
 					selected: true,
 				}),
 			);

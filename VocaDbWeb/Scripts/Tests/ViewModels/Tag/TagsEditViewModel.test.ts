@@ -22,7 +22,9 @@ test('addTag - new tag', () => {
 });
 
 test('addTag - already exists', () => {
-	var selection = new TagSelectionViewModel({ tag: { name: 'Miku', id: 39 } });
+	var selection = new TagSelectionViewModel({
+		tag: { name: 'Miku', id: 39, status: undefined! },
+	});
 	viewModel.selections.push(selection);
 	expect(selection.selected(), 'selection.selected').toBe(false);
 	viewModel.newTagName('Miku');

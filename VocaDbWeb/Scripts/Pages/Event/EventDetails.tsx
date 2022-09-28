@@ -29,7 +29,6 @@ import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/Relea
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
@@ -228,9 +227,7 @@ const EventDetailsLayout = observer(
 						>
 							{t('ViewRes:EntryDetails.ReportAnError')}
 						</JQueryUIButton>{' '}
-						<EntryStatusMessage
-							status={EntryStatus[event.status as keyof typeof EntryStatus]}
-						/>
+						<EntryStatusMessage status={event.status} />
 					</>
 				}
 			>

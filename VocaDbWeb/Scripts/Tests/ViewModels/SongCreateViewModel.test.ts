@@ -14,6 +14,7 @@ var producer: ArtistContract = {
 	id: 1,
 	name: 'Tripshots',
 	additionalNames: '',
+	status: undefined!,
 };
 artistRepository.result = producer;
 repository.results = {

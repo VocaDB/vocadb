@@ -7,7 +7,6 @@ import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -123,14 +122,7 @@ const FollowedArtists = observer(
 										<ArtistTypeLabel
 											artistType={artistForUser.artist.artistType}
 										/>{' '}
-										<DraftIcon
-											status={
-												EntryStatus[
-													artistForUser.artist
-														.status as keyof typeof EntryStatus
-												]
-											}
-										/>
+										<DraftIcon status={artistForUser.artist.status} />
 										<br />
 										{artistForUser.artist.additionalNames && (
 											<span>

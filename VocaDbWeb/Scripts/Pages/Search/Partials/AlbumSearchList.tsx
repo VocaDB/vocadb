@@ -4,7 +4,6 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { AlbumThumbItem } from '@/Components/Shared/Partials/Shared/AlbumThumbItem';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
@@ -147,11 +146,7 @@ const AlbumSearchList = observer(
 										>
 											{_.truncate(album.name, { length: 150 })}
 										</Link>{' '}
-										<DraftIcon
-											status={
-												EntryStatus[album.status as keyof typeof EntryStatus]
-											}
-										/>
+										<DraftIcon status={album.status} />
 										<br />
 										<small className="extraInfo">{album.artistString}</small>
 										<br />

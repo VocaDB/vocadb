@@ -11,7 +11,6 @@ import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { LoginManager } from '@/Models/LoginManager';
@@ -249,9 +248,7 @@ const SongDetailsLayout = observer(
 								</JQueryUIButton>
 							</>
 						)}{' '}
-						<EntryStatusMessage
-							status={EntryStatus[model.status as keyof typeof EntryStatus]}
-						/>
+						<EntryStatusMessage status={model.status} />
 						{/* TODO: _AjaxLoader */}
 					</>
 				}

@@ -14,7 +14,6 @@ import {
 	AlbumReportType,
 	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
@@ -173,9 +172,7 @@ const AlbumDetailsLayout = observer(
 						>
 							{t('ViewRes:EntryDetails.ReportAnError')}
 						</JQueryUIButton>{' '}
-						<EntryStatusMessage
-							status={EntryStatus[model.status as keyof typeof EntryStatus]}
-						/>
+						<EntryStatusMessage status={model.status} />
 					</>
 				}
 			>

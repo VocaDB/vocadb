@@ -5,7 +5,6 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { EntryContract } from '@/DataContracts/EntryContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { AnythingSearchStore } from '@/Stores/Search/AnythingSearchStore';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
@@ -132,11 +131,7 @@ const AnythingSearchList = observer(
 											<SongTypeLabel songType={entry.songType} />
 										</>
 									)}{' '}
-									<DraftIcon
-										status={
-											EntryStatus[entry.status as keyof typeof EntryStatus]
-										}
-									/>
+									<DraftIcon status={entry.status} />
 									{entry.artistString && (
 										<>
 											<br />

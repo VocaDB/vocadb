@@ -1,3 +1,5 @@
+import { EntryStatus } from '@/Models/EntryStatus';
+
 // Corresponds to the TagCategoryForApiContract class in C#.
 export interface TagCategoryContract {
 	name: string;
@@ -5,6 +7,7 @@ export interface TagCategoryContract {
 		additionalNames?: string;
 		id: number;
 		name: string;
+		status: EntryStatus;
 		usageCount: number;
 	}[];
 }

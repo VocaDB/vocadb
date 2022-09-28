@@ -15,7 +15,6 @@ import {
 	ArtistReportType,
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
@@ -221,9 +220,7 @@ const ArtistDetailsLayout = observer(
 						>
 							{t('ViewRes:EntryDetails.ReportAnError')}
 						</JQueryUIButton>{' '}
-						<EntryStatusMessage
-							status={EntryStatus[artist.status as keyof typeof EntryStatus]}
-						/>
+						<EntryStatusMessage status={artist.status} />
 					</>
 				}
 			>

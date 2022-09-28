@@ -23,7 +23,6 @@ import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
@@ -430,9 +429,7 @@ const TagDetailsLayout = observer(
 						>
 							{t('ViewRes:EntryDetails.ReportAnError')}
 						</JQueryUIButton>{' '}
-						<EntryStatusMessage
-							status={EntryStatus[tag.status as keyof typeof EntryStatus]}
-						/>
+						<EntryStatusMessage status={tag.status} />
 					</>
 				}
 			>

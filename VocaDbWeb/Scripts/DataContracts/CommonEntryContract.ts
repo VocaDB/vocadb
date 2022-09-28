@@ -4,6 +4,6 @@ export interface CommonEntryContract {
 	createDate?: string;
 	id: number;
 	name: string;
-	status?: EntryStatus;
+	status: EntryStatus;
 	version?: number;
 }

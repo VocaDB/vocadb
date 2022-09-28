@@ -10,6 +10,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 interface TopStatContract<T> {
 	count: number;
@@ -72,7 +73,7 @@ export interface ArtistDetailsContract {
 	releaseDate?: Date;
 	sharedStats: SharedArtistStatsContract;
 	siteNotifications: boolean;
-	status: string;
+	status: EntryStatus;
 	tags: TagUsageForApiContract[];
 	topAlbums: AlbumForApiContract[];
 	topSongs: SongApiContract[];

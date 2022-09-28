@@ -105,7 +105,7 @@ export class AlbumDetailsForApi {
 	public readonly releaseDate?: OptionalDateTimeContract;
 	public readonly releaseEvent?: ReleaseEventContract;
 	public readonly reviewCount: number;
-	public readonly status: string /* TODO: enum */;
+	public readonly status: EntryStatus;
 	public readonly subject: ArtistForAlbumContract[];
 	public readonly tags: TagUsageForApiContract[];
 	public readonly totalLength: number;

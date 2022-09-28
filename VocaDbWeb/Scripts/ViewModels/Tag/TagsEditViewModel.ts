@@ -31,7 +31,7 @@ export class TagsEditViewModel {
 		} else {
 			this.selections.push(
 				new TagSelectionViewModel({
-					tag: { name: tagName, id: null! },
+					tag: { name: tagName, id: null!, status: null! },
 					selected: true,
 				}),
 			);

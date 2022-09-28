@@ -14,6 +14,7 @@ beforeEach(() => {
 		name: 'Tripshots',
 		additionalNames: '',
 		artistType: ArtistType.Producer,
+		status: undefined!,
 	};
 	data = {
 		artist: producer,

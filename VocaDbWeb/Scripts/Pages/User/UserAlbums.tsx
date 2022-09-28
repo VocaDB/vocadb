@@ -12,7 +12,6 @@ import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { MediaType } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { AlbumSearchListTiles } from '@/Pages/Search/Partials/AlbumSearchList';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
@@ -408,14 +407,7 @@ const AlbumCollection = observer(
 												{albumForUser.album.name}
 											</Link>
 											<br />
-											<DraftIcon
-												status={
-													EntryStatus[
-														albumForUser.album
-															.status as keyof typeof EntryStatus
-													]
-												}
-											/>{' '}
+											<DraftIcon status={albumForUser.album.status} />{' '}
 											<small className="extraInfo">
 												{albumForUser.album.artistString}
 											</small>

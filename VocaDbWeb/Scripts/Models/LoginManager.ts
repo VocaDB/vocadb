@@ -266,9 +266,7 @@ export class LoginManager {
 	/// <param name="entry">Entry to be checked. Cannot be null.</param>
 	/// <returns>True if the user can edit the entry, otherwise false.</returns>
 	public canEdit = (entry: IEntryWithStatus): boolean => {
-		return this.allowedEntryStatuses(entry).includes(
-			EntryStatus[entry.status as keyof typeof EntryStatus],
-		);
+		return this.allowedEntryStatuses(entry).includes(entry.status);
 	};
 
 	public canEditSongList = (songList: SongListContract): boolean => {

@@ -39,18 +39,21 @@ var producer: ArtistContract = {
 	name: 'Tripshots',
 	additionalNames: '',
 	artistType: ArtistType.Producer,
+	status: undefined!,
 };
 var vocalist: ArtistContract = {
 	id: 2,
 	name: 'Hatsune Miku',
 	additionalNames: '初音ミク',
 	artistType: ArtistType.Vocalist,
+	status: undefined!,
 };
 var label: ArtistContract = {
 	id: 3,
 	name: 'KarenT',
 	additionalNames: '',
 	artistType: ArtistType.Label,
+	status: undefined!,
 };
 
 var producerArtistLink = {
@@ -279,6 +282,7 @@ test('addArtist existing', () => {
 		name: 'Kagamine Rin',
 		additionalNames: '',
 		artistType: ArtistType.Vocaloid,
+		status: undefined!,
 	};
 	artistRep.result = newVocalist;
 

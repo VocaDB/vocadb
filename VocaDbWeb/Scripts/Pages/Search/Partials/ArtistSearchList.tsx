@@ -3,7 +3,6 @@ import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeL
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
@@ -95,11 +94,7 @@ const ArtistSearchList = observer(
 										{artist.name}
 									</Link>{' '}
 									<ArtistTypeLabel artistType={artist.artistType} />{' '}
-									<DraftIcon
-										status={
-											EntryStatus[artist.status as keyof typeof EntryStatus]
-										}
-									/>
+									<DraftIcon status={artist.status} />
 									<br />
 									<small className="extraInfo">{artist.additionalNames}</small>
 								</td>

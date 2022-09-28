@@ -66,7 +66,7 @@ export class SongDetailsForApi {
 	public readonly releaseEvent?: ReleaseEventContract;
 	public readonly songType: SongType;
 	public readonly songTypeTag: TagBaseContract;
-	public readonly status: string /* TODO: enum */;
+	public readonly status: EntryStatus;
 	public readonly subject: ArtistForSongContract[];
 	public readonly suggestions: SongApiContract[];
 	public readonly tags: TagUsageForApiContract[];

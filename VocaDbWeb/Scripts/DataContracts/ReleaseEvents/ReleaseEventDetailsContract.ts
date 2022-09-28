@@ -12,6 +12,7 @@ import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContra
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
 
 // Corresponds to the ReleaseEventDetailsForApiContract record class in C#.
@@ -36,7 +37,7 @@ export interface ReleaseEventDetailsContract {
 	songList?: SongListBaseContract;
 	songListSongs?: SongInListContract[];
 	songs: SongApiContract[];
-	status: string /* TODO: enum */;
+	status: EntryStatus;
 	tags: TagUsageForApiContract[];
 	usersAttending: UserApiContract[];
 	venue?: VenueForApiContract;

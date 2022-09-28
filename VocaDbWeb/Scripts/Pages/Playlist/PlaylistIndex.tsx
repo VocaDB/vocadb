@@ -7,7 +7,6 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -233,13 +232,7 @@ const PlaylistIndex = observer(
 													<img src={icon.url} title={icon.service} />
 												</React.Fragment>
 											))}{' '}
-										<DraftIcon
-											status={
-												EntryStatus[
-													item.entry.status as keyof typeof EntryStatus
-												]
-											}
-										/>
+										<DraftIcon status={item.entry.status} />
 										{(item.entry.entryType === 'Album' ||
 											item.entry.entryType === 'Song') && (
 											<>

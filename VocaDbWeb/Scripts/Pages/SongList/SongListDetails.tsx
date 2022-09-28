@@ -201,11 +201,7 @@ const SongListDetailsLayout = observer(
 						{songList.featuredCategory !== 'Nothing' && (
 							<>
 								{' '}
-								<EntryStatusMessage
-									status={
-										EntryStatus[songList.status as keyof typeof EntryStatus]
-									}
-								/>
+								<EntryStatusMessage status={songList.status} />
 							</>
 						)}
 					</>
@@ -516,13 +512,7 @@ const SongListDetailsLayout = observer(
 														<img src={icon.url} title={icon.service} />
 													</React.Fragment>
 												))}{' '}
-											<DraftIcon
-												status={
-													EntryStatus[
-														item.song.status as keyof typeof EntryStatus
-													]
-												}
-											/>
+											<DraftIcon status={item.song.status} />
 											<br />
 											<small className="extraInfo">
 												{item.song.artistString}

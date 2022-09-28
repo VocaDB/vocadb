@@ -11,7 +11,6 @@ import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
@@ -113,9 +112,7 @@ const EventSeriesDetailsLayout = ({
 							</JQueryUIButton>
 						</>
 					)}{' '}
-					<EntryStatusMessage
-						status={EntryStatus[series.status as keyof typeof EntryStatus]}
-					/>
+					<EntryStatusMessage status={series.status} />
 				</>
 			}
 		>

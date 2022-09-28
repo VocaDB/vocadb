@@ -5,7 +5,6 @@ import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntr
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -62,7 +61,7 @@ const EventVersionsLayout = ({
 		>
 			<CurrentVersionMessage
 				version={model.entry.version}
-				status={EntryStatus[model.entry.status as keyof typeof EntryStatus]}
+				status={model.entry.status}
 			/>
 
 			<ArchivedObjectVersions

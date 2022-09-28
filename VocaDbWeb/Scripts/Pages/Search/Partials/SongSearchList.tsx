@@ -7,7 +7,6 @@ import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
-import { EntryStatus } from '@/Models/EntryStatus';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -182,11 +181,7 @@ const SongSearchList = observer(
 													/>
 												</>
 											)}{' '}
-											<DraftIcon
-												status={
-													EntryStatus[song.status as keyof typeof EntryStatus]
-												}
-											/>
+											<DraftIcon status={song.status} />
 											{song.publishDate && (
 												<>
 													{' '}

@@ -9,6 +9,7 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 // Corresponds to the TagStatsForApiContract record class in C#.
 interface TagStatsContract {
@@ -46,7 +47,7 @@ export interface TagDetailsContract {
 	relatedTags: TagBaseContract[];
 	siblings: TagBaseContract[];
 	stats: TagStatsContract;
-	status: string;
+	status: EntryStatus;
 	targets: number;
 	translations: string;
 	webLinks: WebLinkContract[];
