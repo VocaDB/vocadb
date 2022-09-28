@@ -221,20 +221,22 @@ const UserMessages = observer(
 
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');
-		const inboxType = searchParams.get('inboxType');
+		const inbox = searchParams.get('inbox');
 
 		React.useEffect(() => {
 			if (messageId) {
-				const isNotification = inboxType === 'Notifications';
-				const inbox = isNotification
+				const isNotification = inbox === 'Notifications';
+				const userMessageFolderStore = isNotification
 					? userMessagesStore.notifications
 					: userMessagesStore.receivedMessages;
-
-				inbox.init(() => {
-					userMessagesStore.selectMessageById(Number(messageId), inbox);
+				userMessageFolderStore.init(() => {
+					userMessagesStore.selectMessageById(
+						Number(messageId),
+						userMessageFolderStore,
+					);
 				});
 			}
-		}, [messageId, inboxType]);
+		}, [messageId, inbox]);
 
 		return (
 			<Layout
