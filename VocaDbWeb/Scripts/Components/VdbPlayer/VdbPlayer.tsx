@@ -11,8 +11,7 @@ import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { RepeatMode } from '@/Stores/VdbPlayer/VdbPlayerStore';
+import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
@@ -59,9 +58,9 @@ const PlayerCenterControls = observer(
 				<Button
 					variant="inverse"
 					title={`Coming soon!` /* TODO: Remove. */}
-					onClick={vdbPlayer.toggleShuffle}
+					onClick={playQueue.toggleShuffle}
 					disabled={true /* TODO: Remove. */}
-					className={classNames('hidden-phone', vdbPlayer.shuffle && 'active')}
+					className={classNames('hidden-phone', playQueue.shuffle && 'active')}
 				>
 					<i className="icon-random icon-white" />
 				</Button>
@@ -106,12 +105,12 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title={`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
-					onClick={vdbPlayer.toggleRepeat}
+					title={`Repeat: ${playQueue.repeat}` /* TODO: localize */}
+					onClick={playQueue.toggleRepeat}
 					className="hidden-phone"
 				>
 					<i
-						className={classNames(repeatIcons[vdbPlayer.repeat], 'icon-white')}
+						className={classNames(repeatIcons[playQueue.repeat], 'icon-white')}
 					/>
 				</Button>
 			</ButtonGroup>
@@ -280,22 +279,22 @@ const PlayerRightControls = observer(
 							Skip forward 30 seconds{/* TODO: localize */}
 						</Dropdown.Item>
 						<Dropdown.Item
-							onClick={vdbPlayer.toggleShuffle}
+							onClick={playQueue.toggleShuffle}
 							disabled={true /* TODO: Remove. */}
 							className="visible-phone"
 							title="Coming soon!" /* TODO: Remove. */
 						>
 							{
 								`Shuffle: ${
-									vdbPlayer.shuffle ? 'On' : 'Off'
+									playQueue.shuffle ? 'On' : 'Off'
 								}` /* TODO: localize */
 							}
 						</Dropdown.Item>
 						<Dropdown.Item
-							onClick={vdbPlayer.toggleRepeat}
+							onClick={playQueue.toggleRepeat}
 							className="visible-phone"
 						>
-							{`Repeat: ${vdbPlayer.repeat}` /* TODO: localize */}
+							{`Repeat: ${playQueue.repeat}` /* TODO: localize */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.clear}
@@ -387,10 +386,10 @@ const EmbedPVWrapper = observer(
 
 		const handleEnded = React.useCallback(async () => {
 			VdbPlayerConsole.debug(
-				`Playback ended (repeat mode: ${vdbPlayer.repeat})`,
+				`Playback ended (repeat mode: ${playQueue.repeat})`,
 			);
 
-			switch (vdbPlayer.repeat) {
+			switch (playQueue.repeat) {
 				case RepeatMode.One:
 					await diva.setCurrentTime(0);
 					break;
@@ -398,7 +397,7 @@ const EmbedPVWrapper = observer(
 				case RepeatMode.Off:
 				case RepeatMode.All:
 					if (playQueue.isLastItem && !playQueue.hasMoreItems) {
-						switch (vdbPlayer.repeat) {
+						switch (playQueue.repeat) {
 							case RepeatMode.Off:
 								vdbPlayer.setPlaying(false);
 								break;

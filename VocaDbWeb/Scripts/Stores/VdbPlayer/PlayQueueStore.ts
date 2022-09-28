@@ -33,6 +33,12 @@ import {
 	runInAction,
 } from 'mobx';
 
+export enum RepeatMode {
+	Off = 'Off',
+	All = 'All',
+	One = 'One',
+}
+
 export interface PlayQueueLocalStorageState {
 	items?: PlayQueueItemContract[];
 	currentIndex?: number;
@@ -115,6 +121,8 @@ export class PlayQueueStore
 	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
 	@observable public items: PlayQueueItem[] = [];
 	@observable public currentId?: number;
+	@observable public repeat = RepeatMode.Off;
+	@observable public shuffle = false;
 
 	private autoplayContext?: AutoplayContext<any>;
 	private readonly paging = new ServerSidePagingStore(30);
@@ -628,5 +636,25 @@ export class PlayQueueStore
 		const newItem = new PlayQueueItem(entry, pv.id, currentTime);
 		this.items[currentIndex] = newItem;
 		this.currentId = newItem.id;
+	};
+
+	@action public toggleRepeat = (): void => {
+		switch (this.repeat) {
+			case RepeatMode.Off:
+				this.repeat = RepeatMode.All;
+				break;
+
+			case RepeatMode.All:
+				this.repeat = RepeatMode.One;
+				break;
+
+			case RepeatMode.One:
+				this.repeat = RepeatMode.Off;
+				break;
+		}
+	};
+
+	@action public toggleShuffle = (): void => {
+		this.shuffle = !this.shuffle;
 	};
 }

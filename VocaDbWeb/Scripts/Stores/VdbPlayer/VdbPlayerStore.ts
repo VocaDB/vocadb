@@ -9,12 +9,6 @@ import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
-export enum RepeatMode {
-	Off = 'Off',
-	All = 'All',
-	One = 'One',
-}
-
 interface Rectangle {
 	x: number;
 	y: number;
@@ -37,8 +31,6 @@ export class VdbPlayerStore
 	implements LocalStorageStateStore<VdbPlayerLocalStorageState> {
 	@observable public bottomBarEnabled = true;
 	@observable public playing = false;
-	@observable public repeat = RepeatMode.Off;
-	@observable public shuffle = false;
 	public readonly playQueue: PlayQueueStore;
 	@observable public playerBounds?: Rectangle;
 	@observable public percent = 0;
@@ -101,26 +93,6 @@ export class VdbPlayerStore
 
 	@action public setPlaying = (value: boolean): void => {
 		this.playing = value;
-	};
-
-	@action public toggleRepeat = (): void => {
-		switch (this.repeat) {
-			case RepeatMode.Off:
-				this.repeat = RepeatMode.All;
-				break;
-
-			case RepeatMode.All:
-				this.repeat = RepeatMode.One;
-				break;
-
-			case RepeatMode.One:
-				this.repeat = RepeatMode.Off;
-				break;
-		}
-	};
-
-	@action public toggleShuffle = (): void => {
-		this.shuffle = !this.shuffle;
 	};
 
 	@action public setPlayerBounds = (value?: Rectangle): void => {
