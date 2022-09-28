@@ -286,7 +286,7 @@ const UserMessages = observer(
 						title={
 							<>
 								{t('ViewRes.User:Messages.Received')}
-								{userMessagesStore.receivedMessages.unread &&
+								{!!userMessagesStore.receivedMessages.unread &&
 									userMessagesStore.receivedMessages.unread > 0 && (
 										<>
 											{' '}
@@ -325,7 +325,7 @@ const UserMessages = observer(
 						title={
 							<>
 								{t('ViewRes.User:Messages.Notifications')}
-								{userMessagesStore.notifications.unread &&
+								{!!userMessagesStore.notifications.unread &&
 									userMessagesStore.notifications.unread > 0 && (
 										<>
 											{' '}
