@@ -636,21 +636,8 @@ namespace VocaDb.Web.Controllers
 
 #nullable enable
 		[Authorize]
-		public ActionResult Messages(int? messageId, string receiverName)
+		public ActionResult Messages()
 		{
-			var user = PermissionContext.LoggedUser;
-			var inbox = UserInboxType.Received;
-
-			if (messageId.HasValue)
-			{
-				var isNotification = Data.IsNotification(messageId.Value, user);
-
-				if (isNotification)
-					inbox = UserInboxType.Notifications;
-			}
-
-			var model = new Messages(user, messageId, receiverName, inbox);
-
 			PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
 			return View("React/Index");
