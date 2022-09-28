@@ -37,12 +37,12 @@ export abstract class PagedItemsStore<TModel> {
 		return this.loadMore();
 	};
 
-	public init = (
+	public init = async (
 		callback?: (result: PartialFindResultContract<TModel>) => void,
-	): void => {
+	): Promise<void> => {
 		if (this.isInit) return;
 
-		this.loadMore().then(callback);
+		await this.loadMore().then(callback);
 		this.isInit = true;
 	};
 }

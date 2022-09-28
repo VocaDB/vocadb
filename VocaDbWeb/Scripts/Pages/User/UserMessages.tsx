@@ -232,7 +232,7 @@ const UserMessages = observer(
 				? userMessagesStore.notifications
 				: userMessagesStore.receivedMessages;
 
-			userMessageFolderStore.init(() => {
+			userMessageFolderStore.init().then(() => {
 				userMessagesStore.selectMessageById(
 					Number(messageId),
 					userMessageFolderStore,
