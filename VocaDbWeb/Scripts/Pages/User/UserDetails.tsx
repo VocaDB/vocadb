@@ -107,7 +107,7 @@ const UserDetailsLayout = observer(
 										as={Link}
 										to={`/User/Messages?${qs.stringify({
 											receiverName: user.name,
-										})}#composeTab`}
+										})}`}
 										icons={{ primary: 'ui-icon-mail-closed' }}
 									>
 										{t('ViewRes.User:Details.ComposeMessage')}

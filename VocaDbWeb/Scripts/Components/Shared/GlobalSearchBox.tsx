@@ -317,7 +317,7 @@ export const GlobalSearchBox = observer(
 										as={Link}
 										to={`/User/Messages?${qs.stringify({
 											messageId: unreadMessage.id,
-											inboxType: unreadMessage.inbox,
+											inbox: unreadMessage.inbox,
 										})}`}
 										key={unreadMessage.id}
 									>

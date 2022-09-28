@@ -221,20 +221,35 @@ const UserMessages = observer(
 
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');
-		const inboxType = searchParams.get('inboxType');
+		const inbox = searchParams.get('inbox');
+		const receiverName = searchParams.get('receiverName');
 
 		React.useEffect(() => {
-			if (messageId) {
-				const isNotification = inboxType === 'Notifications';
-				const inbox = isNotification
-					? userMessagesStore.notifications
-					: userMessagesStore.receivedMessages;
+			if (!messageId) return;
 
-				inbox.init(() => {
-					userMessagesStore.selectMessageById(Number(messageId), inbox);
-				});
-			}
-		}, [messageId, inboxType]);
+			const isNotification = inbox === 'Notifications';
+			const userMessageFolderStore = isNotification
+				? userMessagesStore.notifications
+				: userMessagesStore.receivedMessages;
+
+			userMessageFolderStore.init().then(() => {
+				userMessagesStore.selectMessageById(
+					Number(messageId),
+					userMessageFolderStore,
+				);
+			});
+		}, [messageId, inbox]);
+
+		React.useEffect(() => {
+			if (!receiverName) return;
+
+			userMessagesStore.selectTab('composeTab');
+			userRepo.getOneByName({ username: receiverName }).then((result) =>
+				runInAction(() => {
+					userMessagesStore.newMessageStore.receiver.id = result?.id;
+				}),
+			);
+		}, [receiverName]);
 
 		return (
 			<Layout
@@ -286,7 +301,7 @@ const UserMessages = observer(
 						title={
 							<>
 								{t('ViewRes.User:Messages.Received')}
-								{userMessagesStore.receivedMessages.unread &&
+								{!!userMessagesStore.receivedMessages.unread &&
 									userMessagesStore.receivedMessages.unread > 0 && (
 										<>
 											{' '}
@@ -325,7 +340,7 @@ const UserMessages = observer(
 						title={
 							<>
 								{t('ViewRes.User:Messages.Notifications')}
-								{userMessagesStore.notifications.unread &&
+								{!!userMessagesStore.notifications.unread &&
 									userMessagesStore.notifications.unread > 0 && (
 										<>
 											{' '}
