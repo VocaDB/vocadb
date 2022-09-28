@@ -124,7 +124,7 @@ export class PlayQueueStore
 	@observable public repeat = RepeatMode.Off;
 	@observable public shuffle = false;
 
-	private autoplayContext?: AutoplayContext<any>;
+	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
 	public constructor(
