@@ -20,9 +20,7 @@ export class LyricsForSongEditViewModel {
 		} else {
 			this.id = ko.observable(0);
 			this.cultureCode = ko.observable('');
-			this.language = ko.observable(
-				ContentLanguageSelection[ContentLanguageSelection.Unspecified],
-			);
+			this.language = ko.observable(ContentLanguageSelection.Unspecified);
 			this.source = ko.observable('');
 			this.translationType = ko.observable(
 				TranslationType[TranslationType.Translation],
@@ -57,7 +55,7 @@ export class LyricsForSongEditViewModel {
 
 	public isNew: boolean;
 
-	public language: Observable<string>;
+	public language: Observable<ContentLanguageSelection>;
 
 	public showLanguageSelection = (): boolean =>
 		this.translationType() !== TranslationType[TranslationType.Romanized];

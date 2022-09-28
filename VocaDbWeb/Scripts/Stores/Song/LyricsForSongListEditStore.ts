@@ -10,7 +10,7 @@ export class LyricsForSongEditStore {
 	@observable public cultureCode: string;
 	@observable public id: number;
 	public readonly isNew: boolean;
-	@observable public language: string /* TODO: enum */;
+	@observable public language: ContentLanguageSelection;
 	@observable public source: string;
 	@observable public translationType: string /* TODO: enum */;
 	@observable public url: string;
@@ -30,8 +30,7 @@ export class LyricsForSongEditStore {
 		} else {
 			this.id = 0;
 			this.cultureCode = '';
-			this.language =
-				ContentLanguageSelection[ContentLanguageSelection.Unspecified];
+			this.language = ContentLanguageSelection.Unspecified;
 			this.source = '';
 			this.translationType = TranslationType[TranslationType.Translation];
 			this.url = '';

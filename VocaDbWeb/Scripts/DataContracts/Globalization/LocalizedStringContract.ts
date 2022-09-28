@@ -1,4 +1,6 @@
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+
 export interface LocalizedStringContract {
-	language: string;
+	language: ContentLanguageSelection;
 	value: string;
 }

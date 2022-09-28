@@ -196,7 +196,8 @@ const VenueEditLayout = observer(
 							value={venueEditStore.defaultNameLanguage}
 							onChange={(e): void =>
 								runInAction(() => {
-									venueEditStore.defaultNameLanguage = e.target.value;
+									venueEditStore.defaultNameLanguage = e.target
+										.value as ContentLanguageSelection;
 								})
 							}
 						/>
@@ -386,8 +387,7 @@ const defaultModel: VenueForEditContract = {
 	address: '',
 	addressCountryCode: '',
 	deleted: false,
-	defaultNameLanguage:
-		ContentLanguageSelection[ContentLanguageSelection.Unspecified],
+	defaultNameLanguage: ContentLanguageSelection.Unspecified,
 	description: '',
 	id: 0,
 	name: '',

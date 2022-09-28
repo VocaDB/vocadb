@@ -1,6 +1,7 @@
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EventCategory } from '@/Models/Events/EventCategory';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
@@ -10,7 +11,7 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class ReleaseEventSeriesEditStore {
 	@observable public category: EventCategory;
-	@observable public defaultNameLanguage: string;
+	@observable public defaultNameLanguage: ContentLanguageSelection;
 	public readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.deleteSeries({
 			id: this.contract.id,

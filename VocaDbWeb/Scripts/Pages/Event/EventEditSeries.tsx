@@ -237,8 +237,8 @@ const EventEditSeriesLayout = observer(
 							value={releaseEventSeriesEditStore.defaultNameLanguage}
 							onChange={(e): void =>
 								runInAction(() => {
-									releaseEventSeriesEditStore.defaultNameLanguage =
-										e.target.value;
+									releaseEventSeriesEditStore.defaultNameLanguage = e.target
+										.value as ContentLanguageSelection;
 								})
 							}
 						/>
@@ -406,8 +406,7 @@ const EventEditSeriesLayout = observer(
 
 const defaultModel: ReleaseEventSeriesForEditContract = {
 	category: EventCategory.Unspecified,
-	defaultNameLanguage:
-		ContentLanguageSelection[ContentLanguageSelection.Unspecified],
+	defaultNameLanguage: ContentLanguageSelection.Unspecified,
 	deleted: false,
 	description: '',
 	id: 0,

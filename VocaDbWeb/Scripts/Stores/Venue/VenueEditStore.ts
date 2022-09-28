@@ -1,6 +1,7 @@
 import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
 import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { VenueRepository } from '@/Repositories/VenueRepository';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
@@ -17,7 +18,7 @@ import {
 export class VenueEditStore {
 	@observable public address: string;
 	@observable public addressCountryCode: string;
-	@observable public defaultNameLanguage: string /* TODO: enum */;
+	@observable public defaultNameLanguage: ContentLanguageSelection;
 	public readonly deleted: boolean;
 	public readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.venueRepo.delete({

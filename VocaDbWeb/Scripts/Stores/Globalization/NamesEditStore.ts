@@ -74,7 +74,7 @@ export class NamesEditStore {
 		return this.getAllNames().map((name) => {
 			const contract: LocalizedStringWithIdContract = {
 				id: name.id,
-				language: name.languageStr,
+				language: name.language,
 				value: name.value!,
 			};
 

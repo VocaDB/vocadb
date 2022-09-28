@@ -2,13 +2,14 @@ import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/Loc
 import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { EntryStatus } from '@/Models/EntryStatus';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 
 // Corresponds to the VenueForEditForApiContract record class in C#.
 export interface VenueForEditContract {
 	address: string;
 	addressCountryCode: string;
 	coordinates?: OptionalGeoPointContract;
-	defaultNameLanguage: string;
+	defaultNameLanguage: ContentLanguageSelection;
 	deleted: boolean;
 	description: string;
 	id: number;

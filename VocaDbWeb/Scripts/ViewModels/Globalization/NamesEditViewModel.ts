@@ -41,7 +41,7 @@ export class NamesEditViewModel {
 		return this.getAllNames().map((name) => {
 			var contract: LocalizedStringWithIdContract = {
 				id: name.id,
-				language: name.languageStr(),
+				language: name.language(),
 				value: name.value(),
 			};
 

@@ -5,6 +5,7 @@ import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
@@ -47,7 +48,7 @@ export class ReleaseEventEditStore {
 	@observable public customName: boolean;
 	// Event date. This should always be in UTC.
 	@observable public date?: Date;
-	@observable public defaultNameLanguage: string /* TODO: enum */;
+	@observable public defaultNameLanguage: ContentLanguageSelection;
 	public readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.delete({
 			id: this.contract.id,

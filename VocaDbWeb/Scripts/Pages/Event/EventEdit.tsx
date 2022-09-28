@@ -207,7 +207,8 @@ const BasicInfoTabContent = observer(
 								value={releaseEventEditStore.defaultNameLanguage}
 								onChange={(e): void =>
 									runInAction(() => {
-										releaseEventEditStore.defaultNameLanguage = e.target.value;
+										releaseEventEditStore.defaultNameLanguage = e.target
+											.value as ContentLanguageSelection;
 									})
 								}
 							/>
@@ -820,8 +821,7 @@ const defaultModel: ReleaseEventForEditContract = {
 	artists: [],
 	category: EventCategory.Unspecified,
 	customName: false,
-	defaultNameLanguage:
-		ContentLanguageSelection[ContentLanguageSelection.Unspecified],
+	defaultNameLanguage: ContentLanguageSelection.Unspecified,
 	deleted: false,
 	description: '',
 	id: 0,

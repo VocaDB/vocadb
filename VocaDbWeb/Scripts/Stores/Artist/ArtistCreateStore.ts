@@ -101,22 +101,19 @@ export class ArtistCreateStore {
 					names: ([] as LocalizedStringContract[]).concat(
 						this.nameOriginal
 							? {
-									language:
-										ContentLanguageSelection[ContentLanguageSelection.Japanese],
+									language: ContentLanguageSelection.Japanese,
 									value: this.nameOriginal,
 							  }
 							: [],
 						this.nameRomaji
 							? {
-									language:
-										ContentLanguageSelection[ContentLanguageSelection.Romaji],
+									language: ContentLanguageSelection.Romaji,
 									value: this.nameRomaji,
 							  }
 							: [],
 						this.nameEnglish
 							? {
-									language:
-										ContentLanguageSelection[ContentLanguageSelection.English],
+									language: ContentLanguageSelection.English,
 									value: this.nameEnglish,
 							  }
 							: [],
