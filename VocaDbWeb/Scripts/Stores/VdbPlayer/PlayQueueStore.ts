@@ -534,11 +534,11 @@ export class PlayQueueStore
 		});
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	private updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	private updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
