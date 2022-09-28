@@ -222,6 +222,7 @@ const UserMessages = observer(
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');
 		const inbox = searchParams.get('inbox');
+		const receiverName = searchParams.get('receiverName');
 
 		React.useEffect(() => {
 			if (messageId) {
@@ -229,6 +230,7 @@ const UserMessages = observer(
 				const userMessageFolderStore = isNotification
 					? userMessagesStore.notifications
 					: userMessagesStore.receivedMessages;
+
 				userMessageFolderStore.init(() => {
 					userMessagesStore.selectMessageById(
 						Number(messageId),
@@ -237,6 +239,17 @@ const UserMessages = observer(
 				});
 			}
 		}, [messageId, inbox]);
+
+		React.useEffect(() => {
+			if (receiverName) {
+				userMessagesStore.selectTab('composeTab');
+				userRepo.getOneByName({ username: receiverName }).then((result) =>
+					runInAction(() => {
+						userMessagesStore.newMessageStore.receiver.id = result?.id;
+					}),
+				);
+			}
+		}, [receiverName]);
 
 		return (
 			<Layout
