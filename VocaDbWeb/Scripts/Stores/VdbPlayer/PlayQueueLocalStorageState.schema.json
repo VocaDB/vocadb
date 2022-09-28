@@ -567,9 +567,16 @@
 				}
 			]
 		},
+		"repeat": {
+			"enum": ["All", "Off", "One"],
+			"type": "string"
+		},
 		"repositoryType": {
 			"enum": ["RatedSongs", "SongList", "Songs"],
 			"type": "string"
+		},
+		"shuffle": {
+			"type": "boolean"
 		},
 		"totalCount": {
 			"type": "number"

@@ -40,6 +40,8 @@ export enum RepeatMode {
 }
 
 export interface PlayQueueLocalStorageState {
+	repeat?: RepeatMode;
+	shuffle?: boolean;
 	items?: PlayQueueItemContract[];
 	currentIndex?: number;
 	repositoryType?: PlayQueueRepositoryType;
@@ -139,6 +141,8 @@ export class PlayQueueStore
 
 	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
 		return {
+			repeat: this.repeat,
+			shuffle: this.shuffle,
 			items: this.items.map((item) => item.toContract()),
 			currentIndex: this.currentIndex,
 			repositoryType: this.autoplayContext?.repositoryType,
@@ -148,6 +152,8 @@ export class PlayQueueStore
 		};
 	}
 	public set localStorageState(value: PlayQueueLocalStorageState) {
+		this.repeat = value.repeat ?? RepeatMode.Off;
+		this.shuffle = value.shuffle ?? false;
 		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
 		this.currentIndex = value.currentIndex;
 		this.autoplayContext =
