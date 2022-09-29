@@ -204,7 +204,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult PVAuthorNames(string term)
