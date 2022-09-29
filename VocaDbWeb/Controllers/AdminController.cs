@@ -196,7 +196,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Manage entry type to tag mappings";
 
-			return View();
+			return View("React/Index");
 		}
 
 		[Authorize]

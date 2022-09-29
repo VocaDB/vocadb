@@ -37,9 +37,9 @@ const AdminIndex = (): React.ReactElement => {
 						</Link>
 					</p>
 					<p>
-						<a href="/Admin/ManageEntryTagMappings">
+						<Link to="/Admin/ManageEntryTagMappings">
 							Manage entry type to tag mappings{/* TODO: localize */}
-						</a>
+						</Link>
 					</p>
 				</>
 			)}
