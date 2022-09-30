@@ -7,15 +7,12 @@ import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
-import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
-import { PVService } from '@/Models/PVs/PVService';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { css } from '@emotion/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import {
-	IPlayerApi,
 	PlayerOptions,
 	TimeEvent,
 	useNostalgicDiva,
@@ -448,38 +445,7 @@ const EmbedPVWrapper = observer(
 			[handleError, handlePlay, handlePause, handleEnded, handleTimeUpdate],
 		);
 
-		const handlePlayerApiChange = React.useCallback(
-			async (playerApi?: IPlayerApi) => {
-				try {
-					if (!playerApi) return;
-
-					const pvId =
-						pv.service === PVService.Piapro
-							? VideoServiceHelper.getPiaproUrlWithTimestamp(pv)!
-							: pv.pvId;
-
-					await playerApi.loadVideo(pvId);
-					await playerApi.play();
-				} catch (error) {
-					VdbPlayerConsole.error(
-						'Failed to load PV',
-						JSON.parse(JSON.stringify(pv)),
-						error,
-					);
-				}
-			},
-			[pv],
-		);
-
-		return (
-			<EmbedPV
-				pv={pv}
-				width="100%"
-				height="100%"
-				options={options}
-				onPlayerApiChange={handlePlayerApiChange}
-			/>
-		);
+		return <EmbedPV pv={pv} width="100%" height="100%" options={options} />;
 	},
 );
 
