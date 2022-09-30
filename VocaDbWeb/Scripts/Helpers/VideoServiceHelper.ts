@@ -1,4 +1,8 @@
-import { PiaproPVContract, PVContract } from '@/DataContracts/PVs/PVContract';
+import {
+	PiaproPVContract,
+	PVContract,
+	SoundCloudPVContract,
+} from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import _ from 'lodash';
@@ -46,6 +50,12 @@ export class VideoServiceHelper {
 		return `https://cdn.piapro.jp/mp3_a/${pv.pvId.slice(0, 2)}/${
 			pv.pvId
 		}_${timestamp}_audition.mp3`;
+	};
+
+	public static getSoundCloudUrlFromId = (pv: SoundCloudPVContract): string => {
+		const parts = pv.pvId.split(' ');
+		const url = `https://api.soundcloud.com/tracks/${parts[0]}`;
+		return url;
 	};
 
 	public static readonly autoplayServices = [

@@ -74,7 +74,7 @@ export const EmbedPV = React.memo(
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
-		const service = pv.service;
+		const { service, pvId } = pv;
 
 		switch (service) {
 			case PVService.File:
@@ -114,6 +114,11 @@ export const EmbedPV = React.memo(
 				return (
 					<NostalgicDiva
 						type={playerTypes[service]}
+						videoId={
+							service === PVService.SoundCloud
+								? VideoServiceHelper.getSoundCloudUrlFromId(pv)
+								: pvId
+						}
 						options={options}
 						onPlayerApiChange={onPlayerApiChange}
 					/>
@@ -124,9 +129,9 @@ export const EmbedPV = React.memo(
 					// eslint-disable-next-line jsx-a11y/iframe-has-title
 					<iframe
 						style={{ border: 0, width: '100%', height: '120px' }}
-						src={`https://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=${pv.pvId}/transparent=true/`}
+						src={`https://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=${pvId}/transparent=true/`}
 						seamless
-						key={pv.pvId}
+						key={pvId}
 					/>
 				);
 
@@ -141,8 +146,8 @@ export const EmbedPV = React.memo(
 						height={typeof height === 'number' ? Math.min(height, 120) : height}
 						scrolling="no"
 						frameBorder="no"
-						src={`https://creofuga.net/audios/player?color=black&id=${pv.pvId}`}
-						key={pv.pvId}
+						src={`https://creofuga.net/audios/player?color=black&id=${pvId}`}
+						key={pvId}
 					/>
 				);
 

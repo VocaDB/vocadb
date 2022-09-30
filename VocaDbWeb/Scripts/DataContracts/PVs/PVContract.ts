@@ -20,8 +20,18 @@ export interface PiaproPVContract extends PVContractBase {
 	extendedMetadata?: { json?: string };
 }
 
-interface DefaultPVContract extends PVContractBase {
-	service: Exclude<PVService, PiaproPVContract['service']>;
+export interface SoundCloudPVContract extends PVContractBase {
+	service: PVService.SoundCloud;
 }
 
-export type PVContract = PiaproPVContract | DefaultPVContract;
+interface DefaultPVContract extends PVContractBase {
+	service: Exclude<
+		PVService,
+		PiaproPVContract['service'] | SoundCloudPVContract['service']
+	>;
+}
+
+export type PVContract =
+	| PiaproPVContract
+	| SoundCloudPVContract
+	| DefaultPVContract;
