@@ -448,18 +448,18 @@ const EmbedPVWrapper = observer(
 			[handleError, handlePlay, handlePause, handleEnded, handleTimeUpdate],
 		);
 
-		const handlePlayerChange = React.useCallback(
-			async (player?: IPlayerApi) => {
+		const handlePlayerApiChange = React.useCallback(
+			async (playerApi?: IPlayerApi) => {
 				try {
-					if (!player) return;
+					if (!playerApi) return;
 
 					const pvId =
 						pv.service === PVService.Piapro
 							? VideoServiceHelper.getPiaproUrlWithTimestamp(pv)!
 							: pv.pvId;
 
-					await player.loadVideo(pvId);
-					await player.play();
+					await playerApi.loadVideo(pvId);
+					await playerApi.play();
 				} catch (error) {
 					VdbPlayerConsole.error(
 						'Failed to load PV',
@@ -477,7 +477,7 @@ const EmbedPVWrapper = observer(
 				width="100%"
 				height="100%"
 				options={options}
-				onPlayerChange={handlePlayerChange}
+				onPlayerApiChange={handlePlayerApiChange}
 			/>
 		);
 	},

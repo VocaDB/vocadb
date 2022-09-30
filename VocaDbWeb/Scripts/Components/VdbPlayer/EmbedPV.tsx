@@ -61,7 +61,7 @@ interface EmbedPVProps {
 	width?: number | string;
 	height?: number | string;
 	options: PlayerOptions;
-	onPlayerChange?: (player?: IPlayerApi) => void;
+	onPlayerApiChange?: (player?: IPlayerApi) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -70,7 +70,7 @@ export const EmbedPV = React.memo(
 		width = 560,
 		height = 315,
 		options,
-		onPlayerChange,
+		onPlayerApiChange,
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
@@ -115,7 +115,7 @@ export const EmbedPV = React.memo(
 					<NostalgicDiva
 						type={playerTypes[service]}
 						options={options}
-						onPlayerChange={onPlayerChange}
+						onPlayerApiChange={onPlayerApiChange}
 					/>
 				);
 
