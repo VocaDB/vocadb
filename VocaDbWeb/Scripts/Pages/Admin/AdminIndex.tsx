@@ -70,9 +70,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canManageIPRules && (
 				<p>
-					<a href="/Admin/ManageIPRules">
+					<Link to="/Admin/ManageIPRules">
 						Manage IP rules{/* TODO: localize */}
-					</a>
+					</Link>
 				</p>
 			)}
 

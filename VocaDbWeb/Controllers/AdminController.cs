@@ -170,25 +170,9 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var rules = _otherService.GetIPRules();
-
 			PageProperties.Title = "Manage blocked IPs";
 
-			return View(rules);
-		}
-
-		[Authorize]
-		[HttpPost]
-		public ActionResult ManageIPRules([ModelBinder(BinderType = typeof(JsonModelBinder))] IPRule[] rules)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
-
-			Service.UpdateIPRules(rules);
-			_ipRuleManager.Reset(rules.Select(i => i.Address));
-
-			TempData.SetSuccessMessage("IP rules updated.");
-
-			return View(rules);
+			return View("React/Index");
 		}
 
 		[Authorize]
