@@ -56,7 +56,7 @@
         "@emotion/react": "^11.8.2",
         "@fluentui/react-icons": "^2.0.179",
         "@restart/ui": "^0.2.3",
-        "@vocadb/nostalgic-diva": "^1.3.0-rc.1",
+        "@vocadb/nostalgic-diva": "^1.3.0-rc.2",
         "@vocadb/route-sphere": "^2.0.0-rc.5",
         "@vocadb/web-link-matcher": "^1.0.0",
         "ajv": "^8.6.2",
