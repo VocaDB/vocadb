@@ -608,7 +608,6 @@ export const VdbPlayer = observer(
 							const videoId = VideoServiceHelper.getVideoId(selectedItem.pv);
 							if (videoId !== undefined) {
 								await diva.loadVideo(videoId);
-								await diva.play();
 							}
 						}
 					}
