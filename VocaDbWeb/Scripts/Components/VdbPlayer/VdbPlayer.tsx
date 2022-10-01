@@ -373,6 +373,8 @@ const EmbedPVWrapper = observer(
 			VdbPlayerConsole.error('error', event);
 		}, []);
 
+		const handleLoaded = React.useCallback(() => diva.play(), [diva]);
+
 		const handlePlay = React.useCallback(() => vdbPlayer.setPlaying(true), [
 			vdbPlayer,
 		]);
@@ -437,12 +439,20 @@ const EmbedPVWrapper = observer(
 		const options = React.useMemo(
 			(): PlayerOptions => ({
 				onError: handleError,
+				onLoaded: handleLoaded,
 				onPlay: handlePlay,
 				onPause: handlePause,
 				onEnded: handleEnded,
 				onTimeUpdate: handleTimeUpdate,
 			}),
-			[handleError, handlePlay, handlePause, handleEnded, handleTimeUpdate],
+			[
+				handleError,
+				handleLoaded,
+				handlePlay,
+				handlePause,
+				handleEnded,
+				handleTimeUpdate,
+			],
 		);
 
 		return <EmbedPV pv={pv} width="100%" height="100%" options={options} />;
