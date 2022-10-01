@@ -5,7 +5,6 @@ import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 import {
-	IPlayerApi,
 	NostalgicDiva,
 	PlayerOptions,
 	PlayerType,
@@ -61,7 +60,6 @@ interface EmbedPVProps {
 	width?: number | string;
 	height?: number | string;
 	options: PlayerOptions;
-	onPlayerApiChange?: (player?: IPlayerApi) => void;
 }
 
 export const EmbedPV = React.memo(
@@ -70,7 +68,6 @@ export const EmbedPV = React.memo(
 		width = 560,
 		height = 315,
 		options,
-		onPlayerApiChange,
 	}: EmbedPVProps): React.ReactElement => {
 		VdbPlayerConsole.debug('EmbedPV');
 
@@ -116,7 +113,6 @@ export const EmbedPV = React.memo(
 						type={playerTypes[service]}
 						videoId={VideoServiceHelper.getVideoId(pv)!}
 						options={options}
-						onPlayerApiChange={onPlayerApiChange}
 					/>
 				);
 
