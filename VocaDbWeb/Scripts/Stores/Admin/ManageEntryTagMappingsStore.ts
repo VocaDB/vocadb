@@ -128,6 +128,7 @@ export class ManageEntryTagMappingsStore {
 
 	public loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getEntryTagMappings({});
+
 		runInAction(() => {
 			this.mappings = result.map((t) => new EditEntryTagMappingStore(t));
 		});

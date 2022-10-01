@@ -78,9 +78,9 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canManageWebhooks && (
 				<p>
-					<a href="/Admin/ManageWebhooks">
+					<Link to="/Admin/ManageWebhooks">
 						Manage webhooks{/* TODO: localize */}
-					</a>
+					</Link>
 				</p>
 			)}
 

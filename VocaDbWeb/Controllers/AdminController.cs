@@ -354,7 +354,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Manage webhooks";
 
-			return View();
+			return View("React/Index");
 		}
 	}
 }
