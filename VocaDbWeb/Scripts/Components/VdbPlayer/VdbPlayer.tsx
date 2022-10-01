@@ -7,6 +7,7 @@ import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueItem, RepeatMode } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -599,9 +600,17 @@ export const VdbPlayer = observer(
 				async (selectedItem, previousItem) => {
 					if (!selectedItem || !previousItem) return;
 
-					// If the current PV is the same as the previous one, then seek it to 0 and play it again.
-					if (selectedItem.pv.id === previousItem.pv.id) {
+					if (selectedItem.pvId === previousItem.pvId) {
+						// If the current PV is the same as the previous one, then seek it to 0 and play it again.
 						await diva.setCurrentTime(0);
+					} else {
+						if (selectedItem.pv.service === previousItem.pv.service) {
+							const videoId = VideoServiceHelper.getVideoId(selectedItem.pv);
+							if (videoId !== undefined) {
+								await diva.loadVideo(videoId);
+								await diva.play();
+							}
+						}
 					}
 				},
 			);

@@ -40,7 +40,7 @@ export class VideoServiceHelper {
 		return meta?.Timestamp;
 	};
 
-	public static getPiaproUrlWithTimestamp = (
+	private static getPiaproUrlWithTimestamp = (
 		pv: PiaproPVContract,
 	): string | undefined => {
 		const timestamp = VideoServiceHelper.getPiaproTimestamp(pv);
@@ -52,10 +52,25 @@ export class VideoServiceHelper {
 		}_${timestamp}_audition.mp3`;
 	};
 
-	public static getSoundCloudUrlFromId = (pv: SoundCloudPVContract): string => {
+	private static getSoundCloudUrlFromId = (
+		pv: SoundCloudPVContract,
+	): string => {
 		const parts = pv.pvId.split(' ');
 		const url = `https://api.soundcloud.com/tracks/${parts[0]}`;
 		return url;
+	};
+
+	public static getVideoId = (pv: PVContract): string | undefined => {
+		switch (pv.service) {
+			case PVService.Piapro:
+				return VideoServiceHelper.getPiaproUrlWithTimestamp(pv);
+
+			case PVService.SoundCloud:
+				return VideoServiceHelper.getSoundCloudUrlFromId(pv);
+
+			default:
+				return pv.pvId;
+		}
 	};
 
 	public static readonly autoplayServices = [

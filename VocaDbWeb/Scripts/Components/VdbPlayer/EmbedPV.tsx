@@ -114,11 +114,7 @@ export const EmbedPV = React.memo(
 				return (
 					<NostalgicDiva
 						type={playerTypes[service]}
-						videoId={
-							service === PVService.SoundCloud
-								? VideoServiceHelper.getSoundCloudUrlFromId(pv)
-								: pvId
-						}
+						videoId={VideoServiceHelper.getVideoId(pv)!}
 						options={options}
 						onPlayerApiChange={onPlayerApiChange}
 					/>
