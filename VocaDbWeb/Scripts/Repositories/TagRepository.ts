@@ -20,6 +20,7 @@ import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import qs from 'qs';
 
 export enum TagOptionalField {
 	'AliasedTo' = 'AliasedTo',
@@ -237,6 +238,23 @@ export class TagRepository extends BaseRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	public merge = (
+		requestToken: string,
+		{ id, targetTagId }: { id: number; targetTagId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/tags/${id}/merge?${qs.stringify({ targetTagId: targetTagId })}`,
+			),
+			undefined,
+			{
+				headers: {
 					requestVerificationToken: requestToken,
 				},
 			},

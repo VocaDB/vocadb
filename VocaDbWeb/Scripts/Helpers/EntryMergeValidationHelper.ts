@@ -34,8 +34,8 @@ export class EntryMergeValidationHelper {
 	}
 
 	public static validateEntry(
-		base: CommonEntryContract,
-		target: CommonEntryContract,
+		base?: CommonEntryContract,
+		target?: CommonEntryContract,
 	): IEntryMergeValidationResult {
 		if (base == null || target == null) {
 			return {

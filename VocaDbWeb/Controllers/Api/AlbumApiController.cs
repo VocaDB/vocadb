@@ -488,6 +488,18 @@ namespace VocaDb.Web.Controllers.Api
 
 			return contract.Id;
 		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int targetAlbumId)
+		{
+			_queries.Merge(id, targetAlbumId);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

@@ -378,6 +378,19 @@ namespace VocaDb.Web.Controllers.Api
 				return ValidationProblem(ModelState);
 			}
 		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int targetArtistId)
+		{
+			// TODO: Replace _service with _queries.
+			_service.Merge(id, targetArtistId);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

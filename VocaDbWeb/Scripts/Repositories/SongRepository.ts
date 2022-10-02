@@ -30,6 +30,7 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
 export enum SongOptionalField {
 	AdditionalNames = 'AdditionalNames',
@@ -604,6 +605,25 @@ export class SongRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	public merge = (
+		requestToken: string,
+		{ id, targetSongId }: { id: number; targetSongId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/songs/${id}/merge?${qs.stringify({
+					targetSongId: targetSongId,
+				})}`,
+			),
+			undefined,
+			{
+				headers: {
 					requestVerificationToken: requestToken,
 				},
 			},

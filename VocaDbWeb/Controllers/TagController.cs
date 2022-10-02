@@ -172,24 +172,9 @@ namespace VocaDb.Web.Controllers
 			return View("React/Index");
 		}
 
-		public ActionResult Merge(int id)
+		public ActionResult Merge()
 		{
-			var tag = _queries.LoadTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
-			return View(tag);
-		}
-
-		[HttpPost]
-		public ActionResult Merge(int id, int? targetTagId)
-		{
-			if (targetTagId == null)
-			{
-				ModelState.AddModelError("targetTagId", "Tag must be selected");
-				return Merge(id);
-			}
-
-			_queries.Merge(id, targetTagId.Value);
-
-			return RedirectToAction("Edit", new { id = targetTagId.Value });
+			return View("React/Index");
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)

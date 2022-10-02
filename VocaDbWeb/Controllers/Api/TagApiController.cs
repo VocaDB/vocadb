@@ -411,6 +411,24 @@ namespace VocaDb.Web.Controllers.Api
 
 			return result.Id;
 		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int? targetTagId)
+		{
+			if (targetTagId == null)
+			{
+				ModelState.AddModelError("targetTagId", "Tag must be selected");
+				return ValidationProblem(ModelState);
+			}
+
+			_queries.Merge(id, targetTagId.Value);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

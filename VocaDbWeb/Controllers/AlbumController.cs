@@ -265,18 +265,9 @@ namespace VocaDb.Web.Controllers
 			return View(album);
 		}
 
-		public ActionResult Merge(int id)
+		public ActionResult Merge()
 		{
-			var album = Service.GetAlbum(id);
-			return View(album);
-		}
-
-		[HttpPost]
-		public ActionResult Merge(int id, int targetAlbumId)
-		{
-			_queries.Merge(id, targetAlbumId);
-
-			return RedirectToAction("Edit", new { id = targetAlbumId });
+			return View("React/Index");
 		}
 
 		[Authorize]

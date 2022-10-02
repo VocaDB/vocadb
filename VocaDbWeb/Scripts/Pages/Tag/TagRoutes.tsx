@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 const TagIndex = React.lazy(() => import('./TagIndex'));
 const TagEdit = React.lazy(() => import('./TagEdit'));
+const TagMerge = React.lazy(() => import('./TagMerge'));
 const TagVersions = React.lazy(() => import('./TagVersions'));
 
 const TagRoutes = (): React.ReactElement => {
@@ -11,6 +12,7 @@ const TagRoutes = (): React.ReactElement => {
 		<Routes>
 			<Route path="" element={<TagIndex />} />
 			<Route path="Edit/:id" element={<TagEdit />} />
+			<Route path="Merge/:id" element={<TagMerge />} />
 			<Route path="Versions/:id" element={<TagVersions />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
