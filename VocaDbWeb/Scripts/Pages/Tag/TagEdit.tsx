@@ -151,7 +151,7 @@ const TagEditLayout = observer(
 							{loginManager.canMergeEntries && (
 								<>
 									{' '}
-									<JQueryUIButton as="a" href={`/Tag/Merge/${contract.id}`}>
+									<JQueryUIButton as={Link} to={`/Tag/Merge/${contract.id}`}>
 										{t('ViewRes:EntryEdit.Merge')}
 									</JQueryUIButton>
 								</>

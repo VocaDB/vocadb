@@ -21,6 +21,7 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
 export enum ArtistOptionalField {
 	'AdditionalNames' = 'AdditionalNames',
@@ -311,6 +312,25 @@ export class ArtistRepository
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	public merge = (
+		requestToken: string,
+		{ id, targetArtistId }: { id: number; targetArtistId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/artists/${id}/merge?${qs.stringify({
+					targetArtistId: targetArtistId,
+				})}`,
+			),
+			undefined,
+			{
+				headers: {
 					requestVerificationToken: requestToken,
 				},
 			},

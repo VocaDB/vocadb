@@ -777,7 +777,7 @@ const SongEditLayout = observer(
 							<>
 								{' '}
 								&nbsp;{' '}
-								<JQueryUIButton as="a" href={`/Song/Merge/${contract.id}`}>
+								<JQueryUIButton as={Link} to={`/Song/Merge/${contract.id}`}>
 									{t('ViewRes:EntryEdit.Merge')}
 								</JQueryUIButton>
 							</>

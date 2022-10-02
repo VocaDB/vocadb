@@ -638,6 +638,24 @@ namespace VocaDb.Web.Controllers.Api
 
 			return contract.Id;
 		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int? targetSongId)
+		{
+			if (targetSongId == null)
+			{
+				ModelState.AddModelError("targetSongId", "Song must be selected");
+				return ValidationProblem(ModelState);
+			}
+
+			_queries.Merge(id, targetSongId.Value);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

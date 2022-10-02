@@ -910,7 +910,7 @@ const AlbumEditLayout = observer(
 							<>
 								{' '}
 								&nbsp;{' '}
-								<JQueryUIButton as="a" href={`/Album/Merge/${contract.id}`}>
+								<JQueryUIButton as={Link} to={`/Album/Merge/${contract.id}`}>
 									{t('ViewRes:EntryEdit.Merge')}
 								</JQueryUIButton>
 							</>
