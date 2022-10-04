@@ -1,16 +1,12 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Users;
 
-
-namespace VocaDb.Model.Domain.Users
+public class UserAuditEvent
 {
-	public class UserAuditEvent
-	{
-	}
+}
 
-	public enum UserAuditEventType
-	{
-		EditGroup,
-		EditName,
-		AddNote
-	}
+public enum UserAuditEventType
+{
+	EditGroup,
+	EditName,
+	AddNote
 }

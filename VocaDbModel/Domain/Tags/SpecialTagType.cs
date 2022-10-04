@@ -1,15 +1,12 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Domain.Tags
+public enum SpecialTagType
 {
-	public enum SpecialTagType
-	{
-		Nothing,
-		ChangedLyrics,
-		Cover,
-		Free,
-		Instrumental,
-		Remix,
-		ShortVersion
-	}
+	Nothing,
+	ChangedLyrics,
+	Cover,
+	Free,
+	Instrumental,
+	Remix,
+	ShortVersion
 }

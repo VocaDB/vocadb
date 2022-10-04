@@ -1,11 +1,8 @@
-#nullable disable
+namespace VocaDb.Web.Code.Highcharts;
 
-namespace VocaDb.Web.Code.Highcharts
+public enum ChartType
 {
-	public enum ChartType
-	{
-		Area,
+	Area,
 
-		Pie
-	}
+	Pie
 }

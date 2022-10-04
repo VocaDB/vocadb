@@ -1,23 +1,20 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Domain.Songs
+public enum SongArchiveReason
 {
-	public enum SongArchiveReason
-	{
-		Unknown,
+	Unknown,
 
-		Created,
+	Created,
 
-		Merged,
+	Merged,
 
-		AutoImportedFromMikuDb,
+	AutoImportedFromMikuDb,
 
-		PropertiesUpdated,
+	PropertiesUpdated,
 
-		Reverted,
+	Reverted,
 
-		Deleted,
+	Deleted,
 
-		Restored
-	}
+	Restored
 }

@@ -1,11 +1,8 @@
-#nullable disable
+namespace VocaDb.Model.Service;
 
-namespace VocaDb.Model.Service
+public enum EntryViewMode
 {
-	public enum EntryViewMode
-	{
-		Details,
+	Details,
 
-		Tiles
-	}
+	Tiles
 }

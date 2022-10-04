@@ -1,28 +1,24 @@
-#nullable disable
+namespace VocaDb.Model.Domain.ReleaseEvents;
 
-
-namespace VocaDb.Model.Domain.ReleaseEvents
+[Flags]
+public enum ReleaseEventSeriesEditableFields
 {
-	[Flags]
-	public enum ReleaseEventSeriesEditableFields
-	{
-		Nothing = 0,
+	Nothing = 0,
 
-		Category = 1 << 0,
+	Category = 1 << 0,
 
-		Description = 1 << 1,
+	Description = 1 << 1,
 
-		[Obsolete]
-		Name = 1 << 2,
+	[Obsolete]
+	Name = 1 << 2,
 
-		Names = 1 << 3,
+	Names = 1 << 3,
 
-		OriginalName = 1 << 4,
+	OriginalName = 1 << 4,
 
-		Picture = 1 << 5,
+	Picture = 1 << 5,
 
-		Status = 1 << 6,
+	Status = 1 << 6,
 
-		WebLinks = 1 << 7,
-	}
+	WebLinks = 1 << 7,
 }

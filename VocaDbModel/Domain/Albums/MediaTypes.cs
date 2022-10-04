@@ -1,9 +1,5 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Albums;
 
-
-namespace VocaDb.Model.Domain.Albums
+public enum MediaTypes
 {
-	public enum MediaTypes
-	{
-	}
 }

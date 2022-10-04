@@ -1,16 +1,13 @@
-#nullable disable
+namespace VocaDb.Model.Service;
 
-namespace VocaDb.Model.Service
+public enum LogicalGrouping
 {
-	public enum LogicalGrouping
-	{
-		/// <summary>
-		/// All must match
-		/// </summary>
-		And,
-		/// <summary>
-		/// One must match
-		/// </summary>
-		Or
-	}
+	/// <summary>
+	/// All must match
+	/// </summary>
+	And,
+	/// <summary>
+	/// One must match
+	/// </summary>
+	Or
 }
