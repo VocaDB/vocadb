@@ -1,57 +1,50 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts
+namespace VocaDb.Model.DataContracts;
+
+/// <summary>
+/// Serializable data contract with (Int32) Id of the referred object
+/// and the referred object's current name.
+/// Used for serializing archived versions.
+/// </summary>
+[DataContract(Namespace = Schemas.VocaDb)]
+public class ObjectRefContract : IEntryWithIntId
 {
-	/// <summary>
-	/// Serializable data contract with (Int32) Id of the referred object
-	/// and the referred object's current name.
-	/// Used for serializing archived versions.
-	/// </summary>
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ObjectRefContract : IEntryWithIntId
+	public static ObjectRefContract? Create(IEntryBase? entry)
 	{
-#nullable enable
-		public static ObjectRefContract? Create(IEntryBase? entry)
-		{
-			return entry != null ? new ObjectRefContract(entry) : null;
-		}
+		return entry != null ? new ObjectRefContract(entry) : null;
+	}
+
 #nullable disable
-
-		public ObjectRefContract() { }
-
-		public ObjectRefContract(int id, string nameHint)
-		{
-			Id = id;
-			NameHint = nameHint;
-		}
-
+	public ObjectRefContract() { }
 #nullable enable
-		public ObjectRefContract(IEntryBase entry)
-		{
-			ParamIs.NotNull(() => entry);
 
-			Id = entry.Id;
-			NameHint = entry.DefaultName;
-		}
+	public ObjectRefContract(int id, string? nameHint)
+	{
+		Id = id;
+		NameHint = nameHint;
+	}
 
-		/// <summary>
-		/// Id of the referred object.
-		/// </summary>
-		[DataMember]
-		public int Id { get; set; }
-#nullable disable
+	public ObjectRefContract(IEntryBase entry)
+	{
+		ParamIs.NotNull(() => entry);
 
-		[DataMember]
-		public string NameHint { get; init; }
+		Id = entry.Id;
+		NameHint = entry.DefaultName;
+	}
 
-#nullable enable
-		public override string ToString()
-		{
-			return $"{NameHint} [{Id}]";
-		}
-#nullable disable
+	/// <summary>
+	/// Id of the referred object.
+	/// </summary>
+	[DataMember]
+	public int Id { get; set; }
+
+	[DataMember]
+	public string? NameHint { get; init; }
+
+	public override string ToString()
+	{
+		return $"{NameHint} [{Id}]";
 	}
 }

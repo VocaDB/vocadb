@@ -71,7 +71,7 @@ public class ArchivedEventSeriesContract
 	public int Id { get; set; }
 
 	[DataMember]
-	public string MainPictureMime { get; set; }
+	public string? MainPictureMime { get; set; }
 
 	[DataMember]
 	public LocalizedStringContract[]? Names { get; set; }

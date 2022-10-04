@@ -1,36 +1,33 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs
+namespace VocaDb.Model.DataContracts.Songs;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class ArchivedArtistForSongContract : ObjectRefContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedArtistForSongContract : ObjectRefContract
+	public ArchivedArtistForSongContract() { }
+
+	public ArchivedArtistForSongContract(ArtistForSong entry)
 	{
-		public ArchivedArtistForSongContract() { }
+		IsSupport = entry.IsSupport;
+		Roles = entry.Roles;
 
-		public ArchivedArtistForSongContract(ArtistForSong entry)
+		if (entry.Artist != null)
 		{
-			IsSupport = entry.IsSupport;
-			Roles = entry.Roles;
-
-			if (entry.Artist != null)
-			{
-				Id = entry.Artist.Id;
-				NameHint = entry.Artist.DefaultName;
-			}
-			else
-			{
-				NameHint = entry.Name;
-			}
+			Id = entry.Artist.Id;
+			NameHint = entry.Artist.DefaultName;
 		}
-
-		[DataMember]
-		public bool IsSupport { get; init; }
-
-		[DataMember]
-		public ArtistRoles Roles { get; init; }
+		else
+		{
+			NameHint = entry.Name;
+		}
 	}
+
+	[DataMember]
+	public bool IsSupport { get; init; }
+
+	[DataMember]
+	public ArtistRoles Roles { get; init; }
 }

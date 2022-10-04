@@ -1,157 +1,153 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Albums
+namespace VocaDb.Model.Domain.Albums;
+
+public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId
 {
-	public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId
+	private Album _album;
+	private string _notes;
+
+#nullable disable
+	public ArtistForAlbum()
 	{
-		private Album _album;
-		private string _notes;
-
-		public ArtistForAlbum()
-		{
-			IsSupport = false;
-			Notes = string.Empty;
-			Roles = ArtistRoles.Default;
-		}
-
-		public ArtistForAlbum(Album album, Artist artist, bool support, ArtistRoles roles)
-			: this()
-		{
-			Album = album;
-			Artist = artist;
-			IsSupport = support;
-			Roles = roles;
-		}
-
-		public ArtistForAlbum(Album album, string name, bool support, ArtistRoles roles)
-			: this()
-		{
-			Album = album;
-			IsSupport = support;
-			Name = name;
-			Roles = roles;
-		}
-
-		public virtual Album Album
-		{
-			get => _album;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_album = value;
-			}
-		}
-
+		IsSupport = false;
+		Notes = string.Empty;
+		Roles = ArtistRoles.Default;
+	}
 #nullable enable
-		public virtual Artist? Artist { get; set; }
-#nullable disable
 
-		public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
+	public ArtistForAlbum(Album album, Artist artist, bool support, ArtistRoles roles)
+		: this()
+	{
+		Album = album;
+		Artist = artist;
+		IsSupport = support;
+		Roles = roles;
+	}
 
-		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
+	public ArtistForAlbum(Album album, string name, bool support, ArtistRoles roles)
+		: this()
+	{
+		Album = album;
+		IsSupport = support;
+		Name = name;
+		Roles = roles;
+	}
 
-		public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
-
-		public virtual int Id { get; set; }
-
-		public virtual bool IsSupport { get; set; }
-
-		public virtual string Name { get; set; }
-
-		public virtual string Notes
+	public virtual Album Album
+	{
+		get => _album;
+		[MemberNotNull(nameof(_album))]
+		set
 		{
-			get => _notes;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_notes = value;
-			}
+			ParamIs.NotNull(() => value);
+			_album = value;
 		}
+	}
 
-		public virtual ArtistRoles Roles { get; set; }
+	public virtual Artist? Artist { get; set; }
 
-#nullable enable
-		public virtual bool ArtistLinkEquals(ArtistForAlbum? another)
+	public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
+
+	public virtual string? ArtistToStringOrName => Artist?.ToString() ?? Name;
+
+	public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
+
+	public virtual int Id { get; set; }
+
+	public virtual bool IsSupport { get; set; }
+
+	public virtual string? Name { get; set; }
+
+	public virtual string Notes
+	{
+		get => _notes;
+		[MemberNotNull(nameof(_notes))]
+		set
 		{
-			if (another == null)
-				return false;
-
-			return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
+			ParamIs.NotNull(() => value);
+			_notes = value;
 		}
+	}
 
-		public virtual bool ContentEquals(ArtistForAlbumContract? contract)
-		{
-			if (contract == null)
-				return false;
+	public virtual ArtistRoles Roles { get; set; }
 
-			var realNewName = contract.IsCustomName ? contract.Name : null;
+	public virtual bool ArtistLinkEquals(ArtistForAlbum? another)
+	{
+		if (another == null)
+			return false;
 
-			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
-		}
-#nullable disable
+		return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
+	}
 
-		public virtual void Delete()
-		{
-			Album.DeleteArtistForAlbum(this);
-		}
+	public virtual bool ContentEquals(ArtistForAlbumContract? contract)
+	{
+		if (contract == null)
+			return false;
 
-#nullable enable
-		public virtual bool Equals(ArtistForAlbum? another)
-		{
-			if (another == null)
-				return false;
+		var realNewName = contract.IsCustomName ? contract.Name : null;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
+	}
 
-			if (Id == 0)
-				return false;
+	public virtual void Delete()
+	{
+		Album.DeleteArtistForAlbum(this);
+	}
 
-			return Id == another.Id;
-		}
+	public virtual bool Equals(ArtistForAlbum? another)
+	{
+		if (another == null)
+			return false;
 
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as ArtistForAlbum);
-		}
+		if (ReferenceEquals(this, another))
+			return true;
 
-		public override int GetHashCode()
-		{
-			return Id.GetHashCode();
-		}
+		if (Id == 0)
+			return false;
 
-		public virtual void Move(Album target)
-		{
-			ParamIs.NotNull(() => target);
+		return Id == another.Id;
+	}
 
-			if (target.Equals(Album))
-				return;
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as ArtistForAlbum);
+	}
 
-			Album.AllArtists.Remove(this);
-			Album = target;
-			target.AllArtists.Add(this);
-		}
+	public override int GetHashCode()
+	{
+		return Id.GetHashCode();
+	}
 
-		public virtual void Move(Artist target)
-		{
-			ParamIs.NotNull(() => target);
+	public virtual void Move(Album target)
+	{
+		ParamIs.NotNull(() => target);
 
-			if (target.Equals(Artist))
-				return;
+		if (target.Equals(Album))
+			return;
 
-			Artist.AllAlbums.Remove(this);
-			Artist = target;
-			target.AllAlbums.Add(this);
-		}
+		Album.AllArtists.Remove(this);
+		Album = target;
+		target.AllArtists.Add(this);
+	}
 
-		public override string ToString()
-		{
-			return $"{ArtistToStringOrName} for {Album} [{Id}]";
-		}
-#nullable disable
+	public virtual void Move(Artist target)
+	{
+		ParamIs.NotNull(() => target);
+
+		if (target.Equals(Artist))
+			return;
+
+		Artist.AllAlbums.Remove(this);
+		Artist = target;
+		target.AllAlbums.Add(this);
+	}
+
+	public override string ToString()
+	{
+		return $"{ArtistToStringOrName} for {Album} [{Id}]";
 	}
 }

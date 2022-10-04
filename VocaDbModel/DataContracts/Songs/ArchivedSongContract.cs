@@ -131,7 +131,7 @@ public class ArchivedSongContract
 	public LocalizedStringContract[]? Names { get; set; }
 
 	[DataMember]
-	public string NicoId { get; set; }
+	public string? NicoId { get; set; }
 
 	[DataMember]
 	public string Notes { get; set; }
