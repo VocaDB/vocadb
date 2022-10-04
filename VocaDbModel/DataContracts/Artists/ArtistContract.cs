@@ -13,7 +13,9 @@ namespace VocaDb.Model.DataContracts.Artists
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 
 		EntryType IEntryBase.EntryType => EntryType.Artist;
 
@@ -70,8 +72,10 @@ namespace VocaDb.Model.DataContracts.Artists
 		[DataMember]
 		public int Id { get; set; }
 
+#nullable enable
 		[DataMember]
 		public string Name { get; init; }
+#nullable disable
 
 		[DataMember]
 		public string PictureMime { get; set; }

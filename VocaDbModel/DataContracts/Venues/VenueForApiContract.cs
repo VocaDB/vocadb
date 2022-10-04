@@ -12,7 +12,9 @@ namespace VocaDb.Model.DataContracts.Venues
 	public class VenueForApiContract : IEntryWithStatus
 	{
 		EntryType IEntryBase.EntryType => EntryType.Venue;
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
@@ -49,8 +51,10 @@ namespace VocaDb.Model.DataContracts.Venues
 		[DataMember]
 		public int Id { get; set; }
 
+#nullable enable
 		[DataMember]
 		public string Name { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.

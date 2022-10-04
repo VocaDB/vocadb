@@ -6,86 +6,85 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Venues
+namespace VocaDb.Model.Domain.Venues;
+
+public class ArchivedVenueVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<VenueEditableFields>
 {
-	public class ArchivedVenueVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<VenueEditableFields>
+	public static ArchivedVenueVersion Create(Venue venue, VenueDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes)
 	{
-		public static ArchivedVenueVersion Create(Venue venue, VenueDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes)
-		{
-			var contract = new ArchivedVenueContract(venue, diff);
-			var data = XmlHelper.SerializeToXml(contract);
+		var contract = new ArchivedVenueContract(venue, diff);
+		var data = XmlHelper.SerializeToXml(contract);
 
-			return venue.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
-		}
+		return venue.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
+	}
 
-		private VenueDiff _diff;
-		private Venue _venue;
+	private VenueDiff _diff;
+	private Venue _venue;
 
 #nullable disable
-		public ArchivedVenueVersion()
-		{
-			Status = EntryStatus.Finished;
-		}
+	public ArchivedVenueVersion()
+	{
+		Status = EntryStatus.Finished;
+	}
 #nullable enable
 
-		public ArchivedVenueVersion(
-			Venue venue,
-			XDocument data,
-			VenueDiff diff,
-			AgentLoginData author,
-			EntryEditEvent commonEditEvent,
-			string notes
-		)
-			: base(data, author, venue.Version, venue.Status, notes)
+	public ArchivedVenueVersion(
+		Venue venue,
+		XDocument data,
+		VenueDiff diff,
+		AgentLoginData author,
+		EntryEditEvent commonEditEvent,
+		string notes
+	)
+		: base(data, author, venue.Version, venue.Status, notes)
+	{
+		ParamIs.NotNull(() => diff);
+
+		Entry = venue;
+		Diff = diff;
+		CommonEditEvent = commonEditEvent;
+	}
+
+	public virtual EntryEditEvent CommonEditEvent { get; set; }
+
+	public override IEntryDiff DiffBase => Diff;
+
+	public virtual VenueDiff Diff
+	{
+		get => _diff;
+		[MemberNotNull(nameof(_diff))]
+		set
 		{
-			ParamIs.NotNull(() => diff);
-
-			Entry = venue;
-			Diff = diff;
-			CommonEditEvent = commonEditEvent;
+			ParamIs.NotNull(() => value);
+			_diff = value;
 		}
+	}
 
-		public virtual EntryEditEvent CommonEditEvent { get; set; }
+	public override EntryEditEvent EditEvent => CommonEditEvent;
 
-		public override IEntryDiff DiffBase => Diff;
+	public override IEntryWithNames EntryBase => Entry;
 
-		public virtual VenueDiff Diff
+	public virtual Venue Entry
+	{
+		get => _venue;
+		[MemberNotNull(nameof(_venue))]
+		set
 		{
-			get => _diff;
-			[MemberNotNull(nameof(_diff))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_diff = value;
-			}
+			ParamIs.NotNull(() => value);
+			_venue = value;
 		}
+	}
 
-		public override EntryEditEvent EditEvent => CommonEditEvent;
+	public virtual ArchivedVenueVersion? GetLatestVersionWithField(VenueEditableFields field)
+	{
+		if (IsIncluded(field))
+			return this;
 
-		public override IEntryWithNames EntryBase => Entry;
+		return Entry.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
+	}
 
-		public virtual Venue Entry
-		{
-			get => _venue;
-			[MemberNotNull(nameof(_venue))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_venue = value;
-			}
-		}
-
-		public virtual ArchivedVenueVersion? GetLatestVersionWithField(VenueEditableFields field)
-		{
-			if (IsIncluded(field))
-				return this;
-
-			return Entry.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
-		}
-
-		public virtual bool IsIncluded(VenueEditableFields field)
-		{
-			return Diff != null && Data != null && Diff.IsIncluded(field);
-		}
+	public virtual bool IsIncluded(VenueEditableFields field)
+	{
+		return Diff != null && Data != null && Diff.IsIncluded(field);
 	}
 }

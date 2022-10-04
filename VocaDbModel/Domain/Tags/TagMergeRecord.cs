@@ -1,12 +1,9 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Domain.Tags
+public class TagMergeRecord : MergeRecord<Tag>
 {
-	public class TagMergeRecord : MergeRecord<Tag>
-	{
-		public TagMergeRecord() { }
+	public TagMergeRecord() { }
 
-		public TagMergeRecord(Tag source, Tag target)
-			: base(source, target) { }
-	}
+	public TagMergeRecord(Tag source, Tag target)
+		: base(source, target) { }
 }

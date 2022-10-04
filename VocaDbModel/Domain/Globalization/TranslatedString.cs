@@ -1,243 +1,248 @@
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 
+namespace VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Globalization
+/// <summary>
+/// String that is translated to all common languages supported by the system.
+/// </summary>
+public class TranslatedString : ITranslatedString
 {
-	/// <summary>
-	/// String that is translated to all common languages supported by the system.
-	/// </summary>
-	public class TranslatedString : ITranslatedString
+	public static TranslatedString Create(Func<ContentLanguageSelection, string> factory)
 	{
-		public static TranslatedString Create(Func<ContentLanguageSelection, string> factory)
-		{
-			return new TranslatedString(
-				factory(ContentLanguageSelection.Japanese),
-				factory(ContentLanguageSelection.Romaji),
-				factory(ContentLanguageSelection.English)
-			);
-		}
+		return new TranslatedString(
+			factory(ContentLanguageSelection.Japanese),
+			factory(ContentLanguageSelection.Romaji),
+			factory(ContentLanguageSelection.English)
+		);
+	}
 
-		public static TranslatedString Create(string uniform)
-		{
-			return new TranslatedString(uniform, uniform, uniform);
-		}
+	public static TranslatedString Create(string uniform)
+	{
+		return new TranslatedString(uniform, uniform, uniform);
+	}
 
-		private string _english;
-		private string _original;
-		private string _romaji;
+	private string _english;
+	private string _original;
+	private string _romaji;
 
-		public TranslatedString()
-		{
-			DefaultLanguage = ContentLanguageSelection.Japanese;
-		}
-
-		public TranslatedString(string original, string romaji, string english)
-			: this()
-		{
-			Japanese = original;
-			Romaji = romaji;
-			English = english;
-		}
-
-		public TranslatedString(string original, string romaji, string english,
-			ContentLanguageSelection defaultLanguage)
-		{
-			Japanese = original;
-			Romaji = romaji;
-			English = english;
-			DefaultLanguage = defaultLanguage;
-		}
-
-#nullable enable
-		public TranslatedString(ITranslatedString contract)
-			: this()
-		{
-			ParamIs.NotNull(() => contract);
-
-			CopyFrom(contract);
-		}
 #nullable disable
+	public TranslatedString()
+	{
+		DefaultLanguage = ContentLanguageSelection.Japanese;
+	}
+#nullable enable
 
-		public virtual string this[ContentLanguageSelection language]
+	public TranslatedString(string original, string romaji, string english)
+		: this()
+	{
+		Japanese = original;
+		Romaji = romaji;
+		English = english;
+	}
+
+	public TranslatedString(
+		string original,
+		string romaji,
+		string english,
+		ContentLanguageSelection defaultLanguage
+	)
+	{
+		Japanese = original;
+		Romaji = romaji;
+		English = english;
+		DefaultLanguage = defaultLanguage;
+	}
+
+	public TranslatedString(ITranslatedString contract)
+		: this()
+	{
+		ParamIs.NotNull(() => contract);
+
+		CopyFrom(contract);
+	}
+
+	public virtual string this[ContentLanguageSelection language]
+	{
+		get => language switch
 		{
-			get => language switch
+			ContentLanguageSelection.English => English,
+			ContentLanguageSelection.Japanese => Japanese,
+			ContentLanguageSelection.Romaji => Romaji,
+			_ => Default,
+		};
+		set
+		{
+			switch (language)
 			{
-				ContentLanguageSelection.English => English,
-				ContentLanguageSelection.Japanese => Japanese,
-				ContentLanguageSelection.Romaji => Romaji,
-				_ => Default,
+				case ContentLanguageSelection.English:
+					English = value;
+					break;
+				case ContentLanguageSelection.Japanese:
+					Japanese = value;
+					break;
+				case ContentLanguageSelection.Romaji:
+					Romaji = value;
+					break;
+				default:
+					Default = value;
+					break;
+			}
+		}
+	}
+
+	public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
+
+	/// <summary>
+	/// All names in prioritized order.
+	/// Cannot be null.
+	/// </summary>
+	public virtual IEnumerable<string> All
+	{
+		get
+		{
+			return new[]
+			{
+				Japanese,
+				Romaji,
+				English,
 			};
-			set
+		}
+	}
+
+	public virtual IEnumerable<LocalizedString> AllLocalized
+	{
+		get
+		{
+			return new[]
 			{
-				switch (language)
-				{
-					case ContentLanguageSelection.English:
-						English = value;
-						break;
-					case ContentLanguageSelection.Japanese:
-						Japanese = value;
-						break;
-					case ContentLanguageSelection.Romaji:
-						Romaji = value;
-						break;
-					default:
-						Default = value;
-						break;
-				}
-			}
+				new LocalizedString(Japanese, ContentLanguageSelection.Japanese),
+				new LocalizedString(Romaji, ContentLanguageSelection.Romaji),
+				new LocalizedString(English, ContentLanguageSelection.English),
+			};
 		}
+	}
 
-		public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
+	/*public virtual string Default {
+		get {  return defaultVal; }
+		protected set {
+			ParamIs.NotNullOrEmpty(() => value);
+			defaultVal = value;
+		}
+	}*/
 
-		/// <summary>
-		/// All names in prioritized order.
-		/// Cannot be null.
-		/// </summary>
-		public virtual IEnumerable<string> All
+	/// <summary>
+	/// Name in the default language, or first available translation.
+	/// Can be null or empty, but only if there are no translations.
+	/// </summary>
+	public virtual string Default
+	{
+		get => GetDefaultOrFirst();
+		set
 		{
-			get
+			switch (DefaultLanguage)
 			{
-				return new[] {
-					Japanese,
-					Romaji,
-					English,
-				};
+				case ContentLanguageSelection.English:
+					English = value;
+					break;
+				case ContentLanguageSelection.Japanese:
+					Japanese = value;
+					break;
+				case ContentLanguageSelection.Romaji:
+					Romaji = value;
+					break;
+				default:
+					Japanese = value;
+					break;
 			}
 		}
+	}
 
-		public virtual IEnumerable<LocalizedString> AllLocalized
+	public virtual ContentLanguageSelection DefaultLanguage { get; set; }
+
+	/// <summary>
+	/// Name in English.
+	/// TODO: currently this can be null/empty, but that should be changed for all new fields.
+	/// </summary>
+	public virtual string English
+	{
+		get => _english;
+		[MemberNotNull(nameof(_english))]
+		set
 		{
-			get
-			{
-				return new[] {
-					new LocalizedString(Japanese, ContentLanguageSelection.Japanese),
-					new LocalizedString(Romaji, ContentLanguageSelection.Romaji),
-					new LocalizedString(English, ContentLanguageSelection.English),
-				};
-			}
+			_english = value;
+			//UpdateDefault();
 		}
+	}
 
-		/*public virtual string Default {
-			get {  return defaultVal; }
-			protected set {
-				ParamIs.NotNullOrEmpty(() => value);
-				defaultVal = value;
-			}
-		}*/
-
-		/// <summary>
-		/// Name in the default language, or first available translation.
-		/// Can be null or empty, but only if there are no translations.
-		/// </summary>
-		public virtual string Default
+	/// <summary>
+	/// Name in the original language (usually Japanese).
+	/// TODO: currently this can be null/empty, but that should be changed for all new fields.
+	/// </summary>
+	public virtual string Japanese
+	{
+		get => _original;
+		[MemberNotNull(nameof(_original))]
+		set
 		{
-			get => GetDefaultOrFirst();
-			set
-			{
-				switch (DefaultLanguage)
-				{
-					case ContentLanguageSelection.English:
-						English = value;
-						break;
-					case ContentLanguageSelection.Japanese:
-						Japanese = value;
-						break;
-					case ContentLanguageSelection.Romaji:
-						Romaji = value;
-						break;
-					default:
-						Japanese = value;
-						break;
-				}
-			}
+			_original = value;
 		}
+	}
 
-		public virtual ContentLanguageSelection DefaultLanguage { get; set; }
-
-		/// <summary>
-		/// Name in English.
-		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
-		/// </summary>
-		public virtual string English
+	/// <summary>
+	/// Romanized name.
+	/// TODO: currently this can be null/empty, but that should be changed for all new fields.
+	/// </summary>
+	public virtual string Romaji
+	{
+		get => _romaji;
+		[MemberNotNull(nameof(_romaji))]
+		set
 		{
-			get => _english;
-			set
-			{
-				_english = value;
-				//UpdateDefault();
-			}
+			_romaji = value;
 		}
+	}
 
-		/// <summary>
-		/// Name in the original language (usually Japanese).
-		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
-		/// </summary>
-		public virtual string Japanese
-		{
-			get => _original;
-			set
-			{
-				_original = value;
-			}
-		}
+	public virtual void Clear()
+	{
+		Japanese = Romaji = English = string.Empty;
+	}
 
-		/// <summary>
-		/// Romanized name.
-		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
-		/// </summary>
-		public virtual string Romaji
-		{
-			get => _romaji;
-			set
-			{
-				_romaji = value;
-			}
-		}
+	public virtual void CopyFrom(ITranslatedString contract)
+	{
+		ParamIs.NotNull(() => contract);
 
-		public virtual void Clear()
-		{
-			Japanese = Romaji = English = string.Empty;
-		}
+		DefaultLanguage = contract.DefaultLanguage;
+		English = contract.English;
+		Japanese = contract.Japanese;
+		Romaji = contract.Romaji;
+	}
 
-#nullable enable
-		public virtual void CopyFrom(ITranslatedString contract)
-		{
-			ParamIs.NotNull(() => contract);
+	public virtual string GetBestMatch(ContentLanguagePreference preference)
+	{
+		return GetBestMatch(preference, DefaultLanguage);
+	}
 
-			DefaultLanguage = contract.DefaultLanguage;
-			English = contract.English;
-			Japanese = contract.Japanese;
-			Romaji = contract.Romaji;
-		}
+	public virtual string GetBestMatch(ContentLanguagePreference preference, ContentLanguageSelection defaultLanguage)
+	{
+		var val = this[preference == ContentLanguagePreference.Default ? defaultLanguage : (ContentLanguageSelection)preference];
 
-		public virtual string GetBestMatch(ContentLanguagePreference preference)
-		{
-			return GetBestMatch(preference, DefaultLanguage);
-		}
+		return !string.IsNullOrEmpty(val) ? val : GetDefaultOrFirst(defaultLanguage);
+	}
 
-		public virtual string GetBestMatch(ContentLanguagePreference preference, ContentLanguageSelection defaultLanguage)
-		{
-			var val = this[preference == ContentLanguagePreference.Default ? defaultLanguage : (ContentLanguageSelection)preference];
+	public virtual string GetDefaultOrFirst()
+	{
+		return GetDefaultOrFirst(DefaultLanguage);
+	}
 
-			return (!string.IsNullOrEmpty(val) ? val : GetDefaultOrFirst(defaultLanguage));
-		}
+	/// <summary>
+	/// Gets the translation matching the selected language, or the first translation if the specified language has no translation.
+	/// </summary>
+	/// <param name="defaultLanguage">Selected language. If this is Unspecified, DefaultLanguage will be used.</param>
+	/// <returns>Translated name for the selected language, or first translation. Cannot be null. Can be empty, but only if there are no translations.</returns>
+	public virtual string GetDefaultOrFirst(ContentLanguageSelection defaultLanguage)
+	{
+		var val = defaultLanguage != ContentLanguageSelection.Unspecified || DefaultLanguage != ContentLanguageSelection.Unspecified ? this[defaultLanguage] : null;
 
-		public virtual string GetDefaultOrFirst()
-		{
-			return GetDefaultOrFirst(DefaultLanguage);
-		}
-
-		/// <summary>
-		/// Gets the translation matching the selected language, or the first translation if the specified language has no translation.
-		/// </summary>
-		/// <param name="defaultLanguage">Selected language. If this is Unspecified, DefaultLanguage will be used.</param>
-		/// <returns>Translated name for the selected language, or first translation. Cannot be null. Can be empty, but only if there are no translations.</returns>
-		public virtual string GetDefaultOrFirst(ContentLanguageSelection defaultLanguage)
-		{
-			var val = (defaultLanguage != ContentLanguageSelection.Unspecified || DefaultLanguage != ContentLanguageSelection.Unspecified ? this[defaultLanguage] : null);
-
-			return !string.IsNullOrEmpty(val) ? val : All.FirstOrDefault(n => !string.IsNullOrEmpty(n)) ?? string.Empty;
-		}
-#nullable disable
+		return !string.IsNullOrEmpty(val) ? val : All.FirstOrDefault(n => !string.IsNullOrEmpty(n)) ?? string.Empty;
 	}
 }

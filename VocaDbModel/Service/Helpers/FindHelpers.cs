@@ -40,7 +40,7 @@ public static class FindHelpers
 	/// Because brackets are used for character group wildcards in T-SQL "like" queries, 
 	/// searches such as "alone [SNDI RMX]" did not work.
 	/// </remarks>
-	[return: NotNullIfNotNull("term"/* TODO: use nameof */)]
+	[return: NotNullIfNotNull(nameof(term))]
 	public static string? CleanTerm(string? term)
 	{
 		if (string.IsNullOrEmpty(term))
@@ -64,7 +64,7 @@ public static class FindHelpers
 	/// <param name="matchMode">Current match mode. If Auto, will be set if something else besides Auto.</param>
 	/// <param name="defaultMode">Default match mode to be used for normal queries.</param>
 	/// <returns>Text query. Wildcard characters are removed. Can be null or empty, if original query is.</returns>
-	[return: NotNullIfNotNull("query"/* TODO: use nameof */)]
+	[return: NotNullIfNotNull(nameof(query))]
 	public static string? GetMatchModeAndQueryForSearch(string? query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words)
 	{
 		if (string.IsNullOrEmpty(query))

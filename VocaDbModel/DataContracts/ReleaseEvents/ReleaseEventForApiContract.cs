@@ -17,7 +17,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 	{
 		bool IDeletableEntry.Deleted => false;
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 
 		public ReleaseEventForApiContract() { }
@@ -144,8 +146,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; init; }
 
+#nullable enable
 		[DataMember]
 		public string Name { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.

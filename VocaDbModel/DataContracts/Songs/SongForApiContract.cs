@@ -25,6 +25,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongForApiContract(Song song, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 			: this(song, null, languagePreference, fields) { }
 
+#nullable enable
 		public SongForApiContract(Song song, SongMergeRecord mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
 			ArtistString = song.ArtistString[languagePreference];
@@ -103,6 +104,7 @@ namespace VocaDb.Model.DataContracts.Songs
 				MaxMilliBpm = song.MaxMilliBpm;
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
@@ -134,11 +136,13 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		public DateTime CreateDate { get; init; }
 
+#nullable enable
 		/// <summary>
 		/// Name in default language.
 		/// </summary>
 		[DataMember]
 		public string DefaultName { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// Language selection of the original name.

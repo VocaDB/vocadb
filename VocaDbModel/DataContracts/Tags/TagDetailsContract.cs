@@ -9,7 +9,9 @@ namespace VocaDb.Model.DataContracts.Tags
 	[Obsolete]
 	public class TagDetailsContract : TagContract, IEntryWithStatus
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 
 		EntryType IEntryBase.EntryType => EntryType.Tag;
 

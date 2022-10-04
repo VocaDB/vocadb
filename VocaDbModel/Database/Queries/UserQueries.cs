@@ -1935,7 +1935,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		[return: NotNullIfNotNull(nameof(pictureData))]
 		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
 		{
 			if (pictureData == null) return null;

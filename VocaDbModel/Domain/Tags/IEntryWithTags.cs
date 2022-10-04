@@ -1,14 +1,11 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Domain.Tags
+public interface IEntryWithTags : IEntryBase
 {
-	public interface IEntryWithTags : IEntryBase
-	{
-		/// <summary>
-		/// If this is set to false, notifications will not be sent to users.
-		/// </summary>
-		bool AllowNotifications { get; }
+	/// <summary>
+	/// If this is set to false, notifications will not be sent to users.
+	/// </summary>
+	bool AllowNotifications { get; }
 
-		ITagManager Tags { get; }
-	}
+	ITagManager Tags { get; }
 }

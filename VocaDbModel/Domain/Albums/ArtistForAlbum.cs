@@ -46,7 +46,9 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual Artist Artist { get; set; }
+#nullable enable
+		public virtual Artist? Artist { get; set; }
+#nullable disable
 
 		public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
 

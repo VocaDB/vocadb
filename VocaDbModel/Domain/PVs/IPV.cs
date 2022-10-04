@@ -1,31 +1,30 @@
 using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Model.Domain.PVs
+namespace VocaDb.Model.Domain.PVs;
+
+/// <summary>
+/// Interface for PVs
+/// </summary>
+public interface IPV
 {
+	bool Disabled { get; }
+
 	/// <summary>
-	/// Interface for PVs
+	/// Unique Id.
 	/// </summary>
-	public interface IPV
-	{
-		bool Disabled { get; }
+	int Id { get; }
 
-		/// <summary>
-		/// Unique Id.
-		/// </summary>
-		int Id { get; }
+	string PVId { get; }
 
-		string PVId { get; }
+	/// <summary>
+	/// PV type
+	/// </summary>
+	PVType PVType { get; }
 
-		/// <summary>
-		/// PV type
-		/// </summary>
-		PVType PVType { get; }
+	/// <summary>
+	/// PV service
+	/// </summary>
+	PVService Service { get; }
 
-		/// <summary>
-		/// PV service
-		/// </summary>
-		PVService Service { get; }
-
-		bool ContentEquals(PVContract? pv);
-	}
+	bool ContentEquals(PVContract? pv);
 }

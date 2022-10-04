@@ -11,7 +11,7 @@ namespace VocaDb.Tests.Helpers;
 [TestClass]
 public class XmlHelperTests
 {
-	[return: NotNullIfNotNull("obj"/* TODO: Use nameof. */)]
+	[return: NotNullIfNotNull(nameof(obj))]
 	private static T? SerializeToObjectAndBack<T>(T? obj)
 	{
 		var xml = XmlHelper.SerializeToXml(obj);

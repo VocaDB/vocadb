@@ -1,54 +1,49 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Albums
+namespace VocaDb.Model.Domain.Albums;
+
+public class AlbumTagUsage : GenericTagUsage<Album, AlbumTagVote>
 {
-	public class AlbumTagUsage : GenericTagUsage<Album, AlbumTagVote>
+	public AlbumTagUsage() { }
+
+	public AlbumTagUsage(Album album, Tag tag) : base(album, tag) { }
+
+	public override TagVote? CreateVote(User user)
 	{
-		public AlbumTagUsage() { }
+		if (FindVote(user) != null)
+			return null;
 
-		public AlbumTagUsage(Album album, Tag tag) : base(album, tag) { }
+		var vote = new AlbumTagVote(this, user);
+		Votes.Add(vote);
+		Count++;
 
-		public override TagVote CreateVote(User user)
-		{
-			if (FindVote(user) != null)
-				return null;
+		return vote;
+	}
 
-			var vote = new AlbumTagVote(this, user);
-			Votes.Add(vote);
-			Count++;
+	public override void Delete()
+	{
+		base.Delete();
 
-			return vote;
-		}
+		Entry.Tags.Usages.Remove(this);
+		Tag.AllAlbumTagUsages.Remove(this);
+	}
 
-		public override void Delete()
-		{
-			base.Delete();
+	public override TagUsage Move(Tag target)
+	{
+		ParamIs.NotNull(() => target);
 
-			Entry.Tags.Usages.Remove(this);
-			Tag.AllAlbumTagUsages.Remove(this);
-		}
+		if (target.Equals(Tag))
+			return this;
 
-#nullable enable
-		public override TagUsage Move(Tag target)
-		{
-			ParamIs.NotNull(() => target);
+		// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
+		Tag.AllAlbumTagUsages.Remove(this);
+		Entry.Tags.Usages.Remove(this);
 
-			if (target.Equals(Tag))
-				return this;
+		var newUsage = new AlbumTagUsage(Entry, target);
+		target.AllAlbumTagUsages.Add(newUsage);
+		Entry.Tags.Usages.Add(newUsage);
 
-			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
-			Tag.AllAlbumTagUsages.Remove(this);
-			Entry.Tags.Usages.Remove(this);
-
-			var newUsage = new AlbumTagUsage(Entry, target);
-			target.AllAlbumTagUsages.Add(newUsage);
-			Entry.Tags.Usages.Add(newUsage);
-
-			return newUsage;
-		}
-#nullable disable
+		return newUsage;
 	}
 }

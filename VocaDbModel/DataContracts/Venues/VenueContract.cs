@@ -9,7 +9,9 @@ namespace VocaDb.Model.DataContracts.Venues
 	public class VenueContract : IEntryWithStatus
 	{
 		EntryType IEntryBase.EntryType => EntryType.Venue;
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 
 		public string AdditionalNames { get; init; }
 
@@ -25,7 +27,9 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public int Id { get; set; }
 
+#nullable enable
 		public string Name { get; init; }
+#nullable disable
 
 		public EntryStatus Status { get; init; }
 

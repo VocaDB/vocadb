@@ -1,119 +1,118 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Tags
+namespace VocaDb.Model.Domain.Tags;
+
+/// <summary>
+/// Manages tags and tag usages for an entry.
+/// There's always one tag manager per entry.
+/// </summary>
+/// <typeparam name="T">Type of tag usage.</typeparam>
+public class TagManager<T> : ITagManager where T : TagUsage
 {
+	private ISet<T> _tags = new HashSet<T>();
+
 	/// <summary>
-	/// Manages tags and tag usages for an entry.
-	/// There's always one tag manager per entry.
+	/// Usages of tags that are not deleted.
 	/// </summary>
-	/// <typeparam name="T">Type of tag usage.</typeparam>
-	public class TagManager<T> : ITagManager where T : TagUsage
+	public virtual IEnumerable<T> ActiveUsages => Usages.Where(t => !t.Tag.Deleted);
+
+	public virtual IEnumerable<Tag> Tags => Usages.Select(t => t.Tag);
+
+	/// <summary>
+	/// Tags sorted descending by the number of votes. Cannot be null.
+	/// </summary>
+	public virtual IEnumerable<Tag> TagsByVotes => Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
+
+	/// <summary>
+	/// List of all tag usages. Cannot be null.
+	/// This property is mapped to database.
+	/// </summary>
+	public virtual ISet<T> Usages
 	{
-		private ISet<T> _tags = new HashSet<T>();
-
-		/// <summary>
-		/// Usages of tags that are not deleted.
-		/// </summary>
-		public virtual IEnumerable<T> ActiveUsages => Usages.Where(t => !t.Tag.Deleted);
-
-		public virtual IEnumerable<Tag> Tags => Usages.Select(t => t.Tag);
-
-		/// <summary>
-		/// Tags sorted descending by the number of votes. Cannot be null.
-		/// </summary>
-		public virtual IEnumerable<Tag> TagsByVotes => Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
-
-		/// <summary>
-		/// List of all tag usages. Cannot be null.
-		/// This property is mapped to database.
-		/// </summary>
-		public virtual ISet<T> Usages
+		get => _tags;
+		set
 		{
-			get => _tags;
-			set
+			ParamIs.NotNull(() => value);
+			_tags = value;
+		}
+	}
+
+	/// <summary>
+	/// Deletes all tag usages, updating caches.
+	/// </summary>
+	public virtual void DeleteUsages()
+	{
+		var list = Usages.ToArray();
+
+		foreach (var usage in list)
+			usage.Delete();
+	}
+
+	public virtual T? GetTagUsage(Tag tag)
+	{
+		ParamIs.NotNull(() => tag);
+		return Usages.FirstOrDefault(t => t.Tag.Equals(tag));
+	}
+
+	public virtual bool HasTag(Tag tag)
+	{
+		ParamIs.NotNull(() => tag);
+
+		return Usages.Any(u => u.Tag.Equals(tag));
+	}
+
+	public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
+
+	public virtual Tag[] SyncVotes(
+		User user,
+		Tag[] tags,
+		ITagUsageFactory<T> tagUsageFactory,
+		bool onlyAdd = false
+	)
+	{
+		var actualTags = tags.Distinct().ToArray();
+		var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
+		var modifiedTags = new List<Tag>(tagUsagesDiff.Added.Length + tagUsagesDiff.Removed.Length + tagUsagesDiff.Unchanged.Length);
+
+		foreach (var newUsageTag in tagUsagesDiff.Added)
+		{
+			var newUsage = tagUsageFactory.CreateTagUsage(newUsageTag);
+			Usages.Add(newUsage);
+			newUsage.CreateVote(user);
+			newUsageTag.UsageCount++;
+			modifiedTags.Add(newUsageTag);
+		}
+
+		if (!onlyAdd)
+		{
+			foreach (var removedTag in tagUsagesDiff.Removed)
 			{
-				ParamIs.NotNull(() => value);
-				_tags = value;
-			}
-		}
+				removedTag.RemoveVote(user);
 
-		/// <summary>
-		/// Deletes all tag usages, updating caches.
-		/// </summary>
-		public virtual void DeleteUsages()
-		{
-			var list = Usages.ToArray();
-
-			foreach (var usage in list)
-				usage.Delete();
-		}
-
-#nullable enable
-		public virtual T? GetTagUsage(Tag tag)
-		{
-			ParamIs.NotNull(() => tag);
-			return Usages.FirstOrDefault(t => t.Tag.Equals(tag));
-		}
-
-		public virtual bool HasTag(Tag tag)
-		{
-			ParamIs.NotNull(() => tag);
-
-			return Usages.Any(u => u.Tag.Equals(tag));
-		}
-#nullable disable
-
-		public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
-
-		public virtual Tag[] SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
-			bool onlyAdd = false)
-		{
-			var actualTags = tags.Distinct().ToArray();
-			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
-			var modifiedTags = new List<Tag>(tagUsagesDiff.Added.Length + tagUsagesDiff.Removed.Length + tagUsagesDiff.Unchanged.Length);
-
-			foreach (var newUsageTag in tagUsagesDiff.Added)
-			{
-				var newUsage = tagUsageFactory.CreateTagUsage(newUsageTag);
-				Usages.Add(newUsage);
-				newUsage.CreateVote(user);
-				newUsageTag.UsageCount++;
-				modifiedTags.Add(newUsageTag);
-			}
-
-			if (!onlyAdd)
-			{
-				foreach (var removedTag in tagUsagesDiff.Removed)
+				if (!removedTag.HasVotes)
 				{
-					removedTag.RemoveVote(user);
-
-					if (!removedTag.HasVotes)
-					{
-						removedTag.Tag.UsageCount--;
-						Usages.Remove(removedTag);
-					}
-
-					modifiedTags.Add(removedTag.Tag);
+					removedTag.Tag.UsageCount--;
+					Usages.Remove(removedTag);
 				}
-			}
 
-			foreach (var updated in tagUsagesDiff.Unchanged)
-			{
-				updated.CreateVote(user);
-				modifiedTags.Add(updated.Tag);
+				modifiedTags.Add(removedTag.Tag);
 			}
-
-			return modifiedTags.ToArray();
 		}
-	}
 
-	public interface ITagManager
-	{
-		IEnumerable<Tag> Tags { get; }
+		foreach (var updated in tagUsagesDiff.Unchanged)
+		{
+			updated.CreateVote(user);
+			modifiedTags.Add(updated.Tag);
+		}
 
-		bool HasTag(Tag tag);
+		return modifiedTags.ToArray();
 	}
+}
+
+public interface ITagManager
+{
+	IEnumerable<Tag> Tags { get; }
+
+	bool HasTag(Tag tag);
 }

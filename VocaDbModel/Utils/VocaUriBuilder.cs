@@ -83,7 +83,7 @@ namespace VocaDb.Model.Utils
 			}
 		}
 
-		[return: NotNullIfNotNull("url"/* TODO: use nameof */)]
+		[return: NotNullIfNotNull(nameof(url))]
 		public static string? RemoveTrailingSlash(string? url)
 		{
 			if (string.IsNullOrEmpty(url))

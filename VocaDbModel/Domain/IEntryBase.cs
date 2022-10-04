@@ -1,17 +1,14 @@
-#nullable disable
+namespace VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Domain
+public interface IEntryBase : IDeletableEntry
 {
-	public interface IEntryBase : IDeletableEntry
-	{
-		string DefaultName { get; }
+	string DefaultName { get; }
 
-		EntryType EntryType { get; }
+	EntryType EntryType { get; }
 
-		/// <summary>
-		/// Current entry version number.
-		/// If the entry doesn't support versioning, this should always be 0.
-		/// </summary>
-		int Version { get; }
-	}
+	/// <summary>
+	/// Current entry version number.
+	/// If the entry doesn't support versioning, this should always be 0.
+	/// </summary>
+	int Version { get; }
 }

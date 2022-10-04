@@ -1,7 +1,6 @@
-namespace VocaDb.Model.Domain
+namespace VocaDb.Model.Domain;
+
+public interface IEntryWithStatus : IEntryBase
 {
-	public interface IEntryWithStatus : IEntryBase
-	{
-		EntryStatus Status { get; }
-	}
+	EntryStatus Status { get; }
 }

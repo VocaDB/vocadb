@@ -150,11 +150,13 @@ namespace VocaDb.Model.DataContracts.Albums
 		[DataMember]
 		public DateTime CreateDate { get; init; }
 
+#nullable enable
 		/// <summary>
 		/// Name in default language.
 		/// </summary>
 		[DataMember]
 		public string DefaultName { get; init; }
+#nullable disable
 
 		/// <summary>
 		/// Language selection of the original name.

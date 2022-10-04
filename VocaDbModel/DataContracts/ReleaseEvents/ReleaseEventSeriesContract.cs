@@ -11,7 +11,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId, IEntryWithStatus
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
 #nullable enable
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
@@ -63,10 +65,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public int Id { get; set; }
 
+#nullable enable
 		[DataMember]
 		public string Name { get; init; }
 
-#nullable enable
 		[DataMember]
 		public string? PictureMime { get; init; }
 
