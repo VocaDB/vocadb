@@ -1,20 +1,17 @@
-#nullable disable
-
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Songs
+namespace VocaDb.Model.DataContracts.Songs;
+
+public interface IArtistLinkContract
 {
-	public interface IArtistLinkContract
-	{
-		ArtistContract Artist { get; }
+	ArtistContract? Artist { get; }
 
-		ArtistCategories Categories { get; }
+	ArtistCategories Categories { get; }
 
-		ArtistRoles EffectiveRoles { get; }
+	ArtistRoles EffectiveRoles { get; }
 
-		bool IsSupport { get; }
+	bool IsSupport { get; }
 
-		string Name { get; }
-	}
+	string? Name { get; }
 }

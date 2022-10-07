@@ -39,17 +39,19 @@ export class PlayQueueRepositoryForSongListAdapter
 			.map(({ song }) => song)
 			.filter((song) => !!song)
 			.map((song) => song!)
-			.map((song) => ({
-				entryType: EntryType.Song as const /* TODO: enum */,
-				id: song.id,
-				name: song.name,
-				status: song.status,
-				additionalNames: song.additionalNames,
-				urlThumb: song.mainPicture?.urlThumb ?? '',
-				pvs: song.pvs ?? [],
-				artistString: song.artistString,
-				songType: song.songType,
-			}));
+			.map(
+				(song): PlayQueueSongContract => ({
+					entryType: EntryType.Song,
+					id: song.id,
+					name: song.name,
+					status: song.status,
+					additionalNames: song.additionalNames,
+					urlThumb: song.mainPicture?.urlThumb ?? '',
+					pvs: song.pvs ?? [],
+					artistString: song.artistString,
+					songType: song.songType,
+				}),
+			);
 
 		return { items: songs, totalCount: totalCount };
 	};

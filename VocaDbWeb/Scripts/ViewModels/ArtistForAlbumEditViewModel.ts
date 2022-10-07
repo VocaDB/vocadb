@@ -46,7 +46,7 @@ export class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
 		repository: AlbumRepository,
 		data: ArtistForAlbumContract,
 	) {
-		this.artist = data.artist;
+		this.artist = data.artist!;
 		this.id = data.id!;
 		this.isCustomName = data.isCustomName!;
 		this.isSupport = ko.observable(data.isSupport!);

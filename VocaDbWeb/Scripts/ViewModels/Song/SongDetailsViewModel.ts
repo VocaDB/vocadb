@@ -253,7 +253,7 @@ export class SongDetailsViewModel {
 					.then((result) => {
 						var artists = _.chain(result.artists!)
 							.filter(ArtistHelper.isValidForPersonalDescription)
-							.map((a) => a.artist)
+							.map((a) => a.artist!)
 							.value();
 						return artists;
 					}),

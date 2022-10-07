@@ -29,10 +29,13 @@ export class SongCreateViewModel {
 
 	public artistsWithRoles: Computed<ArtistForAlbumContract[]> = ko.computed(
 		() =>
-			this.artists().map((a) => ({
-				artist: a,
-				roles: ArtistRoles[ArtistRoles.Default],
-			})),
+			this.artists().map(
+				(a) =>
+					({
+						artist: a,
+						roles: ArtistRoles[ArtistRoles.Default],
+					} as ArtistForAlbumContract),
+			),
 	);
 
 	private getArtistIds = (): number[] => {

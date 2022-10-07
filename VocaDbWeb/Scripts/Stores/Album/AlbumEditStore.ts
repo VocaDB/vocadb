@@ -327,7 +327,7 @@ export class AlbumEditStore {
 			});
 
 			const artists = song
-				.artists!.map((artistLink) => artistLink.artist)
+				.artists!.map((artistLink) => artistLink.artist!)
 				.filter((artist) => artist != null);
 
 			const track = new SongInAlbumEditStore({

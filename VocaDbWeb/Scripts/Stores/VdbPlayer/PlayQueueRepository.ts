@@ -36,35 +36,27 @@ export enum EntryType {
 	Song = 'Song',
 }
 
-export interface PlayQueueAlbumContract {
-	entryType: EntryType.Album;
+interface PlayQueueCommonEntryContract {
 	id: number;
 	name: string;
 	status: EntryStatus;
 	additionalNames: string;
 	urlThumb: string;
 	pvs: PVContract[];
+}
+
+export interface PlayQueueAlbumContract extends PlayQueueCommonEntryContract {
+	entryType: EntryType.Album;
 	artistString: string;
 }
 
-export interface PlayQueueReleaseEventContract {
+export interface PlayQueueReleaseEventContract
+	extends PlayQueueCommonEntryContract {
 	entryType: EntryType.ReleaseEvent;
-	id: number;
-	name: string;
-	status: EntryStatus;
-	additionalNames: string;
-	urlThumb: string;
-	pvs: PVContract[];
 }
 
-export interface PlayQueueSongContract {
+export interface PlayQueueSongContract extends PlayQueueCommonEntryContract {
 	entryType: EntryType.Song;
-	id: number;
-	name: string;
-	status: EntryStatus;
-	additionalNames: string;
-	urlThumb: string;
-	pvs: PVContract[];
 	artistString: string;
 	songType: SongType;
 }

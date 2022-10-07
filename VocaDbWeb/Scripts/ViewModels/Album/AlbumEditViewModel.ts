@@ -348,7 +348,7 @@ export class AlbumEditViewModel {
 					})
 					.then((song) => {
 						var artists = song
-							.artists!.map((artistLink) => artistLink.artist)
+							.artists!.map((artistLink) => artistLink.artist!)
 							.filter((artist) => artist != null);
 
 						var track = new SongInAlbumEditViewModel({

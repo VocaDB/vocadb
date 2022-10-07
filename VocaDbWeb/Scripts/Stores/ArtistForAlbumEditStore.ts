@@ -22,7 +22,7 @@ export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
 	public constructor(data: ArtistForAlbumContract) {
 		makeObservable(this);
 
-		this.artist = data.artist;
+		this.artist = data.artist!;
 		this.id = data.id!;
 		this.isCustomName = data.isCustomName!;
 		this.isSupport = data.isSupport!;

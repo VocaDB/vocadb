@@ -35,17 +35,19 @@ export class PlayQueueRepositoryForSongsAdapter
 			queryParams: queryParams,
 		});
 
-		const songs = items.map((song) => ({
-			entryType: EntryType.Song as const /* TODO: enum */,
-			id: song.id,
-			name: song.name,
-			status: song.status,
-			additionalNames: song.additionalNames,
-			urlThumb: song.mainPicture?.urlThumb ?? '',
-			pvs: song.pvs ?? [],
-			artistString: song.artistString,
-			songType: song.songType,
-		}));
+		const songs = items.map(
+			(song): PlayQueueSongContract => ({
+				entryType: EntryType.Song,
+				id: song.id,
+				name: song.name,
+				status: song.status,
+				additionalNames: song.additionalNames,
+				urlThumb: song.mainPicture?.urlThumb ?? '',
+				pvs: song.pvs ?? [],
+				artistString: song.artistString,
+				songType: song.songType,
+			}),
+		);
 
 		return { items: songs, totalCount: totalCount };
 	};

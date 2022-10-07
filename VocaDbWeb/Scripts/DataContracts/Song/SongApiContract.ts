@@ -8,15 +8,10 @@ export interface SongApiContract
 	extends SongContract,
 		EntryWithTagUsagesContract {
 	artists?: ArtistForAlbumContract[];
-
 	defaultName?: string;
-
 	names?: LocalizedStringContract[];
-
 	// Not returned from the API, but can be used to cache the list of PV services client side
 	pvServicesArray?: PVService[];
-
 	urlFriendlyName?: string;
-
 	version?: number;
 }

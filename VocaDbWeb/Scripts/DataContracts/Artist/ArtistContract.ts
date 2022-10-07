@@ -5,12 +5,8 @@ import { ArtistType } from '@/Models/Artists/ArtistType';
 
 export interface ArtistContract extends CommonEntryContract {
 	additionalNames?: string;
-
 	artistType: ArtistType;
-
 	mainPicture?: EntryThumbContract;
-
 	releaseDate?: string;
-
 	tags?: TagUsageForApiContract[];
 }
