@@ -42,6 +42,20 @@ const PlayerCenterControls = observer(
 		const diva = useNostalgicDiva();
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
+		const handlePrevious = React.useCallback(async () => {
+			if (playQueue.hasPreviousItem) {
+				const currentTime = await diva.getCurrentTime();
+
+				if (currentTime === undefined || currentTime < 5) {
+					playQueue.previous();
+				} else {
+					await diva.setCurrentTime(0);
+				}
+			} else {
+				await diva.setCurrentTime(0);
+			}
+		}, [diva, playQueue]);
+
 		const handlePause = React.useCallback(async () => {
 			await diva.pause();
 		}, [diva]);
@@ -64,8 +78,7 @@ const PlayerCenterControls = observer(
 				<Button
 					variant="inverse"
 					title="Previous" /* TODO: localize */
-					onClick={playQueue.previous}
-					disabled={!playQueue.hasPreviousItem}
+					onClick={handlePrevious}
 				>
 					<i className="icon-step-backward icon-white" />
 				</Button>
