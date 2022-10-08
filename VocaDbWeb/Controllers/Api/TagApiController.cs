@@ -315,7 +315,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPut("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IActionResult PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings)
+		public IActionResult PutEntryMappings([FromBody] IEnumerable<TagEntryMappingContract> mappings)
 		{
 			if (mappings == null)
 				return BadRequest("Mappings cannot be null");
@@ -327,7 +327,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPut("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IActionResult PutMappings(IEnumerable<TagMappingContract> mappings)
+		public IActionResult PutMappings([FromBody] IEnumerable<TagMappingContract> mappings)
 		{
 			if (mappings == null)
 				return BadRequest("Mappings cannot be null");

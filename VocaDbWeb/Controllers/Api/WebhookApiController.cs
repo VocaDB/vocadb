@@ -36,7 +36,7 @@ namespace VocaDb.Web.Controllers.Api
 		}
 
 		[HttpPut("")]
-		public IActionResult PutWebhooks(IEnumerable<WebhookContract> webhooks)
+		public IActionResult PutWebhooks([FromBody] IEnumerable<WebhookContract> webhooks)
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageWebhooks);
 
