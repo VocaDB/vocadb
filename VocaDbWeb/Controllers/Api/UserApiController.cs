@@ -726,7 +726,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/albumTags/{albumId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutAlbumTags(int albumId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutAlbumTags(int albumId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
@@ -737,7 +737,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/artistTags/{artistId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutArtistTags(int artistId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutArtistTags(int artistId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
@@ -748,7 +748,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/eventTags/{eventId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventTags(int eventId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventTags(int eventId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
@@ -759,7 +759,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/eventSeriesTags/{seriesId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventSeriesTags(int seriesId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutEventSeriesTags(int seriesId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
@@ -770,7 +770,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/songListTags/{songListId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongListTags(int songListId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongListTags(int songListId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();
@@ -803,7 +803,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPut("current/songTags/{songId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongTags(int songId, TagBaseContract[]? tags)
+		public async Task<ActionResult<TagUsageForApiContract[]>> PutSongTags(int songId, [FromBody] TagBaseContract[]? tags)
 		{
 			if (tags == null)
 				return BadRequest();

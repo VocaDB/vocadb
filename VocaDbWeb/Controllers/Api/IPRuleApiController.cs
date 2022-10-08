@@ -88,7 +88,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPut("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IActionResult PutIPRules(IEnumerable<IPRule> rules)
+		public IActionResult PutIPRules([FromBody] IEnumerable<IPRule> rules)
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
