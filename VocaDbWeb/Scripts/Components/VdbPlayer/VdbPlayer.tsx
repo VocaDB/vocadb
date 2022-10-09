@@ -259,6 +259,13 @@ const PlayerRightControls = observer(
 			}
 		}, [diva, playQueue]);
 
+		const handleClickRemoveFromPlayQueue = React.useCallback(async () => {
+			const { currentItem } = playQueue;
+			if (currentItem !== undefined) {
+				playQueue.removeFromPlayQueue([currentItem]);
+			}
+		}, [playQueue]);
+
 		return (
 			<>
 				{playQueue.currentItem && (
@@ -317,11 +324,12 @@ const PlayerRightControls = observer(
 						>
 							{`Repeat: ${playQueue.repeat}` /* TODO: localize */}
 						</Dropdown.Item>
+						<Dropdown.Divider />
 						<Dropdown.Item
-							onClick={playQueue.clear}
+							onClick={handleClickRemoveFromPlayQueue}
 							disabled={playQueue.isEmpty}
 						>
-							Clear play queue{/* TODO: localize */}
+							Remove from play queue{/* TODO: localize */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
