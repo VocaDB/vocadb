@@ -79,6 +79,7 @@ const PlayerCenterControls = observer(
 					variant="inverse"
 					title="Previous" /* TODO: localize */
 					onClick={handlePrevious}
+					disabled={playQueue.isEmpty}
 				>
 					<i className="icon-step-backward icon-white" />
 				</Button>
