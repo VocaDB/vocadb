@@ -19,6 +19,11 @@ export interface PVExtendedMetadata {
 	json?: string;
 }
 
+export interface BandcampPVContract extends PVContractBase {
+	service: PVService.Bandcamp;
+	extendedMetadata?: PVExtendedMetadata;
+}
+
 export interface PiaproPVContract extends PVContractBase {
 	service: PVService.Piapro;
 	extendedMetadata?: PVExtendedMetadata;
@@ -31,11 +36,14 @@ export interface SoundCloudPVContract extends PVContractBase {
 interface DefaultPVContract extends PVContractBase {
 	service: Exclude<
 		PVService,
-		PiaproPVContract['service'] | SoundCloudPVContract['service']
+		| BandcampPVContract['service']
+		| PiaproPVContract['service']
+		| SoundCloudPVContract['service']
 	>;
 }
 
 export type PVContract =
+	| BandcampPVContract
 	| PiaproPVContract
 	| SoundCloudPVContract
 	| DefaultPVContract;

@@ -1,8 +1,7 @@
-import { PVExtendedMetadata } from '@/DataContracts/PVs/PVContract';
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 
-interface ArchivedPVContractBase {
+export interface ArchivedPVContract {
 	author: string;
 	disabled: boolean;
 	length: number;
@@ -10,18 +9,6 @@ interface ArchivedPVContractBase {
 	publishDate?: string;
 	pvId: string;
 	pvType: PVType;
+	service: PVService;
 	thumbUrl: string;
 }
-
-export interface ArchivedBandcampPVContract extends ArchivedPVContractBase {
-	service: PVService.Bandcamp;
-	extendedMetadata?: PVExtendedMetadata;
-}
-
-interface DefaultArchivedPVContract extends ArchivedPVContractBase {
-	service: Exclude<PVService, ArchivedBandcampPVContract['service']>;
-}
-
-export type ArchivedPVContract =
-	| ArchivedBandcampPVContract
-	| DefaultArchivedPVContract;
