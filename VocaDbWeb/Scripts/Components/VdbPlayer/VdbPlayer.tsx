@@ -22,6 +22,7 @@ import classNames from 'classnames';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 export const miniPlayerWidth = 16 * 25;
@@ -239,6 +240,8 @@ const PVServiceDropdown = observer(
 
 const PlayerRightControls = observer(
 	(): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.Search']);
+
 		const diva = useNostalgicDiva();
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
@@ -261,6 +264,16 @@ const PlayerRightControls = observer(
 				{playQueue.currentItem && (
 					<PVServiceDropdown item={playQueue.currentItem} />
 				)}{' '}
+				<ButtonGroup>
+					<Button
+						variant="inverse"
+						as={Link}
+						to="/playlist"
+						title={t('ViewRes.Search:Index.Playlist')}
+					>
+						<i className="icon-list icon-white" />
+					</Button>
+				</ButtonGroup>{' '}
 				<Dropdown as={ButtonGroup} drop="up" css={{ marginLeft: 8 }}>
 					<Dropdown.Toggle variant="inverse">
 						<span
@@ -274,9 +287,6 @@ const PlayerRightControls = observer(
 						</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Item as={Link} to="/playlist">
-							Show play queue{/* TODO: localize */}
-						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipBack10Seconds}
 							disabled={!vdbPlayer.canAutoplay}
