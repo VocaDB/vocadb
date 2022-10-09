@@ -1,6 +1,7 @@
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Newtonsoft.Json;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils;
@@ -128,6 +129,12 @@ public class ArchivedSongContract
 	public LyricsForSongContract[]? Lyrics { get; set; }
 
 	[DataMember]
+	public int? MaxMilliBpm { get; set; }
+
+	[DataMember]
+	public int? MinMilliBpm { get; set; }
+
+	[DataMember]
 	public LocalizedStringContract[]? Names { get; set; }
 
 	[DataMember]
@@ -146,6 +153,7 @@ public class ArchivedSongContract
 	public DateTime? PublishDate { get; set; }
 
 	[DataMember]
+	[JsonProperty("pvs")]
 	public ArchivedPVContract[]? PVs { get; set; }
 
 	[DataMember]
@@ -159,10 +167,4 @@ public class ArchivedSongContract
 
 	[DataMember]
 	public ArchivedWebLinkContract[]? WebLinks { get; set; }
-
-	[DataMember]
-	public int? MinMilliBpm { get; set; }
-
-	[DataMember]
-	public int? MaxMilliBpm { get; set; }
 }

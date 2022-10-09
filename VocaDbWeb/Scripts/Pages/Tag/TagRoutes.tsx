@@ -6,6 +6,7 @@ const TagIndex = React.lazy(() => import('./TagIndex'));
 const TagEdit = React.lazy(() => import('./TagEdit'));
 const TagMerge = React.lazy(() => import('./TagMerge'));
 const TagVersions = React.lazy(() => import('./TagVersions'));
+const TagViewVersion = React.lazy(() => import('./TagViewVersion'));
 
 const TagRoutes = (): React.ReactElement => {
 	return (
@@ -14,6 +15,7 @@ const TagRoutes = (): React.ReactElement => {
 			<Route path="Edit/:id" element={<TagEdit />} />
 			<Route path="Merge/:id" element={<TagMerge />} />
 			<Route path="Versions/:id" element={<TagVersions />} />
+			<Route path="ViewVersion/:id" element={<TagViewVersion />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

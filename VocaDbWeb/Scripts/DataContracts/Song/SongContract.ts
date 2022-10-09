@@ -18,4 +18,5 @@ export interface SongContract extends CommonEntryContract {
 	songType: SongType;
 	status: EntryStatus;
 	thumbUrl?: string;
+	version: number;
 }

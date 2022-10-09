@@ -175,6 +175,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
+		[Obsolete]
 		public ArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>

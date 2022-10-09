@@ -7,6 +7,7 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
+import { regionNames } from '@/Components/regions';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -33,10 +34,6 @@ const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const venueRepo = new VenueRepository(httpClient, urlMapper);
-
-const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
-	type: 'region',
-});
 
 interface VenueDetailsLayoutProps {
 	venue: VenueForApiContract;

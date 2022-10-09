@@ -3,6 +3,7 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
+	[Obsolete]
 	public class ArchivedAlbumVersionContract : ArchivedObjectVersionContract
 	{
 		public ArchivedAlbumVersionContract() { }

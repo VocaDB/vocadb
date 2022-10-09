@@ -11,6 +11,7 @@ const SongEdit = React.lazy(() => import('./SongEdit'));
 const SongMerge = React.lazy(() => import('./SongMerge'));
 const SongRankings = React.lazy(() => import('./SongRankings'));
 const SongVersions = React.lazy(() => import('./SongVersions'));
+const SongViewVersion = React.lazy(() => import('./SongViewVersion'));
 
 const SongDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();
@@ -41,6 +42,7 @@ const SongRoutes = (): React.ReactElement => {
 			<Route path="Merge/:id" element={<SongMerge />} />
 			<Route path="Rankings" element={<SongRankings />} />
 			<Route path="Versions/:id" element={<SongVersions />} />
+			<Route path="ViewVersion/:id" element={<SongViewVersion />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

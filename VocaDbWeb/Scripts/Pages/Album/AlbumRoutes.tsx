@@ -10,6 +10,7 @@ const AlbumCreate = React.lazy(() => import('./AlbumCreate'));
 const AlbumEdit = React.lazy(() => import('./AlbumEdit'));
 const AlbumMerge = React.lazy(() => import('./AlbumMerge'));
 const AlbumVersions = React.lazy(() => import('./AlbumVersions'));
+const AlbumViewVersion = React.lazy(() => import('./AlbumViewVersion'));
 
 const AlbumDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();
@@ -39,6 +40,7 @@ const AlbumRoutes = (): React.ReactElement => {
 			<Route path="Edit/:id" element={<AlbumEdit />} />
 			<Route path="Merge/:id" element={<AlbumMerge />} />
 			<Route path="Versions/:id" element={<AlbumVersions />} />
+			<Route path="ViewVersion/:id" element={<AlbumViewVersion />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

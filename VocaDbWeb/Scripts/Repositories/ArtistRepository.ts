@@ -1,3 +1,4 @@
+import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/ArchivedArtistVersionDetailsContract';
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
@@ -269,6 +270,19 @@ export class ArtistRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<ArtistApiContract>
 		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
+	};
+
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedArtistVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedArtistVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/artists/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public create = (

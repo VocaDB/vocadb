@@ -6,7 +6,6 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -277,12 +276,7 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new SongListForApiContract(songList, PermissionContext.LanguagePreference, _userIconFactory, imagePersister: null, fields: SongListOptionalFields.None),
 					versions: songList.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: true,
-							reason: a.CommonEditEvent.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromSongList(a, _userIconFactory))
 						.ToArray()
 				);
 			});

@@ -1,5 +1,6 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedTagVersionDetailsContract';
 import { EntryTagMappingContract } from '@/DataContracts/Tag/EntryTagMappingContract';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
@@ -214,6 +215,19 @@ export class TagRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<TagApiContract>
 		>(this.urlMapper.mapRelative(`/api/tags/${id}/versions`));
+	};
+
+	public getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedTagVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedTagVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/tags/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
 	};
 
 	public getForEdit = ({ id }: { id: number }): Promise<TagForEditContract> => {

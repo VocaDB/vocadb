@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
+	[Obsolete]
 	public class SongWithArchivedVersionsContract : SongContract
 	{
 #nullable enable

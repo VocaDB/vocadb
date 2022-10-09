@@ -9,6 +9,7 @@ export interface ArchivedVersionContract {
 	created: Date;
 	hidden: boolean;
 	id: number;
+	isSnapshot: boolean;
 	notes: string;
 	reason: string;
 	status: string;

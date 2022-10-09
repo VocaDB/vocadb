@@ -1,6 +1,7 @@
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Newtonsoft.Json;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Utils;
@@ -138,6 +139,7 @@ public class ArchivedAlbumContract
 	public ArchivedEntryPictureFileContract[]? Pictures { get; set; }
 
 	[DataMember]
+	[JsonProperty("pvs")]
 	public ArchivedPVContract[]? PVs { get; set; }
 
 	[DataMember]

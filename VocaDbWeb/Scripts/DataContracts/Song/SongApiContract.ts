@@ -13,5 +13,4 @@ export interface SongApiContract
 	// Not returned from the API, but can be used to cache the list of PV services client side
 	pvServicesArray?: PVService[];
 	urlFriendlyName?: string;
-	version?: number;
 }

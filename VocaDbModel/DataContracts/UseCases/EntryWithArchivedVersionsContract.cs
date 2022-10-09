@@ -1,5 +1,6 @@
 namespace VocaDb.Model.DataContracts.UseCases
 {
+	[Obsolete]
 	public class EntryWithArchivedVersionsContract<TEntry, TVersion> : IEntryWithArchivedVersionsContract<TEntry, TVersion>
 	{
 #nullable disable
@@ -24,6 +25,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 		TEntry Entry { get; }
 	}
 
+	[Obsolete]
 	public static class EntryWithArchivedVersionsContract
 	{
 		public static EntryWithArchivedVersionsContract<TEntry, TVersion> Create<TEntry, TVersion>(TEntry entry, TVersion[] versions)

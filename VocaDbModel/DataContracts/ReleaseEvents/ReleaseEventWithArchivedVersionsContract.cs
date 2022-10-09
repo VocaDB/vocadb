@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventWithArchivedVersionsContract : ReleaseEventContract
 	{
 		public ReleaseEventWithArchivedVersionsContract(ReleaseEvent ev, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)

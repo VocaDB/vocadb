@@ -228,6 +228,7 @@ namespace VocaDb.Model.Service
 					.Select(u => new AlbumForUserContract(u, LanguagePreference, _userIconFactory, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 		}
 
+		[Obsolete]
 		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
