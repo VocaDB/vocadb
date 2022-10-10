@@ -1,12 +1,15 @@
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
+import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
+import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -18,6 +21,54 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
+
+const SkipListEdit = observer(
+	(): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes', 'VocaDb.Web.Resources.Domain']);
+
+		const { playQueue } = useVdbPlayer();
+
+		return (
+			<JQueryUIDialog
+				title="Edit skip list" /* TODO: localize */
+				autoOpen={playQueue.skipList.dialogVisible}
+				width={550}
+				close={playQueue.skipList.hideDialog}
+				buttons={[
+					{
+						text: 'Done' /* TODO: localize */,
+						click: playQueue.skipList.hideDialog,
+					},
+				]}
+			>
+				<div className="form-horizontal">
+					<div className="control-group">
+						<div className="control-label">
+							{t('VocaDb.Web.Resources.Domain:EntryTypeNames.Artist')}
+						</div>
+						<div className="controls">
+							<ArtistFilters
+								artistFilters={playQueue.skipList.artistFilters}
+								artistParticipationStatus={false}
+								showChildVoicebanks={false}
+							/>
+						</div>
+					</div>
+
+					<div className="control-group">
+						<div className="control-label">{t('ViewRes:Shared.Tag')}</div>
+						<div className="controls">
+							<TagFilters
+								tagFilters={playQueue.skipList.tagFilters}
+								showChildTags={false}
+							/>
+						</div>
+					</div>
+				</div>
+			</JQueryUIDialog>
+		);
+	},
+);
 
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const pvServiceIcons = new PVServiceIcons(urlMapper);
@@ -270,6 +321,8 @@ const PlaylistIndex = observer(
 						</SafeAnchor>
 					</h3>
 				)}
+
+				<SkipListEdit />
 			</Layout>
 		);
 	},
