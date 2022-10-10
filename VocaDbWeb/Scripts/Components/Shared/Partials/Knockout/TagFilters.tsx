@@ -13,17 +13,22 @@ import { useTranslation } from 'react-i18next';
 interface TagFiltersProps {
 	tagFilters: TagFiltersStore;
 	genreTags?: TagBaseContract[];
+	showChildTags?: boolean;
 }
 
 export const TagFilters = observer(
-	({ tagFilters, genreTags }: TagFiltersProps): React.ReactElement => {
+	({
+		tagFilters,
+		genreTags,
+		showChildTags = true,
+	}: TagFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
 		return (
 			<>
 				<TagFiltersBase tagFilters={tagFilters} />
 
-				{tagFilters.tags.length > 0 && (
+				{showChildTags && tagFilters.tags.length > 0 && (
 					<div>
 						<label className="checkbox">
 							<input

@@ -13,12 +13,14 @@ import { Link } from 'react-router-dom';
 interface ArtistFiltersProps {
 	artistFilters: ArtistFiltersStore;
 	artistParticipationStatus: boolean;
+	showChildVoicebanks?: boolean;
 }
 
 export const ArtistFilters = observer(
 	({
 		artistFilters,
 		artistParticipationStatus,
+		showChildVoicebanks = true,
 	}: ArtistFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
@@ -68,7 +70,7 @@ export const ArtistFilters = observer(
 					</div>
 				))}
 
-				{artistFilters.showChildVoicebanks && (
+				{showChildVoicebanks && artistFilters.showChildVoicebanks && (
 					<div className="control-group">
 						<label className="checkbox">
 							<input

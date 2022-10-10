@@ -1,7 +1,9 @@
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -14,9 +16,11 @@ const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
+const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 const songListRepo = new SongListRepository(httpClient, urlMapper);
 const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
+const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 const userRepo = new UserRepository(httpClient, urlMapper);
 
 const playQueueRepoFactory = new PlayQueueRepositoryFactory(
@@ -49,6 +53,8 @@ export const VdbPlayerProvider = ({
 				eventRepo,
 				songRepo,
 				playQueueRepoFactory,
+				artistRepo,
+				tagRepo,
 			),
 	);
 

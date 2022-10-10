@@ -4,8 +4,10 @@ import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
@@ -20,6 +22,7 @@ import {
 	PlayQueueRepositoryType,
 	PlayQueueSongContract,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
@@ -128,14 +131,20 @@ export class PlayQueueStore
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
+	public readonly skipList: SkipListStore;
+
 	public constructor(
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 		private readonly eventRepo: ReleaseEventRepository,
 		private readonly songRepo: SongRepository,
 		private readonly playQueueRepoFactory: PlayQueueRepositoryFactory,
+		artistRepo: ArtistRepository,
+		tagRepo: TagRepository,
 	) {
 		makeObservable(this);
+
+		this.skipList = new SkipListStore(values, artistRepo, tagRepo);
 	}
 
 	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
@@ -247,6 +256,13 @@ export class PlayQueueStore
 		return this.selectedItems.length > 0 ? this.selectedItems : this.items;
 	}
 
+	@computed public get shouldSkipCurrentItem(): boolean {
+		return (
+			this.currentItem !== undefined &&
+			this.skipList.includesAny(this.currentItem.entry)
+		);
+	}
+
 	@action public clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
@@ -317,6 +333,52 @@ export class PlayQueueStore
 		this.unselectAll();
 	};
 
+	@action public removeFromPlayQueue = async (
+		items: PlayQueueItem[],
+	): Promise<void> => {
+		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
+		// so that the current index can be set properly even if the current item was removed.
+
+		// Capture the current item.
+		const { currentItem } = this;
+
+		// First, remove items that are not equal to the current one.
+		_.pull(this.items, ...items.filter((item) => item !== currentItem));
+
+		// Capture the current index.
+		const { currentIndex, isLastItem } = this;
+
+		// Then, remove the current item if any.
+		_.pull(
+			this.items,
+			items.find((item) => item === currentItem),
+		);
+
+		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
+		if (this.currentItem !== currentItem) {
+			if (isLastItem) {
+				if (this.hasMoreItems) {
+					await this.loadMore();
+
+					// Set the current index to the captured one.
+					this.currentIndex = currentIndex;
+				} else {
+					// Start over the playlist from the beginning.
+					this.goToFirst();
+				}
+			} else {
+				// Set the current index to the captured one.
+				this.currentIndex = currentIndex;
+			}
+		}
+	};
+
+	public removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
+		await this.removeFromPlayQueue(this.selectedItemsOrAllItems);
+
+		this.unselectAll();
+	};
+
 	public play = (method: PlayMethod, items: PlayQueueItem[]): void => {
 		switch (method) {
 			case PlayMethod.ClearAndPlay:
@@ -372,6 +434,11 @@ export class PlayQueueStore
 				additionalNames: album.additionalNames,
 				urlThumb: album.mainPicture?.urlThumb ?? '',
 				pvs: album.pvs ?? [],
+				artistIds:
+					album.artists
+						?.filter(({ artist }) => artist !== undefined)
+						.map((artist) => artist.artist!.id) ?? [],
+				tagIds: album.tags?.map((tag) => tag.tag.id) ?? [],
 				artistString: album.artistString,
 			},
 			songs:
@@ -386,6 +453,11 @@ export class PlayQueueStore
 						additionalNames: song.additionalNames,
 						urlThumb: song.mainPicture?.urlThumb ?? '',
 						pvs: song.pvs ?? [],
+						artistIds:
+							song.artists
+								?.filter(({ artist }) => artist !== undefined)
+								.map((artist) => artist.artist!.id) ?? [],
+						tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
 						artistString: song.artistString,
 						songType: song.songType,
 					})) ?? [],
@@ -426,6 +498,11 @@ export class PlayQueueStore
 			additionalNames: event.additionalNames ?? '',
 			urlThumb: event.mainPicture?.urlThumb ?? '',
 			pvs: event.pvs ?? [],
+			artistIds:
+				event.artists
+					?.filter(({ artist }) => artist !== undefined)
+					.map((artist) => artist.artist!.id) ?? [],
+			tagIds: event.tags?.map((tag) => tag.tag.id) ?? [],
 		};
 	};
 
@@ -462,6 +539,11 @@ export class PlayQueueStore
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
 			pvs: song.pvs ?? [],
+			artistIds:
+				song.artists
+					?.filter(({ artist }) => artist !== undefined)
+					.map((artist) => artist.artist!.id) ?? [],
+			tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
 			artistString: song.artistString,
 			songType: song.songType,
 		};
@@ -515,6 +597,10 @@ export class PlayQueueStore
 		if (!this.hasPreviousItem) return;
 
 		this.currentIndex--;
+
+		if (this.shouldSkipCurrentItem) {
+			this.previous();
+		}
 	};
 
 	private updateResults = async (getTotalCount: boolean): Promise<void> => {
@@ -564,59 +650,25 @@ export class PlayQueueStore
 			await this.loadMore();
 		}
 
-		this.currentIndex++;
+		if (
+			this.currentItem &&
+			this.shouldSkipCurrentItem &&
+			this.skipList.removeFromPlayQueueOnSkip
+		) {
+			this.removeFromPlayQueue([this.currentItem]);
+		} else {
+			this.currentIndex++;
+		}
+
+		if (this.shouldSkipCurrentItem) {
+			await this.next();
+		}
 	};
 
 	@action public goToFirst = (): void => {
 		if (this.currentIndex === undefined) return;
 
 		this.currentIndex = 0;
-	};
-
-	@action public removeFromPlayQueue = async (
-		items: PlayQueueItem[],
-	): Promise<void> => {
-		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
-		// so that the current index can be set properly even if the current item was removed.
-
-		// Capture the current item.
-		const { currentItem } = this;
-
-		// First, remove items that are not equal to the current one.
-		_.pull(this.items, ...items.filter((item) => item !== currentItem));
-
-		// Capture the current index.
-		const { currentIndex, isLastItem } = this;
-
-		// Then, remove the current item if any.
-		_.pull(
-			this.items,
-			items.find((item) => item === currentItem),
-		);
-
-		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
-		if (this.currentItem !== currentItem) {
-			if (isLastItem) {
-				if (this.hasMoreItems) {
-					await this.loadMore();
-
-					// Set the current index to the captured one.
-					this.currentIndex = currentIndex;
-				} else {
-					// Start over the playlist from the beginning.
-					this.goToFirst();
-				}
-			} else {
-				// Set the current index to the captured one.
-				this.currentIndex = currentIndex;
-			}
-		}
-	};
-
-	public removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
-		await this.removeFromPlayQueue(this.selectedItemsOrAllItems);
-
-		this.unselectAll();
 	};
 
 	@action public startAutoplay = async <
@@ -631,6 +683,10 @@ export class PlayQueueStore
 		await this.updateResultsWithTotalCount();
 
 		this.setCurrentItem(this.items[0]);
+
+		if (this.shouldSkipCurrentItem) {
+			await this.next();
+		}
 	};
 
 	@action public switchPV = (pv: PVContract): void => {

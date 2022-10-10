@@ -1,7 +1,9 @@
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { PlayQueueRepositoryFactory } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -41,6 +43,8 @@ export class VdbPlayerStore
 		eventRepo: ReleaseEventRepository,
 		songRepo: SongRepository,
 		playQueueRepoFactory: PlayQueueRepositoryFactory,
+		artistRepo: ArtistRepository,
+		tagRepo: TagRepository,
 	) {
 		makeObservable(this);
 
@@ -50,6 +54,8 @@ export class VdbPlayerStore
 			eventRepo,
 			songRepo,
 			playQueueRepoFactory,
+			artistRepo,
+			tagRepo,
 		);
 
 		reaction(
