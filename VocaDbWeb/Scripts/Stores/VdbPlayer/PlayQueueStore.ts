@@ -20,6 +20,7 @@ import {
 	PlayQueueRepositoryType,
 	PlayQueueSongContract,
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
@@ -127,6 +128,8 @@ export class PlayQueueStore
 
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
+
+	public readonly skipList = new SkipListStore();
 
 	public constructor(
 		private readonly values: GlobalValues,

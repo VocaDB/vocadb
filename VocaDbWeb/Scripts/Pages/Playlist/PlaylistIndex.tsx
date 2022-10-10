@@ -118,7 +118,11 @@ const PlaylistIndex = observer(
 							</div>
 							<div css={{ flexGrow: 1 }} />
 							<div>
-								<JQueryUIButton as={SafeAnchor} href="#">
+								<JQueryUIButton
+									as={SafeAnchor}
+									href="#"
+									onClick={playQueue.skipList.showDialog}
+								>
 									Edit skip list{/* TODO: localize */}
 								</JQueryUIButton>
 							</div>
