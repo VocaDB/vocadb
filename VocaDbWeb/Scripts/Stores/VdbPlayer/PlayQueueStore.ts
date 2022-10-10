@@ -256,6 +256,13 @@ export class PlayQueueStore
 		return this.selectedItems.length > 0 ? this.selectedItems : this.items;
 	}
 
+	@computed public get shouldSkipCurrentItem(): boolean {
+		return (
+			this.currentItem !== undefined &&
+			this.skipList.includesAny(this.currentItem.entry)
+		);
+	}
+
 	@action public clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
@@ -544,6 +551,10 @@ export class PlayQueueStore
 		if (!this.hasPreviousItem) return;
 
 		this.currentIndex--;
+
+		if (this.shouldSkipCurrentItem) {
+			this.previous();
+		}
 	};
 
 	private updateResults = async (getTotalCount: boolean): Promise<void> => {
@@ -594,6 +605,10 @@ export class PlayQueueStore
 		}
 
 		this.currentIndex++;
+
+		if (this.shouldSkipCurrentItem) {
+			await this.next();
+		}
 	};
 
 	@action public goToFirst = (): void => {
@@ -660,6 +675,10 @@ export class PlayQueueStore
 		await this.updateResultsWithTotalCount();
 
 		this.setCurrentItem(this.items[0]);
+
+		if (this.shouldSkipCurrentItem) {
+			await this.next();
+		}
 	};
 
 	@action public switchPV = (pv: PVContract): void => {

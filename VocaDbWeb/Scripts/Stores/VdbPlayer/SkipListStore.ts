@@ -3,7 +3,8 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { TagFilters } from '@/Stores/Search/TagFilters';
-import { LocalStorageStateStore } from '@vocadb/route-sphere';
+import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { includesAny, LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
@@ -75,5 +76,14 @@ export class SkipListStore
 
 	@action public hideDialog = (): void => {
 		this.dialogVisible = false;
+	};
+
+	public includesAny = ({
+		artistIds,
+		tagIds,
+	}: PlayQueueEntryContract): boolean => {
+		return (
+			includesAny(this.artistIds, artistIds) || includesAny(this.tagIds, tagIds)
+		);
 	};
 }
