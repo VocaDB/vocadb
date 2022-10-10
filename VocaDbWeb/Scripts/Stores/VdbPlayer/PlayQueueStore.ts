@@ -333,6 +333,52 @@ export class PlayQueueStore
 		this.unselectAll();
 	};
 
+	@action public removeFromPlayQueue = async (
+		items: PlayQueueItem[],
+	): Promise<void> => {
+		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
+		// so that the current index can be set properly even if the current item was removed.
+
+		// Capture the current item.
+		const { currentItem } = this;
+
+		// First, remove items that are not equal to the current one.
+		_.pull(this.items, ...items.filter((item) => item !== currentItem));
+
+		// Capture the current index.
+		const { currentIndex, isLastItem } = this;
+
+		// Then, remove the current item if any.
+		_.pull(
+			this.items,
+			items.find((item) => item === currentItem),
+		);
+
+		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
+		if (this.currentItem !== currentItem) {
+			if (isLastItem) {
+				if (this.hasMoreItems) {
+					await this.loadMore();
+
+					// Set the current index to the captured one.
+					this.currentIndex = currentIndex;
+				} else {
+					// Start over the playlist from the beginning.
+					this.goToFirst();
+				}
+			} else {
+				// Set the current index to the captured one.
+				this.currentIndex = currentIndex;
+			}
+		}
+	};
+
+	public removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
+		await this.removeFromPlayQueue(this.selectedItemsOrAllItems);
+
+		this.unselectAll();
+	};
+
 	public play = (method: PlayMethod, items: PlayQueueItem[]): void => {
 		switch (method) {
 			case PlayMethod.ClearAndPlay:
@@ -615,52 +661,6 @@ export class PlayQueueStore
 		if (this.currentIndex === undefined) return;
 
 		this.currentIndex = 0;
-	};
-
-	@action public removeFromPlayQueue = async (
-		items: PlayQueueItem[],
-	): Promise<void> => {
-		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
-		// so that the current index can be set properly even if the current item was removed.
-
-		// Capture the current item.
-		const { currentItem } = this;
-
-		// First, remove items that are not equal to the current one.
-		_.pull(this.items, ...items.filter((item) => item !== currentItem));
-
-		// Capture the current index.
-		const { currentIndex, isLastItem } = this;
-
-		// Then, remove the current item if any.
-		_.pull(
-			this.items,
-			items.find((item) => item === currentItem),
-		);
-
-		// If the current item differs from the captured one, then it means that the current item was removed from the play queue.
-		if (this.currentItem !== currentItem) {
-			if (isLastItem) {
-				if (this.hasMoreItems) {
-					await this.loadMore();
-
-					// Set the current index to the captured one.
-					this.currentIndex = currentIndex;
-				} else {
-					// Start over the playlist from the beginning.
-					this.goToFirst();
-				}
-			} else {
-				// Set the current index to the captured one.
-				this.currentIndex = currentIndex;
-			}
-		}
-	};
-
-	public removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
-		await this.removeFromPlayQueue(this.selectedItemsOrAllItems);
-
-		this.unselectAll();
 	};
 
 	@action public startAutoplay = async <
