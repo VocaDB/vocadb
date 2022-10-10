@@ -4,8 +4,10 @@ import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
@@ -129,7 +131,7 @@ export class PlayQueueStore
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
-	public readonly skipList = new SkipListStore();
+	public readonly skipList: SkipListStore;
 
 	public constructor(
 		private readonly values: GlobalValues,
@@ -137,8 +139,12 @@ export class PlayQueueStore
 		private readonly eventRepo: ReleaseEventRepository,
 		private readonly songRepo: SongRepository,
 		private readonly playQueueRepoFactory: PlayQueueRepositoryFactory,
+		artistRepo: ArtistRepository,
+		tagRepo: TagRepository,
 	) {
 		makeObservable(this);
+
+		this.skipList = new SkipListStore(values, artistRepo, tagRepo);
 	}
 
 	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
