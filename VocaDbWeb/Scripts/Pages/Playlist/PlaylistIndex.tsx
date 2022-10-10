@@ -43,6 +43,24 @@ const SkipListEdit = observer(
 			>
 				<div className="form-horizontal">
 					<div className="control-group">
+						<div className="controls">
+							<label className="checkbox">
+								<input
+									type="checkbox"
+									checked={playQueue.skipList.removeFromPlayQueueOnSkip}
+									onChange={(e): void =>
+										runInAction(() => {
+											playQueue.skipList.removeFromPlayQueueOnSkip =
+												e.target.checked;
+										})
+									}
+								/>
+								Remove from play queue on skip{/* TODO: localize */}
+							</label>
+						</div>
+					</div>
+
+					<div className="control-group">
 						<div className="control-label">
 							{t('VocaDb.Web.Resources.Domain:EntryTypeNames.Artist')}
 						</div>

@@ -9,6 +9,7 @@ import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export interface SkipListLocalStorageState {
+	removeFromPlayQueueOnSkip?: boolean;
 	artistIds?: number[];
 	tagIds?: number[];
 }
@@ -23,6 +24,7 @@ const validate = ajv.compile(schema);
 export class SkipListStore
 	implements LocalStorageStateStore<SkipListLocalStorageState> {
 	@observable public dialogVisible = false;
+	@observable public removeFromPlayQueueOnSkip = false;
 	public readonly artistFilters: ArtistFilters;
 	public readonly tagFilters: TagFilters;
 
@@ -55,11 +57,13 @@ export class SkipListStore
 
 	@computed.struct public get localStorageState(): SkipListLocalStorageState {
 		return {
+			removeFromPlayQueueOnSkip: this.removeFromPlayQueueOnSkip,
 			artistIds: this.artistIds,
 			tagIds: this.tagIds,
 		};
 	}
 	public set localStorageState(value: SkipListLocalStorageState) {
+		this.removeFromPlayQueueOnSkip = value.removeFromPlayQueueOnSkip ?? false;
 		this.artistIds = value.artistIds ?? [];
 		this.tagIds = value.tagIds ?? [];
 	}

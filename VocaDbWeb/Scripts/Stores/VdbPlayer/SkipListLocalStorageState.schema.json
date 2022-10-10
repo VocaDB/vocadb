@@ -7,6 +7,9 @@
 			},
 			"type": "array"
 		},
+		"removeFromPlayQueueOnSkip": {
+			"type": "boolean"
+		},
 		"tagIds": {
 			"items": {
 				"type": "number"
