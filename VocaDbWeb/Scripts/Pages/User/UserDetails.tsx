@@ -216,7 +216,7 @@ const UserDetailsLayout = observer(
 							i18nKey="ViewRes.User:Details.PossibleProducerMessage"
 							components={{
 								// eslint-disable-next-line jsx-a11y/anchor-has-content
-								a: <a href="/User/RequestVerification" />,
+								a: <Link to="/User/RequestVerification" />,
 							}}
 						/>
 					</Alert>

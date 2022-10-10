@@ -397,6 +397,40 @@ namespace VocaDb.Web.Controllers.Api
 
 			return NoContent();
 		}
+
+		[HttpPost("{id:int}/verifications")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> PostVerification(int id, RequestVerificationContract contract)
+		{
+			if (string.IsNullOrEmpty(contract.LinkToProof) && !contract.PrivateMessage)
+			{
+				ModelState.AddModelError(nameof(contract.LinkToProof), "You must provide a link to proof");
+				return ValidationProblem(ModelState);
+			}
+
+			if (string.IsNullOrEmpty(contract.LinkToProof) && contract.PrivateMessage)
+			{
+				contract = contract with
+				{
+					LinkToProof = "in a private message",
+				};
+			}
+
+			var fullMessage = $"Proof: {contract.LinkToProof}, Message: {contract.Message}";
+
+			await _queries.CreateReport(
+				artistId: id,
+				reportType: ArtistReportType.OwnershipClaim,
+				hostname: WebHelper.GetRealHost(Request),
+				notes: $"Account verification request: {fullMessage}",
+				versionNumber: null
+			);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

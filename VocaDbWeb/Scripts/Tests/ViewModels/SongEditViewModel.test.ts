@@ -40,6 +40,7 @@ vdb.resources = {
 	artist: {},
 	home: {},
 	layout: {},
+	user: {},
 };
 
 beforeEach(() => {

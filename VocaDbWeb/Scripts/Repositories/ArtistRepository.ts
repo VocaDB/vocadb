@@ -350,6 +350,35 @@ export class ArtistRepository
 			},
 		);
 	};
+
+	public requestVerification = (
+		requestToken: string,
+		{
+			artistId,
+			message,
+			linkToProof,
+			privateMessage,
+		}: {
+			artistId: number;
+			message: string;
+			linkToProof: string;
+			privateMessage: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(`/api/artists/${artistId}/verifications`),
+			{
+				message: message,
+				linkToProof: linkToProof,
+				privateMessage: privateMessage,
+			},
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
