@@ -18,6 +18,7 @@ declare global {
 			artist: { authoredBy?: string; newArtistExternalLink?: string };
 			layout: { paypalDonateTitle?: string };
 			home: { welcome?: string; welcomeSubtitle?: string };
+			user: { requestVerificationInfo?: string };
 		};
 		values: GlobalValues;
 	};

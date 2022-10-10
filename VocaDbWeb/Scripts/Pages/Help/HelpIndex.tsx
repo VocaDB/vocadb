@@ -145,8 +145,8 @@ const AboutVocaDb = React.memo(() => {
 				welcome you to add an entry for yourself (and your circle) to our
 				database. First, make sure that your entry hasn't already been added by
 				someone else. After your entry has been added, you can submit an{' '}
-				<a href="/User/RequestVerification">account verification request</a>,
-				which allows you to be marked as the legitimate owner of that entry.
+				<Link to="/User/RequestVerification">account verification request</Link>
+				, which allows you to be marked as the legitimate owner of that entry.
 			</p>
 			<br />
 			<h4 id="vocadbmetadata">For developers and webmasters</h4>

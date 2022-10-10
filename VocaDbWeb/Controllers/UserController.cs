@@ -693,36 +693,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RequestVerification()
 		{
-			return View();
-		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult RequestVerification([ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage)
-		{
-			if (selectedArtist == null)
-			{
-				TempData.SetErrorMessage("Artist must be selected");
-				return View("RequestVerification", message);
-			}
-
-			if (string.IsNullOrEmpty(linkToProof) && !privateMessage)
-			{
-				TempData.SetErrorMessage("You must provide a link to proof");
-				return View();
-			}
-
-			if (string.IsNullOrEmpty(linkToProof) && privateMessage)
-			{
-				linkToProof = "in a private message";
-			}
-
-			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
-
-			_artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, $"Account verification request: {fullMessage}", null);
-
-			TempData.SetSuccessMessage("Request sent");
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult ResetAccesskey()

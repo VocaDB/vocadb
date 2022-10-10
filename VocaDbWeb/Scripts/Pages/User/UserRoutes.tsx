@@ -12,6 +12,9 @@ const UserEntryEdits = React.lazy(() => import('./UserEntryEdits'));
 const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
 const UserMessages = React.lazy(() => import('./UserMessages'));
 const UserMySettings = React.lazy(() => import('./UserMySettings'));
+const UserRequestVerification = React.lazy(
+	() => import('./UserRequestVerification'),
+);
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -56,6 +59,7 @@ const UserRoutes = (): React.ReactElement => {
 			<Route path="FavoriteSongs/:id" element={<UserFavoriteSongs />} />
 			<Route path="Messages" element={<UserMessages />} />
 			<Route path="MySettings" element={<UserMySettings />} />
+			<Route path="RequestVerification" element={<UserRequestVerification />} />
 			<Route path="*" element={<ErrorNotFound />} />
 		</Routes>
 	);

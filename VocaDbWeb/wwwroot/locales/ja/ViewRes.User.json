@@ -189,7 +189,7 @@
     "Login": "ログオン",
     "MessageTitle": "追加メッセージ（任意）",
     "Signup": "登録",
-    "NotLoggedInMessage": "これを使う前に{{0}}するか{{1}}してください。",
+    "NotLoggedInMessage": "これを使う前に<1>ログオン</1>するか<2>登録</2>してください。",
     "PageTitle": "アーティストアカウント証明",
     "Send": "送信",
     "NoPrivateMessage": "証明を以下のURLで提出",

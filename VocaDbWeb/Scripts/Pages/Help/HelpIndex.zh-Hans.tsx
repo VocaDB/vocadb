@@ -62,7 +62,7 @@ const AboutVocaDb = React.memo(() => {
 				<li>发表评论、在讨论区讨论相关问题。</li>
 			</ul>
 			备注：Vocaloid艺术家可以在自己的词条已被添加的前提下
-			<a href="/User/RequestVerification">申请账户认证</a>
+			<Link to="/User/RequestVerification">申请账户认证</Link>
 			，将自己的VocaDB账户与词条进行绑定。
 			<br />
 			<h4 id="contribute">关于错误信息</h4>

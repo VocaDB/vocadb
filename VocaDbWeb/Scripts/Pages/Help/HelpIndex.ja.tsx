@@ -93,7 +93,7 @@ const AboutVocaDb = React.memo(() => {
 				プロデューサー、イラストレーター、アニメーター、ボーカロイド音楽や動画に関わるクリエーター、もしくはサークルの管理人ですか？
 				ニコニコ、Youtube、SoundCloudなどに作品を投稿されている創作者であれば、ご自身のアーティストページと作品をを登録することをお奨めします。
 				（すでに登録済みでないことを確認してください。）次のリンクで
-				<a href="/User/RequestVerification">アーティストアカウント証明</a>
+				<Link to="/User/RequestVerification">アーティストアカウント証明</Link>
 				が出来ます。これはVocaDBユーザーアカウントとVocaDBアーティストページを連携するプロセスです。
 			</p>
 			<br />

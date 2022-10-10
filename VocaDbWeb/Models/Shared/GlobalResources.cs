@@ -63,11 +63,22 @@ namespace VocaDb.Web.Models.Shared
 			}
 		}
 
+		public sealed record UserResources
+		{
+			public string? RequestVerificationInfo { get; }
+
+			public UserResources(UserStrings model)
+			{
+				RequestVerificationInfo = model.RequestVerificationInfo;
+			}
+		}
+
 		public AlbumResources Album { get; }
 		public ArtistResources Artist { get; }
 		public HomeResources Home { get; }
 		public LayoutResources Layout { get; }
 		public SongResources Song { get; }
+		public UserResources User { get; }
 
 		public GlobalResources(VocaDbPage model)
 		{
@@ -76,6 +87,7 @@ namespace VocaDb.Web.Models.Shared
 			Home = new HomeResources(model.BrandableStrings.Home);
 			Layout = new LayoutResources(model.BrandableStrings.Layout);
 			Song = new SongResources(model.BrandableStrings.Song);
+			User = new UserResources(model.BrandableStrings.User);
 		}
 	}
 }

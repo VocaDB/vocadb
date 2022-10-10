@@ -141,7 +141,7 @@
     "Login": "登陆",
     "MessageTitle": "其余信息：（选填）",
     "NoPrivateMessage": "下方所填地址即证明材料",
-    "NotLoggedInMessage": "您只有【{{0}}】或【{{1}}】之后才能进行此操作。",
+    "NotLoggedInMessage": "您只有【<1>登陆</1>】或【<2>注册</2>】之后才能进行此操作。",
     "PageTitle": "申请账户认证",
     "PrivateMessage": "证明材料将通过私信提交至管理员",
     "Send": "提交申请",
