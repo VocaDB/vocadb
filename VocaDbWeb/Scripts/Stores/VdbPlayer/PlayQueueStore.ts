@@ -650,7 +650,15 @@ export class PlayQueueStore
 			await this.loadMore();
 		}
 
-		this.currentIndex++;
+		if (
+			this.currentItem &&
+			this.shouldSkipCurrentItem &&
+			this.skipList.removeFromPlayQueueOnSkip
+		) {
+			this.removeFromPlayQueue([this.currentItem]);
+		} else {
+			this.currentIndex++;
+		}
 
 		if (this.shouldSkipCurrentItem) {
 			await this.next();
