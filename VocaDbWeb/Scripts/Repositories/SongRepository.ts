@@ -349,7 +349,7 @@ export class SongRepository
 		paging: PagingProperties;
 		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;
-	}): Promise<PartialFindResultContract<SongContract>> => {
+	}): Promise<PartialFindResultContract<SongApiContract>> => {
 		const {
 			query,
 			sort,

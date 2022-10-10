@@ -139,6 +139,12 @@
 				"additionalNames": {
 					"type": "string"
 				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
 				"artistString": {
 					"type": "string"
 				},
@@ -168,18 +174,26 @@
 				"status": {
 					"$ref": "#/definitions/EntryStatus"
 				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
 				"urlThumb": {
 					"type": "string"
 				}
 			},
 			"required": [
 				"additionalNames",
+				"artistIds",
 				"artistString",
 				"entryType",
 				"id",
 				"name",
 				"pvs",
 				"status",
+				"tagIds",
 				"urlThumb"
 			],
 			"type": "object"
@@ -211,6 +225,12 @@
 				"additionalNames": {
 					"type": "string"
 				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
 				"entryType": {
 					"enum": ["ReleaseEvent"],
 					"type": "string"
@@ -237,17 +257,25 @@
 				"status": {
 					"$ref": "#/definitions/EntryStatus"
 				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
 				"urlThumb": {
 					"type": "string"
 				}
 			},
 			"required": [
 				"additionalNames",
+				"artistIds",
 				"entryType",
 				"id",
 				"name",
 				"pvs",
 				"status",
+				"tagIds",
 				"urlThumb"
 			],
 			"type": "object"
@@ -256,6 +284,12 @@
 			"properties": {
 				"additionalNames": {
 					"type": "string"
+				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
 				},
 				"artistString": {
 					"type": "string"
@@ -289,12 +323,19 @@
 				"status": {
 					"$ref": "#/definitions/EntryStatus"
 				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
 				"urlThumb": {
 					"type": "string"
 				}
 			},
 			"required": [
 				"additionalNames",
+				"artistIds",
 				"artistString",
 				"entryType",
 				"id",
@@ -302,6 +343,7 @@
 				"pvs",
 				"songType",
 				"status",
+				"tagIds",
 				"urlThumb"
 			],
 			"type": "object"

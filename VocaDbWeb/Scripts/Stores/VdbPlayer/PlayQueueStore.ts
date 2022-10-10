@@ -381,6 +381,11 @@ export class PlayQueueStore
 				additionalNames: album.additionalNames,
 				urlThumb: album.mainPicture?.urlThumb ?? '',
 				pvs: album.pvs ?? [],
+				artistIds:
+					album.artists
+						?.filter(({ artist }) => artist !== undefined)
+						.map((artist) => artist.artist!.id) ?? [],
+				tagIds: album.tags?.map((tag) => tag.tag.id) ?? [],
 				artistString: album.artistString,
 			},
 			songs:
@@ -395,6 +400,11 @@ export class PlayQueueStore
 						additionalNames: song.additionalNames,
 						urlThumb: song.mainPicture?.urlThumb ?? '',
 						pvs: song.pvs ?? [],
+						artistIds:
+							song.artists
+								?.filter(({ artist }) => artist !== undefined)
+								.map((artist) => artist.artist!.id) ?? [],
+						tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
 						artistString: song.artistString,
 						songType: song.songType,
 					})) ?? [],
@@ -435,6 +445,11 @@ export class PlayQueueStore
 			additionalNames: event.additionalNames ?? '',
 			urlThumb: event.mainPicture?.urlThumb ?? '',
 			pvs: event.pvs ?? [],
+			artistIds:
+				event.artists
+					?.filter(({ artist }) => artist !== undefined)
+					.map((artist) => artist.artist!.id) ?? [],
+			tagIds: event.tags?.map((tag) => tag.tag.id) ?? [],
 		};
 	};
 
@@ -471,6 +486,11 @@ export class PlayQueueStore
 			additionalNames: song.additionalNames,
 			urlThumb: song.mainPicture?.urlThumb ?? '',
 			pvs: song.pvs ?? [],
+			artistIds:
+				song.artists
+					?.filter(({ artist }) => artist !== undefined)
+					.map((artist) => artist.artist!.id) ?? [],
+			tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
 			artistString: song.artistString,
 			songType: song.songType,
 		};

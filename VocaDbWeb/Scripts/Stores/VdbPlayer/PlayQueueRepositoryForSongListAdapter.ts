@@ -48,6 +48,11 @@ export class PlayQueueRepositoryForSongListAdapter
 					additionalNames: song.additionalNames,
 					urlThumb: song.mainPicture?.urlThumb ?? '',
 					pvs: song.pvs ?? [],
+					artistIds:
+						song.artists
+							?.filter(({ artist }) => artist !== undefined)
+							.map((artist) => artist.artist!.id) ?? [],
+					tagIds: song.tags?.map((tag) => tag.tag.id) ?? [],
 					artistString: song.artistString,
 					songType: song.songType,
 				}),

@@ -43,6 +43,8 @@ interface PlayQueueCommonEntryContract {
 	additionalNames: string;
 	urlThumb: string;
 	pvs: PVContract[];
+	artistIds: number[];
+	tagIds: number[];
 }
 
 export interface PlayQueueAlbumContract extends PlayQueueCommonEntryContract {
@@ -82,21 +84,27 @@ export abstract class PlayQueueRepository<
 > {
 	public static readonly albumOptionalFields = [
 		AlbumOptionalField.AdditionalNames,
+		AlbumOptionalField.Artists,
 		AlbumOptionalField.MainPicture,
 		AlbumOptionalField.PVs,
+		AlbumOptionalField.Tags,
 		AlbumOptionalField.Tracks,
 	];
 
 	public static readonly eventOptionalFields = [
 		ReleaseEventOptionalField.AdditionalNames,
+		ReleaseEventOptionalField.Artists,
 		ReleaseEventOptionalField.MainPicture,
 		ReleaseEventOptionalField.PVs,
+		ReleaseEventOptionalField.Tags,
 	];
 
 	public static readonly songOptionalFields = [
 		SongOptionalField.AdditionalNames,
+		SongOptionalField.Artists,
 		SongOptionalField.MainPicture,
 		SongOptionalField.PVs,
+		SongOptionalField.Tags,
 	];
 
 	public abstract getSongs({
