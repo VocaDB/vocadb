@@ -106,6 +106,12 @@ const PlaylistIndex = observer(
 			// TODO: Implement.
 		}, []);
 
+		React.useEffect(() => {
+			return (): void => {
+				playQueue.skipList.hideDialog();
+			};
+		});
+
 		return (
 			<Layout
 				title={title}
