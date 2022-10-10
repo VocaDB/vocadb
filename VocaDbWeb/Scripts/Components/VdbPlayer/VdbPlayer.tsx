@@ -623,6 +623,7 @@ export const VdbPlayer = observer(
 		const { vdbPlayer, playQueue } = useVdbPlayer();
 
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
+		useLocalStorageStateStore('SkipListStore', playQueue.skipList);
 
 		React.useEffect(() => {
 			// Returns the disposer.
