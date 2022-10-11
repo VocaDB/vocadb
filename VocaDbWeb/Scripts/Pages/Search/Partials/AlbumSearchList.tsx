@@ -4,12 +4,11 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { AlbumThumbItem } from '@/Components/Shared/Partials/Shared/AlbumThumbItem';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import {
-	AlbumSearchStore,
-	AlbumSortRule,
-} from '@/Stores/Search/AlbumSearchStore';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { runInAction } from 'mobx';
@@ -34,8 +33,19 @@ export const AlbumSearchListTiles = React.memo(
 	},
 );
 
+interface IAlbumSearchStore {
+	loading: boolean;
+	page: AlbumContract[];
+	paging: ServerSidePagingStore;
+	ratingStars?: (album: AlbumContract) => { enabled: boolean }[];
+	selectTag?: (tag: TagBaseContract) => void;
+	showTags: boolean;
+	sort: AlbumSortRule;
+	viewMode: string /* TODO: enum */;
+}
+
 interface AlbumSearchListProps {
-	albumSearchStore: AlbumSearchStore;
+	albumSearchStore: IAlbumSearchStore;
 }
 
 const AlbumSearchList = observer(
@@ -166,7 +176,7 @@ const AlbumSearchList = observer(
 															{index > 0 && ', '}
 															<SafeAnchor
 																onClick={(): void =>
-																	albumSearchStore.selectTag(tag.tag)
+																	albumSearchStore.selectTag?.(tag.tag)
 																}
 															>
 																{tag.tag.name}
@@ -196,7 +206,7 @@ const AlbumSearchList = observer(
 									<td style={{ width: '150px' }}>
 										<span title={`${album.ratingAverage}`}>
 											{albumSearchStore
-												.ratingStars(album)
+												.ratingStars?.(album)
 												.map((ratingStar, index) => (
 													<React.Fragment key={index}>
 														{index > 0 && ' '}

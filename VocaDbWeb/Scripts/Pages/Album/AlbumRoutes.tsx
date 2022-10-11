@@ -7,6 +7,7 @@ import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const AlbumCreate = React.lazy(() => import('./AlbumCreate'));
+const AlbumDeleted = React.lazy(() => import('./AlbumDeleted'));
 const AlbumEdit = React.lazy(() => import('./AlbumEdit'));
 const AlbumMerge = React.lazy(() => import('./AlbumMerge'));
 const AlbumVersions = React.lazy(() => import('./AlbumVersions'));
@@ -36,6 +37,7 @@ const AlbumRoutes = (): React.ReactElement => {
 				}
 			/>
 			<Route path="Create" element={<AlbumCreate />} />
+			<Route path="Deleted" element={<AlbumDeleted />} />
 			<Route path="Details/:id/*" element={<AlbumDetailsNavigate />} />
 			<Route path="Edit/:id" element={<AlbumEdit />} />
 			<Route path="Merge/:id" element={<AlbumMerge />} />
