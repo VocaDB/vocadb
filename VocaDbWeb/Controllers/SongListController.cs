@@ -110,7 +110,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = Resources.Views.SongList.ImportStrings.Title;
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult Versions(int id = InvalidId)
