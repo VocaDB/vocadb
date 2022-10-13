@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Security
 {
+	[Obsolete]
 	public class AuditLogEntryContract
 	{
 		public AuditLogEntryContract() { }

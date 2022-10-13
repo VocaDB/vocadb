@@ -16,7 +16,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// Manages <see cref="IPRule"/>s
 	/// </summary>
-	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
+	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	[Route("api/ip-rules")]

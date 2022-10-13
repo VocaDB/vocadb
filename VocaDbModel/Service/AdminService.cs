@@ -294,9 +294,17 @@ namespace VocaDb.Model.Service
 			throw new NotImplementedException();
 		}
 
-		public AuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
- 			string userName, string[] excludeUsers, bool onlyNewUsers,
-			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing)
+#nullable enable
+		public AuditLogEntryForApiContract[] GetAuditLog(
+			string filter,
+			int start,
+			int maxEntries,
+			int timeCutoffDays,
+			string userName,
+			string[] excludeUsers,
+			bool onlyNewUsers,
+			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing
+		)
 		{
 			return HandleTransaction(session =>
 			{
@@ -345,12 +353,13 @@ namespace VocaDb.Model.Service
 					.Skip(start)
 					.Take(maxEntries)
 					.ToArray()
-					.Select(e => new AuditLogEntryContract(e))
+					.Select(e => new AuditLogEntryForApiContract(e))
 					.ToArray();
 
 				return entries;
 			}, IsolationLevel.ReadUncommitted);
 		}
+#nullable disable
 
 		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults)
 		{

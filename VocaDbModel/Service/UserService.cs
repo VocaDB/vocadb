@@ -28,9 +28,9 @@ namespace VocaDb.Model.Service
 		private IEntryLinkFactory EntryLinkFactory { get; }
 		private readonly IUserIconFactory _userIconFactory;
 
-		private string MakeGeoIpToolLink(string hostname)
+		private static string MakeGeoIpToolLink(string hostname)
 		{
-			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
+			return $"[{hostname}](http://www.geoiptool.com/?IP={hostname})";
 		}
 
 		public UserService(

@@ -451,14 +451,14 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		private bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
+		private static bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
 		{
 			return ctx.OfType<UserOptions>().Query().Any(o => o.Poisoned && o.User.NameLC == lcUserName);
 		}
 
-		private string MakeGeoIpToolLink(string hostname)
+		private static string MakeGeoIpToolLink(string hostname)
 		{
-			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
+			return $"[{hostname}](http://www.geoiptool.com/?IP={hostname})";
 		}
 
 		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject)

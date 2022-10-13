@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +9,7 @@ using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
-	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
+	[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	[Route("api/webhooks")]

@@ -13,7 +13,6 @@ using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
-using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Admin;
@@ -50,22 +49,6 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = "Active editors";
 
 			return View(items);
-		}
-
-		[Authorize]
-		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
-
-			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers)
-				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray()
-				: Array.Empty<string>());
-
-			var cutoffDays = (string.IsNullOrEmpty(model.UserName) ? 365 : 0);
-
-			var entries = Service.GetAuditLog(model.Filter, start, 200, cutoffDays, model.UserName, excludeUsers, model.OnlyNewUsers, model.GroupId);
-
-			return PartialView(entries);
 		}
 
 		[Authorize]
@@ -295,13 +278,13 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewAuditLog(ViewAuditLogModel model)
+		public ActionResult ViewAuditLog()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
 			PageProperties.Title = "View audit log";
 
-			return View(model ?? new ViewAuditLogModel());
+			return View("React/Index");
 		}
 
 		[Authorize]
