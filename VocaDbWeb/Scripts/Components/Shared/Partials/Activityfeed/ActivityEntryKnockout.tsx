@@ -110,7 +110,7 @@ export const ActivityEntryKnockout = ({
 				<span>{t('HelperRes:ActivityFeedHelper.Someone')}</span>
 			)}{' '}
 			<span>{activityFeedEventName(entry)}</span>
-			{showDetails && (
+			{showDetails && entry.archivedVersion && (
 				<>
 					{' '}
 					<span>
