@@ -7,6 +7,8 @@ import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/Relea
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { ReleaseEventSeriesForApiContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { ReleaseEventSeriesWithEventsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesWithEventsContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { NameMatchMode } from '@/Models/NameMatchMode';
@@ -326,6 +328,24 @@ export class ReleaseEventRepository extends BaseRepository {
 					requestVerificationToken: requestToken,
 				},
 			},
+		);
+	};
+
+	getByDate = (): Promise<ReleaseEventContract[]> => {
+		return this.httpClient.get<ReleaseEventContract[]>(
+			this.urlMapper.mapRelative('/api/releaseEvents/by-date'),
+		);
+	};
+
+	getBySeries = (): Promise<ReleaseEventSeriesWithEventsContract[]> => {
+		return this.httpClient.get<ReleaseEventSeriesWithEventsContract[]>(
+			this.urlMapper.mapRelative('/api/releaseEvents/by-series'),
+		);
+	};
+
+	getByVenue = (): Promise<VenueForApiContract[]> => {
+		return this.httpClient.get<VenueForApiContract[]>(
+			this.urlMapper.mapRelative('/api/releaseEvents/by-venue'),
 		);
 	};
 }

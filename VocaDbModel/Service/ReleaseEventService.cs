@@ -8,7 +8,6 @@ using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
-using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service
 {
@@ -20,25 +19,6 @@ namespace VocaDb.Model.Service
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_userIconFactory = userIconFactory;
-		}
-
-		public ReleaseEventSeriesWithEventsContract[] GetReleaseEventsBySeries()
-		{
-			return HandleQuery(session =>
-			{
-				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
-				var series = session.Query<ReleaseEventSeries>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
-
-				var seriesContracts = series.Select(s =>
-					new ReleaseEventSeriesWithEventsContract(s, allEvents.Where(e => s.Equals(e.Series)), PermissionContext.LanguagePreference));
-				var ungrouped = allEvents.Where(e => e.Series == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
-
-				return seriesContracts.Append(new ReleaseEventSeriesWithEventsContract
-				{
-					Name = string.Empty,
-					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
-				}).ToArray();
-			});
 		}
 
 		[Obsolete]
