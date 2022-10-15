@@ -40,11 +40,13 @@ Add any other context about the problem here.
 
 ### Checklist
 
-Fill out the checklist, using ~~strikethroughs~~ to mark any items that are not applicable
+Fill out the checklist, using ~~strikethroughs~~ to mark any items that are not applicable.
 
-- [ ] Tested on the **[beta site](https://beta.vocadb.net)**
-- [ ] Checked in **Chrome**, **Safari**, **Edge** and **Firefox**
-- [ ] Checked in **private mode**
-- [ ] Cleared **browser cache** and **cookies**
-- [ ] Checked the **DevTools console**
-- [ ] Checked the **syslog** (mods+ only)
+- [ ] Users should limit themselves to three or less active issues and PRs at any one time.
+- [ ] Searched **[VocaDB/vocadb](https://github.com/VocaDB/vocadb/issues)** and **[VocaDB/community](https://github.com/VocaDB/community)** for duplicate issues.
+- [ ] Tested on the **[beta site](https://beta.vocadb.net)**.
+- [ ] Checked in **Chrome**, **Safari**, **Edge** and **Firefox**.
+- [ ] Checked in **private mode**.
+- [ ] Cleared **browser cache** and **cookies**.
+- [ ] Checked the **DevTools console**.
+- [ ] Checked the **syslog** (mods+ only).
