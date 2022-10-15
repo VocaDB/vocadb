@@ -4,7 +4,7 @@ import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVers
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 
 export interface ActivityEntryContract {
-	archivedVersion: ArchivedVersionContract;
+	archivedVersion?: ArchivedVersionContract;
 	author: UserApiContract;
 	createDate: string;
 	editEvent: EntryEditEvent;
