@@ -188,7 +188,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Manage tag usages - " + artist.DefaultName;
 
-			return View(artist);
+			return View("React/Index");
 		}
 
 		public ActionResult Merge()

@@ -459,8 +459,8 @@ const SongBasicInfo = observer(
 										<>
 											{' '}
 											<JQueryUIButton
-												as="a"
-												href={`/Song/ManageTagUsages/${model.id}`}
+												as={Link}
+												to={`/Song/ManageTagUsages/${model.id}`}
 												icons={{ primary: 'ui-icon-wrench' }}
 											>
 												{t('ViewRes:EntryDetails.ManageTags')}

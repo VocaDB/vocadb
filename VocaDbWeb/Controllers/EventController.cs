@@ -157,7 +157,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Manage tag usages - " + releaseEvent.DefaultName;
 
-			return View(releaseEvent);
+			return View("React/Index");
 		}
 
 		[Authorize]

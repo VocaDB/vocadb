@@ -351,8 +351,8 @@ const AlbumBasicInfo = observer(
 											<>
 												{' '}
 												<JQueryUIButton
-													as="a"
-													href={`/Album/ManageTagUsages/${model.id}`}
+													as={Link}
+													to={`/Album/ManageTagUsages/${model.id}`}
 													icons={{ primary: 'ui-icon-wrench' }}
 												>
 													{t('ViewRes:EntryDetails.ManageTags')}

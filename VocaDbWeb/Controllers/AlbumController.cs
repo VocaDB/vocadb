@@ -262,7 +262,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Manage tag usages - " + album.DefaultName;
 
-			return View(album);
+			return View("React/Index");
 		}
 
 		public ActionResult Merge()
