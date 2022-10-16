@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Text;
 using VocaDb.Model.Service.BBCode;
 using VocaDb.Web.Code;
@@ -25,7 +23,7 @@ namespace VocaDb.Tests.Service.BBCode
 		{
 			var result = ApplyTransform("/Artist/Details/39");
 
-			result.Should().Be("<a href=\"/Ar/39\">/Artist/Details/39</a>", "result");
+			result.Should().Be("[/Artist/Details/39](/Ar/39)", "result");
 		}
 
 		[TestMethod]
@@ -33,7 +31,7 @@ namespace VocaDb.Tests.Service.BBCode
 		{
 			var result = ApplyTransform("/S/39");
 
-			result.Should().Be("<a href=\"/S/39\">/S/39</a>", "result");
+			result.Should().Be("[/S/39](/S/39)", "result");
 		}
 	}
 }
