@@ -9,7 +9,7 @@ interface ValidationSummaryPanelProps {
 export const ValidationSummaryPanel = React.memo(
 	({ message, errors }: ValidationSummaryPanelProps): React.ReactElement => {
 		const errorTexts = React.useMemo(
-			() => Object.values(errors).flatMap((error) => error),
+			() => Object.entries(errors).map(([, value]) => value[0]),
 			[errors],
 		);
 

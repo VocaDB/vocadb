@@ -103,7 +103,7 @@ const ArtistCreateLayout = observer(
 							<div className="editor-field">
 								{artistCreateStore.errors && artistCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{artistCreateStore.errors.names}
+										{artistCreateStore.errors.names[0]}
 									</span>
 								)}
 

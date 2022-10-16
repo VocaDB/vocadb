@@ -58,7 +58,7 @@ namespace VocaDb.Web.Controllers
 		private readonly IRepository _repository;
 		private UserService Service { get; set; }
 
-		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
+		public static Task SetAuthCookieAsync(HttpContext httpContext, string userName, bool createPersistentCookie)
 		{
 			// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-5.0
 			var claims = new List<Claim>
@@ -70,7 +70,12 @@ namespace VocaDb.Web.Controllers
 			{
 				IsPersistent = createPersistentCookie,
 			};
-			return HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+			return httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+		}
+
+		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
+		{
+			return SetAuthCookieAsync(HttpContext, userName, createPersistentCookie);
 		}
 
 		private async Task<bool> HandleCreateAsync(ServerOnlyUserContract user)
@@ -288,19 +293,17 @@ namespace VocaDb.Web.Controllers
 #nullable disable
 
 		[RestrictBannedIP]
-		public new ActionResult Login(string returnUrl = null)
+		public new ActionResult Login()
 		{
 			RestoreErrorsFromTempData();
 
-			return View(new LoginModel(returnUrl, false));
+			PageProperties.Title = ViewRes.User.LoginStrings.Login;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+
+			return View("React/Index");
 		}
 
-		[RestrictBannedIP]
-		public PartialViewResult LoginForm(string returnUrl)
-		{
-			return PartialView("Login", new LoginModel(returnUrl, false));
-		}
-
+		[Obsolete("Use /api/users/login instead.")]
 		[HttpPost]
 		[RestrictBannedIP]
 		public new async Task<ActionResult> Login(LoginModel model)

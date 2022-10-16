@@ -40,6 +40,7 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -62,6 +63,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 		private readonly IUserIconFactory _userIconFactory;
 		private readonly LoginManager _loginManager;
+		private readonly IPRuleManager _ipRuleManager;
 
 		public UserApiController(
 			UserQueries queries,
@@ -70,7 +72,8 @@ namespace VocaDb.Web.Controllers.Api
 			IUserPermissionContext permissionContext,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			IUserIconFactory userIconFactory,
-			LoginManager loginManager
+			LoginManager loginManager,
+			IPRuleManager ipRuleManager
 		)
 		{
 			_queries = queries;
@@ -80,6 +83,7 @@ namespace VocaDb.Web.Controllers.Api
 			_thumbPersister = thumbPersister;
 			_userIconFactory = userIconFactory;
 			_loginManager = loginManager;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		[Authorize]
@@ -1005,6 +1009,35 @@ namespace VocaDb.Web.Controllers.Api
 			}
 
 			return contract.Id;
+		}
+
+		[HttpPost("login")]
+		[RestrictBannedIP]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> Login(LoginModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var host = WebHelper.GetRealHost(Request);
+				var culture = WebHelper.GetInterfaceCultureName(Request);
+				var result = _queries.CheckAuthentication(model.UserName, model.Password, host, culture, delayFailedLogin: true);
+
+				if (!result.IsOk)
+				{
+					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
+
+					if (result.Error == LoginError.AccountPoisoned)
+						_ipRuleManager.AddTempBannedIP(host, "Account poisoned");
+				}
+				else
+				{
+					await UserController.SetAuthCookieAsync(HttpContext, result.User.Name, model.KeepLoggedIn);
+					return NoContent();
+				}
+			}
+
+			return ValidationProblem(ModelState);
 		}
 #nullable disable
 	}

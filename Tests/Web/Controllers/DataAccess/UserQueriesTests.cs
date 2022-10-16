@@ -925,7 +925,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
 				.Should().Throw<ValidationException>()
 				.WithMessage(@"Validation failed: 
- -- Name: The length of 'Name' must be at least 3 characters. You entered 2 characters. Severity: Error");
+ -- Name: 'Name' must be between 3 and 100 characters. You entered 2 characters. Severity: Error");
 		}
 
 		[TestMethod]
@@ -938,7 +938,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
 				.Should().Throw<ValidationException>()
 				.WithMessage(@"Validation failed: 
- -- Name: The length of 'Name' must be 100 characters or fewer. You entered 101 characters. Severity: Error");
+ -- Name: 'Name' must be between 3 and 100 characters. You entered 101 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Name_Whitespace()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				Name = string.Concat(Enumerable.Repeat(' ', 3)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- Name: 'Name' must not be empty. Severity: Error");
 		}
 
 		[TestMethod]
@@ -953,7 +966,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
 				.Should().Throw<ValidationException>()
 				.WithMessage(@"Validation failed: 
- -- NewPass: The length of 'New Pass' must be at least 8 characters. You entered 7 characters. Severity: Error");
+ -- NewPass: 'New Pass' must be between 8 and 100 characters. You entered 7 characters. Severity: Error");
 		}
 
 		[TestMethod]
@@ -969,7 +982,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				.Should().Throw<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- OldPass: The length of 'Old Pass' must be 100 characters or fewer. You entered 101 characters. Severity: Error
- -- NewPass: The length of 'New Pass' must be 100 characters or fewer. You entered 101 characters. Severity: Error
+ -- NewPass: 'New Pass' must be between 8 and 100 characters. You entered 101 characters. Severity: Error
  -- NewPassAgain: The length of 'New Pass Again' must be 100 characters or fewer. You entered 101 characters. Severity: Error");
 		}
 

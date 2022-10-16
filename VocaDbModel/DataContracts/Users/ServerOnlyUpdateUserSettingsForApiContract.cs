@@ -124,13 +124,13 @@ public sealed class ServerOnlyUpdateUserSettingsForApiContractValidator : Abstra
 	{
 		RuleFor(x => x.Location).MaximumLength(50);
 		RuleFor(x => x.Email)/* TODO: .EmailAddress()*/.MaximumLength(50);
-		RuleFor(x => x.Name).MaximumLength(100).MinimumLength(3);
+		RuleFor(x => x.Name).NotEmpty().Length(3, 100);
 		RuleFor(x => x.OldPass).MaximumLength(100);
 		When(x => !string.IsNullOrEmpty(x.NewPass), () =>
 		{
 			RuleFor(x => x.NewPass)
 				.Equal(x => x.NewPassAgain).WithMessage("Passwords must match"/* TODO: ViewRes.User.MySettingsStrings.PasswordsMustMatch */)
-				.MaximumLength(100).MinimumLength(8);
+				.Length(8, 100);
 		});
 		RuleFor(x => x.NewPassAgain).MaximumLength(100);
 		RuleFor(x => x.UnreadNotificationsToKeep).GreaterThanOrEqualTo(1).LessThanOrEqualTo(390);
