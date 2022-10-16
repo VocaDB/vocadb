@@ -55,4 +55,8 @@ export interface GlobalValues {
 	bigBanners: MenuPageLink[];
 	smallBanners: MenuPageLink[];
 	socialLinks: MenuPageLink[];
+
+	signupsDisabled: boolean;
+	// TODO Move to .env.
+	reCAPTCHAPublicKey: string;
 }

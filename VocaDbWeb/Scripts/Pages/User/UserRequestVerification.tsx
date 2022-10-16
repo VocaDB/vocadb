@@ -174,9 +174,9 @@ const UserRequestVerification = observer(
 										</Link>
 									),
 									2: (
-										<a href="/User/Create">
+										<Link to="/User/Create">
 											{t('ViewRes.User:RequestVerification.Create')}
-										</a>
+										</Link>
 									),
 								}}
 							/>

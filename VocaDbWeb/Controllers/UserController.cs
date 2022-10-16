@@ -204,7 +204,11 @@ namespace VocaDb.Web.Controllers
 		{
 			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
 			{
-				var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+				var captchaResult = await ReCaptcha2.ValidateAsync(
+					userResponse: model.ReCAPTCHAResponse,
+					userIp: new AspNetCoreHttpRequest(Request).UserHostAddress,
+					privateKey: AppConfig.ReCAPTCHAKey
+				);
 				if (!captchaResult.Success)
 					ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 			}
@@ -464,94 +468,10 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public ActionResult Create()
 		{
-			return View(new RegisterModel());
-		}
+			PageProperties.Title = ViewRes.User.CreateStrings.Register;
+			PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
-		//
-		// POST: /User/Create
-
-		[HttpPost]
-		public async Task<ActionResult> Create(RegisterModel model, [FromServices] IDiscordWebhookNotifier discordWebhookNotifier)
-		{
-			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
-
-			if (ModelState[nameof(model.Extra)].Errors.Any())
-			{
-				s_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
-				_ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
-				return View(model);
-			}
-
-			if (_config.SiteSettings.SignupsDisabled)
-			{
-				ModelState.AddModelError(string.Empty, "Signups are disabled");
-			}
-
-			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
-			{
-				var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
-				if (!recaptchaResult.Success)
-				{
-					ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
-					_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
-					ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
-				}
-			}
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			if (!_ipRuleManager.IsAllowed(Hostname))
-			{
-				s_log.Warn("Restricting blocked IP {0}.", Hostname);
-				ModelState.AddModelError("Restricted", restrictedErr);
-				return View(model);
-			}
-
-			var time = TimeSpan.FromTicks(DateTime.Now.Ticks - model.EntryTime);
-
-			// Attempt to register the user
-			try
-			{
-				var verifyEmailUrl = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = await Data.Create(
-					model.UserName,
-					model.Password,
-					model.Email ?? string.Empty,
-					Hostname,
-					Request.Headers[HeaderNames.UserAgent],
-					WebHelper.GetInterfaceCultureName(Request),
-					time,
-					_ipRuleManager,
-					verifyEmailUrl);
-				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
-				return RedirectToAction("Index", "Home");
-			}
-			catch (UserNameAlreadyExistsException)
-			{
-				ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
-				return View(model);
-			}
-			catch (UserEmailAlreadyExistsException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
-				return View(model);
-			}
-			catch (InvalidEmailFormatException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
-				return View(model);
-			}
-			catch (TooFastRegistrationException)
-			{
-				ModelState.AddModelError("Restricted", restrictedErr);
-				return View(model);
-			}
-			catch (RestrictedIPException)
-			{
-				ModelState.AddModelError("Restricted", restrictedErr);
-				return View(model);
-			}
+			return View("React/Index");
 		}
 
 		[HttpPost]

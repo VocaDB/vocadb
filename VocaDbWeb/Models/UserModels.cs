@@ -2,6 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Users;
@@ -45,6 +46,9 @@ namespace VocaDb.Web.Models
 		/// </summary>
 		[StringLength(0)]
 		public string Extra { get; set; }
+
+		[JsonProperty("g-recaptcha-response")]
+		public string ReCAPTCHAResponse { get; set; }
 
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "UsernameIsRequired")]
 		[Display(ResourceType = typeof(ViewRes.User.CreateStrings), Name = "Username")]

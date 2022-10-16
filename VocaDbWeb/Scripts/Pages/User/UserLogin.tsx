@@ -9,7 +9,7 @@ import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 interface UserLoginLayoutProps {
 	userLoginStore: UserLoginStore;
@@ -123,7 +123,7 @@ const UserLoginLayout = observer(
 					</p>
 				</form>
 				{t('ViewRes.User:Login.NoAccount')}{' '}
-				<a href="/User/Create">{t('ViewRes.User:Login.RegisterHere')}</a>
+				<Link to="/User/Create">{t('ViewRes.User:Login.RegisterHere')}</Link>
 				{t('ViewRes:Shared.Period')}
 				<br />
 				{t('ViewRes.User:Login.ForgotPassword')}{' '}
