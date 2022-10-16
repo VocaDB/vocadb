@@ -13,7 +13,6 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
@@ -191,37 +190,9 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ForgotPassword()
 		{
-			return View();
-		}
+			PageProperties.Title = ViewRes.User.ForgotPasswordStrings.RequestPasswordReset;
 
-		[HttpPost]
-		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
-		{
-			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
-			{
-				var captchaResult = await ReCaptcha2.ValidateAsync(
-					userResponse: model.ReCAPTCHAResponse,
-					userIp: new AspNetCoreHttpRequest(Request).UserHostAddress,
-					privateKey: AppConfig.ReCAPTCHAKey
-				);
-				if (!captchaResult.Success)
-					ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
-			}
-
-			if (!ModelState.IsValid)
-			{
-				return View();
-			}
-
-			try
-			{
-				await Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
-			}
-			catch (UserNotFoundException) { }
-
-			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
-
-			return RedirectToAction("Login");
+			return View("React/Index");
 		}
 
 		//

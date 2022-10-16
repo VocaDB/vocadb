@@ -44,6 +44,7 @@ using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.Shared;
+using VocaDb.Web.Models.User;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -1004,6 +1005,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpPost("register")]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public async Task<ActionResult> Create(RegisterModel model)
 		{
@@ -1125,6 +1127,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("login")]
 		[RestrictBannedIP]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public async Task<ActionResult> Login(LoginModel model)
 		{
@@ -1160,6 +1163,40 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			return NoContent();
+		}
+
+		[HttpPost("forgot-password")]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
+		{
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
+			{
+				var captchaResult = await ReCaptcha2.ValidateAsync(
+					userResponse: model.ReCAPTCHAResponse,
+					userIp: new AspNetCoreHttpRequest(Request).UserHostAddress,
+					privateKey: AppConfig.ReCAPTCHAKey
+				);
+				if (!captchaResult.Success)
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			try
+			{
+				await _queries.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
+				return NoContent();
+			}
+			catch (UserNotFoundException)
+			{
+				s_log.Info("User not found: {0}", model.Username);
+				return BadRequest();
+			}
 		}
 #nullable disable
 	}
