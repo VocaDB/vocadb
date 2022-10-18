@@ -4,6 +4,8 @@ import 'nprogress/nprogress.css';
 import React from 'react';
 import { useTitle } from 'react-use';
 
+NProgress.configure({ showSpinner: false });
+
 export const useVocaDbTitle = (
 	title: string | undefined,
 	ready: boolean,
