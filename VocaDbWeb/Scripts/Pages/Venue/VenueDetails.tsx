@@ -23,6 +23,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueDetailsStore } from '@/Stores/Venue/VenueDetailsStore';
 import moment from 'moment';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -187,14 +188,18 @@ const VenueDetails = (): React.ReactElement => {
 	const { id } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		venueRepo
 			.getDetails({ id: Number(id) })
-			.then((venue) =>
+			.then((venue) => {
 				setModel({
 					venue: venue,
 					venueDetailsStore: new VenueDetailsStore(venueRepo, venue.id),
-				}),
-			)
+				});
+
+				NProgress.done();
+			})
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404)

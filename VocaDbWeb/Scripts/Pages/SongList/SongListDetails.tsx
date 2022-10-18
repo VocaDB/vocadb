@@ -51,6 +51,7 @@ import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
@@ -574,9 +575,11 @@ const SongListDetails = (): React.ReactElement => {
 	const { id } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		songListRepo
 			.getDetails({ id: Number(id) })
-			.then((songList) =>
+			.then((songList) => {
 				setModel({
 					songList: songList,
 					songListStore: new SongListStore(
@@ -593,8 +596,10 @@ const SongListDetails = (): React.ReactElement => {
 						pvPlayersFactory,
 						loginManager.canDeleteComments,
 					),
-				}),
-			)
+				});
+
+				NProgress.done();
+			})
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404)

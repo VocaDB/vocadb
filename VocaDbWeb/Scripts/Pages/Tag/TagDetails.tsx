@@ -43,6 +43,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -873,6 +874,8 @@ const TagDetails = (): React.ReactElement => {
 	const { id } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		tagRepo
 			.getDetails({ id: Number(id) })
 			.then((tag) => {
@@ -893,6 +896,8 @@ const TagDetails = (): React.ReactElement => {
 						tag.isFollowing,
 					),
 				});
+
+				NProgress.done();
 			})
 			.catch((error) => {
 				if (error.response) {

@@ -30,6 +30,7 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -329,6 +330,8 @@ const SongDetails = (): React.ReactElement => {
 	const albumId = searchParams.get('albumId');
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		songRepo
 			.getDetails({
 				id: Number(id),
@@ -355,6 +358,8 @@ const SongDetails = (): React.ReactElement => {
 						loginManager.canDeleteComments,
 					),
 				});
+
+				NProgress.done();
 			})
 			.catch((error) => {
 				if (error.response) {

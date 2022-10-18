@@ -31,6 +31,7 @@ import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import NProgress from 'nprogress';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -275,9 +276,11 @@ const ArtistDetails = (): React.ReactElement => {
 	>(undefined);
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		artistRepo
 			.getDetails({ id: Number(id) })
-			.then((artist) =>
+			.then((artist) => {
 				setModel({
 					artist: artist,
 					artistDetailsStore: new ArtistDetailsStore(
@@ -298,8 +301,10 @@ const ArtistDetails = (): React.ReactElement => {
 						pvPlayersFactory,
 						artist.latestComments,
 					),
-				}),
-			)
+				});
+
+				NProgress.done();
+			})
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404)

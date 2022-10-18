@@ -27,6 +27,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import NProgress from 'nprogress';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -221,6 +222,8 @@ const AlbumDetails = (): React.ReactElement => {
 	>(undefined);
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		albumRepo
 			.getDetails({ id: Number(id) })
 			.then((album) => {
@@ -240,6 +243,8 @@ const AlbumDetails = (): React.ReactElement => {
 						!!model.description.english,
 					),
 				});
+
+				NProgress.done();
 			})
 			.catch((error) => {
 				if (error.response) {

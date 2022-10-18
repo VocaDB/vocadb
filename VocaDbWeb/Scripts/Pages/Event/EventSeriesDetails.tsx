@@ -23,6 +23,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSeriesDetailsStore } from '@/Stores/ReleaseEvent/EventSeriesDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import moment from 'moment';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -243,9 +244,11 @@ const EventSeriesDetails = (): React.ReactElement => {
 	const { id } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		eventRepo
 			.getSeriesDetails({ id: Number(id) })
-			.then((series) =>
+			.then((series) => {
 				setModel({
 					series: series,
 					eventSeriesDetailsStore: new EventSeriesDetailsStore(
@@ -253,8 +256,10 @@ const EventSeriesDetails = (): React.ReactElement => {
 						series.id,
 						series.tags,
 					),
-				}),
-			)
+				});
+
+				NProgress.done();
+			})
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404)

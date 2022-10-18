@@ -25,6 +25,7 @@ import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -290,6 +291,8 @@ const UserDetails = (): React.ReactElement => {
 	const { name } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		userRepo
 			.getDetails({ name: name! })
 			.then((user) => {
@@ -341,6 +344,8 @@ const UserDetails = (): React.ReactElement => {
 						user.latestComments,
 					),
 				});
+
+				NProgress.done();
 			})
 			.catch((error) => {
 				if (error.response) {

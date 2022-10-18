@@ -48,6 +48,7 @@ import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDeta
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -611,9 +612,11 @@ const EventDetails = (): React.ReactElement => {
 	const { id } = useParams();
 
 	React.useEffect(() => {
+		NProgress.start();
+
 		eventRepo
 			.getDetails({ id: Number(id) })
-			.then((event) =>
+			.then((event) => {
 				setModel({
 					event: event,
 					releaseEventDetailsStore: new ReleaseEventDetailsStore(
@@ -631,8 +634,10 @@ const EventDetails = (): React.ReactElement => {
 						event.tags,
 						loginManager.canDeleteComments,
 					),
-				}),
-			)
+				});
+
+				NProgress.done();
+			})
 			.catch((error) => {
 				if (error.response) {
 					if (error.response.status === 404)
