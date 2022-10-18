@@ -54,7 +54,6 @@ const SongListVersionsLayout = ({
 
 			<ArchivedObjectVersions
 				archivedVersions={model.archivedVersions}
-				linkFunc={(id): string => `/SongList/ViewVersion/${id}`}
 				entryType={EntryType.SongList}
 			/>
 		</Layout>
