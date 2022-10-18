@@ -1,4 +1,7 @@
 import { usePageTracking } from '@/Components/usePageTracking';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import React from 'react';
 import { useTitle } from 'react-use';
 
 export const useVocaDbTitle = (
@@ -10,4 +13,12 @@ export const useVocaDbTitle = (
 	);
 
 	usePageTracking(ready);
+
+	React.useEffect(() => {
+		NProgress.done();
+
+		return (): void => {
+			NProgress.start();
+		};
+	}, [title]);
 };
