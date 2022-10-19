@@ -1,6 +1,9 @@
 import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
 import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
-import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
+import {
+	bottomBarHeight,
+	songleWidgetHeight,
+} from '@/Components/VdbPlayer/VdbPlayer';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -92,7 +95,11 @@ export const LeftMenu = observer(
 					overflowY: 'auto',
 					position: 'sticky',
 					maxHeight: vdbPlayer.bottomBarEnabled
-						? `calc(100vh - ${40 + bottomBarHeight}px)`
+						? `calc(100vh - ${
+								40 +
+								((vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
+									bottomBarHeight)
+						  }px)`
 						: 'calc(100vh - 40px)',
 					top: 40,
 				}}
