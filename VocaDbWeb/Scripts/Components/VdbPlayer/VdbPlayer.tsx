@@ -269,7 +269,19 @@ const PlayerRightControls = observer(
 		return (
 			<>
 				{playQueue.currentItem && (
-					<PVServiceDropdown item={playQueue.currentItem} />
+					<>
+						<ButtonGroup>
+							<Button variant="inverse" title="Songle">
+								<img
+									src="/Content/songle.png"
+									alt="Songle"
+									width={16}
+									height={16}
+								/>
+							</Button>
+						</ButtonGroup>
+						<PVServiceDropdown item={playQueue.currentItem} />
+					</>
 				)}{' '}
 				<ButtonGroup>
 					<Button
