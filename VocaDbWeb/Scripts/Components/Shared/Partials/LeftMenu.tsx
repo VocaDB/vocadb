@@ -1,9 +1,7 @@
 import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
 import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
-import {
-	bottomBarHeight,
-	songleWidgetHeight,
-} from '@/Components/VdbPlayer/VdbPlayer';
+import { songleWidgetHeight } from '@/Components/VdbPlayer/SongleWidget';
+import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';

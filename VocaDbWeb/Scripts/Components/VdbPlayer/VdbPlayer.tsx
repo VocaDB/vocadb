@@ -4,6 +4,11 @@ import Container from '@/Bootstrap/Container';
 import Dropdown from '@/Bootstrap/Dropdown';
 import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
+import {
+	SongleIcon,
+	SongleWidget,
+	songleWidgetHeight,
+} from '@/Components/VdbPlayer/SongleWidget';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
@@ -27,8 +32,6 @@ import { Link } from 'react-router-dom';
 
 export const miniPlayerWidth = 16 * 25;
 export const miniPlayerHeight = 9 * 25;
-
-export const songleWidgetHeight = 0;
 
 const seekBarHeight = 8;
 const controlsHeight = 48;
@@ -282,12 +285,7 @@ const PlayerRightControls = observer(
 									vdbPlayer.songleWidgetEnabled && 'active',
 								)}
 							>
-								<img
-									src="/Content/songle.png"
-									alt="Songle"
-									width={16}
-									height={16}
-								/>
+								<SongleIcon />
 							</Button>
 						</ButtonGroup>
 						<PVServiceDropdown item={playQueue.currentItem} />
@@ -565,7 +563,6 @@ const SeekBar = observer(
 		const { vdbPlayer } = useVdbPlayer();
 
 		const ref = React.useRef<HTMLDivElement>(undefined!);
-
 		const handleClick = React.useCallback(
 			async (e: React.MouseEvent): Promise<void> => {
 				const duration = await diva.getDuration();
@@ -634,6 +631,8 @@ const BottomBar = observer(
 				}}
 			>
 				<div css={{ display: 'flex', flexDirection: 'column' }}>
+					{vdbPlayer.songleWidgetEnabled && <SongleWidget />}
+
 					<SeekBar />
 
 					<Container fluid>
