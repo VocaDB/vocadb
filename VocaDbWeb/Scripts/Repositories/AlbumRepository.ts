@@ -26,7 +26,7 @@ import { SongOptionalField } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import qs from 'qs';
 
 export enum AlbumOptionalField {

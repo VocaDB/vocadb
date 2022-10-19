@@ -34,7 +34,7 @@ import { SongListOptionalField } from '@/Repositories/SongListRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
 import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
 export enum UserInboxType {
 	Received = 'Received',

@@ -12,7 +12,7 @@ import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { AdvancedSearchFilter } from '@/ViewModels/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
 export interface SongListGetSongsQueryParams {
 	listId: number;
