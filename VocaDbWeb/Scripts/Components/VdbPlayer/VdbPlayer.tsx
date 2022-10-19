@@ -271,7 +271,15 @@ const PlayerRightControls = observer(
 				{playQueue.currentItem && (
 					<>
 						<ButtonGroup>
-							<Button variant="inverse" title="Songle">
+							<Button
+								variant="inverse"
+								title="Songle"
+								onClick={vdbPlayer.toggleSongleWidget}
+								className={classNames(
+									'hidden-phone',
+									vdbPlayer.songleWidgetEnabled && 'active',
+								)}
+							>
 								<img
 									src="/Content/songle.png"
 									alt="Songle"

@@ -36,6 +36,7 @@ export class VdbPlayerStore
 	public readonly playQueue: PlayQueueStore;
 	@observable public playerBounds?: Rectangle;
 	@observable public percent = 0;
+	@observable public songleWidgetEnabled = false;
 
 	public constructor(
 		values: GlobalValues,
@@ -107,5 +108,9 @@ export class VdbPlayerStore
 
 	@action public setPercent = (value: number): void => {
 		this.percent = value;
+	};
+
+	@action public toggleSongleWidget = (): void => {
+		this.songleWidgetEnabled = !this.songleWidgetEnabled;
 	};
 }
