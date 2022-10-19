@@ -19,10 +19,6 @@ require('jquery-ui/sortable');
 require('jquery-ui/spinner');
 require('jquery-ui/tabs');
 
-window.ko = require('knockout');
-
-require('knockout-punches');
-
 window._ = require('lodash');
 
 window.moment = require('moment');
