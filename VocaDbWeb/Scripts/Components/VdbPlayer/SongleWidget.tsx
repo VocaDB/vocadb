@@ -1,6 +1,7 @@
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { PVService } from '@/Models/PVs/PVService';
 import { HttpClient } from '@/Shared/HttpClient';
 import { css } from '@emotion/react';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
@@ -148,6 +149,21 @@ export const SongleWidget = observer(
 
 		const [song, setSong] = React.useState<SongleSong & SongleChorus>();
 
+		const pv = React.useMemo(() => {
+			const currentItem = playQueue.currentItem;
+			// Prefer NND, and then YouTube.
+			const pv = currentItem
+				? currentItem.entry.pvs.find(
+						(pv) => pv.service === PVService.NicoNicoDouga,
+				  ) ??
+				  currentItem.entry.pvs.find(
+						(pv) => pv.service === PVService.Youtube,
+				  ) ??
+				  currentItem.pv
+				: undefined;
+			return pv;
+		}, [playQueue.currentItem]);
+
 		const load = React.useCallback(async (pv: PVContract): Promise<void> => {
 			const url = VideoServiceHelper.getUrlById(pv);
 			const [song, chorus] = await Promise.all([
@@ -164,17 +180,12 @@ export const SongleWidget = observer(
 		React.useEffect(() => {
 			setSong(undefined);
 
-			const { currentItem } = playQueue;
-			if (!currentItem) return;
+			if (!pv) return;
 
-			const timeoutId = setTimeout(async () => {
-				await load(currentItem.pv);
-			}, 1000);
+			const timeoutId = setTimeout(() => load(pv), 1000);
 
-			return (): void => {
-				clearTimeout(timeoutId);
-			};
-		}, [playQueue, playQueue.currentItem?.pv, load]);
+			return (): void => clearTimeout(timeoutId);
+		}, [pv, load]);
 
 		return (
 			<div
@@ -222,12 +233,10 @@ export const SongleWidget = observer(
 					}}
 				>
 					<div css={{ display: 'flex', alignItems: 'center' }}>
-						{playQueue.currentItem && (
+						{pv && (
 							<a
 								href={`https://songle.jp/songs/${encodeURIComponent(
-									VideoServiceHelper.getUrlById(
-										playQueue.currentItem.pv,
-									).replace('https://', ''),
+									VideoServiceHelper.getUrlById(pv).replace('https://', ''),
 								)}`}
 								target="_blank"
 								rel="noreferrer"
