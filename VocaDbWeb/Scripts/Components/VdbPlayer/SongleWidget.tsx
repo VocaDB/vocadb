@@ -232,7 +232,15 @@ export const SongleWidget = observer(
 						paddingRight: 12,
 					}}
 				>
-					<div css={{ display: 'flex', alignItems: 'center' }}>
+					<div
+						css={{
+							display: 'flex',
+							justifyContent: 'flex-start',
+							alignItems: 'center',
+							width: 'calc(100% / 3)',
+							height: '100%',
+						}}
+					>
 						{pv && (
 							<a
 								href={`https://songle.jp/songs/${encodeURIComponent(
@@ -256,8 +264,24 @@ export const SongleWidget = observer(
 							</a>
 						)}
 					</div>
-					<div css={{ display: 'flex', alignItems: 'center', flexGrow: 1 }} />
-					<div css={{ display: 'flex', alignItems: 'center' }}>
+					<div
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							width: 'calc(100% / 3)',
+							height: '100%',
+						}}
+					/>
+					<div
+						css={{
+							display: 'flex',
+							justifyContent: 'flex-end',
+							alignItems: 'center',
+							width: 'calc(100% / 3)',
+							height: '100%',
+						}}
+					>
 						<a
 							href="https://api.songle.jp/"
 							target="_blank"
@@ -273,7 +297,7 @@ export const SongleWidget = observer(
 								font-weight: bold;
 							`}
 						>
-							<SongleIcon /> Powered by Songle API{/* TODO: localize */}
+							<SongleIcon /> By Songle API{/* TODO: localize */}
 						</a>
 					</div>
 				</div>
