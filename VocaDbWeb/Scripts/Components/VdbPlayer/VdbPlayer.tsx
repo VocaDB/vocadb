@@ -4,6 +4,11 @@ import Container from '@/Bootstrap/Container';
 import Dropdown from '@/Bootstrap/Dropdown';
 import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
 import { EmbedPV } from '@/Components/VdbPlayer/EmbedPV';
+import {
+	SongleIcon,
+	SongleWidget,
+	songleWidgetHeight,
+} from '@/Components/VdbPlayer/SongleWidget';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
@@ -269,7 +274,22 @@ const PlayerRightControls = observer(
 		return (
 			<>
 				{playQueue.currentItem && (
-					<PVServiceDropdown item={playQueue.currentItem} />
+					<>
+						<ButtonGroup>
+							<Button
+								variant="inverse"
+								title="Songle"
+								onClick={vdbPlayer.toggleSongleWidget}
+								className={classNames(
+									'hidden-phone',
+									vdbPlayer.songleWidgetEnabled && 'active',
+								)}
+							>
+								<SongleIcon />
+							</Button>
+						</ButtonGroup>
+						<PVServiceDropdown item={playQueue.currentItem} />
+					</>
 				)}{' '}
 				<ButtonGroup>
 					<Button
@@ -502,7 +522,10 @@ const MiniPlayer = observer(
 						? {
 								position: 'fixed',
 								right: 0,
-								bottom: vdbPlayer.bottomBarEnabled ? bottomBarHeight : 0,
+								bottom: vdbPlayer.bottomBarEnabled
+									? (vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
+									  bottomBarHeight
+									: 0,
 								width: miniPlayerWidth,
 								height: miniPlayerHeight,
 								zIndex: 3939,
@@ -540,7 +563,6 @@ const SeekBar = observer(
 		const { vdbPlayer } = useVdbPlayer();
 
 		const ref = React.useRef<HTMLDivElement>(undefined!);
-
 		const handleClick = React.useCallback(
 			async (e: React.MouseEvent): Promise<void> => {
 				const duration = await diva.getDuration();
@@ -579,11 +601,16 @@ const SeekBar = observer(
 	},
 );
 
-const BottomBar = React.memo(
+const BottomBar = observer(
 	(): React.ReactElement => {
+		const { vdbPlayer } = useVdbPlayer();
+
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
-			document.body.style.paddingBottom = `${bottomBarHeight}px`;
+			document.body.style.paddingBottom = `${
+				(vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
+				bottomBarHeight
+			}px`;
 
 			return (): void => {
 				document.body.style.paddingBottom = '';
@@ -604,6 +631,8 @@ const BottomBar = React.memo(
 				}}
 			>
 				<div css={{ display: 'flex', flexDirection: 'column' }}>
+					{vdbPlayer.songleWidgetEnabled && <SongleWidget />}
+
 					<SeekBar />
 
 					<Container fluid>

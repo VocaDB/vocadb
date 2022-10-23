@@ -118,7 +118,7 @@ export class VideoServiceHelper {
 				return `https://vimeo.com/${pv.pvId}`;
 
 			case PVService.Youtube:
-				return `https://youtu.be/${pv.pvId}`;
+				return `https://www.youtube.com/watch?v=${pv.pvId}`;
 		}
 	};
 
