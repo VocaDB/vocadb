@@ -16,8 +16,10 @@ import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongFo
 import { UpdateUserSettingsContract } from '@/DataContracts/User/UpdateUserSettingsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { UserForEditContract } from '@/DataContracts/User/UserForEditContract';
 import { UserForMySettingsContract } from '@/DataContracts/User/UserForMySettingsContract';
 import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { UserWithPermissionsForApiContract } from '@/DataContracts/User/UserWithPermissionsForApiContract';
 import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { Tuple2 } from '@/Helpers/HighchartsHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
@@ -842,6 +844,31 @@ export class UserRepository implements ICommentRepository {
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	public getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<UserWithPermissionsForApiContract> => {
+		return this.httpClient.get<UserWithPermissionsForApiContract>(
+			this.urlMapper.mapRelative(`/api/users/${id}/for-edit`),
+		);
+	};
+
+	public edit = (
+		requestToken: string,
+		contract: UserForEditContract,
+	): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/users/${contract.id}`),
+			contract,
+			{
+				headers: {
 					requestVerificationToken: requestToken,
 				},
 			},

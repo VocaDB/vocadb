@@ -1,22 +1,28 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain.Users
 {
+	public interface IArtistForUser : IArtistLink
+	{
+		new Artist Artist { get; }
+	}
+
 	/// <summary>
 	/// User following an artist.
 	/// </summary>
 	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
-	public class ArtistForUser : IArtistLink, IEntryWithIntId
+	public class ArtistForUser : IArtistForUser, IEntryWithIntId
 	{
 		private Artist _artist;
 		private User _user;
 
+#nullable disable
 		public ArtistForUser()
 		{
 			SiteNotifications = true;
 		}
+#nullable enable
 
 		public ArtistForUser(User user, Artist artist)
 			: this()
@@ -30,6 +36,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual Artist Artist
 		{
 			get => _artist;
+			[MemberNotNull(nameof(_artist))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -50,6 +57,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual User User
 		{
 			get => _user;
+			[MemberNotNull(nameof(_user))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -67,7 +75,6 @@ namespace VocaDb.Model.Domain.Users
 			Artist.Users.Remove(this);
 		}
 
-#nullable enable
 		public virtual bool Equals(ArtistForUser? another)
 		{
 			if (another == null)
@@ -108,6 +115,5 @@ namespace VocaDb.Model.Domain.Users
 		{
 			return $"{User} following {Artist}";
 		}
-#nullable disable
 	}
 }

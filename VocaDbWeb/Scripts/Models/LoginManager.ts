@@ -282,7 +282,7 @@ export class LoginManager {
 		return songList.author.id === this.loggedUserId;
 	};
 
-	private canEditGroupTo = (groupId: UserGroup): boolean => {
+	public canEditGroupTo = (groupId: UserGroup): boolean => {
 		return (
 			!!this.loggedUser &&
 			(this.loggedUser.groupId === UserGroup.Admin ||

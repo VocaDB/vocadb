@@ -975,6 +975,37 @@ namespace VocaDb.Web.Controllers.Api
 				return ValidationProblem(ModelState);
 			}
 		}
+
+		[HttpGet("{id:int}/for-edit")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ServerOnlyUserWithPermissionsForApiContract GetForEdit(int id) => _queries.GetUserWithPermissions(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(UserForEditForApiContract contract)
+		{
+			try
+			{
+				_queries.UpdateUser(contract);
+			}
+			catch (InvalidEmailFormatException)
+			{
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
+				return ValidationProblem(ModelState);
+			}
+			catch (UserNameAlreadyExistsException)
+			{
+				ModelState.AddModelError("Username", "Username is already in use.");
+				return ValidationProblem(ModelState);
+			}
+
+			return contract.Id;
+		}
 #nullable disable
 	}
 }
