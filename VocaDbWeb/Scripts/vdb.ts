@@ -147,7 +147,6 @@ export { EventIndex } from '@/Event/Index';
 // ~/bundles/User/Details
 
 // ~/bundles/User/Edit
-export { UserEdit } from '@/User/Edit';
 
 // ~/bundles/User/EntryEdits
 
