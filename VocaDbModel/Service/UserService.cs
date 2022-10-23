@@ -38,7 +38,8 @@ namespace VocaDb.Model.Service
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer userMessageMailer,
-			IUserIconFactory userIconFactory)
+			IUserIconFactory userIconFactory
+		)
 			: base(sessionFactory, permissionContext)
 		{
 			EntryLinkFactory = entryLinkFactory;

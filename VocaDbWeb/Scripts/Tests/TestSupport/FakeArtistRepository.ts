@@ -1,11 +1,11 @@
-import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
 export class FakeArtistRepository extends ArtistRepository {
-	public result: ArtistContract = null!;
+	public result: ArtistApiContract = null!;
 
 	public constructor() {
 		super(new HttpClient(), '');
@@ -16,7 +16,7 @@ export class FakeArtistRepository extends ArtistRepository {
 		}: {
 			id: number;
 			lang: ContentLanguagePreference;
-		}): Promise<ArtistContract> => {
+		}): Promise<ArtistApiContract> => {
 			return FakePromise.resolve(this.result);
 		};
 	}

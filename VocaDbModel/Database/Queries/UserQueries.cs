@@ -1749,9 +1749,11 @@ namespace VocaDb.Model.Database.Queries
 		/// <remarks>
 		/// Requires the <see cref="PermissionToken.ManageUserPermissions"/> right.
 		/// </remarks>
-		public void UpdateUser(ServerOnlyUserWithPermissionsContract contract)
+		public void UpdateUser(UserForEditForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			_repository.UpdateEntity<User, IDatabaseContext<User>>(contract.Id, (session, user) =>
 			{
@@ -1764,7 +1766,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (EntryPermissionManager.CanEditAdditionalPermissions(PermissionContext))
 				{
-					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p.Id)));
+					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p)));
 				}
 
 				if (user.Name != contract.Name)
@@ -2162,7 +2164,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
-		public bool IsNotification(int messageId, ServerOnlyUserWithPermissionsContract user) => HandleQuery(ctx =>
+		public bool IsNotification(int messageId, ServerOnlyUserWithPermissionsForApiContract user) => HandleQuery(ctx =>
 		{
 			return ctx.Query<UserMessage>()
 				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
@@ -2187,6 +2189,13 @@ namespace VocaDb.Model.Database.Queries
 				user: session.Load<User>(PermissionContext.LoggedUser.Id),
 				iconFactory: _userIconFactory
 			));
+		}
+
+		public ServerOnlyUserWithPermissionsForApiContract GetUserWithPermissions(int id)
+		{
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
+
+			return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference));
 		}
 #nullable disable
 	}

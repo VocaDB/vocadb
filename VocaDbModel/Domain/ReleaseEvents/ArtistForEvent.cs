@@ -20,7 +20,7 @@ public class ArtistForEvent : IEntryWithIntId, IArtistLink
 	/// <summary>
 	/// Linked artist. Can be null.
 	/// </summary>
-	public virtual Artist Artist { get; set; }
+	public virtual Artist? Artist { get; set; }
 
 	public virtual int Id { get; set; }
 

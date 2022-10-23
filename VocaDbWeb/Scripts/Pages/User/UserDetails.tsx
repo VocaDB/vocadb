@@ -122,8 +122,8 @@ const UserDetailsLayout = observer(
 									{' '}
 									&nbsp;{' '}
 									<JQueryUIButton
-										as="a"
-										href={`/User/Edit/${user.id}`}
+										as={Link}
+										to={`/User/Edit/${user.id}`}
 										icons={{ primary: 'ui-icon-wrench' }}
 									>
 										{t('ViewRes:Shared.Edit')}

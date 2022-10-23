@@ -1,4 +1,4 @@
-import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { SongType } from '@/Models/Songs/SongType';
 import { FakeArtistRepository } from '@/Tests/TestSupport/FakeArtistRepository';
@@ -9,12 +9,14 @@ import { SongCreateViewModel } from '@/ViewModels/SongCreateViewModel';
 var repository = new FakeSongRepository();
 var artistRepository = new FakeArtistRepository();
 var tagRepository = new FakeTagRepository();
-var producer: ArtistContract = {
+var producer: ArtistApiContract = {
 	artistType: ArtistType.Producer,
 	id: 1,
 	name: 'Tripshots',
 	additionalNames: '',
 	status: undefined!,
+	mainPicture: undefined!,
+	version: undefined!,
 };
 artistRepository.result = producer;
 repository.results = {

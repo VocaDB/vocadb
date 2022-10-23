@@ -17,5 +17,7 @@ namespace VocaDb.Model.Domain.Artists
 		public ArtistRoles Roles { get; set; }
 
 		public Artist Artist => null;
+
+		public int Id => 0;
 	}
 }

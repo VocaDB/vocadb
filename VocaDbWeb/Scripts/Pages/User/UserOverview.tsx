@@ -18,6 +18,7 @@ import {
 } from '@/DataContracts/User/UserKnownLanguageContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { LoginManager, PermissionToken } from '@/Models/LoginManager';
+import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
@@ -64,22 +65,6 @@ const Avatar = ({ user }: AvatarProps): React.ReactElement => {
 		<AvatarImg user={user} />
 	);
 };
-
-interface PermissionTokenNameProps {
-	token: PermissionToken;
-}
-
-const PermissionTokenName = React.memo(
-	({ token }: PermissionTokenNameProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources']);
-
-		const tokenName = Object.entries(PermissionToken)
-			.filter(([_, value]) => value === token)
-			.map(([key, _]) => key)[0];
-
-		return t([`Resources:PermissionTokenNames.${tokenName}`, tokenName]);
-	},
-);
 
 interface AllPermissionTokenNamesProps {
 	tokens: PermissionToken[];
