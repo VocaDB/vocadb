@@ -30,7 +30,7 @@ import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import { isEmpty, isNumber, pull, some } from 'lodash';
+import { isEmpty, isNumber, pull, some } from 'lodash-es';
 import {
 	action,
 	computed,

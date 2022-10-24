@@ -3,7 +3,7 @@ import { LoginManager, PermissionToken } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { difference, xor } from 'lodash';
+import { difference, xor } from 'lodash-es';
 
 const createUser = ({
 	id = 39,

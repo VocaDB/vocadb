@@ -24,7 +24,7 @@ import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { ArtistForEventEditStore } from '@/Stores/ReleaseEvent/ArtistForEventEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

@@ -1,23 +1,25 @@
 import {
-	chunk,
 	Dictionary,
-	first,
-	groupBy,
-	head,
-	last,
 	ListIteratee,
 	ListIterator,
 	Many,
 	NotVoid,
-	orderBy,
 	PartialShallow,
 	PropertyName,
+	ValueIteratee,
+} from 'lodash';
+import {
+	chunk,
+	first,
+	groupBy,
+	head,
+	last,
+	orderBy,
 	sortBy,
 	sum,
 	sumBy,
 	take,
-	ValueIteratee,
-} from 'lodash';
+} from 'lodash-es';
 
 declare global {
 	interface Array<T> {

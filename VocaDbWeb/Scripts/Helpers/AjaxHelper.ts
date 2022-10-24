@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { forOwn } from 'lodash';
+import { forOwn } from 'lodash-es';
 
 export class AjaxHelper {
 	public static createUrl = (params: {

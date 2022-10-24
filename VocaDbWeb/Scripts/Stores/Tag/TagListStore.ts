@@ -1,6 +1,6 @@
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class TagListStore {

@@ -1,7 +1,7 @@
 import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { LocalizedStringWithIdEditStore } from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class NamesEditStore {

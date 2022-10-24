@@ -1,5 +1,5 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import { range } from 'lodash';
+import { range } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class ServerSidePagingStore {

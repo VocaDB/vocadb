@@ -6,7 +6,7 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

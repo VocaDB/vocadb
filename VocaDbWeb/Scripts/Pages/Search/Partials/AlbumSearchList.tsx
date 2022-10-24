@@ -10,7 +10,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import classNames from 'classnames';
-import { truncate } from 'lodash';
+import { truncate } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

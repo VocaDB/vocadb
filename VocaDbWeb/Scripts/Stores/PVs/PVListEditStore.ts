@@ -6,7 +6,7 @@ import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PVEditStore {

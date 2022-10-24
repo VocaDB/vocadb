@@ -3,7 +3,7 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { TranslationType } from '@/Models/Globalization/TranslationType';
 import { BasicListEditStore } from '@/Stores/BasicListEditStore';
 import { WebLinkMatcher } from '@vocadb/web-link-matcher';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export class LyricsForSongEditStore {

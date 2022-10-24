@@ -12,7 +12,7 @@ import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/English
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import { isEmpty, pull } from 'lodash';
+import { isEmpty, pull } from 'lodash-es';
 import {
 	action,
 	computed,

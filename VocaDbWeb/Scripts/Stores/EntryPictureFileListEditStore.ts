@@ -1,6 +1,6 @@
 import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
 import { EntryPictureFileEditStore } from '@/Stores/EntryPictureFileEditStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class EntryPictureFileListEditStore {

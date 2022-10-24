@@ -6,7 +6,7 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class AlbumCreateStore {

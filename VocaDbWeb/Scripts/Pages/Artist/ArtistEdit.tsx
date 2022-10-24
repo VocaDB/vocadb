@@ -44,7 +44,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import { map, pull } from 'lodash';
+import { map, pull } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

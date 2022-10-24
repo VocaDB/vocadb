@@ -1,5 +1,5 @@
 // Basic list view model implementation where items are constructed from data contracts.
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 // Item type can be constructed from a contract, or with default parameters (for new items).

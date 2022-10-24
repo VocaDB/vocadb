@@ -2,7 +2,7 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { trim } from 'lodash';
+import { trim } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 interface ITagSelectionsRepository {

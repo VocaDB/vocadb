@@ -14,7 +14,7 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

@@ -29,7 +29,7 @@ import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import { isEmpty, pull, some, unionBy } from 'lodash';
+import { isEmpty, pull, some, unionBy } from 'lodash-es';
 import {
 	action,
 	computed,

@@ -1,6 +1,6 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
-import { truncate } from 'lodash';
+import { truncate } from 'lodash-es';
 import React from 'react';
 
 interface TagPopupContentProps {

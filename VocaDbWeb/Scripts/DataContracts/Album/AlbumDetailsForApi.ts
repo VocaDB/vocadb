@@ -25,7 +25,7 @@ import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { has } from 'lodash';
+import { has } from 'lodash-es';
 import moment from 'moment';
 
 export enum DiscMediaType {

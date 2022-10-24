@@ -8,7 +8,7 @@ import {
 } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
-import { max } from 'lodash';
+import { max } from 'lodash-es';
 
 export interface SongInList {
 	listId: number;

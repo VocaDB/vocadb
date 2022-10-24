@@ -2,7 +2,7 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { TagFilter } from '@/Stores/Search/TagFilter';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

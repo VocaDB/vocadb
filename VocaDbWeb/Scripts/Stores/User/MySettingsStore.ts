@@ -7,7 +7,7 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

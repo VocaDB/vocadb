@@ -5,7 +5,7 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PermissionEditStore {

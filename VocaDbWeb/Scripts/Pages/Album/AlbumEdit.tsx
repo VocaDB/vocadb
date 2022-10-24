@@ -56,7 +56,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

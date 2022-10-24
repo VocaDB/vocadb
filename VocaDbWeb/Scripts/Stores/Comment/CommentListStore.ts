@@ -14,7 +14,7 @@ import {
 	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 import {
 	action,
 	computed,

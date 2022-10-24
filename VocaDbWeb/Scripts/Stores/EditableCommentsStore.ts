@@ -3,7 +3,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { CommentStore } from '@/Stores/CommentStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { clone, pull } from 'lodash';
+import { clone, pull } from 'lodash-es';
 import {
 	action,
 	computed,

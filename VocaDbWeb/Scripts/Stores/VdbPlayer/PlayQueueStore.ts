@@ -26,7 +26,7 @@ import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

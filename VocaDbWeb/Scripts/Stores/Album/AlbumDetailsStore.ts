@@ -25,7 +25,7 @@ import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import $ from 'jquery';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

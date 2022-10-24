@@ -2,7 +2,7 @@ import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilter } from '@/Stores/Search/ArtistFilter';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

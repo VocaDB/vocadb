@@ -41,7 +41,7 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { TagDetailsStore } from '@/Stores/Tag/TagDetailsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { drop, some } from 'lodash';
+import { drop, some } from 'lodash-es';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
 import qs from 'qs';

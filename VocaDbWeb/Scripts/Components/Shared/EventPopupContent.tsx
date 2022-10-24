@@ -1,7 +1,7 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EventCategory } from '@/Models/Events/EventCategory';
-import { truncate } from 'lodash';
+import { truncate } from 'lodash-es';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

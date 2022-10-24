@@ -7,7 +7,7 @@ import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,

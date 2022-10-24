@@ -1,6 +1,6 @@
 import { AdvancedFilterType } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
-import { pull } from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class AdvancedSearchFilters {

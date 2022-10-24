@@ -26,7 +26,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
 import { getReasonPhrase } from 'http-status-codes';
-import { truncate } from 'lodash';
+import { truncate } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
