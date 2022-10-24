@@ -2,7 +2,7 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { TagFilter } from '@/Stores/Search/TagFilter';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -67,6 +67,6 @@ export class TagFilters {
 	};
 
 	@action public removeTag = (tag: TagFilter): void => {
-		_.pull(this.tags, tag);
+		pull(this.tags, tag);
 	};
 }

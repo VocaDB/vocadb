@@ -8,7 +8,6 @@ import { SearchRouteParams } from '@/Stores/Search/SearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -141,10 +140,9 @@ export abstract class SearchCategoryBaseStore<
 		if (this.showTags) {
 			for (const item of result.items) {
 				if (item.tags) {
-					item.tags = _.take(
-						_.sortBy(item.tags, (t) => t.tag.name.toLowerCase()),
-						10,
-					);
+					item.tags = item.tags
+						.sortBy((t) => t.tag.name.toLowerCase())
+						.take(10);
 				}
 			}
 		}

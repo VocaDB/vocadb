@@ -25,7 +25,7 @@ import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -197,7 +197,7 @@ export class AlbumReviewsStore {
 	};
 
 	@action public deleteReview = (review: AlbumReviewStore): Promise<void> => {
-		_.pull(this.reviews, review);
+		pull(this.reviews, review);
 
 		return this.albumRepo.deleteReview({
 			albumId: this.albumId,
@@ -320,10 +320,9 @@ export class AlbumDetailsStore {
 						lang: values.languagePreference,
 					})
 					.then((result) => {
-						const artists = _.chain(result.artists)
+						const artists = (result.artists ?? [])
 							.filter(ArtistHelper.isValidForPersonalDescription)
-							.map((a) => a.artist!)
-							.value();
+							.map((a) => a.artist!);
 						return artists;
 					}),
 			(store) =>

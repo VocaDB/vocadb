@@ -2,7 +2,7 @@ import {
 	AdminRepository,
 	IPRuleContract,
 } from '@/Repositories/AdminRepository';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import moment from 'moment';
 
@@ -62,11 +62,11 @@ export class ManageIPRulesStore {
 		const cutOff = moment().subtract(1, 'years').toDate();
 
 		const toBeRemoved = this.rules.filter((r) => new Date(r.created) < cutOff);
-		_.pull(this.rules, ...toBeRemoved);
+		pull(this.rules, ...toBeRemoved);
 	};
 
 	@action public remove = (rule: IPRule): void => {
-		_.pull(this.rules, rule);
+		pull(this.rules, rule);
 	};
 
 	@action public save = async (): Promise<void> => {

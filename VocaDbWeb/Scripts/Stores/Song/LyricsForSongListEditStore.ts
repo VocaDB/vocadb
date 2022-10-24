@@ -3,7 +3,7 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { TranslationType } from '@/Models/Globalization/TranslationType';
 import { BasicListEditStore } from '@/Stores/BasicListEditStore';
 import { WebLinkMatcher } from '@vocadb/web-link-matcher';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export class LyricsForSongEditStore {
@@ -65,7 +65,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 
 	private find = (translationType: string): LyricsForSongEditStore => {
 		let store = this.items.find((i) => i.translationType === translationType);
-		if (store) _.pull(this.items, store);
+		if (store) pull(this.items, store);
 		else {
 			store = new LyricsForSongEditStore({
 				source: '',
@@ -89,7 +89,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 		this.original.cultureCode = lyrics.cultureCode;
 		this.original.source = lyrics.source;
 		this.original.url = lyrics.url;
-		_.pull(this.items, lyrics);
+		pull(this.items, lyrics);
 	};
 
 	@action public changeToTranslation = (

@@ -26,7 +26,7 @@ import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -343,13 +343,13 @@ export class PlayQueueStore
 		const { currentItem } = this;
 
 		// First, remove items that are not equal to the current one.
-		_.pull(this.items, ...items.filter((item) => item !== currentItem));
+		pull(this.items, ...items.filter((item) => item !== currentItem));
 
 		// Capture the current index.
 		const { currentIndex, isLastItem } = this;
 
 		// Then, remove the current item if any.
-		_.pull(
+		pull(
 			this.items,
 			items.find((item) => item === currentItem),
 		);

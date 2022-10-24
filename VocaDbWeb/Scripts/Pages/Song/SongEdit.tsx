@@ -56,7 +56,6 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
@@ -950,7 +949,7 @@ const SongEdit = (): React.ReactElement => {
 
 	const artistRoleNames = React.useMemo(
 		() =>
-			_.fromPairs(
+			Object.fromEntries(
 				vdb.values.artistRoles.map((artistRole): [
 					string,
 					string | undefined,

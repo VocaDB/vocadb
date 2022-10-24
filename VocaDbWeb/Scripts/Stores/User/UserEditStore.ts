@@ -5,7 +5,7 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PermissionEditStore {
@@ -77,7 +77,7 @@ export class UserEditStore {
 	@action public removeArtist = (
 		ownedArtist: ArtistForUserForApiContract,
 	): void => {
-		_.pull(this.ownedArtists, ownedArtist);
+		pull(this.ownedArtists, ownedArtist);
 	};
 
 	@action public submit = async (requestToken: string): Promise<number> => {

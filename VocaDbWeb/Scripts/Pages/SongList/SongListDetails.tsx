@@ -47,7 +47,6 @@ import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository'
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -345,7 +344,7 @@ const SongListDetailsLayout = observer(
 						<Dropdown
 							items={{
 								'': t('ViewRes.SongList:Details.DefaultSortRule'),
-								..._.fromPairs(
+								...Object.fromEntries(
 									Object.values(SongSortRule).map((value) => [
 										value,
 										t(`Resources:SongSortRuleNames.${value}`),

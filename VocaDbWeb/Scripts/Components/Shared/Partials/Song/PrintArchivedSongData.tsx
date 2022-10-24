@@ -14,7 +14,6 @@ import { ArchivedSongContract } from '@/DataContracts/Song/ArchivedSongContract'
 import { ComparedVersionsContract } from '@/DataContracts/Versioning/ComparedVersionsContract';
 import { BpmHelper } from '@/Helpers/BpmHelper';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
-import _ from 'lodash';
 import React from 'react';
 
 interface PrintArchivedSongDataProps {
@@ -123,12 +122,14 @@ export const PrintArchivedSongData = React.memo(
 							name="Artists" /* TODO: localize */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
-								_.orderBy(data.artists, (artist) => artist.nameHint).map(
-									(artist) =>
-										`${artist.nameHint} [${artist.id}] - IsSupport: ${
-											artist.isSupport ? 'True' : 'False'
-										}, Roles: ${artist.roles}` /* TODO: localize */,
-								)
+								(data.artists ?? [])
+									.orderBy((artist) => artist.nameHint)
+									.map(
+										(artist) =>
+											`${artist.nameHint} [${artist.id}] - IsSupport: ${
+												artist.isSupport ? 'True' : 'False'
+											}, Roles: ${artist.roles}` /* TODO: localize */,
+									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}

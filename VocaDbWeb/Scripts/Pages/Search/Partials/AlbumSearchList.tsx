@@ -10,7 +10,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import classNames from 'classnames';
-import _ from 'lodash';
+import { truncate } from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -154,7 +154,7 @@ const AlbumSearchList = observer(
 											to={EntryUrlMapper.details(EntryType.Album, album.id)}
 											title={album.additionalNames}
 										>
-											{_.truncate(album.name, { length: 150 })}
+											{truncate(album.name, { length: 150 })}
 										</Link>{' '}
 										<DraftIcon status={album.status} />
 										<br />

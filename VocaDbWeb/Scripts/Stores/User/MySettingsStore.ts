@@ -7,7 +7,7 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -94,7 +94,7 @@ export class MySettingsStore {
 	@action public removeKnownLanguage = (
 		knownLanguage: UserKnownLanguageEditStore,
 	): void => {
-		_.pull(this.knownLanguages, knownLanguage);
+		pull(this.knownLanguages, knownLanguage);
 	};
 
 	@action public verifyEmail = async (): Promise<void> => {

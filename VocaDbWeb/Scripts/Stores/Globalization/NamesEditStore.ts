@@ -1,7 +1,7 @@
 import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { LocalizedStringWithIdEditStore } from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 export class NamesEditStore {
@@ -49,7 +49,7 @@ export class NamesEditStore {
 	@action public deleteAlias = (
 		alias: LocalizedStringWithIdEditStore,
 	): void => {
-		_.pull(this.aliases, alias);
+		pull(this.aliases, alias);
 	};
 
 	private getAllPrimaryNames: () => LocalizedStringWithIdEditStore[] = () => {

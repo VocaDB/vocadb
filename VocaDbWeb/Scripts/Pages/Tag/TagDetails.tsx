@@ -41,7 +41,7 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { TagDetailsStore } from '@/Stores/Tag/TagDetailsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import _ from 'lodash';
+import { drop, some } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
 import qs from 'qs';
@@ -125,9 +125,9 @@ const tagLinks = (tagList: TagBaseContract[]): string => {
 	const tagsPerRow = 7;
 
 	for (var i = 0; i < tagList.length; i += tagsPerRow) {
-		str += _.take(_.drop(links, i), tagsPerRow).reduce(
-			(list, item) => list + ', ' + item,
-		);
+		str += drop(links, i)
+			.take(tagsPerRow)
+			.reduce((list, item) => list + ', ' + item);
 
 		if (i < tagList.length + tagsPerRow) str += '<br/>';
 	}
@@ -333,9 +333,7 @@ const HierarchyContainer = React.memo(
 				containerProps={{
 					style: {
 						width: '1000px',
-						height: `${
-							75 + (parent ? 125 : 0) + (_.some(children) ? 125 : 0)
-						}px`,
+						height: `${75 + (parent ? 125 : 0) + (some(children) ? 125 : 0)}px`,
 					},
 				}}
 			/>
@@ -523,8 +521,8 @@ const TagDetailsLayout = observer(
 									<HierarchyContainer
 										thisTag={tag.name}
 										parent={tag.parent}
-										siblings={_.slice(tag.siblings, 0, 20)}
-										children={_.slice(tag.children, 0, 20)}
+										siblings={tag.siblings.slice(0, 20)}
+										children={tag.children.slice(0, 20)}
 										hasMoreSiblings={tag.siblings.length > 20}
 										hasMoreChildren={tag.children.length > 20}
 									/>

@@ -26,7 +26,6 @@ import { SelfDescriptionStore } from '@/Stores/SelfDescriptionStore';
 import { SongLyricsStore } from '@/Stores/Song/SongLyricsStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -266,10 +265,9 @@ export class SongDetailsStore {
 						lang: values.languagePreference,
 					})
 					.then((result) => {
-						const artists = _.chain(result.artists)
+						const artists = (result.artists ?? [])
 							.filter(ArtistHelper.isValidForPersonalDescription)
-							.map((a) => a.artist!)
-							.value();
+							.map((a) => a.artist!);
 						return artists;
 					}),
 			(store) =>

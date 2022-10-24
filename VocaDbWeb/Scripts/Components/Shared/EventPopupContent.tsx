@@ -1,7 +1,7 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EventCategory } from '@/Models/Events/EventCategory';
-import _ from 'lodash';
+import { truncate } from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +45,7 @@ export const EventPopupContent = React.memo(
 				{event.description && (
 					<p>
 						<Markdown>
-							{_.truncate(event.description, {
+							{truncate(event.description, {
 								length: 100,
 							})}
 						</Markdown>

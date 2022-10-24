@@ -15,7 +15,6 @@ import {
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -50,7 +49,7 @@ const CommentsFilters = observer(
 					<div className="inline-block">
 						{t('ViewRes:EntryIndex.SortBy')}{' '}
 						<Dropdown
-							items={_.fromPairs(
+							items={Object.fromEntries(
 								Object.values(CommentSortRule).map((value) => [
 									value,
 									t(`Resources:CommentSortRuleNames.${value}`),

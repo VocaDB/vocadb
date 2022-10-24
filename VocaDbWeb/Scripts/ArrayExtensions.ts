@@ -4,7 +4,7 @@ import {
 	first,
 	groupBy,
 	head,
-	List,
+	last,
 	ListIteratee,
 	ListIterator,
 	Many,
@@ -14,8 +14,8 @@ import {
 	PropertyName,
 	sortBy,
 	sum,
+	sumBy,
 	take,
-	unionBy,
 	ValueIteratee,
 } from 'lodash';
 
@@ -25,6 +25,7 @@ declare global {
 		first(): T | undefined;
 		groupBy(iteratee?: ValueIteratee<T>): Dictionary<T[]>;
 		head(): T | undefined;
+		last(): T | undefined;
 		orderBy(
 			iteratees?: Many<
 				ListIterator<T, NotVoid> | PropertyName | PartialShallow<T>
@@ -33,11 +34,8 @@ declare global {
 		): T[];
 		sortBy(...iteratees: Array<Many<ListIteratee<T>>>): T[];
 		sum(): number;
+		sumBy(iteratee?: ((value: T) => number) | string): number;
 		take(n?: number): T[];
-		unionBy(
-			arrays2: List<T> | null | undefined,
-			iteratee?: ValueIteratee<T>,
-		): T[];
 	}
 }
 
@@ -65,6 +63,11 @@ Array.prototype.head = function <T>(this: T[]): T | undefined {
 };
 
 // eslint-disable-next-line no-extend-native
+Array.prototype.last = function <T>(this: T[]): T | undefined {
+	return last(this);
+};
+
+// eslint-disable-next-line no-extend-native
 Array.prototype.orderBy = function <T>(
 	this: T[],
 	iteratees?: Many<ListIterator<T, NotVoid> | PropertyName | PartialShallow<T>>,
@@ -87,15 +90,14 @@ Array.prototype.sum = function <T>(this: T[]): number {
 };
 
 // eslint-disable-next-line no-extend-native
-Array.prototype.take = function <T>(this: T[], n?: number): T[] {
-	return take(this, n);
+Array.prototype.sumBy = function <T>(
+	this: T[],
+	iteratee?: ((value: T) => number) | string,
+): number {
+	return sumBy(this, iteratee);
 };
 
 // eslint-disable-next-line no-extend-native
-Array.prototype.unionBy = function <T>(
-	this: T[],
-	arrays2: List<T> | null | undefined,
-	iteratee?: ValueIteratee<T>,
-): T[] {
-	return unionBy(this, arrays2, iteratee);
+Array.prototype.take = function <T>(this: T[], n?: number): T[] {
+	return take(this, n);
 };

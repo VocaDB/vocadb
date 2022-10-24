@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { range } from 'lodash';
 import React from 'react';
 
 interface StarsMetaProps {
@@ -10,7 +10,7 @@ export const StarsMeta = React.memo(
 	({ current, max }: StarsMetaProps): React.ReactElement => {
 		return (
 			<>
-				{_.range(1, max + 1).map((i) => (
+				{range(1, max + 1).map((i) => (
 					<React.Fragment key={i}>
 						{i > 0 && ' '}
 						{current >= i ? (

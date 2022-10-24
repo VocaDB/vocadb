@@ -1,6 +1,5 @@
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
-import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 export interface RoleSelection {
@@ -46,7 +45,7 @@ export class ArtistRolesEditStore {
 			}
 		}
 
-		this.roleSelections = _.sortBy(this.roleSelections, (r) => r.name);
+		this.roleSelections = this.roleSelections.sortBy((r) => r.name);
 	}
 
 	@action public save = (): void => {

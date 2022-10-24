@@ -25,7 +25,7 @@ import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryStatus } from '@/Models/EntryStatus';
-import _ from 'lodash';
+import { has } from 'lodash';
 import moment from 'moment';
 
 export enum DiscMediaType {
@@ -55,7 +55,7 @@ export class AlbumDisc {
 		this.totalLengthSeconds = this.songs.every(
 			(s) => s.song && s.song.lengthSeconds > 0,
 		)
-			? _.sumBy(this.songs, (s) => s.song!.lengthSeconds)
+			? this.songs.sumBy((s) => s.song!.lengthSeconds)
 			: 0;
 	}
 }
@@ -151,13 +151,13 @@ export class AlbumDetailsForApi {
 		this.webLinks = contract.webLinks;
 		this.wishlistedBy = contract.stats.wishlistCount;
 
-		const songsByDiscs = _.groupBy(contract.songs, (s) => s.discNumber);
+		const songsByDiscs = contract.songs.groupBy((s) => s.discNumber);
 		this.discs = Object.entries(songsByDiscs).map(
 			([key, value]) =>
 				new AlbumDisc(
 					Number(key),
 					value,
-					_.has(contract.discs, key) ? contract.discs[key] : undefined,
+					has(contract.discs, key) ? contract.discs[key] : undefined,
 				),
 		);
 

@@ -12,7 +12,7 @@ import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/English
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { isEmpty, pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -99,7 +99,7 @@ export class TagEditStore {
 	}
 
 	@computed public get validationError_needDescription(): boolean {
-		return !this.description.original && _.isEmpty(this.webLinks.items);
+		return !this.description.original && isEmpty(this.webLinks.items);
 	}
 
 	@computed public get hasValidationErrors(): boolean {
@@ -111,7 +111,7 @@ export class TagEditStore {
 	};
 
 	@action public removeRelatedTag = (tag: TagBaseContract): void => {
-		_.pull(this.relatedTags, tag);
+		pull(this.relatedTags, tag);
 	};
 
 	public denySelf = (tag: TagBaseContract): boolean => {
@@ -186,7 +186,7 @@ export class TagEditStore {
 				TagTargetTypes.Event,
 				TagTargetTypes.Song,
 			];
-			if (this.targets === _.sum(types)) {
+			if (this.targets === types.sum()) {
 				this.targets = TagEditStore.allEntryTypes;
 			} else {
 				this.targets = types.filter((t) => hasFlag(t)).sum();

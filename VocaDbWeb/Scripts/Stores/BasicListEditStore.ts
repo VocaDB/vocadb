@@ -1,5 +1,5 @@
 // Basic list view model implementation where items are constructed from data contracts.
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 // Item type can be constructed from a contract, or with default parameters (for new items).
@@ -23,7 +23,7 @@ export class BasicListEditStore<TItem extends TContract, TContract> {
 	};
 
 	@action public remove = (item: TItem): void => {
-		_.pull(this.items, item);
+		pull(this.items, item);
 	};
 
 	public toContracts = (): TContract[] => {

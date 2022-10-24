@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import _ from 'lodash';
+import { forOwn } from 'lodash';
 
 export class AjaxHelper {
 	public static createUrl = (params: {
@@ -9,7 +9,7 @@ export class AjaxHelper {
 
 		var par: string[] = [];
 
-		_.forOwn(params, (val, key) => {
+		forOwn(params, (val, key) => {
 			par.push(
 				key +
 					'=' +

@@ -24,7 +24,7 @@ import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { ArtistForEventEditStore } from '@/Stores/ReleaseEvent/ArtistForEventEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -194,7 +194,7 @@ export class ReleaseEventEditStore {
 	};
 
 	@action public removeArtist = (artist: ArtistForEventEditStore): void => {
-		_.pull(this.artistLinks, artist);
+		pull(this.artistLinks, artist);
 	};
 
 	@action public submit = async (

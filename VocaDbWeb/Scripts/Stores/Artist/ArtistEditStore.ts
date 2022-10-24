@@ -18,7 +18,7 @@ import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/English
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -227,7 +227,7 @@ export class ArtistEditStore {
 	};
 
 	@action public removeGroup = (group: ArtistForArtistContract): void => {
-		_.pull(this.groups, group);
+		pull(this.groups, group);
 	};
 
 	@action public submit = async (

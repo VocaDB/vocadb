@@ -7,7 +7,7 @@ import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import {
 	action,
 	computed,
@@ -119,7 +119,7 @@ export class SongListEditStore {
 	};
 
 	@action public removeSong = (songLink: SongInListEditStore): void => {
-		_.pull(this.songLinks, songLink);
+		pull(this.songLinks, songLink);
 	};
 
 	@action public submit = async (

@@ -1,6 +1,6 @@
 import { AdvancedFilterType } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
-import _ from 'lodash';
+import { pull } from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 export class AdvancedSearchFilters {
@@ -35,6 +35,6 @@ export class AdvancedSearchFilters {
 	};
 
 	@action public remove = (filter: AdvancedSearchFilter): void => {
-		_.pull(this.filters, filter);
+		pull(this.filters, filter);
 	};
 }

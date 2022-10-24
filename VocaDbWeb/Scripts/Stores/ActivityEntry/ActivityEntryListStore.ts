@@ -11,7 +11,6 @@ import {
 	StateChangeEvent,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -112,7 +111,7 @@ export class ActivityEntryListStore
 
 		runInAction(() => {
 			this.entries.push(...entries);
-			this.lastEntryDate = new Date(_.last(entries)!.createDate);
+			this.lastEntryDate = new Date(entries.last()!.createDate);
 		});
 	};
 

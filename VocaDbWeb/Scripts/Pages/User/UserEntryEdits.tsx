@@ -17,7 +17,6 @@ import {
 	ActivityEntrySortRule,
 } from '@/Stores/ActivityEntry/ActivityEntryListStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -69,7 +68,7 @@ const UserEntryEditsLayout = observer(
 						<div className="inline-block">
 							{t('ViewRes:EntryIndex.SortBy')}{' '}
 							<Dropdown
-								items={_.fromPairs(
+								items={Object.fromEntries(
 									Object.values(ActivityEntrySortRule).map((value) => [
 										value,
 										t(`Resources:ActivityEntrySortRuleNames.${value}`),

@@ -3,7 +3,7 @@ import { LoginManager, PermissionToken } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import _ from 'lodash';
+import { difference, xor } from 'lodash';
 
 const createUser = ({
 	id = 39,
@@ -63,7 +63,7 @@ describe('hasPermission', () => {
 			expect(result).toBe(true);
 		}
 
-		_.xor(Object.values(PermissionToken), tokens).forEach((token) => {
+		xor(Object.values(PermissionToken), tokens).forEach((token) => {
 			const result = loginManager.hasPermission(token);
 			expect(result).toBe(false);
 		});
@@ -109,7 +109,7 @@ describe('hasPermission', () => {
 
 		testHasPermission(loginManager, [
 			PermissionToken.Nothing,
-			..._.difference(effectivePermissions, [PermissionToken.ManageDatabase]),
+			...difference(effectivePermissions, [PermissionToken.ManageDatabase]),
 		]);
 	});
 });

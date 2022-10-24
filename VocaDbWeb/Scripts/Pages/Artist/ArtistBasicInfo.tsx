@@ -30,7 +30,6 @@ import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
@@ -438,7 +437,7 @@ const ArtistBasicInfo = observer(
 						{!artistDetailsStore.showAllMembers && (
 							<div>
 								<ArtistGrid
-									artists={_.take(artist.members, 6)}
+									artists={artist.members.take(6)}
 									columns={3}
 									displayType={true}
 								/>

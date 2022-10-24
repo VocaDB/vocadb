@@ -29,7 +29,7 @@ import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { isEmpty, pull, some, unionBy } from 'lodash';
 import {
 	action,
 	computed,
@@ -178,8 +178,8 @@ export class SongEditStore {
 	}
 
 	@computed public get validationError_duplicateArtist(): boolean {
-		return _.some(
-			_.groupBy(this.artistLinks, (a) =>
+		return some(
+			this.artistLinks.groupBy((a) =>
 				a.artist ? a.artist.id.toString() : a.name,
 			),
 			(a) => a.length > 1,
@@ -225,9 +225,9 @@ export class SongEditStore {
 	@computed public get validationError_needReferences(): boolean {
 		return (
 			!this.hasAlbums &&
-			_.isEmpty(this.notes.original) &&
-			_.isEmpty(this.webLinks.items) &&
-			_.isEmpty(this.pvs.pvs)
+			isEmpty(this.notes.original) &&
+			isEmpty(this.webLinks.items) &&
+			isEmpty(this.pvs.pvs)
 		);
 	}
 
@@ -371,7 +371,7 @@ export class SongEditStore {
 			}),
 		]);
 
-		const suggestions = originals.unionBy(all, (i) => i.id).take(3);
+		const suggestions = unionBy(originals, all, (i) => i.id).take(3);
 
 		runInAction(() => {
 			this.originalVersionSuggestions = suggestions;
@@ -380,7 +380,7 @@ export class SongEditStore {
 
 	// Removes an artist from this album.
 	@action public removeArtist = (artist: ArtistForAlbumEditStore): void => {
-		_.pull(this.artistLinks, artist);
+		pull(this.artistLinks, artist);
 	};
 
 	@action public selectOriginalVersion = (song: SongContract): void => {

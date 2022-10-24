@@ -26,7 +26,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
+import { truncate } from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -458,7 +458,7 @@ const SongCreateLayout = observer(
 										</Link>
 									</h3>
 									<Markdown>
-										{_.truncate(songCreateStore.songTypeInfo, {
+										{truncate(songCreateStore.songTypeInfo, {
 											length: 500,
 										})}
 									</Markdown>

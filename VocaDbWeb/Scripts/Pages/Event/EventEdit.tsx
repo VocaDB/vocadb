@@ -51,7 +51,6 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventEditStore } from '@/Stores/ReleaseEvent/ReleaseEventEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -840,7 +839,7 @@ const EventEdit = (): React.ReactElement => {
 
 	const artistRoleNames = React.useMemo(
 		() =>
-			_.fromPairs(
+			Object.fromEntries(
 				Object.values(ArtistEventRoles)
 					.filter((artistRole) => isNaN(Number(artistRole)))
 					.map((artistRole): [string, string | undefined] => [

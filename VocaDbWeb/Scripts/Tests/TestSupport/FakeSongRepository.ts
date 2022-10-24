@@ -8,7 +8,7 @@ import {
 } from '@/Repositories/SongRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
-import _ from 'lodash';
+import { max } from 'lodash';
 
 export interface SongInList {
 	listId: number;
@@ -43,7 +43,7 @@ export class FakeSongRepository extends SongRepository {
 					notes: notes,
 				});
 			} else {
-				const nextListId = (_.max(this.songLists.map((sl) => sl.id)) || 0) + 1;
+				const nextListId = (max(this.songLists.map((sl) => sl.id)) || 0) + 1;
 				this.songLists.push({ id: nextListId, name: newListName });
 				this.songsInLists.push({
 					listId: nextListId,

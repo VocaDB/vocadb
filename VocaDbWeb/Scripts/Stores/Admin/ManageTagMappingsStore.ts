@@ -5,7 +5,6 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -75,7 +74,7 @@ export class ManageTagMappingsStore {
 	}
 
 	@computed public get sortedMappings(): EditTagMappingStore[] {
-		return _.sortBy(this.filteredMappings, (m) => m.tag.name.toLowerCase());
+		return this.filteredMappings.sortBy((m) => m.tag.name.toLowerCase());
 	}
 
 	public get sortedMappingsPage(): EditTagMappingStore[] {
