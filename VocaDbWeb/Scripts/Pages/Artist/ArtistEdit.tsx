@@ -44,7 +44,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
+import _, { map } from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -679,13 +679,12 @@ const ArtistEditLayout = observer(
 								coverPicUploadRef.current.files?.item(0) ?? undefined;
 
 							// TODO: Use useRef.
-							const pictureUpload = _.chain(
+							const pictureUpload = map(
 								document.getElementsByName('pictureUpload'),
+								(element) => (element as HTMLInputElement).files?.[0],
 							)
-								.map((element) => (element as HTMLInputElement).files?.[0])
 								.filter((file) => file !== undefined)
-								.map((file) => file as File)
-								.value();
+								.map((file) => file as File);
 
 							const id = await artistEditStore.submit(
 								requestToken,

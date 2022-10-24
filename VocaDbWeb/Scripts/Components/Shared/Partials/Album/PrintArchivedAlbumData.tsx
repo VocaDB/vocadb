@@ -162,10 +162,9 @@ export const PrintArchivedAlbumData = React.memo(
 							name="Tracks" /* TODO: localize */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
-								_.chain(data.songs)
+								(data.songs ?? [])
 									.orderBy((song) => song.discNumber)
 									.orderBy((song) => song.trackNumber)
-									.value()
 									.map(
 										(song) =>
 											`(Disc ${song.discNumber}) ${song.trackNumber}. ${song.nameHint} [${song.id}]` /* TODO: localize */,

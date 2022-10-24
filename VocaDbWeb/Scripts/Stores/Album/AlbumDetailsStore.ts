@@ -206,14 +206,13 @@ export class AlbumReviewsStore {
 	};
 
 	public getRatingForUser = (userId: number): number => {
-		return _.chain(this.userRatings)
+		return this.userRatings
 			.filter(
 				(rating) =>
 					!!rating.user && rating.user.id === userId && !!rating.rating,
 			)
 			.map((rating) => rating.rating)
-			.take(1)
-			.value()[0];
+			.take(1)[0];
 	};
 
 	public ratingStars = (userRating: number): { enabled: boolean }[] => {

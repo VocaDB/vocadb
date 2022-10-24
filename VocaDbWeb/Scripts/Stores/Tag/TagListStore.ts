@@ -40,14 +40,13 @@ export class TagListStore {
 		const genres = tags.filter((c) => c.categoryName === 'Genres').value();
 		const empty = tags.filter((c) => c.categoryName === '').value();
 
-		return _.chain(genres)
+		return genres
 			.concat(
 				tags
 					.filter((c) => c.categoryName !== 'Genres' && c.categoryName !== '')
 					.value(),
 			)
-			.concat(empty)
-			.value();
+			.concat(empty);
 	}
 
 	public getTagUrl = (tag: TagUsageForApiContract): string => {
@@ -55,9 +54,8 @@ export class TagListStore {
 	};
 
 	@action public updateTagUsages = (usages: TagUsageForApiContract[]): void => {
-		this.tagUsages = _.chain(usages)
+		this.tagUsages = usages
 			.sortBy((u) => u.tag.name.toLowerCase())
-			.sortBy((u) => -u.count)
-			.value();
+			.sortBy((u) => -u.count);
 	};
 }

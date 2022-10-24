@@ -87,10 +87,9 @@ export class TagsEditStore {
 	};
 
 	@action public save = (): void => {
-		const tags = _.chain(this.selections)
+		const tags = this.selections
 			.filter((sel) => sel.selected)
-			.map((sel) => sel.tag)
-			.value();
+			.map((sel) => sel.tag);
 
 		this.repo.saveTagSelections(tags);
 		this.dialogVisible = false;

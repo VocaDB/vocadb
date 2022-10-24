@@ -47,42 +47,31 @@ export class RatingsStore {
 	}
 
 	@computed public get favorites(): UserApiContract[] {
-		return _.chain(this.ratings)
+		return this.ratings
 			.filter((r) => !!r.user && r.rating === fav)
 			.take(20)
 			.map((r) => r.user!)
-			.sortBy((u) => u.name)
-			.value();
+			.sortBy((u) => u.name);
 	}
 
 	@computed public get favoritesCount(): number {
-		return _.chain(this.ratings)
-			.filter((r) => r.rating === fav)
-			.size()
-			.value();
+		return this.ratings.filter((r) => r.rating === fav).length;
 	}
 
 	@computed public get likes(): UserApiContract[] {
-		return _.chain(this.ratings)
+		return this.ratings
 			.filter((r) => !!r.user && r.rating === like)
 			.take(20)
 			.map((r) => r.user!)
-			.sortBy((u) => u.name)
-			.value();
+			.sortBy((u) => u.name);
 	}
 
 	@computed public get likesCount(): number {
-		return _.chain(this.ratings)
-			.filter((r) => r.rating === like)
-			.size()
-			.value();
+		return this.ratings.filter((r) => r.rating === like).length;
 	}
 
 	@computed public get hiddenRatingsCount(): number {
-		return _.chain(this.ratings)
-			.filter((r) => !r.user)
-			.size()
-			.value();
+		return this.ratings.filter((r) => !r.user).length;
 	}
 
 	@computed public get showFavorites(): boolean {

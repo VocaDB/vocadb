@@ -1,4 +1,5 @@
 import App from '@/App';
+import '@/ArrayExtensions';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import '@/i18n';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';

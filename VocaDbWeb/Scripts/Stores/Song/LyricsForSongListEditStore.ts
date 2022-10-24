@@ -118,9 +118,8 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 	};
 
 	public toContracts = (): LyricsForSongContract[] => {
-		return _.chain([this.original, this.romanized])
+		return [this.original, this.romanized]
 			.concat(this.items)
-			.filter((i) => !!i.value)
-			.value();
+			.filter((i) => !!i.value);
 	};
 }

@@ -12,7 +12,6 @@ import { PVType } from '@/Models/PVs/PVType';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserGroup } from '@/Models/Users/UserGroup';
-import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,9 +28,9 @@ const eventCategoryOrders: Record<EventCategory, number> = {
 	[EventCategory.Other]: nextEventCategoryOrder++,
 };
 
-const eventCategories = _.chain(Object.values(EventCategory))
-	.orderBy((eventCategory) => eventCategoryOrders[eventCategory])
-	.value();
+const eventCategories = Object.values(EventCategory).orderBy(
+	(eventCategory) => eventCategoryOrders[eventCategory],
+);
 
 interface DropdownListProps
 	extends React.DetailedHTMLProps<

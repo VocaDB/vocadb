@@ -1,5 +1,4 @@
 import Alert from '@/Bootstrap/Alert';
-import _ from 'lodash';
 import React from 'react';
 
 interface ValidationSummaryPanelProps {
@@ -10,7 +9,7 @@ interface ValidationSummaryPanelProps {
 export const ValidationSummaryPanel = React.memo(
 	({ message, errors }: ValidationSummaryPanelProps): React.ReactElement => {
 		const errorTexts = React.useMemo(
-			() => _.chain(errors).values().flatMap().value(),
+			() => Object.values(errors).flatMap((error) => error),
 			[errors],
 		);
 

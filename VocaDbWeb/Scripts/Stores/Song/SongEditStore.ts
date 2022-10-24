@@ -280,27 +280,25 @@ export class SongEditStore {
 			: undefined;
 	}
 
-	@computed public get firstPvDate(): Moment {
-		return _.chain(this.pvs.pvs)
+	@computed public get firstPvDate(): Moment | undefined {
+		return this.pvs.pvs
 			.filter(
 				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
 			)
 			.map((pv) => moment(pv.contract.publishDate))
 			.sortBy((p) => p)
-			.head()
-			.value();
+			.head();
 	}
 
-	@computed public get suggestedPublishDate(): PotentialDate {
-		return _.chain([
+	@computed public get suggestedPublishDate(): PotentialDate | undefined {
+		return [
 			{ date: this.albumReleaseDate, source: 'Album' },
 			{ date: this.firstPvDate, source: 'PV' },
-		])
+		]
 			.filter((d) => d.date != null)
 			.map((d) => d as PotentialDate)
 			.sortBy((d) => d.date)
-			.head()
-			.value();
+			.head();
 	}
 
 	// Adds a new artist to the album
@@ -373,10 +371,7 @@ export class SongEditStore {
 			}),
 		]);
 
-		const suggestions = _.chain(originals)
-			.unionBy(all, (i) => i.id)
-			.take(3)
-			.value();
+		const suggestions = originals.unionBy(all, (i) => i.id).take(3);
 
 		runInAction(() => {
 			this.originalVersionSuggestions = suggestions;

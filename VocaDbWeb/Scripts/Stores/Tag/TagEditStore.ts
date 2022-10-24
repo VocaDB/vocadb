@@ -189,10 +189,7 @@ export class TagEditStore {
 			if (this.targets === _.sum(types)) {
 				this.targets = TagEditStore.allEntryTypes;
 			} else {
-				this.targets = _.chain(types)
-					.filter((t) => hasFlag(t))
-					.sum()
-					.value();
+				this.targets = types.filter((t) => hasFlag(t)).sum();
 			}
 		};
 		const addFlag = (): void => {

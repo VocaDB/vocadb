@@ -52,10 +52,9 @@ export class ArtistRolesEditStore {
 	@action public save = (): void => {
 		if (!this.selectedArtist) return;
 
-		var selectedRoles = _.chain(this.roleSelections)
+		var selectedRoles = this.roleSelections
 			.filter((r) => r.selected)
-			.map((r) => r.id)
-			.value();
+			.map((r) => r.id);
 
 		if (selectedRoles.length === 0) selectedRoles = [this.defaultRoleName];
 

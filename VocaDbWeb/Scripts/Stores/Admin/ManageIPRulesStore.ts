@@ -33,11 +33,10 @@ export class ManageIPRulesStore {
 
 		adminRepo.getIPRules({}).then((data) =>
 			runInAction(() => {
-				this.rules = _.chain(data)
+				this.rules = data
 					.sortBy('created')
 					.reverse()
-					.map((r) => new IPRule(r))
-					.value();
+					.map((r) => new IPRule(r));
 			}),
 		);
 

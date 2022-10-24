@@ -27,7 +27,7 @@ export class VideoServiceHelper {
 		if (allPVs.length === 0) return undefined;
 
 		for (const predicate of predicates) {
-			const pv = _.chain(allPVs).filter(predicate).first().value();
+			const pv = allPVs.filter(predicate).first();
 
 			if (pv) return pv;
 		}

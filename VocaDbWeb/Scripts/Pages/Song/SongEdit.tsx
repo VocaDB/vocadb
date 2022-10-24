@@ -352,7 +352,7 @@ const BasicInfoTabContent = observer(
 											<Button
 												onClick={(): void =>
 													runInAction(() => {
-														songEditStore.publishDate = songEditStore.suggestedPublishDate.date.toDate();
+														songEditStore.publishDate = songEditStore.suggestedPublishDate?.date.toDate();
 													})
 												}
 											>
