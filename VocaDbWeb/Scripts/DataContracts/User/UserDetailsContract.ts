@@ -11,7 +11,7 @@ import { PermissionToken } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 
 export interface OldUsernameContract {
-	date: Date;
+	date: string;
 	oldName: string;
 }
 
@@ -22,7 +22,7 @@ interface UserDetailsContractBase {
 	anonymousActivity: boolean;
 	artistCount: number;
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	customTitle: string;
 	designatedStaff: boolean;
 	editCount: number;
@@ -60,6 +60,6 @@ export interface UserDetailsContract extends UserDetailsContractBase {
 	additionalPermissions: PermissionToken[];
 	effectivePermissions: PermissionToken[];
 	email: string;
-	lastLogin: Date;
+	lastLogin: string;
 	lastLoginAddress: string;
 }

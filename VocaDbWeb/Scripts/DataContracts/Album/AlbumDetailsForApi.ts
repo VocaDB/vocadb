@@ -74,7 +74,7 @@ export class AlbumDetailsForApi {
 	public readonly circles: ArtistForAlbumContract[];
 	public readonly commentCount: number;
 	public readonly contentFocus: ContentFocus;
-	public readonly createDate: Date;
+	public readonly createDate: string;
 	public readonly deleted: boolean;
 	public readonly description: EnglishTranslatedStringContract;
 	public readonly discs: AlbumDisc[];

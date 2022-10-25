@@ -6,7 +6,7 @@ export interface ArchivedVersionContract {
 	anythingChanged: boolean;
 	author?: UserApiContract;
 	changedFields: string[];
-	created: Date;
+	created: string;
 	hidden: boolean;
 	id: number;
 	isSnapshot: boolean;

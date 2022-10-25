@@ -15,7 +15,7 @@ interface CommentKnockoutStore {
 	author: UserApiContract;
 	canBeDeleted?: boolean;
 	canBeEdited?: boolean;
-	created?: Date;
+	created: string;
 }
 
 interface CommentKnockoutProps {

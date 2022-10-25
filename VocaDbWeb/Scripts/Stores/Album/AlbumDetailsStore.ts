@@ -70,7 +70,7 @@ export class EditCollectionStore {
 }
 
 export class AlbumReviewStore {
-	public readonly date: Date;
+	public readonly date: string;
 	@observable public editedTitle = '';
 	@observable public editedText = '';
 	public readonly id?: number;
@@ -86,7 +86,7 @@ export class AlbumReviewStore {
 	) {
 		makeObservable(this);
 
-		this.date = new Date(contract.date);
+		this.date = contract.date;
 		this.id = contract.id;
 		this.languageCode = contract.languageCode;
 		this.text = contract.text;
@@ -106,7 +106,7 @@ export class AlbumReviewStore {
 
 	public toContract = (): AlbumReviewContract => {
 		return {
-			date: this.date.toISOString(),
+			date: new Date(this.date).toISOString(),
 			id: this.id,
 			languageCode: this.languageCode,
 			text: this.text,

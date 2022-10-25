@@ -33,7 +33,7 @@ export class SongDetailsForApi {
 	public readonly canEditPersonalDescription: boolean;
 	public readonly canRemoveTagUsages: boolean;
 	public readonly commentCount: number;
-	public readonly createDate: Date;
+	public readonly createDate: string;
 	public readonly deleted: boolean;
 	public readonly draft: boolean;
 	public readonly favoritedTimes: number;

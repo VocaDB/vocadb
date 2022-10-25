@@ -31,7 +31,7 @@ export interface SongDetailsContract {
 	canEditPersonalDescription: boolean;
 	canRemoveTagUsages: boolean;
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	deleted: boolean;
 	hits: number;
 	latestComments: CommentContract[];

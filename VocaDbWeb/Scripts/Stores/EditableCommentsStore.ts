@@ -94,6 +94,7 @@ export class EditableCommentsStore {
 
 		const commentContract: CommentContract = {
 			author: { id: this.loginManager.loggedUserId },
+			created: undefined!,
 			message: comment,
 		};
 

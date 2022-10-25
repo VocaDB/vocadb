@@ -33,7 +33,7 @@ export interface TagDetailsContract {
 	categoryName?: string;
 	children: TagBaseContract[];
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	id: number;

@@ -5,7 +5,7 @@ import { action, makeObservable, observable } from 'mobx';
 export class CommentStore {
 	public readonly author: UserApiContract;
 	public readonly authorName?: string;
-	public readonly created?: Date;
+	public readonly created: string;
 	@observable public editedMessage?: string = undefined;
 	public id?: number;
 	@observable public message: string;
@@ -33,6 +33,11 @@ export class CommentStore {
 	};
 
 	public toContract = (): CommentContract => {
-		return { id: this.id, message: this.message, author: this.author };
+		return {
+			created: this.created,
+			id: this.id,
+			message: this.message,
+			author: this.author,
+		};
 	};
 }
