@@ -574,7 +574,7 @@ const AlbumBasicInfo = observer(
 									/>{' '}
 									|{' '}
 									<MomentJsTimeAgo as="span">
-										{new Date(model.latestReview.date)}
+										{model.latestReview.date}
 									</MomentJsTimeAgo>
 								</div>
 								<h3 className="media-heading">

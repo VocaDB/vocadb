@@ -3,18 +3,11 @@ import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
 export interface CommentContract {
 	author: UserApiContract;
-
 	authorName?: string;
-
 	canBeDeleted?: boolean;
-
 	canBeEdited?: boolean;
-
-	created?: Date;
-
+	created: string;
 	entry?: EntryContract;
-
 	id?: number;
-
 	message: string;
 }

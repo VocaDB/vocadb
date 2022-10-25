@@ -33,7 +33,7 @@ export interface AlbumDetailsContract {
 	canEditPersonalDescription: boolean;
 	canRemoveTagUsages: boolean;
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	discs: Record<string, AlbumDiscPropertiesContract>;

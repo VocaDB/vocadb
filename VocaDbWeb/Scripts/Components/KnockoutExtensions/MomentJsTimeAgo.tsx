@@ -4,7 +4,7 @@ import React from 'react';
 interface MomentJsTimeAgoProps {
 	as: React.ElementType;
 	className?: string;
-	children?: Date;
+	children: string;
 }
 
 export const MomentJsTimeAgo = ({

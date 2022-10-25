@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 
 interface UniversalTimeLabelProps {
-	dateTime: Date;
+	dateTime: string;
 }
 
 export const UniversalTimeLabel = React.memo(

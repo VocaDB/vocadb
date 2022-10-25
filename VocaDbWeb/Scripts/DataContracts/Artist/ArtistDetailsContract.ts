@@ -47,7 +47,7 @@ export interface ArtistDetailsContract {
 	characterDesignerOf: ArtistApiContract[];
 	childVoicebanks: ArtistApiContract[];
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	draft: boolean;
@@ -70,7 +70,7 @@ export interface ArtistDetailsContract {
 	ownerUsers: UserApiContract[];
 	personalStats?: PersonalArtistStatsContract;
 	pictures: EntryThumbContract[];
-	releaseDate?: Date;
+	releaseDate?: string;
 	sharedStats: SharedArtistStatsContract;
 	siteNotifications: boolean;
 	status: EntryStatus;
