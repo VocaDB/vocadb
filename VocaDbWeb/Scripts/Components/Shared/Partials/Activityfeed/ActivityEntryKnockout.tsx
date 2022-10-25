@@ -1,10 +1,10 @@
+import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { IconNameAndTypeLinkKnockout } from '@/Components/Shared/Partials/User/IconNameAndTypeLinkKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ActivityEntryContract } from '@/DataContracts/ActivityEntry/ActivityEntryContract';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -152,13 +152,9 @@ export const ActivityEntryKnockout = ({
 					</span>
 				</>
 			)}
-			<small
-				className="pull-right extraInfo"
-				title={moment(entry.createDate).format('l LT ([UTC]Z)')}
-				/* TODO: timeAgo */
-			>
-				{moment(entry.createDate).fromNow()}
-			</small>
+			<MomentJsTimeAgo as="small" className="pull-right extraInfo">
+				{entry.createDate}
+			</MomentJsTimeAgo>
 			<div className="media">
 				{entry.entry.mainPicture &&
 					(entry.entry.mainPicture.urlTinyThumb ||
