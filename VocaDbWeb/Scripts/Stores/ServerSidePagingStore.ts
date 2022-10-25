@@ -1,5 +1,5 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
-import _ from 'lodash';
+import { range } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class ServerSidePagingStore {
@@ -37,7 +37,7 @@ export class ServerSidePagingStore {
 		const start = Math.max(this.page - 4, 1);
 		const end = Math.min(this.page + 4, this.totalPages);
 
-		return end >= start ? _.range(start, end + 1) : [];
+		return end >= start ? range(start, end + 1) : [];
 	}
 
 	@computed public get showMoreBegin(): boolean {

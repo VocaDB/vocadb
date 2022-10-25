@@ -6,7 +6,6 @@ import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVers
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import classNames from 'classnames';
-import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -118,10 +117,7 @@ export const ArchivedObjectVersions = React.memo(
 		const { t } = useTranslation(['ViewRes']);
 
 		const ordered = React.useMemo(
-			() =>
-				_.chain(archivedVersions)
-					.orderBy((v) => v.version, 'desc')
-					.value(),
+			() => archivedVersions.orderBy((v) => v.version, 'desc'),
 			[archivedVersions],
 		);
 

@@ -3,7 +3,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { CommentStore } from '@/Stores/CommentStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import _ from 'lodash';
+import { clone, pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -49,7 +49,7 @@ export class EditableCommentsStore {
 
 	// Latest N comments
 	@computed public get topComments(): CommentStore[] {
-		return _.take(this.comments, 3);
+		return this.comments.take(3);
 	}
 
 	@action public beginEditComment = (comment: CommentStore): void => {
@@ -116,22 +116,21 @@ export class EditableCommentsStore {
 					}
 				});
 
-				return _.clone(processed);
+				return clone(processed);
 			});
 	};
 
 	@action public deleteComment = (comment: CommentStore): void => {
-		_.pull(this.comments, comment);
+		pull(this.comments, comment);
 
 		this.commentRepo.deleteComment({ commentId: comment.id! });
 		this.paging.totalItems = this.paging.totalItems - 1;
 	};
 
 	@action private setComments = (commentContracts: CommentContract[]): void => {
-		var commentStores = _.sortBy(
-			commentContracts.map((comment) => this.processComment(comment)),
-			(comment) => comment.created,
-		);
+		var commentStores = commentContracts
+			.map((comment) => this.processComment(comment))
+			.sortBy((comment) => comment.created);
 
 		this.paging.totalItems = commentContracts.length;
 

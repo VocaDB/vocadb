@@ -30,7 +30,7 @@ import { PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { SongInAlbumEditStore } from '@/Stores/SongInAlbumEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { isEmpty, isNumber, pull, some } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -242,9 +242,8 @@ export class AlbumEditStore {
 	}
 
 	@computed public get validationError_duplicateArtist(): boolean {
-		return _.some(
-			_.groupBy(
-				this.artistLinks,
+		return some(
+			this.artistLinks.groupBy(
 				(a) => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport,
 			),
 			(a) => a.length > 1,
@@ -252,7 +251,7 @@ export class AlbumEditStore {
 	}
 
 	@computed public get validationError_needArtist(): boolean {
-		return _.isEmpty(this.artistLinks);
+		return isEmpty(this.artistLinks);
 	}
 
 	@computed public get validationError_needCover(): boolean {
@@ -261,19 +260,19 @@ export class AlbumEditStore {
 
 	@computed public get validationError_needReferences(): boolean {
 		return (
-			_.isEmpty(this.description.original) &&
-			_.isEmpty(this.webLinks.items) &&
-			_.isEmpty(this.pvs.pvs)
+			isEmpty(this.description.original) &&
+			isEmpty(this.webLinks.items) &&
+			isEmpty(this.pvs.pvs)
 		);
 	}
 
 	@computed public get validationError_needReleaseYear(): boolean {
-		const num = !_.isNumber(this.releaseYear) || this.releaseYear === undefined;
+		const num = !isNumber(this.releaseYear) || this.releaseYear === undefined;
 		return num;
 	}
 
 	@computed public get validationError_needTracks(): boolean {
-		return this.discType !== AlbumType.Artbook && _.isEmpty(this.tracks);
+		return this.discType !== AlbumType.Artbook && isEmpty(this.tracks);
 	}
 
 	@computed public get validationError_needType(): boolean {
@@ -452,7 +451,7 @@ export class AlbumEditStore {
 	@action public removeArtist = (
 		artistForAlbum: ArtistForAlbumEditStore,
 	): void => {
-		_.pull(this.artistLinks, artistForAlbum);
+		pull(this.artistLinks, artistForAlbum);
 	};
 
 	// Removes artists (selected from the track properties view model) from selected tracks.
@@ -463,19 +462,19 @@ export class AlbumEditStore {
 					(a2) => a2.selected && a.id === a2.artist.id,
 				),
 			);
-			_.pull(song.artists, ...removed);
+			pull(song.artists, ...removed);
 		}
 
 		this.trackPropertiesDialogVisible = false;
 	};
 
 	@action public removeIdentifier = (identifier: string): void => {
-		_.pull(this.identifiers, identifier);
+		pull(this.identifiers, identifier);
 	};
 
 	// Removes a track from this album.
 	@action public removeTrack = (song: SongInAlbumEditStore): void => {
-		_.pull(this.tracks, song);
+		pull(this.tracks, song);
 	};
 
 	// Copies modified state from track properties view model to the single track being edited.

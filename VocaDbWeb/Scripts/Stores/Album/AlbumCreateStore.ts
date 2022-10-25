@@ -6,7 +6,7 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class AlbumCreateStore {
@@ -57,7 +57,7 @@ export class AlbumCreateStore {
 	};
 
 	@action public removeArtist = (artist: ArtistContract): void => {
-		_.pull(this.artists, artist);
+		pull(this.artists, artist);
 	};
 
 	@action public submit = async (requestToken: string): Promise<number> => {

@@ -36,7 +36,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventSeriesEditStore } from '@/Stores/ReleaseEvent/ReleaseEventSeriesEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
+import { debounce } from 'lodash-es';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -91,7 +91,7 @@ const EventEditSeriesLayout = observer(
 			].map((name) =>
 				reaction(
 					() => name.value,
-					_.debounce(releaseEventSeriesEditStore.checkName, 500),
+					debounce(releaseEventSeriesEditStore.checkName, 500),
 				),
 			);
 

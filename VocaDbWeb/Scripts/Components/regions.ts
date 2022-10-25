@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const regionCodes = [
 	'AF',
 	'AX',
@@ -255,9 +253,8 @@ export const regionNames = new Intl.DisplayNames([vdb.values.uiCulture], {
 	type: 'region',
 });
 
-export const regions: Record<string, string | undefined> = _.fromPairs(
-	_.chain(regionCodes)
+export const regions: Record<string, string | undefined> = Object.fromEntries(
+	regionCodes
 		.map((regionCode) => [regionCode, regionNames.of(regionCode)])
-		.orderBy(([, value]) => value)
-		.value(),
+		.orderBy(([, value]) => value),
 );

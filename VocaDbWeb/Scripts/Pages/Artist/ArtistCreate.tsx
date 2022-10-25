@@ -20,7 +20,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
+import { truncate } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -384,7 +384,7 @@ const ArtistCreateLayout = observer(
 										</Link>
 									</h3>
 									<Markdown>
-										{_.truncate(artistCreateStore.artistTypeInfo, {
+										{truncate(artistCreateStore.artistTypeInfo, {
 											length: 500,
 										})}
 									</Markdown>

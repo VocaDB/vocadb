@@ -29,7 +29,7 @@ import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import $ from 'jquery';
-import _ from 'lodash';
+import { isEmpty, pull, some, unionBy } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -178,8 +178,8 @@ export class SongEditStore {
 	}
 
 	@computed public get validationError_duplicateArtist(): boolean {
-		return _.some(
-			_.groupBy(this.artistLinks, (a) =>
+		return some(
+			this.artistLinks.groupBy((a) =>
 				a.artist ? a.artist.id.toString() : a.name,
 			),
 			(a) => a.length > 1,
@@ -225,9 +225,9 @@ export class SongEditStore {
 	@computed public get validationError_needReferences(): boolean {
 		return (
 			!this.hasAlbums &&
-			_.isEmpty(this.notes.original) &&
-			_.isEmpty(this.webLinks.items) &&
-			_.isEmpty(this.pvs.pvs)
+			isEmpty(this.notes.original) &&
+			isEmpty(this.webLinks.items) &&
+			isEmpty(this.pvs.pvs)
 		);
 	}
 
@@ -280,27 +280,25 @@ export class SongEditStore {
 			: undefined;
 	}
 
-	@computed public get firstPvDate(): Moment {
-		return _.chain(this.pvs.pvs)
+	@computed public get firstPvDate(): Moment | undefined {
+		return this.pvs.pvs
 			.filter(
 				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
 			)
 			.map((pv) => moment(pv.contract.publishDate))
 			.sortBy((p) => p)
-			.head()
-			.value();
+			.head();
 	}
 
-	@computed public get suggestedPublishDate(): PotentialDate {
-		return _.chain([
+	@computed public get suggestedPublishDate(): PotentialDate | undefined {
+		return [
 			{ date: this.albumReleaseDate, source: 'Album' },
 			{ date: this.firstPvDate, source: 'PV' },
-		])
+		]
 			.filter((d) => d.date != null)
 			.map((d) => d as PotentialDate)
 			.sortBy((d) => d.date)
-			.head()
-			.value();
+			.head();
 	}
 
 	// Adds a new artist to the album
@@ -373,10 +371,7 @@ export class SongEditStore {
 			}),
 		]);
 
-		const suggestions = _.chain(originals)
-			.unionBy(all, (i) => i.id)
-			.take(3)
-			.value();
+		const suggestions = unionBy(originals, all, (i) => i.id).take(3);
 
 		runInAction(() => {
 			this.originalVersionSuggestions = suggestions;
@@ -385,7 +380,7 @@ export class SongEditStore {
 
 	// Removes an artist from this album.
 	@action public removeArtist = (artist: ArtistForAlbumEditStore): void => {
-		_.pull(this.artistLinks, artist);
+		pull(this.artistLinks, artist);
 	};
 
 	@action public selectOriginalVersion = (song: SongContract): void => {

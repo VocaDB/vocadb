@@ -14,7 +14,7 @@ import {
 	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
+import { map } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -119,22 +119,21 @@ export class CommentListStore
 			sortRule: this.sort,
 		});
 
-		const entries = _.chain(result.items)
-			.map((comment) => ({
-				globalEntryId: `${comment.entry?.entryType}.${comment.entry?.id}`,
-				comment,
-			}))
-			.groupBy((x) => x.globalEntryId)
-			.map(
-				(value) =>
-					({
-						comments: value.map(({ comment }) => comment),
-						entry: value[0].comment.entry,
-					} as EntryWithCommentsContract),
-			)
-			.value();
+		const entries = map(
+			result.items
+				.map((comment) => ({
+					globalEntryId: `${comment.entry?.entryType}.${comment.entry?.id}`,
+					comment,
+				}))
+				.groupBy((x) => x.globalEntryId),
+			(value) =>
+				({
+					comments: value.map(({ comment }) => comment),
+					entry: value[0].comment.entry,
+				} as EntryWithCommentsContract),
+		);
 
-		const lastEntry = _.last(_.last(entries)?.comments);
+		const lastEntry = entries.last()?.comments.last();
 
 		runInAction(() => {
 			this.entries.push(...entries);

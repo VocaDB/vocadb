@@ -6,7 +6,7 @@ import { PVRepository } from '@/Repositories/PVRepository';
 import { HttpClientError } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import $ from 'jquery';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PVEditStore {
@@ -83,7 +83,7 @@ export class PVListEditStore {
 	};
 
 	@action public remove = (pv: PVEditStore): void => {
-		_.pull(this.pvs, pv);
+		pull(this.pvs, pv);
 	};
 
 	public formatLength = (seconds: number): string => {

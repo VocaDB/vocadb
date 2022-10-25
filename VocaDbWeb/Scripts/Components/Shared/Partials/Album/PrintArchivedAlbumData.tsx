@@ -13,7 +13,6 @@ import { WebLinkInfo } from '@/Components/Shared/Partials/ArchivedEntry/WebLinkI
 import { ArchivedAlbumContract } from '@/DataContracts/Album/ArchivedAlbumContract';
 import { ArchivedTranslatedStringContract } from '@/DataContracts/ArchivedTranslatedStringContract';
 import { ComparedVersionsContract } from '@/DataContracts/Versioning/ComparedVersionsContract';
-import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -138,12 +137,14 @@ export const PrintArchivedAlbumData = React.memo(
 							name="Artists" /* TODO: localize */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
-								_.orderBy(data.artists, (artist) => artist.nameHint).map(
-									(artist) =>
-										`${artist.nameHint} [${artist.id}] - IsSupport: ${
-											artist.isSupport ? 'True' : 'False'
-										}, Roles: ${artist.roles}` /* TODO: localize */,
-								)
+								(data.artists ?? [])
+									.orderBy((artist) => artist.nameHint)
+									.map(
+										(artist) =>
+											`${artist.nameHint} [${artist.id}] - IsSupport: ${
+												artist.isSupport ? 'True' : 'False'
+											}, Roles: ${artist.roles}` /* TODO: localize */,
+									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
@@ -151,10 +152,12 @@ export const PrintArchivedAlbumData = React.memo(
 							name="Discs" /* TODO: localize */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
-								_.orderBy(data.discs, (disc) => disc.discNumber).map(
-									(disc) =>
-										`${disc.discNumber}: ${disc.name} (${disc.mediaType}) [${disc.id}]` /* TODO: localize */,
-								)
+								(data.discs ?? [])
+									.orderBy((disc) => disc.discNumber)
+									.map(
+										(disc) =>
+											`${disc.discNumber}: ${disc.name} (${disc.mediaType}) [${disc.id}]` /* TODO: localize */,
+									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
@@ -162,10 +165,9 @@ export const PrintArchivedAlbumData = React.memo(
 							name="Tracks" /* TODO: localize */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
-								_.chain(data.songs)
+								(data.songs ?? [])
 									.orderBy((song) => song.discNumber)
 									.orderBy((song) => song.trackNumber)
-									.value()
 									.map(
 										(song) =>
 											`(Disc ${song.discNumber}) ${song.trackNumber}. ${song.nameHint} [${song.id}]` /* TODO: localize */,

@@ -2,7 +2,7 @@ import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ArtistFilter } from '@/Stores/Search/ArtistFilter';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -98,6 +98,6 @@ export class ArtistFilters {
 	};
 
 	@action public removeArtist = (artist: ArtistFilter): void => {
-		_.pull(this.artists, artist);
+		pull(this.artists, artist);
 	};
 }

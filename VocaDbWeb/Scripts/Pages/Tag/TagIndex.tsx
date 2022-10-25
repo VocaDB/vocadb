@@ -10,7 +10,6 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { TagCreateStore } from '@/Stores/Tag/TagCreateStore';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -41,9 +40,9 @@ const TagIndexLayout = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const tagCount = _.sumBy(model, (m) => m.tags.length);
+		const tagCount = model.sumBy((m) => m.tags.length);
 		const avgUsageCount =
-			_.sumBy(model, (m) => _.sumBy(m.tags, (t) => t.usageCount)) / tagCount;
+			model.sumBy((m) => m.tags.sumBy((t) => t.usageCount)) / tagCount;
 
 		const navigate = useNavigate();
 

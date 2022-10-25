@@ -2,7 +2,6 @@ import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
 import { RegexLinkMatcher } from '@/Helpers/RegexLinkMatcher';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { GlobalValues } from '@/Shared/GlobalValues';
-import _ from 'lodash';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
 /// <summary>
@@ -130,11 +129,10 @@ export class UrlHelper {
 		if (UrlHelper.httpUpgradeDomains.some((m) => url!.startsWith(m)))
 			return url.replace('http://', 'https://');
 
-		const httpUpgradeMatch = _.chain(UrlHelper.httpUpgradeMatchers)
+		const httpUpgradeMatch = UrlHelper.httpUpgradeMatchers
 			.map((m) => m.getLinkFromUrl(url!))
 			.filter((m) => m.success)
-			.first()
-			.value();
+			.first();
 
 		if (httpUpgradeMatch) url = httpUpgradeMatch.formattedUrl;
 

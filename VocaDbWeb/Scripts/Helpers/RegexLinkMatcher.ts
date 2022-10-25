@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 // Code from: https://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format/4673436#4673436
 const format = (format: string, args: any): string => {
 	return format.replace(/{(\d+)}/g, function (match, number) {
@@ -25,7 +23,7 @@ export class RegexLinkMatcher {
 		const match = url.match(this.regex);
 
 		if (match) {
-			const values = _.slice(match, 1);
+			const values = match.slice(1);
 			return {
 				formattedUrl: format(this.template, values),
 				success: true,

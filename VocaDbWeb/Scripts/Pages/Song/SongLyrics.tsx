@@ -7,7 +7,6 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
@@ -35,9 +34,8 @@ const SongLyrics = observer(
 				tab="lyrics"
 			>
 				<ul className="nav nav-pills">
-					{_.chain(model.lyrics)
+					{model.lyrics
 						.sortBy((l) => l.translationType)
-						.value()
 						.map((lyrics) => (
 							<li
 								className={classNames(

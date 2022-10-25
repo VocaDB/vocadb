@@ -17,7 +17,7 @@ import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -111,7 +111,7 @@ export class ReleaseEventDetailsStore {
 		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
-		_.pull(this.usersAttending, link);
+		pull(this.usersAttending, link);
 	};
 
 	@action public setEventAttending = (): void => {
@@ -141,6 +141,6 @@ export class ReleaseEventDetailsStore {
 		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
-		_.pull(this.usersAttending, link);
+		pull(this.usersAttending, link);
 	};
 }

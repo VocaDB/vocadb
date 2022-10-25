@@ -14,7 +14,7 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -97,7 +97,7 @@ export class SongCreateStore {
 	public get originalSongSuggestions(): DuplicateEntryResultContract[] {
 		if (!this.dupeEntries || this.dupeEntries.length === 0) return [];
 
-		return _.take(this.dupeEntries, 3);
+		return this.dupeEntries.take(3);
 	}
 
 	@computed public get songTypeName(): string | undefined {
@@ -197,7 +197,7 @@ export class SongCreateStore {
 	};
 
 	@action public removeArtist = (artist: ArtistContract): void => {
-		_.pull(this.artists, artist);
+		pull(this.artists, artist);
 	};
 
 	public selectOriginal = async (

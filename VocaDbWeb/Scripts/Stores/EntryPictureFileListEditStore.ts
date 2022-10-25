@@ -1,6 +1,6 @@
 import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
 import { EntryPictureFileEditStore } from '@/Stores/EntryPictureFileEditStore';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class EntryPictureFileListEditStore {
@@ -19,7 +19,7 @@ export class EntryPictureFileListEditStore {
 	};
 
 	@action public remove = (picture: EntryPictureFileEditStore): void => {
-		_.pull(this.pictures, picture);
+		pull(this.pictures, picture);
 	};
 
 	public toContracts = (): EntryPictureFileContract[] => {

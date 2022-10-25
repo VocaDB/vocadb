@@ -1,6 +1,6 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
-import _ from 'lodash';
+import { truncate } from 'lodash-es';
 import React from 'react';
 
 interface TagPopupContentProps {
@@ -31,7 +31,7 @@ export const TagPopupContent = React.memo(
 				{tag.description && (
 					<p>
 						<Markdown>
-							{_.truncate(tag.description, {
+							{truncate(tag.description, {
 								length: 100,
 							})}
 						</Markdown>

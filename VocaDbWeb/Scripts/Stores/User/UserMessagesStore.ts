@@ -6,7 +6,7 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
-import _ from 'lodash';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -161,7 +161,7 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 
 	@action public deleteMessage = (message: UserMessageStore): void => {
 		this.userRepo.deleteMessage({ messageId: message.id });
-		_.pull(this.items, message);
+		pull(this.items, message);
 	};
 
 	@action public deleteSelected = (): void => {
@@ -174,7 +174,7 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 			userId: this.values.loggedUserId,
 			messageIds: selectedIds,
 		});
-		_.pull(this.items, ...selected);
+		pull(this.items, ...selected);
 	};
 
 	@action public selectMessage = (message: UserMessageStore): void => {

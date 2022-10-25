@@ -20,7 +20,6 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import classNames from 'classnames';
-import _ from 'lodash';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
@@ -57,7 +56,7 @@ const PVPlayer = observer(
 							className="scrollable-items"
 							style={{ top: -384 * (pvPlayerStore.paging.page - 1) }}
 						>
-							{_.chunk(model.newSongs, 4).map((chunk, index) => (
+							{model.newSongs.chunk(4).map((chunk, index) => (
 								<div key={index}>
 									{chunk.map((song) => (
 										<div

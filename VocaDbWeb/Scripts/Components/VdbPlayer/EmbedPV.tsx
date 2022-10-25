@@ -10,7 +10,6 @@ import {
 	PlayerOptions,
 	PlayerType,
 } from '@vocadb/nostalgic-diva';
-import _ from 'lodash';
 import React from 'react';
 
 // Code from: https://github.com/dotnet/runtime/blob/09c1a1f7b0c477890b04912d8dd4f742f80faffc/src/libraries/System.Private.CoreLib/src/System/IO/Path.cs#L152
@@ -35,7 +34,7 @@ const getExtension = (path?: string): string | undefined => {
 const isImage = (filename?: string): boolean => {
 	const imageExtensions = ['.jpg', '.png'];
 	const ext = getExtension(filename);
-	return _.includes(imageExtensions, ext);
+	return ext !== undefined && imageExtensions.includes(ext);
 };
 
 const isAudio = (filename?: string): boolean => !isImage(filename);

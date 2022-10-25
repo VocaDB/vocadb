@@ -8,7 +8,6 @@ import SongRelated from '@/Pages/Song/SongRelated';
 import SongShare from '@/Pages/Song/SongShare';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
-import _ from 'lodash';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +33,7 @@ export const SongDetailsTabs = React.memo(
 			'VocaDb.Web.Resources.Domain.Globalization',
 		]);
 
-		const lyricsLanguageNames = _.chain(model.lyrics)
+		const lyricsLanguageNames = model.lyrics
 			.sortBy((l) => l.translationType)
 			.filter((l) => !!l.cultureCode || l!.translationType === 'Romanized')
 			.map((l) =>
@@ -44,8 +43,7 @@ export const SongDetailsTabs = React.memo(
 							'VocaDb.Web.Resources.Domain.Globalization:TranslationTypeNames.Romanized',
 					  ),
 			)
-			.take(3)
-			.value();
+			.take(3);
 
 		const additionalLyrics =
 			lyricsLanguageNames.length > 0

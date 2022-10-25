@@ -7,7 +7,6 @@ import {
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import { functions } from '@/Shared/GlobalFunctions';
-import _ from 'lodash';
 
 interface BandcampMetadata {
 	Url?: string;
@@ -27,12 +26,12 @@ export class VideoServiceHelper {
 		if (allPVs.length === 0) return undefined;
 
 		for (const predicate of predicates) {
-			const pv = _.chain(allPVs).filter(predicate).first().value();
+			const pv = allPVs.filter(predicate).first();
 
 			if (pv) return pv;
 		}
 
-		return acceptFirst ? _.first(allPVs) : undefined;
+		return acceptFirst ? allPVs.first() : undefined;
 	};
 
 	public static getPiaproTimestamp = (

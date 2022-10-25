@@ -32,7 +32,7 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueEditStore } from '@/Stores/Venue/VenueEditStore';
 import { getReasonPhrase } from 'http-status-codes';
-import _ from 'lodash';
+import { debounce } from 'lodash-es';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -80,7 +80,7 @@ const VenueEditLayout = observer(
 				venueEditStore.names.romajiName,
 				venueEditStore.names.englishName,
 			].map((name) =>
-				reaction(() => name.value, _.debounce(venueEditStore.checkName, 500)),
+				reaction(() => name.value, debounce(venueEditStore.checkName, 500)),
 			);
 
 			return (): void => {

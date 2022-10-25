@@ -2,7 +2,7 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import _ from 'lodash';
+import { trim } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 interface ITagSelectionsRepository {
@@ -40,7 +40,7 @@ export class TagsEditStore {
 	@action public addTag = (tagName: string): void => {
 		if (!tagName) return;
 
-		tagName = _.trim(tagName);
+		tagName = trim(tagName);
 
 		// If tag is already added, select it
 		const selection = this.selections.find(
@@ -87,10 +87,9 @@ export class TagsEditStore {
 	};
 
 	@action public save = (): void => {
-		const tags = _.chain(this.selections)
+		const tags = this.selections
 			.filter((sel) => sel.selected)
-			.map((sel) => sel.tag)
-			.value();
+			.map((sel) => sel.tag);
 
 		this.repo.saveTagSelections(tags);
 		this.dialogVisible = false;
