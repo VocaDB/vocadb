@@ -323,5 +323,16 @@ namespace VocaDb.Web.Controllers
 
 			return View("React/Index");
 		}
+
+		// TODO: Remove.
+		[Authorize]
+		public IActionResult ConvertToUtc()
+		{
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			Service.ConvertToUtc();
+
+			return RedirectToAction("Index");
+		}
 	}
 }

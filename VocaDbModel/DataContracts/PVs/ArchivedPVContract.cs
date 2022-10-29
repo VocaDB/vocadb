@@ -52,7 +52,7 @@ public class ArchivedPVContract
 	public string Name { get; init; }
 
 	[DataMember]
-	public DateTime? PublishDate { get; init; }
+	public DateTime? PublishDate { get; set/* TODO: init */; }
 
 	[DataMember]
 	public string PVId { get; init; }

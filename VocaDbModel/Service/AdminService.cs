@@ -1,11 +1,12 @@
-#nullable disable
-
 using System.Data;
 using System.Globalization;
 using NHibernate;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
@@ -16,6 +17,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -174,7 +176,6 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-#nullable enable
 		public void CreateJsonDump()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.CreateDatabaseDump);
@@ -209,7 +210,6 @@ namespace VocaDb.Model.Service
 				}
 			});
 		}
-#nullable disable
 
 		public int DeletePVsByAuthor(string author, PVService service)
 		{
@@ -294,7 +294,6 @@ namespace VocaDb.Model.Service
 			throw new NotImplementedException();
 		}
 
-#nullable enable
 		public AuditLogEntryForApiContract[] GetAuditLog(
 			string filter,
 			int start,
@@ -359,7 +358,6 @@ namespace VocaDb.Model.Service
 				return entries;
 			}, IsolationLevel.ReadUncommitted);
 		}
-#nullable disable
 
 		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults)
 		{
@@ -619,6 +617,84 @@ namespace VocaDb.Model.Service
 			UpdateWebLinkCategories<AlbumWebLink>();
 			UpdateWebLinkCategories<ArtistWebLink>();
 			UpdateWebLinkCategories<SongWebLink>();
+		}
+
+		// TODO: Remove.
+		public void ConvertToUtc()
+		{
+			VerifyAdmin();
+
+			SysLog("Converting to UTC");
+
+			HandleTransaction((session) =>
+			{
+				var archivedAlbumVersions = session.Query<ArchivedAlbumVersion>();
+				foreach (var archivedAlbumVersion in archivedAlbumVersions)
+				{
+					var contract = XmlHelper.DeserializeFromXml<ArchivedAlbumContract>(archivedAlbumVersion.Data);
+					if (contract.Pictures is not null)
+					{
+						foreach (var picture in contract.Pictures)
+						{
+							picture.Created = picture.Created.ToUniversalTime();
+						}
+					}
+					if (contract.PVs is not null)
+					{
+						foreach (var pv in contract.PVs)
+						{
+							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+						}
+					}
+					archivedAlbumVersion.Data = XmlHelper.SerializeToXml(contract);
+					session.Update(archivedAlbumVersion);
+				}
+
+				var archivedArtistVersions = session.Query<ArchivedArtistVersion>();
+				foreach (var archivedArtistVersion in archivedArtistVersions)
+				{
+					var contract = XmlHelper.DeserializeFromXml<ArchivedArtistContract>(archivedArtistVersion.Data);
+					if (contract.Pictures is not null)
+					{
+						foreach (var picture in contract.Pictures)
+						{
+							picture.Created = picture.Created.ToUniversalTime();
+						}
+					}
+					archivedArtistVersion.Data = XmlHelper.SerializeToXml(contract);
+					session.Update(archivedArtistVersion);
+				}
+
+				var archivedEventVersions = session.Query<ArchivedReleaseEventVersion>();
+				foreach (var archivedEventVersion in archivedEventVersions)
+				{
+					var contract = XmlHelper.DeserializeFromXml<ArchivedEventContract>(archivedEventVersion.Data);
+					if (contract.PVs is not null)
+					{
+						foreach (var pv in contract.PVs)
+						{
+							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+						}
+					}
+					archivedEventVersion.Data = XmlHelper.SerializeToXml(contract);
+					session.Update(archivedEventVersion);
+				}
+
+				var archivedSongVersions = session.Query<ArchivedSongVersion>();
+				foreach (var archivedSongVersion in archivedSongVersions)
+				{
+					var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(archivedSongVersion.Data);
+					if (contract.PVs is not null)
+					{
+						foreach (var pv in contract.PVs)
+						{
+							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+						}
+					}
+					archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
+					session.Update(archivedSongVersion);
+				}
+			});
 		}
 	}
 

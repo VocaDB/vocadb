@@ -111,6 +111,11 @@ const AdminIndex = (): React.ReactElement => {
 							Refresh .NET memory cache{/* TODO: localize */}
 						</a>
 					</p>
+					<p>
+						<a href="/Admin/ConvertToUtc">
+							Convert to UTC{/* TODO: localize */}
+						</a>
+					</p>
 				</>
 			)}
 		</Layout>

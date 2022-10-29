@@ -25,7 +25,7 @@ public class ArchivedEntryPictureFileContract
 	public ObjectRefContract Author { get; init; }
 
 	[DataMember]
-	public DateTime Created { get; init; }
+	public DateTime Created { get; set/* TODO: init */; }
 
 	[DataMember]
 	public int Id { get; init; }
