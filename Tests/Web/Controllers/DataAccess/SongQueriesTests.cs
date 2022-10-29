@@ -69,7 +69,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var result = await _queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = _repository.Load<SongReport>(result.reportId);
 			if (created != null)
-				report.CreatedUtc = created.Value;
+				report.Created = created.Value;
 			return (result.created, report);
 		}
 
@@ -933,7 +933,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var songFromRepo = _repository.Load(contract.Id);
 			songFromRepo.PVs.PVs.Count.Should().Be(2, "Number of PVs");
-			songFromRepo.PublishDate.DateTimeUtc.Should().Be(new DateTime(2015, 4, 9), "Song publish date was updated");
+			songFromRepo.PublishDate.DateTime.Should().Be(new DateTime(2015, 4, 9), "Song publish date was updated");
 		}
 
 		[TestMethod]
@@ -1035,7 +1035,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_SendNotificationsForNewPVs()
 		{
 			_song.PVs.PVs.Clear();
-			_song.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(30);
+			_song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
 			_repository.Save(_user2.AddArtist(_producer));
 			var contract = EditContract();
 			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Original) };
@@ -1052,7 +1052,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_DoNotSendNotificationsForReprints()
 		{
 			_song.PVs.PVs.Clear();
-			_song.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(30);
+			_song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
 			_repository.Save(_user2.AddArtist(_producer));
 			var contract = EditContract();
 			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Reprint) };

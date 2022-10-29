@@ -67,7 +67,7 @@ namespace VocaDb.Tests.GitHubIssues.Issue1035
 			{
 				var comment = new TagComment(entry: tag, message: message, loginData: new AgentLoginData(user: _user, name: _user.Name))
 				{
-					CreatedUtc = created,
+					Created = created,
 					Deleted = deleted,
 				};
 
@@ -87,7 +87,7 @@ namespace VocaDb.Tests.GitHubIssues.Issue1035
 			_queries.Merge(sourceId: _tag.Id, targetId: target.Id);
 
 			target.Comments.Count().Should().Be(4, "Number of comments");
-			target.Comments.OrderByDescending(c => c.CreatedUtc).Select(c => c.Message).Should().Equal("6", "5", "2", "1");
+			target.Comments.OrderByDescending(c => c.Created).Select(c => c.Message).Should().Equal("6", "5", "2", "1");
 		}
 	}
 }

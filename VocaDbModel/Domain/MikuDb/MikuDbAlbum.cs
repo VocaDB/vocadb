@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public MikuDbAlbum()
 		{
-			CreatedUtc = DateTime.Now;
+			Created = DateTime.Now;
 		}
 
 #nullable enable
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual string CoverPictureMime { get; set; }
 
-		public virtual DateTime CreatedUtc { get; set; }
+		public virtual DateTime Created { get; set; }
 
 		public virtual XDocument Data
 		{

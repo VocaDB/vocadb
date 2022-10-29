@@ -120,8 +120,8 @@ public sealed record SongForEditForApiContract
 			.FirstOrDefault();
 
 		AlbumEventId = firstAlbum?.Album.OriginalReleaseEvent?.Id;
-		AlbumReleaseDate = song.FirstAlbumDateUtc is not null
-			? DateTime.SpecifyKind(song.FirstAlbumDateUtc.Value, DateTimeKind.Utc)
+		AlbumReleaseDate = song.FirstAlbumDate is not null
+			? DateTime.SpecifyKind(song.FirstAlbumDate.Value, DateTimeKind.Utc)
 			: null;
 		Artists = song.Artists
 			.Select(a => new ArtistForSongContract(a, languagePreference))
@@ -150,7 +150,7 @@ public sealed record SongForEditForApiContract
 				fields: SongOptionalFields.None
 			)
 			: null;
-		PublishDate = song.PublishDate.DateTimeUtc;
+		PublishDate = song.PublishDate.DateTime;
 		PVs = song.PVs
 			.Select(p => new PVContract(p))
 			.ToArray();

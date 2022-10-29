@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 			Id = review.Id;
 			AlbumId = review.EntryForComment.Id;
-			Date = review.CreatedUtc;
+			Date = review.Created;
 			LanguageCode = review.LanguageCode;
 			Text = review.Message;
 			Title = review.Title;

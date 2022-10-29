@@ -250,7 +250,7 @@ namespace VocaDb.Model.Database.Queries
 
 				return album.Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
-					.OrderBy(review => review.CreatedUtc)
+					.OrderBy(review => review.Created)
 					.Select(review => new AlbumReviewContract(review, _userIconFactory))
 					.ToArray();
 			});
@@ -411,7 +411,7 @@ namespace VocaDb.Model.Database.Queries
 				contract.LatestComments = session.Query<AlbumComment>()
 					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == id)
-					.OrderByDescending(c => c.CreatedUtc)
+					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory))
@@ -508,7 +508,7 @@ namespace VocaDb.Model.Database.Queries
 				contract.LatestComments = session.Query<AlbumComment>()
 					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == id)
-					.OrderByDescending(c => c.CreatedUtc)
+					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()
 					.Select(c => new CommentForApiContract(comment: c, iconFactory: _userIconFactory))
@@ -1131,7 +1131,7 @@ namespace VocaDb.Model.Database.Queries
 				await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated, archivedAlbum);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
-				if (artistsDiff.Added.Any() && album.CreateDateUtc >= DateTime.Now - newSongCutoff)
+				if (artistsDiff.Added.Any() && album.CreateDate >= DateTime.Now - newSongCutoff)
 				{
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 

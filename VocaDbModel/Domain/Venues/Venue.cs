@@ -64,7 +64,7 @@ public class Venue :
 		set => _coordinates = value;
 	}
 
-	public virtual DateTime CreateDateUtc { get; set; } = DateTime.Now;
+	public virtual DateTime CreateDate { get; set; } = DateTime.Now;
 
 	public virtual string DefaultName => TranslatedName.Default;
 

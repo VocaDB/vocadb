@@ -54,10 +54,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 			_artist = new Artist(TranslatedString.Create("XenonP")) { Id = 64 };
 			_querySource.Add(_artist);
 
-			_album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English)) { Id = 1, DiscType = DiscType.Album, CreateDateUtc = new DateTime(2011, 1, 16) };
+			_album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English)) { Id = 1, DiscType = DiscType.Album, CreateDate = new DateTime(2011, 1, 16) };
 			AddAlbum(_album);
 
-			_albumWithArtist = new Album(new LocalizedString("DIVINE", ContentLanguageSelection.English)) { Id = 1010, DiscType = DiscType.Unknown, RatingAverage = 4.5, CreateDateUtc = new DateTime(2012, 1, 15) };
+			_albumWithArtist = new Album(new LocalizedString("DIVINE", ContentLanguageSelection.English)) { Id = 1010, DiscType = DiscType.Unknown, RatingAverage = 4.5, CreateDate = new DateTime(2012, 1, 15) };
 			_albumWithArtist.AddArtist(_artist);
 			AddAlbum(_albumWithArtist);
 

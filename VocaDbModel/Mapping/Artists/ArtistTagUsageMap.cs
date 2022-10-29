@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.Artists
 			Id(m => m.Id);
 
 			Map(m => m.Count).Not.Nullable();
-			Map(m => m.DateUtc).Not.Nullable();
+			Map(m => m.Date).Not.Nullable();
 
 			References(m => m.Entry).Column("[Artist]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();

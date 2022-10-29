@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public FavoriteSongForUser()
 		{
-			DateUtc = DateTime.Now;
+			Date = DateTime.Now;
 		}
 
 		public FavoriteSongForUser(User user, Song song, SongVoteRating rating)
@@ -33,7 +33,7 @@ namespace VocaDb.Model.Domain.Users
 			Rating = rating;
 		}
 
-		public virtual DateTime DateUtc { get; set; }
+		public virtual DateTime Date { get; set; }
 
 		public virtual int Id { get; set; }
 

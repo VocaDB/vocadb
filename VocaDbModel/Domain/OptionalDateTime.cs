@@ -101,7 +101,7 @@ namespace VocaDb.Model.Domain
 		/// <remarks>
 		/// If the date is empty this will be minimal date.
 		/// </remarks>
-		public virtual DateTime SortableDateTimeUtc
+		public virtual DateTime SortableDateTime
 		{
 			get => new DateTime(Year ?? 1970, Month ?? 1, Day ?? 1);
 			// ReSharper disable ValueParameterNotUsed
@@ -113,7 +113,7 @@ namespace VocaDb.Model.Domain
 
 		public int CompareTo(OptionalDateTime other)
 		{
-			return SortableDateTimeUtc.CompareTo(other.SortableDateTimeUtc);
+			return SortableDateTime.CompareTo(other.SortableDateTime);
 		}
 
 #nullable enable

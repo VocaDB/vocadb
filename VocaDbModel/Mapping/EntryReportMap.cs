@@ -19,8 +19,8 @@ namespace VocaDb.Model.Mapping
 			Id(m => m.Id);
 			DiscriminateSubClassesOnColumn("[EntryType]");
 
-			Map(m => m.ClosedAtUtc).Nullable();
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.ClosedAt).Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Hostname).Length(50).Not.Nullable();
 			Map(m => m.Notes).Length(EntryReport.MaxNotesLength).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();

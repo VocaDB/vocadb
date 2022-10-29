@@ -213,7 +213,7 @@ namespace VocaDb.Model.Database.Queries
 
 				return folder.Topics
 					.Select(t => new DiscussionTopicContract(t, _userIconFactory, fields))
-					.OrderByDescending(t => t.LastComment != null ? t.LastComment.CreatedUtc : t.Created)
+					.OrderByDescending(t => t.LastComment != null ? t.LastComment.Created : t.Created)
 					.ToArray();
 			});
 		}

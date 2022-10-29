@@ -77,7 +77,7 @@ public class Album :
 	public Album()
 	{
 		ArtistString = new TranslatedStringWithDefault(string.Empty, string.Empty, string.Empty, string.Empty);
-		CreateDateUtc = DateTime.Now;
+		CreateDate = DateTime.Now;
 		Deleted = false;
 		Description = new EnglishTranslatedString();
 		DiscType = DiscType.Album;
@@ -188,7 +188,7 @@ public class Album :
 	/// </summary>
 	public virtual string? CoverPictureMime { get; set; }
 
-	public virtual DateTime CreateDateUtc { get; set; }
+	public virtual DateTime CreateDate { get; set; }
 
 	public virtual string DefaultName => TranslatedName.Default;
 
@@ -247,7 +247,7 @@ public class Album :
 	/// </summary>
 	public virtual int LastDiscNumber => (Songs.Any() ? Songs.Max(s => s.DiscNumber) : 1);
 
-	public virtual AlbumReview? LastReview => Reviews.OrderByDescending(r => r.CreatedUtc).FirstOrDefault();
+	public virtual AlbumReview? LastReview => Reviews.OrderByDescending(r => r.Created).FirstOrDefault();
 
 	public virtual TranslatedString TranslatedName => Names.SortNames;
 

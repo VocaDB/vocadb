@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			Active = user.Active;
 			GroupId = user.GroupId;
-			MemberSince = user.CreateDateUtc;
+			MemberSince = user.CreateDate;
 			VerifiedArtist = user.VerifiedArtist;
 
 			if (optionalFields.HasFlag(UserOptionalFields.KnownLanguages))

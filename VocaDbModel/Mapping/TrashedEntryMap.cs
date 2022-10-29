@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping
 			Table("TrashedEntries");
 			Id(m => m.Id);
 
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
 			Map(m => m.EntryId).Not.Nullable();
 			Map(m => m.EntryType).Not.Nullable();

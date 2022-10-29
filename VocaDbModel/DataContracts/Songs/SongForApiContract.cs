@@ -28,7 +28,7 @@ public class SongForApiContract : IEntryBase
 	public SongForApiContract(Song song, SongMergeRecord? mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 	{
 		ArtistString = song.ArtistString[languagePreference];
-		CreateDate = song.CreateDateUtc;
+		CreateDate = song.CreateDate;
 		DefaultName = song.DefaultName;
 		DefaultNameLanguage = song.Names.SortNames.DefaultLanguage;
 		Deleted = song.Deleted;

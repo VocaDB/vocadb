@@ -23,7 +23,7 @@ public static class SongQueryableExtensions
 	public static IOrderedQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction)
 	{
 		return criteria.OrderBy(a => a.PublishDate, direction)
-			.ThenBy(a => a.CreateDateUtc, direction);
+			.ThenBy(a => a.CreateDate, direction);
 	}
 
 	private static IOrderedQueryable<Song> OrderBySongType(this IQueryable<Song> query) =>
@@ -40,7 +40,7 @@ public static class SongQueryableExtensions
 		sortRule switch
 		{
 			SongSortRule.Name => query.OrderByEntryName(languagePreference),
-			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDateUtc),
+			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
 			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
 			SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
 			SongSortRule.RatingScore => query.OrderByDescending(a => a.RatingScore),
@@ -57,8 +57,8 @@ public static class SongQueryableExtensions
 		sortRule switch
 		{
 			EntrySortRule.Name => query.OrderBySongType().ThenByEntryName(languagePreference),
-			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDateUtc),
-			EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTimeUtc),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTime),
 			_ => query,
 		};
 
@@ -192,7 +192,7 @@ public static class SongQueryableExtensions
 
 		var since = DateTime.Now - timeFilter;
 
-		return criteria.Where(t => t.CreateDateUtc >= since);
+		return criteria.Where(t => t.CreateDate >= since);
 	}
 
 	public static IQueryable<Song> WhereHasNicoId(this IQueryable<Song> query, string? nicoId)
@@ -219,7 +219,7 @@ public static class SongQueryableExtensions
 
 	public static IQueryable<Song> WhereHasPublishDate(this IQueryable<Song> query, bool hasPublishDate)
 	{
-		return hasPublishDate ? query.Where(s => s.PublishDate.DateTimeUtc != null) : query.Where(s => s.PublishDate.DateTimeUtc == null);
+		return hasPublishDate ? query.Where(s => s.PublishDate.DateTime != null) : query.Where(s => s.PublishDate.DateTime == null);
 	}
 
 	/// <summary>
@@ -387,13 +387,13 @@ public static class SongQueryableExtensions
 	public static IQueryable<Song> WherePublishDateIsBetween(this IQueryable<Song> query, DateTime? begin, DateTime? end)
 	{
 		if (begin.HasValue && end.HasValue)
-			return query.Where(e => e.PublishDate.DateTimeUtc != null && e.PublishDate.DateTimeUtc >= begin && e.PublishDate.DateTimeUtc < end);
+			return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime >= begin && e.PublishDate.DateTime < end);
 
 		if (begin.HasValue)
-			return query.Where(e => e.PublishDate.DateTimeUtc != null && e.PublishDate.DateTimeUtc >= begin);
+			return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime >= begin);
 
 		if (end.HasValue)
-			return query.Where(e => e.PublishDate.DateTimeUtc != null && e.PublishDate.DateTimeUtc < end);
+			return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime < end);
 
 		return query;
 	}

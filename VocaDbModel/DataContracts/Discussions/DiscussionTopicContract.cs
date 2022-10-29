@@ -17,7 +17,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 			ParamIs.NotNull(() => topic);
 
 			Author = new UserForApiContract(topic.Author, userIconFactory, UserOptionalFields.MainPicture);
-			Created = topic.CreatedUtc.ToUniversalTime();
+			Created = topic.Created.ToUniversalTime();
 			FolderId = topic.Folder.Id;
 			Id = topic.Id;
 			Locked = topic.Locked;
@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any())
 			{
-				LastComment = new CommentForApiContract(topic.Comments.ToArray().MaxItem(c => c.CreatedUtc),
+				LastComment = new CommentForApiContract(topic.Comments.ToArray().MaxItem(c => c.Created),
 					userIconFactory, includeMessage: false);
 			}
 		}

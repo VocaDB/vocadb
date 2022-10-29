@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Security
 
 			Map(m => m.Action).Length(400).Not.Nullable();
 			Map(m => m.AgentName).Length(100).Not.Nullable();
-			Map(m => m.TimeUtc).Not.Nullable();
+			Map(m => m.Time).Not.Nullable();
 			References(m => m.User).Nullable();
 
 			Component(m => m.EntryId, c =>

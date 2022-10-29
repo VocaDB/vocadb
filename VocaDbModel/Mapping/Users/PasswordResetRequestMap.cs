@@ -11,7 +11,7 @@ namespace VocaDb.Model.Mapping.Users
 		{
 			Id(m => m.Id).GeneratedBy.GuidComb();
 
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Email).Not.Nullable().Length(50);
 
 			References(m => m.User).Not.Nullable();

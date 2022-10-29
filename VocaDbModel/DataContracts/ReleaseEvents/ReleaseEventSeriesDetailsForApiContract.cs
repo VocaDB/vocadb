@@ -59,7 +59,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 			Events = series.Events
 				.OrderBy(e => e.SeriesNumber)
-				.ThenBy(e => e.Date.DateTimeUtc)
+				.ThenBy(e => e.Date.DateTime)
 				.Select(e => new ReleaseEventForApiContract(
 					rel: e,
 					languagePreference: languagePreference,

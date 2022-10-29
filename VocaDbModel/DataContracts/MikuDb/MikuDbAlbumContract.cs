@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		{
 			ParamIs.NotNull(() => album);
 
-			Created = album.CreatedUtc;
+			Created = album.Created;
 			Data = XmlHelper.DeserializeFromXml<ImportedAlbumDataContract>(album.Data);
 			Id = album.Id;
 			SourceUrl = album.SourceUrl;

@@ -71,7 +71,7 @@ namespace VocaDb.Model.Service.TagFormatting
 					return GetProducerStr(song, languagePreference);
 
 				case "publishdate":
-					return song.PublishDate.DateTimeUtc.HasValue ? song.PublishDate.ToString() : string.Empty;
+					return song.PublishDate.DateTime.HasValue ? song.PublishDate.ToString() : string.Empty;
 				case "pv.original.niconicodouga":
 					return GetPvUrl(song, PVType.Original, PVServices.NicoNicoDouga);
 				case "pv.original.!niconicodouga":

@@ -36,14 +36,14 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			ArtistString = song.ArtistString.GetBestMatch(languagePreference);
-			CreateDate = song.CreateDateUtc;
+			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			FavoritedTimes = song.FavoritedTimes;
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
 			Name = song.TranslatedName[languagePreference];
 			NicoId = song.NicoId;
-			PublishDate = song.PublishDate.DateTimeUtc;
+			PublishDate = song.PublishDate.DateTime;
 			PVServices = song.PVServices;
 			RatingScore = song.RatingScore;
 			SongType = song.SongType;

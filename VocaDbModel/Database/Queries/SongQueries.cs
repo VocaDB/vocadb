@@ -527,7 +527,7 @@ namespace VocaDb.Model.Database.Queries
 				contract.LatestComments = session.Query<SongComment>()
 					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == songId)
-					.OrderByDescending(c => c.CreatedUtc).Take(3).ToArray()
+					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Where(l => !l.List.Deleted).Count(l => l.Song.Id == songId);
@@ -805,7 +805,7 @@ namespace VocaDb.Model.Database.Queries
 							}
 						case TopSongsDateFilterType.CreateDate:
 							{
-								query = query.Where(s => s.CreateDateUtc >= startDate);
+								query = query.Where(s => s.CreateDate >= startDate);
 								break;
 							}
 						case TopSongsDateFilterType.Popularity:
@@ -813,8 +813,8 @@ namespace VocaDb.Model.Database.Queries
 								// Sort by number of ratings and hits during that time
 								// Older songs get more hits so value them even less
 								query = query.OrderByDescending(s => s.UserFavorites
-									.Where(f => f.DateUtc >= startDate)
-									.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.DateUtc >= startDate) / 100));
+									.Where(f => f.Date >= startDate)
+									.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= startDate) / 100));
 								break;
 							}
 					}
@@ -1405,13 +1405,13 @@ namespace VocaDb.Model.Database.Queries
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 				var newPVCutoff = TimeSpan.FromDays(7);
-				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDateUtc <= DateTime.Now - newPVCutoff)
+				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff)
 				{
 					await _followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
 				}
 
 				var newSongCutoff = TimeSpan.FromHours(1);
-				if (artistsDiff.Added.Any() && song.CreateDateUtc >= DateTime.Now - newSongCutoff)
+				if (artistsDiff.Added.Any() && song.CreateDate >= DateTime.Now - newSongCutoff)
 				{
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 

@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.Queries
 		public void AddActivityfeedEntry(ActivityEntry entry)
 		{
 			var latestEntries = _ctx.Query()
-				.OrderByDescending(a => a.CreateDateUtc)
+				.OrderByDescending(a => a.CreateDate)
 				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
 				.ToArray();
 
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Service.Queries
 		public async Task AddActivityfeedEntryAsync(ActivityEntry entry)
 		{
 			var latestEntries = await _ctx.Query()
-				.OrderByDescending(a => a.CreateDateUtc)
+				.OrderByDescending(a => a.CreateDate)
 				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
 				.VdbToListAsync();
 

@@ -118,7 +118,7 @@ namespace VocaDb.Model.Database.Queries
 
 
 				var messages = query
-					.OrderByDescending(m => m.CreatedUtc)
+					.OrderByDescending(m => m.Created)
 					.Paged(paging, true)
 					.ToArray()
 					.Select(m => new UserMessageContract(m, iconFactory))

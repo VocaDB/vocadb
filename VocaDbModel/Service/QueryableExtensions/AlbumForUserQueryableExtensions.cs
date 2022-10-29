@@ -21,7 +21,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			AlbumSortRule.CollectionCount => query.OrderByDescending(a => a.Album.UserCollections.Count),
 			AlbumSortRule.ReleaseDate => query.WhereHasReleaseYear().OrderByReleaseDate(),
 			AlbumSortRule.ReleaseDateWithNulls => query.OrderByReleaseDate(),
-			AlbumSortRule.AdditionDate => query.OrderByDescending(a => a.Album.CreateDateUtc),
+			AlbumSortRule.AdditionDate => query.OrderByDescending(a => a.Album.CreateDate),
 			AlbumSortRule.RatingAverage => query.OrderByDescending(a => a.Album.RatingAverageInt).ThenByDescending(a => a.Album.RatingCount),
 			AlbumSortRule.RatingTotal => query.OrderByDescending(a => a.Album.RatingTotal).ThenByDescending(a => a.Album.RatingAverageInt),
 			AlbumSortRule.NameThenReleaseDate => OrderByAlbumName(query, languagePreference).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Year).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Month).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Day),

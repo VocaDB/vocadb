@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
 			Author = archivedObjectVersion.Author != null ? new UserForApiContract(archivedObjectVersion.Author, userIconFactory, UserOptionalFields.MainPicture) : null;
-			Created = archivedObjectVersion.CreatedUtc;
+			Created = archivedObjectVersion.Created;
 			EditEvent = archivedObjectVersion.EditEvent;
 			Hidden = archivedObjectVersion.Hidden;
 			Id = archivedObjectVersion.Id;

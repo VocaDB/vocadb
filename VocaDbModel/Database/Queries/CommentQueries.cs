@@ -74,13 +74,13 @@ namespace VocaDb.Model.Database.Queries
 					.WhereNotDeleted();
 
 				if (before.HasValue && !since.HasValue)
-					query = query.Where(c => c.CreatedUtc < before.Value);
+					query = query.Where(c => c.Created < before.Value);
 
 				if (!before.HasValue && since.HasValue)
-					query = query.Where(c => c.CreatedUtc > since.Value);
+					query = query.Where(c => c.Created > since.Value);
 
 				if (before.HasValue && since.HasValue)
-					query = query.Where(c => c.CreatedUtc > since.Value && c.CreatedUtc < before.Value);
+					query = query.Where(c => c.Created > since.Value && c.Created < before.Value);
 
 				if (userId.HasValue)
 					query = query.Where(c => c.Author.Id == userId.Value);

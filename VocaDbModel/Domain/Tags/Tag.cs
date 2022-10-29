@@ -61,7 +61,7 @@ public class Tag :
 	public Tag()
 	{
 		CategoryName = string.Empty;
-		CreateDateUtc = DateTime.Now;
+		CreateDate = DateTime.Now;
 		Description = new EnglishTranslatedString();
 		Status = EntryStatus.Draft;
 		Targets = TagTargetTypes.All;
@@ -183,7 +183,7 @@ public class Tag :
 	/// <summary>
 	/// Date when this entry was created.
 	/// </summary>
-	public virtual DateTime CreateDateUtc { get; set; }
+	public virtual DateTime CreateDate { get; set; }
 
 	public virtual Comment CreateComment(string message, AgentLoginData loginData)
 	{

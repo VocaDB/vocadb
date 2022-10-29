@@ -100,7 +100,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			return Load(entryId)
 				.Comments
-				.OrderByDescending(c => c.CreatedUtc)
+				.OrderByDescending(c => c.Created)
 				.Select(c => new CommentForApiContract(c, _userIconFactory))
 				.ToArray();
 		}
@@ -116,7 +116,7 @@ namespace VocaDb.Model.Service.Queries
 		public CommentForApiContract[] GetList(int entryId, int count)
 		{
 			return GetComments(entryId)
-				.OrderByDescending(c => c.CreatedUtc)
+				.OrderByDescending(c => c.Created)
 				.Take(count)
 				.ToArray()
 				.Select(c => new CommentForApiContract(comment: c, iconFactory: _userIconFactory))
@@ -126,7 +126,7 @@ namespace VocaDb.Model.Service.Queries
 		public async Task<CommentForApiContract[]> GetListAsync(int entryId, int count)
 		{
 			var comments = await GetComments(entryId)
-				.OrderByDescending(c => c.CreatedUtc).Take(count)
+				.OrderByDescending(c => c.Created).Take(count)
 				.VdbToListAsync();
 
 			return comments

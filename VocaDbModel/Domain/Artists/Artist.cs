@@ -55,7 +55,7 @@ public class Artist :
 	public Artist()
 	{
 		ArtistType = ArtistType.Unknown;
-		CreateDateUtc = DateTime.Now;
+		CreateDate = DateTime.Now;
 		Deleted = false;
 		Description = new EnglishTranslatedString();
 		Status = EntryStatus.Draft;
@@ -199,7 +199,7 @@ public class Artist :
 
 	public virtual IEnumerable<ArtistComment> Comments => AllComments.Where(c => !c.Deleted);
 
-	public virtual DateTime CreateDateUtc { get; set; }
+	public virtual DateTime CreateDate { get; set; }
 
 	public virtual bool Deleted { get; set; }
 

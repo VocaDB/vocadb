@@ -62,7 +62,7 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			_song.UpdatePublishDateFromPVs();
 
-			_song.PublishDate.DateTimeUtc.Should().Be(expected, "PublishDate");
+			_song.PublishDate.DateTime.Should().Be(expected, "PublishDate");
 		}
 
 		[TestInitialize]

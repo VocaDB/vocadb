@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		protected ActivityEntry()
 		{
-			CreateDateUtc = DateTime.Now;
+			CreateDate = DateTime.Now;
 		}
 
 		protected ActivityEntry(User author, EntryEditEvent editEvent)
@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Activityfeed
 			}
 		}
 
-		public virtual DateTime CreateDateUtc { get; set; }
+		public virtual DateTime CreateDate { get; set; }
 
 		public virtual EntryEditEvent EditEvent { get; set; }
 

@@ -22,24 +22,24 @@ namespace VocaDb.Model.Domain
 
 		public static implicit operator DateTime?(Date? date)
 		{
-			return date.HasValue ? date.Value.DateTimeUtc : null;
+			return date.HasValue ? date.Value.DateTime : null;
 		}
 
 		private DateTime? dateTime;
 
 		/// <summary>
-		/// Initializes Date object based on <see cref="DateTimeUtc"/>.
+		/// Initializes Date object based on <see cref="DateTime"/>.
 		/// Only the date portion will be included.
 		/// </summary>
 		/// <param name="dateTime">DateTime instance. Can be null.</param>
 		public Date(DateTime? dateTime) : this()
 		{
-			DateTimeUtc = dateTime;
+			DateTime = dateTime;
 		}
 
 		public Date(DateTimeOffset? dateTimeOffset) : this()
 		{
-			DateTimeUtc = dateTimeOffset.HasValue ? (DateTime?)dateTimeOffset.Value.Date : null;
+			DateTime = dateTimeOffset.HasValue ? (DateTime?)dateTimeOffset.Value.Date : null;
 		}
 
 		public Date(int year, int month, int day) : this(new DateTime(year, month, day)) { }
@@ -47,7 +47,7 @@ namespace VocaDb.Model.Domain
 		/// <summary>
 		/// Internal DateTime instance. Can be null.
 		/// </summary>
-		public DateTime? DateTimeUtc
+		public DateTime? DateTime
 		{
 			get => dateTime;
 			set
@@ -58,17 +58,17 @@ namespace VocaDb.Model.Domain
 			}
 		}
 
-		public bool IsEmpty => !DateTimeUtc.HasValue;
+		public bool IsEmpty => !DateTime.HasValue;
 
 		public int CompareTo(Date other)
 		{
-			return Nullable.Compare(DateTimeUtc, other.DateTimeUtc);
+			return Nullable.Compare(DateTime, other.DateTime);
 		}
 
 #nullable enable
 		public bool Equals(DateTime? anotherDateTime)
 		{
-			return DateTimeHelper.DateEquals(DateTimeUtc, anotherDateTime);
+			return DateTimeHelper.DateEquals(DateTime, anotherDateTime);
 		}
 
 		public bool Equals(Date? another)
@@ -76,12 +76,12 @@ namespace VocaDb.Model.Domain
 			if (another == null)
 				return false;
 
-			return DateTimeHelper.DateEquals(DateTimeUtc, another.Value.DateTimeUtc);
+			return DateTimeHelper.DateEquals(DateTime, another.Value.DateTime);
 		}
 
 		public bool Equals(Date another)
 		{
-			return DateTimeHelper.DateEquals(DateTimeUtc, another.DateTimeUtc);
+			return DateTimeHelper.DateEquals(DateTime, another.DateTime);
 		}
 
 		public override bool Equals(object? obj)
@@ -97,12 +97,12 @@ namespace VocaDb.Model.Domain
 
 		public override int GetHashCode()
 		{
-			return DateTimeUtc.HasValue ? DateTimeUtc.Value.GetHashCode() : base.GetHashCode();
+			return DateTime.HasValue ? DateTime.Value.GetHashCode() : base.GetHashCode();
 		}
 
 		public override string? ToString()
 		{
-			return DateTimeUtc.HasValue ? DateTimeUtc.Value.ToShortDateString() : base.ToString();
+			return DateTime.HasValue ? DateTime.Value.ToShortDateString() : base.ToString();
 		}
 #nullable disable
 	}

@@ -229,7 +229,7 @@ namespace VocaDb.Model.DataContracts.Tags
 				.OrderBy(t => t.Name)
 				.ToArray();
 			CommentCount = commentCount;
-			CreateDate = tag.CreateDateUtc;
+			CreateDate = tag.CreateDate;
 			Deleted = tag.Deleted;
 			Description = new EnglishTranslatedStringContract(tag.Description);
 			Id = tag.Id;

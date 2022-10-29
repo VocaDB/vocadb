@@ -66,7 +66,7 @@ namespace VocaDb.Model.Service.Queries
 			var loggedUserId = permissionContext.LoggedUserId;
 			var existing = ctx.Query<TReport>()
 				.Where(r => r.Entry.Id == entryId && ((loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname))
-				.OrderByDescending(r => r.CreatedUtc)
+				.OrderByDescending(r => r.Created)
 				.ThenByDescending(r => r.Id)
 				.FirstOrDefault();
 

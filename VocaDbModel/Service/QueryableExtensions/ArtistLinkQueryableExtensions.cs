@@ -12,9 +12,9 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			this IQueryable<T> criteria, ArtistSortRule sortRule, ContentLanguagePreference languagePreference) where T : IArtistLink => sortRule switch
 		{
 			ArtistSortRule.Name => criteria.OrderByName(languagePreference),
-			ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.Artist.CreateDateUtc),
-			ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.Artist.CreateDateUtc),
-			ArtistSortRule.ReleaseDate => criteria.OrderBy(a => a.Artist.ReleaseDate.DateTimeUtc),
+			ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.Artist.CreateDate),
+			ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.Artist.CreateDate),
+			ArtistSortRule.ReleaseDate => criteria.OrderBy(a => a.Artist.ReleaseDate.DateTime),
 			ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.Artist.AllSongs.Count()),
 			ArtistSortRule.SongRating => criteria.OrderByDescending(a => a.Artist.AllSongs.Where(s => !s.Song.Deleted).Sum(s => s.Song.RatingScore)),
 			ArtistSortRule.FollowerCount => criteria.OrderByDescending(a => a.Artist.Users.Count),

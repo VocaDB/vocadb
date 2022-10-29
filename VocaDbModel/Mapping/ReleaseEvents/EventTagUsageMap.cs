@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			Id(m => m.Id);
 
 			Map(m => m.Count).Not.Nullable();
-			Map(m => m.DateUtc).Not.Nullable();
+			Map(m => m.Date).Not.Nullable();
 
 			References(m => m.Entry).Column("[Event]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();

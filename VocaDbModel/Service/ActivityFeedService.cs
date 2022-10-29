@@ -33,19 +33,19 @@ namespace VocaDb.Model.Service
 
 				var albumEntries = session.Query<AlbumActivityEntry>()
 					.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-					.OrderByDescending(a => a.CreateDateUtc)
+					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
 					.ToArray();
 
 				var songEntries = session.Query<SongActivityEntry>()
 					.Where(a => !a.Entry.Deleted && a.EditEvent == EntryEditEvent.Created && a.Entry.AllArtists.Any(r => r.Artist.Users.Any(u => u.User.Id == userId)))
-					.OrderByDescending(a => a.CreateDateUtc)
+					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
 					.ToArray();
 
 				var contracts = albumEntries.Cast<ActivityEntry>()
 					.Concat(songEntries)
-					.OrderByDescending(a => a.CreateDateUtc)
+					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
 					.Select(e => new ActivityEntryForApiContract(e, _entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
 						LanguagePreference), _userIconFactory,

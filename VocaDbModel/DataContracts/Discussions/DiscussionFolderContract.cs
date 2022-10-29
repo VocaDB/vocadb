@@ -23,10 +23,10 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopic) && folder.Topics.Any())
 			{
-				var lastTopic = folder.Topics.ToArray().MaxItem(t => t.CreatedUtc);
+				var lastTopic = folder.Topics.ToArray().MaxItem(t => t.Created);
 
 				LastTopicAuthor = new UserForApiContract(lastTopic.Author, lastTopic.AuthorName, userIconFactory, UserOptionalFields.MainPicture);
-				LastTopicDate = folder.Topics.Max(t => t.CreatedUtc).ToUniversalTime();
+				LastTopicDate = folder.Topics.Max(t => t.Created).ToUniversalTime();
 			}
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount))

@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Security
 		public IPRule()
 		{
 			_address = string.Empty;
-			CreatedUtc = DateTime.Now;
+			Created = DateTime.Now;
 			Notes = string.Empty;
 		}
 
@@ -19,7 +19,7 @@ namespace VocaDb.Model.Domain.Security
 		{
 			Address = address;
 			Notes = notes;
-			CreatedUtc = DateTime.Now;
+			Created = DateTime.Now;
 		}
 
 		public virtual string Address
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain.Security
 			}
 		}
 
-		public virtual DateTime CreatedUtc { get; set; }
+		public virtual DateTime Created { get; set; }
 
 		public virtual int Id { get; set; }
 
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Security
 #nullable enable
 		public override string ToString()
 		{
-			return $"IPRule for {Address}, created at {CreatedUtc}, notes {Notes}";
+			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
 		}
 #nullable disable
 	}

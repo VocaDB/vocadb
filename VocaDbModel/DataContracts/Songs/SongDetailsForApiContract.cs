@@ -161,7 +161,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 
 			Albums = song.OnAlbums
-				.OrderBy(a => a.OriginalReleaseDate.SortableDateTimeUtc)
+				.OrderBy(a => a.OriginalReleaseDate.SortableDateTime)
 				.Select(a => new AlbumForApiContract(
 					album: a,
 					languagePreference: languagePreference,
@@ -187,7 +187,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			ArtistString = song.ArtistString[languagePreference];
 			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
-			CreateDate = song.CreateDateUtc;
+			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 

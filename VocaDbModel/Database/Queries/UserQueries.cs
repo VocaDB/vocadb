@@ -106,7 +106,7 @@ namespace VocaDb.Model.Database.Queries
 		private IQueryable<User> AddOrder(IQueryable<User> query, UserSortRule sortRule) => sortRule switch
 		{
 			UserSortRule.Name => query.OrderBy(u => u.Name),
-			UserSortRule.RegisterDate => query.OrderBy(u => u.CreateDateUtc),
+			UserSortRule.RegisterDate => query.OrderBy(u => u.CreateDate),
 			UserSortRule.Group => query.OrderBy(u => u.GroupId).ThenBy(u => u.Name),
 			_ => query,
 		};
@@ -262,13 +262,13 @@ namespace VocaDb.Model.Database.Queries
 
 			details.LatestComments = session.Query<UserComment>()
 				.WhereNotDeleted()
-				.Where(c => c.EntryForComment == user).OrderByDescending(c => c.CreatedUtc).Take(3)
+				.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
 				.ToArray()
 				.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 
 			details.LatestRatedSongs = session.Query<FavoriteSongForUser>()
 				.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
-				.OrderByDescending(c => c.DateUtc)
+				.OrderByDescending(c => c.Date)
 				.Select(c => c.Song)
 				.Take(6)
 				.ToArray()
@@ -382,13 +382,13 @@ namespace VocaDb.Model.Database.Queries
 
 				contract.LatestComments = ctx.Query<UserComment>()
 					.WhereNotDeleted()
-					.Where(c => c.EntryForComment == user).OrderByDescending(c => c.CreatedUtc).Take(3)
+					.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
 					.ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 
 				contract.LatestRatedSongs = ctx.Query<FavoriteSongForUser>()
 					.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
-					.OrderByDescending(c => c.DateUtc)
+					.OrderByDescending(c => c.Date)
 					.Select(c => c.Song)
 					.Take(6)
 					.ToArray()
@@ -632,7 +632,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			var cutoff = DateTime.Now - PasswordResetRequest.ExpirationTime;
 
-			return _repository.HandleQuery(ctx => ctx.OfType<PasswordResetRequest>().Query().Any(r => r.Id == requestId && r.CreatedUtc >= cutoff));
+			return _repository.HandleQuery(ctx => ctx.OfType<PasswordResetRequest>().Query().Any(r => r.Id == requestId && r.Created >= cutoff));
 		}
 
 		public CommentForApiContract CreateComment(int userId, string message)
@@ -1150,7 +1150,7 @@ namespace VocaDb.Model.Database.Queries
 				var user = ctx.Load<User>(userId);
 				return user.Events
 					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
-					.OrderByDescending(e => e.ReleaseEvent.Date.DateTimeUtc)
+					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
 					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, _entryImagePersister))
 					.ToArray();
 			});
@@ -1165,7 +1165,7 @@ namespace VocaDb.Model.Database.Queries
 					.Where(c => c.EntryForComment.Id == userId);
 
 				var comments = query
-					.OrderByDescending(c => c.CreatedUtc)
+					.OrderByDescending(c => c.Created)
 					.Skip(paging.Start)
 					.Take(paging.MaxEntries)
 					.ToArray()
@@ -1439,12 +1439,12 @@ namespace VocaDb.Model.Database.Queries
 
 				if (queryParams.JoinDateAfter.HasValue)
 				{
-					usersQuery = usersQuery.Where(u => u.CreateDateUtc >= queryParams.JoinDateAfter);
+					usersQuery = usersQuery.Where(u => u.CreateDate >= queryParams.JoinDateAfter);
 				}
 
 				if (queryParams.JoinDateBefore.HasValue)
 				{
-					usersQuery = usersQuery.Where(u => u.CreateDateUtc < queryParams.JoinDateBefore);
+					usersQuery = usersQuery.Where(u => u.CreateDate < queryParams.JoinDateBefore);
 				}
 
 				var users = AddOrder(usersQuery, queryParams.Sort)
@@ -1667,11 +1667,11 @@ namespace VocaDb.Model.Database.Queries
 
 				session.AuditLogger.SysLog("sending message from " + sender + " to " + receiver);
 
-				if (sender.CreateDateUtc >= DateTime.Now.AddDays(-7))
+				if (sender.CreateDate >= DateTime.Now.AddDays(-7))
 				{
 					var cutoffTime = DateTime.Now.AddHours(-1);
 					var sentMessageCount = await session.Query<UserMessage>()
-						.Where(msg => msg.Sender.Id == sender.Id && msg.CreatedUtc >= cutoffTime)
+						.Where(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime)
 						.VdbCountAsync();
 					s_log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
 					if (sentMessageCount > 10)
@@ -2066,7 +2066,7 @@ namespace VocaDb.Model.Database.Queries
 					if (
 						user.CanBeDisabled &&
 						user.Active &&
-						DateTime.Now - user.CreateDateUtc < TimeSpan.FromDays(14) &&
+						DateTime.Now - user.CreateDate < TimeSpan.FromDays(14) &&
 						user.GroupId <= UserGroupId.Regular &&
 						!user.VerifiedArtist &&
 						!user.Options.Supporter

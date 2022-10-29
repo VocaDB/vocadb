@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Albums
 			Id(m => m.Id);
 
 			Map(m => m.CoverPictureMime).Length(32).Nullable();
-			Map(m => m.CreateDateUtc).Not.Nullable();
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.DiscType).Column("[Type]").Not.Nullable();
 			Map(m => m.PersonalDescriptionAuthorId).Column(ClassConventions.EscapeColumn("PersonalDescriptionAuthor")).Nullable();
@@ -123,7 +123,7 @@ namespace VocaDb.Model.Mapping.Albums
 
 			Map(m => m.AgentName).Not.Nullable();
 			Map(m => m.CoverPictureMime).Length(32).Nullable();
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();

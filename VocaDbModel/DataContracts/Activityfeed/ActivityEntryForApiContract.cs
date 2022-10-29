@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 			ActivityEntryOptionalFields fields
 		)
 		{
-			CreateDate = activityEntry.CreateDateUtc.ToUniversalTime();
+			CreateDate = activityEntry.CreateDate.ToUniversalTime();
 			EditEvent = activityEntry.EditEvent;
 
 			if (activityEntry.Author != null

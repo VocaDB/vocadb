@@ -14,7 +14,7 @@ public abstract class TagUsage : IEntryWithLongId, ITagLink
 #nullable disable
 	protected TagUsage()
 	{
-		DateUtc = DateTime.Now;
+		Date = DateTime.Now;
 	}
 #nullable enable
 
@@ -31,7 +31,7 @@ public abstract class TagUsage : IEntryWithLongId, ITagLink
 	/// <summary>
 	/// Date when this usage was first created.
 	/// </summary>
-	public virtual DateTime DateUtc { get; set; }
+	public virtual DateTime Date { get; set; }
 
 	/// <summary>
 	/// Attached entry. Cannot be null.

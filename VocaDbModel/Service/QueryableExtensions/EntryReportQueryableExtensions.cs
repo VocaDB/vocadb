@@ -6,8 +6,8 @@ public static class EntryReportQueryableExtensions
 {
 	public static IQueryable<EntryReport> OrderBy(this IQueryable<EntryReport> query, EntryReportSortRule sortRule) => sortRule switch
 	{
-		EntryReportSortRule.CloseDate => query.OrderByDescending(e => e.ClosedAtUtc ?? e.CreatedUtc),
-		EntryReportSortRule.Created => query.OrderByDescending(e => e.CreatedUtc),
+		EntryReportSortRule.CloseDate => query.OrderByDescending(e => e.ClosedAt ?? e.Created),
+		EntryReportSortRule.Created => query.OrderByDescending(e => e.Created),
 		_ => query,
 	};
 }

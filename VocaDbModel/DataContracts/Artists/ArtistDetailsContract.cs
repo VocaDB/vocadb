@@ -29,7 +29,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			ArtistTypeTag = artistTypeTag != null ? new TagBaseContract(artistTypeTag, languagePreference) : null;
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
-			CreateDate = artist.CreateDateUtc;
+			CreateDate = artist.CreateDate;
 			Description = artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);

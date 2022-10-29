@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			AlbumSortRule.CollectionCount => criteria.OrderByDescending(a => a.UserCollections.Count),
 			AlbumSortRule.ReleaseDate => criteria.OrderByReleaseDate(SortDirection.Descending),
 			AlbumSortRule.ReleaseDateWithNulls => criteria.OrderByReleaseDate(SortDirection.Descending),
-			AlbumSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDateUtc),
+			AlbumSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDate),
 			AlbumSortRule.RatingAverage => criteria.OrderByDescending(a => a.RatingAverageInt).ThenByDescending(a => a.RatingCount),
 			AlbumSortRule.RatingTotal => criteria.OrderByDescending(a => a.RatingTotal).ThenByDescending(a => a.RatingAverageInt),
 			AlbumSortRule.NameThenReleaseDate => FindHelpers.AddNameOrder(criteria, languagePreference).ThenBy(a => a.OriginalRelease.ReleaseDate.Year).ThenBy(a => a.OriginalRelease.ReleaseDate.Month).ThenBy(a => a.OriginalRelease.ReleaseDate.Day),
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
 			EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
-			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDateUtc),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
 			EntrySortRule.ActivityDate => query.OrderByReleaseDate(direction ?? SortDirection.Descending),
 			_ => query,
 		};

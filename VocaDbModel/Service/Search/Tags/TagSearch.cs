@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service.Search.Tags
 				{
 					Id = t.Id,
 					CategoryName = t.CategoryName,
-					CreateDateUtc = t.CreateDateUtc,
+					CreateDate = t.CreateDate,
 					Status = t.Status,
 					Version = t.Version,
 					Names = new NameManager<TagName>

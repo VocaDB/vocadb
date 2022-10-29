@@ -11,7 +11,7 @@ namespace VocaDb.Model.Mapping.Artists
 		{
 			Id(m => m.Id);
 
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Mime).Length(32).Not.Nullable();
 			Map(m => m.Name).Length(200).Not.Nullable();
 

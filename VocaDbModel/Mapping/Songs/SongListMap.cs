@@ -12,7 +12,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.CreateDateUtc).Not.Nullable();
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(4000).Not.Nullable();
 			Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
@@ -23,7 +23,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[SongList]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
-			Component(m => m.EventDate, c => c.Map(m => m.DateTimeUtc).Column("EventDate").Nullable());
+			Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
 
 			Component(m => m.Tags, c =>
 			{
@@ -73,7 +73,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
-			Map(m => m.CreatedUtc).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();

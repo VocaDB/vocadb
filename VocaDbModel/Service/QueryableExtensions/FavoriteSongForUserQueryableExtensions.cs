@@ -9,7 +9,7 @@ public static class FavoriteSongForUserQueryableExtensions
 	public static IQueryable<FavoriteSongForUser> OrderBy(this IQueryable<FavoriteSongForUser> query, RatedSongForUserSortRule sortRule, ContentLanguagePreference languagePreference)
 	{
 		if (sortRule == RatedSongForUserSortRule.RatingDate)
-			return query.OrderByDescending(s => s.DateUtc);
+			return query.OrderByDescending(s => s.Date);
 
 		return query.OrderBy((SongSortRule)sortRule, languagePreference);
 	}

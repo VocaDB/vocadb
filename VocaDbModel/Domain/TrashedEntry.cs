@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain
 
 		public TrashedEntry()
 		{
-			CreatedUtc = DateTime.Now;
+			Created = DateTime.Now;
 			Notes = string.Empty;
 		}
 
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain
 			Notes = notes;
 		}
 
-		public virtual DateTime CreatedUtc { get; set; }
+		public virtual DateTime Created { get; set; }
 
 		public virtual XDocument Data
 		{

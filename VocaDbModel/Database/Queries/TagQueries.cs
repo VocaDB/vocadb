@@ -400,7 +400,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var eventDateCutoff = DateTime.Now.AddDays(-7);
 				var events = await GetTopUsagesAndCountAsync<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted
-					&& (t.Entry.Series == null || (t.Entry.Date.DateTimeUtc != null && t.Entry.Date.DateTimeUtc >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
+					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var followerCount = await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId).VdbCountAsync();
 
 				var stats = new TagStatsForApiContract(

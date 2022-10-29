@@ -14,13 +14,13 @@ namespace VocaDb.Model.Mapping.Users
 			Map(m => m.AccessKey).Length(20).Not.Nullable();
 			Map(m => m.Active).Not.Nullable();
 			Map(m => m.AnonymousActivity).Not.Nullable();
-			Map(m => m.CreateDateUtc).Not.Nullable();
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Culture).Not.Nullable();
 			Map(m => m.DefaultLanguageSelection).Not.Nullable();
 			Map(m => m.Email).Length(50).Not.Nullable();
 			Map(m => m.EmailOptions).CustomType(typeof(UserEmailOptions)).Not.Nullable();
 			Map(m => m.GroupId).Column("[UserGroup]").Not.Nullable();
-			Map(m => m.LastLoginUtc).Not.Nullable();
+			Map(m => m.LastLogin).Not.Nullable();
 			Map(m => m.Name).Length(100).Not.Nullable();
 			Map(m => m.NameLC).Length(100).Not.Nullable();
 			Map(m => m.NormalizedEmail).Length(50).Not.Nullable();
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Mapping.Users
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.DateUtc).Not.Nullable();
+			Map(m => m.Date).Not.Nullable();
 			Map(m => m.Rating).CustomType<SongVoteRating>().Not.Nullable();
 
 			References(m => m.Song).Not.Nullable().UniqueKey("IX_FavoriteSongsForUsers_3");

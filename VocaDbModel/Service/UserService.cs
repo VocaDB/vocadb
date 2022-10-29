@@ -172,10 +172,10 @@ namespace VocaDb.Model.Service
 
 				var comments = session.Query<AlbumComment>()
 					.WhereNotDeleted()
-					.Where(c => c.Author == user && !c.EntryForComment.Deleted).OrderByDescending(c => c.CreatedUtc).ToArray().Cast<Comment>()
+					.Where(c => c.Author == user && !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).ToArray().Cast<Comment>()
 					.Concat(session.Query<ArtistComment>()
 						.WhereNotDeleted()
-						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.CreatedUtc).ToArray();
+						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.Created).ToArray();
 
 				return comments.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 			});

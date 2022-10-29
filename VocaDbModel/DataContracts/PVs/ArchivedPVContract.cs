@@ -32,7 +32,7 @@ public class ArchivedPVContract
 	{
 		Disabled = pv.Disabled;
 		Length = pv.Length;
-		PublishDate = pv.PublishDateUtc;
+		PublishDate = pv.PublishDate;
 		ThumbUrl = pv.ThumbUrl;
 	}
 

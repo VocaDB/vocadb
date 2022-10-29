@@ -13,8 +13,8 @@ public static class ActivityEntryQueryableExtensions
 {
 	public static IQueryable<ActivityEntry> OrderBy(this IQueryable<ActivityEntry> queryable, ActivityEntrySortRule sortRule) => sortRule switch
 	{
-		ActivityEntrySortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.CreateDateUtc),
-		ActivityEntrySortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.CreateDateUtc),
+		ActivityEntrySortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.CreateDate),
+		ActivityEntrySortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.CreateDate),
 		_ => queryable,
 	};
 }

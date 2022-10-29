@@ -30,7 +30,7 @@ public abstract class Comment : ICommentWithEntry, IDeletableEntry
 #nullable disable
 	protected Comment()
 	{
-		CreatedUtc = DateTime.Now;
+		Created = DateTime.Now;
 	}
 #nullable enable
 
@@ -57,7 +57,7 @@ public abstract class Comment : ICommentWithEntry, IDeletableEntry
 		}
 	}
 
-	public virtual DateTime CreatedUtc { get; set; }
+	public virtual DateTime Created { get; set; }
 
 	public virtual bool Deleted { get; set; }
 
@@ -94,7 +94,7 @@ public interface IComment : IEntryWithIntId
 {
 	string AuthorName { get; }
 
-	DateTime CreatedUtc { get; }
+	DateTime Created { get; }
 
 	string Message { get; }
 }

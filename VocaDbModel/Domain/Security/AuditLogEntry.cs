@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain.Security
 		public AuditLogEntry()
 		{
 			Category = AuditLogCategory.Unspecified;
-			TimeUtc = DateTime.Now;
+			Time = DateTime.Now;
 		}
 
 #nullable enable
@@ -59,7 +59,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual long Id { get; set; }
 
-		public virtual DateTime TimeUtc { get; set; }
+		public virtual DateTime Time { get; set; }
 
 		public virtual User User { get; set; }
 	}

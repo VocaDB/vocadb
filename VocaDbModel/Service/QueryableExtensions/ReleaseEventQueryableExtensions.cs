@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 	{
 		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction)
 		{
-			return query.OrderBy(e => e.Date.DateTimeUtc, direction ?? SortDirection.Descending);
+			return query.OrderBy(e => e.Date.DateTime, direction ?? SortDirection.Descending);
 		}
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
 			EventSortRule.Date => query.OrderByDate(direction),
-			EventSortRule.AdditionDate => query.OrderBy(e => e.CreateDateUtc, direction ?? SortDirection.Descending),
+			EventSortRule.AdditionDate => query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending),
 			EventSortRule.Name => query.OrderByName(languagePreference),
 			EventSortRule.SeriesName => query.OrderBySeriesName(languagePreference),
 			EventSortRule.VenueName => query.OrderByVenueName(languagePreference),
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
 			EntrySortRule.Name => query.OrderByName(languagePreference),
-			EntrySortRule.AdditionDate => query.OrderBy(e => e.CreateDateUtc, direction ?? SortDirection.Descending),
+			EntrySortRule.AdditionDate => query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending),
 			EntrySortRule.ActivityDate => query.OrderByDate(direction),
 			_ => query,
 		};
@@ -70,13 +70,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end)
 		{
 			if (begin.HasValue && end.HasValue)
-				return query.Where(e => e.Date.DateTimeUtc != null && e.Date.DateTimeUtc >= begin && e.Date.DateTimeUtc < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime >= begin && e.Date.DateTime < end);
 
 			if (begin.HasValue)
-				return query.Where(e => e.Date.DateTimeUtc != null && e.Date.DateTimeUtc >= begin);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime >= begin);
 
 			if (end.HasValue)
-				return query.Where(e => e.Date.DateTimeUtc != null && e.Date.DateTimeUtc < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime < end);
 
 			return query;
 		}
