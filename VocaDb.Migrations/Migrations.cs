@@ -6,6 +6,227 @@ namespace VocaDb.Migrations;
 
 // Migration version format: YYYY_MM_DD_HHmm
 
+[Migration(2022_10_29_0400)]
+public class UniversalTime : Migration
+{
+	public override void Up()
+	{
+		Create.Column("OldCreateDate").OnTable(TableNames.ActivityEntries).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.Albums).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedAlbumVersions).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.AlbumPictureFiles).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.AlbumTagUsages).AsDateTime().Nullable();
+		Create.Column("OldPublishDate").OnTable(TableNames.PVsForAlbums).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.Artists).AsDateTime().Nullable();
+		/*Create.Column("OldReleaseDate").OnTable(TableNames.Artists).AsDateTime().Nullable();*/
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedArtistVersions).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.ArtistPictureFiles).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.ArtistTagUsages).AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable(TableNames.Comments).AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsDateTime().Nullable();
+
+		Create.Column("OldDate").OnTable(TableNames.AlbumHits).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.ArtistHits).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.SongHits).AsDateTime().Nullable();
+
+		Create.Column("OldClosedAt").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable("ImportedAlbums").InSchema("mikudb").AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedEventSeriesVersions).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.EventSeriesTagUsages).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.EventTagUsages).AsDateTime().Nullable();
+		Create.Column("OldPublishDate").OnTable(TableNames.PVsForEvents).AsDateTime().Nullable();
+		Create.Column("OldCreateDate").OnTable(TableNames.AlbumReleaseEvents).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.AlbumReleaseEvents).AsDateTime().Nullable();
+		Create.Column("OldEndDate").OnTable(TableNames.AlbumReleaseEvents).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedEventVersions).AsDateTime().Nullable();
+
+		Create.Column("OldTime").OnTable(TableNames.AuditLogEntries).AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable(TableNames.IPRules).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.SongLists).AsDateTime().Nullable();
+		/*Create.Column("OldEventDate").OnTable(TableNames.SongLists).AsDateTime().Nullable();*/
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedSongListVersions).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.SongListTagUsages).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.Songs).AsDateTime().Nullable();
+		/*Create.Column("OldPublishDate").OnTable(TableNames.Songs).AsDateTime().Nullable();*/
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedSongVersions).AsDateTime().Nullable();
+		/*Create.Column("OldPublishDate").OnTable(TableNames.PVsForSongs).AsDateTime().Nullable();*/
+		Create.Column("OldDate").OnTable(TableNames.SongTagUsages).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.Tags).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedTagVersions).AsDateTime().Nullable();
+		Create.Column("OldCreateDate").OnTable(TableNames.TagMappings).AsDateTime().Nullable();
+
+		Create.Column("OldCreated").OnTable(TableNames.TrashedEntries).AsDateTime().Nullable();
+
+		Create.Column("OldDate").OnTable(TableNames.OldUsernames).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.PasswordResetRequests).AsDateTime().Nullable();
+		Create.Column("OldCreateDate").OnTable(TableNames.Users).AsDateTime().Nullable();
+		Create.Column("OldLastLogin").OnTable(TableNames.Users).AsDateTime().Nullable();
+		Create.Column("OldDate").OnTable(TableNames.FavoriteSongsForUsers).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.UserMessages).AsDateTime().Nullable();
+
+		Create.Column("OldCreateDate").OnTable(TableNames.Venues).AsDateTime().Nullable();
+		Create.Column("OldCreated").OnTable(TableNames.ArchivedVenueVersions).AsDateTime().Nullable();
+
+		// Create backup.
+		Execute.Sql($$"""
+			update {{TableNames.ActivityEntries}} set OldCreateDate = CreateDate;
+
+			update {{TableNames.Albums}} set OldCreateDate = CreateDate;
+			update {{TableNames.ArchivedAlbumVersions}} set OldCreated = Created;
+			update {{TableNames.AlbumPictureFiles}} set OldCreated = Created;
+			update {{TableNames.AlbumTagUsages}} set OldDate = Date;
+			update {{TableNames.PVsForAlbums}} set OldPublishDate = PublishDate;
+
+			update {{TableNames.Artists}} set OldCreateDate = CreateDate;
+			/*update {{TableNames.Artists}} set OldReleaseDate = ReleaseDate;*/
+			update {{TableNames.ArchivedArtistVersions}} set OldCreated = Created;
+			update {{TableNames.ArtistPictureFiles}} set OldCreated = Created;
+			update {{TableNames.ArtistTagUsages}} set OldDate = Date;
+			
+			update {{TableNames.Comments}} set OldCreated = Created;
+			
+			update {{SchemaNames.Discussions}}.{{TableNames.DiscussionTopics}} set OldCreated = Created;
+
+			update {{TableNames.AlbumHits}} set OldDate = Date;
+			update {{TableNames.ArtistHits}} set OldDate = Date;
+			update {{TableNames.SongHits}} set OldDate = Date;
+
+			update {{TableNames.EntryReports}} set OldClosedAt = ClosedAt;
+			update {{TableNames.EntryReports}} set OldCreated = Created;
+
+			update mikudb.ImportedAlbums set OldCreated = Created;
+
+			update {{TableNames.ArchivedEventSeriesVersions}} set OldCreated = Created;
+			update {{TableNames.EventSeriesTagUsages}} set OldDate = Date;
+			update {{TableNames.EventTagUsages}} set OldDate = Date;
+			update {{TableNames.PVsForEvents}} set OldPublishDate = PublishDate;
+			update {{TableNames.AlbumReleaseEvents}} set OldCreateDate = CreateDate;
+			update {{TableNames.AlbumReleaseEvents}} set OldDate = Date;
+			update {{TableNames.AlbumReleaseEvents}} set OldEndDate = EndDate;
+			update {{TableNames.ArchivedEventVersions}} set OldCreated = Created;
+
+			update {{TableNames.AuditLogEntries}} set OldTime = Time;
+
+			update {{TableNames.IPRules}} set OldCreated = Created;
+
+			update {{TableNames.SongLists}} set OldCreateDate = CreateDate;
+			/*update {{TableNames.SongLists}} set OldEventDate = EventDate;*/
+			update {{TableNames.ArchivedSongListVersions}} set OldCreated = Created;
+			update {{TableNames.SongListTagUsages}} set OldDate = Date;
+
+			update {{TableNames.Songs}} set OldCreateDate = CreateDate;
+			/*update {{TableNames.Songs}} set OldPublishDate = PublishDate;*/
+			update {{TableNames.ArchivedSongVersions}} set OldCreated = Created;
+			/*update {{TableNames.PVsForSongs}} set OldPublishDate = PublishDate;*/
+			update {{TableNames.SongTagUsages}} set OldDate = Date;
+
+			update {{TableNames.Tags}} set OldCreateDate = CreateDate;
+			update {{TableNames.ArchivedTagVersions}} set OldCreated = Created;
+			update {{TableNames.TagMappings}} set OldCreateDate = CreateDate;
+
+			update {{TableNames.TrashedEntries}} set OldCreated = Created;
+
+			update {{TableNames.OldUsernames}} set OldDate = Date;
+			update {{TableNames.PasswordResetRequests}} set OldCreated = Created;
+			update {{TableNames.Users}} set OldCreateDate = CreateDate;
+			update {{TableNames.Users}} set OldLastLogin = LastLogin;
+			update {{TableNames.FavoriteSongsForUsers}} set OldDate = Date;
+			update {{TableNames.UserMessages}} set OldCreated = Created;
+
+			update {{TableNames.Venues}} set OldCreateDate = CreateDate;
+			update {{TableNames.ArchivedVenueVersions}} set OldCreated = Created;
+			""");
+
+		// Convert "E. Europe Standard Time" to "UTC".
+		const string fromTimezone = "E. Europe Standard Time";
+		const string toTimezone = "UTC";
+		Execute.Sql($$"""
+			update {{TableNames.ActivityEntries}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.Albums}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArchivedAlbumVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.AlbumPictureFiles}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.AlbumTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.PVsForAlbums}} set PublishDate = (PublishDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.Artists}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			/*update {{TableNames.Artists}} set ReleaseDate = (ReleaseDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
+			update {{TableNames.ArchivedArtistVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArtistPictureFiles}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArtistTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			
+			update {{TableNames.Comments}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			
+			update {{SchemaNames.Discussions}}.{{TableNames.DiscussionTopics}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.AlbumHits}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArtistHits}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.SongHits}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.EntryReports}} set ClosedAt = (ClosedAt at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.EntryReports}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update mikudb.ImportedAlbums set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.ArchivedEventSeriesVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.EventSeriesTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.EventTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.PVsForEvents}} set PublishDate = (PublishDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.AlbumReleaseEvents}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.AlbumReleaseEvents}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.AlbumReleaseEvents}} set EndDate = (EndDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArchivedEventVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.AuditLogEntries}} set Time = (Time at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.IPRules}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.SongLists}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			/*update {{TableNames.SongLists}} set EventDate = (EventDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
+			update {{TableNames.ArchivedSongListVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.SongListTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.Songs}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			/*update {{TableNames.Songs}} set PublishDate = (PublishDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
+			update {{TableNames.ArchivedSongVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			/*update {{TableNames.PVsForSongs}} set PublishDate = (PublishDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
+			update {{TableNames.SongTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.Tags}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArchivedTagVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.TagMappings}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.TrashedEntries}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.OldUsernames}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.PasswordResetRequests}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.Users}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.Users}} set LastLogin = (LastLogin at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.FavoriteSongsForUsers}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.UserMessages}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+
+			update {{TableNames.Venues}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			update {{TableNames.ArchivedVenueVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			""");
+	}
+
+	public override void Down()
+	{
+		throw new NotImplementedException();
+	}
+}
+
 [Migration(2022_03_19_0300)]
 public class UserPicture : AutoReversingMigration
 {
