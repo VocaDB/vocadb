@@ -219,6 +219,25 @@ public class UniversalTime : Migration
 			update {{TableNames.Venues}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
 			update {{TableNames.ArchivedVenueVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
 			""");
+
+		// TODO: remove this column
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedAlbumVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedArtistVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedEventSeriesVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedEventVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedSongListVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedSongVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedTagVersions).AsXml().Nullable();
+		Create.Column("OldData_2022_10_29").OnTable(TableNames.ArchivedVenueVersions).AsXml().Nullable();
+
+		Execute.Sql($"update {TableNames.ArchivedAlbumVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedArtistVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedEventSeriesVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedEventVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedSongListVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedSongVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedTagVersions} set OldData_2022_10_29 = [Data]");
+		Execute.Sql($"update {TableNames.ArchivedVenueVersions} set OldData_2022_10_29 = [Data]");
 	}
 
 	public override void Down()
