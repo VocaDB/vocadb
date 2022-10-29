@@ -22,23 +22,23 @@ namespace VocaDb.Model.Database.Queries
 		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
 		{
 			var query = ctx.Query<Song>()
-				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
+				.Where(a => !a.Deleted && a.PublishDate.DateTimeUtc != null);
 
 			if (where != null)
 				query = query.Where(where);
 
 			if (after != null)
-				query = query.Where(s => s.PublishDate.DateTime >= after);
+				query = query.Where(s => s.PublishDate.DateTimeUtc >= after);
 
 			return query
-				.OrderBy(a => a.PublishDate.DateTime.Value.Year) // Need to order by part of publish date because we're grouping
-				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
-				.ThenBy(a => a.PublishDate.DateTime.Value.Day)
+				.OrderBy(a => a.PublishDate.DateTimeUtc.Value.Year) // Need to order by part of publish date because we're grouping
+				.ThenBy(a => a.PublishDate.DateTimeUtc.Value.Month)
+				.ThenBy(a => a.PublishDate.DateTimeUtc.Value.Day)
 				.GroupBy(a => new
 				{
-					Year = a.PublishDate.DateTime.Value.Year,
-					Month = a.PublishDate.DateTime.Value.Month,
-					Day = a.PublishDate.DateTime.Value.Day,
+					Year = a.PublishDate.DateTimeUtc.Value.Year,
+					Month = a.PublishDate.DateTimeUtc.Value.Month,
+					Day = a.PublishDate.DateTimeUtc.Value.Day,
 				})
 				.Select(a => new CountPerDayContract
 				{
@@ -53,21 +53,21 @@ namespace VocaDb.Model.Database.Queries
 		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
 		{
 			var query = ctx.Query<Song>()
-				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
+				.Where(a => !a.Deleted && a.PublishDate.DateTimeUtc != null);
 
 			if (where != null)
 				query = query.Where(where);
 
 			if (after != null)
-				query = query.Where(s => s.PublishDate.DateTime >= after);
+				query = query.Where(s => s.PublishDate.DateTimeUtc >= after);
 
 			return query
-				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
-				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
+				.OrderBy(a => a.PublishDate.DateTimeUtc.Value.Year)
+				.ThenBy(a => a.PublishDate.DateTimeUtc.Value.Month)
 				.GroupBy(a => new
 				{
-					Year = a.PublishDate.DateTime.Value.Year,
-					Month = a.PublishDate.DateTime.Value.Month,
+					Year = a.PublishDate.DateTimeUtc.Value.Year,
+					Month = a.PublishDate.DateTimeUtc.Value.Month,
 				})
 				.Select(a => new CountPerDayContract
 				{
@@ -101,7 +101,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public CountPerDayContract[] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, int artistId, int tagId)
 		{
-			Expression<Func<Song, bool>> query = (s => s.PublishDate.DateTime <= DateTime.Now);
+			Expression<Func<Song, bool>> query = (s => s.PublishDate.DateTimeUtc <= DateTime.Now);
 
 			if (artistId != 0)
 			{

@@ -14,9 +14,9 @@ namespace VocaDb.Model.DataContracts
 		{
 			ParamIs.NotNull(() => report);
 
-			ClosedAt = report.ClosedAt;
+			ClosedAt = report.ClosedAtUtc;
 			ClosedBy = report.ClosedBy != null ? new UserForApiContract(report.ClosedBy, userIconFactory, UserOptionalFields.MainPicture) : null;
-			Created = report.Created;
+			Created = report.CreatedUtc;
 			Entry = entry;
 			Hostname = report.Hostname;
 			Id = report.Id;

@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		protected ArchivedObjectVersion()
 		{
-			Created = DateTime.Now;
+			CreatedUtc = DateTime.Now;
 		}
 
 		protected ArchivedObjectVersion(XDocument data, AgentLoginData author, int version, EntryStatus status, string notes)
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain.Versioning
 		public virtual User Author { get; protected set; }
 
 #nullable enable
-		public virtual DateTime Created { get; protected set; }
+		public virtual DateTime CreatedUtc { get; protected set; }
 #nullable disable
 
 		/// <summary>

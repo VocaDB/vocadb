@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			Id(m => m.Id);
 
 			Map(m => m.Category).Not.Nullable();
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.CreateDateUtc).Not.Nullable();
 			Map(m => m.CustomName).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
@@ -62,8 +62,8 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 				c.HasMany(m => m.Usages).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			});
 
-			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
-			Component(m => m.EndDate, c => c.Map(m => m.DateTime).Column("[EndDate]").Nullable());
+			Component(m => m.Date, c => c.Map(m => m.DateTimeUtc).Column("[Date]").Nullable());
+			Component(m => m.EndDate, c => c.Map(m => m.DateTimeUtc).Column("[EndDate]").Nullable());
 		}
 	}
 
@@ -89,7 +89,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data); // Some old events have null data
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();

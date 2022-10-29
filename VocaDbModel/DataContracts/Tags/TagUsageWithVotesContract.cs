@@ -11,7 +11,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		public TagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)
 		{
 			Count = usage.Count;
-			Date = usage.Date;
+			Date = usage.DateUtc;
 			Id = usage.Id;
 			Tag = new TagBaseContract(usage.Tag, languagePreference);
 

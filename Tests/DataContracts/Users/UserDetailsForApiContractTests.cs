@@ -29,7 +29,7 @@ namespace VocaDb.Tests.DataContracts.Users
 			_thumbPersister = new InMemoryImagePersister();
 
 			_user = CreateEntry.User(id: 1, email: "miku@vocadb.net");
-			_user.LastLogin = new DateTime(2022, 8, 31, 3, 9, 39);
+			_user.LastLoginUtc = new DateTime(2022, 8, 31, 3, 9, 39);
 			_user.AdditionalPermissions.AddAll(s_additionalPermissions);
 			_user.Options.LastLoginAddress = "::1";
 

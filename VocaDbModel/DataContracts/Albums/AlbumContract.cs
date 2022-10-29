@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			ArtistString = album.ArtistString.GetBestMatch(languagePreference);
 			CoverPictureMime = album.CoverPictureMime;
-			CreateDate = album.CreateDate;
+			CreateDate = album.CreateDateUtc;
 			Deleted = album.Deleted;
 			DiscType = album.DiscType;
 			Id = album.Id;

@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.Artists
 
 			Id(m => m.Id);
 			Map(m => m.ArtistType).Not.Nullable();
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.CreateDateUtc).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.Status).Not.Nullable();
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Mapping.Artists
 				c.HasMany(m => m.Pictures).KeyColumn("[Artist]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
 
-			Component(m => m.ReleaseDate, c => c.Map(m => m.DateTime).Column("ReleaseDate").Nullable());
+			Component(m => m.ReleaseDate, c => c.Map(m => m.DateTimeUtc).Column("ReleaseDate").Nullable());
 
 			Component(m => m.Tags, c =>
 			{
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Mapping.Artists
 			Id(m => m.Id);
 
 			Map(m => m.AgentName).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();

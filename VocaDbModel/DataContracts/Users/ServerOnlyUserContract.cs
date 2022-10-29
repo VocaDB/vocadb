@@ -27,7 +27,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			Active = user.Active;
 			AnonymousActivity = user.AnonymousActivity;
-			CreateDate = user.CreateDate;
+			CreateDate = user.CreateDateUtc;
 			Culture = user.Culture;
 			DefaultLanguageSelection = user.DefaultLanguageSelection;
 			EmailOptions = user.EmailOptions;

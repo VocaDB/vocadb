@@ -29,13 +29,13 @@ namespace VocaDb.Model.DataContracts.Songs
 			Song = new SongContract(song, languagePreference);
 
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-			Albums = song.OnAlbums.OrderBy(a => a.OriginalReleaseDate.SortableDateTime).Select(a => new AlbumContract(a, languagePreference)).ToArray();
+			Albums = song.OnAlbums.OrderBy(a => a.OriginalReleaseDate.SortableDateTimeUtc).Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference, getThumbUrl: false)).OrderBy(s => s.PublishDate).ToArray();
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			ArtistString = song.ArtistString[languagePreference];
 			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
-			CreateDate = song.CreateDate;
+			CreateDate = song.CreateDateUtc;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 			LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray();

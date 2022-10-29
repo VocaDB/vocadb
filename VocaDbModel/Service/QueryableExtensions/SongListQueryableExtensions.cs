@@ -9,7 +9,7 @@ public static class SongListQueryableExtensions
 	public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule) => sortRule switch
 	{
 		SongListSortRule.Date => query.OrderByDate(SortDirection.Descending).ThenBy(r => r.Name),
-		SongListSortRule.CreateDate => query.OrderByDescending(r => r.CreateDate),
+		SongListSortRule.CreateDate => query.OrderByDescending(r => r.CreateDateUtc),
 		SongListSortRule.Name => query.OrderBy(r => r.Name),
 		_ => query,
 	};
@@ -22,13 +22,13 @@ public static class SongListQueryableExtensions
 	public static IQueryable<SongList> WhereEventDateIsBetween(this IQueryable<SongList> query, DateTime? begin, DateTime? end)
 	{
 		if (begin.HasValue && end.HasValue)
-			return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin && e.EventDate.DateTime < end);
+			return query.Where(e => e.EventDate.DateTimeUtc != null && e.EventDate.DateTimeUtc >= begin && e.EventDate.DateTimeUtc < end);
 
 		if (begin.HasValue)
-			return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin);
+			return query.Where(e => e.EventDate.DateTimeUtc != null && e.EventDate.DateTimeUtc >= begin);
 
 		if (end.HasValue)
-			return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime < end);
+			return query.Where(e => e.EventDate.DateTimeUtc != null && e.EventDate.DateTimeUtc < end);
 
 		return query;
 	}

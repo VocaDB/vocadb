@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<T> OrderByPublishDate<T>(this IQueryable<T> criteria, SortDirection direction) where T : ISongLink
 		{
 			return criteria.OrderBy(a => a.Song.PublishDate, direction)
-				.ThenBy(a => a.Song.CreateDate, direction);
+				.ThenBy(a => a.Song.CreateDateUtc, direction);
 		}
 
 		public static IOrderedQueryable<T> OrderBySongName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
@@ -31,10 +31,10 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			where T : ISongLink => sortRule switch
 		{
 			SongSortRule.Name => query.OrderBySongName(languagePreference),
-			SongSortRule.AdditionDate => query.OrderByDescending(a => a.Song.CreateDate),
+			SongSortRule.AdditionDate => query.OrderByDescending(a => a.Song.CreateDateUtc),
 			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.Song.FavoritedTimes),
 			SongSortRule.RatingScore => query.OrderByDescending(a => a.Song.RatingScore),
-			SongSortRule.PublishDate => query.OrderByDescending(a => a.Song.PublishDate.DateTime),
+			SongSortRule.PublishDate => query.OrderByDescending(a => a.Song.PublishDate.DateTimeUtc),
 			_ => query,
 		};
 
@@ -157,7 +157,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IQueryable<T> WhereSongHasPublishDate<T>(this IQueryable<T> query, bool hasPublishDate) where T : ISongLink
 		{
-			return hasPublishDate ? query.Where(s => s.Song.PublishDate.DateTime != null) : query.Where(s => s.Song.PublishDate.DateTime == null);
+			return hasPublishDate ? query.Where(s => s.Song.PublishDate.DateTimeUtc != null) : query.Where(s => s.Song.PublishDate.DateTimeUtc == null);
 		}
 
 		public static IQueryable<T> WhereSongIsInList<T>(this IQueryable<T> query, int listId)
@@ -225,13 +225,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<T> WhereSongPublishDateIsBetween<T>(this IQueryable<T> query, DateTime? begin, DateTime? end) where T : ISongLink
 		{
 			if (begin.HasValue && end.HasValue)
-				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin && e.Song.PublishDate.DateTime < end);
+				return query.Where(e => e.Song.PublishDate.DateTimeUtc != null && e.Song.PublishDate.DateTimeUtc >= begin && e.Song.PublishDate.DateTimeUtc < end);
 
 			if (begin.HasValue)
-				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin);
+				return query.Where(e => e.Song.PublishDate.DateTimeUtc != null && e.Song.PublishDate.DateTimeUtc >= begin);
 
 			if (end.HasValue)
-				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime < end);
+				return query.Where(e => e.Song.PublishDate.DateTimeUtc != null && e.Song.PublishDate.DateTimeUtc < end);
 
 			return query;
 		}

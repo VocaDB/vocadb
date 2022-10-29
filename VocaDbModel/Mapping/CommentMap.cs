@@ -18,7 +18,7 @@ namespace VocaDb.Model.Mapping
 			Id(m => m.Id);
 			Cache.ReadWrite();
 
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Message).Length(int.MaxValue).Not.Nullable();
 

@@ -33,7 +33,7 @@ public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 		Id = artist.Id;
 		Name = artist.TranslatedName[preference];
 		PictureMime = artist.PictureMime;
-		ReleaseDate = artist.ReleaseDate.DateTime;
+		ReleaseDate = artist.ReleaseDate.DateTimeUtc;
 		Status = artist.Status;
 		Version = artist.Version;
 	}

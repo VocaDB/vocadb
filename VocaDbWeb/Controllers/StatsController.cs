@@ -346,7 +346,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult AlbumsPerVocaloid(DateTime? cutoff)
 		{
-			Expression<Func<ArtistForAlbum, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Album.CreateDate >= cutoff : true);
+			Expression<Func<ArtistForAlbum, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Album.CreateDateUtc >= cutoff : true);
 
 			return SimpleBarChart<Artist>(
 				q => q
@@ -451,7 +451,7 @@ namespace VocaDb.Web.Controllers
 		{
 			return SimpleBarChart<ActivityEntry>(
 				q => q
-					.FilterIfNotNull(cutoff, a => a.CreateDate >= cutoff.Value)
+					.FilterIfNotNull(cutoff, a => a.CreateDateUtc >= cutoff.Value)
 					.GroupBy(a => a.Author.Name)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
@@ -474,7 +474,7 @@ namespace VocaDb.Web.Controllers
 			var result = _userRepository.HandleQuery(ctx =>
 			{
 				var pvs = ctx.Query<PVForSong>()
-					.FilterIfNotNull(cutoff, pv => pv.PublishDate >= cutoff)
+					.FilterIfNotNull(cutoff, pv => pv.PublishDateUtc >= cutoff)
 					.Where(pv => !onlyOriginal || pv.PVType == PVType.Original)
 					.GroupBy(s => s.Service)
 					.Select(g => new
@@ -498,15 +498,15 @@ namespace VocaDb.Web.Controllers
 			var data = _userRepository.HandleQuery(ctx =>
 			{
 				return ctx.Query<PVForSong>()
-					.Where(a => a.PublishDate != null)
+					.Where(a => a.PublishDateUtc != null)
 					.Where(pv => pv.PVType == PVType.Original)
-					.OrderBy(a => a.PublishDate.Value.Year)
-					.ThenBy(a => a.PublishDate.Value.Month)
+					.OrderBy(a => a.PublishDateUtc.Value.Year)
+					.ThenBy(a => a.PublishDateUtc.Value.Month)
 					.GroupBy(a => new
 					{
 						Service = a.Service,
-						Year = a.PublishDate.Value.Year,
-						Month = a.PublishDate.Value.Month
+						Year = a.PublishDateUtc.Value.Year,
+						Month = a.PublishDateUtc.Value.Month
 					})
 					.Select(a => new
 					{
@@ -546,7 +546,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day)
 		{
 			cutoff ??= DefaultMinDate;
-			var values = _songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
+			var values = _songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTimeUtc <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
@@ -590,7 +590,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult SongsPerVocaloid(DateTime? cutoff)
 		{
-			Expression<Func<ArtistForSong, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Song.CreateDate >= cutoff : true);
+			Expression<Func<ArtistForSong, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Song.CreateDateUtc >= cutoff : true);
 
 			return SimpleBarChart<Artist>(
 				q => q
@@ -706,7 +706,7 @@ namespace VocaDb.Web.Controllers
 			var values = _userRepository.HandleQuery(ctx =>
 			{
 				var idsAndHits = ctx.OfType<AlbumHit>().Query()
-					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
+					.FilterIfNotNull(cutoff, s => s.DateUtc > cutoff)
 					.GroupBy(h => h.Entry.Id)
 					.Select(h => new
 					{
@@ -750,7 +750,7 @@ namespace VocaDb.Web.Controllers
 			var values = _userRepository.HandleQuery(ctx =>
 			{
 				var idsAndHits = ctx.OfType<SongHit>().Query()
-					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
+					.FilterIfNotNull(cutoff, s => s.DateUtc > cutoff)
 					.GroupBy(h => h.Entry.Id)
 					.Select(h => new
 					{

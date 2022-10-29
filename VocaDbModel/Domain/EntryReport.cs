@@ -21,7 +21,7 @@ public abstract class EntryReport : IEntryWithIntId
 
 	protected EntryReport()
 	{
-		Created = DateTime.UtcNow;
+		CreatedUtc = DateTime.UtcNow;
 		Hostname = string.Empty;
 		Notes = string.Empty;
 		Status = ReportStatus.Open;
@@ -36,11 +36,11 @@ public abstract class EntryReport : IEntryWithIntId
 		VersionNumber = versionNumber;
 	}
 
-	public virtual DateTime? ClosedAt { get; set; }
+	public virtual DateTime? ClosedAtUtc { get; set; }
 
 	public virtual User? ClosedBy { get; set; }
 
-	public virtual DateTime Created { get; set; }
+	public virtual DateTime CreatedUtc { get; set; }
 
 	public abstract IEntryWithNames EntryBase { get; }
 

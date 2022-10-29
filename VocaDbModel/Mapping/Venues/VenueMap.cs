@@ -15,7 +15,7 @@ namespace VocaDb.Model.Mapping.Venues
 
 			Map(m => m.Address).Not.Nullable();
 			Map(m => m.AddressCountryCode).Length(10).Not.Nullable();
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.CreateDateUtc).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();
@@ -74,7 +74,7 @@ namespace VocaDb.Model.Mapping.Venues
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data);
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();

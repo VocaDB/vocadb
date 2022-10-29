@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts
 
 			Author = comment.Author != null ? new UserForApiContract(comment.Author, iconFactory, UserOptionalFields.MainPicture) : null;
 			AuthorName = comment.Author?.Name;
-			Created = comment.Created.ToUniversalTime();
+			CreatedUtc = comment.CreatedUtc.ToUniversalTime();
 			Id = comment.Id;
 			Message = includeMessage ? comment.Message : null;
 		}
@@ -31,7 +31,7 @@ namespace VocaDb.Model.DataContracts
 		/// Comment creation date in UTC.
 		/// </summary>
 		[DataMember]
-		public DateTime Created { get; init; }
+		public DateTime CreatedUtc { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryForApiContract? Entry { get; init; }

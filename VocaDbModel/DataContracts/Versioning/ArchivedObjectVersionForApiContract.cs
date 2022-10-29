@@ -67,7 +67,7 @@ public sealed record ArchivedObjectVersionForApiContract
 			new UserForApiContract(archivedObjectVersion.Author, userIconFactory, UserOptionalFields.MainPicture)
 			: null;
 		ChangedFields = archivedObjectVersion.DiffBase.ChangedFieldNames;
-		Created = archivedObjectVersion.Created;
+		Created = archivedObjectVersion.CreatedUtc;
 		Hidden = archivedObjectVersion.Hidden;
 		Id = archivedObjectVersion.Id;
 		IsSnapshot = archivedObjectVersion.DiffBase.IsSnapshot;

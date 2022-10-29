@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Users
 #nullable disable
 		public OldUsername()
 		{
-			Date = DateTime.Now;
+			DateUtc = DateTime.Now;
 		}
 #nullable enable
 
@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Users
 			OldName = oldName;
 		}
 
-		public virtual DateTime Date { get; set; }
+		public virtual DateTime DateUtc { get; set; }
 
 		public virtual int Id { get; set; }
 

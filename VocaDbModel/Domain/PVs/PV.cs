@@ -37,7 +37,7 @@ public class PV : IEquatable<PV>, IEditablePV
 		PVId = contract.PVId;
 		PVType = contract.PVType;
 		Name = contract.Name ?? string.Empty;
-		PublishDate = contract.PublishDate;
+		PublishDateUtc = contract.PublishDate;
 		Author = contract.Author ?? string.Empty;
 		ExtendedMetadata = contract.ExtendedMetadata;
 	}
@@ -78,7 +78,7 @@ public class PV : IEquatable<PV>, IEditablePV
 		}
 	}
 
-	public virtual DateTime? PublishDate { get; set; }
+	public virtual DateTime? PublishDateUtc { get; set; }
 
 	public virtual string PVId
 	{

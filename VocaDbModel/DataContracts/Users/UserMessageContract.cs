@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Users
 			ParamIs.NotNull(() => message);
 
 			Body = (includeBody ? message.Message : string.Empty);
-			Created = message.Created;
+			Created = message.CreatedUtc;
 			CreatedFormatted = Created.ToUniversalTime().ToString("g");
 			HighPriority = message.HighPriority;
 			Id = message.Id;

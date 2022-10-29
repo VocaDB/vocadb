@@ -54,7 +54,7 @@ public class ArchivedVersionManager<TVersion, TField> :
 		// Also need to sort by creation date because version number is not available for all entry types.
 		return Versions
 			.OrderByDescending(m => m.Version)
-			.ThenByDescending(m => m.Created)
+			.ThenByDescending(m => m.CreatedUtc)
 			.FirstOrDefault();
 	}
 

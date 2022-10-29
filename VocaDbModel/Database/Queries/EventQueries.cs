@@ -399,7 +399,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return _repository.HandleQuery(ctx => ctx
 				.Query()
-				.Where(e => e.Date.DateTime != null)
+				.Where(e => e.Date.DateTimeUtc != null)
 				.OrderBy(sortRule, LanguagePreference, sortDirection)
 				.ToArray()
 				.Select(e => new ReleaseEventContract(e, LanguagePreference, includeSeries))
@@ -754,7 +754,7 @@ namespace VocaDb.Model.Database.Queries
 					await session.AuditLogger.AuditLogAsync(logStr);
 
 					var newSongCutoff = TimeSpan.FromHours(1);
-					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff)
+					if (artistDiff.Added.Any() && ev.CreateDateUtc >= DateTime.Now - newSongCutoff)
 					{
 						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 

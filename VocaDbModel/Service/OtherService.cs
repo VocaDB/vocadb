@@ -203,8 +203,8 @@ namespace VocaDb.Model.Service
 				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.WhereNotDeleted()
 				.WhereHasPV()
-				.Where(s => s.CreateDate >= cutoffDate)
-				.OrderByDescending(s => s.CreateDate)
+				.Where(s => s.CreateDateUtc >= cutoffDate)
+				.OrderByDescending(s => s.CreateDateUtc)
 				.Take(maxSongs)
 				.Select(s => new
 				{
@@ -240,8 +240,8 @@ namespace VocaDb.Model.Service
 					.WhereHasArtist(AppConfig.FilteredArtistId)
 					.WhereNotDeleted()
 					.WhereHasPV()
-					.Where(s => s.CreateDate < cutoffDate)
-					.OrderByDescending(s => s.CreateDate)
+					.Where(s => s.CreateDateUtc < cutoffDate)
+					.OrderByDescending(s => s.CreateDateUtc)
 					.Take(songCount - recentSongs.Length)
 					.ToArray();
 
@@ -271,13 +271,13 @@ namespace VocaDb.Model.Service
 			var comments = (await session.Query<Comment>()
 				.WhereNotDeleted()
 				.Where(c => !(c is UserComment))
-				.OrderByDescending(c => c.Created)
+				.OrderByDescending(c => c.CreatedUtc)
 				.Take(maxComments)
 				.ToListAsync())
 				.Where(c => !c.Entry.Deleted);
 
 			var combined = comments
-				.OrderByDescending(c => c.Created)
+				.OrderByDescending(c => c.CreatedUtc)
 				.Take(maxComments);
 
 			var contracts = CreateEntryWithCommentsContract(combined, c => _entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, LanguagePreference))
@@ -377,7 +377,7 @@ namespace VocaDb.Model.Service
 				// FIXME: this returns less comments if there are deleted entries.
 				// See also: https://github.com/VocaDB/vocadb/pull/663#pullrequestreview-545596680
 				var activityEntries = (await session.Query<ActivityEntry>()
-					.OrderByDescending(a => a.CreateDate)
+					.OrderByDescending(a => a.CreateDateUtc)
 					.Take(maxActivityEntries)
 					.ToListAsync())
 					.Where(a => !a.EntryBase.Deleted);

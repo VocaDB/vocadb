@@ -35,7 +35,7 @@ public abstract class EntryPictureFile : IEntryPictureFile
 #nullable disable
 	protected EntryPictureFile()
 	{
-		Created = DateTime.Now;
+		CreatedUtc = DateTime.Now;
 	}
 #nullable enable
 
@@ -61,7 +61,7 @@ public abstract class EntryPictureFile : IEntryPictureFile
 		}
 	}
 
-	public virtual DateTime Created { get; set; }
+	public virtual DateTime CreatedUtc { get; set; }
 
 	/// <summary>
 	/// Type of entry for which this picture is for. 

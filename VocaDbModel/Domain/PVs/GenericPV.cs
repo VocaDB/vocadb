@@ -19,7 +19,7 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			Entry = entry;
 			Length = contract.Length;
-			PublishDate = contract.PublishDate;
+			PublishDateUtc = contract.PublishDate;
 		}
 
 		public virtual TEntry Entry

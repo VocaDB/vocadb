@@ -42,7 +42,7 @@ public class AlbumForApiContract : IEntryBase
 	{
 		ArtistString = album.ArtistString[languagePreference];
 		CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
-		CreateDate = album.CreateDate;
+		CreateDate = album.CreateDateUtc;
 		DefaultName = album.DefaultName;
 		DefaultNameLanguage = album.Names.SortNames.DefaultLanguage;
 		DiscType = album.DiscType;

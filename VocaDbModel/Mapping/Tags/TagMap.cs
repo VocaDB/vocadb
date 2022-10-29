@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Tags
 			Id(m => m.Id);
 
 			Map(m => m.CategoryName).Length(30).Not.Nullable();
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.CreateDateUtc).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.HideFromSuggestions).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
@@ -78,7 +78,7 @@ namespace VocaDb.Model.Mapping.Tags
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data).Nullable();
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();

@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		{
 			ParamIs.NotNull(() => tag);
 
-			CreateDate = tag.CreateDate;
+			CreateDate = tag.CreateDateUtc;
 			Deleted = tag.Deleted;
 			Description = tag.Description.GetBestMatch(languagePreference);
 			HideFromSuggestions = tag.HideFromSuggestions;

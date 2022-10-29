@@ -13,8 +13,8 @@ public static class CommentQueryableExtensions
 {
 	public static IQueryable<Comment> OrderBy(this IQueryable<Comment> queryable, CommentSortRule sortRule) => sortRule switch
 	{
-		CommentSortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.Created),
-		CommentSortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.Created),
+		CommentSortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.CreatedUtc),
+		CommentSortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.CreatedUtc),
 		_ => queryable,
 	};
 }

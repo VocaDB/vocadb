@@ -475,7 +475,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session => session
 				.Query<MikuDbAlbum>()
 				.Where(a => (string.IsNullOrEmpty(title) || a.Title.Contains(title)) && a.Status == status)
-				.OrderByDescending(a => a.Created)
+				.OrderByDescending(a => a.CreatedUtc)
 				.Skip(paging.Start)
 				.Take(paging.MaxEntries)
 				.ToArray()

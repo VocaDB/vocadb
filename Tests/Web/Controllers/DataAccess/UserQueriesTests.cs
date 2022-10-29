@@ -855,7 +855,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task UpdateUserSettings_ChangeName()
 		{
-			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			_userWithEmail.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "mikumiku" };
 
 			await _data.UpdateUserSettings(contract, pictureData: null);
@@ -868,7 +868,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUserSettings_ChangeName_Invalid()
 		{
-			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			_userWithEmail.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "miku miku" };
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidUserNameException>();
 		}
@@ -876,7 +876,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUserSettings_ChangeName_AlreadyInUse()
 		{
-			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			_userWithEmail.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = _userWithoutEmail.Name };
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameAlreadyExistsException>();
 		}
@@ -884,7 +884,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUserSettings_ChangeName_TooSoon()
 		{
-			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
+			_userWithEmail.CreateDateUtc = DateTime.Now - TimeSpan.FromDays(39);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "mikumiku" };
 			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameTooSoonException>();
 		}

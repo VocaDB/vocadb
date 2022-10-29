@@ -10,7 +10,7 @@ namespace VocaDb.Model.Domain.Tags
 	{
 		public TagMapping()
 		{
-			CreateDate = DateTime.Now;
+			CreateDateUtc = DateTime.Now;
 			MappingType = TagMappingType.Automatic;
 		}
 
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Domain.Tags
 		private Tag _tag;
 		private string _sourceTag;
 
-		public virtual DateTime CreateDate { get; set; }
+		public virtual DateTime CreateDateUtc { get; set; }
 
 		public virtual int Id { get; set; }
 

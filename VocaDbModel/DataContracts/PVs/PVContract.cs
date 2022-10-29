@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.PVs
 			Name = pv.Name;
 			PVId = pv.PVId;
 			Service = pv.Service;
-			PublishDate = pv.PublishDate;
+			PublishDate = pv.PublishDateUtc;
 			PVType = pv.PVType;
 			Url = pv.Url;
 		}

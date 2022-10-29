@@ -26,7 +26,7 @@ namespace VocaDb.Model.DataContracts.Users
 			AboutMe = user.Options.AboutMe;
 			CustomTitle = user.Options.CustomTitle;
 			EmailVerified = user.Options.EmailVerified;
-			LastLogin = user.LastLogin;
+			LastLogin = user.LastLoginUtc;
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
 			KnownLanguages = user.KnownLanguages.OrderByDescending(l => l.Proficiency).Select(l => new UserKnownLanguageContract(l)).ToArray();

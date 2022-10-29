@@ -66,7 +66,7 @@ namespace VocaDb.Model.DataContracts.Api
 		{
 			ActivityDate = artist.ReleaseDate;
 			ArtistType = artist.ArtistType;
-			CreateDate = artist.CreateDate;
+			CreateDate = artist.CreateDateUtc;
 			Status = artist.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null)
@@ -100,7 +100,7 @@ namespace VocaDb.Model.DataContracts.Api
 		{
 			ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 			ArtistString = album.ArtistString[languagePreference];
-			CreateDate = album.CreateDate;
+			CreateDate = album.CreateDateUtc;
 			DiscType = album.DiscType;
 			Status = album.Status;
 
@@ -138,7 +138,7 @@ namespace VocaDb.Model.DataContracts.Api
 		)
 			: this(releaseEvent, languagePreference, includedFields)
 		{
-			ActivityDate = releaseEvent.Date.DateTime;
+			ActivityDate = releaseEvent.Date.DateTimeUtc;
 			EventCategory = releaseEvent.InheritedCategory;
 			ReleaseEventSeriesName = releaseEvent.Series?.TranslatedName[languagePreference];
 			Status = releaseEvent.Status;
@@ -159,15 +159,15 @@ namespace VocaDb.Model.DataContracts.Api
 		public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
 			: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None)
 		{
-			CreateDate = topic.Created;
+			CreateDate = topic.CreatedUtc;
 		}
 
 		public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
 			: this((IEntryWithNames)song, languagePreference, includedFields)
 		{
-			ActivityDate = song.PublishDate.DateTime;
+			ActivityDate = song.PublishDate.DateTimeUtc;
 			ArtistString = song.ArtistString[languagePreference];
-			CreateDate = song.CreateDate;
+			CreateDate = song.CreateDateUtc;
 			SongType = song.SongType;
 			Status = song.Status;
 
@@ -210,7 +210,7 @@ namespace VocaDb.Model.DataContracts.Api
 			: this(songList, ContentLanguagePreference.Default, includedFields)
 		{
 			ActivityDate = songList.EventDate;
-			CreateDate = songList.CreateDate;
+			CreateDate = songList.CreateDateUtc;
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null)
@@ -227,7 +227,7 @@ namespace VocaDb.Model.DataContracts.Api
 		)
 			: this(tag, languagePreference, includedFields)
 		{
-			CreateDate = tag.CreateDate;
+			CreateDate = tag.CreateDateUtc;
 			Status = tag.Status;
 			TagCategoryName = tag.CategoryName;
 

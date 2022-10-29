@@ -12,8 +12,8 @@
 
 	<div class="media-body">
 		<div class="pull-right">
-			<span title="@Model.Contract.Created.ToUniversalTime().ToString("g") UTC" class="comment-date">
-				@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
+			<span title="@Model.Contract.CreatedUtc.ToUniversalTime().ToString("g") UTC" class="comment-date">
+				@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.CreatedUtc)
 			</span>
 			@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
 			{

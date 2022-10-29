@@ -140,7 +140,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			ArtistString = album.ArtistString.GetBestMatch(languagePreference);
 			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, album);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, album);
-			CreateDate = album.CreateDate;
+			CreateDate = album.CreateDateUtc;
 			Deleted = album.Deleted;
 			Description = new EnglishTranslatedStringContract(album.Description);
 

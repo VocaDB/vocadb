@@ -11,7 +11,7 @@ namespace VocaDb.Model.Mapping.Users
 		{
 			Id(m => m.Id);
 
-			Map(m => m.Date).Not.Nullable();
+			Map(m => m.DateUtc).Not.Nullable();
 			Map(m => m.OldName).Not.Nullable();
 			References(m => m.User).Not.Nullable();
 		}

@@ -138,7 +138,7 @@ public class TagComment : GenericComment<Tag>
 			loginData: new AgentLoginData(user: Author, name: Author.Name)
 		)
 		{
-			Created = Created,
+			CreatedUtc = CreatedUtc,
 			Deleted = Deleted,
 		};
 		target.AllComments.Add(newComment);

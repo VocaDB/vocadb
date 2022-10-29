@@ -55,7 +55,7 @@ namespace VocaDb.Model.Service
 
 			return HandleTransaction(session =>
 			{
-				var oldEntries = session.Query<ActivityEntry>().OrderByDescending(e => e.CreateDate).Skip(200).ToArray();
+				var oldEntries = session.Query<ActivityEntry>().OrderByDescending(e => e.CreateDateUtc).Skip(200).ToArray();
 
 				foreach (var entry in oldEntries)
 					session.Delete(entry);
@@ -204,7 +204,7 @@ namespace VocaDb.Model.Service
 					AuditLog($"closed entry report {report.TranslatedReportTypeName(_enumTranslations, CultureInfo.DefaultThreadCurrentCulture)}{(!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty)} for {EntryLinkFactory.CreateEntryLink(report.EntryBase)}", session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
-					report.ClosedAt = DateTime.UtcNow;
+					report.ClosedAtUtc = DateTime.UtcNow;
 					session.Update(report);
 				}
 			});
@@ -313,7 +313,7 @@ namespace VocaDb.Model.Service
 				if (timeCutoffDays > 0)
 				{
 					var cutoff = DateTime.Now - TimeSpan.FromDays(timeCutoffDays);
-					q = q.Where(e => e.Time > cutoff);
+					q = q.Where(e => e.TimeUtc > cutoff);
 				}
 
 				if (!string.IsNullOrWhiteSpace(filter))
@@ -336,7 +336,7 @@ namespace VocaDb.Model.Service
 				if (onlyNewUsers)
 				{
 					var newUserDate = DateTime.Now - TimeSpan.FromDays(7);
-					q = q.Where(e => e.User.CreateDate >= newUserDate);
+					q = q.Where(e => e.User.CreateDateUtc >= newUserDate);
 				}
 
 				if (filterByGroup != AuditLogUserGroupFilter.Nothing && filterByGroup != AuditLogUserGroupFilter.NoFilter)
@@ -349,7 +349,7 @@ namespace VocaDb.Model.Service
 					q = q.Where(e => e.User == null);
 
 				var entries = q
-					.OrderByDescending(e => e.Time)
+					.OrderByDescending(e => e.TimeUtc)
 					.Skip(start)
 					.Take(maxEntries)
 					.ToArray()

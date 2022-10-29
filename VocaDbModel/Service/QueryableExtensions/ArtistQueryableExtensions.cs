@@ -70,8 +70,8 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return sortRule switch
 			{
 				ArtistSortRule.Name => FindHelpers.AddNameOrder(criteria, languagePreference),
-				ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDate),
-				ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDate),
+				ArtistSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDateUtc),
+				ArtistSortRule.AdditionDateAsc => criteria.OrderBy(a => a.CreateDateUtc),
 				ArtistSortRule.ReleaseDate => OrderByReleaseDate(criteria, SortDirection.Descending),
 				ArtistSortRule.SongCount => criteria.OrderByDescending(a => a.AllSongs.Count(s => !s.Song.Deleted)),
 				ArtistSortRule.SongRating => criteria.OrderBySongRating(),
@@ -90,7 +90,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return sortRule switch
 			{
 				EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
-				EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+				EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDateUtc),
 				_ => query,
 			};
 		}
@@ -99,7 +99,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		{
 			return criteria
 				.OrderBy(a => a.ReleaseDate, direction)
-				.ThenBy(a => a.CreateDate, direction);
+				.ThenBy(a => a.CreateDateUtc, direction);
 		}
 
 		public static IQueryable<Artist> WhereDraftsOnly(this IQueryable<Artist> query, bool draftsOnly)

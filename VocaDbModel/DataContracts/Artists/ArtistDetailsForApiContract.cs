@@ -189,7 +189,7 @@ namespace VocaDb.Model.DataContracts.Artists
 				: null;
 
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
-			CreateDate = artist.CreateDate;
+			CreateDate = artist.CreateDateUtc;
 			Deleted = artist.Deleted;
 			Description = new EnglishTranslatedStringContract(artist.Description);
 			Draft = artist.Status == EntryStatus.Draft;
@@ -206,7 +206,7 @@ namespace VocaDb.Model.DataContracts.Artists
 				.ToArray();
 
 			Pictures = artist.Pictures.Select(p => new EntryThumbForApiContract(image: p, thumbPersister: imageStore, name: p.Name)).ToArray();
-			ReleaseDate = artist.ReleaseDate.DateTime;
+			ReleaseDate = artist.ReleaseDate.DateTimeUtc;
 			Status = artist.Status;
 			Version = artist.Version;
 

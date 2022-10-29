@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Security
 			Action = new HtmlSanitizer().Sanitize(entry.Action);
 			AgentName = entry.AgentName;
 			Id = entry.Id;
-			Time = entry.Time;
+			Time = entry.TimeUtc;
 			User = (entry.User != null ? new UserForApiContract(entry.User) : null);
 		}
 #nullable disable

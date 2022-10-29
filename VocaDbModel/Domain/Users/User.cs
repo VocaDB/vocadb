@@ -81,7 +81,7 @@ public class User :
 	{
 		Active = true;
 		AnonymousActivity = false;
-		CreateDate = DateTime.Now;
+		CreateDateUtc = DateTime.Now;
 		Culture = string.Empty;
 		DefaultLanguageSelection = ContentLanguagePreference.Default;
 		Email = string.Empty;
@@ -89,7 +89,7 @@ public class User :
 		EmailOptions = UserEmailOptions.PrivateMessagesFromAll;
 		GroupId = UserGroupId.Regular;
 		Language = OptionalCultureCode.Empty;
-		LastLogin = DateTime.Now;
+		LastLoginUtc = DateTime.Now;
 		Options = new UserOptions(this);
 		PreferredVideoService = PVService.Youtube;
 	}
@@ -193,7 +193,7 @@ public class User :
 	{
 		get
 		{
-			var lastNameDate = OldUsernames.Any() ? OldUsernames.OrderByDescending(n => n.Date).Select(n => n.Date).First() : CreateDate;
+			var lastNameDate = OldUsernames.Any() ? OldUsernames.OrderByDescending(n => n.DateUtc).Select(n => n.DateUtc).First() : CreateDateUtc;
 			return DateTime.Now - lastNameDate >= User.UsernameCooldown;
 		}
 	}
@@ -217,7 +217,7 @@ public class User :
 	/// <summary>
 	/// Date when user account was created (signed up).
 	/// </summary>
-	public virtual DateTime CreateDate { get; set; }
+	public virtual DateTime CreateDateUtc { get; set; }
 
 	/// <summary>
 	/// User's culture setting (date/time and number formatting).
@@ -343,7 +343,7 @@ public class User :
 	/// </summary>
 	public virtual OptionalCultureCode LanguageOrLastLoginCulture => !Language.IsEmpty ? Language : Options.LastLoginCulture;
 
-	public virtual DateTime LastLogin { get; set; }
+	public virtual DateTime LastLoginUtc { get; set; }
 
 	public virtual IList<UserMessage> Messages
 	{
@@ -711,7 +711,7 @@ public class User :
 
 	public virtual void UpdateLastLogin(string host, string? culture)
 	{
-		LastLogin = DateTime.Now;
+		LastLoginUtc = DateTime.Now;
 		Options.LastLoginAddress = host;
 		Options.LastLoginCulture = new OptionalCultureCode(culture);
 	}

@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public PasswordResetRequest()
 		{
-			Created = DateTime.Now;
+			CreatedUtc = DateTime.Now;
 			Email = string.Empty;
 		}
 
@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Users
 			Email = user.Email;
 		}
 
-		public virtual DateTime Created { get; set; }
+		public virtual DateTime CreatedUtc { get; set; }
 
 		/// <summary>
 		/// Email to which this request was sent. Might be different from user's current email.
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Guid Id { get; set; }
 
-		public virtual bool IsValid => Created >= DateTime.Now - ExpirationTime;
+		public virtual bool IsValid => CreatedUtc >= DateTime.Now - ExpirationTime;
 
 		public virtual User User
 		{

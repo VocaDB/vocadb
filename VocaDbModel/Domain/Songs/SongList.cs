@@ -44,7 +44,7 @@ public class SongList :
 #nullable disable
 	public SongList()
 	{
-		CreateDate = DateTime.Now;
+		CreateDateUtc = DateTime.Now;
 		Description = string.Empty;
 	}
 #nullable enable
@@ -117,7 +117,7 @@ public class SongList :
 	/// <summary>
 	/// Date when this entry was created.
 	/// </summary>
-	public virtual DateTime CreateDate { get; set; }
+	public virtual DateTime CreateDateUtc { get; set; }
 
 	string IEntryBase.DefaultName => Name;
 

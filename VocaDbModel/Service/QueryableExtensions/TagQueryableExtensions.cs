@@ -16,7 +16,7 @@ public static class TagQueryableExtensions
 	/// </summary>
 	public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 	{
-		TagSortRule.AdditionDate => query.OrderByDescending(t => t.CreateDate),
+		TagSortRule.AdditionDate => query.OrderByDescending(t => t.CreateDateUtc),
 		TagSortRule.Name => query.OrderByEntryName(languagePreference),
 		TagSortRule.UsageCount => query.OrderByDescending(t => t.UsageCount),
 		_ => query,
@@ -29,7 +29,7 @@ public static class TagQueryableExtensions
 		this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 	{
 		EntrySortRule.Name => query.OrderByEntryName(languagePreference),
-		EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+		EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDateUtc),
 		_ => query,
 	};
 

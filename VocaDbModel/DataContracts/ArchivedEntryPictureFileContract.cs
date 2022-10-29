@@ -15,7 +15,7 @@ public class ArchivedEntryPictureFileContract
 		ParamIs.NotNull(() => entryPictureFile);
 
 		Author = new ObjectRefContract(entryPictureFile.Author);
-		Created = entryPictureFile.Created;
+		Created = entryPictureFile.CreatedUtc;
 		Id = entryPictureFile.Id;
 		Mime = entryPictureFile.Mime;
 		Name = entryPictureFile.Name;

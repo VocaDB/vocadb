@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Users
 		{
 			ParamIs.NotNull(() => oldUsername);
 
-			Date = oldUsername.Date;
+			Date = oldUsername.DateUtc;
 			OldName = oldUsername.OldName;
 		}
 

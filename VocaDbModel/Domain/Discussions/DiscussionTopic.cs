@@ -34,7 +34,7 @@ public class DiscussionTopic : IEntryWithNames, IEntryWithComments
 		CreateComment(content, agent);
 		AuthorName = agent.Name;
 
-		Created = DateTime.Now;
+		CreatedUtc = DateTime.Now;
 	}
 
 	public virtual User Author => FirstComment.Author;
@@ -67,13 +67,13 @@ public class DiscussionTopic : IEntryWithNames, IEntryWithComments
 
 	public virtual string Content => FirstComment.Message;
 
-	public virtual DateTime Created { get; set; }
+	public virtual DateTime CreatedUtc { get; set; }
 
 	public virtual bool Deleted { get; set; }
 
 	public virtual EntryType EntryType => EntryType.DiscussionTopic;
 
-	public virtual DiscussionComment FirstComment => AllComments.OrderBy(c => c.Created).First();
+	public virtual DiscussionComment FirstComment => AllComments.OrderBy(c => c.CreatedUtc).First();
 
 	/// <summary>
 	/// Folder containing this topic. Cannot be null.

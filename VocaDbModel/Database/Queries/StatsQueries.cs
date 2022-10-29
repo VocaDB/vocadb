@@ -111,12 +111,12 @@ namespace VocaDb.Model.Database.Queries
 					.WhereSongHasPublishDate(true)
 					.WhereSongPublishDateIsBetween(cutoff, end)
 					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted)
-					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
-					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
+					.OrderBy(a => a.Song.PublishDate.DateTimeUtc.Value.Year)
+					.ThenBy(a => a.Song.PublishDate.DateTimeUtc.Value.Month)
 					.GroupBy(a => new
 					{ // Note: we want to do count distinct here, but it's not supported by NHibernate LINQ, so doing a second group by in memory
-						Year = a.Song.PublishDate.DateTime.Value.Year,
-						Month = a.Song.PublishDate.DateTime.Value.Month,
+						Year = a.Song.PublishDate.DateTimeUtc.Value.Year,
+						Month = a.Song.PublishDate.DateTimeUtc.Value.Month,
 						Artist = a.Artist.Id
 					})
 					.Select(a => new
@@ -147,17 +147,17 @@ namespace VocaDb.Model.Database.Queries
 				var query = ctx.Query<Song>();
 
 				if (cutoff.HasValue)
-					query = query.Where(a => a.CreateDate >= cutoff);
+					query = query.Where(a => a.CreateDateUtc >= cutoff);
 
 				return query
-					.OrderBy(a => a.CreateDate.Year)
-					.ThenBy(a => a.CreateDate.Month)
-					.ThenBy(a => a.CreateDate.Day)
+					.OrderBy(a => a.CreateDateUtc.Year)
+					.ThenBy(a => a.CreateDateUtc.Month)
+					.ThenBy(a => a.CreateDateUtc.Day)
 					.GroupBy(a => new
 					{
-						Year = a.CreateDate.Year,
-						Month = a.CreateDate.Month,
-						Day = a.CreateDate.Day
+						Year = a.CreateDateUtc.Year,
+						Month = a.CreateDateUtc.Month,
+						Day = a.CreateDateUtc.Day
 					})
 					.ToArray()
 					.Select(a => new CountPerDayContract(a.Key.Year, a.Key.Month, a.Key.Day, a.Count()))
@@ -177,12 +177,12 @@ namespace VocaDb.Model.Database.Queries
 			{
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
-					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
-					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
-					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTimeUtc != null && s.Song.PublishDate.DateTimeUtc.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTimeUtc > cutoff)
+					.OrderBy(a => a.Song.PublishDate.DateTimeUtc.Value.Year)
 					.GroupBy(s => new
 					{
-						s.Song.PublishDate.DateTime.Value.Year,
+						s.Song.PublishDate.DateTimeUtc.Value.Year,
 						ArtistId = s.Artist.Id,
 					})
 					.Select(s => new
@@ -220,13 +220,13 @@ namespace VocaDb.Model.Database.Queries
 			{
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
-					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
-					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
-					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTimeUtc != null && s.Song.PublishDate.DateTimeUtc.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTimeUtc > cutoff)
+					.OrderBy(a => a.Song.PublishDate.DateTimeUtc.Value.Year)
 					.GroupBy(s => new
 					{
-						s.Song.PublishDate.DateTime.Value.Year,
-						s.Song.PublishDate.DateTime.Value.Month,
+						s.Song.PublishDate.DateTimeUtc.Value.Year,
+						s.Song.PublishDate.DateTimeUtc.Value.Month,
 						ArtistType = s.Artist.ArtistType
 					})
 					.Select(s => new
@@ -251,8 +251,8 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(ctx =>
 			{
 				var topSongIds = ctx.Query<SongHit>()
-					.Where(s => !s.Entry.Deleted && s.Entry.PublishDate.DateTime != null)
-					.FilterIfNotNull(cutoff, s => s.Entry.PublishDate.DateTime > cutoff)
+					.Where(s => !s.Entry.Deleted && s.Entry.PublishDate.DateTimeUtc != null)
+					.FilterIfNotNull(cutoff, s => s.Entry.PublishDate.DateTimeUtc > cutoff)
 					.GroupBy(s => new
 					{
 						SongId = s.Entry.Id,
@@ -271,14 +271,14 @@ namespace VocaDb.Model.Database.Queries
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<SongHit>()
 					.Where(s => topSongIds.Contains(s.Entry.Id))
-					.OrderBy(a => a.Date.Year)
-					.ThenBy(a => a.Date.Month)
-					.ThenBy(a => a.Date.Day)
+					.OrderBy(a => a.DateUtc.Year)
+					.ThenBy(a => a.DateUtc.Month)
+					.ThenBy(a => a.DateUtc.Day)
 					.GroupBy(s => new
 					{
-						Year = s.Date.Year,
-						Month = s.Date.Month,
-						Day = s.Date.Day,
+						Year = s.DateUtc.Year,
+						Month = s.DateUtc.Month,
+						Day = s.DateUtc.Day,
 						SongId = s.Entry.Id,
 					})
 					.Select(s => new
@@ -314,8 +314,8 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(ctx =>
 			{
 				var topSongIds = ctx.Query<FavoriteSongForUser>()
-					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null)
-					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTimeUtc != null)
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTimeUtc > cutoff)
 					.GroupBy(s => new
 					{
 						SongId = s.Song.Id,
@@ -334,14 +334,14 @@ namespace VocaDb.Model.Database.Queries
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<FavoriteSongForUser>()
 					.Where(s => topSongIds.Contains(s.Song.Id))
-					.OrderBy(a => a.Date.Year)
-					.ThenBy(a => a.Date.Month)
-					.ThenBy(a => a.Date.Day)
+					.OrderBy(a => a.DateUtc.Year)
+					.ThenBy(a => a.DateUtc.Month)
+					.ThenBy(a => a.DateUtc.Day)
 					.GroupBy(s => new
 					{
-						Year = s.Date.Year,
-						Month = s.Date.Month,
-						Day = s.Date.Day,
+						Year = s.DateUtc.Year,
+						Month = s.DateUtc.Month,
+						Day = s.DateUtc.Day,
 						SongId = s.Song.Id,
 					})
 					.Select(s => new

@@ -23,7 +23,7 @@ namespace VocaDb.Model.Domain
 		/// <summary>
 		/// Database-generated
 		/// </summary>
-		public virtual DateTime Date { get; set; }
+		public virtual DateTime DateUtc { get; set; }
 
 		public virtual long Id { get; set; }
 	}

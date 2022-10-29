@@ -16,8 +16,8 @@ namespace VocaDb.Tests.Domain
 			var first = new Date(new DateTimeOffset(2015, 3, 9, 0, 0, 0, TimeSpan.FromHours(6)));
 			var second = new Date(new DateTimeOffset(2015, 3, 9, 0, 0, 0, TimeSpan.FromHours(-10)));
 
-			first.DateTime.Should().NotBeNull("DateTime");
-			first.DateTime.Value.Kind.Should().Be(DateTimeKind.Utc, "DateTimeKind");
+			first.DateTimeUtc.Should().NotBeNull("DateTime");
+			first.DateTimeUtc.Value.Kind.Should().Be(DateTimeKind.Utc, "DateTimeKind");
 			second.Should().Be(first, "Dates are equal despite different timezones");
 		}
 

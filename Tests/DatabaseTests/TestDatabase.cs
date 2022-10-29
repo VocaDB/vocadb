@@ -96,7 +96,7 @@ namespace VocaDb.Tests.DatabaseTests
 			{
 				var comment = new TagComment(entry: tag, message: message, loginData: new AgentLoginData(user: UserWithEditPermissions, name: UserWithEditPermissions.Name))
 				{
-					Created = created,
+					CreatedUtc = created,
 					Deleted = deleted,
 				};
 
@@ -128,7 +128,7 @@ namespace VocaDb.Tests.DatabaseTests
 				SongType = SongType.Original,
 				FavoritedTimes = 1,
 				PVServices = PVServices.Youtube,
-				CreateDate = new DateTime(2012, 6, 1)
+				CreateDateUtc = new DateTime(2012, 6, 1)
 			};
 			Song.Lyrics.Add(new LyricsForSong(Song, "Here be lyrics", string.Empty, string.Empty, TranslationType.Translation, "en"));
 			var tagUsage = new SongTagUsage(Song, Tag);
@@ -141,7 +141,7 @@ namespace VocaDb.Tests.DatabaseTests
 				Id = Song2Id,
 				SongType = SongType.Original,
 				PVServices = PVServices.Youtube,
-				CreateDate = new DateTime(2012, 6, 1)
+				CreateDateUtc = new DateTime(2012, 6, 1)
 			};
 			Song2.Lyrics.Add(new LyricsForSong(Song2, "Here be lyrics", string.Empty, string.Empty, TranslationType.Romanized, string.Empty));
 			session.Save(Song2);
@@ -150,35 +150,35 @@ namespace VocaDb.Tests.DatabaseTests
 			{
 				Id = SongWithArtistId,
 				FavoritedTimes = 39,
-				CreateDate = new DateTime(2012, 1, 1)
+				CreateDateUtc = new DateTime(2012, 1, 1)
 			};
 			Song3.AddArtist(Producer);
 			session.Save(Song3);
 
 			Song4 = new Song(new LocalizedString("Azalea", ContentLanguageSelection.English))
 			{
-				CreateDate = new DateTime(2012, 1, 1)
+				CreateDateUtc = new DateTime(2012, 1, 1)
 			};
 			Song4.AddArtist(Producer);
 			session.Save(Song4);
 
 			Song5 = new Song(new LocalizedString("Melancholic", ContentLanguageSelection.English))
 			{
-				CreateDate = new DateTime(2012, 1, 1)
+				CreateDateUtc = new DateTime(2012, 1, 1)
 			};
 			Song5.AddArtist(Producer2);
 			session.Save(Song5);
 
 			Song6 = new Song(new LocalizedString("Tears", ContentLanguageSelection.English))
 			{
-				CreateDate = new DateTime(2012, 1, 1)
+				CreateDateUtc = new DateTime(2012, 1, 1)
 			};
 			Song6.AddArtist(Producer3);
 			session.Save(Song6);
 
 			SongWithSpecialChars = new Song(new LocalizedString("Nebula [Extend RMX]", ContentLanguageSelection.English))
 			{
-				CreateDate = new DateTime(2011, 1, 1)
+				CreateDateUtc = new DateTime(2011, 1, 1)
 			};
 			session.Save(SongWithSpecialChars);
 

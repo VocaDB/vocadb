@@ -15,7 +15,7 @@ namespace VocaDb.Model.Mapping.MikuDb
 			Id(m => m.Id);
 
 			Map(m => m.CoverPictureMime).Length(32).Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
 			Map(m => m.SourceUrl).Length(255).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();

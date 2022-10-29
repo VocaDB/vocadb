@@ -56,17 +56,17 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				if (cutoff.HasValue)
-					query = query.Where(a => a.CreateDate >= cutoff);
+					query = query.Where(a => a.CreateDateUtc >= cutoff);
 
 				return query
-					.OrderBy(a => a.CreateDate.Year)
-					.ThenBy(a => a.CreateDate.Month)
-					.ThenBy(a => a.CreateDate.Day)
+					.OrderBy(a => a.CreateDateUtc.Year)
+					.ThenBy(a => a.CreateDateUtc.Month)
+					.ThenBy(a => a.CreateDateUtc.Day)
 					.GroupBy(a => new
 					{
-						Year = a.CreateDate.Year,
-						Month = a.CreateDate.Month,
-						Day = a.CreateDate.Day
+						Year = a.CreateDateUtc.Year,
+						Month = a.CreateDateUtc.Month,
+						Day = a.CreateDateUtc.Day
 					})
 					.Select(a => new
 					{
@@ -104,13 +104,13 @@ namespace VocaDb.Model.Database.Queries
 				var query = ctx.Query<ActivityEntry>();
 
 				if (before.HasValue && !since.HasValue)
-					query = query.Where(a => a.CreateDate < before.Value);
+					query = query.Where(a => a.CreateDateUtc < before.Value);
 
 				if (!before.HasValue && since.HasValue)
-					query = query.Where(a => a.CreateDate > since.Value);
+					query = query.Where(a => a.CreateDateUtc > since.Value);
 
 				if (before.HasValue && since.HasValue)
-					query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
+					query = query.Where(a => a.CreateDateUtc > since.Value && a.CreateDateUtc < before.Value);
 
 				if (userId.HasValue)
 					query = query.Where(a => a.Author.Id == userId.Value);

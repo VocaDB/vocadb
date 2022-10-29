@@ -14,8 +14,8 @@
 		{
 			<text>-</text> <a href="#" id="deleteComment_@(Model.Contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
 		}
-		<small class="pull-right extraInfo" title="@Model.Contract.Created.ToUniversalTime() UTC">
-			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
+		<small class="pull-right extraInfo" title="@Model.Contract.CreatedUtc.ToUniversalTime() UTC">
+			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.CreatedUtc)
 		</small>
 	</h3>
 	<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength)))" />

@@ -7,8 +7,8 @@ public static class DiscussionTopicQueryableExtensions
 	public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort) => sort switch
 	{
 		DiscussionTopicSortRule.Name => query.OrderBy(d => d.Name),
-		DiscussionTopicSortRule.DateCreated => query.OrderByDescending(d => d.Created),
-		DiscussionTopicSortRule.LastCommentDate => query.OrderByDescending(d => d.Comments.Max(c => c.Created)),
+		DiscussionTopicSortRule.DateCreated => query.OrderByDescending(d => d.CreatedUtc),
+		DiscussionTopicSortRule.LastCommentDate => query.OrderByDescending(d => d.Comments.Max(c => c.CreatedUtc)),
 		_ => query,
 	};
 

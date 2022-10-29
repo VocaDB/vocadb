@@ -119,7 +119,7 @@ public sealed record ArtistForEditForApiContract
 		Pictures = artist.Pictures
 			.Select(p => new EntryPictureFileContract(p, imageStore))
 			.ToList();
-		ReleaseDate = artist.ReleaseDate.DateTime;
+		ReleaseDate = artist.ReleaseDate.DateTimeUtc;
 		Status = artist.Status;
 		UpdateNotes = string.Empty;
 		Version = artist.Version;

@@ -15,7 +15,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.CreateDateUtc).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.FavoritedTimes).Not.Nullable();
 			Map(m => m.LengthSeconds).Not.Nullable();
@@ -54,7 +54,7 @@ namespace VocaDb.Model.Mapping.Songs
 				c.Map(m => m.English).Column("NotesEng").Not.Nullable().Length(int.MaxValue);
 			});
 
-			Component(m => m.PublishDate, c => c.Map(m => m.DateTime).Column("PublishDate").Nullable());
+			Component(m => m.PublishDate, c => c.Map(m => m.DateTimeUtc).Column("PublishDate").Nullable());
 
 			Component(m => m.PVs, c =>
 			{
@@ -96,7 +96,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Id(m => m.Id);
 
 			Map(m => m.AgentName).Length(100).Not.Nullable();
-			Map(m => m.Created).Not.Nullable();
+			Map(m => m.CreatedUtc).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
 			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
@@ -176,7 +176,7 @@ namespace VocaDb.Model.Mapping.Songs
 			Map(m => m.Disabled).Not.Nullable();
 			Map(m => m.Length).Not.Nullable();
 			Map(m => m.Name).Length(200).Not.Nullable();
-			Map(m => m.PublishDate).Nullable();
+			Map(m => m.PublishDateUtc).Nullable();
 			Map(m => m.PVId).Length(255).Not.Nullable();
 			Map(m => m.PVType).Not.Nullable();
 			Map(m => m.Service).Not.Nullable();

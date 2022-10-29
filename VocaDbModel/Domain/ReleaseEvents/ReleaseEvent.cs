@@ -56,7 +56,7 @@ public class ReleaseEvent :
 	public ReleaseEvent()
 	{
 		Category = EventCategory.Unspecified;
-		CreateDate = DateTime.Now;
+		CreateDateUtc = DateTime.Now;
 		Deleted = false;
 		Description = SeriesSuffix = string.Empty;
 		Status = EntryStatus.Draft;
@@ -166,7 +166,7 @@ public class ReleaseEvent :
 
 	public virtual IEnumerable<ReleaseEventComment> Comments => AllComments.Where(c => !c.Deleted);
 
-	public virtual DateTime CreateDate { get; set; }
+	public virtual DateTime CreateDateUtc { get; set; }
 
 	public virtual bool CustomName { get; set; }
 

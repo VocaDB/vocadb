@@ -66,7 +66,7 @@ public class Song :
 	public Song()
 	{
 		ArtistString = new TranslatedStringWithDefault(string.Empty, string.Empty, string.Empty, string.Empty);
-		CreateDate = DateTime.Now;
+		CreateDateUtc = DateTime.Now;
 		Deleted = false;
 		Notes = new EnglishTranslatedString();
 		PVServices = PVServices.Nothing;
@@ -192,7 +192,7 @@ public class Song :
 	/// <summary>
 	/// Date when this entry was created.
 	/// </summary>
-	public virtual DateTime CreateDate { get; set; }
+	public virtual DateTime CreateDateUtc { get; set; }
 
 	public virtual string DefaultName => TranslatedName.Default;
 
@@ -205,7 +205,7 @@ public class Song :
 	/// <summary>
 	/// Release date of the earliest album.
 	/// </summary>
-	public virtual DateTime? FirstAlbumDate
+	public virtual DateTime? FirstAlbumDateUtc
 	{
 		get
 		{
@@ -884,7 +884,7 @@ public class Song :
 			UpdateThumbUrl();
 		}
 
-		if (result.Changed && !PublishDate.DateTime.HasValue)
+		if (result.Changed && !PublishDate.DateTimeUtc.HasValue)
 		{
 			UpdatePublishDateFromPVs();
 		}
@@ -925,12 +925,12 @@ public class Song :
 		var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1);
 
 		// Original PVs that have a publish date
-		var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDateLimit).ToArray();
+		var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDateUtc.HasValue && p.PublishDateUtc > minDateLimit).ToArray();
 
 		// Lowest published (original) PV
-		var minPvDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDate) : null;
+		var minPvDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDateUtc) : null;
 
-		var minAlbumDate = FirstAlbumDate;
+		var minAlbumDate = FirstAlbumDateUtc;
 
 		var minDate = minAlbumDate.HasValue && minAlbumDate > minDateLimit && minAlbumDate < minPvDate ? minAlbumDate : minPvDate;
 

@@ -25,7 +25,7 @@ public class UserMessage : IEntryWithIntId
 #nullable disable
 	public UserMessage()
 	{
-		Created = DateTime.Now;
+		CreatedUtc = DateTime.Now;
 	}
 #nullable enable
 
@@ -63,7 +63,7 @@ public class UserMessage : IEntryWithIntId
 	/// <summary>
 	/// Timestamp when message was created (sent).
 	/// </summary>
-	public virtual DateTime Created { get; set; }
+	public virtual DateTime CreatedUtc { get; set; }
 
 	public virtual bool HighPriority { get; set; }
 

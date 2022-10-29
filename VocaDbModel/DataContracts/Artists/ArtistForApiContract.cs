@@ -27,14 +27,14 @@ public class ArtistForApiContract
 	)
 	{
 		ArtistType = artist.ArtistType;
-		CreateDate = artist.CreateDate;
+		CreateDate = artist.CreateDateUtc;
 		DefaultName = artist.DefaultName;
 		DefaultNameLanguage = artist.Names.SortNames.DefaultLanguage;
 		Deleted = artist.Deleted;
 		Id = artist.Id;
 		Name = artist.Names.SortNames[languagePreference];
 		PictureMime = artist.PictureMime;
-		ReleaseDate = artist.ReleaseDate.DateTime;
+		ReleaseDate = artist.ReleaseDate.DateTimeUtc;
 		Status = artist.Status;
 		Version = artist.Version;
 

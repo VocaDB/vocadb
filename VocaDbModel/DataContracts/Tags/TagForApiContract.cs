@@ -32,7 +32,7 @@ public class TagForApiContract
 		ParamIs.NotNull(() => tag);
 
 		CategoryName = tag.CategoryName;
-		CreateDate = tag.CreateDate;
+		CreateDate = tag.CreateDateUtc;
 		DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 		Id = tag.Id;
 		Name = tag.TranslatedName[languagePreference];
