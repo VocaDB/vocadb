@@ -12,7 +12,12 @@ const AppContainer = (): React.ReactElement => {
 	return (
 		<Container
 			fluid
-			css={{ flex: '1 1 100%', paddingBottom: miniPlayerHeight }}
+			css={{
+				flex: '1 1 100%',
+				paddingBottom: miniPlayerHeight,
+				minWidth: 0,
+				overflow: 'hidden',
+			}}
 		>
 			<div className="row-fluid">
 				<div className="span12 rightFrame well">
