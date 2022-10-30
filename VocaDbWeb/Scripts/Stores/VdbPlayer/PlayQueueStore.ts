@@ -104,6 +104,10 @@ export class PlayQueueItem {
 	public toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pvId: this.pvId };
 	};
+
+	public clone = (): PlayQueueItem => {
+		return PlayQueueItem.fromContract(this.toContract());
+	};
 }
 
 export class AutoplayContext<
@@ -308,9 +312,7 @@ export class PlayQueueStore
 
 	public playSelectedItemsNext = (): void => {
 		const items = this.selectedItemsOrAllItems;
-		this.playNext(
-			items.map((item) => PlayQueueItem.fromContract(item.toContract())),
-		);
+		this.playNext(items.map((item) => item.clone()));
 
 		this.unselectAll();
 	};
@@ -326,9 +328,7 @@ export class PlayQueueStore
 
 	public addSelectedItemsToPlayQueue = (): void => {
 		const items = this.selectedItemsOrAllItems;
-		this.addToPlayQueue(
-			items.map((item) => PlayQueueItem.fromContract(item.toContract())),
-		);
+		this.addToPlayQueue(items.map((item) => item.clone()));
 
 		this.unselectAll();
 	};
