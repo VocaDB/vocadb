@@ -13,6 +13,7 @@ import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -88,8 +89,172 @@ const SkipListEdit = observer(
 	},
 );
 
+const PlaylistTableHeader = observer(
+	(): React.ReactElement => {
+		const { playQueue } = useVdbPlayer();
+
+		return (
+			<thead>
+				<tr>
+					<th>
+						<input
+							type="checkbox"
+							checked={playQueue.allItemsSelected}
+							onChange={(e): void =>
+								runInAction(() => {
+									playQueue.allItemsSelected = e.target.checked;
+								})
+							}
+						/>
+					</th>
+					<th colSpan={2}>
+						{
+							playQueue.selectedItems.length > 0
+								? `${playQueue.selectedItems.length} item(s) selected` /* TODO: localize */
+								: 'Name' /* TODO: localize */
+						}
+					</th>
+				</tr>
+			</thead>
+		);
+	},
+);
+
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const pvServiceIcons = new PVServiceIcons(urlMapper);
+
+interface PlaylistTableRowProps {
+	item: PlayQueueItem;
+}
+
+const PlaylistTableRow = observer(
+	({ item }: PlaylistTableRowProps): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes']);
+
+		const diva = useNostalgicDiva();
+		const { playQueue } = useVdbPlayer();
+
+		return (
+			<tr className={classNames(item === playQueue.currentItem && 'info')}>
+				<td>
+					<input
+						type="checkbox"
+						checked={item.isSelected}
+						onChange={(e): void =>
+							runInAction(() => {
+								item.isSelected = e.target.checked;
+							})
+						}
+					/>
+				</td>
+				<td style={{ width: '80px' }}>
+					{item.entry.urlThumb && (
+						<Link
+							to={EntryUrlMapper.details_entry(item.entry)}
+							title={item.entry.additionalNames}
+						>
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<img
+								src={item.entry.urlThumb}
+								title="Cover picture" /* TODO: localize */
+								className="coverPicThumb img-rounded"
+								referrerPolicy="same-origin"
+							/>
+						</Link>
+					)}
+				</td>
+				<td>
+					<div className="pull-right">
+						<Button
+							onClick={async (): Promise<void> => {
+								if (playQueue.currentItem === item) {
+									await diva.setCurrentTime(0);
+								} else {
+									playQueue.setCurrentItem(item);
+								}
+							}}
+							href="#"
+						>
+							<i className="icon-play" /> Play{/* TODO: localize */}
+						</Button>{' '}
+						<Button
+							onClick={(): Promise<void> =>
+								playQueue.removeFromPlayQueue([item])
+							}
+							href="#"
+						>
+							<i className="icon-remove" /> {t('ViewRes:Shared.Remove')}
+						</Button>
+					</div>
+					<Link
+						to={EntryUrlMapper.details_entry(item.entry)}
+						title={item.entry.additionalNames}
+					>
+						{item.entry.name}
+					</Link>{' '}
+					{item.entry.entryType === 'Song' /* TODO: enum */ &&
+						item.entry.songType && (
+							<>
+								{' '}
+								<SongTypeLabel songType={item.entry.songType} />
+							</>
+						)}{' '}
+					{pvServiceIcons.getIconUrls(item.pv.service).map((icon, index) => (
+						<React.Fragment key={icon.service}>
+							{index > 0 && ' '}
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<img src={icon.url} title={icon.service} />
+						</React.Fragment>
+					))}{' '}
+					<DraftIcon status={item.entry.status} />
+					{(item.entry.entryType === 'Album' ||
+						item.entry.entryType === 'Song') && (
+						<>
+							<br />
+							<small className="extraInfo">{item.entry.artistString}</small>
+						</>
+					)}
+				</td>
+			</tr>
+		);
+	},
+);
+
+const PlaylistTableBody = observer(
+	(): React.ReactElement => {
+		const { playQueue } = useVdbPlayer();
+
+		return (
+			<ReactSortable
+				tag="tbody"
+				list={playQueue.items}
+				setList={(items): void =>
+					runInAction(() => {
+						playQueue.items = items;
+					})
+				}
+			>
+				{playQueue.items.map((item) => (
+					<PlaylistTableRow item={item} key={item.id} />
+				))}
+			</ReactSortable>
+		);
+	},
+);
+
+const PlaylistTable = observer(
+	(): React.ReactElement => {
+		return (
+			<table
+				className="table"
+				css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
+			>
+				<PlaylistTableHeader />
+				<PlaylistTableBody />
+			</table>
+		);
+	},
+);
 
 const PlaylistIndex = observer(
 	(): React.ReactElement => {
@@ -99,7 +264,6 @@ const PlaylistIndex = observer(
 
 		useVocaDbTitle(title, ready);
 
-		const diva = useNostalgicDiva();
 		const { playQueue } = useVdbPlayer();
 
 		const handleClickAddToNewSongList = React.useCallback(() => {
@@ -205,138 +369,7 @@ const PlaylistIndex = observer(
 					</>
 				}
 			>
-				{!playQueue.isEmpty && (
-					<table
-						className="table"
-						css={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}
-					>
-						<thead>
-							<tr>
-								<th>
-									<input
-										type="checkbox"
-										checked={playQueue.allItemsSelected}
-										onChange={(e): void =>
-											runInAction(() => {
-												playQueue.allItemsSelected = e.target.checked;
-											})
-										}
-									/>
-								</th>
-								<th colSpan={2}>
-									{
-										playQueue.selectedItems.length > 0
-											? `${playQueue.selectedItems.length} item(s) selected` /* TODO: localize */
-											: 'Name' /* TODO: localize */
-									}
-								</th>
-							</tr>
-						</thead>
-						<ReactSortable
-							tag="tbody"
-							list={playQueue.items}
-							setList={(items): void =>
-								runInAction(() => {
-									playQueue.items = items;
-								})
-							}
-						>
-							{playQueue.items.map((item) => (
-								<tr
-									className={classNames(
-										item === playQueue.currentItem && 'info',
-									)}
-									key={item.id}
-								>
-									<td>
-										<input
-											type="checkbox"
-											checked={item.isSelected}
-											onChange={(e): void =>
-												runInAction(() => {
-													item.isSelected = e.target.checked;
-												})
-											}
-										/>
-									</td>
-									<td style={{ width: '80px' }}>
-										{item.entry.urlThumb && (
-											<Link
-												to={EntryUrlMapper.details_entry(item.entry)}
-												title={item.entry.additionalNames}
-											>
-												{/* eslint-disable-next-line jsx-a11y/alt-text */}
-												<img
-													src={item.entry.urlThumb}
-													title="Cover picture" /* TODO: localize */
-													className="coverPicThumb img-rounded"
-													referrerPolicy="same-origin"
-												/>
-											</Link>
-										)}
-									</td>
-									<td>
-										<div className="pull-right">
-											<Button
-												onClick={async (): Promise<void> => {
-													if (playQueue.currentItem === item) {
-														await diva.setCurrentTime(0);
-													} else {
-														playQueue.setCurrentItem(item);
-													}
-												}}
-												href="#"
-											>
-												<i className="icon-play" /> Play{/* TODO: localize */}
-											</Button>{' '}
-											<Button
-												onClick={(): Promise<void> =>
-													playQueue.removeFromPlayQueue([item])
-												}
-												href="#"
-											>
-												<i className="icon-remove" />{' '}
-												{t('ViewRes:Shared.Remove')}
-											</Button>
-										</div>
-										<Link
-											to={EntryUrlMapper.details_entry(item.entry)}
-											title={item.entry.additionalNames}
-										>
-											{item.entry.name}
-										</Link>{' '}
-										{item.entry.entryType === 'Song' /* TODO: enum */ &&
-											item.entry.songType && (
-												<>
-													{' '}
-													<SongTypeLabel songType={item.entry.songType} />
-												</>
-											)}{' '}
-										{pvServiceIcons
-											.getIconUrls(item.pv.service)
-											.map((icon, index) => (
-												<React.Fragment key={icon.service}>
-													{index > 0 && ' '}
-													{/* eslint-disable-next-line jsx-a11y/alt-text */}
-													<img src={icon.url} title={icon.service} />
-												</React.Fragment>
-											))}{' '}
-										<DraftIcon status={item.entry.status} />
-										{(item.entry.entryType === 'Album' ||
-											item.entry.entryType === 'Song') && (
-											<>
-												<br />
-												<small className="extraInfo">
-													{item.entry.artistString}
-												</small>
-											</>
-										)}
-									</td>
-								</tr>
-							))}
-						</ReactSortable>
-					</table>
-				)}
+				{!playQueue.isEmpty && <PlaylistTable />}
 
 				{playQueue.hasMoreItems && (
 					<h3>
