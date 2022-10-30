@@ -1,11 +1,13 @@
 using System.Data;
 using System.Globalization;
+using System.Xml.Linq;
 using NHibernate;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Songs;
@@ -631,68 +633,80 @@ namespace VocaDb.Model.Service
 				var archivedAlbumVersions = session.Query<ArchivedAlbumVersion>();
 				foreach (var archivedAlbumVersion in archivedAlbumVersions)
 				{
-					var contract = XmlHelper.DeserializeFromXml<ArchivedAlbumContract>(archivedAlbumVersion.Data);
-					if (contract.Pictures is not null)
+					if (archivedAlbumVersion.Data is XDocument data)
 					{
-						foreach (var picture in contract.Pictures)
+						var contract = XmlHelper.DeserializeFromXml<ArchivedAlbumContract>(data) ?? throw new InvalidOperationException();
+						if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
 						{
-							picture.Created = picture.Created.ToUniversalTime();
+							foreach (var picture in pictures)
+							{
+								picture.Created = picture.Created.ToUniversalTime();
+							}
 						}
-					}
-					if (contract.PVs is not null)
-					{
-						foreach (var pv in contract.PVs)
+						if (contract.PVs is ArchivedPVContract[] pvs)
 						{
-							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							foreach (var pv in pvs)
+							{
+								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							}
 						}
+						archivedAlbumVersion.Data = XmlHelper.SerializeToXml(contract);
+						session.Update(archivedAlbumVersion);
 					}
-					archivedAlbumVersion.Data = XmlHelper.SerializeToXml(contract);
-					session.Update(archivedAlbumVersion);
 				}
 
 				var archivedArtistVersions = session.Query<ArchivedArtistVersion>();
 				foreach (var archivedArtistVersion in archivedArtistVersions)
 				{
-					var contract = XmlHelper.DeserializeFromXml<ArchivedArtistContract>(archivedArtistVersion.Data);
-					if (contract.Pictures is not null)
+					if (archivedArtistVersion.Data is XDocument data)
 					{
-						foreach (var picture in contract.Pictures)
+						var contract = XmlHelper.DeserializeFromXml<ArchivedArtistContract>(data) ?? throw new InvalidOperationException();
+						if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
 						{
-							picture.Created = picture.Created.ToUniversalTime();
+							foreach (var picture in pictures)
+							{
+								picture.Created = picture.Created.ToUniversalTime();
+							}
 						}
+						archivedArtistVersion.Data = XmlHelper.SerializeToXml(contract);
+						session.Update(archivedArtistVersion);
 					}
-					archivedArtistVersion.Data = XmlHelper.SerializeToXml(contract);
-					session.Update(archivedArtistVersion);
 				}
 
 				var archivedEventVersions = session.Query<ArchivedReleaseEventVersion>();
 				foreach (var archivedEventVersion in archivedEventVersions)
 				{
-					var contract = XmlHelper.DeserializeFromXml<ArchivedEventContract>(archivedEventVersion.Data);
-					if (contract.PVs is not null)
+					if (archivedEventVersion.Data is XDocument data)
 					{
-						foreach (var pv in contract.PVs)
+						var contract = XmlHelper.DeserializeFromXml<ArchivedEventContract>(data) ?? throw new InvalidOperationException();
+						if (contract.PVs is ArchivedPVContract[] pvs)
 						{
-							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							foreach (var pv in pvs)
+							{
+								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							}
 						}
+						archivedEventVersion.Data = XmlHelper.SerializeToXml(contract);
+						session.Update(archivedEventVersion);
 					}
-					archivedEventVersion.Data = XmlHelper.SerializeToXml(contract);
-					session.Update(archivedEventVersion);
 				}
 
 				var archivedSongVersions = session.Query<ArchivedSongVersion>();
 				foreach (var archivedSongVersion in archivedSongVersions)
 				{
-					var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(archivedSongVersion.Data);
-					if (contract.PVs is not null)
+					if (archivedSongVersion.Data is XDocument data)
 					{
-						foreach (var pv in contract.PVs)
+						var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(data) ?? throw new InvalidOperationException();
+						if (contract.PVs is ArchivedPVContract[] pvs)
 						{
-							pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							foreach (var pv in pvs)
+							{
+								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+							}
 						}
+						archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
+						session.Update(archivedSongVersion);
 					}
-					archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
-					session.Update(archivedSongVersion);
 				}
 			});
 		}

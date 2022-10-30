@@ -43,17 +43,15 @@ namespace VocaDb.Model.Domain.Versioning
 
 #nullable enable
 		public virtual DateTime Created { get; protected set; }
-#nullable disable
 
 		/// <summary>
 		/// Archived data serialized as XML.
 		/// </summary>
 		/// <remarks>For most types of entries, this will be non-null, but that is not guaranteed.</remarks>
-		public virtual XDocument Data { get; /* TODO: protected */set; }
+		public virtual XDocument? Data { get; /* TODO: protected */set; }
 
 		public abstract IEntryDiff DiffBase { get; }
 
-#nullable enable
 		public abstract EntryEditEvent EditEvent { get; }
 
 		public abstract IEntryWithNames EntryBase { get; }
