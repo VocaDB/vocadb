@@ -153,8 +153,10 @@ export const EmbedPVPreview = observer(
 				css={{
 					display: 'inline-block',
 					position: 'relative',
-					width: width,
-					height: height,
+					maxWidth: width,
+					maxHeight: height,
+					width: '100%',
+					aspectRatio: '16 / 9',
 				}}
 				ref={embedPVPreviewRef}
 			>
