@@ -13,6 +13,17 @@ export type ButtonVariant = Variant;
 
 export type EventKey = string | number;
 
+export type AlignDirection = 'start' | 'end';
+
+export type ResponsiveAlignProp =
+	| { sm: AlignDirection }
+	| { md: AlignDirection }
+	| { lg: AlignDirection }
+	| { xl: AlignDirection }
+	| { xxl: AlignDirection };
+
+export type AlignType = AlignDirection | ResponsiveAlignProp;
+
 export type Placement = import('@restart/ui/usePopper').Placement;
 
 export type RootCloseEvent = 'click' | 'mousedown';

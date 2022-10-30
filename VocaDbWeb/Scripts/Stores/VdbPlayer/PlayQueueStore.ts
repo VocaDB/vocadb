@@ -379,6 +379,20 @@ export class PlayQueueStore
 		this.unselectAll();
 	};
 
+	public removeOtherItems = (item: PlayQueueItem): Promise<void> => {
+		const itemId = item.id;
+		return this.removeFromPlayQueue(
+			this.items.filter((item) => item.id !== itemId),
+		);
+	};
+
+	public removeItemsAbove = (item: PlayQueueItem): Promise<void> => {
+		const itemIndex = this.items.indexOf(item);
+		return this.removeFromPlayQueue(
+			this.items.filter((_, index) => index < itemIndex),
+		);
+	};
+
 	public play = (method: PlayMethod, items: PlayQueueItem[]): void => {
 		switch (method) {
 			case PlayMethod.ClearAndPlay:

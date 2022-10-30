@@ -1,4 +1,6 @@
 import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
@@ -14,6 +16,7 @@ import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -173,7 +176,6 @@ const PlaylistTableRow = observer(
 									playQueue.setCurrentItem(item);
 								}
 							}}
-							href="#"
 						>
 							<i className="icon-play" /> Play{/* TODO: localize */}
 						</Button>{' '}
@@ -181,10 +183,56 @@ const PlaylistTableRow = observer(
 							onClick={(): Promise<void> =>
 								playQueue.removeFromPlayQueue([item])
 							}
-							href="#"
 						>
 							<i className="icon-remove" /> {t('ViewRes:Shared.Remove')}
-						</Button>
+						</Button>{' '}
+						<Dropdown as={ButtonGroup}>
+							<Dropdown.Toggle>
+								<span
+									css={{
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}
+								>
+									<MoreHorizontal20Filled />
+								</span>
+							</Dropdown.Toggle>
+							<Dropdown.Menu align="end">
+								<Dropdown.Item
+									onClick={(): void => playQueue.playNext([item.clone()])}
+								>
+									Play next{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={(): void => playQueue.addToPlayQueue([item.clone()])}
+								>
+									Add to play queue{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Divider />
+								<Dropdown.Item
+									onClick={(): Promise<void> =>
+										playQueue.removeOtherItems(item)
+									}
+								>
+									Remove others{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={(): Promise<void> =>
+										playQueue.removeItemsAbove(item)
+									}
+								>
+									Remove to the top{/* TODO: localize */}
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={(): Promise<void> =>
+										playQueue.removeFromPlayQueue(playQueue.items)
+									}
+								>
+									Remove all{/* TODO: localize */}
+								</Dropdown.Item>
+							</Dropdown.Menu>
+						</Dropdown>
 					</div>
 					<Link
 						to={EntryUrlMapper.details_entry(item.entry)}
