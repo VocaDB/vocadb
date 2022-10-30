@@ -281,7 +281,6 @@ const PlayerRightControls = observer(
 								title="Songle"
 								onClick={vdbPlayer.toggleSongleWidget}
 								className={classNames(
-									'hidden-phone',
 									vdbPlayer.songleWidgetEnabled && 'active',
 								)}
 							>
@@ -291,7 +290,7 @@ const PlayerRightControls = observer(
 						<PVServiceDropdown item={playQueue.currentItem} />
 					</>
 				)}{' '}
-				<ButtonGroup>
+				<ButtonGroup className="hidden-phone">
 					<Button
 						variant="inverse"
 						as={Link}
@@ -314,6 +313,9 @@ const PlayerRightControls = observer(
 						</span>
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
+						<Dropdown.Item as={Link} to="/playlist" className="visible-phone">
+							Show play queue{/* TODO: localize */}
+						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipBack10Seconds}
 							disabled={!vdbPlayer.canAutoplay}
