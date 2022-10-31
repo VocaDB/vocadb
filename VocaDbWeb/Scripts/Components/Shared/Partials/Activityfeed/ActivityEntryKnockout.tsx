@@ -104,7 +104,7 @@ export const ActivityEntryKnockout = observer(
 		const entryTypeName = useEntryTypeName();
 
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(entry.author.id)) return <></>;
+		if (entry.author && mutedUsers.includes(entry.author.id)) return <></>;
 
 		return (
 			<div className="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
