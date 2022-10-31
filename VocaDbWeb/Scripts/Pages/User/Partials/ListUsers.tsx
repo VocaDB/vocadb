@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
@@ -205,6 +206,9 @@ interface UserSearchListTableRowProps {
 const UserSearchListTableRow = observer(
 	({ user }: UserSearchListTableRowProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources']);
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(user.id)) return <></>;
 
 		return (
 			<tr>
