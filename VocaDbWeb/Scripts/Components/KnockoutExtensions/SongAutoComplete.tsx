@@ -9,7 +9,6 @@ import { NameMatchMode } from '@/Models/NameMatchMode';
 import { SongQueryParams } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
-import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -41,9 +40,8 @@ export const SongAutoComplete = ({
 		lang: vdb.values.languagePreference,
 		preferAccurateMatches: true,
 		sort: SongSortRule.SongType,
+		...properties.extraQueryParams,
 	};
-	if (properties.extraQueryParams)
-		$.extend(queryParams, properties.extraQueryParams);
 
 	return (
 		<EntryAutoComplete
