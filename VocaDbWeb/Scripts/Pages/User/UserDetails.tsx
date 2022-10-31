@@ -78,7 +78,7 @@ const UserDetailsLayout = observer(
 				}
 				toolbar={
 					<>
-						{ownProfile && (
+						{ownProfile ? (
 							<>
 								<JQueryUIButton
 									as={Link}
@@ -96,6 +96,30 @@ const UserDetailsLayout = observer(
 									{t('ViewRes.User:Details.Messages')}
 								</JQueryUIButton>
 							</>
+						) : (
+							<>
+								{true /* TODO */ ? (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => {
+											/* TODO */
+										}}
+										icons={{ primary: 'ui-icon-volume-off' }}
+									>
+										Mute{/* TODO: localize */}
+									</JQueryUIButton>
+								) : (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => {
+											/* TODO */
+										}}
+										icons={{ primary: 'ui-icon-volume-on' }}
+									>
+										Unmute{/* TODO: localize */}
+									</JQueryUIButton>
+								)}
+							</>
 						)}
 
 						{loginManager.loggedUser &&
@@ -104,6 +128,7 @@ const UserDetailsLayout = observer(
 							!user.standalone && (
 								<>
 									{' '}
+									&nbsp;{' '}
 									<JQueryUIButton
 										as={Link}
 										to={`/User/Messages?${qs.stringify({
