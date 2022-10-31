@@ -1,3 +1,4 @@
+import { AppProvider } from '@/AppContext';
 import AppRoutes from '@/AppRoutes';
 import Container from '@/Bootstrap/Container';
 import { AboutDisclaimer } from '@/Components/Shared/Partials/AboutDisclaimer';
@@ -33,7 +34,7 @@ const AppContainer = (): React.ReactElement => {
 
 const App = (): React.ReactElement => {
 	return (
-		<>
+		<AppProvider>
 			<ScrollToTop />
 			<Header />
 			<div css={{ display: 'flex' }}>
@@ -42,7 +43,7 @@ const App = (): React.ReactElement => {
 			</div>
 			<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
 			<VdbPlayer />
-		</>
+		</AppProvider>
 	);
 };
 
