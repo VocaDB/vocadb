@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
@@ -26,6 +27,7 @@ import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconA
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -112,6 +114,23 @@ const ArtistList = React.memo(
 					</React.Fragment>
 				))}
 			</>
+		);
+	},
+);
+
+interface UserAttendingProps {
+	user: UserApiContract;
+}
+
+const UserAttending = observer(
+	({ user }: UserAttendingProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(user)) return <></>;
+
+		return (
+			<li>
+				<IconAndNameLinkKnockout user={user} />
+			</li>
 		);
 	},
 );
@@ -573,9 +592,7 @@ const EventDetailsLayout = observer(
 					<div className="withMargin">
 						<ul>
 							{releaseEventDetailsStore.usersAttending.map((user) => (
-								<li key={user.id}>
-									<IconAndNameLinkKnockout user={user} />
-								</li>
+								<UserAttending user={user} key={user.id} />
 							))}
 						</ul>
 					</div>

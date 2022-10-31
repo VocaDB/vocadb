@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import Carousel from '@/Bootstrap/Carousel';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
@@ -28,6 +29,7 @@ import { TagList } from '@/Components/Shared/Partials/TagList';
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
 import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -49,6 +51,59 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
+
+interface LatestAlbumReviewProps {
+	latestReview: AlbumReviewContract;
+	latestReviewRatingScore: number;
+}
+
+const LatestAlbumReview = observer(
+	({
+		latestReview,
+		latestReviewRatingScore,
+	}: LatestAlbumReviewProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(latestReview.user)) return <></>;
+
+		return (
+			<div className="media">
+				<Link
+					className="pull-left"
+					to={EntryUrlMapper.details_user_byName(latestReview.user.name)}
+				>
+					<ProfileIcon
+						url={latestReview.user.mainPicture?.urlThumb}
+						size={70}
+					/>
+				</Link>
+
+				<div className="media-body">
+					<div className="pull-right">
+						<LanguageFlag languageCode={latestReview.languageCode} /> |{' '}
+						<MomentJsTimeAgo as="span">{latestReview.date}</MomentJsTimeAgo>
+					</div>
+					<h3 className="media-heading">
+						<UserLink user={latestReview.user} />
+					</h3>
+
+					{latestReviewRatingScore > 0 && (
+						<Stars current={latestReviewRatingScore} max={5} />
+					)}
+
+					<div>
+						{latestReview.title && (
+							<h4 className="album-review-title">{latestReview.title}</h4>
+						)}
+
+						<div>
+							<FormatMarkdown text={latestReview.text} />
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	},
+);
 
 interface AlbumBasicInfoProps {
 	model: AlbumDetailsForApi;
@@ -554,50 +609,10 @@ const AlbumBasicInfo = observer(
 					<>
 						<h3>{t('ViewRes.Album:Details.LatestReview')}</h3>
 
-						<div className="media">
-							<Link
-								className="pull-left"
-								to={EntryUrlMapper.details_user_byName(
-									model.latestReview.user.name,
-								)}
-							>
-								<ProfileIcon
-									url={model.latestReview.user.mainPicture?.urlThumb}
-									size={70}
-								/>
-							</Link>
-
-							<div className="media-body">
-								<div className="pull-right">
-									<LanguageFlag
-										languageCode={model.latestReview.languageCode}
-									/>{' '}
-									|{' '}
-									<MomentJsTimeAgo as="span">
-										{model.latestReview.date}
-									</MomentJsTimeAgo>
-								</div>
-								<h3 className="media-heading">
-									<UserLink user={model.latestReview.user} />
-								</h3>
-
-								{model.latestReviewRatingScore > 0 && (
-									<Stars current={model.latestReviewRatingScore} max={5} />
-								)}
-
-								<div>
-									{model.latestReview.title && (
-										<h4 className="album-review-title">
-											{model.latestReview.title}
-										</h4>
-									)}
-
-									<div>
-										<FormatMarkdown text={model.latestReview.text} />
-									</div>
-								</div>
-							</div>
-						</div>
+						<LatestAlbumReview
+							latestReview={model.latestReview}
+							latestReviewRatingScore={model.latestReviewRatingScore}
+						/>
 
 						<p className="withMargin">
 							<Link

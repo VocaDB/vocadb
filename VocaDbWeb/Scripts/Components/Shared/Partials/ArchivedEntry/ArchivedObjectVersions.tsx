@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { UserIconLinkOrName_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
@@ -6,6 +7,7 @@ import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVers
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -18,7 +20,7 @@ interface ArchivedObjectVersionRowProps {
 	entryType: EntryType;
 }
 
-const ArchivedObjectVersionRow = React.memo(
+const ArchivedObjectVersionRow = observer(
 	({
 		archivedVersion,
 		linkFunc,
@@ -28,6 +30,9 @@ const ArchivedObjectVersionRow = React.memo(
 
 		const reasonNames = useReasonNames();
 		const changedFieldNames = useChangedFieldNames();
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(archivedVersion.author)) return <></>;
 
 		return (
 			<tr>
