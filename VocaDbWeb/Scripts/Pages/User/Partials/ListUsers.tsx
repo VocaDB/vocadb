@@ -6,6 +6,7 @@ import {
 	UserLanguageCultureDropdownList,
 } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ListUsersStore, UserSortRule } from '@/Stores/User/ListUsersStore';
@@ -126,108 +127,158 @@ const UsersFilters = observer(
 	},
 );
 
+interface UserSearchListTableHeaderProps {
+	listUsersStore: ListUsersStore;
+}
+
+const UserSearchListTableHeader = observer(
+	({ listUsersStore }: UserSearchListTableHeaderProps): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.User']);
+
+		return (
+			<thead>
+				<tr>
+					<th colSpan={2}>
+						<SafeAnchor
+							onClick={(): void =>
+								runInAction(() => {
+									listUsersStore.sort = UserSortRule.Name;
+								})
+							}
+							href="#"
+						>
+							{t('ViewRes.User:Details.UserName')}
+							{listUsersStore.sort === UserSortRule.Name && (
+								<>
+									{' '}
+									<span className="sortDirection_down"></span>
+								</>
+							)}
+						</SafeAnchor>
+					</th>
+					<th>
+						<SafeAnchor
+							onClick={(): void =>
+								runInAction(() => {
+									listUsersStore.sort = UserSortRule.RegisterDate;
+								})
+							}
+							href="#"
+						>
+							{t('ViewRes.User:Details.MemberSince')}
+							{listUsersStore.sort === UserSortRule.RegisterDate && (
+								<>
+									{' '}
+									<span className="sortDirection_down"></span>
+								</>
+							)}
+						</SafeAnchor>
+					</th>
+					<th>
+						<SafeAnchor
+							onClick={(): void =>
+								runInAction(() => {
+									listUsersStore.sort = UserSortRule.Group;
+								})
+							}
+							href="#"
+						>
+							{t('ViewRes.User:Details.UserGroup')}
+							{listUsersStore.sort === UserSortRule.Group && (
+								<>
+									{' '}
+									<span className="sortDirection_down"></span>
+								</>
+							)}
+						</SafeAnchor>
+					</th>
+				</tr>
+			</thead>
+		);
+	},
+);
+
+interface UserSearchListTableRowProps {
+	user: UserApiContract;
+}
+
+const UserSearchListTableRow = observer(
+	({ user }: UserSearchListTableRowProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources']);
+
+		return (
+			<tr>
+				<td style={{ width: '85px' }}>
+					{user.mainPicture && user.mainPicture.urlThumb && (
+						<Link to={EntryUrlMapper.details_user_byName(user.name)}>
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<img
+								src={user.mainPicture.urlThumb}
+								title="Picture"
+								className="img-rounded"
+							/>
+						</Link>
+					)}
+				</td>
+				<td>
+					<Link
+						to={EntryUrlMapper.details_user_byName(user.name)}
+						className={classNames(!user.active && 'muted')}
+					>
+						{user.name}
+					</Link>
+				</td>
+				<td>{moment(user.memberSince).format('L')}</td>
+				<td>{t(`Resources:UserGroupNames.${user.groupId}`)}</td>
+			</tr>
+		);
+	},
+);
+
+interface UserSearchListTableBodyProps {
+	listUsersStore: ListUsersStore;
+}
+
+const UserSearchListTableBody = observer(
+	({ listUsersStore }: UserSearchListTableBodyProps): React.ReactElement => {
+		return (
+			<tbody>
+				{listUsersStore.page.map((user) => (
+					<UserSearchListTableRow user={user} key={user.id} />
+				))}
+			</tbody>
+		);
+	},
+);
+
+interface UserSearchListTableProps {
+	listUsersStore: ListUsersStore;
+}
+
+const UserSearchListTable = observer(
+	({ listUsersStore }: UserSearchListTableProps): React.ReactElement => {
+		return (
+			<table className="table table-striped">
+				<UserSearchListTableHeader listUsersStore={listUsersStore} />
+				<UserSearchListTableBody listUsersStore={listUsersStore} />
+			</table>
+		);
+	},
+);
+
 interface UserSearchListProps {
 	listUsersStore: ListUsersStore;
 }
 
 const UserSearchList = observer(
 	({ listUsersStore }: UserSearchListProps): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes.User']);
-
 		return (
 			<div className={classNames(listUsersStore.loading && 'loading')}>
 				<EntryCountBox pagingStore={listUsersStore.paging} />
 
 				<ServerSidePaging pagingStore={listUsersStore.paging} />
 
-				<table className="table table-striped">
-					<thead>
-						<tr>
-							<th colSpan={2}>
-								<SafeAnchor
-									onClick={(): void =>
-										runInAction(() => {
-											listUsersStore.sort = UserSortRule.Name;
-										})
-									}
-									href="#"
-								>
-									{t('ViewRes.User:Details.UserName')}
-									{listUsersStore.sort === UserSortRule.Name && (
-										<>
-											{' '}
-											<span className="sortDirection_down"></span>
-										</>
-									)}
-								</SafeAnchor>
-							</th>
-							<th>
-								<SafeAnchor
-									onClick={(): void =>
-										runInAction(() => {
-											listUsersStore.sort = UserSortRule.RegisterDate;
-										})
-									}
-									href="#"
-								>
-									{t('ViewRes.User:Details.MemberSince')}
-									{listUsersStore.sort === UserSortRule.RegisterDate && (
-										<>
-											{' '}
-											<span className="sortDirection_down"></span>
-										</>
-									)}
-								</SafeAnchor>
-							</th>
-							<th>
-								<SafeAnchor
-									onClick={(): void =>
-										runInAction(() => {
-											listUsersStore.sort = UserSortRule.Group;
-										})
-									}
-									href="#"
-								>
-									{t('ViewRes.User:Details.UserGroup')}
-									{listUsersStore.sort === UserSortRule.Group && (
-										<>
-											{' '}
-											<span className="sortDirection_down"></span>
-										</>
-									)}
-								</SafeAnchor>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{listUsersStore.page.map((user) => (
-							<tr key={user.id}>
-								<td style={{ width: '85px' }}>
-									{user.mainPicture && user.mainPicture.urlThumb && (
-										<Link to={EntryUrlMapper.details_user_byName(user.name)}>
-											{/* eslint-disable-next-line jsx-a11y/alt-text */}
-											<img
-												src={user.mainPicture.urlThumb}
-												title="Picture"
-												className="img-rounded"
-											/>
-										</Link>
-									)}
-								</td>
-								<td>
-									<Link
-										to={EntryUrlMapper.details_user_byName(user.name)}
-										className={classNames(!user.active && 'muted')}
-									>
-										{user.name}
-									</Link>
-								</td>
-								<td>{moment(user.memberSince).format('L')}</td>
-								<td>{t(`Resources:UserGroupNames.${user.groupId}`)}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+				<UserSearchListTable listUsersStore={listUsersStore} />
 
 				<ServerSidePaging pagingStore={listUsersStore.paging} />
 			</div>
