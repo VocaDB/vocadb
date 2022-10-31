@@ -1,6 +1,8 @@
+import { useMutedUsers } from '@/AppContext';
 import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEntryItem';
 import { PrintComment } from '@/Components/Shared/Partials/Comment/PrintComment';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { uniq } from 'lodash-es';
 import React from 'react';
 
 interface CommentWithEntryVerticalProps {
@@ -13,6 +15,12 @@ export const CommentWithEntryVertical = React.memo(
 		entry,
 		maxLength = 2147483647,
 	}: CommentWithEntryVerticalProps): React.ReactElement => {
+		const authorIds = uniq(entry.comments.map((comment) => comment.author.id));
+
+		const mutedUsers = useMutedUsers();
+		if (authorIds.length === 1 && mutedUsers.includes(authorIds[0]))
+			return <></>;
+
 		return (
 			<div className="well well-transparent">
 				<CommentEntryItem entry={entry.entry} />
