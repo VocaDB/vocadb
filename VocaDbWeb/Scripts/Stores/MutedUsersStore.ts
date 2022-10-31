@@ -1,7 +1,8 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import { computed, makeObservable, observable } from 'mobx';
+import { pull } from 'lodash-es';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 interface MutedUsersLocalStorageState {
 	mutedUserIds?: number[];
@@ -24,7 +25,7 @@ export class MutedUsersStore
 
 	@computed.struct public get localStorageState(): MutedUsersLocalStorageState {
 		return {
-			mutedUserIds: this.mutedUserIds,
+			mutedUserIds: this.mutedUserIds.map((mutedUserId) => mutedUserId),
 		};
 	}
 	public set localStorageState(value: MutedUsersLocalStorageState) {
@@ -39,5 +40,13 @@ export class MutedUsersStore
 
 	public includes = (user: UserApiContract | undefined): boolean => {
 		return user !== undefined && this.mutedUserIds.includes(user.id);
+	};
+
+	@action public addMutedUser = (user: UserApiContract): void => {
+		this.mutedUserIds.push(user.id);
+	};
+
+	@action public removeMutedUser = (user: UserApiContract): void => {
+		pull(this.mutedUserIds, user.id);
 	};
 }

@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
@@ -65,6 +66,8 @@ const UserDetailsLayout = observer(
 			loginManager.loggedUser.id === user.id &&
 			loginManager.loggedUser.active;
 
+		const mutedUsers = useMutedUsers();
+
 		return (
 			<Layout
 				title={title}
@@ -98,25 +101,21 @@ const UserDetailsLayout = observer(
 							</>
 						) : (
 							<>
-								{true /* TODO */ ? (
+								{mutedUsers.includes(user) ? (
 									<JQueryUIButton
 										as={SafeAnchor}
-										onClick={(): void => {
-											/* TODO */
-										}}
-										icons={{ primary: 'ui-icon-volume-off' }}
+										onClick={(): void => mutedUsers.removeMutedUser(user)}
+										icons={{ primary: 'ui-icon-volume-on' }}
 									>
-										Mute{/* TODO: localize */}
+										Unmute{/* TODO: localize */}
 									</JQueryUIButton>
 								) : (
 									<JQueryUIButton
 										as={SafeAnchor}
-										onClick={(): void => {
-											/* TODO */
-										}}
-										icons={{ primary: 'ui-icon-volume-on' }}
+										onClick={(): void => mutedUsers.addMutedUser(user)}
+										icons={{ primary: 'ui-icon-volume-off' }}
 									>
-										Unmute{/* TODO: localize */}
+										Mute{/* TODO: localize */}
 									</JQueryUIButton>
 								)}
 							</>
