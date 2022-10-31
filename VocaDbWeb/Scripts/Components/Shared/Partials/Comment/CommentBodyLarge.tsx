@@ -25,7 +25,7 @@ export const CommentBodyLarge = observer(
 		alwaysAllowDelete = false,
 	}: CommentBodyLargeProps): React.ReactElement => {
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(contract.author)) return <></>;
+		if (mutedUsers.includes(contract.author.id)) return <></>;
 
 		return (
 			<div className="comment media comment-large">

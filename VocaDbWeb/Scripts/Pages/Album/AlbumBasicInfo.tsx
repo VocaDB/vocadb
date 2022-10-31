@@ -63,7 +63,7 @@ const LatestAlbumReview = observer(
 		latestReviewRatingScore,
 	}: LatestAlbumReviewProps): React.ReactElement => {
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(latestReview.user)) return <></>;
+		if (mutedUsers.includes(latestReview.user.id)) return <></>;
 
 		return (
 			<div className="media">

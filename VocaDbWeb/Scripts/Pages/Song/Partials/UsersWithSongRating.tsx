@@ -13,7 +13,7 @@ interface UserWithSongRatingProps {
 const UserWithSongRating = observer(
 	({ user }: UserWithSongRatingProps): React.ReactElement => {
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(user)) return <></>;
+		if (mutedUsers.includes(user.id)) return <></>;
 
 		return (
 			<li className="link-item user-with-rating">

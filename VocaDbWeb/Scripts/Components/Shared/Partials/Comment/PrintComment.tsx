@@ -29,7 +29,7 @@ export const PrintComment = observer(
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(contract.author)) return <></>;
+		if (mutedUsers.includes(contract.author.id)) return <></>;
 
 		return (
 			<div className="comment">

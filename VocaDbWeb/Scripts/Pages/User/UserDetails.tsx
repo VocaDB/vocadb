@@ -68,6 +68,8 @@ const UserDetailsLayout = observer(
 
 		const mutedUsers = useMutedUsers();
 
+		const mutedUser = mutedUsers.find(user.id);
+
 		return (
 			<Layout
 				title={title}
@@ -101,10 +103,10 @@ const UserDetailsLayout = observer(
 							</>
 						) : (
 							<>
-								{mutedUsers.includes(user) ? (
+								{mutedUser ? (
 									<JQueryUIButton
 										as={SafeAnchor}
-										onClick={(): void => mutedUsers.removeMutedUser(user)}
+										onClick={(): void => mutedUsers.removeMutedUser(mutedUser)}
 										icons={{ primary: 'ui-icon-volume-on' }}
 									>
 										Unmute{/* TODO: localize */}
@@ -112,7 +114,7 @@ const UserDetailsLayout = observer(
 								) : (
 									<JQueryUIButton
 										as={SafeAnchor}
-										onClick={(): void => mutedUsers.addMutedUser(user)}
+										onClick={(): void => mutedUsers.addMutedUser(user.id)}
 										icons={{ primary: 'ui-icon-volume-off' }}
 									>
 										Mute{/* TODO: localize */}

@@ -120,7 +120,7 @@ interface OwnedUserProps {
 const OwnedUser = observer(
 	({ user }: OwnedUserProps): React.ReactElement => {
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(user)) return <></>;
+		if (mutedUsers.includes(user.id)) return <></>;
 
 		return (
 			<>

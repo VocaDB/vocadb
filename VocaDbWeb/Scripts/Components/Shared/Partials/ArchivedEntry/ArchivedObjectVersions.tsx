@@ -32,7 +32,12 @@ const ArchivedObjectVersionRow = observer(
 		const changedFieldNames = useChangedFieldNames();
 
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(archivedVersion.author)) return <></>;
+		if (
+			archivedVersion.author &&
+			mutedUsers.includes(archivedVersion.author.id)
+		) {
+			return <></>;
+		}
 
 		return (
 			<tr>

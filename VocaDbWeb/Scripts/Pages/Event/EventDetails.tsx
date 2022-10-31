@@ -125,7 +125,7 @@ interface UserAttendingProps {
 const UserAttending = observer(
 	({ user }: UserAttendingProps): React.ReactElement => {
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(user)) return <></>;
+		if (mutedUsers.includes(user.id)) return <></>;
 
 		return (
 			<li>

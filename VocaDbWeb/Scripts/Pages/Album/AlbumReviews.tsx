@@ -33,7 +33,7 @@ const AlbumReview = observer(
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();
-		if (mutedUsers.includes(review.user)) return <></>;
+		if (mutedUsers.includes(review.user.id)) return <></>;
 
 		return (
 			<div className="album-review media">
