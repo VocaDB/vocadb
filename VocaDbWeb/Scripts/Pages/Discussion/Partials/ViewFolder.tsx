@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import Button from '@/Bootstrap/Button';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
@@ -43,6 +44,9 @@ interface ViewFolderTableRowProps {
 const ViewFolderTableRow = observer(
 	({ topic }: ViewFolderTableRowProps): React.ReactElement => {
 		const navigate = useNavigate();
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(topic.author.id)) return <></>;
 
 		return (
 			<tr onClick={(): void => navigate(`/discussion/topics/${topic.id}`)}>
