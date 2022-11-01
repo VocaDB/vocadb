@@ -9,6 +9,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -65,6 +66,10 @@ const UserDetailsLayout = observer(
 			loginManager.loggedUser.id === user.id &&
 			loginManager.loggedUser.active;
 
+		const mutedUsers = useMutedUsers();
+
+		const mutedUser = mutedUsers.find(user.id);
+
 		return (
 			<Layout
 				title={title}
@@ -78,7 +83,7 @@ const UserDetailsLayout = observer(
 				}
 				toolbar={
 					<>
-						{ownProfile && (
+						{ownProfile ? (
 							<>
 								<JQueryUIButton
 									as={Link}
@@ -96,6 +101,26 @@ const UserDetailsLayout = observer(
 									{t('ViewRes.User:Details.Messages')}
 								</JQueryUIButton>
 							</>
+						) : (
+							<>
+								{mutedUser ? (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => mutedUsers.removeMutedUser(mutedUser)}
+										icons={{ primary: 'ui-icon-volume-on' }}
+									>
+										Unmute{/* TODO: localize */}
+									</JQueryUIButton>
+								) : (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => mutedUsers.addMutedUser(user.id)}
+										icons={{ primary: 'ui-icon-volume-off' }}
+									>
+										Mute{/* TODO: localize */}
+									</JQueryUIButton>
+								)}
+							</>
 						)}
 
 						{loginManager.loggedUser &&
@@ -104,6 +129,7 @@ const UserDetailsLayout = observer(
 							!user.standalone && (
 								<>
 									{' '}
+									&nbsp;{' '}
 									<JQueryUIButton
 										as={Link}
 										to={`/User/Messages?${qs.stringify({

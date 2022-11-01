@@ -10,7 +10,10 @@ import {
 	songleWidgetHeight,
 } from '@/Components/VdbPlayer/SongleWidget';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -46,7 +49,8 @@ const repeatIcons: Record<RepeatMode, string> = {
 const PlayerCenterControls = observer(
 	(): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handlePrevious = React.useCallback(async () => {
 			if (playQueue.hasPreviousItem) {
@@ -248,7 +252,8 @@ const PlayerRightControls = observer(
 		const { t } = useTranslation(['ViewRes.Search']);
 
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const { currentTime } = playQueue;
@@ -421,7 +426,8 @@ interface PVPlayerProps {
 const EmbedPVWrapper = observer(
 	({ pv }: PVPlayerProps): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleError = React.useCallback((event: any) => {
 			VdbPlayerConsole.error('error', event);
@@ -515,7 +521,8 @@ const EmbedPVWrapper = observer(
 
 const MiniPlayer = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<div
@@ -562,7 +569,7 @@ const MiniPlayer = observer(
 const SeekBar = observer(
 	(): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
 
 		const ref = React.useRef<HTMLDivElement>(undefined!);
 		const handleClick = React.useCallback(
@@ -605,7 +612,7 @@ const SeekBar = observer(
 
 const BottomBar = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
 
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
@@ -651,7 +658,8 @@ export const VdbPlayer = observer(
 		VdbPlayerConsole.debug('VdbPlayer');
 
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
 		useLocalStorageStateStore('SkipListStore', playQueue.skipList);

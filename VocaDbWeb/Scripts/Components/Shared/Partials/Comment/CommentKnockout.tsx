@@ -4,6 +4,7 @@ import { CommentBodyKnockout } from '@/Components/Shared/Partials/Comment/Commen
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ImageSize } from '@/Models/Images/ImageSize';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -39,6 +40,9 @@ export const CommentKnockout = observer(
 		children,
 	}: CommentKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(commentKnockoutStore.author.id)) return <></>;
 
 		return (
 			<div

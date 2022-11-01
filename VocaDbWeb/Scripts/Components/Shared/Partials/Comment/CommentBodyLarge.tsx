@@ -4,7 +4,9 @@ import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,12 +18,15 @@ interface CommentBodyLargeProps {
 	alwaysAllowDelete?: boolean;
 }
 
-export const CommentBodyLarge = React.memo(
+export const CommentBodyLarge = observer(
 	({
 		contract,
 		allowDelete,
 		alwaysAllowDelete = false,
 	}: CommentBodyLargeProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(contract.author.id)) return <></>;
+
 		return (
 			<div className="comment media comment-large">
 				<Link

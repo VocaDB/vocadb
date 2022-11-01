@@ -1,6 +1,7 @@
 import App from '@/App';
 import '@/ArrayExtensions';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { MutedUsersProvider } from '@/MutedUsersContext';
 import '@/i18n';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import React from 'react';
@@ -14,7 +15,9 @@ ReactDOM.render(
 		<BrowserRouter>
 			<NostalgicDivaProvider>
 				<VdbPlayerProvider>
-					<App />
+					<MutedUsersProvider>
+						<App />
+					</MutedUsersProvider>
 				</VdbPlayerProvider>
 			</NostalgicDivaProvider>
 		</BrowserRouter>

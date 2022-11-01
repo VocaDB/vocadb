@@ -6,7 +6,9 @@ import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -15,6 +17,7 @@ import {
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
+import { uniq } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -94,6 +97,38 @@ const CommentsFilters = observer(
 	},
 );
 
+interface CommentWithEntryProps {
+	entry: EntryWithCommentsContract;
+}
+
+const CommentWithEntry = observer(
+	({ entry }: CommentWithEntryProps): React.ReactElement => {
+		const authorIds = uniq(entry.comments.map((comment) => comment.author.id));
+
+		const mutedUsers = useMutedUsers();
+		if (authorIds.length === 1 && mutedUsers.includes(authorIds[0]))
+			return <></>;
+
+		return (
+			<div className="row-fluid comment-with-entry well well-transparent">
+				<div className="span5">
+					{entry.comments.map((comment) => (
+						<CommentBodyLarge
+							contract={comment}
+							allowDelete={false}
+							key={comment.id}
+						/>
+					))}
+				</div>
+
+				<div className="span5 item">
+					<CommentEntryItem entry={entry.entry} />
+				</div>
+			</div>
+		);
+	},
+);
+
 interface CommentSearchListProps {
 	commentListStore: CommentListStore;
 }
@@ -103,24 +138,7 @@ const CommentSearchList = observer(
 		return (
 			<>
 				{commentListStore.entries.map((entry, index) => (
-					<div
-						className="row-fluid comment-with-entry well well-transparent"
-						key={index}
-					>
-						<div className="span5">
-							{entry.comments.map((comment) => (
-								<CommentBodyLarge
-									contract={comment}
-									allowDelete={false}
-									key={comment.id}
-								/>
-							))}
-						</div>
-
-						<div className="span5 item">
-							<CommentEntryItem entry={entry.entry} />
-						</div>
-					</div>
+					<CommentWithEntry entry={entry} key={index} />
 				))}
 			</>
 		);

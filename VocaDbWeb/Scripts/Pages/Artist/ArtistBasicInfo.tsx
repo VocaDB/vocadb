@@ -16,11 +16,13 @@ import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
@@ -107,6 +109,25 @@ const ArtistRow = React.memo(
 					) : undefined
 				}
 			/>
+		);
+	},
+);
+
+interface OwnedUserProps {
+	user: UserApiContract;
+}
+
+const OwnedUser = observer(
+	({ user }: OwnedUserProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(user.id)) return <></>;
+
+		return (
+			<>
+				{/* eslint-disable-next-line react/jsx-pascal-case */}
+				<UserIconLink_UserForApiContract user={user} tooltip={true} />
+				<br />
+			</>
 		);
 	},
 );
@@ -297,14 +318,7 @@ const ArtistBasicInfo = observer(
 									<td>{vdb.resources.artist.authoredBy}</td>
 									<td>
 										{artist.ownerUsers.map((user) => (
-											<React.Fragment key={user.id}>
-												{/* eslint-disable-next-line react/jsx-pascal-case */}
-												<UserIconLink_UserForApiContract
-													user={user}
-													tooltip={true}
-												/>
-												<br />
-											</React.Fragment>
+											<OwnedUser user={user} key={user.id} />
 										))}
 									</td>
 								</tr>

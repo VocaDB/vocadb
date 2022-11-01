@@ -5,7 +5,7 @@ import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 
 export interface ActivityEntryContract {
 	archivedVersion?: ArchivedVersionContract;
-	author: UserApiContract;
+	author?: UserApiContract;
 	createDate: string;
 	editEvent: EntryEditEvent;
 	entry: EntryContract;
