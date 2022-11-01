@@ -1,3 +1,4 @@
+import { useMutedUsers } from '@/AppContext';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { CommentBodyKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
@@ -39,6 +40,9 @@ export const CommentKnockout = observer(
 		children,
 	}: CommentKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(commentKnockoutStore.author.id)) return <></>;
 
 		return (
 			<div
