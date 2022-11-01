@@ -1,7 +1,10 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -101,7 +104,8 @@ export const EmbedPVPreview = observer(
 		allowInline,
 	}: EmbedPVPreviewProps): React.ReactElement => {
 		const embedPVPreviewRef = React.useRef<HTMLDivElement>(undefined!);
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleResize = React.useCallback(() => {
 			if (!allowInline) return;
