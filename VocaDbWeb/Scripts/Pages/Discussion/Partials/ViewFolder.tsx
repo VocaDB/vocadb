@@ -1,10 +1,10 @@
-import { useMutedUsers } from '@/AppContext';
 import Button from '@/Bootstrap/Button';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import classNames from 'classnames';

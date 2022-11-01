@@ -1,10 +1,10 @@
-import { useMutedUsers } from '@/AppContext';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { CommentBodyKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { ImageSize } from '@/Models/Images/ImageSize';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';

@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import Alert from '@/Bootstrap/Alert';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
@@ -10,6 +9,7 @@ import { IconAndLinkKnockout } from '@/Components/Shared/Partials/User/IconAndLi
 import { NameLinkKnockout } from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { functions } from '@/Shared/GlobalFunctions';
 import {

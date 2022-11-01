@@ -1,6 +1,6 @@
-import { useMutedUsers } from '@/AppContext';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { RatingsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

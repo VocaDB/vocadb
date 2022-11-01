@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { AlbumThumbs } from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import { ArtistGrid } from '@/Components/Shared/Partials/Artist/ArtistGrid';
@@ -23,6 +22,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';

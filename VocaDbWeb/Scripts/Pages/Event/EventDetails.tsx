@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
@@ -41,6 +40,7 @@ import {
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';

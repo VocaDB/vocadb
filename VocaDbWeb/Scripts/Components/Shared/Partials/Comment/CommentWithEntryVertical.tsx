@@ -1,7 +1,7 @@
-import { useMutedUsers } from '@/AppContext';
 import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEntryItem';
 import { PrintComment } from '@/Components/Shared/Partials/Comment/PrintComment';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { uniq } from 'lodash-es';
 import React from 'react';
 

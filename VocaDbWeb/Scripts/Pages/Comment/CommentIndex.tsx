@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { CommentBodyLarge } from '@/Components/Shared/Partials/Comment/CommentBodyLarge';
@@ -9,6 +8,7 @@ import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/U
 import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';

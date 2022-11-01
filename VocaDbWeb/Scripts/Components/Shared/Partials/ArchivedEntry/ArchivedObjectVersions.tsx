@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { UserIconLinkOrName_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
@@ -6,6 +5,7 @@ import { useReasonNames } from '@/Components/useReasonNames';
 import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

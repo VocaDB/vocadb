@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
@@ -9,6 +8,7 @@ import {
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ListUsersStore, UserSortRule } from '@/Stores/User/ListUsersStore';
 import classNames from 'classnames';

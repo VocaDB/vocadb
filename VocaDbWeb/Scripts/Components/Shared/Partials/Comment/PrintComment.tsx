@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
@@ -6,6 +5,7 @@ import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/Us
 import { truncateWithEllipsis } from '@/Components/truncateWithEllipsis';
 import { CommentContract } from '@/DataContracts/CommentContract';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

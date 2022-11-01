@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import Alert from '@/Bootstrap/Alert';
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
@@ -10,6 +9,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';

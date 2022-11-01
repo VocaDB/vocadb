@@ -1,10 +1,10 @@
-import { useMutedUsers } from '@/AppContext';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
 import { IconNameAndTypeLinkKnockout } from '@/Components/Shared/Partials/User/IconNameAndTypeLinkKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ActivityEntryContract } from '@/DataContracts/ActivityEntry/ActivityEntryContract';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { EntryType } from '@/Models/EntryType';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

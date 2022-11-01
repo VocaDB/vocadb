@@ -1,4 +1,3 @@
-import { useMutedUsers } from '@/AppContext';
 import Carousel from '@/Bootstrap/Carousel';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
@@ -40,6 +39,7 @@ import { LoginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
