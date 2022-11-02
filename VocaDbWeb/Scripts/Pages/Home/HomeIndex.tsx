@@ -141,7 +141,7 @@ const HomeIndexLayout = ({
 			</h1>
 
 			{model.newSongs && (
-				<>
+				<div id="recentSongs">
 					<h3 className="withMargin">
 						{t('ViewRes.Home:Index.RecentSongs')} (
 						<Link
@@ -160,13 +160,13 @@ const HomeIndexLayout = ({
 						model={model}
 						pvPlayerStore={frontPageStore.pvPlayerStore}
 					/>
-				</>
+				</div>
 			)}
 
 			<br />
 
 			{model.newAlbums.length > 0 && (
-				<>
+				<div id="newAlbums">
 					<h3 className="withMargin">
 						{t('ViewRes.Home:Index.NewAlbums')} (
 						<Link
@@ -182,11 +182,11 @@ const HomeIndexLayout = ({
 					<div id="newAlbums">
 						<AlbumThumbs albums={model.newAlbums} tooltip={true} />
 					</div>
-				</>
+				</div>
 			)}
 
 			{model.topAlbums.length > 0 && (
-				<>
+				<div id="topAlbums">
 					<h3 className="withMargin">
 						{t('ViewRes.Home:Index.TopAlbums')} (
 						<Link
@@ -202,20 +202,20 @@ const HomeIndexLayout = ({
 					<div id="topAlbums">
 						<AlbumThumbs albums={model.topAlbums} tooltip={true} />
 					</div>
-				</>
+				</div>
 			)}
 
 			{model.newEvents.length > 0 && (
-				<>
+				<div id="recentEvents">
 					<h3 className="withMargin">{t('ViewRes.Home:Index.RecentEvents')}</h3>
 					<EventThumbs events={model.newEvents} />
-				</>
+				</div>
 			)}
 
 			<NewsItems newsListStore={frontPageStore.newsListStore} />
 
 			<div className="row-fluid">
-				<div className="span7">
+				<div id="recentActivity" className="span7">
 					<h3 className="withMargin">
 						{t('ViewRes.Home:Index.RecentActivity')} (
 						<Link to="/ActivityEntry">{t('ViewRes.Home:Index.ViewMore')}</Link>)
@@ -227,7 +227,7 @@ const HomeIndexLayout = ({
 
 					<Link to="/ActivityEntry">{t('ViewRes.Home:Index.ViewMore')}</Link>
 				</div>
-				<div className="span5">
+				<div id="recentComments" className="span5">
 					<h3 className="withMargin">
 						{t('ViewRes.Comment:Index.RecentComments')} (
 						<Link to="/Comment">{t('ViewRes.Home:Index.ViewMore')}</Link>)
