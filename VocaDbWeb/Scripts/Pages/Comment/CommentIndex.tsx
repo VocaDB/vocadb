@@ -17,7 +17,6 @@ import {
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
-import { uniq } from 'lodash-es';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -103,11 +102,12 @@ interface CommentWithEntryProps {
 
 const CommentWithEntry = observer(
 	({ entry }: CommentWithEntryProps): React.ReactElement => {
-		const authorIds = uniq(entry.comments.map((comment) => comment.author.id));
-
 		const mutedUsers = useMutedUsers();
-		if (authorIds.length === 1 && mutedUsers.includes(authorIds[0]))
+		if (
+			entry.comments.every((comment) => mutedUsers.includes(comment.author.id))
+		) {
 			return <></>;
+		}
 
 		return (
 			<div className="row-fluid comment-with-entry well well-transparent">
