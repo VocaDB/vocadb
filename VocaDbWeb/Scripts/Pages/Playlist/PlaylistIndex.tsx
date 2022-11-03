@@ -161,14 +161,14 @@ const PlaylistTableRowDropdown = observer(
 					</Dropdown.Item>
 					<Dropdown.Divider />
 					<Dropdown.Item
-						onClick={(): Promise<void> => playQueue.removeOtherItems(item)}
-					>
-						Remove others{/* LOCALIZE */}
-					</Dropdown.Item>
-					<Dropdown.Item
 						onClick={(): Promise<void> => playQueue.removeItemsAbove(item)}
 					>
 						Remove to the top{/* LOCALIZE */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={(): Promise<void> => playQueue.removeOtherItems(item)}
+					>
+						Remove others{/* LOCALIZE */}
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
