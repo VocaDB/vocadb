@@ -15,7 +15,7 @@ import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import classNames from 'classnames';
@@ -131,6 +131,11 @@ const PlaylistTableRowDropdown = observer(
 	({ item }: PlaylistTableRowDropdownProps): React.ReactElement => {
 		const { playQueue } = useVdbPlayer();
 
+		const play = React.useCallback(
+			(method: PlayMethod) => playQueue.play(method, [item.clone()]),
+			[item, playQueue],
+		);
+
 		return (
 			<Dropdown as={ButtonGroup}>
 				<Dropdown.Toggle>
@@ -145,19 +150,13 @@ const PlaylistTableRowDropdown = observer(
 					</span>
 				</Dropdown.Toggle>
 				<Dropdown.Menu align="end">
-					<Dropdown.Item
-						onClick={(): void => playQueue.playFirst([item.clone()])}
-					>
+					<Dropdown.Item onClick={(): void => play(PlayMethod.PlayFirst)}>
 						Play first{/* TODO: localize */}
 					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={(): void => playQueue.playNext([item.clone()])}
-					>
+					<Dropdown.Item onClick={(): void => play(PlayMethod.PlayNext)}>
 						Play next{/* TODO: localize */}
 					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={(): void => playQueue.addToPlayQueue([item.clone()])}
-					>
+					<Dropdown.Item onClick={(): void => play(PlayMethod.AddToPlayQueue)}>
 						Add to play queue{/* TODO: localize */}
 					</Dropdown.Item>
 					<Dropdown.Divider />
