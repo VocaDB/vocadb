@@ -17,6 +17,7 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
+import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
@@ -32,7 +33,6 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
-import { SongSearchListTableRowPlayDropdown } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -85,6 +85,8 @@ const SongListDetailsTableRow = observer(
 		songListStore,
 		item,
 	}: SongListDetailsTableRowProps): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.SongList']);
+
 		return (
 			<tr>
 				<td style={{ width: '75px' }}>
@@ -106,7 +108,16 @@ const SongListDetailsTableRow = observer(
 				<td>
 					{item.song.previewStore && item.song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayDropdown song={item.song} />
+							<Button
+								onClick={(): void => item.song.previewStore?.togglePreview()}
+								className={classNames(
+									'previewSong',
+									item.song.previewStore.preview && 'active',
+								)}
+							>
+								<i className="icon-film" />{' '}
+								{t('ViewRes.SongList:Details.Preview')}
+							</Button>
 						</div>
 					)}
 					<span>{item.order}</span>.{' '}
@@ -137,6 +148,12 @@ const SongListDetailsTableRow = observer(
 					<DraftIcon status={item.song.status} />
 					<br />
 					<small className="extraInfo">{item.song.artistString}</small>
+					{item.song.previewStore && item.song.previewStore.pvServices && (
+						<PVPreviewKnockout
+							previewStore={item.song.previewStore}
+							getPvServiceIcons={songListStore.pvServiceIcons.getIconUrls}
+						/>
+					)}
 				</td>
 				{songListStore.showTags && (
 					<td style={{ width: '33%' }}>

@@ -3,10 +3,10 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
+import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongVoteRating } from '@/Models/SongVoteRating';
-import { SongSearchListTableRowPlayDropdown } from '@/Pages/Search/Partials/SongSearchList';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -95,7 +95,16 @@ const SongRankingsTableRow = observer(
 				<td>
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayDropdown song={song} />
+							<Button
+								onClick={(): void => song.previewStore?.togglePreview()}
+								className={classNames(
+									'previewSong',
+									song.previewStore.preview && 'active',
+								)}
+								href="#"
+							>
+								<i className="icon-film" /> {t('ViewRes.Song:Rankings.Preview')}
+							</Button>
 						</div>
 					)}
 					<Link
@@ -138,6 +147,12 @@ const SongRankingsTableRow = observer(
 					)}
 					<br />
 					<small className="extraInfo">{song.artistString}</small>
+					{song.previewStore && song.previewStore.pvServices && (
+						<PVPreviewKnockout
+							previewStore={song.previewStore}
+							getPvServiceIcons={rankingsStore.getPVServiceIcons}
+						/>
+					)}
 				</td>
 				<td>{moment(song.publishDate).format('l')}</td>
 				<td className="search-tags-column">

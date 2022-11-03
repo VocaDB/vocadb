@@ -1,14 +1,12 @@
-import ButtonGroup from '@/Bootstrap/ButtonGroup';
-import Dropdown from '@/Bootstrap/Dropdown';
+import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { PlayList } from '@/Components/Shared/Partials/PlayList';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
-import { EntryType } from '@/Models/EntryType';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -18,8 +16,6 @@ import {
 } from '@/Stores/Search/SongSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
-import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
-import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -94,60 +90,6 @@ const SongSearchListTableHeader = observer(
 	},
 );
 
-interface SongSearchListTableRowPlayDropdownProps {
-	song: IRatedSongSearchItem;
-}
-
-export const SongSearchListTableRowPlayDropdown = observer(
-	({ song }: SongSearchListTableRowPlayDropdownProps): React.ReactElement => {
-		const playQueue = usePlayQueue();
-
-		const play = React.useCallback(
-			(method: PlayMethod): Promise<void> =>
-				playQueue.loadItemsAndPlay(method, {
-					entryType: EntryType[EntryType.Song],
-					...song,
-				}),
-			[playQueue, song],
-		);
-
-		return (
-			<>
-				<Dropdown as={ButtonGroup}>
-					<Dropdown.Toggle>
-						<span
-							css={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						>
-							<MoreHorizontal20Filled />
-						</span>
-					</Dropdown.Toggle>
-					<Dropdown.Menu align="end">
-						<Dropdown.Item
-							onClick={(): Promise<void> => play(PlayMethod.PlayFirst)}
-						>
-							Play first{/* LOCALIZE */}
-						</Dropdown.Item>
-						<Dropdown.Item
-							onClick={(): Promise<void> => play(PlayMethod.PlayNext)}
-						>
-							Play next{/* LOCALIZE */}
-						</Dropdown.Item>
-						<Dropdown.Item
-							onClick={(): Promise<void> => play(PlayMethod.AddToPlayQueue)}
-						>
-							Add to play queue{/* LOCALIZE */}
-						</Dropdown.Item>
-					</Dropdown.Menu>
-				</Dropdown>
-			</>
-		);
-	},
-);
-
 interface SongSearchListTableRowProps {
 	songSearchStore: ISongSearchStore;
 	song: IRatedSongSearchItem;
@@ -181,7 +123,16 @@ const SongSearchListTableRow = observer(
 				<td>
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayDropdown song={song} />
+							<Button
+								onClick={(): void => song.previewStore?.togglePreview()}
+								className={classNames(
+									'previewSong',
+									song.previewStore.preview && 'active',
+								)}
+								href="#"
+							>
+								<i className="icon-film" /> {t('ViewRes.Search:Index.Preview')}
+							</Button>
 						</div>
 					)}
 					<Link
@@ -241,6 +192,12 @@ const SongSearchListTableRow = observer(
 					)}
 					<br />
 					<small className="extraInfo">{song.artistString}</small>
+					{song.previewStore && song.previewStore.pvServices && (
+						<PVPreviewKnockout
+							previewStore={song.previewStore}
+							getPvServiceIcons={songSearchStore.getPVServiceIcons}
+						/>
+					)}
 				</td>
 				{songSearchStore.showTags && (
 					<td className="search-tags-column">
