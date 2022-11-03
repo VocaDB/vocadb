@@ -4,7 +4,6 @@ import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { PlayList } from '@/Components/Shared/Partials/PlayList';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
-import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { SongVoteRating } from '@/Models/SongVoteRating';
@@ -192,12 +191,6 @@ const SongSearchListTableRow = observer(
 					)}
 					<br />
 					<small className="extraInfo">{song.artistString}</small>
-					{song.previewStore && song.previewStore.pvServices && (
-						<PVPreviewKnockout
-							previewStore={song.previewStore}
-							getPvServiceIcons={songSearchStore.getPVServiceIcons}
-						/>
-					)}
 				</td>
 				{songSearchStore.showTags && (
 					<td className="search-tags-column">

@@ -3,7 +3,6 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
-import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongVoteRating } from '@/Models/SongVoteRating';
@@ -147,12 +146,6 @@ const SongRankingsTableRow = observer(
 					)}
 					<br />
 					<small className="extraInfo">{song.artistString}</small>
-					{song.previewStore && song.previewStore.pvServices && (
-						<PVPreviewKnockout
-							previewStore={song.previewStore}
-							getPvServiceIcons={rankingsStore.getPVServiceIcons}
-						/>
-					)}
 				</td>
 				<td>{moment(song.publishDate).format('l')}</td>
 				<td className="search-tags-column">

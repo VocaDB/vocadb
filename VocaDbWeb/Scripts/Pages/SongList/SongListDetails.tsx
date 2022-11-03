@@ -17,7 +17,6 @@ import { SongAdvancedFilters } from '@/Components/Shared/Partials/Search/Advance
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
@@ -148,12 +147,6 @@ const SongListDetailsTableRow = observer(
 					<DraftIcon status={item.song.status} />
 					<br />
 					<small className="extraInfo">{item.song.artistString}</small>
-					{item.song.previewStore && item.song.previewStore.pvServices && (
-						<PVPreviewKnockout
-							previewStore={item.song.previewStore}
-							getPvServiceIcons={songListStore.pvServiceIcons.getIconUrls}
-						/>
-					)}
 				</td>
 				{songListStore.showTags && (
 					<td style={{ width: '33%' }}>
