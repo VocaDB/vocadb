@@ -13,6 +13,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
@@ -38,9 +39,188 @@ const rankingsStore = new RankingsStore(
 	vdb.values.languagePreference,
 );
 
+const SongRankingsTableHeader = React.memo(
+	(): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.Song']);
+
+		return (
+			<thead>
+				<tr>
+					<th></th>
+					<th colSpan={2}>{t('ViewRes.Song:Rankings.ColName')}</th>
+					<th>{t('ViewRes.Song:Rankings.ColPublished')}</th>
+					<th>{t('ViewRes.Song:Rankings.ColTags')}</th>
+					<th>{t('ViewRes.Song:Rankings.ColRating')}</th>
+				</tr>
+			</thead>
+		);
+	},
+);
+
+interface SongRankingsTableRowProps {
+	rankingsStore: RankingsStore;
+	song: ISongSearchItem;
+	index: number;
+}
+
+const SongRankingsTableRow = observer(
+	({
+		rankingsStore,
+		song,
+		index,
+	}: SongRankingsTableRowProps): React.ReactElement => {
+		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
+
+		return (
+			<tr>
+				<td style={{ width: '30px' }}>
+					<h1>{index + 1}</h1>
+				</td>
+				<td style={{ width: '80px' }}>
+					{song.mainPicture && song.mainPicture.urlThumb && (
+						<Link
+							to={EntryUrlMapper.details_song(song)}
+							title={song.additionalNames}
+						>
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<img
+								src={song.mainPicture.urlThumb}
+								title="Cover picture" /* TODO: localize */
+								className="coverPicThumb img-rounded"
+								referrerPolicy="same-origin"
+							/>
+						</Link>
+					)}
+				</td>
+				<td>
+					{song.previewStore && song.previewStore.pvServices && (
+						<div className="pull-right">
+							<Button
+								onClick={(): void => song.previewStore?.togglePreview()}
+								className={classNames(
+									'previewSong',
+									song.previewStore.preview && 'active',
+								)}
+								href="#"
+							>
+								<i className="icon-film" /> {t('ViewRes.Song:Rankings.Preview')}
+							</Button>
+						</div>
+					)}
+					<Link
+						to={EntryUrlMapper.details_song(song)}
+						title={song.additionalNames}
+					>
+						{song.name}
+					</Link>{' '}
+					<SongTypeLabel songType={song.songType} />{' '}
+					{rankingsStore
+						.getPVServiceIcons(song.pvServices)
+						.map((icon, index) => (
+							<React.Fragment key={icon.service}>
+								{index > 0 && ' '}
+								{/* eslint-disable-next-line jsx-a11y/alt-text */}
+								<img src={icon.url} title={icon.service} />
+							</React.Fragment>
+						))}
+					{false /* TODO */ && (
+						<>
+							{' '}
+							<span
+								className="icon heartIcon"
+								title={t(
+									`Resources:SongVoteRatingNames.${SongVoteRating.Favorite}`,
+								)}
+							/>
+						</>
+					)}
+					{false /* TODO */ && (
+						<>
+							{' '}
+							<span
+								className="icon starIcon"
+								title={t(
+									`Resources:SongVoteRatingNames.${SongVoteRating.Like}`,
+								)}
+							/>
+						</>
+					)}
+					<br />
+					<small className="extraInfo">{song.artistString}</small>
+					{song.previewStore && song.previewStore.pvServices && (
+						<PVPreviewKnockout
+							previewStore={song.previewStore}
+							getPvServiceIcons={rankingsStore.getPVServiceIcons}
+						/>
+					)}
+				</td>
+				<td>{moment(song.publishDate).format('l')}</td>
+				<td className="search-tags-column">
+					{song.tags && song.tags.length > 0 && (
+						<>
+							<i className="icon icon-tags fix-icon-margin" />{' '}
+							{song.tags.map((tag, index) => (
+								<React.Fragment key={tag.tag.id}>
+									{index > 0 && <span>, </span>}
+									<Link
+										to={rankingsStore.getTagUrl(tag)}
+										title={tag.tag.additionalNames}
+									>
+										{tag.tag.name}
+									</Link>
+								</React.Fragment>
+							))}
+						</>
+					)}
+				</td>
+				<td>
+					<span>{song.ratingScore}</span>{' '}
+					{t('ViewRes.Song:Rankings.TotalScore')}
+				</td>
+			</tr>
+		);
+	},
+);
+
+interface SongRankingsTableBodyProps {
+	rankingsStore: RankingsStore;
+}
+
+const SongRankingsTableBody = observer(
+	({ rankingsStore }: SongRankingsTableBodyProps): React.ReactElement => {
+		return (
+			<tbody>
+				{rankingsStore.songs.map((song, index) => (
+					<SongRankingsTableRow
+						rankingsStore={rankingsStore}
+						song={song}
+						index={index}
+						key={song.id}
+					/>
+				))}
+			</tbody>
+		);
+	},
+);
+
+interface SongRankingsTableProps {
+	rankingsStore: RankingsStore;
+}
+
+const SongRankingsTable = observer(
+	({ rankingsStore }: SongRankingsTableProps): React.ReactElement => {
+		return (
+			<table className="table table-striped">
+				<SongRankingsTableHeader />
+				<SongRankingsTableBody rankingsStore={rankingsStore} />
+			</table>
+		);
+	},
+);
+
 const SongRankings = observer(
 	(): React.ReactElement => {
-		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Song']);
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		useVdbTitle(vdb.resources.song.rankingsTitle, true);
 
@@ -222,130 +402,7 @@ const SongRankings = observer(
 						{t('ViewRes.Song:Rankings.NoSongs')}
 					</Alert>
 				) : (
-					<table className="table table-striped">
-						<thead>
-							<tr>
-								<th></th>
-								<th colSpan={2}>{t('ViewRes.Song:Rankings.ColName')}</th>
-								<th>{t('ViewRes.Song:Rankings.ColPublished')}</th>
-								<th>{t('ViewRes.Song:Rankings.ColTags')}</th>
-								<th>{t('ViewRes.Song:Rankings.ColRating')}</th>
-							</tr>
-						</thead>
-						<tbody>
-							{rankingsStore.songs.map((song, index) => (
-								<tr key={song.id}>
-									<td style={{ width: '30px' }}>
-										<h1>{index + 1}</h1>
-									</td>
-									<td style={{ width: '80px' }}>
-										{song.mainPicture && song.mainPicture.urlThumb && (
-											<Link
-												to={EntryUrlMapper.details_song(song)}
-												title={song.additionalNames}
-											>
-												{/* eslint-disable-next-line jsx-a11y/alt-text */}
-												<img
-													src={song.mainPicture.urlThumb}
-													title="Cover picture" /* TODO: localize */
-													className="coverPicThumb img-rounded"
-													referrerPolicy="same-origin"
-												/>
-											</Link>
-										)}
-									</td>
-									<td>
-										{song.previewStore && song.previewStore.pvServices && (
-											<div className="pull-right">
-												<Button
-													onClick={(): void =>
-														song.previewStore?.togglePreview()
-													}
-													className={classNames(
-														'previewSong',
-														song.previewStore.preview && 'active',
-													)}
-													href="#"
-												>
-													<i className="icon-film" />{' '}
-													{t('ViewRes.Song:Rankings.Preview')}
-												</Button>
-											</div>
-										)}
-										<Link
-											to={EntryUrlMapper.details_song(song)}
-											title={song.additionalNames}
-										>
-											{song.name}
-										</Link>{' '}
-										<SongTypeLabel songType={song.songType} />{' '}
-										{rankingsStore
-											.getPVServiceIcons(song.pvServices)
-											.map((icon, index) => (
-												<React.Fragment key={icon.service}>
-													{index > 0 && ' '}
-													{/* eslint-disable-next-line jsx-a11y/alt-text */}
-													<img src={icon.url} title={icon.service} />
-												</React.Fragment>
-											))}
-										{false /* TODO */ && (
-											<>
-												{' '}
-												<span
-													className="icon heartIcon"
-													title={t(
-														`Resources:SongVoteRatingNames.${SongVoteRating.Favorite}`,
-													)}
-												/>
-											</>
-										)}
-										{false /* TODO */ && (
-											<>
-												{' '}
-												<span
-													className="icon starIcon"
-													title={t(
-														`Resources:SongVoteRatingNames.${SongVoteRating.Like}`,
-													)}
-												/>
-											</>
-										)}
-										<br />
-										<small className="extraInfo">{song.artistString}</small>
-										{song.previewStore && song.previewStore.pvServices && (
-											<PVPreviewKnockout
-												previewStore={song.previewStore}
-												getPvServiceIcons={rankingsStore.getPVServiceIcons}
-											/>
-										)}
-									</td>
-									<td>{moment(song.publishDate).format('l')}</td>
-									<td className="search-tags-column">
-										{song.tags && song.tags.length > 0 && (
-											<>
-												<i className="icon icon-tags fix-icon-margin" />{' '}
-												{song.tags.map((tag, index) => (
-													<React.Fragment key={tag.tag.id}>
-														{index > 0 && <span>, </span>}
-														<Link
-															to={rankingsStore.getTagUrl(tag)}
-															title={tag.tag.additionalNames}
-														>
-															{tag.tag.name}
-														</Link>
-													</React.Fragment>
-												))}
-											</>
-										)}
-									</td>
-									<td>
-										<span>{song.ratingScore}</span>{' '}
-										{t('ViewRes.Song:Rankings.TotalScore')}
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
+					<SongRankingsTable rankingsStore={rankingsStore} />
 				)}
 			</Layout>
 		);
