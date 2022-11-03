@@ -1,4 +1,6 @@
 import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
@@ -18,6 +20,7 @@ import {
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -102,9 +105,9 @@ export const SongSearchListTableRowPlayButtonAndDropdown = observer(
 	}: SongSearchListTableRowPlayButtonAndDropdownProps): React.ReactElement => {
 		const playQueue = usePlayQueue();
 
-		const handleClickPlay = React.useCallback(
-			(): Promise<void> =>
-				playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
+		const play = React.useCallback(
+			(method: PlayMethod): Promise<void> =>
+				playQueue.loadItemsAndPlay(method, {
 					entryType: EntryType[EntryType.Song],
 					...song,
 				}),
@@ -113,9 +116,39 @@ export const SongSearchListTableRowPlayButtonAndDropdown = observer(
 
 		return (
 			<>
-				<Button onClick={handleClickPlay}>
+				<Button onClick={(): Promise<void> => play(PlayMethod.ClearAndPlay)}>
 					<i className="icon-play" /> Play{/* TODO: localize */}
-				</Button>
+				</Button>{' '}
+				<Dropdown as={ButtonGroup}>
+					<Dropdown.Toggle>
+						<span
+							css={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<MoreHorizontal20Filled />
+						</span>
+					</Dropdown.Toggle>
+					<Dropdown.Menu align="end">
+						<Dropdown.Item
+							onClick={(): Promise<void> => play(PlayMethod.PlayFirst)}
+						>
+							Play first{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={(): Promise<void> => play(PlayMethod.PlayNext)}
+						>
+							Play next{/* TODO: localize */}
+						</Dropdown.Item>
+						<Dropdown.Item
+							onClick={(): Promise<void> => play(PlayMethod.AddToPlayQueue)}
+						>
+							Add to play queue{/* TODO: localize */}
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
 			</>
 		);
 	},
