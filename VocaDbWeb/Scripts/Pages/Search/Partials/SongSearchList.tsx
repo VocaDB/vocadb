@@ -5,7 +5,9 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { PlayList } from '@/Components/Shared/Partials/PlayList';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryType } from '@/Models/EntryType';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -15,6 +17,7 @@ import {
 } from '@/Stores/Search/SongSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -101,6 +104,8 @@ const SongSearchListTableRow = observer(
 	}: SongSearchListTableRowProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Search']);
 
+		const playQueue = usePlayQueue();
+
 		return (
 			<tr>
 				<td style={{ width: '80px' }}>
@@ -123,14 +128,14 @@ const SongSearchListTableRow = observer(
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
 							<Button
-								onClick={(): void => song.previewStore?.togglePreview()}
-								className={classNames(
-									'previewSong',
-									song.previewStore.preview && 'active',
-								)}
-								href="#"
+								onClick={(): Promise<void> =>
+									playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
+										entryType: EntryType[EntryType.Song],
+										...song,
+									})
+								}
 							>
-								<i className="icon-film" /> {t('ViewRes.Search:Index.Preview')}
+								<i className="icon-play" /> Play{/* TODO: localize */}
 							</Button>
 						</div>
 					)}

@@ -4,7 +4,9 @@ import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { usePlayQueue } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVdbTitle } from '@/Components/useVdbTitle';
+import { EntryType } from '@/Models/EntryType';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -14,6 +16,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
+import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -70,6 +73,8 @@ const SongRankingsTableRow = observer(
 	}: SongRankingsTableRowProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes.Song']);
 
+		const playQueue = usePlayQueue();
+
 		return (
 			<tr>
 				<td style={{ width: '30px' }}>
@@ -95,14 +100,14 @@ const SongRankingsTableRow = observer(
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
 							<Button
-								onClick={(): void => song.previewStore?.togglePreview()}
-								className={classNames(
-									'previewSong',
-									song.previewStore.preview && 'active',
-								)}
-								href="#"
+								onClick={(): Promise<void> =>
+									playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
+										entryType: EntryType[EntryType.Song],
+										...song,
+									})
+								}
 							>
-								<i className="icon-film" /> {t('ViewRes.Song:Rankings.Preview')}
+								<i className="icon-play" /> Play{/* TODO: localize */}
 							</Button>
 						</div>
 					)}

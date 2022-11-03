@@ -21,7 +21,10 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
@@ -44,7 +47,7 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { AutoplayContext, PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -84,7 +87,7 @@ const SongListDetailsTableRow = observer(
 		songListStore,
 		item,
 	}: SongListDetailsTableRowProps): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes.SongList']);
+		const playQueue = usePlayQueue();
 
 		return (
 			<tr>
@@ -108,14 +111,14 @@ const SongListDetailsTableRow = observer(
 					{item.song.previewStore && item.song.previewStore.pvServices && (
 						<div className="pull-right">
 							<Button
-								onClick={(): void => item.song.previewStore?.togglePreview()}
-								className={classNames(
-									'previewSong',
-									item.song.previewStore.preview && 'active',
-								)}
+								onClick={(): Promise<void> =>
+									playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
+										entryType: EntryType[EntryType.Song],
+										...item.song,
+									})
+								}
 							>
-								<i className="icon-film" />{' '}
-								{t('ViewRes.SongList:Details.Preview')}
+								<i className="icon-play" /> Play{/* TODO: localize */}
 							</Button>
 						</div>
 					)}
