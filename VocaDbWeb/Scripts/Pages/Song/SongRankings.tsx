@@ -6,7 +6,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongVoteRating } from '@/Models/SongVoteRating';
-import { SongSearchListTableRowPlayButtonAndDropdown } from '@/Pages/Search/Partials/SongSearchList';
+import { SongSearchListTableRowPlayDropdown } from '@/Pages/Search/Partials/SongSearchList';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -95,7 +95,7 @@ const SongRankingsTableRow = observer(
 				<td>
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayButtonAndDropdown song={song} />
+							<SongSearchListTableRowPlayDropdown song={song} />
 						</div>
 					)}
 					<Link

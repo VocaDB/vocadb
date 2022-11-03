@@ -1,4 +1,3 @@
-import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
@@ -95,14 +94,12 @@ const SongSearchListTableHeader = observer(
 	},
 );
 
-interface SongSearchListTableRowPlayButtonAndDropdownProps {
+interface SongSearchListTableRowPlayDropdownProps {
 	song: IRatedSongSearchItem;
 }
 
-export const SongSearchListTableRowPlayButtonAndDropdown = observer(
-	({
-		song,
-	}: SongSearchListTableRowPlayButtonAndDropdownProps): React.ReactElement => {
+export const SongSearchListTableRowPlayDropdown = observer(
+	({ song }: SongSearchListTableRowPlayDropdownProps): React.ReactElement => {
 		const playQueue = usePlayQueue();
 
 		const play = React.useCallback(
@@ -116,9 +113,6 @@ export const SongSearchListTableRowPlayButtonAndDropdown = observer(
 
 		return (
 			<>
-				<Button onClick={(): Promise<void> => play(PlayMethod.ClearAndPlay)}>
-					<i className="icon-play" /> Play{/* LOCALIZE */}
-				</Button>{' '}
 				<Dropdown as={ButtonGroup}>
 					<Dropdown.Toggle>
 						<span
@@ -187,7 +181,7 @@ const SongSearchListTableRow = observer(
 				<td>
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayButtonAndDropdown song={song} />
+							<SongSearchListTableRowPlayDropdown song={song} />
 						</div>
 					)}
 					<Link

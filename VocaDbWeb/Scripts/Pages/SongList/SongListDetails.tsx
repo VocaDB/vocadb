@@ -32,7 +32,7 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
-import { SongSearchListTableRowPlayButtonAndDropdown } from '@/Pages/Search/Partials/SongSearchList';
+import { SongSearchListTableRowPlayDropdown } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -106,7 +106,7 @@ const SongListDetailsTableRow = observer(
 				<td>
 					{item.song.previewStore && item.song.previewStore.pvServices && (
 						<div className="pull-right">
-							<SongSearchListTableRowPlayButtonAndDropdown song={item.song} />
+							<SongSearchListTableRowPlayDropdown song={item.song} />
 						</div>
 					)}
 					<span>{item.order}</span>.{' '}
