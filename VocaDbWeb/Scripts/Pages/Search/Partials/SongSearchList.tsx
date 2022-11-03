@@ -92,6 +92,35 @@ const SongSearchListTableHeader = observer(
 	},
 );
 
+interface SongSearchListTableRowPlayButtonAndDropdownProps {
+	song: IRatedSongSearchItem;
+}
+
+export const SongSearchListTableRowPlayButtonAndDropdown = observer(
+	({
+		song,
+	}: SongSearchListTableRowPlayButtonAndDropdownProps): React.ReactElement => {
+		const playQueue = usePlayQueue();
+
+		const handleClickPlay = React.useCallback(
+			(): Promise<void> =>
+				playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
+					entryType: EntryType[EntryType.Song],
+					...song,
+				}),
+			[playQueue, song],
+		);
+
+		return (
+			<>
+				<Button onClick={handleClickPlay}>
+					<i className="icon-play" /> Play{/* TODO: localize */}
+				</Button>
+			</>
+		);
+	},
+);
+
 interface SongSearchListTableRowProps {
 	songSearchStore: ISongSearchStore;
 	song: IRatedSongSearchItem;
@@ -103,8 +132,6 @@ const SongSearchListTableRow = observer(
 		song,
 	}: SongSearchListTableRowProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Search']);
-
-		const playQueue = usePlayQueue();
 
 		return (
 			<tr>
@@ -127,16 +154,7 @@ const SongSearchListTableRow = observer(
 				<td>
 					{song.previewStore && song.previewStore.pvServices && (
 						<div className="pull-right">
-							<Button
-								onClick={(): Promise<void> =>
-									playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
-										entryType: EntryType[EntryType.Song],
-										...song,
-									})
-								}
-							>
-								<i className="icon-play" /> Play{/* TODO: localize */}
-							</Button>
+							<SongSearchListTableRowPlayButtonAndDropdown song={song} />
 						</div>
 					)}
 					<Link

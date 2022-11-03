@@ -21,10 +21,7 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/SongTypesDropdownKnockout';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import {
-	usePlayQueue,
-	useVdbPlayer,
-} from '@/Components/VdbPlayer/VdbPlayerContext';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
@@ -35,6 +32,7 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
+import { SongSearchListTableRowPlayButtonAndDropdown } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { SongListRepository } from '@/Repositories/SongListRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
@@ -47,7 +45,7 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import { AutoplayContext, PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -87,8 +85,6 @@ const SongListDetailsTableRow = observer(
 		songListStore,
 		item,
 	}: SongListDetailsTableRowProps): React.ReactElement => {
-		const playQueue = usePlayQueue();
-
 		return (
 			<tr>
 				<td style={{ width: '75px' }}>
@@ -110,16 +106,7 @@ const SongListDetailsTableRow = observer(
 				<td>
 					{item.song.previewStore && item.song.previewStore.pvServices && (
 						<div className="pull-right">
-							<Button
-								onClick={(): Promise<void> =>
-									playQueue.loadItemsAndPlay(PlayMethod.ClearAndPlay, {
-										entryType: EntryType[EntryType.Song],
-										...item.song,
-									})
-								}
-							>
-								<i className="icon-play" /> Play{/* TODO: localize */}
-							</Button>
+							<SongSearchListTableRowPlayButtonAndDropdown song={item.song} />
 						</div>
 					)}
 					<span>{item.order}</span>.{' '}
