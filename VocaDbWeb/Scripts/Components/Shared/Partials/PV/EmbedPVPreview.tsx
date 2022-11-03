@@ -13,6 +13,57 @@ import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
+interface EmbedPVPreviewDropdownProps {
+	onPlay: (method: PlayMethod) => void;
+	onToggle?: (
+		isOpen: boolean,
+		event: React.SyntheticEvent,
+		metadata: { source: 'select' | 'click' | 'rootClose' | 'keydown' },
+	) => void;
+}
+
+const EmbedPVPreviewDropdown = React.memo(
+	({ onPlay, onToggle }: EmbedPVPreviewDropdownProps): React.ReactElement => {
+		return (
+			<Dropdown
+				as={ButtonGroup}
+				drop="up"
+				css={{ position: 'absolute', right: 8, bottom: 8 }}
+				onToggle={onToggle}
+			>
+				<Dropdown.Toggle
+					style={{
+						padding: 0,
+						width: 40,
+						height: 40,
+						borderRadius: '50%',
+					}}
+				>
+					<span
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<MoreHorizontal20Filled />
+					</span>
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
+					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
+						Play next{/* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
+					>
+						Add to play queue{/* TODO: localize */}
+					</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
+		);
+	},
+);
+
 interface EmbedPVPreviewButtonsProps {
 	onPlay: (method: PlayMethod) => void;
 	onToggle?: (
@@ -47,41 +98,7 @@ export const EmbedPVPreviewButtons = React.memo(
 					</span>
 				</Button>
 
-				<Dropdown
-					as={ButtonGroup}
-					drop="up"
-					css={{ position: 'absolute', right: 8, bottom: 8 }}
-					onToggle={onToggle}
-				>
-					<Dropdown.Toggle
-						style={{
-							padding: 0,
-							width: 40,
-							height: 40,
-							borderRadius: '50%',
-						}}
-					>
-						<span
-							css={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						>
-							<MoreHorizontal20Filled />
-						</span>
-					</Dropdown.Toggle>
-					<Dropdown.Menu>
-						<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
-							Play next{/* TODO: localize */}
-						</Dropdown.Item>
-						<Dropdown.Item
-							onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
-						>
-							Add to play queue{/* TODO: localize */}
-						</Dropdown.Item>
-					</Dropdown.Menu>
-				</Dropdown>
+				<EmbedPVPreviewDropdown onPlay={onPlay} onToggle={onToggle} />
 			</>
 		);
 	},
