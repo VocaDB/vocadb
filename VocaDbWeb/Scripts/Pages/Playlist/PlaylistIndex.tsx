@@ -9,7 +9,7 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
@@ -318,7 +318,7 @@ const PlaylistIndex = observer(
 
 		const title = t('ViewRes.Search:Index.Playlist');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const { playQueue } = useVdbPlayer();
 

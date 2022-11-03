@@ -5,7 +5,7 @@ import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed
 import { AlbumThumbs } from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/CommentWithEntryVertical';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import NewsItems from '@/Pages/Home/Partials/NewsItems';
@@ -130,7 +130,7 @@ const HomeIndexLayout = ({
 }: HomeIndexLayoutProps): React.ReactElement => {
 	const { t } = useTranslation(['ViewRes.Comment', 'ViewRes.Home']);
 
-	useVocaDbTitle(undefined, true);
+	useVdbTitle(undefined, true);
 
 	return (
 		<Layout>

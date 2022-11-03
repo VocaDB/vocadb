@@ -17,7 +17,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -304,7 +304,7 @@ const SongListEditLayout = observer(
 					0: contract.name,
 			  });
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const conflictingEditor = useConflictingEditor(EntryType.SongList);
 

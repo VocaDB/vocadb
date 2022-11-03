@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -842,7 +842,7 @@ const Guidelines = React.memo(
 const HelpIndex = (): React.ReactElement => {
 	const title = 'Help / About';
 
-	useVocaDbTitle(title, true);
+	useVdbTitle(title, true);
 
 	return (
 		<Layout title={title}>

@@ -23,7 +23,7 @@ import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/Son
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -123,7 +123,7 @@ const SongListDetailsLayout = observer(
 
 		const { pageTitle, title, subtitle, ready } = usePageProperties(songList);
 
-		useVocaDbTitle(pageTitle, ready);
+		useVdbTitle(pageTitle, ready);
 
 		useLocationStateStore(songListStore);
 

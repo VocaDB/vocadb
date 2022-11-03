@@ -23,7 +23,7 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
@@ -159,7 +159,7 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		useVocaDbTitle(`${event.name} (${subtitle})`, ready);
+		useVdbTitle(`${event.name} (${subtitle})`, ready);
 
 		const primaryPV = PVHelper.primaryPV(event.pvs);
 

@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import ListUsers from '@/Pages/User/Partials/ListUsers';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -19,7 +19,7 @@ const UserIndex = (): React.ReactElement => {
 
 	const title = t('ViewRes:Shared.Users');
 
-	useVocaDbTitle(title, ready);
+	useVdbTitle(title, ready);
 
 	useLocationStateStore(listUsersStore);
 

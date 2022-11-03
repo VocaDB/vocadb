@@ -7,7 +7,7 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -62,7 +62,7 @@ const SongDetailsLayout = observer(
 
 		const titleAndArtist = `${model.name} - ${model.artistString}`;
 
-		useVocaDbTitle(titleAndArtist, true);
+		useVdbTitle(titleAndArtist, true);
 
 		const primaryPV = model.contract.pvs.filter(
 			(pv) => pv.id === songDetailsStore.selectedPvId,

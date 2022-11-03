@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { LoginManager } from '@/Models/LoginManager';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ const loginManager = new LoginManager(vdb.values);
 const AdminIndex = (): React.ReactElement => {
 	const title = 'Site management'; /* TODO: localize */
 
-	useVocaDbTitle(title, true);
+	useVdbTitle(title, true);
 
 	return (
 		<Layout title={title}>

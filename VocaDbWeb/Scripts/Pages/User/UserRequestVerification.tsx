@@ -3,7 +3,7 @@ import Button from '@/Bootstrap/Button';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -37,7 +37,7 @@ const UserRequestVerification = observer(
 
 		const title = t('ViewRes.User:RequestVerification.PageTitle');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		return (
 			<Layout title={title}>

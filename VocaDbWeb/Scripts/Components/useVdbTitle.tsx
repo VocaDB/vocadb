@@ -6,7 +6,7 @@ import { useTitle } from 'react-use';
 
 NProgress.configure({ showSpinner: false });
 
-export const useVocaDbTitle = (
+export const useVdbTitle = (
 	title: string | undefined,
 	ready: boolean,
 ): void => {

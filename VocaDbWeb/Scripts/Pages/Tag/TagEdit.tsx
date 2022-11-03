@@ -23,7 +23,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -75,7 +75,7 @@ const TagEditLayout = observer(
 
 		const title = `Edit tag - ${contract.name}`; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const thumbUrl = UrlHelper.imageThumb(
 			contract.mainPicture,

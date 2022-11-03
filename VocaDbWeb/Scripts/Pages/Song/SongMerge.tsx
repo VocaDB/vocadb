@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { EntryType } from '@/Models/EntryType';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -37,7 +37,7 @@ const SongMergeLayout = observer(
 
 		const title = `Merge song - ${song.name}`; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 

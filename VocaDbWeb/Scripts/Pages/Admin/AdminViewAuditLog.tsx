@@ -6,7 +6,7 @@ import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { Layout } from '@/Components/Shared/Layout';
 import { UserGroupDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLinkOrName } from '@/Components/Shared/Partials/User/UserLinkOrName';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -216,7 +216,7 @@ const AdminViewAuditLog = observer(
 
 		const title = 'View audit log'; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		useLocationStateStore(viewAuditLogStore);
 

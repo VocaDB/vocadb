@@ -8,7 +8,7 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { AlbumSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import {
@@ -121,7 +121,7 @@ const ArtistDetailsLayout = observer(
 
 		const title = artist.name;
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		React.useEffect(() => {
 			// Returns the disposer.

@@ -1,5 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolder from '@/Pages/Discussion/Partials/ViewFolder';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -19,7 +19,7 @@ const DiscussionFolders = observer(
 
 		const title = t('ViewRes.Discussion:Index.Discussions');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const { folderId } = useParams();
 

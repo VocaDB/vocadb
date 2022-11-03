@@ -6,7 +6,7 @@ import { ArchivedObjectVersionProperties } from '@/Components/Shared/Partials/Ar
 import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBanner';
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -43,7 +43,7 @@ const AlbumViewVersionLayout = observer(
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 

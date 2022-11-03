@@ -1,6 +1,6 @@
 import { Layout } from '@/Components/Shared/Layout';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { LoginManager } from '@/Models/LoginManager';
@@ -34,7 +34,7 @@ const EventIndexLayout = ({
 
 	const title = t('ViewRes:Shared.ReleaseEvents');
 
-	useVocaDbTitle(title, ready);
+	useVdbTitle(title, ready);
 
 	return (
 		<Layout

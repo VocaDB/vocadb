@@ -5,7 +5,7 @@ import { IPManage } from '@/Components/Shared/KnockoutPartials/IPManage';
 import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -31,7 +31,7 @@ const AdminManageIPRules = observer(
 
 		const title = 'Manage blocked IPs'; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		return (
 			<Layout

@@ -2,7 +2,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
@@ -47,7 +47,7 @@ const SongListFeatured = observer(
 
 		const title = t('ViewRes:Shared.FeaturedSongLists');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		useLocationStateStore(featuredSongListsStore);
 

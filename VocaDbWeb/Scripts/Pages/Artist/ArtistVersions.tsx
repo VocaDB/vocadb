@@ -2,7 +2,7 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
 import { ArchivedObjectVersions } from '@/Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
 import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
@@ -27,7 +27,7 @@ const ArtistVersionsLayout = ({
 
 	const title = `${t('ViewRes:EntryDetails.Revisions')} - ${model.entry.name}`;
 
-	useVocaDbTitle(title, ready);
+	useVdbTitle(title, ready);
 
 	return (
 		<Layout

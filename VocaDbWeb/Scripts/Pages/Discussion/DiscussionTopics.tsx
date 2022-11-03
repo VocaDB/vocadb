@@ -1,5 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewTopic from '@/Pages/Discussion/Partials/ViewTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -18,7 +18,7 @@ const DiscussionTopics = observer(
 
 		const title = t('ViewRes.Discussion:Index.Discussions');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const { topicId } = useParams();
 

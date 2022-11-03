@@ -1,6 +1,6 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -39,7 +39,7 @@ const UserFavoriteSongsLayout = ({
 }: UserFavoriteSongsLayoutProps): React.ReactElement => {
 	const title = `Songs rated by ${user.name}`; /* TODO: localize */
 
-	useVocaDbTitle(title, true);
+	useVdbTitle(title, true);
 
 	useLocationStateStore(ratedSongsStore);
 

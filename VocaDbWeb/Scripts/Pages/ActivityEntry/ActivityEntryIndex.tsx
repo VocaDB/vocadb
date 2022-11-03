@@ -1,7 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { LoginManager } from '@/Models/LoginManager';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -32,7 +32,7 @@ const ActivityEntryIndex = observer(
 			'VocaDb.Web.Resources.Views.ActivityEntry:Index.RecentActivity',
 		);
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		React.useEffect(() => {
 			activityEntryListStore.loadMore();

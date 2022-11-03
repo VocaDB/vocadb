@@ -26,7 +26,7 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
@@ -560,7 +560,7 @@ const ArtistEditLayout = observer(
 
 		const title = t('ViewRes.Artist:Edit.EditTitle', { 0: contract.name });
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const conflictingEditor = useConflictingEditor(EntryType.Artist);
 

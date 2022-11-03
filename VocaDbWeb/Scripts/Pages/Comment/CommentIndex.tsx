@@ -5,7 +5,7 @@ import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEn
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
 import { LoginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
@@ -154,7 +154,7 @@ const CommentIndex = observer(
 
 		const title = t('ViewRes.Comment:Index.RecentComments');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		useLocationStateStore(commentListStore);
 

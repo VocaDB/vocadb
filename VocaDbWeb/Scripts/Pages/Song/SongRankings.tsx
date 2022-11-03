@@ -5,7 +5,7 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -42,7 +42,7 @@ const SongRankings = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Song']);
 
-		useVocaDbTitle(vdb.resources.song.rankingsTitle, true);
+		useVdbTitle(vdb.resources.song.rankingsTitle, true);
 
 		useLocationStateStore(rankingsStore);
 

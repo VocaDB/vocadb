@@ -1,7 +1,7 @@
 import Alert from '@/Bootstrap/Alert';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -38,7 +38,7 @@ const TagIndexLayout = observer(
 
 		const title = t('ViewRes:Shared.Tags');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const tagCount = model.sumBy((m) => m.tags.length);
 		const avgUsageCount =

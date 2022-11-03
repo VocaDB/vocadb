@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { HttpClient } from '@/Shared/HttpClient';
 import { StatsStore } from '@/Stores/StatsStore';
 import Highcharts from 'highcharts';
@@ -16,7 +16,7 @@ const StatsIndex = observer(
 	(): React.ReactElement => {
 		const title = 'Statistics / Reports'; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		return (
 			<Layout title={title}>

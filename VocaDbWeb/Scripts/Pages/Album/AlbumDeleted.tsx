@@ -1,6 +1,6 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -25,7 +25,7 @@ const AlbumDeleted = observer(
 
 		const title = 'Deleted albums'; /* TODO: localize */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		useLocationStateStore(deletedAlbumsStore);
 

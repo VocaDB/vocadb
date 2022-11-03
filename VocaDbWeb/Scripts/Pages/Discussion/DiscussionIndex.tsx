@@ -1,4 +1,4 @@
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolders from '@/Pages/Discussion/Partials/ViewFolders';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -17,7 +17,7 @@ const DiscussionIndex = observer(
 
 		const title = t('ViewRes.Discussion:Index.Discussions');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		React.useEffect(() => {
 			runInAction(() => {
