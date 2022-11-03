@@ -123,6 +123,7 @@ export enum PlayMethod {
 	ClearAndPlay,
 	PlayNext,
 	AddToPlayQueue,
+	PlayFirst,
 }
 
 export class PlayQueueStore
@@ -333,6 +334,18 @@ export class PlayQueueStore
 		this.unselectAll();
 	};
 
+	@action playFirst = (items: PlayQueueItem[]): void => {
+		if (this.isEmpty) {
+			this.clearAndPlay(items);
+			return;
+		}
+
+		const { currentIndex } = this;
+		if (currentIndex === undefined) return;
+		this.items.splice(currentIndex, 0, ...items);
+		this.currentIndex = currentIndex;
+	};
+
 	@action removeFromPlayQueue = async (
 		items: PlayQueueItem[],
 	): Promise<void> => {
@@ -405,6 +418,10 @@ export class PlayQueueStore
 
 			case PlayMethod.AddToPlayQueue:
 				this.addToPlayQueue(items);
+				break;
+
+			case PlayMethod.PlayFirst:
+				this.playFirst(items);
 				break;
 		}
 	};

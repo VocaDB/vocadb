@@ -146,6 +146,11 @@ const PlaylistTableRowDropdown = observer(
 				</Dropdown.Toggle>
 				<Dropdown.Menu align="end">
 					<Dropdown.Item
+						onClick={(): void => playQueue.playFirst([item.clone()])}
+					>
+						Play first{/* TODO: localize */}
+					</Dropdown.Item>
+					<Dropdown.Item
 						onClick={(): void => playQueue.playNext([item.clone()])}
 					>
 						Play next{/* TODO: localize */}
@@ -165,13 +170,6 @@ const PlaylistTableRowDropdown = observer(
 						onClick={(): Promise<void> => playQueue.removeItemsAbove(item)}
 					>
 						Remove to the top{/* TODO: localize */}
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={(): Promise<void> =>
-							playQueue.removeFromPlayQueue(playQueue.items)
-						}
-					>
-						Remove all{/* TODO: localize */}
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
