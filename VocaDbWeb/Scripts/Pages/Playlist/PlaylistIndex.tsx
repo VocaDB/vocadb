@@ -348,68 +348,47 @@ const PlaylistIndex = observer(
 						)}
 						<div css={{ display: 'flex' }}>
 							<div>
-								{playQueue.selectedItems.length > 0 ? (
-									<>
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={playQueue.playSelectedItemsNext}
-											icons={{ primary: 'ui-icon-play' }}
-										>
-											Play next{/* TODO: localize */}
-										</JQueryUIButton>{' '}
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={playQueue.addSelectedItemsToPlayQueue}
-											icons={{ primary: 'ui-icon-plus' }}
-										>
-											Add to play queue{/* TODO: localize */}
-										</JQueryUIButton>{' '}
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={handleClickAddToNewSongList}
-											icons={{ primary: 'ui-icon-plus' }}
-											disabled={true}
-											title="Coming soon!" /* TODO: Remove. */
-										>
-											Add to new song list{/* TODO: localize */}
-										</JQueryUIButton>{' '}
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={playQueue.removeSelectedItemsFromPlayQueue}
-											icons={{ primary: ' ui-icon-close' }}
-										>
-											Remove{/* TODO: localize */}
-										</JQueryUIButton>
-									</>
-								) : (
-									<>
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={playQueue.clear}
-											icons={{ primary: 'ui-icon-trash' }}
-											disabled={playQueue.isEmpty}
-										>
-											Clear{/* TODO: localize */}
-										</JQueryUIButton>{' '}
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={playQueue.addSelectedItemsToPlayQueue}
-											icons={{ primary: 'ui-icon-plus' }}
-											disabled={playQueue.isEmpty}
-										>
-											Add to play queue{/* TODO: localize */}
-										</JQueryUIButton>{' '}
-										<JQueryUIButton
-											as={SafeAnchor}
-											onClick={handleClickAddToNewSongList}
-											icons={{ primary: 'ui-icon-plus' }}
-											disabled={true}
-											title="Coming soon!" /* TODO: Remove. */
-										>
-											Add to new song list{/* TODO: localize */}
-										</JQueryUIButton>
-									</>
-								)}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={playQueue.playSelectedItemsNext}
+									icons={{ primary: 'ui-icon-play' }}
+									disabled={playQueue.selectedItems.length === 0}
+								>
+									Play next{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={playQueue.addSelectedItemsToPlayQueue}
+									icons={{ primary: 'ui-icon-plus' }}
+									disabled={playQueue.selectedItems.length === 0}
+								>
+									Add to play queue{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={handleClickAddToNewSongList}
+									icons={{ primary: 'ui-icon-plus' }}
+									disabled={true}
+									title="Coming soon!" /* TODO: Remove. */
+								>
+									Add to new song list{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={playQueue.removeSelectedItemsFromPlayQueue}
+									icons={{ primary: ' ui-icon-close' }}
+									disabled={playQueue.selectedItems.length === 0}
+								>
+									Remove{/* TODO: localize */}
+								</JQueryUIButton>{' '}
+								<JQueryUIButton
+									as={SafeAnchor}
+									onClick={playQueue.clear}
+									icons={{ primary: 'ui-icon-trash' }}
+									disabled={playQueue.isEmpty}
+								>
+									Clear{/* TODO: localize */}
+								</JQueryUIButton>
 							</div>
 							<div css={{ flexGrow: 1 }} />
 							<div>
