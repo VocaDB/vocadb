@@ -8,12 +8,12 @@ import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { action, makeObservable, observable } from 'mobx';
 
 export class TagDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	@observable public isFollowed: boolean;
-	public readonly reportStore: ReportEntryStore;
-	public readonly description: EnglishTranslatedStringStore;
+	readonly comments: EditableCommentsStore;
+	@observable isFollowed: boolean;
+	readonly reportStore: ReportEntryStore;
+	readonly description: EnglishTranslatedStringStore;
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		tagRepo: TagRepository,
 		private readonly userRepo: UserRepository,
@@ -51,13 +51,13 @@ export class TagDetailsStore {
 		this.isFollowed = isFollowed;
 	}
 
-	@action public followTag = (): void => {
+	@action followTag = (): void => {
 		if (!this.loginManager.isLoggedIn) return;
 		this.userRepo.addFollowedTag({ tagId: this.tagId });
 		this.isFollowed = true;
 	};
 
-	@action public unfollowTag = (): void => {
+	@action unfollowTag = (): void => {
 		this.userRepo.deleteFollowedTag({ tagId: this.tagId });
 		this.isFollowed = false;
 	};

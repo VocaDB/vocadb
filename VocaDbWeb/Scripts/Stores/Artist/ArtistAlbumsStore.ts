@@ -35,7 +35,7 @@ const validate = ajv.compile(schema);
 export class ArtistAlbumsStore
 	extends AlbumSearchStore
 	implements LocationStateStore<ArtistAlbumsRouteParams> {
-	public constructor(values: GlobalValues, albumRepo: AlbumRepository) {
+	constructor(values: GlobalValues, albumRepo: AlbumRepository) {
 		super(
 			new CommonSearchStore(values, undefined!),
 			values,
@@ -44,7 +44,7 @@ export class ArtistAlbumsStore
 		);
 	}
 
-	public get locationState(): ArtistAlbumsRouteParams {
+	get locationState(): ArtistAlbumsRouteParams {
 		return {
 			page: this.paging.page,
 			pageSize: this.paging.pageSize,
@@ -52,20 +52,18 @@ export class ArtistAlbumsStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set locationState(value: ArtistAlbumsRouteParams) {
+	set locationState(value: ArtistAlbumsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? AlbumSortRule.Name;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is ArtistAlbumsRouteParams => {
+	validateLocationState = (data: any): data is ArtistAlbumsRouteParams => {
 		return validate(data);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<ArtistAlbumsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

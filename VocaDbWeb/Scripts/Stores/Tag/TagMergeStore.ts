@@ -12,12 +12,12 @@ import {
 } from 'mobx';
 
 export class TagMergeStore {
-	@observable public submitting = false;
-	public readonly target: BasicEntryLinkStore<TagBaseContract>;
-	@observable public validationError_targetIsLessComplete = false;
-	@observable public validationError_targetIsNewer = false;
+	@observable submitting = false;
+	readonly target: BasicEntryLinkStore<TagBaseContract>;
+	@observable validationError_targetIsLessComplete = false;
+	@observable validationError_targetIsNewer = false;
 
-	public constructor(
+	constructor(
 		private readonly tagRepo: TagRepository,
 		private readonly tag: TagBaseContract,
 	) {
@@ -42,11 +42,11 @@ export class TagMergeStore {
 		);
 	}
 
-	public tagFilter = (tag: TagApiContract): boolean => {
+	tagFilter = (tag: TagApiContract): boolean => {
 		return tag.id !== this.tag.id;
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		targetTagId: number,
 	): Promise<void> => {

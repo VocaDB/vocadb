@@ -37,13 +37,13 @@ const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRoutePara
 const validate = ajv.compile(schema);
 
 export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
-	@observable public dateFilterType = 'CreateDate' /* TODO: enum */;
-	@observable public durationHours?: number;
+	@observable dateFilterType = 'CreateDate' /* TODO: enum */;
+	@observable durationHours?: number;
 	private readonly pvServiceIcons: PVServiceIcons;
-	@observable public songs: ISongSearchItem[] = [];
-	@observable public vocalistSelection?: string;
+	@observable songs: ISongSearchItem[] = [];
+	@observable vocalistSelection?: string;
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		private readonly songRepo: SongRepository,
@@ -55,7 +55,7 @@ export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 	}
 
-	public getPVServiceIcons = (
+	getPVServiceIcons = (
 		services: string,
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
@@ -94,30 +94,30 @@ export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
 			});
 	};
 
-	public getTagUrl = (tag: TagUsageForApiContract): string => {
+	getTagUrl = (tag: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	@computed.struct public get locationState(): RankingsRouteParams {
+	@computed.struct get locationState(): RankingsRouteParams {
 		return {
 			dateFilterType: this.dateFilterType,
 			durationHours: this.durationHours,
 			vocalistSelection: this.vocalistSelection,
 		};
 	}
-	public set locationState(value: RankingsRouteParams) {
+	set locationState(value: RankingsRouteParams) {
 		this.dateFilterType = value.dateFilterType ?? 'CreateDate';
 		this.durationHours = value.durationHours;
 		this.vocalistSelection = value.vocalistSelection;
 	}
 
-	public validateLocationState = (data: any): data is RankingsRouteParams => {
+	validateLocationState = (data: any): data is RankingsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -127,7 +127,7 @@ export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
 		this.pauseNotifications = false;
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<RankingsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

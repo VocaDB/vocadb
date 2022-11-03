@@ -6,10 +6,10 @@ import { action, computed, makeObservable, observable } from 'mobx';
 export class TagListStore {
 	private static maxDisplayedTags = 4;
 
-	@observable public expanded = false;
-	@observable public tagUsages: TagUsageForApiContract[];
+	@observable expanded = false;
+	@observable tagUsages: TagUsageForApiContract[];
 
-	public constructor(tagUsages: TagUsageForApiContract[]) {
+	constructor(tagUsages: TagUsageForApiContract[]) {
 		makeObservable(this);
 
 		this.tagUsages = [];
@@ -19,13 +19,13 @@ export class TagListStore {
 			this.expanded = true;
 	}
 
-	@computed public get displayedTagUsages(): TagUsageForApiContract[] {
+	@computed get displayedTagUsages(): TagUsageForApiContract[] {
 		return this.expanded
 			? this.tagUsages
 			: this.tagUsages.take(TagListStore.maxDisplayedTags);
 	}
 
-	@computed public get tagUsagesByCategories(): {
+	@computed get tagUsagesByCategories(): {
 		categoryName: string;
 		tagUsages: TagUsageForApiContract[];
 	}[] {
@@ -51,11 +51,11 @@ export class TagListStore {
 			.concat(empty);
 	}
 
-	public getTagUrl = (tag: TagUsageForApiContract): string => {
+	getTagUrl = (tag: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	@action public updateTagUsages = (usages: TagUsageForApiContract[]): void => {
+	@action updateTagUsages = (usages: TagUsageForApiContract[]): void => {
 		this.tagUsages = usages
 			.sortBy((u) => u.tag.name.toLowerCase())
 			.sortBy((u) => -u.count);

@@ -13,10 +13,10 @@ import {
 
 // Manages tag filters for search
 export class TagFilters {
-	@observable public childTags = false;
-	@observable public tags: TagFilter[] = [];
+	@observable childTags = false;
+	@observable tags: TagFilter[] = [];
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly tagRepo: TagRepository,
 		tags?: TagFilter[],
@@ -26,22 +26,22 @@ export class TagFilters {
 		this.tags = tags || [];
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tags.map((t) => t.id);
 	}
 
 	// Fired when any of the tag filters is changed
-	@computed public get filters(): any {
+	@computed get filters(): any {
 		return {
 			tagIds: this.tagIds,
 			childTags: this.childTags,
 		};
 	}
 
-	@action public addTag = (tag: TagBaseContract): number =>
+	@action addTag = (tag: TagBaseContract): number =>
 		this.tags.push(TagFilter.fromContract(tag));
 
-	@action public addTags = (selectedTagIds: number[]): void => {
+	@action addTags = (selectedTagIds: number[]): void => {
 		if (!selectedTagIds) return;
 
 		const filters = selectedTagIds.map((a) => new TagFilter(a));
@@ -66,7 +66,7 @@ export class TagFilters {
 		}
 	};
 
-	@action public removeTag = (tag: TagFilter): void => {
+	@action removeTag = (tag: TagFilter): void => {
 		pull(this.tags, tag);
 	};
 }

@@ -79,7 +79,7 @@ export class SongRepository
 	implements ICommentRepository {
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -151,7 +151,7 @@ export class SongRepository
 		};
 	}
 
-	public addSongToList = ({
+	addSongToList = ({
 		listId,
 		songId,
 		notes,
@@ -170,7 +170,7 @@ export class SongRepository
 		});
 	};
 
-	public createComment = ({
+	createComment = ({
 		entryId: songId,
 		contract,
 	}: {
@@ -183,7 +183,7 @@ export class SongRepository
 		);
 	};
 
-	public createReport = ({
+	createReport = ({
 		songId,
 		reportType,
 		notes,
@@ -210,17 +210,13 @@ export class SongRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate = ({
+	findDuplicate = ({
 		params,
 	}: {
 		params: {
@@ -238,7 +234,7 @@ export class SongRepository
 
 	private get: <T>(relative: string, params: any) => Promise<T>;
 
-	public getByNames({
+	getByNames({
 		names,
 		ignoreIds,
 		lang,
@@ -258,7 +254,7 @@ export class SongRepository
 		});
 	}
 
-	public getComments = ({
+	getComments = ({
 		entryId: songId,
 	}: {
 		entryId: number;
@@ -268,16 +264,12 @@ export class SongRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<SongForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<SongForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}/for-edit`);
 		return this.httpClient.get<SongForEditContract>(url);
 	};
 
-	public getLyrics = ({
+	getLyrics = ({
 		lyricsId,
 		songVersion,
 	}: {
@@ -293,7 +285,7 @@ export class SongRepository
 
 	private getJSON: <T>(relative: string, params: any) => Promise<T>;
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
 		baseUrl,
 		id,
 		fields,
@@ -311,7 +303,7 @@ export class SongRepository
 		});
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
@@ -325,7 +317,7 @@ export class SongRepository
 		});
 	};
 
-	public getListByParams({
+	getListByParams({
 		params,
 	}: {
 		params: SongQueryParams;
@@ -337,7 +329,7 @@ export class SongRepository
 		);
 	}
 
-	public getList = ({
+	getList = ({
 		fields,
 		lang,
 		paging,
@@ -418,7 +410,7 @@ export class SongRepository
 		);
 	};
 
-	public getOverTime = ({
+	getOverTime = ({
 		timeUnit,
 		artistId,
 	}: {
@@ -433,7 +425,7 @@ export class SongRepository
 	};
 
 	// Get PV ID by song ID and PV service.
-	public getPvId = ({
+	getPvId = ({
 		songId,
 		pvService,
 	}: {
@@ -446,7 +438,7 @@ export class SongRepository
 		);
 	};
 
-	public getRatings = ({
+	getRatings = ({
 		songId,
 	}: {
 		songId: number;
@@ -457,7 +449,7 @@ export class SongRepository
 		);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		songId,
 	}: {
 		songId: number;
@@ -472,7 +464,7 @@ export class SongRepository
 
 	private post: <T>(relative: string, params: any) => Promise<T>;
 
-	public pvForSongAndService: ({
+	pvForSongAndService: ({
 		songId,
 		pvService,
 	}: {
@@ -480,7 +472,7 @@ export class SongRepository
 		pvService: PVService;
 	}) => Promise<string>;
 
-	public pvPlayer = ({
+	pvPlayer = ({
 		songId,
 		params,
 	}: {
@@ -493,23 +485,23 @@ export class SongRepository
 		);
 	};
 
-	public pvPlayerWithRating: ({
+	pvPlayerWithRating: ({
 		songId,
 	}: {
 		songId: number;
 	}) => Promise<SongWithPVPlayerAndVoteContract>;
 
-	//public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
+	//songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
-	public songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
+	songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
 
-	public songListsForUser: ({
+	songListsForUser: ({
 		ignoreSongId,
 	}: {
 		ignoreSongId: number;
 	}) => Promise<SongListBaseContract[]>;
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -522,7 +514,7 @@ export class SongRepository
 		);
 	};
 
-	public updatePersonalDescription = ({
+	updatePersonalDescription = ({
 		songId,
 		text,
 		author,
@@ -540,7 +532,7 @@ export class SongRepository
 		);
 	};
 
-	public updateSongRating = ({
+	updateSongRating = ({
 		songId,
 		rating,
 	}: {
@@ -551,7 +543,7 @@ export class SongRepository
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
 	};
 
-	public getDetails = ({
+	getDetails = ({
 		id,
 		albumId,
 	}: {
@@ -564,7 +556,7 @@ export class SongRepository
 		);
 	};
 
-	public getSongWithArchivedVersions = ({
+	getSongWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -574,7 +566,7 @@ export class SongRepository
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -587,7 +579,7 @@ export class SongRepository
 		);
 	};
 
-	public create = (
+	create = (
 		requestToken: string,
 		contract: CreateSongContract,
 	): Promise<number> => {
@@ -606,7 +598,7 @@ export class SongRepository
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: SongForEditContract,
 	): Promise<number> => {
@@ -625,7 +617,7 @@ export class SongRepository
 		);
 	};
 
-	public merge = (
+	merge = (
 		requestToken: string,
 		{ id, targetSongId }: { id: number; targetSongId: number },
 	): Promise<void> => {

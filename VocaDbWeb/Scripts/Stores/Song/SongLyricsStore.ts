@@ -24,11 +24,11 @@ const validate = ajv.compile(schema);
 
 export class SongLyricsStore
 	implements LocationStateStore<SongLyricsRouteParams> {
-	@observable public albumId?: number;
-	@observable public selectedLyrics?: LyricsForSongContract;
-	@observable public selectedLyricsId: number;
+	@observable albumId?: number;
+	@observable selectedLyrics?: LyricsForSongContract;
+	@observable selectedLyricsId: number;
 
-	public constructor(
+	constructor(
 		private readonly songRepo: SongRepository,
 		private readonly lyricsId: number,
 		private readonly songVersion: number,
@@ -38,24 +38,24 @@ export class SongLyricsStore
 		this.selectedLyricsId = lyricsId;
 	}
 
-	@computed.struct public get locationState(): SongLyricsRouteParams {
+	@computed.struct get locationState(): SongLyricsRouteParams {
 		return {
 			albumId: this.albumId,
 			lyricsId: this.selectedLyricsId,
 		};
 	}
-	public set locationState(value: SongLyricsRouteParams) {
+	set locationState(value: SongLyricsRouteParams) {
 		this.albumId = value.albumId;
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 
-	public validateLocationState = (data: any): data is SongLyricsRouteParams => {
+	validateLocationState = (data: any): data is SongLyricsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -72,7 +72,7 @@ export class SongLyricsStore
 		});
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<SongLyricsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

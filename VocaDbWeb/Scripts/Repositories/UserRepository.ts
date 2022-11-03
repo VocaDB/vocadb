@@ -69,7 +69,7 @@ export class UserRepository implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
 	private mapUrl: (relative: string) => string;
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
@@ -78,13 +78,13 @@ export class UserRepository implements ICommentRepository {
 		};
 	}
 
-	public addFollowedTag = ({ tagId }: { tagId: number }): Promise<void> => {
+	addFollowedTag = ({ tagId }: { tagId: number }): Promise<void> => {
 		return this.httpClient.post<void>(
 			this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
 		);
 	};
 
-	public createArtistSubscription = ({
+	createArtistSubscription = ({
 		artistId,
 	}: {
 		artistId: number;
@@ -102,7 +102,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public createComment = ({
+	createComment = ({
 		entryId: userId,
 		contract,
 	}: {
@@ -115,7 +115,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public createMessage = ({
+	createMessage = ({
 		userId,
 		contract,
 	}: {
@@ -128,7 +128,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public deleteArtistSubscription = ({
+	deleteArtistSubscription = ({
 		artistId,
 	}: {
 		artistId: number;
@@ -146,38 +146,26 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
 		);
 	};
 
-	public deleteEventForUser = ({
-		eventId,
-	}: {
-		eventId: number;
-	}): Promise<void> => {
+	deleteEventForUser = ({ eventId }: { eventId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			`/api/users/current/events/${eventId}`,
 		);
 		return this.httpClient.delete<void>(url);
 	};
 
-	public deleteFollowedTag = ({ tagId }: { tagId: number }): Promise<void> => {
+	deleteFollowedTag = ({ tagId }: { tagId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
 		);
 	};
 
-	public deleteMessage = ({
-		messageId,
-	}: {
-		messageId: number;
-	}): Promise<void> => {
+	deleteMessage = ({ messageId }: { messageId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/User/DeleteMessage');
 		return this.httpClient.post<void>(
 			url,
@@ -190,7 +178,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public deleteMessages = ({
+	deleteMessages = ({
 		userId,
 		messageIds,
 	}: {
@@ -206,7 +194,7 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getAlbumCollectionList = ({
+	getAlbumCollectionList = ({
 		userId,
 		paging,
 		lang,
@@ -261,7 +249,7 @@ export class UserRepository implements ICommentRepository {
 		>(url, data);
 	};
 
-	public getComments = async ({
+	getComments = async ({
 		entryId: userId,
 	}: {
 		entryId: number;
@@ -282,7 +270,7 @@ export class UserRepository implements ICommentRepository {
 		return result.items;
 	};
 
-	public getEvents = ({
+	getEvents = ({
 		userId,
 		relationshipType,
 	}: {
@@ -295,7 +283,7 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public getFollowedArtistsList = ({
+	getFollowedArtistsList = ({
 		userId,
 		paging,
 		lang,
@@ -330,7 +318,7 @@ export class UserRepository implements ICommentRepository {
 		>(url, data);
 	};
 
-	public getList = ({
+	getList = ({
 		paging,
 		query,
 		sort,
@@ -372,7 +360,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		fields,
 	}: {
@@ -385,7 +373,7 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public getOneByName = async ({
+	getOneByName = async ({
 		username,
 	}: {
 		username: string;
@@ -403,7 +391,7 @@ export class UserRepository implements ICommentRepository {
 		return result.items.length === 1 ? result.items[0] : undefined;
 	};
 
-	public getMessage = ({
+	getMessage = ({
 		messageId,
 	}: {
 		messageId: number;
@@ -412,7 +400,7 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.get<UserMessageSummaryContract>(url);
 	};
 
-	public getMessageSummaries = ({
+	getMessageSummaries = ({
 		userId,
 		inbox,
 		paging,
@@ -440,7 +428,7 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public getRatedSongsList = ({
+	getRatedSongsList = ({
 		fields,
 		lang,
 		paging,
@@ -491,7 +479,7 @@ export class UserRepository implements ICommentRepository {
 		>(url, data);
 	};
 
-	public getRatingsByGenre = ({
+	getRatingsByGenre = ({
 		userId,
 	}: {
 		userId: number;
@@ -502,7 +490,7 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.get<Tuple2<string, number>[]>(url);
 	};
 
-	public getSongLists = ({
+	getSongLists = ({
 		userId,
 		query,
 		paging,
@@ -536,7 +524,7 @@ export class UserRepository implements ICommentRepository {
 	// userId: User ID.
 	// songId: ID of the song for which to get the rating. Cannot be null.
 	// callback: Callback receiving the rating. If the user has not rated the song, or if the user is not logged in, this will be "Nothing".
-	public getSongRating = ({
+	getSongRating = ({
 		userId,
 		songId,
 	}: {
@@ -553,7 +541,7 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.get<string>(url);
 	};
 
-	public getAlbumTagSelections = ({
+	getAlbumTagSelections = ({
 		albumId,
 	}: {
 		albumId: number;
@@ -563,7 +551,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getArtistTagSelections = ({
+	getArtistTagSelections = ({
 		artistId,
 	}: {
 		artistId: number;
@@ -573,7 +561,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getEventTagSelections = ({
+	getEventTagSelections = ({
 		eventId,
 	}: {
 		eventId: number;
@@ -583,7 +571,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getEventSeriesTagSelections = ({
+	getEventSeriesTagSelections = ({
 		seriesId,
 	}: {
 		seriesId: number;
@@ -595,7 +583,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getSongListTagSelections = ({
+	getSongListTagSelections = ({
 		songListId,
 	}: {
 		songListId: number;
@@ -607,7 +595,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getSongTagSelections = ({
+	getSongTagSelections = ({
 		songId,
 	}: {
 		songId: number;
@@ -617,7 +605,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public refreshEntryEdit = ({
+	refreshEntryEdit = ({
 		entryType,
 		entryId,
 	}: {
@@ -632,7 +620,7 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public requestEmailVerification = ({}: {}): Promise<void> => {
+	requestEmailVerification = ({}: {}): Promise<void> => {
 		var url = this.mapUrl('/RequestEmailVerification');
 		return this.httpClient.post<void>(url, undefined, {
 			headers: {
@@ -641,7 +629,7 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public updateAlbumTags = ({
+	updateAlbumTags = ({
 		albumId,
 		tags,
 	}: {
@@ -655,7 +643,7 @@ export class UserRepository implements ICommentRepository {
 	};
 
 	// Updates artist subscription settings for an artist followed by a user.
-	public updateArtistSubscription = ({
+	updateArtistSubscription = ({
 		artistId,
 		emailNotifications,
 		siteNotifications,
@@ -679,7 +667,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public updateArtistTags = ({
+	updateArtistTags = ({
 		artistId,
 		tags,
 	}: {
@@ -692,7 +680,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -705,7 +693,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public updateEventForUser = ({
+	updateEventForUser = ({
 		eventId,
 		associationType,
 	}: {
@@ -720,7 +708,7 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public updateEventTags = ({
+	updateEventTags = ({
 		eventId,
 		tags,
 	}: {
@@ -733,7 +721,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public updateEventSeriesTags = ({
+	updateEventSeriesTags = ({
 		seriesId,
 		tags,
 	}: {
@@ -748,7 +736,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public updateSongListTags = ({
+	updateSongListTags = ({
 		songListId,
 		tags,
 	}: {
@@ -767,7 +755,7 @@ export class UserRepository implements ICommentRepository {
 	// songId: Id of the song to be updated.
 	// rating: Song rating.
 	// callback: Callback function to be executed when the operation is complete.
-	public updateSongRating = ({
+	updateSongRating = ({
 		songId,
 		rating,
 	}: {
@@ -778,7 +766,7 @@ export class UserRepository implements ICommentRepository {
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
 	};
 
-	public updateSongTags = ({
+	updateSongTags = ({
 		songId,
 		tags,
 	}: {
@@ -795,7 +783,7 @@ export class UserRepository implements ICommentRepository {
 	// userId: user ID.
 	// settingName: name of the setting to be updated, for example 'showChatBox'.
 	// value: setting value, for example 'false'.
-	public updateUserSetting = ({
+	updateUserSetting = ({
 		userId,
 		settingName,
 		value,
@@ -812,23 +800,19 @@ export class UserRepository implements ICommentRepository {
 		});
 	};
 
-	public getDetails = ({
-		name,
-	}: {
-		name: string;
-	}): Promise<UserDetailsContract> => {
+	getDetails = ({ name }: { name: string }): Promise<UserDetailsContract> => {
 		return this.httpClient.get<UserDetailsContract>(
 			this.urlMapper.mapRelative(`/api/profiles/${name}`),
 		);
 	};
 
-	public getForMySettings = (): Promise<UserForMySettingsContract> => {
+	getForMySettings = (): Promise<UserForMySettingsContract> => {
 		return this.httpClient.get<UserForMySettingsContract>(
 			this.urlMapper.mapRelative('/api/users/current/for-my-settings'),
 		);
 	};
 
-	public updateMySettings = (
+	updateMySettings = (
 		requestToken: string,
 		contract: UpdateUserSettingsContract,
 		pictureUpload: File | undefined,
@@ -850,7 +834,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public getForEdit = ({
+	getForEdit = ({
 		id,
 	}: {
 		id: number;
@@ -860,7 +844,7 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: UserForEditContract,
 	): Promise<number> => {

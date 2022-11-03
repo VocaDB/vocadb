@@ -21,13 +21,13 @@ import moment from 'moment';
 export class SongInListEditStore {
 	private static nextId = 1;
 
-	public readonly id: number;
-	@observable public notes: string;
-	@observable public order: number;
-	public readonly song: SongApiContract;
-	public readonly songInListId: number;
+	readonly id: number;
+	@observable notes: string;
+	@observable order: number;
+	readonly song: SongApiContract;
+	readonly songInListId: number;
 
-	public constructor(data: SongInListEditContract) {
+	constructor(data: SongInListEditContract) {
 		makeObservable(this);
 
 		this.id = SongInListEditStore.nextId++;
@@ -39,35 +39,35 @@ export class SongInListEditStore {
 }
 
 export class SongListEditStore {
-	public readonly deleteStore = new DeleteEntryStore((notes) =>
+	readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.songListRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: false,
 		}),
 	);
-	@observable public description: string;
-	@observable public errors?: Record<string, string[]>;
-	@observable public eventDateDate?: Date;
-	@observable public featuredCategory: SongListFeaturedCategory;
-	@observable public name: string;
-	@observable public songLinks: SongInListEditStore[];
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
-	public readonly trashStore = new DeleteEntryStore((notes) =>
+	@observable description: string;
+	@observable errors?: Record<string, string[]>;
+	@observable eventDateDate?: Date;
+	@observable featuredCategory: SongListFeaturedCategory;
+	@observable name: string;
+	@observable songLinks: SongInListEditStore[];
+	@observable status: EntryStatus;
+	@observable submitting = false;
+	readonly trashStore = new DeleteEntryStore((notes) =>
 		this.songListRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: true,
 		}),
 	);
-	@observable public updateNotes = '';
+	@observable updateNotes = '';
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
-		public readonly contract: SongListForEditContract,
+		readonly contract: SongListForEditContract,
 	) {
 		makeObservable(this);
 
@@ -96,11 +96,11 @@ export class SongListEditStore {
 		);
 	}
 
-	@computed public get eventDate(): string | undefined {
+	@computed get eventDate(): string | undefined {
 		return this.eventDateDate ? this.eventDateDate.toISOString() : undefined;
 	}
 
-	public acceptSongSelection = (songId?: number): void => {
+	acceptSongSelection = (songId?: number): void => {
 		if (!songId) return;
 
 		this.songRepo
@@ -118,11 +118,11 @@ export class SongListEditStore {
 			});
 	};
 
-	@action public removeSong = (songLink: SongInListEditStore): void => {
+	@action removeSong = (songLink: SongInListEditStore): void => {
 		pull(this.songLinks, songLink);
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		thumbPicUpload: File | undefined,
 	): Promise<number> => {

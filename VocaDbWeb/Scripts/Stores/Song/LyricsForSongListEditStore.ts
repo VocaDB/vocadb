@@ -7,16 +7,16 @@ import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
 export class LyricsForSongEditStore {
-	@observable public cultureCode: string;
-	@observable public id: number;
-	public readonly isNew: boolean;
-	@observable public language: ContentLanguageSelection;
-	@observable public source: string;
-	@observable public translationType: string /* TODO: enum */;
-	@observable public url: string;
-	@observable public value: string;
+	@observable cultureCode: string;
+	@observable id: number;
+	readonly isNew: boolean;
+	@observable language: ContentLanguageSelection;
+	@observable source: string;
+	@observable translationType: string /* TODO: enum */;
+	@observable url: string;
+	@observable value: string;
 
-	public constructor(contract?: LyricsForSongContract) {
+	constructor(contract?: LyricsForSongContract) {
 		makeObservable(this);
 
 		if (contract) {
@@ -51,7 +51,7 @@ export class LyricsForSongEditStore {
 		this.isNew = !contract;
 	}
 
-	@computed public get showLanguageSelection(): boolean {
+	@computed get showLanguageSelection(): boolean {
 		return this.translationType !== TranslationType[TranslationType.Romanized];
 	}
 }
@@ -60,8 +60,8 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 	LyricsForSongEditStore,
 	LyricsForSongContract
 > {
-	public readonly original: LyricsForSongEditStore;
-	public readonly romanized: LyricsForSongEditStore;
+	readonly original: LyricsForSongEditStore;
+	readonly romanized: LyricsForSongEditStore;
 
 	private find = (translationType: string): LyricsForSongEditStore => {
 		let store = this.items.find((i) => i.translationType === translationType);
@@ -76,14 +76,14 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 		return store;
 	};
 
-	public constructor(contracts: LyricsForSongContract[]) {
+	constructor(contracts: LyricsForSongContract[]) {
 		super(LyricsForSongEditStore, contracts);
 
 		this.original = this.find('Original');
 		this.romanized = this.find('Romanized');
 	}
 
-	@action public changeToOriginal = (lyrics: LyricsForSongEditStore): void => {
+	@action changeToOriginal = (lyrics: LyricsForSongEditStore): void => {
 		this.original.id = lyrics.id;
 		this.original.value = lyrics.value;
 		this.original.cultureCode = lyrics.cultureCode;
@@ -92,9 +92,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 		pull(this.items, lyrics);
 	};
 
-	@action public changeToTranslation = (
-		lyrics: LyricsForSongEditStore,
-	): void => {
+	@action changeToTranslation = (lyrics: LyricsForSongEditStore): void => {
 		if (lyrics === this.original) {
 			const newLyrics = new LyricsForSongEditStore({
 				id: this.original.id,
@@ -117,7 +115,7 @@ export class LyricsForSongListEditStore extends BasicListEditStore<
 		}
 	};
 
-	public toContracts = (): LyricsForSongContract[] => {
+	toContracts = (): LyricsForSongContract[] => {
 		return [this.original, this.romanized]
 			.concat(this.items)
 			.filter((i) => !!i.value);

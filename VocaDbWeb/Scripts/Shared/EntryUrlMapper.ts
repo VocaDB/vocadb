@@ -13,7 +13,7 @@ export class EntryUrlMapper {
 	// URL to details view.
 	// typeName: entry type name.
 	// id: entry Id.
-	public static details(
+	static details(
 		typeName: string | EntryType,
 		id: number,
 		urlFriendlyName?: string,
@@ -65,11 +65,11 @@ export class EntryUrlMapper {
 		return prefix + urlFriendlyPart;
 	}
 
-	public static details_entry(entry: EntryRefContract, slug?: string): string {
+	static details_entry(entry: EntryRefContract, slug?: string): string {
 		return EntryUrlMapper.details(entry.entryType, entry.id, slug);
 	}
 
-	public static details_song(entry: SongApiContract): string {
+	static details_song(entry: SongApiContract): string {
 		return EntryUrlMapper.details(
 			EntryType.Song,
 			entry.id,
@@ -77,11 +77,11 @@ export class EntryUrlMapper {
 		);
 	}
 
-	public static details_tag(id: number, slug?: string): string {
+	static details_tag(id: number, slug?: string): string {
 		return EntryUrlMapper.details(EntryType.Tag, id, slug);
 	}
 
-	public static details_tag_contract(
+	static details_tag_contract(
 		tag: TagBaseContract | TagApiContract | undefined,
 	): string | undefined {
 		if (!tag) return undefined;
@@ -91,13 +91,11 @@ export class EntryUrlMapper {
 		return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
 	}
 
-	public static details_user_byName(name?: string): string {
+	static details_user_byName(name?: string): string {
 		return functions.mapAbsoluteUrl(`/Profile/${name}`);
 	}
 
-	public static index = (
-		fullEntryType: EntryTypeAndSubTypeContract,
-	): string => {
+	static index = (fullEntryType: EntryTypeAndSubTypeContract): string => {
 		switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
 			case EntryType.Artist:
 				return `/Search?${qs.stringify({

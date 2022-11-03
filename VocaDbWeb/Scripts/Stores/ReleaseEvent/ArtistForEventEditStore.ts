@@ -5,14 +5,14 @@ import { computed, makeObservable, observable } from 'mobx';
 
 // Store for editing artist for album link.
 export class ArtistForEventEditStore implements IEditableArtistWithSupport {
-	public readonly artist: ArtistContract;
+	readonly artist: ArtistContract;
 	// Unique link Id.
-	public readonly id: number;
-	public readonly name: string;
+	readonly id: number;
+	readonly name: string;
 	// List of roles for this artist.
-	@observable public rolesArray: string[];
+	@observable rolesArray: string[];
 
-	public constructor(data: ArtistForEventContract) {
+	constructor(data: ArtistForEventContract) {
 		makeObservable(this);
 
 		this.artist = data.artist!;
@@ -25,14 +25,14 @@ export class ArtistForEventEditStore implements IEditableArtistWithSupport {
 	}
 
 	// Roles as comma-separated string (for serializing to and from .NET enum for the server)
-	@computed public get roles(): string {
+	@computed get roles(): string {
 		return this.rolesArray.join();
 	}
-	public set roles(value: string) {
+	set roles(value: string) {
 		this.rolesArray = value.split(',').map((val) => val.trim());
 	}
 
-	public toContract = (): ArtistForEventContract => {
+	toContract = (): ArtistForEventContract => {
 		return {
 			artist: this.artist,
 			id: this.id,

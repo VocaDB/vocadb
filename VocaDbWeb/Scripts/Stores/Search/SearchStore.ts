@@ -76,23 +76,23 @@ const validate = ajv.compile(schema);
 
 export class SearchStore
 	implements ICommonSearchStore, LocationStateStore<SearchRouteParams> {
-	public readonly albumSearchStore: AlbumSearchStore;
-	public readonly anythingSearchStore: AnythingSearchStore;
-	public readonly artistSearchStore: ArtistSearchStore;
-	public readonly eventSearchStore: EventSearchStore;
-	public readonly songSearchStore: SongSearchStore;
-	public readonly tagSearchStore: TagSearchStore;
+	readonly albumSearchStore: AlbumSearchStore;
+	readonly anythingSearchStore: AnythingSearchStore;
+	readonly artistSearchStore: ArtistSearchStore;
+	readonly eventSearchStore: EventSearchStore;
+	readonly songSearchStore: SongSearchStore;
+	readonly tagSearchStore: TagSearchStore;
 
-	@observable public draftsOnly = false;
-	@observable public genreTags: TagBaseContract[] = [];
-	@observable public pageSize = 10;
-	@observable public showAdvancedFilters = false;
-	@observable public searchTerm = '';
-	@observable public searchType = SearchType.Anything;
-	public readonly tagFilters: TagFilters;
-	@observable public showTags = false;
+	@observable draftsOnly = false;
+	@observable genreTags: TagBaseContract[] = [];
+	@observable pageSize = 10;
+	@observable showAdvancedFilters = false;
+	@observable searchTerm = '';
+	@observable searchType = SearchType.Anything;
+	readonly tagFilters: TagFilters;
+	@observable showTags = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,
 		entryRepo: EntryRepository,
@@ -149,39 +149,39 @@ export class SearchStore
 			);
 	}
 
-	@computed public get showAnythingSearch(): boolean {
+	@computed get showAnythingSearch(): boolean {
 		return this.searchType === SearchType.Anything;
 	}
 
-	@computed public get showArtistSearch(): boolean {
+	@computed get showArtistSearch(): boolean {
 		return this.searchType === SearchType.Artist;
 	}
 
-	@computed public get showAlbumSearch(): boolean {
+	@computed get showAlbumSearch(): boolean {
 		return this.searchType === SearchType.Album;
 	}
 
-	@computed public get showEventSearch(): boolean {
+	@computed get showEventSearch(): boolean {
 		return this.searchType === SearchType.ReleaseEvent;
 	}
 
-	@computed public get showSongSearch(): boolean {
+	@computed get showSongSearch(): boolean {
 		return this.searchType === SearchType.Song;
 	}
 
-	@computed public get showTagSearch(): boolean {
+	@computed get showTagSearch(): boolean {
 		return this.searchType === SearchType.Tag;
 	}
 
-	@computed public get showTagFilter(): boolean {
+	@computed get showTagFilter(): boolean {
 		return !this.showTagSearch;
 	}
 
-	@computed public get showDraftsFilter(): boolean {
+	@computed get showDraftsFilter(): boolean {
 		return this.searchType !== SearchType.Tag;
 	}
 
-	@computed public get isUniversalSearch(): boolean {
+	@computed get isUniversalSearch(): boolean {
 		return this.searchType === SearchType.Anything;
 	}
 
@@ -210,36 +210,36 @@ export class SearchStore
 		}
 	};
 
-	public get currentCategoryStore(): ISearchCategoryBaseStore<SearchRouteParams> {
+	get currentCategoryStore(): ISearchCategoryBaseStore<SearchRouteParams> {
 		return this.getCategoryStore(this.searchType);
 	}
 
-	public get paging(): ServerSidePagingStore {
+	get paging(): ServerSidePagingStore {
 		return this.currentCategoryStore.paging;
 	}
 
-	@computed public get locationState(): SearchRouteParams {
+	@computed get locationState(): SearchRouteParams {
 		return this.currentCategoryStore.locationState;
 	}
-	public set locationState(value: SearchRouteParams) {
+	set locationState(value: SearchRouteParams) {
 		value.searchType ??= SearchType.Anything;
 		this.searchType = value.searchType;
 		this.currentCategoryStore.locationState = value;
 	}
 
-	public validateLocationState = (data: any): data is SearchRouteParams => {
+	validateLocationState = (data: any): data is SearchRouteParams => {
 		return validate(data);
 	};
 
-	public updateResults = (clearResults: boolean): Promise<void> => {
+	updateResults = (clearResults: boolean): Promise<void> => {
 		return this.currentCategoryStore.updateResults(clearResults);
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<SearchRouteParams>,
 	): void => {
 		this.currentCategoryStore.onLocationStateChange?.(event);

@@ -33,7 +33,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 	AnythingSearchRouteParams,
 	EntryContract
 > {
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly entryRepo: EntryRepository,
@@ -43,13 +43,13 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	@computed public get fields(): string {
+	@computed get fields(): string {
 		return this.showTags
 			? 'AdditionalNames,MainPicture,Tags'
 			: 'AdditionalNames,MainPicture';
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<EntryContract>> => {
 		return this.entryRepo.getList({
@@ -63,11 +63,11 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	public entryUrl = (entry: EntryContract): string => {
+	entryUrl = (entry: EntryContract): string => {
 		return EntryUrlMapper.details(entry.entryType, entry.id);
 	};
 
-	@computed.struct public get locationState(): AnythingSearchRouteParams {
+	@computed.struct get locationState(): AnythingSearchRouteParams {
 		return {
 			searchType: SearchType.Anything,
 			childTags: this.childTags,
@@ -78,7 +78,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: AnythingSearchRouteParams) {
+	set locationState(value: AnythingSearchRouteParams) {
 		this.childTags = value.childTags ?? false;
 		this.draftsOnly = value.draftsOnly ?? false;
 		this.searchTerm = value.filter ?? '';
@@ -87,7 +87,7 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<AnythingSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

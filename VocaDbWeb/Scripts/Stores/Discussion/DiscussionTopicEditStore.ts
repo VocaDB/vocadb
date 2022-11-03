@@ -5,15 +5,15 @@ import { LoginManager } from '@/Models/LoginManager';
 import { makeObservable, observable } from 'mobx';
 
 export class DiscussionTopicEditStore {
-	public readonly author: UserApiContract;
-	@observable public content = '';
-	@observable public folderId?: number = undefined;
-	@observable public locked = false;
-	@observable public name = '';
+	readonly author: UserApiContract;
+	@observable content = '';
+	@observable folderId?: number = undefined;
+	@observable locked = false;
+	@observable name = '';
 
-	public constructor(
+	constructor(
 		loginManager: LoginManager,
-		public folders: DiscussionFolderContract[],
+		readonly folders: DiscussionFolderContract[],
 		contract?: DiscussionTopicContract,
 	) {
 		makeObservable(this);
@@ -29,7 +29,7 @@ export class DiscussionTopicEditStore {
 		}
 	}
 
-	public toContract = (): DiscussionTopicContract => {
+	toContract = (): DiscussionTopicContract => {
 		return JSON.parse(JSON.stringify(this)) as DiscussionTopicContract;
 	};
 }

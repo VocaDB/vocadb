@@ -8,18 +8,18 @@ import { computed, makeObservable, observable, runInAction } from 'mobx';
 // Store for the top bar.
 export class TopBarStore {
 	// entryType: currently selected entry type (for search).
-	@observable public entryType = EntryType.Undefined;
-	@observable public isLoaded = false;
-	@observable public reportCount = 0;
-	@observable public searchTerm = '';
-	@observable public unreadMessages: UserMessageSummaryContract[] = [];
+	@observable entryType = EntryType.Undefined;
+	@observable isLoaded = false;
+	@observable reportCount = 0;
+	@observable searchTerm = '';
+	@observable unreadMessages: UserMessageSummaryContract[] = [];
 	// unreadMessagesCount: number of unread received messages (includes notifications).
-	@observable public unreadMessagesCount = 0;
+	@observable unreadMessagesCount = 0;
 
 	// Initializes store.
 	// entryReportRepo: entry reports repository.
 	// userRepo: user repository.
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		entryReportRepo: EntryReportRepository,
 		private readonly userRepo: UserRepository,
@@ -36,11 +36,11 @@ export class TopBarStore {
 		}
 	}
 
-	@computed public get hasNotifications(): boolean {
+	@computed get hasNotifications(): boolean {
 		return this.reportCount > 0;
 	}
 
-	public ensureMessagesLoaded = async (): Promise<void> => {
+	ensureMessagesLoaded = async (): Promise<void> => {
 		if (this.isLoaded) return;
 
 		const messages = await this.userRepo.getMessageSummaries({

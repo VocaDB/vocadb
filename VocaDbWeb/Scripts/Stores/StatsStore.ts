@@ -23,7 +23,7 @@ interface IReport {
 }
 
 export class StatsStore {
-	public categories: IReportCategory[] = [
+	categories: IReportCategory[] = [
 		{
 			name: 'Producers',
 			reports: [
@@ -145,11 +145,11 @@ export class StatsStore {
 		},
 	];
 
-	@observable public chartData?: any = undefined;
-	@observable public selectedReport?: IReport = undefined;
-	@observable public timespan?: string = undefined;
+	@observable chartData?: any = undefined;
+	@observable selectedReport?: IReport = undefined;
+	@observable timespan?: string = undefined;
 
-	public constructor(private readonly httpClient: HttpClient) {
+	constructor(private readonly httpClient: HttpClient) {
 		makeObservable(this);
 
 		reaction(() => this.selectedReport, this.updateReport);
@@ -159,7 +159,7 @@ export class StatsStore {
 		});
 	}
 
-	@computed public get showTimespanFilter(): boolean {
+	@computed get showTimespanFilter(): boolean {
 		return this.selectedReport?.allowTimespan ?? false;
 	}
 

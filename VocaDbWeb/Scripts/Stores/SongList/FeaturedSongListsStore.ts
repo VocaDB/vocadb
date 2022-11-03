@@ -17,7 +17,7 @@ import Ajv, { JSONSchemaType } from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly songListRepo: SongListRepository,
 		tagRepo: TagRepository,
@@ -36,9 +36,7 @@ export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 		makeObservable(this);
 	}
 
-	public loadMoreItems = (): Promise<
-		PartialFindResultContract<SongListContract>
-	> => {
+	loadMoreItems = (): Promise<PartialFindResultContract<SongListContract>> => {
 		return this.songListRepo.getFeatured({
 			query: this.query,
 			category: this.category,
@@ -72,10 +70,10 @@ const validate = ajv.compile(schema);
 
 export class FeaturedSongListsStore
 	implements LocationStateStore<FeaturedSongListsRouteParams> {
-	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
-	@observable public category = SongListFeaturedCategory.Concerts;
+	categories: { [index: string]: FeaturedSongListCategoryStore } = {};
+	@observable category = SongListFeaturedCategory.Concerts;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		songListRepo: SongListRepository,
 		tagRepo: TagRepository,
@@ -95,9 +93,7 @@ export class FeaturedSongListsStore
 		}
 	}
 
-	@action public setCategory = (
-		categoryName: SongListFeaturedCategory,
-	): void => {
+	@action setCategory = (categoryName: SongListFeaturedCategory): void => {
 		if (!categoryName) categoryName = SongListFeaturedCategory.Concerts;
 
 		this.category = categoryName;
@@ -107,7 +103,7 @@ export class FeaturedSongListsStore
 		return this.categories[this.category];
 	}
 
-	@computed.struct public get locationState(): FeaturedSongListsRouteParams {
+	@computed.struct get locationState(): FeaturedSongListsRouteParams {
 		return {
 			categoryName: this.category,
 			filter: this.currentCategoryStore.query,
@@ -115,7 +111,7 @@ export class FeaturedSongListsStore
 			tagId: this.currentCategoryStore.tagIds,
 		};
 	}
-	public set locationState(value: FeaturedSongListsRouteParams) {
+	set locationState(value: FeaturedSongListsRouteParams) {
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
 		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
@@ -124,15 +120,13 @@ export class FeaturedSongListsStore
 		);
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is FeaturedSongListsRouteParams => {
+	validateLocationState = (data: any): data is FeaturedSongListsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -142,7 +136,7 @@ export class FeaturedSongListsStore
 		this.pauseNotifications = false;
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<FeaturedSongListsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

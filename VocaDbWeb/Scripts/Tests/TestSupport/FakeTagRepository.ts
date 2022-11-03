@@ -5,7 +5,7 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 
 export class FakeTagRepository extends TagRepository {
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), '');
 
 		this.getEntryTypeTag = ({

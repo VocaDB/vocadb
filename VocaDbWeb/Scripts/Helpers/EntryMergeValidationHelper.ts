@@ -11,7 +11,7 @@ export class EntryMergeValidationHelper {
 		}
 	}
 
-	public static validate(
+	static validate(
 		baseStatus: string | EntryStatus,
 		targetStatus: string | EntryStatus,
 		baseCreated: string,
@@ -33,7 +33,7 @@ export class EntryMergeValidationHelper {
 		};
 	}
 
-	public static validateEntry(
+	static validateEntry(
 		base?: CommonEntryContract,
 		target?: CommonEntryContract,
 	): IEntryMergeValidationResult {

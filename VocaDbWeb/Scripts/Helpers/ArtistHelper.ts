@@ -8,7 +8,7 @@ export class ArtistHelper {
 	/// <summary>
 	/// The roles of these artists can be customized
 	/// </summary>
-	public static customizableTypes = [
+	static customizableTypes = [
 		ArtistType.Animator,
 		ArtistType.OtherGroup,
 		ArtistType.OtherIndividual,
@@ -24,7 +24,7 @@ export class ArtistHelper {
 	];
 
 	// Artist types that are groups (excluding Unknown)
-	public static groupTypes = [
+	static groupTypes = [
 		ArtistType.Band,
 		ArtistType.Circle,
 		ArtistType.Label,
@@ -42,7 +42,7 @@ export class ArtistHelper {
 		ArtistType.SynthesizerV,
 	];
 
-	public static canHaveChildVoicebanks(at?: ArtistType): boolean {
+	static canHaveChildVoicebanks(at?: ArtistType): boolean {
 		if (at == null) return false;
 
 		return (
@@ -51,12 +51,12 @@ export class ArtistHelper {
 		);
 	}
 
-	public static getRolesArray(roles: string[] | string): ArtistRoles[] {
+	static getRolesArray(roles: string[] | string): ArtistRoles[] {
 		const stringArr = typeof roles === 'string' ? roles.split(',') : roles;
 		return stringArr.map((s) => ArtistRoles[s as keyof typeof ArtistRoles]);
 	}
 
-	public static getRolesList(roles: ArtistRoles | ArtistRoles[]): string {
+	static getRolesList(roles: ArtistRoles | ArtistRoles[]): string {
 		if (Array.isArray(roles)) {
 			return roles.map((r) => ArtistRoles[r]).join(',');
 		} else {
@@ -65,17 +65,17 @@ export class ArtistHelper {
 	}
 
 	// Whether the roles for an artist type can be customized
-	public static isCustomizable(at: ArtistType): boolean {
+	static isCustomizable(at: ArtistType): boolean {
 		return ArtistHelper.customizableTypes.includes(at);
 	}
 
 	// Whether roles array indicates default roles
-	public static isDefaultRoles(roles: ArtistRoles[]): boolean {
+	static isDefaultRoles(roles: ArtistRoles[]): boolean {
 		return roles.length === 0 || roles[0] === ArtistRoles.Default;
 	}
 
 	// Checks whether an artist type with possible custom roles is to be considered a producer
-	public static isProducerRoleType(
+	static isProducerRoleType(
 		artistType: ArtistType,
 		roles: ArtistRoles[],
 		focus: ContentFocus,
@@ -99,7 +99,7 @@ export class ArtistHelper {
 		return res;
 	}
 
-	public static isProducerRole(
+	static isProducerRole(
 		artist: ArtistContract,
 		roles: ArtistRoles[],
 		focus: ContentFocus,
@@ -112,10 +112,7 @@ export class ArtistHelper {
 	}
 
 	// Whether an artist type with default roles is to be considered a producer
-	public static isProducerType(
-		artistType: ArtistType,
-		focus: ContentFocus,
-	): boolean {
+	static isProducerType(artistType: ArtistType, focus: ContentFocus): boolean {
 		return (
 			artistType === ArtistType.Producer ||
 			artistType === ArtistType.Circle ||
@@ -127,7 +124,7 @@ export class ArtistHelper {
 		);
 	}
 
-	public static isValidForPersonalDescription(
+	static isValidForPersonalDescription(
 		artistLink: ArtistForAlbumContract,
 	): boolean {
 		if (!artistLink.artist || artistLink.isSupport) return false;
@@ -162,7 +159,7 @@ export class ArtistHelper {
 		return validRoles.some((r) => rolesArray.includes(r));
 	}
 
-	public static isVocalistRoleType(
+	static isVocalistRoleType(
 		artistType: ArtistType,
 		roles: ArtistRoles[],
 	): boolean {
@@ -178,17 +175,14 @@ export class ArtistHelper {
 		return res;
 	}
 
-	public static isVocalistRole(
-		artist: ArtistContract,
-		roles: ArtistRoles[],
-	): boolean {
+	static isVocalistRole(artist: ArtistContract, roles: ArtistRoles[]): boolean {
 		return ArtistHelper.isVocalistRoleType(
 			artist != null ? artist.artistType : ArtistType.Unknown,
 			roles,
 		);
 	}
 
-	public static isVocalistType(artistType: ArtistType): boolean {
+	static isVocalistType(artistType: ArtistType): boolean {
 		return ArtistHelper.vocalistTypes.includes(artistType);
 	}
 

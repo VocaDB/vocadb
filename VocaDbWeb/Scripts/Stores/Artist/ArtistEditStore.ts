@@ -30,17 +30,17 @@ import {
 import moment from 'moment';
 
 export class ArtistForArtistEditStore {
-	@observable public linkType: string /* TODO: enum */;
-	public parent: ArtistContract;
+	@observable linkType: string /* TODO: enum */;
+	parent: ArtistContract;
 
-	public constructor(link: ArtistForArtistContract) {
+	constructor(link: ArtistForArtistContract) {
 		makeObservable(this);
 
 		this.linkType = link.linkType!;
 		this.parent = link.parent;
 	}
 
-	public toContract = (): ArtistForArtistContract => {
+	toContract = (): ArtistForArtistContract => {
 		return {
 			linkType: this.linkType,
 			parent: this.parent,
@@ -49,11 +49,11 @@ export class ArtistForArtistEditStore {
 }
 
 export class ArtistEditStore {
-	@observable public artistType: ArtistType;
-	@observable public associatedArtists: ArtistForArtistEditStore[];
-	public readonly baseVoicebank: BasicEntryLinkStore<ArtistContract>;
-	@observable public defaultNameLanguage: string;
-	public readonly deleteStore = new DeleteEntryStore(async (notes) => {
+	@observable artistType: ArtistType;
+	@observable associatedArtists: ArtistForArtistEditStore[];
+	readonly baseVoicebank: BasicEntryLinkStore<ArtistContract>;
+	@observable defaultNameLanguage: string;
+	readonly deleteStore = new DeleteEntryStore(async (notes) => {
 		await $.ajax(
 			this.urlMapper.mapRelative(
 				`api/artists/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
@@ -68,27 +68,27 @@ export class ArtistEditStore {
 			},
 		);
 	});
-	public readonly description: EnglishTranslatedStringEditStore;
-	@observable public errors?: Record<string, string[]>;
-	@observable public groups: ArtistForArtistContract[];
-	public readonly illustrator: BasicEntryLinkStore<ArtistContract>;
-	public readonly names: NamesEditStore;
-	public readonly newAssociatedArtist: BasicEntryLinkStore<ArtistContract>;
-	@observable public newAssociatedArtistType = ArtistLinkType.CharacterDesigner;
-	public readonly pictures: EntryPictureFileListEditStore;
-	@observable public releaseDate?: Date;
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
-	@observable public updateNotes = '';
-	@observable public validationExpanded = false;
-	public readonly voiceProvider: BasicEntryLinkStore<ArtistContract>;
-	public readonly webLinks: WebLinksEditStore;
+	readonly description: EnglishTranslatedStringEditStore;
+	@observable errors?: Record<string, string[]>;
+	@observable groups: ArtistForArtistContract[];
+	readonly illustrator: BasicEntryLinkStore<ArtistContract>;
+	readonly names: NamesEditStore;
+	readonly newAssociatedArtist: BasicEntryLinkStore<ArtistContract>;
+	@observable newAssociatedArtistType = ArtistLinkType.CharacterDesigner;
+	readonly pictures: EntryPictureFileListEditStore;
+	@observable releaseDate?: Date;
+	@observable status: EntryStatus;
+	@observable submitting = false;
+	@observable updateNotes = '';
+	@observable validationExpanded = false;
+	readonly voiceProvider: BasicEntryLinkStore<ArtistContract>;
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 		private readonly urlMapper: UrlMapper,
-		public readonly contract: ArtistForEditContract,
+		readonly contract: ArtistForEditContract,
 	) {
 		makeObservable(this);
 
@@ -139,19 +139,19 @@ export class ArtistEditStore {
 		);
 	};
 
-	@computed public get allowBaseVoicebank(): boolean {
+	@computed get allowBaseVoicebank(): boolean {
 		return this.canHaveBaseVoicebank(this.artistType);
 	}
 
-	@computed public get canHaveCircles(): boolean {
+	@computed get canHaveCircles(): boolean {
 		return this.artistType !== ArtistType.Label;
 	}
 
-	@computed public get canHaveRelatedArtists(): boolean {
+	@computed get canHaveRelatedArtists(): boolean {
 		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
-	@computed public get canHaveReleaseDate(): boolean {
+	@computed get canHaveReleaseDate(): boolean {
 		const vocaloidTypes = [
 			ArtistType.Vocaloid,
 			ArtistType.UTAU,
@@ -162,22 +162,22 @@ export class ArtistEditStore {
 		return vocaloidTypes.includes(this.artistType);
 	}
 
-	@computed public get validationError_needReferences(): boolean {
+	@computed get validationError_needReferences(): boolean {
 		return (
 			(!this.description.original || this.description.original.length === 0) &&
 			this.webLinks.items.length === 0
 		);
 	}
 
-	@computed public get validationError_needType(): boolean {
+	@computed get validationError_needType(): boolean {
 		return this.artistType === ArtistType.Unknown;
 	}
 
-	@computed public get validationError_unspecifiedNames(): boolean {
+	@computed get validationError_unspecifiedNames(): boolean {
 		return !this.names.hasPrimaryName();
 	}
 
-	@computed public get validationError_unnecessaryPName(): boolean {
+	@computed get validationError_unnecessaryPName(): boolean {
 		const allNames = this.names.getAllNames();
 		return allNames.some((n) =>
 			allNames.some(
@@ -191,7 +191,7 @@ export class ArtistEditStore {
 		);
 	}
 
-	@computed public get hasValidationErrors(): boolean {
+	@computed get hasValidationErrors(): boolean {
 		return (
 			this.validationError_needReferences ||
 			this.validationError_needType ||
@@ -200,7 +200,7 @@ export class ArtistEditStore {
 		);
 	}
 
-	@action public addAssociatedArtist = (): void => {
+	@action addAssociatedArtist = (): void => {
 		if (!this.newAssociatedArtist.entry) return;
 
 		this.associatedArtists.push(
@@ -213,7 +213,7 @@ export class ArtistEditStore {
 		this.newAssociatedArtist.clear();
 	};
 
-	public addGroup = async (artistId?: number): Promise<void> => {
+	addGroup = async (artistId?: number): Promise<void> => {
 		if (!artistId) return;
 
 		const artist = await this.artistRepo.getOne({
@@ -226,11 +226,11 @@ export class ArtistEditStore {
 		});
 	};
 
-	@action public removeGroup = (group: ArtistForArtistContract): void => {
+	@action removeGroup = (group: ArtistForArtistContract): void => {
 		pull(this.groups, group);
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],

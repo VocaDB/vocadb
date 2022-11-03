@@ -50,13 +50,13 @@ export class AffiliateLinkGenerator {
 		return this.addOrReplaceParam(url, '(\\d+)', 'affiliate_id', this.paAffId);
 	};
 
-	public constructor(values: GlobalValues) {
+	constructor(values: GlobalValues) {
 		this.amazonComAffId = values.amazonComAffiliateId;
 		this.amazonJpAffId = values.amazonJpAffiliateId;
 		this.paAffId = values.playAsiaAffiliateId;
 	}
 
-	public generateAffiliateLink = (url?: string): string | undefined => {
+	generateAffiliateLink = (url?: string): string | undefined => {
 		if (!url) return url;
 
 		url = this.replaceAmazonComLink(url);
@@ -83,7 +83,7 @@ export class UrlHelper {
 	/// <param name="partialLink">Partial URL. Can be null.</param>
 	/// <param name="assumeWww">Whether to assume the URL should start with www.</param>
 	/// <returns>Full URL including http://. Can be null if source was null.</returns>
-	public static makeLink = (
+	static makeLink = (
 		partialLink: string | undefined,
 		assumeWww: boolean = false,
 	): string | undefined => {
@@ -97,7 +97,7 @@ export class UrlHelper {
 		return `http://${partialLink}`;
 	};
 
-	public static makePossileAffiliateLink = (
+	static makePossileAffiliateLink = (
 		partialLink?: string,
 	): string | undefined => {
 		const link = UrlHelper.makeLink(partialLink);
@@ -123,7 +123,7 @@ export class UrlHelper {
 		),
 	];
 
-	public static upgradeToHttps = (url?: string): string | undefined => {
+	static upgradeToHttps = (url?: string): string | undefined => {
 		if (!url || url.startsWith('https://')) return url;
 
 		if (UrlHelper.httpUpgradeDomains.some((m) => url!.startsWith(m)))
@@ -139,7 +139,7 @@ export class UrlHelper {
 		return url;
 	};
 
-	public static getSmallestThumb = (
+	static getSmallestThumb = (
 		imageInfo: EntryThumbContract,
 		preferLargerThan: ImageSize,
 	): string | undefined => {
@@ -178,7 +178,7 @@ export class UrlHelper {
 		}
 	};
 
-	public static imageThumb = (
+	static imageThumb = (
 		imageInfo: EntryThumbContract | undefined,
 		size: ImageSize,
 		useUnknownImage = true,

@@ -35,12 +35,12 @@ export enum SongListOptionalField {
 }
 
 export class SongListRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -59,10 +59,10 @@ export class SongListRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getComments = ({}: {}): EntryCommentRepository =>
+	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
 
-	public getFeatured = ({
+	getFeatured = ({
 		query,
 		category,
 		paging,
@@ -93,16 +93,12 @@ export class SongListRepository {
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<SongListForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<SongListForEditContract> => {
 		var url = this.urlMapper.mapRelative(`/api/songLists/${id}/for-edit`);
 		return this.httpClient.get<SongListForEditContract>(url);
 	};
 
-	public getSongs = ({
+	getSongs = ({
 		fields,
 		lang,
 		paging,
@@ -153,13 +149,13 @@ export class SongListRepository {
 		);
 	};
 
-	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
+	getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
 		return this.httpClient.get<SongListContract>(
 			this.urlMapper.mapRelative(`/api/songLists/${id}/details`),
 		);
 	};
 
-	public getSongListWithArchivedVersions = ({
+	getSongListWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -169,11 +165,11 @@ export class SongListRepository {
 		>(this.urlMapper.mapRelative(`/api/songLists/${id}/versions`));
 	};
 
-	public getOne = ({ id }: { id: number }): Promise<SongListBaseContract> => {
+	getOne = ({ id }: { id: number }): Promise<SongListBaseContract> => {
 		return this.httpClient.get<SongListBaseContract>(`/api/songLists/${id}`);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: SongListForEditContract,
 		thumbPicUpload: File | undefined,

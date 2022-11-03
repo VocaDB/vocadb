@@ -13,11 +13,11 @@ const format = (format: string, args: any): string => {
 export class RegexLinkMatcher {
 	private readonly regex: RegExp;
 
-	public constructor(private readonly template: string, regexStr: string) {
+	constructor(private readonly template: string, regexStr: string) {
 		this.regex = new RegExp(regexStr);
 	}
 
-	public getLinkFromUrl = (
+	getLinkFromUrl = (
 		url: string,
 	): { success: boolean; formattedUrl?: string } => {
 		const match = url.match(this.regex);

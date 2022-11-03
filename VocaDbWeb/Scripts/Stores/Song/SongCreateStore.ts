@@ -25,21 +25,21 @@ import {
 } from 'mobx';
 
 export class SongCreateStore {
-	@observable public artists: ArtistContract[] = [];
-	@observable public draft = false;
-	@observable public dupeEntries: DuplicateEntryResultContract[] = [];
-	@observable public errors?: Record<string, string[]>;
-	@observable public nameOriginal = '';
-	@observable public nameRomaji = '';
-	@observable public nameEnglish = '';
-	public readonly originalVersion: BasicEntryLinkStore<SongContract>;
-	@observable public pv1 = '';
-	@observable public pv2 = '';
-	@observable public songType = SongType.Original;
-	@observable public songTypeTag?: TagApiContract;
-	@observable public submitting = false;
+	@observable artists: ArtistContract[] = [];
+	@observable draft = false;
+	@observable dupeEntries: DuplicateEntryResultContract[] = [];
+	@observable errors?: Record<string, string[]>;
+	@observable nameOriginal = '';
+	@observable nameRomaji = '';
+	@observable nameEnglish = '';
+	readonly originalVersion: BasicEntryLinkStore<SongContract>;
+	@observable pv1 = '';
+	@observable pv2 = '';
+	@observable songType = SongType.Original;
+	@observable songTypeTag?: TagApiContract;
+	@observable submitting = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
@@ -77,11 +77,11 @@ export class SongCreateStore {
 		this.getSongTypeTag(this.songType);
 	}
 
-	@computed public get canHaveOriginalVersion(): boolean {
+	@computed get canHaveOriginalVersion(): boolean {
 		return this.songType !== SongType.Original;
 	}
 
-	@computed public get hasName(): boolean {
+	@computed get hasName(): boolean {
 		return (
 			this.nameOriginal.length > 0 ||
 			this.nameRomaji.length > 0 ||
@@ -89,30 +89,30 @@ export class SongCreateStore {
 		);
 	}
 
-	@computed public get isDuplicatePV(): boolean {
+	@computed get isDuplicatePV(): boolean {
 		return this.dupeEntries.some((item) => item.matchProperty === 'PV');
 	}
 
 	@computed
-	public get originalSongSuggestions(): DuplicateEntryResultContract[] {
+	get originalSongSuggestions(): DuplicateEntryResultContract[] {
 		if (!this.dupeEntries || this.dupeEntries.length === 0) return [];
 
 		return this.dupeEntries.take(3);
 	}
 
-	@computed public get songTypeName(): string | undefined {
+	@computed get songTypeName(): string | undefined {
 		return this.songTypeTag?.name;
 	}
 
-	@computed public get songTypeInfo(): string | undefined {
+	@computed get songTypeInfo(): string | undefined {
 		return this.songTypeTag?.description;
 	}
 
-	@computed public get songTypeTagUrl(): string | undefined {
+	@computed get songTypeTagUrl(): string | undefined {
 		return EntryUrlMapper.details_tag_contract(this.songTypeTag);
 	}
 
-	@computed public get coverArtists(): ArtistContract[] {
+	@computed get coverArtists(): ArtistContract[] {
 		return this.artists.filter(
 			(artist) => artist.artistType === ArtistType.CoverArtist,
 		);
@@ -173,15 +173,15 @@ export class SongCreateStore {
 		});
 	};
 
-	public checkDuplicates = (): Promise<void> => {
+	checkDuplicates = (): Promise<void> => {
 		return this._checkDuplicates(false);
 	};
 
-	public checkDuplicatesAndPV = (): Promise<void> => {
+	checkDuplicatesAndPV = (): Promise<void> => {
 		return this._checkDuplicates(true);
 	};
 
-	public addArtist = async (artistId?: number): Promise<void> => {
+	addArtist = async (artistId?: number): Promise<void> => {
 		if (!artistId) return;
 
 		const artist = await this.artistRepo.getOne({
@@ -196,11 +196,11 @@ export class SongCreateStore {
 		await this.checkDuplicates();
 	};
 
-	@action public removeArtist = (artist: ArtistContract): void => {
+	@action removeArtist = (artist: ArtistContract): void => {
 		pull(this.artists, artist);
 	};
 
-	public selectOriginal = async (
+	selectOriginal = async (
 		dupe: DuplicateEntryResultContract,
 	): Promise<void> => {
 		const song = await this.songRepo.getOne({
@@ -213,7 +213,7 @@ export class SongCreateStore {
 		});
 	};
 
-	@action public submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {

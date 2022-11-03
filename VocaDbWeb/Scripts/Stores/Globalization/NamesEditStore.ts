@@ -5,12 +5,12 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class NamesEditStore {
-	@observable public aliases: LocalizedStringWithIdEditStore[];
-	public englishName: LocalizedStringWithIdEditStore;
-	public originalName: LocalizedStringWithIdEditStore;
-	public romajiName: LocalizedStringWithIdEditStore;
+	@observable aliases: LocalizedStringWithIdEditStore[];
+	englishName: LocalizedStringWithIdEditStore;
+	originalName: LocalizedStringWithIdEditStore;
+	romajiName: LocalizedStringWithIdEditStore;
 
-	public constructor(names: LocalizedStringWithIdEditStore[] = []) {
+	constructor(names: LocalizedStringWithIdEditStore[] = []) {
 		makeObservable(this);
 
 		this.englishName = NamesEditStore.nameOrEmpty(
@@ -42,13 +42,11 @@ export class NamesEditStore {
 		return name || new LocalizedStringWithIdEditStore(lang, '');
 	}
 
-	@action public createAlias = (): void => {
+	@action createAlias = (): void => {
 		this.aliases.push(new LocalizedStringWithIdEditStore());
 	};
 
-	@action public deleteAlias = (
-		alias: LocalizedStringWithIdEditStore,
-	): void => {
+	@action deleteAlias = (alias: LocalizedStringWithIdEditStore): void => {
 		pull(this.aliases, alias);
 	};
 
@@ -56,21 +54,21 @@ export class NamesEditStore {
 		return [this.originalName, this.romajiName, this.englishName];
 	};
 
-	public getAllNames = (): LocalizedStringWithIdEditStore[] => {
+	getAllNames = (): LocalizedStringWithIdEditStore[] => {
 		return this.getAllPrimaryNames()
 			.concat(this.aliases)
 			.filter((name) => !!name && !!name.value);
 	};
 
-	public getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
+	getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
 		this.getAllPrimaryNames().filter((n) => !!n && !!n.value);
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
-	public hasPrimaryName = (): boolean => {
+	hasPrimaryName = (): boolean => {
 		return this.getPrimaryNames().some((name) => name && name.value);
 	};
 
-	public toContracts = (): LocalizedStringWithIdContract[] => {
+	toContracts = (): LocalizedStringWithIdContract[] => {
 		return this.getAllNames().map((name) => {
 			const contract: LocalizedStringWithIdContract = {
 				id: name.id,
@@ -82,7 +80,7 @@ export class NamesEditStore {
 		});
 	};
 
-	public static fromContracts(
+	static fromContracts(
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditStore {
 		return new NamesEditStore(

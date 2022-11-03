@@ -16,12 +16,12 @@ export class EntryRepository {
 		);
 	};
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private baseUrl: string,
 	) {}
 
-	public getList = ({
+	getList = ({
 		paging,
 		lang,
 		query,

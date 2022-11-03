@@ -38,17 +38,17 @@ export enum TagOptionalField {
 export class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 		this.urlMapper = new UrlMapper(baseUrl);
 	}
 
-	public create = ({ name }: { name: string }): Promise<TagBaseContract> => {
+	create = ({ name }: { name: string }): Promise<TagBaseContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags?name=${name}`);
 		return this.httpClient.post<TagBaseContract>(url);
 	};
 
-	public createReport = ({
+	createReport = ({
 		entryId: tagId,
 		reportType,
 		notes,
@@ -70,7 +70,7 @@ export class TagRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public getById = ({
+	getById = ({
 		id,
 		fields,
 		lang,
@@ -87,14 +87,14 @@ export class TagRepository extends BaseRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getComments = ({}: {}): EntryCommentRepository =>
+	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
 			this.httpClient,
 			new UrlMapper(this.baseUrl),
 			'/tags/',
 		);
 
-	public getEntryTypeTag = ({
+	getEntryTypeTag = ({
 		entryType,
 		subType,
 		lang,
@@ -113,7 +113,7 @@ export class TagRepository extends BaseRepository {
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		queryParams,
 	}: {
 		queryParams: TagQueryParams;
@@ -141,13 +141,13 @@ export class TagRepository extends BaseRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getEntryTagMappings = ({}: {}): Promise<EntryTagMappingContract[]> => {
+	getEntryTagMappings = ({}: {}): Promise<EntryTagMappingContract[]> => {
 		return this.httpClient.get<EntryTagMappingContract[]>(
 			this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
 		);
 	};
 
-	public getMappings = ({
+	getMappings = ({
 		paging,
 	}: {
 		paging: PagingProperties;
@@ -158,7 +158,7 @@ export class TagRepository extends BaseRepository {
 		);
 	};
 
-	public getTopTags = ({
+	getTopTags = ({
 		lang,
 		categoryName,
 		entryType,
@@ -177,7 +177,7 @@ export class TagRepository extends BaseRepository {
 		return this.httpClient.get<TagBaseContract[]>(url, data);
 	};
 
-	public saveEntryMappings = ({
+	saveEntryMappings = ({
 		mappings,
 	}: {
 		mappings: EntryTagMappingContract[];
@@ -186,7 +186,7 @@ export class TagRepository extends BaseRepository {
 		return this.httpClient.put<void>(url, mappings);
 	};
 
-	public saveMappings = ({
+	saveMappings = ({
 		mappings,
 	}: {
 		mappings: TagMappingContract[];
@@ -195,19 +195,19 @@ export class TagRepository extends BaseRepository {
 		return this.httpClient.put<void>(url, mappings);
 	};
 
-	public getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
 		return this.httpClient.get<TagDetailsContract>(
 			this.urlMapper.mapRelative(`/api/tags/${id}/details`),
 		);
 	};
 
-	public getTagsByCategories = (): Promise<TagCategoryContract[]> => {
+	getTagsByCategories = (): Promise<TagCategoryContract[]> => {
 		return this.httpClient.get<TagCategoryContract[]>(
 			this.urlMapper.mapRelative('/api/tags/by-categories'),
 		);
 	};
 
-	public getTagWithArchivedVersions = ({
+	getTagWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -217,7 +217,7 @@ export class TagRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/tags/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -230,13 +230,13 @@ export class TagRepository extends BaseRepository {
 		);
 	};
 
-	public getForEdit = ({ id }: { id: number }): Promise<TagForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<TagForEditContract> => {
 		return this.httpClient.get<TagForEditContract>(
 			this.urlMapper.mapRelative(`/api/tags/${id}/for-edit`),
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: TagForEditContract,
 		thumbPicUpload: File | undefined,
@@ -258,7 +258,7 @@ export class TagRepository extends BaseRepository {
 		);
 	};
 
-	public merge = (
+	merge = (
 		requestToken: string,
 		{ id, targetTagId }: { id: number; targetTagId: number },
 	): Promise<void> => {

@@ -3,12 +3,12 @@ import { functions } from '@/Shared/GlobalFunctions';
 import { HttpClient } from '@/Shared/HttpClient';
 
 export class ResourceRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private baseUrl: string,
 	) {}
 
-	public getList = ({
+	getList = ({
 		cultureCode,
 		setNames,
 	}: {

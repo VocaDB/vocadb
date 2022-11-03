@@ -154,11 +154,9 @@ const AboutVocaDb = React.memo(() => {
 				Do you have a site or service that concerns Vocaloid/UTAU discography?
 				We'd be happy to help you, and we're prepared to share the information
 				on our site with other similar services. Currently, we have a limited{' '}
-				<a href="https://github.com/riipah/vocadb/wiki/Public-API">
-					public API
-				</a>{' '}
-				for basic queries, supporting XML and JSON, and it's possible to expand
-				it as needed.
+				<a href="https://github.com/riipah/vocadb/wiki/Public-API">API</a> for
+				basic queries, supporting XML and JSON, and it's possible to expand it
+				as needed.
 			</p>
 			<p>
 				We're offering our own embeddable{' '}

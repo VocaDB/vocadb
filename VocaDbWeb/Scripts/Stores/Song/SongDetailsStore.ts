@@ -38,14 +38,14 @@ const fav = SongVoteRating[SongVoteRating.Favorite];
 const like = SongVoteRating[SongVoteRating.Like];
 
 export class RatingsStore {
-	@observable public popupVisible = false;
-	@observable public ratings: RatedSongForUserForApiContract[] = [];
+	@observable popupVisible = false;
+	@observable ratings: RatedSongForUserForApiContract[] = [];
 
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@computed public get favorites(): UserApiContract[] {
+	@computed get favorites(): UserApiContract[] {
 		return this.ratings
 			.filter((r) => !!r.user && r.rating === fav)
 			.take(20)
@@ -53,11 +53,11 @@ export class RatingsStore {
 			.sortBy((u) => u.name);
 	}
 
-	@computed public get favoritesCount(): number {
+	@computed get favoritesCount(): number {
 		return this.ratings.filter((r) => r.rating === fav).length;
 	}
 
-	@computed public get likes(): UserApiContract[] {
+	@computed get likes(): UserApiContract[] {
 		return this.ratings
 			.filter((r) => !!r.user && r.rating === like)
 			.take(20)
@@ -65,19 +65,19 @@ export class RatingsStore {
 			.sortBy((u) => u.name);
 	}
 
-	@computed public get likesCount(): number {
+	@computed get likesCount(): number {
 		return this.ratings.filter((r) => r.rating === like).length;
 	}
 
-	@computed public get hiddenRatingsCount(): number {
+	@computed get hiddenRatingsCount(): number {
 		return this.ratings.filter((r) => !r.user).length;
 	}
 
-	@computed public get showFavorites(): boolean {
+	@computed get showFavorites(): boolean {
 		return !!this.favorites.length;
 	}
 
-	@computed public get showLikes(): boolean {
+	@computed get showLikes(): boolean {
 		return !!this.likes.length;
 	}
 }
@@ -89,17 +89,17 @@ interface SongLinkWithUrl {
 }
 
 export class SongInListsStore {
-	@observable public contentHtml?: string;
-	@observable public dialogVisible = false;
+	@observable contentHtml?: string;
+	@observable dialogVisible = false;
 
-	public constructor(
+	constructor(
 		private readonly songRepo: SongRepository,
 		private readonly songId: number,
 	) {
 		makeObservable(this);
 	}
 
-	public show = (): void => {
+	show = (): void => {
 		this.songRepo.songListsForSong({ songId: this.songId }).then((result) =>
 			runInAction(() => {
 				this.contentHtml = result;
@@ -110,36 +110,36 @@ export class SongInListsStore {
 }
 
 export class SongListsStore {
-	public static readonly tabName_Personal = 'Personal';
-	public static readonly tabName_Featured = 'Featured';
-	public static readonly tabName_New = 'New';
+	static readonly tabName_Personal = 'Personal';
+	static readonly tabName_Featured = 'Featured';
+	static readonly tabName_New = 'New';
 
-	@observable public dialogVisible = false;
-	@observable public featuredLists: SongListBaseContract[] = [];
-	@observable public newListName = '';
-	@observable public notes = '';
-	@observable public personalLists: SongListBaseContract[] = [];
-	@observable public selectedListId?: number;
-	@observable public tabName = SongListsStore.tabName_Personal;
+	@observable dialogVisible = false;
+	@observable featuredLists: SongListBaseContract[] = [];
+	@observable newListName = '';
+	@observable notes = '';
+	@observable personalLists: SongListBaseContract[] = [];
+	@observable selectedListId?: number;
+	@observable tabName = SongListsStore.tabName_Personal;
 
-	public constructor(
+	constructor(
 		private readonly songRepo: SongRepository,
 		private readonly songId: number,
 	) {
 		makeObservable(this);
 	}
 
-	@computed public get isValid(): boolean {
+	@computed get isValid(): boolean {
 		return !!this.selectedListId || this.newListName.length > 0;
 	}
 
-	@computed public get songLists(): SongListBaseContract[] {
+	@computed get songLists(): SongListBaseContract[] {
 		return this.tabName === SongListsStore.tabName_Personal
 			? this.personalLists
 			: this.featuredLists;
 	}
 
-	public addSongToList = (): Promise<void> => {
+	addSongToList = (): Promise<void> => {
 		if (!this.isValid) return Promise.reject();
 
 		const listId =
@@ -161,7 +161,7 @@ export class SongListsStore {
 			});
 	};
 
-	public showSongLists = (): void => {
+	showSongLists = (): void => {
 		this.songRepo
 			.songListsForUser({ ignoreSongId: this.songId })
 			.then((songLists) => {
@@ -193,24 +193,24 @@ export class SongListsStore {
 
 // Store for the song details view.
 export class SongDetailsStore {
-	@observable public allVersionsVisible = false;
-	public readonly comments: EditableCommentsStore;
-	public readonly id: number;
-	@observable public maintenanceDialogVisible = false;
-	@observable public originalVersion: SongLinkWithUrl;
-	public readonly reportStore: ReportEntryStore;
-	public readonly lyricsStore: SongLyricsStore;
-	@observable public selectedPvId: number;
-	public readonly personalDescription: SelfDescriptionStore;
-	public readonly description: EnglishTranslatedStringStore;
-	public readonly songInListsDialog: SongInListsStore;
-	public readonly songListDialog: SongListsStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
-	public readonly ratingsDialogStore = new RatingsStore();
-	public readonly userRating: PVRatingButtonsStore;
+	@observable allVersionsVisible = false;
+	readonly comments: EditableCommentsStore;
+	readonly id: number;
+	@observable maintenanceDialogVisible = false;
+	@observable originalVersion: SongLinkWithUrl;
+	readonly reportStore: ReportEntryStore;
+	readonly lyricsStore: SongLyricsStore;
+	@observable selectedPvId: number;
+	readonly personalDescription: SelfDescriptionStore;
+	readonly description: EnglishTranslatedStringStore;
+	readonly songInListsDialog: SongInListsStore;
+	readonly songListDialog: SongListsStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
+	readonly ratingsDialogStore = new RatingsStore();
+	readonly userRating: PVRatingButtonsStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		loginManager: LoginManager,
 		private readonly httpClient: HttpClient,
@@ -311,14 +311,14 @@ export class SongDetailsStore {
 		}
 	}
 
-	@computed public get selectedLyrics(): LyricsForSongContract | undefined {
+	@computed get selectedLyrics(): LyricsForSongContract | undefined {
 		return this.lyricsStore.selectedLyrics;
 	}
 
-	@computed public get selectedLyricsId(): number {
+	@computed get selectedLyricsId(): number {
 		return this.lyricsStore.selectedLyricsId;
 	}
-	public set selectedLyricsId(value: number) {
+	set selectedLyricsId(value: number) {
 		this.lyricsStore.selectedLyricsId = value;
 	}
 
@@ -364,7 +364,7 @@ export class SongDetailsStore {
 			});
 	};
 
-	public getUsers = (): void => {
+	getUsers = (): void => {
 		this.songRepo.getRatings({ songId: this.id }).then((result) =>
 			runInAction(() => {
 				this.ratingsDialogStore.ratings = result;
@@ -373,7 +373,7 @@ export class SongDetailsStore {
 		);
 	};
 
-	@action public showAllVersions = (): void => {
+	@action showAllVersions = (): void => {
 		this.allVersionsVisible = true;
 	};
 }

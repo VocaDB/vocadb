@@ -36,22 +36,22 @@ const validate = ajv.compile(schema);
 
 export class DeletedAlbumsStore
 	implements LocationStateStore<DeletedAlbumsRouteParams> {
-	@observable public loading = false;
-	@observable public page: AlbumContract[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	@observable public searchTerm = '';
-	@observable public showTags = false;
-	@observable public sort = AlbumSortRule.Name;
-	@observable public viewMode = 'Details' /* TODO: enum */;
+	@observable loading = false;
+	@observable page: AlbumContract[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	@observable searchTerm = '';
+	@observable showTags = false;
+	@observable sort = AlbumSortRule.Name;
+	@observable viewMode = 'Details' /* TODO: enum */;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 	) {
 		makeObservable(this);
 	}
 
-	@computed.struct public get locationState(): DeletedAlbumsRouteParams {
+	@computed.struct get locationState(): DeletedAlbumsRouteParams {
 		return {
 			filter: this.searchTerm,
 			page: this.paging.page,
@@ -59,14 +59,14 @@ export class DeletedAlbumsStore
 			sort: this.sort,
 		};
 	}
-	public set locationState(value: DeletedAlbumsRouteParams) {
+	set locationState(value: DeletedAlbumsRouteParams) {
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.sort = value.sort ?? AlbumSortRule.Name;
 	}
 
-	public validateLocationState = (
+	validateLocationState = (
 		locationState: any,
 	): locationState is DeletedAlbumsRouteParams => {
 		return validate(locationState);
@@ -107,7 +107,7 @@ export class DeletedAlbumsStore
 		});
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<DeletedAlbumsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

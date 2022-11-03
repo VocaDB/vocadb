@@ -8,9 +8,9 @@ export class WebLinksEditStore extends BasicListEditStore<
 	WebLinkEditStore,
 	WebLinkContract
 > {
-	public constructor(
+	constructor(
 		webLinkContracts: WebLinkContract[],
-		public categories?: WebLinkCategory[],
+		readonly categories?: WebLinkCategory[],
 	) {
 		super(WebLinkEditStore, webLinkContracts);
 

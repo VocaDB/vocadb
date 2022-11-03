@@ -4,11 +4,11 @@ import { action, makeObservable, observable } from 'mobx';
 
 // Item type can be constructed from a contract, or with default parameters (for new items).
 export class BasicListEditStore<TItem extends TContract, TContract> {
-	@observable public items: TItem[];
+	@observable items: TItem[];
 
 	// type: item constructor, optionally receiving a data contract parameter.
 	// contracts: list of data contracts for current items.
-	public constructor(
+	constructor(
 		private readonly type: { new (contract?: TContract): TItem },
 		contracts: TContract[],
 	) {
@@ -18,15 +18,15 @@ export class BasicListEditStore<TItem extends TContract, TContract> {
 	}
 
 	// add new item by instansiating the item type with default parameters
-	@action public add = (): void => {
+	@action add = (): void => {
 		this.items.push(new this.type());
 	};
 
-	@action public remove = (item: TItem): void => {
+	@action remove = (item: TItem): void => {
 		pull(this.items, item);
 	};
 
-	public toContracts = (): TContract[] => {
+	toContracts = (): TContract[] => {
 		return this.items as TContract[];
 	};
 }

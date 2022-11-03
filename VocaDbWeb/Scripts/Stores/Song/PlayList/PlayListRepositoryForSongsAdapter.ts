@@ -41,13 +41,13 @@ export interface ISongsAdapterStore {
 }
 
 export class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		private readonly songsAdapterStore: ISongsAdapterStore,
 	) {}
 
-	public getSongs = (
+	getSongs = (
 		pvServices: PVService[],
 		paging: PagingProperties,
 		fields: SongOptionalField[],

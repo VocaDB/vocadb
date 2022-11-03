@@ -12,13 +12,13 @@ export interface ICommonSearchStore {
 }
 
 export class CommonSearchStore implements ICommonSearchStore {
-	@observable public draftsOnly = false;
-	@observable public pageSize = 10;
-	@observable public searchTerm = '';
-	@observable public showTags = false;
-	public readonly tagFilters: TagFilters;
+	@observable draftsOnly = false;
+	@observable pageSize = 10;
+	@observable searchTerm = '';
+	@observable showTags = false;
+	readonly tagFilters: TagFilters;
 
-	public constructor(values: GlobalValues, tagRepo: TagRepository) {
+	constructor(values: GlobalValues, tagRepo: TagRepository) {
 		makeObservable(this);
 
 		this.tagFilters = new TagFilters(values, tagRepo);

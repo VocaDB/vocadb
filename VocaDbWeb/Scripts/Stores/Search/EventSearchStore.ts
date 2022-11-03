@@ -65,15 +65,15 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 	EventSearchRouteParams,
 	ReleaseEventContract
 > {
-	@observable public afterDate?: Date = undefined;
-	@observable public allowAliases = false;
-	public readonly artistFilters: ArtistFilters;
-	@observable public beforeDate?: Date = undefined;
-	@observable public category = '';
-	@observable public onlyMyEvents = false;
-	@observable public sort = EventSortRule.Name;
+	@observable afterDate?: Date = undefined;
+	@observable allowAliases = false;
+	readonly artistFilters: ArtistFilters;
+	@observable beforeDate?: Date = undefined;
+	@observable category = '';
+	@observable onlyMyEvents = false;
+	@observable sort = EventSortRule.Name;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly eventRepo: ReleaseEventRepository,
@@ -86,7 +86,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): ReleaseEventOptionalField[] {
+	@computed get fields(): ReleaseEventOptionalField[] {
 		return this.showTags
 			? [
 					ReleaseEventOptionalField.AdditionalNames,
@@ -103,7 +103,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 			  ];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		return this.eventRepo.getList({
@@ -131,7 +131,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	@computed.struct public get locationState(): EventSearchRouteParams {
+	@computed.struct get locationState(): EventSearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,
 			afterDate: this.afterDate?.toISOString(),
@@ -149,7 +149,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: EventSearchRouteParams) {
+	set locationState(value: EventSearchRouteParams) {
 		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -167,7 +167,7 @@ export class EventSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<EventSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

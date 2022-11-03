@@ -3,9 +3,7 @@ import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 
 export class PVHelper {
-	public static pvServicesArrayFromString = (
-		pvServices: string,
-	): PVService[] => {
+	static pvServicesArrayFromString = (pvServices: string): PVService[] => {
 		if (!pvServices) return [];
 
 		var values = pvServices.split(',');
@@ -14,7 +12,7 @@ export class PVHelper {
 		return services;
 	};
 
-	public static primaryPV = (
+	static primaryPV = (
 		pvs: PVContract[],
 		autoplay?: boolean,
 	): PVContract | undefined => {

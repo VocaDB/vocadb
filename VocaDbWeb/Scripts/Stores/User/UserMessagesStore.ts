@@ -17,19 +17,19 @@ import {
 } from 'mobx';
 
 export class UserMessageStore {
-	@observable public checked = false;
-	public readonly created: string;
-	public readonly highPriority: boolean;
-	public readonly id: number;
-	public readonly inbox: string;
-	@observable public read: boolean;
-	public readonly receiver: UserApiContract;
-	@observable public selected = false;
+	@observable checked = false;
+	readonly created: string;
+	readonly highPriority: boolean;
+	readonly id: number;
+	readonly inbox: string;
+	@observable read: boolean;
+	readonly receiver: UserApiContract;
+	@observable selected = false;
 
-	public readonly sender: UserApiContract;
-	public subject: string;
+	readonly sender: UserApiContract;
+	subject: string;
 
-	public constructor(data: UserMessageSummaryContract) {
+	constructor(data: UserMessageSummaryContract) {
 		makeObservable(this);
 
 		this.created = data.createdFormatted;
@@ -44,14 +44,14 @@ export class UserMessageStore {
 }
 
 export class NewMessageStore {
-	@observable public body = '';
-	@observable public highPriority = false;
-	@observable public isReceiverInvalid = false;
-	@observable public isSending = false;
-	public readonly receiver: BasicEntryLinkStore<UserApiContract>;
-	@observable public subject = '';
+	@observable body = '';
+	@observable highPriority = false;
+	@observable isReceiverInvalid = false;
+	@observable isSending = false;
+	readonly receiver: BasicEntryLinkStore<UserApiContract>;
+	@observable subject = '';
 
-	public constructor(userRepo: UserRepository) {
+	constructor(userRepo: UserRepository) {
 		makeObservable(this);
 
 		this.receiver = new BasicEntryLinkStore<UserApiContract>((entryId) =>
@@ -66,14 +66,14 @@ export class NewMessageStore {
 		);
 	}
 
-	@action public clear = (): void => {
+	@action clear = (): void => {
 		this.body = '';
 		this.highPriority = false;
 		this.receiver.clear();
 		this.subject = '';
 	};
 
-	public toContract = (senderId: number): UserApiContract => {
+	toContract = (senderId: number): UserApiContract => {
 		return {
 			body: this.body,
 			highPriority: this.highPriority,
@@ -86,14 +86,14 @@ export class NewMessageStore {
 }
 
 export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
-	public readonly anotherUser: BasicEntryLinkStore<UserApiContract>;
-	@observable public selectAll = false;
-	@observable public unreadOnServer?: number;
+	readonly anotherUser: BasicEntryLinkStore<UserApiContract>;
+	@observable selectAll = false;
+	@observable unreadOnServer?: number;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly userRepo: UserRepository,
-		public readonly inbox: UserInboxType,
+		readonly inbox: UserInboxType,
 		getMessageCount: boolean,
 	) {
 		super();
@@ -131,19 +131,19 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 		reaction(() => this.anotherUser.id, this.clear);
 	}
 
-	@computed public get canFilterByUser(): boolean {
+	@computed get canFilterByUser(): boolean {
 		return (
 			this.inbox === UserInboxType.Received || this.inbox === UserInboxType.Sent
 		);
 	}
 
-	@computed public get unread(): number | undefined {
+	@computed get unread(): number | undefined {
 		return this.items.length
 			? this.items.filter((msg) => !msg.read).length
 			: this.unreadOnServer;
 	}
 
-	public loadMoreItems = async (): Promise<
+	loadMoreItems = async (): Promise<
 		PartialFindResultContract<UserMessageStore>
 	> => {
 		const result = await this.userRepo.getMessageSummaries({
@@ -159,12 +159,12 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 		return { items: messageStores, totalCount: result.totalCount };
 	};
 
-	@action public deleteMessage = (message: UserMessageStore): void => {
+	@action deleteMessage = (message: UserMessageStore): void => {
 		this.userRepo.deleteMessage({ messageId: message.id });
 		pull(this.items, message);
 	};
 
-	@action public deleteSelected = (): void => {
+	@action deleteSelected = (): void => {
 		const selected = this.items.filter((m) => m.checked);
 		const selectedIds = selected.map((m) => m.id);
 
@@ -177,7 +177,7 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 		pull(this.items, ...selected);
 	};
 
-	@action public selectMessage = (message: UserMessageStore): void => {
+	@action selectMessage = (message: UserMessageStore): void => {
 		for (const msg of this.items) {
 			if (msg !== message) msg.selected = false;
 		}
@@ -186,19 +186,19 @@ export class UserMessageFolderStore extends PagedItemsStore<UserMessageStore> {
 
 export class UserMessagesStore {
 	private readonly inboxes: UserMessageFolderStore[];
-	public newMessageStore: NewMessageStore;
-	public readonly notifications: UserMessageFolderStore;
-	public readonly receivedMessages: UserMessageFolderStore;
-	public readonly sentMessages: UserMessageFolderStore;
-	@observable public selectedMessage?: UserMessageStore;
-	@observable public selectedMessageBody = '';
-	@observable public tabName:
+	newMessageStore: NewMessageStore;
+	readonly notifications: UserMessageFolderStore;
+	readonly receivedMessages: UserMessageFolderStore;
+	readonly sentMessages: UserMessageFolderStore;
+	@observable selectedMessage?: UserMessageStore;
+	@observable selectedMessageBody = '';
+	@observable tabName:
 		| 'receivedTab'
 		| 'notificationsTab'
 		| 'sentTab'
 		| 'composeTab' = 'receivedTab';
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly userRepo: UserRepository,
 		private readonly userId: number,
@@ -252,7 +252,7 @@ export class UserMessagesStore {
 		}
 	}
 
-	@action public selectMessage = (message: UserMessageStore): void => {
+	@action selectMessage = (message: UserMessageStore): void => {
 		this.userRepo.getMessage({ messageId: message.id }).then((message) =>
 			runInAction(() => {
 				this.selectedMessageBody = message.body!;
@@ -268,7 +268,7 @@ export class UserMessagesStore {
 		this.selectedMessage = message;
 	};
 
-	@action public selectTab = (
+	@action selectTab = (
 		tabName: 'receivedTab' | 'notificationsTab' | 'sentTab' | 'composeTab',
 	): void => {
 		this.tabName = tabName;
@@ -293,7 +293,7 @@ export class UserMessagesStore {
 		this.selectTab(this.getInboxTabName(inbox));
 	};
 
-	@action public reply = (): void => {
+	@action reply = (): void => {
 		if (!this.selectedMessage) throw Error('No message selected');
 
 		const msg = this.selectedMessage;
@@ -306,7 +306,7 @@ export class UserMessagesStore {
 		this.selectTab('composeTab');
 	};
 
-	@action public selectMessageById = (
+	@action selectMessageById = (
 		messageId: number,
 		inbox: UserMessageFolderStore,
 	): void => {
@@ -318,7 +318,7 @@ export class UserMessagesStore {
 		}
 	};
 
-	@action public sendMessage = async (): Promise<void> => {
+	@action sendMessage = async (): Promise<void> => {
 		this.newMessageStore.isSending = true;
 		const message = this.newMessageStore.toContract(this.userId);
 		try {

@@ -4,13 +4,13 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class AdvancedSearchFilters {
-	@observable public filters: AdvancedSearchFilter[] = [];
+	@observable filters: AdvancedSearchFilter[] = [];
 
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@action public add = (
+	@action add = (
 		filter: AdvancedFilterType,
 		param: string,
 		description?: string,
@@ -24,17 +24,14 @@ export class AdvancedSearchFilters {
 		});
 	};
 
-	public hasFilter = (
-		filterType: AdvancedFilterType,
-		param: string,
-	): boolean => {
+	hasFilter = (filterType: AdvancedFilterType, param: string): boolean => {
 		const result = this.filters.some(
 			(f) => f.filterType === filterType && f.param === param,
 		);
 		return result;
 	};
 
-	@action public remove = (filter: AdvancedSearchFilter): void => {
+	@action remove = (filter: AdvancedSearchFilter): void => {
 		pull(this.filters, filter);
 	};
 }

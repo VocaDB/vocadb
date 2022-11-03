@@ -4,15 +4,15 @@ import $ from 'jquery';
 
 export class PVPlayerYoutube implements IPVPlayer {
 	private player?: YT.Player;
-	public readonly service = PVService.Youtube;
+	readonly service = PVService.Youtube;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {}
 
-	public attach = (reset: boolean = false): Promise<void> => {
+	attach = (reset: boolean = false): Promise<void> => {
 		return new Promise((resolve, reject) => {
 			if (!reset && this.player) {
 				resolve();
@@ -43,7 +43,7 @@ export class PVPlayerYoutube implements IPVPlayer {
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		this.player = undefined;
 	};
 
@@ -55,7 +55,7 @@ export class PVPlayerYoutube implements IPVPlayer {
 		}
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) {
 			this.attach(false).then(() => this.doPlay(pvId));
 		} else {

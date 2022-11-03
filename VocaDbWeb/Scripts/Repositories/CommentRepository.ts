@@ -9,7 +9,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 export class CommentRepository
 	extends BaseRepository
 	implements ICommentRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		private entryType: EntryType,
@@ -17,7 +17,7 @@ export class CommentRepository
 		super(urlMapper.baseUrl);
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId,
 		contract,
 	}: {
@@ -36,11 +36,7 @@ export class CommentRepository
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,
@@ -50,7 +46,7 @@ export class CommentRepository
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async ({
+	getComments = async ({
 		entryId: listId,
 	}: {
 		entryId: number;
@@ -64,7 +60,7 @@ export class CommentRepository
 		return result.items;
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {

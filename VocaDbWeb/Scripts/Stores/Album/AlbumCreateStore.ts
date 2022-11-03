@@ -10,16 +10,16 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class AlbumCreateStore {
-	@observable public artists: ArtistContract[] = [];
-	@observable public discType = AlbumType.Unknown;
-	@observable public dupeEntries: DuplicateEntryResultContract[] = [];
-	@observable public errors?: Record<string, string[]>;
-	@observable public nameOriginal = '';
-	@observable public nameRomaji = '';
-	@observable public nameEnglish = '';
-	@observable public submitting = false;
+	@observable artists: ArtistContract[] = [];
+	@observable discType = AlbumType.Unknown;
+	@observable dupeEntries: DuplicateEntryResultContract[] = [];
+	@observable errors?: Record<string, string[]>;
+	@observable nameOriginal = '';
+	@observable nameRomaji = '';
+	@observable nameEnglish = '';
+	@observable submitting = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 		private readonly artistRepo: ArtistRepository,
@@ -27,7 +27,7 @@ export class AlbumCreateStore {
 		makeObservable(this);
 	}
 
-	public addArtist = async (artistId?: number): Promise<void> => {
+	addArtist = async (artistId?: number): Promise<void> => {
 		if (!artistId) return;
 
 		const artist = await this.artistRepo.getOne({
@@ -40,7 +40,7 @@ export class AlbumCreateStore {
 		});
 	};
 
-	public checkDuplicates = (): void => {
+	checkDuplicates = (): void => {
 		const term1 = this.nameOriginal;
 		const term2 = this.nameRomaji;
 		const term3 = this.nameEnglish;
@@ -56,11 +56,11 @@ export class AlbumCreateStore {
 			);
 	};
 
-	@action public removeArtist = (artist: ArtistContract): void => {
+	@action removeArtist = (artist: ArtistContract): void => {
 		pull(this.artists, artist);
 	};
 
-	@action public submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {

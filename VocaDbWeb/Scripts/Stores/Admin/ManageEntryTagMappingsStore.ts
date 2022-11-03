@@ -20,12 +20,12 @@ import {
 } from 'mobx';
 
 class EditEntryTagMappingStore {
-	@observable public isDeleted = false;
-	public readonly isNew: boolean;
-	public readonly entryType: EntryTypeAndSubTypeContract;
-	public readonly tag: TagBaseContract;
+	@observable isDeleted = false;
+	readonly isNew: boolean;
+	readonly entryType: EntryTypeAndSubTypeContract;
+	readonly tag: TagBaseContract;
 
-	public constructor(mapping: EntryTagMappingContract, isNew: boolean = false) {
+	constructor(mapping: EntryTagMappingContract, isNew: boolean = false) {
 		makeObservable(this);
 
 		this.entryType = mapping.entryType;
@@ -33,20 +33,20 @@ class EditEntryTagMappingStore {
 		this.isNew = isNew;
 	}
 
-	@action public deleteMapping = (): void => {
+	@action deleteMapping = (): void => {
 		this.isDeleted = true;
 	};
 }
 
 export class ManageEntryTagMappingsStore {
-	@observable public mappings: EditEntryTagMappingStore[] = [];
-	public readonly paging = new ServerSidePagingStore(50);
-	@observable public newEntryType = '';
-	@observable public newEntrySubType = '';
-	public readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
-	@observable public submitting = false;
+	@observable mappings: EditEntryTagMappingStore[] = [];
+	readonly paging = new ServerSidePagingStore(50);
+	@observable newEntryType = '';
+	@observable newEntrySubType = '';
+	readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
+	@observable submitting = false;
 
-	public constructor(private readonly tagRepo: TagRepository) {
+	constructor(private readonly tagRepo: TagRepository) {
 		makeObservable(this);
 
 		this.newTargetTag = new BasicEntryLinkStore<TagBaseContract>((entryId) =>
@@ -56,7 +56,7 @@ export class ManageEntryTagMappingsStore {
 		this.loadMappings();
 	}
 
-	@computed public get activeMappings(): EditEntryTagMappingStore[] {
+	@computed get activeMappings(): EditEntryTagMappingStore[] {
 		return this.mappings.filter((m) => !m.isDeleted);
 	}
 
@@ -70,7 +70,7 @@ export class ManageEntryTagMappingsStore {
 				typeof Enum[k as any] === 'number',
 		);
 
-	public entryTypes = this.getEnumValues<EntryType>(EntryType, [
+	entryTypes = this.getEnumValues<EntryType>(EntryType, [
 		EntryType.Album,
 		EntryType.Artist,
 		EntryType.Song,
@@ -84,7 +84,7 @@ export class ManageEntryTagMappingsStore {
 		[EntryType.ReleaseEvent]: Object.values(EventCategory),
 	};
 
-	@computed public get entrySubTypes():
+	@computed get entrySubTypes():
 		| AlbumType[]
 		| ArtistType[]
 		| SongType[]
@@ -96,7 +96,7 @@ export class ManageEntryTagMappingsStore {
 		);
 	}
 
-	@action public addMapping = (): void => {
+	@action addMapping = (): void => {
 		if (!this.newEntryType || this.newTargetTag.isEmpty) return;
 
 		this.mappings.push(
@@ -116,17 +116,17 @@ export class ManageEntryTagMappingsStore {
 		this.newTargetTag.clear();
 	};
 
-	@action public deleteMapping = (mapping: EditEntryTagMappingStore): void => {
+	@action deleteMapping = (mapping: EditEntryTagMappingStore): void => {
 		mapping.isDeleted = true;
 	};
 
-	public getTagUrl = (tag: EditEntryTagMappingStore): string => {
+	getTagUrl = (tag: EditEntryTagMappingStore): string => {
 		return functions.mapAbsoluteUrl(
 			EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
 		);
 	};
 
-	public loadMappings = async (): Promise<void> => {
+	loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getEntryTagMappings({});
 
 		runInAction(() => {
@@ -134,7 +134,7 @@ export class ManageEntryTagMappingsStore {
 		});
 	};
 
-	@action public save = async (): Promise<void> => {
+	@action save = async (): Promise<void> => {
 		try {
 			this.submitting = true;
 

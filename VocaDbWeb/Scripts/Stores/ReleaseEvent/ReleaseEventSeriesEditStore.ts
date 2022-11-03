@@ -10,33 +10,33 @@ import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class ReleaseEventSeriesEditStore {
-	@observable public category: EventCategory;
-	@observable public defaultNameLanguage: ContentLanguageSelection;
-	public readonly deleteStore = new DeleteEntryStore((notes) =>
+	@observable category: EventCategory;
+	@observable defaultNameLanguage: ContentLanguageSelection;
+	readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.deleteSeries({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: false,
 		}),
 	);
-	@observable public description: string;
-	@observable public duplicateName?: string;
-	@observable public errors?: Record<string, string[]>;
-	public readonly names: NamesEditStore;
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
-	public readonly trashStore = new DeleteEntryStore((notes) =>
+	@observable description: string;
+	@observable duplicateName?: string;
+	@observable errors?: Record<string, string[]>;
+	readonly names: NamesEditStore;
+	@observable status: EntryStatus;
+	@observable submitting = false;
+	readonly trashStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.deleteSeries({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: true,
 		}),
 	);
-	public readonly webLinks: WebLinksEditStore;
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly eventRepo: ReleaseEventRepository,
-		public readonly contract: ReleaseEventSeriesForEditContract,
+		readonly contract: ReleaseEventSeriesForEditContract,
 	) {
 		makeObservable(this);
 
@@ -48,7 +48,7 @@ export class ReleaseEventSeriesEditStore {
 		this.webLinks = new WebLinksEditStore(contract.webLinks);
 	}
 
-	@action public checkName = async (value: string): Promise<void> => {
+	@action checkName = async (value: string): Promise<void> => {
 		if (!value) {
 			this.duplicateName = undefined;
 			return;
@@ -65,7 +65,7 @@ export class ReleaseEventSeriesEditStore {
 		});
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {

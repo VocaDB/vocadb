@@ -15,12 +15,12 @@ import {
 } from 'mobx';
 
 class EditTagMappingStore {
-	@observable public isDeleted = false;
-	public readonly isNew: boolean;
-	public readonly sourceTag: string;
-	public readonly tag: TagBaseContract;
+	@observable isDeleted = false;
+	readonly isNew: boolean;
+	readonly sourceTag: string;
+	readonly tag: TagBaseContract;
 
-	public constructor(mapping: TagMappingContract, isNew: boolean = false) {
+	constructor(mapping: TagMappingContract, isNew: boolean = false) {
 		makeObservable(this);
 
 		this.sourceTag = mapping.sourceTag;
@@ -28,20 +28,20 @@ class EditTagMappingStore {
 		this.isNew = isNew;
 	}
 
-	@action public deleteMapping = (): void => {
+	@action deleteMapping = (): void => {
 		this.isDeleted = true;
 	};
 }
 
 export class ManageTagMappingsStore {
-	@observable public filter = '';
-	@observable public mappings: EditTagMappingStore[] = [];
-	public readonly paging = new ServerSidePagingStore(50);
-	@observable public newSourceName = '';
-	public readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
-	@observable public submitting = false;
+	@observable filter = '';
+	@observable mappings: EditTagMappingStore[] = [];
+	readonly paging = new ServerSidePagingStore(50);
+	@observable newSourceName = '';
+	readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
+	@observable submitting = false;
 
-	public constructor(private readonly tagRepo: TagRepository) {
+	constructor(private readonly tagRepo: TagRepository) {
 		makeObservable(this);
 
 		this.newTargetTag = new BasicEntryLinkStore<TagBaseContract>((entryId) =>
@@ -59,7 +59,7 @@ export class ManageTagMappingsStore {
 		this.loadMappings();
 	}
 
-	@computed public get filteredMappings(): EditTagMappingStore[] {
+	@computed get filteredMappings(): EditTagMappingStore[] {
 		const filter = this.filter.toLowerCase();
 		if (!filter) return this.mappings;
 		return this.mappings.filter(
@@ -69,22 +69,22 @@ export class ManageTagMappingsStore {
 		);
 	}
 
-	@computed public get activeMappings(): EditTagMappingStore[] {
+	@computed get activeMappings(): EditTagMappingStore[] {
 		return this.mappings.filter((m) => !m.isDeleted);
 	}
 
-	@computed public get sortedMappings(): EditTagMappingStore[] {
+	@computed get sortedMappings(): EditTagMappingStore[] {
 		return this.filteredMappings.sortBy((m) => m.tag.name.toLowerCase());
 	}
 
-	public get sortedMappingsPage(): EditTagMappingStore[] {
+	get sortedMappingsPage(): EditTagMappingStore[] {
 		return this.sortedMappings.slice(
 			this.paging.firstItem,
 			this.paging.firstItem + this.paging.pageSize,
 		);
 	}
 
-	@action public addMapping = (): void => {
+	@action addMapping = (): void => {
 		if (!this.newSourceName || this.newTargetTag.isEmpty) return;
 
 		this.mappings.push(
@@ -97,21 +97,21 @@ export class ManageTagMappingsStore {
 		this.newTargetTag.clear();
 	};
 
-	@action public deleteMapping = (mapping: EditTagMappingStore): void => {
+	@action deleteMapping = (mapping: EditTagMappingStore): void => {
 		mapping.isDeleted = true;
 	};
 
-	public getSourceTagUrl = (tag: EditTagMappingStore): string => {
+	getSourceTagUrl = (tag: EditTagMappingStore): string => {
 		return `http://www.nicovideo.jp/tag/${encodeURIComponent(tag.sourceTag)}`;
 	};
 
-	public getTagUrl = (tag: EditTagMappingStore): string => {
+	getTagUrl = (tag: EditTagMappingStore): string => {
 		return functions.mapAbsoluteUrl(
 			EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug),
 		);
 	};
 
-	public loadMappings = async (): Promise<void> => {
+	loadMappings = async (): Promise<void> => {
 		const result = await this.tagRepo.getMappings({
 			paging: {
 				start: 0,
@@ -127,7 +127,7 @@ export class ManageTagMappingsStore {
 		});
 	};
 
-	@action public save = async (): Promise<void> => {
+	@action save = async (): Promise<void> => {
 		try {
 			this.submitting = true;
 

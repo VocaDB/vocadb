@@ -15,12 +15,12 @@ interface SongWithVoteContract {
 
 // MobX store for PV rating buttons
 export class PVRatingButtonsStore {
-	@observable public rating: SongVoteRating;
+	@observable rating: SongVoteRating;
 	// Rating operation is in progress. Prevents racing conditions.
-	@observable public ratingInProgress = false;
+	@observable ratingInProgress = false;
 	private readonly songId: number;
 
-	public constructor(
+	constructor(
 		private readonly userRepo: UserRepository,
 		songWithVoteContract: SongWithVoteContract,
 		private readonly ratingCallback?: () => void,
@@ -32,19 +32,19 @@ export class PVRatingButtonsStore {
 		this.rating = parseSongVoteRating(songWithVoteContract.vote);
 	}
 
-	@computed public get isRated(): boolean {
+	@computed get isRated(): boolean {
 		return this.rating !== SongVoteRating.Nothing;
 	}
 
-	@computed public get isRatingFavorite(): boolean {
+	@computed get isRatingFavorite(): boolean {
 		return this.rating === SongVoteRating.Favorite;
 	}
 
-	@computed public get isRatingLike(): boolean {
+	@computed get isRatingLike(): boolean {
 		return this.rating === SongVoteRating.Like;
 	}
 
-	@action public setRating = (rating: SongVoteRating): Promise<void> => {
+	@action setRating = (rating: SongVoteRating): Promise<void> => {
 		if (this.ratingInProgress || !this.isLoggedIn) return Promise.resolve();
 
 		this.ratingInProgress = true;
@@ -62,12 +62,11 @@ export class PVRatingButtonsStore {
 			);
 	};
 
-	public setRating_favorite = (): Promise<void> =>
+	setRating_favorite = (): Promise<void> =>
 		this.setRating(SongVoteRating.Favorite);
 
-	public setRating_like = (): Promise<void> =>
-		this.setRating(SongVoteRating.Like);
+	setRating_like = (): Promise<void> => this.setRating(SongVoteRating.Like);
 
-	public setRating_nothing = (): Promise<void> =>
+	setRating_nothing = (): Promise<void> =>
 		this.setRating(SongVoteRating.Nothing);
 }

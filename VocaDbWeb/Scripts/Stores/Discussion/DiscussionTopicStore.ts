@@ -27,11 +27,11 @@ const validate = ajv.compile(schema);
 
 export class DiscussionTopicStore
 	implements LocationStateStore<DiscussionTopicRouteParams> {
-	@observable public comments: EditableCommentsStore;
-	@observable public contract: DiscussionTopicContract;
-	@observable public editStore?: DiscussionTopicEditStore = undefined;
+	@observable comments: EditableCommentsStore;
+	@observable contract: DiscussionTopicContract;
+	@observable editStore?: DiscussionTopicEditStore = undefined;
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		private readonly discussionRepo: DiscussionRepository,
 		canDeleteAllComments: boolean,
@@ -53,11 +53,11 @@ export class DiscussionTopicStore
 		);
 	}
 
-	@computed public get isBeingEdited(): boolean {
+	@computed get isBeingEdited(): boolean {
 		return !!this.editStore;
 	}
 
-	@action public beginEditTopic = (): void => {
+	@action beginEditTopic = (): void => {
 		this.editStore = new DiscussionTopicEditStore(
 			this.loginManager,
 			this.folders,
@@ -65,11 +65,11 @@ export class DiscussionTopicStore
 		);
 	};
 
-	@action public cancelEdit = (): void => {
+	@action cancelEdit = (): void => {
 		this.editStore = undefined;
 	};
 
-	public saveEditedTopic = (): void => {
+	saveEditedTopic = (): void => {
 		if (!this.isBeingEdited) return;
 
 		const editedContract = this.editStore!.toContract();
@@ -92,18 +92,16 @@ export class DiscussionTopicStore
 			});
 	};
 
-	@computed.struct public get locationState(): DiscussionTopicRouteParams {
+	@computed.struct get locationState(): DiscussionTopicRouteParams {
 		return {
 			page: this.comments.paging.page,
 		};
 	}
-	public set locationState(value: DiscussionTopicRouteParams) {
+	set locationState(value: DiscussionTopicRouteParams) {
 		this.comments.paging.page = value.page ?? 1;
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is DiscussionTopicRouteParams => {
+	validateLocationState = (data: any): data is DiscussionTopicRouteParams => {
 		return validate(data);
 	};
 }

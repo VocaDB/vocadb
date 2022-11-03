@@ -2,13 +2,13 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class EntryReportRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
 	// eslint-disable-next-line no-empty-pattern
-	public getNewReportCount = ({}: {}): Promise<number> => {
+	getNewReportCount = ({}: {}): Promise<number> => {
 		var url = this.urlMapper.mapRelative('/entryReports/newReportsCount');
 		return this.httpClient.get<number>(url);
 	};

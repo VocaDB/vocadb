@@ -128,30 +128,29 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
 	implements ISongSearchStore, ISongsAdapterStore {
-	public readonly artistFilters: ArtistFilters;
-	@observable public dateDay?: number = undefined;
-	@observable public dateMonth?: number = undefined;
-	@observable public dateYear?: number = undefined;
-	public readonly releaseEvent: BasicEntryLinkStore<IEntryWithIdAndName>;
-	@observable public minScore?: number;
-	@observable public onlyRatedSongs = false;
-	public readonly parentVersion: BasicEntryLinkStore<SongContract>;
-	public readonly playListStore: PlayListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
-	@observable public pvsOnly = false;
+	readonly artistFilters: ArtistFilters;
+	@observable dateDay?: number = undefined;
+	@observable dateMonth?: number = undefined;
+	@observable dateYear?: number = undefined;
+	readonly releaseEvent: BasicEntryLinkStore<IEntryWithIdAndName>;
+	@observable minScore?: number;
+	@observable onlyRatedSongs = false;
+	readonly parentVersion: BasicEntryLinkStore<SongContract>;
+	readonly playListStore: PlayListStore;
+	readonly pvPlayerStore: PVPlayerStore;
+	@observable pvsOnly = false;
 	private readonly pvServiceIcons: PVServiceIcons;
-	@observable public since?: number;
-	@observable public songType = SongType.Unspecified;
-	@observable public sort = SongSortRule.RatingScore;
-	@observable public unifyEntryTypesAndTags = false;
-	@observable public viewMode: 'Details' | 'PlayList' =
-		'Details' /* TODO: enum */;
-	public readonly minBpmFilter = new SongBpmFilter();
-	public readonly maxBpmFilter = new SongBpmFilter();
-	public readonly minLengthFilter = new SongLengthFilter();
-	public readonly maxLengthFilter = new SongLengthFilter();
+	@observable since?: number;
+	@observable songType = SongType.Unspecified;
+	@observable sort = SongSortRule.RatingScore;
+	@observable unifyEntryTypesAndTags = false;
+	@observable viewMode: 'Details' | 'PlayList' = 'Details' /* TODO: enum */;
+	readonly minBpmFilter = new SongBpmFilter();
+	readonly maxBpmFilter = new SongBpmFilter();
+	readonly minLengthFilter = new SongLengthFilter();
+	readonly maxLengthFilter = new SongLengthFilter();
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
@@ -206,7 +205,7 @@ export class SongSearchStore
 	private toDateOrUndefined = (mom: moment.Moment): Date | undefined =>
 		mom.isValid() ? mom.toDate() : undefined;
 
-	@computed public get afterDate(): Date | undefined {
+	@computed get afterDate(): Date | undefined {
 		return this.dateYear
 			? this.toDateOrUndefined(
 					moment.utc([
@@ -218,7 +217,7 @@ export class SongSearchStore
 			: undefined;
 	}
 
-	@computed public get beforeDate(): Date | undefined {
+	@computed get beforeDate(): Date | undefined {
 		if (!this.dateYear) return undefined;
 
 		const mom = moment.utc([
@@ -232,7 +231,7 @@ export class SongSearchStore
 		);
 	}
 
-	@computed public get fields(): SongOptionalField[] {
+	@computed get fields(): SongOptionalField[] {
 		return this.showTags
 			? [
 					SongOptionalField.AdditionalNames,
@@ -242,14 +241,14 @@ export class SongSearchStore
 			: [SongOptionalField.AdditionalNames, SongOptionalField.MainPicture];
 	}
 
-	@computed public get showUnifyEntryTypesAndTags(): boolean {
+	@computed get showUnifyEntryTypesAndTags(): boolean {
 		return (
 			this.songType !== SongType.Unspecified &&
 			this.songType !== SongType.Original
 		);
 	}
 
-	@computed public get queryParams(): SongGetListQueryParams {
+	@computed get queryParams(): SongGetListQueryParams {
 		return {
 			query: this.searchTerm,
 			sort: this.sort,
@@ -285,7 +284,7 @@ export class SongSearchStore
 		};
 	}
 
-	public loadResults = async (
+	loadResults = async (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<ISongSearchItem>> => {
 		if (this.viewMode === 'PlayList') {
@@ -318,13 +317,13 @@ export class SongSearchStore
 		}
 	};
 
-	public getPVServiceIcons = (
+	getPVServiceIcons = (
 		services: string,
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	@computed.struct public get locationState(): SongSearchRouteParams {
+	@computed.struct get locationState(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -364,7 +363,7 @@ export class SongSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set locationState(value: SongSearchRouteParams) {
+	set locationState(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -400,7 +399,7 @@ export class SongSearchStore
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<SongSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

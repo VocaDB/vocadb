@@ -41,13 +41,13 @@ const validate = ajv.compile(schema);
 
 export class FollowedArtistsStore
 	implements LocationStateStore<FollowedArtistsRouteParams> {
-	@observable public artistType = ArtistType.Unknown;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: ArtistForUserForApiContract[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging store
-	public readonly tagFilters: TagFilters;
+	@observable artistType = ArtistType.Unknown;
+	@observable loading = true; // Currently loading for data
+	@observable page: ArtistForUserForApiContract[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging store
+	readonly tagFilters: TagFilters;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly userRepo: UserRepository,
 		tagRepo: TagRepository,
@@ -58,18 +58,18 @@ export class FollowedArtistsStore
 		this.tagFilters = new TagFilters(values, tagRepo);
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tagFilters.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	public pauseNotifications = false;
+	pauseNotifications = false;
 
-	@action public updateResults = async (clearResults = true): Promise<void> => {
+	@action updateResults = async (clearResults = true): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -97,7 +97,7 @@ export class FollowedArtistsStore
 		});
 	};
 
-	@computed.struct public get locationState(): FollowedArtistsRouteParams {
+	@computed.struct get locationState(): FollowedArtistsRouteParams {
 		return {
 			artistType: this.artistType,
 			page: this.paging.page,
@@ -105,20 +105,18 @@ export class FollowedArtistsStore
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: FollowedArtistsRouteParams) {
+	set locationState(value: FollowedArtistsRouteParams) {
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 20;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is FollowedArtistsRouteParams => {
+	validateLocationState = (data: any): data is FollowedArtistsRouteParams => {
 		return validate(data);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<FollowedArtistsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

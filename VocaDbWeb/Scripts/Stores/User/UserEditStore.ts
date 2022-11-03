@@ -9,12 +9,12 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PermissionEditStore {
-	@observable public hasFlag: boolean;
+	@observable hasFlag: boolean;
 
-	public constructor(
+	constructor(
 		hasFlag: boolean,
-		public readonly hasPermission: boolean,
-		public readonly permissionToken: PermissionToken,
+		readonly hasPermission: boolean,
+		readonly permissionToken: PermissionToken,
 	) {
 		makeObservable(this);
 
@@ -23,19 +23,19 @@ export class PermissionEditStore {
 }
 
 export class UserEditStore {
-	@observable public active: boolean;
-	@observable public email: string;
-	@observable public errors?: Record<string, string[]>;
-	@observable public groupId: UserGroup;
-	@observable public name: string;
-	@observable public ownedArtists: ArtistForUserForApiContract[];
-	@observable public permissions: PermissionEditStore[];
-	@observable public poisoned: boolean;
-	@observable public submitting = false;
-	@observable public supporter: boolean;
+	@observable active: boolean;
+	@observable email: string;
+	@observable errors?: Record<string, string[]>;
+	@observable groupId: UserGroup;
+	@observable name: string;
+	@observable ownedArtists: ArtistForUserForApiContract[];
+	@observable permissions: PermissionEditStore[];
+	@observable poisoned: boolean;
+	@observable submitting = false;
+	@observable supporter: boolean;
 
-	public constructor(
-		public readonly contract: UserWithPermissionsForApiContract,
+	constructor(
+		readonly contract: UserWithPermissionsForApiContract,
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 		private readonly userRepo: UserRepository,
@@ -61,7 +61,7 @@ export class UserEditStore {
 		this.supporter = contract.supporter;
 	}
 
-	public addArtist = async (artistId?: number): Promise<void> => {
+	addArtist = async (artistId?: number): Promise<void> => {
 		if (!artistId) return;
 
 		const artist = await this.artistRepo.getOne({
@@ -74,13 +74,11 @@ export class UserEditStore {
 		});
 	};
 
-	@action public removeArtist = (
-		ownedArtist: ArtistForUserForApiContract,
-	): void => {
+	@action removeArtist = (ownedArtist: ArtistForUserForApiContract): void => {
 		pull(this.ownedArtists, ownedArtist);
 	};
 
-	@action public submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (requestToken: string): Promise<number> => {
 		try {
 			this.submitting = true;
 

@@ -30,10 +30,10 @@ interface IEntryReportsRepository {
 
 export class ArchivedEntryStore
 	implements LocationStateStore<ArchivedEntryRouteParams> {
-	@observable public comparedVersionId?: number;
-	public readonly reportStore: ReportEntryStore;
+	@observable comparedVersionId?: number;
+	readonly reportStore: ReportEntryStore;
 
-	public constructor(
+	constructor(
 		entryId: number,
 		versionNumber: number,
 		entryReportsRepo: IEntryReportsRepository,
@@ -52,14 +52,14 @@ export class ArchivedEntryStore
 		);
 	}
 
-	@computed.struct public get locationState(): ArchivedEntryRouteParams {
+	@computed.struct get locationState(): ArchivedEntryRouteParams {
 		return { comparedVersionId: this.comparedVersionId };
 	}
-	public set locationState(value: ArchivedEntryRouteParams) {
+	set locationState(value: ArchivedEntryRouteParams) {
 		this.comparedVersionId = value.comparedVersionId;
 	}
 
-	public validateLocationState = (
+	validateLocationState = (
 		locationState: any,
 	): locationState is ArchivedEntryRouteParams => {
 		return validate(locationState);

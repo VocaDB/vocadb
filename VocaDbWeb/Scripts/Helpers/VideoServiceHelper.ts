@@ -18,7 +18,7 @@ interface PiaproMetadata {
 
 export class VideoServiceHelper {
 	// TODO: Test.
-	public static getPV = (
+	static getPV = (
 		allPVs: PVContract[],
 		acceptFirst: boolean,
 		predicates: ((pv: PVContract) => boolean)[],
@@ -34,9 +34,7 @@ export class VideoServiceHelper {
 		return acceptFirst ? allPVs.first() : undefined;
 	};
 
-	public static getPiaproTimestamp = (
-		pv: PiaproPVContract,
-	): string | undefined => {
+	static getPiaproTimestamp = (pv: PiaproPVContract): string | undefined => {
 		const meta =
 			pv.extendedMetadata && pv.extendedMetadata.json
 				? (JSON.parse(pv.extendedMetadata.json) as PiaproMetadata)
@@ -63,7 +61,7 @@ export class VideoServiceHelper {
 		return url;
 	};
 
-	public static getVideoId = (pv: PVContract): string | undefined => {
+	static getVideoId = (pv: PVContract): string | undefined => {
 		switch (pv.service) {
 			case PVService.Piapro:
 				return VideoServiceHelper.getPiaproUrlWithTimestamp(pv);
@@ -84,7 +82,7 @@ export class VideoServiceHelper {
 		return bandcampMetadata?.Url ?? `https://bandcamp.com/track/${pv.pvId}`;
 	};
 
-	public static getUrlById = (pv: PVContract): string => {
+	static getUrlById = (pv: PVContract): string => {
 		switch (pv.service) {
 			case PVService.Bandcamp:
 				return VideoServiceHelper.getBandcampUrlById(pv);
@@ -121,7 +119,7 @@ export class VideoServiceHelper {
 		}
 	};
 
-	public static readonly autoplayServices = [
+	static readonly autoplayServices = [
 		PVService.File,
 		PVService.LocalFile,
 		PVService.NicoNicoDouga,
@@ -131,7 +129,7 @@ export class VideoServiceHelper {
 		PVService.SoundCloud,
 	];
 
-	public static canAutoplayPV = (pv: PVContract): boolean => {
+	static canAutoplayPV = (pv: PVContract): boolean => {
 		if (pv.service === PVService.Piapro)
 			return VideoServiceHelper.getPiaproTimestamp(pv) !== undefined;
 
@@ -139,7 +137,7 @@ export class VideoServiceHelper {
 	};
 
 	// TODO: Test.
-	public static primaryPV = (
+	static primaryPV = (
 		pvs: PVContract[],
 		preferredService?: PVService,
 		autoplay?: boolean,

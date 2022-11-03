@@ -12,10 +12,10 @@ interface ITagSelectionsRepository {
 }
 
 class TagSelectionStore {
-	@observable public selected: boolean;
-	public readonly tag: TagBaseContract;
+	@observable selected: boolean;
+	readonly tag: TagBaseContract;
 
-	public constructor(contract: TagSelectionContract) {
+	constructor(contract: TagSelectionContract) {
 		makeObservable(this);
 
 		this.tag = contract.tag;
@@ -24,20 +24,20 @@ class TagSelectionStore {
 }
 
 export class TagsEditStore {
-	@observable public dialogVisible = false;
-	@observable public selections: TagSelectionStore[] = [];
-	@observable public suggestions: TagUsageForApiContract[] = [];
-	@observable public suggestionsLoaded = false;
+	@observable dialogVisible = false;
+	@observable selections: TagSelectionStore[] = [];
+	@observable suggestions: TagUsageForApiContract[] = [];
+	@observable suggestionsLoaded = false;
 
-	public constructor(
+	constructor(
 		private readonly repo: ITagSelectionsRepository,
-		public readonly target?: EntryType,
-		public readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
+		readonly target?: EntryType,
+		readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {
 		makeObservable(this);
 	}
 
-	@action public addTag = (tagName: string): void => {
+	@action addTag = (tagName: string): void => {
 		if (!tagName) return;
 
 		tagName = trim(tagName);
@@ -59,7 +59,7 @@ export class TagsEditStore {
 		}
 	};
 
-	@action public autoCompletedTag = (tag: TagBaseContract): void => {
+	@action autoCompletedTag = (tag: TagBaseContract): void => {
 		const selection = this.selections.find((sel) => sel.tag.id === tag.id);
 
 		if (selection) {
@@ -69,7 +69,7 @@ export class TagsEditStore {
 		}
 	};
 
-	public getSuggestionText = (
+	getSuggestionText = (
 		suggestion: TagUsageForApiContract,
 		countText: string,
 	): string => {
@@ -86,7 +86,7 @@ export class TagsEditStore {
 		return text;
 	};
 
-	@action public save = (): void => {
+	@action save = (): void => {
 		const tags = this.selections
 			.filter((sel) => sel.selected)
 			.map((sel) => sel.tag);
@@ -95,7 +95,7 @@ export class TagsEditStore {
 		this.dialogVisible = false;
 	};
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.repo.getTagSelections().then((selections) => {
 			runInAction(() => {
 				this.selections = selections.map(

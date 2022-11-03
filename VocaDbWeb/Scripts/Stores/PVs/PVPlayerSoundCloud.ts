@@ -4,15 +4,15 @@ import $ from 'jquery';
 
 export class PVPlayerSoundCloud implements IPVPlayer {
 	private player?: SC.SoundCloudWidget;
-	public readonly service = PVService.SoundCloud;
+	readonly service = PVService.SoundCloud;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {}
 
-	public attach = (reset: boolean = false): Promise<void> => {
+	attach = (reset: boolean = false): Promise<void> => {
 		return new Promise((resolve, reject) => {
 			if (!reset && this.player) {
 				resolve();
@@ -39,7 +39,7 @@ export class PVPlayerSoundCloud implements IPVPlayer {
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		if (this.player) {
 			this.player.unbind(SC.Widget.Events.FINISH);
 		}
@@ -53,7 +53,7 @@ export class PVPlayerSoundCloud implements IPVPlayer {
 		return url;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) this.attach(false);
 
 		if (pvId) {

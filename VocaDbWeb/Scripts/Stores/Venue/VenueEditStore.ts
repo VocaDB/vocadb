@@ -16,38 +16,38 @@ import {
 } from 'mobx';
 
 export class VenueEditStore {
-	@observable public address: string;
-	@observable public addressCountryCode: string;
-	@observable public defaultNameLanguage: ContentLanguageSelection;
-	public readonly deleted: boolean;
-	public readonly deleteStore = new DeleteEntryStore((notes) =>
+	@observable address: string;
+	@observable addressCountryCode: string;
+	@observable defaultNameLanguage: ContentLanguageSelection;
+	readonly deleted: boolean;
+	readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.venueRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: false,
 		}),
 	);
-	@observable public description = '';
-	@observable public duplicateName?: string;
-	@observable public errors?: Record<string, string[]>;
-	@observable public latitude?: number;
-	@observable public longitude?: number;
-	public readonly name: string;
-	public readonly names: NamesEditStore;
-	@observable public status = EntryStatus.Draft;
-	@observable public submitting = false;
-	public readonly trashStore = new DeleteEntryStore((notes) =>
+	@observable description = '';
+	@observable duplicateName?: string;
+	@observable errors?: Record<string, string[]>;
+	@observable latitude?: number;
+	@observable longitude?: number;
+	readonly name: string;
+	readonly names: NamesEditStore;
+	@observable status = EntryStatus.Draft;
+	@observable submitting = false;
+	readonly trashStore = new DeleteEntryStore((notes) =>
 		this.venueRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: true,
 		}),
 	);
-	public readonly webLinks: WebLinksEditStore;
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly venueRepo: VenueRepository,
-		public readonly contract: VenueForEditContract,
+		readonly contract: VenueForEditContract,
 	) {
 		makeObservable(this);
 
@@ -64,7 +64,7 @@ export class VenueEditStore {
 		this.webLinks = new WebLinksEditStore(contract.webLinks);
 	}
 
-	@computed public get coordinates(): OptionalGeoPointContract | undefined {
+	@computed get coordinates(): OptionalGeoPointContract | undefined {
 		if (!this.latitude || !this.longitude) return undefined;
 
 		return {
@@ -73,7 +73,7 @@ export class VenueEditStore {
 		} as OptionalGeoPointContract;
 	}
 
-	@action public checkName = async (value: string): Promise<void> => {
+	@action checkName = async (value: string): Promise<void> => {
 		if (!value) {
 			this.duplicateName = undefined;
 			return;
@@ -90,7 +90,7 @@ export class VenueEditStore {
 		});
 	};
 
-	@action public submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {

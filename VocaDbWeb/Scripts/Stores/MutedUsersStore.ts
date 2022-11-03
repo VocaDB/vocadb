@@ -17,47 +17,47 @@ const validate = ajv.compile(schema);
 
 export class MutedUsersStore
 	implements LocalStorageStateStore<MutedUsersLocalStorageState> {
-	@observable public mutedUsers: UserApiContract[] = [];
+	@observable mutedUsers: UserApiContract[] = [];
 
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@computed public get mutedUserIds(): number[] {
+	@computed get mutedUserIds(): number[] {
 		return this.mutedUsers.map((mutedUser) => mutedUser.id);
 	}
-	public set mutedUserIds(value: number[]) {
+	set mutedUserIds(value: number[]) {
 		this.mutedUsers = value.map((mutedUserId) => ({ id: mutedUserId }));
 	}
 
-	@computed.struct public get localStorageState(): MutedUsersLocalStorageState {
+	@computed.struct get localStorageState(): MutedUsersLocalStorageState {
 		return {
 			mutedUserIds: this.mutedUserIds,
 		};
 	}
-	public set localStorageState(value: MutedUsersLocalStorageState) {
+	set localStorageState(value: MutedUsersLocalStorageState) {
 		this.mutedUserIds = value.mutedUserIds ?? [];
 	}
 
-	public validateLocalStorageState(
+	validateLocalStorageState(
 		localStorageState: any,
 	): localStorageState is MutedUsersLocalStorageState {
 		return validate(localStorageState);
 	}
 
-	public includes = (userId: number): boolean => {
+	includes = (userId: number): boolean => {
 		return this.mutedUserIds.includes(userId);
 	};
 
-	public find = (userId: number): UserApiContract | undefined => {
+	find = (userId: number): UserApiContract | undefined => {
 		return this.mutedUsers.find((mutedUser) => mutedUser.id === userId);
 	};
 
-	@action public addMutedUser = (userId: number): void => {
+	@action addMutedUser = (userId: number): void => {
 		this.mutedUsers.push({ id: userId });
 	};
 
-	@action public removeMutedUser = (user: UserApiContract): void => {
+	@action removeMutedUser = (user: UserApiContract): void => {
 		pull(this.mutedUsers, user);
 	};
 }

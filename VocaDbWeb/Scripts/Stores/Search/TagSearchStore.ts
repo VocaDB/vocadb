@@ -40,11 +40,11 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 	TagSearchRouteParams,
 	TagApiContract
 > {
-	@observable public allowAliases = false;
-	@observable public categoryName?: string;
-	@observable public sort = TagSortRule.Name;
+	@observable allowAliases = false;
+	@observable categoryName?: string;
+	@observable sort = TagSortRule.Name;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly tagRepo: TagRepository,
@@ -54,7 +54,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<TagApiContract>> => {
 		return this.tagRepo.getList({
@@ -75,7 +75,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	@computed.struct public get locationState(): TagSearchRouteParams {
+	@computed.struct get locationState(): TagSearchRouteParams {
 		return {
 			searchType: SearchType.Tag,
 			categoryName: this.categoryName,
@@ -85,7 +85,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 			sort: this.sort,
 		};
 	}
-	public set locationState(value: TagSearchRouteParams) {
+	set locationState(value: TagSearchRouteParams) {
 		this.categoryName = value.categoryName;
 		this.searchTerm = value.filter ?? '';
 		this.paging.page = value.page ?? 1;
@@ -93,7 +93,7 @@ export class TagSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? TagSortRule.Name;
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<TagSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

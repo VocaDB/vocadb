@@ -4,7 +4,7 @@ export class RelatedSitesHelper {
 		'i',
 	);
 
-	public static isRelatedSite = (url?: string): boolean => {
+	static isRelatedSite = (url?: string): boolean => {
 		if (!url) return false;
 
 		return this.relatedSiteUrlRegex.test(url);

@@ -1,34 +1,34 @@
 import $ from 'jquery';
 
 export class ui {
-	public static showSuccessMessage = (message?: string): JQuery => {
+	static showSuccessMessage = (message?: string): JQuery => {
 		var successMessage = $('#successMessage');
 		var successMessageString = $('#successMessageString');
 		if (message) successMessageString.text(message);
 		return successMessage.show().delay(4000).fadeOut('normal');
 	};
 
-	public static showErrorMessage = (message?: string): JQuery => {
+	static showErrorMessage = (message?: string): JQuery => {
 		var errorMessage = $('#errorMessage');
 		var errorMessageString = $('#errorMessageString');
 		if (message) errorMessageString.text(message);
 		return errorMessage.show().delay(4000).fadeOut('normal');
 	};
 
-	public static showWarnMessage = (message?: string): JQuery => {
+	static showWarnMessage = (message?: string): JQuery => {
 		var warnMessage = $('#warnMessage');
 		var warnMessageString = $('#warnMessageString');
 		if (message) warnMessageString.text(message);
 		return warnMessage.show().delay(4000).fadeOut('normal');
 	};
 
-	public static showLoadingMessage = (): JQuery => {
+	static showLoadingMessage = (): JQuery => {
 		var ajaxLoadingMessage = $('#loadingMessage');
 		if (ajaxLoadingMessage) return ajaxLoadingMessage.show();
 		return undefined!;
 	};
 
-	public static hideLoadingMessage = (): JQuery => {
+	static hideLoadingMessage = (): JQuery => {
 		var ajaxLoadingMessage = $('#loadingMessage');
 		if (ajaxLoadingMessage) return ajaxLoadingMessage.hide();
 		return undefined!;
@@ -36,7 +36,7 @@ export class ui {
 
 	private static thanksForRatingMessage: string;
 
-	public static showThankYouForRatingMessage = (): void => {
+	static showThankYouForRatingMessage = (): void => {
 		ui.showSuccessMessage(ui.thanksForRatingMessage);
 	};
 
@@ -63,7 +63,7 @@ export class ui {
 		if ($('#warnMessageString').text() !== '') ui.showWarnMessage();
 	};
 
-	public static initAll = (thanksForRatingMessage: string): void => {
+	static initAll = (thanksForRatingMessage: string): void => {
 		ui.thanksForRatingMessage = thanksForRatingMessage;
 		ui.initMessages();
 	};

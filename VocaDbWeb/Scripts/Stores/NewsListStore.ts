@@ -27,10 +27,10 @@ export interface WordpressAuthor {
 }
 
 export class NewsListStore {
-	@observable public loaded = false;
-	@observable public posts: WordpressPost[] = [];
+	@observable loaded = false;
+	@observable posts: WordpressPost[] = [];
 
-	public constructor(blogUrl?: string) {
+	constructor(blogUrl?: string) {
 		makeObservable(this);
 
 		if (!blogUrl) {

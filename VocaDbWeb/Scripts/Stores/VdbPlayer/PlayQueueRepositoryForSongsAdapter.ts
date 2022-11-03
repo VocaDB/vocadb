@@ -14,9 +14,9 @@ import {
 
 export class PlayQueueRepositoryForSongsAdapter
 	implements PlayQueueRepository<SongGetListQueryParams> {
-	public constructor(private readonly songRepo: SongRepository) {}
+	constructor(private readonly songRepo: SongRepository) {}
 
-	public getSongs = async ({
+	getSongs = async ({
 		lang,
 		pagingProps,
 		pvServices,

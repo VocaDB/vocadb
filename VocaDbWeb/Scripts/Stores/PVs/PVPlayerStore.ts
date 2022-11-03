@@ -30,37 +30,35 @@ export interface IPVPlayerSong {
 }
 
 export class PVPlayerStore {
-	public static autoplayPVServices = [
+	static autoplayPVServices = [
 		PVService.File,
 		PVService.LocalFile,
 		PVService.NicoNicoDouga,
 		PVService.SoundCloud,
 		PVService.Youtube,
 	];
-	public static autoplayPVServicesString = PVPlayerStore.autoplayPVServices.join(
-		', ',
-	);
+	static autoplayPVServicesString = PVPlayerStore.autoplayPVServices.join(', ');
 
-	@observable public autoplay = false;
+	@observable autoplay = false;
 	private readonly autoplayServices = [
 		PVService.File,
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
 	private readonly players: { [index: string]: IPVPlayer };
-	public nextSong?: () => void;
-	@observable public primaryPV?: PVContract;
-	public playerService?: PVService;
-	@observable public ratingButtonsStore?: PVRatingButtonsStore;
-	public resetSong?: () => void;
-	@observable public selectedSong?: IPVPlayerSong;
-	@observable public shuffle = false;
+	nextSong?: () => void;
+	@observable primaryPV?: PVContract;
+	playerService?: PVService;
+	@observable ratingButtonsStore?: PVRatingButtonsStore;
+	resetSong?: () => void;
+	@observable selectedSong?: IPVPlayerSong;
+	@observable shuffle = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		userRepo: UserRepository,
-		public readonly pvPlayersFactory: PVPlayersFactory,
+		readonly pvPlayersFactory: PVPlayersFactory,
 		autoplay?: boolean,
 		shuffle?: boolean,
 	) {
@@ -162,7 +160,7 @@ export class PVPlayerStore {
 		return song.song.pvServicesArray?.includes(service) ?? false;
 	};
 
-	public songIsValid = (song: IPVPlayerSong): boolean => {
+	songIsValid = (song: IPVPlayerSong): boolean => {
 		return (
 			!this.autoplay ||
 			this.autoplayServices.some(

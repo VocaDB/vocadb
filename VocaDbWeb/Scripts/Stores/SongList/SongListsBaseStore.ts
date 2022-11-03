@@ -23,16 +23,16 @@ interface SongListsBaseRouteParams {
 }
 
 export abstract class SongListsBaseStore extends PagedItemsStore<SongListContract> {
-	@observable public query = '';
-	@observable public showTags = false;
-	@observable public sort = SongListSortRule.Date;
-	public readonly tagFilters: TagFilters;
+	@observable query = '';
+	@observable showTags = false;
+	@observable sort = SongListSortRule.Date;
+	readonly tagFilters: TagFilters;
 
 	protected constructor(
 		values: GlobalValues,
 		tagRepo: TagRepository,
 		tagIds: number[],
-		public readonly showEventDateSort: boolean,
+		readonly showEventDateSort: boolean,
 	) {
 		super();
 
@@ -47,32 +47,29 @@ export abstract class SongListsBaseStore extends PagedItemsStore<SongListContrac
 		reaction(() => this.showTags, this.clear);
 	}
 
-	@computed public get tags(): TagFilter[] {
+	@computed get tags(): TagFilter[] {
 		return this.tagFilters.tags;
 	}
-	public set tags(value: TagFilter[]) {
+	set tags(value: TagFilter[]) {
 		this.tagFilters.tags = value;
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	@computed public get fields(): SongListOptionalField[] {
+	@computed get fields(): SongListOptionalField[] {
 		return this.showTags
 			? [SongListOptionalField.MainPicture, SongListOptionalField.Tags]
 			: [SongListOptionalField.MainPicture];
 	}
 
-	public isFirstForYear = (
-		current: SongListContract,
-		index: number,
-	): boolean => {
+	isFirstForYear = (current: SongListContract, index: number): boolean => {
 		if (this.sort !== SongListSortRule.Date) return false;
 
 		if (!current.eventDate) return false;
@@ -89,18 +86,18 @@ export abstract class SongListsBaseStore extends PagedItemsStore<SongListContrac
 		return currentYear !== prevYear;
 	};
 
-	@action public selectTag = (tag: TagBaseContract): void => {
+	@action selectTag = (tag: TagBaseContract): void => {
 		this.tagFilters.tags = [TagFilter.fromContract(tag)];
 	};
 
-	@computed.struct public get locationState(): SongListsBaseRouteParams {
+	@computed.struct get locationState(): SongListsBaseRouteParams {
 		return {
 			filter: this.query,
 			sort: this.sort,
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: SongListsBaseRouteParams) {
+	set locationState(value: SongListsBaseRouteParams) {
 		this.query = value.filter ?? '';
 		this.sort = value.sort || SongListSortRule.Date;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);

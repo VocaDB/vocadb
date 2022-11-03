@@ -58,13 +58,13 @@ const validate = ajv.compile(schema);
 
 export class CommentListStore
 	implements LocationStateStore<CommentListRouteParams> {
-	@observable public entries: EntryWithCommentsContract[] = [];
-	@observable public entryType = EntryType[EntryType.Undefined];
-	@observable public lastEntryDate?: Date;
-	@observable public sort = CommentSortRule.CreateDateDescending;
-	public readonly user: BasicEntryLinkStore<UserBaseContract>;
+	@observable entries: EntryWithCommentsContract[] = [];
+	@observable entryType = EntryType[EntryType.Undefined];
+	@observable lastEntryDate?: Date;
+	@observable sort = CommentSortRule.CreateDateDescending;
+	readonly user: BasicEntryLinkStore<UserBaseContract>;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
@@ -77,26 +77,24 @@ export class CommentListStore
 		);
 	}
 
-	@computed.struct public get locationState(): CommentListRouteParams {
+	@computed.struct get locationState(): CommentListRouteParams {
 		return {
 			entryType: this.entryType,
 			sort: this.sort,
 			userId: this.user.id,
 		};
 	}
-	public set locationState(value: CommentListRouteParams) {
+	set locationState(value: CommentListRouteParams) {
 		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
 		this.sort = value.sort ?? CommentSortRule.CreateDateDescending;
 		this.user.id = value.userId;
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is CommentListRouteParams => {
+	validateLocationState = (data: any): data is CommentListRouteParams => {
 		return validate(data);
 	};
 
-	public loadMore = async (): Promise<void> => {
+	loadMore = async (): Promise<void> => {
 		const result = await this.httpClient.get<
 			PartialFindResultContract<CommentContract>
 		>(this.urlMapper.mapRelative('/api/comments'), {
@@ -152,7 +150,7 @@ export class CommentListStore
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -162,7 +160,7 @@ export class CommentListStore
 		this.pauseNotifications = false;
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<CommentListRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
