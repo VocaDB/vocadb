@@ -80,7 +80,7 @@ const SongInAlbumEdit = observer(
 									songInAlbumEditStore.songId,
 								)}
 								target="_blank"
-								title="Open for edit" /* TODO: localize */
+								title="Open for edit" /* LOCALIZE */
 								className="iconLink editLink"
 							>
 								{t('ViewRes:Shared.Edit')}
@@ -93,7 +93,7 @@ const SongInAlbumEdit = observer(
 						}
 						href="#"
 						className="iconLink removeLink"
-						title="Remove from album" /* TODO: localize */
+						title="Remove from album" /* LOCALIZE */
 					>
 						{t('ViewRes:Shared.Remove')}
 					</SafeAnchor>

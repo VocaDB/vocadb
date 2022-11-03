@@ -49,7 +49,7 @@ const LyricsForSongEdit = observer(
 												userLanguageCultures[lyricsForSongEditStore.cultureCode]
 													.englishName
 										  })`
-										: 'Other/Unknown' /* TODO: localize */
+										: 'Other/Unknown' /* LOCALIZE */
 								}
 								)
 							</span>
@@ -74,7 +74,7 @@ const LyricsForSongEdit = observer(
 										label={t('ViewRes.Song:Edit.LyLanguage')}
 										dangerouslySetInnerHTML={{
 											__html:
-												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* TODO: localize */,
+												"If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'." /* LOCALIZE */,
 										}}
 									/>{' '}
 									<UserLanguageCultureDropdownList
@@ -92,14 +92,14 @@ const LyricsForSongEdit = observer(
 							)}
 							<div>
 								<HelpLabel
-									label="Source" /* TODO: localize */
+									label="Source" /* LOCALIZE */
 									dangerouslySetInnerHTML={{
 										__html:
-											'You can fill either label, URL or both' /* TODO: localize */,
+											'You can fill either label, URL or both' /* LOCALIZE */,
 									}}
 								/>{' '}
 								<div className="inline input-prepend">
-									<span className="add-on" title="Label" /* TODO: localize */>
+									<span className="add-on" title="Label" /* LOCALIZE */>
 										<i className="icon-pencil" />
 									</span>
 									<input
@@ -113,11 +113,11 @@ const LyricsForSongEdit = observer(
 										className="input-large"
 										size={45}
 										maxLength={255}
-										placeholder="Label" /* TODO: localize */
+										placeholder="Label" /* LOCALIZE */
 									/>
 								</div>{' '}
 								<div className="inline input-prepend">
-									<span className="add-on" title="URL" /* TODO: localize */>
+									<span className="add-on" title="URL" /* LOCALIZE */>
 										<i className="icon-globe" />
 									</span>
 									<input
@@ -131,7 +131,7 @@ const LyricsForSongEdit = observer(
 										className="input-xlarge"
 										size={45}
 										maxLength={500}
-										placeholder="URL" /* TODO: localize */
+										placeholder="URL" /* LOCALIZE */
 									/>
 								</div>
 							</div>
@@ -176,7 +176,7 @@ const LyricsForSongEdit = observer(
 										href="#"
 										className="textLink editLink"
 									>
-										Change to original{/* TODO: localize */}
+										Change to original{/* LOCALIZE */}
 									</SafeAnchor>
 								</>
 							)}
@@ -193,7 +193,7 @@ const LyricsForSongEdit = observer(
 										href="#"
 										className="textLink editLink"
 									>
-										Change to translation{/* TODO: localize */}
+										Change to translation{/* LOCALIZE */}
 									</SafeAnchor>
 								</>
 							)}

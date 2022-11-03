@@ -89,7 +89,7 @@ const BasicInfoTabContent = observer(
 		return (
 			<>
 				<div>
-					<div className="editor-label">Event type{/* TODO: localize */}</div>
+					<div className="editor-label">Event type{/* LOCALIZE */}</div>
 					<div className="editor-field">
 						<label>
 							<input
@@ -102,7 +102,7 @@ const BasicInfoTabContent = observer(
 								}
 							/>{' '}
 							Series event
-							{/* TODO: localize */}
+							{/* LOCALIZE */}
 						</label>
 						<label>
 							<input
@@ -115,14 +115,14 @@ const BasicInfoTabContent = observer(
 								}
 							/>{' '}
 							Standalone event
-							{/* TODO: localize */}
+							{/* LOCALIZE */}
 						</label>
 					</div>
 				</div>
 
 				{releaseEventEditStore.isSeriesEvent && (
 					<div>
-						<div className="editor-label">Series{/* TODO: localize */}</div>
+						<div className="editor-label">Series{/* LOCALIZE */}</div>
 						<div className="editor-field">
 							<ReleaseEventSeriesLockingAutoComplete
 								basicEntryLinkStore={releaseEventEditStore.series}
@@ -131,7 +131,7 @@ const BasicInfoTabContent = observer(
 
 						<div className="editor-label">
 							<label htmlFor="seriesNumber">
-								Series number{/* TODO: localize */}
+								Series number{/* LOCALIZE */}
 							</label>
 						</div>
 						<div className="editor-field">
@@ -161,7 +161,7 @@ const BasicInfoTabContent = observer(
 									}
 								/>{' '}
 								Customize event name
-								{/* TODO: localize */}
+								{/* LOCALIZE */}
 							</label>
 						</div>
 
@@ -169,7 +169,7 @@ const BasicInfoTabContent = observer(
 							<div>
 								<div className="editor-label">
 									<label htmlFor="seriesSuffix">
-										Series suffix{/* TODO: localize */}
+										Series suffix{/* LOCALIZE */}
 									</label>
 								</div>
 								<div className="editor-field">
@@ -214,7 +214,7 @@ const BasicInfoTabContent = observer(
 						</div>
 
 						<div className="editor-label">
-							<label>Names{/* TODO: localize */}</label>
+							<label>Names{/* LOCALIZE */}</label>
 						</div>
 						<div className="editor-field">
 							<NamesEditor namesEditStore={releaseEventEditStore.names} />
@@ -223,7 +223,7 @@ const BasicInfoTabContent = observer(
 				)}
 
 				<div className="editor-label">
-					<label htmlFor="description">Description{/* TODO: localize */}</label>
+					<label htmlFor="description">Description{/* LOCALIZE */}</label>
 				</div>
 				<div className="editor-field">
 					<textarea
@@ -239,13 +239,13 @@ const BasicInfoTabContent = observer(
 						className="span4"
 						maxLength={1000}
 					/>
-					Live preview{/* TODO: localize */}
+					Live preview{/* LOCALIZE */}
 					<Markdown>{releaseEventEditStore.description}</Markdown>
 				</div>
 
 				{!releaseEventEditStore.isSeriesEvent && (
 					<div>
-						<div className="editor-label">Category{/* TODO: localize */}</div>
+						<div className="editor-label">Category{/* LOCALIZE */}</div>
 						<div className="editor-field">
 							<div className="row-fluid">
 								<div className="span4">
@@ -266,10 +266,10 @@ const BasicInfoTabContent = observer(
 
 				<div className="editor-label">
 					<HelpLabel
-						label="Date" /* TODO: localize */
+						label="Date" /* LOCALIZE */
 						dangerouslySetInnerHTML={{
 							__html:
-								"Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* TODO: localize */,
+								"Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* LOCALIZE */,
 						}}
 					/>
 				</div>
@@ -303,10 +303,10 @@ const BasicInfoTabContent = observer(
 
 				<div className="editor-label">
 					<HelpLabel
-						label="Setlist" /* TODO: localize */
+						label="Setlist" /* LOCALIZE */
 						dangerouslySetInnerHTML={{
 							__html:
-								'If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.' /* TODO: localize */,
+								'If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.' /* LOCALIZE */,
 						}}
 					/>
 				</div>
@@ -317,7 +317,7 @@ const BasicInfoTabContent = observer(
 					/>
 				</div>
 
-				<div className="editor-label">Venue{/* TODO: localize */}</div>
+				<div className="editor-label">Venue{/* LOCALIZE */}</div>
 				<div className="editor-field">
 					<VenueLockingAutoComplete
 						basicEntryLinkStore={releaseEventEditStore.venue}
@@ -328,10 +328,10 @@ const BasicInfoTabContent = observer(
 					<div>
 						<div className="editor-label">
 							<HelpLabel
-								label="Venue name" /* TODO: localize */
+								label="Venue name" /* LOCALIZE */
 								dangerouslySetInnerHTML={{
 									__html:
-										'Can be either a physical location such as concert hall, or a virtual location (website).' /* TODO: localize */,
+										'Can be either a physical location such as concert hall, or a virtual location (website).' /* LOCALIZE */,
 								}}
 							/>
 						</div>
@@ -355,7 +355,7 @@ const BasicInfoTabContent = observer(
 				<br />
 
 				<div className="editor-label">
-					<label>Picture{/* TODO: localize */}</label>
+					<label>Picture{/* LOCALIZE */}</label>
 				</div>
 				<div className="editor-field">
 					<table>
@@ -368,7 +368,7 @@ const BasicInfoTabContent = observer(
 											releaseEventEditStore.contract.mainPicture,
 											ImageSize.SmallThumb,
 										)}
-										alt="Picture" /* TODO: localize */
+										alt="Picture" /* LOCALIZE */
 										className="coverPic"
 									/>
 								</td>
@@ -446,9 +446,9 @@ const ArtistsTabContent = observer(
 						<table>
 							<thead>
 								<tr>
-									<th>Artist{/* TODO: localize */}</th>
-									<th>Roles{/* TODO: localize */}</th>
-									<th>Actions{/* TODO: localize */}</th>
+									<th>Artist{/* LOCALIZE */}</th>
+									<th>Roles{/* LOCALIZE */}</th>
+									<th>Actions{/* LOCALIZE */}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -520,12 +520,11 @@ const ArtistsTabContent = observer(
 					)}
 
 					<br />
-					<h4>Add artist{/* TODO: localize */}</h4>
+					<h4>Add artist{/* LOCALIZE */}</h4>
 					<ArtistAutoComplete
 						type="text"
 						properties={{
-							createNewItem:
-								"Add custom artist named '{0}'" /* TODO: localize */,
+							createNewItem: "Add custom artist named '{0}'" /* LOCALIZE */,
 							acceptSelection: releaseEventEditStore.addArtist,
 						}}
 						maxLength={128}
@@ -552,12 +551,12 @@ const PVsTabContent = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Service{/* TODO: localize */}</th>
-								<th>Type{/* TODO: localize */}</th>
-								<th>Name{/* TODO: localize */}</th>
-								<th>Length{/* TODO: localize */}</th>
-								<th>Date{/* TODO: localize */}</th>
-								<th>Author{/* TODO: localize */}</th>
+								<th>Service{/* LOCALIZE */}</th>
+								<th>Type{/* LOCALIZE */}</th>
+								<th>Name{/* LOCALIZE */}</th>
+								<th>Length{/* LOCALIZE */}</th>
+								<th>Date{/* LOCALIZE */}</th>
+								<th>Author{/* LOCALIZE */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -574,11 +573,11 @@ const PVsTabContent = observer(
 				)}
 
 				<br />
-				<h4>Add media{/* TODO: localize */}</h4>
+				<h4>Add media{/* LOCALIZE */}</h4>
 
 				<p>
 					Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro
-					and Bilibili.{/* TODO: localize */}
+					and Bilibili.{/* LOCALIZE */}
 				</p>
 				<p>
 					URL:{' '}
@@ -622,8 +621,8 @@ const EventEditLayout = observer(
 		const isNew = contract.id === 0;
 
 		const title = isNew
-			? 'Create a new event' /* TODO: localize */
-			: `Edit event - ${contract.name}`; /* TODO: localize */
+			? 'Create a new event' /* LOCALIZE */
+			: `Edit event - ${contract.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -649,7 +648,7 @@ const EventEditLayout = observer(
 									to: '/Event',
 								}}
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOCALIZE */}
 							</Breadcrumb.Item>
 						</>
 					) : (
@@ -661,7 +660,7 @@ const EventEditLayout = observer(
 								}}
 								divider
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOCALIZE */}
 							</Breadcrumb.Item>
 							<Breadcrumb.Item
 								linkAs={Link}
@@ -722,7 +721,7 @@ const EventEditLayout = observer(
 
 				{releaseEventEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOCALIZE */
 						errors={releaseEventEditStore.errors}
 					/>
 				)}
@@ -747,7 +746,7 @@ const EventEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOCALIZE */,
 							);
 
 							throw error;
@@ -770,16 +769,13 @@ const EventEditLayout = observer(
 							/>
 						</JQueryUITab>
 
-						<JQueryUITab
-							eventKey="artists"
-							title="Artists" /* TODO: localize */
-						>
+						<JQueryUITab eventKey="artists" title="Artists" /* LOCALIZE */>
 							<ArtistsTabContent
 								releaseEventEditStore={releaseEventEditStore}
 							/>
 						</JQueryUITab>
 
-						<JQueryUITab eventKey="pvs" title="Media" /* TODO: localize */>
+						<JQueryUITab eventKey="pvs" title="Media" /* LOCALIZE */>
 							<PVsTabContent releaseEventEditStore={releaseEventEditStore} />
 						</JQueryUITab>
 					</JQueryUITabs>

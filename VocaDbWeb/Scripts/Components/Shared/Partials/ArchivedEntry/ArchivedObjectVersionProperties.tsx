@@ -23,27 +23,27 @@ export const ArchivedObjectVersionProperties = React.memo(
 
 		return (
 			<div className="well well-transparent">
-				<h4>Properties{/* TODO: localize */}</h4>
+				<h4>Properties{/* LOCALIZE */}</h4>
 
 				<table className="table-bordered">
 					<tbody>
 						<tr>
-							<td>Version{/* TODO: localize */}</td>
+							<td>Version{/* LOCALIZE */}</td>
 							<td>{version.version}</td>
 							<td>{compareTo?.version}</td>
 						</tr>
 						<tr>
-							<td>Status{/* TODO: localize */}</td>
+							<td>Status{/* LOCALIZE */}</td>
 							<td>{version.status}</td>
 							<td>{compareTo?.status}</td>
 						</tr>
 						<tr>
-							<td>Snapshot{/* TODO: localize */}</td>
+							<td>Snapshot{/* LOCALIZE */}</td>
 							<td>{version.isSnapshot ? 'True' : 'False'}</td>
 							<td>{compareTo && (compareTo.isSnapshot ? 'True' : 'False')}</td>
 						</tr>
 						<tr>
-							<td>Created{/* TODO: localize */}</td>
+							<td>Created{/* LOCALIZE */}</td>
 							<td>
 								<UniversalTimeLabel dateTime={version.created} />
 							</td>
@@ -54,7 +54,7 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Author{/* TODO: localize */}</td>
+							<td>Author{/* LOCALIZE */}</td>
 							<td>
 								{/* eslint-disable-next-line react/jsx-pascal-case */}
 								<UserIconLinkOrName_UserForApiContract
@@ -73,12 +73,12 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Reason{/* TODO: localize */}</td>
+							<td>Reason{/* LOCALIZE */}</td>
 							<td>{reasonNames(entryType, version)}</td>
 							<td>{compareTo && reasonNames(entryType, compareTo)}</td>
 						</tr>
 						<tr>
-							<td>Changed{/* TODO: localize */}</td>
+							<td>Changed{/* LOCALIZE */}</td>
 							<td>
 								{version.changedFields.length > 0 && (
 									<>
@@ -103,7 +103,7 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Notes{/* TODO: localize */}</td>
+							<td>Notes{/* LOCALIZE */}</td>
 							<td>{version.notes}</td>
 							<td>{compareTo?.notes}</td>
 						</tr>

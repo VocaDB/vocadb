@@ -41,7 +41,7 @@ const AlbumViewVersionLayout = observer(
 	}: AlbumViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -78,7 +78,7 @@ const AlbumViewVersionLayout = observer(
 								to: `/Album/Versions/${contract.album.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOCALIZE */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -113,7 +113,7 @@ const AlbumViewVersionLayout = observer(
 							href={`/Album/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOCALIZE */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -166,7 +166,7 @@ const AlbumViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOCALIZE */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedAlbumStore.comparedVersionId}

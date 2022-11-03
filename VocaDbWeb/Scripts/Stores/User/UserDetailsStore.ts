@@ -200,7 +200,7 @@ export class UserDetailsStore {
 		runInAction(() => {
 			this.ratingsByGenreChart = HighchartsHelper.simplePieChart(
 				null!,
-				'Songs' /* TODO: localize */,
+				'Songs' /* LOCALIZE */,
 				data,
 			);
 		});

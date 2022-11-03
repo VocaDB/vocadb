@@ -52,12 +52,12 @@ const UserRequestVerification = observer(
 
 									await requestVerificationStore.submit(requestToken);
 
-									showSuccessMessage('Request sent' /* TODO: localize */);
+									showSuccessMessage('Request sent' /* LOCALIZE */);
 								} catch (error: any) {
 									showErrorMessage(
 										error.response && error.response.status
 											? getReasonPhrase(error.response.status)
-											: 'Unable to send request.' /* TODO: localize */,
+											: 'Unable to send request.' /* LOCALIZE */,
 									);
 
 									throw error;
@@ -129,7 +129,7 @@ const UserRequestVerification = observer(
 								<div>
 									<label>{t('ViewRes.User:RequestVerification.URL')}</label>
 									<div className="inline input-prepend">
-										<span className="add-on" title="URL" /* TODO: localize */>
+										<span className="add-on" title="URL" /* LOCALIZE */>
 											<i className="icon-globe" />
 										</span>
 										<input

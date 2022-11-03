@@ -9,9 +9,9 @@ export const AjaxLoader = ({ id }: AjaxLoaderProps): React.ReactElement => {
 		<img
 			id={id}
 			src="/Content/ajax-loader.gif"
-			alt="loading..." /* TODO: localize */
+			alt="loading..." /* LOCALIZE */
 		/>
 	) : (
-		<img src="/Content/ajax-loader.gif" alt="loading..." /* TODO: localize */ />
+		<img src="/Content/ajax-loader.gif" alt="loading..." /* LOCALIZE */ />
 	);
 };

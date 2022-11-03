@@ -175,7 +175,7 @@ const MessageFolderTabContent = observer(
 												<span>
 													<img
 														src="/Content/star5.png"
-														alt="unread" /* TODO: localize */
+														alt="unread" /* LOCALIZE */
 													/>
 													&nbsp;
 												</span>

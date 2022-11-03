@@ -35,7 +35,7 @@ const TagMergeLayout = observer(
 	({ tag, tagMergeStore }: TagMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge tag - ${tag.name}`; /* TODO: localize */
+		const title = `Merge tag - ${tag.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -70,7 +70,7 @@ const TagMergeLayout = observer(
 								to: `/Tag/Edit/${tag.id}`,
 							}}
 						>
-							Edit{/* TODO: localize */}
+							Edit{/* LOCALIZE */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -91,7 +91,7 @@ const TagMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge tag.' /* TODO: localize */,
+									: 'Unable to merge tag.' /* LOCALIZE */,
 							);
 
 							throw error;
@@ -133,7 +133,7 @@ const TagMergeLayout = observer(
 						id="mergeBtn"
 						disabled={!tagMergeStore.target.id || tagMergeStore.submitting}
 					>
-						Merge{/* TODO: localize */}
+						Merge{/* LOCALIZE */}
 					</Button>
 				</form>
 			</Layout>

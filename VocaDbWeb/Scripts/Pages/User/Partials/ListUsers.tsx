@@ -45,7 +45,7 @@ const UsersFilters = observer(
 									})
 								}
 								className="input-xlarge"
-								placeholder="Type something..." /* TODO: localize */
+								placeholder="Type something..." /* LOCALIZE */
 								debounceTimeout={300}
 							/>
 							{listUsersStore.searchTerm && (

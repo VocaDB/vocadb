@@ -117,7 +117,7 @@ export const SongSearchListTableRowPlayButtonAndDropdown = observer(
 		return (
 			<>
 				<Button onClick={(): Promise<void> => play(PlayMethod.ClearAndPlay)}>
-					<i className="icon-play" /> Play{/* TODO: localize */}
+					<i className="icon-play" /> Play{/* LOCALIZE */}
 				</Button>{' '}
 				<Dropdown as={ButtonGroup}>
 					<Dropdown.Toggle>
@@ -135,17 +135,17 @@ export const SongSearchListTableRowPlayButtonAndDropdown = observer(
 						<Dropdown.Item
 							onClick={(): Promise<void> => play(PlayMethod.PlayFirst)}
 						>
-							Play first{/* TODO: localize */}
+							Play first{/* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={(): Promise<void> => play(PlayMethod.PlayNext)}
 						>
-							Play next{/* TODO: localize */}
+							Play next{/* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={(): Promise<void> => play(PlayMethod.AddToPlayQueue)}
 						>
-							Add to play queue{/* TODO: localize */}
+							Add to play queue{/* LOCALIZE */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
@@ -177,7 +177,7 @@ const SongSearchListTableRow = observer(
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
 								src={song.mainPicture.urlThumb}
-								title="Cover picture" /* TODO: localize */
+								title="Cover picture" /* LOCALIZE */
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>
@@ -240,7 +240,7 @@ const SongSearchListTableRow = observer(
 								className="icon-calendar"
 								title={`Published: ${songSearchStore.formatDate(
 									song.publishDate,
-								)}`} /* TODO: localize */
+								)}`} /* LOCALIZE */
 								/* TODO: tooltip */
 							/>
 						</>

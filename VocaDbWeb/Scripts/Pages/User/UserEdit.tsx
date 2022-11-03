@@ -44,7 +44,7 @@ const UserEditLayout = observer(
 
 		const contract = userEditStore.contract;
 
-		const title = `Edit user - ${contract.name}`; /* TODO: localize */
+		const title = `Edit user - ${contract.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -62,7 +62,7 @@ const UserEditLayout = observer(
 							}}
 							divider
 						>
-							Users{/* TODO: localize */}
+							Users{/* LOCALIZE */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -83,14 +83,14 @@ const UserEditLayout = observer(
 								onClick={(e): void => {
 									if (
 										!window.confirm(
-											'Are you sure you want to clear ratings for this user?' /* TODO: localize */,
+											'Are you sure you want to clear ratings for this user?' /* LOCALIZE */,
 										)
 									) {
 										e.preventDefault();
 									}
 								}}
 							>
-								Clear user ratings{/* TODO: localize */}
+								Clear user ratings{/* LOCALIZE */}
 							</JQueryUIButton>
 						)}
 					</>
@@ -98,7 +98,7 @@ const UserEditLayout = observer(
 			>
 				{userEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to edit user." /* TODO: localize */
+						message="Unable to edit user." /* LOCALIZE */
 						errors={userEditStore.errors}
 					/>
 				)}
@@ -117,7 +117,7 @@ const UserEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to edit user.' /* TODO: localize */,
+									: 'Unable to edit user.' /* LOCALIZE */,
 							);
 
 							throw error;
@@ -125,7 +125,7 @@ const UserEditLayout = observer(
 					}}
 				>
 					<fieldset>
-						<legend>Account settings{/* TODO: localize */}</legend>
+						<legend>Account settings{/* LOCALIZE */}</legend>
 						<p>
 							<input
 								type="checkbox"
@@ -136,7 +136,7 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Active {/* TODO: localize */}
+							Active {/* LOCALIZE */}
 						</p>
 						<p>
 							<input
@@ -148,7 +148,7 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Poisoned (autoban for logging in) {/* TODO: localize */}
+							Poisoned (autoban for logging in) {/* LOCALIZE */}
 						</p>
 						<p>
 							<input
@@ -160,10 +160,10 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Patreon supporter {/* TODO: localize */}
+							Patreon supporter {/* LOCALIZE */}
 						</p>
 
-						<label htmlFor="name">Username{/* TODO: localize */}</label>
+						<label htmlFor="name">Username{/* LOCALIZE */}</label>
 						<input
 							type="text"
 							id="name"
@@ -176,7 +176,7 @@ const UserEditLayout = observer(
 							maxLength={100}
 						/>
 
-						<label htmlFor="email">Email{/* TODO: localize */}</label>
+						<label htmlFor="email">Email{/* LOCALIZE */}</label>
 						<input
 							type="text"
 							id="email"
@@ -189,7 +189,7 @@ const UserEditLayout = observer(
 							maxLength={50}
 						/>
 
-						<label htmlFor="groupId">User group{/* TODO: localize */}</label>
+						<label htmlFor="groupId">User group{/* LOCALIZE */}</label>
 						<select
 							id="groupId"
 							value={userEditStore.groupId}
@@ -222,7 +222,7 @@ const UserEditLayout = observer(
 					)}
 
 					<fieldset>
-						<legend>Owned artists{/* TODO: localize */}</legend>
+						<legend>Owned artists{/* LOCALIZE */}</legend>
 						<table>
 							<tbody id="ownedArtistsTableBody">
 								{userEditStore.ownedArtists.map((ownedArtist, index) => (

@@ -109,7 +109,7 @@ const UserDetailsLayout = observer(
 										onClick={(): void => mutedUsers.removeMutedUser(mutedUser)}
 										icons={{ primary: 'ui-icon-volume-on' }}
 									>
-										Unmute{/* TODO: localize */}
+										Unmute{/* LOCALIZE */}
 									</JQueryUIButton>
 								) : (
 									<JQueryUIButton
@@ -117,7 +117,7 @@ const UserDetailsLayout = observer(
 										onClick={(): void => mutedUsers.addMutedUser(user.id)}
 										icons={{ primary: 'ui-icon-volume-off' }}
 									>
-										Mute{/* TODO: localize */}
+										Mute{/* LOCALIZE */}
 									</JQueryUIButton>
 								)}
 							</>
@@ -222,17 +222,17 @@ const UserDetailsLayout = observer(
 			>
 				{ownProfile && user.groupId === UserGroup.Limited && (
 					<Alert>
-						<h4>Why is my user group "Limited user"?{/* TODO: localize */}</h4>
+						<h4>Why is my user group "Limited user"?{/* LOCALIZE */}</h4>
 						<p>
 							In order to prevent spammers and abusers we use automated tools to
 							check users' IP address. If you have a dynamic IP, it's possible
 							that someone with the same IP as you was participating in these
 							activities and your account was mistakenly reduced, preventing you
-							from editing the database.{/* TODO: localize */}
+							from editing the database.{/* LOCALIZE */}
 						</p>
 						<p>
 							If this is the case, please <a href="/Help">contact us</a> and
-							we'll take care of it. Thank you.{/* TODO: localize */}
+							we'll take care of it. Thank you.{/* LOCALIZE */}
 						</p>
 					</Alert>
 				)}
@@ -265,7 +265,7 @@ const UserDetailsLayout = observer(
 
 				{loginManager.canManageUserPermissions && (
 					<JQueryUIDialog
-						title="StopForumSpam check" /* TODO: localize */
+						title="StopForumSpam check" /* LOCALIZE */
 						autoOpen={userDetailsStore.sfsCheckDialog.dialogVisible}
 						close={(): void =>
 							runInAction(() => {
@@ -286,20 +286,20 @@ const UserDetailsLayout = observer(
 				)}
 
 				<EntryDeletePopupBase
-					confirmText="Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional)." /* TODO: localize */
+					confirmText="Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional)." /* LOCALIZE */
 					deleteEntryStore={userDetailsStore.limitedUserStore}
-					title="Remove editing permissions" /* TODO: localize */
+					title="Remove editing permissions" /* LOCALIZE */
 					deleteButtonProps={{
-						text: 'Confirm' /* TODO: localize */,
+						text: 'Confirm' /* LOCALIZE */,
 						icons: { primary: 'ui-icon-close' },
 					}}
 				/>
 				<EntryDeletePopupBase
-					confirmText="Please confirm that you wish to report user. Please provide additional explanation below." /* TODO: localize */
+					confirmText="Please confirm that you wish to report user. Please provide additional explanation below." /* LOCALIZE */
 					deleteEntryStore={userDetailsStore.reportUserStore}
-					title="Report user" /* TODO: localize */
+					title="Report user" /* LOCALIZE */
 					deleteButtonProps={{
-						text: 'Confirm' /* TODO: localize */,
+						text: 'Confirm' /* LOCALIZE */,
 						icons: { primary: 'ui-icon-alert' },
 					}}
 				/>

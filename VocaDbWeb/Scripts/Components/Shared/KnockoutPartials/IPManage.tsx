@@ -16,7 +16,7 @@ export const IPManage = React.memo(
 					target="_blank"
 					rel="noreferrer"
 				>
-					View on GeoIPTool{/* TODO: localize */}
+					View on GeoIPTool{/* LOCALIZE */}
 				</a>
 				) (
 				<a
@@ -24,7 +24,7 @@ export const IPManage = React.memo(
 					target="_blank"
 					rel="noreferrer"
 				>
-					View on StopForumSpam{/* TODO: localize */}
+					View on StopForumSpam{/* LOCALIZE */}
 				</a>
 				) (
 				<a
@@ -34,7 +34,7 @@ export const IPManage = React.memo(
 					target="_blank"
 					rel="noreferrer"
 				>
-					View in audit log{/* TODO: localize */}
+					View in audit log{/* LOCALIZE */}
 				</a>
 				)
 			</>

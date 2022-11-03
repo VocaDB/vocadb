@@ -120,7 +120,7 @@ const AuditLogFilters = observer(
 		return (
 			<form className="form-horizontal">
 				<div className="control-group">
-					<div className="control-label">Text query{/* TODO: localize */}</div>
+					<div className="control-label">Text query{/* LOCALIZE */}</div>
 					<div className="controls">
 						<DebounceInput
 							type="text"
@@ -137,9 +137,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">
-						Show only user{/* TODO: localize */}
-					</div>
+					<div className="control-label">Show only user{/* LOCALIZE */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={userNameRef}
@@ -157,9 +155,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">
-						Exclude users{/* TODO: localize */}
-					</div>
+					<div className="control-label">Exclude users{/* LOCALIZE */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={excludeUsersRef}
@@ -177,7 +173,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">User group{/* TODO: localize */}</div>
+					<div className="control-label">User group{/* LOCALIZE */}</div>
 					<div className="controls">
 						<UserGroupDropdownList
 							value={viewAuditLogStore.group}
@@ -201,7 +197,7 @@ const AuditLogFilters = observer(
 									})
 								}
 							/>
-							Only show new users{/* TODO: localize */}
+							Only show new users{/* LOCALIZE */}
 						</label>
 					</div>
 				</div>
@@ -214,7 +210,7 @@ const AdminViewAuditLog = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'View audit log'; /* TODO: localize */
+		const title = 'View audit log'; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -231,7 +227,7 @@ const AdminViewAuditLog = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* TODO: localize */}
+							Manage{/* LOCALIZE */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -256,9 +252,9 @@ const AdminViewAuditLog = observer(
 					<table className="table">
 						<thead>
 							<tr>
-								<th>Time{/* TODO: localize */}</th>
-								<th>User{/* TODO: localize */}</th>
-								<th>Action{/* TODO: localize */}</th>
+								<th>Time{/* LOCALIZE */}</th>
+								<th>User{/* LOCALIZE */}</th>
+								<th>Action{/* LOCALIZE */}</th>
 							</tr>
 						</thead>
 						<tbody id="logEntries">
@@ -281,7 +277,7 @@ const AdminViewAuditLog = observer(
 				</div>
 
 				<SafeAnchor id="loadMoreLink" onClick={viewAuditLogStore.loadMore}>
-					Load more{/* TODO: localize */}
+					Load more{/* LOCALIZE */}
 				</SafeAnchor>
 			</Layout>
 		);

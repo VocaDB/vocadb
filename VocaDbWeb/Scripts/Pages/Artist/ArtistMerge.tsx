@@ -38,7 +38,7 @@ const ArtistMergeLayout = observer(
 	}: ArtistMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge artist - ${artist.name}`; /* TODO: localize */
+		const title = `Merge artist - ${artist.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -73,7 +73,7 @@ const ArtistMergeLayout = observer(
 								to: `/Artist/Edit/${artist.id}`,
 							}}
 						>
-							Edit{/* TODO: localize */}
+							Edit{/* LOCALIZE */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -97,7 +97,7 @@ const ArtistMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge artist.' /* TODO: localize */,
+									: 'Unable to merge artist.' /* LOCALIZE */,
 							);
 
 							throw error;
@@ -141,7 +141,7 @@ const ArtistMergeLayout = observer(
 							!artistMergeStore.target.id || artistMergeStore.submitting
 						}
 					>
-						Merge{/* TODO: localize */}
+						Merge{/* LOCALIZE */}
 					</Button>
 				</form>
 			</Layout>

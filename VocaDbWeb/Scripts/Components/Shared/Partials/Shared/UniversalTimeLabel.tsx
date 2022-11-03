@@ -8,7 +8,7 @@ interface UniversalTimeLabelProps {
 export const UniversalTimeLabel = React.memo(
 	({ dateTime }: UniversalTimeLabelProps): React.ReactElement => {
 		return (
-			<span title="UTC" /* TODO: localize */>
+			<span title="UTC" /* LOCALIZE */>
 				{moment(dateTime).utc().format('lll')}
 			</span>
 		);

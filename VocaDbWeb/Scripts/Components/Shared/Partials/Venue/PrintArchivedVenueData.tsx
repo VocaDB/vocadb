@@ -20,12 +20,12 @@ export const PrintArchivedVenueData = React.memo(
 	({ comparedVenues }: PrintArchivedVenueDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* TODO: localize */}</h4>
+				<h4>Content{/* LOCALIZE */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
 						<DataRow
-							name="Id" /* TODO: localize */
+							name="Id" /* LOCALIZE */
 							val={comparedVenues.firstData.id}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
@@ -37,7 +37,7 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* TODO: localize */
+							name="Names" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -47,19 +47,19 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* TODO: localize */
+							name="Description" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.description}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Coordinates" /* TODO: localize */
+							name="Coordinates" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.coordinates.formatted}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Country/Region" /* TODO: localize */
+							name="Country/Region" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode =>
 								regionNames.of(data.addressCountryCode)
@@ -67,13 +67,13 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Address" /* TODO: localize */
+							name="Address" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.address}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* TODO: localize */
+							name="External links" /* LOCALIZE */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (

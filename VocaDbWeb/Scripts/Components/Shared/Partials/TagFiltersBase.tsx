@@ -37,7 +37,7 @@ export const TagFiltersBase = observer(
 									variant="danger"
 									onClick={(): void => tagFilters.removeTag(tag)}
 								>
-									Clear{/* TODO: localize */}
+									Clear{/* LOCALIZE */}
 								</Button>
 							</div>
 						</div>

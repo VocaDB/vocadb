@@ -86,7 +86,7 @@ const Events = observer(
 										>
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
-												alt="Picture" /* TODO: localize */
+												alt="Picture" /* LOCALIZE */
 												src={event.mainPicture.urlTinyThumb}
 											/>
 										</Link>

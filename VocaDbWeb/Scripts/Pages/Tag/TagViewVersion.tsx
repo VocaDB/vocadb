@@ -41,7 +41,7 @@ const TagViewVersionLayout = observer(
 	}: TagViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -78,7 +78,7 @@ const TagViewVersionLayout = observer(
 								to: `/Tag/Versions/${contract.tag.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOCALIZE */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -89,7 +89,7 @@ const TagViewVersionLayout = observer(
 							href={`/Tag/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOCALIZE */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -142,7 +142,7 @@ const TagViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOCALIZE */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

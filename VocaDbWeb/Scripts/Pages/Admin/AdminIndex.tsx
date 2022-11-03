@@ -7,27 +7,25 @@ import { Link } from 'react-router-dom';
 const loginManager = new LoginManager(vdb.values);
 
 const AdminIndex = (): React.ReactElement => {
-	const title = 'Site management'; /* TODO: localize */
+	const title = 'Site management'; /* LOCALIZE */
 
 	useVdbTitle(title, true);
 
 	return (
 		<Layout title={title}>
-			<h3>Common tasks{/* TODO: localize */}</h3>
+			<h3>Common tasks{/* LOCALIZE */}</h3>
 
 			<p>
-				<Link to="/User">View users list{/* TODO: localize */}</Link>
+				<Link to="/User">View users list{/* LOCALIZE */}</Link>
 			</p>
 
 			<p>
-				<Link to="/Comment">View recent comments{/* TODO: localize */}</Link>
+				<Link to="/Comment">View recent comments{/* LOCALIZE */}</Link>
 			</p>
 
 			{loginManager.canViewAuditLog && (
 				<p>
-					<Link to="/Admin/ViewAuditLog">
-						View audit log{/* TODO: localize */}
-					</Link>
+					<Link to="/Admin/ViewAuditLog">View audit log{/* LOCALIZE */}</Link>
 				</p>
 			)}
 
@@ -35,12 +33,12 @@ const AdminIndex = (): React.ReactElement => {
 				<>
 					<p>
 						<Link to="/Admin/ManageTagMappings">
-							Manage tag mappings{/* TODO: localize */}
+							Manage tag mappings{/* LOCALIZE */}
 						</Link>
 					</p>
 					<p>
 						<Link to="/Admin/ManageEntryTagMappings">
-							Manage entry type to tag mappings{/* TODO: localize */}
+							Manage entry type to tag mappings{/* LOCALIZE */}
 						</Link>
 					</p>
 				</>
@@ -49,39 +47,33 @@ const AdminIndex = (): React.ReactElement => {
 			{loginManager.canManageEntryReports && (
 				<p>
 					<a href="/Admin/ViewEntryReports">
-						Manage entry reports{/* TODO: localize */}
+						Manage entry reports{/* LOCALIZE */}
 					</a>
 				</p>
 			)}
 
 			{loginManager.canBulkDeletePVs && (
 				<p>
-					<a href="/Admin/PVsByAuthor">
-						Delete PVs by author{/* TODO: localize */}
-					</a>
+					<a href="/Admin/PVsByAuthor">Delete PVs by author{/* LOCALIZE */}</a>
 				</p>
 			)}
 
 			{loginManager.canMoveToTrash && (
 				<p>
-					<Link to="/Album/Deleted">
-						Manage deleted albums{/* TODO: localize */}
-					</Link>
+					<Link to="/Album/Deleted">Manage deleted albums{/* LOCALIZE */}</Link>
 				</p>
 			)}
 
 			{loginManager.canManageIPRules && (
 				<p>
-					<Link to="/Admin/ManageIPRules">
-						Manage IP rules{/* TODO: localize */}
-					</Link>
+					<Link to="/Admin/ManageIPRules">Manage IP rules{/* LOCALIZE */}</Link>
 				</p>
 			)}
 
 			{loginManager.canManageWebhooks && (
 				<p>
 					<Link to="/Admin/ManageWebhooks">
-						Manage webhooks{/* TODO: localize */}
+						Manage webhooks{/* LOCALIZE */}
 					</Link>
 				</p>
 			)}
@@ -90,25 +82,21 @@ const AdminIndex = (): React.ReactElement => {
 
 			{loginManager.canAdmin && (
 				<>
-					<h3>Database maintenance tasks{/* TODO: localize */}</h3>
+					<h3>Database maintenance tasks{/* LOCALIZE */}</h3>
 					<p>
-						<a href="/Admin/ActiveEdits">
-							View active editors{/* TODO: localize */}
-						</a>
+						<a href="/Admin/ActiveEdits">View active editors{/* LOCALIZE */}</a>
 					</p>
 					<p>
-						<a href="/Admin/CreateJsonDump">
-							Create JSON dump{/* TODO: localize */}
-						</a>
+						<a href="/Admin/CreateJsonDump">Create JSON dump{/* LOCALIZE */}</a>
 					</p>
 					<p>
 						<a href="/Admin/RefreshDbCache">
-							Refresh NHibernate 2nd level cache{/* TODO: localize */}
+							Refresh NHibernate 2nd level cache{/* LOCALIZE */}
 						</a>
 					</p>
 					<p>
 						<a href="/Admin/ClearCaches">
-							Refresh .NET memory cache{/* TODO: localize */}
+							Refresh .NET memory cache{/* LOCALIZE */}
 						</a>
 					</p>
 				</>

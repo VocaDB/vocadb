@@ -59,7 +59,7 @@ const SongLyrics = observer(
 									}}
 								>
 									{lyrics.translationType === 'Romanized'
-										? 'Romanized' /* TODO: localize */
+										? 'Romanized' /* LOCALIZE */
 										: lyrics.cultureCode
 										? userLanguageCultures[lyrics.cultureCode].nativeName
 										: t('ViewRes.Song:Details.LyricsLanguageOther')}

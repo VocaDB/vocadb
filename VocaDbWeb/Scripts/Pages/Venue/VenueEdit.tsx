@@ -59,8 +59,8 @@ const VenueEditLayout = observer(
 		const isNew = contract.id === 0;
 
 		const title = isNew
-			? `Create a new venue` /* TODO: localize */
-			: `Edit venue - ${venueEditStore.name}`; /* TODO: localize */
+			? `Create a new venue` /* LOCALIZE */
+			: `Edit venue - ${venueEditStore.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -154,7 +154,7 @@ const VenueEditLayout = observer(
 
 				{venueEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOCALIZE */
 						errors={venueEditStore.errors}
 					/>
 				)}
@@ -173,7 +173,7 @@ const VenueEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOCALIZE */,
 							);
 						}
 					}}
@@ -204,7 +204,7 @@ const VenueEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Names{/* TODO: localize */}</label>
+						<label>Names{/* LOCALIZE */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -216,7 +216,7 @@ const VenueEditLayout = observer(
 									<td style={{ verticalAlign: 'top' }}>
 										{venueEditStore.duplicateName && (
 											<Alert>
-												Venue already exists with name{/* TODO: localize */}{' '}
+												Venue already exists with name{/* LOCALIZE */}{' '}
 												<span>{venueEditStore.duplicateName}</span>
 											</Alert>
 										)}
@@ -226,7 +226,7 @@ const VenueEditLayout = observer(
 						</table>
 					</div>
 
-					<div className="editor-label">Description{/* TODO: localize */}</div>
+					<div className="editor-label">Description{/* LOCALIZE */}</div>
 					<div className="editor-field">
 						<textarea
 							value={venueEditStore.description}
@@ -240,7 +240,7 @@ const VenueEditLayout = observer(
 							maxLength={1000}
 							className="span4"
 						/>
-						Live preview{/* TODO: localize */}
+						Live preview{/* LOCALIZE */}
 						<Markdown>{venueEditStore.description}</Markdown>
 					</div>
 

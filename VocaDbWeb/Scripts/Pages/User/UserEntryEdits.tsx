@@ -40,7 +40,7 @@ const UserEntryEditsLayout = observer(
 	}: UserEntryEditsLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes.User']);
 
-		const title = `Entry edits - ${user.name}`; /* TODO: localize */
+		const title = `Entry edits - ${user.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -52,7 +52,7 @@ const UserEntryEditsLayout = observer(
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>
-							Users{/* TODO: localize */}
+							Users{/* LOCALIZE */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -101,9 +101,7 @@ const UserEntryEditsLayout = observer(
 					</div>
 
 					<div className="control-group">
-						<div className="control-label">
-							Edit event{/* TODO: localize */}
-						</div>
+						<div className="control-label">Edit event{/* LOCALIZE */}</div>
 						<div className="controls">
 							<Button
 								disabled={activityEntryListStore.entryEditEvent === undefined}
@@ -113,7 +111,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								All{/* TODO: localize */}
+								All{/* LOCALIZE */}
 							</Button>{' '}
 							<Button
 								disabled={
@@ -127,7 +125,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								Only additions{/* TODO: localize */}
+								Only additions{/* LOCALIZE */}
 							</Button>{' '}
 							<Button
 								disabled={
@@ -141,7 +139,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								Only edits{/* TODO: localize */}
+								Only edits{/* LOCALIZE */}
 							</Button>
 						</div>
 					</div>
@@ -160,7 +158,7 @@ const UserEntryEditsLayout = observer(
 				<hr />
 				<h3>
 					<SafeAnchor onClick={activityEntryListStore.loadMore}>
-						View more{/* TODO: localize */}
+						View more{/* LOCALIZE */}
 					</SafeAnchor>
 				</h3>
 			</Layout>

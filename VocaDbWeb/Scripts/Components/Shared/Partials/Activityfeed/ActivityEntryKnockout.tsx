@@ -73,7 +73,7 @@ const useEntryTypeName = (): ((entry: EntryContract) => string | undefined) => {
 					);
 
 				case EntryType.Tag:
-					return entry.tagCategoryName /* TODO: localize */;
+					return entry.tagCategoryName /* LOCALIZE */;
 
 				default:
 					return undefined;

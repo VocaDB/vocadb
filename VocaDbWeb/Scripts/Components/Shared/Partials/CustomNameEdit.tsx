@@ -16,7 +16,7 @@ export const CustomNameEdit = observer(
 
 		return (
 			<JQueryUIDialog
-				title="Customize artist name" /* TODO: localize */
+				title="Customize artist name" /* LOCALIZE */
 				autoOpen={customNameEditStore.dialogVisible}
 				width={550}
 				close={(): void =>
@@ -35,7 +35,7 @@ export const CustomNameEdit = observer(
 					{customNameEditStore.artistLink &&
 						customNameEditStore.artistLink.artist && (
 							<>
-								<label>Default name{/* TODO: localize */}</label>
+								<label>Default name{/* LOCALIZE */}</label>
 								<span>{customNameEditStore.artistLink.artist.name}</span>
 								<br />
 								<br />
@@ -44,7 +44,7 @@ export const CustomNameEdit = observer(
 				</div>
 
 				<div className="input-append">
-					<label>Custom name{/* TODO: localize */}</label>
+					<label>Custom name{/* LOCALIZE */}</label>
 					<input
 						type="text"
 						maxLength={255}
@@ -62,7 +62,7 @@ export const CustomNameEdit = observer(
 							})
 						}
 					>
-						Reset{/* TODO: localize */}
+						Reset{/* LOCALIZE */}
 					</Button>
 				</div>
 			</JQueryUIDialog>

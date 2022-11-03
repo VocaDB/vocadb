@@ -42,7 +42,7 @@ const ArtistShare = ({
 			</div>
 			<div>
 				<a href="http://daringfireball.net/projects/markdown/">
-					Markdown{/* TODO: localize */}
+					Markdown{/* LOCALIZE */}
 				</a>
 				<br />
 				<input

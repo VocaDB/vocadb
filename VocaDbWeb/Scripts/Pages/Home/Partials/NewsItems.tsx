@@ -34,7 +34,7 @@ const NewsItems = observer(
 													src={post.author.avatar_URL || '/Content/Unknown.png'}
 													width={15}
 													height={15}
-													alt="Avatar" /* TODO: localize */
+													alt="Avatar" /* LOCALIZE */
 												/>{' '}
 												<span>{post.author.name}</span>
 												<span> {t('HelperRes:ActivityFeedHelper.At')} </span>

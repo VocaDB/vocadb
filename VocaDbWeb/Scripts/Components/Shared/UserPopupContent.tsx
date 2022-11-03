@@ -29,7 +29,7 @@ export const UserPopupContent = React.memo(
 				)}
 
 				<p>
-					Joined{/* TODO: localize */} {moment(user.memberSince).format('l')}
+					Joined{/* LOCALIZE */} {moment(user.memberSince).format('l')}
 				</p>
 			</>
 		);

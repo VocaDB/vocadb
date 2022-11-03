@@ -68,8 +68,8 @@ const EventEditSeriesLayout = observer(
 			: EntryUrlMapper.details(EntryType.ReleaseEventSeries, contract.id);
 
 		const title = isNew
-			? 'Create a new series' /* TODO: localize */
-			: `Edit series - ${contract.name}`; /* TODO: localize */
+			? 'Create a new series' /* LOCALIZE */
+			: `Edit series - ${contract.name}`; /* LOCALIZE */
 
 		useVdbTitle(title, true);
 
@@ -112,7 +112,7 @@ const EventEditSeriesLayout = observer(
 									to: '/Event',
 								}}
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOCALIZE */}
 							</Breadcrumb.Item>
 						</>
 					) : (
@@ -124,7 +124,7 @@ const EventEditSeriesLayout = observer(
 								}}
 								divider
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOCALIZE */}
 							</Breadcrumb.Item>
 							<Breadcrumb.Item
 								linkAs={Link}
@@ -185,7 +185,7 @@ const EventEditSeriesLayout = observer(
 
 				{releaseEventSeriesEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOCALIZE */
 						errors={releaseEventSeriesEditStore.errors}
 					/>
 				)}
@@ -212,7 +212,7 @@ const EventEditSeriesLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOCALIZE */,
 							);
 
 							throw error;
@@ -245,7 +245,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Names{/* TODO: localize */}</label>
+						<label>Names{/* LOCALIZE */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -259,7 +259,7 @@ const EventEditSeriesLayout = observer(
 									<td style={{ verticalAlign: 'top' }}>
 										{releaseEventSeriesEditStore.duplicateName && (
 											<Alert>
-												Series already exists with name{/* TODO: localize */}{' '}
+												Series already exists with name{/* LOCALIZE */}{' '}
 												<span>{releaseEventSeriesEditStore.duplicateName}</span>
 											</Alert>
 										)}
@@ -270,9 +270,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label htmlFor="description">
-							Description{/* TODO: localize */}
-						</label>
+						<label htmlFor="description">Description{/* LOCALIZE */}</label>
 					</div>
 					<div className="editor-field">
 						<textarea
@@ -288,12 +286,12 @@ const EventEditSeriesLayout = observer(
 							maxLength={4000}
 							className="span4"
 						/>
-						Live preview{/* TODO: localize */}
+						Live preview{/* LOCALIZE */}
 						<Markdown>{releaseEventSeriesEditStore.description}</Markdown>
 					</div>
 
 					<div className="editor-label">
-						<label>Category{/* TODO: localize */}</label>
+						<label>Category{/* LOCALIZE */}</label>
 					</div>
 					<div className="editor-field">
 						<div className="row-fluid">
@@ -312,7 +310,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Picture{/* TODO: localize */}</label>
+						<label>Picture{/* LOCALIZE */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -325,7 +323,7 @@ const EventEditSeriesLayout = observer(
 												contract.mainPicture,
 												ImageSize.SmallThumb,
 											)}
-											alt="Picture" /* TODO: localize */
+											alt="Picture" /* LOCALIZE */
 											className="coverPic"
 										/>
 									</td>

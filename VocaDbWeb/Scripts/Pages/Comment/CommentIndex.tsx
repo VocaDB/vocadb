@@ -84,7 +84,7 @@ const CommentsFilters = observer(
 				</div>
 
 				<div className="control-group">
-					<div className="control-label">User{/* TODO: localize */}</div>
+					<div className="control-label">User{/* LOCALIZE */}</div>
 					<div className="controls">
 						<UserLockingAutoComplete
 							basicEntryLinkStore={commentListStore.user}
@@ -162,7 +162,7 @@ const CommentIndex = observer(
 			<Layout title={title}>
 				<ul className="nav nav-pills">
 					<li>
-						<Link to="/ActivityEntry">All activity{/* TODO: localize */}</Link>
+						<Link to="/ActivityEntry">All activity{/* LOCALIZE */}</Link>
 					</li>
 					{loginManager.isLoggedIn && (
 						<li>
@@ -172,7 +172,7 @@ const CommentIndex = observer(
 						</li>
 					)}
 					<li className="active">
-						<Link to="/Comment">Comments{/* TODO: localize */}</Link>
+						<Link to="/Comment">Comments{/* LOCALIZE */}</Link>
 					</li>
 				</ul>
 

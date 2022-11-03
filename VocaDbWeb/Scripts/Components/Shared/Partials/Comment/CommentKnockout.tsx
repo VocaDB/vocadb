@@ -91,7 +91,7 @@ export const CommentKnockout = observer(
 									onClick={(): void => {
 										if (
 											window.confirm(
-												'Are you sure you want to delete this comment?' /* TODO: localize */,
+												'Are you sure you want to delete this comment?' /* LOCALIZE */,
 											)
 										) {
 											onDelete();

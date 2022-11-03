@@ -77,7 +77,7 @@ const UsersWithSongRating = observer(
 
 				{ratingsStore.hiddenRatingsCount > 0 && (
 					<h4 className="withMargin">{
-						`${ratingsStore.hiddenRatingsCount} hidden ratings` /* TODO: localize */
+						`${ratingsStore.hiddenRatingsCount} hidden ratings` /* LOCALIZE */
 					}</h4>
 				)}
 			</>

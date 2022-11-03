@@ -51,15 +51,15 @@ const EmbedPVPreviewDropdown = React.memo(
 				</Dropdown.Toggle>
 				<Dropdown.Menu>
 					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayFirst)}>
-						Play first{/* TODO: localize */}
+						Play first{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
-						Play next{/* TODO: localize */}
+						Play next{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Item
 						onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
 					>
-						Add to play queue{/* TODO: localize */}
+						Add to play queue{/* LOCALIZE */}
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>

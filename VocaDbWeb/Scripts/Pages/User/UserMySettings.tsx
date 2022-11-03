@@ -163,7 +163,7 @@ const AccountSettingsTabContent = observer(
 						label={t('ViewRes.User:MySettings.Username')}
 						dangerouslySetInnerHTML={{
 							__html:
-								'Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary.' /* TODO: localize */,
+								'Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary.' /* LOCALIZE */,
 						}}
 					/>
 				</div>
@@ -210,13 +210,13 @@ const AccountSettingsTabContent = observer(
 									await mySettingsStore.verifyEmail();
 
 									showSuccessMessage(
-										'Message sent, please check your email' /* TODO: localize */,
+										'Message sent, please check your email' /* LOCALIZE */,
 									);
 								}}
 								href="#"
 								className="textLink acceptLink"
 							>
-								Verify email{/* TODO: localize */}
+								Verify email{/* LOCALIZE */}
 							</SafeAnchor>
 						</>
 					)}
@@ -226,7 +226,7 @@ const AccountSettingsTabContent = observer(
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
 								src="/Content/Icons/tick.png"
-								title="Verified email" /* TODO: localize */
+								title="Verified email" /* LOCALIZE */
 							/>
 						</>
 					)}{' '}
@@ -500,7 +500,7 @@ const InterfaceSettingsTabContent = observer(
 							})
 						}
 					>
-						<option value="">Default{/* TODO: localize */}</option>
+						<option value="">Default{/* LOCALIZE */}</option>
 						{vdb.values.stylesheets.map((stylesheet) => (
 							<option value={stylesheet} key={stylesheet}>
 								{parsePath(stylesheet).name}
@@ -627,7 +627,7 @@ const ProfileSettingsTabContent = observer(
 				</div>
 
 				<div className="editor-label">
-					<label>Picture{/* TODO: localize */}</label>
+					<label>Picture{/* LOCALIZE */}</label>
 				</div>
 				<div className="editor-field">
 					<table>
@@ -640,7 +640,7 @@ const ProfileSettingsTabContent = observer(
 											contract.mainPicture,
 											ImageSize.SmallThumb,
 										)}
-										alt="Picture" /* TODO: localize */
+										alt="Picture" /* LOCALIZE */
 										className="coverPic"
 									/>
 								</td>
@@ -716,7 +716,7 @@ const ConnectivitySettingsTabContent = observer(
 								href="/User/DisconnectTwitter" /* TODO: Convert to POST. */
 								className="textLink removeLink"
 							>
-								Disconnect{/* TODO: localize */}
+								Disconnect{/* LOCALIZE */}
 							</SafeAnchor>
 						</>
 					) : (

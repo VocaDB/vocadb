@@ -245,7 +245,7 @@ const SongDetailsLayout = observer(
 									}
 									icons={{ primary: 'ui-icon-wrench' }}
 								>
-									Maintenance actions{/* TODO: localize */}
+									Maintenance actions{/* LOCALIZE */}
 								</JQueryUIButton>
 							</>
 						)}{' '}
@@ -282,7 +282,7 @@ const SongDetailsLayout = observer(
 				/>
 
 				<JQueryUIDialog
-					title="Maintenance actions" /* TODO: localize */
+					title="Maintenance actions" /* LOCALIZE */
 					autoOpen={songDetailsStore.maintenanceDialogVisible}
 					width={400}
 					close={(): void =>
@@ -297,12 +297,12 @@ const SongDetailsLayout = observer(
 								as="a"
 								href={`/Song/UpdateArtistString/${model.id}`}
 							>
-								Refresh artist string{/* TODO: localize */}
+								Refresh artist string{/* LOCALIZE */}
 							</JQueryUIButton>
 						</p>
 						<p>
 							<JQueryUIButton as="a" href={`/Song/UpdateThumbUrl/${model.id}`}>
-								Refresh thumbnail{/* TODO: localize */}
+								Refresh thumbnail{/* LOCALIZE */}
 							</JQueryUIButton>
 						</p>
 						<p>
@@ -310,7 +310,7 @@ const SongDetailsLayout = observer(
 								as="a"
 								href={`/Song/RefreshPVMetadatas/${model.id}`}
 							>
-								Refresh PV metadata{/* TODO: localize */}
+								Refresh PV metadata{/* LOCALIZE */}
 							</JQueryUIButton>
 						</p>
 					</div>

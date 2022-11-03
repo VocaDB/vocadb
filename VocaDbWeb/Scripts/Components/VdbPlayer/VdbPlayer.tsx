@@ -87,7 +87,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title="Previous" /* TODO: localize */
+					title="Previous" /* LOCALIZE */
 					onClick={handlePrevious}
 					disabled={playQueue.isEmpty}
 				>
@@ -96,7 +96,7 @@ const PlayerCenterControls = observer(
 				{vdbPlayer.playing ? (
 					<Button
 						variant="inverse"
-						title="Pause" /* TODO: localize */
+						title="Pause" /* LOCALIZE */
 						onClick={handlePause}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -109,7 +109,7 @@ const PlayerCenterControls = observer(
 							vdbPlayer.canAutoplay
 								? ''
 								: ' (Unavailable for this video service)'
-						}`} /* TODO: localize */
+						}`} /* LOCALIZE */
 						onClick={handlePlay}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -118,7 +118,7 @@ const PlayerCenterControls = observer(
 				)}
 				<Button
 					variant="inverse"
-					title="Next" /* TODO: localize */
+					title="Next" /* LOCALIZE */
 					onClick={playQueue.next}
 					disabled={!playQueue.hasNextItem}
 				>
@@ -126,7 +126,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title={`Repeat: ${playQueue.repeat}` /* TODO: localize */}
+					title={`Repeat: ${playQueue.repeat}` /* LOCALIZE */}
 					onClick={playQueue.toggleRepeat}
 					className="hidden-phone"
 				>
@@ -319,19 +319,19 @@ const PlayerRightControls = observer(
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 						<Dropdown.Item as={Link} to="/playlist" className="visible-phone">
-							Show play queue{/* TODO: localize */}
+							Show play queue{/* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipBack10Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip back 10 seconds{/* TODO: localize */}
+							Skip back 10 seconds{/* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipForward30Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip forward 30 seconds{/* TODO: localize */}
+							Skip forward 30 seconds{/* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleShuffle}
@@ -339,24 +339,20 @@ const PlayerRightControls = observer(
 							className="visible-phone"
 							title="Coming soon!" /* TODO: Remove. */
 						>
-							{
-								`Shuffle: ${
-									playQueue.shuffle ? 'On' : 'Off'
-								}` /* TODO: localize */
-							}
+							{`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleRepeat}
 							className="visible-phone"
 						>
-							{`Repeat: ${playQueue.repeat}` /* TODO: localize */}
+							{`Repeat: ${playQueue.repeat}` /* LOCALIZE */}
 						</Dropdown.Item>
 						<Dropdown.Divider />
 						<Dropdown.Item
 							onClick={handleClickRemoveFromPlayQueue}
 							disabled={playQueue.isEmpty}
 						>
-							Remove from play queue{/* TODO: localize */}
+							Remove from play queue{/* LOCALIZE */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>

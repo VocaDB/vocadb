@@ -58,11 +58,11 @@ const RatedSongs = observer(
 											),
 										);
 									}}
-									title="Play" /* TODO: localize */
+									title="Play" /* LOCALIZE */
 									className="btn-nomargin"
 								>
 									<i className="icon-play noMargin" /> Play
-									{/* TODO: localize */}
+									{/* LOCALIZE */}
 								</Button>
 							</div>
 						</div>{' '}

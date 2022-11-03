@@ -13,7 +13,7 @@ export const EntryPictureFileLink = React.memo(
 			<a href={UrlHelper.imageThumb(imageInfo, ImageSize.Original)}>
 				<img
 					src={UrlHelper.imageThumb(imageInfo, ImageSize.Thumb)}
-					alt="Preview" /* TODO: localize */
+					alt="Preview" /* LOCALIZE */
 					className="coverPic"
 				/>
 			</a>

@@ -163,7 +163,7 @@ const PropertiesTabContent = observer(
 							<img
 								className="pull-left media-object"
 								src={thumbUrl}
-								alt="Thumb" /* TODO: localize */
+								alt="Thumb" /* LOCALIZE */
 							/>
 						)}
 						<div className="media-body">
@@ -373,7 +373,7 @@ const SongListEditLayout = observer(
 
 				{songListEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOCALIZE */
 						errors={songListEditStore.errors}
 					/>
 				)}
@@ -398,7 +398,7 @@ const SongListEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOCALIZE */,
 							);
 
 							throw error;

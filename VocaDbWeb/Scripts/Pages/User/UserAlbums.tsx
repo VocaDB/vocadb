@@ -185,7 +185,7 @@ const AlbumCollection = observer(
 										as={Link}
 										className="btn-nomargin"
 										to={albumCollectionStore.tagUrl!}
-										title="Tag information" /* TODO: localize */
+										title="Tag information" /* LOCALIZE */
 									>
 										<i className="icon icon-info-sign" />
 									</Button>
@@ -237,7 +237,7 @@ const AlbumCollection = observer(
 										as={Link}
 										className="btn-nomargin"
 										to={albumCollectionStore.releaseEventUrl}
-										title="Release event information" /* TODO: localize */
+										title="Release event information" /* LOCALIZE */
 									>
 										<i className="icon icon-info-sign" />
 									</Button>
@@ -390,7 +390,7 @@ const AlbumCollection = observer(
 														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img
 															src={albumForUser.album.mainPicture.urlTinyThumb}
-															title="Cover picture" /* TODO: localize */
+															title="Cover picture" /* LOCALIZE */
 															className="coverPicThumb img-rounded"
 														/>
 													</Link>

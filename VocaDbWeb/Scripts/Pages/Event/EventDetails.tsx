@@ -269,7 +269,7 @@ const EventDetailsLayout = observer(
 										event.mainPicture,
 										ImageSize.SmallThumb,
 									)}
-									alt="Thumb" /* TODO: localize */
+									alt="Thumb" /* LOCALIZE */
 								/>
 							</a>
 						)}
@@ -305,7 +305,7 @@ const EventDetailsLayout = observer(
 
 							{event.artists.length > 0 && (
 								<p>
-									Participating artists{/* TODO: localize */}:{' '}
+									Participating artists{/* LOCALIZE */}:{' '}
 									<ArtistList
 										artists={event.artists}
 										showRoles={true}

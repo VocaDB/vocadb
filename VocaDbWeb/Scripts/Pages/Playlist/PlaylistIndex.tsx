@@ -34,13 +34,13 @@ const SkipListEdit = observer(
 
 		return (
 			<JQueryUIDialog
-				title="Edit skip list" /* TODO: localize */
+				title="Edit skip list" /* LOCALIZE */
 				autoOpen={playQueue.skipList.dialogVisible}
 				width={550}
 				close={playQueue.skipList.hideDialog}
 				buttons={[
 					{
-						text: 'Done' /* TODO: localize */,
+						text: 'Done' /* LOCALIZE */,
 						click: playQueue.skipList.hideDialog,
 					},
 				]}
@@ -59,7 +59,7 @@ const SkipListEdit = observer(
 										})
 									}
 								/>
-								Remove from play queue on skip{/* TODO: localize */}
+								Remove from play queue on skip{/* LOCALIZE */}
 							</label>
 						</div>
 					</div>
@@ -113,8 +113,8 @@ const PlaylistTableHeader = observer(
 					<th colSpan={2}>
 						{
 							playQueue.selectedItems.length > 0
-								? `${playQueue.selectedItems.length} item(s) selected` /* TODO: localize */
-								: 'Name' /* TODO: localize */
+								? `${playQueue.selectedItems.length} item(s) selected` /* LOCALIZE */
+								: 'Name' /* LOCALIZE */
 						}
 					</th>
 				</tr>
@@ -151,24 +151,24 @@ const PlaylistTableRowDropdown = observer(
 				</Dropdown.Toggle>
 				<Dropdown.Menu align="end">
 					<Dropdown.Item onClick={(): void => play(PlayMethod.PlayFirst)}>
-						Play first{/* TODO: localize */}
+						Play first{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Item onClick={(): void => play(PlayMethod.PlayNext)}>
-						Play next{/* TODO: localize */}
+						Play next{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Item onClick={(): void => play(PlayMethod.AddToPlayQueue)}>
-						Add to play queue{/* TODO: localize */}
+						Add to play queue{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Divider />
 					<Dropdown.Item
 						onClick={(): Promise<void> => playQueue.removeOtherItems(item)}
 					>
-						Remove others{/* TODO: localize */}
+						Remove others{/* LOCALIZE */}
 					</Dropdown.Item>
 					<Dropdown.Item
 						onClick={(): Promise<void> => playQueue.removeItemsAbove(item)}
 					>
-						Remove to the top{/* TODO: localize */}
+						Remove to the top{/* LOCALIZE */}
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
@@ -212,7 +212,7 @@ const PlaylistTableRow = observer(
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
 								src={item.entry.urlThumb}
-								title="Cover picture" /* TODO: localize */
+								title="Cover picture" /* LOCALIZE */
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>
@@ -230,7 +230,7 @@ const PlaylistTableRow = observer(
 								}
 							}}
 						>
-							<i className="icon-play" /> Play{/* TODO: localize */}
+							<i className="icon-play" /> Play{/* LOCALIZE */}
 						</Button>{' '}
 						<Button
 							onClick={(): Promise<void> =>
@@ -353,7 +353,7 @@ const PlaylistIndex = observer(
 									icons={{ primary: 'ui-icon-play' }}
 									disabled={playQueue.selectedItems.length === 0}
 								>
-									Play next{/* TODO: localize */}
+									Play next{/* LOCALIZE */}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
@@ -361,7 +361,7 @@ const PlaylistIndex = observer(
 									icons={{ primary: 'ui-icon-plus' }}
 									disabled={playQueue.selectedItems.length === 0}
 								>
-									Add to play queue{/* TODO: localize */}
+									Add to play queue{/* LOCALIZE */}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
@@ -370,7 +370,7 @@ const PlaylistIndex = observer(
 									disabled={true}
 									title="Coming soon!" /* TODO: Remove. */
 								>
-									Add to new song list{/* TODO: localize */}
+									Add to new song list{/* LOCALIZE */}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
@@ -378,7 +378,7 @@ const PlaylistIndex = observer(
 									icons={{ primary: ' ui-icon-close' }}
 									disabled={playQueue.selectedItems.length === 0}
 								>
-									Remove{/* TODO: localize */}
+									Remove{/* LOCALIZE */}
 								</JQueryUIButton>{' '}
 								<JQueryUIButton
 									as={SafeAnchor}
@@ -386,7 +386,7 @@ const PlaylistIndex = observer(
 									icons={{ primary: 'ui-icon-trash' }}
 									disabled={playQueue.isEmpty}
 								>
-									Clear{/* TODO: localize */}
+									Clear{/* LOCALIZE */}
 								</JQueryUIButton>
 							</div>
 							<div css={{ flexGrow: 1 }} />
@@ -396,7 +396,7 @@ const PlaylistIndex = observer(
 									href="#"
 									onClick={playQueue.skipList.showDialog}
 								>
-									Edit skip list{/* TODO: localize */}
+									Edit skip list{/* LOCALIZE */}
 								</JQueryUIButton>
 							</div>
 						</div>

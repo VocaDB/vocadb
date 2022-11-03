@@ -125,7 +125,7 @@ const BasicInfoTabContent = observer(
 									{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 									<img
 										src={`/Artist/PictureThumb/${contract.id}`}
-										alt="Artist picture" /* TODO: localize */
+										alt="Artist picture" /* LOCALIZE */
 										className="coverPic"
 									/>
 								</td>
@@ -202,10 +202,10 @@ const BasicInfoTabContent = observer(
 					<>
 						<div className="editor-label">
 							<HelpLabel
-								label="Associated artists" /* TODO: localize */
+								label="Associated artists" /* LOCALIZE */
 								dangerouslySetInnerHTML={{
 									__html:
-										"Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* TODO: localize */,
+										"Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* LOCALIZE */,
 								}}
 							/>
 						</div>
@@ -213,8 +213,8 @@ const BasicInfoTabContent = observer(
 							<table>
 								<thead>
 									<tr>
-										<th>Role{/* TODO: localize */}</th>
-										<th>Artist{/* TODO: localize */}</th>
+										<th>Role{/* LOCALIZE */}</th>
+										<th>Artist{/* LOCALIZE */}</th>
 										<th />
 									</tr>
 								</thead>
@@ -222,10 +222,10 @@ const BasicInfoTabContent = observer(
 									<tr>
 										<td>
 											<HelpLabel
-												label="Illustrator" /* TODO: localize */
+												label="Illustrator" /* LOCALIZE */
 												dangerouslySetInnerHTML={{
 													__html:
-														'Person who illustrated the character design. This is inherited to derived voicebanks.' /* TODO: localize */,
+														'Person who illustrated the character design. This is inherited to derived voicebanks.' /* LOCALIZE */,
 												}}
 											/>
 										</td>
@@ -255,10 +255,10 @@ const BasicInfoTabContent = observer(
 									<tr>
 										<td>
 											<HelpLabel
-												label="Voice provider" /* TODO: localize */
+												label="Voice provider" /* LOCALIZE */
 												dangerouslySetInnerHTML={{
 													__html:
-														'Person who provided their voice for this voicebank. This is inherited to derived voicebanks.' /* TODO: localize */,
+														'Person who provided their voice for this voicebank. This is inherited to derived voicebanks.' /* LOCALIZE */,
 												}}
 											/>
 										</td>
@@ -313,7 +313,7 @@ const BasicInfoTabContent = observer(
 																})
 															}
 														>
-															Remove{/* TODO: localize */}
+															Remove{/* LOCALIZE */}
 														</Button>
 													</div>
 												</td>
@@ -631,7 +631,7 @@ const ArtistEditLayout = observer(
 
 				{artistEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOCALIZE */
 						errors={artistEditStore.errors}
 					/>
 				)}
@@ -697,7 +697,7 @@ const ArtistEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOCALIZE */,
 							);
 
 							throw error;

@@ -27,7 +27,7 @@ export const ExternalLinksList = React.memo(
 								onClick={(e): void =>
 									functions.trackOutboundLink(e.nativeEvent)
 								}
-								title="See this page archived on the Wayback Machine" /* TODO: localize */
+								title="See this page archived on the Wayback Machine" /* LOCALIZE */
 								style={{ textDecoration: 'line-through' }}
 							>
 								{webLink.description || webLink.url}
