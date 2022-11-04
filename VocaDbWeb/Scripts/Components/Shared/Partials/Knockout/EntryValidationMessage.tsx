@@ -66,7 +66,7 @@ export const EntryValidationMessage = React.memo(
 										See the{' '}
 										<Link to={`/Help/guidelines#${helpSection}`}>guide</Link>{' '}
 										for more information.
-										{/* LOCALIZE */}
+										{/* LOC */}
 									</span>
 								)}
 							</>

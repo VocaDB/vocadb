@@ -87,7 +87,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title="Previous" /* LOCALIZE */
+					title="Previous" /* LOC */
 					onClick={handlePrevious}
 					disabled={playQueue.isEmpty}
 				>
@@ -96,7 +96,7 @@ const PlayerCenterControls = observer(
 				{vdbPlayer.playing ? (
 					<Button
 						variant="inverse"
-						title="Pause" /* LOCALIZE */
+						title="Pause" /* LOC */
 						onClick={handlePause}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -109,7 +109,7 @@ const PlayerCenterControls = observer(
 							vdbPlayer.canAutoplay
 								? ''
 								: ' (Unavailable for this video service)'
-						}`} /* LOCALIZE */
+						}`} /* LOC */
 						onClick={handlePlay}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -118,7 +118,7 @@ const PlayerCenterControls = observer(
 				)}
 				<Button
 					variant="inverse"
-					title="Next" /* LOCALIZE */
+					title="Next" /* LOC */
 					onClick={playQueue.next}
 					disabled={!playQueue.hasNextItem}
 				>
@@ -126,7 +126,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title={`Repeat: ${playQueue.repeat}` /* LOCALIZE */}
+					title={`Repeat: ${playQueue.repeat}` /* LOC */}
 					onClick={playQueue.toggleRepeat}
 					className="hidden-phone"
 				>
@@ -319,19 +319,19 @@ const PlayerRightControls = observer(
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 						<Dropdown.Item as={Link} to="/playlist" className="visible-phone">
-							Show play queue{/* LOCALIZE */}
+							Show play queue{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipBack10Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip back 10 seconds{/* LOCALIZE */}
+							Skip back 10 seconds{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipForward30Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip forward 30 seconds{/* LOCALIZE */}
+							Skip forward 30 seconds{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleShuffle}
@@ -339,20 +339,20 @@ const PlayerRightControls = observer(
 							className="visible-phone"
 							title="Coming soon!" /* TODO: Remove. */
 						>
-							{`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOCALIZE */}
+							{`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleRepeat}
 							className="visible-phone"
 						>
-							{`Repeat: ${playQueue.repeat}` /* LOCALIZE */}
+							{`Repeat: ${playQueue.repeat}` /* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Divider />
 						<Dropdown.Item
 							onClick={handleClickRemoveFromPlayQueue}
 							disabled={playQueue.isEmpty}
 						>
-							Remove from play queue{/* LOCALIZE */}
+							Remove from play queue{/* LOC */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>

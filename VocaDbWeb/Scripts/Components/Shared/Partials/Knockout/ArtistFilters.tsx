@@ -50,7 +50,7 @@ export const ArtistFilters = observer(
 									variant="danger"
 									onClick={(): void => artistFilters.removeArtist(artist)}
 								>
-									Clear{/* LOCALIZE */}
+									Clear{/* LOC */}
 								</Button>
 							</div>
 						</div>

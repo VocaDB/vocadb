@@ -14,7 +14,7 @@ const statsStore = new StatsStore(httpClient);
 
 const StatsIndex = observer(
 	(): React.ReactElement => {
-		const title = 'Statistics / Reports'; /* LOCALIZE */
+		const title = 'Statistics / Reports'; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -50,15 +50,15 @@ const StatsIndex = observer(
 								})
 							}
 						>
-							<option value="">Overall{/* LOCALIZE */}</option>
-							<option value="24">Last day{/* LOCALIZE */}</option>
-							<option value="48">Last two days{/* LOCALIZE */}</option>
-							<option value="168">Last week{/* LOCALIZE */}</option>
-							<option value="720">Last month{/* LOCALIZE */}</option>
-							<option value="8760">Last year{/* LOCALIZE */}</option>
-							<option value="17520">Last 2 years{/* LOCALIZE */}</option>
-							<option value="26280">Last 3 years{/* LOCALIZE */}</option>
-							<option value="43800">Last 5 years{/* LOCALIZE */}</option>
+							<option value="">Overall{/* LOC */}</option>
+							<option value="24">Last day{/* LOC */}</option>
+							<option value="48">Last two days{/* LOC */}</option>
+							<option value="168">Last week{/* LOC */}</option>
+							<option value="720">Last month{/* LOC */}</option>
+							<option value="8760">Last year{/* LOC */}</option>
+							<option value="17520">Last 2 years{/* LOC */}</option>
+							<option value="26280">Last 3 years{/* LOC */}</option>
+							<option value="43800">Last 5 years{/* LOC */}</option>
 						</select>
 					</>
 				)}

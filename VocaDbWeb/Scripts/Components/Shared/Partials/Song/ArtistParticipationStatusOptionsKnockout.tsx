@@ -8,11 +8,10 @@ enum ArtistAlbumParticipationStatus {
 }
 
 const options = {
-	[ArtistAlbumParticipationStatus.Everything]: 'Everything' /* LOCALIZE */,
-	[ArtistAlbumParticipationStatus.OnlyMainAlbums]:
-		'Only main songs' /* LOCALIZE */,
+	[ArtistAlbumParticipationStatus.Everything]: 'Everything' /* LOC */,
+	[ArtistAlbumParticipationStatus.OnlyMainAlbums]: 'Only main songs' /* LOC */,
 	[ArtistAlbumParticipationStatus.OnlyCollaborations]:
-		'Only collaborations' /* LOCALIZE */,
+		'Only collaborations' /* LOC */,
 };
 
 interface ArtistParticipationStatusOptionsKnockoutProps {

@@ -215,7 +215,7 @@ const BasicInfoTabContent = observer(
 										onClick={songEditStore.findOriginalSongSuggestions}
 										className="textLink searchLink"
 									>
-										Find originals{/* LOCALIZE */}
+										Find originals{/* LOC */}
 									</SafeAnchor>
 									<table>
 										<tbody>
@@ -248,7 +248,7 @@ const BasicInfoTabContent = observer(
 																	)
 																}
 															>
-																Select{/* LOCALIZE */}
+																Select{/* LOC */}
 															</SafeAnchor>
 														</td>
 													</tr>
@@ -310,12 +310,12 @@ const BasicInfoTabContent = observer(
 				</div>
 
 				<div className="editor-label">
-					<label>Release event{/* LOCALIZE */}</label>
+					<label>Release event{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
 					<ReleaseEventLockingAutoComplete
 						basicEntryLinkStore={songEditStore.releaseEvent}
-						// TODO: createNewItem="Create new event '{0}'" /* LOCALIZE */
+						// TODO: createNewItem="Create new event '{0}'" /* LOC */
 					/>
 				</div>
 
@@ -613,14 +613,14 @@ const PVsTabContent = observer(
 
 				{loginManager.canUploadMedia && (
 					<>
-						<h4 className="withMargin">Upload file{/* LOCALIZE */}</h4>
+						<h4 className="withMargin">Upload file{/* LOC */}</h4>
 						<p>
 							You can use VocaDB for hosting songs you have made (you must be
 							the content creator). Choose the file and click "Upload".
 							<br />
 							Supported formats: .mp3. Maximum file size is {maxMediaSizeMB}MB.
 							PV type will automatically be "original".
-							{/* LOCALIZE */}
+							{/* LOC */}
 						</p>
 						<input type="file" id="uploadMedia" ref={uploadMediaRef} />{' '}
 						<SafeAnchor
@@ -635,7 +635,7 @@ const PVsTabContent = observer(
 							href="#"
 							className="textLink addLink"
 						>
-							Upload{/* LOCALIZE */}
+							Upload{/* LOC */}
 						</SafeAnchor>
 					</>
 				)}
@@ -790,7 +790,7 @@ const SongEditLayout = observer(
 
 				{songEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* LOCALIZE */
+						message="Unable to save properties." /* LOC */
 						errors={songEditStore.errors}
 					/>
 				)}
@@ -860,7 +860,7 @@ const SongEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* LOCALIZE */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;

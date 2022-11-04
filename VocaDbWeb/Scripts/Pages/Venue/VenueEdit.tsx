@@ -59,8 +59,8 @@ const VenueEditLayout = observer(
 		const isNew = contract.id === 0;
 
 		const title = isNew
-			? `Create a new venue` /* LOCALIZE */
-			: `Edit venue - ${venueEditStore.name}`; /* LOCALIZE */
+			? `Create a new venue` /* LOC */
+			: `Edit venue - ${venueEditStore.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -154,7 +154,7 @@ const VenueEditLayout = observer(
 
 				{venueEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* LOCALIZE */
+						message="Unable to save properties." /* LOC */
 						errors={venueEditStore.errors}
 					/>
 				)}
@@ -173,7 +173,7 @@ const VenueEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* LOCALIZE */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 						}
 					}}
@@ -204,7 +204,7 @@ const VenueEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Names{/* LOCALIZE */}</label>
+						<label>Names{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -216,7 +216,7 @@ const VenueEditLayout = observer(
 									<td style={{ verticalAlign: 'top' }}>
 										{venueEditStore.duplicateName && (
 											<Alert>
-												Venue already exists with name{/* LOCALIZE */}{' '}
+												Venue already exists with name{/* LOC */}{' '}
 												<span>{venueEditStore.duplicateName}</span>
 											</Alert>
 										)}
@@ -226,7 +226,7 @@ const VenueEditLayout = observer(
 						</table>
 					</div>
 
-					<div className="editor-label">Description{/* LOCALIZE */}</div>
+					<div className="editor-label">Description{/* LOC */}</div>
 					<div className="editor-field">
 						<textarea
 							value={venueEditStore.description}
@@ -240,7 +240,7 @@ const VenueEditLayout = observer(
 							maxLength={1000}
 							className="span4"
 						/>
-						Live preview{/* LOCALIZE */}
+						Live preview{/* LOC */}
 						<Markdown>{venueEditStore.description}</Markdown>
 					</div>
 

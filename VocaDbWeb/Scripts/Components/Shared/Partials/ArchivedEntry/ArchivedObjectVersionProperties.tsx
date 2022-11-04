@@ -23,27 +23,27 @@ export const ArchivedObjectVersionProperties = React.memo(
 
 		return (
 			<div className="well well-transparent">
-				<h4>Properties{/* LOCALIZE */}</h4>
+				<h4>Properties{/* LOC */}</h4>
 
 				<table className="table-bordered">
 					<tbody>
 						<tr>
-							<td>Version{/* LOCALIZE */}</td>
+							<td>Version{/* LOC */}</td>
 							<td>{version.version}</td>
 							<td>{compareTo?.version}</td>
 						</tr>
 						<tr>
-							<td>Status{/* LOCALIZE */}</td>
+							<td>Status{/* LOC */}</td>
 							<td>{version.status}</td>
 							<td>{compareTo?.status}</td>
 						</tr>
 						<tr>
-							<td>Snapshot{/* LOCALIZE */}</td>
+							<td>Snapshot{/* LOC */}</td>
 							<td>{version.isSnapshot ? 'True' : 'False'}</td>
 							<td>{compareTo && (compareTo.isSnapshot ? 'True' : 'False')}</td>
 						</tr>
 						<tr>
-							<td>Created{/* LOCALIZE */}</td>
+							<td>Created{/* LOC */}</td>
 							<td>
 								<UniversalTimeLabel dateTime={version.created} />
 							</td>
@@ -54,7 +54,7 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Author{/* LOCALIZE */}</td>
+							<td>Author{/* LOC */}</td>
 							<td>
 								{/* eslint-disable-next-line react/jsx-pascal-case */}
 								<UserIconLinkOrName_UserForApiContract
@@ -73,12 +73,12 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Reason{/* LOCALIZE */}</td>
+							<td>Reason{/* LOC */}</td>
 							<td>{reasonNames(entryType, version)}</td>
 							<td>{compareTo && reasonNames(entryType, compareTo)}</td>
 						</tr>
 						<tr>
-							<td>Changed{/* LOCALIZE */}</td>
+							<td>Changed{/* LOC */}</td>
 							<td>
 								{version.changedFields.length > 0 && (
 									<>
@@ -103,7 +103,7 @@ export const ArchivedObjectVersionProperties = React.memo(
 							</td>
 						</tr>
 						<tr>
-							<td>Notes{/* LOCALIZE */}</td>
+							<td>Notes{/* LOC */}</td>
 							<td>{version.notes}</td>
 							<td>{compareTo?.notes}</td>
 						</tr>

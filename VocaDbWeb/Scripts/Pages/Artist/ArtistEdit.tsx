@@ -125,7 +125,7 @@ const BasicInfoTabContent = observer(
 									{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 									<img
 										src={`/Artist/PictureThumb/${contract.id}`}
-										alt="Artist picture" /* LOCALIZE */
+										alt="Artist picture" /* LOC */
 										className="coverPic"
 									/>
 								</td>
@@ -202,10 +202,10 @@ const BasicInfoTabContent = observer(
 					<>
 						<div className="editor-label">
 							<HelpLabel
-								label="Associated artists" /* LOCALIZE */
+								label="Associated artists" /* LOC */
 								dangerouslySetInnerHTML={{
 									__html:
-										"Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* LOCALIZE */,
+										"Artists related to this voicebank. These are inherited to derived voicebanks. Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider." /* LOC */,
 								}}
 							/>
 						</div>
@@ -213,8 +213,8 @@ const BasicInfoTabContent = observer(
 							<table>
 								<thead>
 									<tr>
-										<th>Role{/* LOCALIZE */}</th>
-										<th>Artist{/* LOCALIZE */}</th>
+										<th>Role{/* LOC */}</th>
+										<th>Artist{/* LOC */}</th>
 										<th />
 									</tr>
 								</thead>
@@ -222,10 +222,10 @@ const BasicInfoTabContent = observer(
 									<tr>
 										<td>
 											<HelpLabel
-												label="Illustrator" /* LOCALIZE */
+												label="Illustrator" /* LOC */
 												dangerouslySetInnerHTML={{
 													__html:
-														'Person who illustrated the character design. This is inherited to derived voicebanks.' /* LOCALIZE */,
+														'Person who illustrated the character design. This is inherited to derived voicebanks.' /* LOC */,
 												}}
 											/>
 										</td>
@@ -255,10 +255,10 @@ const BasicInfoTabContent = observer(
 									<tr>
 										<td>
 											<HelpLabel
-												label="Voice provider" /* LOCALIZE */
+												label="Voice provider" /* LOC */
 												dangerouslySetInnerHTML={{
 													__html:
-														'Person who provided their voice for this voicebank. This is inherited to derived voicebanks.' /* LOCALIZE */,
+														'Person who provided their voice for this voicebank. This is inherited to derived voicebanks.' /* LOC */,
 												}}
 											/>
 										</td>
@@ -313,7 +313,7 @@ const BasicInfoTabContent = observer(
 																})
 															}
 														>
-															Remove{/* LOCALIZE */}
+															Remove{/* LOC */}
 														</Button>
 													</div>
 												</td>
@@ -631,7 +631,7 @@ const ArtistEditLayout = observer(
 
 				{artistEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* LOCALIZE */
+						message="Unable to save properties." /* LOC */
 						errors={artistEditStore.errors}
 					/>
 				)}
@@ -697,7 +697,7 @@ const ArtistEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* LOCALIZE */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;

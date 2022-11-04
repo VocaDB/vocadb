@@ -23,7 +23,7 @@ const AlbumDeleted = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'Deleted albums'; /* LOCALIZE */
+		const title = 'Deleted albums'; /* LOC */
 
 		useVdbTitle(title, true);
 

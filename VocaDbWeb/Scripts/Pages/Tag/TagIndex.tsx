@@ -61,7 +61,7 @@ const TagIndexLayout = observer(
 									})
 								}
 							>
-								Create new{/* LOCALIZE */}
+								Create new{/* LOC */}
 							</JQueryUIButton>
 						)}
 					</>
@@ -98,7 +98,7 @@ const TagIndexLayout = observer(
 				))}
 
 				<JQueryUIDialog
-					title="Create tag" /* LOCALIZE */
+					title="Create tag" /* LOC */
 					autoOpen={tagCreateStore.dialogVisible}
 					close={(): void =>
 						runInAction(() => {
@@ -109,7 +109,7 @@ const TagIndexLayout = observer(
 					modal={true}
 					buttons={[
 						{
-							text: 'Create' /* LOCALIZE */,
+							text: 'Create' /* LOC */,
 							click: (): void => {
 								tagCreateStore.createTag().then((t) => {
 									navigate(EntryUrlMapper.details_tag_contract(t)!);
@@ -139,9 +139,7 @@ const TagIndexLayout = observer(
 					/>
 
 					{tagCreateStore.duplicateName && (
-						<Alert variant="danger">
-							Tag name must be unique{/* LOCALIZE */}
-						</Alert>
+						<Alert variant="danger">Tag name must be unique{/* LOC */}</Alert>
 					)}
 				</JQueryUIDialog>
 			</Layout>

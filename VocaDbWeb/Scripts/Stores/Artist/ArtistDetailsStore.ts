@@ -169,9 +169,9 @@ export class ArtistDetailsStore {
 				if (points && points.length >= 2) {
 					runInAction(() => {
 						this.songsOverTimeChart = HighchartsHelper.dateLineChartWithAverage(
-							'Songs per month' /* LOCALIZE */,
+							'Songs per month' /* LOC */,
 							null!,
-							'Songs' /* LOCALIZE */,
+							'Songs' /* LOC */,
 							points,
 						);
 					});

@@ -25,25 +25,25 @@ const AdminManageEntryTagMappings = observer(
 	(): React.ReactElement => {
 		return (
 			<Layout
-				title="Manage entry type to tag mappings" /* LOCALIZE */
+				title="Manage entry type to tag mappings" /* LOC */
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Admin' }}>
-							Manage{/* LOCALIZE */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
 			>
 				<Alert variant="info">
 					Only one tag can be mapped to entry type / sub type combination.
-					{/* LOCALIZE */}
+					{/* LOC */}
 				</Alert>
 
 				<form className="form-horizontal">
-					<h3>New mapping{/* LOCALIZE */}</h3>
+					<h3>New mapping{/* LOC */}</h3>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newSourceName">
-							Entry type{/* LOCALIZE */}
+							Entry type{/* LOC */}
 						</label>
 						<div className="controls">
 							<select
@@ -65,7 +65,7 @@ const AdminManageEntryTagMappings = observer(
 					</div>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newSourceName">
-							Sub type{/* LOCALIZE */}
+							Sub type{/* LOC */}
 						</label>
 						<div className="controls">
 							<select
@@ -89,7 +89,7 @@ const AdminManageEntryTagMappings = observer(
 						</div>
 					</div>
 					<div className="control-group">
-						<label className="control-label">Target tag{/* LOCALIZE */}</label>
+						<label className="control-label">Target tag{/* LOC */}</label>
 						<div className="controls">
 							<TagLockingAutoComplete
 								basicEntryLinkStore={manageEntryTagMappingsStore.newTargetTag}
@@ -113,7 +113,7 @@ const AdminManageEntryTagMappings = observer(
 										)
 									) {
 										showErrorMessage(
-											`Mapping already exists for entry type ${manageEntryTagMappingsStore.newEntryType}, ${manageEntryTagMappingsStore.newEntrySubType}` /* LOCALIZE */,
+											`Mapping already exists for entry type ${manageEntryTagMappingsStore.newEntryType}, ${manageEntryTagMappingsStore.newEntrySubType}` /* LOC */,
 										);
 										return;
 									}
@@ -121,7 +121,7 @@ const AdminManageEntryTagMappings = observer(
 									manageEntryTagMappingsStore.addMapping();
 								}}
 							>
-								Add{/* LOCALIZE */}
+								Add{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -136,12 +136,12 @@ const AdminManageEntryTagMappings = observer(
 						try {
 							await manageEntryTagMappingsStore.save();
 
-							showSuccessMessage('Saved' /* LOCALIZE */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save entry type to tag mappings.' /* LOCALIZE */,
+									: 'Unable to save entry type to tag mappings.' /* LOC */,
 							);
 
 							throw error;
@@ -150,7 +150,7 @@ const AdminManageEntryTagMappings = observer(
 						await manageEntryTagMappingsStore.loadMappings();
 					}}
 				>
-					<h3>Mappings{/* LOCALIZE */}</h3>
+					<h3>Mappings{/* LOC */}</h3>
 
 					<br />
 					<br />
@@ -160,8 +160,8 @@ const AdminManageEntryTagMappings = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Entry type{/* LOCALIZE */}</th>
-								<th>Tag{/* LOCALIZE */}</th>
+								<th>Entry type{/* LOC */}</th>
+								<th>Tag{/* LOC */}</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -194,7 +194,7 @@ const AdminManageEntryTagMappings = observer(
 											onClick={mapping.deleteMapping}
 											disabled={mapping.isDeleted}
 										>
-											Delete{/* LOCALIZE */}
+											Delete{/* LOC */}
 										</Button>
 									</td>
 								</tr>

@@ -18,7 +18,7 @@ export const SongPopupContent = React.memo(
 					<div className="thumbnail">
 						<img
 							src={song.thumbUrl}
-							alt="Thumb" /* LOCALIZE */
+							alt="Thumb" /* LOC */
 							className="coverPicThumb"
 							referrerPolicy="same-origin"
 						/>

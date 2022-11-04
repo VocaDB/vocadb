@@ -37,7 +37,7 @@ const UserFavoriteSongsLayout = ({
 	user,
 	ratedSongsStore,
 }: UserFavoriteSongsLayoutProps): React.ReactElement => {
-	const title = `Songs rated by ${user.name}`; /* LOCALIZE */
+	const title = `Songs rated by ${user.name}`; /* LOC */
 
 	useVdbTitle(title, true);
 

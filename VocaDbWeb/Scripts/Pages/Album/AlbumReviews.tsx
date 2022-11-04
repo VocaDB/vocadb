@@ -72,7 +72,7 @@ const AlbumReview = observer(
 									onClick={(): void => {
 										if (
 											window.confirm(
-												'Are you sure you want to delete this review?' /* LOCALIZE */,
+												'Are you sure you want to delete this review?' /* LOC */,
 											)
 										) {
 											albumDetailsStore.reviewsStore.deleteReview(review);
@@ -128,7 +128,7 @@ const AlbumReview = observer(
 								type="text"
 								className="input-xlarge"
 								maxLength={200}
-								placeholder="Title" /* LOCALIZE */
+								placeholder="Title" /* LOC */
 							/>
 							<br />
 							<textarea
@@ -142,7 +142,7 @@ const AlbumReview = observer(
 								cols={100}
 								maxLength={4000}
 								className="input-xxlarge"
-								placeholder="Review" /* LOCALIZE */
+								placeholder="Review" /* LOC */
 								required
 							/>
 							<br />
@@ -219,7 +219,7 @@ const AlbumReviews = observer(
 						<div>
 							<label>{t('ViewRes.Album:Details.ReviewLanguage')}</label>
 							<UserLanguageCultureDropdownList
-								placeholder="Choose" /* LOCALIZE */
+								placeholder="Choose" /* LOC */
 								value={albumDetailsStore.reviewsStore.languageCode}
 								onChange={(e): void =>
 									runInAction(() => {

@@ -20,14 +20,11 @@ export const PrintArchivedVenueData = React.memo(
 	({ comparedVenues }: PrintArchivedVenueDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* LOCALIZE */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
-						<DataRow
-							name="Id" /* LOCALIZE */
-							val={comparedVenues.firstData.id}
-						/>
+						<DataRow name="Id" /* LOC */ val={comparedVenues.firstData.id} />
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<TranslatedNameRow_ComparedVersionsContract
 							comparedVersions={comparedVenues}
@@ -37,7 +34,7 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* LOCALIZE */
+							name="Names" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -47,19 +44,19 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* LOCALIZE */
+							name="Description" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.description}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Coordinates" /* LOCALIZE */
+							name="Coordinates" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.coordinates.formatted}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Country/Region" /* LOCALIZE */
+							name="Country/Region" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode =>
 								regionNames.of(data.addressCountryCode)
@@ -67,13 +64,13 @@ export const PrintArchivedVenueData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Address" /* LOCALIZE */
+							name="Address" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode => data.address}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* LOCALIZE */
+							name="External links" /* LOC */
 							comparedVersions={comparedVenues}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (

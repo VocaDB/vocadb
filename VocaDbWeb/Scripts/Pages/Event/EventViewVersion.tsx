@@ -43,7 +43,7 @@ const EventViewVersionLayout = observer(
 	}: EventViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOCALIZE */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -83,7 +83,7 @@ const EventViewVersionLayout = observer(
 								to: `/Event/Versions/${contract.releaseEvent.id}`,
 							}}
 						>
-							Revisions{/* LOCALIZE */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -94,7 +94,7 @@ const EventViewVersionLayout = observer(
 							href={`/Event/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* LOCALIZE */}
+							Download XML{/* LOC */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -147,7 +147,7 @@ const EventViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* LOCALIZE */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

@@ -52,7 +52,7 @@ export const EventThumbs = ({
 							<img
 								className="media-object"
 								src={UrlHelper.getSmallestThumb(event.mainPicture, imageSize)}
-								alt="Thumb" /* LOCALIZE */
+								alt="Thumb" /* LOC */
 							/>
 						</Link>
 					)}

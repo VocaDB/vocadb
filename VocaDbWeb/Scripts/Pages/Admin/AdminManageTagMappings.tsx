@@ -28,11 +28,11 @@ const AdminManageTagMappings = observer(
 
 		return (
 			<Layout
-				title="Manage NicoNicoDouga tag mappings" /* LOCALIZE */
+				title="Manage NicoNicoDouga tag mappings" /* LOC */
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Admin' }}>
-							Manage{/* LOCALIZE */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -47,10 +47,10 @@ const AdminManageTagMappings = observer(
 				</Alert>
 
 				<form className="form-horizontal">
-					<h3>New mapping{/* LOCALIZE */}</h3>
+					<h3>New mapping{/* LOC */}</h3>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newSourceName">
-							Source tag name{/* LOCALIZE */}
+							Source tag name{/* LOC */}
 						</label>
 						<div className="controls">
 							<input
@@ -63,12 +63,12 @@ const AdminManageTagMappings = observer(
 										manageTagMappingsStore.newSourceName = e.target.value;
 									})
 								}
-								placeholder="Tag name" /* LOCALIZE */
+								placeholder="Tag name" /* LOC */
 							/>
 						</div>
 					</div>
 					<div className="control-group">
-						<label className="control-label">Target tag{/* LOCALIZE */}</label>
+						<label className="control-label">Target tag{/* LOC */}</label>
 						<div className="controls">
 							<TagLockingAutoComplete
 								basicEntryLinkStore={manageTagMappingsStore.newTargetTag}
@@ -89,7 +89,7 @@ const AdminManageTagMappings = observer(
 										)
 									) {
 										showErrorMessage(
-											`Mapping already exists for source tag ${manageTagMappingsStore.newSourceName}` /* LOCALIZE */,
+											`Mapping already exists for source tag ${manageTagMappingsStore.newSourceName}` /* LOC */,
 										);
 										return;
 									}
@@ -97,7 +97,7 @@ const AdminManageTagMappings = observer(
 									manageTagMappingsStore.addMapping();
 								}}
 							>
-								Add{/* LOCALIZE */}
+								Add{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -112,12 +112,12 @@ const AdminManageTagMappings = observer(
 						try {
 							await manageTagMappingsStore.save();
 
-							showSuccessMessage('Saved' /* LOCALIZE */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save tag mappings.' /* LOCALIZE */,
+									: 'Unable to save tag mappings.' /* LOC */,
 							);
 
 							throw error;
@@ -126,7 +126,7 @@ const AdminManageTagMappings = observer(
 						await manageTagMappingsStore.loadMappings();
 					}}
 				>
-					<h3>Mappings{/* LOCALIZE */}</h3>
+					<h3>Mappings{/* LOC */}</h3>
 
 					<div className="input-append input-prepend">
 						<span className="add-on">
@@ -140,7 +140,7 @@ const AdminManageTagMappings = observer(
 									manageTagMappingsStore.filter = e.target.value;
 								})
 							}
-							placeholder="Search" /* LOCALIZE */
+							placeholder="Search" /* LOC */
 						/>
 						<Button
 							variant="danger"
@@ -151,7 +151,7 @@ const AdminManageTagMappings = observer(
 							}
 							disabled={!manageTagMappingsStore.filter}
 						>
-							Clear{/* LOCALIZE */}
+							Clear{/* LOC */}
 						</Button>
 					</div>
 
@@ -165,9 +165,9 @@ const AdminManageTagMappings = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Source (NND){/* LOCALIZE */}</th>
+								<th>Source (NND){/* LOC */}</th>
 								<th>
-									Target ({siteName}){/* LOCALIZE */}
+									Target ({siteName}){/* LOC */}
 								</th>
 								<th></th>
 							</tr>
@@ -208,7 +208,7 @@ const AdminManageTagMappings = observer(
 											onClick={item.deleteMapping}
 											disabled={item.isDeleted}
 										>
-											Delete{/* LOCALIZE */}
+											Delete{/* LOC */}
 										</Button>
 									</td>
 								</tr>

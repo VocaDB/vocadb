@@ -450,7 +450,7 @@ const TagDetailsLayout = observer(
 										tag.mainPicture,
 										ImageSize.SmallThumb,
 									)}
-									alt="Thumb" /* LOCALIZE */
+									alt="Thumb" /* LOC */
 								/>
 							</a>
 						)}

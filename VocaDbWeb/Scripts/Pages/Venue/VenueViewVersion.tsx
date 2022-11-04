@@ -43,7 +43,7 @@ const VenueViewVersionLayout = observer(
 	}: VenueViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOCALIZE */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -80,7 +80,7 @@ const VenueViewVersionLayout = observer(
 								to: `/Venue/Versions/${contract.venue.id}`,
 							}}
 						>
-							Revisions{/* LOCALIZE */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -137,7 +137,7 @@ const VenueViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* LOCALIZE */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

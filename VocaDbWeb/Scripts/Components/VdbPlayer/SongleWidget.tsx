@@ -260,7 +260,7 @@ export const SongleWidget = observer(
 								`}
 							>
 								<i className="icon-pencil icon-white" /> Edit on Songle
-								{/* LOCALIZE */}
+								{/* LOC */}
 							</a>
 						)}
 					</div>
@@ -297,7 +297,7 @@ export const SongleWidget = observer(
 								font-weight: bold;
 							`}
 						>
-							<SongleIcon /> By Songle API{/* LOCALIZE */}
+							<SongleIcon /> By Songle API{/* LOC */}
 						</a>
 					</div>
 				</div>

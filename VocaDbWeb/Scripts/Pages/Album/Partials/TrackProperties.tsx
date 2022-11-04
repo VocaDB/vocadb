@@ -14,14 +14,14 @@ const TrackProperties = observer(
 				<div>
 					{trackPropertiesStore.song && (
 						<h3>{
-							`Artists for song ${trackPropertiesStore.song.songName}` /* LOCALIZE */
+							`Artists for song ${trackPropertiesStore.song.songName}` /* LOC */
 						}</h3>
 					)}
 				</div>
 
 				<h5>
-					Selected artists{/* LOCALIZE */}{' '}
-					<small>(click to remove{/* LOCALIZE */})</small>
+					Selected artists{/* LOC */}{' '}
+					<small>(click to remove{/* LOC */})</small>
 				</h5>
 				<div>
 					{trackPropertiesStore.artistSelections.map(
@@ -53,18 +53,17 @@ const TrackProperties = observer(
 				<span className="extraInfo">
 					{
 						!trackPropertiesStore.somethingSelected &&
-							'No artists selected.' /* LOCALIZE */
+							'No artists selected.' /* LOC */
 					}
 					<br />
 				</span>
 				<br />
 
 				<h4>
-					Album artists{/* LOCALIZE */}{' '}
-					<small>(click to add{/* LOCALIZE */})</small>
+					Album artists{/* LOC */} <small>(click to add{/* LOC */})</small>
 				</h4>
 				<div className="form-inline">
-					Filter{/* LOCALIZE */}{' '}
+					Filter{/* LOC */}{' '}
 					<input
 						value={trackPropertiesStore.filter}
 						onChange={(e): void =>
@@ -106,7 +105,7 @@ const TrackProperties = observer(
 				<span className="extraInfo">
 					{
 						!trackPropertiesStore.somethingSelectable &&
-							'No selectable artists.' /* LOCALIZE */
+							'No selectable artists.' /* LOC */
 					}
 				</span>
 			</>

@@ -37,7 +37,7 @@ export const EventSeriesThumbs = ({
 									event.mainPicture,
 									ImageSize.TinyThumb,
 								)}
-								alt="Thumb" /* LOCALIZE */
+								alt="Thumb" /* LOC */
 							/>
 						</Link>
 					)}

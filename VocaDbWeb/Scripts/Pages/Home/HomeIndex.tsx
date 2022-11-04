@@ -82,7 +82,7 @@ const PVPlayer = observer(
 													src={UrlHelper.upgradeToHttps(
 														song.mainPicture.urlThumb,
 													)}
-													alt="Cover" /* LOCALIZE */
+													alt="Cover" /* LOC */
 													className="coverPicThumb"
 													referrerPolicy="same-origin"
 												/>

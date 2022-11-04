@@ -27,7 +27,7 @@ const AdminManageWebhooks = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain']);
 
-		const title = 'Manage webhooks'; /* LOCALIZE */
+		const title = 'Manage webhooks'; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -42,16 +42,16 @@ const AdminManageWebhooks = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* LOCALIZE */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
 			>
 				<form className="form-horizontal">
-					<h3>New webhook{/* LOCALIZE */}</h3>
+					<h3>New webhook{/* LOC */}</h3>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newUrl">
-							Payload URL{/* LOCALIZE */}
+							Payload URL{/* LOC */}
 						</label>
 						<div className="controls">
 							<input
@@ -69,7 +69,7 @@ const AdminManageWebhooks = observer(
 					</div>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newWebhookEvents">
-							Events{/* LOCALIZE */}
+							Events{/* LOC */}
 						</label>
 						<div className="controls">
 							<div>
@@ -111,14 +111,14 @@ const AdminManageWebhooks = observer(
 											(w) => w.url === manageWebhooksStore.newUrl,
 										)
 									) {
-										showErrorMessage('Hook already exists' /* LOCALIZE */);
+										showErrorMessage('Hook already exists' /* LOC */);
 										return;
 									}
 
 									manageWebhooksStore.addWebhook();
 								}}
 							>
-								Add{/* LOCALIZE */}
+								Add{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -133,12 +133,12 @@ const AdminManageWebhooks = observer(
 						try {
 							await manageWebhooksStore.save();
 
-							showSuccessMessage('Saved' /* LOCALIZE */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save webhooks.' /* LOCALIZE */,
+									: 'Unable to save webhooks.' /* LOC */,
 							);
 
 							throw error;
@@ -147,15 +147,15 @@ const AdminManageWebhooks = observer(
 						await manageWebhooksStore.loadWebhooks();
 					}}
 				>
-					<h3>Webhooks{/* LOCALIZE */}</h3>
+					<h3>Webhooks{/* LOC */}</h3>
 
 					<SaveBtn submitting={manageWebhooksStore.submitting} />
 
 					<table>
 						<thead>
 							<tr>
-								<th>Payload URL{/* LOCALIZE */}</th>
-								<th>Events{/* LOCALIZE */}</th>
+								<th>Payload URL{/* LOC */}</th>
+								<th>Events{/* LOC */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -190,7 +190,7 @@ const AdminManageWebhooks = observer(
 											onClick={webhook.deleteWebhook}
 											disabled={webhook.isDeleted}
 										>
-											Delete{/* LOCALIZE */}
+											Delete{/* LOC */}
 										</Button>
 									</td>
 								</tr>

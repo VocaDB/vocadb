@@ -66,11 +66,11 @@ const JQueryUIDialog = ({
 						<button
 							type="button"
 							className="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close"
-							title="close" /* LOCALIZE */
+							title="close" /* LOC */
 							onClick={close}
 						>
 							<span className="ui-button-icon-primary ui-icon ui-icon-closethick" />
-							<span className="ui-button-text">close{/* LOCALIZE */}</span>
+							<span className="ui-button-text">close{/* LOC */}</span>
 						</button>
 					</div>
 					<div

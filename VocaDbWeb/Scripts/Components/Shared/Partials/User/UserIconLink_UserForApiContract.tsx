@@ -31,7 +31,7 @@ export const UserIconLink_UserForApiContract = ({
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 							user.memberSince
-					  }` /* LOCALIZE */
+					  }` /* LOC */
 					: undefined
 			}
 		>
@@ -52,7 +52,7 @@ export const UserIconLink_UserForApiContract = ({
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 							user.memberSince
-					  }` /* LOCALIZE */
+					  }` /* LOC */
 					: undefined
 			}
 		>

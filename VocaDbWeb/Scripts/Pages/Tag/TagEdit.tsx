@@ -73,7 +73,7 @@ const TagEditLayout = observer(
 
 		const contract = tagEditStore.contract;
 
-		const title = `Edit tag - ${contract.name}`; /* LOCALIZE */
+		const title = `Edit tag - ${contract.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -102,7 +102,7 @@ const TagEditLayout = observer(
 							}}
 							divider
 						>
-							Tags{/* LOCALIZE */}
+							Tags{/* LOC */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -166,7 +166,7 @@ const TagEditLayout = observer(
 
 				{tagEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* LOCALIZE */
+						message="Unable to save properties." /* LOC */
 						errors={tagEditStore.errors}
 					/>
 				)}
@@ -204,7 +204,7 @@ const TagEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* LOCALIZE */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;
@@ -218,7 +218,7 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Default language" /* LOCALIZE */
+							label="Default language" /* LOC */
 							dangerouslySetInnerHTML={{ __html: '' }}
 						/>
 					</div>
@@ -235,7 +235,7 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Names" /* LOCALIZE */
+							label="Names" /* LOC */
 							dangerouslySetInnerHTML={{ __html: '' }}
 						/>{' '}
 						<RequiredField />
@@ -245,7 +245,7 @@ const TagEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Category{/* LOCALIZE */}</label>
+						<label>Category{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<TagCategoryAutoComplete
@@ -261,10 +261,10 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Parent" /* LOCALIZE */
+							label="Parent" /* LOC */
 							dangerouslySetInnerHTML={{
 								__html:
-									'Parent tag groups related tags under one parent. Child tags are still considered separate.' /* LOCALIZE */,
+									'Parent tag groups related tags under one parent. Child tags are still considered separate.' /* LOC */,
 							}}
 						/>
 					</div>
@@ -278,7 +278,7 @@ const TagEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Description{/* LOCALIZE */}</label>
+						<label>Description{/* LOC */}</label>
 						<MarkdownNotice />
 					</div>
 					<div className="editor-field entry-edit-description">
@@ -294,7 +294,7 @@ const TagEditLayout = observer(
 								<img
 									className="pull-left media-object"
 									src={thumbUrl}
-									alt="Thumb" /* LOCALIZE */
+									alt="Thumb" /* LOC */
 								/>
 							)}
 							<div className="media-body">
@@ -311,7 +311,7 @@ const TagEditLayout = observer(
 
 					<div
 						className="editor-field withMargin"
-						title="Hides this tag from suggested tags for albums and artists" /* LOCALIZE */
+						title="Hides this tag from suggested tags for albums and artists" /* LOC */
 					>
 						<input
 							type="checkbox"
@@ -323,7 +323,7 @@ const TagEditLayout = observer(
 								})
 							}
 						/>{' '}
-						Hide from suggestions{/* LOCALIZE */}
+						Hide from suggestions{/* LOC */}
 					</div>
 
 					<div className="editor-label withMargin">
@@ -382,7 +382,7 @@ const TagEditLayout = observer(
 										})
 									}
 								/>{' '}
-								{TagTargetTypes[entryType] /* LOCALIZE */}
+								{TagTargetTypes[entryType] /* LOC */}
 								<br />
 							</React.Fragment>
 						))}

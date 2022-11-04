@@ -89,7 +89,7 @@ const BasicInfoTabContent = observer(
 		return (
 			<>
 				<div>
-					<div className="editor-label">Event type{/* LOCALIZE */}</div>
+					<div className="editor-label">Event type{/* LOC */}</div>
 					<div className="editor-field">
 						<label>
 							<input
@@ -102,7 +102,7 @@ const BasicInfoTabContent = observer(
 								}
 							/>{' '}
 							Series event
-							{/* LOCALIZE */}
+							{/* LOC */}
 						</label>
 						<label>
 							<input
@@ -115,14 +115,14 @@ const BasicInfoTabContent = observer(
 								}
 							/>{' '}
 							Standalone event
-							{/* LOCALIZE */}
+							{/* LOC */}
 						</label>
 					</div>
 				</div>
 
 				{releaseEventEditStore.isSeriesEvent && (
 					<div>
-						<div className="editor-label">Series{/* LOCALIZE */}</div>
+						<div className="editor-label">Series{/* LOC */}</div>
 						<div className="editor-field">
 							<ReleaseEventSeriesLockingAutoComplete
 								basicEntryLinkStore={releaseEventEditStore.series}
@@ -130,9 +130,7 @@ const BasicInfoTabContent = observer(
 						</div>
 
 						<div className="editor-label">
-							<label htmlFor="seriesNumber">
-								Series number{/* LOCALIZE */}
-							</label>
+							<label htmlFor="seriesNumber">Series number{/* LOC */}</label>
 						</div>
 						<div className="editor-field">
 							<input
@@ -161,16 +159,14 @@ const BasicInfoTabContent = observer(
 									}
 								/>{' '}
 								Customize event name
-								{/* LOCALIZE */}
+								{/* LOC */}
 							</label>
 						</div>
 
 						{!releaseEventEditStore.customName && (
 							<div>
 								<div className="editor-label">
-									<label htmlFor="seriesSuffix">
-										Series suffix{/* LOCALIZE */}
-									</label>
+									<label htmlFor="seriesSuffix">Series suffix{/* LOC */}</label>
 								</div>
 								<div className="editor-field">
 									<input
@@ -214,7 +210,7 @@ const BasicInfoTabContent = observer(
 						</div>
 
 						<div className="editor-label">
-							<label>Names{/* LOCALIZE */}</label>
+							<label>Names{/* LOC */}</label>
 						</div>
 						<div className="editor-field">
 							<NamesEditor namesEditStore={releaseEventEditStore.names} />
@@ -223,7 +219,7 @@ const BasicInfoTabContent = observer(
 				)}
 
 				<div className="editor-label">
-					<label htmlFor="description">Description{/* LOCALIZE */}</label>
+					<label htmlFor="description">Description{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
 					<textarea
@@ -239,13 +235,13 @@ const BasicInfoTabContent = observer(
 						className="span4"
 						maxLength={1000}
 					/>
-					Live preview{/* LOCALIZE */}
+					Live preview{/* LOC */}
 					<Markdown>{releaseEventEditStore.description}</Markdown>
 				</div>
 
 				{!releaseEventEditStore.isSeriesEvent && (
 					<div>
-						<div className="editor-label">Category{/* LOCALIZE */}</div>
+						<div className="editor-label">Category{/* LOC */}</div>
 						<div className="editor-field">
 							<div className="row-fluid">
 								<div className="span4">
@@ -266,10 +262,10 @@ const BasicInfoTabContent = observer(
 
 				<div className="editor-label">
 					<HelpLabel
-						label="Date" /* LOCALIZE */
+						label="Date" /* LOC */
 						dangerouslySetInnerHTML={{
 							__html:
-								"Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* LOCALIZE */,
+								"Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date." /* LOC */,
 						}}
 					/>
 				</div>
@@ -303,10 +299,10 @@ const BasicInfoTabContent = observer(
 
 				<div className="editor-label">
 					<HelpLabel
-						label="Setlist" /* LOCALIZE */
+						label="Setlist" /* LOC */
 						dangerouslySetInnerHTML={{
 							__html:
-								'If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.' /* LOCALIZE */,
+								'If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.' /* LOC */,
 						}}
 					/>
 				</div>
@@ -317,7 +313,7 @@ const BasicInfoTabContent = observer(
 					/>
 				</div>
 
-				<div className="editor-label">Venue{/* LOCALIZE */}</div>
+				<div className="editor-label">Venue{/* LOC */}</div>
 				<div className="editor-field">
 					<VenueLockingAutoComplete
 						basicEntryLinkStore={releaseEventEditStore.venue}
@@ -328,10 +324,10 @@ const BasicInfoTabContent = observer(
 					<div>
 						<div className="editor-label">
 							<HelpLabel
-								label="Venue name" /* LOCALIZE */
+								label="Venue name" /* LOC */
 								dangerouslySetInnerHTML={{
 									__html:
-										'Can be either a physical location such as concert hall, or a virtual location (website).' /* LOCALIZE */,
+										'Can be either a physical location such as concert hall, or a virtual location (website).' /* LOC */,
 								}}
 							/>
 						</div>
@@ -355,7 +351,7 @@ const BasicInfoTabContent = observer(
 				<br />
 
 				<div className="editor-label">
-					<label>Picture{/* LOCALIZE */}</label>
+					<label>Picture{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
 					<table>
@@ -368,7 +364,7 @@ const BasicInfoTabContent = observer(
 											releaseEventEditStore.contract.mainPicture,
 											ImageSize.SmallThumb,
 										)}
-										alt="Picture" /* LOCALIZE */
+										alt="Picture" /* LOC */
 										className="coverPic"
 									/>
 								</td>
@@ -446,9 +442,9 @@ const ArtistsTabContent = observer(
 						<table>
 							<thead>
 								<tr>
-									<th>Artist{/* LOCALIZE */}</th>
-									<th>Roles{/* LOCALIZE */}</th>
-									<th>Actions{/* LOCALIZE */}</th>
+									<th>Artist{/* LOC */}</th>
+									<th>Roles{/* LOC */}</th>
+									<th>Actions{/* LOC */}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -520,11 +516,11 @@ const ArtistsTabContent = observer(
 					)}
 
 					<br />
-					<h4>Add artist{/* LOCALIZE */}</h4>
+					<h4>Add artist{/* LOC */}</h4>
 					<ArtistAutoComplete
 						type="text"
 						properties={{
-							createNewItem: "Add custom artist named '{0}'" /* LOCALIZE */,
+							createNewItem: "Add custom artist named '{0}'" /* LOC */,
 							acceptSelection: releaseEventEditStore.addArtist,
 						}}
 						maxLength={128}
@@ -551,12 +547,12 @@ const PVsTabContent = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Service{/* LOCALIZE */}</th>
-								<th>Type{/* LOCALIZE */}</th>
-								<th>Name{/* LOCALIZE */}</th>
-								<th>Length{/* LOCALIZE */}</th>
-								<th>Date{/* LOCALIZE */}</th>
-								<th>Author{/* LOCALIZE */}</th>
+								<th>Service{/* LOC */}</th>
+								<th>Type{/* LOC */}</th>
+								<th>Name{/* LOC */}</th>
+								<th>Length{/* LOC */}</th>
+								<th>Date{/* LOC */}</th>
+								<th>Author{/* LOC */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -573,11 +569,11 @@ const PVsTabContent = observer(
 				)}
 
 				<br />
-				<h4>Add media{/* LOCALIZE */}</h4>
+				<h4>Add media{/* LOC */}</h4>
 
 				<p>
 					Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro
-					and Bilibili.{/* LOCALIZE */}
+					and Bilibili.{/* LOC */}
 				</p>
 				<p>
 					URL:{' '}
@@ -621,8 +617,8 @@ const EventEditLayout = observer(
 		const isNew = contract.id === 0;
 
 		const title = isNew
-			? 'Create a new event' /* LOCALIZE */
-			: `Edit event - ${contract.name}`; /* LOCALIZE */
+			? 'Create a new event' /* LOC */
+			: `Edit event - ${contract.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -648,7 +644,7 @@ const EventEditLayout = observer(
 									to: '/Event',
 								}}
 							>
-								Events{/* LOCALIZE */}
+								Events{/* LOC */}
 							</Breadcrumb.Item>
 						</>
 					) : (
@@ -660,7 +656,7 @@ const EventEditLayout = observer(
 								}}
 								divider
 							>
-								Events{/* LOCALIZE */}
+								Events{/* LOC */}
 							</Breadcrumb.Item>
 							<Breadcrumb.Item
 								linkAs={Link}
@@ -721,7 +717,7 @@ const EventEditLayout = observer(
 
 				{releaseEventEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* LOCALIZE */
+						message="Unable to save properties." /* LOC */
 						errors={releaseEventEditStore.errors}
 					/>
 				)}
@@ -746,7 +742,7 @@ const EventEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* LOCALIZE */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;
@@ -769,13 +765,13 @@ const EventEditLayout = observer(
 							/>
 						</JQueryUITab>
 
-						<JQueryUITab eventKey="artists" title="Artists" /* LOCALIZE */>
+						<JQueryUITab eventKey="artists" title="Artists" /* LOC */>
 							<ArtistsTabContent
 								releaseEventEditStore={releaseEventEditStore}
 							/>
 						</JQueryUITab>
 
-						<JQueryUITab eventKey="pvs" title="Media" /* LOCALIZE */>
+						<JQueryUITab eventKey="pvs" title="Media" /* LOC */>
 							<PVsTabContent releaseEventEditStore={releaseEventEditStore} />
 						</JQueryUITab>
 					</JQueryUITabs>

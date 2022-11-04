@@ -55,7 +55,7 @@ const SongSearchOptions = observer(
 											})
 										}
 									/>
-									Also search associated tag{/* LOCALIZE */}
+									Also search associated tag{/* LOC */}
 								</label>
 							</div>
 						)}
@@ -87,16 +87,16 @@ const SongSearchOptions = observer(
 								})
 							}
 						>
-							<option value="">(Show all){/* LOCALIZE */}</option>
-							<option value="24">1 day{/* LOCALIZE */}</option>
-							<option value="48">2 days{/* LOCALIZE */}</option>
-							<option value="168">7 days{/* LOCALIZE */}</option>
-							<option value="336">2 weeks{/* LOCALIZE */}</option>
-							<option value="720">1 month{/* LOCALIZE */}</option>
-							<option value="4320">6 months{/* LOCALIZE */}</option>
-							<option value="8760">1 year{/* LOCALIZE */}</option>
-							<option value="17520">2 years{/* LOCALIZE */}</option>
-							<option value="26280">3 years{/* LOCALIZE */}</option>
+							<option value="">(Show all){/* LOC */}</option>
+							<option value="24">1 day{/* LOC */}</option>
+							<option value="48">2 days{/* LOC */}</option>
+							<option value="168">7 days{/* LOC */}</option>
+							<option value="336">2 weeks{/* LOC */}</option>
+							<option value="720">1 month{/* LOC */}</option>
+							<option value="4320">6 months{/* LOC */}</option>
+							<option value="8760">1 year{/* LOC */}</option>
+							<option value="17520">2 years{/* LOC */}</option>
+							<option value="26280">3 years{/* LOC */}</option>
 						</select>
 					</div>
 				</div>
@@ -154,7 +154,7 @@ const SongSearchOptions = observer(
 							maxLength={4}
 							max={2100}
 							min={1900}
-							placeholder="Year" /* LOCALIZE */
+							placeholder="Year" /* LOC */
 							debounceTimeout={300}
 						/>
 						{songSearchStore.dateYear && (
@@ -174,7 +174,7 @@ const SongSearchOptions = observer(
 									maxLength={2}
 									max={12}
 									min={1}
-									placeholder="Month" /* LOCALIZE */
+									placeholder="Month" /* LOC */
 									debounceTimeout={300}
 								/>
 							</>
@@ -196,7 +196,7 @@ const SongSearchOptions = observer(
 									maxLength={2}
 									max={31}
 									min={1}
-									placeholder="Day" /* LOCALIZE */
+									placeholder="Day" /* LOC */
 									debounceTimeout={300}
 								/>
 							</>

@@ -21,14 +21,11 @@ export const PrintArchivedEventData = React.memo(
 	({ comparedEvents }: PrintArchivedEventDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* LOCALIZE */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
-						<DataRow
-							name="Id" /* LOCALIZE */
-							val={comparedEvents.firstData.id}
-						/>
+						<DataRow name="Id" /* LOC */ val={comparedEvents.firstData.id} />
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<TranslatedNameRow_ComparedVersionsContract
 							comparedVersions={comparedEvents}
@@ -38,7 +35,7 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* LOCALIZE */
+							name="Names" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -48,13 +45,13 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* LOCALIZE */
+							name="Description" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.description}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* LOCALIZE */
+							name="External links" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (
@@ -64,19 +61,19 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Category" /* LOCALIZE */
+							name="Category" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.category}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Date" /* LOCALIZE */
+							name="Date" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.date}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Venue" /* LOCALIZE */
+							name="Venue" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.venue} />
@@ -84,19 +81,19 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Venue name" /* LOCALIZE */
+							name="Venue name" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.venueName}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Main picture MIME" /* LOCALIZE */
+							name="Main picture MIME" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.mainPictureMime}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Series" /* LOCALIZE */
+							name="Series" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.series} />
@@ -104,13 +101,13 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Series number" /* LOCALIZE */
+							name="Series number" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => data.seriesNumber}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Artists" /* LOCALIZE */
+							name="Artists" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode[] =>
 								data.artists?.map((artist, index) => (
@@ -120,7 +117,7 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="PVs" /* LOCALIZE */
+							name="PVs" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode[] =>
 								data.pvs?.map((pv, index) => <PVInfo pv={pv} key={index} />) ??
@@ -129,7 +126,7 @@ export const PrintArchivedEventData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Song list" /* LOCALIZE */
+							name="Song list" /* LOC */
 							comparedVersions={comparedEvents}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.songList} />

@@ -52,7 +52,7 @@ const AlbumShare = ({
 			</div>
 			<div>
 				<a href="http://daringfireball.net/projects/markdown/">
-					Markdown{/* LOCALIZE */}
+					Markdown{/* LOC */}
 				</a>
 				<br />
 				<input

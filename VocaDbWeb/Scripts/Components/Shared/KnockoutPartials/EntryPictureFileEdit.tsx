@@ -24,7 +24,7 @@ export const EntryPictureFileEdit = observer(
 					{entryPictureFileEditStore.thumbUrl ? (
 						<img
 							src={entryPictureFileEditStore.thumbUrl}
-							alt="Preview" /* LOCALIZE */
+							alt="Preview" /* LOC */
 							className="coverPicThumb"
 						/>
 					) : (

@@ -15,7 +15,7 @@ export const TagPopupContent = React.memo(
 					<div className="thumbnail">
 						<img
 							src={tag.mainPicture.urlSmallThumb}
-							alt="Thumb" /* LOCALIZE */
+							alt="Thumb" /* LOC */
 							className="coverPicThumb"
 							referrerPolicy="same-origin"
 						/>

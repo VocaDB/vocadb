@@ -120,7 +120,7 @@ export class PVListEditStore {
 			error: (result) => {
 				const text =
 					result.status === 404 ? 'File too large' : result.statusText;
-				alert(`Unable to post file: ${text}` /* LOCALIZE */);
+				alert(`Unable to post file: ${text}` /* LOC */);
 			},
 		});
 	};

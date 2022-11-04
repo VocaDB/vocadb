@@ -35,7 +35,7 @@ export const PersonalDescriptionMedia = observer(
 						>
 							<img
 								className="coverPicThumb"
-								alt="Thumb" /* LOCALIZE */
+								alt="Thumb" /* LOC */
 								src={personalDescription.author.entry.mainPicture.urlSmallThumb}
 								referrerPolicy="same-origin"
 							/>

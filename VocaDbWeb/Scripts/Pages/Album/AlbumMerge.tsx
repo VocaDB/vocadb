@@ -35,7 +35,7 @@ const AlbumMergeLayout = observer(
 	({ album, albumMergeStore }: AlbumMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge album - ${album.name}`; /* LOCALIZE */
+		const title = `Merge album - ${album.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -70,7 +70,7 @@ const AlbumMergeLayout = observer(
 								to: `/Album/Edit/${album.id}`,
 							}}
 						>
-							Edit{/* LOCALIZE */}
+							Edit{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -94,7 +94,7 @@ const AlbumMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge album.' /* LOCALIZE */,
+									: 'Unable to merge album.' /* LOC */,
 							);
 
 							throw error;
@@ -136,7 +136,7 @@ const AlbumMergeLayout = observer(
 						id="mergeBtn"
 						disabled={!albumMergeStore.target.id || albumMergeStore.submitting}
 					>
-						Merge{/* LOCALIZE */}
+						Merge{/* LOC */}
 					</Button>
 				</form>
 			</Layout>

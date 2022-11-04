@@ -35,7 +35,7 @@ const SongMergeLayout = observer(
 	({ song, songMergeStore }: SongMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge song - ${song.name}`; /* LOCALIZE */
+		const title = `Merge song - ${song.name}`; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -70,7 +70,7 @@ const SongMergeLayout = observer(
 								to: `/Song/Edit/${song.id}`,
 							}}
 						>
-							Edit{/* LOCALIZE */}
+							Edit{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -94,7 +94,7 @@ const SongMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge song.' /* LOCALIZE */,
+									: 'Unable to merge song.' /* LOC */,
 							);
 
 							throw error;
@@ -136,7 +136,7 @@ const SongMergeLayout = observer(
 						id="mergeBtn"
 						disabled={!songMergeStore.target.id || songMergeStore.submitting}
 					>
-						Merge{/* LOCALIZE */}
+						Merge{/* LOC */}
 					</Button>
 				</form>
 			</Layout>

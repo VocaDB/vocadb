@@ -52,7 +52,7 @@ const ComposeMessage = observer(
 					/>
 					{userMessagesStore.newMessageStore.isReceiverInvalid && (
 						<Alert variant="danger">
-							Receiver must be selected.{/* LOCALIZE */}
+							Receiver must be selected.{/* LOC */}
 						</Alert>
 					)}
 				</div>
@@ -107,7 +107,7 @@ const ComposeMessage = observer(
 						required
 					/>
 					<br />
-					Live preview{/* LOCALIZE */}
+					Live preview{/* LOC */}
 					<Markdown>{userMessagesStore.newMessageStore.body}</Markdown>
 				</div>
 				<br />

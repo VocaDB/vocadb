@@ -27,7 +27,7 @@ export const CommentEntryItem = React.memo(
 					>
 						<img
 							src={thumbUrl}
-							alt="thumb" /* LOCALIZE */
+							alt="thumb" /* LOC */
 							className="coverPicThumb"
 							referrerPolicy="same-origin"
 						/>

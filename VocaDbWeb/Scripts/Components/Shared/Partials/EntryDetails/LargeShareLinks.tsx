@@ -19,10 +19,10 @@ export const LargeShareLinks = ({
 				rel="noreferrer"
 			>
 				<img
-					alt="Share on Facebook" /* LOCALIZE */
+					alt="Share on Facebook" /* LOC */
 					src="/Content/ExtIcons/facebook32.png"
 					style={{ border: 0, height: '32px', width: '32px', margin: '0 1px' }}
-					title="Share on Facebook" /* LOCALIZE */
+					title="Share on Facebook" /* LOC */
 				/>
 			</a>{' '}
 			<a
@@ -42,7 +42,7 @@ export const LargeShareLinks = ({
 				href={`https://twitter.com/home/?status=${urlEncodedTitle}: ${url}`}
 				target="_blank"
 				rel="noreferrer"
-				title="Share on Twitter" /* LOCALIZE */
+				title="Share on Twitter" /* LOC */
 			>
 				<img
 					alt="Twitter"
@@ -53,7 +53,7 @@ export const LargeShareLinks = ({
 						width: '32px',
 						margin: '0 1px',
 					}}
-					title="Share on Twitter" /* LOCALIZE */
+					title="Share on Twitter" /* LOC */
 				/>
 			</a>{' '}
 			<a
@@ -67,13 +67,13 @@ export const LargeShareLinks = ({
 						'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600',
 					);
 				}}
-				title="Share on Google+" /* LOCALIZE */
+				title="Share on Google+" /* LOC */
 			>
 				<img
 					alt="Google+"
 					src="https://www.gstatic.com/images/icons/gplus-32.png"
 					style={{ border: 0, height: '32px', width: '32px', margin: '0 1px' }}
-					title="Share on Google+" /* LOCALIZE */
+					title="Share on Google+" /* LOC */
 				/>
 			</a>
 		</>

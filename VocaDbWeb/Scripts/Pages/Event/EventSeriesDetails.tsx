@@ -131,7 +131,7 @@ const EventSeriesDetailsLayout = ({
 								series.mainPicture,
 								ImageSize.SmallThumb,
 							)}
-							alt="Thumb" /* LOCALIZE */
+							alt="Thumb" /* LOC */
 						/>
 					</a>
 				)}

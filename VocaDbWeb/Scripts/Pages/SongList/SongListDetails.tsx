@@ -98,7 +98,7 @@ const SongListDetailsTableRow = observer(
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
 								src={item.song.mainPicture.urlThumb}
-								title="Cover picture" /* LOCALIZE */
+								title="Cover picture" /* LOC */
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>
@@ -361,7 +361,7 @@ const SongListDetailsLayout = observer(
 							<img
 								className="media-object"
 								src={smallThumbUrl}
-								alt="Thumb" /* LOCALIZE */
+								alt="Thumb" /* LOC */
 							/>
 						</a>
 					)}
@@ -458,10 +458,10 @@ const SongListDetailsLayout = observer(
 									),
 								);
 							}}
-							title="Play" /* LOCALIZE */
+							title="Play" /* LOC */
 							className="btn-nomargin"
 						>
-							<i className="icon-play noMargin" /> Play{/* LOCALIZE */}
+							<i className="icon-play noMargin" /> Play{/* LOC */}
 						</Button>
 					</ButtonGroup>
 					{!songListStore.playlistMode && (

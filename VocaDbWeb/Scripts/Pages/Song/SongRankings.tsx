@@ -85,7 +85,7 @@ const SongRankingsTableRow = observer(
 							{/* eslint-disable-next-line jsx-a11y/alt-text */}
 							<img
 								src={song.mainPicture.urlThumb}
-								title="Cover picture" /* LOCALIZE */
+								title="Cover picture" /* LOC */
 								className="coverPicThumb img-rounded"
 								referrerPolicy="same-origin"
 							/>

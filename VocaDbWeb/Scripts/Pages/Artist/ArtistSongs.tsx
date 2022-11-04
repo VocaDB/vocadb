@@ -51,10 +51,10 @@ const ArtistSongs = observer(
 										),
 									);
 								}}
-								title="Play" /* LOCALIZE */
+								title="Play" /* LOC */
 								className="btn-nomargin"
 							>
-								<i className="icon-play noMargin" /> Play{/* LOCALIZE */}
+								<i className="icon-play noMargin" /> Play{/* LOC */}
 							</Button>
 						</ButtonGroup>
 					</div>

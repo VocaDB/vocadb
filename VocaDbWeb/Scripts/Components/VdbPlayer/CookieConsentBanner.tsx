@@ -92,10 +92,10 @@ export const CookieConsentBanner = React.memo(
 					<div>
 						<Button onClick={onLoadVideo} variant="primary">
 							<i className="icon-play icon-white" /> Load video
-							{/* LOCALIZE */}
+							{/* LOC */}
 						</Button>{' '}
 						<Button onClick={onDoNotAskAgain}>
-							Don't ask again{/* LOCALIZE */}
+							Don't ask again{/* LOC */}
 						</Button>
 					</div>
 				</div>

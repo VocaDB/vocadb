@@ -68,7 +68,7 @@ const EventSearchOptions = observer(
 							dateFormat="yy-mm-dd"
 							className="input-small"
 							maxLength={10}
-							placeholder="Begin" /* LOCALIZE */
+							placeholder="Begin" /* LOC */
 						/>{' '}
 						-{' '}
 						<JQueryUIDatepicker
@@ -82,7 +82,7 @@ const EventSearchOptions = observer(
 							dateFormat="yy-mm-dd"
 							className="input-small"
 							maxLength={10}
-							placeholder="End" /* LOCALIZE */
+							placeholder="End" /* LOC */
 						/>{' '}
 						<Button
 							onClick={(): void =>

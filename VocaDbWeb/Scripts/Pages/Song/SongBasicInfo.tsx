@@ -336,7 +336,7 @@ const SongBasicInfo = observer(
 
 						{model.illustrators && model.illustrators.length > 0 && (
 							<tr>
-								<td>Illustrators{/* LOCALIZE */}</td>
+								<td>Illustrators{/* LOC */}</td>
 								<td className="artistList">
 									<ArtistList artists={model.illustrators} tooltip={true} />
 								</td>

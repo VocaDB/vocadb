@@ -120,7 +120,7 @@ const AuditLogFilters = observer(
 		return (
 			<form className="form-horizontal">
 				<div className="control-group">
-					<div className="control-label">Text query{/* LOCALIZE */}</div>
+					<div className="control-label">Text query{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							type="text"
@@ -137,7 +137,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">Show only user{/* LOCALIZE */}</div>
+					<div className="control-label">Show only user{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={userNameRef}
@@ -155,7 +155,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">Exclude users{/* LOCALIZE */}</div>
+					<div className="control-label">Exclude users{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={excludeUsersRef}
@@ -173,7 +173,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">User group{/* LOCALIZE */}</div>
+					<div className="control-label">User group{/* LOC */}</div>
 					<div className="controls">
 						<UserGroupDropdownList
 							value={viewAuditLogStore.group}
@@ -197,7 +197,7 @@ const AuditLogFilters = observer(
 									})
 								}
 							/>
-							Only show new users{/* LOCALIZE */}
+							Only show new users{/* LOC */}
 						</label>
 					</div>
 				</div>
@@ -210,7 +210,7 @@ const AdminViewAuditLog = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'View audit log'; /* LOCALIZE */
+		const title = 'View audit log'; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -227,7 +227,7 @@ const AdminViewAuditLog = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* LOCALIZE */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -252,9 +252,9 @@ const AdminViewAuditLog = observer(
 					<table className="table">
 						<thead>
 							<tr>
-								<th>Time{/* LOCALIZE */}</th>
-								<th>User{/* LOCALIZE */}</th>
-								<th>Action{/* LOCALIZE */}</th>
+								<th>Time{/* LOC */}</th>
+								<th>User{/* LOC */}</th>
+								<th>Action{/* LOC */}</th>
 							</tr>
 						</thead>
 						<tbody id="logEntries">
@@ -277,7 +277,7 @@ const AdminViewAuditLog = observer(
 				</div>
 
 				<SafeAnchor id="loadMoreLink" onClick={viewAuditLogStore.loadMore}>
-					Load more{/* LOCALIZE */}
+					Load more{/* LOC */}
 				</SafeAnchor>
 			</Layout>
 		);

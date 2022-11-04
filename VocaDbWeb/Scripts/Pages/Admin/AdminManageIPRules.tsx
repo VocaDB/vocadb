@@ -29,7 +29,7 @@ const AdminManageIPRules = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'Manage blocked IPs'; /* LOCALIZE */
+		const title = 'Manage blocked IPs'; /* LOC */
 
 		useVdbTitle(title, true);
 
@@ -44,7 +44,7 @@ const AdminManageIPRules = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* LOCALIZE */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -57,12 +57,12 @@ const AdminManageIPRules = observer(
 						try {
 							await manageIPRulesStore.save();
 
-							showSuccessMessage('Saved' /* LOCALIZE */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save IP rules.' /* LOCALIZE */,
+									: 'Unable to save IP rules.' /* LOC */,
 							);
 
 							throw error;
@@ -72,11 +72,11 @@ const AdminManageIPRules = observer(
 					<SaveBtn submitting={manageIPRulesStore.submitting} />
 
 					<Button onClick={manageIPRulesStore.deleteOldRules}>
-						Delete rules older than 1 year{/* LOCALIZE */}
+						Delete rules older than 1 year{/* LOC */}
 					</Button>
 
 					<div className="editor-label">
-						<label>New address{/* LOCALIZE */}</label>
+						<label>New address{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<input
@@ -97,7 +97,7 @@ const AdminManageIPRules = observer(
 								if (!addr) return;
 
 								if (manageIPRulesStore.rules.some((r) => r.address === addr)) {
-									showErrorMessage('Address already added' /* LOCALIZE */);
+									showErrorMessage('Address already added' /* LOC */);
 									return;
 								}
 
@@ -111,9 +111,9 @@ const AdminManageIPRules = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Address{/* LOCALIZE */}</th>
-								<th>Notes{/* LOCALIZE */}</th>
-								<th>Created{/* LOCALIZE */}</th>
+								<th>Address{/* LOC */}</th>
+								<th>Notes{/* LOC */}</th>
+								<th>Created{/* LOC */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -153,7 +153,7 @@ const AdminManageIPRules = observer(
 				<div>
 					{manageIPRulesStore.bannedIPs.length > 0 && (
 						<>
-							<h2>Automatically banned IPs{/* LOCALIZE */}</h2>
+							<h2>Automatically banned IPs{/* LOC */}</h2>
 							<ul>
 								{manageIPRulesStore.bannedIPs.map((bannedIP, index) => (
 									<li key={index}>

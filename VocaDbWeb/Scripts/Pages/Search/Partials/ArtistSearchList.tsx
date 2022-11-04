@@ -80,7 +80,7 @@ const ArtistSearchList = observer(
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={artist.mainPicture.urlTinyThumb}
-												title="Cover picture" /* LOCALIZE */
+												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"
 												referrerPolicy="same-origin"
 											/>

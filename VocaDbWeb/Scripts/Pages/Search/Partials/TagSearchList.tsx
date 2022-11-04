@@ -83,7 +83,7 @@ const TagSearchList = observer(
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={tag.mainPicture.urlSmallThumb}
-												title="Cover picture" /* LOCALIZE */
+												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"
 											/>
 										</Link>
