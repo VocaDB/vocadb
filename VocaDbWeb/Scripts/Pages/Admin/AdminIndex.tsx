@@ -95,6 +95,12 @@ const AdminIndex = (): React.ReactElement => {
 							Refresh .NET memory cache{/* LOC */}
 						</a>
 					</p>
+					{/* TODO: Remove. */}
+					<p>
+						<a href="/Admin/UpdateWebAddresses">
+							Update web addresses{/* LOC */}
+						</a>
+					</p>
 				</>
 			)}
 		</Layout>

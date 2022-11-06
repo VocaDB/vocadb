@@ -39,8 +39,13 @@ namespace VocaDb.Model.Service
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 		}
 
-		public AdminService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
+		public AdminService(
+			ISessionFactory sessionFactory,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations,
+			IUserIconFactory userIconFactory
+		)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_enumTranslations = enumTranslations;
@@ -620,6 +625,86 @@ namespace VocaDb.Model.Service
 			UpdateWebLinkCategories<ArtistWebLink>();
 			UpdateWebLinkCategories<SongWebLink>();
 		}
+
+#nullable enable
+		public void UpdateWebAddresses()
+		{
+			static WebAddressHost GetOrCreateWebAddressHost(ISession session, Uri uri, User actor)
+			{
+				var host = session.Query<WebAddressHost>().FirstOrDefault(host => host.Hostname == uri.Host);
+				if (host is not null)
+				{
+					return host;
+				}
+				else
+				{
+					host = new WebAddressHost(uri.Host, actor);
+					session.Save(host);
+					return host;
+				}
+			}
+
+			static WebAddress GetOrCreateWebAddress(ISession session, Uri uri, User actor)
+			{
+				var host = GetOrCreateWebAddressHost(session, uri, actor);
+				var address = session.Query<WebAddress>().FirstOrDefault(address => address.Url == uri.ToString());
+				if (address is not null)
+				{
+					return address;
+				}
+				else
+				{
+					address = new WebAddress(uri, host, actor);
+					session.Save(address);
+					return address;
+				}
+			}
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			HandleTransaction(session =>
+			{
+				AuditLog("updating web addresses", session);
+
+				var webLinkQueries = new IQueryable<WebLink>[]
+				{
+					session.Query<AlbumWebLink>(),
+					session.Query<ArtistWebLink>(),
+					session.Query<ReleaseEventSeriesWebLink>(),
+					session.Query<ReleaseEventWebLink>(),
+					session.Query<SongWebLink>(),
+					session.Query<TagWebLink>(),
+					session.Query<UserWebLink>(),
+					session.Query<VenueWebLink>(),
+				};
+
+				foreach (var webLinkQuery in webLinkQueries)
+				{
+					foreach (var webLink in webLinkQuery)
+					{
+						try
+						{
+							var uri = new Uri(webLink.Url);
+
+							// Actors can be used for https://github.com/VocaDB/vocadb/issues/1149 in the future.
+							var actor = webLink is UserWebLink userWebLink
+								? userWebLink.Entry
+								: GetLoggedUser(session);
+
+							var address = GetOrCreateWebAddress(session, uri, actor);
+							webLink.Address = address;
+							address.IncrementReferenceCount();
+						}
+						catch (UriFormatException)
+						{
+							// Ignore.
+							SysLog($"Skipping {webLink.Url}");
+						}
+					}
+				}
+			});
+		}
+#nullable disable
 	}
 
 	public enum AuditLogUserGroupFilter

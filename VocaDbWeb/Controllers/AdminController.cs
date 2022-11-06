@@ -323,5 +323,12 @@ namespace VocaDb.Web.Controllers
 
 			return View("React/Index");
 		}
+
+		[Authorize]
+		public IActionResult UpdateWebAddresses()
+		{
+			Service.UpdateWebAddresses();
+			return RedirectToAction("Index");
+		}
 	}
 }

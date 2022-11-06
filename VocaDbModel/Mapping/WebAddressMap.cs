@@ -22,6 +22,7 @@ public class WebAddressMap : ClassMap<WebAddress>
 	public WebAddressMap()
 	{
 		Cache.ReadWrite();
+		Table("WebAddresses");
 		Id(m => m.Id);
 
 		Map(m => m.Url).Length(512).Not.Nullable();
