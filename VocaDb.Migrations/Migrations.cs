@@ -32,6 +32,15 @@ public class WebAddress : AutoReversingMigration
 			.WithColumn("Fragment").AsString().NotNullable()
 			.WithColumn("ReferenceCount").AsInt32().NotNullable()
 			.WithColumn("Actor").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").Indexed();
+
+		Create.Column("Address").OnTable(TableNames.AlbumWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.ArtistWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.ReleaseEventSeriesWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.ReleaseEventWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.SongWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.TagWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.UserWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
+		Create.Column("Address").OnTable(TableNames.VenueWebLinks).AsInt32().Nullable()/* TODO: NotNullable */.Indexed();
 	}
 }
 

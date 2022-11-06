@@ -121,6 +121,9 @@ public class WebLink : IWebLink, IEntryWithIntId
 
 	public virtual int Id { get; set; }
 
+	// TODO: Make non-nullable.
+	public virtual WebAddress? Address { get; set; }
+
 	/// <summary>
 	/// Link URL. Cannot be null or empty.
 	/// </summary>
