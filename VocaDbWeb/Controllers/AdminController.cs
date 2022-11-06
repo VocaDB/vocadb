@@ -324,6 +324,7 @@ namespace VocaDb.Web.Controllers
 			return View("React/Index");
 		}
 
+		// TODO: Remove.
 		[Authorize]
 		public IActionResult UpdateWebAddresses()
 		{
