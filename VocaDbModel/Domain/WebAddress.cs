@@ -7,10 +7,6 @@ public class WebAddressHost
 {
 	public virtual int Id { get; set; }
 
-	public virtual DateTimeOffset CreatedAt { get; set; }
-
-	public virtual DateTimeOffset UpdatedAt { get; set; }
-
 	public virtual required string Hostname { get; set; }
 
 	public virtual int ReferenceCount { get; set; }
@@ -40,10 +36,6 @@ public class WebAddressHost
 public class WebAddress
 {
 	public virtual int Id { get; set; }
-
-	public virtual DateTimeOffset CreatedAt { get; set; }
-
-	public virtual DateTimeOffset UpdatedAt { get; set; }
 
 	public virtual required string Url { get; set; }
 

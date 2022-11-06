@@ -10,8 +10,6 @@ public class WebAddressHostMap : ClassMap<WebAddressHost>
 		Cache.ReadWrite();
 		Id(m => m.Id);
 
-		Map(m => m.CreatedAt).Not.Nullable();
-		Map(m => m.UpdatedAt).Not.Nullable();
 		Map(m => m.Hostname).Not.Nullable();
 		Map(m => m.ReferenceCount).Not.Nullable();
 
@@ -26,8 +24,6 @@ public class WebAddressMap : ClassMap<WebAddress>
 		Cache.ReadWrite();
 		Id(m => m.Id);
 
-		Map(m => m.CreatedAt).Not.Nullable();
-		Map(m => m.UpdatedAt).Not.Nullable();
 		Map(m => m.Url).Not.Nullable();
 		Map(m => m.Scheme).Not.Nullable();
 		Map(m => m.Port).Not.Nullable();
