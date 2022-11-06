@@ -6,6 +6,35 @@ namespace VocaDb.Migrations;
 
 // Migration version format: YYYY_MM_DD_HHmm
 
+[Migration(2022_11_06_0400)]
+public class WebAddress : AutoReversingMigration
+{
+	public override void Up()
+	{
+		Create.Table(TableNames.WebAddressHosts)
+			.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+			.WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
+			.WithColumn("UpdatedAt").AsDateTimeOffset().NotNullable()
+			.WithColumn("Hostname").AsString().NotNullable().Unique()
+			.WithColumn("ReferenceCount").AsInt32().NotNullable()
+			.WithColumn("Actor").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").Indexed();
+
+		Create.Table(TableNames.WebAddresses)
+			.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+			.WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
+			.WithColumn("UpdatedAt").AsDateTimeOffset().NotNullable()
+			.WithColumn("Url").AsString().NotNullable().Unique()
+			.WithColumn("Scheme").AsString().NotNullable()
+			.WithColumn("Host").AsInt32().NotNullable().ForeignKey(TableNames.WebAddressHosts, "Id").Indexed()
+			.WithColumn("Port").AsInt32().NotNullable()
+			.WithColumn("Path").AsString().NotNullable()
+			.WithColumn("Query").AsString().NotNullable()
+			.WithColumn("Fragment").AsString().NotNullable()
+			.WithColumn("ReferenceCount").AsInt32().NotNullable()
+			.WithColumn("Actor").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").Indexed();
+	}
+}
+
 [Migration(2022_03_19_0300)]
 public class UserPicture : AutoReversingMigration
 {
