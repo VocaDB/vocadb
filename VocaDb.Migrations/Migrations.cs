@@ -13,16 +13,12 @@ public class WebAddress : AutoReversingMigration
 	{
 		Create.Table(TableNames.WebAddressHosts)
 			.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-			.WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
-			.WithColumn("UpdatedAt").AsDateTimeOffset().NotNullable()
 			.WithColumn("Hostname").AsString().NotNullable().Unique()
 			.WithColumn("ReferenceCount").AsInt32().NotNullable()
 			.WithColumn("Actor").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").Indexed();
 
 		Create.Table(TableNames.WebAddresses)
 			.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
-			.WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
-			.WithColumn("UpdatedAt").AsDateTimeOffset().NotNullable()
 			.WithColumn("Url").AsString(512).NotNullable().Unique()
 			.WithColumn("Scheme").AsString().NotNullable()
 			.WithColumn("Host").AsInt32().NotNullable().ForeignKey(TableNames.WebAddressHosts, "Id").Indexed()
