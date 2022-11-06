@@ -1,8 +1,9 @@
 import { usePageTracking } from '@/Components/usePageTracking';
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import React from 'react';
 import { useTitle } from 'react-use';
+
+import './nprogress.css';
 
 NProgress.configure({ showSpinner: false });
 
