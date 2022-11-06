@@ -24,12 +24,12 @@ public class WebAddressMap : ClassMap<WebAddress>
 		Cache.ReadWrite();
 		Id(m => m.Id);
 
-		Map(m => m.Url).Not.Nullable();
+		Map(m => m.Url).Length(512).Not.Nullable();
 		Map(m => m.Scheme).Not.Nullable();
 		Map(m => m.Port).Not.Nullable();
-		Map(m => m.Path).Not.Nullable();
-		Map(m => m.Query).Not.Nullable();
-		Map(m => m.Fragment).Not.Nullable();
+		Map(m => m.Path).Length(512).Not.Nullable();
+		Map(m => m.Query).Length(512).Not.Nullable();
+		Map(m => m.Fragment).Length(512).Not.Nullable();
 		Map(m => m.ReferenceCount).Not.Nullable();
 
 		References(m => m.Host).Not.Nullable();

@@ -23,13 +23,13 @@ public class WebAddress : AutoReversingMigration
 			.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 			.WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
 			.WithColumn("UpdatedAt").AsDateTimeOffset().NotNullable()
-			.WithColumn("Url").AsString().NotNullable().Unique()
+			.WithColumn("Url").AsString(512).NotNullable().Unique()
 			.WithColumn("Scheme").AsString().NotNullable()
 			.WithColumn("Host").AsInt32().NotNullable().ForeignKey(TableNames.WebAddressHosts, "Id").Indexed()
 			.WithColumn("Port").AsInt32().NotNullable()
-			.WithColumn("Path").AsString().NotNullable()
-			.WithColumn("Query").AsString().NotNullable()
-			.WithColumn("Fragment").AsString().NotNullable()
+			.WithColumn("Path").AsString(512).NotNullable()
+			.WithColumn("Query").AsString(512).NotNullable()
+			.WithColumn("Fragment").AsString(512).NotNullable()
 			.WithColumn("ReferenceCount").AsInt32().NotNullable()
 			.WithColumn("Actor").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").Indexed();
 
