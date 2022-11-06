@@ -1,27 +1,46 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ReleaseEventDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
-import ReleaseEventSeriesDetailsContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
-import ReleaseEventSeriesForApiContract from '@DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventSeriesVersionDetailsContract';
+import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
+import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
+import { ReleaseEventSeriesForApiContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
+export enum ReleaseEventOptionalField {
+	'AdditionalNames' = 'AdditionalNames',
+	'Artists' = 'Artists',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Series' = 'Series',
+	'SongList' = 'SongList',
+	'Tags' = 'Tags',
+	'Venue' = 'Venue',
+	'WebLinks' = 'WebLinks',
+	'PVs' = 'PVs',
+}
 
-export default class ReleaseEventRepository extends BaseRepository {
-	public constructor(
+export class ReleaseEventRepository extends BaseRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = ({
+	createReport = ({
 		entryId: eventId,
 		reportType,
 		notes,
@@ -43,7 +62,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -61,7 +80,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public deleteSeries = ({
+	deleteSeries = ({
 		id,
 		notes,
 		hardDelete,
@@ -79,7 +98,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getList = ({
+	getList = ({
 		queryParams,
 	}: {
 		queryParams: EventQueryParams;
@@ -95,7 +114,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 			category: queryParams.category || undefined,
 			tagId: queryParams.tagIds,
 			childTags: queryParams.childTags,
-			fields: queryParams.fields || undefined,
+			fields: queryParams.fields?.join(','),
 			userCollectionId: queryParams.userCollectionId || undefined,
 			artistId: queryParams.artistId || undefined,
 			childVoicebanks: queryParams.childVoicebanks || undefined,
@@ -115,12 +134,30 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = ({ id }: { id: number }): Promise<ReleaseEventContract> => {
+	getOne = ({
+		id,
+		fields,
+	}: {
+		id: number;
+		fields?: ReleaseEventOptionalField[];
+	}): Promise<ReleaseEventContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
-		return this.httpClient.get<ReleaseEventContract>(url);
+		return this.httpClient.get<ReleaseEventContract>(url, {
+			fields: fields?.join(','),
+		});
 	};
 
-	public getOneByName = async ({
+	getOneSeries = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForApiContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForApiContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}`),
+		);
+	};
+
+	getOneByName = async ({
 		name,
 	}: {
 		name: string;
@@ -139,7 +176,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 			: null;
 	};
 
-	public getSeriesList = ({
+	getSeriesList = ({
 		query,
 		nameMatchMode,
 		maxResults,
@@ -160,7 +197,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		>(url, data);
 	};
 
-	public getDetails = ({
+	getDetails = ({
 		id,
 	}: {
 		id: number;
@@ -170,7 +207,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getSeriesDetails = ({
+	getSeriesDetails = ({
 		id,
 	}: {
 		id: number;
@@ -180,7 +217,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getReleaseEventWithArchivedVersions = ({
+	getReleaseEventWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -190,7 +227,20 @@ export default class ReleaseEventRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/releaseEvents/${id}/versions`));
 	};
 
-	public getReleaseEventSeriesWithArchivedVersions = ({
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedEventVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedEventVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	getReleaseEventSeriesWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -200,6 +250,83 @@ export default class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<ReleaseEventSeriesForApiContract>
 		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
+	};
+
+	getSeriesVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedEventSeriesVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedEventSeriesVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	getForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventForEditContract> => {
+		return this.httpClient.get<ReleaseEventForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${id}/for-edit`),
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: ReleaseEventForEditContract,
+		pictureUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEvents/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	getSeriesForEdit = ({
+		id,
+	}: {
+		id: number;
+	}): Promise<ReleaseEventSeriesForEditContract> => {
+		return this.httpClient.get<ReleaseEventSeriesForEditContract>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/for-edit`),
+		);
+	};
+
+	editSeries = (
+		requestToken: string,
+		contract: ReleaseEventSeriesForEditContract,
+		pictureUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/releaseEventSeries/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
 	};
 }
 
@@ -217,7 +344,7 @@ export interface EventQueryParams extends CommonQueryParams {
 	childVoicebanks?: boolean;
 
 	// Comma-separated list of optional fields
-	fields?: string;
+	fields?: ReleaseEventOptionalField[];
 
 	includeMembers?: boolean;
 

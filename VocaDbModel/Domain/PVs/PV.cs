@@ -2,146 +2,145 @@ using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.Domain.PVs
+namespace VocaDb.Model.Domain.PVs;
+
+public class PV : IEquatable<PV>, IEditablePV
 {
-	public class PV : IEquatable<PV>, IEditablePV
+	public static string GetUrl(PVService service, string pvId, PVExtendedMetadata? extendedMetadata = null)
 	{
-		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata? extendedMetadata = null)
+		return VideoServiceHelper.Services
+			.Where(s => s.IsValidFor(service))
+			.Select(s => s.GetUrlById(pvId, extendedMetadata))
+			.First();
+	}
+
+	private string _author;
+	private PVExtendedMetadata? _extendedMetadata;
+	private string _name;
+	private string _pvId;
+
+	public PV()
+	{
+		Author = string.Empty;
+		_pvId = string.Empty;
+		Name = string.Empty;
+		Service = PVService.Youtube;
+		PVType = PVType.Other;
+	}
+
+	public PV(PVContract contract)
+		: this()
+	{
+		ParamIs.NotNull(() => contract);
+
+		Service = contract.Service;
+		PVId = contract.PVId;
+		PVType = contract.PVType;
+		Name = contract.Name ?? string.Empty;
+		PublishDate = contract.PublishDate;
+		Author = contract.Author ?? string.Empty;
+		ExtendedMetadata = contract.ExtendedMetadata;
+	}
+
+	public virtual string Author
+	{
+		get => _author;
+		[MemberNotNull(nameof(_author))]
+		set
 		{
-			return VideoServiceHelper.Services
-				.Where(s => s.IsValidFor(service))
-				.Select(s => s.GetUrlById(pvId, extendedMetadata))
-				.First();
+			ParamIs.NotNull(() => value);
+			_author = value;
 		}
+	}
 
-		private string _author;
-		private PVExtendedMetadata? _extendedMetadata;
-		private string _name;
-		private string _pvId;
+	public virtual bool Disabled
+	{
+		get => false;
+		set => throw new NotSupportedException();
+	}
 
-		public PV()
+	public virtual int Id { get; set; }
+
+	public virtual PVExtendedMetadata? ExtendedMetadata
+	{
+		get => _extendedMetadata;
+		set => _extendedMetadata = value;
+	}
+
+	public virtual string Name
+	{
+		get => _name;
+		[MemberNotNull(nameof(_name))]
+		set
 		{
-			Author = string.Empty;
-			_pvId = string.Empty;
-			Name = string.Empty;
-			Service = PVService.Youtube;
-			PVType = PVType.Other;
+			ParamIs.NotNull(() => value);
+			_name = value;
 		}
+	}
 
-		public PV(PVContract contract)
-			: this()
+	public virtual DateTime? PublishDate { get; set; }
+
+	public virtual string PVId
+	{
+		get => _pvId;
+		set
 		{
-			ParamIs.NotNull(() => contract);
-
-			Service = contract.Service;
-			PVId = contract.PVId;
-			PVType = contract.PVType;
-			Name = contract.Name ?? string.Empty;
-			PublishDate = contract.PublishDate;
-			Author = contract.Author ?? string.Empty;
-			ExtendedMetadata = contract.ExtendedMetadata;
+			ParamIs.NotNullOrEmpty(() => value);
+			_pvId = value;
 		}
+	}
 
-		public virtual string Author
-		{
-			get => _author;
-			[MemberNotNull(nameof(_author))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_author = value;
-			}
-		}
+	public virtual PVService Service { get; set; }
 
-		public virtual bool Disabled
-		{
-			get => false;
-			set => throw new NotSupportedException();
-		}
+	public virtual PVType PVType { get; set; }
 
-		public virtual int Id { get; set; }
+	public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
 
-		public virtual PVExtendedMetadata? ExtendedMetadata
-		{
-			get => _extendedMetadata;
-			set => _extendedMetadata = value;
-		}
+	public virtual bool ContentEquals([NotNullWhen(true)] PVContract? pv)
+	{
+		if (pv == null)
+			return false;
 
-		public virtual string Name
-		{
-			get => _name;
-			[MemberNotNull(nameof(_name))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_name = value;
-			}
-		}
+		return Name == pv.Name;
+	}
 
-		public virtual DateTime? PublishDate { get; set; }
+	public virtual void CopyMetaFrom(PVContract contract)
+	{
+		ParamIs.NotNull(() => contract);
 
-		public virtual string PVId
-		{
-			get => _pvId;
-			set
-			{
-				ParamIs.NotNullOrEmpty(() => value);
-				_pvId = value;
-			}
-		}
+		Author = contract.Author;
+		Name = contract.Name;
+		PVType = contract.PVType;
+	}
 
-		public virtual PVService Service { get; set; }
+	public virtual bool Equals(PV? another)
+	{
+		if (another == null)
+			return false;
 
-		public virtual PVType PVType { get; set; }
+		if (ReferenceEquals(this, another))
+			return true;
 
-		public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
+		if (Id == 0)
+			return false;
 
-		public virtual bool ContentEquals([NotNullWhen(true)] PVContract? pv)
-		{
-			if (pv == null)
-				return false;
+		return Id == another.Id;
+	}
 
-			return Name == pv.Name;
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as PV);
+	}
 
-		public virtual void CopyMetaFrom(PVContract contract)
-		{
-			ParamIs.NotNull(() => contract);
+	public override int GetHashCode()
+	{
+		return Id.GetHashCode();
+	}
 
-			Author = contract.Author;
-			Name = contract.Name;
-			PVType = contract.PVType;
-		}
+	public virtual void OnDelete() { }
 
-		public virtual bool Equals(PV? another)
-		{
-			if (another == null)
-				return false;
-
-			if (ReferenceEquals(this, another))
-				return true;
-
-			if (Id == 0)
-				return false;
-
-			return Id == another.Id;
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as PV);
-		}
-
-		public override int GetHashCode()
-		{
-			return Id.GetHashCode();
-		}
-
-		public virtual void OnDelete() { }
-
-		public override string ToString()
-		{
-			return $"PV '{PVId}' on {Service} [{Id}]";
-		}
+	public override string ToString()
+	{
+		return $"PV '{PVId}' on {Service} [{Id}]";
 	}
 }

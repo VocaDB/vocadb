@@ -1,18 +1,16 @@
-import Alert from '@Bootstrap/Alert';
-import { EntryToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import Alert from '@/Bootstrap/Alert';
+import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
+import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import NotificationIcon from '../Partials/Shared/NotificationIcon';
 
 interface DuplicateEntriesMessageProps {
 	dupeEntries: DuplicateEntryResultContract[];
 }
 
 // Shows a message for duplicate instances of an entry.
-const DuplicateEntriesMessage = React.memo(
+export const DuplicateEntriesMessage = React.memo(
 	({ dupeEntries }: DuplicateEntriesMessageProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -23,13 +21,13 @@ const DuplicateEntriesMessage = React.memo(
 				<ul>
 					{dupeEntries.map((entry, index) => (
 						<li key={index}>
-							<EntryToolTip
-								as="a"
-								value={entry.entry}
-								href={EntryUrlMapper.details_entry(entry.entry)}
+							<EntryLink
+								entry={entry.entry}
+								tooltip
+								/* TODO: target="_blank" */
 							>
 								{entry.entry.name.displayName}
-							</EntryToolTip>{' '}
+							</EntryLink>{' '}
 							(<span>{entry.entry.entryTypeName}</span>)
 							{entry.entry.artistString && (
 								<div>
@@ -45,5 +43,3 @@ const DuplicateEntriesMessage = React.memo(
 		);
 	},
 );
-
-export default DuplicateEntriesMessage;

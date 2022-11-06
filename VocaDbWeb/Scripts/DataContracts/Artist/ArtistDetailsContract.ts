@@ -1,16 +1,16 @@
-import ArtistType from '@Models/Artists/ArtistType';
-
-import AlbumForApiContract from '../Album/AlbumForApiContract';
-import CommentContract from '../CommentContract';
-import EntryThumbContract from '../EntryThumbContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
-import SongApiContract from '../Song/SongApiContract';
-import TagBaseContract from '../Tag/TagBaseContract';
-import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
-import UserApiContract from '../User/UserApiContract';
-import WebLinkContract from '../WebLinkContract';
-import ArtistApiContract from './ArtistApiContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
 interface TopStatContract<T> {
 	count: number;
@@ -36,7 +36,7 @@ interface SharedArtistStatsContract {
 }
 
 // Corresponds to the ArtistDetailsForApiContract record class in C#.
-export default interface ArtistDetailsContract {
+export interface ArtistDetailsContract {
 	additionalNames: string;
 	advancedStats?: AdvancedArtistStatsContract;
 	artistType: ArtistType;
@@ -47,7 +47,7 @@ export default interface ArtistDetailsContract {
 	characterDesignerOf: ArtistApiContract[];
 	childVoicebanks: ArtistApiContract[];
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	deleted: boolean;
 	description: EnglishTranslatedStringContract;
 	draft: boolean;
@@ -70,10 +70,10 @@ export default interface ArtistDetailsContract {
 	ownerUsers: UserApiContract[];
 	personalStats?: PersonalArtistStatsContract;
 	pictures: EntryThumbContract[];
-	releaseDate?: Date;
+	releaseDate?: string;
 	sharedStats: SharedArtistStatsContract;
 	siteNotifications: boolean;
-	status: string;
+	status: EntryStatus;
 	tags: TagUsageForApiContract[];
 	topAlbums: AlbumForApiContract[];
 	topSongs: SongApiContract[];

@@ -12,7 +12,7 @@ namespace VocaDb.Tests.TestSupport
 	{
 		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
 		{
-			return new User[0];
+			return Array.Empty<User>();
 		}
 
 		public Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)

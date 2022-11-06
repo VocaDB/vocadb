@@ -1,13 +1,12 @@
+import { SongVoteRating } from '@/Models/SongVoteRating';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import SongVoteRating from '../../../../Models/SongVoteRating';
 
 interface RatingIconProps {
 	rating: SongVoteRating;
 }
 
-const RatingIcon = React.memo(
+export const RatingIcon = React.memo(
 	({ rating }: RatingIconProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources']);
 
@@ -41,5 +40,3 @@ const RatingIcon = React.memo(
 		}
 	},
 );
-
-export default RatingIcon;

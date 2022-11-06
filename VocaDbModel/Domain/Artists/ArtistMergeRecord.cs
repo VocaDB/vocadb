@@ -1,14 +1,11 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Domain.Artists
+public class ArtistMergeRecord : MergeRecord<Artist>
 {
-	public class ArtistMergeRecord : MergeRecord<Artist>
-	{
-		public ArtistMergeRecord() { }
+	public ArtistMergeRecord() { }
 
-		public ArtistMergeRecord(Artist source, Artist target)
-			: base(source, target)
-		{
-		}
+	public ArtistMergeRecord(Artist source, Artist target)
+		: base(source, target)
+	{
 	}
 }

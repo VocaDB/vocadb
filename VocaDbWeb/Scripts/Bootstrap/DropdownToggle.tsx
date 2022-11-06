@@ -1,12 +1,11 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/DropdownToggle.tsx
+import Button, { ButtonProps } from '@/Bootstrap/Button';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import useMergedRefs from '@restart/hooks/useMergedRefs';
 import classNames from 'classnames';
 import * as React from 'react';
 import { useDropdownToggle } from 'react-overlays/DropdownToggle';
-
-import Button, { ButtonProps } from './Button';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixRefForwardingComponent } from './helpers';
 
 export interface DropdownToggleProps extends ButtonProps {}
 

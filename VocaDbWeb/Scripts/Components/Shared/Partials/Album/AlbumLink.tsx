@@ -1,30 +1,16 @@
-import { AlbumToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { AlbumToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface AlbumLinkProps {
+interface AlbumLinkBaseProps {
 	album: AlbumForApiContract;
-	tooltip: boolean;
 }
 
-const AlbumLink = ({
-	album,
-	tooltip = false,
-}: AlbumLinkProps): React.ReactElement => {
-	return tooltip ? (
-		<AlbumToolTip
-			as={Link}
-			to={EntryUrlMapper.details(EntryType.Album, album.id)}
-			title={album.additionalNames}
-			id={album.id}
-			className="albumLink"
-		>
-			{album.name}
-		</AlbumToolTip>
-	) : (
+const AlbumLinkBase = ({ album }: AlbumLinkBaseProps): React.ReactElement => {
+	return (
 		<Link
 			to={`${EntryUrlMapper.details(EntryType.Album, album.id)}`}
 			title={album.additionalNames}
@@ -35,4 +21,20 @@ const AlbumLink = ({
 	);
 };
 
-export default AlbumLink;
+interface AlbumLinkProps {
+	album: AlbumForApiContract;
+	tooltip: boolean;
+}
+
+export const AlbumLink = ({
+	album,
+	tooltip = false,
+}: AlbumLinkProps): React.ReactElement => {
+	return tooltip ? (
+		<AlbumToolTip id={album.id} withCover>
+			<AlbumLinkBase album={album} />
+		</AlbumToolTip>
+	) : (
+		<AlbumLinkBase album={album} />
+	);
+};

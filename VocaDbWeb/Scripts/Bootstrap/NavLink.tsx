@@ -1,11 +1,15 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/3d4c57374646949e6fedfef00236c99f4d1b4e71/src/NavLink.tsx
+import AbstractNavItem, {
+	AbstractNavItemProps,
+} from '@/Bootstrap/AbstractNavItem';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import classNames from 'classnames';
 import * as React from 'react';
-
-import AbstractNavItem, { AbstractNavItemProps } from './AbstractNavItem';
-import SafeAnchor from './SafeAnchor';
-import { useBootstrapPrefix } from './ThemeProvider';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 export interface NavLinkProps
 	extends BsPrefixProps,

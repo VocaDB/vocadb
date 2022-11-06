@@ -1,13 +1,11 @@
-enum VenueReportType {
+export enum VenueReportType {
 	InvalidInfo = 'InvalidInfo',
 	Duplicate = 'Duplicate',
 	Inappropriate = 'Inappropriate',
 	Other = 'Other',
 }
 
-export default VenueReportType;
-
-export const reportTypesWithRequiredNotes = [
+export const venueReportTypesWithRequiredNotes = [
 	VenueReportType.InvalidInfo,
 	VenueReportType.Other,
 ];

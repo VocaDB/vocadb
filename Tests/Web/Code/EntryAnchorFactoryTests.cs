@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -14,7 +12,7 @@ namespace VocaDb.Tests.Web.Code
 	[TestClass]
 	public class EntryAnchorFactoryTests
 	{
-		private EntryAnchorFactory _factory;
+		private EntryAnchorFactory _factory = default!;
 
 		[TestInitialize]
 		public void SetUp()
@@ -27,7 +25,7 @@ namespace VocaDb.Tests.Web.Code
 		{
 			var result = _factory.CreateEntryLink(EntryType.Artist, 39, "Hatsune Miku");
 
-			result.Should().Be("<a href=\"/Ar/39\">Hatsune Miku</a>", "result");
+			result.Should().Be("[Hatsune Miku](/Ar/39)", "result");
 		}
 
 		[TestMethod]
@@ -36,7 +34,7 @@ namespace VocaDb.Tests.Web.Code
 			var artist = new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 39 };
 			var result = _factory.CreateEntryLink(artist);
 
-			result.Should().Be("<a href=\"/Ar/39\">Hatsune Miku</a>", "result");
+			result.Should().Be("[Hatsune Miku](/Ar/39)", "result");
 		}
 
 		[TestMethod]
@@ -45,7 +43,7 @@ namespace VocaDb.Tests.Web.Code
 			var song = new Song(TranslatedString.Create("Sentaku <love or dead>")) { Id = 39 };
 			var result = _factory.CreateEntryLink(song);
 
-			result.Should().Be("<a href=\"/S/39\">Sentaku &lt;love or dead&gt;</a>", "result");
+			result.Should().Be("[Sentaku &lt;love or dead&gt;](/S/39)", "result");
 		}
 	}
 }

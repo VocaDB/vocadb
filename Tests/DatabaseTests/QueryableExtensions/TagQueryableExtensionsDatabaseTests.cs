@@ -39,7 +39,7 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 		[TestCategory(TestCategories.Database)]
 		public void WhereHasName_Empty()
 		{
-			var tags = WhereHasName(new string[0]);
+			var tags = WhereHasName(Array.Empty<string>());
 
 			tags.Length.Should().Be(0, "Number of tags returned");
 		}

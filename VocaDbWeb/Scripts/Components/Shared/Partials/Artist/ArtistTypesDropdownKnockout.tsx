@@ -1,5 +1,4 @@
-import ArtistType from '@Models/Artists/ArtistType';
-import _ from 'lodash';
+import { ArtistType } from '@/Models/Artists/ArtistType';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -34,12 +33,11 @@ const groupsForTypes: Record<ArtistType, ArtistTypeGroup> = {
 	[ArtistType.CoverArtist]: ArtistTypeGroup.Producer,
 };
 
-const artistTypeGroups = _.chain(vdb.values.artistTypes)
+const artistTypeGroups = vdb.values.artistTypes
 	.orderBy((artistType) =>
 		Object.values(ArtistTypeGroup).indexOf(groupsForTypes[artistType]),
 	)
-	.groupBy((artistType) => groupsForTypes[artistType])
-	.value();
+	.groupBy((artistType) => groupsForTypes[artistType]);
 
 interface ArtistTypesDropdownKnockoutProps
 	extends React.DetailedHTMLProps<
@@ -47,7 +45,7 @@ interface ArtistTypesDropdownKnockoutProps
 		HTMLSelectElement
 	> {}
 
-const ArtistTypesDropdownKnockout = React.memo(
+export const ArtistTypesDropdownKnockout = React.memo(
 	({ ...props }: ArtistTypesDropdownKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation('VocaDb.Model.Resources');
 
@@ -63,7 +61,7 @@ const ArtistTypesDropdownKnockout = React.memo(
 							))}
 						</React.Fragment>
 					) : (
-						<optgroup label={key /* TODO: localize */} key={key}>
+						<optgroup label={key /* LOC */} key={key}>
 							{value.map((artistType) => (
 								<option value={artistType} key={artistType}>
 									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}
@@ -76,5 +74,3 @@ const ArtistTypesDropdownKnockout = React.memo(
 		);
 	},
 );
-
-export default ArtistTypesDropdownKnockout;

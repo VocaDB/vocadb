@@ -1,72 +1,71 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Tags
+namespace VocaDb.Model.Domain.Tags;
+
+public abstract class GenericTagUsage<TEntry, TVote> : TagUsage
+	where TEntry : class, IEntryWithStatus
+	where TVote : TagVote
 {
-	public abstract class GenericTagUsage<TEntry, TVote> : TagUsage
-		where TEntry : class, IEntryWithStatus
-		where TVote : TagVote
-	{
-		private TEntry _entry;
-		private IList<TVote> _votes = new List<TVote>();
+	private TEntry _entry;
+	private IList<TVote> _votes = new List<TVote>();
 
 #nullable disable
-		public GenericTagUsage() { }
+	public GenericTagUsage() { }
 #nullable enable
 
-		public GenericTagUsage(TEntry entry, Tag tag)
-			: base(tag)
+	public GenericTagUsage(TEntry entry, Tag tag)
+		: base(tag)
+	{
+		Entry = entry;
+	}
+
+	public virtual TEntry Entry
+	{
+		get => _entry;
+		[MemberNotNull(nameof(_entry))]
+		set
 		{
-			Entry = entry;
+			ParamIs.NotNull(() => value);
+			_entry = value;
 		}
+	}
 
-		public virtual TEntry Entry
+	public override IEntryWithStatus EntryBase => Entry;
+
+	public virtual IList<TVote> Votes
+	{
+		get => _votes;
+		set
 		{
-			get => _entry;
-			[MemberNotNull(nameof(_entry))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_entry = value;
-			}
+			ParamIs.NotNull(() => value);
+			_votes = value;
 		}
+	}
 
-		public override IEntryWithStatus EntryBase => Entry;
+	public override IEnumerable<TagVote> VotesBase => Votes;
 
-		public virtual IList<TVote> Votes
-		{
-			get => _votes;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_votes = value;
-			}
-		}
+	public override void Delete()
+	{
+		base.Delete();
+		Votes.Clear();
+	}
 
-		public override IEnumerable<TagVote> VotesBase => Votes;
+	public virtual TVote? FindVote(User? user)
+	{
+		return Votes.FirstOrDefault(v => v.User.Equals(user));
+	}
 
-		public override void Delete()
-		{
-			base.Delete();
-			Votes.Clear();
-		}
+	public override TagVote? RemoveVote(User? user)
+	{
+		var vote = FindVote(user);
 
-		public virtual TVote? FindVote(User? user)
-		{
-			return Votes.FirstOrDefault(v => v.User.Equals(user));
-		}
+		if (vote == null)
+			return null;
 
-		public override TagVote? RemoveVote(User? user)
-		{
-			var vote = FindVote(user);
+		Votes.Remove(vote);
+		Count--;
 
-			if (vote == null)
-				return null;
-
-			Votes.Remove(vote);
-			Count--;
-
-			return vote;
-		}
+		return vote;
 	}
 }

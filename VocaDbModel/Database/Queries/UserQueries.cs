@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Web;
+using Discord;
+using FluentValidation;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
@@ -46,6 +48,7 @@ using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Database.Queries
 {
@@ -232,7 +235,7 @@ namespace VocaDb.Model.Database.Queries
 			details.ArtistCount = cachedStats.ArtistCount;
 			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
 			details.FavoriteTags = cachedStats.FavoriteTags != null ? session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray()
-				.Select(t => new TagBaseContract(t, LanguagePreference, true)).ToArray() : new TagBaseContract[0];
+				.Select(t => new TagBaseContract(t, LanguagePreference, true)).ToArray() : Array.Empty<TagBaseContract>();
 			details.CommentCount = cachedStats.CommentCount;
 			details.EditCount = cachedStats.EditCount;
 			details.SubmitCount = cachedStats.SubmitCount;
@@ -448,14 +451,14 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		private bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
+		private static bool IsPoisoned(IDatabaseContext<User> ctx, string lcUserName)
 		{
 			return ctx.OfType<UserOptions>().Query().Any(o => o.Poisoned && o.User.NameLC == lcUserName);
 		}
 
-		private string MakeGeoIpToolLink(string hostname)
+		private static string MakeGeoIpToolLink(string hostname)
 		{
-			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
+			return $"[{hostname}](http://www.geoiptool.com/?IP={hostname})";
 		}
 
 		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject)
@@ -1045,7 +1048,7 @@ namespace VocaDb.Model.Database.Queries
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults, bool allowDisabled)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -1746,9 +1749,11 @@ namespace VocaDb.Model.Database.Queries
 		/// <remarks>
 		/// Requires the <see cref="PermissionToken.ManageUserPermissions"/> right.
 		/// </remarks>
-		public void UpdateUser(ServerOnlyUserWithPermissionsContract contract)
+		public void UpdateUser(UserForEditForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			_repository.UpdateEntity<User, IDatabaseContext<User>>(contract.Id, (session, user) =>
 			{
@@ -1761,7 +1766,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (EntryPermissionManager.CanEditAdditionalPermissions(PermissionContext))
 				{
-					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p.Id)));
+					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p)));
 				}
 
 				if (user.Name != contract.Name)
@@ -1932,7 +1937,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		[return: NotNullIfNotNull("pictureData"/* TODO: Use nameof. */)]
+		[return: NotNullIfNotNull(nameof(pictureData))]
 		private PictureDataContract? SaveImage(IEntryImageInformation entry, EntryPictureFileContract? pictureData)
 		{
 			if (pictureData == null) return null;
@@ -1968,13 +1973,16 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract, EntryPictureFileContract? pictureData)
+		public Task<ServerOnlyUserWithPermissionsContract> UpdateUserSettings(ServerOnlyUpdateUserSettingsForApiContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return _repository.HandleTransaction(ctx =>
+			var validator = new ServerOnlyUpdateUserSettingsForApiContractValidator();
+			validator.ValidateAndThrow(contract);
+
+			return _repository.HandleTransactionAsync(async ctx =>
 			{
 				var user = ctx.Load(contract.Id);
 
@@ -2046,6 +2054,50 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.AuditLogger.AuditLog("updated settings");
 
+				if (!string.IsNullOrEmpty(AppConfig.MLNetActiveModelPath) && !string.IsNullOrWhiteSpace(user.Options.AboutMe))
+				{
+					// Skip users who are
+					// - able to disable users
+					// - not active
+					// - more than or equal to 2 weeks old
+					// - trusted+
+					// - verified artists
+					// - supporters
+					if (
+						user.CanBeDisabled &&
+						user.Active &&
+						DateTime.Now - user.CreateDate < TimeSpan.FromDays(14) &&
+						user.GroupId <= UserGroupId.Regular &&
+						!user.VerifiedArtist &&
+						!user.Options.Supporter
+					)
+					{
+						var modelInput = new ActiveModel.ModelInput()
+						{
+							Col0 = user.Options.AboutMe,
+						};
+
+						var predictionResult = ActiveModel.Predict(modelInput);
+
+						if (predictionResult.PredictedLabel == 0)
+						{
+							s_log.Info("User disabled");
+							user.Active = false;
+							ctx.Update(user);
+
+							ctx.AuditLogger.SysLog("Possible spam account");
+
+							await _discordWebhookNotifier.SendMessageAsync(
+								WebhookEvents.User,
+								user,
+								title: $"Possible spam account: {user.Name}",
+								url: _entryLinkFactory.GetFullEntryUrl(EntryType.User, user.Id),
+								color: new Color(252, 41, 41)
+							);
+						}
+					}
+				}
+
 				return new ServerOnlyUserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 			});
 		}
@@ -2112,7 +2164,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
-		public bool IsNotification(int messageId, ServerOnlyUserWithPermissionsContract user) => HandleQuery(ctx =>
+		public bool IsNotification(int messageId, ServerOnlyUserWithPermissionsForApiContract user) => HandleQuery(ctx =>
 		{
 			return ctx.Query<UserMessage>()
 				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
@@ -2129,6 +2181,23 @@ namespace VocaDb.Model.Database.Queries
 			var albumForUser = ctx.OfType<AlbumForUser>().Query().FirstOrDefault(s => s.Album.Id == albumId && s.User.Id == userId);
 			return new AlbumForUserForApiContract(albumForUser, LanguagePreference, _entryImagePersister, AlbumOptionalFields.None, shouldShowCollectionStatus: true);
 		});
+
+#nullable enable
+		public ServerOnlyUserForMySettingsForApiContract GetUserForMySettings()
+		{
+			return HandleQuery(session => new ServerOnlyUserForMySettingsForApiContract(
+				user: session.Load<User>(PermissionContext.LoggedUser.Id),
+				iconFactory: _userIconFactory
+			));
+		}
+
+		public ServerOnlyUserWithPermissionsForApiContract GetUserWithPermissions(int id)
+		{
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
+
+			return HandleQuery(session => new ServerOnlyUserWithPermissionsForApiContract(session.Load<User>(id), LanguagePreference));
+		}
+#nullable disable
 	}
 
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage>

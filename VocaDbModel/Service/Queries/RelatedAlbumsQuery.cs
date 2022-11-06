@@ -119,9 +119,9 @@ namespace VocaDb.Model.Service.Queries
 	{
 		public RelatedAlbums()
 		{
-			ArtistMatches = new Album[0];
-			LikeMatches = new Album[0];
-			TagMatches = new Album[0];
+			ArtistMatches = Array.Empty<Album>();
+			LikeMatches = Array.Empty<Album>();
+			TagMatches = Array.Empty<Album>();
 		}
 
 		public Album[] ArtistMatches { get; set; }

@@ -3,6 +3,7 @@
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
@@ -47,10 +48,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 				new VdbConfigManager(),
 				new EntrySubTypeNameFactory(),
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),
-				new FakeDiscordWebhookNotifier());
+				new FakeDiscordWebhookNotifier()
+			);
 		}
 
-		private async Task<SongForEditContract> Update(SongForEditContract contract)
+		private async Task<SongForEditForApiContract> Update(SongForEditForApiContract contract)
 		{
 			return await _context.RunTestAsync(async repository =>
 			{
@@ -71,7 +73,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 			Db.ReleaseEvent.AllSongs.Contains(Db.Song).Should().BeTrue("Release event has song");
 
 			// Act
-			var contract = new SongForEditContract(Db.Song, ContentLanguagePreference.English)
+			var contract = new SongForEditForApiContract(Db.Song, ContentLanguagePreference.English, _userContext)
 			{
 				ReleaseEvent = null
 			};
@@ -97,10 +99,15 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 			{
 				var queries = Queries(repository);
 
-				var newEvent = repository.HandleTransaction(ctx => new ReleaseEventContract(ctx.Save(CreateEntry.ReleaseEvent("Mikumas")), ContentLanguagePreference.English, false));
+				var newEvent = repository.HandleTransaction(ctx => new ReleaseEventForApiContract(
+					rel: ctx.Save(CreateEntry.ReleaseEvent("Mikumas")),
+					languagePreference: ContentLanguagePreference.English,
+					fields: ReleaseEventOptionalFields.None,
+					thumbPersister: null
+				));
 
 				// Act
-				var contract = new SongForEditContract(Db.Song, ContentLanguagePreference.English)
+				var contract = new SongForEditForApiContract(Db.Song, ContentLanguagePreference.English, _userContext)
 				{
 					ReleaseEvent = newEvent
 				};
@@ -118,7 +125,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public async Task Update_Lyrics()
 		{
-			var contract = new SongForEditContract(Db.Song2, ContentLanguagePreference.English)
+			var contract = new SongForEditForApiContract(Db.Song2, ContentLanguagePreference.English, _userContext)
 			{
 				Lyrics = new[] { CreateEntry.LyricsForSongContract(TranslationType.Original) }
 			};

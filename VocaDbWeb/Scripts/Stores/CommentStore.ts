@@ -1,19 +1,19 @@
-import CommentContract from '@DataContracts/CommentContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { action, makeObservable, observable } from 'mobx';
 
-export default class CommentStore {
-	public readonly author: UserApiContract;
-	public readonly authorName?: string;
-	public readonly created?: Date;
-	@observable public editedMessage?: string = undefined;
-	public id?: number;
-	@observable public message: string;
+export class CommentStore {
+	readonly author: UserApiContract;
+	readonly authorName?: string;
+	readonly created: string;
+	@observable editedMessage?: string = undefined;
+	id?: number;
+	@observable message: string;
 
-	public constructor(
+	constructor(
 		contract: CommentContract,
-		public readonly canBeDeleted: boolean,
-		public readonly canBeEdited: boolean,
+		readonly canBeDeleted: boolean,
+		readonly canBeEdited: boolean,
 	) {
 		makeObservable(this);
 
@@ -24,15 +24,20 @@ export default class CommentStore {
 		this.message = contract.message;
 	}
 
-	@action public beginEdit = (): void => {
+	@action beginEdit = (): void => {
 		this.editedMessage = this.message;
 	};
 
-	@action public saveChanges = (): void => {
+	@action saveChanges = (): void => {
 		this.message = this.editedMessage!;
 	};
 
-	public toContract = (): CommentContract => {
-		return { id: this.id, message: this.message, author: this.author };
+	toContract = (): CommentContract => {
+		return {
+			created: this.created,
+			id: this.id,
+			message: this.message,
+			author: this.author,
+		};
 	};
 }

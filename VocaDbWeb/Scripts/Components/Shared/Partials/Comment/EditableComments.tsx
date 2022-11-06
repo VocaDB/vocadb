@@ -1,13 +1,12 @@
-import CommentStore from '@Stores/CommentStore';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
+import { CommentBodyEditableKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyEditableKnockout';
+import { CommentKnockout } from '@/Components/Shared/Partials/Comment/CommentKnockout';
+import { CreateComment } from '@/Components/Shared/Partials/Comment/CreateComment';
+import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
+import { CommentStore } from '@/Stores/CommentStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import ServerSidePaging from '../Knockout/ServerSidePaging';
-import CommentBodyEditableKnockout from './CommentBodyEditableKnockout';
-import CommentKnockout from './CommentKnockout';
-import CreateComment from './CreateComment';
 
 interface EditableCommentsProps {
 	editableCommentsStore: EditableCommentsStore;
@@ -19,7 +18,7 @@ interface EditableCommentsProps {
 	pagination?: boolean;
 }
 
-const EditableComments = observer(
+export const EditableComments = observer(
 	({
 		editableCommentsStore,
 		allowCreateComment,
@@ -88,5 +87,3 @@ const EditableComments = observer(
 		);
 	},
 );
-
-export default EditableComments;

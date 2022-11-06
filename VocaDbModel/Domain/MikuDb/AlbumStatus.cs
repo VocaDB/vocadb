@@ -1,13 +1,10 @@
-#nullable disable
+namespace VocaDb.Model.Domain.MikuDb;
 
-namespace VocaDb.Model.Domain.MikuDb
+public enum AlbumStatus
 {
-	public enum AlbumStatus
-	{
-		New,
+	New,
 
-		Approved,
+	Approved,
 
-		Skipped
-	}
+	Skipped
 }

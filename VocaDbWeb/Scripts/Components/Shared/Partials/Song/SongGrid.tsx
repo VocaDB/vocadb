@@ -1,12 +1,10 @@
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import _ from 'lodash';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import SongTypeLabel from './SongTypeLabel';
 
 interface SongIconLinkProps {
 	song: SongApiContract;
@@ -17,7 +15,7 @@ const SongIconLink = ({ song }: SongIconLinkProps): React.ReactElement => {
 		<Link to={EntryUrlMapper.details_song(song)}>
 			<img
 				src={UrlHelper.upgradeToHttps(song.mainPicture.urlThumb)}
-				alt="Cover" /* TODO: localize */
+				alt="Cover" /* LOC */
 				className="coverPicThumb"
 				referrerPolicy="same-origin"
 			/>
@@ -42,7 +40,7 @@ interface SongGridProps {
 	displayPublishDate?: boolean;
 }
 
-const SongGrid = ({
+export const SongGrid = ({
 	songs,
 	columns,
 	displayType = false,
@@ -51,48 +49,43 @@ const SongGrid = ({
 	return (
 		<table>
 			<tbody>
-				{_.chain(songs)
-					.chunk(columns)
-					.value()
-					.map((chunk, index) => (
-						<tr key={index}>
-							{chunk.map((song) => (
-								<React.Fragment key={song.id}>
-									<td>
-										<SongIconLink song={song} />
-									</td>
-									<td>
-										<SongLink song={song} />
-										{displayType && (
-											<>
-												{' '}
-												<SongTypeLabel songType={song.songType} />
-											</>
-										)}
-										{displayPublishDate && song.publishDate && (
-											<>
-												{' '}
-												<i
-													className="icon-calendar"
-													title={`Published: ${
-														moment(song.publishDate)
-															.utc()
-															.format('l') /* REVIEW */
-													}`} /* TODO: localize */
-													/* TODO: tooltip */
-												/>
-											</>
-										)}
-										<br />
-										<span className="extraInfo">{song.artistString}</span>
-									</td>
-								</React.Fragment>
-							))}
-						</tr>
-					))}
+				{songs.chunk(columns).map((chunk, index) => (
+					<tr key={index}>
+						{chunk.map((song) => (
+							<React.Fragment key={song.id}>
+								<td>
+									<SongIconLink song={song} />
+								</td>
+								<td>
+									<SongLink song={song} />
+									{displayType && (
+										<>
+											{' '}
+											<SongTypeLabel songType={song.songType} />
+										</>
+									)}
+									{displayPublishDate && song.publishDate && (
+										<>
+											{' '}
+											<i
+												className="icon-calendar"
+												title={`Published: ${
+													moment(song.publishDate)
+														.utc()
+														.format('l') /* REVIEW */
+												}`} /* LOC */
+												/* TODO: tooltip */
+											/>
+										</>
+									)}
+									<br />
+									<span className="extraInfo">{song.artistString}</span>
+								</td>
+							</React.Fragment>
+						))}
+					</tr>
+				))}
 			</tbody>
 		</table>
 	);
 };
-
-export default SongGrid;

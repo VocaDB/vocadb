@@ -35,15 +35,6 @@ namespace VocaDb.Tests.Web.Controllers
 		}
 
 		[TestMethod]
-		public async Task Edit_ModelIsNull()
-		{
-			var result = await _controller.Edit(new ArtistEditViewModel()) as ContentResult;
-
-			result.Should().NotBeNull("result");
-			_response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest, "Response status code");
-		}
-
-		[TestMethod]
 		public void ViewVersion_NoId()
 		{
 			var result = _controller.ViewVersion();

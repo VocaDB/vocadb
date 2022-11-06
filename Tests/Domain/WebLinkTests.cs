@@ -60,7 +60,7 @@ namespace VocaDb.Tests.Domain
 		{
 			var newLinks = new[] { _webLinkContract };
 
-			var result = WebLink.Sync(new WebLink[] { }, newLinks, _webLinkFactory);
+			var result = WebLink.Sync(Array.Empty<WebLink>(), newLinks, _webLinkFactory);
 
 			result.Should().NotBeNull("result is not null");
 			result.Changed.Should().BeTrue("is changed");
@@ -109,7 +109,7 @@ namespace VocaDb.Tests.Domain
 		public void Sync_Contracts_Removed()
 		{
 			var oldLinks = new List<WebLink> { new WebLink(_webLinkContract) { Id = 1 } };
-			var newLinks = new WebLinkContract[] { };
+			var newLinks = Array.Empty<WebLinkContract>();
 
 			var result = WebLink.Sync(oldLinks, newLinks, _webLinkFactory);
 
@@ -127,7 +127,7 @@ namespace VocaDb.Tests.Domain
 		{
 			var newLinks = new[] { new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference, disabled: false) };
 
-			var result = WebLink.Sync(new WebLink[] { }, newLinks, _webLinkFactory);
+			var result = WebLink.Sync(Array.Empty<WebLink>(), newLinks, _webLinkFactory);
 
 			result.Should().NotBeNull("result is not null");
 			result.Changed.Should().BeFalse("is changed");

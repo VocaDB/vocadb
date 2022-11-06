@@ -1,13 +1,12 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
+import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import { UserToolTip } from '../../../KnockoutExtensions/EntryToolTip';
-import ProfileIcon from './ProfileIcon';
 
 interface UserIconLink_UserForApiContractProps {
 	user: UserApiContract;
@@ -16,7 +15,7 @@ interface UserIconLink_UserForApiContractProps {
 	tooltip?: boolean;
 }
 
-const UserIconLink_UserForApiContract = ({
+export const UserIconLink_UserForApiContract = ({
 	user,
 	size = 20,
 	userInfo = false,
@@ -25,17 +24,16 @@ const UserIconLink_UserForApiContract = ({
 	const { t } = useTranslation(['Resources']);
 
 	return tooltip ? (
-		<UserToolTip
-			as={Link}
-			to={EntryUrlMapper.details_user_byName(user.name)}
+		<UserLink
+			user={user}
+			tooltip
 			title={
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 							user.memberSince
-					  }` /* TODO: localize */
+					  }` /* LOC */
 					: undefined
 			}
-			id={user.id}
 		>
 			<ProfileIcon
 				url={
@@ -46,7 +44,7 @@ const UserIconLink_UserForApiContract = ({
 				size={size}
 			/>{' '}
 			<span>{user.name}</span>
-		</UserToolTip>
+		</UserLink>
 	) : (
 		<Link
 			to={EntryUrlMapper.details_user_byName(user.name)}
@@ -54,7 +52,7 @@ const UserIconLink_UserForApiContract = ({
 				userInfo
 					? `${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 							user.memberSince
-					  }` /* TODO: localize */
+					  }` /* LOC */
 					: undefined
 			}
 		>
@@ -70,5 +68,3 @@ const UserIconLink_UserForApiContract = ({
 		</Link>
 	);
 };
-
-export default UserIconLink_UserForApiContract;

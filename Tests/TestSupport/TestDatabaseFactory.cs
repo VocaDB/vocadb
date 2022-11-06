@@ -14,12 +14,10 @@ namespace VocaDb.Tests.TestSupport
 		{
 			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
 
-			using (var connection = new SqlConnection(connectionString))
-			{
-				connection.Open();
+			using var connection = new SqlConnection(connectionString);
+			connection.Open();
 
-				func(connection);
-			}
+			func(connection);
 		}
 
 		/// <summary>
@@ -64,10 +62,8 @@ namespace VocaDb.Tests.TestSupport
 				var export = new SchemaExport(cfg);
 				if (writeOutput)
 				{
-					using (var writer = new StreamWriter(@"C:\Temp\vdb.sql"))
-					{
-						export.Execute(false, true, false, connection, writer);
-					}
+					using var writer = new StreamWriter(@"C:\Temp\vdb.sql");
+					export.Execute(false, true, false, connection, writer);
 				}
 				else
 				{

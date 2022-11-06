@@ -1,5 +1,5 @@
-import Button from '@Bootstrap/Button';
-import { SongVoteRating } from '@Stores/Search/SongSearchStore';
+import Button from '@/Bootstrap/Button';
+import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ interface SongVoteRatingsRadioKnockoutProps {
 	onRatingChange: (rating: SongVoteRating) => void;
 }
 
-const SongVoteRatingsRadioKnockout = React.memo(
+export const SongVoteRatingsRadioKnockout = React.memo(
 	({
 		rating,
 		onRatingChange,
@@ -41,5 +41,3 @@ const SongVoteRatingsRadioKnockout = React.memo(
 		);
 	},
 );
-
-export default SongVoteRatingsRadioKnockout;

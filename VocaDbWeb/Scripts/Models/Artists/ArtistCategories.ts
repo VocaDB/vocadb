@@ -1,5 +1,5 @@
 // Corresponds to the ArtistCategories enum in C#.
-enum ArtistCategories {
+export enum ArtistCategories {
 	Nothing = 'Nothing',
 	Vocalist = 'Vocalist',
 	Producer = 'Producer',
@@ -11,5 +11,3 @@ enum ArtistCategories {
 	Illustrator = 'Illustrator',
 	Subject = 'Subject',
 }
-
-export default ArtistCategories;

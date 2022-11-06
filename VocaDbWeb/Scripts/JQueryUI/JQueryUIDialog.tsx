@@ -1,9 +1,8 @@
+import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import classNames from 'classnames';
 import React from 'react';
 import Draggable from 'react-draggable';
 import { Modal } from 'react-overlays';
-
-import JQueryUIButton from './JQueryUIButton';
 
 type JQueryUIDialogProps = {
 	autoOpen?: boolean;
@@ -95,7 +94,7 @@ const JQueryUIDialog = ({
 									'ui-button-icon-only',
 									'ui-dialog-titlebar-close',
 								)}
-								title="close" /* TODO: localize */
+								title="close" /* LOC */
 								onClick={close}
 							>
 								<span
@@ -105,9 +104,7 @@ const JQueryUIDialog = ({
 										'ui-icon-closethick',
 									)}
 								/>
-								<span className="ui-button-text">
-									close{/* TODO: localize */}
-								</span>
+								<span className="ui-button-text">close{/* LOC */}</span>
 							</button>
 						</div>
 						<div

@@ -1,4 +1,4 @@
-import GlobalValues from '@Shared/GlobalValues';
+import { GlobalValues } from '@/Shared/GlobalValues';
 
 declare global {
 	const vdb: {
@@ -6,12 +6,19 @@ declare global {
 			albumEdit: any;
 			entryEdit: any;
 			shared: any;
-			song: any | /* TODO: Remove. */ { rankingsTitle?: string };
-			album: { addedToCollection?: string };
+			song:
+				| any /* TODO: Remove. */
+				| { newSongInfo?: string; rankingsTitle?: string };
+			album: {
+				addedToCollection?: string;
+				newAlbumArtistDesc?: string;
+				newAlbumInfo?: string;
+			};
 			albumDetails: { download: string };
-			artist: { authoredBy?: string };
+			artist: { authoredBy?: string; newArtistExternalLink?: string };
 			layout: { paypalDonateTitle?: string };
 			home: { welcome?: string; welcomeSubtitle?: string };
+			user: { requestVerificationInfo?: string };
 		};
 		values: GlobalValues;
 	};

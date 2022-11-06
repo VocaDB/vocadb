@@ -204,7 +204,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<ArtistContract> Create(CreateArtistContract contract)
+		public async Task<ArtistContract> Create(CreateArtistForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -298,7 +298,7 @@ namespace VocaDb.Model.Database.Queries
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
 
 			if (!names.Any() && string.IsNullOrEmpty(url))
-				return new EntryRefWithCommonPropertiesContract[] { };
+				return Array.Empty<EntryRefWithCommonPropertiesContract>();
 
 			return HandleQuery(session =>
 			{
@@ -309,7 +309,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(n => n.Artist)
 					.Take(10)
 					.ToArray()
-					.Distinct() : new Artist[] { });
+					.Distinct() : Array.Empty<Artist>());
 
 				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()
 					.Where(w => !w.Entry.Deleted)
@@ -317,7 +317,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
-					.Distinct() : new Artist[] { };
+					.Distinct() : Array.Empty<Artist>();
 
 				return nameMatches.Union(linkMatches)
 					.Select(n => new EntryRefWithCommonPropertiesContract(n, PermissionContext.LanguagePreference))
@@ -330,12 +330,17 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => fac(ctx.Load(id)));
 		}
 
-		public ArtistForEditContract GetArtistForEdit(int id)
+#nullable enable
+		public ArtistForEditForApiContract GetArtistForEdit(int id)
 		{
-			return
-				HandleQuery(session =>
-					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
+			return HandleQuery(session => new ArtistForEditForApiContract(
+				artist: session.Load<Artist>(id),
+				languagePreference: PermissionContext.LanguagePreference,
+				imageStore: _imageUrlFactory,
+				permissionContext: PermissionContext
+			));
 		}
+#nullable disable
 
 		public CommentForApiContract[] GetComments(int artistId)
 		{
@@ -596,11 +601,9 @@ namespace VocaDb.Model.Database.Queries
 					if (versionWithPic.Picture != null)
 					{
 						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes))
-						{
-							var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
-							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-						}
+						using var stream = new MemoryStream(versionWithPic.Picture.Bytes);
+						var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 					}
 				}
 				else
@@ -649,7 +652,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract? pictureData, IUserPermissionContext permissionContext)
+		public async Task<int> Update(ArtistForEditForApiContract properties, EntryPictureFileContract? pictureData, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);
@@ -824,14 +827,29 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new ArtistForApiContract(artist, PermissionContext.LanguagePreference, thumbPersister: null, includedFields: ArtistOptionalFields.None),
 					versions: artist.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: a.Reason != ArtistArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != ArtistEditableFields.Nothing,
-							reason: a.Reason.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromArtist(a, _userIconFactory))
 						.ToArray()
 				);
+			});
+		}
+
+		public ArchivedArtistVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedArtistVersionDetailsForApiContract(
+					archived: session.Load<ArchivedArtistVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
 			});
 		}
 #nullable disable

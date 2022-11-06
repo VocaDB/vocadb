@@ -1,4 +1,4 @@
-import EntryStatus from '@Models/EntryStatus';
+import { EntryStatus } from '@/Models/EntryStatus';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface EntryStatusMessageProps {
 	status: EntryStatus;
 }
 
-const EntryStatusMessage = React.memo(
+export const EntryStatusMessage = React.memo(
 	({ status }: EntryStatusMessageProps): React.ReactElement => {
 		const { t } = useTranslation(['HelperRes', 'Resources']);
 
@@ -15,7 +15,7 @@ const EntryStatusMessage = React.memo(
 				return (
 					<span title={t('HelperRes:Helper.StatusDescriptionDraft')}>
 						<span className="icon draftIcon" />{' '}
-						{t(`Resources:EntryStatusNames.${EntryStatus[EntryStatus.Draft]}`)}
+						{t(`Resources:EntryStatusNames.${EntryStatus.Draft}`)}
 					</span>
 				);
 
@@ -23,9 +23,7 @@ const EntryStatusMessage = React.memo(
 				return (
 					<span title={t('HelperRes:Helper.StatusDescriptionFinished')}>
 						<span className="icon asteriskIcon" />{' '}
-						{t(
-							`Resources:EntryStatusNames.${EntryStatus[EntryStatus.Finished]}`,
-						)}
+						{t(`Resources:EntryStatusNames.${EntryStatus.Finished}`)}
 					</span>
 				);
 
@@ -33,9 +31,7 @@ const EntryStatusMessage = React.memo(
 				return (
 					<span title={t('HelperRes:Helper.StatusDescriptionApproved')}>
 						<span className="icon tickIcon" />{' '}
-						{t(
-							`Resources:EntryStatusNames.${EntryStatus[EntryStatus.Approved]}`,
-						)}
+						{t(`Resources:EntryStatusNames.${EntryStatus.Approved}`)}
 					</span>
 				);
 
@@ -43,7 +39,7 @@ const EntryStatusMessage = React.memo(
 				return (
 					<span title={t('HelperRes:Helper.StatusDescriptionLocked')}>
 						<span className="icon lockIcon" />{' '}
-						{t(`Resources:EntryStatusNames.${EntryStatus[EntryStatus.Locked]}`)}
+						{t(`Resources:EntryStatusNames.${EntryStatus.Locked}`)}
 					</span>
 				);
 
@@ -52,5 +48,3 @@ const EntryStatusMessage = React.memo(
 		}
 	},
 );
-
-export default EntryStatusMessage;

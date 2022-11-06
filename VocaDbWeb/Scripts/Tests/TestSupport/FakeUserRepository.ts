@@ -1,22 +1,22 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import UserMessageSummaryContract from '@DataContracts/User/UserMessageSummaryContract';
-import EntryType from '@Models/EntryType';
-import SongVoteRating from '@Models/SongVoteRating';
-import { UserInboxType } from '@Repositories/UserRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
+import { UserMessageSummaryContract } from '@/DataContracts/User/UserMessageSummaryContract';
+import { EntryType } from '@/Models/EntryType';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { UserInboxType } from '@/Repositories/UserRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
-import FakePromise from './FakePromise';
+export class FakeUserRepository extends UserRepository {
+	message!: UserMessageSummaryContract;
+	messages!: UserMessageSummaryContract[];
+	songId!: number;
+	rating!: SongVoteRating;
 
-export default class FakeUserRepository extends UserRepository {
-	public message!: UserMessageSummaryContract;
-	public messages!: UserMessageSummaryContract[];
-	public songId!: number;
-	public rating!: SongVoteRating;
-
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
 		this.getMessage = ({
@@ -56,8 +56,8 @@ export default class FakeUserRepository extends UserRepository {
 		}: {
 			entryType: EntryType;
 			entryId: number;
-		}): Promise<void> => {
-			return Promise.resolve();
+		}): Promise<EntryEditDataContract> => {
+			return Promise.resolve({ time: '0001-01-01T00:00:00', userId: 0 });
 		};
 
 		this.updateSongRating = ({

@@ -2,19 +2,6 @@ import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';
 
-const useJQueryUIAutocomplete = (
-	el: React.RefObject<any>,
-	options: JQueryUI.AutocompleteOptions,
-	renderItem?: (ul: HTMLElement, item: any) => JQuery,
-): void => {
-	React.useLayoutEffect(() => {
-		const $el = $(el.current);
-		const autocomplete = $el.autocomplete(options).data('ui-autocomplete');
-		if (renderItem) autocomplete._renderItem = renderItem;
-		return (): void => $el.autocomplete('destroy');
-	});
-};
-
 type JQueryUIAutocompleteProps = {
 	renderItem?: (ul: HTMLElement, item: any) => JQuery;
 } & JQueryUI.AutocompleteOptions &
@@ -29,7 +16,15 @@ const JQueryUIAutocomplete = React.forwardRef<
 		ref,
 		() => el.current,
 	);
-	useJQueryUIAutocomplete(el, { select, source }, renderItem);
+
+	const options = React.useMemo(() => ({ select, source }), [select, source]);
+
+	React.useLayoutEffect(() => {
+		const $el = $(el.current);
+		const autocomplete = $el.autocomplete(options).data('ui-autocomplete');
+		if (renderItem) autocomplete._renderItem = renderItem;
+		return (): void => $el.autocomplete('destroy');
+	}, [renderItem, options]);
 
 	return <input ref={el} {...props} />;
 });

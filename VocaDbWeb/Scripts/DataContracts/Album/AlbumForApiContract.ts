@@ -1,6 +1,10 @@
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import AlbumContract from './AlbumContract';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
 
-export default interface AlbumForApiContract extends AlbumContract {
+export interface AlbumForApiContract extends AlbumContract {
 	artists?: ArtistForAlbumContract[];
+	pvs?: PVContract[];
+	tracks?: SongInAlbumContract[];
 }

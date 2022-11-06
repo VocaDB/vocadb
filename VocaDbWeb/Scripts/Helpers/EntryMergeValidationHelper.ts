@@ -1,8 +1,8 @@
-import CommonEntryContract from '@DataContracts/CommonEntryContract';
-import EntryStatus from '@Models/EntryStatus';
+import { CommonEntryContract } from '@/DataContracts/CommonEntryContract';
+import { EntryStatus } from '@/Models/EntryStatus';
 import moment from 'moment';
 
-export default class EntryMergeValidationHelper {
+export class EntryMergeValidationHelper {
 	private static toEnum(statusStr: string | EntryStatus): EntryStatus {
 		if (typeof statusStr === 'string') {
 			return EntryStatus[statusStr as keyof typeof EntryStatus];
@@ -11,7 +11,7 @@ export default class EntryMergeValidationHelper {
 		}
 	}
 
-	public static validate(
+	static validate(
 		baseStatus: string | EntryStatus,
 		targetStatus: string | EntryStatus,
 		baseCreated: string,
@@ -33,9 +33,9 @@ export default class EntryMergeValidationHelper {
 		};
 	}
 
-	public static validateEntry(
-		base: CommonEntryContract,
-		target: CommonEntryContract,
+	static validateEntry(
+		base?: CommonEntryContract,
+		target?: CommonEntryContract,
 	): IEntryMergeValidationResult {
 		if (base == null || target == null) {
 			return {

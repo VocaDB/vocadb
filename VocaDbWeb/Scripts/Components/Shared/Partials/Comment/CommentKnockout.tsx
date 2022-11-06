@@ -1,22 +1,22 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import MomentJsTimeAgo from '@Components/KnockoutExtensions/MomentJsTimeAgo';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { MomentJsTimeAgo } from '@/Components/KnockoutExtensions/MomentJsTimeAgo';
+import { CommentBodyKnockout } from '@/Components/Shared/Partials/Comment/CommentBodyKnockout';
+import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { useMutedUsers } from '@/MutedUsersContext';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import ProfileIconKnockout_ImageSize from '../User/ProfileIconKnockout_ImageSize';
-import CommentBodyKnockout from './CommentBodyKnockout';
-
 interface CommentKnockoutStore {
 	author: UserApiContract;
 	canBeDeleted?: boolean;
 	canBeEdited?: boolean;
-	created?: Date;
+	created: string;
 }
 
 interface CommentKnockoutProps {
@@ -29,7 +29,7 @@ interface CommentKnockoutProps {
 	children?: React.ReactNode;
 }
 
-const CommentKnockout = observer(
+export const CommentKnockout = observer(
 	({
 		commentKnockoutStore,
 		message,
@@ -40,6 +40,9 @@ const CommentKnockout = observer(
 		children,
 	}: CommentKnockoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
+
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(commentKnockoutStore.author.id)) return <></>;
 
 		return (
 			<div
@@ -88,7 +91,7 @@ const CommentKnockout = observer(
 									onClick={(): void => {
 										if (
 											window.confirm(
-												'Are you sure you want to delete this comment?' /* TODO: localize */,
+												'Are you sure you want to delete this comment?' /* LOC */,
 											)
 										) {
 											onDelete();
@@ -116,5 +119,3 @@ const CommentKnockout = observer(
 		);
 	},
 );
-
-export default CommentKnockout;

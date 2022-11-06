@@ -9,20 +9,18 @@ import {
 export interface IEntryReportType {
 	// Report type ID
 	id: string;
-
 	// Localized name
 	name?: string;
-
 	// Notes field is required for this report type
 	notesRequired: boolean;
 }
 
-export default class ReportEntryStore {
-	@observable public dialogVisible = false;
-	@observable public notes = '';
-	@observable public reportType?: IEntryReportType;
+export class ReportEntryStore {
+	@observable dialogVisible = false;
+	@observable notes = '';
+	@observable reportType?: IEntryReportType;
 
-	public constructor(
+	constructor(
 		private readonly sendFunc: (
 			reportType: string,
 			notes: string,
@@ -35,13 +33,13 @@ export default class ReportEntryStore {
 	}
 
 	/** Report is valid to be sent (either notes are specified or not required) */
-	@computed public get isValid(): boolean {
+	@computed get isValid(): boolean {
 		return (
 			!this.reportType || !this.reportType.notesRequired || this.notes !== ''
 		);
 	}
 
-	public send = async (): Promise<void> => {
+	send = async (): Promise<void> => {
 		await this.sendFunc(this.reportType!.id, this.notes);
 
 		runInAction(() => {
@@ -50,7 +48,7 @@ export default class ReportEntryStore {
 		});
 	};
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.dialogVisible = true;
 	};
 }

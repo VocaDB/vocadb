@@ -28,10 +28,8 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				{
-					return func(ctx);
-				}
+				using var ctx = OpenSessionForContext();
+				return func(ctx);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -49,11 +47,9 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				{
-					// Note: async/await is needed here because of using statement
-					return await func(ctx);
-				}
+				using var ctx = OpenSessionForContext();
+				// Note: async/await is needed here because of using statement
+				return await func(ctx);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -71,13 +67,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					var val = func(ctx);
-					tx.Commit();
-					return val;
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				var val = func(ctx);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -90,13 +84,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					var val = await func(ctx);
-					await tx.CommitAsync();
-					return val;
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				var val = await func(ctx);
+				await tx.CommitAsync();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -109,12 +101,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					await func(ctx);
-					await tx.CommitAsync();
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				await func(ctx);
+				await tx.CommitAsync();
 			}
 			catch (HibernateException x)
 			{
@@ -127,12 +117,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					func(ctx);
-					tx.Commit();
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				func(ctx);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{
@@ -163,10 +151,8 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				{
-					return func(ctx);
-				}
+				using var ctx = OpenSessionForContext();
+				return func(ctx);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -184,11 +170,9 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				{
-					// Note: async/await is needed here because of using statement
-					return await func(ctx);
-				}
+				using var ctx = OpenSessionForContext();
+				// Note: async/await is needed here because of using statement
+				return await func(ctx);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -206,13 +190,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					var val = func(ctx);
-					tx.Commit();
-					return val;
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				var val = func(ctx);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -225,12 +207,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					func(ctx);
-					tx.Commit();
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				func(ctx);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{
@@ -243,13 +223,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					var val = await func(ctx);
-					await tx.CommitAsync();
-					return val;
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				var val = await func(ctx);
+				await tx.CommitAsync();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -262,12 +240,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		{
 			try
 			{
-				using (var ctx = OpenSessionForContext())
-				using (var tx = ctx.Session.BeginTransaction())
-				{
-					await func(ctx);
-					await tx.CommitAsync();
-				}
+				using var ctx = OpenSessionForContext();
+				using var tx = ctx.Session.BeginTransaction();
+				await func(ctx);
+				await tx.CommitAsync();
 			}
 			catch (HibernateException x)
 			{

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { range } from 'lodash-es';
 import React from 'react';
 
 interface StarsProps {
@@ -6,11 +6,11 @@ interface StarsProps {
 	max: number;
 }
 
-const Stars = React.memo(
+export const Stars = React.memo(
 	({ current, max }: StarsProps): React.ReactElement => {
 		return (
 			<>
-				{_.range(1, max + 1).map((i) => (
+				{range(1, max + 1).map((i) => (
 					<React.Fragment key={i}>
 						{i > 0 && ' '}
 						{current >= i ? (
@@ -24,5 +24,3 @@ const Stars = React.memo(
 		);
 	},
 );
-
-export default Stars;

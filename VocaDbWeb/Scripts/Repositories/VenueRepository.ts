@@ -1,23 +1,24 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import VenueForApiContract from '@DataContracts/Venue/VenueForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedVenueVersionDetailsContract } from '@/DataContracts/Venue/ArchivedVenueVersionDetailsContract';
+import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { BaseRepository } from '@/Repositories/BaseRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
-
-export default class VenueRepository extends BaseRepository {
-	public constructor(
+export class VenueRepository extends BaseRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = ({
+	createReport = ({
 		entryId: venueId,
 		reportType,
 		notes,
@@ -39,7 +40,7 @@ export default class VenueRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -57,7 +58,7 @@ export default class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getList = ({
+	getList = ({
 		query,
 		nameMatchMode,
 		maxResults,
@@ -79,17 +80,13 @@ export default class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<VenueForApiContract> => {
+	getDetails = ({ id }: { id: number }): Promise<VenueForApiContract> => {
 		return this.httpClient.get<VenueForApiContract>(
 			this.urlMapper.mapRelative(`/api/venues/${id}/details`),
 		);
 	};
 
-	public getVenueWithArchivedVersions = ({
+	getVenueWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -97,5 +94,41 @@ export default class VenueRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<VenueForApiContract>
 		>(this.urlMapper.mapRelative(`/api/venues/${id}/versions`));
+	};
+
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedVenueVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedVenueVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/venues/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {
+		return this.httpClient.get<VenueForApiContract>(
+			this.urlMapper.mapRelative(`/api/venues/${id}`),
+		);
+	};
+
+	getForEdit = ({ id }: { id: number }): Promise<VenueForEditContract> => {
+		return this.httpClient.get<VenueForEditContract>(
+			this.urlMapper.mapRelative(`/api/venues/${id}/for-edit`),
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: VenueForEditContract,
+	): Promise<number> => {
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/venues/${contract.id}`),
+			contract,
+			{ headers: { requestVerificationToken: requestToken } },
+		);
 	};
 }

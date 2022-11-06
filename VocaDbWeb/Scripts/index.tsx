@@ -1,16 +1,25 @@
+import App from '@/App';
+import '@/ArrayExtensions';
+import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { MutedUsersProvider } from '@/MutedUsersContext';
+import '@/i18n';
+import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-
-import App from './App';
-import './i18n';
 
 const app = document.getElementById('app');
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<App />
+			<NostalgicDivaProvider>
+				<VdbPlayerProvider>
+					<MutedUsersProvider>
+						<App />
+					</MutedUsersProvider>
+				</VdbPlayerProvider>
+			</NostalgicDivaProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	app,

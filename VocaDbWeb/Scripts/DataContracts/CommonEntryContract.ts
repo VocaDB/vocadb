@@ -1,11 +1,9 @@
-export default interface CommonEntryContract {
+import { EntryStatus } from '@/Models/EntryStatus';
+
+export interface CommonEntryContract {
 	createDate?: string;
-
 	id: number;
-
 	name: string;
-
-	status?: string;
-
+	status: EntryStatus;
 	version?: number;
 }

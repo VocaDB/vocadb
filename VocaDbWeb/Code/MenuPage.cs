@@ -31,10 +31,10 @@ namespace VocaDb.Web.Code
 
 			var config = AppConfig.GetGlobalLinksSection();
 
-			AppLinks = config?.AppLinks?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? new Link[0];
-			BigBanners = config?.BigBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? new Link[0];
-			SmallBanners = config?.SmallBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? new Link[0];
-			SocialLinks = config?.SocialSites?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? new Link[0];
+			AppLinks = config?.AppLinks?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? Array.Empty<Link>();
+			BigBanners = config?.BigBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? Array.Empty<Link>();
+			SmallBanners = config?.SmallBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? Array.Empty<Link>();
+			SocialLinks = config?.SocialSites?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? Array.Empty<Link>();
 		}
 
 		public static Link[] AppLinks { get; }

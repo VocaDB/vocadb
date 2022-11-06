@@ -1,20 +1,22 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import {
+	ArtistOptionalField,
+	ArtistRepository,
+} from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-import GlobalValues from '../Shared/GlobalValues';
-import BasicEntryLinkStore from './BasicEntryLinkStore';
-
-export default class SelfDescriptionStore {
-	@observable public artists: ArtistContract[] = [];
-	public readonly author: BasicEntryLinkStore<ArtistApiContract>;
-	@observable public editing = false;
+export class SelfDescriptionStore {
+	@observable artists: ArtistContract[] = [];
+	readonly author: BasicEntryLinkStore<ArtistApiContract>;
+	@observable editing = false;
 	private originalAuthor?: number;
 	private originalText?: string;
-	@observable public text?: string;
+	@observable text?: string;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		author: ArtistApiContract | undefined,
 		text: string | undefined,
@@ -27,7 +29,7 @@ export default class SelfDescriptionStore {
 		this.author = new BasicEntryLinkStore<ArtistApiContract>((artistId) =>
 			artistRepo.getOneWithComponents({
 				id: artistId,
-				fields: 'MainPicture',
+				fields: [ArtistOptionalField.MainPicture],
 				lang: values.languagePreference,
 			}),
 		);
@@ -35,7 +37,7 @@ export default class SelfDescriptionStore {
 		this.text = text;
 	}
 
-	@action public beginEdit = (): void => {
+	@action beginEdit = (): void => {
 		this.originalAuthor = this.author.id;
 		this.originalText = this.text;
 
@@ -51,13 +53,13 @@ export default class SelfDescriptionStore {
 		}
 	};
 
-	@action public cancelEdit = (): void => {
+	@action cancelEdit = (): void => {
 		this.text = this.originalText;
 		this.author.id = this.originalAuthor;
 		this.editing = false;
 	};
 
-	@action public save = (): void => {
+	@action save = (): void => {
 		this.saveFunc(this);
 		this.editing = false;
 	};

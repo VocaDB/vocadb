@@ -1,58 +1,49 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerYoutube implements IPVPlayer {
+export class PVPlayerYoutube implements IPVPlayer {
 	private player?: YT.Player;
-	public readonly service = PVService.Youtube;
+	readonly service = PVService.Youtube;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (!reset && this.player) {
-			readyCallback?.();
-			return;
-		}
+	attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (!reset && this.player) {
+				resolve();
+				return;
+			}
 
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append($(`<div id='${this.playerElementId}' />`));
-		}
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(`<div id='${this.playerElementId}' />`),
+				);
+			}
 
-		this.player = new YT.Player(this.playerElementId, {
-			width: 560,
-			height: 315,
-			events: {
-				onStateChange: (event: YT.EventArgs): void => {
-					// This will still be fired once if the user disabled autoplay mode.
-					if (this.player && event.data === YT.PlayerState.ENDED) {
-						this.songFinishedCallback?.();
-					}
-				},
-				onReady: (): void => {
-					readyCallback?.();
-				},
-				onError: (): void => {
-					// Some delay, to let the user read the error message and to prevent infinite loop
-					setTimeout(() => {
-						if (this.player) {
+			this.player = new YT.Player(this.playerElementId, {
+				width: 560,
+				height: 315,
+				events: {
+					onStateChange: (event: YT.EventArgs): void => {
+						// This will still be fired once if the user disabled autoplay mode.
+						if (this.player && event.data === YT.PlayerState.ENDED) {
 							this.songFinishedCallback?.();
 						}
-					}, 3000);
+					},
+					onReady: (): void => resolve(),
+					onError: (): void => reject(),
 				},
-			},
+			});
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		this.player = undefined;
 	};
 
@@ -64,9 +55,9 @@ export default class PVPlayerYoutube implements IPVPlayer {
 		}
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) {
-			this.attach(false, () => this.doPlay(pvId));
+			this.attach(false).then(() => this.doPlay(pvId));
 		} else {
 			this.doPlay(pvId);
 		}

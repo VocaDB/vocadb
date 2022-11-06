@@ -1,3 +1,3 @@
-export default class Tag {
-	public static commonCategory_Genres = 'Genres';
+export class Tag {
+	static commonCategory_Genres = 'Genres';
 }

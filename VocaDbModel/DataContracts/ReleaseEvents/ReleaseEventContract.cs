@@ -12,7 +12,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
 	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase, IEntryWithStatus
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 
 #nullable enable
@@ -76,9 +78,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public EventCategory InheritedCategory => Series?.Category ?? Category;
 
+#nullable enable
 		public string Name { get; init; }
 
-#nullable enable
 		public string? PictureMime { get; init; }
 #nullable disable
 

@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		public ImportedAlbumTrack()
 		{
 			DiscNum = 1;
-			ArtistNames = VocalistNames = new string[] { };
+			ArtistNames = VocalistNames = Array.Empty<string>();
 		}
 
 		[DataMember]

@@ -28,9 +28,9 @@ namespace VocaDb.Model.Service
 		private IEntryLinkFactory EntryLinkFactory { get; }
 		private readonly IUserIconFactory _userIconFactory;
 
-		private string MakeGeoIpToolLink(string hostname)
+		private static string MakeGeoIpToolLink(string hostname)
 		{
-			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
+			return $"[{hostname}](http://www.geoiptool.com/?IP={hostname})";
 		}
 
 		public UserService(
@@ -38,7 +38,8 @@ namespace VocaDb.Model.Service
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer userMessageMailer,
-			IUserIconFactory userIconFactory)
+			IUserIconFactory userIconFactory
+		)
 			: base(sessionFactory, permissionContext)
 		{
 			EntryLinkFactory = entryLinkFactory;
@@ -183,11 +184,6 @@ namespace VocaDb.Model.Service
 		public ServerOnlyUserContract GetUser(int id, bool getPublicCollection = false)
 		{
 			return HandleQuery(session => new ServerOnlyUserContract(session.Load<User>(id), getPublicCollection));
-		}
-
-		public ServerOnlyUserForMySettingsContract GetUserForMySettings(int id)
-		{
-			return HandleQuery(session => new ServerOnlyUserForMySettingsContract(session.Load<User>(id)));
 		}
 
 		public ServerOnlyUserWithPermissionsContract GetUserWithPermissions(int id)

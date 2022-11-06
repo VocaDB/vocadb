@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.VideoServices
 	public class VideoServiceLocalFile : VideoService
 	{
 		public VideoServiceLocalFile()
-			: base(PVService.LocalFile, null, new RegexLinkMatcher[0]) { }
+			: base(PVService.LocalFile, null, Array.Empty<RegexLinkMatcher>()) { }
 
 		public override string GetIdByUrl(string url)
 		{

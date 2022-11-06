@@ -1,48 +1,43 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Albums
+namespace VocaDb.Model.DataContracts.Albums;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class ArtistForAlbumForApiContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForAlbumForApiContract
+	public ArtistForAlbumForApiContract() { }
+
+	public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
 	{
-		public ArtistForAlbumForApiContract() { }
+		ParamIs.NotNull(() => artistForAlbum);
 
-#nullable enable
-		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
-		{
-			ParamIs.NotNull(() => artistForAlbum);
-
-			Artist = (artistForAlbum.Artist != null ? new ArtistContract(artistForAlbum.Artist, languagePreference) : null);
-			Categories = artistForAlbum.ArtistCategories;
-			EffectiveRoles = artistForAlbum.EffectiveRoles;
-			IsSupport = artistForAlbum.IsSupport;
-			Name = (Artist != null ? Artist.Name : artistForAlbum.Name);
-			Roles = artistForAlbum.Roles;
-		}
-#nullable disable
-
-		[DataMember]
-		public ArtistContract Artist { get; init; }
-
-		[DataMember]
-		public ArtistCategories Categories { get; init; }
-
-		[DataMember]
-		public ArtistRoles EffectiveRoles { get; init; }
-
-		[DataMember]
-		public bool IsSupport { get; init; }
-
-		[DataMember]
-		public string Name { get; init; }
-
-		[DataMember]
-		public ArtistRoles Roles { get; init; }
+		Artist = artistForAlbum.Artist != null ? new ArtistContract(artistForAlbum.Artist, languagePreference) : null;
+		Categories = artistForAlbum.ArtistCategories;
+		EffectiveRoles = artistForAlbum.EffectiveRoles;
+		IsSupport = artistForAlbum.IsSupport;
+		Name = Artist != null ? Artist.Name : artistForAlbum.Name;
+		Roles = artistForAlbum.Roles;
 	}
+
+	[DataMember]
+	public ArtistContract? Artist { get; init; }
+
+	[DataMember]
+	public ArtistCategories Categories { get; init; }
+
+	[DataMember]
+	public ArtistRoles EffectiveRoles { get; init; }
+
+	[DataMember]
+	public bool IsSupport { get; init; }
+
+	[DataMember]
+	public string? Name { get; init; }
+
+	[DataMember]
+	public ArtistRoles Roles { get; init; }
 }

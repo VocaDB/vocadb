@@ -1,20 +1,13 @@
-import EntryContract from './EntryContract';
-import UserApiContract from './User/UserApiContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
-export default interface CommentContract {
+export interface CommentContract {
 	author: UserApiContract;
-
 	authorName?: string;
-
 	canBeDeleted?: boolean;
-
 	canBeEdited?: boolean;
-
-	created?: Date;
-
+	created: string;
 	entry?: EntryContract;
-
 	id?: number;
-
 	message: string;
 }

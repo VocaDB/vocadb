@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js-light';
 
-export default class BpmHelper {
-	public static formatFromMilliBpm = (
+export class BpmHelper {
+	static formatFromMilliBpm = (
 		minMilliBpm?: number,
 		maxMilliBpm?: number,
 	): string => {

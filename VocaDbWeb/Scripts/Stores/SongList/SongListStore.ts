@@ -1,45 +1,51 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongInListContract from '@DataContracts/Song/SongInListContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongType } from '@/Models/Songs/SongType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import {
+	SongListGetSongsQueryParams,
+	SongListRepository,
+} from '@/Repositories/SongListRepository';
 import {
 	SongOptionalField,
-	SongOptionalFields,
-} from '@Models/EntryOptionalFields';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import SongType from '@Models/Songs/SongType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import SongListRepository from '@Repositories/SongListRepository';
-import SongRepository from '@Repositories/SongRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import AdvancedSearchFilter from '@Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
-import ArtistFilters from '@Stores/Search/ArtistFilters';
-import { ISongSearchItem } from '@Stores/Search/SongSearchStore';
-import TagFilter from '@Stores/Search/TagFilter';
-import TagFilters from '@Stores/Search/TagFilters';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import PlayListRepositoryForSongListAdapter, {
+	SongRepository,
+} from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
+import { TagFilter } from '@/Stores/Search/TagFilter';
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import {
 	ISongListStore,
-} from '@Stores/Song/PlayList/PlayListRepositoryForSongListAdapter';
-import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
-import TagListStore from '@Stores/Tag/TagListStore';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+	PlayListRepositoryForSongListAdapter,
+} from '@/Stores/Song/PlayList/PlayListRepositoryForSongListAdapter';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -66,6 +72,21 @@ interface SongListRouteParams {
 	tagId?: number[];
 }
 
+const clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childTags',
+	'childVoicebanks',
+	'pageSize',
+	'songType',
+	'tagId',
+
+	'sort',
+	'playlistMode',
+	'query',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -73,31 +94,31 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SongListStore
-	implements ISongListStore, StoreWithPagination<SongListRouteParams> {
-	public readonly advancedFilters = new AdvancedSearchFilters();
-	public readonly artistFilters: ArtistFilters;
-	public readonly comments: EditableCommentsStore;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: (SongInListContract & {
+export class SongListStore
+	implements ISongListStore, LocationStateStore<SongListRouteParams> {
+	readonly advancedFilters = new AdvancedSearchFilters();
+	readonly artistFilters: ArtistFilters;
+	readonly comments: EditableCommentsStore;
+	@observable loading = true; // Currently loading for data
+	@observable page: (SongInListContract & {
 		song: ISongSearchItem;
 	})[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	public pauseNotifications = false;
-	@observable public playlistMode = false;
-	public readonly playlistStore: PlayListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
-	public readonly pvServiceIcons: PVServiceIcons;
-	@observable public query = '';
-	@observable public showAdvancedFilters = false;
-	@observable public showTags = false;
-	@observable public sort = '' /* TODO: enum */;
-	@observable public songType = SongType.Unspecified;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagFilters: TagFilters;
-	public readonly tagUsages: TagListStore;
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	pauseNotifications = false;
+	@observable playlistMode = false;
+	readonly playlistStore: PlayListStore;
+	readonly pvPlayerStore: PVPlayerStore;
+	readonly pvServiceIcons: PVServiceIcons;
+	@observable query = '';
+	@observable showAdvancedFilters = false;
+	@observable showTags = false;
+	@observable sort = '' /* TODO: enum */;
+	@observable songType = SongType.Unspecified;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagFilters: TagFilters;
+	readonly tagUsages: TagListStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: SongListRepository,
@@ -149,10 +170,14 @@ export default class SongListStore
 			{
 				getTagSelections: (): Promise<TagSelectionContract[]> =>
 					userRepo.getSongListTagSelections({ songListId: this.listId }),
-				saveTagSelections: (tags): Promise<void> =>
-					userRepo
-						.updateSongListTags({ songListId: this.listId, tags: tags })
-						.then(this.tagUsages.updateTagUsages),
+				saveTagSelections: async (tags): Promise<void> => {
+					const usages = await userRepo.updateSongListTags({
+						songListId: this.listId,
+						tags: tags,
+					});
+
+					this.tagUsages.updateTagUsages(usages);
+				},
 			},
 			EntryType.SongList,
 		);
@@ -164,51 +189,34 @@ export default class SongListStore
 		reaction(() => this.showTags, this.updateResultsWithTotalCount);
 	}
 
-	@computed public get childTags(): boolean {
+	@computed get childTags(): boolean {
 		return this.tagFilters.childTags;
 	}
-	public set childTags(value: boolean) {
+	set childTags(value: boolean) {
 		this.tagFilters.childTags = value;
 	}
 
-	@computed public get tags(): TagFilter[] {
+	@computed get tags(): TagFilter[] {
 		return this.tagFilters.tags;
 	}
-	public set tags(value: TagFilter[]) {
+	set tags(value: TagFilter[]) {
 		this.tagFilters.tags = value;
 	}
 
-	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+	@computed get tagIds(): number[] {
+		return this.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
+	mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childTags',
-		'childVoicebanks',
-		'pageSize',
-		'songType',
-		'tagId',
-
-		'sort',
-		'playlistMode',
-		'query',
-	];
-
-	@computed.struct public get routeParams(): SongListRouteParams {
+	@computed.struct get locationState(): SongListRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -229,7 +237,7 @@ export default class SongListStore
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: SongListRouteParams) {
+	set locationState(value: SongListRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -247,9 +255,25 @@ export default class SongListStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateRouteParams = (data: any): data is SongListRouteParams => {
+	validateLocationState = (data: any): data is SongListRouteParams => {
 		return validate(data);
 	};
+
+	@computed get queryParams(): SongListGetSongsQueryParams {
+		return {
+			listId: this.listId,
+			query: this.query,
+			songTypes:
+				this.songType !== SongType.Unspecified ? [this.songType] : undefined,
+			tagIds: this.tagIds,
+			childTags: this.childTags,
+			artistIds: this.artistFilters.artistIds,
+			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			advancedFilters: this.advancedFilters.filters,
+			sort: this.sort,
+		};
+	}
 
 	private loadResults = (
 		pagingProperties: PagingProperties,
@@ -258,36 +282,21 @@ export default class SongListStore
 			this.playlistStore.updateResultsWithTotalCount();
 			return Promise.resolve({ items: [], totalCount: 0 });
 		} else {
-			const fields = [
-				SongOptionalField.AdditionalNames,
-				SongOptionalField.MainPicture,
-			];
-
-			if (this.showTags) fields.push(SongOptionalField.Tags);
-
 			return this.songListRepo.getSongs({
-				listId: this.listId,
-				query: this.query,
-				songTypes:
-					this.songType !== SongType.Unspecified ? [this.songType] : undefined,
-				tagIds: this.tagIds,
-				childTags: this.childTags,
-				artistIds: this.artistFilters.artistIds,
-				artistParticipationStatus: this.artistFilters.artistParticipationStatus,
-				childVoicebanks: this.artistFilters.childVoicebanks,
-				advancedFilters: this.advancedFilters.filters,
-				pvServices: undefined,
-				paging: pagingProperties,
-				fields: new SongOptionalFields(fields),
-				sort: this.sort,
+				fields: [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.MainPicture,
+					...(this.showTags ? [SongOptionalField.Tags] : []),
+				],
 				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: this.queryParams,
 			});
 		}
 	};
 
-	@action public updateResults = async (
-		clearResults: boolean,
-	): Promise<void> => {
+	@action updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -298,7 +307,7 @@ export default class SongListStore
 
 		const result = await this.loadResults(pagingProperties);
 
-		_.each(result.items, (item) => {
+		for (const item of result.items) {
 			const song = item.song;
 			const songAny: any = song;
 
@@ -313,7 +322,7 @@ export default class SongListStore
 			} else {
 				songAny.previewStore = undefined;
 			}
-		});
+		}
 
 		this.pauseNotifications = false;
 
@@ -326,15 +335,21 @@ export default class SongListStore
 		});
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	onLocationStateChange = (
+		event: StateChangeEvent<SongListRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

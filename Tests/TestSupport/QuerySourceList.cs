@@ -102,7 +102,7 @@ namespace VocaDb.Tests.TestSupport
 			if (_entities.ContainsKey(t))
 				return ((List<T>)_entities[t]).AsQueryable();
 			else
-				return (new T[] { }).AsQueryable();
+				return (Array.Empty<T>()).AsQueryable();
 		}
 
 		/// <summary>

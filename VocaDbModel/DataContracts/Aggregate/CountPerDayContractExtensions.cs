@@ -59,19 +59,17 @@ namespace VocaDb.Model.DataContracts.Aggregate
 		public static IEnumerable<TResult> SelectWithPrevious<TSource, TResult>(this IEnumerable<TSource> source,
 			Func<TSource, TResult, TResult> projection)
 		{
-			using (var iterator = source.GetEnumerator())
+			using var iterator = source.GetEnumerator();
+			/*if (!iterator.MoveNext()) {
+				yield break;
+			}
+			var previous = projection(iterator.Current, default(TResult));
+			yield return previous;*/
+			var previous = default(TResult);
+			while (iterator.MoveNext())
 			{
-				/*if (!iterator.MoveNext()) {
-					yield break;
-				}
-				var previous = projection(iterator.Current, default(TResult));
-				yield return previous;*/
-				var previous = default(TResult);
-				while (iterator.MoveNext())
-				{
-					previous = projection(iterator.Current, previous);
-					yield return previous;
-				}
+				previous = projection(iterator.Current, previous);
+				yield return previous;
 			}
 		}
 

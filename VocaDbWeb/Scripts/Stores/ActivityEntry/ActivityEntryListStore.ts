@@ -1,75 +1,142 @@
-import ActivityEntryContract from '@DataContracts/ActivityEntry/ActivityEntryContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryEditEvent from '@Models/ActivityEntries/EntryEditEvent';
-import EntryType from '@Models/EntryType';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import _ from 'lodash';
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { ActivityEntryContract } from '@/DataContracts/ActivityEntry/ActivityEntryContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
+import { EntryType } from '@/Models/EntryType';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	includesAny,
+	LocationStateStore,
+	StateChangeEvent,
+} from '@vocadb/route-sphere';
+import Ajv, { JSONSchemaType } from 'ajv';
+import {
+	action,
+	computed,
+	makeObservable,
+	observable,
+	runInAction,
+} from 'mobx';
 
-enum ActivityEntrySortRule {
+export enum ActivityEntrySortRule {
 	CreateDateDescending = 'CreateDateDescending',
-
 	CreateDate = 'CreateDate',
 }
 
-export default class ActivityEntryListStore {
-	@observable public additionsOnly = false;
-	@observable public entries: ActivityEntryContract[] = [];
-	@observable public entryType =
-		EntryType[EntryType.Undefined]; /* TODO: enum */
-	private lastEntryDate?: Date;
-	@observable public sort = ActivityEntrySortRule.CreateDateDescending;
-	@observable public userId?: number;
+interface ActivityEntryListRouteParams {
+	entryEditEvent?: EntryEditEvent;
+	entryType?: string /* TODO: enum */;
+	sort?: ActivityEntrySortRule;
+}
 
-	public constructor(
+const clearResultsByQueryKeys: (keyof ActivityEntryListRouteParams)[] = [
+	'entryEditEvent',
+	'entryType',
+	'sort',
+];
+
+// TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
+const ajv = new Ajv({ coerceTypes: true });
+
+// TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
+const schema: JSONSchemaType<ActivityEntryListRouteParams> = require('./ActivityEntryListRouteParams.schema');
+const validate = ajv.compile(schema);
+
+export class ActivityEntryListStore
+	implements LocationStateStore<ActivityEntryListRouteParams> {
+	@observable entries: ActivityEntryContract[] = [];
+	@observable entryEditEvent?: EntryEditEvent;
+	@observable entryType = EntryType[EntryType.Undefined]; /* TODO: enum */
+	private lastEntryDate?: Date;
+	@observable sort = ActivityEntrySortRule.CreateDateDescending;
+	@observable userId?: number;
+
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
+		userId?: number,
 	) {
 		makeObservable(this);
 
-		this.loadMore();
+		this.userId = userId;
 	}
 
-	public loadMore = (): void => {
-		const url = this.urlMapper.mapRelative('/api/activityEntries');
-		const sortRule = this.sort;
-		this.httpClient
-			.get<PartialFindResultContract<ActivityEntryContract>>(url, {
-				fields: 'Entry,ArchivedVersion',
-				entryFields: 'AdditionalNames,MainPicture',
-				lang: this.values.languagePreference,
-				before:
-					sortRule === ActivityEntrySortRule.CreateDateDescending &&
-					this.lastEntryDate
-						? this.lastEntryDate.toISOString()
-						: null,
-				since:
-					sortRule === ActivityEntrySortRule.CreateDate && this.lastEntryDate
-						? this.lastEntryDate.toISOString()
-						: null,
-				userId: this.userId,
-				editEvent: this.additionsOnly ? EntryEditEvent.Created : null,
-				entryType: this.entryType,
-				sortRule: this.sort,
-			})
-			.then((result) => {
-				const entries = result.items;
+	@computed.struct get locationState(): ActivityEntryListRouteParams {
+		return {
+			entryEditEvent: this.entryEditEvent,
+			entryType: this.entryType,
+			sort: this.sort,
+		};
+	}
+	set locationState(value: ActivityEntryListRouteParams) {
+		this.entryEditEvent = value.entryEditEvent;
+		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
+		this.sort = value.sort ?? ActivityEntrySortRule.CreateDateDescending;
+	}
 
-				if (!entries) return;
+	validateLocationState(
+		locationState: any,
+	): locationState is ActivityEntryListRouteParams {
+		return validate(locationState);
+	}
 
-				runInAction(() => {
-					this.entries.push(...entries);
-					this.lastEntryDate = new Date(_.last(entries)!.createDate);
-				});
-			});
+	loadMore = async (): Promise<void> => {
+		const result = await this.httpClient.get<
+			PartialFindResultContract<ActivityEntryContract>
+		>(this.urlMapper.mapRelative('/api/activityEntries'), {
+			fields: 'Entry,ArchivedVersion',
+			entryFields: 'AdditionalNames,MainPicture',
+			lang: this.values.languagePreference,
+			before:
+				this.sort === ActivityEntrySortRule.CreateDateDescending &&
+				this.lastEntryDate
+					? this.lastEntryDate.toISOString()
+					: undefined,
+			since:
+				this.sort === ActivityEntrySortRule.CreateDate && this.lastEntryDate
+					? this.lastEntryDate.toISOString()
+					: undefined,
+			userId: this.userId,
+			editEvent: this.entryEditEvent,
+			entryType: this.entryType,
+			sortRule: this.sort,
+		});
+
+		const entries = result.items;
+
+		if (!entries) return;
+
+		runInAction(() => {
+			this.entries.push(...entries);
+			this.lastEntryDate = new Date(entries.last()!.createDate);
+		});
 	};
 
-	@action private clear = (): void => {
+	@action private clear = (): Promise<void> => {
 		this.lastEntryDate = undefined;
 		this.entries = [];
-		this.loadMore();
+		return this.loadMore();
+	};
+
+	private pauseNotifications = false;
+
+	updateResults = async (clearResults: boolean): Promise<void> => {
+		if (this.pauseNotifications) return;
+
+		this.pauseNotifications = true;
+
+		await this.clear();
+
+		this.pauseNotifications = false;
+	};
+
+	onLocationStateChange = (
+		event: StateChangeEvent<ActivityEntryListRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

@@ -1,16 +1,16 @@
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Basic link to an entry with ID and name.
 // Allows changing the link by setting the ID.
 // Works well with LockingAutoComplete.
-export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
+export class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 	@observable private _id?: number;
-	@observable public entry?: TEntry;
+	@observable entry?: TEntry;
 
 	// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 	// entryFunc: function for loading the entry asynchronously by Id.
-	public constructor(
+	constructor(
 		private readonly entryFunc?: (
 			entryId: number,
 		) => Promise<TEntry | undefined>,
@@ -18,10 +18,10 @@ export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 		makeObservable(this);
 	}
 
-	@computed public get id(): number | undefined {
+	@computed get id(): number | undefined {
 		return this._id;
 	}
-	public set id(value: number | undefined) {
+	set id(value: number | undefined) {
 		this._id = value;
 
 		if (value) {
@@ -35,15 +35,15 @@ export default class BasicEntryLinkStore<TEntry extends IEntryWithIdAndName> {
 		}
 	}
 
-	@computed public get name(): string | undefined {
+	@computed get name(): string | undefined {
 		return this.entry?.name;
 	}
 
-	@computed public get isEmpty(): boolean {
-		return !this.entry;
+	@computed get isEmpty(): boolean {
+		return !this.id;
 	}
 
-	public clear = (): void => {
+	clear = (): void => {
 		this.id = undefined;
 	};
 }

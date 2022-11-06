@@ -1,0 +1,86 @@
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { Layout } from '@/Components/Shared/Layout';
+import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
+import { useVdbTitle } from '@/Components/useVdbTitle';
+import { LoginManager } from '@/Models/LoginManager';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ActivityEntryListStore } from '@/Stores/ActivityEntry/ActivityEntryListStore';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+const loginManager = new LoginManager(vdb.values);
+
+const httpClient = new HttpClient();
+const urlMapper = new UrlMapper(vdb.values.baseAddress);
+
+const activityEntryListStore = new ActivityEntryListStore(
+	vdb.values,
+	httpClient,
+	urlMapper,
+);
+
+const ActivityEntryIndex = observer(
+	(): React.ReactElement => {
+		const { t, ready } = useTranslation([
+			'VocaDb.Web.Resources.Views.ActivityEntry',
+		]);
+
+		const title = t(
+			'VocaDb.Web.Resources.Views.ActivityEntry:Index.RecentActivity',
+		);
+
+		useVdbTitle(title, ready);
+
+		React.useEffect(() => {
+			activityEntryListStore.loadMore();
+		}, []);
+
+		return (
+			<Layout title={title}>
+				<ul className="nav nav-pills">
+					<li className="active">
+						<Link to="/ActivityEntry">
+							{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.AllActivity')}
+						</Link>
+					</li>
+					{loginManager.isLoggedIn && (
+						<li>
+							<a href="/ActivityEntry/FollowedArtistActivity">
+								{t(
+									'VocaDb.Web.Resources.Views.ActivityEntry:Index.FollowedArtists',
+								)}
+							</a>
+						</li>
+					)}
+					<li>
+						<Link to="/Comment">
+							{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.Comments')}
+						</Link>
+					</li>
+				</ul>
+
+				<div>
+					{activityEntryListStore.entries.map((entry, index) => (
+						<ActivityEntryKnockout
+							entry={entry}
+							showDetails={true}
+							key={index}
+						/>
+					))}
+				</div>
+
+				<hr />
+				<h3>
+					<SafeAnchor onClick={activityEntryListStore.loadMore}>
+						{t('VocaDb.Web.Resources.Views.ActivityEntry:Index.ViewMore')}
+					</SafeAnchor>
+				</h3>
+			</Layout>
+		);
+	},
+);
+
+export default ActivityEntryIndex;

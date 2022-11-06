@@ -1,8 +1,8 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryType from '@Models/EntryType';
-import _ from 'lodash';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryType } from '@/Models/EntryType';
+import { trim } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 interface ITagSelectionsRepository {
@@ -12,10 +12,10 @@ interface ITagSelectionsRepository {
 }
 
 class TagSelectionStore {
-	@observable public selected: boolean;
-	public readonly tag: TagBaseContract;
+	@observable selected: boolean;
+	readonly tag: TagBaseContract;
 
-	public constructor(contract: TagSelectionContract) {
+	constructor(contract: TagSelectionContract) {
 		makeObservable(this);
 
 		this.tag = contract.tag;
@@ -23,28 +23,27 @@ class TagSelectionStore {
 	}
 }
 
-export default class TagsEditStore {
-	@observable public dialogVisible = false;
-	@observable public selections: TagSelectionStore[] = [];
-	@observable public suggestions: TagUsageForApiContract[] = [];
-	@observable public suggestionsLoaded = false;
+export class TagsEditStore {
+	@observable dialogVisible = false;
+	@observable selections: TagSelectionStore[] = [];
+	@observable suggestions: TagUsageForApiContract[] = [];
+	@observable suggestionsLoaded = false;
 
-	public constructor(
+	constructor(
 		private readonly repo: ITagSelectionsRepository,
-		public readonly target?: EntryType,
-		public readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
+		readonly target?: EntryType,
+		readonly getSuggestions?: () => Promise<TagUsageForApiContract[]>,
 	) {
 		makeObservable(this);
 	}
 
-	@action public addTag = (tagName: string): void => {
+	@action addTag = (tagName: string): void => {
 		if (!tagName) return;
 
-		tagName = _.trim(tagName);
+		tagName = trim(tagName);
 
 		// If tag is already added, select it
-		const selection = _.find(
-			this.selections,
+		const selection = this.selections.find(
 			(sel) => sel.tag.name.toLowerCase() === tagName.toLowerCase(),
 		);
 
@@ -53,15 +52,15 @@ export default class TagsEditStore {
 		} else {
 			this.selections.push(
 				new TagSelectionStore({
-					tag: { name: tagName, id: undefined! },
+					tag: { name: tagName, id: undefined!, status: undefined! },
 					selected: true,
 				}),
 			);
 		}
 	};
 
-	@action public autoCompletedTag = (tag: TagBaseContract): void => {
-		const selection = _.find(this.selections, (sel) => sel.tag.id === tag.id);
+	@action autoCompletedTag = (tag: TagBaseContract): void => {
+		const selection = this.selections.find((sel) => sel.tag.id === tag.id);
 
 		if (selection) {
 			selection.selected = true;
@@ -70,7 +69,7 @@ export default class TagsEditStore {
 		}
 	};
 
-	public getSuggestionText = (
+	getSuggestionText = (
 		suggestion: TagUsageForApiContract,
 		countText: string,
 	): string => {
@@ -87,21 +86,19 @@ export default class TagsEditStore {
 		return text;
 	};
 
-	@action public save = (): void => {
-		const tags = _.chain(this.selections)
+	@action save = (): void => {
+		const tags = this.selections
 			.filter((sel) => sel.selected)
-			.map((sel) => sel.tag)
-			.value();
+			.map((sel) => sel.tag);
 
 		this.repo.saveTagSelections(tags);
 		this.dialogVisible = false;
 	};
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.repo.getTagSelections().then((selections) => {
 			runInAction(() => {
-				this.selections = _.map(
-					selections,
+				this.selections = selections.map(
 					(selection) => new TagSelectionStore(selection),
 				);
 				this.dialogVisible = true;

@@ -1,23 +1,23 @@
-import SongContract from '@DataContracts/Song/SongContract';
-import SearchTextQueryHelper from '@Helpers/SearchTextQueryHelper';
-import NameMatchMode from '@Models/NameMatchMode';
-import { SongQueryParams } from '@Repositories/SongRepository';
-import functions from '@Shared/GlobalFunctions';
-import $ from 'jquery';
+import { SongAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
+import {
+	EntryAutoComplete,
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SearchTextQueryHelper } from '@/Helpers/SearchTextQueryHelper';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { SongQueryParams } from '@/Repositories/SongRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { SongAutoCompleteParams } from './AutoCompleteParams';
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface SongAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	properties: SongAutoCompleteParams;
 }
 
-const SongAutoComplete = ({
+export const SongAutoComplete = ({
 	properties,
 	...props
 }: SongAutoCompleteProps): React.ReactElement => {
@@ -39,9 +39,9 @@ const SongAutoComplete = ({
 		nameMatchMode: NameMatchMode[NameMatchMode.Auto],
 		lang: vdb.values.languagePreference,
 		preferAccurateMatches: true,
+		sort: SongSortRule.SongType,
+		...properties.extraQueryParams,
 	};
-	if (properties.extraQueryParams)
-		$.extend(queryParams, properties.extraQueryParams);
 
 	return (
 		<EntryAutoComplete
@@ -73,5 +73,3 @@ const SongAutoComplete = ({
 		/>
 	);
 };
-
-export default SongAutoComplete;

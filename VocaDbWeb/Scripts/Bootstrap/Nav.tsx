@@ -1,20 +1,19 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/d278c495ffe987420947c036baedc6ec34ed7e8b/src/Nav.tsx
-import classNames from 'classnames';
-import * as React from 'react';
-import { useContext } from 'react';
-import { useUncontrolled } from 'uncontrollable';
-
-import AbstractNav from './AbstractNav';
-import NavItem from './NavItem';
-import NavLink from './NavLink';
-import NavbarContext from './NavbarContext';
-import { useBootstrapPrefix } from './ThemeProvider';
+import AbstractNav from '@/Bootstrap/AbstractNav';
+import NavItem from '@/Bootstrap/NavItem';
+import NavLink from '@/Bootstrap/NavLink';
+import NavbarContext from '@/Bootstrap/NavbarContext';
+import { useBootstrapPrefix } from '@/Bootstrap/ThemeProvider';
 import {
 	BsPrefixProps,
 	BsPrefixRefForwardingComponent,
 	SelectCallback,
-} from './helpers';
-import { EventKey } from './types';
+} from '@/Bootstrap/helpers';
+import { EventKey } from '@/Bootstrap/types';
+import classNames from 'classnames';
+import * as React from 'react';
+import { useContext } from 'react';
+import { useUncontrolled } from 'uncontrollable';
 
 export interface NavProps
 	extends BsPrefixProps,

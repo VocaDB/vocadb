@@ -1,20 +1,17 @@
-#nullable disable
+namespace VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Domain
+/// <summary>
+/// Direction of a many-to-one or many-to-many bidirectional link between entities (usually child-parent relationship).
+/// </summary>
+public enum LinkDirection
 {
 	/// <summary>
-	/// Direction of a many-to-one or many-to-many bidirectional link between entities (usually child-parent relationship).
+	/// From child to parent (default).
 	/// </summary>
-	public enum LinkDirection
-	{
-		/// <summary>
-		/// From child to parent (default).
-		/// </summary>
-		ManyToOne,
+	ManyToOne,
 
-		/// <summary>
-		/// From parent to child (reverse link).
-		/// </summary>
-		OneToMany
-	}
+	/// <summary>
+	/// From parent to child (reverse link).
+	/// </summary>
+	OneToMany
 }

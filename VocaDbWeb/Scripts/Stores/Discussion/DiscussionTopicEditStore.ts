@@ -1,19 +1,19 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import LoginManager from '@Models/LoginManager';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { LoginManager } from '@/Models/LoginManager';
 import { makeObservable, observable } from 'mobx';
 
-export default class DiscussionTopicEditStore {
-	public readonly author: UserApiContract;
-	@observable public content = '';
-	@observable public folderId?: number = undefined;
-	@observable public locked = false;
-	@observable public name = '';
+export class DiscussionTopicEditStore {
+	readonly author: UserApiContract;
+	@observable content = '';
+	@observable folderId?: number = undefined;
+	@observable locked = false;
+	@observable name = '';
 
-	public constructor(
+	constructor(
 		loginManager: LoginManager,
-		public folders: DiscussionFolderContract[],
+		readonly folders: DiscussionFolderContract[],
 		contract?: DiscussionTopicContract,
 	) {
 		makeObservable(this);
@@ -29,7 +29,7 @@ export default class DiscussionTopicEditStore {
 		}
 	}
 
-	public toContract = (): DiscussionTopicContract => {
+	toContract = (): DiscussionTopicContract => {
 		return JSON.parse(JSON.stringify(this)) as DiscussionTopicContract;
 	};
 }

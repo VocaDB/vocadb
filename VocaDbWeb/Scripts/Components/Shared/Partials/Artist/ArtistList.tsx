@@ -1,12 +1,10 @@
-import ArtistLinkContract from '@DataContracts/Song/ArtistLinkContract';
-import ArtistCategories from '@Models/Artists/ArtistCategories';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
-import _ from 'lodash';
+import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
+import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
+import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import ArtistLink from './ArtistLink';
-import ArtistTypeLabel from './ArtistTypeLabel';
 
 export enum ShowRolesMode {
 	Never,
@@ -48,7 +46,7 @@ interface ArtistListProps {
 	tooltip?: boolean;
 }
 
-const ArtistList = ({
+export const ArtistList = ({
 	artists,
 	showRoles = ShowRolesMode.Never,
 	showType = false,
@@ -56,7 +54,7 @@ const ArtistList = ({
 }: ArtistListProps): React.ReactElement => {
 	const { t } = useTranslation(['Resources']);
 
-	const ordered = React.useMemo(() => _.sortBy(artists, (a) => a.isSupport), [
+	const ordered = React.useMemo(() => artists.sortBy((a) => a.isSupport), [
 		artists,
 	]);
 
@@ -109,5 +107,3 @@ const ArtistList = ({
 		</>
 	);
 };
-
-export default ArtistList;

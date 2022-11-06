@@ -4,6 +4,5 @@
 
 @if (Model.User != null && !string.IsNullOrEmpty(Model.User.Email)) {
 	<div style="width: @(Model.Size)px; height: @(Model.Size)px; display: inline-block">
-		@Gravatar.GetHtml(Model.User.Email, Model.Size)
 	</div>
 }

@@ -1,10 +1,10 @@
-import VenueRepository from '@Repositories/VenueRepository';
-import ReportEntryStore from '@Stores/ReportEntryStore';
+import { VenueRepository } from '@/Repositories/VenueRepository';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 
-export default class VenueDetailsStore {
-	public readonly reportStore: ReportEntryStore;
+export class VenueDetailsStore {
+	readonly reportStore: ReportEntryStore;
 
-	public constructor(venueRepo: VenueRepository, venueId: number) {
+	constructor(venueRepo: VenueRepository, venueId: number) {
 		this.reportStore = new ReportEntryStore((reportType, notes) => {
 			return venueRepo.createReport({
 				entryId: venueId,

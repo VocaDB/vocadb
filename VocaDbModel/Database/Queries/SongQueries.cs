@@ -71,7 +71,7 @@ namespace VocaDb.Model.Database.Queries
 		private Tag[] AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IDatabaseContext<Song> ctx)
 		{
 			if (pvResult.Tags == null || !pvResult.Tags.Any())
-				return new Tag[0];
+				return Array.Empty<Tag>();
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var tags = MapTags(ctx, pvResult.Tags);
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 
 			if (!songIds.Any())
-				return new Song[0];
+				return Array.Empty<Song>();
 
 			return ctx.Query()
 				.Where(s => songIds.Contains(s.Id))
@@ -332,7 +332,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public Task<SongContract> Create(CreateSongContract contract)
+		public Task<SongContract> Create(CreateSongForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -343,7 +343,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return _repository.HandleTransactionAsync(async ctx =>
 			{
-				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
+				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? Array.Empty<VideoUrlParseResult>();
 				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
 				ctx.AuditLogger.SysLog($"creating a new song with name '{contract.Names.First().Value}'");
@@ -664,9 +664,8 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
-#nullable disable
 
-			public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
+		public SongWithPVAndVoteForApiContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true)
 		{
 			return HandleQuery(session =>
 			{
@@ -682,9 +681,14 @@ namespace VocaDb.Model.Database.Queries
 				if (addHit)
 					AddSongHit(session, song, hostname);
 
-				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference, includePVs);
+				return new SongWithPVAndVoteForApiContract(
+					song: song,
+					vote: vote != null ? vote.Rating : SongVoteRating.Nothing,
+					languagePreference: PermissionContext.LanguagePreference
+				);
 			});
 		}
+#nullable disable
 
 		public SongForApiContract GetSongForApi(int songId, SongOptionalFields fields, ContentLanguagePreference? lang = null)
 		{
@@ -700,10 +704,12 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public SongForEditContract GetSongForEdit(int songId)
+#nullable enable
+		public SongForEditForApiContract GetSongForEdit(int songId)
 		{
-			return HandleQuery(session => new SongForEditContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
+			return HandleQuery(session => new SongForEditForApiContract(session.Load<Song>(songId), PermissionContext.LanguagePreference, PermissionContext));
 		}
+#nullable disable
 
 		public T GetSongWithMergeRecord<T>(int id, Func<Song, SongMergeRecord, T> fac)
 		{
@@ -840,7 +846,7 @@ namespace VocaDb.Model.Database.Queries
 			if (names == null || !names.Any())
 				return Enumerable.Empty<ValueTuple<Song, SongMatchProperty>>();
 
-			var nameMatchIds = new int[0];
+			var nameMatchIds = Array.Empty<int>();
 
 			var totalCount = 10;
 			var nameQuery = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
@@ -873,7 +879,7 @@ namespace VocaDb.Model.Database.Queries
 			}
 
 			var nameMatches = (nameMatchIds.Any() ? CollectionHelper.SortByIds(ctx.Query().Where(s => nameMatchIds.Contains(s.Id)).ToArray(), nameMatchIds)
-				.Select(d => (d, SongMatchProperty.Title)) : new ValueTuple<Song, SongMatchProperty>[] { });
+				.Select(d => (d, SongMatchProperty.Title)) : Array.Empty<(Song, SongMatchProperty)>());
 
 			return nameMatches;
 		}
@@ -1054,8 +1060,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				// Other properties
-				if (target.OriginalVersion == null)
-					target.OriginalVersion = source.OriginalVersion;
+				target.OriginalVersion ??= source.OriginalVersion;
 
 				var alternateVersions = source.AlternateVersions.ToArray();
 				foreach (var alternate in alternateVersions)
@@ -1075,6 +1080,8 @@ namespace VocaDb.Model.Database.Queries
 				{
 					target.PublishDate = source.PublishDate;
 				}
+
+				target.ReleaseEvent ??= source.ReleaseEvent;
 
 				// Create merge record
 				var mergeEntry = new SongMergeRecord(source, target);
@@ -1285,7 +1292,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<SongForEditContract> UpdateBasicProperties(SongForEditContract properties)
+		public async Task<SongForEditForApiContract> UpdateBasicProperties(SongForEditForApiContract properties)
 		{
 			ParamIs.NotNull(() => properties);
 
@@ -1414,7 +1421,7 @@ namespace VocaDb.Model.Database.Queries
 					}
 				}
 
-				return new SongForEditContract(song, PermissionContext.LanguagePreference);
+				return new SongForEditForApiContract(song, PermissionContext.LanguagePreference, PermissionContext);
 			});
 		}
 #nullable disable
@@ -1531,14 +1538,30 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new SongForApiContract(song, PermissionContext.LanguagePreference, fields: SongOptionalFields.None),
 					versions: song.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: a.Reason != SongArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != SongEditableFields.Nothing,
-							reason: a.Reason.ToString(),
-							userIconFactory: _userIconFactory
-						)).OrderByDescending(v => v.Version)
+						.Select(a => ArchivedObjectVersionForApiContract.FromSong(a, _userIconFactory))
+						.OrderByDescending(v => v.Version)
 						.ToArray()
 				);
+			});
+		}
+
+		public ArchivedSongVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedSongVersionDetailsForApiContract(
+					archived: session.Load<ArchivedSongVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
 			});
 		}
 #nullable disable

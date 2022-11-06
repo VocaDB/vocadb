@@ -1,17 +1,44 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import Tag from '@Models/Tags/Tag';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import EntryRepository from '@Repositories/EntryRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongRepository from '@Repositories/SongRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { Tag } from '@/Models/Tags/Tag';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { EntryRepository } from '@/Repositories/EntryRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import {
+	AlbumSearchRouteParams,
+	AlbumSearchStore,
+} from '@/Stores/Search/AlbumSearchStore';
+import {
+	AnythingSearchRouteParams,
+	AnythingSearchStore,
+} from '@/Stores/Search/AnythingSearchStore';
+import {
+	ArtistSearchRouteParams,
+	ArtistSearchStore,
+} from '@/Stores/Search/ArtistSearchStore';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import {
+	EventSearchRouteParams,
+	EventSearchStore,
+} from '@/Stores/Search/EventSearchStore';
+import { ISearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import {
+	SongSearchRouteParams,
+	SongSearchStore,
+} from '@/Stores/Search/SongSearchStore';
+import { TagFilters } from '@/Stores/Search/TagFilters';
+import {
+	TagSearchRouteParams,
+	TagSearchStore,
+} from '@/Stores/Search/TagSearchStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import addFormats from 'ajv-formats';
 import {
@@ -21,20 +48,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-
-import AlbumSearchStore, { AlbumSearchRouteParams } from './AlbumSearchStore';
-import AnythingSearchStore, {
-	AnythingSearchRouteParams,
-} from './AnythingSearchStore';
-import ArtistSearchStore, {
-	ArtistSearchRouteParams,
-} from './ArtistSearchStore';
-import { ICommonSearchStore } from './CommonSearchStore';
-import EventSearchStore, { EventSearchRouteParams } from './EventSearchStore';
-import { ISearchCategoryBaseStore } from './SearchCategoryBaseStore';
-import SongSearchStore, { SongSearchRouteParams } from './SongSearchStore';
-import TagFilters from './TagFilters';
-import TagSearchStore, { TagSearchRouteParams } from './TagSearchStore';
 
 export enum SearchType {
 	Anything = 'Anything',
@@ -61,25 +74,25 @@ addFormats(ajv);
 const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SearchStore
-	implements ICommonSearchStore, StoreWithPagination<SearchRouteParams> {
-	public readonly albumSearchStore: AlbumSearchStore;
-	public readonly anythingSearchStore: AnythingSearchStore;
-	public readonly artistSearchStore: ArtistSearchStore;
-	public readonly eventSearchStore: EventSearchStore;
-	public readonly songSearchStore: SongSearchStore;
-	public readonly tagSearchStore: TagSearchStore;
+export class SearchStore
+	implements ICommonSearchStore, LocationStateStore<SearchRouteParams> {
+	readonly albumSearchStore: AlbumSearchStore;
+	readonly anythingSearchStore: AnythingSearchStore;
+	readonly artistSearchStore: ArtistSearchStore;
+	readonly eventSearchStore: EventSearchStore;
+	readonly songSearchStore: SongSearchStore;
+	readonly tagSearchStore: TagSearchStore;
 
-	@observable public draftsOnly = false;
-	@observable public genreTags: TagBaseContract[] = [];
-	@observable public pageSize = 10;
-	@observable public showAdvancedFilters = false;
-	@observable public searchTerm = '';
-	@observable public searchType = SearchType.Anything;
-	public readonly tagFilters: TagFilters;
-	@observable public showTags = false;
+	@observable draftsOnly = false;
+	@observable genreTags: TagBaseContract[] = [];
+	@observable pageSize = 10;
+	@observable showAdvancedFilters = false;
+	@observable searchTerm = '';
+	@observable searchType = SearchType.Anything;
+	readonly tagFilters: TagFilters;
+	@observable showTags = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,
 		entryRepo: EntryRepository,
@@ -136,39 +149,39 @@ export default class SearchStore
 			);
 	}
 
-	@computed public get showAnythingSearch(): boolean {
+	@computed get showAnythingSearch(): boolean {
 		return this.searchType === SearchType.Anything;
 	}
 
-	@computed public get showArtistSearch(): boolean {
+	@computed get showArtistSearch(): boolean {
 		return this.searchType === SearchType.Artist;
 	}
 
-	@computed public get showAlbumSearch(): boolean {
+	@computed get showAlbumSearch(): boolean {
 		return this.searchType === SearchType.Album;
 	}
 
-	@computed public get showEventSearch(): boolean {
+	@computed get showEventSearch(): boolean {
 		return this.searchType === SearchType.ReleaseEvent;
 	}
 
-	@computed public get showSongSearch(): boolean {
+	@computed get showSongSearch(): boolean {
 		return this.searchType === SearchType.Song;
 	}
 
-	@computed public get showTagSearch(): boolean {
+	@computed get showTagSearch(): boolean {
 		return this.searchType === SearchType.Tag;
 	}
 
-	@computed public get showTagFilter(): boolean {
+	@computed get showTagFilter(): boolean {
 		return !this.showTagSearch;
 	}
 
-	@computed public get showDraftsFilter(): boolean {
+	@computed get showDraftsFilter(): boolean {
 		return this.searchType !== SearchType.Tag;
 	}
 
-	@computed public get isUniversalSearch(): boolean {
+	@computed get isUniversalSearch(): boolean {
 		return this.searchType === SearchType.Anything;
 	}
 
@@ -197,42 +210,38 @@ export default class SearchStore
 		}
 	};
 
-	public get currentCategoryStore(): ISearchCategoryBaseStore<SearchRouteParams> {
+	get currentCategoryStore(): ISearchCategoryBaseStore<SearchRouteParams> {
 		return this.getCategoryStore(this.searchType);
 	}
 
-	public popState = false;
-
-	public get paging(): ServerSidePagingStore {
+	get paging(): ServerSidePagingStore {
 		return this.currentCategoryStore.paging;
 	}
 
-	public get clearResultsByQueryKeys(): (keyof SearchRouteParams)[] {
-		return this.currentCategoryStore.clearResultsByQueryKeys;
+	@computed get locationState(): SearchRouteParams {
+		return this.currentCategoryStore.locationState;
 	}
-
-	@computed public get routeParams(): SearchRouteParams {
-		return this.currentCategoryStore.routeParams;
-	}
-	public set routeParams(value: SearchRouteParams) {
+	set locationState(value: SearchRouteParams) {
 		value.searchType ??= SearchType.Anything;
 		this.searchType = value.searchType;
-		this.currentCategoryStore.routeParams = value;
+		this.currentCategoryStore.locationState = value;
 	}
 
-	public validateRouteParams = (data: any): data is SearchRouteParams => {
+	validateLocationState = (data: any): data is SearchRouteParams => {
 		return validate(data);
 	};
 
-	public updateResults = (clearResults: boolean): Promise<void> => {
+	updateResults = (clearResults: boolean): Promise<void> => {
 		return this.currentCategoryStore.updateResults(clearResults);
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.currentCategoryStore.updateResultsWithTotalCount();
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	onLocationStateChange = (
+		event: StateChangeEvent<SearchRouteParams>,
+	): void => {
+		this.currentCategoryStore.onLocationStateChange?.(event);
 	};
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PatreonLink = React.memo(
+export const PatreonLink = React.memo(
 	(): React.ReactElement => {
 		return (
 			<>
@@ -19,5 +19,3 @@ const PatreonLink = React.memo(
 		);
 	},
 );
-
-export default PatreonLink;

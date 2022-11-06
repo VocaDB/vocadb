@@ -302,7 +302,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<AlbumContract> Create(CreateAlbumContract contract)
+		public async Task<AlbumContract> Create(CreateAlbumForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -427,23 +427,21 @@ namespace VocaDb.Model.Database.Queries
 				{
 					var agentNum = (user != null ? user.Id : hostname.GetHashCode());
 
-					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted))
+					using var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted);
+					var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
+
+					if (!isHit)
 					{
-						var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
+						var hit = new AlbumHit(album, agentNum);
+						session.Save(hit);
 
-						if (!isHit)
+						try
 						{
-							var hit = new AlbumHit(album, agentNum);
-							session.Save(hit);
-
-							try
-							{
-								tx.Commit();
-							}
-							catch (SqlException x)
-							{
-								session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
-							}
+							tx.Commit();
+						}
+						catch (SqlException x)
+						{
+							session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
 						}
 					}
 				}
@@ -598,11 +596,16 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public AlbumForEditContract GetForEdit(int id)
+		public AlbumForEditForApiContract GetForEdit(int id)
 		{
-			return
-				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
+			return HandleQuery(session =>
+				new AlbumForEditForApiContract(
+					album: session.Load<Album>(id),
+					languagePreference: PermissionContext.LanguagePreference,
+					imageStore: _imageUrlFactory,
+					permissionContext: PermissionContext
+				)
+			);
 		}
 
 		public RelatedAlbumsContract GetRelatedAlbums(int albumId)
@@ -858,11 +861,9 @@ namespace VocaDb.Model.Database.Queries
 					if (versionWithPic.CoverPicture != null)
 					{
 						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
-						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes))
-						{
-							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
-							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-						}
+						using var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes);
+						var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 					}
 				}
 				else
@@ -947,7 +948,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract? pictureData)
+		public async Task<AlbumForEditForApiContract> UpdateBasicProperties(AlbumForEditForApiContract properties, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => properties);
 
@@ -1140,7 +1141,7 @@ namespace VocaDb.Model.Database.Queries
 					}
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, _imageUrlFactory);
+				return new AlbumForEditForApiContract(album, PermissionContext.LanguagePreference, _imageUrlFactory, PermissionContext);
 			});
 		}
 #nullable disable
@@ -1200,14 +1201,29 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new AlbumForApiContract(album, PermissionContext.LanguagePreference, thumbPersister: null, fields: AlbumOptionalFields.None),
 					versions: album.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: a.Reason != AlbumArchiveReason.PropertiesUpdated || a.Diff.ChangedFields.Value != AlbumEditableFields.Nothing,
-							reason: a.Reason.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromAlbum(a, _userIconFactory))
 						.ToArray()
 				);
+			});
+		}
+
+		public ArchivedAlbumVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedAlbumVersionDetailsForApiContract(
+					archived: session.Load<ArchivedAlbumVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
 			});
 		}
 #nullable disable

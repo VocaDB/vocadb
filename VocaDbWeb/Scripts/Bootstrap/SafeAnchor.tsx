@@ -1,9 +1,11 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/8a7e095e8032fdeac4fd1fdb41e6dfb452ae4494/src/SafeAnchor.tsx
+import createChainedFunction from '@/Bootstrap/createChainedFunction';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-
-import createChainedFunction from './createChainedFunction';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 export interface SafeAnchorProps
 	extends React.HTMLAttributes<HTMLElement>,

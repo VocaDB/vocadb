@@ -1,12 +1,11 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import LocalizedStringWithIdEditStore from '@Stores/Globalization/LocalizedStringWithIdEditStore';
-import NamesEditStore from '@Stores/Globalization/NamesEditStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
+import { LocalizedStringWithIdEditStore } from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
+import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import HelpLabel from '../Partials/Shared/HelpLabel';
 
 interface NameEditorProps {
 	namesEditStore: NamesEditStore;
@@ -51,7 +50,7 @@ interface NamesEditorProps {
 	showAliases?: boolean;
 }
 
-const NamesEditor = observer(
+export const NamesEditor = observer(
 	({
 		namesEditStore,
 		showAliases = true,
@@ -116,7 +115,9 @@ const NamesEditor = observer(
 				{showAliases && (
 					<>
 						<HelpLabel
-							title={t('ViewRes:EntryEdit.AliasesDesc')}
+							dangerouslySetInnerHTML={{
+								__html: t('ViewRes:EntryEdit.AliasesDesc'),
+							}}
 							label={t('ViewRes:EntryEdit.Aliases')}
 						/>
 
@@ -145,5 +146,3 @@ const NamesEditor = observer(
 		);
 	},
 );
-
-export default NamesEditor;

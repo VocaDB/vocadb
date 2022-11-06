@@ -27,19 +27,19 @@ namespace VocaDb.Web.Models.Shared
 			}
 		}
 
+		public bool AllowCustomArtistName { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public DiscType[] AlbumTypes { get; init; }
-
+		public bool AllowCustomTracks { get; init; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public ArtistType[] ArtistTypes { get; init; }
-
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public ArtistRoles[] ArtistRoles { get; init; }
 		public string? ExternalHelpPath { get; init; }
 		public string? HostAddress { get; init; }
 		public string? LockdownMessage { get; init; }
-
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public SongType[] SongTypes { get; init; }
-
 		public string StaticContentHost { get; init; }
 
 		public string SiteName { get; init; }
@@ -49,6 +49,7 @@ namespace VocaDb.Web.Models.Shared
 		public string? BlogUrl { get; init; }
 		public string? PatreonLink { get; init; }
 		public string? SitewideAnnouncement { get; init; }
+		public string[] Stylesheets { get; init; }
 
 		public string AmazonComAffiliateId { get; init; }
 		public string AmazonJpAffiliateId { get; init; }
@@ -57,10 +58,8 @@ namespace VocaDb.Web.Models.Shared
 		public int InstrumentalTagId { get; init; }
 
 		public string? BaseAddress { get; init; }
-
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguagePreference LanguagePreference { get; init; }
-
 		public bool IsLoggedIn { get; init; }
 		public int LoggedUserId { get; init; }
 		public SanitizedUserWithPermissionsContract? LoggedUser { get; init; }
@@ -74,12 +73,13 @@ namespace VocaDb.Web.Models.Shared
 		public MenuPageLink[] SmallBanners { get; init; }
 		public MenuPageLink[] SocialLinks { get; init; }
 
-		public string? RequestToken { get; init; }
-
 		public GlobalValues(VocaDbPage model)
 		{
+			AllowCustomArtistName = AppConfig.AllowCustomArtistName;
 			AlbumTypes = AppConfig.AlbumTypes;
+			AllowCustomTracks = AppConfig.AllowCustomTracks;
 			ArtistTypes = AppConfig.ArtistTypes;
+			ArtistRoles = AppConfig.ArtistRoles;
 			ExternalHelpPath = AppConfig.ExternalHelpPath;
 			HostAddress = AppConfig.HostAddress;
 			LockdownMessage = AppConfig.LockdownMessage;
@@ -93,6 +93,7 @@ namespace VocaDb.Web.Models.Shared
 			BlogUrl = model.Config.SiteSettings.BlogUrl.EmptyToNull();
 			PatreonLink = model.Config.SiteSettings.PatreonLink.EmptyToNull();
 			SitewideAnnouncement = model.Config.SiteSettings.SitewideAnnouncement.EmptyToNull();
+			Stylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
 			AmazonComAffiliateId = model.Config.Affiliates.AmazonComAffiliateId;
 			AmazonJpAffiliateId = model.Config.Affiliates.amazonJpAffiliateId;

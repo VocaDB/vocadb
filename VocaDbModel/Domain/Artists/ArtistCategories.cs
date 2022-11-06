@@ -1,36 +1,32 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Artists;
 
-
-namespace VocaDb.Model.Domain.Artists
+/// <summary>
+/// Artist categories are shown as rows on song/album details page,
+/// with their own title.
+/// </summary>
+[Flags]
+public enum ArtistCategories
 {
+	Nothing = 0,
+
+	Vocalist = 1 << 0,
+
+	Producer = 1 << 1,
+
+	Animator = 1 << 2,
+
+	Label = 1 << 3,
+
+	Circle = 1 << 4,
+
 	/// <summary>
-	/// Artist categories are shown as rows on song/album details page,
-	/// with their own title.
+	/// Instrumentalist, lyricist, etc.
 	/// </summary>
-	[Flags]
-	public enum ArtistCategories
-	{
-		Nothing = 0,
+	Other = 1 << 5,
 
-		Vocalist = 1 << 0,
+	Band = 1 << 6,
 
-		Producer = 1 << 1,
+	Illustrator = 1 << 7,
 
-		Animator = 1 << 2,
-
-		Label = 1 << 3,
-
-		Circle = 1 << 4,
-
-		/// <summary>
-		/// Instrumentalist, lyricist, etc.
-		/// </summary>
-		Other = 1 << 5,
-
-		Band = 1 << 6,
-
-		Illustrator = 1 << 7,
-
-		Subject = 1 << 8,
-	}
+	Subject = 1 << 8,
 }

@@ -10,7 +10,9 @@ namespace VocaDb.Model.DataContracts
 	/// </summary>
 	public class EntryWithNameAndVersionContract : EntryRefWithNameContract, IEntryBase
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name.DisplayName;
+#nullable disable
 
 		bool IDeletableEntry.Deleted => false;
 

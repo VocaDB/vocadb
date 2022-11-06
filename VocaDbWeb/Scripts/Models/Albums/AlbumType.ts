@@ -1,4 +1,4 @@
-enum AlbumType {
+export enum AlbumType {
 	Unknown = 'Unknown',
 
 	Album = 'Album',
@@ -23,5 +23,3 @@ enum AlbumType {
 
 	Other = 'Other',
 }
-
-export default AlbumType;

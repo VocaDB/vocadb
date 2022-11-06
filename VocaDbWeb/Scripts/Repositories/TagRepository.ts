@@ -1,38 +1,54 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryTagMappingContract from '@DataContracts/Tag/EntryTagMappingContract';
-import TagApiContract from '@DataContracts/Tag/TagApiContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagCategoryContract from '@DataContracts/Tag/TagCategoryContract';
-import TagDetailsContract from '@DataContracts/Tag/TagDetailsContract';
-import TagMappingContract from '@DataContracts/Tag/TagMappingContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import NameMatchMode from '@Models/NameMatchMode';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedTagVersionDetailsContract';
+import { EntryTagMappingContract } from '@/DataContracts/Tag/EntryTagMappingContract';
+import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
+import { TagDetailsContract } from '@/DataContracts/Tag/TagDetailsContract';
+import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
+import { TagMappingContract } from '@/DataContracts/Tag/TagMappingContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import qs from 'qs';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import EntryCommentRepository from './EntryCommentRepository';
+export enum TagOptionalField {
+	'AliasedTo' = 'AliasedTo',
+	'AdditionalNames' = 'AdditionalNames',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Parent' = 'Parent',
+	'RelatedTags' = 'RelatedTags',
+	'TranslatedDescription' = 'TranslatedDescription',
+	'WebLinks' = 'WebLinks',
+}
 
-export default class TagRepository extends BaseRepository {
+export class TagRepository extends BaseRepository {
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 		this.urlMapper = new UrlMapper(baseUrl);
 	}
 
-	public create = ({ name }: { name: string }): Promise<TagBaseContract> => {
+	create = ({ name }: { name: string }): Promise<TagBaseContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags?name=${name}`);
 		return this.httpClient.post<TagBaseContract>(url);
 	};
 
-	public createReport = ({
+	createReport = ({
 		entryId: tagId,
 		reportType,
 		notes,
@@ -54,31 +70,31 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public getById = ({
+	getById = ({
 		id,
 		fields,
 		lang,
 	}: {
 		id: number;
-		fields?: string;
+		fields?: TagOptionalField[];
 		lang?: ContentLanguagePreference;
 	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
 		return this.httpClient.get<TagApiContract>(url, {
-			fields: fields || undefined,
+			fields: fields?.join(','),
 			lang: lang,
 		});
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getComments = ({}: {}): EntryCommentRepository =>
+	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
 			this.httpClient,
 			new UrlMapper(this.baseUrl),
 			'/tags/',
 		);
 
-	public getEntryTypeTag = ({
+	getEntryTypeTag = ({
 		entryType,
 		subType,
 		lang,
@@ -92,12 +108,12 @@ export default class TagRepository extends BaseRepository {
 			`/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
 		);
 		return this.httpClient.get<TagApiContract>(url, {
-			fields: 'Description',
+			fields: [TagOptionalField.Description].join(','),
 			lang: lang,
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		queryParams,
 	}: {
 		queryParams: TagQueryParams;
@@ -110,7 +126,7 @@ export default class TagRepository extends BaseRepository {
 			getTotalCount: queryParams.getTotalCount,
 			maxResults: queryParams.maxResults,
 			query: queryParams.query,
-			fields: queryParams.fields || undefined,
+			fields: queryParams.fields?.join(','),
 			nameMatchMode: NameMatchMode[nameMatchMode],
 			allowAliases: queryParams.allowAliases,
 			categoryName: queryParams.categoryName,
@@ -125,13 +141,13 @@ export default class TagRepository extends BaseRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getEntryTagMappings = ({}: {}): Promise<EntryTagMappingContract[]> => {
+	getEntryTagMappings = ({}: {}): Promise<EntryTagMappingContract[]> => {
 		return this.httpClient.get<EntryTagMappingContract[]>(
 			this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
 		);
 	};
 
-	public getMappings = ({
+	getMappings = ({
 		paging,
 	}: {
 		paging: PagingProperties;
@@ -142,7 +158,7 @@ export default class TagRepository extends BaseRepository {
 		);
 	};
 
-	public getTopTags = ({
+	getTopTags = ({
 		lang,
 		categoryName,
 		entryType,
@@ -161,7 +177,7 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.get<TagBaseContract[]>(url, data);
 	};
 
-	public saveEntryMappings = ({
+	saveEntryMappings = ({
 		mappings,
 	}: {
 		mappings: EntryTagMappingContract[];
@@ -170,7 +186,7 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.put<void>(url, mappings);
 	};
 
-	public saveMappings = ({
+	saveMappings = ({
 		mappings,
 	}: {
 		mappings: TagMappingContract[];
@@ -179,19 +195,19 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.put<void>(url, mappings);
 	};
 
-	public getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<TagDetailsContract> => {
 		return this.httpClient.get<TagDetailsContract>(
 			this.urlMapper.mapRelative(`/api/tags/${id}/details`),
 		);
 	};
 
-	public getTagsByCategories = (): Promise<TagCategoryContract[]> => {
+	getTagsByCategories = (): Promise<TagCategoryContract[]> => {
 		return this.httpClient.get<TagCategoryContract[]>(
 			this.urlMapper.mapRelative('/api/tags/by-categories'),
 		);
 	};
 
-	public getTagWithArchivedVersions = ({
+	getTagWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -199,6 +215,64 @@ export default class TagRepository extends BaseRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<TagApiContract>
 		>(this.urlMapper.mapRelative(`/api/tags/${id}/versions`));
+	};
+
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedTagVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedTagVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/tags/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	getForEdit = ({ id }: { id: number }): Promise<TagForEditContract> => {
+		return this.httpClient.get<TagForEditContract>(
+			this.urlMapper.mapRelative(`/api/tags/${id}/for-edit`),
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: TagForEditContract,
+		thumbPicUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/tags/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	merge = (
+		requestToken: string,
+		{ id, targetTagId }: { id: number; targetTagId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/tags/${id}/merge?${qs.stringify({ targetTagId: targetTagId })}`,
+			),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
 	};
 }
 
@@ -208,7 +282,7 @@ export interface TagQueryParams extends CommonQueryParams {
 	categoryName?: string;
 
 	// Comma-separated list of optional fields
-	fields?: string;
+	fields?: TagOptionalField[];
 
 	sort?: string;
 }

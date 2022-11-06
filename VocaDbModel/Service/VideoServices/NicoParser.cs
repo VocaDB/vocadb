@@ -66,10 +66,8 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-				using (var stream = response.GetResponseStream())
-				{
-					return GetUserName(stream, enc);
-				}
+				using var stream = response.GetResponseStream();
+				return GetUserName(stream, enc);
 			}
 			finally
 			{

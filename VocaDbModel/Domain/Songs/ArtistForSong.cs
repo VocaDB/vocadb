@@ -1,160 +1,158 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Songs
+namespace VocaDb.Model.Domain.Songs;
+
+public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId
 {
-	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId
+	private string _notes;
+	private Song _song;
+
+#nullable disable
+	public ArtistForSong()
 	{
-		private string _notes;
-		private Song _song;
-
-		public ArtistForSong()
-		{
-			IsSupport = false;
-			Notes = string.Empty;
-		}
-
-		public ArtistForSong(Song song, Artist artist, bool support, ArtistRoles roles)
-			: this()
-		{
-			Song = song;
-			Artist = artist;
-			IsSupport = support;
-			Roles = roles;
-		}
-
-		public ArtistForSong(Song song, string name, bool support, ArtistRoles roles)
-			: this()
-		{
-			Song = song;
-			IsSupport = support;
-			Name = name;
-			Roles = roles;
-		}
-
-		public virtual Artist Artist { get; set; }
-
-		public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
-
-		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
-
-		public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
-
-		public virtual int Id { get; set; }
-
-		public virtual bool IsSupport { get; set; }
-
-		public virtual string Name { get; set; }
-
-		public virtual string Notes
-		{
-			get => _notes;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_notes = value;
-			}
-		}
-
-		public virtual ArtistRoles Roles { get; set; }
-
-		public virtual Song Song
-		{
-			get => _song;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_song = value;
-			}
-		}
-
+		IsSupport = false;
+		Notes = string.Empty;
+	}
 #nullable enable
-		public virtual bool ArtistLinkEquals(ArtistForSong? another)
+
+	public ArtistForSong(Song song, Artist artist, bool support, ArtistRoles roles)
+		: this()
+	{
+		Song = song;
+		Artist = artist;
+		IsSupport = support;
+		Roles = roles;
+	}
+
+	public ArtistForSong(Song song, string name, bool support, ArtistRoles roles)
+		: this()
+	{
+		Song = song;
+		IsSupport = support;
+		Name = name;
+		Roles = roles;
+	}
+
+	public virtual Artist? Artist { get; set; }
+
+	public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
+
+	public virtual string? ArtistToStringOrName => Artist?.ToString() ?? Name;
+
+	public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
+
+	public virtual int Id { get; set; }
+
+	public virtual bool IsSupport { get; set; }
+
+	public virtual string? Name { get; set; }
+
+	public virtual string Notes
+	{
+		get => _notes;
+		[MemberNotNull(nameof(_notes))]
+		set
 		{
-			if (another == null)
-				return false;
-
-			return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
+			ParamIs.NotNull(() => value);
+			_notes = value;
 		}
+	}
 
-		public virtual bool ContentEquals(ArtistForSongContract? contract)
+	public virtual ArtistRoles Roles { get; set; }
+
+	public virtual Song Song
+	{
+		get => _song;
+		[MemberNotNull(nameof(_song))]
+		set
 		{
-			if (contract == null)
-				return false;
-
-			var realNewName = contract.IsCustomName ? contract.Name : null;
-
-			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
+			ParamIs.NotNull(() => value);
+			_song = value;
 		}
-#nullable disable
+	}
 
-		public virtual void Delete()
-		{
-			if (Artist != null)
-				Artist.AllSongs.Remove(this);
+	public virtual bool ArtistLinkEquals(ArtistForSong? another)
+	{
+		if (another == null)
+			return false;
 
-			Song.AllArtists.Remove(this);
-			Song.UpdateArtistString();
-		}
+		return (Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name);
+	}
 
-#nullable enable
-		public virtual bool Equals(ArtistForSong? another)
-		{
-			if (another == null)
-				return false;
+	public virtual bool ContentEquals(ArtistForSongContract? contract)
+	{
+		if (contract == null)
+			return false;
 
-			if (ReferenceEquals(this, another))
-				return true;
+		var realNewName = contract.IsCustomName ? contract.Name : null;
 
-			if (Id == 0)
-				return false;
+		return IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName;
+	}
 
-			return Id == another.Id;
-		}
+	public virtual void Delete()
+	{
+		if (Artist != null)
+			Artist.AllSongs.Remove(this);
 
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as ArtistForSong);
-		}
+		Song.AllArtists.Remove(this);
+		Song.UpdateArtistString();
+	}
 
-		public override int GetHashCode()
-		{
-			return Id.GetHashCode();
-		}
+	public virtual bool Equals(ArtistForSong? another)
+	{
+		if (another == null)
+			return false;
 
-		public virtual void Move(Artist target)
-		{
-			ParamIs.NotNull(() => target);
+		if (ReferenceEquals(this, another))
+			return true;
 
-			if (target.Equals(Artist))
-				return;
+		if (Id == 0)
+			return false;
 
-			if (Artist != null)
-				Artist.AllSongs.Remove(this);
+		return Id == another.Id;
+	}
 
-			Artist = target;
-			target.AllSongs.Add(this);
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as ArtistForSong);
+	}
 
-		public virtual void Move(Song target)
-		{
-			ParamIs.NotNull(() => target);
+	public override int GetHashCode()
+	{
+		return Id.GetHashCode();
+	}
 
-			if (target.Equals(Song))
-				return;
+	public virtual void Move(Artist target)
+	{
+		ParamIs.NotNull(() => target);
 
-			Song.AllArtists.Remove(this);
-			Song = target;
-			target.AllArtists.Add(this);
-		}
+		if (target.Equals(Artist))
+			return;
 
-		public override string ToString()
-		{
-			return $"{ArtistToStringOrName} for {Song}";
-		}
-#nullable disable
+		if (Artist != null)
+			Artist.AllSongs.Remove(this);
+
+		Artist = target;
+		target.AllSongs.Add(this);
+	}
+
+	public virtual void Move(Song target)
+	{
+		ParamIs.NotNull(() => target);
+
+		if (target.Equals(Song))
+			return;
+
+		Song.AllArtists.Remove(this);
+		Song = target;
+		target.AllArtists.Add(this);
+	}
+
+	public override string ToString()
+	{
+		return $"{ArtistToStringOrName} for {Song}";
 	}
 }

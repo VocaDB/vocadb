@@ -1,4 +1,4 @@
-enum ArtistType {
+export enum ArtistType {
 	Unknown = 'Unknown',
 
 	/// <summary>
@@ -48,5 +48,3 @@ enum ArtistType {
 
 	CoverArtist = 'CoverArtist',
 }
-
-export default ArtistType;

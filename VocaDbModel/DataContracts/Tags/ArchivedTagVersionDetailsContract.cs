@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
+	[Obsolete]
 	public class ArchivedTagVersionDetailsContract
 	{
 		public ArchivedTagVersionDetailsContract() { }

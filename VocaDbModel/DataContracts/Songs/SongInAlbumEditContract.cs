@@ -34,7 +34,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			}
 			else
 			{
-				Artists = new ArtistContract[0];
+				Artists = Array.Empty<ArtistContract>();
 				SongName = songInAlbum.Name;
 			}
 

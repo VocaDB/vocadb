@@ -1,8 +1,8 @@
-import ArtistHelper from '@Helpers/ArtistHelper';
-import { ArtistAutoCompleteParams } from '@KnockoutExtensions/AutoCompleteParams';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilter } from '@/Stores/Search/ArtistFilter';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -11,44 +11,39 @@ import {
 	runInAction,
 } from 'mobx';
 
-import ArtistFilter from './ArtistFilter';
-
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page
-export default class ArtistFilters {
-	@observable public artists: ArtistFilter[] = [];
-	@observable public artistParticipationStatus = 'Everything' /* TODO: enum */;
-	public readonly artistSearchParams: ArtistAutoCompleteParams;
-	@observable public childVoicebanks = false;
-	@observable public includeMembers = false;
+export class ArtistFilters {
+	@observable artists: ArtistFilter[] = [];
+	@observable artistParticipationStatus = 'Everything' /* TODO: enum */;
+	@observable childVoicebanks = false;
+	@observable includeMembers = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 	) {
 		makeObservable(this);
-
-		this.artistSearchParams = { acceptSelection: this.selectArtist };
 	}
 
-	@computed public get artistIds(): number[] {
-		return _.map(this.artists, (a) => a.id);
+	@computed get artistIds(): number[] {
+		return this.artists.map((a) => a.id);
 	}
-	public set artistIds(value: number[]) {
+	set artistIds(value: number[]) {
 		// OPTIMIZE
 		this.artists = [];
 		this.selectArtists(value);
 	}
 
-	@computed public get hasMultipleArtists(): boolean {
+	@computed get hasMultipleArtists(): boolean {
 		return this.artists.length > 1;
 	}
 
-	@computed public get hasSingleArtist(): boolean {
+	@computed get hasSingleArtist(): boolean {
 		return this.artists.length === 1;
 	}
 
-	@computed public get showChildVoicebanks(): boolean {
+	@computed get showChildVoicebanks(): boolean {
 		return (
 			this.hasSingleArtist &&
 			ArtistHelper.canHaveChildVoicebanks(this.artists[0].artistType)
@@ -59,14 +54,15 @@ export default class ArtistFilters {
 		return this.artists[0];
 	}
 
-	@computed public get showMembers(): boolean {
+	@computed get showMembers(): boolean {
 		return (
 			this.hasSingleArtist &&
-			_.includes(ArtistHelper.groupTypes, this.firstArtist.artistType)
+			!!this.firstArtist.artistType &&
+			ArtistHelper.groupTypes.includes(this.firstArtist.artistType)
 		);
 	}
 
-	@computed public get filters(): any {
+	@computed get filters(): any {
 		return {
 			artistIds: this.artistIds,
 			artistParticipationStatus: this.artistParticipationStatus,
@@ -75,15 +71,15 @@ export default class ArtistFilters {
 		};
 	}
 
-	@action public selectArtists = (selectedArtistIds?: number[]): void => {
+	@action selectArtists = (selectedArtistIds?: number[]): void => {
 		if (!selectedArtistIds) return;
 
-		const filters = _.map(selectedArtistIds, (a) => new ArtistFilter(a));
+		const filters = selectedArtistIds.map((a) => new ArtistFilter(a));
 		this.artists.push(...filters);
 
 		if (!this.artistRepo) return;
 
-		_.forEach(filters, (newArtist) => {
+		for (const newArtist of filters) {
 			const selectedArtistId = newArtist.id;
 
 			this.artistRepo
@@ -94,14 +90,14 @@ export default class ArtistFilters {
 						newArtist.artistType = artist.artistType;
 					});
 				});
-		});
+		}
 	};
 
-	public selectArtist = (selectedArtistId?: number): void => {
+	selectArtist = (selectedArtistId?: number): void => {
 		this.selectArtists([selectedArtistId!]);
 	};
 
-	@action public removeArtist = (artist: ArtistFilter): void => {
-		_.pull(this.artists, artist);
+	@action removeArtist = (artist: ArtistFilter): void => {
+		pull(this.artists, artist);
 	};
 }

@@ -6,6 +6,7 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts
 {
+	[Obsolete]
 	public class ArchivedObjectVersionContract
 	{
 #nullable disable

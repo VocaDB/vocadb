@@ -1,20 +1,23 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import UserBaseContract from '@DataContracts/User/UserBaseContract';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import CommentRepository from '@Repositories/CommentRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import UserRepository from '@Repositories/UserRepository';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import ReportEntryStore from '@Stores/ReportEntryStore';
-import TagListStore from '@Stores/Tag/TagListStore';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
-import _ from 'lodash';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { CommentRepository } from '@/Repositories/CommentRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -23,15 +26,15 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class ReleaseEventDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	@observable public eventAssociationType?: UserEventRelationshipType;
-	public readonly reportStore: ReportEntryStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
-	@observable public usersAttending: UserBaseContract[];
+export class ReleaseEventDetailsStore {
+	readonly comments: EditableCommentsStore;
+	@observable eventAssociationType?: UserEventRelationshipType;
+	readonly reportStore: ReportEntryStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
+	@observable usersAttending: UserBaseContract[];
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		httpClient: HttpClient,
 		urlMapper: UrlMapper,
@@ -90,29 +93,28 @@ export default class ReleaseEventDetailsStore {
 		this.tagUsages = new TagListStore(tagUsages);
 	}
 
-	@computed public get hasEvent(): boolean {
+	@computed get hasEvent(): boolean {
 		return !!this.eventAssociationType;
 	}
 
-	@computed public get isEventAttending(): boolean {
+	@computed get isEventAttending(): boolean {
 		return this.eventAssociationType === UserEventRelationshipType.Attending;
 	}
 
-	@computed public get isEventInterested(): boolean {
+	@computed get isEventInterested(): boolean {
 		return this.eventAssociationType === UserEventRelationshipType.Interested;
 	}
 
-	@action public removeEvent = (): void => {
+	@action removeEvent = (): void => {
 		this.userRepo.deleteEventForUser({ eventId: this.eventId });
 		this.eventAssociationType = undefined;
-		const link = _.find(
-			this.usersAttending,
+		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
-		_.pull(this.usersAttending, link);
+		pull(this.usersAttending, link);
 	};
 
-	@action public setEventAttending = (): void => {
+	@action setEventAttending = (): void => {
 		this.userRepo.updateEventForUser({
 			eventId: this.eventId,
 			associationType: UserEventRelationshipType.Attending,
@@ -121,7 +123,7 @@ export default class ReleaseEventDetailsStore {
 		this.userRepo
 			.getOne({
 				id: this.loginManager.loggedUserId,
-				fields: 'MainPicture',
+				fields: [UserOptionalField.MainPicture],
 			})
 			.then((user) => {
 				runInAction(() => {
@@ -130,16 +132,15 @@ export default class ReleaseEventDetailsStore {
 			});
 	};
 
-	@action public setEventInterested = (): void => {
+	@action setEventInterested = (): void => {
 		this.userRepo.updateEventForUser({
 			eventId: this.eventId,
 			associationType: UserEventRelationshipType.Interested,
 		});
 		this.eventAssociationType = UserEventRelationshipType.Interested;
-		const link = _.find(
-			this.usersAttending,
+		const link = this.usersAttending.find(
 			(u) => u.id === this.loginManager.loggedUserId,
 		);
-		_.pull(this.usersAttending, link);
+		pull(this.usersAttending, link);
 	};
 }

@@ -1,10 +1,12 @@
 // Code from: https://github.com/react-bootstrap/react-bootstrap/blob/c11bc67ab3105e7a1839c0dcaacc5f1099885f02/src/NavbarToggle.tsx
+import NavbarContext from '@/Bootstrap/NavbarContext';
+import {
+	BsPrefixProps,
+	BsPrefixRefForwardingComponent,
+} from '@/Bootstrap/helpers';
 import useEventCallback from '@restart/hooks/useEventCallback';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
-
-import NavbarContext from './NavbarContext';
-import { BsPrefixProps, BsPrefixRefForwardingComponent } from './helpers';
 
 export interface NavbarToggleProps
 	extends BsPrefixProps,

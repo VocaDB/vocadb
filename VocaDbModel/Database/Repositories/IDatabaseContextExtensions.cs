@@ -97,10 +97,10 @@ namespace VocaDb.Model.Database.Repositories
 		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) where T2 : class, IDatabaseObject
 			=> ctx.OfType<T2>().Load(id);
 
-		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject
+		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId entry) where T : class, IDatabaseObject
 			=> ctx.Load<T>(entry.Id);
 
-		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : class, IEntryWithIntId
+		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : class, IEntryWithReadOnlyIntId
 			=> ctx.OfType<T2>().Query().WhereIdIn(ids);
 
 		/// <summary>
@@ -110,12 +110,12 @@ namespace VocaDb.Model.Database.Repositories
 		/// <param name="ctx">Repository context. Cannot be null.</param>
 		/// <param name="entry">Entry reference. Can be null in which case null is returned.</param>
 		/// <returns>Reference to the loaded entry. Can be null if <paramref name="entry"/> is null or Id is 0.</returns>
-		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, IEntryWithIntId entry)
+		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
 		{
 			return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default;
 		}
 
-		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext<T> ctx, IEntryWithIntId entry)
+		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext<T> ctx, IEntryWithReadOnlyIntId entry)
 		{
 			return entry != null && entry.Id != 0 ? await ctx.LoadAsync(entry.Id) : default;
 		}
@@ -130,17 +130,17 @@ namespace VocaDb.Model.Database.Repositories
 			return id != 0 ? ctx.Load<T>(id) : default;
 		}
 
-		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject
+#nullable enable
+		public static T? NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
 		{
 			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default;
 		}
 
-		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject
+		public static async Task<T?> NullSafeLoadAsync<T>(this IDatabaseContext ctx, IEntryWithReadOnlyIntId? entry) where T : class, IDatabaseObject
 		{
 			return entry != null && entry.Id != 0 ? await ctx.LoadAsync<T>(entry.Id) : default;
 		}
 
-#nullable enable
 		private static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
 		{
 			ParamIs.NotNull(() => ctx);

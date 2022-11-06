@@ -101,36 +101,5 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>List of entry names.</returns>
 		[HttpGet("names")]
 		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => _otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
-
-		[ApiExplorerSettings(IgnoreApi = true)]
-		[HttpGet("tooltip")]
-		public async Task<ActionResult<string>> GetToolTip(string url)
-		{
-			if (string.IsNullOrWhiteSpace(url))
-				return BadRequest("URL must be specified");
-
-			var entryId = _entryUrlParser.Parse(url, allowRelative: true);
-
-			if (entryId.IsEmpty)
-				return BadRequest("Invalid URL");
-
-			var data = string.Empty;
-			var id = entryId.Id;
-
-			switch (entryId.EntryType)
-			{
-				case EntryType.Album:
-					data = await _viewRenderService.RenderToStringAsync("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
-					break;
-				case EntryType.Artist:
-					data = await _viewRenderService.RenderToStringAsync("ArtistPopupContent", _artistService.GetArtist(id));
-					break;
-				case EntryType.Song:
-					data = await _viewRenderService.RenderToStringAsync("SongPopupContent", _songQueries.GetSong(id));
-					break;
-			}
-
-			return data;
-		}
 	}
 }

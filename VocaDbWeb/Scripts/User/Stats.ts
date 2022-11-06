@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-const UserStats = (model: { id: number }, type: string): void => {
+export const UserStats = (model: { id: number }, type: string): void => {
 	$(function () {
 		var userId = model.id;
 
@@ -11,5 +11,3 @@ const UserStats = (model: { id: number }, type: string): void => {
 		});
 	});
 };
-
-export default UserStats;

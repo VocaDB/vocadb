@@ -113,7 +113,7 @@ namespace VocaDb.Model.Service
 			var names = anyName.Where(n => !string.IsNullOrEmpty(n)).Select(n => n.Trim()).ToArray();
 
 			if (!names.Any())
-				return new EntryRefWithCommonPropertiesContract[] { };
+				return Array.Empty<EntryRefWithCommonPropertiesContract>();
 
 			// TODO: moved Distinct after ToArray to work around NH bug
 			return HandleQuery(session =>
@@ -133,7 +133,7 @@ namespace VocaDb.Model.Service
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
 		{
 			if (textQuery.IsEmpty)
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -228,6 +228,7 @@ namespace VocaDb.Model.Service
 					.Select(u => new AlbumForUserContract(u, LanguagePreference, _userIconFactory, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 		}
 
+		[Obsolete]
 		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>

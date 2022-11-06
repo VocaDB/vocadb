@@ -6,7 +6,7 @@ export enum UserLanguageProficiency {
 	Native = 'Native',
 }
 
-export default interface UserKnownLanguageContract {
+export interface UserKnownLanguageContract {
 	cultureCode: string;
 	proficiency: UserLanguageProficiency;
 }

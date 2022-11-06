@@ -1,6 +1,4 @@
-enum EntryEditEvent {
-	Created = 1,
-	Updated = 2,
+export enum EntryEditEvent {
+	Created = 'Created',
+	Updated = 'Updated',
 }
-
-export default EntryEditEvent;

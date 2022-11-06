@@ -1,8 +1,8 @@
-import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistType from '@Models/Artists/ArtistType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongType from '@Models/Songs/SongType';
+import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { SongType } from '@/Models/Songs/SongType';
 
 interface MenuPageLink {
 	bannerImg: string;
@@ -11,9 +11,12 @@ interface MenuPageLink {
 }
 
 // Corresponds to the GlobalValues record class in C#.
-export default interface GlobalValues {
+export interface GlobalValues {
+	allowCustomArtistName: boolean;
 	albumTypes: AlbumType[];
+	allowCustomTracks: boolean;
 	artistTypes: ArtistType[];
+	artistRoles: string[] /* TODO: enum */;
 	externalHelpPath?: string;
 	hostAddress: string;
 	lockdownMessage?: string;
@@ -27,6 +30,7 @@ export default interface GlobalValues {
 	blogUrl?: string;
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
+	stylesheets: string[];
 
 	amazonComAffiliateId: string;
 	amazonJpAffiliateId: string;
@@ -51,6 +55,4 @@ export default interface GlobalValues {
 	bigBanners: MenuPageLink[];
 	smallBanners: MenuPageLink[];
 	socialLinks: MenuPageLink[];
-
-	requestToken?: string;
 }

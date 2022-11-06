@@ -1,13 +1,13 @@
-import PVContract from '@DataContracts/PVs/PVContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
 import React from 'react';
 
 interface EmbedBiliProps {
 	pv: PVContract;
-	width: number;
-	height: number;
+	width: number | string;
+	height: number | string;
 }
 
-const EmbedBili = React.memo(
+export const EmbedBili = React.memo(
 	({ pv, width, height }: EmbedBiliProps): React.ReactElement => {
 		return height >= 274 && width >= 480 ? (
 			<div
@@ -27,11 +27,11 @@ const EmbedBili = React.memo(
 					framespacing="0"
 					allowFullScreen
 					width={width}
-					height={height + 67}
+					height={typeof height === 'number' ? height + 67 : height}
 					style={{
 						marginBottom: '-43px',
-						width: `${width}px`,
-						height: `${height + 67}px`,
+						width: width,
+						height: typeof height === 'number' ? height + 67 : height,
 					}}
 					key={pv.pvId}
 				/>
@@ -53,5 +53,3 @@ const EmbedBili = React.memo(
 		);
 	},
 );
-
-export default EmbedBili;

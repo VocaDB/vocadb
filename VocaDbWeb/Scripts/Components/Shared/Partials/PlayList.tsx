@@ -1,8 +1,11 @@
-import Button from '@Bootstrap/Button';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
-import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
+import Button from '@/Bootstrap/Button';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
+import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
+import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -10,16 +13,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import EmbedPV from './PV/EmbedPV';
-import PVRatingButtonsForIndex from './PVRatingButtonsForIndex';
-import SongTypeLabel from './Song/SongTypeLabel';
-
 interface PlayListProps {
 	playListStore: PlayListStore;
 	pvPlayerStore: PVPlayerStore;
 }
 
-const PlayList = observer(
+export const PlayList = observer(
 	({ playListStore, pvPlayerStore }: PlayListProps): React.ReactElement => {
 		const { t } = useTranslation([
 			'ViewRes.Home',
@@ -55,10 +54,12 @@ const PlayList = observer(
 
 								{pvPlayerStore.primaryPV && (
 									<div id="pv-player-wrapper">
-										<EmbedPV
+										<EmbedPVPreview
+											entry={{
+												...pvPlayerStore.selectedSong.song,
+												entryType: EntryType[EntryType.Song],
+											}}
 											pv={pvPlayerStore.primaryPV}
-											enableApi={true}
-											id="pv-player"
 										/>
 									</div>
 								)}
@@ -166,7 +167,7 @@ const PlayList = observer(
 												{/* eslint-disable-next-line jsx-a11y/alt-text */}
 												<img
 													src={song.song.mainPicture.urlThumb}
-													title="Cover picture" /* TODO: localize */
+													title="Cover picture" /* LOC */
 													className="coverPicIcon img-rounded"
 													referrerPolicy="same-origin"
 												/>
@@ -204,5 +205,3 @@ const PlayList = observer(
 		);
 	},
 );
-
-export default PlayList;

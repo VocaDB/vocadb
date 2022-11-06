@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentValidation;
 using Moq;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Users;
@@ -699,8 +700,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.AdditionalPermissions = new HashSet<PermissionToken>(new[] { PermissionToken.DesignatedStaff });
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				AdditionalPermissions = new[]
+				{
+					PermissionToken.DesignatedStaff
+				}.Select(permissionToken => permissionToken.Id).ToArray(),
+			};
 			_data.UpdateUser(contract);
 
 			var user = _repository.Load(contract.Id);
@@ -714,8 +720,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext.RefreshLoggedUser(_repository);
 
 			var oldName = _userWithoutEmail.Name;
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = "HatsuneMiku";
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = "HatsuneMiku",
+			};
 
 			_data.UpdateUser(contract);
 
@@ -734,8 +742,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = _userWithEmail.Name;
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = _userWithEmail.Name,
+			};
 
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<UserNameAlreadyExistsException>();
 		}
@@ -746,8 +756,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			LoggedUser.GroupId = UserGroupId.Admin;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			contract.Name = "Miku!";
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default)
+			{
+				Name = "Miku!",
+			};
 
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<InvalidUserNameException>();
 		}
@@ -755,16 +767,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUser_NotAllowed()
 		{
-			var contract = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
+			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_SetEmail()
+		public async Task UpdateUserSettings_SetEmail()
 		{
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Email = "new_email@vocadb.net" };
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Email = "new_email@vocadb.net" };
 			_userWithEmail.Options.EmailVerified = true;
-			var result = _data.UpdateUserSettings(contract, pictureData: null);
+			var result = await _data.UpdateUserSettings(contract, pictureData: null);
 
 			result.Should().NotBeNull("Result");
 			var user = GetUserFromRepo(_userWithEmail.Name);
@@ -774,56 +786,58 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Password()
+		public async Task UpdateUserSettings_Password()
 		{
 			var algo = new HMICSHA1PasswordHashAlgorithm();
 
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail)
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				OldPass = "123",
-				NewPass = "3939"
+				NewPass = "39393939",
+				NewPassAgain = "39393939",
 			};
 
-			_data.UpdateUserSettings(contract, pictureData: null);
+			await _data.UpdateUserSettings(contract, pictureData: null);
 
-			_userWithEmail.Password.Should().Be(algo.HashPassword("3939", _userWithEmail.Salt), "Password was updated");
+			_userWithEmail.Password.Should().Be(algo.HashPassword("39393939", _userWithEmail.Salt), "Password was updated");
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_Password_InvalidOldPassword()
 		{
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail)
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				OldPass = "393",
-				NewPass = "3939"
+				NewPass = "39393939",
+				NewPassAgain = "39393939",
 			};
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidPasswordException>();
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidPasswordException>();
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_NoPermission()
 		{
-			_data.Invoking(subject => subject.UpdateUserSettings(new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail), pictureData: null)).Should().Throw<NotAllowedException>();
+			_data.Awaiting(subject => subject.UpdateUserSettings(new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail), pictureData: null)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_EmailTaken()
 		{
 			_permissionContext.LoggedUser = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail) { Email = _userWithEmail.Email };
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserEmailAlreadyExistsException>();
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_EmailTakenButDisabled()
+		public async Task UpdateUserSettings_EmailTakenButDisabled()
 		{
 			_userWithEmail.Active = false;
 			_permissionContext.LoggedUser = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithoutEmail) { Email = _userWithEmail.Email };
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.UpdateUserSettings(contract, pictureData: null);
+			await _data.UpdateUserSettings(contract, pictureData: null);
 
 			var user = GetUserFromRepo(_userWithoutEmail.Name);
 			user.Should().NotBeNull("User was found in repository");
@@ -833,18 +847,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void UpdateUserSettings_InvalidEmailFormat()
 		{
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Email = "mikumiku" };
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Email = "mikumiku" };
 
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidEmailFormatException>();
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_ChangeName()
+		public async Task UpdateUserSettings_ChangeName()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "mikumiku" };
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "mikumiku" };
 
-			_data.UpdateUserSettings(contract, pictureData: null);
+			await _data.UpdateUserSettings(contract, pictureData: null);
 
 			_userWithEmail.Name.Should().Be("mikumiku", "Name was changed");
 			_userWithEmail.OldUsernames.Count.Should().Be(1, "Old username was added");
@@ -855,24 +869,149 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void UpdateUserSettings_ChangeName_Invalid()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "miku miku" };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidUserNameException>();
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "miku miku" };
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidUserNameException>();
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_ChangeName_AlreadyInUse()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = _userWithoutEmail.Name };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameAlreadyExistsException>();
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = _userWithoutEmail.Name };
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
 		public void UpdateUserSettings_ChangeName_TooSoon()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
-			var contract = new ServerOnlyUpdateUserSettingsContract(_userWithEmail) { Name = "mikumiku" };
-			_data.Invoking(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameTooSoonException>();
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "mikumiku" };
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameTooSoonException>();
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Location_TooLong()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				Location = string.Concat(Enumerable.Repeat(' ', 51)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- Location: The length of 'Location' must be 50 characters or fewer. You entered 51 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Email_TooLong()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				Email = $"{string.Concat(Enumerable.Repeat('a', 40))}@vocadb.net",
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- Email: The length of 'Email' must be 50 characters or fewer. You entered 51 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Name_TooShort()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				Name = string.Concat(Enumerable.Repeat('a', 2)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- Name: The length of 'Name' must be at least 3 characters. You entered 2 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Name_TooLong()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				Name = string.Concat(Enumerable.Repeat('a', 101)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- Name: The length of 'Name' must be 100 characters or fewer. You entered 101 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Password_TooShort()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				OldPass = string.Concat(Enumerable.Repeat('a', 7)),
+				NewPass = string.Concat(Enumerable.Repeat('a', 7)),
+				NewPassAgain = string.Concat(Enumerable.Repeat('a', 7)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- NewPass: The length of 'New Pass' must be at least 8 characters. You entered 7 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Password_TooLong()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				OldPass = string.Concat(Enumerable.Repeat('a', 101)),
+				NewPass = string.Concat(Enumerable.Repeat('a', 101)),
+				NewPassAgain = string.Concat(Enumerable.Repeat('a', 101)),
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- OldPass: The length of 'Old Pass' must be 100 characters or fewer. You entered 101 characters. Severity: Error
+ -- NewPass: The length of 'New Pass' must be 100 characters or fewer. You entered 101 characters. Severity: Error
+ -- NewPassAgain: The length of 'New Pass Again' must be 100 characters or fewer. You entered 101 characters. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_InvalidNewPassAgain()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				OldPass = "393",
+				NewPass = "39393939",
+				NewPassAgain = "",
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- NewPass: Passwords must match Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_UnreadNotificationsToKeep_TooSmall()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				UnreadNotificationsToKeep = 0,
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- UnreadNotificationsToKeep: 'Unread Notifications To Keep' must be greater than or equal to '1'. Severity: Error");
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_UnreadNotificationsToKeep_TooLarge()
+		{
+			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
+			{
+				UnreadNotificationsToKeep = 391,
+			};
+			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
+				.Should().Throw<ValidationException>()
+				.WithMessage(@"Validation failed: 
+ -- UnreadNotificationsToKeep: 'Unread Notifications To Keep' must be less than or equal to '390'. Severity: Error");
 		}
 
 		[TestMethod]

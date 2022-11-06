@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es2020",
 		"module": "esnext",
 		"moduleResolution": "node",
 		"jsx": "react-jsx",
@@ -12,17 +12,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./",
 		"paths": {
-			"@Bootstrap/*": ["Scripts/Bootstrap/*"],
-			"@Components/*": ["Scripts/Components/*"],
-			"@DataContracts/*": ["Scripts/DataContracts/*"],
-			"@Helpers/*": ["Scripts/Helpers/*"],
-			"@JQueryUI/*": ["Scripts/JQueryUI/*"],
-			"@KnockoutExtensions/*": ["Scripts/KnockoutExtensions/*"],
-			"@Models/*": ["Scripts/Models/*"],
-			"@Repositories/*": ["Scripts/Repositories/*"],
-			"@Shared/*": ["Scripts/Shared/*"],
-			"@Stores/*": ["Scripts/Stores/*"],
-			"@ViewModels/*": ["Scripts/ViewModels/*"]
+			"@/*": ["Scripts/*"]
 		},
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
@@ -30,5 +20,6 @@
 		"useDefineForClassFields": true,
 		"lib": ["dom", "esnext"]
 	},
-	"include": ["Scripts/**/*"]
+	"include": ["Scripts/**/*"],
+	"exclude": ["node_modules"]
 }

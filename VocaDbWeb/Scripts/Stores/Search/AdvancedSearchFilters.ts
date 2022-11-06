@@ -1,18 +1,16 @@
-import _ from 'lodash';
+import { AdvancedFilterType } from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
-import AdvancedSearchFilter, {
-	AdvancedFilterType,
-} from './AdvancedSearchFilter';
+export class AdvancedSearchFilters {
+	@observable filters: AdvancedSearchFilter[] = [];
 
-export default class AdvancedSearchFilters {
-	@observable public filters: AdvancedSearchFilter[] = [];
-
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@action public add = (
+	@action add = (
 		filter: AdvancedFilterType,
 		param: string,
 		description?: string,
@@ -26,18 +24,14 @@ export default class AdvancedSearchFilters {
 		});
 	};
 
-	public hasFilter = (
-		filterType: AdvancedFilterType,
-		param: string,
-	): boolean => {
-		const result = _.some(
-			this.filters,
+	hasFilter = (filterType: AdvancedFilterType, param: string): boolean => {
+		const result = this.filters.some(
 			(f) => f.filterType === filterType && f.param === param,
 		);
 		return result;
 	};
 
-	@action public remove = (filter: AdvancedSearchFilter): void => {
-		_.pull(this.filters, filter);
+	@action remove = (filter: AdvancedSearchFilter): void => {
+		pull(this.filters, filter);
 	};
 }

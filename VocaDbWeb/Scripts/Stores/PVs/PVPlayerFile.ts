@@ -1,46 +1,44 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerFile implements IPVPlayer {
-	public readonly service;
+export class PVPlayerFile implements IPVPlayer {
+	readonly service;
 	private player?: HTMLAudioElement;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 		service: PVService = PVService.File,
 	) {
 		this.service = service;
 	}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (!reset && this.player) {
-			readyCallback?.();
-			return;
-		}
+	attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (!reset && this.player) {
+				resolve();
+				return;
+			}
 
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append(
-				$(`<audio id='${this.playerElementId}' />`),
-			);
-		}
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(`<audio id='${this.playerElementId}' />`),
+				);
+			}
 
-		this.player = $(`#${this.playerElementId}`)[0] as HTMLAudioElement;
-		this.player.onended = (): void => {
-			if (this.player) this.songFinishedCallback?.();
-		};
+			this.player = $(`#${this.playerElementId}`)[0] as HTMLAudioElement;
+			this.player.onended = (): void => {
+				if (this.player) this.songFinishedCallback?.();
+			};
 
-		readyCallback?.();
+			resolve();
+		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		if (this.player) {
 			this.player.onended = null;
 		}
@@ -48,7 +46,7 @@ export default class PVPlayerFile implements IPVPlayer {
 		this.player = undefined;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) this.attach(false);
 
 		if (pvId) {

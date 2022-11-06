@@ -1,54 +1,45 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
-import { IPVPlayer } from './PVPlayerStore';
-
-export default class PVPlayerSoundCloud implements IPVPlayer {
+export class PVPlayerSoundCloud implements IPVPlayer {
 	private player?: SC.SoundCloudWidget;
-	public readonly service = PVService.SoundCloud;
+	readonly service = PVService.SoundCloud;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (!reset && this.player) {
-			readyCallback?.();
-			return;
-		}
+	attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (!reset && this.player) {
+				resolve();
+				return;
+			}
 
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append(
-				$(
-					`<div id='${this.playerElementId}' src='${window.location.protocol}//w.soundcloud.com/player/' />`,
-				),
-			);
-		}
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(
+						`<div id='${this.playerElementId}' src='${window.location.protocol}//w.soundcloud.com/player/' />`,
+					),
+				);
+			}
 
-		this.player = SC.Widget(this.playerElementId);
-		this.player.bind(SC.Widget.Events.FINISH, () => {
-			if (this.player) this.songFinishedCallback?.();
-		});
-
-		this.player.bind(SC.Widget.Events.READY, () => {
-			readyCallback?.();
-		});
-
-		this.player.bind(SC.Widget.Events.ERROR, () => {
-			// Some delay, to let the user read the error message and to prevent infinite loop
-			setTimeout(() => {
+			this.player = SC.Widget(this.playerElementId);
+			this.player.bind(SC.Widget.Events.FINISH, () => {
 				if (this.player) this.songFinishedCallback?.();
-			}, 3000);
+			});
+
+			this.player.bind(SC.Widget.Events.READY, () => resolve());
+
+			this.player.bind(SC.Widget.Events.ERROR, () => reject());
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		if (this.player) {
 			this.player.unbind(SC.Widget.Events.FINISH);
 		}
@@ -62,7 +53,7 @@ export default class PVPlayerSoundCloud implements IPVPlayer {
 		return url;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) this.attach(false);
 
 		if (pvId) {

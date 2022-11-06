@@ -149,7 +149,9 @@ namespace VocaDb.Model.Utils
 
 		public static string BrandedStringsAssembly => Val("BrandedStringsAssembly");
 
-		public static string DbDumpFolder => Val("DbDumpFolder");
+#nullable enable
+		public static string? DbDumpFolder => Val("DbDumpFolder");
+#nullable disable
 
 		/// <summary>
 		/// Enable inheriting artists for certain situations.
@@ -197,7 +199,7 @@ namespace VocaDb.Model.Utils
 			get
 			{
 				var val = Val("PreferredNicoArtistTypes");
-				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : new ArtistType[0];
+				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : Array.Empty<ArtistType>();
 			}
 		}
 
@@ -240,5 +242,9 @@ namespace VocaDb.Model.Utils
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
 		public static string VimeoApiKey => Val("VimeoApiKey");
+
+#nullable enable
+		public static string? MLNetActiveModelPath = Val(nameof(MLNetActiveModelPath));
+#nullable disable
 	}
 }

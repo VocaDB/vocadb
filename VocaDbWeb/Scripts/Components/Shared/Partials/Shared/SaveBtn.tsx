@@ -1,14 +1,18 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const SaveBtn = React.memo(
-	(): React.ReactElement => {
+interface SaveBtnProps {
+	submitting: boolean;
+}
+
+export const SaveBtn = React.memo(
+	({ submitting }: SaveBtnProps): React.ReactElement => {
 		const { t } = useTranslation('HelperRes');
 
 		return (
 			<p>
-				<Button type="submit" variant="primary">
+				<Button type="submit" variant="primary" disabled={submitting}>
 					<i className="icon-ok icon-white"></i> &nbsp;
 					{t('HelperRes:Helper.SaveChanges')}
 				</Button>
@@ -16,5 +20,3 @@ const SaveBtn = React.memo(
 		);
 	},
 );
-
-export default SaveBtn;

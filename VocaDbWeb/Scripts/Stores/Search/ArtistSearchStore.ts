@@ -1,16 +1,19 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ArtistHelper from '@Helpers/ArtistHelper';
-import ArtistType from '@Models/Artists/ArtistType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArtistHelper } from '@/Helpers/ArtistHelper';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import {
+	ArtistOptionalField,
+	ArtistRepository,
+} from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
-
-import AdvancedSearchFilter from './AdvancedSearchFilter';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the ArtistSortRule enum in C#.
 export enum ArtistSortRule {
@@ -22,6 +25,7 @@ export enum ArtistSortRule {
 	SongCount = 'SongCount',
 	SongRating = 'SongRating',
 	FollowerCount = 'FollowerCount',
+	ArtistType = 'ArtistType',
 }
 
 export interface ArtistSearchRouteParams {
@@ -39,16 +43,31 @@ export interface ArtistSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class ArtistSearchStore extends SearchCategoryBaseStore<
+const clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'sort',
+	'artistType',
+	'onlyFollowedByMe',
+	// TODO: onlyRootVoicebanks
+];
+
+export class ArtistSearchStore extends SearchCategoryBaseStore<
 	ArtistSearchRouteParams,
 	ArtistContract
 > {
-	@observable public artistType = ArtistType.Unknown;
-	@observable public onlyFollowedByMe = false;
-	@observable public onlyRootVoicebanks = false;
-	@observable public sort = ArtistSortRule.Name;
+	@observable artistType = ArtistType.Unknown;
+	@observable onlyFollowedByMe = false;
+	@observable onlyRootVoicebanks = false;
+	@observable sort = ArtistSortRule.Name;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
@@ -58,58 +77,43 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	@computed public get fields(): string {
+	@computed get fields(): ArtistOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Tags'
-			: 'AdditionalNames,MainPicture';
+			? [
+					ArtistOptionalField.AdditionalNames,
+					ArtistOptionalField.MainPicture,
+					ArtistOptionalField.Tags,
+			  ]
+			: [ArtistOptionalField.AdditionalNames, ArtistOptionalField.MainPicture];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ArtistContract>> => {
 		return this.artistRepo.getList({
 			paging: pagingProperties,
 			lang: this.values.languagePreference,
-			query: searchTerm,
+			query: this.searchTerm,
 			sort: this.sort,
 			artistTypes:
 				this.artistType !== ArtistType.Unknown ? [this.artistType] : undefined,
 			allowBaseVoicebanks: !this.onlyRootVoicebanks,
-			tags: tags,
-			childTags: childTags,
+			tags: this.tagIds,
+			childTags: this.childTags,
 			followedByUserId: this.onlyFollowedByMe
 				? this.values.loggedUserId
 				: undefined,
 			fields: this.fields,
-			status: status,
+			status: this.draftsOnly ? 'Draft' : undefined,
 			advancedFilters: this.advancedFilters.filters,
 		});
 	};
 
-	@computed public get canHaveChildVoicebanks(): boolean {
+	@computed get canHaveChildVoicebanks(): boolean {
 		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
-	public readonly clearResultsByQueryKeys: (keyof ArtistSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'sort',
-		'artistType',
-		'onlyFollowedByMe',
-		// TODO: onlyRootVoicebanks
-	];
-
-	@computed.struct public get routeParams(): ArtistSearchRouteParams {
+	@computed.struct get locationState(): ArtistSearchRouteParams {
 		return {
 			searchType: SearchType.Artist,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -129,7 +133,7 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: ArtistSearchRouteParams) {
+	set locationState(value: ArtistSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.childTags = value.childTags ?? false;
@@ -141,4 +145,14 @@ export default class ArtistSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? ArtistSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
+
+	onLocationStateChange = (
+		event: StateChangeEvent<ArtistSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

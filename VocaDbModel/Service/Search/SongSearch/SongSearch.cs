@@ -15,19 +15,26 @@ namespace VocaDb.Model.Service.Search.SongSearch
 {
 	public class SongSearch
 	{
+#nullable enable
 		private readonly IEntryUrlParser _entryUrlParser;
 		private readonly ContentLanguagePreference _languagePreference;
 		private readonly IDatabaseContext _querySource;
 
 		private ContentLanguagePreference LanguagePreference => _languagePreference;
+#nullable disable
 
 		private IQueryable<Song> CreateQuery(
 			SongQueryParams queryParams,
 			ParsedSongQuery parsedQuery,
-			NameMatchMode? nameMatchMode = null)
+			NameMatchMode? nameMatchMode = null
+		)
 		{
-			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ?
-				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
+			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name)
+				? new SearchTextQuery(
+					query: parsedQuery.Name.Query,
+					matchMode: nameMatchMode ?? parsedQuery.Name.MatchMode,
+					originalQuery: parsedQuery.Name.OriginalQuery
+				)
 				: SearchTextQuery.Empty;
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
@@ -205,6 +212,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			};
 		}
 
+#nullable enable
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
 		{
 			_querySource = querySource;
@@ -212,7 +220,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			_entryUrlParser = entryUrlParser;
 		}
 
-#nullable enable
 		/// <summary>
 		/// Finds songs based on criteria.
 		/// </summary>
@@ -224,12 +231,13 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
-				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
-				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact
-				&& !queryParams.ArtistParticipation.ArtistIds.HasAny
-				&& queryParams.Paging.Start == 0
-				&& parsedQuery.HasNameQuery);
+			var isMoveToTopQuery =
+				queryParams.Common.MoveExactToTop &&
+				queryParams.Common.NameMatchMode != NameMatchMode.StartsWith &&
+				queryParams.Common.NameMatchMode != NameMatchMode.Exact &&
+				!queryParams.ArtistParticipation.ArtistIds.HasAny &&
+				queryParams.Paging.Start == 0 &&
+				parsedQuery.HasNameQuery;
 
 			if (isMoveToTopQuery)
 			{
@@ -238,7 +246,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return GetSongs(queryParams, parsedQuery);
 		}
-#nullable disable
 
 		/// <summary>
 		/// Get songs, searching by exact matches FIRST.
@@ -253,7 +260,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			// Exact query contains the "exact" matches.
 			// Note: the matched name does not have to be in user's display language, it can be any name.
 			// The songs are sorted by user's display language though
-			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.StartsWith);
+			var exactQ = CreateQuery(queryParams, parsedQuery, NameMatchMode.Exact);
 
 			int count;
 			int[] ids;
@@ -273,7 +280,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
-					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
+					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 					.Select(s => s.Id)
 					.Take(maxResults)
 					.ToArray();
@@ -294,6 +301,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 		}
+#nullable disable
 
 		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
 		{
@@ -305,14 +313,21 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.Paged(queryParams.Paging)
 				.ToArray();
 
-			var songs = SortByIds(_querySource
-				.Query<Song>()
-				.Where(s => ids.Contains(s.Id))
-				.ToArray(), ids);
+			var songs = SortByIds(
+				songs: _querySource
+					.Query<Song>()
+					.Where(s => ids.Contains(s.Id))
+					.ToArray(),
+				idList: ids
+			);
 
-			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
+			var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
 
-			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
+			return new PartialFindResult<Song>(
+				items: songs,
+				totalCount: count,
+				term: queryParams.Common.Query
+			);
 		}
 	}
 }

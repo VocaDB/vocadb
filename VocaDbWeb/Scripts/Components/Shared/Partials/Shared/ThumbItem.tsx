@@ -1,60 +1,69 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
-import EntryRefContract from '@DataContracts/EntryRefContract';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
+import { EntryLink } from '@/Components/Shared/Partials/Shared/EntryLink';
+import { EntryRefContract } from '@/DataContracts/EntryRefContract';
 import React from 'react';
 
-import { EntryToolTip } from '../../../KnockoutExtensions/EntryToolTip';
-
 interface ThumbItemProps {
-	as?: React.ElementType;
+	linkAs?: React.ElementType;
+	linkProps?: Record<string, any>;
 	thumbUrl: string;
 	caption?: string;
 	entry?: EntryRefContract;
 	tooltip?: boolean;
+	children?: React.ReactNode;
 }
 
-const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
+export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 	'a',
 	ThumbItemProps
-> = ({
-	as: Component = 'a',
-	thumbUrl,
-	caption,
-	entry,
-	tooltip,
-	...props
-}: ThumbItemProps): React.ReactElement => {
-	return (
-		<li>
-			<Component {...props}>
-				<div className="pictureFrame">
-					{entry ? (
-						tooltip ? (
-							<EntryToolTip
-								as="img"
-								src={thumbUrl}
-								alt="Preview" /* TODO: localize */
-								className="coverPic"
-								value={entry}
-							/>
+> = React.forwardRef<HTMLDivElement, ThumbItemProps>(
+	(
+		{
+			linkAs: LinkComponent = 'a',
+			linkProps,
+			thumbUrl,
+			caption,
+			entry,
+			tooltip,
+			children,
+			...props
+		}: ThumbItemProps,
+		ref,
+	): React.ReactElement => {
+		return (
+			<div css={{ marginRight: 9, lineHeight: '18px' }}>
+				<div ref={ref} css={{ position: 'relative' }} {...props}>
+					<div className="pictureFrame">
+						{entry ? (
+							<EntryLink
+								entry={entry}
+								tooltip={tooltip}
+								css={{ display: 'block', width: '100%', height: '100%' }}
+							>
+								<img
+									src={thumbUrl}
+									alt="Preview" /* LOC */
+									className="coverPic"
+								/>
+							</EntryLink>
 						) : (
-							<img
-								src={thumbUrl}
-								alt="Preview" /* TODO: localize */
-								className="coverPic"
-							/>
-						)
-					) : (
-						<img
-							src={thumbUrl}
-							alt="Preview" /* TODO: localize */
-							className="coverPic"
-						/>
-					)}
-				</div>
-			</Component>
-			{caption && <p>{caption}</p>}
-		</li>
-	);
-};
+							<LinkComponent
+								{...linkProps}
+								css={{ display: 'block', width: '100%', height: '100%' }}
+							>
+								<img
+									src={thumbUrl}
+									alt="Preview" /* LOC */
+									className="coverPic"
+								/>
+							</LinkComponent>
+						)}
+					</div>
 
-export default ThumbItem;
+					{children}
+				</div>
+				{caption && <p css={{ display: 'flex', width: 150 }}>{caption}</p>}
+			</div>
+		);
+	},
+);

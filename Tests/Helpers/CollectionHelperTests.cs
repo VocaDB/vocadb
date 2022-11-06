@@ -170,7 +170,7 @@ namespace VocaDb.Tests.Helpers
 		public void Sync_Removed()
 		{
 			var oldItems = List("39");
-			var newItems = new int[] { };
+			var newItems = Array.Empty<int>();
 
 			var result = CollectionHelper.Sync(oldItems, newItems, Equality, Fac);
 

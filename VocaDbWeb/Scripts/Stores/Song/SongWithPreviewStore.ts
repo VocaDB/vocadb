@@ -1,37 +1,37 @@
-import SongWithPVAndVoteContract from '@DataContracts/Song/SongWithPVAndVoteContract';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
+import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 // Store for song with PV preview and rating buttons (for example, on front page and song index page).
-export default class SongWithPreviewStore {
+export class SongWithPreviewStore {
 	// Whether preview mode is active.
-	@observable public preview = false;
-	@observable public selectedSong?: SongWithPVAndVoteContract;
-	@observable public pvService?: string = undefined /* TODO: enum */;
+	@observable preview = false;
+	@observable selectedSong?: SongWithPVAndVoteContract;
+	@observable pvService?: string = undefined /* TODO: enum */;
 	// View model for rating buttons.
-	@observable public ratingButtons?: PVRatingButtonsStore = undefined;
+	@observable ratingButtons?: PVRatingButtonsStore = undefined;
 
 	// Event handler for the event when the song has been rated.
-	public ratingComplete = (): void => {};
+	ratingComplete = (): void => {};
 
-	public constructor(
+	constructor(
 		private readonly songRepo: SongRepository,
 		private readonly userRepo: UserRepository,
 		private readonly songId: number,
-		public readonly pvServices: string,
+		readonly pvServices: string,
 	) {
 		makeObservable(this);
 	}
 
 	// Destroy PV player (clears HTML)
-	@action public destroyPV = (): void => {
+	@action destroyPV = (): void => {
 		this.selectedSong = undefined;
 	};
 
 	// Toggle preview status.
-	@action public togglePreview = (): void => {
+	@action togglePreview = (): void => {
 		if (this.preview) {
 			this.preview = false;
 			this.ratingButtons = undefined;
@@ -55,7 +55,7 @@ export default class SongWithPreviewStore {
 		});
 	};
 
-	@action public switchPV = (newService: string): void => {
+	@action switchPV = (newService: string): void => {
 		this.pvService = newService;
 	};
 }

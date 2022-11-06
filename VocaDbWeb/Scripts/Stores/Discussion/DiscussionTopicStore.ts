@@ -1,9 +1,10 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@Models/LoginManager';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import EditableCommentsStore from '@Stores/EditableCommentsStore';
-import { StoreWithRouteParams } from '@vocadb/route-sphere';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { LocationStateStore } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import {
 	action,
@@ -12,8 +13,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import DiscussionTopicEditStore from './DiscussionTopicEditStore';
 
 interface DiscussionTopicRouteParams {
 	page?: number;
@@ -26,13 +25,13 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./DiscussionTopicRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class DiscussionTopicStore
-	implements StoreWithRouteParams<DiscussionTopicRouteParams> {
-	@observable public comments: EditableCommentsStore;
-	@observable public contract: DiscussionTopicContract;
-	@observable public editStore?: DiscussionTopicEditStore = undefined;
+export class DiscussionTopicStore
+	implements LocationStateStore<DiscussionTopicRouteParams> {
+	@observable comments: EditableCommentsStore;
+	@observable contract: DiscussionTopicContract;
+	@observable editStore?: DiscussionTopicEditStore = undefined;
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		private readonly discussionRepo: DiscussionRepository,
 		canDeleteAllComments: boolean,
@@ -54,11 +53,11 @@ export default class DiscussionTopicStore
 		);
 	}
 
-	@computed public get isBeingEdited(): boolean {
+	@computed get isBeingEdited(): boolean {
 		return !!this.editStore;
 	}
 
-	@action public beginEditTopic = (): void => {
+	@action beginEditTopic = (): void => {
 		this.editStore = new DiscussionTopicEditStore(
 			this.loginManager,
 			this.folders,
@@ -66,11 +65,11 @@ export default class DiscussionTopicStore
 		);
 	};
 
-	@action public cancelEdit = (): void => {
+	@action cancelEdit = (): void => {
 		this.editStore = undefined;
 	};
 
-	public saveEditedTopic = (): void => {
+	saveEditedTopic = (): void => {
 		if (!this.isBeingEdited) return;
 
 		const editedContract = this.editStore!.toContract();
@@ -93,20 +92,16 @@ export default class DiscussionTopicStore
 			});
 	};
 
-	public popState = false;
-
-	@computed.struct public get routeParams(): DiscussionTopicRouteParams {
+	@computed.struct get locationState(): DiscussionTopicRouteParams {
 		return {
 			page: this.comments.paging.page,
 		};
 	}
-	public set routeParams(value: DiscussionTopicRouteParams) {
+	set locationState(value: DiscussionTopicRouteParams) {
 		this.comments.paging.page = value.page ?? 1;
 	}
 
-	public validateRouteParams = (
-		data: any,
-	): data is DiscussionTopicRouteParams => {
+	validateLocationState = (data: any): data is DiscussionTopicRouteParams => {
 		return validate(data);
 	};
 }

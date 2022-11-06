@@ -22,36 +22,34 @@ namespace VocaDb.Model.Service.VideoServices {
 		private static async Task<HtmlDocument?> GetVideoHtmlPage(string videoId) {
 			var url = $"https://nicolog.jp/watch/{videoId}";
 
-			using (var client = new HttpClient())
+			using var client = new HttpClient();
+			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
+			HttpResponseMessage response;
+
+			try
 			{
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
-				HttpResponseMessage response;
-
-				try
-				{
-					response = await client.GetAsync(url);
-					response.EnsureSuccessStatusCode();
-				}
-				catch (HttpRequestException x)
-				{
-					log.Warn(x, "Unable to get response for nicolog page");
-					return null;
-				}
-				
-				var doc = new HtmlDocument();
-				try
-				{
-					var contentStream = await response.Content.ReadAsStreamAsync();
-					doc.Load(contentStream, Encoding.UTF8);
-				}
-				catch (IOException x)
-				{
-					log.Warn(x, "Unable to load document for nicolog page");
-					return null;
-				}
-
-				return doc;
+				response = await client.GetAsync(url);
+				response.EnsureSuccessStatusCode();
 			}
+			catch (HttpRequestException x)
+			{
+				log.Warn(x, "Unable to get response for nicolog page");
+				return null;
+			}
+
+			var doc = new HtmlDocument();
+			try
+			{
+				var contentStream = await response.Content.ReadAsStreamAsync();
+				doc.Load(contentStream, Encoding.UTF8);
+			}
+			catch (IOException x)
+			{
+				log.Warn(x, "Unable to load document for nicolog page");
+				return null;
+			}
+
+			return doc;
 		}
 
 		public static Task<VideoTitleParseResult> GetVideoTitleParseResultAsync(string id) {

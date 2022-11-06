@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const AboutDisclaimer = React.memo(
+export const AboutDisclaimer = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -26,5 +26,3 @@ const AboutDisclaimer = React.memo(
 		);
 	},
 );
-
-export default AboutDisclaimer;

@@ -1,7 +1,6 @@
 #nullable disable
 
 using VocaDb.Model.Database.Repositories;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.DataContracts.Versioning;
@@ -142,11 +141,12 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public VenueForEditContract GetForEdit(int id)
+		public VenueForEditForApiContract GetForEdit(int id)
 		{
-			return HandleQuery(ctx => new VenueForEditContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new VenueForEditForApiContract(ctx.Load(id), LanguagePreference));
 		}
 
+		[Obsolete]
 		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
@@ -164,6 +164,28 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
+		public ArchivedVenueVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedVenueVersionDetailsForApiContract(
+					archived: session.Load<ArchivedVenueVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
+
 		[Obsolete]
 		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
@@ -179,12 +201,7 @@ namespace VocaDb.Model.Database.Queries
 				return EntryWithArchivedVersionsForApiContract.Create(
 					entry: new VenueForApiContract(venue, LanguagePreference, fields: VenueOptionalFields.None),
 					versions: venue.ArchivedVersionsManager.Versions
-						.Select(a => new ArchivedObjectVersionForApiContract(
-							archivedObjectVersion: a,
-							anythingChanged: !Equals(a.Diff.ChangedFields, default(VenueEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
-							reason: a.CommonEditEvent.ToString(),
-							userIconFactory: _userIconFactory
-						))
+						.Select(a => ArchivedObjectVersionForApiContract.FromVenue(a, _userIconFactory))
 						.ToArray()
 				);
 			});
@@ -242,7 +259,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 #nullable enable
-		public int Update(VenueForEditContract contract)
+		public int Update(VenueForEditForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -353,6 +370,11 @@ namespace VocaDb.Model.Database.Queries
 
 				return venue.Id;
 			});
+		}
+
+		public VenueForApiContract GetOne(int id)
+		{
+			return HandleQuery(ctx => new VenueForApiContract(ctx.Load(id), LanguagePreference, VenueOptionalFields.None));
 		}
 #nullable disable
 	}

@@ -1,20 +1,18 @@
-import PVContract from '@DataContracts/PVs/PVContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import PVService from '@Models/PVs/PVService';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import PVRatingButtonsStore from '@Stores/PVRatingButtonsStore';
-import _ from 'lodash';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
-
-import PVPlayersFactory from './PVPlayersFactory';
 
 export interface IPVPlayer {
 	// Attach the player by creating the JavaScript object, either to the currently playing element, or create a new element.
 	// reset: whether to create a new player element
 	// readyCallback: called when the player is ready
-	attach: (reset?: boolean, readyCallback?: () => void) => void;
+	attach: (reset?: boolean, readyCallback?: () => void) => Promise<void>;
 
 	detach: () => void;
 
@@ -31,31 +29,36 @@ export interface IPVPlayerSong {
 	song: SongApiContract;
 }
 
-export default class PVPlayerStore {
-	public static autoplayPVServicesString =
-		'File, LocalFile, NicoNicoDouga, SoundCloud, Youtube';
+export class PVPlayerStore {
+	static autoplayPVServices = [
+		PVService.File,
+		PVService.LocalFile,
+		PVService.NicoNicoDouga,
+		PVService.SoundCloud,
+		PVService.Youtube,
+	];
+	static autoplayPVServicesString = PVPlayerStore.autoplayPVServices.join(', ');
 
-	@observable public autoplay = false;
+	@observable autoplay = false;
 	private readonly autoplayServices = [
 		PVService.File,
 		PVService.Youtube,
 		PVService.SoundCloud,
 	];
-	private currentPlayer?: IPVPlayer;
 	private readonly players: { [index: string]: IPVPlayer };
-	public nextSong?: () => void;
-	@observable public primaryPV?: PVContract;
-	public playerService?: PVService;
-	@observable public ratingButtonsStore?: PVRatingButtonsStore;
-	public resetSong?: () => void;
-	@observable public selectedSong?: IPVPlayerSong;
-	@observable public shuffle = false;
+	nextSong?: () => void;
+	@observable primaryPV?: PVContract;
+	playerService?: PVService;
+	@observable ratingButtonsStore?: PVRatingButtonsStore;
+	resetSong?: () => void;
+	@observable selectedSong?: IPVPlayerSong;
+	@observable shuffle = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		userRepo: UserRepository,
-		public readonly pvPlayersFactory: PVPlayersFactory,
+		readonly pvPlayersFactory: PVPlayersFactory,
 		autoplay?: boolean,
 		shuffle?: boolean,
 	) {
@@ -70,11 +73,6 @@ export default class PVPlayerStore {
 			() => this.selectedSong,
 			(song) => {
 				if (!song) {
-					if (this.currentPlayer) {
-						this.currentPlayer.detach();
-						this.currentPlayer = undefined;
-					}
-
 					this.primaryPV = undefined;
 					this.ratingButtonsStore = undefined;
 					return;
@@ -92,20 +90,8 @@ export default class PVPlayerStore {
 					});
 
 				// Use current player
-				if (
-					this.currentPlayer &&
-					this.songHasPVService(song, this.currentPlayer.service)
-				) {
-					this.loadPVId(this.currentPlayer.service, song.song.id).then((pvId) =>
-						this.currentPlayer!.play(pvId),
-					);
+				if (false) {
 				} else {
-					// Detech old player
-					if (this.currentPlayer) {
-						this.currentPlayer.detach();
-						this.currentPlayer = undefined;
-					}
-
 					const services = this.autoplay
 						? PVPlayerStore.autoplayPVServicesString
 						: undefined;
@@ -125,18 +111,9 @@ export default class PVPlayerStore {
 								this.primaryPV = {
 									pvId: result.pvId,
 									service: result.pvService,
-									pvType: '',
-								};
-								this.playerService =
-									PVService[result.pvService as keyof typeof PVService];
-								this.currentPlayer = this.players[result.pvService];
+								} as PVContract;
+								this.playerService = result.pvService;
 							});
-
-							if (this.currentPlayer) {
-								this.currentPlayer.attach(false, () => {
-									this.currentPlayer!.play();
-								});
-							}
 						});
 				}
 			},
@@ -153,24 +130,12 @@ export default class PVPlayerStore {
 						3) currently playing song doesn't have a PV that supports autoplay: switch song
 					*/
 
-					// Case 1
-					if (this.currentPlayer) {
-						return;
-					}
-
 					// Case 2
-					const newService = _.find(this.autoplayServices, (s) =>
+					const newService = this.autoplayServices.find((s) =>
 						this.songHasPVService(this.selectedSong!, s),
 					);
 					if (newService) {
 						this.playerService = newService;
-						this.currentPlayer = this.players[PVService[newService]];
-						this.currentPlayer.attach(true, () => {
-							this.loadPVId(
-								this.currentPlayer!.service,
-								this.selectedSong!.song.id,
-							).then((pvId) => this.currentPlayer!.play(pvId));
-						});
 						return;
 					}
 
@@ -192,14 +157,14 @@ export default class PVPlayerStore {
 		song: IPVPlayerSong,
 		service: PVService,
 	): boolean => {
-		return _.includes(song.song.pvServicesArray, service);
+		return song.song.pvServicesArray?.includes(service) ?? false;
 	};
 
-	public songIsValid = (song: IPVPlayerSong): boolean => {
+	songIsValid = (song: IPVPlayerSong): boolean => {
 		return (
 			!this.autoplay ||
-			this.autoplayServices.some((s) =>
-				_.includes(song.song.pvServicesArray, s),
+			this.autoplayServices.some(
+				(s) => song.song.pvServicesArray?.includes(s) ?? false,
 			)
 		);
 	};

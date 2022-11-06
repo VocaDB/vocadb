@@ -1,25 +1,23 @@
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import SongListRepository from '@Repositories/SongListRepository';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
+import { SongListRepository } from '@/Repositories/SongListRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import {
+	SongListsBaseStore,
+	SongListSortRule,
+} from '@/Stores/SongList/SongListsBaseStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-import SongListsBaseStore, { SongListSortRule } from './SongListsBaseStore';
-
-export enum SongListFeaturedCategory {
-	Nothing = 'Nothing',
-	Concerts = 'Concerts',
-	VocaloidRanking = 'VocaloidRanking',
-	Pools = 'Pools',
-	Other = 'Other',
-}
-
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly songListRepo: SongListRepository,
 		tagRepo: TagRepository,
@@ -38,9 +36,7 @@ export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 		makeObservable(this);
 	}
 
-	public loadMoreItems = (): Promise<
-		PartialFindResultContract<SongListContract>
-	> => {
+	loadMoreItems = (): Promise<PartialFindResultContract<SongListContract>> => {
 		return this.songListRepo.getFeatured({
 			query: this.query,
 			category: this.category,
@@ -59,6 +55,12 @@ interface FeaturedSongListsRouteParams {
 	tagId?: number | number[];
 }
 
+const clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -66,12 +68,12 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./FeaturedSongListsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class FeaturedSongListsStore
-	implements StoreWithUpdateResults<FeaturedSongListsRouteParams> {
-	public categories: { [index: string]: FeaturedSongListCategoryStore } = {};
-	@observable public category = SongListFeaturedCategory.Concerts;
+export class FeaturedSongListsStore
+	implements LocationStateStore<FeaturedSongListsRouteParams> {
+	categories: { [index: string]: FeaturedSongListCategoryStore } = {};
+	@observable category = SongListFeaturedCategory.Concerts;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		songListRepo: SongListRepository,
 		tagRepo: TagRepository,
@@ -80,7 +82,7 @@ export default class FeaturedSongListsStore
 	) {
 		makeObservable(this);
 
-		_.forEach(categoryNames, (categoryName) => {
+		for (const categoryName of categoryNames) {
 			this.categories[categoryName] = new FeaturedSongListCategoryStore(
 				values,
 				songListRepo,
@@ -88,30 +90,20 @@ export default class FeaturedSongListsStore
 				tagIds,
 				categoryName,
 			);
-		});
+		}
 	}
 
-	@action public setCategory = (
-		categoryName: SongListFeaturedCategory,
-	): void => {
+	@action setCategory = (categoryName: SongListFeaturedCategory): void => {
 		if (!categoryName) categoryName = SongListFeaturedCategory.Concerts;
 
 		this.category = categoryName;
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
 	private get currentCategoryStore(): FeaturedSongListCategoryStore {
 		return this.categories[this.category];
 	}
 
-	@computed.struct public get routeParams(): FeaturedSongListsRouteParams {
+	@computed.struct get locationState(): FeaturedSongListsRouteParams {
 		return {
 			categoryName: this.category,
 			filter: this.currentCategoryStore.query,
@@ -119,7 +111,7 @@ export default class FeaturedSongListsStore
 			tagId: this.currentCategoryStore.tagIds,
 		};
 	}
-	public set routeParams(value: FeaturedSongListsRouteParams) {
+	set locationState(value: FeaturedSongListsRouteParams) {
 		this.category = value.categoryName ?? SongListFeaturedCategory.Concerts;
 		this.currentCategoryStore.query = value.filter ?? '';
 		this.currentCategoryStore.sort = value.sort ?? SongListSortRule.Date;
@@ -128,15 +120,13 @@ export default class FeaturedSongListsStore
 		);
 	}
 
-	public validateRouteParams = (
-		data: any,
-	): data is FeaturedSongListsRouteParams => {
+	validateLocationState = (data: any): data is FeaturedSongListsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -144,5 +134,13 @@ export default class FeaturedSongListsStore
 		await this.currentCategoryStore.clear();
 
 		this.pauseNotifications = false;
+	};
+
+	onLocationStateChange = (
+		event: StateChangeEvent<FeaturedSongListsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

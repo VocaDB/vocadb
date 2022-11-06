@@ -1,6 +1,6 @@
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import functions from '@Shared/GlobalFunctions';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ interface ExternalLinksListProps {
 	showCategory?: boolean;
 }
 
-const ExternalLinksList = React.memo(
+export const ExternalLinksList = React.memo(
 	({
 		webLinks,
 		showCategory = false,
@@ -27,7 +27,7 @@ const ExternalLinksList = React.memo(
 								onClick={(e): void =>
 									functions.trackOutboundLink(e.nativeEvent)
 								}
-								title="See this page archived on the Wayback Machine" /* TODO: localize */
+								title="See this page archived on the Wayback Machine" /* LOC */
 								style={{ textDecoration: 'line-through' }}
 							>
 								{webLink.description || webLink.url}
@@ -53,5 +53,3 @@ const ExternalLinksList = React.memo(
 		);
 	},
 );
-
-export default ExternalLinksList;

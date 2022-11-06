@@ -2,13 +2,13 @@ import React from 'react';
 
 interface EmbedNicoProps {
 	pvId: string;
-	width: number;
-	height: number;
+	width: number | string;
+	height: number | string;
 	id?: string;
 	enableApi?: boolean;
 }
 
-const EmbedNico = React.memo(
+export const EmbedNico = React.memo(
 	({
 		pvId,
 		width,
@@ -17,7 +17,7 @@ const EmbedNico = React.memo(
 		enableApi = false,
 	}: EmbedNicoProps): React.ReactElement => {
 		return (
-			<div id={id}>
+			<div id={id} css={{ height: '100%' }}>
 				{/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
 				<iframe
 					width={width}
@@ -34,5 +34,3 @@ const EmbedNico = React.memo(
 		);
 	},
 );
-
-export default EmbedNico;

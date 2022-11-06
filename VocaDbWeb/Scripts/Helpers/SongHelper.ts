@@ -1,8 +1,8 @@
-import ContentFocus from '@Models/ContentFocus';
-import SongType from '@Models/Songs/SongType';
+import { ContentFocus } from '@/Models/ContentFocus';
+import { SongType } from '@/Models/Songs/SongType';
 
-export default class SongHelper {
-	public static originalVersionTypes = [
+export class SongHelper {
+	static originalVersionTypes = [
 		SongType.Unspecified,
 		SongType.Original,
 		SongType.Remaster,
@@ -14,7 +14,7 @@ export default class SongHelper {
 	];
 
 	// Checks whether a song type is to be considered animation where animators are considered as the main role
-	public static getContentFocus(songType: SongType): ContentFocus {
+	static getContentFocus(songType: SongType): ContentFocus {
 		switch (songType) {
 			case SongType.DramaPV:
 			case SongType.MusicPV:
@@ -29,7 +29,7 @@ export default class SongHelper {
 	}
 
 	// Checks whether a song type is to be considered instrumental where the song is allowed to have no vocalists
-	public static isInstrumental(songType: SongType): boolean {
+	static isInstrumental(songType: SongType): boolean {
 		return songType === SongType.Instrumental || songType === SongType.DramaPV;
 	}
 }

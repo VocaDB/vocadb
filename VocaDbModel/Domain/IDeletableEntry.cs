@@ -1,9 +1,6 @@
-#nullable disable
+namespace VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Domain
+public interface IDeletableEntry : IEntryWithIntId
 {
-	public interface IDeletableEntry : IEntryWithIntId
-	{
-		bool Deleted { get; }
-	}
+	bool Deleted { get; }
 }

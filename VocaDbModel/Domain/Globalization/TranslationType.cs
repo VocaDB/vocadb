@@ -1,11 +1,8 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Globalization
+public enum TranslationType
 {
-	public enum TranslationType
-	{
-		Original,
-		Romanized,
-		Translation
-	}
+	Original,
+	Romanized,
+	Translation
 }

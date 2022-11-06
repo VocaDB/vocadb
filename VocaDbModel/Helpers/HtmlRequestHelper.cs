@@ -20,14 +20,12 @@ namespace VocaDb.Model.Helpers
 			{
 				var enc = response.Headers[HttpResponseHeader.ContentEncoding];
 
-				using (var stream = response.GetResponseStream())
-				{
-					var encoding = (!string.IsNullOrEmpty(enc) ? Encoding.GetEncoding(enc) : Encoding.UTF8);
+				using var stream = response.GetResponseStream();
+				var encoding = (!string.IsNullOrEmpty(enc) ? Encoding.GetEncoding(enc) : Encoding.UTF8);
 
-					var doc = new HtmlDocument();
-					doc.Load(stream, encoding);
-					return doc;
-				}
+				var doc = new HtmlDocument();
+				doc.Load(stream, encoding);
+				return doc;
 			}
 			finally
 			{

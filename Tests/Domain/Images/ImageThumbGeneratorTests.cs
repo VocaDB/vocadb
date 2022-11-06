@@ -21,12 +21,10 @@ namespace VocaDb.Tests.Domain.Images
 
 		private void AssertDimensions(IEntryImageInformation imageInfo, ImageSize size, int width, int height)
 		{
-			using (var stream = _persister.GetReadStream(imageInfo, size))
-			using (var img = Image.FromStream(stream))
-			{
-				img.Width.Should().Be(width, "Image width");
-				img.Height.Should().Be(height, "Image height");
-			}
+			using var stream = _persister.GetReadStream(imageInfo, size);
+			using var img = Image.FromStream(stream);
+			img.Width.Should().Be(width, "Image width");
+			img.Height.Should().Be(height, "Image height");
 		}
 
 		private EntryThumbContract CallGenerateThumbsAndMoveImage(ImageSizes sizes)

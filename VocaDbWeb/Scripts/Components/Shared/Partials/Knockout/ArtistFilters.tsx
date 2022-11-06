@@ -1,25 +1,26 @@
-import Button from '@Bootstrap/Button';
-import ArtistAutoComplete from '@Components/KnockoutExtensions/ArtistAutoComplete';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import ArtistFiltersStore from '@Stores/Search/ArtistFilters';
+import Button from '@/Bootstrap/Button';
+import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
+import { ArtistParticipationStatusOptionsKnockout } from '@/Components/Shared/Partials/Song/ArtistParticipationStatusOptionsKnockout';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { ArtistFilters as ArtistFiltersStore } from '@/Stores/Search/ArtistFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import ArtistParticipationStatusOptionsKnockout from '../Song/ArtistParticipationStatusOptionsKnockout';
-
 interface ArtistFiltersProps {
 	artistFilters: ArtistFiltersStore;
 	artistParticipationStatus: boolean;
+	showChildVoicebanks?: boolean;
 }
 
-const ArtistFilters = observer(
+export const ArtistFilters = observer(
 	({
 		artistFilters,
 		artistParticipationStatus,
+		showChildVoicebanks = true,
 	}: ArtistFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
@@ -49,7 +50,7 @@ const ArtistFilters = observer(
 									variant="danger"
 									onClick={(): void => artistFilters.removeArtist(artist)}
 								>
-									Clear{/* TODO: localize */}
+									Clear{/* LOC */}
 								</Button>
 							</div>
 						</div>
@@ -69,7 +70,7 @@ const ArtistFilters = observer(
 					</div>
 				))}
 
-				{artistFilters.showChildVoicebanks && (
+				{showChildVoicebanks && artistFilters.showChildVoicebanks && (
 					<div className="control-group">
 						<label className="checkbox">
 							<input
@@ -107,7 +108,7 @@ const ArtistFilters = observer(
 					<ArtistAutoComplete
 						type="text"
 						className="input-large"
-						properties={artistFilters.artistSearchParams}
+						properties={{ acceptSelection: artistFilters.selectArtist }}
 						placeholder={t('ViewRes:Shared.Search')}
 					/>
 				</div>
@@ -115,5 +116,3 @@ const ArtistFilters = observer(
 		);
 	},
 );
-
-export default ArtistFilters;

@@ -1,12 +1,14 @@
-import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongRepository from '@Repositories/SongRepository';
-import HttpClient from '@Shared/HttpClient';
-import _ from 'lodash';
-
-import FakePromise from './FakePromise';
+import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import {
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { FakePromise } from '@/Tests/TestSupport/FakePromise';
+import { max } from 'lodash-es';
 
 export interface SongInList {
 	listId: number;
@@ -14,13 +16,13 @@ export interface SongInList {
 	notes: string;
 }
 
-export default class FakeSongRepository extends SongRepository {
-	public results: NewSongCheckResultContract = null!;
-	public song: SongApiContract = null!;
-	public songLists: SongListBaseContract[] = [];
-	public songsInLists: SongInList[] = [];
+export class FakeSongRepository extends SongRepository {
+	results: NewSongCheckResultContract = null!;
+	song: SongApiContract = null!;
+	songLists: SongListBaseContract[] = [];
+	songsInLists: SongInList[] = [];
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), '');
 
 		this.addSongToList = ({
@@ -41,8 +43,7 @@ export default class FakeSongRepository extends SongRepository {
 					notes: notes,
 				});
 			} else {
-				const nextListId =
-					(_.max(_.map(this.songLists, (sl) => sl.id)) || 0) + 1;
+				const nextListId = (max(this.songLists.map((sl) => sl.id)) || 0) + 1;
 				this.songLists.push({ id: nextListId, name: newListName });
 				this.songsInLists.push({
 					listId: nextListId,
@@ -73,7 +74,7 @@ export default class FakeSongRepository extends SongRepository {
 			lang,
 		}: {
 			id: number;
-			fields: string;
+			fields?: SongOptionalField[];
 			lang: ContentLanguagePreference;
 		}): Promise<SongApiContract> => {
 			return FakePromise.resolve(this.song);

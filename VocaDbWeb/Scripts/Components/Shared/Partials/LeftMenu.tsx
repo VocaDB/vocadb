@@ -1,11 +1,14 @@
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import functions from '@Shared/GlobalFunctions';
+import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigationItems';
+import { PatreonLink } from '@/Components/Shared/Partials/PatreonLink';
+import { songleWidgetHeight } from '@/Components/VdbPlayer/SongleWidget';
+import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
+import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { functions } from '@/Shared/GlobalFunctions';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-import MainNavigationItems from './MainNavigationItems';
-import PatreonLink from './PatreonLink';
 
 interface BannerLinkProps {
 	title: string;
@@ -75,12 +78,30 @@ const SocialLink = React.memo(
 	),
 );
 
-const LeftMenu = React.memo(
+export const LeftMenu = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
+		const vdbPlayer = useVdbPlayer();
+
 		return (
-			<div className="span2 menu">
+			<div
+				className="menu"
+				css={{
+					minWidth: 240,
+					flex: '0 1 0',
+					overflowY: 'auto',
+					position: 'sticky',
+					maxHeight: vdbPlayer.bottomBarEnabled
+						? `calc(100vh - ${
+								40 +
+								((vdbPlayer.songleWidgetEnabled ? songleWidgetHeight : 0) +
+									bottomBarHeight)
+						  }px)`
+						: 'calc(100vh - 40px)',
+					top: 40,
+				}}
+			>
 				<div className="well">
 					<Link to="/">
 						<img
@@ -190,5 +211,3 @@ const LeftMenu = React.memo(
 		);
 	},
 );
-
-export default LeftMenu;

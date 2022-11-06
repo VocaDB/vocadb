@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
@@ -9,10 +8,13 @@ namespace VocaDb.Model.Domain.Users
 	/// <summary>
 	/// User is a verified owner of an artist entry.
 	/// </summary>
-	public class OwnedArtistForUser : IEntryWithIntId, IArtistLink
+	public class OwnedArtistForUser : IEntryWithIntId, IArtistForUser
 	{
 		public static CollectionDiff<OwnedArtistForUser, OwnedArtistForUser> Sync(
-			IList<OwnedArtistForUser> oldLinks, IEnumerable<ArtistForUserContract> newLinks, Func<ArtistForUserContract, OwnedArtistForUser> fac)
+			IList<OwnedArtistForUser> oldLinks,
+			IEnumerable<ArtistForUserForApiContract> newLinks,
+			Func<ArtistForUserForApiContract, OwnedArtistForUser> fac
+		)
 		{
 			return CollectionHelper.Sync(oldLinks, newLinks, (n1, n2) => n1.Id == n2.Id, fac);
 		}
@@ -20,7 +22,9 @@ namespace VocaDb.Model.Domain.Users
 		private Artist _artist;
 		private User _user;
 
+#nullable disable
 		public OwnedArtistForUser() { }
+#nullable enable
 
 		public OwnedArtistForUser(User user, Artist artist)
 		{
@@ -33,6 +37,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual Artist Artist
 		{
 			get => _artist;
+			[MemberNotNull(nameof(_artist))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -43,6 +48,7 @@ namespace VocaDb.Model.Domain.Users
 		public virtual User User
 		{
 			get => _user;
+			[MemberNotNull(nameof(_user))]
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -56,7 +62,6 @@ namespace VocaDb.Model.Domain.Users
 			Artist.OwnerUsers.Remove(this);
 		}
 
-#nullable enable
 		public virtual bool Equals(OwnedArtistForUser? another)
 		{
 			if (another == null)
@@ -97,6 +102,5 @@ namespace VocaDb.Model.Domain.Users
 		{
 			return $"Owned {Artist} for {User}";
 		}
-#nullable disable
 	}
 }

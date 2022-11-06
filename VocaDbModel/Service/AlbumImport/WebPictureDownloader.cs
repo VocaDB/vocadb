@@ -10,18 +10,14 @@ namespace VocaDb.Model.Service.AlbumImport
 		{
 			var request = WebRequest.Create(url);
 
-			using (var response = (HttpWebResponse)request.GetResponse())
-			{
-				if (response.StatusCode == HttpStatusCode.NotFound)
-					return null;
+			using var response = (HttpWebResponse)request.GetResponse();
+			if (response.StatusCode == HttpStatusCode.NotFound)
+				return null;
 
-				using (var stream = response.GetResponseStream())
-				{
-					var buf = StreamHelper.ReadStream(stream, response.ContentLength);
+			using var stream = response.GetResponseStream();
+			var buf = StreamHelper.ReadStream(stream, response.ContentLength);
 
-					return new PictureDataContract(buf, response.ContentType);
-				}
-			}
+			return new PictureDataContract(buf, response.ContentType);
 		}
 	}
 }

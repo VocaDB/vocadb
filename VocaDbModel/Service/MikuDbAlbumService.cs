@@ -344,7 +344,7 @@ namespace VocaDb.Model.Service
 			var importedContract = new MikuDbAlbumContract(imported);
 			var data = importedContract.Data;
 
-			var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : new string[] { })
+			var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : Array.Empty<string>())
 				.Select(a => InspectArtist(session, a))
 				.ToArray();
 

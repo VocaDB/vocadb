@@ -1,24 +1,29 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import AlbumForUserForApiContract, {
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import {
+	AlbumForUserForApiContract,
 	MediaType,
-} from '@DataContracts/User/AlbumForUserForApiContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import EntryType from '@Models/EntryType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import GlobalValues from '@Shared/GlobalValues';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
-import { AlbumSortRule } from '@Stores/Search/AlbumSearchStore';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryType } from '@/Models/EntryType';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -26,8 +31,6 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
-
-import AdvancedSearchFilter from '../Search/AdvancedSearchFilter';
 
 interface AlbumCollectionRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
@@ -44,6 +47,19 @@ interface AlbumCollectionRouteParams {
 	mediaType?: MediaType;
 }
 
+const clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+
+	'advancedFilters',
+	'discType',
+	'artistId',
+	'collectionStatus',
+	'eventId',
+	'mediaType',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -51,32 +67,32 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<AlbumCollectionRouteParams> = require('./AlbumCollectionRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class AlbumCollectionStore
-	implements StoreWithPagination<AlbumCollectionRouteParams> {
-	public readonly advancedFilters = new AdvancedSearchFilters();
-	@observable public albumType = AlbumType.Unknown;
-	public readonly artist: BasicEntryLinkStore<ArtistContract>;
-	@observable public artistName = '';
-	@observable public collectionStatus = '';
-	@observable public loading = true; // Currently loading for data
-	@observable public page: AlbumForUserForApiContract[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging store
-	public pauseNotifications = false;
-	public readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
-	@observable public searchTerm = '';
-	@observable public sort = AlbumSortRule.Name;
-	public readonly tag: BasicEntryLinkStore<TagBaseContract>;
-	@observable public viewMode: 'Details' | 'Tiles' = 'Details'; /* TODO: enum */
-	@observable public mediaType?: MediaType;
+export class AlbumCollectionStore
+	implements LocationStateStore<AlbumCollectionRouteParams> {
+	readonly advancedFilters = new AdvancedSearchFilters();
+	@observable albumType = AlbumType.Unknown;
+	readonly artist: BasicEntryLinkStore<ArtistContract>;
+	@observable artistName = '';
+	@observable collectionStatus = '';
+	@observable loading = true; // Currently loading for data
+	@observable page: AlbumForUserForApiContract[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging store
+	pauseNotifications = false;
+	readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
+	@observable searchTerm = '';
+	@observable sort = AlbumSortRule.Name;
+	readonly tag: BasicEntryLinkStore<TagBaseContract>;
+	@observable viewMode: 'Details' | 'Tiles' = 'Details'; /* TODO: enum */
+	@observable mediaType?: MediaType;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly userRepo: UserRepository,
 		artistRepo: ArtistRepository,
 		eventRepo: ReleaseEventRepository,
 		tagRepo: TagRepository,
 		private readonly userId: number,
-		public readonly publicCollection: boolean,
+		readonly publicCollection: boolean,
 	) {
 		makeObservable(this);
 
@@ -96,33 +112,33 @@ export default class AlbumCollectionStore
 		);
 	}
 
-	@computed public get tagId(): number | undefined {
+	@computed get tagId(): number | undefined {
 		return this.tag.id;
 	}
 
-	@computed public get tagName(): string | undefined {
+	@computed get tagName(): string | undefined {
 		return this.tag.name;
 	}
 
-	@computed public get tagUrl(): string | undefined {
+	@computed get tagUrl(): string | undefined {
 		return EntryUrlMapper.details_tag_contract(this.tag.entry);
 	}
 
-	@computed public get releaseEventUrl(): string {
+	@computed get releaseEventUrl(): string {
 		return EntryUrlMapper.details(
 			EntryType.ReleaseEvent,
 			this.releaseEvent.id!,
 		);
 	}
 
-	public ratingStars = (userRating: number): { enabled: boolean }[] => {
-		const ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return { enabled: Math.round(userRating) >= rating };
-		});
+	ratingStars = (userRating: number): { enabled: boolean }[] => {
+		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(userRating) >= rating,
+		}));
 		return ratings;
 	};
 
-	@action public updateResults = async (
+	@action updateResults = async (
 		clearResults: boolean = true,
 	): Promise<void> => {
 		// Disable duplicate updates
@@ -159,22 +175,7 @@ export default class AlbumCollectionStore
 		});
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof AlbumCollectionRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-
-		'advancedFilters',
-		'discType',
-		'artistId',
-		'collectionStatus',
-		'eventId',
-		'mediaType',
-	];
-
-	@computed.struct public get routeParams(): AlbumCollectionRouteParams {
+	@computed.struct get locationState(): AlbumCollectionRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -195,7 +196,7 @@ export default class AlbumCollectionStore
 			mediaType: this.mediaType,
 		};
 	}
-	public set routeParams(value: AlbumCollectionRouteParams) {
+	set locationState(value: AlbumCollectionRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artist.id = value.artistId;
 		this.collectionStatus = value.collectionStatus ?? '';
@@ -210,13 +211,17 @@ export default class AlbumCollectionStore
 		this.mediaType = value.mediaType;
 	}
 
-	public validateRouteParams = (
-		data: any,
-	): data is AlbumCollectionRouteParams => {
+	validateLocationState = (data: any): data is AlbumCollectionRouteParams => {
 		return validate(data);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	onLocationStateChange = (
+		event: StateChangeEvent<AlbumCollectionRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

@@ -1,42 +1,85 @@
-import CountPerDayContract from '@DataContracts/Aggregate/CountPerDayContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import CommentContract from '@DataContracts/CommentContract';
-import NewSongCheckResultContract from '@DataContracts/NewSongCheckResultContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import SongDetailsContract from '@DataContracts/Song/SongDetailsContract';
-import SongForEditContract from '@DataContracts/Song/SongForEditContract';
-import SongWithPVPlayerAndVoteContract from '@DataContracts/Song/SongWithPVPlayerAndVoteContract';
-import SongListBaseContract from '@DataContracts/SongListBaseContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import TimeUnit from '@Models/Aggregate/TimeUnit';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import PVService from '@Models/PVs/PVService';
-import SongVoteRating from '@Models/SongVoteRating';
-import SongType from '@Models/Songs/SongType';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { CountPerDayContract } from '@/DataContracts/Aggregate/CountPerDayContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { NewSongCheckResultContract } from '@/DataContracts/NewSongCheckResultContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
+import { CreateSongContract } from '@/DataContracts/Song/CreateSongContract';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { SongDetailsContract } from '@/DataContracts/Song/SongDetailsContract';
+import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
+import { SongWithPVPlayerAndVoteContract } from '@/DataContracts/Song/SongWithPVPlayerAndVoteContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongVoteRating } from '@/Models/SongVoteRating';
+import { SongType } from '@/Models/Songs/SongType';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
+export enum SongOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	Albums = 'Albums',
+	Artists = 'Artists',
+	Names = 'Names',
+	PVs = 'PVs',
+	Tags = 'Tags',
+	ThumbUrl = 'ThumbUrl',
+	WebLinks = 'WebLinks',
+	MainPicture = 'MainPicture',
+}
+
+export interface SongGetListQueryParams {
+	query: string;
+	sort: string;
+	songTypes?: SongType[];
+	afterDate?: Date;
+	beforeDate?: Date;
+	tagIds: number[];
+	childTags: boolean;
+	unifyTypesAndTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	includeMembers: boolean;
+	eventId?: number;
+	onlyWithPvs: boolean;
+	since?: number;
+	minScore?: number;
+	userCollectionId?: number;
+	parentSongId?: number;
+	status?: string;
+	advancedFilters?: AdvancedSearchFilter[];
+	minMilliBpm?: number;
+	maxMilliBpm?: number;
+	minLength?: number;
+	maxLength?: number;
+}
 
 // Repository for managing songs and related objects.
 // Corresponds to the SongController class.
-export default class SongRepository
+export class SongRepository
 	extends BaseRepository
 	implements ICommentRepository {
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -108,7 +151,7 @@ export default class SongRepository
 		};
 	}
 
-	public addSongToList = ({
+	addSongToList = ({
 		listId,
 		songId,
 		notes,
@@ -127,7 +170,7 @@ export default class SongRepository
 		});
 	};
 
-	public createComment = ({
+	createComment = ({
 		entryId: songId,
 		contract,
 	}: {
@@ -140,7 +183,7 @@ export default class SongRepository
 		);
 	};
 
-	public createReport = ({
+	createReport = ({
 		songId,
 		reportType,
 		notes,
@@ -167,17 +210,13 @@ export default class SongRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate = ({
+	findDuplicate = ({
 		params,
 	}: {
 		params: {
@@ -195,7 +234,7 @@ export default class SongRepository
 
 	private get: <T>(relative: string, params: any) => Promise<T>;
 
-	public getByNames({
+	getByNames({
 		names,
 		ignoreIds,
 		lang,
@@ -215,7 +254,7 @@ export default class SongRepository
 		});
 	}
 
-	public getComments = ({
+	getComments = ({
 		entryId: songId,
 	}: {
 		entryId: number;
@@ -225,16 +264,12 @@ export default class SongRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<SongForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<SongForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}/for-edit`);
 		return this.httpClient.get<SongForEditContract>(url);
 	};
 
-	public getLyrics = ({
+	getLyrics = ({
 		lyricsId,
 		songVersion,
 	}: {
@@ -250,23 +285,25 @@ export default class SongRepository
 
 	private getJSON: <T>(relative: string, params: any) => Promise<T>;
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
+		baseUrl,
 		id,
 		fields,
 		lang,
 	}: {
+		baseUrl?: string;
 		id: number;
-		fields: string;
+		fields?: SongOptionalField[];
 		lang: ContentLanguagePreference;
 	}): Promise<SongApiContract> => {
-		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
+		var url = functions.mergeUrls(baseUrl ?? this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongApiContract>(url, {
-			fields: fields,
+			fields: fields?.join(','),
 			lang: lang,
 		});
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
@@ -275,12 +312,12 @@ export default class SongRepository
 	}): Promise<SongContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
 		return this.httpClient.get<SongContract>(url, {
-			fields: 'AdditionalNames',
+			fields: [SongOptionalField.AdditionalNames].join(','),
 			lang: lang,
 		});
 	};
 
-	public getListByParams({
+	getListByParams({
 		params,
 	}: {
 		params: SongQueryParams;
@@ -292,72 +329,53 @@ export default class SongRepository
 		);
 	}
 
-	public getList = ({
-		paging,
-		lang,
-		query,
-		sort,
-		songTypes,
-		afterDate,
-		beforeDate,
-		tagIds,
-		childTags,
-		unifyTypesAndTags,
-		artistIds,
-		artistParticipationStatus,
-		childVoicebanks,
-		includeMembers,
-		eventId,
-		onlyWithPvs,
-		pvServices,
-		since,
-		minScore,
-		userCollectionId,
-		parentSongId,
+	getList = ({
 		fields,
-		status,
-		advancedFilters,
-		minMilliBpm,
-		maxMilliBpm,
-		minLength,
-		maxLength,
+		lang,
+		paging,
+		pvServices,
+		queryParams,
 	}: {
-		paging: PagingProperties;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
-		query: string;
-		sort: string;
-		songTypes?: SongType[];
-		afterDate?: Date;
-		beforeDate?: Date;
-		tagIds: number[];
-		childTags: boolean;
-		unifyTypesAndTags: boolean;
-		artistIds: number[];
-		artistParticipationStatus: string;
-		childVoicebanks: boolean;
-		includeMembers: boolean;
-		eventId?: number;
-		onlyWithPvs: boolean;
-		pvServices?: string;
-		since?: number;
-		minScore?: number;
-		userCollectionId?: number;
-		parentSongId?: number;
-		fields: string;
-		status?: string;
-		advancedFilters?: AdvancedSearchFilter[];
-		minMilliBpm?: number;
-		maxMilliBpm?: number;
-		minLength?: number;
-		maxLength?: number;
-	}): Promise<PartialFindResultContract<SongContract>> => {
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: SongGetListQueryParams;
+	}): Promise<PartialFindResultContract<SongApiContract>> => {
+		const {
+			query,
+			sort,
+			songTypes,
+			afterDate,
+			beforeDate,
+			tagIds,
+			childTags,
+			unifyTypesAndTags,
+			artistIds,
+			artistParticipationStatus,
+			childVoicebanks,
+			includeMembers,
+			eventId,
+			onlyWithPvs,
+			since,
+			minScore,
+			userCollectionId,
+			parentSongId,
+			status,
+			advancedFilters,
+			minMilliBpm,
+			maxMilliBpm,
+			minLength,
+			maxLength,
+		} = queryParams;
+
 		var url = functions.mergeUrls(this.baseUrl, '/api/songs');
 		var data = {
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -373,7 +391,7 @@ export default class SongRepository
 			includeMembers: includeMembers || undefined,
 			releaseEventId: eventId,
 			onlyWithPvs: onlyWithPvs,
-			pvServices: pvServices,
+			pvServices: pvServices?.join(','),
 			since: since,
 			minScore: minScore,
 			userCollectionId: userCollectionId,
@@ -392,7 +410,7 @@ export default class SongRepository
 		);
 	};
 
-	public getOverTime = ({
+	getOverTime = ({
 		timeUnit,
 		artistId,
 	}: {
@@ -407,7 +425,7 @@ export default class SongRepository
 	};
 
 	// Get PV ID by song ID and PV service.
-	public getPvId = ({
+	getPvId = ({
 		songId,
 		pvService,
 	}: {
@@ -420,7 +438,7 @@ export default class SongRepository
 		);
 	};
 
-	public getRatings = ({
+	getRatings = ({
 		songId,
 	}: {
 		songId: number;
@@ -431,7 +449,7 @@ export default class SongRepository
 		);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		songId,
 	}: {
 		songId: number;
@@ -446,7 +464,7 @@ export default class SongRepository
 
 	private post: <T>(relative: string, params: any) => Promise<T>;
 
-	public pvForSongAndService: ({
+	pvForSongAndService: ({
 		songId,
 		pvService,
 	}: {
@@ -454,7 +472,7 @@ export default class SongRepository
 		pvService: PVService;
 	}) => Promise<string>;
 
-	public pvPlayer = ({
+	pvPlayer = ({
 		songId,
 		params,
 	}: {
@@ -467,23 +485,23 @@ export default class SongRepository
 		);
 	};
 
-	public pvPlayerWithRating: ({
+	pvPlayerWithRating: ({
 		songId,
 	}: {
 		songId: number;
 	}) => Promise<SongWithPVPlayerAndVoteContract>;
 
-	//public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
+	//songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
-	public songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
+	songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
 
-	public songListsForUser: ({
+	songListsForUser: ({
 		ignoreSongId,
 	}: {
 		ignoreSongId: number;
 	}) => Promise<SongListBaseContract[]>;
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -496,7 +514,7 @@ export default class SongRepository
 		);
 	};
 
-	public updatePersonalDescription = ({
+	updatePersonalDescription = ({
 		songId,
 		text,
 		author,
@@ -514,7 +532,7 @@ export default class SongRepository
 		);
 	};
 
-	public updateSongRating = ({
+	updateSongRating = ({
 		songId,
 		rating,
 	}: {
@@ -525,7 +543,7 @@ export default class SongRepository
 		return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
 	};
 
-	public getDetails = ({
+	getDetails = ({
 		id,
 		albumId,
 	}: {
@@ -538,7 +556,7 @@ export default class SongRepository
 		);
 	};
 
-	public getSongWithArchivedVersions = ({
+	getSongWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -546,6 +564,76 @@ export default class SongRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<SongApiContract>
 		>(this.urlMapper.mapRelative(`/api/songs/${id}/versions`));
+	};
+
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedSongVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedSongVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/songs/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	create = (
+		requestToken: string,
+		contract: CreateSongContract,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songs`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: SongForEditContract,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songs/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	merge = (
+		requestToken: string,
+		{ id, targetSongId }: { id: number; targetSongId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/songs/${id}/merge?${qs.stringify({
+					targetSongId: targetSongId,
+				})}`,
+			),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
 	};
 }
 

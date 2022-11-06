@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -18,6 +18,8 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -313,7 +315,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPut("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IActionResult PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings)
+		public IActionResult PutEntryMappings([FromBody] IEnumerable<TagEntryMappingContract> mappings)
 		{
 			if (mappings == null)
 				return BadRequest("Mappings cannot be null");
@@ -325,7 +327,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPut("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IActionResult PutMappings(IEnumerable<TagMappingContract> mappings)
+		public IActionResult PutMappings([FromBody] IEnumerable<TagMappingContract> mappings)
 		{
 			if (mappings == null)
 				return BadRequest("Mappings cannot be null");
@@ -347,6 +349,91 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<TagForApiContract> GetTagWithArchivedVersions(int id) =>
 			_queries.GetTagWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedTagVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
+
+		[HttpGet("{id:int}/for-edit")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagForEditForApiContract GetForEdit(int id) => _queries.GetTagForEdit(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] TagForEditForApiContract contract
+		)
+		{
+			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
+			UploadedFileContract? uploadedPicture = null;
+			if (coverPicUpload is not null && coverPicUpload.Length > 0)
+			{
+				ControllerBase.CheckUploadedPicture(this, coverPicUpload, "thumbPicUpload");
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
+			}
+
+			try
+			{
+				static void CheckModel(TagForEditForApiContract contract)
+				{
+					if (contract.Description is null)
+						throw new InvalidFormException("Description was null");
+
+					if (contract.Names is null)
+						throw new InvalidFormException("Names list was null");
+
+					if (contract.WebLinks is null)
+						throw new InvalidFormException("WebLinks list was null");
+				}
+
+				CheckModel(contract);
+			}
+			catch (InvalidFormException x)
+			{
+				ControllerBase.AddFormSubmissionError(this, x.Message);
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			TagBaseContract result;
+
+			try
+			{
+				result = _queries.Update(contract, uploadedPicture);
+			}
+			catch (DuplicateTagNameException x)
+			{
+				ModelState.AddModelError("Names", x.Message);
+				return ValidationProblem(ModelState);
+			}
+
+			return result.Id;
+		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int? targetTagId)
+		{
+			if (targetTagId == null)
+			{
+				ModelState.AddModelError("targetTagId", "Tag must be selected");
+				return ValidationProblem(ModelState);
+			}
+
+			_queries.Merge(id, targetTagId.Value);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

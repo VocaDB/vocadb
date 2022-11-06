@@ -1,17 +1,14 @@
-#nullable disable
+namespace VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.Search
+public enum QueryCost
 {
-	public enum QueryCost
-	{
-		Nothing = 0,
+	Nothing = 0,
 
-		Low = 1,
+	Low = 1,
 
-		Medium = 5,
+	Medium = 5,
 
-		High = 10,
+	High = 10,
 
-		VeryHigh = 15
-	}
+	VeryHigh = 15
 }

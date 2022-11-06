@@ -1,11 +1,9 @@
-import JQueryUIDialog from '@JQueryUI/JQueryUIDialog';
-import DeleteEntryStore from '@Stores/DeleteEntryStore';
+import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { showSuccessMessage } from '../../../ui';
 
 interface EntryDeletePopupBaseProps {
 	confirmText: string;
@@ -13,16 +11,18 @@ interface EntryDeletePopupBaseProps {
 	title: string;
 	deleteButtonProps: {
 		text: string;
-		icons: any;
+		icons?: any;
 	};
+	onDelete?: () => void;
 }
 
-const EntryDeletePopupBase = observer(
+export const EntryDeletePopupBase = observer(
 	({
 		confirmText,
 		deleteEntryStore,
 		title,
 		deleteButtonProps,
+		onDelete,
 	}: EntryDeletePopupBaseProps): React.ReactElement => {
 		const { t } = useTranslation(['AjaxRes', 'ViewRes']);
 
@@ -42,7 +42,9 @@ const EntryDeletePopupBase = observer(
 						click: async (): Promise<void> => {
 							await deleteEntryStore.deleteEntry();
 
-							showSuccessMessage(t('AjaxRes:Shared.ReportSent'));
+							// TODO: showSuccessMessage();
+
+							onDelete?.();
 						},
 						disabled: !deleteEntryStore.isValid,
 					},
@@ -72,5 +74,3 @@ const EntryDeletePopupBase = observer(
 		);
 	},
 );
-
-export default EntryDeletePopupBase;

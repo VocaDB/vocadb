@@ -1,9 +1,7 @@
 using System.Runtime.Caching;
 using System.Security.Claims;
-using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -81,10 +79,6 @@ namespace VocaDb.Web
 				});
 
 			services.AddInMemoryCacheOutput();
-
-			services.AddSwaggerGen();
-			// Code from: https://stackoverflow.com/questions/36452468/swagger-ui-web-api-documentation-present-enums-as-strings/55541764#55541764
-			services.AddSwaggerGenNewtonsoftSupport();
 
 			// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 			services
@@ -266,13 +260,6 @@ namespace VocaDb.Web
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
-			// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
-			});
-
 			app.UseRouting();
 
 			app.UseRequestLocalization(options =>
@@ -293,27 +280,9 @@ namespace VocaDb.Web
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#generate-antiforgery-tokens-with-iantiforgery.
-			var antiforgery = app.ApplicationServices.GetRequiredService<IAntiforgery>();
-			app.Use((context, next) =>
-			{
-				var requestPath = context.Request.Path.Value;
-
-				if (string.Equals(requestPath, "/", StringComparison.OrdinalIgnoreCase) || string.Equals(requestPath, "/index.html", StringComparison.OrdinalIgnoreCase))
-				{
-					var tokenSet = antiforgery.GetAndStoreTokens(context);
-					context.Response.Cookies.Append("XSRF-TOKEN", tokenSet.RequestToken!, new CookieOptions { HttpOnly = false });
-				}
-
-				return next(context);
-			});
-
 			app.UseVocaDbPrincipal();
 
 			app.UseResponseCaching();
-
-			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
-			app.UseCacheOutput();
 
 			// Code from: https://stackoverflow.com/questions/54271639/how-can-i-redirect-a-user-when-a-specific-exception-is-cought-with-asp-net-core/54275293#54275293
 			app.Use(async (context, next) =>
@@ -373,8 +342,8 @@ namespace VocaDb.Web
 				endpoints.MapControllerRoute("User", "Profile/{id}/{**clientPath}", new { controller = "User", action = "Profile" });
 
 				endpoints.MapControllerRoute("Discussion", "discussion/{**clientPath}", new { controller = "Discussion", action = "Index" });
-
 				endpoints.MapControllerRoute("Help", "Help/{**clientPath}", new { controller = "Help", action = "Index" });
+				endpoints.MapControllerRoute("Playlist", "playlist/{**clientPath}", new { controller = "Playlist", action = "Index" });
 
 				endpoints.MapControllerRoute(
 					name: "default",

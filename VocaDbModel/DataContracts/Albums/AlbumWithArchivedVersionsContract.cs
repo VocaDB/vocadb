@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
+	[Obsolete]
 	public class AlbumWithArchivedVersionsContract : AlbumContract
 	{
 #nullable enable

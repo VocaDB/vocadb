@@ -1,19 +1,19 @@
-import Button from '@Bootstrap/Button';
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
+import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
+import { PVRatingButtonsForIndex } from '@/Components/Shared/Partials/PVRatingButtonsForIndex';
+import { EntryType } from '@/Models/EntryType';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import EmbedPV from '../PV/EmbedPV';
-import PVRatingButtonsForIndex from '../PVRatingButtonsForIndex';
 
 interface PVPreviewKnockoutProps {
 	previewStore: SongWithPreviewStore;
 	getPvServiceIcons: (services: string) => { service: string; url: string }[];
 }
 
-const PVPreviewKnockout = observer(
+export const PVPreviewKnockout = observer(
 	({
 		previewStore,
 		getPvServiceIcons,
@@ -62,10 +62,18 @@ const PVPreviewKnockout = observer(
 							)}
 					</div>
 				</div>
-				<div>{primaryPV && <EmbedPV pv={primaryPV} />}</div>
+				<div>
+					{primaryPV && (
+						<EmbedPVPreview
+							entry={{
+								...previewStore.selectedSong,
+								entryType: EntryType[EntryType.Song],
+							}}
+							pv={primaryPV}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	},
 );
-
-export default PVPreviewKnockout;

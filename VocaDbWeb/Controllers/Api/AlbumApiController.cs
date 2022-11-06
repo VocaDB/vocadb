@@ -11,13 +11,18 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
@@ -41,8 +46,12 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly AlbumQueries _queries;
 		private readonly AlbumService _service;
 
-		public AlbumApiController(AlbumQueries queries, AlbumService service,
-			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister)
+		public AlbumApiController(
+			AlbumQueries queries,
+			AlbumService service,
+			OtherService otherService,
+			IAggregatedEntryImageUrlFactory thumbPersister
+		)
 		{
 			_queries = queries;
 			_service = service;
@@ -84,7 +93,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public AlbumForEditContract GetForEdit(int id) => _queries.GetForEdit(id);
+		public AlbumForEditForApiContract GetForEdit(int id) => _queries.GetForEdit(id);
 
 		/// <summary>
 		/// Gets an album by Id.
@@ -365,6 +374,138 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<AlbumForApiContract> GetAlbumWithArchivedVersions(int id) =>
 			_queries.GetAlbumWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedAlbumVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
+
+		[HttpPost("")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Create(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] CreateAlbumForApiContract contract
+		)
+		{
+			if (contract.Names.All(name => string.IsNullOrWhiteSpace(name.Value)))
+				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
+
+			if (contract.Artists is null || !contract.Artists.Any())
+				ModelState.AddModelError("Artists", ViewRes.Album.CreateStrings.NeedArtist);
+
+			if (!ModelState.IsValid)
+				return ValidationProblem(ModelState);
+
+			var album = await _queries.Create(contract);
+
+			return album.Id;
+		}
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] AlbumForEditForApiContract contract
+		)
+		{
+			// Unable to continue if viewmodel is null because we need the ID at least
+			if (contract is null)
+			{
+				return BadRequest("Viewmodel was null - probably JavaScript is disabled");
+			}
+
+			try
+			{
+				static void CheckModel(AlbumForEditForApiContract contract)
+				{
+					if (contract is null)
+						throw new InvalidFormException("Model was null");
+
+					if (contract.ArtistLinks is null)
+						throw new InvalidFormException("Artists list was null");
+
+					if (contract.Identifiers is null)
+						throw new InvalidFormException("Identifiers list was null");
+
+					if (contract.Names is null)
+						throw new InvalidFormException("Names list was null");
+
+					if (contract.PVs is null)
+						throw new InvalidFormException("PVs list was null");
+
+					if (contract.Songs is null)
+						throw new InvalidFormException("Tracks list was null");
+
+					if (contract.WebLinks is null)
+						throw new InvalidFormException("WebLinks list was null");
+				}
+
+				CheckModel(contract);
+			}
+			catch (InvalidFormException x)
+			{
+				ControllerBase.AddFormSubmissionError(this, x.Message);
+			}
+
+			// Note: name is allowed to be whitespace, but not empty.
+			if (contract.Names is not null && contract.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Names", AlbumValidationErrors.UnspecifiedNames);
+			}
+
+			if (
+				contract.OriginalRelease is not null &&
+				contract.OriginalRelease.ReleaseDate is not null &&
+				!OptionalDateTime.IsValid(contract.OriginalRelease.ReleaseDate.Year, contract.OriginalRelease.ReleaseDate.Day, contract.OriginalRelease.ReleaseDate.Month)
+			)
+			{
+				ModelState.AddModelError("ReleaseYear", "Invalid date");
+			}
+
+			var coverPicUpload = Request.Form.Files["coverPicUpload"];
+			var pictureData = ControllerBase.ParsePicture(this, coverPicUpload, "CoverPicture", ImagePurpose.Main);
+
+			if (contract.Pictures is null)
+			{
+				ControllerBase.AddFormSubmissionError(this, "List of pictures was null");
+			}
+
+			if (contract.Pictures is not null)
+				ControllerBase.ParseAdditionalPictures(this, coverPicUpload, contract.Pictures);
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			try
+			{
+				await _queries.UpdateBasicProperties(contract, pictureData);
+			}
+			catch (InvalidPictureException)
+			{
+				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return ValidationProblem(ModelState);
+			}
+
+			return contract.Id;
+		}
+
+		[HttpPost("{id:int}/merge")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult Merge(int id, int targetAlbumId)
+		{
+			_queries.Merge(id, targetAlbumId);
+
+			return NoContent();
+		}
 #nullable disable
 	}
 }

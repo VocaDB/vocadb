@@ -1,6 +1,6 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import NameMatchMode from '@Models/NameMatchMode';
-import TagRepository from '@Repositories/TagRepository';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { TagRepository } from '@/Repositories/TagRepository';
 import {
 	computed,
 	makeObservable,
@@ -9,12 +9,12 @@ import {
 	runInAction,
 } from 'mobx';
 
-export default class TagCreateStore {
-	@observable public dialogVisible = false;
-	@observable public duplicateName = false;
-	@observable public newTagName = '';
+export class TagCreateStore {
+	@observable dialogVisible = false;
+	@observable duplicateName = false;
+	@observable newTagName = '';
 
-	public constructor(private readonly tagRepo: TagRepository) {
+	constructor(private readonly tagRepo: TagRepository) {
 		makeObservable(this);
 
 		reaction(
@@ -45,11 +45,11 @@ export default class TagCreateStore {
 		);
 	}
 
-	@computed public get isValid(): boolean {
+	@computed get isValid(): boolean {
 		return !!this.newTagName && !this.duplicateName;
 	}
 
-	public createTag = async (): Promise<TagBaseContract> => {
+	createTag = async (): Promise<TagBaseContract> => {
 		const tag = await this.tagRepo.create({ name: this.newTagName });
 
 		runInAction(() => {

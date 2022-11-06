@@ -1,4 +1,4 @@
-import { BsPrefixRefForwardingComponent } from '@Bootstrap/helpers';
+import { BsPrefixRefForwardingComponent } from '@/Bootstrap/helpers';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface ShowMoreProps {
 	as: React.ElementType;
 }
 
-const ShowMore: BsPrefixRefForwardingComponent<
+export const ShowMore: BsPrefixRefForwardingComponent<
 	'a',
 	ShowMoreProps
 > = React.forwardRef<HTMLAnchorElement, ShowMoreProps>(
@@ -24,5 +24,3 @@ const ShowMore: BsPrefixRefForwardingComponent<
 		);
 	},
 );
-
-export default ShowMore;

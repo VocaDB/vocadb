@@ -1,27 +1,49 @@
-export default interface PVContract {
+import { PVService } from '@/Models/PVs/PVService';
+import { PVType } from '@/Models/PVs/PVType';
+
+interface PVContractBase {
 	author?: string;
-
 	createdBy?: number;
-
 	disabled?: boolean;
-
-	extendedMetadata?: any;
-
-	id?: number;
-
+	id: number;
 	length?: number;
-
 	name?: string;
-
 	pvId: string;
-
-	service: string;
-
 	publishDate?: string;
-
-	pvType: string;
-
+	pvType: PVType;
 	thumbUrl?: string;
-
 	url?: string;
 }
+
+export interface PVExtendedMetadata {
+	json?: string;
+}
+
+export interface BandcampPVContract extends PVContractBase {
+	service: PVService.Bandcamp;
+	extendedMetadata?: PVExtendedMetadata;
+}
+
+export interface PiaproPVContract extends PVContractBase {
+	service: PVService.Piapro;
+	extendedMetadata?: PVExtendedMetadata;
+}
+
+export interface SoundCloudPVContract extends PVContractBase {
+	service: PVService.SoundCloud;
+}
+
+interface DefaultPVContract extends PVContractBase {
+	service: Exclude<
+		PVService,
+		| BandcampPVContract['service']
+		| PiaproPVContract['service']
+		| SoundCloudPVContract['service']
+	>;
+}
+
+export type PVContract =
+	| BandcampPVContract
+	| PiaproPVContract
+	| SoundCloudPVContract
+	| DefaultPVContract;

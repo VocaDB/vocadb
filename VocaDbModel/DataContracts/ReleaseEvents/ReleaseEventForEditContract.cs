@@ -7,11 +7,12 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventForEditContract : ReleaseEventDetailsContract
 	{
 		public ReleaseEventForEditContract()
 		{
-			Names = new LocalizedStringWithIdContract[0];
+			Names = Array.Empty<LocalizedStringWithIdContract>();
 		}
 
 		public ReleaseEventForEditContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) :

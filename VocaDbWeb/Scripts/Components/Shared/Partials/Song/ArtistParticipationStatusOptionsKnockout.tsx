@@ -1,4 +1,4 @@
-import Button from '@Bootstrap/Button';
+import Button from '@/Bootstrap/Button';
 import React from 'react';
 
 enum ArtistAlbumParticipationStatus {
@@ -8,12 +8,10 @@ enum ArtistAlbumParticipationStatus {
 }
 
 const options = {
-	[ArtistAlbumParticipationStatus.Everything]:
-		'Everything' /* TODO: localize */,
-	[ArtistAlbumParticipationStatus.OnlyMainAlbums]:
-		'Only main songs' /* TODO: localize */,
+	[ArtistAlbumParticipationStatus.Everything]: 'Everything' /* LOC */,
+	[ArtistAlbumParticipationStatus.OnlyMainAlbums]: 'Only main songs' /* LOC */,
 	[ArtistAlbumParticipationStatus.OnlyCollaborations]:
-		'Only collaborations' /* TODO: localize */,
+		'Only collaborations' /* LOC */,
 };
 
 interface ArtistParticipationStatusOptionsKnockoutProps {
@@ -21,7 +19,7 @@ interface ArtistParticipationStatusOptionsKnockoutProps {
 	onSelect: (eventKey: string) => void;
 }
 
-const ArtistParticipationStatusOptionsKnockout = React.memo(
+export const ArtistParticipationStatusOptionsKnockout = React.memo(
 	({
 		activeKey,
 		onSelect,
@@ -43,5 +41,3 @@ const ArtistParticipationStatusOptionsKnockout = React.memo(
 		);
 	},
 );
-
-export default ArtistParticipationStatusOptionsKnockout;

@@ -1,36 +1,40 @@
-import { ISongSearchStore } from '@Components/Search/Partials/SongSearchList';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import SongContract from '@DataContracts/Song/SongContract';
-import IEntryWithIdAndName from '@Models/IEntryWithIdAndName';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import SongType from '@Models/Songs/SongType';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import BasicEntryLinkStore from '@Stores/BasicEntryLinkStore';
-import PVPlayerStore from '@Stores/PVs/PVPlayerStore';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import PlayListRepositoryForSongsAdapter, {
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { SongContract } from '@/DataContracts/Song/SongContract';
+import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { SongType } from '@/Models/Songs/SongType';
+import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import {
+	SongGetListQueryParams,
+	SongOptionalField,
+	SongRepository,
+} from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
+import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
+import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
+import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
+import {
 	ISongsAdapterStore,
-} from '@Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
-import PlayListStore from '@Stores/Song/PlayList/PlayListStore';
-import SongWithPreviewStore from '@Stores/Song/SongWithPreviewStore';
-import _ from 'lodash';
+	PlayListRepositoryForSongsAdapter,
+} from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
+import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
+import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
-
-import AdvancedSearchFilter from './AdvancedSearchFilter';
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
-import SongBpmFilter from './SongBpmFilter';
-import SongLengthFilter from './SongLengthFilter';
 
 export interface ISongSearchItem extends SongApiContract {
 	previewStore?: SongWithPreviewStore;
@@ -51,6 +55,7 @@ export enum SongSortRule {
 	FavoritedTimes = 'FavoritedTimes',
 	RatingScore = 'RatingScore',
 	TagUsageCount = 'TagUsageCount',
+	SongType = 'SongType',
 }
 
 export interface SongSearchRouteParams {
@@ -88,33 +93,64 @@ export interface SongSearchRouteParams {
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
-export default class SongSearchStore
+const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+	'dateYear',
+	'dateMonth',
+	'dateDay',
+	'eventId',
+	'minScore',
+	'onlyRatedSongs',
+	'parentVersionId',
+	'onlyWithPVs',
+	'since',
+	'songType',
+	'sort',
+	'unifyEntryTypesAndTags',
+	'viewMode',
+	'minMilliBpm',
+	'maxMilliBpm',
+	'minLength',
+	'maxLength',
+];
+
+export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
 	implements ISongSearchStore, ISongsAdapterStore {
-	public readonly artistFilters: ArtistFilters;
-	@observable public dateDay?: number = undefined;
-	@observable public dateMonth?: number = undefined;
-	@observable public dateYear?: number = undefined;
-	public readonly releaseEvent: BasicEntryLinkStore<IEntryWithIdAndName>;
-	@observable public minScore?: number;
-	@observable public onlyRatedSongs = false;
-	public readonly parentVersion: BasicEntryLinkStore<SongContract>;
-	public readonly playListStore: PlayListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
-	@observable public pvsOnly = false;
+	readonly artistFilters: ArtistFilters;
+	@observable dateDay?: number = undefined;
+	@observable dateMonth?: number = undefined;
+	@observable dateYear?: number = undefined;
+	readonly releaseEvent: BasicEntryLinkStore<IEntryWithIdAndName>;
+	@observable minScore?: number;
+	@observable onlyRatedSongs = false;
+	readonly parentVersion: BasicEntryLinkStore<SongContract>;
+	readonly playListStore: PlayListStore;
+	readonly pvPlayerStore: PVPlayerStore;
+	@observable pvsOnly = false;
 	private readonly pvServiceIcons: PVServiceIcons;
-	@observable public since?: number;
-	@observable public songType = SongType.Unspecified;
-	@observable public sort = SongSortRule.Name;
-	@observable public unifyEntryTypesAndTags = false;
-	@observable public viewMode: 'Details' | 'PlayList' =
-		'Details' /* TODO: enum */;
-	public readonly minBpmFilter = new SongBpmFilter();
-	public readonly maxBpmFilter = new SongBpmFilter();
-	public readonly minLengthFilter = new SongLengthFilter();
-	public readonly maxLengthFilter = new SongLengthFilter();
+	@observable since?: number;
+	@observable songType = SongType.Unspecified;
+	@observable sort = SongSortRule.RatingScore;
+	@observable unifyEntryTypesAndTags = false;
+	@observable viewMode: 'Details' | 'PlayList' = 'Details' /* TODO: enum */;
+	readonly minBpmFilter = new SongBpmFilter();
+	readonly maxBpmFilter = new SongBpmFilter();
+	readonly minLengthFilter = new SongLengthFilter();
+	readonly maxLengthFilter = new SongLengthFilter();
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
@@ -169,7 +205,7 @@ export default class SongSearchStore
 	private toDateOrUndefined = (mom: moment.Moment): Date | undefined =>
 		mom.isValid() ? mom.toDate() : undefined;
 
-	@computed public get afterDate(): Date | undefined {
+	@computed get afterDate(): Date | undefined {
 		return this.dateYear
 			? this.toDateOrUndefined(
 					moment.utc([
@@ -181,7 +217,7 @@ export default class SongSearchStore
 			: undefined;
 	}
 
-	@computed public get beforeDate(): Date | undefined {
+	@computed get beforeDate(): Date | undefined {
 		if (!this.dateYear) return undefined;
 
 		const mom = moment.utc([
@@ -195,130 +231,99 @@ export default class SongSearchStore
 		);
 	}
 
-	@computed public get fields(): string {
+	@computed get fields(): SongOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Tags'
-			: 'AdditionalNames,MainPicture' /* TODO: enum */;
+			? [
+					SongOptionalField.AdditionalNames,
+					SongOptionalField.MainPicture,
+					SongOptionalField.Tags,
+			  ]
+			: [SongOptionalField.AdditionalNames, SongOptionalField.MainPicture];
 	}
 
-	@computed public get showUnifyEntryTypesAndTags(): boolean {
+	@computed get showUnifyEntryTypesAndTags(): boolean {
 		return (
 			this.songType !== SongType.Unspecified &&
 			this.songType !== SongType.Original
 		);
 	}
 
-	public loadResults = (
+	@computed get queryParams(): SongGetListQueryParams {
+		return {
+			query: this.searchTerm,
+			sort: this.sort,
+			songTypes:
+				this.songType !== SongType.Unspecified ? [this.songType] : undefined,
+			afterDate: this.afterDate,
+			beforeDate: this.beforeDate,
+			tagIds: this.tagIds,
+			childTags: this.childTags,
+			unifyTypesAndTags: this.unifyEntryTypesAndTags,
+			artistIds: this.artistFilters.artistIds,
+			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
+			childVoicebanks: this.artistFilters.childVoicebanks,
+			includeMembers: this.artistFilters.includeMembers,
+			eventId: this.releaseEvent.id,
+			onlyWithPvs: this.pvsOnly,
+			since: this.since,
+			minScore: this.minScore,
+			userCollectionId: this.onlyRatedSongs
+				? this.values.loggedUserId
+				: undefined,
+			parentSongId: this.parentVersion.id,
+			status: this.draftsOnly ? 'Draft' : undefined,
+			advancedFilters: this.advancedFilters.filters,
+			minMilliBpm: this.minBpmFilter.milliBpm,
+			maxMilliBpm: this.maxBpmFilter.milliBpm,
+			minLength: this.minLengthFilter.length
+				? this.minLengthFilter.length
+				: undefined,
+			maxLength: this.maxLengthFilter.length
+				? this.maxLengthFilter.length
+				: undefined,
+		};
+	}
+
+	loadResults = async (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ISongSearchItem>> => {
 		if (this.viewMode === 'PlayList') {
 			this.playListStore.updateResultsWithTotalCount();
-			return Promise.resolve({ items: [], totalCount: 0 });
+			return { items: [], totalCount: 0 };
 		} else {
-			return this.songRepo
-				.getList({
-					paging: pagingProperties,
-					lang: this.values.languagePreference,
-					query: searchTerm,
-					sort: this.sort,
-					songTypes:
-						this.songType !== SongType.Unspecified
-							? [this.songType]
-							: undefined,
-					afterDate: this.afterDate,
-					beforeDate: this.beforeDate,
-					tagIds: tags,
-					childTags: childTags,
-					unifyTypesAndTags: this.unifyEntryTypesAndTags,
-					artistIds: this.artistFilters.artistIds,
-					artistParticipationStatus: this.artistFilters
-						.artistParticipationStatus,
-					childVoicebanks: this.artistFilters.childVoicebanks,
-					includeMembers: this.artistFilters.includeMembers,
-					eventId: this.releaseEvent.id,
-					onlyWithPvs: this.pvsOnly,
-					pvServices: undefined,
-					since: this.since,
-					minScore: this.minScore,
-					userCollectionId: this.onlyRatedSongs
-						? this.values.loggedUserId
-						: undefined,
-					parentSongId: this.parentVersion.id,
-					fields: this.fields,
-					status: status,
-					advancedFilters: this.advancedFilters.filters,
-					minMilliBpm: this.minBpmFilter.milliBpm,
-					maxMilliBpm: this.maxBpmFilter.milliBpm,
-					minLength: this.minLengthFilter.length
-						? this.minLengthFilter.length
-						: undefined,
-					maxLength: this.maxLengthFilter.length
-						? this.maxLengthFilter.length
-						: undefined,
-				})
-				.then((result) => {
-					_.each(result.items, (song: ISongSearchItem) => {
-						if (song.pvServices && song.pvServices !== 'Nothing') {
-							song.previewStore = new SongWithPreviewStore(
-								this.songRepo,
-								this.userRepo,
-								song.id,
-								song.pvServices,
-							);
-							// TODO: song.previewStore.ratingComplete = ui.showThankYouForRatingMessage;
-						} else {
-							song.previewStore = undefined;
-						}
-					});
+			const result = await this.songRepo.getList({
+				fields: this.fields,
+				lang: this.values.languagePreference,
+				paging: pagingProperties,
+				pvServices: undefined,
+				queryParams: this.queryParams,
+			});
 
-					return result;
-				});
+			for (const song of result.items as ISongSearchItem[]) {
+				if (song.pvServices && song.pvServices !== 'Nothing') {
+					song.previewStore = new SongWithPreviewStore(
+						this.songRepo,
+						this.userRepo,
+						song.id,
+						song.pvServices,
+					);
+					// TODO: song.previewStore.ratingComplete = ui.showThankYouForRatingMessage;
+				} else {
+					song.previewStore = undefined;
+				}
+			}
+
+			return result;
 		}
 	};
 
-	public getPVServiceIcons = (
+	getPVServiceIcons = (
 		services: string,
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-		'dateYear',
-		'dateMonth',
-		'dateDay',
-		'eventId',
-		'minScore',
-		'onlyRatedSongs',
-		'parentVersionId',
-		'onlyWithPVs',
-		'since',
-		'songType',
-		'sort',
-		'unifyEntryTypesAndTags',
-		'viewMode',
-		'minMilliBpm',
-		'maxMilliBpm',
-		'minLength',
-		'maxLength',
-	];
-
-	@computed.struct public get routeParams(): SongSearchRouteParams {
+	@computed.struct get locationState(): SongSearchRouteParams {
 		return {
 			searchType: SearchType.Song,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -358,7 +363,7 @@ export default class SongSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: SongSearchRouteParams) {
+	set locationState(value: SongSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -388,9 +393,19 @@ export default class SongSearchStore
 		// TODO: shuffle
 		this.since = value.since;
 		this.songType = value.songType ?? SongType.Unspecified;
-		this.sort = value.sort ?? SongSortRule.Name;
+		this.sort = value.sort ?? SongSortRule.RatingScore;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.unifyEntryTypesAndTags = value.unifyEntryTypesAndTags ?? false;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	onLocationStateChange = (
+		event: StateChangeEvent<SongSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

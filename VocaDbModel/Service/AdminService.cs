@@ -70,7 +70,7 @@ namespace VocaDb.Model.Service
 
 			var imagePersister = new ServerEntryThumbPersister();
 			var thumbGenerator = new ImageThumbGenerator(imagePersister);
-			var artistIds = new int[0];
+			var artistIds = Array.Empty<int>();
 
 			HandleQuery(session =>
 			{
@@ -92,10 +92,8 @@ namespace VocaDb.Model.Service
 						if (artist.Picture.Bytes == null || imagePersister.HasImage(data, ImageSize.Thumb))
 							continue;
 
-						using (var stream = new MemoryStream(artist.Picture.Bytes))
-						{
-							thumbGenerator.GenerateThumbsAndMoveImage(stream, data, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
-						}
+						using var stream = new MemoryStream(artist.Picture.Bytes);
+						thumbGenerator.GenerateThumbsAndMoveImage(stream, data, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 					}
 				});
 			}
@@ -177,15 +175,15 @@ namespace VocaDb.Model.Service
 		}
 
 #nullable enable
-		public void CreateXmlDump()
+		public void CreateJsonDump()
 		{
-			PermissionContext.VerifyPermission(PermissionToken.CreateXmlDump);
+			PermissionContext.VerifyPermission(PermissionToken.CreateDatabaseDump);
 
 			HandleQuery(session =>
 			{
-				AuditLog("creating XML dump", session);
+				AuditLog("creating JSON dump", session);
 
-				var dumper = new XmlDumper();
+				var dumper = new DatabaseDumper();
 				var path = Path.Combine(AppConfig.DbDumpFolder, "dump.zip");
 				dumper.Create(path, session);
 			});
@@ -239,7 +237,7 @@ namespace VocaDb.Model.Service
 		public string[] FindPVAuthorNames(string term)
 		{
 			if (string.IsNullOrEmpty(term))
-				return new string[] { };
+				return Array.Empty<string>();
 
 			return HandleQuery(session =>
 			{
@@ -296,9 +294,17 @@ namespace VocaDb.Model.Service
 			throw new NotImplementedException();
 		}
 
-		public AuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
- 			string userName, string[] excludeUsers, bool onlyNewUsers,
-			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing)
+#nullable enable
+		public AuditLogEntryForApiContract[] GetAuditLog(
+			string filter,
+			int start,
+			int maxEntries,
+			int timeCutoffDays,
+			string userName,
+			string[] excludeUsers,
+			bool onlyNewUsers,
+			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing
+		)
 		{
 			return HandleTransaction(session =>
 			{
@@ -347,17 +353,18 @@ namespace VocaDb.Model.Service
 					.Skip(start)
 					.Take(maxEntries)
 					.ToArray()
-					.Select(e => new AuditLogEntryContract(e))
+					.Select(e => new AuditLogEntryForApiContract(e))
 					.ToArray();
 
 				return entries;
 			}, IsolationLevel.ReadUncommitted);
 		}
+#nullable disable
 
 		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults)
 		{
 			if (string.IsNullOrEmpty(author))
-				return new PVForSongContract[] { };
+				return Array.Empty<PVForSongContract>();
 
 			return HandleQuery(session =>
 			{

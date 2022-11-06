@@ -2,15 +2,11 @@
 
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
@@ -21,15 +17,8 @@ namespace VocaDb.Web.Controllers
 {
 	public class ExtController : ControllerBase
 	{
-		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-
-		private readonly AlbumService _albumService;
-		private readonly ArtistService _artistService;
-		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 		private readonly IEntryUrlParser _entryUrlParser;
-		private readonly EventQueries _eventQueries;
 		private readonly SongQueries _songService;
-		private readonly TagQueries _tagQueries;
 		private readonly PVHelper _pvHelper;
 
 		protected ActionResult Object<T>(T obj, DataFormat format) where T : class
@@ -40,7 +29,8 @@ namespace VocaDb.Web.Controllers
 				return Json(obj);
 		}
 
-		protected ActionResult Xml<T>(T obj) where T : class
+#nullable enable
+		protected ActionResult Xml<T>(T? obj) where T : class
 		{
 			if (obj == null)
 				return new EmptyResult();
@@ -48,25 +38,16 @@ namespace VocaDb.Web.Controllers
 			var content = XmlHelper.SerializeToUTF8XmlString(obj);
 			return base.Xml(content);
 		}
+#nullable disable
 
 		public ExtController(
 			IEntryUrlParser entryUrlParser,
-			IAggregatedEntryImageUrlFactory entryThumbPersister,
-			AlbumService albumService,
-			ArtistService artistService,
-			EventQueries eventQueries,
 			SongQueries songService,
-			TagQueries tagQueries,
 			PVHelper pvHelper
 		)
 		{
 			_entryUrlParser = entryUrlParser;
-			_entryThumbPersister = entryThumbPersister;
-			_albumService = albumService;
-			_artistService = artistService;
-			_eventQueries = eventQueries;
 			_songService = songService;
-			_tagQueries = tagQueries;
 			_pvHelper = pvHelper;
 		}
 
@@ -102,44 +83,6 @@ namespace VocaDb.Web.Controllers
 			};
 
 			return PartialView(viewModel);
-		}
-
-		public async Task<ActionResult> EntryToolTip(string url, string callback)
-		{
-			if (string.IsNullOrWhiteSpace(url))
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
-
-			var entryId = _entryUrlParser.Parse(url, allowRelative: true);
-
-			if (entryId.IsEmpty)
-			{
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid URL");
-			}
-
-			var data = string.Empty;
-			var id = entryId.Id;
-
-			switch (entryId.EntryType)
-			{
-				case EntryType.Album:
-					data = await RenderPartialViewToStringAsync("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
-					break;
-				case EntryType.Artist:
-					data = await RenderPartialViewToStringAsync("ArtistPopupContent", _artistService.GetArtist(id));
-					break;
-				case EntryType.ReleaseEvent:
-					data = await RenderPartialViewToStringAsync("_EventPopupContent", _eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
-					break;
-				case EntryType.Song:
-					data = await RenderPartialViewToStringAsync("SongPopupContent", _songService.GetSong(id));
-					break;
-				case EntryType.Tag:
-					data = await RenderPartialViewToStringAsync("_TagPopupContent", _tagQueries.LoadTag(id, t =>
-						new TagForApiContract(t, _entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
-					break;
-			}
-
-			return Json(data, callback);
 		}
 
 		public async Task<ActionResult> OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false)

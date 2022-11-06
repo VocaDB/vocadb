@@ -1,25 +1,46 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongInListContract from '@DataContracts/Song/SongInListContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import SongListForEditContract from '@DataContracts/Song/SongListForEditContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import SongType from '@Models/Songs/SongType';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
+import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongType } from '@/Models/Songs/SongType';
+import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
-import EntryWithArchivedVersionsContract from '../DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import EntryCommentRepository from './EntryCommentRepository';
+export interface SongListGetSongsQueryParams {
+	listId: number;
+	query: string;
+	songTypes?: SongType[];
+	tagIds: number[];
+	childTags: boolean;
+	artistIds: number[];
+	artistParticipationStatus: string;
+	childVoicebanks: boolean;
+	advancedFilters: AdvancedSearchFilter[];
+	sort: string;
+}
 
-export default class SongListRepository {
-	public constructor(
+export enum SongListOptionalField {
+	'Description' = 'Description',
+	'Events' = 'Events',
+	'MainPicture' = 'MainPicture',
+	'Tags' = 'Tags',
+}
+
+export class SongListRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -38,10 +59,10 @@ export default class SongListRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getComments = ({}: {}): EntryCommentRepository =>
+	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
 
-	public getFeatured = ({
+	getFeatured = ({
 		query,
 		category,
 		paging,
@@ -53,7 +74,7 @@ export default class SongListRepository {
 		category: string;
 		paging: PagingProperties;
 		tagIds: number[];
-		fields: string;
+		fields: SongListOptionalField[];
 		sort: string;
 	}): Promise<PartialFindResultContract<SongListContract>> => {
 		var url = this.urlMapper.mapRelative('/api/songLists/featured');
@@ -66,52 +87,43 @@ export default class SongListRepository {
 				getTotalCount: paging.getTotalCount,
 				maxResults: paging.maxEntries,
 				tagId: tagIds,
-				fields: fields,
+				fields: fields.join(','),
 				sort: sort,
 			},
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<SongListForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<SongListForEditContract> => {
 		var url = this.urlMapper.mapRelative(`/api/songLists/${id}/for-edit`);
 		return this.httpClient.get<SongListForEditContract>(url);
 	};
 
-	public getSongs = ({
-		listId,
-		query,
-		songTypes,
-		tagIds,
-		childTags,
-		artistIds,
-		artistParticipationStatus,
-		childVoicebanks,
-		advancedFilters,
-		pvServices,
-		paging,
+	getSongs = ({
 		fields,
-		sort,
 		lang,
+		paging,
+		pvServices,
+		queryParams,
 	}: {
-		listId: number;
-		query: string;
-		songTypes?: SongType[];
-		tagIds: number[];
-		childTags: boolean;
-		artistIds: number[];
-		artistParticipationStatus: string;
-		childVoicebanks: boolean;
-		advancedFilters: AdvancedSearchFilter[];
-		pvServices?: string;
-		paging: PagingProperties;
-		fields: SongOptionalFields;
-		sort: string;
+		fields: SongOptionalField[];
 		lang: ContentLanguagePreference;
+		paging: PagingProperties;
+		pvServices?: PVService[];
+		queryParams: SongListGetSongsQueryParams;
 	}): Promise<PartialFindResultContract<SongInListContract>> => {
+		const {
+			listId,
+			query,
+			songTypes,
+			tagIds,
+			childTags,
+			artistIds,
+			artistParticipationStatus,
+			childVoicebanks,
+			advancedFilters,
+			sort,
+		} = queryParams;
+
 		var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
 		var data = {
 			query: query,
@@ -122,11 +134,11 @@ export default class SongListRepository {
 			artistParticipationStatus: artistParticipationStatus,
 			childVoicebanks: childVoicebanks,
 			advancedFilters: advancedFilters,
-			pvServices: pvServices,
+			pvServices: pvServices?.join(','),
 			start: paging.start,
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
-			fields: fields.fields,
+			fields: fields.join(','),
 			lang: lang,
 			sort: sort,
 		};
@@ -137,13 +149,13 @@ export default class SongListRepository {
 		);
 	};
 
-	public getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
+	getDetails = ({ id }: { id: number }): Promise<SongListContract> => {
 		return this.httpClient.get<SongListContract>(
 			this.urlMapper.mapRelative(`/api/songLists/${id}/details`),
 		);
 	};
 
-	public getSongListWithArchivedVersions = ({
+	getSongListWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -151,5 +163,31 @@ export default class SongListRepository {
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<SongListContract>
 		>(this.urlMapper.mapRelative(`/api/songLists/${id}/versions`));
+	};
+
+	getOne = ({ id }: { id: number }): Promise<SongListBaseContract> => {
+		return this.httpClient.get<SongListBaseContract>(`/api/songLists/${id}`);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: SongListForEditContract,
+		thumbPicUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (thumbPicUpload) formData.append('thumbPicUpload', thumbPicUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/songLists/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
 	};
 }

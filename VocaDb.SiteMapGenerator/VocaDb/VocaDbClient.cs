@@ -17,33 +17,31 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 		private async Task<T> GetEntries<T>(string apiUrl)
 		{
 			var uri = new Uri(apiUrl);
-			using (var client = new HttpClient())
+			using var client = new HttpClient();
+			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+			HttpResponseMessage response;
+
+			try
 			{
-				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				response = await client.GetAsync(uri);
+				response.EnsureSuccessStatusCode();
+			}
+			catch (HttpRequestException x)
+			{
+				s_log.Fatal(x, "Unable to get entries from VocaDB API");
+				throw;
+			}
 
-				HttpResponseMessage response;
-
-				try
-				{
-					response = await client.GetAsync(uri);
-					response.EnsureSuccessStatusCode();
-				}
-				catch (HttpRequestException x)
-				{
-					s_log.Fatal(x, "Unable to get entries from VocaDB API");
-					throw;
-				}
-
-				try
-				{
-					var entries = await response.Content.ReadAsAsync<T>();
-					return entries;
-				}
-				catch (UnsupportedMediaTypeException x)
-				{
-					s_log.Fatal(x, "Unable to get entries from VocaDB API");
-					throw;
-				}
+			try
+			{
+				var entries = await response.Content.ReadAsAsync<T>();
+				return entries;
+			}
+			catch (UnsupportedMediaTypeException x)
+			{
+				s_log.Fatal(x, "Unable to get entries from VocaDB API");
+				throw;
 			}
 		}
 

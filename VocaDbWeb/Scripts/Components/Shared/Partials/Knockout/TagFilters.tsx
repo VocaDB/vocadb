@@ -1,10 +1,10 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import TagAutoComplete from '@Components/KnockoutExtensions/TagAutoComplete';
-import TagFiltersCore from '@Components/Shared/Partials/TagFilters';
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import TagFiltersStore from '@Stores/Search/TagFilters';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
+import { TagFiltersBase } from '@/Components/Shared/Partials/TagFiltersBase';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { TagFilters as TagFiltersStore } from '@/Stores/Search/TagFilters';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -13,17 +13,22 @@ import { useTranslation } from 'react-i18next';
 interface TagFiltersProps {
 	tagFilters: TagFiltersStore;
 	genreTags?: TagBaseContract[];
+	showChildTags?: boolean;
 }
 
-const TagFilters = observer(
-	({ tagFilters, genreTags }: TagFiltersProps): React.ReactElement => {
+export const TagFilters = observer(
+	({
+		tagFilters,
+		genreTags,
+		showChildTags = true,
+	}: TagFiltersProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Search']);
 
 		return (
 			<>
-				<TagFiltersCore tagFilters={tagFilters} />
+				<TagFiltersBase tagFilters={tagFilters} />
 
-				{tagFilters.tags.length > 0 && (
+				{showChildTags && tagFilters.tags.length > 0 && (
 					<div>
 						<label className="checkbox">
 							<input
@@ -78,5 +83,3 @@ const TagFilters = observer(
 		);
 	},
 );
-
-export default TagFilters;

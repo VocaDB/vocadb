@@ -1,39 +1,36 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Albums
+namespace VocaDb.Model.DataContracts.Albums;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class SongInAlbumRefContract : ObjectRefContract
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongInAlbumRefContract : ObjectRefContract
+	public SongInAlbumRefContract()
 	{
-		public SongInAlbumRefContract()
-		{
-			DiscNumber = 1;
-		}
-
-		public SongInAlbumRefContract(SongInAlbum songInAlbum)
-		{
-			DiscNumber = songInAlbum.DiscNumber;
-			TrackNumber = songInAlbum.TrackNumber;
-
-			var song = songInAlbum.Song;
-			if (song != null)
-			{
-				Id = song.Id;
-				NameHint = song.DefaultName;
-			}
-			else
-			{
-				NameHint = songInAlbum.Name;
-			}
-		}
-
-		[DataMember]
-		public int DiscNumber { get; init; }
-
-		[DataMember]
-		public int TrackNumber { get; init; }
+		DiscNumber = 1;
 	}
+
+	public SongInAlbumRefContract(SongInAlbum songInAlbum)
+	{
+		DiscNumber = songInAlbum.DiscNumber;
+		TrackNumber = songInAlbum.TrackNumber;
+
+		var song = songInAlbum.Song;
+		if (song != null)
+		{
+			Id = song.Id;
+			NameHint = song.DefaultName;
+		}
+		else
+		{
+			NameHint = songInAlbum.Name;
+		}
+	}
+
+	[DataMember]
+	public int DiscNumber { get; init; }
+
+	[DataMember]
+	public int TrackNumber { get; init; }
 }

@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			if (song.RatingScore <= 0)
 			{
-				return new int[0];
+				return Array.Empty<int>();
 			}
 
 			// N users who rated this song the highest
@@ -134,9 +134,9 @@ namespace VocaDb.Model.Service.Queries
 	{
 		public RelatedSongs()
 		{
-			ArtistMatches = new Song[0];
-			LikeMatches = new Song[0];
-			TagMatches = new Song[0];
+			ArtistMatches = Array.Empty<Song>();
+			LikeMatches = Array.Empty<Song>();
+			TagMatches = Array.Empty<Song>();
 		}
 
 		public Song[] ArtistMatches { get; set; }

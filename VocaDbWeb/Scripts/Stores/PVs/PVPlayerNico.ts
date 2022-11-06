@@ -1,7 +1,6 @@
-import PVService from '@Models/PVs/PVService';
+import { PVService } from '@/Models/PVs/PVService';
+import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
-
-import { IPVPlayer } from './PVPlayerStore';
 
 declare namespace nico {
 	export interface NicoPlayerFactory {
@@ -57,29 +56,23 @@ declare namespace nico {
 	}
 }
 
-declare global {
-	interface Window {
-		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
-	}
-}
-
 /*
 		Note: I'm not terrible happy about the implementation for now.
 		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.
 		The current PV is saved into variable "loadedPv" when the original player is loaded.
 	*/
-export default class PVPlayerNico implements IPVPlayer {
+export class PVPlayerNico implements IPVPlayer {
 	private static scriptLoaded: boolean = false;
 	private static playerFactory?: nico.NicoPlayerFactory;
 	private currentPv?: string;
 	private loadedPv?: string;
 	private player?: nico.NicoPlayer;
-	public readonly service = PVService.NicoNicoDouga;
+	readonly service = PVService.NicoNicoDouga;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {
 		window.addEventListener('message', (e: nico.PlayerEvent) => {
 			if (e.data.eventName === 'loadComplete') {
@@ -89,53 +82,54 @@ export default class PVPlayerNico implements IPVPlayer {
 		});
 	}
 
-	public attach = (
-		reset: boolean = false,
-		readyCallback?: () => void,
-	): void => {
-		if (reset) {
-			$(this.wrapperElement).empty();
-			$(this.wrapperElement).append($(`<div id='${this.playerElementId}' />`));
-		}
+	attach = (reset: boolean = false): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append(
+					$(`<div id='${this.playerElementId}' />`),
+				);
+			}
 
-		window.onNicoPlayerFactoryReady = (factory): void => {
-			PVPlayerNico.playerFactory = factory;
-			readyCallback?.();
-		};
+			window.onNicoPlayerFactoryReady = (factory): void => {
+				PVPlayerNico.playerFactory = factory;
+				resolve();
+			};
 
-		if (!PVPlayerNico.scriptLoaded) {
-			$.getScript('https://static.vocadb.net/script/nico/api.js').then(() => {
-				PVPlayerNico.scriptLoaded = true;
+			if (!PVPlayerNico.scriptLoaded) {
+				$.getScript('https://static.vocadb.net/script/nico/api.js').then(() => {
+					PVPlayerNico.scriptLoaded = true;
 
-				window.addEventListener('message', (e: nico.PlayerEvent) => {
-					if (e.data.eventName === 'playerStatusChange') {
-						if (e.data.data.playerStatus === nico.PlayerStatus.End) {
-							this.songFinishedCallback?.();
+					window.addEventListener('message', (e: nico.PlayerEvent) => {
+						if (e.data.eventName === 'playerStatusChange') {
+							if (e.data.data.playerStatus === nico.PlayerStatus.End) {
+								this.songFinishedCallback?.();
+							}
 						}
-					}
-					if (e.data.eventName === 'loadComplete') {
-						this.loadedPv = e.data.data.videoInfo.watchId;
-					}
-					if (e.data.eventName === 'error') {
-						const currentPv = this.loadedPv;
-						window.setTimeout(() => {
-							if (currentPv === this.loadedPv) this.songFinishedCallback?.();
-						}, 3900);
-					}
-				});
+						if (e.data.eventName === 'loadComplete') {
+							this.loadedPv = e.data.data.videoInfo.watchId;
+						}
+						if (e.data.eventName === 'error') {
+							const currentPv = this.loadedPv;
+							window.setTimeout(() => {
+								if (currentPv === this.loadedPv) this.songFinishedCallback?.();
+							}, 3900);
+						}
+					});
 
-				readyCallback?.();
-			});
-		} else {
-			readyCallback?.();
-		}
+					resolve();
+				});
+			} else {
+				resolve();
+			}
+		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		this.player = undefined;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player || this.currentPv !== pvId) {
 			if (!pvId) {
 				pvId = this.loadedPv;

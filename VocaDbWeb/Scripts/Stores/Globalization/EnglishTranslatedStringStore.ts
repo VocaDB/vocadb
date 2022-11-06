@@ -1,16 +1,16 @@
 import { action, makeObservable, observable } from 'mobx';
 
-export default class EnglishTranslatedStringStore {
-	@observable public isFullDescriptionShown = false;
-	@observable public showTranslatedDescription: boolean;
+export class EnglishTranslatedStringStore {
+	@observable isFullDescriptionShown = false;
+	@observable showTranslatedDescription: boolean;
 
-	public constructor(showTranslatedDescription: boolean) {
+	constructor(showTranslatedDescription: boolean) {
 		makeObservable(this);
 
 		this.showTranslatedDescription = showTranslatedDescription;
 	}
 
-	@action public showFullDescription = (): void => {
+	@action showFullDescription = (): void => {
 		this.isFullDescriptionShown = true;
 	};
 }

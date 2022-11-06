@@ -2,48 +2,43 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 const ActivityEntryRoutes = React.lazy(
-	() => import('@Components/ActivityEntry/ActivityEntryRoutes'),
+	() => import('@/Pages/ActivityEntry/ActivityEntryRoutes'),
 );
-const AdminRoutes = React.lazy(() => import('@Components/Admin/AdminRoutes'));
-const AlbumRoutes = React.lazy(() => import('@Components/Album/AlbumRoutes'));
-const ArtistRoutes = React.lazy(
-	() => import('@Components/Artist/ArtistRoutes'),
-);
-const CommentRoutes = React.lazy(
-	() => import('@Components/Comment/CommentRoutes'),
-);
+const AdminRoutes = React.lazy(() => import('@/Pages/Admin/AdminRoutes'));
+const AlbumRoutes = React.lazy(() => import('@/Pages/Album/AlbumRoutes'));
+const ArtistRoutes = React.lazy(() => import('@/Pages/Artist/ArtistRoutes'));
+const CommentRoutes = React.lazy(() => import('@/Pages/Comment/CommentRoutes'));
 const DiscussionRoutes = React.lazy(
-	() => import('@Components/Discussion/DiscussionRoutes'),
+	() => import('@/Pages/Discussion/DiscussionRoutes'),
 );
-const EventRoutes = React.lazy(() => import('@Components/Event/EventRoutes'));
-const HelpRoutes = React.lazy(() => import('@Components/Help/HelpRoutes'));
-const HomeRoutes = React.lazy(() => import('@Components/Home/HomeRoutes'));
-const SearchRoutes = React.lazy(
-	() => import('@Components/Search/SearchRoutes'),
+const EventRoutes = React.lazy(() => import('@/Pages/Event/EventRoutes'));
+const HelpRoutes = React.lazy(() => import('@/Pages/Help/HelpRoutes'));
+const HomeRoutes = React.lazy(() => import('@/Pages/Home/HomeRoutes'));
+const PlaylistRoutes = React.lazy(
+	() => import('@/Pages/Playlist/PlaylistRoutes'),
 );
+const SearchRoutes = React.lazy(() => import('@/Pages/Search/SearchRoutes'));
 const SongListRoutes = React.lazy(
-	() => import('@Components/SongList/SongListRoutes'),
+	() => import('@/Pages/SongList/SongListRoutes'),
 );
-const SongRoutes = React.lazy(() => import('@Components/Song/SongRoutes'));
-const StatsRoutes = React.lazy(() => import('@Components/Stats/StatsRoutes'));
-const TagRoutes = React.lazy(() => import('@Components/Tag/TagRoutes'));
-const UserRoutes = React.lazy(() => import('@Components/User/UserRoutes'));
-const VenueRoutes = React.lazy(() => import('@Components/Venue/VenueRoutes'));
+const SongRoutes = React.lazy(() => import('@/Pages/Song/SongRoutes'));
+const StatsRoutes = React.lazy(() => import('@/Pages/Stats/StatsRoutes'));
+const TagRoutes = React.lazy(() => import('@/Pages/Tag/TagRoutes'));
+const UserRoutes = React.lazy(() => import('@/Pages/User/UserRoutes'));
+const VenueRoutes = React.lazy(() => import('@/Pages/Venue/VenueRoutes'));
 
-const AlbumDetails = React.lazy(() => import('@Components/Album/AlbumDetails'));
-const ArtistDetails = React.lazy(
-	() => import('@Components/Artist/ArtistDetails'),
-);
-const EventDetails = React.lazy(() => import('@Components/Event/EventDetails'));
+const AlbumDetails = React.lazy(() => import('@/Pages/Album/AlbumDetails'));
+const ArtistDetails = React.lazy(() => import('@/Pages/Artist/ArtistDetails'));
+const EventDetails = React.lazy(() => import('@/Pages/Event/EventDetails'));
 const EventSeriesDetails = React.lazy(
-	() => import('@Components/Event/EventSeriesDetails'),
+	() => import('@/Pages/Event/EventSeriesDetails'),
 );
-const SongDetails = React.lazy(() => import('@Components/Song/SongDetails'));
+const SongDetails = React.lazy(() => import('@/Pages/Song/SongDetails'));
 const SongListDetails = React.lazy(
-	() => import('@Components/SongList/SongListDetails'),
+	() => import('@/Pages/SongList/SongListDetails'),
 );
-const TagDetails = React.lazy(() => import('@Components/Tag/TagDetails'));
-const UserDetails = React.lazy(() => import('@Components/User/UserDetails'));
+const TagDetails = React.lazy(() => import('@/Pages/Tag/TagDetails'));
+const UserDetails = React.lazy(() => import('@/Pages/User/UserDetails'));
 
 const AppRoutes = (): React.ReactElement => {
 	return (
@@ -56,6 +51,7 @@ const AppRoutes = (): React.ReactElement => {
 			<Route path="discussion/*" element={<DiscussionRoutes />} />
 			<Route path="Event/*" element={<EventRoutes />} />
 			<Route path="Help/*" element={<HelpRoutes />} />
+			<Route path="playlist/*" element={<PlaylistRoutes />} />
 			<Route path="Search/*" element={<SearchRoutes />} />
 			<Route path="SongList/*" element={<SongListRoutes />} />
 			<Route path="Song/*" element={<SongRoutes />} />

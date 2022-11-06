@@ -1,22 +1,20 @@
-using System.Linq;
 using VocaDb.Model.Domain.Comments;
 
-namespace VocaDb.Model.Service.QueryableExtensions
+namespace VocaDb.Model.Service.QueryableExtensions;
+
+public enum CommentSortRule
 {
-	public enum CommentSortRule
-	{
-		CreateDateDescending,
+	CreateDateDescending,
 
-		CreateDate,
-	}
+	CreateDate,
+}
 
-	public static class CommentQueryableExtensions
+public static class CommentQueryableExtensions
+{
+	public static IQueryable<Comment> OrderBy(this IQueryable<Comment> queryable, CommentSortRule sortRule) => sortRule switch
 	{
-		public static IQueryable<Comment> OrderBy(this IQueryable<Comment> queryable, CommentSortRule sortRule) => sortRule switch
-		{
-			CommentSortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.Created),
-			CommentSortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.Created),
-			_ => queryable,
-		};
-	}
+		CommentSortRule.CreateDate => queryable.OrderBy(activityEntry => activityEntry.Created),
+		CommentSortRule.CreateDateDescending => queryable.OrderByDescending(activityEntry => activityEntry.Created),
+		_ => queryable,
+	};
 }

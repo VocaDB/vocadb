@@ -7,16 +7,18 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -220,6 +222,58 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<ReleaseEventForApiContract> GetReleaseEventWithArchivedVersions(int id) =>
 			_queries.GetReleaseEventWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedEventVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetVersionDetailsForApi(id, comparedVersionId);
+
+		[HttpGet("{id:int}/for-edit")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ReleaseEventForEditForApiContract GetForEdit(int id) => _queries.GetEventForEditForApi(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult<int>> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] ReleaseEventForEditForApiContract contract,
+			IFormFile? pictureUpload
+		)
+		{
+			// Either series or name must be specified. If series is specified, name is generated automatically.
+			if (contract.Series.IsNullOrDefault() || contract.CustomName)
+			{
+				// Note: name is allowed to be whitespace, but not empty.
+				if (contract.Names is null || contract.Names.All(n => string.IsNullOrEmpty(n?.Value)))
+				{
+					ModelState.AddModelError("Names", "Name cannot be empty");
+				}
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			var pictureData = ControllerBase.ParsePicture(this, pictureUpload, "pictureUpload", ImagePurpose.Main);
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			try
+			{
+				return (await _queries.Update(contract, pictureData)).Id;
+			}
+			catch (DuplicateEventNameException x)
+			{
+				ModelState.AddModelError("Names", x.Message);
+				return ValidationProblem(ModelState);
+			}
+		}
 #nullable disable
 	}
 }

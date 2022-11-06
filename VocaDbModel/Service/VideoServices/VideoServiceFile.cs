@@ -83,21 +83,17 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-				using (var client = new HttpClient())
+				using var client = new HttpClient();
+				client.Timeout = TimeSpan.FromSeconds(10);
+
+				using var response = await client.SendAsync(request);
+				response.EnsureSuccessStatusCode();
+
+				var mime = response.Content.Headers.ContentType?.MediaType;
+
+				if (!s_mimeTypes.Contains(mime))
 				{
-					client.Timeout = TimeSpan.FromSeconds(10);
-
-					using (var response = await client.SendAsync(request))
-					{
-						response.EnsureSuccessStatusCode();
-
-						var mime = response.Content.Headers.ContentType?.MediaType;
-
-						if (!s_mimeTypes.Contains(mime))
-						{
-							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, $"Unsupported content type: {mime}");
-						}
-					}
+					return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, $"Unsupported content type: {mime}");
 				}
 			}
 			catch (WebException x)

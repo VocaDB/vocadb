@@ -1,16 +1,18 @@
-import PagingPropertiesContract from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import RatedSongForUserForApiContract from '@DataContracts/User/RatedSongForUserForApiContract';
-import { SongOptionalFields } from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import UserRepository from '@Repositories/UserRepository';
-import _ from 'lodash';
-
-import AdvancedSearchFilters from '../../Search/AdvancedSearchFilters';
-import ArtistFilters from '../../Search/ArtistFilters';
-import { SongVoteRating } from '../../Search/SongSearchStore';
-import { RatedSongForUserSortRule } from '../../User/RatedSongsSearchStore';
-import { IPlayListRepository, ISongForPlayList } from './PlayListStore';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { RatedSongForUserForApiContract } from '@/DataContracts/User/RatedSongForUserForApiContract';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongOptionalField } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { SongVoteRating } from '@/Stores/Search/SongSearchStore';
+import {
+	IPlayListRepository,
+	ISongForPlayList,
+} from '@/Stores/Song/PlayList/PlayListStore';
+import { RatedSongForUserSortRule } from '@/Stores/User/RatedSongsSearchStore';
 
 export interface IRatedSongsAdapterStore {
 	userId: number;
@@ -24,46 +26,46 @@ export interface IRatedSongsAdapterStore {
 	sort: RatedSongForUserSortRule;
 }
 
-export default class PlayListRepositoryForRatedSongsAdapter
+export class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
-	public constructor(
+	constructor(
 		private readonly userRepo: UserRepository,
 		private readonly ratedSongsAdapterStore: IRatedSongsAdapterStore,
 	) {}
 
-	public getSongs(
-		pvServices: string,
-		paging: PagingPropertiesContract,
-		fields: SongOptionalFields,
+	getSongs(
+		pvServices: PVService[],
+		paging: PagingProperties,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>> {
 		return this.userRepo
 			.getRatedSongsList({
-				userId: this.ratedSongsAdapterStore.userId,
-				paging: paging,
+				fields: [SongOptionalField.MainPicture],
 				lang: lang,
-				query: this.ratedSongsAdapterStore.searchTerm,
-				tagIds: this.ratedSongsAdapterStore.tagIds,
-				artistIds: this.ratedSongsAdapterStore.artistFilters.artistIds,
-				childVoicebanks: this.ratedSongsAdapterStore.artistFilters
-					.childVoicebanks,
-				rating: this.ratedSongsAdapterStore.rating,
-				songListId: this.ratedSongsAdapterStore.songListId,
-				advancedFilters: this.ratedSongsAdapterStore.advancedFilters.filters,
-				groupByRating: this.ratedSongsAdapterStore.groupByRating,
+				paging: paging,
 				pvServices: pvServices,
-				fields: 'MainPicture' /* TODO: enum */,
-				sort: this.ratedSongsAdapterStore.sort,
+				queryParams: {
+					userId: this.ratedSongsAdapterStore.userId,
+					query: this.ratedSongsAdapterStore.searchTerm,
+					tagIds: this.ratedSongsAdapterStore.tagIds,
+					artistIds: this.ratedSongsAdapterStore.artistFilters.artistIds,
+					childVoicebanks: this.ratedSongsAdapterStore.artistFilters
+						.childVoicebanks,
+					rating: this.ratedSongsAdapterStore.rating,
+					songListId: this.ratedSongsAdapterStore.songListId,
+					advancedFilters: this.ratedSongsAdapterStore.advancedFilters.filters,
+					groupByRating: this.ratedSongsAdapterStore.groupByRating,
+					sort: this.ratedSongsAdapterStore.sort,
+				},
 			})
 			.then(
 				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-					const mapped = _.map(result.items, (song, index) => {
-						return {
-							name: song.song!.name,
-							song: song.song!,
-							indexInPlayList: paging.start! + index,
-						};
-					});
+					const mapped = result.items.map((song, index) => ({
+						name: song.song!.name,
+						song: song.song!,
+						indexInPlayList: paging.start! + index,
+					}));
 
 					return { items: mapped, totalCount: result.totalCount };
 				},

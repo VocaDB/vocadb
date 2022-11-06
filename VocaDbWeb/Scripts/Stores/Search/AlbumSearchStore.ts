@@ -1,18 +1,20 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import AlbumType from '@Models/Albums/AlbumType';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import {
+	AlbumOptionalField,
+	AlbumRepository,
+} from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
-
-import AdvancedSearchFilter from './AdvancedSearchFilter';
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the AlbumSortRule enum in C#.
 export enum AlbumSortRule {
@@ -46,16 +48,33 @@ export interface AlbumSearchRouteParams {
 	viewMode?: string /* TODO: enum */;
 }
 
-export default class AlbumSearchStore extends SearchCategoryBaseStore<
+const clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'advancedFilters',
+	'sort',
+	'discType',
+	'artistId',
+	'artistParticipationStatus',
+	'childVoicebanks',
+	'includeMembers',
+];
+
+export class AlbumSearchStore extends SearchCategoryBaseStore<
 	AlbumSearchRouteParams,
 	AlbumContract
 > {
-	@observable public albumType = AlbumType.Unknown;
-	public readonly artistFilters: ArtistFilters;
-	@observable public sort = AlbumSortRule.Name;
-	@observable public viewMode = 'Details' /* TODO: enum */;
+	@observable albumType = AlbumType.Unknown;
+	readonly artistFilters: ArtistFilters;
+	@observable sort = AlbumSortRule.Name;
+	@observable viewMode = 'Details' /* TODO: enum */;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
@@ -68,69 +87,53 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): string {
+	@computed get fields(): AlbumOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,ReleaseEvent,Tags'
-			: 'AdditionalNames,MainPicture,ReleaseEvent';
+			? [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+					AlbumOptionalField.Tags,
+			  ]
+			: [
+					AlbumOptionalField.AdditionalNames,
+					AlbumOptionalField.MainPicture,
+					AlbumOptionalField.ReleaseEvent,
+			  ];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<AlbumContract>> => {
-		const artistIds = this.artistFilters.artistIds;
-
 		return this.albumRepo.getList({
 			paging: pagingProperties,
 			lang: this.values.languagePreference,
-			query: searchTerm,
+			query: this.searchTerm,
 			sort: this.sort,
 			discTypes: [this.albumType],
-			tags: tags,
-			childTags: childTags,
-			artistIds: artistIds,
+			tags: this.tagIds,
+			childTags: this.childTags,
+			artistIds: this.artistFilters.artistIds,
 			artistParticipationStatus: this.artistFilters.artistParticipationStatus,
 			childVoicebanks: this.artistFilters.childVoicebanks,
 			includeMembers: this.artistFilters.includeMembers,
 			fields: this.fields,
-			status: status,
+			status: this.draftsOnly ? 'Draft' : undefined,
 			deleted: false,
 			advancedFilters: this.advancedFilters.filters,
 		});
 	};
 
-	public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
+	ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
 		if (!album) return [];
 
-		const ratings = _.map([1, 2, 3, 4, 5], (rating) => {
-			return {
-				enabled: Math.round(album.ratingAverage) >= rating,
-			};
-		});
+		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
+			enabled: Math.round(album.ratingAverage) >= rating,
+		}));
 		return ratings;
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof AlbumSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'advancedFilters',
-		'sort',
-		'discType',
-		'artistId',
-		'artistParticipationStatus',
-		'childVoicebanks',
-		'includeMembers',
-	];
-
-	@computed.struct public get routeParams(): AlbumSearchRouteParams {
+	@computed.struct get locationState(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -153,7 +156,7 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: AlbumSearchRouteParams) {
+	set locationState(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -171,4 +174,14 @@ export default class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 		this.viewMode = value.viewMode ?? 'Details';
 	}
+
+	onLocationStateChange = (
+		event: StateChangeEvent<AlbumSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

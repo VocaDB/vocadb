@@ -1,7 +1,9 @@
-import CommentContract from '@DataContracts/CommentContract';
-import LoginManager from '@Models/LoginManager';
-import ICommentRepository from '@Repositories/ICommentRepository';
-import _ from 'lodash';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { CommentStore } from '@/Stores/CommentStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import { clone, pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -10,19 +12,16 @@ import {
 	runInAction,
 } from 'mobx';
 
-import CommentStore from './CommentStore';
-import ServerSidePagingStore from './ServerSidePagingStore';
-
 // Store for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
-export default class EditableCommentsStore {
-	@observable public comments: CommentStore[] = [];
+export class EditableCommentsStore {
+	@observable comments: CommentStore[] = [];
 	// Whether all comments have been loaded
-	@observable public commentsLoaded = false;
-	@observable public editCommentStore?: CommentStore = undefined;
-	@observable public newComment = '';
-	public readonly paging = new ServerSidePagingStore();
+	@observable commentsLoaded = false;
+	@observable editCommentStore?: CommentStore = undefined;
+	@observable newComment = '';
+	readonly paging = new ServerSidePagingStore();
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		private readonly commentRepo: ICommentRepository,
 		private readonly entryId: number,
@@ -41,7 +40,7 @@ export default class EditableCommentsStore {
 		}
 	}
 
-	@computed public get pageOfComments(): CommentStore[] {
+	@computed get pageOfComments(): CommentStore[] {
 		return this.comments.slice(
 			this.paging.firstItem,
 			this.paging.firstItem + this.paging.pageSize,
@@ -49,16 +48,16 @@ export default class EditableCommentsStore {
 	}
 
 	// Latest N comments
-	@computed public get topComments(): CommentStore[] {
-		return _.take(this.comments, 3);
+	@computed get topComments(): CommentStore[] {
+		return this.comments.take(3);
 	}
 
-	@action public beginEditComment = (comment: CommentStore): void => {
+	@action beginEditComment = (comment: CommentStore): void => {
 		comment.beginEdit();
 		this.editCommentStore = comment;
 	};
 
-	@action public cancelEditComment = (): void => {
+	@action cancelEditComment = (): void => {
 		this.editCommentStore = undefined;
 	};
 
@@ -86,7 +85,7 @@ export default class EditableCommentsStore {
 		);
 	};
 
-	@action public createComment = (): Promise<CommentStore> => {
+	@action createComment = (): Promise<CommentStore> => {
 		const comment = this.newComment;
 
 		if (!comment) return Promise.reject();
@@ -95,6 +94,7 @@ export default class EditableCommentsStore {
 
 		const commentContract: CommentContract = {
 			author: { id: this.loginManager.loggedUserId },
+			created: undefined!,
 			message: comment,
 		};
 
@@ -117,22 +117,21 @@ export default class EditableCommentsStore {
 					}
 				});
 
-				return _.clone(processed);
+				return clone(processed);
 			});
 	};
 
-	@action public deleteComment = (comment: CommentStore): void => {
-		_.pull(this.comments, comment);
+	@action deleteComment = (comment: CommentStore): void => {
+		pull(this.comments, comment);
 
 		this.commentRepo.deleteComment({ commentId: comment.id! });
 		this.paging.totalItems = this.paging.totalItems - 1;
 	};
 
 	@action private setComments = (commentContracts: CommentContract[]): void => {
-		var commentStores = _.sortBy(
-			_.map(commentContracts, (comment) => this.processComment(comment)),
-			(comment) => comment.created,
-		);
+		var commentStores = commentContracts
+			.map((comment) => this.processComment(comment))
+			.sortBy((comment) => comment.created);
 
 		this.paging.totalItems = commentContracts.length;
 
@@ -145,7 +144,7 @@ export default class EditableCommentsStore {
 		this.comments = commentStores;
 	};
 
-	@action public initComments = (): void => {
+	@action initComments = (): void => {
 		if (this.commentsLoaded) return;
 
 		this.commentRepo
@@ -157,7 +156,7 @@ export default class EditableCommentsStore {
 		this.commentsLoaded = true;
 	};
 
-	@action public saveEditedComment = (): void => {
+	@action saveEditedComment = (): void => {
 		if (!this.editCommentStore) return;
 
 		this.editCommentStore.saveChanges();

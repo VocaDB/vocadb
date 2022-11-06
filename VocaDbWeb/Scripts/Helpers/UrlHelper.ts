@@ -1,9 +1,7 @@
-import EntryThumbContract from '@DataContracts/EntryThumbContract';
-import ImageSize from '@Models/Images/ImageSize';
-import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
-
-import RegexLinkMatcher from './RegexLinkMatcher';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { RegexLinkMatcher } from '@/Helpers/RegexLinkMatcher';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { GlobalValues } from '@/Shared/GlobalValues';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
 /// <summary>
@@ -52,13 +50,13 @@ export class AffiliateLinkGenerator {
 		return this.addOrReplaceParam(url, '(\\d+)', 'affiliate_id', this.paAffId);
 	};
 
-	public constructor(values: GlobalValues) {
+	constructor(values: GlobalValues) {
 		this.amazonComAffId = values.amazonComAffiliateId;
 		this.amazonJpAffId = values.amazonJpAffiliateId;
 		this.paAffId = values.playAsiaAffiliateId;
 	}
 
-	public generateAffiliateLink = (url?: string): string | undefined => {
+	generateAffiliateLink = (url?: string): string | undefined => {
 		if (!url) return url;
 
 		url = this.replaceAmazonComLink(url);
@@ -70,7 +68,7 @@ export class AffiliateLinkGenerator {
 }
 
 // Corresponds to the UrlHelper and UrlHelperExtensionsForImages classes in C#.
-export default class UrlHelper {
+export class UrlHelper {
 	private static isFullLink = (str: string): boolean => {
 		return (
 			str.startsWith('http://') ||
@@ -85,7 +83,7 @@ export default class UrlHelper {
 	/// <param name="partialLink">Partial URL. Can be null.</param>
 	/// <param name="assumeWww">Whether to assume the URL should start with www.</param>
 	/// <returns>Full URL including http://. Can be null if source was null.</returns>
-	public static makeLink = (
+	static makeLink = (
 		partialLink: string | undefined,
 		assumeWww: boolean = false,
 	): string | undefined => {
@@ -99,7 +97,7 @@ export default class UrlHelper {
 		return `http://${partialLink}`;
 	};
 
-	public static makePossileAffiliateLink = (
+	static makePossileAffiliateLink = (
 		partialLink?: string,
 	): string | undefined => {
 		const link = UrlHelper.makeLink(partialLink);
@@ -125,24 +123,23 @@ export default class UrlHelper {
 		),
 	];
 
-	public static upgradeToHttps = (url?: string): string | undefined => {
+	static upgradeToHttps = (url?: string): string | undefined => {
 		if (!url || url.startsWith('https://')) return url;
 
-		if (_.some(UrlHelper.httpUpgradeDomains, (m) => url!.startsWith(m)))
+		if (UrlHelper.httpUpgradeDomains.some((m) => url!.startsWith(m)))
 			return url.replace('http://', 'https://');
 
-		const httpUpgradeMatch = _.chain(UrlHelper.httpUpgradeMatchers)
+		const httpUpgradeMatch = UrlHelper.httpUpgradeMatchers
 			.map((m) => m.getLinkFromUrl(url!))
 			.filter((m) => m.success)
-			.first()
-			.value();
+			.first();
 
 		if (httpUpgradeMatch) url = httpUpgradeMatch.formattedUrl;
 
 		return url;
 	};
 
-	public static getSmallestThumb = (
+	static getSmallestThumb = (
 		imageInfo: EntryThumbContract,
 		preferLargerThan: ImageSize,
 	): string | undefined => {
@@ -181,13 +178,14 @@ export default class UrlHelper {
 		}
 	};
 
-	public static imageThumb = (
+	static imageThumb = (
 		imageInfo: EntryThumbContract | undefined,
 		size: ImageSize,
+		useUnknownImage = true,
 	): string => {
 		return (
 			(imageInfo && UrlHelper.getSmallestThumb(imageInfo, size)) ||
-			'/Content/unknown.png'
+			(useUnknownImage ? '/Content/unknown.png' : '')
 		);
 	};
 }

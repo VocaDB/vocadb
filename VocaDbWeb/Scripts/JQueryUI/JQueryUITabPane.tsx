@@ -2,7 +2,7 @@
 import {
 	BsPrefixProps,
 	BsPrefixRefForwardingComponent,
-} from '@Bootstrap/helpers';
+} from '@/Bootstrap/helpers';
 import NoopTransition from '@restart/ui/NoopTransition';
 import SelectableContext from '@restart/ui/SelectableContext';
 import TabContext from '@restart/ui/TabContext';

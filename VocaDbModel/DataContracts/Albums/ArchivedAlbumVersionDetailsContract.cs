@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
+	[Obsolete]
 	public class ArchivedAlbumVersionDetailsContract
 	{
 		public ArchivedAlbumVersionDetailsContract() { }

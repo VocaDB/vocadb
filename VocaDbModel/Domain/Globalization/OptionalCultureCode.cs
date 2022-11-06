@@ -1,92 +1,91 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace VocaDb.Model.Domain.Globalization
+namespace VocaDb.Model.Domain.Globalization;
+
+public class OptionalCultureCode : IEquatable<OptionalCultureCode>
 {
-	public class OptionalCultureCode : IEquatable<OptionalCultureCode>
+	public static OptionalCultureCode Empty => new OptionalCultureCode(string.Empty);
+	public const string LanguageCode_English = "en";
+	public const string LanguageCode_Japanese = "ja";
+
+	public static CultureInfo? GetCultureInfo(string? cultureCode)
 	{
-		public static OptionalCultureCode Empty => new OptionalCultureCode(string.Empty);
-		public const string LanguageCode_English = "en";
-		public const string LanguageCode_Japanese = "ja";
+		return !string.IsNullOrEmpty(cultureCode) ? CultureInfo.GetCultureInfo(cultureCode) : null;
+	}
 
-		public static CultureInfo? GetCultureInfo(string? cultureCode)
+	private string _cultureCode;
+
+	public OptionalCultureCode() : this(string.Empty) { }
+
+	public OptionalCultureCode(string? cultureCode)
+	{
+		CultureCode = cultureCode;
+	}
+
+	public OptionalCultureCode(CultureInfo? culture, bool onlyLanguage)
+	{
+		CultureCode = onlyLanguage ? culture?.TwoLetterISOLanguageName : culture?.Name;
+	}
+
+	/// <summary>
+	/// .NET culture associated with this code. Can be null.
+	/// </summary>
+	public virtual CultureInfo? CultureInfo => GetCultureInfo(CultureCode);
+
+	[AllowNull]
+	public virtual string CultureCode
+	{
+		get => _cultureCode;
+		[MemberNotNull(nameof(_cultureCode))]
+		set => _cultureCode = value ?? string.Empty;
+	}
+
+	[MemberNotNullWhen(false, nameof(CultureCode))]
+	public virtual bool IsEmpty => string.IsNullOrEmpty(CultureCode);
+
+	public override string? ToString()
+	{
+		return CultureCode;
+	}
+
+	public virtual bool Equals(OptionalCultureCode? culture)
+	{
+		return string.Equals(CultureCode, culture?.CultureCode ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+	}
+
+	public virtual bool Equals(CultureInfo? culture)
+	{
+		return string.Equals(CultureCode, culture?.Name ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+	}
+
+	public virtual bool Equals(string? cultureCode)
+	{
+		return string.Equals(CultureCode, cultureCode ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+	}
+
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as OptionalCultureCode);
+	}
+
+	public virtual CultureInfo? GetCultureInfoSafe()
+	{
+		if (IsEmpty)
+			return null;
+
+		try
 		{
-			return !string.IsNullOrEmpty(cultureCode) ? CultureInfo.GetCultureInfo(cultureCode) : null;
+			return CultureInfo;
 		}
-
-		private string _cultureCode;
-
-		public OptionalCultureCode() : this(string.Empty) { }
-
-		public OptionalCultureCode(string? cultureCode)
+		catch (CultureNotFoundException)
 		{
-			CultureCode = cultureCode;
+			return null;
 		}
+	}
 
-		public OptionalCultureCode(CultureInfo? culture, bool onlyLanguage)
-		{
-			CultureCode = onlyLanguage ? culture?.TwoLetterISOLanguageName : culture?.Name;
-		}
-
-		/// <summary>
-		/// .NET culture associated with this code. Can be null.
-		/// </summary>
-		public virtual CultureInfo? CultureInfo => GetCultureInfo(CultureCode);
-
-		[AllowNull]
-		public virtual string CultureCode
-		{
-			get => _cultureCode;
-			[MemberNotNull(nameof(_cultureCode))]
-			set => _cultureCode = value ?? string.Empty;
-		}
-
-		[MemberNotNullWhen(false, nameof(CultureCode))]
-		public virtual bool IsEmpty => string.IsNullOrEmpty(CultureCode);
-
-		public override string? ToString()
-		{
-			return CultureCode;
-		}
-
-		public virtual bool Equals(OptionalCultureCode? culture)
-		{
-			return string.Equals(CultureCode, culture?.CultureCode ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
-		}
-
-		public virtual bool Equals(CultureInfo? culture)
-		{
-			return string.Equals(CultureCode, culture?.Name ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
-		}
-
-		public virtual bool Equals(string? cultureCode)
-		{
-			return string.Equals(CultureCode, cultureCode ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as OptionalCultureCode);
-		}
-
-		public virtual CultureInfo? GetCultureInfoSafe()
-		{
-			if (IsEmpty)
-				return null;
-
-			try
-			{
-				return CultureInfo;
-			}
-			catch (CultureNotFoundException)
-			{
-				return null;
-			}
-		}
-
-		public override int GetHashCode()
-		{
-			return !IsEmpty ? CultureCode.GetHashCode() : 0;
-		}
+	public override int GetHashCode()
+	{
+		return !IsEmpty ? CultureCode.GetHashCode() : 0;
 	}
 }

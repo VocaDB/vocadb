@@ -3,6 +3,7 @@
 
 namespace VocaDb.Model.DataContracts.Versioning
 {
+	[Obsolete]
 	public class ComparedVersionsContract<T> where T : class
 	{
 		public static ComparedVersionsContract<T> Create<TSource>(

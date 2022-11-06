@@ -1,13 +1,13 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import { computed, makeObservable, observable } from 'mobx';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { makeObservable, observable } from 'mobx';
 
-export default class LocalizedStringWithIdEditStore {
-	public readonly id: number;
-	@observable public language = ContentLanguageSelection.Unspecified;
-	@observable public value: string;
+export class LocalizedStringWithIdEditStore {
+	readonly id: number;
+	@observable language = ContentLanguageSelection.Unspecified;
+	@observable value: string;
 
-	public constructor(
+	constructor(
 		language: ContentLanguageSelection = ContentLanguageSelection.Unspecified,
 		value: string = '',
 		id: number = 0,
@@ -19,23 +19,13 @@ export default class LocalizedStringWithIdEditStore {
 		this.id = id;
 	}
 
-	public static fromContract(
+	static fromContract(
 		contract: LocalizedStringWithIdContract,
 	): LocalizedStringWithIdEditStore {
 		return new LocalizedStringWithIdEditStore(
-			ContentLanguageSelection[
-				contract.language as keyof typeof ContentLanguageSelection
-			],
+			contract.language,
 			contract.value,
 			contract.id,
 		);
-	}
-
-	@computed public get languageStr(): string {
-		return ContentLanguageSelection[this.language];
-	}
-	public set languageStr(value: string) {
-		this.language =
-			ContentLanguageSelection[value as keyof typeof ContentLanguageSelection];
 	}
 }

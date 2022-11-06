@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -95,6 +98,53 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<ReleaseEventSeriesForApiContract> GetReleaseEventSeriesWithArchivedVersions(int id) =>
 			_queries.GetReleaseEventSeriesWithArchivedVersionsForApi(id);
+
+		[HttpGet("versions/{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ArchivedEventSeriesVersionDetailsForApiContract GetVersionDetails(int id, int comparedVersionId = 0) =>
+			_queries.GetSeriesVersionDetailsForApi(id, comparedVersionId);
+
+		[HttpGet("{id:int}/for-edit")]
+		public ReleaseEventSeriesForEditForApiContract GetForEdit(int id) => _queries.GetReleaseEventSeriesForEditForApi(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] ReleaseEventSeriesForEditForApiContract contract,
+			IFormFile? pictureUpload
+		)
+		{
+			// Note: name is allowed to be whitespace, but not empty.
+			if (contract.Names is null || contract.Names.All(n => string.IsNullOrEmpty(n.Value)))
+			{
+				ModelState.AddModelError("Names", "Name cannot be empty");
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			var pictureData = ControllerBase.ParsePicture(this, pictureUpload, "Picture", ImagePurpose.Main);
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			try
+			{
+				return _queries.UpdateSeries(contract, pictureData);
+			}
+			catch (DuplicateEventNameException x)
+			{
+				ModelState.AddModelError("Names", x.Message);
+				return ValidationProblem(ModelState);
+			}
+		}
 #nullable disable
 	}
 }

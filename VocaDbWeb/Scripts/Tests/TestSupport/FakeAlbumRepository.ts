@@ -1,11 +1,11 @@
-import AlbumRepository from '@Repositories/AlbumRepository';
-import HttpClient from '@Shared/HttpClient';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { HttpClient } from '@/Shared/HttpClient';
 
-export default class FakeAlbumRepository extends AlbumRepository {
-	public deletedId!: number;
-	public updatedId!: number;
+export class FakeAlbumRepository extends AlbumRepository {
+	deletedId!: number;
+	updatedId!: number;
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), '');
 	}
 }

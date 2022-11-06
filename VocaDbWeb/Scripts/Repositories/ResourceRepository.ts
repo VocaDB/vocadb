@@ -1,14 +1,14 @@
-import ResourcesContract from '@DataContracts/ResourcesContract';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import { ResourcesContract } from '@/DataContracts/ResourcesContract';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
 
-export default class ResourceRepository {
-	public constructor(
+export class ResourceRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private baseUrl: string,
 	) {}
 
-	public getList = ({
+	getList = ({
 		cultureCode,
 		setNames,
 	}: {

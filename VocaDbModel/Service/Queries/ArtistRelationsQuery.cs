@@ -126,7 +126,7 @@ namespace VocaDb.Model.Service.Queries
 
 			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
 			{
-				var latestSongIds = latestSongs != null ? latestSongs.Select(s => s.Id).ToArray() : new int[0];
+				var latestSongIds = latestSongs != null ? latestSongs.Select(s => s.Id).ToArray() : Array.Empty<int>();
 
 				return ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted
@@ -170,7 +170,7 @@ namespace VocaDb.Model.Service.Queries
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularAlbums))
 			{
-				var latestAlbumIds = contract.LatestAlbums != null ? contract.LatestAlbums.Select(a => a.Id).ToArray() : new int[0];
+				var latestAlbumIds = contract.LatestAlbums != null ? contract.LatestAlbums.Select(a => a.Id).ToArray() : Array.Empty<int>();
 				contract.PopularAlbums = GetTopAlbums(_ctx, artist, latestAlbumIds);
 			}
 

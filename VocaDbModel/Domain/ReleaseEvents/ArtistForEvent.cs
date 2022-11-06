@@ -1,46 +1,45 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Domain.ReleaseEvents
+namespace VocaDb.Model.Domain.ReleaseEvents;
+
+public class ArtistForEvent : IEntryWithIntId, IArtistLink
 {
-	public class ArtistForEvent : IEntryWithIntId, IArtistLink
+	private ReleaseEvent _releaseEvent;
+	private string? _name;
+
+#nullable disable
+	public ArtistForEvent() { }
+#nullable enable
+
+	public ArtistForEvent(ReleaseEvent releaseEvent, Artist artist)
 	{
-		private ReleaseEvent _releaseEvent;
-		private string _name;
+		Artist = artist;
+		_releaseEvent = releaseEvent;
+	}
 
-		public ArtistForEvent() { }
+	/// <summary>
+	/// Linked artist. Can be null.
+	/// </summary>
+	public virtual Artist? Artist { get; set; }
 
-		public ArtistForEvent(ReleaseEvent releaseEvent, Artist artist)
-		{
-			Artist = artist;
-			_releaseEvent = releaseEvent;
-		}
+	public virtual int Id { get; set; }
 
-		/// <summary>
-		/// Linked artist. Can be null.
-		/// </summary>
-		public virtual Artist Artist { get; set; }
+	public virtual string? Name
+	{
+		get => _name;
+		set => _name = value;
+	}
 
-		public virtual int Id { get; set; }
+	public virtual ReleaseEvent ReleaseEvent
+	{
+		get => _releaseEvent;
+		set => _releaseEvent = value;
+	}
 
-		public virtual string Name
-		{
-			get => _name;
-			set => _name = value;
-		}
+	public virtual ArtistEventRoles Roles { get; set; }
 
-		public virtual ReleaseEvent ReleaseEvent
-		{
-			get => _releaseEvent;
-			set => _releaseEvent = value;
-		}
-
-		public virtual ArtistEventRoles Roles { get; set; }
-
-		public virtual void Delete()
-		{
-			ReleaseEvent.AllArtists.Remove(this);
-		}
+	public virtual void Delete()
+	{
+		ReleaseEvent.AllArtists.Remove(this);
 	}
 }

@@ -1,27 +1,23 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Venues;
 
-
-namespace VocaDb.Model.Domain.Venues
+[Flags]
+public enum VenueEditableFields
 {
-	[Flags]
-	public enum VenueEditableFields
-	{
-		Nothing = 0,
+	Nothing = 0,
 
-		Address = 1 << 0,
+	Address = 1 << 0,
 
-		AddressCountryCode = 1 << 1,
+	AddressCountryCode = 1 << 1,
 
-		Coordinates = 1 << 2,
+	Coordinates = 1 << 2,
 
-		Description = 1 << 3,
+	Description = 1 << 3,
 
-		Names = 1 << 4,
+	Names = 1 << 4,
 
-		OriginalName = 1 << 5,
+	OriginalName = 1 << 5,
 
-		Status = 1 << 6,
+	Status = 1 << 6,
 
-		WebLinks = 1 << 7,
-	}
+	WebLinks = 1 << 7,
 }

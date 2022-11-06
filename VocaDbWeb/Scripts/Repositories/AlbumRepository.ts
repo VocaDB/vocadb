@@ -1,31 +1,52 @@
-import AlbumContract from '@DataContracts/Album/AlbumContract';
-import AlbumDetailsContract from '@DataContracts/Album/AlbumDetailsContract';
-import AlbumForApiContract from '@DataContracts/Album/AlbumForApiContract';
-import AlbumForEditContract from '@DataContracts/Album/AlbumForEditContract';
-import AlbumReviewContract from '@DataContracts/Album/AlbumReviewContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import CommentContract from '@DataContracts/CommentContract';
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import AlbumForUserForApiContract from '@DataContracts/User/AlbumForUserForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import AlbumType from '@Models/Albums/AlbumType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
+import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { AlbumForEditContract } from '@/DataContracts/Album/AlbumForEditContract';
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
+import { CreateAlbumContract } from '@/DataContracts/Album/CreateAlbumContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { AlbumForUserForApiContract } from '@/DataContracts/User/AlbumForUserForApiContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { SongOptionalField } from '@/Repositories/SongRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
+export enum AlbumOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	Artists = 'Artists',
+	Description = 'Description',
+	Discs = 'Discs',
+	Identifiers = 'Identifiers',
+	MainPicture = 'MainPicture',
+	Names = 'Names',
+	PVs = 'PVs',
+	ReleaseEvent = 'ReleaseEvent',
+	Tags = 'Tags',
+	Tracks = 'Tracks',
+	WebLinks = 'WebLinks',
+}
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
-export default class AlbumRepository
+export class AlbumRepository
 	extends BaseRepository
 	implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
@@ -33,7 +54,7 @@ export default class AlbumRepository
 
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -43,7 +64,7 @@ export default class AlbumRepository
 		};
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId: albumId,
 		contract,
 	}: {
@@ -56,7 +77,7 @@ export default class AlbumRepository
 		);
 	};
 
-	public createOrUpdateReview({
+	createOrUpdateReview({
 		albumId,
 		reviewContract,
 	}: {
@@ -70,7 +91,7 @@ export default class AlbumRepository
 		return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
 	}
 
-	public createReport = ({
+	createReport = ({
 		albumId,
 		reportType,
 		notes,
@@ -97,17 +118,13 @@ export default class AlbumRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
 		);
 	};
 
-	public deleteReview({
+	deleteReview({
 		albumId,
 		reviewId,
 	}: {
@@ -121,7 +138,7 @@ export default class AlbumRepository
 		return this.httpClient.delete(url);
 	}
 
-	public findDuplicate = ({
+	findDuplicate = ({
 		params,
 	}: {
 		params: {
@@ -134,7 +151,7 @@ export default class AlbumRepository
 		return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
 	};
 
-	public getComments = ({
+	getComments = ({
 		entryId: albumId,
 	}: {
 		entryId: number;
@@ -144,16 +161,12 @@ export default class AlbumRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<AlbumForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<AlbumForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
 		return this.httpClient.get<AlbumForEditContract>(url);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
@@ -162,28 +175,31 @@ export default class AlbumRepository
 	}): Promise<AlbumContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumContract>(url, {
-			fields: 'AdditionalNames',
+			fields: AlbumOptionalField.AdditionalNames,
 			lang: lang,
 		});
 	};
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
 		id,
 		fields,
 		lang,
+		songFields,
 	}: {
 		id: number;
-		fields: string;
+		fields: AlbumOptionalField[];
 		lang: ContentLanguagePreference;
+		songFields?: SongOptionalField[];
 	}): Promise<AlbumForApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
 		return this.httpClient.get<AlbumForApiContract>(url, {
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
+			songFields: songFields?.join(','),
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		paging,
 		lang,
 		query,
@@ -211,7 +227,7 @@ export default class AlbumRepository
 		artistParticipationStatus?: string;
 		childVoicebanks?: boolean;
 		includeMembers?: boolean;
-		fields: string;
+		fields: AlbumOptionalField[];
 		status?: string;
 		deleted: boolean;
 		advancedFilters?: AdvancedSearchFilter[];
@@ -222,7 +238,7 @@ export default class AlbumRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -244,7 +260,7 @@ export default class AlbumRepository
 		);
 	};
 
-	public getReviews = ({
+	getReviews = ({
 		albumId,
 	}: {
 		albumId: number;
@@ -256,7 +272,7 @@ export default class AlbumRepository
 		return this.httpClient.get<AlbumReviewContract[]>(url);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		albumId,
 	}: {
 		albumId: number;
@@ -266,7 +282,25 @@ export default class AlbumRepository
 		);
 	};
 
-	public async getUserCollections({
+	getTracks = ({
+		id,
+		fields,
+		lang,
+	}: {
+		id: number;
+		fields: SongOptionalField[];
+		lang: ContentLanguagePreference;
+	}): Promise<SongInAlbumContract[]> => {
+		return this.httpClient.get<SongInAlbumContract[]>(
+			this.urlMapper.mapRelative(`/api/albums/${id}/tracks`),
+			{
+				fields: fields.join(','),
+				lang: lang,
+			},
+		);
+	};
+
+	async getUserCollections({
 		albumId,
 	}: {
 		albumId: number;
@@ -278,7 +312,7 @@ export default class AlbumRepository
 		return this.httpClient.get<AlbumForUserForApiContract[]>(url);
 	}
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -291,7 +325,7 @@ export default class AlbumRepository
 		);
 	};
 
-	public updatePersonalDescription = ({
+	updatePersonalDescription = ({
 		albumId,
 		text,
 		author,
@@ -311,17 +345,13 @@ export default class AlbumRepository
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<AlbumDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<AlbumDetailsContract> => {
 		return this.httpClient.get<AlbumDetailsContract>(
 			this.urlMapper.mapRelative(`/api/albums/${id}/details`),
 		);
 	};
 
-	public getAlbumWithArchivedVersions = ({
+	getAlbumWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -329,6 +359,82 @@ export default class AlbumRepository
 		return this.httpClient.get<
 			EntryWithArchivedVersionsContract<AlbumForApiContract>
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
+	};
+
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedAlbumVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedAlbumVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/albums/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	create = (
+		requestToken: string,
+		contract: CreateAlbumContract,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative('/api/albums'),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: AlbumForEditContract,
+		coverPicUpload: File | undefined,
+		pictureUpload: File[],
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (coverPicUpload) formData.append('coverPicUpload', coverPicUpload);
+
+		for (const file of pictureUpload) formData.append('pictureUpload', file);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/albums/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	merge = (
+		requestToken: string,
+		{ id, targetAlbumId }: { id: number; targetAlbumId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/albums/${id}/merge?${qs.stringify({
+					targetAlbumId: targetAlbumId,
+				})}`,
+			),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
 	};
 }
 

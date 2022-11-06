@@ -1,19 +1,20 @@
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import OptionalGeoPointContract from '../OptionalGeoPointContract';
-import WebLinkContract from '../WebLinkContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 
-export default interface VenueForEditContract {
+// Corresponds to the VenueForEditForApiContract record class in C#.
+export interface VenueForEditContract {
 	address: string;
-
 	addressCountryCode: string;
-
-	coordinates: OptionalGeoPointContract;
-
-	defaultNameLanguage: string;
-
+	coordinates?: OptionalGeoPointContract;
+	defaultNameLanguage: ContentLanguageSelection;
+	deleted: boolean;
+	description: string;
 	id: number;
-
-	names?: LocalizedStringWithIdContract[];
-
+	name: string;
+	names: LocalizedStringWithIdContract[];
+	status: EntryStatus;
 	webLinks: WebLinkContract[];
 }

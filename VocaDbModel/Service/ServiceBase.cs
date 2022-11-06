@@ -21,12 +21,14 @@ namespace VocaDb.Model.Service
 {
 	public abstract class ServiceBase
 	{
+#nullable enable
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		protected const int MaxEntryCount = 500;
 		private readonly ISessionFactory _sessionFactory;
 		private readonly IUserPermissionContext _permissionContext;
+#nullable disable
 
 		protected string CreateEntryLink(IEntryBase entry)
 		{
@@ -50,6 +52,7 @@ namespace VocaDb.Model.Service
 			return (PermissionContext.LoggedUser != null ? session.Load<User>(PermissionContext.LoggedUser.Id) : null);
 		}
 
+#nullable enable
 		protected IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
 		protected ContentLanguagePreference LanguagePreference => PermissionContext.LanguagePreference;
@@ -57,6 +60,7 @@ namespace VocaDb.Model.Service
 		protected IUserPermissionContext PermissionContext => _permissionContext;
 
 		protected ISessionFactory SessionFactory => _sessionFactory;
+#nullable disable
 
 		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
 		{
@@ -163,10 +167,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					func(session);
-				}
+				using var session = OpenSession();
+				func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -184,10 +186,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					return func(session);
-				}
+				using var session = OpenSession();
+				return func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -205,10 +205,8 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				{
-					return await func(session);
-				}
+				using var session = OpenSession();
+				return await func(session);
 			}
 			catch (ObjectNotFoundException x)
 			{
@@ -226,13 +224,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					var val = func(session);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				var val = func(session);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -245,13 +241,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					var val = func(session, tx);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				var val = func(session, tx);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -264,13 +258,11 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel))
-				{
-					var val = func(session);
-					tx.Commit();
-					return val;
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction(isolationLevel);
+				var val = func(session);
+				tx.Commit();
+				return val;
 			}
 			catch (HibernateException x)
 			{
@@ -283,12 +275,10 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction())
-				{
-					func(session);
-					tx.Commit();
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction();
+				func(session);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{
@@ -301,12 +291,10 @@ namespace VocaDb.Model.Service
 		{
 			try
 			{
-				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel))
-				{
-					func(session);
-					tx.Commit();
-				}
+				using var session = OpenSession();
+				using var tx = session.BeginTransaction(isolationLevel);
+				func(session);
+				tx.Commit();
 			}
 			catch (HibernateException x)
 			{
@@ -320,8 +308,12 @@ namespace VocaDb.Model.Service
 			return _sessionFactory.OpenSession();
 		}
 
+#nullable enable
 		protected ServiceBase(
-			ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
+			ISessionFactory sessionFactory,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory
+		)
 		{
 			ParamIs.NotNull(() => sessionFactory);
 
@@ -329,6 +321,7 @@ namespace VocaDb.Model.Service
 			_permissionContext = permissionContext;
 			_entryLinkFactory = entryLinkFactory;
 		}
+#nullable disable
 
 		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)
 		{
@@ -435,7 +428,7 @@ namespace VocaDb.Model.Service
 	{
 		public PartialFindResult()
 		{
-			Items = new T[] { };
+			Items = Array.Empty<T>();
 		}
 
 		public PartialFindResult(T[] items, int totalCount)

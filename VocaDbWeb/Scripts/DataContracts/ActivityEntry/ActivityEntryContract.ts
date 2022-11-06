@@ -1,15 +1,12 @@
-import EntryContract from '../EntryContract';
-import UserApiContract from '../User/UserApiContract';
-import ArchivedVersionContract from '../Versioning/ArchivedVersionContract';
+import { EntryContract } from '@/DataContracts/EntryContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
+import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 
-export default interface ActivityEntryContract {
-	archivedVersion: ArchivedVersionContract;
-
-	author: UserApiContract;
-
+export interface ActivityEntryContract {
+	archivedVersion?: ArchivedVersionContract;
+	author?: UserApiContract;
 	createDate: string;
-
-	editEvent: string;
-
+	editEvent: EntryEditEvent;
 	entry: EntryContract;
 }

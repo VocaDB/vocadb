@@ -1,19 +1,16 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import SongApiContract from '@DataContracts/Song/SongApiContract';
-import DateTimeHelper from '@Helpers/DateTimeHelper';
-import PVHelper from '@Helpers/PVHelper';
-import {
-	SongOptionalField,
-	SongOptionalFields,
-} from '@Models/EntryOptionalFields';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import PVServiceIcons from '@Models/PVServiceIcons';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayerStore, { IPVPlayerSong } from '@Stores/PVs/PVPlayerStore';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import _ from 'lodash';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { PVServiceIcons } from '@/Models/PVServiceIcons';
+import { PVService } from '@/Models/PVs/PVService';
+import { SongOptionalField } from '@/Repositories/SongRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { IPVPlayerSong, PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
 	action,
 	computed,
@@ -35,21 +32,21 @@ export interface ISongForPlayList {
 
 export interface IPlayListRepository {
 	getSongs(
-		pvServices: string,
+		pvServices: PVService[],
 		paging: PagingProperties,
-		fields: SongOptionalFields,
+		fields: SongOptionalField[],
 		lang: ContentLanguagePreference,
 	): Promise<PartialFindResultContract<ISongForPlayList>>;
 }
 
-export default class PlayListStore {
-	public isInit = false;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: ISongForPlayList[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(30); // Paging view model
-	public pvServiceIcons: PVServiceIcons;
+export class PlayListStore {
+	isInit = false;
+	@observable loading = true; // Currently loading for data
+	@observable page: ISongForPlayList[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(30); // Paging view model
+	pvServiceIcons: PVServiceIcons;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: IPlayListRepository,
@@ -60,7 +57,7 @@ export default class PlayListStore {
 		pvPlayerStore.nextSong = this.nextSong;
 		pvPlayerStore.resetSong = (): void => {
 			runInAction(() => {
-				pvPlayerStore.selectedSong = _.find(this.page, (song) =>
+				pvPlayerStore.selectedSong = this.page.find((song) =>
 					pvPlayerStore.songIsValid(song),
 				);
 			});
@@ -80,11 +77,11 @@ export default class PlayListStore {
 		return this.page.length < this.paging.totalItems;
 	}
 
-	@computed public get songsLoaded(): number {
+	@computed get songsLoaded(): number {
 		return this.page.length;
 	}
 
-	public formatLength = (length: number): string =>
+	formatLength = (length: number): string =>
 		DateTimeHelper.formatFromSeconds(length);
 
 	private getRandomSongIndex = (): number => {
@@ -108,14 +105,14 @@ export default class PlayListStore {
 		index: number,
 	): ISongForPlayList | undefined => {
 		// Might need to build a lookup for this for large playlists
-		return _.find(this.page, (s) => s.indexInPlayList === index);
+		return this.page.find((s) => s.indexInPlayList === index);
 	};
 
 	@action private playSong = (song?: ISongForPlayList): void => {
 		this.pvPlayerStore.selectedSong = song;
 	};
 
-	public scrollEnd = (): void => {
+	scrollEnd = (): void => {
 		// For now, disable autoload in shuffle mode
 		if (this.hasMoreSongs && !this.pvPlayerStore.shuffle) {
 			this.paging.nextPage();
@@ -125,12 +122,12 @@ export default class PlayListStore {
 
 	private pauseNotifications = false;
 
-	@action public updateResults = (
+	@action updateResults = async (
 		clearResults: boolean = true,
 		songWithIndex?: number,
 	): Promise<void> => {
 		// Disable duplicate updates
-		if (this.pauseNotifications) return Promise.resolve();
+		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
 		this.loading = true;
@@ -148,56 +145,60 @@ export default class PlayListStore {
 		}
 
 		const services = this.pvPlayerStore.autoplay
-			? PVPlayerStore.autoplayPVServicesString
-			: 'Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File,LocalFile';
+			? PVPlayerStore.autoplayPVServices
+			: [
+					PVService.Youtube,
+					PVService.SoundCloud,
+					PVService.NicoNicoDouga,
+					PVService.Bilibili,
+					PVService.Vimeo,
+					PVService.Piapro,
+					PVService.File,
+					PVService.LocalFile,
+			  ];
 
-		return this.songListRepo
-			.getSongs(
-				services,
-				pagingProperties,
-				SongOptionalFields.create(
-					SongOptionalField.AdditionalNames,
-					SongOptionalField.MainPicture,
-				),
-				this.values.languagePreference,
-			)
-			.then((result: PartialFindResultContract<ISongForPlayList>) => {
-				this.pauseNotifications = false;
+		const result = await this.songListRepo.getSongs(
+			services,
+			pagingProperties,
+			[SongOptionalField.AdditionalNames, SongOptionalField.MainPicture],
+			this.values.languagePreference,
+		);
 
-				runInAction(() => {
-					if (pagingProperties.getTotalCount)
-						this.paging.totalItems = result.totalCount;
+		this.pauseNotifications = false;
 
-					_.each(result.items, (item) => {
-						item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
-							item.song.pvServices,
-						);
-						this.page.push(item);
-					});
+		runInAction(() => {
+			if (pagingProperties.getTotalCount)
+				this.paging.totalItems = result.totalCount;
 
-					this.loading = false;
-				});
+			for (const item of result.items) {
+				item.song.pvServicesArray = PVHelper.pvServicesArrayFromString(
+					item.song.pvServices,
+				);
+				this.page.push(item);
+			}
 
-				if (
-					result.items &&
-					result.items.length &&
-					!this.pvPlayerStore.selectedSong
-				) {
-					const song = this.pvPlayerStore.shuffle
-						? result.items[Math.floor(Math.random() * result.items.length)]
-						: result.items[0];
-					this.playSong(song);
-				}
-			});
+			this.loading = false;
+		});
+
+		if (
+			result.items &&
+			result.items.length &&
+			!this.pvPlayerStore.selectedSong
+		) {
+			const song = this.pvPlayerStore.shuffle
+				? result.items[Math.floor(Math.random() * result.items.length)]
+				: result.items[0];
+			this.playSong(song);
+		}
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> =>
+	updateResultsWithTotalCount = (): Promise<void> =>
 		this.updateResults(true, undefined);
 
-	public updateResultsWithoutTotalCount = (): Promise<void> =>
+	updateResultsWithoutTotalCount = (): Promise<void> =>
 		this.updateResults(false);
 
-	public nextSong = (): void => {
+	nextSong = (): void => {
 		if (this.paging.totalItems === 0) return;
 
 		if (this.pvPlayerStore.shuffle) {

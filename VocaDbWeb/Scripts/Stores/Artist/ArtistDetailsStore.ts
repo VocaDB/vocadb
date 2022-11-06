@@ -1,34 +1,33 @@
-import CommentContract from '@DataContracts/CommentContract';
-import TagSelectionContract from '@DataContracts/Tag/TagSelectionContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import HighchartsHelper from '@Helpers/HighchartsHelper';
-import TimeUnit from '@Models/Aggregate/TimeUnit';
-import EntryType from '@Models/EntryType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import LoginManager from '@Models/LoginManager';
-import AlbumRepository from '@Repositories/AlbumRepository';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import ReportEntryStore from '@Stores/ReportEntryStore';
-import TagListStore from '@Stores/Tag/TagListStore';
-import TagsEditStore from '@Stores/Tag/TagsEditStore';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
+import { TimeUnit } from '@/Models/Aggregate/TimeUnit';
+import { EntryType } from '@/Models/EntryType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { LoginManager } from '@/Models/LoginManager';
+import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { ArtistAlbumsStore } from '@/Stores/Artist/ArtistAlbumsStore';
+import { ArtistSongsStore } from '@/Stores/Artist/ArtistSongsStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import { EnglishTranslatedStringStore } from '@/Stores/Globalization/EnglishTranslatedStringStore';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { ReportEntryStore } from '@/Stores/ReportEntryStore';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
+import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 import { Options } from 'highcharts';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
-import EditableCommentsStore from '../EditableCommentsStore';
-import EnglishTranslatedStringStore from '../Globalization/EnglishTranslatedStringStore';
-import ArtistAlbumsStore from './ArtistAlbumsStore';
-import ArtistSongsStore from './ArtistSongsStore';
-
 export class CustomizeArtistSubscriptionStore {
-	@observable public dialogVisible = false;
-	@observable public notificationsMethod: string /* TODO: enum */;
+	@observable dialogVisible = false;
+	@observable notificationsMethod: string /* TODO: enum */;
 
-	public constructor(emailNotifications: boolean, siteNotifications: boolean) {
+	constructor(emailNotifications: boolean, siteNotifications: boolean) {
 		makeObservable(this);
 
 		this.notificationsMethod = !siteNotifications
@@ -38,30 +37,30 @@ export class CustomizeArtistSubscriptionStore {
 			: 'Email';
 	}
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.dialogVisible = true;
 	};
 }
 
-export default class ArtistDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	public readonly customizeSubscriptionDialog: CustomizeArtistSubscriptionStore;
-	@observable public hasArtistSubscription;
-	@observable public showAllMembers = false;
-	public readonly description: EnglishTranslatedStringStore;
-	public readonly songsStore: ArtistSongsStore;
-	@observable public songsOverTimeChart?: Options;
-	public readonly collaborationAlbumsStore: ArtistAlbumsStore;
-	public readonly mainAlbumsStore: ArtistAlbumsStore;
-	public readonly reportStore: ReportEntryStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
+export class ArtistDetailsStore {
+	readonly comments: EditableCommentsStore;
+	readonly customizeSubscriptionDialog: CustomizeArtistSubscriptionStore;
+	@observable hasArtistSubscription;
+	@observable showAllMembers = false;
+	readonly description: EnglishTranslatedStringStore;
+	readonly songsStore: ArtistSongsStore;
+	@observable songsOverTimeChart?: Options;
+	readonly collaborationAlbumsStore: ArtistAlbumsStore;
+	readonly mainAlbumsStore: ArtistAlbumsStore;
+	readonly reportStore: ReportEntryStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		loginManager: LoginManager,
 		artistRepo: ArtistRepository,
-		public readonly artistId: number,
+		readonly artistId: number,
 		tagUsages: TagUsageForApiContract[],
 		hasSubscription: boolean,
 		emailNotifications: boolean,
@@ -145,7 +144,7 @@ export default class ArtistDetailsStore {
 		);
 	}
 
-	public addFollowedArtist = (): Promise<void> => {
+	addFollowedArtist = (): Promise<void> => {
 		return this.userRepo
 			.createArtistSubscription({ artistId: this.artistId })
 			.then(() => {
@@ -156,7 +155,7 @@ export default class ArtistDetailsStore {
 			});
 	};
 
-	public loadHighcharts = (): Promise<void> => {
+	loadHighcharts = (): Promise<void> => {
 		// Delayed load highcharts stuff
 		const highchartsPromise = import('highcharts');
 		const songsPerMonthDataPromise = this.songRepo.getOverTime({
@@ -170,9 +169,9 @@ export default class ArtistDetailsStore {
 				if (points && points.length >= 2) {
 					runInAction(() => {
 						this.songsOverTimeChart = HighchartsHelper.dateLineChartWithAverage(
-							'Songs per month' /* TODO: localize */,
+							'Songs per month' /* LOC */,
 							null!,
-							'Songs' /* TODO: localize */,
+							'Songs' /* LOC */,
 							points,
 						);
 					});
@@ -181,7 +180,7 @@ export default class ArtistDetailsStore {
 		);
 	};
 
-	public removeFollowedArtist = (): Promise<void> => {
+	removeFollowedArtist = (): Promise<void> => {
 		return this.userRepo
 			.deleteArtistSubscription({ artistId: this.artistId })
 			.then(() => {

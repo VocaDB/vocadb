@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
+	[Obsolete]
 	public class VenueWithArchivedVersionsContract : VenueContract
 	{
 		public ArchivedVenueVersionContract[] ArchivedVersions { get; init; }

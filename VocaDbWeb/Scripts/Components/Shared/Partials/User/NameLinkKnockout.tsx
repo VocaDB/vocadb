@@ -1,5 +1,5 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ interface NameLinkKnockoutProps {
 	user: UserApiContract;
 }
 
-const NameLinkKnockout = ({
+export const NameLinkKnockout = ({
 	user,
 }: NameLinkKnockoutProps): React.ReactElement => {
 	return (
@@ -17,5 +17,3 @@ const NameLinkKnockout = ({
 		</Link>
 	);
 };
-
-export default NameLinkKnockout;

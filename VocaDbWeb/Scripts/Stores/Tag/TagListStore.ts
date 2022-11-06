@@ -1,15 +1,15 @@
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import _ from 'lodash';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { map } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
 
-export default class TagListStore {
+export class TagListStore {
 	private static maxDisplayedTags = 4;
 
-	@observable public expanded = false;
-	@observable public tagUsages: TagUsageForApiContract[];
+	@observable expanded = false;
+	@observable tagUsages: TagUsageForApiContract[];
 
-	public constructor(tagUsages: TagUsageForApiContract[]) {
+	constructor(tagUsages: TagUsageForApiContract[]) {
 		makeObservable(this);
 
 		this.tagUsages = [];
@@ -19,45 +19,45 @@ export default class TagListStore {
 			this.expanded = true;
 	}
 
-	@computed public get displayedTagUsages(): TagUsageForApiContract[] {
+	@computed get displayedTagUsages(): TagUsageForApiContract[] {
 		return this.expanded
 			? this.tagUsages
-			: _.take(this.tagUsages, TagListStore.maxDisplayedTags);
+			: this.tagUsages.take(TagListStore.maxDisplayedTags);
 	}
 
-	@computed public get tagUsagesByCategories(): {
+	@computed get tagUsagesByCategories(): {
 		categoryName: string;
 		tagUsages: TagUsageForApiContract[];
 	}[] {
-		const tags = _.chain(this.tagUsages)
-			.orderBy((tagUsage) => tagUsage.tag.categoryName)
-			.groupBy((tagUsage) => tagUsage.tag.categoryName)
-			.map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({
+		const tags = map(
+			this.tagUsages
+				.orderBy((tagUsage) => tagUsage.tag.categoryName)
+				.groupBy((tagUsage) => tagUsage.tag.categoryName),
+			(tagUsages: TagUsageForApiContract[], categoryName: string) => ({
 				categoryName,
 				tagUsages,
-			}));
+			}),
+		);
 
-		const genres = tags.filter((c) => c.categoryName === 'Genres').value();
-		const empty = tags.filter((c) => c.categoryName === '').value();
+		const genres = tags.filter((c) => c.categoryName === 'Genres');
+		const empty = tags.filter((c) => c.categoryName === '');
 
-		return _.chain(genres)
+		return genres
 			.concat(
-				tags
-					.filter((c) => c.categoryName !== 'Genres' && c.categoryName !== '')
-					.value(),
+				tags.filter(
+					(c) => c.categoryName !== 'Genres' && c.categoryName !== '',
+				),
 			)
-			.concat(empty)
-			.value();
+			.concat(empty);
 	}
 
-	public getTagUrl = (tag: TagUsageForApiContract): string => {
+	getTagUrl = (tag: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 	};
 
-	@action public updateTagUsages = (usages: TagUsageForApiContract[]): void => {
-		this.tagUsages = _.chain(usages)
+	@action updateTagUsages = (usages: TagUsageForApiContract[]): void => {
+		this.tagUsages = usages
 			.sortBy((u) => u.tag.name.toLowerCase())
-			.sortBy((u) => -u.count)
-			.value();
+			.sortBy((u) => -u.count);
 	};
 }

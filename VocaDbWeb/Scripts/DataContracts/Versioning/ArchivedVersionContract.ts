@@ -1,14 +1,15 @@
-import UserApiContract from '../User/UserApiContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 
 // C# class: ArchivedObjectVersionForApiContract
-export default interface ArchivedVersionContract {
+export interface ArchivedVersionContract {
 	agentName: string;
 	anythingChanged: boolean;
 	author?: UserApiContract;
 	changedFields: string[];
-	created: Date;
+	created: string;
 	hidden: boolean;
 	id: number;
+	isSnapshot: boolean;
 	notes: string;
 	reason: string;
 	status: string;

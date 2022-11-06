@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>VocaDb.Web</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\vocadb-loc\VocaDbWeb.Resources\VocaDbWeb.Resources.csproj" />
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
-    <ProjectReference Include="..\VocaDbWeb.Resources\VocaDbWeb.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,18 +23,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.CacheOutput.InMemory" Version="1.0.6.2" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="BeginCollectionItemCore" Version="1.0.8" />
+    <PackageReference Include="AspNetCore.CacheOutput.InMemory" Version="2.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="BeginCollectionItemCore" Version="1.1.0" />
     <PackageReference Include="MarkdownSharp" Version="2.0.5" />
-    <PackageReference Include="Microsoft.AspNet.WebHelpers" Version="3.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebHelpers" Version="3.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.1" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.10.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.1.1" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.4" />
+    <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
     <PackageReference Include="VocaDb.ReMikus" Version="1.1.1" />
   </ItemGroup>
 

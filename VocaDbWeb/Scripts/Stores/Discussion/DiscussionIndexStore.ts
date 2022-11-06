@@ -1,11 +1,16 @@
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import LoginManager from '@Models/LoginManager';
-import DiscussionRepository from '@Repositories/DiscussionRepository';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { LoginManager } from '@/Models/LoginManager';
+import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
+import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
+import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import _ from 'lodash';
 import {
 	action,
 	computed,
@@ -15,12 +20,11 @@ import {
 	runInAction,
 } from 'mobx';
 
-import DiscussionTopicEditStore from './DiscussionTopicEditStore';
-import DiscussionTopicStore from './DiscussionTopicStore';
-
 interface DiscussionIndexRouteParams {
 	page?: number;
 }
+
+const clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -29,19 +33,19 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<DiscussionIndexRouteParams> = require('./DiscussionIndexRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class DiscussionIndexStore
-	implements StoreWithPagination<DiscussionIndexRouteParams> {
-	@observable public folders: DiscussionFolderContract[] = [];
-	@observable public newTopic: DiscussionTopicEditStore;
-	public readonly paging = new ServerSidePagingStore(30); // Paging store
-	@observable public recentTopics: DiscussionTopicContract[] = [];
-	@observable public selectedFolder?: DiscussionFolderContract = undefined;
-	@observable public selectedTopic?: DiscussionTopicStore = undefined;
-	@observable public showCreateNewTopic: boolean = false;
-	@observable public topics: DiscussionTopicContract[] = [];
+export class DiscussionIndexStore
+	implements LocationStateStore<DiscussionIndexRouteParams> {
+	@observable folders: DiscussionFolderContract[] = [];
+	@observable newTopic: DiscussionTopicEditStore;
+	readonly paging = new ServerSidePagingStore(30); // Paging store
+	@observable recentTopics: DiscussionTopicContract[] = [];
+	@observable selectedFolder?: DiscussionFolderContract = undefined;
+	@observable selectedTopic?: DiscussionTopicStore = undefined;
+	@observable showCreateNewTopic: boolean = false;
+	@observable topics: DiscussionTopicContract[] = [];
 
-	public constructor(
-		public readonly loginManager: LoginManager,
+	constructor(
+		readonly loginManager: LoginManager,
 		private readonly discussionRepo: DiscussionRepository,
 		private readonly canDeleteAllComments: boolean,
 	) {
@@ -73,10 +77,10 @@ export default class DiscussionIndexStore
 	private getFolder = (
 		folderId: number,
 	): DiscussionFolderContract | undefined => {
-		return _.find(this.folders, (f) => f.id === folderId);
+		return this.folders.find((f) => f.id === folderId);
 	};
 
-	@action public selectFolderById = (folderId: number): void => {
+	@action selectFolderById = (folderId: number): void => {
 		this.selectedFolder = this.getFolder(folderId);
 	};
 
@@ -119,7 +123,7 @@ export default class DiscussionIndexStore
 		);
 	};
 
-	public selectTopicById = (topicId?: number): void => {
+	selectTopicById = (topicId?: number): void => {
 		if (!topicId) {
 			this.loadTopics(this.selectedFolder).then(() => {
 				runInAction(() => {
@@ -146,7 +150,7 @@ export default class DiscussionIndexStore
 		});
 	};
 
-	public createNewTopic = (): Promise<DiscussionTopicContract> => {
+	createNewTopic = (): Promise<DiscussionTopicContract> => {
 		const folder = this.selectedFolder;
 		return this.discussionRepo
 			.createTopic({
@@ -167,32 +171,26 @@ export default class DiscussionIndexStore
 			});
 	};
 
-	public deleteTopic = (topic: DiscussionTopicContract): Promise<void> => {
+	deleteTopic = (topic: DiscussionTopicContract): Promise<void> => {
 		return this.discussionRepo.deleteTopic({ topicId: topic.id });
 	};
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof DiscussionIndexRouteParams)[] = [];
-
-	@computed.struct public get routeParams(): DiscussionIndexRouteParams {
+	@computed.struct get locationState(): DiscussionIndexRouteParams {
 		return {
 			page: this.paging.page,
 		};
 	}
-	public set routeParams(value: DiscussionIndexRouteParams) {
+	set locationState(value: DiscussionIndexRouteParams) {
 		this.paging.page = value.page ?? 1;
 	}
 
-	public validateRouteParams = (
-		data: any,
-	): data is DiscussionIndexRouteParams => {
+	validateLocationState = (data: any): data is DiscussionIndexRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -202,7 +200,13 @@ export default class DiscussionIndexStore
 		this.pauseNotifications = false;
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	onLocationStateChange = (
+		event: StateChangeEvent<DiscussionIndexRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

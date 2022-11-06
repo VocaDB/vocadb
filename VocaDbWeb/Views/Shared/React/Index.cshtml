@@ -48,12 +48,6 @@
 	@if (!string.IsNullOrEmpty(PageProperties.CanonicalUrl)) {
 		<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 	}
-
-	<style>
-		html {
-			overflow-y:scroll
-		}
-	</style>
 </head>
 <body class="vdb">
 	<div id="app"></div>
@@ -61,10 +55,7 @@
 		window.vdb = @ToJS(new
 		{
 			Resources = new GlobalResources(this),
-			Values = new GlobalValues(this)
-			{
-				RequestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken,
-			},
+			Values = new GlobalValues(this),
 		});
 	</script>
 	<remikus path="/bundles/manifest.js" />

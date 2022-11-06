@@ -2,84 +2,83 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.Service.ExtSites
+namespace VocaDb.Model.Service.ExtSites;
+
+/// <summary>
+/// Generates affiliate (paid) links to partner sites.
+/// </summary>
+public class AffiliateLinkGenerator
 {
-	/// <summary>
-	/// Generates affiliate (paid) links to partner sites.
-	/// </summary>
-	public class AffiliateLinkGenerator
+	/*private static readonly RegexLinkMatcher cdjRegex = new RegexLinkMatcher("http://www.cdjapan.co.jp/aff/click.cgi/PytJTGW7Lok/4412/A585851/detailview.html?{0}",
+		@"http://www.cdjapan\.co\.jp/detailview.html\?(KEY=\w+-\d+)");*/
+
+	private readonly string _amazonComAffId;
+	private readonly string _amazonJpAffId;
+	private readonly string _paAffId;
+
+	private string AddOrReplaceParam(string url, string? affIdRegex, string? param, string? val)
 	{
-		/*private static readonly RegexLinkMatcher cdjRegex = new RegexLinkMatcher("http://www.cdjapan.co.jp/aff/click.cgi/PytJTGW7Lok/4412/A585851/detailview.html?{0}",
-			@"http://www.cdjapan\.co\.jp/detailview.html\?(KEY=\w+-\d+)");*/
+		var paramEq = param + "=";
 
-		private readonly string _amazonComAffId;
-		private readonly string _amazonJpAffId;
-		private readonly string _paAffId;
-
-		private string AddOrReplaceParam(string url, string? affIdRegex, string? param, string? val)
+		if (url.Contains(paramEq))
 		{
-			var paramEq = param + "=";
-
-			if (url.Contains(paramEq))
-			{
-				return Regex.Replace(url, paramEq + affIdRegex, string.Format(@"{0}{1}", paramEq, val));
-			}
-			else if (url.Contains("?"))
-			{
-				return $"{url}&{paramEq}{val}";
-			}
-			else
-			{
-				return $"{url}?{paramEq}{val}";
-			}
+			return Regex.Replace(url, paramEq + affIdRegex, string.Format(@"{0}{1}", paramEq, val));
 		}
-
-		private string ReplaceAmazonComLink(string url)
+		else if (url.Contains("?"))
 		{
-			if (string.IsNullOrEmpty(_amazonComAffId) || !url.Contains("www.amazon.com/"))
-				return url;
-
-			return AddOrReplaceParam(url, @"(\w+)", "tag", _amazonComAffId);
+			return $"{url}&{paramEq}{val}";
 		}
-
-		private string ReplaceAmazonJpLink(string url)
+		else
 		{
-			if (string.IsNullOrEmpty(_amazonJpAffId) || !url.Contains("www.amazon.co.jp/"))
-				return url;
-
-			return AddOrReplaceParam(url, @"(\w+)", "tag", _amazonJpAffId);
+			return $"{url}?{paramEq}{val}";
 		}
+	}
 
-		private string ReplacePlayAsiaLink(string url)
-		{
-			if (string.IsNullOrEmpty(_paAffId) || !url.Contains("www.play-asia.com/"))
-				return url;
-
-			return AddOrReplaceParam(url, @"(\d+)", "affiliate_id", _paAffId);
-		}
-
-		public AffiliateLinkGenerator(VdbConfigManager configManager)
-		{
-			_amazonComAffId = configManager.Affiliates.AmazonComAffiliateId;
-			_amazonJpAffId = configManager.Affiliates.amazonJpAffiliateId;
-			_paAffId = configManager.Affiliates.PlayAsiaAffiliateId;
-		}
-
-		[return: NotNullIfNotNull("url"/* TODO: use nameof */)]
-		public string? GenerateAffiliateLink(string? url)
-		{
-			if (string.IsNullOrEmpty(url))
-				return url;
-
-			/*if (cdjRegex.IsMatch(url)) {
-				return cdjRegex.MakeLinkFromUrl(url);				
-			}*/
-
-			url = ReplacePlayAsiaLink(url);
-			url = ReplaceAmazonComLink(url);
-			url = ReplaceAmazonJpLink(url);
-
+	private string ReplaceAmazonComLink(string url)
+	{
+		if (string.IsNullOrEmpty(_amazonComAffId) || !url.Contains("www.amazon.com/"))
 			return url;
-		}
+
+		return AddOrReplaceParam(url, @"(\w+)", "tag", _amazonComAffId);
+	}
+
+	private string ReplaceAmazonJpLink(string url)
+	{
+		if (string.IsNullOrEmpty(_amazonJpAffId) || !url.Contains("www.amazon.co.jp/"))
+			return url;
+
+		return AddOrReplaceParam(url, @"(\w+)", "tag", _amazonJpAffId);
+	}
+
+	private string ReplacePlayAsiaLink(string url)
+	{
+		if (string.IsNullOrEmpty(_paAffId) || !url.Contains("www.play-asia.com/"))
+			return url;
+
+		return AddOrReplaceParam(url, @"(\d+)", "affiliate_id", _paAffId);
+	}
+
+	public AffiliateLinkGenerator(VdbConfigManager configManager)
+	{
+		_amazonComAffId = configManager.Affiliates.AmazonComAffiliateId;
+		_amazonJpAffId = configManager.Affiliates.amazonJpAffiliateId;
+		_paAffId = configManager.Affiliates.PlayAsiaAffiliateId;
+	}
+
+	[return: NotNullIfNotNull(nameof(url))]
+	public string? GenerateAffiliateLink(string? url)
+	{
+		if (string.IsNullOrEmpty(url))
+			return url;
+
+		/*if (cdjRegex.IsMatch(url)) {
+			return cdjRegex.MakeLinkFromUrl(url);				
+		}*/
+
+		url = ReplacePlayAsiaLink(url);
+		url = ReplaceAmazonComLink(url);
+		url = ReplaceAmazonJpLink(url);
+
+		return url;
 	}
 }

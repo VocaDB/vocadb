@@ -182,7 +182,7 @@
     "ViewHiddenRatings": "View hidden ratings",
     "ViewHiddenRevisions": "View hidden revisions",
     "ManageWebhooks": "Manage webhooks",
-    "CreateXmlDump": "Create XML dump"
+    "CreateDatabaseDump": "Create database dump"
   },
   "PVTypeDescriptions": {
     "Original": "Original (official/authorized upload)",

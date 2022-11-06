@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using VocaDb.Model.Database.Queries;
@@ -15,7 +14,6 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -31,7 +29,6 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
@@ -60,11 +57,6 @@ namespace VocaDb.Web.Controllers
 		private readonly OtherService _otherService;
 		private readonly IRepository _repository;
 		private UserService Service { get; set; }
-
-		private ServerOnlyUserForMySettingsContract GetUserForMySettings()
-		{
-			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
-		}
 
 		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
 		{
@@ -182,7 +174,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Entry edits - " + user.Name;
 
-			return View(user);
+			return View("React/Index");
 		}
 
 		public ActionResult FavoriteSongs(int id = InvalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
@@ -280,25 +272,7 @@ namespace VocaDb.Web.Controllers
 
 			return RenderDetails(model);
 		}
-#nullable disable
 
-		[Authorize]
-		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
-		{
-			var artist = _artistService.GetArtist(artistId);
-			var ownedArtist = new ArtistForUserContract(artist);
-
-			return PartialView(ownedArtist);
-		}
-
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
-		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode)
-		{
-			var user = Service.GetUser(id);
-			return PartialView("_UserPopupContent", user);
-		}
-
-#nullable enable
 		public ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{
 			var model = Data.GetUserByNameNonSensitive(id);
@@ -591,43 +565,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-			var user = Service.GetUserWithPermissions(id);
-			return View(new UserEdit(user) { EditableGroups = UserEdit.GetEditableGroups(_loginManager) });
-		}
-
-		//
-		// POST: /User/Edit/5
-		[Authorize]
-		[HttpPost]
-		public ActionResult Edit(UserEdit model, IEnumerable<PermissionFlagEntry> permissions)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
-
-			model.EditableGroups = UserEdit.GetEditableGroups(_loginManager);
-			model.OldName = Service.GetUser(model.Id).Name;
-
-			if (permissions != null)
-				model.Permissions = permissions.ToArray();
-
-			if (!ModelState.IsValid)
-				return View(model);
-
-			try
-			{
-				Data.UpdateUser(model.ToContract());
-			}
-			catch (InvalidEmailFormatException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
-				return View(model);
-			}
-			catch (UserNameAlreadyExistsException)
-			{
-				ModelState.AddModelError("Username", "Username is already in use.");
-				return View(model);
-			}
-
-			return RedirectToAction("Details", new { id = model.Id });
+			return View("React/Index");
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
@@ -649,25 +587,13 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
+#nullable enable
 		[Authorize]
-		public ActionResult Messages(int? messageId, string receiverName)
+		public ActionResult Messages()
 		{
-			var user = PermissionContext.LoggedUser;
-			var inbox = UserInboxType.Received;
-
-			if (messageId.HasValue)
-			{
-				var isNotification = Data.IsNotification(messageId.Value, user);
-
-				if (isNotification)
-					inbox = UserInboxType.Notifications;
-			}
-
-			var model = new Messages(user, messageId, receiverName, inbox);
-
 			PageProperties.Title = ViewRes.User.MessagesStrings.Messages;
 
-			return View(model);
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -675,85 +601,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			var user = GetUserForMySettings();
-
-			return View(new MySettingsModel(user));
-		}
-
-#nullable enable
-		[HttpPost]
-		public async Task<ActionResult> MySettings(MySettingsModel model, IFormFile? pictureUpload = null)
-		{
-			var user = PermissionContext.LoggedUser;
-
-			if (user == null || user.Id != model.Id)
-				return Forbid();
-
-			if (!ModelState.IsValid)
-				return View(new MySettingsModel(GetUserForMySettings()));
-
-			ServerOnlyUpdateUserSettingsContract contract;
-
-			try
-			{
-				contract = model.ToContract();
-			}
-			catch (InvalidFormException x)
-			{
-				AddFormSubmissionError(x.Message);
-				return View(model);
-			}
-
-			ServerOnlyUserWithPermissionsContract newUser;
-
-			try
-			{
-				var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
-
-				newUser = Data.UpdateUserSettings(contract, pictureData);
-				_loginManager.SetLoggedUser(newUser);
-				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
-			}
-			catch (InvalidPasswordException x)
-			{
-				ModelState.AddModelError("OldPass", x.Message);
-				return View(model);
-			}
-			catch (UserEmailAlreadyExistsException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.EmailTaken);
-				return View(model);
-			}
-			catch (InvalidEmailFormatException)
-			{
-				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
-				return View(model);
-			}
-			catch (InvalidUserNameException)
-			{
-				ModelState.AddModelError("Username", "Username is invalid. Username may contain alphanumeric characters and underscores.");
-				return View(model);
-			}
-			catch (UserNameAlreadyExistsException)
-			{
-				ModelState.AddModelError("Username", "Username is already in use.");
-				return View(model);
-			}
-			catch (UserNameTooSoonException)
-			{
-				ModelState.AddModelError("Username", "Username may only be changed once per year. If necessary, contact a staff member.");
-				return View(model);
-			}
-
-			// Updating username currently requires signing in again
-			if (newUser.Name != user.Name)
-			{
-				await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			}
-
-			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
-
-			return RedirectToAction("Profile", new { id = newUser.Name });
+			return View("React/Index");
 		}
 #nullable disable
 
@@ -798,36 +646,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RequestVerification()
 		{
-			return View();
-		}
-
-		[HttpPost]
-		[Authorize]
-		public ActionResult RequestVerification([ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage)
-		{
-			if (selectedArtist == null)
-			{
-				TempData.SetErrorMessage("Artist must be selected");
-				return View("RequestVerification", message);
-			}
-
-			if (string.IsNullOrEmpty(linkToProof) && !privateMessage)
-			{
-				TempData.SetErrorMessage("You must provide a link to proof");
-				return View();
-			}
-
-			if (string.IsNullOrEmpty(linkToProof) && privateMessage)
-			{
-				linkToProof = "in a private message";
-			}
-
-			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
-
-			_artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, $"Account verification request: {fullMessage}", null);
-
-			TempData.SetSuccessMessage("Request sent");
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult ResetAccesskey()

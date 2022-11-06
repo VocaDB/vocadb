@@ -1,19 +1,20 @@
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import functions from '@Shared/GlobalFunctions';
+import { ArtistAutoCompleteParams } from '@/Components/KnockoutExtensions/AutoCompleteParams';
+import {
+	EntryAutoComplete,
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { functions } from '@/Shared/GlobalFunctions';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { ArtistAutoCompleteParams } from './AutoCompleteParams';
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface ArtistAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	properties: ArtistAutoCompleteParams;
 }
 
-const ArtistAutoComplete = ({
+export const ArtistAutoComplete = ({
 	properties,
 	...props
 }: ArtistAutoCompleteProps): React.ReactElement => {
@@ -37,6 +38,8 @@ const ArtistAutoComplete = ({
 		fields: 'AdditionalNames',
 		preferAccurateMatches: true,
 		maxResults: 20,
+		sort: ArtistSortRule.ArtistType,
+		...properties.extraQueryParams,
 	};
 
 	const params: EntryAutoCompleteParams<ArtistContract> = {
@@ -60,5 +63,3 @@ const ArtistAutoComplete = ({
 		/>
 	);
 };
-
-export default ArtistAutoComplete;

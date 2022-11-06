@@ -1,14 +1,14 @@
-import AjaxHelper from '@Helpers/AjaxHelper';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import axios from 'axios';
 
 export class HeaderNames {
-	public static readonly ContentType = 'Content-Type';
+	static readonly ContentType = 'Content-Type';
 }
 
 export class MediaTypes {
-	public static readonly APPLICATION_FORM_URLENCODED =
+	static readonly APPLICATION_FORM_URLENCODED =
 		'application/x-www-form-urlencoded';
-	public static readonly APPLICATION_JSON = 'application/json';
+	static readonly APPLICATION_JSON = 'application/json';
 }
 
 export interface ErrorResponse<T = any> {
@@ -22,13 +22,13 @@ export interface HttpClientError<T = ErrorResponse> extends Error {
 	response?: T;
 }
 
-export default class HttpClient {
-	public delete = async <T>(url: string): Promise<T> => {
+export class HttpClient {
+	delete = async <T>(url: string): Promise<T> => {
 		const response = await axios.delete<T>(url);
 		return response.data;
 	};
 
-	public get = async <T>(url: string, data?: any): Promise<T> => {
+	get = async <T>(url: string, data?: any): Promise<T> => {
 		const response = await axios.get<T>(url, {
 			params: data,
 			// HACK: This is required for advanced search filters.
@@ -37,7 +37,7 @@ export default class HttpClient {
 		return response.data;
 	};
 
-	public post = async <T>(
+	post = async <T>(
 		url: string,
 		data?: any,
 		config?: { headers?: any },
@@ -46,7 +46,7 @@ export default class HttpClient {
 		return response.data;
 	};
 
-	public put = async <T>(url: string, data?: any): Promise<T> => {
+	put = async <T>(url: string, data?: any): Promise<T> => {
 		const response = await axios.put<T>(url, data);
 		return response.data;
 	};

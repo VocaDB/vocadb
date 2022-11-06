@@ -1,4 +1,4 @@
-export default interface EntryPictureFileContract {
+export interface EntryPictureFileContract {
 	entryType: string;
 
 	fileName: string;

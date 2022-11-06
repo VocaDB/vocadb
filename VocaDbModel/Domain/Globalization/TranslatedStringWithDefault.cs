@@ -1,104 +1,101 @@
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 
+namespace VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Globalization
+public class TranslatedStringWithDefault : TranslatedString, IEquatable<TranslatedStringWithDefault>
 {
-	public class TranslatedStringWithDefault : TranslatedString, IEquatable<TranslatedStringWithDefault>
+	public new static TranslatedStringWithDefault Create(Func<ContentLanguageSelection, string> factory)
 	{
-		public new static TranslatedStringWithDefault Create(Func<ContentLanguageSelection, string> factory)
+		return new TranslatedStringWithDefault(
+			factory(ContentLanguageSelection.Japanese),
+			factory(ContentLanguageSelection.Romaji),
+			factory(ContentLanguageSelection.English),
+			factory(ContentLanguageSelection.Unspecified)
+		);
+	}
+
+	private string _def;
+
+#nullable disable
+	public TranslatedStringWithDefault() { }
+#nullable enable
+
+	public TranslatedStringWithDefault(string original, string romaji, string english, string def)
+		: base(original, romaji, english)
+	{
+		Default = def;
+	}
+
+	public override string this[ContentLanguageSelection language]
+	{
+		get => language switch
 		{
-			return new TranslatedStringWithDefault(
-				factory(ContentLanguageSelection.Japanese),
-				factory(ContentLanguageSelection.Romaji),
-				factory(ContentLanguageSelection.English),
-				factory(ContentLanguageSelection.Unspecified)
-			);
-		}
-
-		private string _def;
-
-		public TranslatedStringWithDefault() { }
-
-		public TranslatedStringWithDefault(string original, string romaji, string english, string def)
-			: base(original, romaji, english)
+			ContentLanguageSelection.English => English,
+			ContentLanguageSelection.Japanese => Japanese,
+			ContentLanguageSelection.Romaji => Romaji,
+			_ => Default,
+		};
+		set
 		{
-			Default = def;
-		}
-
-		public override string this[ContentLanguageSelection language]
-		{
-			get => language switch
+			switch (language)
 			{
-				ContentLanguageSelection.English => English,
-				ContentLanguageSelection.Japanese => Japanese,
-				ContentLanguageSelection.Romaji => Romaji,
-				_ => Default,
-			};
-			set
-			{
-				switch (language)
-				{
-					case ContentLanguageSelection.English:
-						English = value;
-						break;
-					case ContentLanguageSelection.Japanese:
-						Japanese = value;
-						break;
-					case ContentLanguageSelection.Romaji:
-						Romaji = value;
-						break;
-					default:
-						Default = value;
-						break;
-				}
+				case ContentLanguageSelection.English:
+					English = value;
+					break;
+				case ContentLanguageSelection.Japanese:
+					Japanese = value;
+					break;
+				case ContentLanguageSelection.Romaji:
+					Romaji = value;
+					break;
+				default:
+					Default = value;
+					break;
 			}
 		}
+	}
 
-		public override string Default
+	public override string Default
+	{
+		get => _def;
+		[MemberNotNull(nameof(_def))]
+		set
 		{
-			get => _def;
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_def = value;
-			}
+			ParamIs.NotNull(() => value);
+			_def = value;
 		}
+	}
 
-#nullable enable
-		public bool Equals(TranslatedStringWithDefault? other)
-		{
-			if (other == null)
-				return false;
+	public bool Equals(TranslatedStringWithDefault? other)
+	{
+		if (other == null)
+			return false;
 
-			return Default.Equals(other.Default) && English.Equals(other.English) && Japanese.Equals(other.Japanese) && Romaji.Equals(other.Romaji);
-		}
+		return Default.Equals(other.Default) && English.Equals(other.English) && Japanese.Equals(other.Japanese) && Romaji.Equals(other.Romaji);
+	}
 
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as TranslatedStringWithDefault);
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as TranslatedStringWithDefault);
+	}
 
-		public override int GetHashCode()
-		{
-			return (Default + English + Japanese + Romaji).GetHashCode();
-		}
+	public override int GetHashCode()
+	{
+		return (Default + English + Japanese + Romaji).GetHashCode();
+	}
 
-		public override string GetBestMatch(ContentLanguagePreference preference)
-		{
-			return GetBestMatch(preference, ContentLanguageSelection.Unspecified);
-		}
-#nullable disable
+	public override string GetBestMatch(ContentLanguagePreference preference)
+	{
+		return GetBestMatch(preference, ContentLanguageSelection.Unspecified);
+	}
 
-		public override string GetDefaultOrFirst()
-		{
-			return GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-		}
+	public override string GetDefaultOrFirst()
+	{
+		return GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
+	}
 
-#nullable enable
-		public override string ToString()
-		{
-			return $"Default: {Default}, Japanese: {Japanese}, Romaji: {Romaji}, English: {English}";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"Default: {Default}, Japanese: {Japanese}, Romaji: {Romaji}, English: {English}";
 	}
 }

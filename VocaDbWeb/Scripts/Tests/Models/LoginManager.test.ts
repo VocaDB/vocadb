@@ -1,9 +1,9 @@
-import UserWithPermissionsContract from '@DataContracts/User/UserWithPermissionsContract';
-import LoginManager, { PermissionToken } from '@Models/LoginManager';
-import PVService from '@Models/PVs/PVService';
-import UserGroup from '@Models/Users/UserGroup';
-import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
+import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
+import { LoginManager, PermissionToken } from '@/Models/LoginManager';
+import { PVService } from '@/Models/PVs/PVService';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { difference, xor } from 'lodash-es';
 
 const createUser = ({
 	id = 39,
@@ -26,7 +26,7 @@ const createUser = ({
 		unreadMessagesCount: 0,
 		verifiedArtist: false,
 		ownedArtistEntries: [],
-		preferredVideoService: PVService[PVService.NicoNicoDouga],
+		preferredVideoService: PVService.NicoNicoDouga,
 		albumFormatString: '',
 		groupId: groupId,
 	};
@@ -58,12 +58,12 @@ describe('hasPermission', () => {
 		loginManager: LoginManager,
 		tokens: PermissionToken[],
 	): void => {
-		_.forEach(tokens, (token) => {
+		for (const token of tokens) {
 			const result = loginManager.hasPermission(token);
 			expect(result).toBe(true);
-		});
+		}
 
-		_.xor(Object.values(PermissionToken), tokens).forEach((token) => {
+		xor(Object.values(PermissionToken), tokens).forEach((token) => {
 			const result = loginManager.hasPermission(token);
 			expect(result).toBe(false);
 		});
@@ -109,7 +109,7 @@ describe('hasPermission', () => {
 
 		testHasPermission(loginManager, [
 			PermissionToken.Nothing,
-			..._.difference(effectivePermissions, [PermissionToken.ManageDatabase]),
+			...difference(effectivePermissions, [PermissionToken.ManageDatabase]),
 		]);
 	});
 });

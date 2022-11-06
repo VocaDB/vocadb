@@ -1,4 +1,4 @@
-enum ArtistEventRoles {
+export enum ArtistEventRoles {
 	Default = 0,
 
 	Dancer = 1 << 0,
@@ -39,5 +39,3 @@ enum ArtistEventRoles {
 
 	Other = 1 << 9,
 }
-
-export default ArtistEventRoles;

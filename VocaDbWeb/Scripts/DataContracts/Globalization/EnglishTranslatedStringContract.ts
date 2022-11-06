@@ -1,4 +1,4 @@
-export default interface EnglishTranslatedStringContract {
+export interface EnglishTranslatedStringContract {
 	english: string;
 
 	original: string;

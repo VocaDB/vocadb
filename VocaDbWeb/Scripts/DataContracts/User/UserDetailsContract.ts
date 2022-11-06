@@ -1,18 +1,17 @@
-import { PermissionToken } from '@Models/LoginManager';
-import UserGroup from '@Models/Users/UserGroup';
-
-import AlbumForApiContract from '../Album/AlbumForApiContract';
-import ArtistApiContract from '../Artist/ArtistApiContract';
-import CommentContract from '../CommentContract';
-import EntryThumbContract from '../EntryThumbContract';
-import SongApiContract from '../Song/SongApiContract';
-import TagBaseContract from '../Tag/TagBaseContract';
-import WebLinkContract from '../WebLinkContract';
-import ArtistForUserForApiContract from './ArtistForUserForApiContract';
-import UserKnownLanguageContract from './UserKnownLanguageContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { ArtistForUserForApiContract } from '@/DataContracts/User/ArtistForUserForApiContract';
+import { UserKnownLanguageContract } from '@/DataContracts/User/UserKnownLanguageContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { PermissionToken } from '@/Models/LoginManager';
+import { UserGroup } from '@/Models/Users/UserGroup';
 
 export interface OldUsernameContract {
-	date: Date;
+	date: string;
 	oldName: string;
 }
 
@@ -23,7 +22,7 @@ interface UserDetailsContractBase {
 	anonymousActivity: boolean;
 	artistCount: number;
 	commentCount: number;
-	createDate: Date;
+	createDate: string;
 	customTitle: string;
 	designatedStaff: boolean;
 	editCount: number;
@@ -57,10 +56,10 @@ interface UserDetailsContractBase {
 }
 
 // Corresponds to the UserDetailsForApiContract in C#.
-export default interface UserDetailsContract extends UserDetailsContractBase {
+export interface UserDetailsContract extends UserDetailsContractBase {
 	additionalPermissions: PermissionToken[];
 	effectivePermissions: PermissionToken[];
 	email: string;
-	lastLogin: Date;
+	lastLogin: string;
 	lastLoginAddress: string;
 }

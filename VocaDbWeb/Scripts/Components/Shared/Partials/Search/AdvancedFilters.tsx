@@ -1,14 +1,14 @@
-import ButtonGroup from '@Bootstrap/ButtonGroup';
-import Dropdown from '@Bootstrap/Dropdown';
-import ArtistType from '@Models/Artists/ArtistType';
-import AdvancedSearchFilter, {
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
+import Dropdown from '@/Bootstrap/Dropdown';
+import { AdvancedFilter } from '@/Components/Shared/Partials/Search/AdvancedFilter';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import {
 	AdvancedFilterType,
-} from '@Stores/Search/AdvancedSearchFilter';
-import AdvancedSearchFilters from '@Stores/Search/AdvancedSearchFilters';
+	AdvancedSearchFilter,
+} from '@/Stores/Search/AdvancedSearchFilter';
+import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import AdvancedFilter from './AdvancedFilter';
 
 interface AdvancedFiltersProps {
 	advancedFilters: AdvancedSearchFilters;
@@ -21,7 +21,7 @@ const AdvancedFilters = observer(
 			<>
 				<Dropdown as={ButtonGroup}>
 					<Dropdown.Toggle>
-						Advanced filters{/* TODO: localize */} <span className="caret" />
+						Advanced filters{/* LOC */} <span className="caret" />
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 						{filters.map((filter) => (
@@ -63,49 +63,49 @@ const AdvancedFilters = observer(
 // Corresponds to AdvancedSearchFilters.AlbumFilters in C#.
 const albumFilters: AdvancedSearchFilter[] = [
 	{
-		description: 'Artist type: Vocaloid' /* TODO: localize */,
+		description: 'Artist type: Vocaloid' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.Vocaloid}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: UTAU' /* TODO: localize */,
+		description: 'Artist type: UTAU' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.UTAU}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: CeVIO' /* TODO: localize */,
+		description: 'Artist type: CeVIO' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.CeVIO}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: Synthesizer V' /* TODO: localize */,
+		description: 'Artist type: Synthesizer V' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.SynthesizerV}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: other voice synthesizer' /* TODO: localize */,
+		description: 'Artist type: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
 		negate: false,
 	},
 	{
-		description: 'No cover picture' /* TODO: localize */,
+		description: 'No cover picture' /* LOC */,
 		filterType: AdvancedFilterType.NoCoverPicture,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'With store link' /* TODO: localize */,
+		description: 'With store link' /* LOC */,
 		filterType: AdvancedFilterType.HasStoreLink,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'No tracks' /* TODO: localize */,
+		description: 'No tracks' /* LOC */,
 		filterType: AdvancedFilterType.HasTracks,
 		param: '',
 		negate: true,
@@ -130,56 +130,55 @@ export const AlbumAdvancedFilters = React.memo(
 // Corresponds to AdvancedSearchFilters.ArtistFilters in C#.
 const artistFilters: AdvancedSearchFilter[] = [
 	{
-		description: 'Voice provider of: any voicebank' /* TODO: localize */,
+		description: 'Voice provider of: any voicebank' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Voice provider of: Vocaloid' /* TODO: localize */,
+		description: 'Voice provider of: Vocaloid' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.Vocaloid}`,
 		negate: false,
 	},
 	{
-		description: 'Voice provider of: UTAU' /* TODO: localize */,
+		description: 'Voice provider of: UTAU' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.UTAU}`,
 		negate: false,
 	},
 	{
-		description: 'Voice provider of: CeVIO' /* TODO: localize */,
+		description: 'Voice provider of: CeVIO' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.CeVIO}`,
 		negate: false,
 	},
 	{
-		description: 'Voice provider of: Synthesizer V' /* TODO: localize */,
+		description: 'Voice provider of: Synthesizer V' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.SynthesizerV}`,
 		negate: false,
 	},
 	{
-		description:
-			'Voice provider of: other voice synthesizer' /* TODO: localize */,
+		description: 'Voice provider of: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.VoiceProvider,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
 		negate: false,
 	},
 	{
-		description: 'Root voicebank (no base)' /* TODO: localize */,
+		description: 'Root voicebank (no base)' /* LOC */,
 		filterType: AdvancedFilterType.RootVoicebank,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Derived voicebank' /* TODO: localize */,
+		description: 'Derived voicebank' /* LOC */,
 		filterType: AdvancedFilterType.RootVoicebank,
 		param: '',
 		negate: true,
 	},
 	{
-		description: 'User account on VocaDB' /* TODO: localize */,
+		description: 'User account on VocaDB' /* LOC */,
 		filterType: AdvancedFilterType.HasUserAccount,
 		param: '',
 		negate: false,
@@ -204,97 +203,97 @@ export const ArtistAdvancedFilters = React.memo(
 // Corresponds to AdvancedSearchFilters.SongFilters in C#.
 const songFilters: AdvancedSearchFilter[] = [
 	{
-		description: 'Artist type: Vocaloid' /* TODO: localize */,
+		description: 'Artist type: Vocaloid' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.Vocaloid}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: UTAU' /* TODO: localize */,
+		description: 'Artist type: UTAU' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.UTAU}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: CeVIO' /* TODO: localize */,
+		description: 'Artist type: CeVIO' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.CeVIO}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: Synthesizer V' /* TODO: localize */,
+		description: 'Artist type: Synthesizer V' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.SynthesizerV}`,
 		negate: false,
 	},
 	{
-		description: 'Artist type: other voice synthesizer' /* TODO: localize */,
+		description: 'Artist type: other voice synthesizer' /* LOC */,
 		filterType: AdvancedFilterType.ArtistType,
 		param: `${ArtistType.OtherVoiceSynthesizer}`,
 		negate: false,
 	},
 	{
-		description: 'Multiple voicebanks' /* TODO: localize */,
+		description: 'Multiple voicebanks' /* LOC */,
 		filterType: AdvancedFilterType.HasMultipleVoicebanks,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Lyrics: Any language' /* TODO: localize */,
+		description: 'Lyrics: Any language' /* LOC */,
 		filterType: AdvancedFilterType.Lyrics,
 		param: '*',
 		negate: false,
 	},
 	{
-		description: 'Lyrics: Japanese' /* TODO: localize */,
+		description: 'Lyrics: Japanese' /* LOC */,
 		filterType: AdvancedFilterType.Lyrics,
 		param: 'ja',
 		negate: false,
 	},
 	{
-		description: 'Lyrics: Chinese' /* TODO: localize */,
+		description: 'Lyrics: Chinese' /* LOC */,
 		filterType: AdvancedFilterType.Lyrics,
 		param: 'zh',
 		negate: false,
 	},
 	{
-		description: 'Lyrics: English' /* TODO: localize */,
+		description: 'Lyrics: English' /* LOC */,
 		filterType: AdvancedFilterType.Lyrics,
 		param: 'en',
 		negate: false,
 	},
 	{
-		description: 'Lyrics: Other/unspecified language' /* TODO: localize */,
+		description: 'Lyrics: Other/unspecified language' /* LOC */,
 		filterType: AdvancedFilterType.Lyrics,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Has publish date' /* TODO: localize */,
+		description: 'Has publish date' /* LOC */,
 		filterType: AdvancedFilterType.HasPublishDate,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Album song' /* TODO: localize */,
+		description: 'Album song' /* LOC */,
 		filterType: AdvancedFilterType.HasAlbum,
 		param: '',
 		negate: false,
 	},
 	{
-		description: 'Standalone (no album)' /* TODO: localize */,
+		description: 'Standalone (no album)' /* LOC */,
 		filterType: AdvancedFilterType.HasAlbum,
 		param: '',
 		negate: true,
 	},
 	{
-		description: 'No original media' /* TODO: localize */,
+		description: 'No original media' /* LOC */,
 		filterType: AdvancedFilterType.HasOriginalMedia,
 		param: '',
 		negate: true,
 	},
 	{
-		description: 'No media' /* TODO: localize */,
+		description: 'No media' /* LOC */,
 		filterType: AdvancedFilterType.HasMedia,
 		param: '',
 		negate: true,

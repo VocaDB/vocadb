@@ -1,11 +1,31 @@
-import { ArtistToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import EntryType from '@Models/EntryType';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { ArtistToolTip } from '@/Components/KnockoutExtensions/EntryToolTip';
+import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeLabel';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { EntryType } from '@/Models/EntryType';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
-import ArtistTypeLabel from './ArtistTypeLabel';
+interface ArtistLinkBaseProps extends Omit<LinkProps, 'to'> {
+	artist: ArtistContract;
+	children?: React.ReactNode;
+}
+
+const ArtistLinkBase = ({
+	artist,
+	children,
+	...props
+}: ArtistLinkBaseProps): React.ReactElement => {
+	return (
+		<Link
+			{...props}
+			to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
+			className="artistLink"
+		>
+			{children ?? artist.name}
+		</Link>
+	);
+};
 
 interface ArtistLinkProps {
 	artist: ArtistContract;
@@ -15,7 +35,7 @@ interface ArtistLinkProps {
 	tooltip?: boolean;
 }
 
-const ArtistLink = ({
+export const ArtistLink = ({
 	artist,
 	typeLabel = false,
 	name,
@@ -27,23 +47,13 @@ const ArtistLink = ({
 			{typeLabel && <ArtistTypeLabel artistType={artist.artistType} />}
 			{typeLabel && ' '}
 			{tooltip ? (
-				<ArtistToolTip
-					as={Link}
-					to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
-					title={artist.additionalNames}
-					id={artist.id}
-					className="artistLink"
-				>
-					{name ?? artist.name}
+				<ArtistToolTip id={artist.id}>
+					<ArtistLinkBase artist={artist}>{name}</ArtistLinkBase>
 				</ArtistToolTip>
 			) : (
-				<Link
-					to={EntryUrlMapper.details(EntryType.Artist, artist.id)}
-					title={artist.additionalNames}
-					className="artistLink"
-				>
-					{name ?? artist.name}
-				</Link>
+				<ArtistLinkBase artist={artist} title={artist.additionalNames}>
+					{name}
+				</ArtistLinkBase>
 			)}
 			{releaseYear && artist.releaseDate && (
 				<>
@@ -56,5 +66,3 @@ const ArtistLink = ({
 		</>
 	);
 };
-
-export default ArtistLink;

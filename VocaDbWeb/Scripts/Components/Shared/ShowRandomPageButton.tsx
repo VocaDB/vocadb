@@ -1,15 +1,14 @@
-import Button from '@Bootstrap/Button';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryType from '@Models/EntryType';
-import NameMatchMode from '@Models/NameMatchMode';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import Button from '@/Bootstrap/Button';
+import { apiEndpointsForEntryType } from '@/Components/Shared/GlobalSearchBox';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { apiEndpointsForEntryType } from './GlobalSearchBox';
 
 const httpClient = new HttpClient();
 const urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -23,7 +22,7 @@ interface ShowRandomPageButtonProps {
 	globalSearchTermRef: React.MutableRefObject<HTMLInputElement>;
 }
 
-const ShowRandomPageButton = React.memo(
+export const ShowRandomPageButton = React.memo(
 	({
 		entryType,
 		globalSearchTermRef,
@@ -85,12 +84,10 @@ const ShowRandomPageButton = React.memo(
 				className="navbar-languageBtn"
 				disabled={clicked}
 				onClick={handleClick}
-				title="Show random page" /* TODO: localize */
+				title="Show random page" /* LOC */
 			>
 				<i className="icon-random" />
 			</Button>
 		);
 	},
 );
-
-export default ShowRandomPageButton;

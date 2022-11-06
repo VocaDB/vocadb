@@ -5,7 +5,6 @@ using System.Runtime.Caching;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
@@ -28,7 +27,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	public class ArtistQueriesTests
 	{
 		private Artist _artist;
-		private CreateArtistContract _newArtistContract;
+		private CreateArtistForApiContract _newArtistContract;
 		private InMemoryImagePersister _imagePersister;
 		private FakePermissionContext _permissionContext;
 		private ArtistQueries _queries;
@@ -40,15 +39,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private User _user2;
 		private Artist _vocalist;
 
-		private async Task<ArtistForEditContract> CallUpdate(ArtistForEditContract contract)
+		private async Task<ArtistForEditForApiContract> CallUpdate(ArtistForEditForApiContract contract)
 		{
-			contract.Id = await _queries.Update(contract, null, _permissionContext);
+			contract.Id = await _queries.Update(contract, pictureData: null, _permissionContext);
 			return contract;
 		}
 
-		private async Task<ArtistForEditContract> CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg)
+		private async Task<ArtistForEditForApiContract> CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg)
 		{
-			var contract = new ArtistForEditContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			using (var stream = image)
 			{
 				contract.Id = await _queries.Update(contract, new EntryPictureFileContract(stream, mime, (int)stream.Length, ImagePurpose.Main), _permissionContext);
@@ -86,24 +85,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				new FakeDiscordWebhookNotifier()
 			);
 
-			_newArtistContract = new CreateArtistContract
+			_newArtistContract = new CreateArtistForApiContract
 			{
 				ArtistType = ArtistType.Producer,
 				Description = string.Empty,
-				Names = new[] {
+				Names = new[]
+				{
 					new LocalizedStringContract("Tripshots", ContentLanguageSelection.English)
 				},
-				WebLink = new WebLinkContract("http://tripshots.net/", "Website", WebLinkCategory.Official, disabled: false)
+				WebLink = new WebLinkForApiContract
+				{
+					Url = "http://tripshots.net/",
+					Description = "Website",
+					Category = WebLinkCategory.Official,
+					Disabled = false,
+				},
 			};
 		}
 
-		private async Task<(bool created, ArtistReport report)> CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null)
+#nullable enable
+		private async Task<(bool created, ArtistReport report)> CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist? artist = null)
 		{
 			artist ??= _artist;
-			var result = await _queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
-			var report = _repository.Load<ArtistReport>(result.reportId);
-			return (result.created, report);
+			var (created, reportId) = await _queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			var report = _repository.Load<ArtistReport>(reportId);
+			return (created, report);
 		}
+#nullable disable
 
 		[TestMethod]
 		public async Task Create()
@@ -185,7 +193,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_Link()
 		{
-			var result = _queries.FindDuplicates(new string[0], "http://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(1, "Number of results");
@@ -195,7 +203,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_DifferentScheme()
 		{
-			var result = _queries.FindDuplicates(new string[0], "https://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "https://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(1, "Number of results");
@@ -215,7 +223,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void FindDuplicates_Link_IgnoreDeleted()
 		{
 			_artist.Deleted = true;
-			var result = _queries.FindDuplicates(new string[0], "http://tripshots.net");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "http://tripshots.net");
 
 			result.Should().NotBeNull("result");
 			result.Length.Should().Be(0, "Number of results");
@@ -224,7 +232,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void FindDuplicates_Link_IgnoreInvalidLink()
 		{
-			var result = _queries.FindDuplicates(new string[0], "Miku!");
+			var result = _queries.FindDuplicates(Array.Empty<string>(), "Miku!");
 			result?.Length.Should().Be(0, "Number of results");
 		}
 
@@ -281,7 +289,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			// Arrange
 			_artist.Description.English = "Original";
 			var oldVer = await _repository.HandleTransactionAsync(ctx => _queries.ArchiveAsync(ctx, _artist, ArtistArchiveReason.PropertiesUpdated));
-			var contract = new ArtistForEditContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			contract.Description.English = "Updated";
 			await CallUpdate(contract);
 
@@ -371,7 +379,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Update_Names()
 		{
 			// Arrange
-			var contract = new ArtistForEditContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated artist";
@@ -416,7 +424,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			song.ArtistString[ContentLanguagePreference.Default].Should().Be("初音ミク", "Precondition: default name");
 
-			var contract = new ArtistForEditContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext);
 			contract.DefaultNameLanguage = ContentLanguageSelection.English;
 
 			await CallUpdate(contract);
@@ -451,7 +459,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var circle = _repository.Save(CreateEntry.Circle());
 			var illustrator = _repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 
-			var contract = new ArtistForEditContract(_vocalist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			var contract = new ArtistForEditForApiContract(_vocalist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
 			{
 				Groups = new[] {
 					new ArtistForArtistContract { Parent = new ArtistContract(circle, ContentLanguagePreference.English)},
@@ -480,7 +488,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_vocalist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 
 			// Change linked artist from illustrator to voice provider
-			var contract = new ArtistForEditContract(_vocalist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			var contract = new ArtistForEditForApiContract(_vocalist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
 			{
 				Illustrator = null,
 				VoiceProvider = new ArtistContract(illustrator, ContentLanguagePreference.English)
@@ -507,7 +515,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var circle2 = _repository.Save(CreateEntry.Circle());
 
 			// Cannot add character designer for producer
-			var contract = new ArtistForEditContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			var contract = new ArtistForEditForApiContract(_artist, ContentLanguagePreference.English, new InMemoryImagePersister(), _permissionContext)
 			{
 				AssociatedArtists = new[] {
 					new ArtistForArtistContract(new ArtistForArtist(circle, _artist, ArtistLinkType.CharacterDesigner), ContentLanguagePreference.English),

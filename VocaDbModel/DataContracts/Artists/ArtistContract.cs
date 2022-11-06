@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -8,89 +6,84 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.Artists
+namespace VocaDb.Model.DataContracts.Artists;
+
+[DataContract(Namespace = Schemas.VocaDb)]
+public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistContract : IEntryWithStatus, IEntryImageInformation
+	string IEntryBase.DefaultName => Name;
+
+	EntryType IEntryBase.EntryType => EntryType.Artist;
+
+	EntryType IEntryImageInformation.EntryType => EntryType.Artist;
+	string? IEntryImageInformation.Mime => PictureMime;
+	ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
+
+#nullable disable
+	public ArtistContract() { }
+#nullable enable
+
+	public ArtistContract(Artist artist, ContentLanguagePreference preference)
 	{
-		string IEntryBase.DefaultName => Name;
+		ParamIs.NotNull(() => artist);
 
-		EntryType IEntryBase.EntryType => EntryType.Artist;
+		AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
+		ArtistType = artist.ArtistType;
+		Deleted = artist.Deleted;
+		Id = artist.Id;
+		Name = artist.TranslatedName[preference];
+		PictureMime = artist.PictureMime;
+		ReleaseDate = artist.ReleaseDate.DateTime;
+		Status = artist.Status;
+		Version = artist.Version;
+	}
 
-#nullable enable
-		EntryType IEntryImageInformation.EntryType => EntryType.Artist;
-		string? IEntryImageInformation.Mime => PictureMime;
-		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
-#nullable disable
+	public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference)
+	{
+		ParamIs.NotNull(() => artist);
 
-		public ArtistContract() { }
+		AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
+		ArtistType = artist.ArtistType;
+		Deleted = artist.Deleted;
+		Id = artist.Id;
+		Name = artist.Names.SortNames[preference];
+		PictureMime = artist.PictureMime;
+		ReleaseDate = artist.ReleaseDate;
+		Status = artist.Status;
+		Version = artist.Version;
+	}
 
-#nullable enable
-		public ArtistContract(Artist artist, ContentLanguagePreference preference)
-		{
-			ParamIs.NotNull(() => artist);
+	[DataMember]
+	public string AdditionalNames { get; init; }
 
-			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
-			ArtistType = artist.ArtistType;
-			Deleted = artist.Deleted;
-			Id = artist.Id;
-			Name = artist.TranslatedName[preference];
-			PictureMime = artist.PictureMime;
-			ReleaseDate = artist.ReleaseDate.DateTime;
-			Status = artist.Status;
-			Version = artist.Version;
-		}
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public ArtistType ArtistType { get; init; }
 
-		public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference)
-		{
-			ParamIs.NotNull(() => artist);
+	[DataMember]
+	public bool Deleted { get; init; }
 
-			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
-			ArtistType = artist.ArtistType;
-			Deleted = artist.Deleted;
-			Id = artist.Id;
-			Name = artist.Names.SortNames[preference];
-			PictureMime = artist.PictureMime;
-			ReleaseDate = artist.ReleaseDate;
-			Status = artist.Status;
-			Version = artist.Version;
-		}
-#nullable disable
+	[DataMember]
+	public int Id { get; set; }
 
-		[DataMember]
-		public string AdditionalNames { get; init; }
+	[DataMember]
+	public string Name { get; init; }
 
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistType ArtistType { get; init; }
+	[DataMember]
+	public string? PictureMime { get; set; }
 
-		[DataMember]
-		public bool Deleted { get; init; }
+	[DataMember]
+	public DateTime? ReleaseDate { get; init; }
 
-		[DataMember]
-		public int Id { get; set; }
+	[DataMember]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public EntryStatus Status { get; init; }
 
-		[DataMember]
-		public string Name { get; init; }
+	[DataMember]
+	public int Version { get; init; }
 
-		[DataMember]
-		public string PictureMime { get; set; }
-
-		[DataMember]
-		public DateTime? ReleaseDate { get; init; }
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryStatus Status { get; init; }
-
-		[DataMember]
-		public int Version { get; init; }
-
-#nullable enable
-		public override string ToString()
-		{
-			return $"Artist {Name} [{Id}]";
-		}
-#nullable disable
+	public override string ToString()
+	{
+		return $"Artist {Name} [{Id}]";
 	}
 }

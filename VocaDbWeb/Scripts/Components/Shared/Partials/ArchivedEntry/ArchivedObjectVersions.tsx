@@ -1,55 +1,18 @@
-import ArchivedVersionContract from '@DataContracts/Versioning/ArchivedVersionContract';
-import EntryType from '@Models/EntryType';
-import LoginManager from '@Models/LoginManager';
+import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
+import { UserIconLinkOrName_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLinkOrName_UserForApiContract';
+import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
+import { useReasonNames } from '@/Components/useReasonNames';
+import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
+import { EntryType } from '@/Models/EntryType';
+import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import classNames from 'classnames';
-import _ from 'lodash';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import useChangedFieldNames from '../../../useChangedFieldNames';
-import UniversalTimeLabel from '../Shared/UniversalTimeLabel';
-import UserIconLinkOrName_UserForApiContract from '../User/UserIconLinkOrName_UserForApiContract';
+import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const useReasonNames = (): ((
-	entryType: EntryType,
-	archivedVersion: ArchivedVersionContract,
-) => string | undefined) => {
-	const { t } = useTranslation(['Resources']);
-
-	return React.useCallback(
-		(
-			entryType: EntryType,
-			archivedVersion: ArchivedVersionContract,
-		): string | undefined => {
-			switch (entryType) {
-				case EntryType.Album:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:AlbumArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.Artist:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:ArtistArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.Song:
-					return archivedVersion.reason === 'Unknown'
-						? archivedVersion.notes
-						: t(`Resources:SongArchiveReasonNames.${archivedVersion.reason}`);
-
-				case EntryType.ReleaseEvent:
-				case EntryType.ReleaseEventSeries:
-				case EntryType.Tag:
-				case EntryType.SongList:
-				case EntryType.Venue:
-					return t(`Resources:EntryEditEventNames.${archivedVersion.reason}`);
-			}
-		},
-		[t],
-	);
-};
 
 interface ArchivedObjectVersionRowProps {
 	archivedVersion: ArchivedVersionContract;
@@ -57,7 +20,7 @@ interface ArchivedObjectVersionRowProps {
 	entryType: EntryType;
 }
 
-const ArchivedObjectVersionRow = React.memo(
+const ArchivedObjectVersionRow = observer(
 	({
 		archivedVersion,
 		linkFunc,
@@ -68,13 +31,21 @@ const ArchivedObjectVersionRow = React.memo(
 		const reasonNames = useReasonNames();
 		const changedFieldNames = useChangedFieldNames();
 
+		const mutedUsers = useMutedUsers();
+		if (
+			archivedVersion.author &&
+			mutedUsers.includes(archivedVersion.author.id)
+		) {
+			return <></>;
+		}
+
 		return (
 			<tr>
 				<td>
 					{linkFunc &&
 					(loginManager.canViewHiddenRevisions || !archivedVersion.hidden) ? (
-						<a
-							href={linkFunc(archivedVersion.id)}
+						<Link
+							to={linkFunc(archivedVersion.id)}
 							className={classNames(
 								!archivedVersion.anythingChanged && 'muted',
 							)}
@@ -84,7 +55,7 @@ const ArchivedObjectVersionRow = React.memo(
 						>
 							{archivedVersion.version} (
 							{t(`Resources:EntryStatusNames.${archivedVersion.status}`)})
-						</a>
+						</Link>
 					) : (
 						<span
 							style={{
@@ -147,7 +118,7 @@ interface ArchivedObjectVersionsProps {
 	entryType: EntryType;
 }
 
-const ArchivedObjectVersions = React.memo(
+export const ArchivedObjectVersions = React.memo(
 	({
 		archivedVersions,
 		linkFunc,
@@ -156,10 +127,7 @@ const ArchivedObjectVersions = React.memo(
 		const { t } = useTranslation(['ViewRes']);
 
 		const ordered = React.useMemo(
-			() =>
-				_.chain(archivedVersions)
-					.orderBy((v) => v.version, 'desc')
-					.value(),
+			() => archivedVersions.orderBy((v) => v.version, 'desc'),
 			[archivedVersions],
 		);
 
@@ -188,5 +156,3 @@ const ArchivedObjectVersions = React.memo(
 		);
 	},
 );
-
-export default ArchivedObjectVersions;

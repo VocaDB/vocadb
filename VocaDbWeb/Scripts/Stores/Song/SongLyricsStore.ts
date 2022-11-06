@@ -1,6 +1,10 @@
-import LyricsForSongContract from '@DataContracts/Song/LyricsForSongContract';
-import SongRepository from '@Repositories/SongRepository';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import { SongRepository } from '@/Repositories/SongRepository';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -9,6 +13,8 @@ interface SongLyricsRouteParams {
 	lyricsId?: number;
 }
 
+const clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -16,13 +22,13 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class SongLyricsStore
-	implements StoreWithUpdateResults<SongLyricsRouteParams> {
-	@observable public albumId?: number;
-	@observable public selectedLyrics?: LyricsForSongContract;
-	@observable public selectedLyricsId: number;
+export class SongLyricsStore
+	implements LocationStateStore<SongLyricsRouteParams> {
+	@observable albumId?: number;
+	@observable selectedLyrics?: LyricsForSongContract;
+	@observable selectedLyricsId: number;
 
-	public constructor(
+	constructor(
 		private readonly songRepo: SongRepository,
 		private readonly lyricsId: number,
 		private readonly songVersion: number,
@@ -32,28 +38,24 @@ export default class SongLyricsStore
 		this.selectedLyricsId = lyricsId;
 	}
 
-	public popState = false;
-
-	@computed.struct public get routeParams(): SongLyricsRouteParams {
+	@computed.struct get locationState(): SongLyricsRouteParams {
 		return {
 			albumId: this.albumId,
 			lyricsId: this.selectedLyricsId,
 		};
 	}
-	public set routeParams(value: SongLyricsRouteParams) {
+	set locationState(value: SongLyricsRouteParams) {
 		this.albumId = value.albumId;
 		this.selectedLyricsId = value.lyricsId || this.lyricsId;
 	}
 
-	public validateRouteParams = (data: any): data is SongLyricsRouteParams => {
+	validateLocationState = (data: any): data is SongLyricsRouteParams => {
 		return validate(data);
 	};
 
-	public clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
-
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -68,5 +70,13 @@ export default class SongLyricsStore
 		runInAction(() => {
 			this.selectedLyrics = lyrics;
 		});
+	};
+
+	onLocationStateChange = (
+		event: StateChangeEvent<SongLyricsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
 	};
 }

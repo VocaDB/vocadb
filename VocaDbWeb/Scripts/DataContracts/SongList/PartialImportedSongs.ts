@@ -1,6 +1,6 @@
-import ImportedSongInListContract from './ImportedSongInListContract';
+import { ImportedSongInListContract } from '@/DataContracts/SongList/ImportedSongInListContract';
 
-export default interface PartialImportedSongs {
+export interface PartialImportedSongs {
 	items: ImportedSongInListContract[];
 
 	nextPageToken: string;

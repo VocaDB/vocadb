@@ -1,21 +1,20 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import functions from '@Shared/GlobalFunctions';
+import {
+	EntryAutoComplete,
+	EntryAutoCompleteParams,
+} from '@/Components/KnockoutExtensions/EntryAutoComplete';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { EventCategory } from '@/Models/Events/EventCategory';
+import { functions } from '@/Shared/GlobalFunctions';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import EntryAutoComplete, {
-	EntryAutoCompleteParams,
-} from './EntryAutoComplete';
 
 interface ReleaseEventAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onAcceptSelection: (entry: ReleaseEventContract) => void;
-	createNewItem?: string;
 }
 
-const ReleaseEventAutoComplete = ({
+export const ReleaseEventAutoComplete = ({
 	onAcceptSelection,
-	createNewItem,
 	...props
 }: ReleaseEventAutoCompleteProps): React.ReactElement => {
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
@@ -36,8 +35,9 @@ const ReleaseEventAutoComplete = ({
 					artists: [],
 					name: term!,
 					webLinks: [],
-					category: 'Unspecified',
+					category: EventCategory.Unspecified,
 					defaultNameLanguage: 'Undefined',
+					status: null!,
 				},
 			);
 		},
@@ -45,7 +45,6 @@ const ReleaseEventAutoComplete = ({
 			`${item.name} (${t(
 				`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${item.category}`,
 			)})`,
-		createNewItem: createNewItem,
 		extraQueryParams: queryParams,
 	};
 
@@ -57,5 +56,3 @@ const ReleaseEventAutoComplete = ({
 		/>
 	);
 };
-
-export default ReleaseEventAutoComplete;

@@ -1,11 +1,12 @@
-import SongWithPVAndVoteContract from './SongWithPVAndVoteContract';
+import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import { PVService } from '@/Models/PVs/PVService';
 
-export default interface SongWithPVPlayerAndVoteContract {
+export interface SongWithPVPlayerAndVoteContract {
 	playerHtml: string;
 
 	pvId: string;
 
-	pvService: string;
+	pvService: PVService;
 
 	song: SongWithPVAndVoteContract;
 }

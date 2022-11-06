@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
@@ -13,11 +14,10 @@
 <remikus path="/bundles/manifest.js" />
 <remikus path="/bundles/vendor.js" />
 <remikus path="/bundles/shared/libs.js" />
-<remikus path="/bundles/VocaDB.js" />
 <remikus path="/bundles/vdb.js" />
 
 <script type="text/javascript">
-	vdb = vdb || {};
+	vdb = {};
 	vdb.values = @ToJS(new GlobalValues(this));
 	vdb.resources = vdb.resources || {};
 
@@ -28,7 +28,7 @@
 		reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent),
 		rootPath: '@RootPath',
 		thanksForRating: @ToJS(AjaxRes.SharedStrings.ThanksForRating),
-		topBarData: @Html.Raw(JsonHelpers.Serialize(new {
+		topBarData: @Html.Raw(JsonHelper.Serialize(new {
 			searchObjectType = searchObjectType.ToString()
 		})),
 		unreadMessagesCount: @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0),

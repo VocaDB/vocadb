@@ -1,28 +1,44 @@
-import ArtistApiContract from '@DataContracts/Artist/ArtistApiContract';
-import ArtistContract from '@DataContracts/Artist/ArtistContract';
-import ArtistDetailsContract from '@DataContracts/Artist/ArtistDetailsContract';
-import ArtistForEditContract from '@DataContracts/Artist/ArtistForEditContract';
-import CommentContract from '@DataContracts/CommentContract';
-import DuplicateEntryResultContract from '@DataContracts/DuplicateEntryResultContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryWithArchivedVersionsContract from '@DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
-import AjaxHelper from '@Helpers/AjaxHelper';
-import ArtistType from '@Models/Artists/ArtistType';
-import ContentLanguagePreference from '@Models/Globalization/ContentLanguagePreference';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient, { HeaderNames, MediaTypes } from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import AdvancedSearchFilter from '@ViewModels/Search/AdvancedSearchFilter';
+import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/ArchivedArtistVersionDetailsContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
+import { ArtistForEditContract } from '@/DataContracts/Artist/ArtistForEditContract';
+import { CreateArtistContract } from '@/DataContracts/Artist/CreateArtistContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
+import { AjaxHelper } from '@/Helpers/AjaxHelper';
+import { ArtistType } from '@/Models/Artists/ArtistType';
+import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import {
+	BaseRepository,
+	CommonQueryParams,
+} from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import qs from 'qs';
 
-import BaseRepository from './BaseRepository';
-import { CommonQueryParams } from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
+export enum ArtistOptionalField {
+	'AdditionalNames' = 'AdditionalNames',
+	'ArtistLinks' = 'ArtistLinks',
+	'ArtistLinksReverse' = 'ArtistLinksReverse',
+	'BaseVoicebank' = 'BaseVoicebank',
+	'Description' = 'Description',
+	'MainPicture' = 'MainPicture',
+	'Names' = 'Names',
+	'Tags' = 'Tags',
+	'WebLinks' = 'WebLinks',
+}
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
-export default class ArtistRepository
+export class ArtistRepository
 	extends BaseRepository
 	implements ICommentRepository {
 	// Maps a relative URL to an absolute one.
@@ -30,7 +46,7 @@ export default class ArtistRepository
 
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -56,7 +72,7 @@ export default class ArtistRepository
 		};
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId: artistId,
 		contract,
 	}: {
@@ -69,7 +85,7 @@ export default class ArtistRepository
 		);
 	};
 
-	public createReport = ({
+	createReport = ({
 		artistId,
 		reportType,
 		notes,
@@ -96,23 +112,19 @@ export default class ArtistRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate: ({
+	findDuplicate: ({
 		params,
 	}: {
 		params: any;
 	}) => Promise<DuplicateEntryResultContract[]>;
 
-	public getComments = ({
+	getComments = ({
 		entryId: artistId,
 	}: {
 		entryId: number;
@@ -122,46 +134,42 @@ export default class ArtistRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<ArtistForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<ArtistForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
 		return this.httpClient.get<ArtistForEditContract>(url);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
 		id: number;
 		lang: ContentLanguagePreference;
-	}): Promise<ArtistContract> => {
+	}): Promise<ArtistApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
-		return this.httpClient.get<ArtistContract>(url, {
-			fields: 'AdditionalNames',
+		return this.httpClient.get<ArtistApiContract>(url, {
+			fields: [ArtistOptionalField.AdditionalNames].join(','),
 			lang: lang,
 		});
 	};
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
 		id,
 		fields,
 		lang,
 	}: {
 		id: number;
-		fields: string;
+		fields: ArtistOptionalField[];
 		lang: ContentLanguagePreference;
 	}): Promise<ArtistApiContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
 		return this.httpClient.get<ArtistApiContract>(url, {
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		paging,
 		lang,
 		query,
@@ -184,7 +192,7 @@ export default class ArtistRepository
 		tags: number[];
 		childTags: boolean;
 		followedByUserId?: number;
-		fields: string;
+		fields: ArtistOptionalField[];
 		status?: string;
 		advancedFilters: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
@@ -194,7 +202,7 @@ export default class ArtistRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -213,7 +221,7 @@ export default class ArtistRepository
 		);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		artistId,
 	}: {
 		artistId: number;
@@ -223,7 +231,7 @@ export default class ArtistRepository
 		);
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -236,17 +244,13 @@ export default class ArtistRepository
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<ArtistDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<ArtistDetailsContract> => {
 		return this.httpClient.get<ArtistDetailsContract>(
 			this.urlMapper.mapRelative(`/api/artists/${id}/details`),
 		);
 	};
 
-	public getArtistWithArchivedVersions = ({
+	getArtistWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -255,8 +259,116 @@ export default class ArtistRepository
 			EntryWithArchivedVersionsContract<ArtistApiContract>
 		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
 	};
+
+	getVersionDetails = ({
+		id,
+		comparedVersionId,
+	}: {
+		id: number;
+		comparedVersionId?: number;
+	}): Promise<ArchivedArtistVersionDetailsContract> => {
+		return this.httpClient.get<ArchivedArtistVersionDetailsContract>(
+			this.urlMapper.mapRelative(`/api/artists/versions/${id}`),
+			{ comparedVersionId: comparedVersionId },
+		);
+	};
+
+	create = (
+		requestToken: string,
+		contract: CreateArtistContract,
+		pictureUpload: File | undefined,
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (pictureUpload) formData.append('pictureUpload', pictureUpload);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative('/api/artists'),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	edit = (
+		requestToken: string,
+		contract: ArtistForEditContract,
+		coverPicUpload: File | undefined,
+		pictureUpload: File[],
+	): Promise<number> => {
+		const formData = new FormData();
+		formData.append('contract', JSON.stringify(contract));
+
+		if (coverPicUpload) formData.append('coverPicUpload', coverPicUpload);
+
+		for (const file of pictureUpload) formData.append('pictureUpload', file);
+
+		return this.httpClient.post<number>(
+			this.urlMapper.mapRelative(`/api/artists/${contract.id}`),
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	merge = (
+		requestToken: string,
+		{ id, targetArtistId }: { id: number; targetArtistId: number },
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(
+				`/api/artists/${id}/merge?${qs.stringify({
+					targetArtistId: targetArtistId,
+				})}`,
+			),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
+
+	requestVerification = (
+		requestToken: string,
+		{
+			artistId,
+			message,
+			linkToProof,
+			privateMessage,
+		}: {
+			artistId: number;
+			message: string;
+			linkToProof: string;
+			privateMessage: boolean;
+		},
+	): Promise<void> => {
+		return this.httpClient.post(
+			this.urlMapper.mapRelative(`/api/artists/${artistId}/verifications`),
+			{
+				message: message,
+				linkToProof: linkToProof,
+				privateMessage: privateMessage,
+			},
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
 }
 
 export interface ArtistQueryParams extends CommonQueryParams {
-	artistTypes: ArtistType[];
+	artistTypes: string /* TODO: ArtistType[] */;
 }

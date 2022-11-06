@@ -5,7 +5,7 @@ interface ProfileIconProps {
 	size?: number;
 }
 
-const ProfileIcon = React.memo(
+export const ProfileIcon = React.memo(
 	({ url, size = 80 }: ProfileIconProps): React.ReactElement => {
 		return url ? (
 			<div
@@ -17,7 +17,7 @@ const ProfileIcon = React.memo(
 			>
 				<img
 					src={url}
-					alt="Icon" /* TODO: localize */
+					alt="Icon" /* LOC */
 					style={{ width: size, height: size, objectFit: 'cover' }}
 				/>
 			</div>
@@ -26,5 +26,3 @@ const ProfileIcon = React.memo(
 		);
 	},
 );
-
-export default ProfileIcon;

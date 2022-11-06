@@ -152,7 +152,12 @@ namespace VocaDb.Model.DataContracts.Songs
 			Tag? songTypeTag = null
 		)
 		{
-			Song = new SongForApiContract(song: song, languagePreference: languagePreference, fields: SongOptionalFields.None);
+			Song = new SongForApiContract(
+				song: song,
+				languagePreference: languagePreference,
+				fields: SongOptionalFields.MainPicture
+			);
+
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 
 			Albums = song.OnAlbums

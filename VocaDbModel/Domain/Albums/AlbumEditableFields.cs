@@ -1,48 +1,44 @@
-#nullable disable
+namespace VocaDb.Model.Domain.Albums;
 
-
-namespace VocaDb.Model.Domain.Albums
+/// <summary>
+/// Saved in the database as strings - numbers can be changed, but not the names.
+/// </summary>
+[Flags]
+public enum AlbumEditableFields
 {
+	Nothing = 0,
+
+	Artists = 1 << 0,
+
 	/// <summary>
-	/// Saved in the database as strings - numbers can be changed, but not the names.
+	/// Identifiers list
 	/// </summary>
-	[Flags]
-	public enum AlbumEditableFields
-	{
-		Nothing = 0,
+	[Obsolete("Replaced by Identifiers")]
+	Barcode = 1 << 1,
 
-		Artists = 1 << 0,
+	Cover = 1 << 2,
 
-		/// <summary>
-		/// Identifiers list
-		/// </summary>
-		[Obsolete("Replaced by Identifiers")]
-		Barcode = 1 << 1,
+	Description = 1 << 3,
 
-		Cover = 1 << 2,
+	Discs = 1 << 4,
 
-		Description = 1 << 3,
+	DiscType = 1 << 5,
 
-		Discs = 1 << 4,
+	Identifiers = 1 << 6,
 
-		DiscType = 1 << 5,
+	Names = 1 << 7,
 
-		Identifiers = 1 << 6,
+	OriginalName = 1 << 8,
 
-		Names = 1 << 7,
+	OriginalRelease = 1 << 9,
 
-		OriginalName = 1 << 8,
+	Pictures = 1 << 10,
 
-		OriginalRelease = 1 << 9,
+	PVs = 1 << 11,
 
-		Pictures = 1 << 10,
+	Status = 1 << 12,
 
-		PVs = 1 << 11,
+	Tracks = 1 << 13,
 
-		Status = 1 << 12,
-
-		Tracks = 1 << 13,
-
-		WebLinks = 1 << 14,
-	}
+	WebLinks = 1 << 14,
 }

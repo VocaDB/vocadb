@@ -1,17 +1,16 @@
-import LocalizedStringWithIdContract from '@DataContracts/Globalization/LocalizedStringWithIdContract';
-import ContentLanguageSelection from '@Models/Globalization/ContentLanguageSelection';
-import _ from 'lodash';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
+import { LocalizedStringWithIdEditStore } from '@/Stores/Globalization/LocalizedStringWithIdEditStore';
+import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
-import LocalizedStringWithIdEditStore from './LocalizedStringWithIdEditStore';
+export class NamesEditStore {
+	@observable aliases: LocalizedStringWithIdEditStore[];
+	englishName: LocalizedStringWithIdEditStore;
+	originalName: LocalizedStringWithIdEditStore;
+	romajiName: LocalizedStringWithIdEditStore;
 
-export default class NamesEditStore {
-	@observable public aliases: LocalizedStringWithIdEditStore[];
-	public englishName: LocalizedStringWithIdEditStore;
-	public originalName: LocalizedStringWithIdEditStore;
-	public romajiName: LocalizedStringWithIdEditStore;
-
-	public constructor(names: LocalizedStringWithIdEditStore[] = []) {
+	constructor(names: LocalizedStringWithIdEditStore[] = []) {
 		makeObservable(this);
 
 		this.englishName = NamesEditStore.nameOrEmpty(
@@ -27,8 +26,7 @@ export default class NamesEditStore {
 			ContentLanguageSelection.Romaji,
 		);
 
-		this.aliases = _.filter(
-			names,
+		this.aliases = names.filter(
 			(n) =>
 				n.id !== this.englishName.id &&
 				n.id !== this.originalName.id &&
@@ -40,44 +38,41 @@ export default class NamesEditStore {
 		names: LocalizedStringWithIdEditStore[],
 		lang: ContentLanguageSelection,
 	): LocalizedStringWithIdEditStore {
-		const name = _.find(names, (n) => n.language === lang);
+		const name = names.find((n) => n.language === lang);
 		return name || new LocalizedStringWithIdEditStore(lang, '');
 	}
 
-	@action public createAlias = (): void => {
+	@action createAlias = (): void => {
 		this.aliases.push(new LocalizedStringWithIdEditStore());
 	};
 
-	@action public deleteAlias = (
-		alias: LocalizedStringWithIdEditStore,
-	): void => {
-		_.pull(this.aliases, alias);
+	@action deleteAlias = (alias: LocalizedStringWithIdEditStore): void => {
+		pull(this.aliases, alias);
 	};
 
 	private getAllPrimaryNames: () => LocalizedStringWithIdEditStore[] = () => {
 		return [this.originalName, this.romajiName, this.englishName];
 	};
 
-	public getAllNames = (): LocalizedStringWithIdEditStore[] => {
-		return _.filter(
-			this.getAllPrimaryNames().concat(this.aliases),
-			(name) => !!name && !!name.value,
-		);
+	getAllNames = (): LocalizedStringWithIdEditStore[] => {
+		return this.getAllPrimaryNames()
+			.concat(this.aliases)
+			.filter((name) => !!name && !!name.value);
 	};
 
-	public getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
-		_.filter(this.getAllPrimaryNames(), (n) => !!n && !!n.value);
+	getPrimaryNames = (): LocalizedStringWithIdEditStore[] =>
+		this.getAllPrimaryNames().filter((n) => !!n && !!n.value);
 
 	// Whether the primary name is specified (in any language). This excludes aliases.
-	public hasPrimaryName = (): boolean => {
-		return _.some(this.getPrimaryNames(), (name) => name && name.value);
+	hasPrimaryName = (): boolean => {
+		return this.getPrimaryNames().some((name) => name && name.value);
 	};
 
-	public toContracts = (): LocalizedStringWithIdContract[] => {
-		return _.map(this.getAllNames(), (name) => {
+	toContracts = (): LocalizedStringWithIdContract[] => {
+		return this.getAllNames().map((name) => {
 			const contract: LocalizedStringWithIdContract = {
 				id: name.id,
-				language: name.languageStr,
+				language: name.language,
 				value: name.value!,
 			};
 
@@ -85,11 +80,11 @@ export default class NamesEditStore {
 		});
 	};
 
-	public static fromContracts(
+	static fromContracts(
 		contracts: LocalizedStringWithIdContract[],
 	): NamesEditStore {
 		return new NamesEditStore(
-			_.map(contracts, (contract) =>
+			contracts.map((contract) =>
 				LocalizedStringWithIdEditStore.fromContract(contract),
 			),
 		);

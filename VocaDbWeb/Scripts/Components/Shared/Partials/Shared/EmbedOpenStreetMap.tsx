@@ -1,4 +1,4 @@
-import OptionalGeoPointContract from '@DataContracts/OptionalGeoPointContract';
+import { OptionalGeoPointContract } from '@/DataContracts/OptionalGeoPointContract';
 import qs from 'qs';
 import React from 'react';
 
@@ -6,7 +6,7 @@ interface EmbedOpenStreetMapProps {
 	coordinates: OptionalGeoPointContract;
 }
 
-const EmbedOpenStreetMap = React.memo(
+export const EmbedOpenStreetMap = React.memo(
 	({ coordinates }: EmbedOpenStreetMapProps): React.ReactElement => {
 		return (
 			<div>
@@ -37,5 +37,3 @@ const EmbedOpenStreetMap = React.memo(
 		);
 	},
 );
-
-export default EmbedOpenStreetMap;

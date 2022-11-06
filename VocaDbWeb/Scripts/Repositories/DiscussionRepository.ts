@@ -1,15 +1,14 @@
-import CommentContract from '@DataContracts/CommentContract';
-import DiscussionFolderContract from '@DataContracts/Discussion/DiscussionFolderContract';
-import DiscussionTopicContract from '@DataContracts/Discussion/DiscussionTopicContract';
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import ICommentRepository from './ICommentRepository';
-
-export default class DiscussionRepository implements ICommentRepository {
-	public constructor(
+export class DiscussionRepository implements ICommentRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
@@ -20,7 +19,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public createComment = ({
+	createComment = ({
 		entryId: topicId,
 		contract,
 	}: {
@@ -33,7 +32,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public createTopic = ({
+	createTopic = ({
 		folderId,
 		contract,
 	}: {
@@ -46,19 +45,15 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`comments/${commentId}`));
 	};
 
-	public deleteTopic = ({ topicId }: { topicId: number }): Promise<void> => {
+	deleteTopic = ({ topicId }: { topicId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(this.mapUrl(`topics/${topicId}`));
 	};
 
-	public getComments = ({
+	getComments = ({
 		entryId: topicId,
 	}: {
 		entryId: number;
@@ -68,7 +63,7 @@ export default class DiscussionRepository implements ICommentRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getFolders = ({}: {}): Promise<DiscussionFolderContract[]> => {
+	getFolders = ({}: {}): Promise<DiscussionFolderContract[]> => {
 		return this.httpClient.get<DiscussionFolderContract[]>(
 			this.mapUrl('folders'),
 			{
@@ -77,7 +72,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public getTopic = ({
+	getTopic = ({
 		topicId,
 	}: {
 		topicId: number;
@@ -89,7 +84,7 @@ export default class DiscussionRepository implements ICommentRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getTopics = ({}: {}): Promise<
+	getTopics = ({}: {}): Promise<
 		PartialFindResultContract<DiscussionTopicContract>
 	> => {
 		return this.httpClient.get<
@@ -97,7 +92,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		>(this.mapUrl('topics'), { fields: 'CommentCount', maxResults: 5 });
 	};
 
-	public getTopicsForFolder = ({
+	getTopicsForFolder = ({
 		folderId,
 		paging,
 	}: {
@@ -115,7 +110,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		});
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -128,7 +123,7 @@ export default class DiscussionRepository implements ICommentRepository {
 		);
 	};
 
-	public updateTopic = ({
+	updateTopic = ({
 		topicId,
 		contract,
 	}: {

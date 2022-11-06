@@ -1,7 +1,8 @@
-import TagBaseContract from '@DataContracts/Tag/TagBaseContract';
-import TagRepository from '@Repositories/TagRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import _ from 'lodash';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { TagFilter } from '@/Stores/Search/TagFilter';
+import { pull } from 'lodash-es';
 import {
 	action,
 	computed,
@@ -10,14 +11,12 @@ import {
 	runInAction,
 } from 'mobx';
 
-import TagFilter from './TagFilter';
-
 // Manages tag filters for search
-export default class TagFilters {
-	@observable public childTags = false;
-	@observable public tags: TagFilter[] = [];
+export class TagFilters {
+	@observable childTags = false;
+	@observable tags: TagFilter[] = [];
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly tagRepo: TagRepository,
 		tags?: TagFilter[],
@@ -27,36 +26,35 @@ export default class TagFilters {
 		this.tags = tags || [];
 	}
 
-	@computed public get tagIds(): number[] {
-		return _.map(this.tags, (t) => t.id);
+	@computed get tagIds(): number[] {
+		return this.tags.map((t) => t.id);
 	}
 
 	// Fired when any of the tag filters is changed
-	@computed public get filters(): any {
+	@computed get filters(): any {
 		return {
 			tagIds: this.tagIds,
 			childTags: this.childTags,
 		};
 	}
 
-	@action public addTag = (tag: TagBaseContract): number =>
+	@action addTag = (tag: TagBaseContract): number =>
 		this.tags.push(TagFilter.fromContract(tag));
 
-	@action public addTags = (selectedTagIds: number[]): void => {
+	@action addTags = (selectedTagIds: number[]): void => {
 		if (!selectedTagIds) return;
 
-		const filters = _.map(selectedTagIds, (a) => new TagFilter(a));
+		const filters = selectedTagIds.map((a) => new TagFilter(a));
 		this.tags.push(...filters);
 
 		if (!this.tagRepo) return;
 
-		_.forEach(filters, (newTag) => {
+		for (const newTag of filters) {
 			const selectedTagId = newTag.id;
 
 			this.tagRepo
 				.getById({
 					id: selectedTagId,
-					fields: undefined,
 					lang: this.values.languagePreference,
 				})
 				.then((tag) => {
@@ -65,10 +63,10 @@ export default class TagFilters {
 						newTag.urlSlug = tag.urlSlug;
 					});
 				});
-		});
+		}
 	};
 
-	@action public removeTag = (tag: TagFilter): void => {
-		_.pull(this.tags, tag);
+	@action removeTag = (tag: TagFilter): void => {
+		pull(this.tags, tag);
 	};
 }

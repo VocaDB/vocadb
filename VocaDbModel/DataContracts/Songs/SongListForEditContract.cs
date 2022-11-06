@@ -6,12 +6,13 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
+	[Obsolete]
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongListForEditContract : SongListContract
 	{
 		public SongListForEditContract()
 		{
-			SongLinks = new SongInListEditContract[] { };
+			SongLinks = Array.Empty<SongInListEditContract>();
 			UpdateNotes = string.Empty;
 		}
 

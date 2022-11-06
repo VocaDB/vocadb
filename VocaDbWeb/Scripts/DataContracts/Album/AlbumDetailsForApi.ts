@@ -1,30 +1,32 @@
-import AlbumHelper from '@Helpers/AlbumHelper';
-import PVHelper from '@Helpers/PVHelper';
-import AlbumType from '@Models/Albums/AlbumType';
-import ArtistCategories from '@Models/Artists/ArtistCategories';
-import ArtistRoles from '@Models/Artists/ArtistRoles';
-import ContentFocus from '@Models/ContentFocus';
-import EntryStatus from '@Models/EntryStatus';
-import _ from 'lodash';
+import { AlbumDetailsContract } from '@/DataContracts/Album/AlbumDetailsContract';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
+import { AlbumReviewContract } from '@/DataContracts/Album/AlbumReviewContract';
+import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { OptionalDateTimeContract } from '@/DataContracts/OptionalDateTimeContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongInAlbumContract } from '@/DataContracts/Song/SongInAlbumContract';
+import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import {
+	MediaType,
+	PurchaseStatus,
+} from '@/DataContracts/User/AlbumForUserForApiContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { AlbumHelper } from '@/Helpers/AlbumHelper';
+import { PVHelper } from '@/Helpers/PVHelper';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
+import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
+import { ContentFocus } from '@/Models/ContentFocus';
+import { EntryStatus } from '@/Models/EntryStatus';
+import { has } from 'lodash-es';
 import moment from 'moment';
-
-import ArtistApiContract from '../Artist/ArtistApiContract';
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import CommentContract from '../CommentContract';
-import EntryThumbContract from '../EntryThumbContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import OptionalDateTimeContract from '../OptionalDateTimeContract';
-import PVContract from '../PVs/PVContract';
-import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
-import SongInAlbumContract from '../Song/SongInAlbumContract';
-import TagBaseContract from '../Tag/TagBaseContract';
-import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
-import { MediaType, PurchaseStatus } from '../User/AlbumForUserForApiContract';
-import WebLinkContract from '../WebLinkContract';
-import AlbumDetailsContract from './AlbumDetailsContract';
-import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
-import AlbumForApiContract from './AlbumForApiContract';
-import AlbumReviewContract from './AlbumReviewContract';
 
 export enum DiscMediaType {
 	Audio = 'Audio',
@@ -33,13 +35,13 @@ export enum DiscMediaType {
 
 // Corresponds to the AlbumDisc class in C#.
 export class AlbumDisc {
-	public readonly discNumber: number;
-	public readonly isVideo: boolean;
-	public readonly totalLengthSeconds: number;
-	public readonly name?: string;
-	public readonly songs: SongInAlbumContract[];
+	readonly discNumber: number;
+	readonly isVideo: boolean;
+	readonly totalLengthSeconds: number;
+	readonly name?: string;
+	readonly songs: SongInAlbumContract[];
 
-	public constructor(
+	constructor(
 		discNumber: number,
 		songs: SongInAlbumContract[],
 		discProperties?: AlbumDiscPropertiesContract,
@@ -50,71 +52,70 @@ export class AlbumDisc {
 		this.isVideo =
 			!!discProperties && discProperties.mediaType === DiscMediaType.Video;
 		this.name = discProperties?.name;
-		this.totalLengthSeconds = _.every(
-			this.songs,
+		this.totalLengthSeconds = this.songs.every(
 			(s) => s.song && s.song.lengthSeconds > 0,
 		)
-			? _.sumBy(this.songs, (s) => s.song.lengthSeconds)
+			? this.songs.sumBy((s) => s.song!.lengthSeconds)
 			: 0;
 	}
 }
 
 // Corresponds to the AlbumDetails class in C#.
-export default class AlbumDetailsForApi {
-	public readonly additionalNames: string;
-	public readonly albumMediaType: MediaType;
-	public readonly albumPurchaseStatus: PurchaseStatus;
-	public readonly collectionRating: number;
-	public readonly artistString: string;
-	public readonly bands: ArtistForAlbumContract[];
-	public readonly canEditPersonalDescription: boolean;
-	public readonly canRemoveTagUsages: boolean;
-	public readonly catNum?: string;
-	public readonly circles: ArtistForAlbumContract[];
-	public readonly commentCount: number;
-	public readonly contentFocus: ContentFocus;
-	public readonly createDate: Date;
-	public readonly deleted: boolean;
-	public readonly description: EnglishTranslatedStringContract;
-	public readonly discs: AlbumDisc[];
-	public readonly discType: AlbumType;
-	public readonly discTypeTag?: TagBaseContract;
-	public readonly draft: boolean;
-	public readonly fullReleaseDate?: Date;
-	public readonly hits: number;
-	public readonly id: number;
-	public readonly illustrators?: ArtistForAlbumContract[];
-	public readonly labels: ArtistForAlbumContract[];
-	public readonly latestComments: CommentContract[];
-	public readonly latestReview?: AlbumReviewContract;
-	public readonly latestReviewRatingScore: number;
-	public readonly mainPicture?: EntryThumbContract;
-	public readonly mergedTo?: AlbumForApiContract;
-	public readonly name: string;
-	public readonly otherArtists: ArtistForAlbumContract[];
-	public readonly ownedBy: number;
-	public readonly personalDescriptionAuthor?: ArtistApiContract;
-	public readonly personalDescriptionText?: string;
-	public readonly pictures: EntryThumbContract[];
-	public readonly primaryPV?: PVContract;
-	public readonly producers: ArtistForAlbumContract[];
-	public readonly pvs: PVContract[];
-	public readonly ratingAverage: number;
-	public readonly ratingCount: number;
-	public readonly releaseDate?: OptionalDateTimeContract;
-	public readonly releaseEvent?: ReleaseEventContract;
-	public readonly reviewCount: number;
-	public readonly status: string /* TODO: enum */;
-	public readonly subject: ArtistForAlbumContract[];
-	public readonly tags: TagUsageForApiContract[];
-	public readonly totalLength: number;
-	public readonly userHasAlbum: boolean;
-	public readonly version: number;
-	public readonly vocalists: ArtistForAlbumContract[];
-	public readonly webLinks: WebLinkContract[];
-	public readonly wishlistedBy: number;
+export class AlbumDetailsForApi {
+	readonly additionalNames: string;
+	readonly albumMediaType: MediaType;
+	readonly albumPurchaseStatus: PurchaseStatus;
+	readonly collectionRating: number;
+	readonly artistString: string;
+	readonly bands: ArtistForAlbumContract[];
+	readonly canEditPersonalDescription: boolean;
+	readonly canRemoveTagUsages: boolean;
+	readonly catNum?: string;
+	readonly circles: ArtistForAlbumContract[];
+	readonly commentCount: number;
+	readonly contentFocus: ContentFocus;
+	readonly createDate: string;
+	readonly deleted: boolean;
+	readonly description: EnglishTranslatedStringContract;
+	readonly discs: AlbumDisc[];
+	readonly discType: AlbumType;
+	readonly discTypeTag?: TagBaseContract;
+	readonly draft: boolean;
+	readonly fullReleaseDate?: Date;
+	readonly hits: number;
+	readonly id: number;
+	readonly illustrators?: ArtistForAlbumContract[];
+	readonly labels: ArtistForAlbumContract[];
+	readonly latestComments: CommentContract[];
+	readonly latestReview?: AlbumReviewContract;
+	readonly latestReviewRatingScore: number;
+	readonly mainPicture?: EntryThumbContract;
+	readonly mergedTo?: AlbumForApiContract;
+	readonly name: string;
+	readonly otherArtists: ArtistForAlbumContract[];
+	readonly ownedBy: number;
+	readonly personalDescriptionAuthor?: ArtistApiContract;
+	readonly personalDescriptionText?: string;
+	readonly pictures: EntryThumbContract[];
+	readonly primaryPV?: PVContract;
+	readonly producers: ArtistForAlbumContract[];
+	readonly pvs: PVContract[];
+	readonly ratingAverage: number;
+	readonly ratingCount: number;
+	readonly releaseDate?: OptionalDateTimeContract;
+	readonly releaseEvent?: ReleaseEventContract;
+	readonly reviewCount: number;
+	readonly status: EntryStatus;
+	readonly subject: ArtistForAlbumContract[];
+	readonly tags: TagUsageForApiContract[];
+	readonly totalLength: number;
+	readonly userHasAlbum: boolean;
+	readonly version: number;
+	readonly vocalists: ArtistForAlbumContract[];
+	readonly webLinks: WebLinkContract[];
+	readonly wishlistedBy: number;
 
-	public constructor(public readonly contract: AlbumDetailsContract) {
+	constructor(readonly contract: AlbumDetailsContract) {
 		this.additionalNames = contract.additionalNames;
 		this.artistString = contract.artistString;
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
@@ -125,7 +126,7 @@ export default class AlbumDetailsForApi {
 		this.description = contract.description;
 		this.discType = contract.discType;
 		this.discTypeTag = contract.discTypeTag;
-		this.draft = contract.status === EntryStatus[EntryStatus.Draft];
+		this.draft = contract.status === EntryStatus.Draft;
 		this.hits = contract.hits;
 		this.id = contract.id;
 		this.latestComments = contract.latestComments;
@@ -150,13 +151,13 @@ export default class AlbumDetailsForApi {
 		this.webLinks = contract.webLinks;
 		this.wishlistedBy = contract.stats.wishlistCount;
 
-		const songsByDiscs = _.groupBy(contract.songs, (s) => s.discNumber);
+		const songsByDiscs = contract.songs.groupBy((s) => s.discNumber);
 		this.discs = Object.entries(songsByDiscs).map(
 			([key, value]) =>
 				new AlbumDisc(
 					Number(key),
 					value,
-					_.has(contract.discs, key) ? contract.discs[key] : undefined,
+					has(contract.discs, key) ? contract.discs[key] : undefined,
 				),
 		);
 
@@ -264,18 +265,18 @@ export default class AlbumDetailsForApi {
 		this.primaryPV = PVHelper.primaryPV(this.pvs);
 	}
 
-	public get jsonModel(): AlbumDetailsAjax {
+	get jsonModel(): AlbumDetailsAjax {
 		return new AlbumDetailsAjax(this);
 	}
 
-	public get releaseDateIsInTheFarFuture(): boolean {
+	get releaseDateIsInTheFarFuture(): boolean {
 		return (
 			!!this.fullReleaseDate &&
 			this.fullReleaseDate > moment.utc().add(7, 'd').toDate()
 		);
 	}
 
-	public get releaseDateIsInTheNearFuture(): boolean {
+	get releaseDateIsInTheNearFuture(): boolean {
 		return (
 			!!this.fullReleaseDate &&
 			this.fullReleaseDate > moment.utc().toDate() &&
@@ -283,17 +284,16 @@ export default class AlbumDetailsForApi {
 		);
 	}
 
-	public get releaseDateIsInThePast(): boolean {
+	get releaseDateIsInThePast(): boolean {
 		return (
 			!!this.fullReleaseDate && this.fullReleaseDate <= moment.utc().toDate()
 		);
 	}
 
-	public get showProducerRoles(): boolean {
+	get showProducerRoles(): boolean {
 		return (
 			this.producers.length > 1 &&
-			_.some(
-				this.producers,
+			this.producers.some(
 				(p) =>
 					p.roles !== ArtistRoles[ArtistRoles.Default] &&
 					p.roles !== ArtistRoles[ArtistRoles.Composer],
@@ -303,17 +303,17 @@ export default class AlbumDetailsForApi {
 }
 
 export class AlbumDetailsAjax {
-	public readonly albumMediaType: MediaType;
-	public readonly albumPurchaseStatus: PurchaseStatus;
-	public readonly collectionRating: number;
-	public readonly id: number;
-	public readonly latestComments: CommentContract[];
-	public readonly personalDescriptionAuthor?: ArtistApiContract;
-	public readonly personalDescriptionText?: string;
-	public readonly tagUsages: TagUsageForApiContract[];
-	public readonly userHasAlbum: boolean;
+	readonly albumMediaType: MediaType;
+	readonly albumPurchaseStatus: PurchaseStatus;
+	readonly collectionRating: number;
+	readonly id: number;
+	readonly latestComments: CommentContract[];
+	readonly personalDescriptionAuthor?: ArtistApiContract;
+	readonly personalDescriptionText?: string;
+	readonly tagUsages: TagUsageForApiContract[];
+	readonly userHasAlbum: boolean;
 
-	public constructor(model: AlbumDetailsForApi) {
+	constructor(model: AlbumDetailsForApi) {
 		this.albumMediaType = model.albumMediaType;
 		this.albumPurchaseStatus = model.albumPurchaseStatus;
 		this.collectionRating = model.collectionRating;

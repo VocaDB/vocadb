@@ -1,14 +1,28 @@
-import DateTimeHelper from '@Helpers/DateTimeHelper';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import $ from 'jquery';
 import 'jquery-ui';
 import React, { useImperativeHandle } from 'react';
 
-const useJQueryUIDatepicker = (
-	el: React.RefObject<any>,
-	options: JQueryUI.DatepickerOptions,
-	value?: Date,
-	onSelect?: (date?: Date) => void,
-): void => {
+type JQueryUIDatepickerProps = {
+	value?: Date;
+	onSelect?: (date?: Date) => void;
+} & Omit<JQueryUI.DatepickerOptions, 'onSelect'> &
+	Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onSelect'>;
+
+const JQueryUIDatepicker = React.forwardRef<
+	HTMLInputElement,
+	React.PropsWithChildren<JQueryUIDatepickerProps>
+>(({ dateFormat, value, onSelect, ...props }, ref) => {
+	const el = React.useRef<HTMLInputElement>(undefined!);
+	useImperativeHandle<HTMLInputElement, HTMLInputElement>(
+		ref,
+		() => el.current,
+	);
+
+	const options = React.useMemo(() => ({ dateFormat: dateFormat }), [
+		dateFormat,
+	]);
+
 	React.useLayoutEffect(() => {
 		const $el = $(el.current);
 		$el.datepicker(options);
@@ -50,25 +64,7 @@ const useJQueryUIDatepicker = (
 			$el.datepicker('destroy');
 			$el.off('change');
 		};
-	});
-};
-
-type JQueryUIDatepickerProps = {
-	value?: Date;
-	onSelect?: (date?: Date) => void;
-} & Omit<JQueryUI.DatepickerOptions, 'onSelect'> &
-	Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onSelect'>;
-
-const JQueryUIDatepicker = React.forwardRef<
-	HTMLInputElement,
-	React.PropsWithChildren<JQueryUIDatepickerProps>
->(({ dateFormat, value, onSelect, ...props }, ref) => {
-	const el = React.useRef<HTMLInputElement>(undefined!);
-	useImperativeHandle<HTMLInputElement, HTMLInputElement>(
-		ref,
-		() => el.current,
-	);
-	useJQueryUIDatepicker(el, { dateFormat: dateFormat }, value, onSelect);
+	}, [onSelect, options, value]);
 
 	return <input ref={el} {...props} />;
 });

@@ -1,26 +1,44 @@
-import WebhookContract from '@DataContracts/WebhookContract';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import { IPRuleContract } from '@ViewModels/Admin/ManageIPRulesViewModel';
+import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
+import { WebhookContract } from '@/DataContracts/WebhookContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-export default class AdminRepository {
-	public constructor(
+export interface IPRuleContract {
+	address?: string;
+	created?: string;
+	id?: number;
+	notes?: string;
+}
+
+export class AdminRepository {
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public addIpToBanList = ({
-		rule,
-	}: {
-		rule: IPRuleContract;
-	}): Promise<boolean> => {
+	// eslint-disable-next-line no-empty-pattern
+	getIPRules = ({}: {}): Promise<IPRuleContract[]> => {
+		return this.httpClient.get<IPRuleContract[]>(
+			this.urlMapper.mapRelative('/api/ip-rules'),
+		);
+	};
+
+	saveIPRules = ({ ipRules }: { ipRules: IPRuleContract[] }): Promise<void> => {
+		return this.httpClient.put<void>(
+			this.urlMapper.mapRelative('/api/ip-rules'),
+			ipRules,
+		);
+	};
+
+	addIpToBanList = ({ rule }: { rule: IPRuleContract }): Promise<boolean> => {
 		return this.httpClient.post<boolean>(
 			this.urlMapper.mapRelative('/api/ip-rules'),
 			rule,
 		);
 	};
 
-	public checkSFS = ({ ip }: { ip: string }): Promise<string> => {
+	checkSFS = ({ ip }: { ip: string }): Promise<string> => {
 		return this.httpClient.get<string>(
 			this.urlMapper.mapRelative('/Admin/CheckSFS'),
 			{ ip: ip },
@@ -28,25 +46,53 @@ export default class AdminRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getTempBannedIps = ({}: {}): Promise<string[]> => {
+	getTempBannedIps = ({}: {}): Promise<string[]> => {
 		return this.httpClient.get<string[]>(
 			this.urlMapper.mapRelative('/api/admin/tempBannedIPs'),
 		);
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getWebhooks = ({}: {}): Promise<WebhookContract[]> => {
+	getWebhooks = ({}: {}): Promise<WebhookContract[]> => {
 		return this.httpClient.get<WebhookContract[]>(
 			this.urlMapper.mapRelative('/api/webhooks'),
 		);
 	};
 
-	public saveWebhooks = ({
+	saveWebhooks = ({
 		webhooks,
 	}: {
 		webhooks: WebhookContract[];
 	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative('/api/webhooks');
 		return this.httpClient.put<void>(url, webhooks);
+	};
+
+	getAuditLogEntries = ({
+		excludeUsers,
+		filter,
+		groupId,
+		onlyNewUsers,
+		userName,
+		start,
+	}: {
+		excludeUsers: string;
+		filter: string;
+		groupId?: UserGroup;
+		onlyNewUsers: boolean;
+		userName: string;
+		start: number;
+	}): Promise<AuditLogEntryContract[]> => {
+		return this.httpClient.get<AuditLogEntryContract[]>(
+			this.urlMapper.mapRelative('/api/admin/audit-logs'),
+			{
+				excludeUsers: excludeUsers,
+				filter: filter,
+				groupId: groupId,
+				onlyNewUsers: onlyNewUsers,
+				userName: userName,
+				start: start,
+			},
+		);
 	};
 }

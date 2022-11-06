@@ -9,7 +9,6 @@ using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -120,7 +119,7 @@ namespace VocaDb.Model.Database.Queries
 			catch (Exception x) when (x is SqlException or GenericADOException)
 			{
 				s_log.Warn(x, "Unable to get tag usages");
-				topUsages = new TEntry[0];
+				topUsages = Array.Empty<TEntry>();
 				usageCount = 0;
 			}
 
@@ -556,19 +555,22 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public TagForEditContract GetTagForEdit(int id)
+#nullable enable
+		public TagForEditForApiContract GetTagForEdit(int id)
 		{
 			return HandleQuery(session =>
 			{
-				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
+				var inUse =
+					session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
 					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
 					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted);
 
-				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, PermissionContext);
+				var contract = new TagForEditForApiContract(LoadTagById(session, id), !inUse, PermissionContext, _thumbStore);
 
 				return contract;
 			});
 		}
+#nullable disable
 
 		/// <summary>
 		/// Get tag Id by (exact) tag name.
@@ -592,17 +594,13 @@ namespace VocaDb.Model.Database.Queries
 			return LoadTag(id, tag => EntryWithArchivedVersionsForApiContract.Create(
 				entry: new TagForApiContract(tag, thumbPersister: null, LanguagePreference, optionalFields: TagOptionalFields.None),
 				versions: tag.ArchivedVersionsManager.Versions
-					.Select(a => new ArchivedObjectVersionForApiContract(
-						archivedObjectVersion: a,
-						anythingChanged: !Equals(a.Diff.ChangedFields, default(TagEditableFields)) || !Equals(a.CommonEditEvent, default(EntryEditEvent)),
-						reason: a.CommonEditEvent.ToString(),
-						userIconFactory: _userIconFactory
-					))
+					.Select(a => ArchivedObjectVersionForApiContract.FromTag(a, _userIconFactory))
 					.ToArray()
 			));
 		}
 #nullable disable
 
+		[Obsolete]
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
@@ -619,6 +617,28 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
+
+#nullable enable
+		public ArchivedTagVersionDetailsForApiContract GetVersionDetailsForApi(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
+				var contract = new ArchivedTagVersionDetailsForApiContract(
+					archived: session.Load<ArchivedTagVersion>(id),
+					comparedVersion: comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
+					permissionContext: PermissionContext,
+					userIconFactory: _userIconFactory
+				);
+
+				if (contract.Hidden)
+				{
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+			});
+		}
+#nullable disable
 
 		/// <summary>
 		/// Loads a tag assuming that the tag exists - throws an exception if it doesn't.
@@ -849,7 +869,7 @@ namespace VocaDb.Model.Database.Queries
 			return diff;
 		}
 
-		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract? uploadedImage)
+		public TagBaseContract Update(TagForEditForApiContract contract, UploadedFileContract? uploadedImage)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -871,7 +891,7 @@ namespace VocaDb.Model.Database.Queries
 				if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 					diff.HideFromSuggestions.Set();
 
-				if (tag.Targets != contract.Targets)
+				if (tag.Targets != (TagTargetTypes)contract.Targets)
 					diff.Targets.Set();
 
 				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage)
@@ -914,7 +934,7 @@ namespace VocaDb.Model.Database.Queries
 				tag.CategoryName = contract.CategoryName;
 				tag.HideFromSuggestions = contract.HideFromSuggestions;
 				tag.Status = contract.Status;
-				tag.Targets = contract.Targets;
+				tag.Targets = (TagTargetTypes)contract.Targets;
 
 				if (uploadedImage != null)
 				{

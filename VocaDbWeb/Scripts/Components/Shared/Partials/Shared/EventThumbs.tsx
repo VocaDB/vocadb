@@ -1,18 +1,17 @@
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import UrlHelper from '@Helpers/UrlHelper';
-import EntryType from '@Models/EntryType';
-import EventCategory from '@Models/Events/EventCategory';
-import ImageSize from '@Models/Images/ImageSize';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
+import { VenueLinkOrVenueName } from '@/Components/Shared/Partials/Event/VenueLinkOrVenueName';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { UrlHelper } from '@/Helpers/UrlHelper';
+import { EntryType } from '@/Models/EntryType';
+import { EventCategory } from '@/Models/Events/EventCategory';
+import { ImageSize } from '@/Models/Images/ImageSize';
+import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import VenueLinkOrVenueName from '../Event/VenueLinkOrVenueName';
-
-const getCategory = (event: ReleaseEventContract): string => {
+const getCategory = (event: ReleaseEventContract): EventCategory => {
 	return event.series?.category ?? event.category;
 };
 
@@ -21,7 +20,7 @@ interface EventThumbsProps {
 	imageSize?: ImageSize;
 }
 
-const EventThumbs = ({
+export const EventThumbs = ({
 	events,
 	imageSize = ImageSize.SmallThumb,
 }: EventThumbsProps): React.ReactElement => {
@@ -53,7 +52,7 @@ const EventThumbs = ({
 							<img
 								className="media-object"
 								src={UrlHelper.getSmallestThumb(event.mainPicture, imageSize)}
-								alt="Thumb" /* TODO: localize */
+								alt="Thumb" /* LOC */
 							/>
 						</Link>
 					)}
@@ -69,8 +68,8 @@ const EventThumbs = ({
 							{event.name}
 						</Link>
 						<br />
-						{getCategory(event) !== EventCategory[EventCategory.Unspecified] &&
-							getCategory(event) !== EventCategory[EventCategory.Other] && (
+						{getCategory(event) !== EventCategory.Unspecified &&
+							getCategory(event) !== EventCategory.Other && (
 								<>
 									(
 									{t(
@@ -104,5 +103,3 @@ const EventThumbs = ({
 		</div>
 	);
 };
-
-export default EventThumbs;

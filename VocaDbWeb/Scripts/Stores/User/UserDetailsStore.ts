@@ -1,35 +1,45 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import SongListContract from '@DataContracts/Song/SongListContract';
-import LoginManager from '@Models/LoginManager';
-import UserEventRelationshipType from '@Models/Users/UserEventRelationshipType';
-import AdminRepository from '@Repositories/AdminRepository';
-import TagRepository from '@Repositories/TagRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
-import { StoreWithUpdateResults } from '@vocadb/route-sphere';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { HighchartsHelper } from '@/Helpers/HighchartsHelper';
+import { LoginManager } from '@/Models/LoginManager';
+import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { AdminRepository } from '@/Repositories/AdminRepository';
+import { TagRepository } from '@/Repositories/TagRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
+import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
+import {
+	SongListsBaseStore,
+	SongListSortRule,
+} from '@/Stores/SongList/SongListsBaseStore';
+import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
+import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
+import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
-
-import HighchartsHelper from '../../Helpers/HighchartsHelper';
-import DeleteEntryStore from '../DeleteEntryStore';
-import EditableCommentsStore from '../EditableCommentsStore';
-import SongListsBaseStore, {
-	SongListSortRule,
-} from '../SongList/SongListsBaseStore';
-import AlbumCollectionStore from './AlbumCollectionStore';
-import FollowedArtistsStore from './FollowedArtistsStore';
-import RatedSongsSearchStore from './RatedSongsSearchStore';
 
 interface UserSongListsRouteParams {
 	filter?: string;
 	sort?: SongListSortRule;
 	tagId?: number | number[];
 }
+
+const clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
+	'filter',
+	'sort',
+	'tagId',
+];
 
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
@@ -40,8 +50,8 @@ const validate = ajv.compile(schema);
 
 export class UserSongListsStore
 	extends SongListsBaseStore
-	implements StoreWithUpdateResults<UserSongListsRouteParams> {
-	public constructor(
+	implements LocationStateStore<UserSongListsRouteParams> {
+	constructor(
 		values: GlobalValues,
 		private readonly userId: number,
 		private readonly userRepo: UserRepository,
@@ -50,9 +60,7 @@ export class UserSongListsStore
 		super(values, tagRepo, [], true);
 	}
 
-	public loadMoreItems = (): Promise<
-		PartialFindResultContract<SongListContract>
-	> => {
+	loadMoreItems = (): Promise<PartialFindResultContract<SongListContract>> => {
 		return this.userRepo.getSongLists({
 			userId: this.userId,
 			query: this.query,
@@ -63,23 +71,13 @@ export class UserSongListsStore
 		});
 	};
 
-	public popState = false;
-
-	public clearResultsByQueryKeys: (keyof UserSongListsRouteParams)[] = [
-		'filter',
-		'sort',
-		'tagId',
-	];
-
-	public validateRouteParams = (
-		data: any,
-	): data is UserSongListsRouteParams => {
+	validateLocationState = (data: any): data is UserSongListsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -88,20 +86,28 @@ export class UserSongListsStore
 
 		this.pauseNotifications = false;
 	};
+
+	onLocationStateChange = (
+		event: StateChangeEvent<UserSongListsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		this.updateResults(clearResults);
+	};
 }
 
 export class SfsCheckStore {
-	@observable public html?: string;
-	@observable public dialogVisible = false;
+	@observable html?: string;
+	@observable dialogVisible = false;
 
-	public constructor(
+	constructor(
 		private readonly lastLoginAddress: string,
 		private readonly adminRepo: AdminRepository,
 	) {
 		makeObservable(this);
 	}
 
-	public checkSFS = async (): Promise<void> => {
+	checkSFS = async (): Promise<void> => {
 		const html = await this.adminRepo.checkSFS({ ip: this.lastLoginAddress });
 
 		runInAction(() => {
@@ -111,14 +117,14 @@ export class SfsCheckStore {
 	};
 }
 
-export default class UserDetailsStore {
-	public readonly comments: EditableCommentsStore;
+export class UserDetailsStore {
+	readonly comments: EditableCommentsStore;
 	private eventsLoaded = false;
-	@observable public events: ReleaseEventContract[] = [];
-	@observable public eventsType =
+	@observable events: ReleaseEventContract[] = [];
+	@observable eventsType =
 		UserEventRelationshipType[UserEventRelationshipType.Attending];
 
-	public readonly limitedUserStore = new DeleteEntryStore((notes) => {
+	readonly limitedUserStore = new DeleteEntryStore((notes) => {
 		return this.httpClient
 			.post<void>(
 				this.urlMapper.mapRelative(`/api/users/${this.userId}/status-limited`),
@@ -129,7 +135,7 @@ export default class UserDetailsStore {
 			});
 	});
 
-	public readonly reportUserStore = new DeleteEntryStore((notes) => {
+	readonly reportUserStore = new DeleteEntryStore((notes) => {
 		return this.httpClient
 			.post<boolean>(
 				this.urlMapper.mapRelative(`/api/users/${this.userId}/reports`),
@@ -143,11 +149,11 @@ export default class UserDetailsStore {
 			});
 	}, true);
 
-	@observable public ratingsByGenreChart?: Options;
-	public readonly songLists: UserSongListsStore;
-	public readonly sfsCheckDialog: SfsCheckStore;
+	@observable ratingsByGenreChart?: Options;
+	readonly songLists: UserSongListsStore;
+	readonly sfsCheckDialog: SfsCheckStore;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		loginManager: LoginManager,
 		private readonly userId: number,
@@ -158,9 +164,9 @@ export default class UserDetailsStore {
 		private readonly userRepo: UserRepository,
 		private readonly adminRepo: AdminRepository,
 		tagRepo: TagRepository,
-		public readonly followedArtistsStore: FollowedArtistsStore,
-		public readonly albumCollectionStore: AlbumCollectionStore,
-		public readonly ratedSongsStore: RatedSongsSearchStore,
+		readonly followedArtistsStore: FollowedArtistsStore,
+		readonly albumCollectionStore: AlbumCollectionStore,
+		readonly ratedSongsStore: RatedSongsSearchStore,
 		latestComments: CommentContract[],
 	) {
 		makeObservable(this);
@@ -182,19 +188,19 @@ export default class UserDetailsStore {
 		reaction(() => this.eventsType, this.loadEvents);
 	}
 
-	public addBan = ({ name }: { name: string }): Promise<boolean> => {
+	addBan = ({ name }: { name: string }): Promise<boolean> => {
 		return this.adminRepo.addIpToBanList({
 			rule: { address: this.lastLoginAddress, notes: name },
 		});
 	};
 
-	public loadHighcharts = async (): Promise<void> => {
+	loadHighcharts = async (): Promise<void> => {
 		const data = await this.userRepo.getRatingsByGenre({ userId: this.userId });
 
 		runInAction(() => {
 			this.ratingsByGenreChart = HighchartsHelper.simplePieChart(
 				null!,
-				'Songs' /* TODO: localize */,
+				'Songs' /* LOC */,
 				data,
 			);
 		});
@@ -216,7 +222,7 @@ export default class UserDetailsStore {
 			);
 	};
 
-	public initEvents = (): void => {
+	initEvents = (): void => {
 		if (this.eventsLoaded) return;
 
 		this.loadEvents();

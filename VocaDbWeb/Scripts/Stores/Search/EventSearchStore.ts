@@ -1,15 +1,18 @@
-import PagingProperties from '@DataContracts/PagingPropertiesContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import ReleaseEventContract from '@DataContracts/ReleaseEvents/ReleaseEventContract';
-import ArtistRepository from '@Repositories/ArtistRepository';
-import ReleaseEventRepository from '@Repositories/ReleaseEventRepository';
-import GlobalValues from '@Shared/GlobalValues';
+import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import {
+	ReleaseEventOptionalField,
+	ReleaseEventRepository,
+} from '@/Repositories/ReleaseEventRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
+import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore';
+import { SearchType } from '@/Stores/Search/SearchStore';
+import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
-
-import ArtistFilters from './ArtistFilters';
-import { ICommonSearchStore } from './CommonSearchStore';
-import SearchCategoryBaseStore from './SearchCategoryBaseStore';
-import { SearchType } from './SearchStore';
 
 // Corresponds to the EventSortRule enum in C#.
 export enum EventSortRule {
@@ -40,19 +43,37 @@ export interface EventSearchRouteParams {
 	tagId?: number | number[];
 }
 
-export default class EventSearchStore extends SearchCategoryBaseStore<
+const clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
+	'pageSize',
+	'filter',
+	'tagId',
+	'childTags',
+	'draftsOnly',
+	'searchType',
+
+	'afterDate',
+	'beforeDate',
+	'artistId',
+	'childVoicebanks',
+	'includeMembers',
+	'eventCategory',
+	'onlyMyEvents',
+	'sort',
+];
+
+export class EventSearchStore extends SearchCategoryBaseStore<
 	EventSearchRouteParams,
 	ReleaseEventContract
 > {
-	@observable public afterDate?: Date = undefined;
-	@observable public allowAliases = false;
-	public readonly artistFilters: ArtistFilters;
-	@observable public beforeDate?: Date = undefined;
-	@observable public category = '';
-	@observable public onlyMyEvents = false;
-	@observable public sort = EventSortRule.Name;
+	@observable afterDate?: Date = undefined;
+	@observable allowAliases = false;
+	readonly artistFilters: ArtistFilters;
+	@observable beforeDate?: Date = undefined;
+	@observable category = '';
+	@observable onlyMyEvents = false;
+	@observable sort = EventSortRule.Name;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly eventRepo: ReleaseEventRepository,
@@ -65,18 +86,25 @@ export default class EventSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): string {
+	@computed get fields(): ReleaseEventOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Series,Venue,Tags'
-			: 'AdditionalNames,MainPicture,Series,Venue';
+			? [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+					ReleaseEventOptionalField.Tags,
+			  ]
+			: [
+					ReleaseEventOptionalField.AdditionalNames,
+					ReleaseEventOptionalField.MainPicture,
+					ReleaseEventOptionalField.Series,
+					ReleaseEventOptionalField.Venue,
+			  ];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
-		searchTerm: string,
-		tags: number[],
-		childTags: boolean,
-		status?: string,
 	): Promise<PartialFindResultContract<ReleaseEventContract>> => {
 		return this.eventRepo.getList({
 			queryParams: {
@@ -84,11 +112,11 @@ export default class EventSearchStore extends SearchCategoryBaseStore<
 				maxResults: pagingProperties.maxEntries,
 				getTotalCount: pagingProperties.getTotalCount,
 				lang: this.values.languagePreference,
-				query: searchTerm,
+				query: this.searchTerm,
 				sort: this.sort,
 				category: this.category === 'Unspecified' ? undefined : this.category,
-				childTags: childTags,
-				tagIds: tags,
+				tagIds: this.tagIds,
+				childTags: this.childTags,
 				userCollectionId: this.onlyMyEvents
 					? this.values.loggedUserId
 					: undefined,
@@ -97,31 +125,13 @@ export default class EventSearchStore extends SearchCategoryBaseStore<
 				includeMembers: this.artistFilters.includeMembers,
 				afterDate: this.afterDate,
 				beforeDate: this.beforeDate,
-				status: status,
+				status: this.draftsOnly ? 'Draft' : undefined,
 				fields: this.fields,
 			},
 		});
 	};
 
-	public readonly clearResultsByQueryKeys: (keyof EventSearchRouteParams)[] = [
-		'pageSize',
-		'filter',
-		'tagId',
-		'childTags',
-		'draftsOnly',
-		'searchType',
-
-		'afterDate',
-		'beforeDate',
-		'artistId',
-		'childVoicebanks',
-		'includeMembers',
-		'eventCategory',
-		'onlyMyEvents',
-		'sort',
-	];
-
-	@computed.struct public get routeParams(): EventSearchRouteParams {
+	@computed.struct get locationState(): EventSearchRouteParams {
 		return {
 			searchType: SearchType.ReleaseEvent,
 			afterDate: this.afterDate?.toISOString(),
@@ -139,7 +149,7 @@ export default class EventSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set routeParams(value: EventSearchRouteParams) {
+	set locationState(value: EventSearchRouteParams) {
 		this.afterDate = value.afterDate ? new Date(value.afterDate) : undefined;
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -156,4 +166,14 @@ export default class EventSearchStore extends SearchCategoryBaseStore<
 		this.sort = value.sort ?? EventSortRule.Name;
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
+
+	onLocationStateChange = (
+		event: StateChangeEvent<EventSearchRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
+	};
 }

@@ -1,21 +1,21 @@
 import $ from 'jquery';
-import _ from 'lodash';
+import { forOwn } from 'lodash-es';
 
-export default class AjaxHelper {
-	public static createUrl = (params: {
+export class AjaxHelper {
+	static createUrl = (params: {
 		[key: string]: string[] | number[];
 	}): string | null => {
 		if (!params) return null;
 
 		var par: string[] = [];
 
-		_.forOwn(params, (val, key) => {
+		forOwn(params, (val, key) => {
 			par.push(
 				key +
 					'=' +
-					_.map(val as string[], (v) => encodeURIComponent(v || '')).join(
-						'&' + key + '=',
-					),
+					(val as string[])
+						.map((v) => encodeURIComponent(v || ''))
+						.join('&' + key + '='),
 			);
 		});
 
@@ -23,7 +23,7 @@ export default class AjaxHelper {
 		return query;
 	};
 
-	public static stringify = (params: any): string => {
+	static stringify = (params: any): string => {
 		// HACK: Removes undefined.
 		// Code from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript/30386744#30386744
 		return $.param(JSON.parse(JSON.stringify(params)));

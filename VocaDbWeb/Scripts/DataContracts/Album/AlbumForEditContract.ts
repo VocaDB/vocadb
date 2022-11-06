@@ -1,45 +1,34 @@
-import AlbumType from '@Models/Albums/AlbumType';
+import { AlbumDiscPropertiesContract } from '@/DataContracts/Album/AlbumDiscPropertiesContract';
+import { AlbumReleaseContract } from '@/DataContracts/Album/AlbumReleaseContract';
+import { ArtistForAlbumContract } from '@/DataContracts/ArtistForAlbumContract';
+import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
+import { EnglishTranslatedStringContract } from '@/DataContracts/Globalization/EnglishTranslatedStringContract';
+import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/LocalizedStringWithIdContract';
+import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { SongInAlbumEditContract } from '@/DataContracts/Song/SongInAlbumEditContract';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { AlbumType } from '@/Models/Albums/AlbumType';
+import { EntryStatus } from '@/Models/EntryStatus';
 
-import ArtistForAlbumContract from '../ArtistForAlbumContract';
-import EntryPictureFileContract from '../EntryPictureFileContract';
-import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
-import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
-import PVContract from '../PVs/PVContract';
-import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
-import WebLinkContract from '../WebLinkContract';
-import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
-import AlbumReleaseContract from './AlbumReleaseContract';
-
-export default interface AlbumForEditContract {
+// Corresponds to the AlbumForEditForApiContract record class in C#.
+export interface AlbumForEditContract {
 	artistLinks: ArtistForAlbumContract[];
-
+	canDelete?: boolean;
 	coverPictureMime?: string;
-
 	defaultNameLanguage: string;
-
+	deleted?: boolean;
 	description: EnglishTranslatedStringContract;
-
 	discs: AlbumDiscPropertiesContract[];
-
 	discType: AlbumType;
-
 	id: number;
-
 	identifiers: string[];
-
+	name?: string;
 	names: LocalizedStringWithIdContract[];
-
 	originalRelease: AlbumReleaseContract;
-
 	pictures: EntryPictureFileContract[];
-
 	pvs: PVContract[];
-
 	songs: SongInAlbumEditContract[];
-
-	status: string;
-
+	status: EntryStatus;
 	updateNotes?: string;
-
 	webLinks: WebLinkContract[];
 }

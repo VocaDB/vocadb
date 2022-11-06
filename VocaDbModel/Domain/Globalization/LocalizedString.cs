@@ -1,71 +1,70 @@
 using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Domain.Globalization
+namespace VocaDb.Model.Domain.Globalization;
+
+public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
 {
-	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
+	private string _val;
+
+	public LocalizedString()
 	{
-		private string _val;
+		Language = ContentLanguageSelection.Japanese;
+		Value = string.Empty;
+	}
 
-		public LocalizedString()
+	public LocalizedString(string val, ContentLanguageSelection language)
+		: this()
+	{
+		Value = val;
+		Language = language;
+	}
+
+	public virtual ContentLanguageSelection Language { get; set; }
+
+	public virtual string Value
+	{
+		get => _val;
+		[MemberNotNull(nameof(_val))]
+		set
 		{
-			Language = ContentLanguageSelection.Japanese;
-			Value = string.Empty;
+			ParamIs.NotNull(() => value);
+			_val = value;
 		}
+	}
 
-		public LocalizedString(string val, ContentLanguageSelection language)
-			: this()
-		{
-			Value = val;
-			Language = language;
-		}
+	public virtual bool ContentEquals(ILocalizedString? another)
+	{
+		return another != null && another.Language == Language && another.Value == Value;
+	}
 
-		public virtual ContentLanguageSelection Language { get; set; }
+	public virtual bool ContentEquals(LocalizedString? another)
+	{
+		return another != null && another.Language == Language && another.Value == Value;
+	}
 
-		public virtual string Value
-		{
-			get => _val;
-			[MemberNotNull(nameof(_val))]
-			set
-			{
-				ParamIs.NotNull(() => value);
-				_val = value;
-			}
-		}
+	public virtual bool ContentEquals(LocalizedStringContract? another)
+	{
+		return another != null && another.Language == Language && another.Value == Value;
+	}
 
-		public virtual bool ContentEquals(ILocalizedString? another)
-		{
-			return (another != null && another.Language == Language && another.Value == Value);
-		}
+	public virtual bool Equals(LocalizedString? another)
+	{
+		return ContentEquals(another);
+	}
 
-		public virtual bool ContentEquals(LocalizedString? another)
-		{
-			return (another != null && another.Language == Language && another.Value == Value);
-		}
+	public override bool Equals(object? obj)
+	{
+		return Equals(obj as LocalizedString);
+	}
 
-		public virtual bool ContentEquals(LocalizedStringContract? another)
-		{
-			return (another != null && another.Language == Language && another.Value == Value);
-		}
+	public override int GetHashCode()
+	{
+		return (Language + ":" + Value).GetHashCode();
+	}
 
-		public virtual bool Equals(LocalizedString? another)
-		{
-			return ContentEquals(another);
-		}
-
-		public override bool Equals(object? obj)
-		{
-			return Equals(obj as LocalizedString);
-		}
-
-		public override int GetHashCode()
-		{
-			return (Language + ":" + Value).GetHashCode();
-		}
-
-		public override string ToString()
-		{
-			return Language + ": " + Value;
-		}
+	public override string ToString()
+	{
+		return Language + ": " + Value;
 	}
 }

@@ -1,6 +1,6 @@
-import Nav from '@Bootstrap/Nav';
-import LoginManager from '@Models/LoginManager';
-import { SearchType } from '@Stores/Search/SearchStore';
+import Nav from '@/Bootstrap/Nav';
+import { LoginManager } from '@/Models/LoginManager';
+import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
 
-const MainNavigationItems = React.memo(
+export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -26,7 +26,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link href={'/Artist/Create'}>
+								<Nav.Link as={Link} to="/Artist/Create">
 									{t('ViewRes:Layout.AddArtist')}
 								</Nav.Link>
 							</li>
@@ -40,7 +40,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link href={'/Album/Create'}>
+								<Nav.Link as={Link} to="/Album/Create">
 									{t('ViewRes:Layout.AddAlbum')}
 								</Nav.Link>
 							</li>
@@ -82,7 +82,7 @@ const MainNavigationItems = React.memo(
 					<ul>
 						{loginManager.canManageDatabase && (
 							<li>
-								<Nav.Link href={'/Song/Create'}>
+								<Nav.Link as={Link} to="/Song/Create">
 									{t('ViewRes:Layout.AddSong')}
 								</Nav.Link>
 							</li>
@@ -187,5 +187,3 @@ const MainNavigationItems = React.memo(
 		);
 	},
 );
-
-export default MainNavigationItems;

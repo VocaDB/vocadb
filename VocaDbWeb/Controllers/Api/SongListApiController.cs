@@ -9,8 +9,8 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
@@ -21,6 +21,7 @@ using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -95,7 +96,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongListForEditContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
+		public SongListForEditForApiContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
 
 #nullable enable
 		/// <summary>
@@ -213,7 +214,8 @@ namespace VocaDb.Web.Controllers.Api
 					AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 					SongTypes = types,
 				},
-				songInList => new SongInListForApiContract(songInList, lang, fields));
+				songInList => new SongInListForApiContract(songInList, lang, fields)
+			);
 		}
 #nullable disable
 
@@ -252,12 +254,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>ID of the created list.</returns>
 		[HttpPost("")]
 		[Authorize]
-		public ActionResult<int> Post(SongListForEditContract list)
+		public ActionResult<int> Post(SongListForEditForApiContract list)
 		{
 			if (list == null)
 				return BadRequest();
 
-			return _queries.UpdateSongList(list, null);
+			return _queries.UpdateSongList(list, uploadedFile: null);
 		}
 
 		/// <summary>
@@ -292,6 +294,42 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryWithArchivedVersionsForApiContract<SongListForApiContract> GetSongListWithArchivedVersions(int id) =>
 			_queries.GetSongListWithArchivedVersionsForApi(id);
+
+		[HttpGet("{id:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongListBaseContract GetOne(int id) => _queries.GetOne(id);
+
+		[HttpPost("{id:int}")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ActionResult<int> Edit(
+			[ModelBinder(BinderType = typeof(JsonModelBinder))] SongListForEditForApiContract contract
+		)
+		{
+			if (contract is null)
+			{
+				return BadRequest("View model was null - probably JavaScript is disabled");
+			}
+
+			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
+			UploadedFileContract? uploadedPicture = null;
+			if (coverPicUpload is not null && coverPicUpload.Length > 0)
+			{
+				ControllerBase.CheckUploadedPicture(this, coverPicUpload, "thumbPicUpload");
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			var listId = _queries.UpdateSongList(contract, uploadedPicture);
+
+			return listId;
+		}
 #nullable disable
 	}
 }

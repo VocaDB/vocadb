@@ -13,7 +13,6 @@ using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
-using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Admin;
@@ -50,22 +49,6 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = "Active editors";
 
 			return View(items);
-		}
-
-		[Authorize]
-		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
-
-			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers)
-				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray()
-				: new string[0]);
-
-			var cutoffDays = (string.IsNullOrEmpty(model.UserName) ? 365 : 0);
-
-			var entries = Service.GetAuditLog(model.Filter, start, 200, cutoffDays, model.UserName, excludeUsers, model.OnlyNewUsers, model.GroupId);
-
-			return PartialView(entries);
 		}
 
 		[Authorize]
@@ -114,9 +97,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult CreateXmlDump()
+		public ActionResult CreateJsonDump()
 		{
-			Service.CreateXmlDump();
+			Service.CreateJsonDump();
 
 			TempData.SetStatusMessage("Dump created");
 
@@ -141,7 +124,7 @@ namespace VocaDb.Web.Controllers
 
 			TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
 
-			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, new PVForSongContract[] { }));
+			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, Array.Empty<PVForSongContract>()));
 		}
 
 		//
@@ -170,25 +153,9 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var rules = _otherService.GetIPRules();
-
 			PageProperties.Title = "Manage blocked IPs";
 
-			return View(rules);
-		}
-
-		[Authorize]
-		[HttpPost]
-		public ActionResult ManageIPRules([ModelBinder(BinderType = typeof(JsonModelBinder))] IPRule[] rules)
-		{
-			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
-
-			Service.UpdateIPRules(rules);
-			_ipRuleManager.Reset(rules.Select(i => i.Address));
-
-			TempData.SetSuccessMessage("IP rules updated.");
-
-			return View(rules);
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -196,7 +163,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Manage entry type to tag mappings";
 
-			return View();
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -204,7 +171,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "Manage NicoNicoDouga tag mappings";
 
-			return View();
+			return View("React/Index");
 		}
 
 		public ActionResult PVAuthorNames(string term)
@@ -311,13 +278,13 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewAuditLog(ViewAuditLogModel model)
+		public ActionResult ViewAuditLog()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
 			PageProperties.Title = "View audit log";
 
-			return View(model ?? new ViewAuditLogModel());
+			return View("React/Index");
 		}
 
 		[Authorize]
@@ -354,7 +321,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Title = "Manage webhooks";
 
-			return View();
+			return View("React/Index");
 		}
 	}
 }

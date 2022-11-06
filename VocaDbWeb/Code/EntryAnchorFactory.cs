@@ -11,9 +11,9 @@ namespace VocaDb.Web.Code
 		private readonly string _baseUrl;
 		private readonly string _hostAddress;
 
-		private string CreateAnchor(string? href, string? text)
+		private static string CreateAnchor(string? href, string? text)
 		{
-			return $"<a href=\"{href}\">{HttpUtility.HtmlEncode(text)}</a>";
+			return $"[{HttpUtility.HtmlEncode(text)}]({href})";
 		}
 
 		/// <summary>

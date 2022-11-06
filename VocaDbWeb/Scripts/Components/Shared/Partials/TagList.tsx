@@ -1,13 +1,11 @@
-import SafeAnchor from '@Bootstrap/SafeAnchor';
-import { TagToolTip } from '@Components/KnockoutExtensions/EntryToolTip';
-import TagUsageForApiContract from '@DataContracts/Tag/TagUsageForApiContract';
-import EntryUrlMapper from '@Shared/EntryUrlMapper';
-import TagListStore from '@Stores/Tag/TagListStore';
+import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
+import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
+import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 interface LinkListProps {
 	tagUsages: TagUsageForApiContract[];
@@ -22,17 +20,7 @@ const LinkList = React.memo(
 						{index > 0 && ' '}
 						<li className="link-item">
 							<span>
-								<TagToolTip
-									as={Link}
-									to={EntryUrlMapper.details_tag(
-										tagUsage.tag.id,
-										tagUsage.tag.urlSlug,
-									)}
-									title={tagUsage.tag.additionalNames}
-									id={tagUsage.tag.id}
-								>
-									{tagUsage.tag.name}
-								</TagToolTip>{' '}
+								<TagLink tag={tagUsage.tag} tooltip />{' '}
 								<small className="muted">({tagUsage.count})</small>
 							</span>
 						</li>
@@ -47,7 +35,7 @@ interface TagListProps {
 	tagListStore: TagListStore;
 }
 
-const TagList = observer(
+export const TagList = observer(
 	({ tagListStore }: TagListProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
@@ -91,5 +79,3 @@ const TagList = observer(
 		);
 	},
 );
-
-export default TagList;

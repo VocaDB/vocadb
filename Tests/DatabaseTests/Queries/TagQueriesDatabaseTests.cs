@@ -51,7 +51,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 			});
 		}
 
-		private TagForEditContract Update(TagForEditContract contract)
+		private TagForEditForApiContract Update(TagForEditForApiContract contract)
 		{
 			var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
@@ -88,7 +88,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public void Update_ReplaceName()
 		{
-			var contract = new TagForEditContract(Db.Tag, false, _userContext);
+			var contract = new TagForEditForApiContract(Db.Tag, false, _userContext, thumbPersister: null);
 			contract.Names[0] = new LocalizedStringWithIdContract
 			{
 				Value = "electronic",
@@ -108,7 +108,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public void Update_SwapNameTranslations()
 		{
-			var contract = new TagForEditContract(Db.Tag2, false, _userContext);
+			var contract = new TagForEditForApiContract(Db.Tag2, false, _userContext, thumbPersister: null);
 			contract.Names[0].Value = "ロック"; // Swap values
 			contract.Names[1].Value = "rock";
 

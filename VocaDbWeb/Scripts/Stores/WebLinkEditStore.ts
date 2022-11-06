@@ -1,16 +1,16 @@
-import WebLinkContract from '@DataContracts/WebLinkContract';
-import WebLinkCategory from '@Models/WebLinkCategory';
-import WebLinkMatcher from '@Shared/WebLinkMatcher';
+import { WebLinkContract } from '@/DataContracts/WebLinkContract';
+import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import { makeObservable, observable, reaction } from 'mobx';
 
-export default class WebLinkEditStore {
-	@observable public category: WebLinkCategory;
-	@observable public description: string;
-	@observable public disabled: boolean;
-	public readonly id: number;
-	@observable public url: string;
+export class WebLinkEditStore {
+	@observable category: WebLinkCategory;
+	@observable description: string;
+	@observable disabled: boolean;
+	readonly id: number;
+	@observable url: string;
 
-	public constructor(data?: WebLinkContract) {
+	constructor(data?: WebLinkContract) {
 		makeObservable(this);
 
 		if (data) {
@@ -30,13 +30,13 @@ export default class WebLinkEditStore {
 		reaction(
 			() => this.url,
 			(url) => {
-				if (!this.description) {
-					const matcher = WebLinkMatcher.matchWebLink(url);
+				if (this.description) return;
 
-					if (matcher) {
-						this.description = matcher.desc;
-						this.category = matcher.cat;
-					}
+				const matcher = WebLinkMatcher.matchWebLink(url);
+
+				if (matcher) {
+					this.description = matcher.desc;
+					this.category = matcher.cat;
 				}
 			},
 		);

@@ -1,8 +1,15 @@
-import UserApiContract from '@DataContracts/User/UserApiContract';
-import UserGroup from '@Models/Users/UserGroup';
-import UserRepository from '@Repositories/UserRepository';
-import ServerSidePagingStore from '@Stores/ServerSidePagingStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import {
+	UserOptionalField,
+	UserRepository,
+} from '@/Repositories/UserRepository';
+import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
 
@@ -24,6 +31,15 @@ export interface ListUsersRouteParams {
 	sort?: UserSortRule;
 }
 
+const clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
+	'disabledUsers',
+	'groupId',
+	'knowsLanguage',
+	'onlyVerifiedArtists',
+	'pageSize',
+	'filter',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -31,34 +47,23 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class ListUsersStore
-	implements StoreWithPagination<ListUsersRouteParams> {
-	@observable public disabledUsers = false;
-	@observable public group = UserGroup.Nothing;
-	@observable public loading = false;
-	@observable public knowsLanguage = '';
-	@observable public onlyVerifiedArtists = false;
-	@observable public page: UserApiContract[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	@observable public searchTerm = '';
-	@observable public sort = UserSortRule.RegisterDate;
+export class ListUsersStore
+	implements LocationStateStore<ListUsersRouteParams> {
+	@observable disabledUsers = false;
+	@observable group = UserGroup.Nothing;
+	@observable loading = false;
+	@observable knowsLanguage = '';
+	@observable onlyVerifiedArtists = false;
+	@observable page: UserApiContract[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	@observable searchTerm = '';
+	@observable sort = UserSortRule.RegisterDate;
 
-	public constructor(private readonly userRepo: UserRepository) {
+	constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
-		'disabledUsers',
-		'groupId',
-		'knowsLanguage',
-		'onlyVerifiedArtists',
-		'pageSize',
-		'filter',
-	];
-
-	@computed.struct public get routeParams(): ListUsersRouteParams {
+	@computed.struct get locationState(): ListUsersRouteParams {
 		return {
 			disabledUsers: this.disabledUsers,
 			filter: this.searchTerm,
@@ -70,7 +75,7 @@ export default class ListUsersStore
 			sort: this.sort,
 		};
 	}
-	public set routeParams(value: ListUsersRouteParams) {
+	set locationState(value: ListUsersRouteParams) {
 		this.disabledUsers = value.disabledUsers ?? false;
 		this.searchTerm = value.filter ?? '';
 		this.group = value.groupId ?? UserGroup.Nothing;
@@ -81,13 +86,13 @@ export default class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	public validateRouteParams = (data: any): data is ListUsersRouteParams => {
+	validateLocationState = (data: any): data is ListUsersRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -103,7 +108,7 @@ export default class ListUsersStore
 			onlyVerified: this.onlyVerifiedArtists,
 			knowsLanguage: this.knowsLanguage,
 			nameMatchMode: 'Auto' /* TODO: enum */,
-			fields: 'MainPicture' /* TODO: enum */,
+			fields: [UserOptionalField.MainPicture],
 		});
 
 		this.pauseNotifications = false;
@@ -116,15 +121,21 @@ export default class ListUsersStore
 		});
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public onClearResults = (): void => {
-		this.paging.goToFirstPage();
+	onLocationStateChange = (
+		event: StateChangeEvent<ListUsersRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }

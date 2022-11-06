@@ -13,7 +13,9 @@ namespace VocaDb.Model.DataContracts.Songs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongContract : IEntryWithStatus
 	{
+#nullable enable
 		string IEntryBase.DefaultName => Name;
+#nullable disable
 
 		EntryType IEntryBase.EntryType => EntryType.Song;
 
@@ -71,8 +73,10 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		public int LengthSeconds { get; init; }
 
+#nullable enable
 		[DataMember]
 		public string Name { get; init; }
+#nullable disable
 
 		[DataMember]
 		public string NicoId { get; init; }

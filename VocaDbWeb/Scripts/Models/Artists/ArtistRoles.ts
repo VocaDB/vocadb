@@ -1,4 +1,4 @@
-enum ArtistRoles {
+export enum ArtistRoles {
 	Default = 0,
 
 	/// <summary>
@@ -61,5 +61,3 @@ enum ArtistRoles {
 
 	VocalDataProvider = 1 << 15,
 }
-
-export default ArtistRoles;

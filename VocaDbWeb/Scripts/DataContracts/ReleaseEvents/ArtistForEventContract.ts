@@ -1,13 +1,9 @@
-import ArtistContract from '../Artist/ArtistContract';
+import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 
-export default interface ArtistForEventContract {
+export interface ArtistForEventContract {
 	artist?: ArtistContract;
-
 	effectiveRoles?: string;
-
 	id?: number;
-
 	name?: string;
-
 	roles: string;
 }

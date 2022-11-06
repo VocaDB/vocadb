@@ -13,26 +13,6 @@ ul.ui-autocomplete {
 	background: white url('/Content/ajax-loader.gif') right center no-repeat;
 }
 
-/* Override retarded widget link colors */
-.rightFrame .ui-widget-header,
-.rightFrame .ui-widget-content,
-.ui-dialog.ui-widget-content {
-	a {
-		color: #003399;
-	}
-	a:visited {
-		color: #001155;
-	}
-	a:hover {
-		color: #0065b2;
-	}
-	.btn-info,
-	.btn-info:hover,
-	.btn-info:visited {
-		color: white;
-	}
-}
-
 .ui-dialog.ui-widget-content .ui-menu-item {
 	a,
 	a:hover,
@@ -190,11 +170,6 @@ ol {
 	margin-left: 22px; // To fix lists with over 10 items
 }
 
-// DROPDOWN MENUS
-.dropdown-menu li > a:hover {
-	color: white !important;
-}
-
 // Titles inside menus
 .dropdown-menu h6 {
 	text-transform: none;
@@ -264,4 +239,8 @@ ul.nav.nav-pills {
 
 .vdb .qtip-default {
 	background-color: #ffffcc;
+}
+
+.btn:focus {
+	outline: none;
 }

@@ -1,4 +1,4 @@
-import EntryStatus from '@Models/EntryStatus';
+import { EntryStatus } from '@/Models/EntryStatus';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +6,7 @@ interface DraftIconProps {
 	status: EntryStatus;
 }
 
-const DraftIcon = React.memo(
+export const DraftIcon = React.memo(
 	({ status }: DraftIconProps): React.ReactElement => {
 		const { t } = useTranslation(['HelperRes']);
 
@@ -23,5 +23,3 @@ const DraftIcon = React.memo(
 		);
 	},
 );
-
-export default DraftIcon;

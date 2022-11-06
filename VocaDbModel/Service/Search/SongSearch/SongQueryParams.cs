@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongQueryParams()
 		{
-			IgnoredIds = new int[] { };
-			SongTypes = new SongType[] { };
+			IgnoredIds = Array.Empty<int>();
+			SongTypes = Array.Empty<SongType>();
 		}
 
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
@@ -31,9 +31,17 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// <param name="onlyByName">Whether to search items only by name, and not for example NicoId. Ignored when query string is null or empty.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
-		public SongQueryParams(SearchTextQuery textQuery, SongType[]? songTypes, int start, int maxResults,
-			bool getTotalCount, SongSortRule sortRule,
-			bool onlyByName, bool moveExactToTop, int[]? ignoredIds)
+		public SongQueryParams(
+			SearchTextQuery textQuery,
+			SongType[]? songTypes,
+			int start,
+			int maxResults,
+			bool getTotalCount,
+			SongSortRule sortRule,
+			bool onlyByName,
+			bool moveExactToTop,
+			int[]? ignoredIds
+		)
 		{
 			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
@@ -76,7 +84,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			[MemberNotNull(nameof(_ignoredIds))]
 			init
 			{
-				_ignoredIds = value ?? new int[] { };
+				_ignoredIds = value ?? Array.Empty<int>();
 			}
 		}
 
@@ -113,7 +121,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			[MemberNotNull(nameof(_songTypes))]
 			init
 			{
-				_songTypes = value ?? new SongType[] { };
+				_songTypes = value ?? Array.Empty<SongType>();
 			}
 		}
 

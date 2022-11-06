@@ -1,29 +1,24 @@
-import PVService from '@Models/PVs/PVService';
+import { PVServiceIcon } from '@/Components/Shared/Partials/Shared/PVServiceIcon';
+import { PVService } from '@/Models/PVs/PVService';
 import React from 'react';
 
-import PVServiceIcon from './PVServiceIcon';
-
 interface PVServiceIconsProps {
-	services: string /* TODO: enum */[];
+	services: PVService[];
 }
 
-const PVServiceIcons = React.memo(
+export const PVServiceIcons = React.memo(
 	({ services }: PVServiceIconsProps): React.ReactElement => {
 		return (
 			<>
-				{Object.keys(/* TODO: values */ PVService)
+				{Object.values(PVService)
 					.filter((service) => services.includes(service))
 					.map((service, index) => (
 						<React.Fragment key={service}>
 							{index > 0 && ' '}
-							<PVServiceIcon
-								service={PVService[service as keyof typeof PVService]}
-							/>
+							<PVServiceIcon service={service} />
 						</React.Fragment>
 					))}
 			</>
 		);
 	},
 );
-
-export default PVServiceIcons;

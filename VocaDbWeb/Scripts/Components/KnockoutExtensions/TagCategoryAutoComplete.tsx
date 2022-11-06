@@ -1,6 +1,7 @@
-import JQueryUIAutocomplete from '@JQueryUI/JQueryUIAutocomplete';
-import functions from '@Shared/GlobalFunctions';
-import HttpClient from '@Shared/HttpClient';
+import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
+import { functions } from '@/Shared/GlobalFunctions';
+import { HttpClient } from '@/Shared/HttpClient';
+import useMergedRefs from '@restart/hooks/useMergedRefs';
 import React from 'react';
 
 const httpClient = new HttpClient();
@@ -11,38 +12,41 @@ interface TagCategoryAutoCompleteProps
 	clearValue: boolean;
 }
 
-const TagCategoryAutoComplete = ({
-	onAcceptSelection,
-	clearValue,
-	...props
-}: TagCategoryAutoCompleteProps): React.ReactElement => {
-	const url = functions.mapAbsoluteUrl('/api/tags/categoryNames');
-	const inputRef = React.useRef<HTMLInputElement>(undefined!);
+export const TagCategoryAutoComplete = React.forwardRef<
+	HTMLInputElement,
+	TagCategoryAutoCompleteProps
+>(
+	(
+		{ onAcceptSelection, clearValue, ...props }: TagCategoryAutoCompleteProps,
+		ref,
+	): React.ReactElement => {
+		const url = functions.mapAbsoluteUrl('/api/tags/categoryNames');
+		const inputRef = React.useRef<HTMLInputElement>(undefined!);
+		const mergedRef = useMergedRefs<HTMLInputElement | null>(inputRef, ref);
 
-	return (
-		<JQueryUIAutocomplete
-			source={(
-				ui: { term: any },
-				callback: (result: string[]) => void,
-			): void => {
-				httpClient
-					.get<string[]>(url, { query: ui.term })
-					.then(callback);
-			}}
-			select={(event: Event, ui): boolean => {
-				onAcceptSelection(ui.item.label);
+		return (
+			<JQueryUIAutocomplete
+				source={(
+					ui: { term: any },
+					callback: (result: string[]) => void,
+				): void => {
+					httpClient
+						.get<string[]>(url, { query: ui.term })
+						.then(callback);
+				}}
+				select={(event: Event, ui): boolean => {
+					onAcceptSelection(ui.item.label);
 
-				if (clearValue) {
-					if (inputRef.current) inputRef.current.value = '';
-					return false;
-				} else {
-					return true;
-				}
-			}}
-			{...props}
-			ref={inputRef}
-		/>
-	);
-};
-
-export default TagCategoryAutoComplete;
+					if (clearValue) {
+						if (inputRef.current) inputRef.current.value = '';
+						return false;
+					} else {
+						return true;
+					}
+				}}
+				{...props}
+				ref={mergedRef}
+			/>
+		);
+	},
+);

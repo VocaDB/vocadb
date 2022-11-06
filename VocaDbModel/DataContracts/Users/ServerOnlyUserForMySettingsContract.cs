@@ -5,12 +5,13 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.DataContracts.Users
 {
+	[Obsolete]
 	public class ServerOnlyUserForMySettingsContract : ServerOnlyUserContract
 	{
 		public ServerOnlyUserForMySettingsContract()
 		{
 			AboutMe = Location = string.Empty;
-			WebLinks = new WebLinkContract[] { };
+			WebLinks = Array.Empty<WebLinkContract>();
 		}
 
 		public ServerOnlyUserForMySettingsContract(User user)

@@ -1,15 +1,14 @@
+import { ProfileIconKnockout } from '@/Components/Shared/Partials/User/ProfileIconKnockout';
 import React from 'react';
-
-import ProfileIconKnockout from './ProfileIconKnockout';
 
 interface IconAndNameKnockoutProps {
 	icon?: string;
 	name?: string;
-	size: number;
+	size?: number;
 }
 
-const IconAndNameKnockout = React.memo(
-	({ icon, name, size }: IconAndNameKnockoutProps): React.ReactElement => {
+export const IconAndNameKnockout = React.memo(
+	({ icon, name, size = 20 }: IconAndNameKnockoutProps): React.ReactElement => {
 		return (
 			<>
 				<ProfileIconKnockout icon={icon} size={size} /> <span>{name}</span>
@@ -17,5 +16,3 @@ const IconAndNameKnockout = React.memo(
 		);
 	},
 );
-
-export default IconAndNameKnockout;

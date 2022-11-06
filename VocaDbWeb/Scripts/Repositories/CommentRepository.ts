@@ -1,16 +1,15 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import EntryType from '@Models/EntryType';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
+import { BaseRepository } from '@/Repositories/BaseRepository';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import BaseRepository from './BaseRepository';
-import ICommentRepository from './ICommentRepository';
-
-export default class CommentRepository
+export class CommentRepository
 	extends BaseRepository
 	implements ICommentRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		private entryType: EntryType,
@@ -18,7 +17,7 @@ export default class CommentRepository
 		super(urlMapper.baseUrl);
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId,
 		contract,
 	}: {
@@ -28,7 +27,8 @@ export default class CommentRepository
 		contract.entry = {
 			entryType: EntryType[this.entryType],
 			id: entryId,
-			name: null!,
+			name: undefined!,
+			status: undefined!,
 		};
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),
@@ -36,11 +36,7 @@ export default class CommentRepository
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
 				`api/comments/${EntryType[this.entryType]}-comments/`,
@@ -50,7 +46,7 @@ export default class CommentRepository
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async ({
+	getComments = async ({
 		entryId: listId,
 	}: {
 		entryId: number;
@@ -64,7 +60,7 @@ export default class CommentRepository
 		return result.items;
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {

@@ -90,6 +90,7 @@ namespace VocaDb.Tests.Utils
 				result.Should().Be(expected, input.ToString());
 			}
 
+#nullable enable
 			[TestMethod]
 			public void PreferRomajiForJapanese()
 			{
@@ -103,6 +104,7 @@ namespace VocaDb.Tests.Utils
 				var translatedString = new TranslatedString("ロック", string.Empty, "rock", ContentLanguageSelection.English);
 				CallGetUrlFriendlyName("rock", translatedString);
 			}
+#nullable disable
 
 			[TestMethod]
 			public void AllJapanese()

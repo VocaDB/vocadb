@@ -1,14 +1,13 @@
-import CommentContract from '@DataContracts/CommentContract';
-import PartialFindResultContract from '@DataContracts/PartialFindResultContract';
-import HttpClient from '@Shared/HttpClient';
-import UrlMapper from '@Shared/UrlMapper';
+import { CommentContract } from '@/DataContracts/CommentContract';
+import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { ICommentRepository } from '@/Repositories/ICommentRepository';
+import { HttpClient } from '@/Shared/HttpClient';
+import { UrlMapper } from '@/Shared/UrlMapper';
 
-import ICommentRepository from './ICommentRepository';
-
-export default class EntryCommentRepository implements ICommentRepository {
+export class EntryCommentRepository implements ICommentRepository {
 	private baseUrl: string;
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 		resourcePath: string,
@@ -16,7 +15,7 @@ export default class EntryCommentRepository implements ICommentRepository {
 		this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId,
 		contract,
 	}: {
@@ -29,18 +28,14 @@ export default class EntryCommentRepository implements ICommentRepository {
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
 		);
 		return this.httpClient.delete<void>(url);
 	};
 
-	public getComments = async ({
+	getComments = async ({
 		entryId: listId,
 	}: {
 		entryId: number;
@@ -54,7 +49,7 @@ export default class EntryCommentRepository implements ICommentRepository {
 		return result.items;
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {

@@ -1,11 +1,15 @@
-import SongRepository from '@Repositories/SongRepository';
-import UserRepository from '@Repositories/UserRepository';
-import GlobalValues from '@Shared/GlobalValues';
-import UrlMapper from '@Shared/UrlMapper';
-import PVPlayersFactory from '@Stores/PVs/PVPlayersFactory';
-import CommonSearchStore from '@Stores/Search/CommonSearchStore';
-import SongSearchStore, { SongSortRule } from '@Stores/Search/SongSearchStore';
-import { StoreWithPagination } from '@vocadb/route-sphere';
+import { SongRepository } from '@/Repositories/SongRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
+import { GlobalValues } from '@/Shared/GlobalValues';
+import { UrlMapper } from '@/Shared/UrlMapper';
+import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
+import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
+import {
+	includesAny,
+	StateChangeEvent,
+	LocationStateStore,
+} from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
 
 export interface ArtistSongsRouteParams {
@@ -15,6 +19,13 @@ export interface ArtistSongsRouteParams {
 	viewMode?: 'Details' | 'PlayList' /* TODO: enum */;
 }
 
+const clearResultsByQueryKeys: (keyof ArtistSongsRouteParams)[] = [
+	'pageSize',
+
+	'sort',
+	'viewMode',
+];
+
 // TODO: Use single Ajv instance. See https://ajv.js.org/guide/managing-schemas.html.
 const ajv = new Ajv({ coerceTypes: true });
 
@@ -22,10 +33,10 @@ const ajv = new Ajv({ coerceTypes: true });
 const schema: JSONSchemaType<ArtistSongsRouteParams> = require('./ArtistSongsRouteParams.schema');
 const validate = ajv.compile(schema);
 
-export default class ArtistSongsStore
+export class ArtistSongsStore
 	extends SongSearchStore
-	implements StoreWithPagination<ArtistSongsRouteParams> {
-	public constructor(
+	implements LocationStateStore<ArtistSongsRouteParams> {
+	constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,
 		songRepo: SongRepository,
@@ -44,16 +55,7 @@ export default class ArtistSongsStore
 		);
 	}
 
-	public popState = false;
-
-	public readonly clearResultsByQueryKeys: (keyof ArtistSongsRouteParams)[] = [
-		'pageSize',
-
-		'sort',
-		'viewMode',
-	];
-
-	public get routeParams(): ArtistSongsRouteParams {
+	get locationState(): ArtistSongsRouteParams {
 		return {
 			page: this.paging.page,
 			pageSize: this.paging.pageSize,
@@ -61,14 +63,24 @@ export default class ArtistSongsStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set routeParams(value: ArtistSongsRouteParams) {
+	set locationState(value: ArtistSongsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
-		this.sort = value.sort ?? SongSortRule.Name;
+		this.sort = value.sort ?? SongSortRule.RatingScore;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateRouteParams = (data: any): data is ArtistSongsRouteParams => {
+	validateLocationState = (data: any): data is ArtistSongsRouteParams => {
 		return validate(data);
+	};
+
+	onLocationStateChange = (
+		event: StateChangeEvent<ArtistSongsRouteParams>,
+	): void => {
+		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
+
+		if (!event.popState && clearResults) this.paging.goToFirstPage();
+
+		this.updateResults(clearResults);
 	};
 }
