@@ -267,6 +267,7 @@ const UserDetailsLayout = observer(
 					<JQueryUIDialog
 						title="StopForumSpam check" /* LOC */
 						autoOpen={userDetailsStore.sfsCheckDialog.dialogVisible}
+						width={310}
 						close={(): void =>
 							runInAction(() => {
 								userDetailsStore.sfsCheckDialog.dialogVisible = false;
