@@ -6,11 +6,8 @@ namespace VocaDb.Model.Domain;
 public class WebAddressHost
 {
 	public virtual int Id { get; set; }
-
 	public virtual string Hostname { get; set; }
-
 	public virtual int ReferenceCount { get; set; }
-
 	public virtual User Actor { get; set; }
 
 	public WebAddressHost()
@@ -40,23 +37,14 @@ public class WebAddressHost
 public class WebAddress
 {
 	public virtual int Id { get; set; }
-
 	public virtual string Url { get; set; }
-
 	public virtual string Scheme { get; set; }
-
 	public virtual WebAddressHost Host { get; set; }
-
 	public virtual int Port { get; set; }
-
 	public virtual string Path { get; set; }
-
 	public virtual string Query { get; set; }
-
 	public virtual string Fragment { get; set; }
-
 	public virtual int ReferenceCount { get; set; }
-
 	public virtual User Actor { get; set; }
 
 	public WebAddress()
