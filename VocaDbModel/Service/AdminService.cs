@@ -680,7 +680,8 @@ namespace VocaDb.Model.Service
 
 				foreach (var webLinkQuery in webLinkQueries)
 				{
-					foreach (var webLink in webLinkQuery)
+					var webLinks = webLinkQuery.ToArray();
+					foreach (var webLink in webLinks)
 					{
 						try
 						{
