@@ -704,21 +704,22 @@ namespace VocaDb.Model.Service
 				{
 					foreach (var webLink in chunk)
 					{
+						var trimmedUrl = webLink.Url;
 						try
 						{
-							UpdateWebAddress(session, new Uri(webLink.Url), webLink);
+							UpdateWebAddress(session, new Uri(trimmedUrl), webLink);
 						}
 						catch (UriFormatException)
 						{
 							// Retry by prefixing http://.
 							try
 							{
-								UpdateWebAddress(session, new Uri($"http://{webLink.Url}"), webLink);
+								UpdateWebAddress(session, new Uri($"http://{trimmedUrl}"), webLink);
 							}
 							catch (UriFormatException)
 							{
 								// Ignore.
-								SysLog($"Skipping {webLink.Url}");
+								SysLog($"Skipping {trimmedUrl}");
 							}
 						}
 					}
