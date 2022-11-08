@@ -674,26 +674,35 @@ namespace VocaDb.Model.Service
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			HandleTransaction(session =>
+			SysLog("updating web addresses");
+
+			IEnumerable<WebLink> GetWebLinks()
 			{
-				AuditLog("updating web addresses", session);
-
-				var webLinkQueries = new IQueryable<WebLink>[]
+				return HandleTransaction(session =>
 				{
-					session.Query<AlbumWebLink>(),
-					session.Query<ArtistWebLink>(),
-					session.Query<ReleaseEventSeriesWebLink>(),
-					session.Query<ReleaseEventWebLink>(),
-					session.Query<SongWebLink>(),
-					session.Query<TagWebLink>(),
-					session.Query<UserWebLink>(),
-					session.Query<VenueWebLink>(),
-				};
+					var webLinkQueries = new IQueryable<WebLink>[]
+					{
+						session.Query<AlbumWebLink>(),
+						session.Query<ArtistWebLink>(),
+						session.Query<ReleaseEventSeriesWebLink>(),
+						session.Query<ReleaseEventWebLink>(),
+						session.Query<SongWebLink>(),
+						session.Query<TagWebLink>(),
+						session.Query<UserWebLink>(),
+						session.Query<VenueWebLink>(),
+					};
+					var webLinks = webLinkQueries.SelectMany(webLinkQuery => webLinkQuery.ToArray()).ToArray();
+					return webLinks;
+				});
+			}
 
-				foreach (var webLinkQuery in webLinkQueries)
+			var webLinks = GetWebLinks();
+			var chunks = Enumerable.Chunk(webLinks, size: 1000);
+			foreach (var chunk in chunks)
+			{
+				HandleTransaction(session =>
 				{
-					var webLinks = webLinkQuery.ToArray();
-					foreach (var webLink in webLinks)
+					foreach (var webLink in chunk)
 					{
 						try
 						{
@@ -713,8 +722,8 @@ namespace VocaDb.Model.Service
 							}
 						}
 					}
-				}
-			});
+				});
+			}
 		}
 #nullable disable
 	}
