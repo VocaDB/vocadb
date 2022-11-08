@@ -660,6 +660,18 @@ namespace VocaDb.Model.Service
 				}
 			}
 
+			void UpdateWebAddress(ISession session, Uri uri, WebLink webLink)
+			{
+				// Actors can be used for https://github.com/VocaDB/vocadb/issues/1149 in the future.
+				var actor = webLink is UserWebLink userWebLink
+					? userWebLink.Entry
+					: GetLoggedUser(session);
+
+				var address = GetOrCreateWebAddress(session, uri, actor);
+				webLink.Address = address;
+				address.IncrementReferenceCount();
+			}
+
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
 			HandleTransaction(session =>
@@ -685,21 +697,20 @@ namespace VocaDb.Model.Service
 					{
 						try
 						{
-							var uri = new Uri(webLink.Url);
-
-							// Actors can be used for https://github.com/VocaDB/vocadb/issues/1149 in the future.
-							var actor = webLink is UserWebLink userWebLink
-								? userWebLink.Entry
-								: GetLoggedUser(session);
-
-							var address = GetOrCreateWebAddress(session, uri, actor);
-							webLink.Address = address;
-							address.IncrementReferenceCount();
+							UpdateWebAddress(session, new Uri(webLink.Url), webLink);
 						}
 						catch (UriFormatException)
 						{
-							// Ignore.
-							SysLog($"Skipping {webLink.Url}");
+							// Retry by prefixing http://.
+							try
+							{
+								UpdateWebAddress(session, new Uri($"http://{webLink.Url}"), webLink);
+							}
+							catch (UriFormatException)
+							{
+								// Ignore.
+								SysLog($"Skipping {webLink.Url}");
+							}
 						}
 					}
 				}
