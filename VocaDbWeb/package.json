@@ -70,7 +70,7 @@
 		"http-status-codes": "^2.2.0",
 		"i18next": "^20.3.2",
 		"i18next-http-backend": "^1.4.1",
-		"jquery": "^2.2.1",
+		"jquery": "^3.5.0",
 		"jquery-ui": "^1.10.4",
 		"jqwidgets-scripts": "^13.2.0",
 		"lodash-es": "^4.17.21",
