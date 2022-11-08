@@ -14,3 +14,6 @@ charset = utf-8-bom
 
 [*.cs]
 csharp_style_namespace_declarations=file_scoped:suggestion
+
+[{package.json,package-lock.json}]
+end_of_line = lf
