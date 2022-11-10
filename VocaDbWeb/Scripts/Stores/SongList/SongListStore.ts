@@ -5,7 +5,7 @@ import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -54,8 +54,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface SongListRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];

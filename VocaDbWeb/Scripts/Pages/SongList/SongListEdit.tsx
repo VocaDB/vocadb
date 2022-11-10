@@ -27,7 +27,7 @@ import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
@@ -41,8 +41,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface PropertiesTabContentProps {
 	songListEditStore: SongListEditStore;

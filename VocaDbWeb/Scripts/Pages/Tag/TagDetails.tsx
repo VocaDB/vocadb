@@ -26,7 +26,7 @@ import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import {
 	TagReportType,
 	tagReportTypesWithRequiredNotes,
@@ -46,8 +46,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface NicoTagLinkProps {
 	item: string;

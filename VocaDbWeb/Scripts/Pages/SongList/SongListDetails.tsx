@@ -31,7 +31,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
@@ -58,8 +58,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const loginManager = new LoginManager(vdb.values);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

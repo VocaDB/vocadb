@@ -3,7 +3,7 @@ import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import {
 	eventRepo,
 	ReleaseEventOptionalField,
@@ -13,8 +13,6 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface EventIndexLayoutProps {
 	model: ReleaseEventContract[];

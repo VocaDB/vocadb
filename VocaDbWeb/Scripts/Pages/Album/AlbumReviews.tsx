@@ -8,7 +8,7 @@ import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNoti
 import { IconAndLinkKnockout } from '@/Components/Shared/Partials/User/IconAndLinkKnockout';
 import { NameLinkKnockout } from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -20,8 +20,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface AlbumReviewProps {
 	albumDetailsStore: AlbumDetailsStore;

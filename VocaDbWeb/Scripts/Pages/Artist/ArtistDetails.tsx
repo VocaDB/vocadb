@@ -16,7 +16,7 @@ import {
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
 import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
 import { albumRepo } from '@/Repositories/AlbumRepository';
@@ -36,8 +36,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const loginManager = new LoginManager(vdb.values);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

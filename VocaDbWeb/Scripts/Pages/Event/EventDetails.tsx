@@ -38,7 +38,7 @@ import {
 	eventReportTypesWithRequiredNotes,
 } from '@/Models/Events/EventReportType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -55,8 +55,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface ArtistListProps {
 	artists: ArtistForEventContract[];

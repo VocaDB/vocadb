@@ -4,7 +4,7 @@ import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKn
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
@@ -15,8 +15,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const categories = Object.values(SongListFeaturedCategory).filter(
 	(value) => value !== SongListFeaturedCategory.Nothing,

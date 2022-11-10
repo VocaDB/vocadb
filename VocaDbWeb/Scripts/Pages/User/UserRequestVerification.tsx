@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -15,8 +15,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const requestVerificationStore = new RequestVerificationStore(
 	vdb.values,

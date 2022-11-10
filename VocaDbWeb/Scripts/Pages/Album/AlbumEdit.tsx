@@ -39,7 +39,7 @@ import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
@@ -62,8 +62,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface BasicInfoTabContentProps {
 	albumEditStore: AlbumEditStore;

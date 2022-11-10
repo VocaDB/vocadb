@@ -9,7 +9,7 @@ import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -32,8 +32,6 @@ const allObjectTypes = [
 	EntryType.ReleaseEvent,
 	EntryType.SongList,
 ]; /* TODO */
-
-const loginManager = new LoginManager(vdb.values);
 
 export const apiEndpointsForEntryType: Record<EntryType, string> = {
 	[EntryType.Undefined]: '/api/entries',

@@ -4,15 +4,13 @@ import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { useReasonNames } from '@/Components/useReasonNames';
 import { ArchivedVersionContract } from '@/DataContracts/Versioning/ArchivedVersionContract';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface ArchivedObjectVersionRowProps {
 	archivedVersion: ArchivedVersionContract;

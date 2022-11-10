@@ -29,7 +29,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
@@ -42,8 +42,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const allTagTargetTypes: TagTargetTypes[] = [
 	TagTargetTypes.Album,

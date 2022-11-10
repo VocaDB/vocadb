@@ -38,7 +38,7 @@ import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
@@ -60,8 +60,6 @@ import {
 	useParams,
 	useSearchParams,
 } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface BasicInfoTabContentProps {
 	releaseEventEditStore: ReleaseEventEditStore;

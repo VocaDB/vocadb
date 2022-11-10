@@ -38,7 +38,7 @@ import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
@@ -68,8 +68,6 @@ import {
 } from 'react-router-dom';
 
 const maxMediaSizeMB = 20;
-
-const loginManager = new LoginManager(vdb.values);
 
 interface BasicInfoTabContentProps {
 	songEditStore: SongEditStore;

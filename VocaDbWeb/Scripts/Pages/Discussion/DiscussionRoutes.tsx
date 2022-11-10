@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { discussionRepo } from '@/Repositories/DiscussionRepository';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -23,8 +23,6 @@ export const DiscussionLayout = ({
 }: DiscussionLayoutProps): React.ReactElement => {
 	return <Layout title={title}>{children}</Layout>;
 };
-
-const loginManager = new LoginManager(vdb.values);
 
 const discussionIndexStore = new DiscussionIndexStore(
 	loginManager,

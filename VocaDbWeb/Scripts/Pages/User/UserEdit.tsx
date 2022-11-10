@@ -7,7 +7,7 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { OwnedArtistForUserEditRow } from '@/Pages/User/Partials/OwnedArtistForUserEditRow';
 import { PermissionEditRow } from '@/Pages/User/Partials/PermissionEditRow';
@@ -22,8 +22,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface UserEditLayoutProps {
 	userEditStore: UserEditStore;

@@ -4,7 +4,7 @@ import { showSuccessMessage } from '@/Components/ui';
 import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
@@ -13,8 +13,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface RatingBarProps {
 	pvRatingButtonsStore: PVRatingButtonsStore | undefined;

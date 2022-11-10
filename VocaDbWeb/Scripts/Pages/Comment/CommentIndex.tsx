@@ -7,7 +7,7 @@ import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knoc
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
@@ -22,8 +22,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const commentListStore = new CommentListStore(
 	vdb.values,
