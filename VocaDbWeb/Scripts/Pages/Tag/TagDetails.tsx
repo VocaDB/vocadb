@@ -32,11 +32,9 @@ import {
 	tagReportTypesWithRequiredNotes,
 } from '@/Models/Tags/TagReportType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { TagDetailsStore } from '@/Stores/Tag/TagDetailsStore';
 import Highcharts from 'highcharts';
@@ -50,12 +48,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface NicoTagLinkProps {
 	item: string;

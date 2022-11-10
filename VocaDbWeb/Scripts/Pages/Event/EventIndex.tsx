@@ -5,11 +5,9 @@ import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEvent
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { LoginManager } from '@/Models/LoginManager';
 import {
+	eventRepo,
 	ReleaseEventOptionalField,
-	ReleaseEventRepository,
 } from '@/Repositories/ReleaseEventRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import moment from 'moment';
 import React from 'react';
@@ -17,11 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventIndexLayoutProps {
 	model: ReleaseEventContract[];

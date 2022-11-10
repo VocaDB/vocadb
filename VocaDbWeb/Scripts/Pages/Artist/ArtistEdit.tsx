@@ -37,11 +37,10 @@ import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { map, pull } from 'lodash-es';
@@ -52,12 +51,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface BasicInfoTabContentProps {
 	artistEditStore: ArtistEditStore;

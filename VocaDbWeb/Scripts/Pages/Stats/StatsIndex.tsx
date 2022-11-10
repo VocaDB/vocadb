@@ -1,14 +1,12 @@
 import { Layout } from '@/Components/Shared/Layout';
 import { useVdbTitle } from '@/Components/useVdbTitle';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient } from '@/Shared/HttpClient';
 import { StatsStore } from '@/Stores/StatsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const httpClient = new HttpClient();
 
 const statsStore = new StatsStore(httpClient);
 

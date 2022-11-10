@@ -15,11 +15,9 @@ import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSeriesDetailsStore } from '@/Stores/ReleaseEvent/EventSeriesDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import moment from 'moment';
@@ -30,12 +28,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface EventSeriesDetailsLayoutProps {
 	series: ReleaseEventSeriesDetailsContract;

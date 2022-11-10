@@ -11,9 +11,8 @@ import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/Archi
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { albumRepo } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -24,10 +23,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumViewVersionLayoutProps {
 	contract: ArchivedAlbumVersionDetailsContract;

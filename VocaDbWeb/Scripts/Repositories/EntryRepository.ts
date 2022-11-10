@@ -3,7 +3,7 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
 
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
@@ -58,3 +58,8 @@ export class EntryRepository {
 		);
 	};
 }
+
+export const entryRepo = new EntryRepository(
+	httpClient,
+	vdb.values.baseAddress,
+);

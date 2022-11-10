@@ -10,10 +10,8 @@ import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import ComposeMessage from '@/Pages/User/Partials/ComposeMessage';
 import UserMessageKnockout from '@/Pages/User/Partials/UserMessageKnockout';
-import { UserInboxType, UserRepository } from '@/Repositories/UserRepository';
+import { UserInboxType, userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import {
 	UserMessageFolderStore,
 	UserMessagesStore,
@@ -24,10 +22,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const userMessagesStore = new UserMessagesStore(
 	vdb.values,

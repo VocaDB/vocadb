@@ -10,10 +10,8 @@ import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/Relea
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -24,11 +22,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventSeriesViewVersionLayoutProps {
 	contract: ArchivedEventSeriesVersionDetailsContract;

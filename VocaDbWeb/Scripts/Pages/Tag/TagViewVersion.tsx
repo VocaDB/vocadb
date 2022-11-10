@@ -11,9 +11,8 @@ import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedT
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -24,10 +23,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 interface TagViewVersionLayoutProps {
 	contract: ArchivedTagVersionDetailsContract;

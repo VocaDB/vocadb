@@ -40,15 +40,14 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { PVRepository } from '@/Repositories/PVRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { pvRepo } from '@/Repositories/PVRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventEditStore } from '@/Stores/ReleaseEvent/ReleaseEventEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -63,16 +62,6 @@ import {
 } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const pvRepo = new PVRepository(httpClient, urlMapper);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface BasicInfoTabContentProps {
 	releaseEventEditStore: ReleaseEventEditStore;

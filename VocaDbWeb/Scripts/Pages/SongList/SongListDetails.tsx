@@ -33,14 +33,13 @@ import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
@@ -61,15 +60,6 @@ import { Link, useParams } from 'react-router-dom';
 import '../../../wwwroot/Content/Styles/songlist.less';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

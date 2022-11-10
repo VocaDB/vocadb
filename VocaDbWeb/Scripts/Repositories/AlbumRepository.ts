@@ -24,7 +24,12 @@ import {
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import qs from 'qs';
@@ -441,3 +446,8 @@ export class AlbumRepository
 export interface AlbumQueryParams extends CommonQueryParams {
 	discTypes: AlbumType[];
 }
+
+export const albumRepo = new AlbumRepository(
+	httpClient,
+	vdb.values.baseAddress,
+);

@@ -1,10 +1,8 @@
 import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient } from '@/Shared/HttpClient';
 import useMergedRefs from '@restart/hooks/useMergedRefs';
 import React from 'react';
-
-const httpClient = new HttpClient();
 
 interface TagCategoryAutoCompleteProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {

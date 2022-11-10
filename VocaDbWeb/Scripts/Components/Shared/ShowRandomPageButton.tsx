@@ -4,14 +4,11 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { EntryType } from '@/Models/EntryType';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const random = (max: number): number => Math.floor(Math.random() * max);
 

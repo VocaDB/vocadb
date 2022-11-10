@@ -45,14 +45,13 @@ import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import ArtistForSongEdit from '@/Pages/Song/Partials/ArtistForSongEdit';
 import LyricsForSongEdit from '@/Pages/Song/Partials/LyricsForSongEdit';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { PVRepository } from '@/Repositories/PVRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { pvRepo } from '@/Repositories/PVRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
 import { getReasonPhrase } from 'http-status-codes';
@@ -71,15 +70,6 @@ import {
 const maxMediaSizeMB = 20;
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const pvRepo = new PVRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface BasicInfoTabContentProps {
 	songEditStore: SongEditStore;

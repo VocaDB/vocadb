@@ -6,10 +6,8 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { FeaturedSongListsStore } from '@/Stores/SongList/FeaturedSongListsStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
@@ -19,11 +17,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 const categories = Object.values(SongListFeaturedCategory).filter(
 	(value) => value !== SongListFeaturedCategory.Nothing,

@@ -3,13 +3,12 @@ import { Layout } from '@/Components/Shared/Layout';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
@@ -17,14 +16,6 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

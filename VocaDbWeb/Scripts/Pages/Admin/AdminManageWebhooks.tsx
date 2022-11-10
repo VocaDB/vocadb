@@ -4,9 +4,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
-import { AdminRepository } from '@/Repositories/AdminRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { adminRepo } from '@/Repositories/AdminRepository';
 import { ManageWebhooksStore } from '@/Stores/Admin/ManageWebhooksStore';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
@@ -15,11 +13,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const adminRepo = new AdminRepository(httpClient, urlMapper);
 
 const manageWebhooksStore = new ManageWebhooksStore(adminRepo);
 

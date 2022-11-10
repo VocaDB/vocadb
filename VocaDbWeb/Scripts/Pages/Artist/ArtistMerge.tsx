@@ -8,23 +8,15 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryType } from '@/Models/EntryType';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistMergeStore } from '@/Stores/Artist/ArtistMergeStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface ArtistMergeLayoutProps {
 	artist: ArtistContract;
