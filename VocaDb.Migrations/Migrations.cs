@@ -184,8 +184,8 @@ public class UniversalTime : Migration
 			update {{TableNames.EventTagUsages}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
 			update {{TableNames.PVsForEvents}} set PublishDate = (PublishDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
 			update {{TableNames.AlbumReleaseEvents}} set CreateDate = (CreateDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
-			update {{TableNames.AlbumReleaseEvents}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
-			update {{TableNames.AlbumReleaseEvents}} set EndDate = (EndDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
+			/*update {{TableNames.AlbumReleaseEvents}} set Date = (Date at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
+			/*update {{TableNames.AlbumReleaseEvents}} set EndDate = (EndDate at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';*/
 			update {{TableNames.ArchivedEventVersions}} set Created = (Created at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
 
 			update {{TableNames.AuditLogEntries}} set Time = (Time at time zone '{{fromTimezone}}') at time zone '{{toTimezone}}';
