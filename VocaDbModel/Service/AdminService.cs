@@ -624,91 +624,114 @@ namespace VocaDb.Model.Service
 		// TODO: Remove.
 		public void ConvertToUtc()
 		{
+			const int chunkSize = 1000;
+
 			VerifyAdmin();
 
 			SysLog("Converting to UTC");
 
-			HandleTransaction((session) =>
+			var archivedAlbumVersionChunks = HandleTransaction(session => session.Query<ArchivedAlbumVersion>().ToArray().Chunk(chunkSize));
+			foreach (var chunk in archivedAlbumVersionChunks)
 			{
-				var archivedAlbumVersions = session.Query<ArchivedAlbumVersion>();
-				foreach (var archivedAlbumVersion in archivedAlbumVersions)
+				HandleTransaction(session =>
 				{
-					if (archivedAlbumVersion.Data is XDocument data)
+					foreach (var archivedAlbumVersion in chunk)
 					{
-						var contract = XmlHelper.DeserializeFromXml<ArchivedAlbumContract>(data) ?? throw new InvalidOperationException();
-						if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
+						if (archivedAlbumVersion.Data is XDocument data)
 						{
-							foreach (var picture in pictures)
+							var contract = XmlHelper.DeserializeFromXml<ArchivedAlbumContract>(data) ?? throw new InvalidOperationException();
+							if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
 							{
-								picture.Created = picture.Created.ToUniversalTime();
+								foreach (var picture in pictures)
+								{
+									picture.Created = picture.Created.ToUniversalTime();
+								}
 							}
-						}
-						if (contract.PVs is ArchivedPVContract[] pvs)
-						{
-							foreach (var pv in pvs)
+							if (contract.PVs is ArchivedPVContract[] pvs)
 							{
-								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								foreach (var pv in pvs)
+								{
+									pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								}
 							}
+							archivedAlbumVersion.Data = XmlHelper.SerializeToXml(contract);
+							session.Update(archivedAlbumVersion);
 						}
-						archivedAlbumVersion.Data = XmlHelper.SerializeToXml(contract);
-						session.Update(archivedAlbumVersion);
 					}
-				}
+				});
+			}
 
-				var archivedArtistVersions = session.Query<ArchivedArtistVersion>();
-				foreach (var archivedArtistVersion in archivedArtistVersions)
+			var archivedArtistVersionChunks = HandleTransaction(session => session.Query<ArchivedArtistVersion>().ToArray().Chunk(chunkSize));
+			foreach (var chunk in archivedArtistVersionChunks)
+			{
+				HandleTransaction(session =>
 				{
-					if (archivedArtistVersion.Data is XDocument data)
+					foreach (var archivedArtistVersion in chunk)
 					{
-						var contract = XmlHelper.DeserializeFromXml<ArchivedArtistContract>(data) ?? throw new InvalidOperationException();
-						if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
+						if (archivedArtistVersion.Data is XDocument data)
 						{
-							foreach (var picture in pictures)
+							var contract = XmlHelper.DeserializeFromXml<ArchivedArtistContract>(data) ?? throw new InvalidOperationException();
+							if (contract.Pictures is ArchivedEntryPictureFileContract[] pictures)
 							{
-								picture.Created = picture.Created.ToUniversalTime();
+								foreach (var picture in pictures)
+								{
+									picture.Created = picture.Created.ToUniversalTime();
+								}
 							}
+							archivedArtistVersion.Data = XmlHelper.SerializeToXml(contract);
+							session.Update(archivedArtistVersion);
 						}
-						archivedArtistVersion.Data = XmlHelper.SerializeToXml(contract);
-						session.Update(archivedArtistVersion);
 					}
-				}
+				});
+			}
 
-				var archivedEventVersions = session.Query<ArchivedReleaseEventVersion>();
-				foreach (var archivedEventVersion in archivedEventVersions)
+			var archivedEventVersionChunks = HandleTransaction(session => session.Query<ArchivedReleaseEventVersion>().ToArray().Chunk(chunkSize));
+			foreach (var chunk in archivedEventVersionChunks)
+			{
+				HandleTransaction(session =>
 				{
-					if (archivedEventVersion.Data is XDocument data)
+					foreach (var archivedEventVersion in chunk)
 					{
-						var contract = XmlHelper.DeserializeFromXml<ArchivedEventContract>(data) ?? throw new InvalidOperationException();
-						if (contract.PVs is ArchivedPVContract[] pvs)
+						if (archivedEventVersion.Data is XDocument data)
 						{
-							foreach (var pv in pvs)
+							var contract = XmlHelper.DeserializeFromXml<ArchivedEventContract>(data) ?? throw new InvalidOperationException();
+							if (contract.PVs is ArchivedPVContract[] pvs)
 							{
-								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								foreach (var pv in pvs)
+								{
+									pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								}
 							}
+							archivedEventVersion.Data = XmlHelper.SerializeToXml(contract);
+							session.Update(archivedEventVersion);
 						}
-						archivedEventVersion.Data = XmlHelper.SerializeToXml(contract);
-						session.Update(archivedEventVersion);
 					}
-				}
+				});
+			}
 
-				var archivedSongVersions = session.Query<ArchivedSongVersion>();
-				foreach (var archivedSongVersion in archivedSongVersions)
+			var archivedSongVersionChunks = HandleTransaction(session => session.Query<ArchivedSongVersion>().ToArray().Chunk(chunkSize));
+			foreach (var chunk in archivedSongVersionChunks)
+			{
+				HandleTransaction(session =>
 				{
-					if (archivedSongVersion.Data is XDocument data)
+					foreach (var archivedSongVersion in chunk)
 					{
-						var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(data) ?? throw new InvalidOperationException();
-						if (contract.PVs is ArchivedPVContract[] pvs)
+						if (archivedSongVersion.Data is XDocument data)
 						{
-							foreach (var pv in pvs)
+							var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(data) ?? throw new InvalidOperationException();
+							if (contract.PVs is ArchivedPVContract[] pvs)
 							{
-								pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								foreach (var pv in pvs)
+								{
+									pv.PublishDate = pv.PublishDate?.ToUniversalTime();
+								}
 							}
+							archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
+							session.Update(archivedSongVersion);
 						}
-						archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
-						session.Update(archivedSongVersion);
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 
