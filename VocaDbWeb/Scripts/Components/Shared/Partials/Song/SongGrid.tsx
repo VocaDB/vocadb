@@ -15,7 +15,7 @@ const SongIconLink = ({ song }: SongIconLinkProps): React.ReactElement => {
 		<Link to={EntryUrlMapper.details_song(song)}>
 			<img
 				src={UrlHelper.upgradeToHttps(song.mainPicture.urlThumb)}
-				alt="Cover" /* TODO: localize */
+				alt="Cover" /* LOC */
 				className="coverPicThumb"
 				referrerPolicy="same-origin"
 			/>
@@ -73,7 +73,7 @@ export const SongGrid = ({
 													moment(song.publishDate)
 														.utc()
 														.format('l') /* REVIEW */
-												}`} /* TODO: localize */
+												}`} /* LOC */
 												/* TODO: tooltip */
 											/>
 										</>

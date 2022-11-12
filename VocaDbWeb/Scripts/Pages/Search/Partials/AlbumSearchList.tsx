@@ -143,8 +143,8 @@ const AlbumSearchList = observer(
 													album.mainPicture?.urlTinyThumb ??
 													'/Content/unknown.png'
 												}
-												title="Cover picture" /* TODO: localize */
-												alt="Cover picture" /* TODO: localize */
+												title="Cover picture" /* LOC */
+												alt="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"
 											/>
 										</Link>

@@ -10,12 +10,12 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class PVEditStore {
-	@observable public disabled: boolean;
-	public readonly lengthFormatted: string;
-	@observable public name: string;
-	public readonly pvType: PVType;
+	@observable disabled: boolean;
+	readonly lengthFormatted: string;
+	@observable name: string;
+	readonly pvType: PVType;
 
-	public constructor(public readonly contract: PVContract, pvType?: PVType) {
+	constructor(readonly contract: PVContract, pvType?: PVType) {
 		makeObservable(this);
 
 		this.disabled = contract.disabled!;
@@ -27,19 +27,19 @@ export class PVEditStore {
 }
 
 export class PVListEditStore {
-	@observable public isPossibleInstrumental = false;
-	@observable public newPvType = PVType.Original;
-	@observable public newPvUrl = '';
-	@observable public pvs: PVEditStore[];
-	public readonly pvServiceIcons: PVServiceIcons;
+	@observable isPossibleInstrumental = false;
+	@observable newPvType = PVType.Original;
+	@observable newPvUrl = '';
+	@observable pvs: PVEditStore[];
+	readonly pvServiceIcons: PVServiceIcons;
 
-	public constructor(
+	constructor(
 		private readonly pvRepo: PVRepository,
 		urlMapper: UrlMapper,
 		pvs: PVContract[],
-		public readonly canBulkDeletePVs: boolean,
-		public readonly showPublishDates: boolean,
-		public readonly allowDisabled: boolean,
+		readonly canBulkDeletePVs: boolean,
+		readonly showPublishDates: boolean,
+		readonly allowDisabled: boolean,
 	) {
 		makeObservable(this);
 
@@ -59,7 +59,7 @@ export class PVListEditStore {
 		);
 	};
 
-	@action public add = (): void => {
+	@action add = (): void => {
 		const newPvUrl = this.newPvUrl;
 
 		if (!newPvUrl) return;
@@ -82,19 +82,19 @@ export class PVListEditStore {
 			});
 	};
 
-	@action public remove = (pv: PVEditStore): void => {
+	@action remove = (pv: PVEditStore): void => {
 		pull(this.pvs, pv);
 	};
 
-	public formatLength = (seconds: number): string => {
+	formatLength = (seconds: number): string => {
 		return DateTimeHelper.formatFromSeconds(seconds);
 	};
 
-	public getPvServiceIcon = (service: string): string => {
+	getPvServiceIcon = (service: string): string => {
 		return this.pvServiceIcons.getIconUrl(service);
 	};
 
-	public toContracts = (): PVContract[] => {
+	toContracts = (): PVContract[] => {
 		return this.pvs.map((pv) => ({
 			...pv.contract,
 			disabled: pv.disabled,
@@ -103,7 +103,7 @@ export class PVListEditStore {
 		}));
 	};
 
-	public uploadMedia = async (uploadMedia: File): Promise<void> => {
+	uploadMedia = async (uploadMedia: File): Promise<void> => {
 		const fd = new FormData();
 
 		fd.append('file', uploadMedia);
@@ -120,7 +120,7 @@ export class PVListEditStore {
 			error: (result) => {
 				const text =
 					result.status === 404 ? 'File too large' : result.statusText;
-				alert(`Unable to post file: ${text}` /* TODO: localize */);
+				alert(`Unable to post file: ${text}` /* LOC */);
 			},
 		});
 	};

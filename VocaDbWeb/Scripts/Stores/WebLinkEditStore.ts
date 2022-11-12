@@ -4,13 +4,13 @@ import { WebLinkMatcher } from '@vocadb/web-link-matcher';
 import { makeObservable, observable, reaction } from 'mobx';
 
 export class WebLinkEditStore {
-	@observable public category: WebLinkCategory;
-	@observable public description: string;
-	@observable public disabled: boolean;
-	public readonly id: number;
-	@observable public url: string;
+	@observable category: WebLinkCategory;
+	@observable description: string;
+	@observable disabled: boolean;
+	readonly id: number;
+	@observable url: string;
 
-	public constructor(data?: WebLinkContract) {
+	constructor(data?: WebLinkContract) {
 		makeObservable(this);
 
 		if (data) {

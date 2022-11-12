@@ -6,7 +6,7 @@ import { ArchivedObjectVersionProperties } from '@/Components/Shared/Partials/Ar
 import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBanner';
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -41,9 +41,9 @@ const AlbumViewVersionLayout = observer(
 	}: AlbumViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -78,7 +78,7 @@ const AlbumViewVersionLayout = observer(
 								to: `/Album/Versions/${contract.album.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -113,7 +113,7 @@ const AlbumViewVersionLayout = observer(
 							href={`/Album/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOC */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -166,7 +166,7 @@ const AlbumViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedAlbumStore.comparedVersionId}

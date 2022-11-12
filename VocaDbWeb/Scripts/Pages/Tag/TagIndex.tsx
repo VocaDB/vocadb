@@ -1,7 +1,7 @@
 import Alert from '@/Bootstrap/Alert';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -38,7 +38,7 @@ const TagIndexLayout = observer(
 
 		const title = t('ViewRes:Shared.Tags');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const tagCount = model.sumBy((m) => m.tags.length);
 		const avgUsageCount =
@@ -61,7 +61,7 @@ const TagIndexLayout = observer(
 									})
 								}
 							>
-								Create new{/* TODO: localize */}
+								Create new{/* LOC */}
 							</JQueryUIButton>
 						)}
 					</>
@@ -98,7 +98,7 @@ const TagIndexLayout = observer(
 				))}
 
 				<JQueryUIDialog
-					title="Create tag" /* TODO: localize */
+					title="Create tag" /* LOC */
 					autoOpen={tagCreateStore.dialogVisible}
 					close={(): void =>
 						runInAction(() => {
@@ -109,7 +109,7 @@ const TagIndexLayout = observer(
 					modal={true}
 					buttons={[
 						{
-							text: 'Create' /* TODO: localize */,
+							text: 'Create' /* LOC */,
 							click: (): void => {
 								tagCreateStore.createTag().then((t) => {
 									navigate(EntryUrlMapper.details_tag_contract(t)!);
@@ -139,9 +139,7 @@ const TagIndexLayout = observer(
 					/>
 
 					{tagCreateStore.duplicateName && (
-						<Alert variant="danger">
-							Tag name must be unique{/* TODO: localize */}
-						</Alert>
+						<Alert variant="danger">Tag name must be unique{/* LOC */}</Alert>
 					)}
 				</JQueryUIDialog>
 			</Layout>

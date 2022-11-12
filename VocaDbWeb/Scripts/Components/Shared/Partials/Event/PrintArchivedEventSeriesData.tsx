@@ -21,14 +21,11 @@ export const PrintArchivedEventSeriesData = React.memo(
 	}: PrintArchivedEventSeriesDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* TODO: localize */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
-						<DataRow
-							name="Id" /* TODO: localize */
-							val={comparedSeries.firstData.id}
-						/>
+						<DataRow name="Id" /* LOC */ val={comparedSeries.firstData.id} />
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<TranslatedNameRow_ComparedVersionsContract
 							comparedVersions={comparedSeries}
@@ -38,7 +35,7 @@ export const PrintArchivedEventSeriesData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* TODO: localize */
+							name="Names" /* LOC */
 							comparedVersions={comparedSeries}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -48,13 +45,13 @@ export const PrintArchivedEventSeriesData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* TODO: localize */
+							name="Description" /* LOC */
 							comparedVersions={comparedSeries}
 							valGetter={(data): React.ReactNode => data.description}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* TODO: localize */
+							name="External links" /* LOC */
 							comparedVersions={comparedSeries}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (
@@ -64,13 +61,13 @@ export const PrintArchivedEventSeriesData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Category" /* TODO: localize */
+							name="Category" /* LOC */
 							comparedVersions={comparedSeries}
 							valGetter={(data): React.ReactNode => data.category}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Main picture MIME" /* TODO: localize */
+							name="Main picture MIME" /* LOC */
 							comparedVersions={comparedSeries}
 							valGetter={(data): React.ReactNode => data.mainPictureMime}
 						/>

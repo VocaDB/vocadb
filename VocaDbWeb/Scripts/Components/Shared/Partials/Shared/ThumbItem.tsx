@@ -42,7 +42,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 							>
 								<img
 									src={thumbUrl}
-									alt="Preview" /* TODO: localize */
+									alt="Preview" /* LOC */
 									className="coverPic"
 								/>
 							</EntryLink>
@@ -53,7 +53,7 @@ export const ThumbItem: BsPrefixRefForwardingComponent/* TODO */ <
 							>
 								<img
 									src={thumbUrl}
-									alt="Preview" /* TODO: localize */
+									alt="Preview" /* LOC */
 									className="coverPic"
 								/>
 							</LinkComponent>

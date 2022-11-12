@@ -28,11 +28,11 @@ const AdminManageTagMappings = observer(
 
 		return (
 			<Layout
-				title="Manage NicoNicoDouga tag mappings" /* TODO: localize */
+				title="Manage NicoNicoDouga tag mappings" /* LOC */
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/Admin' }}>
-							Manage{/* TODO: localize */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -47,10 +47,10 @@ const AdminManageTagMappings = observer(
 				</Alert>
 
 				<form className="form-horizontal">
-					<h3>New mapping{/* TODO: localize */}</h3>
+					<h3>New mapping{/* LOC */}</h3>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newSourceName">
-							Source tag name{/* TODO: localize */}
+							Source tag name{/* LOC */}
 						</label>
 						<div className="controls">
 							<input
@@ -63,14 +63,12 @@ const AdminManageTagMappings = observer(
 										manageTagMappingsStore.newSourceName = e.target.value;
 									})
 								}
-								placeholder="Tag name" /* TODO: localize */
+								placeholder="Tag name" /* LOC */
 							/>
 						</div>
 					</div>
 					<div className="control-group">
-						<label className="control-label">
-							Target tag{/* TODO: localize */}
-						</label>
+						<label className="control-label">Target tag{/* LOC */}</label>
 						<div className="controls">
 							<TagLockingAutoComplete
 								basicEntryLinkStore={manageTagMappingsStore.newTargetTag}
@@ -91,7 +89,7 @@ const AdminManageTagMappings = observer(
 										)
 									) {
 										showErrorMessage(
-											`Mapping already exists for source tag ${manageTagMappingsStore.newSourceName}` /* TODO: localize */,
+											`Mapping already exists for source tag ${manageTagMappingsStore.newSourceName}` /* LOC */,
 										);
 										return;
 									}
@@ -99,7 +97,7 @@ const AdminManageTagMappings = observer(
 									manageTagMappingsStore.addMapping();
 								}}
 							>
-								Add{/* TODO: localize */}
+								Add{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -114,12 +112,12 @@ const AdminManageTagMappings = observer(
 						try {
 							await manageTagMappingsStore.save();
 
-							showSuccessMessage('Saved' /* TODO: localize */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save tag mappings.' /* TODO: localize */,
+									: 'Unable to save tag mappings.' /* LOC */,
 							);
 
 							throw error;
@@ -128,7 +126,7 @@ const AdminManageTagMappings = observer(
 						await manageTagMappingsStore.loadMappings();
 					}}
 				>
-					<h3>Mappings{/* TODO: localize */}</h3>
+					<h3>Mappings{/* LOC */}</h3>
 
 					<div className="input-append input-prepend">
 						<span className="add-on">
@@ -142,7 +140,7 @@ const AdminManageTagMappings = observer(
 									manageTagMappingsStore.filter = e.target.value;
 								})
 							}
-							placeholder="Search" /* TODO: localize */
+							placeholder="Search" /* LOC */
 						/>
 						<Button
 							variant="danger"
@@ -153,7 +151,7 @@ const AdminManageTagMappings = observer(
 							}
 							disabled={!manageTagMappingsStore.filter}
 						>
-							Clear{/* TODO: localize */}
+							Clear{/* LOC */}
 						</Button>
 					</div>
 
@@ -167,9 +165,9 @@ const AdminManageTagMappings = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Source (NND){/* TODO: localize */}</th>
+								<th>Source (NND){/* LOC */}</th>
 								<th>
-									Target ({siteName}){/* TODO: localize */}
+									Target ({siteName}){/* LOC */}
 								</th>
 								<th></th>
 							</tr>
@@ -210,7 +208,7 @@ const AdminManageTagMappings = observer(
 											onClick={item.deleteMapping}
 											disabled={item.isDeleted}
 										>
-											Delete{/* TODO: localize */}
+											Delete{/* LOC */}
 										</Button>
 									</td>
 								</tr>

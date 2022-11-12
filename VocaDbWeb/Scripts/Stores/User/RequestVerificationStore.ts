@@ -4,24 +4,24 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export default class RequestVerificationStore {
-	@observable public linkToProof = '';
-	@observable public message = '';
-	@observable public privateMessage = false;
-	@observable public selectedArtist?: ArtistContract;
-	@observable public submitting = false;
+	@observable linkToProof = '';
+	@observable message = '';
+	@observable privateMessage = false;
+	@observable selectedArtist?: ArtistContract;
+	@observable submitting = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 	) {
 		makeObservable(this);
 	}
 
-	public clearArtist = (): void => {
+	clearArtist = (): void => {
 		this.selectedArtist = undefined;
 	};
 
-	public setArtist = async (targetArtistId?: number): Promise<void> => {
+	setArtist = async (targetArtistId?: number): Promise<void> => {
 		const artist = await this.artistRepo.getOne({
 			id: targetArtistId!,
 			lang: this.values.languagePreference,
@@ -32,7 +32,7 @@ export default class RequestVerificationStore {
 		});
 	};
 
-	@action public submit = async (requestToken: string): Promise<void> => {
+	@action submit = async (requestToken: string): Promise<void> => {
 		if (!this.selectedArtist) return;
 
 		try {

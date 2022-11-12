@@ -33,14 +33,14 @@ export enum ReleaseEventOptionalField {
 }
 
 export class ReleaseEventRepository extends BaseRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = ({
+	createReport = ({
 		entryId: eventId,
 		reportType,
 		notes,
@@ -62,7 +62,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -80,7 +80,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public deleteSeries = ({
+	deleteSeries = ({
 		id,
 		notes,
 		hardDelete,
@@ -98,7 +98,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getList = ({
+	getList = ({
 		queryParams,
 	}: {
 		queryParams: EventQueryParams;
@@ -134,7 +134,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		fields,
 	}: {
@@ -147,7 +147,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		});
 	};
 
-	public getOneSeries = ({
+	getOneSeries = ({
 		id,
 	}: {
 		id: number;
@@ -157,7 +157,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getOneByName = async ({
+	getOneByName = async ({
 		name,
 	}: {
 		name: string;
@@ -176,7 +176,7 @@ export class ReleaseEventRepository extends BaseRepository {
 			: null;
 	};
 
-	public getSeriesList = ({
+	getSeriesList = ({
 		query,
 		nameMatchMode,
 		maxResults,
@@ -197,7 +197,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		>(url, data);
 	};
 
-	public getDetails = ({
+	getDetails = ({
 		id,
 	}: {
 		id: number;
@@ -207,7 +207,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getSeriesDetails = ({
+	getSeriesDetails = ({
 		id,
 	}: {
 		id: number;
@@ -217,7 +217,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getReleaseEventWithArchivedVersions = ({
+	getReleaseEventWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -227,7 +227,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/releaseEvents/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -240,7 +240,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getReleaseEventSeriesWithArchivedVersions = ({
+	getReleaseEventSeriesWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -252,7 +252,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/releaseEventSeries/${id}/versions`));
 	};
 
-	public getSeriesVersionDetails = ({
+	getSeriesVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -265,7 +265,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getForEdit = ({
+	getForEdit = ({
 		id,
 	}: {
 		id: number;
@@ -275,7 +275,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: ReleaseEventForEditContract,
 		pictureUpload: File | undefined,
@@ -297,7 +297,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public getSeriesForEdit = ({
+	getSeriesForEdit = ({
 		id,
 	}: {
 		id: number;
@@ -307,7 +307,7 @@ export class ReleaseEventRepository extends BaseRepository {
 		);
 	};
 
-	public editSeries = (
+	editSeries = (
 		requestToken: string,
 		contract: ReleaseEventSeriesForEditContract,
 		pictureUpload: File | undefined,

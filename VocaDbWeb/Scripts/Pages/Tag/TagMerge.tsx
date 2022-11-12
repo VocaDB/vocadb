@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { TagLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -35,9 +35,9 @@ const TagMergeLayout = observer(
 	({ tag, tagMergeStore }: TagMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge tag - ${tag.name}`; /* TODO: localize */
+		const title = `Merge tag - ${tag.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ const TagMergeLayout = observer(
 								to: `/Tag/Edit/${tag.id}`,
 							}}
 						>
-							Edit{/* TODO: localize */}
+							Edit{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -91,7 +91,7 @@ const TagMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge tag.' /* TODO: localize */,
+									: 'Unable to merge tag.' /* LOC */,
 							);
 
 							throw error;
@@ -133,7 +133,7 @@ const TagMergeLayout = observer(
 						id="mergeBtn"
 						disabled={!tagMergeStore.target.id || tagMergeStore.submitting}
 					>
-						Merge{/* TODO: localize */}
+						Merge{/* LOC */}
 					</Button>
 				</form>
 			</Layout>

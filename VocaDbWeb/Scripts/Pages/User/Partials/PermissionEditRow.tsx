@@ -26,7 +26,7 @@ export const PermissionEditRow = observer(
 					{permissionEditStore.hasPermission && (
 						<>
 							{' '}
-							<span>(already granted){/* TODO: localize */}</span>
+							<span>(already granted){/* LOC */}</span>
 						</>
 					)}
 				</label>

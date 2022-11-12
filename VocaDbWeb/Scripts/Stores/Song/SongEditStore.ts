@@ -48,10 +48,10 @@ export class SongEditStore {
 	private readonly albumEventId?: number;
 	private readonly albumReleaseDate?: Moment;
 	// List of artist links for this song.
-	@observable public artistLinks: ArtistForAlbumEditStore[] = [];
-	public readonly artistRolesEditStore: AlbumArtistRolesEditStore;
-	@observable public defaultNameLanguage: string; /* TODO: enum */
-	public readonly deleteStore = new DeleteEntryStore(async (notes) => {
+	@observable artistLinks: ArtistForAlbumEditStore[] = [];
+	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
+	@observable defaultNameLanguage: string; /* TODO: enum */
+	readonly deleteStore = new DeleteEntryStore(async (notes) => {
 		await $.ajax(
 			this.urlMapper.mapRelative(
 				`api/songs/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
@@ -66,29 +66,29 @@ export class SongEditStore {
 			},
 		);
 	});
-	public readonly editedArtistLink = new CustomNameEditStore();
-	@observable public errors?: Record<string, string[]>;
-	public readonly hasAlbums: boolean;
-	@observable public hasMaxMilliBpm: boolean;
-	public readonly lengthFilter = new SongLengthFilter();
-	public readonly lyrics: LyricsForSongListEditStore;
-	public readonly maxBpmFilter = new SongBpmFilter();
-	public readonly minBpmFilter = new SongBpmFilter();
-	public readonly names: NamesEditStore;
-	public readonly notes: EnglishTranslatedStringEditStore;
-	public readonly originalVersion: BasicEntryLinkStore<SongContract>;
-	@observable public originalVersionSuggestions: SongContract[] = [];
-	@observable public publishDate?: Date;
-	public readonly pvs: PVListEditStore;
-	public readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
-	@observable public songType: SongType;
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
+	readonly editedArtistLink = new CustomNameEditStore();
+	@observable errors?: Record<string, string[]>;
+	readonly hasAlbums: boolean;
+	@observable hasMaxMilliBpm: boolean;
+	readonly lengthFilter = new SongLengthFilter();
+	readonly lyrics: LyricsForSongListEditStore;
+	readonly maxBpmFilter = new SongBpmFilter();
+	readonly minBpmFilter = new SongBpmFilter();
+	readonly names: NamesEditStore;
+	readonly notes: EnglishTranslatedStringEditStore;
+	readonly originalVersion: BasicEntryLinkStore<SongContract>;
+	@observable originalVersionSuggestions: SongContract[] = [];
+	@observable publishDate?: Date;
+	readonly pvs: PVListEditStore;
+	readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
+	@observable songType: SongType;
+	@observable status: EntryStatus;
+	@observable submitting = false;
 	private readonly tags: number[];
-	@observable public updateNotes = '';
-	public readonly webLinks: WebLinksEditStore;
+	@observable updateNotes = '';
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
@@ -96,10 +96,10 @@ export class SongEditStore {
 		eventRepo: ReleaseEventRepository,
 		private readonly urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
-		public readonly contract: SongForEditContract,
+		readonly contract: SongForEditContract,
 		canBulkDeletePVs: boolean,
 		private readonly instrumentalTagId: number,
-		public readonly albumId?: number,
+		readonly albumId?: number,
 	) {
 		makeObservable(this);
 
@@ -159,11 +159,11 @@ export class SongEditStore {
 		this.artistRolesEditStore = new AlbumArtistRolesEditStore(artistRoleNames);
 	}
 
-	@computed public get canHaveOriginalVersion(): boolean {
+	@computed get canHaveOriginalVersion(): boolean {
 		return this.songType !== SongType.Original;
 	}
 
-	@computed public get showInstrumentalNote(): boolean {
+	@computed get showInstrumentalNote(): boolean {
 		return (
 			this.pvs.isPossibleInstrumental &&
 			this.songType !== SongType.Instrumental &&
@@ -171,13 +171,13 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get showLyricsNote(): boolean {
+	@computed get showLyricsNote(): boolean {
 		return (
 			this.songType !== SongType.Instrumental && !this.originalVersion.isEmpty
 		);
 	}
 
-	@computed public get validationError_duplicateArtist(): boolean {
+	@computed get validationError_duplicateArtist(): boolean {
 		return some(
 			this.artistLinks.groupBy((a) =>
 				a.artist ? a.artist.id.toString() : a.name,
@@ -186,11 +186,11 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_needArtist(): boolean {
+	@computed get validationError_needArtist(): boolean {
 		return !this.artistLinks.some((a) => a.artist != null);
 	}
 
-	@computed public get validationError_needOriginal(): boolean {
+	@computed get validationError_needOriginal(): boolean {
 		const derivedTypes = [
 			SongType.Remaster,
 			SongType.Cover,
@@ -207,7 +207,7 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_needProducer(): boolean {
+	@computed get validationError_needProducer(): boolean {
 		return (
 			!this.validationError_needArtist &&
 			!this.artistLinks.some(
@@ -222,7 +222,7 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_needReferences(): boolean {
+	@computed get validationError_needReferences(): boolean {
 		return (
 			!this.hasAlbums &&
 			isEmpty(this.notes.original) &&
@@ -231,12 +231,12 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_needType(): boolean {
+	@computed get validationError_needType(): boolean {
 		return this.songType === SongType.Unspecified;
 	}
 
 	@computed
-	public get validationError_nonInstrumentalSongNeedsVocalists(): boolean {
+	get validationError_nonInstrumentalSongNeedsVocalists(): boolean {
 		return (
 			!this.validationError_needArtist &&
 			!SongHelper.isInstrumental(this.songType) &&
@@ -248,7 +248,7 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_redundantEvent(): boolean {
+	@computed get validationError_redundantEvent(): boolean {
 		return (
 			!!this.albumEventId &&
 			!this.releaseEvent.isEmpty &&
@@ -256,11 +256,11 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get validationError_unspecifiedNames(): boolean {
+	@computed get validationError_unspecifiedNames(): boolean {
 		return !this.names.hasPrimaryName;
 	}
 
-	@computed public get hasValidationErrors(): boolean {
+	@computed get hasValidationErrors(): boolean {
 		return (
 			this.validationError_duplicateArtist ||
 			this.validationError_needArtist ||
@@ -274,13 +274,13 @@ export class SongEditStore {
 		);
 	}
 
-	@computed public get eventDate(): Moment | undefined {
+	@computed get eventDate(): Moment | undefined {
 		return this.releaseEvent.entry && this.releaseEvent.entry.date
 			? moment(this.releaseEvent.entry.date)
 			: undefined;
 	}
 
-	@computed public get firstPvDate(): Moment | undefined {
+	@computed get firstPvDate(): Moment | undefined {
 		return this.pvs.pvs
 			.filter(
 				(pv) => !!pv.contract.publishDate && pv.pvType === PVType.Original,
@@ -290,7 +290,7 @@ export class SongEditStore {
 			.head();
 	}
 
-	@computed public get suggestedPublishDate(): PotentialDate | undefined {
+	@computed get suggestedPublishDate(): PotentialDate | undefined {
 		return [
 			{ date: this.albumReleaseDate, source: 'Album' },
 			{ date: this.firstPvDate, source: 'PV' },
@@ -304,7 +304,7 @@ export class SongEditStore {
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
 	// customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-	public addArtist = async (
+	addArtist = async (
 		artistId?: number,
 		customArtistName?: string,
 	): Promise<void> => {
@@ -342,15 +342,15 @@ export class SongEditStore {
 		}
 	};
 
-	public customizeName = (artistLink: ArtistForAlbumEditStore): void => {
+	customizeName = (artistLink: ArtistForAlbumEditStore): void => {
 		this.editedArtistLink.open(artistLink);
 	};
 
-	public editArtistRoles = (artist: ArtistForAlbumEditStore): void => {
+	editArtistRoles = (artist: ArtistForAlbumEditStore): void => {
 		this.artistRolesEditStore.show(artist);
 	};
 
-	@action public findOriginalSongSuggestions = async (): Promise<void> => {
+	@action findOriginalSongSuggestions = async (): Promise<void> => {
 		this.originalVersionSuggestions = [];
 
 		const names = (this.names.getPrimaryNames().length
@@ -379,15 +379,15 @@ export class SongEditStore {
 	};
 
 	// Removes an artist from this album.
-	@action public removeArtist = (artist: ArtistForAlbumEditStore): void => {
+	@action removeArtist = (artist: ArtistForAlbumEditStore): void => {
 		pull(this.artistLinks, artist);
 	};
 
-	@action public selectOriginalVersion = (song: SongContract): void => {
+	@action selectOriginalVersion = (song: SongContract): void => {
 		this.originalVersion.id = song.id;
 	};
 
-	@action public submit = async (requestToken: string): Promise<number> => {
+	@action submit = async (requestToken: string): Promise<number> => {
 		this.submitting = true;
 
 		try {

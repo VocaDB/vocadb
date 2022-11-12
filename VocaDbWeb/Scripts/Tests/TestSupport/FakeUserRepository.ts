@@ -11,12 +11,12 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
 export class FakeUserRepository extends UserRepository {
-	public message!: UserMessageSummaryContract;
-	public messages!: UserMessageSummaryContract[];
-	public songId!: number;
-	public rating!: SongVoteRating;
+	message!: UserMessageSummaryContract;
+	messages!: UserMessageSummaryContract[];
+	songId!: number;
+	rating!: SongVoteRating;
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
 		this.getMessage = ({

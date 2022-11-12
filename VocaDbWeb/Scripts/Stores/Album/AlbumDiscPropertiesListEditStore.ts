@@ -4,11 +4,11 @@ import { BasicListEditStore } from '@/Stores/BasicListEditStore';
 import { makeObservable, observable } from 'mobx';
 
 export class AlbumDiscPropertiesEditStore {
-	public readonly id!: number;
-	@observable public mediaType: DiscMediaType;
-	@observable public name: string;
+	readonly id!: number;
+	@observable mediaType: DiscMediaType;
+	@observable name: string;
 
-	public constructor(contract?: AlbumDiscPropertiesContract) {
+	constructor(contract?: AlbumDiscPropertiesContract) {
 		makeObservable(this);
 
 		if (contract) {
@@ -26,7 +26,7 @@ export class AlbumDiscPropertiesListEditStore extends BasicListEditStore<
 	AlbumDiscPropertiesEditStore,
 	AlbumDiscPropertiesContract
 > {
-	public constructor(contracts: AlbumDiscPropertiesContract[]) {
+	constructor(contracts: AlbumDiscPropertiesContract[]) {
 		super(AlbumDiscPropertiesEditStore, contracts);
 	}
 }

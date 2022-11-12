@@ -10,16 +10,16 @@ export interface IEditableArtistWithSupport {
 
 // Store for editing artist for album link.
 export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
-	public readonly artist: ArtistContract;
+	readonly artist: ArtistContract;
 	// Unique link Id.
-	public readonly id: number;
-	public isCustomName: boolean;
-	@observable public isSupport: boolean;
-	@observable public name: string;
-	@observable public nameDialogVisible = false;
-	@observable public rolesArray: string[];
+	readonly id: number;
+	isCustomName: boolean;
+	@observable isSupport: boolean;
+	@observable name: string;
+	@observable nameDialogVisible = false;
+	@observable rolesArray: string[];
 
-	public constructor(data: ArtistForAlbumContract) {
+	constructor(data: ArtistForAlbumContract) {
 		makeObservable(this);
 
 		this.artist = data.artist!;
@@ -34,23 +34,23 @@ export class ArtistForAlbumEditStore implements IEditableArtistWithSupport {
 	}
 
 	// Whether the roles of this artist can be customized.
-	@computed public get isCustomizable(): boolean {
+	@computed get isCustomizable(): boolean {
 		return !this.artist || ArtistHelper.isCustomizable(this.artist.artistType);
 	}
 
 	// Roles as comma-separated string (for serializing to and from .NET enum for the server)
-	@computed public get roles(): string {
+	@computed get roles(): string {
 		return this.rolesArray.join();
 	}
-	public set roles(value: string) {
+	set roles(value: string) {
 		this.rolesArray = value.split(',').map((val) => val.trim());
 	}
 
-	@computed public get rolesArrayTyped(): ArtistRoles[] {
+	@computed get rolesArrayTyped(): ArtistRoles[] {
 		return ArtistHelper.getRolesArray(this.rolesArray);
 	}
 
-	public toContract = (): ArtistForAlbumContract => {
+	toContract = (): ArtistForAlbumContract => {
 		return {
 			artist: this.artist,
 			id: this.id,

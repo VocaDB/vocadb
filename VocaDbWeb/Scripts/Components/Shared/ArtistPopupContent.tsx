@@ -18,7 +18,7 @@ export const ArtistPopupContent = React.memo(
 				<div className="thumbnail">
 					<img
 						src={UrlHelper.imageThumb(artist.mainPicture, ImageSize.TinyThumb)}
-						alt="Thumb" /* TODO: localize */
+						alt="Thumb" /* LOC */
 						className="coverPicThumb"
 					/>
 				</div>

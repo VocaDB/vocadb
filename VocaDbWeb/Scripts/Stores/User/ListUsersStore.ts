@@ -49,21 +49,21 @@ const validate = ajv.compile(schema);
 
 export class ListUsersStore
 	implements LocationStateStore<ListUsersRouteParams> {
-	@observable public disabledUsers = false;
-	@observable public group = UserGroup.Nothing;
-	@observable public loading = false;
-	@observable public knowsLanguage = '';
-	@observable public onlyVerifiedArtists = false;
-	@observable public page: UserApiContract[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	@observable public searchTerm = '';
-	@observable public sort = UserSortRule.RegisterDate;
+	@observable disabledUsers = false;
+	@observable group = UserGroup.Nothing;
+	@observable loading = false;
+	@observable knowsLanguage = '';
+	@observable onlyVerifiedArtists = false;
+	@observable page: UserApiContract[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	@observable searchTerm = '';
+	@observable sort = UserSortRule.RegisterDate;
 
-	public constructor(private readonly userRepo: UserRepository) {
+	constructor(private readonly userRepo: UserRepository) {
 		makeObservable(this);
 	}
 
-	@computed.struct public get locationState(): ListUsersRouteParams {
+	@computed.struct get locationState(): ListUsersRouteParams {
 		return {
 			disabledUsers: this.disabledUsers,
 			filter: this.searchTerm,
@@ -75,7 +75,7 @@ export class ListUsersStore
 			sort: this.sort,
 		};
 	}
-	public set locationState(value: ListUsersRouteParams) {
+	set locationState(value: ListUsersRouteParams) {
 		this.disabledUsers = value.disabledUsers ?? false;
 		this.searchTerm = value.filter ?? '';
 		this.group = value.groupId ?? UserGroup.Nothing;
@@ -86,13 +86,13 @@ export class ListUsersStore
 		this.sort = value.sort ?? UserSortRule.RegisterDate;
 	}
 
-	public validateLocationState = (data: any): data is ListUsersRouteParams => {
+	validateLocationState = (data: any): data is ListUsersRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -121,15 +121,15 @@ export class ListUsersStore
 		});
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<ListUsersRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

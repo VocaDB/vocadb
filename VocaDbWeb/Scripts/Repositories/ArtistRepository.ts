@@ -46,7 +46,7 @@ export class ArtistRepository
 
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -72,7 +72,7 @@ export class ArtistRepository
 		};
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId: artistId,
 		contract,
 	}: {
@@ -85,7 +85,7 @@ export class ArtistRepository
 		);
 	};
 
-	public createReport = ({
+	createReport = ({
 		artistId,
 		reportType,
 		notes,
@@ -112,23 +112,19 @@ export class ArtistRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
 		);
 	};
 
-	public findDuplicate: ({
+	findDuplicate: ({
 		params,
 	}: {
 		params: any;
 	}) => Promise<DuplicateEntryResultContract[]>;
 
-	public getComments = ({
+	getComments = ({
 		entryId: artistId,
 	}: {
 		entryId: number;
@@ -138,16 +134,12 @@ export class ArtistRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<ArtistForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<ArtistForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
 		return this.httpClient.get<ArtistForEditContract>(url);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
@@ -161,7 +153,7 @@ export class ArtistRepository
 		});
 	};
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
 		id,
 		fields,
 		lang,
@@ -177,7 +169,7 @@ export class ArtistRepository
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		paging,
 		lang,
 		query,
@@ -229,7 +221,7 @@ export class ArtistRepository
 		);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		artistId,
 	}: {
 		artistId: number;
@@ -239,7 +231,7 @@ export class ArtistRepository
 		);
 	};
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -252,17 +244,13 @@ export class ArtistRepository
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<ArtistDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<ArtistDetailsContract> => {
 		return this.httpClient.get<ArtistDetailsContract>(
 			this.urlMapper.mapRelative(`/api/artists/${id}/details`),
 		);
 	};
 
-	public getArtistWithArchivedVersions = ({
+	getArtistWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -272,7 +260,7 @@ export class ArtistRepository
 		>(this.urlMapper.mapRelative(`/api/artists/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -285,7 +273,7 @@ export class ArtistRepository
 		);
 	};
 
-	public create = (
+	create = (
 		requestToken: string,
 		contract: CreateArtistContract,
 		pictureUpload: File | undefined,
@@ -307,7 +295,7 @@ export class ArtistRepository
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: ArtistForEditContract,
 		coverPicUpload: File | undefined,
@@ -332,7 +320,7 @@ export class ArtistRepository
 		);
 	};
 
-	public merge = (
+	merge = (
 		requestToken: string,
 		{ id, targetArtistId }: { id: number; targetArtistId: number },
 	): Promise<void> => {
@@ -351,7 +339,7 @@ export class ArtistRepository
 		);
 	};
 
-	public requestVerification = (
+	requestVerification = (
 		requestToken: string,
 		{
 			artistId,

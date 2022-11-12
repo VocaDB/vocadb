@@ -35,28 +35,28 @@ import {
 } from 'mobx';
 
 export class DownloadTagsStore {
-	@observable public dialogVisible = false;
-	@observable public formatString: string;
+	@observable dialogVisible = false;
+	@observable formatString: string;
 
-	public constructor(public readonly albumId: number, formatString: string) {
+	constructor(readonly albumId: number, formatString: string) {
 		makeObservable(this);
 
 		this.formatString = formatString;
 	}
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.dialogVisible = true;
 	};
 }
 
 export class EditCollectionStore {
-	@observable public dialogVisible = false;
-	@observable public albumMediaType;
-	@observable public albumPurchaseStatus;
-	@observable public collectionRating;
+	@observable dialogVisible = false;
+	@observable albumMediaType;
+	@observable albumPurchaseStatus;
+	@observable collectionRating;
 
-	public constructor(
-		public readonly albumId: number,
+	constructor(
+		readonly albumId: number,
 		albumMediaType: MediaType,
 		albumPurchaseStatus: PurchaseStatus,
 		collectionRating: number,
@@ -70,19 +70,19 @@ export class EditCollectionStore {
 }
 
 export class AlbumReviewStore {
-	public readonly date: string;
-	@observable public editedTitle = '';
-	@observable public editedText = '';
-	public readonly id?: number;
-	@observable public languageCode: string;
-	@observable public text: string;
-	@observable public title: string;
-	public readonly user: UserApiContract;
+	readonly date: string;
+	@observable editedTitle = '';
+	@observable editedText = '';
+	readonly id?: number;
+	@observable languageCode: string;
+	@observable text: string;
+	@observable title: string;
+	readonly user: UserApiContract;
 
-	public constructor(
+	constructor(
 		contract: AlbumReviewContract,
-		public readonly canBeDeleted: boolean,
-		public readonly canBeEdited: boolean,
+		readonly canBeDeleted: boolean,
+		readonly canBeEdited: boolean,
 	) {
 		makeObservable(this);
 
@@ -94,17 +94,17 @@ export class AlbumReviewStore {
 		this.user = contract.user;
 	}
 
-	@action public beginEdit = (): void => {
+	@action beginEdit = (): void => {
 		this.editedTitle = this.title;
 		this.editedText = this.text;
 	};
 
-	@action public saveChanges = (): void => {
+	@action saveChanges = (): void => {
 		this.text = this.editedText;
 		this.title = this.editedTitle;
 	};
 
-	public toContract = (): AlbumReviewContract => {
+	toContract = (): AlbumReviewContract => {
 		return {
 			date: new Date(this.date).toISOString(),
 			id: this.id,
@@ -117,16 +117,16 @@ export class AlbumReviewStore {
 }
 
 export class AlbumReviewsStore {
-	@observable public editReviewStore?: AlbumReviewStore;
-	@observable public languageCode = '';
-	@observable public newReviewText = '';
-	@observable public newReviewTitle = '';
-	@observable public reviews: AlbumReviewStore[] = [];
-	@observable public showCreateNewReview = false;
-	@observable public writeReview = false;
+	@observable editReviewStore?: AlbumReviewStore;
+	@observable languageCode = '';
+	@observable newReviewText = '';
+	@observable newReviewTitle = '';
+	@observable reviews: AlbumReviewStore[] = [];
+	@observable showCreateNewReview = false;
+	@observable writeReview = false;
 	@observable private userRatings: AlbumForUserForApiContract[] = [];
 
-	public constructor(
+	constructor(
 		private readonly albumRepo: AlbumRepository,
 		private readonly albumId: number,
 		private readonly canDeleteAllComments: boolean,
@@ -136,7 +136,7 @@ export class AlbumReviewsStore {
 		makeObservable(this);
 	}
 
-	@computed public get reviewAlreadySubmitted(): boolean {
+	@computed get reviewAlreadySubmitted(): boolean {
 		return this.reviews.some(
 			(review) =>
 				review.user.id === this.loggedUserId &&
@@ -144,12 +144,12 @@ export class AlbumReviewsStore {
 		);
 	}
 
-	@action public beginEditReview = (review: AlbumReviewStore): void => {
+	@action beginEditReview = (review: AlbumReviewStore): void => {
 		review.beginEdit();
 		this.editReviewStore = review;
 	};
 
-	@action public cancelEditReview = (): void => {
+	@action cancelEditReview = (): void => {
 		this.editReviewStore = undefined;
 	};
 
@@ -169,7 +169,7 @@ export class AlbumReviewsStore {
 		);
 	};
 
-	@action public createNewReview = async (): Promise<void> => {
+	@action createNewReview = async (): Promise<void> => {
 		const contract = {
 			date: new Date().toLocaleDateString(),
 			languageCode: this.languageCode,
@@ -196,7 +196,7 @@ export class AlbumReviewsStore {
 		});
 	};
 
-	@action public deleteReview = (review: AlbumReviewStore): Promise<void> => {
+	@action deleteReview = (review: AlbumReviewStore): Promise<void> => {
 		pull(this.reviews, review);
 
 		return this.albumRepo.deleteReview({
@@ -205,7 +205,7 @@ export class AlbumReviewsStore {
 		});
 	};
 
-	public getRatingForUser = (userId: number): number => {
+	getRatingForUser = (userId: number): number => {
 		return this.userRatings
 			.filter(
 				(rating) =>
@@ -215,14 +215,14 @@ export class AlbumReviewsStore {
 			.take(1)[0];
 	};
 
-	public ratingStars = (userRating: number): { enabled: boolean }[] => {
+	ratingStars = (userRating: number): { enabled: boolean }[] => {
 		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
 			enabled: Math.round(userRating) >= rating,
 		}));
 		return ratings;
 	};
 
-	@action public saveEditedReview = (): void => {
+	@action saveEditedReview = (): void => {
 		if (!this.editReviewStore) return;
 
 		this.editReviewStore.saveChanges();
@@ -236,7 +236,7 @@ export class AlbumReviewsStore {
 		this.editReviewStore = undefined;
 	};
 
-	public loadReviews = async (): Promise<void> => {
+	loadReviews = async (): Promise<void> => {
 		const [reviews, ratings] = await Promise.all([
 			this.albumRepo.getReviews({ albumId: this.albumId }),
 			this.albumRepo.getUserCollections({ albumId: this.albumId }),
@@ -257,21 +257,21 @@ export class AlbumReviewsStore {
 }
 
 export class AlbumDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	public readonly downloadTagsDialog: DownloadTagsStore;
-	public readonly editCollectionDialog: EditCollectionStore;
+	readonly comments: EditableCommentsStore;
+	readonly downloadTagsDialog: DownloadTagsStore;
+	readonly editCollectionDialog: EditCollectionStore;
 	private readonly id: number;
-	public readonly reportStore: ReportEntryStore;
-	public readonly description: EnglishTranslatedStringStore;
-	public readonly personalDescription: SelfDescriptionStore;
-	public readonly reviewsStore: AlbumReviewsStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
-	@observable public userHasAlbum;
-	@observable public usersContent?: string;
-	@observable public userCollectionsPopupVisible = false;
+	readonly reportStore: ReportEntryStore;
+	readonly description: EnglishTranslatedStringStore;
+	readonly personalDescription: SelfDescriptionStore;
+	readonly reviewsStore: AlbumReviewsStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
+	@observable userHasAlbum;
+	@observable usersContent?: string;
+	@observable userCollectionsPopupVisible = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		loginManager: LoginManager,
 		albumRepo: AlbumRepository,
@@ -366,7 +366,7 @@ export class AlbumDetailsStore {
 		);
 	}
 
-	public getUsers = async (): Promise<void> => {
+	getUsers = async (): Promise<void> => {
 		await $.post(
 			functions.mapAbsoluteUrl('/Album/UsersWithAlbumInCollection'),
 			{ albumId: this.id },

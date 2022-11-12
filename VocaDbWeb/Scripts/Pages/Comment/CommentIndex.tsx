@@ -5,8 +5,10 @@ import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEn
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
+import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
 import { LoginManager } from '@/Models/LoginManager';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -82,12 +84,45 @@ const CommentsFilters = observer(
 				</div>
 
 				<div className="control-group">
-					<div className="control-label">User{/* TODO: localize */}</div>
+					<div className="control-label">User{/* LOC */}</div>
 					<div className="controls">
 						<UserLockingAutoComplete
 							basicEntryLinkStore={commentListStore.user}
 						/>
 					</div>
+				</div>
+			</div>
+		);
+	},
+);
+
+interface CommentWithEntryProps {
+	entry: EntryWithCommentsContract;
+}
+
+const CommentWithEntry = observer(
+	({ entry }: CommentWithEntryProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (
+			entry.comments.every((comment) => mutedUsers.includes(comment.author.id))
+		) {
+			return <></>;
+		}
+
+		return (
+			<div className="row-fluid comment-with-entry well well-transparent">
+				<div className="span5">
+					{entry.comments.map((comment) => (
+						<CommentBodyLarge
+							contract={comment}
+							allowDelete={false}
+							key={comment.id}
+						/>
+					))}
+				</div>
+
+				<div className="span5 item">
+					<CommentEntryItem entry={entry.entry} />
 				</div>
 			</div>
 		);
@@ -103,24 +138,7 @@ const CommentSearchList = observer(
 		return (
 			<>
 				{commentListStore.entries.map((entry, index) => (
-					<div
-						className="row-fluid comment-with-entry well well-transparent"
-						key={index}
-					>
-						<div className="span5">
-							{entry.comments.map((comment) => (
-								<CommentBodyLarge
-									contract={comment}
-									allowDelete={false}
-									key={comment.id}
-								/>
-							))}
-						</div>
-
-						<div className="span5 item">
-							<CommentEntryItem entry={entry.entry} />
-						</div>
-					</div>
+					<CommentWithEntry entry={entry} key={index} />
 				))}
 			</>
 		);
@@ -136,7 +154,7 @@ const CommentIndex = observer(
 
 		const title = t('ViewRes.Comment:Index.RecentComments');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		useLocationStateStore(commentListStore);
 
@@ -144,7 +162,7 @@ const CommentIndex = observer(
 			<Layout title={title}>
 				<ul className="nav nav-pills">
 					<li>
-						<Link to="/ActivityEntry">All activity{/* TODO: localize */}</Link>
+						<Link to="/ActivityEntry">All activity{/* LOC */}</Link>
 					</li>
 					{loginManager.isLoggedIn && (
 						<li>
@@ -154,7 +172,7 @@ const CommentIndex = observer(
 						</li>
 					)}
 					<li className="active">
-						<Link to="/Comment">Comments{/* TODO: localize */}</Link>
+						<Link to="/Comment">Comments{/* LOC */}</Link>
 					</li>
 				</ul>
 

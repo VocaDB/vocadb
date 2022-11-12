@@ -24,10 +24,10 @@ import { Options } from 'highcharts';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class CustomizeArtistSubscriptionStore {
-	@observable public dialogVisible = false;
-	@observable public notificationsMethod: string /* TODO: enum */;
+	@observable dialogVisible = false;
+	@observable notificationsMethod: string /* TODO: enum */;
 
-	public constructor(emailNotifications: boolean, siteNotifications: boolean) {
+	constructor(emailNotifications: boolean, siteNotifications: boolean) {
 		makeObservable(this);
 
 		this.notificationsMethod = !siteNotifications
@@ -37,30 +37,30 @@ export class CustomizeArtistSubscriptionStore {
 			: 'Email';
 	}
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.dialogVisible = true;
 	};
 }
 
 export class ArtistDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	public readonly customizeSubscriptionDialog: CustomizeArtistSubscriptionStore;
-	@observable public hasArtistSubscription;
-	@observable public showAllMembers = false;
-	public readonly description: EnglishTranslatedStringStore;
-	public readonly songsStore: ArtistSongsStore;
-	@observable public songsOverTimeChart?: Options;
-	public readonly collaborationAlbumsStore: ArtistAlbumsStore;
-	public readonly mainAlbumsStore: ArtistAlbumsStore;
-	public readonly reportStore: ReportEntryStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
+	readonly comments: EditableCommentsStore;
+	readonly customizeSubscriptionDialog: CustomizeArtistSubscriptionStore;
+	@observable hasArtistSubscription;
+	@observable showAllMembers = false;
+	readonly description: EnglishTranslatedStringStore;
+	readonly songsStore: ArtistSongsStore;
+	@observable songsOverTimeChart?: Options;
+	readonly collaborationAlbumsStore: ArtistAlbumsStore;
+	readonly mainAlbumsStore: ArtistAlbumsStore;
+	readonly reportStore: ReportEntryStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		loginManager: LoginManager,
 		artistRepo: ArtistRepository,
-		public readonly artistId: number,
+		readonly artistId: number,
 		tagUsages: TagUsageForApiContract[],
 		hasSubscription: boolean,
 		emailNotifications: boolean,
@@ -144,7 +144,7 @@ export class ArtistDetailsStore {
 		);
 	}
 
-	public addFollowedArtist = (): Promise<void> => {
+	addFollowedArtist = (): Promise<void> => {
 		return this.userRepo
 			.createArtistSubscription({ artistId: this.artistId })
 			.then(() => {
@@ -155,7 +155,7 @@ export class ArtistDetailsStore {
 			});
 	};
 
-	public loadHighcharts = (): Promise<void> => {
+	loadHighcharts = (): Promise<void> => {
 		// Delayed load highcharts stuff
 		const highchartsPromise = import('highcharts');
 		const songsPerMonthDataPromise = this.songRepo.getOverTime({
@@ -169,9 +169,9 @@ export class ArtistDetailsStore {
 				if (points && points.length >= 2) {
 					runInAction(() => {
 						this.songsOverTimeChart = HighchartsHelper.dateLineChartWithAverage(
-							'Songs per month' /* TODO: localize */,
+							'Songs per month' /* LOC */,
 							null!,
-							'Songs' /* TODO: localize */,
+							'Songs' /* LOC */,
 							points,
 						);
 					});
@@ -180,7 +180,7 @@ export class ArtistDetailsStore {
 		);
 	};
 
-	public removeFollowedArtist = (): Promise<void> => {
+	removeFollowedArtist = (): Promise<void> => {
 		return this.userRepo
 			.deleteArtistSubscription({ artistId: this.artistId })
 			.then(() => {

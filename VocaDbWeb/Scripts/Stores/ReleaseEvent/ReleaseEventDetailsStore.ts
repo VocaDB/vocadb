@@ -27,14 +27,14 @@ import {
 } from 'mobx';
 
 export class ReleaseEventDetailsStore {
-	public readonly comments: EditableCommentsStore;
-	@observable public eventAssociationType?: UserEventRelationshipType;
-	public readonly reportStore: ReportEntryStore;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
-	@observable public usersAttending: UserBaseContract[];
+	readonly comments: EditableCommentsStore;
+	@observable eventAssociationType?: UserEventRelationshipType;
+	readonly reportStore: ReportEntryStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
+	@observable usersAttending: UserBaseContract[];
 
-	public constructor(
+	constructor(
 		private readonly loginManager: LoginManager,
 		httpClient: HttpClient,
 		urlMapper: UrlMapper,
@@ -93,19 +93,19 @@ export class ReleaseEventDetailsStore {
 		this.tagUsages = new TagListStore(tagUsages);
 	}
 
-	@computed public get hasEvent(): boolean {
+	@computed get hasEvent(): boolean {
 		return !!this.eventAssociationType;
 	}
 
-	@computed public get isEventAttending(): boolean {
+	@computed get isEventAttending(): boolean {
 		return this.eventAssociationType === UserEventRelationshipType.Attending;
 	}
 
-	@computed public get isEventInterested(): boolean {
+	@computed get isEventInterested(): boolean {
 		return this.eventAssociationType === UserEventRelationshipType.Interested;
 	}
 
-	@action public removeEvent = (): void => {
+	@action removeEvent = (): void => {
 		this.userRepo.deleteEventForUser({ eventId: this.eventId });
 		this.eventAssociationType = undefined;
 		const link = this.usersAttending.find(
@@ -114,7 +114,7 @@ export class ReleaseEventDetailsStore {
 		pull(this.usersAttending, link);
 	};
 
-	@action public setEventAttending = (): void => {
+	@action setEventAttending = (): void => {
 		this.userRepo.updateEventForUser({
 			eventId: this.eventId,
 			associationType: UserEventRelationshipType.Attending,
@@ -132,7 +132,7 @@ export class ReleaseEventDetailsStore {
 			});
 	};
 
-	@action public setEventInterested = (): void => {
+	@action setEventInterested = (): void => {
 		this.userRepo.updateEventForUser({
 			eventId: this.eventId,
 			associationType: UserEventRelationshipType.Interested,

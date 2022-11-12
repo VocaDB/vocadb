@@ -84,7 +84,7 @@ export const ShowRandomPageButton = React.memo(
 				className="navbar-languageBtn"
 				disabled={clicked}
 				onClick={handleClick}
-				title="Show random page" /* TODO: localize */
+				title="Show random page" /* LOC */
 			>
 				<i className="icon-random" />
 			</Button>

@@ -5,20 +5,20 @@ import { makeObservable, observable, reaction } from 'mobx';
 export class SongInAlbumEditStore {
 	private static nextId = 1;
 
-	public readonly id: number;
-	@observable public artists: ArtistContract[];
-	@observable public artistString: string;
-	@observable public discNumber: number;
-	public readonly isCustomTrack: boolean;
-	@observable public isNextDisc: boolean;
-	@observable public selected: boolean;
-	public readonly songAdditionalNames: string;
-	public readonly songId: number;
-	public readonly songInAlbumId: number;
-	public readonly songName: string;
-	@observable public trackNumber: number;
+	readonly id: number;
+	@observable artists: ArtistContract[];
+	@observable artistString: string;
+	@observable discNumber: number;
+	readonly isCustomTrack: boolean;
+	@observable isNextDisc: boolean;
+	@observable selected: boolean;
+	readonly songAdditionalNames: string;
+	readonly songId: number;
+	readonly songInAlbumId: number;
+	readonly songName: string;
+	@observable trackNumber: number;
 
-	public constructor(data: SongInAlbumEditContract) {
+	constructor(data: SongInAlbumEditContract) {
 		makeObservable(this);
 
 		this.id = SongInAlbumEditStore.nextId++;

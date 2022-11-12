@@ -6,7 +6,7 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedVenueData } from '@/Components/Shared/Partials/Venue/PrintArchivedVenueData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedVenueVersionDetailsContract } from '@/DataContracts/Venue/ArchivedVenueVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -43,9 +43,9 @@ const VenueViewVersionLayout = observer(
 	}: VenueViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -80,7 +80,7 @@ const VenueViewVersionLayout = observer(
 								to: `/Venue/Versions/${contract.venue.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -137,7 +137,7 @@ const VenueViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

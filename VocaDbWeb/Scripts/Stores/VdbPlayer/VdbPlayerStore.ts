@@ -31,14 +31,14 @@ const validate = ajv.compile(schema);
 
 export class VdbPlayerStore
 	implements LocalStorageStateStore<VdbPlayerLocalStorageState> {
-	@observable public bottomBarEnabled = true;
-	@observable public playing = false;
-	public readonly playQueue: PlayQueueStore;
-	@observable public playerBounds?: Rectangle;
-	@observable public percent = 0;
-	@observable public songleWidgetEnabled = false;
+	@observable bottomBarEnabled = true;
+	@observable playing = false;
+	readonly playQueue: PlayQueueStore;
+	@observable playerBounds?: Rectangle;
+	@observable percent = 0;
+	@observable songleWidgetEnabled = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		albumRepo: AlbumRepository,
 		eventRepo: ReleaseEventRepository,
@@ -67,22 +67,22 @@ export class VdbPlayerStore
 		);
 	}
 
-	@computed.struct public get localStorageState(): VdbPlayerLocalStorageState {
+	@computed.struct get localStorageState(): VdbPlayerLocalStorageState {
 		return {
 			bottomBarEnabled: this.bottomBarEnabled,
 		};
 	}
-	public set localStorageState(value: VdbPlayerLocalStorageState) {
+	set localStorageState(value: VdbPlayerLocalStorageState) {
 		this.bottomBarEnabled = value.bottomBarEnabled ?? true;
 	}
 
-	public validateLocalStorageState = (
+	validateLocalStorageState = (
 		localStorageState: any,
 	): localStorageState is VdbPlayerLocalStorageState => {
 		return validate(localStorageState);
 	};
 
-	@computed public get canAutoplay(): boolean {
+	@computed get canAutoplay(): boolean {
 		const currentItem = this.playQueue.currentItem;
 		if (!currentItem) return false;
 
@@ -90,27 +90,27 @@ export class VdbPlayerStore
 		return VideoServiceHelper.canAutoplayPV(pv);
 	}
 
-	@action public showBottomBar = (): void => {
+	@action showBottomBar = (): void => {
 		this.bottomBarEnabled = true;
 	};
 
-	@action public hideBottomBar = (): void => {
+	@action hideBottomBar = (): void => {
 		this.bottomBarEnabled = false;
 	};
 
-	@action public setPlaying = (value: boolean): void => {
+	@action setPlaying = (value: boolean): void => {
 		this.playing = value;
 	};
 
-	@action public setPlayerBounds = (value?: Rectangle): void => {
+	@action setPlayerBounds = (value?: Rectangle): void => {
 		this.playerBounds = value;
 	};
 
-	@action public setPercent = (value: number): void => {
+	@action setPercent = (value: number): void => {
 		this.percent = value;
 	};
 
-	@action public toggleSongleWidget = (): void => {
+	@action toggleSongleWidget = (): void => {
 		this.songleWidgetEnabled = !this.songleWidgetEnabled;
 	};
 }

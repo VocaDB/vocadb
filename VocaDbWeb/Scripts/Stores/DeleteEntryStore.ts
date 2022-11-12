@@ -1,26 +1,26 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class DeleteEntryStore {
-	@observable public dialogVisible = false;
-	@observable public notes = '';
+	@observable dialogVisible = false;
+	@observable notes = '';
 
-	public constructor(
+	constructor(
 		private readonly deleteCallback: (notes: string) => Promise<void>,
-		public readonly notesRequired = false,
+		readonly notesRequired = false,
 	) {
 		makeObservable(this);
 	}
 
-	@computed public get isValid(): boolean {
+	@computed get isValid(): boolean {
 		return !this.notesRequired || !!this.notes;
 	}
 
-	@action public deleteEntry = (): Promise<void> => {
+	@action deleteEntry = (): Promise<void> => {
 		this.dialogVisible = false;
 		return this.deleteCallback(this.notes);
 	};
 
-	@action public show = (): void => {
+	@action show = (): void => {
 		this.dialogVisible = true;
 	};
 }

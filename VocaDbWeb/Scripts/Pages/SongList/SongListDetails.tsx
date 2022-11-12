@@ -23,7 +23,8 @@ import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/Son
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
+import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -41,7 +42,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
-import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -71,6 +72,147 @@ const userRepo = new UserRepository(httpClient, urlMapper);
 const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 const pvPlayersFactory = new PVPlayersFactory();
+
+interface SongListDetailsTableRowProps {
+	songListStore: SongListStore;
+	item: SongInListContract & {
+		song: ISongSearchItem;
+	};
+}
+
+const SongListDetailsTableRow = observer(
+	({
+		songListStore,
+		item,
+	}: SongListDetailsTableRowProps): React.ReactElement => {
+		const { t } = useTranslation(['ViewRes.SongList']);
+
+		return (
+			<tr>
+				<td style={{ width: '75px' }}>
+					{item.song.mainPicture && item.song.mainPicture.urlThumb && (
+						<Link
+							to={EntryUrlMapper.details_song(item.song)}
+							title={item.song.additionalNames}
+						>
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<img
+								src={item.song.mainPicture.urlThumb}
+								title="Cover picture" /* LOC */
+								className="coverPicThumb img-rounded"
+								referrerPolicy="same-origin"
+							/>
+						</Link>
+					)}
+				</td>
+				<td>
+					{item.song.previewStore && item.song.previewStore.pvServices && (
+						<div className="pull-right">
+							<Button
+								onClick={(): void => item.song.previewStore?.togglePreview()}
+								className={classNames(
+									'previewSong',
+									item.song.previewStore.preview && 'active',
+								)}
+							>
+								<i className="icon-film" />{' '}
+								{t('ViewRes.SongList:Details.Preview')}
+							</Button>
+						</div>
+					)}
+					<span>{item.order}</span>.{' '}
+					<Link
+						to={EntryUrlMapper.details_song(item.song)}
+						title={item.song.additionalNames}
+					>
+						{item.song.name}
+					</Link>
+					{item.notes && (
+						<>
+							{' '}
+							<span>
+								(<span>{item.notes}</span>)
+							</span>
+						</>
+					)}{' '}
+					<SongTypeLabel songType={item.song.songType} />{' '}
+					{songListStore.pvServiceIcons
+						.getIconUrls(item.song.pvServices)
+						.map((icon, index) => (
+							<React.Fragment key={icon.service}>
+								{index > 0 && ' '}
+								{/* eslint-disable-next-line jsx-a11y/alt-text */}
+								<img src={icon.url} title={icon.service} />
+							</React.Fragment>
+						))}{' '}
+					<DraftIcon status={item.song.status} />
+					<br />
+					<small className="extraInfo">{item.song.artistString}</small>
+					{item.song.previewStore && item.song.previewStore.pvServices && (
+						<PVPreviewKnockout
+							previewStore={item.song.previewStore}
+							getPvServiceIcons={songListStore.pvServiceIcons.getIconUrls}
+						/>
+					)}
+				</td>
+				{songListStore.showTags && (
+					<td style={{ width: '33%' }}>
+						{item.song.tags && item.song.tags.length > 0 && (
+							<div>
+								<i className="icon icon-tags fix-icon-margin" />{' '}
+								{item.song.tags.map((tag, index) => (
+									<React.Fragment key={tag.tag.id}>
+										{index > 0 && ', '}
+										<Link
+											to={songListStore.mapTagUrl(tag)}
+											title={tag.tag.additionalNames}
+										>
+											{tag.tag.name}
+										</Link>
+									</React.Fragment>
+								))}
+							</div>
+						)}
+					</td>
+				)}
+			</tr>
+		);
+	},
+);
+
+interface SongListDetailsTableBodyProps {
+	songListStore: SongListStore;
+}
+
+const SongListDetailsTableBody = observer(
+	({ songListStore }: SongListDetailsTableBodyProps): React.ReactElement => {
+		return (
+			<tbody>
+				{songListStore.page.map((item, index) => (
+					<SongListDetailsTableRow
+						songListStore={songListStore}
+						item={item}
+						key={index}
+					/>
+				))}
+			</tbody>
+		);
+	},
+);
+
+interface SongListDetailsTableProps {
+	songListStore: SongListStore;
+}
+
+const SongListDetailsTable = observer(
+	({ songListStore }: SongListDetailsTableProps): React.ReactElement => {
+		return (
+			<table className="table table-striped">
+				<SongListDetailsTableBody songListStore={songListStore} />
+			</table>
+		);
+	},
+);
 
 const usePageProperties = (
 	songList: SongListContract,
@@ -123,7 +265,7 @@ const SongListDetailsLayout = observer(
 
 		const { pageTitle, title, subtitle, ready } = usePageProperties(songList);
 
-		useVocaDbTitle(pageTitle, ready);
+		useVdbTitle(pageTitle, ready);
 
 		useLocationStateStore(songListStore);
 
@@ -219,7 +361,7 @@ const SongListDetailsLayout = observer(
 							<img
 								className="media-object"
 								src={smallThumbUrl}
-								alt="Thumb" /* TODO: localize */
+								alt="Thumb" /* LOC */
 							/>
 						</a>
 					)}
@@ -316,10 +458,10 @@ const SongListDetailsLayout = observer(
 									),
 								);
 							}}
-							title="Play" /* TODO: localize */
+							title="Play" /* LOC */
 							className="btn-nomargin"
 						>
-							<i className="icon-play noMargin" /> Play{/* TODO: localize */}
+							<i className="icon-play noMargin" /> Play{/* LOC */}
 						</Button>
 					</ButtonGroup>
 					{!songListStore.playlistMode && (
@@ -449,108 +591,7 @@ const SongListDetailsLayout = observer(
 
 						<ServerSidePaging pagingStore={songListStore.paging} />
 
-						<table className="table table-striped">
-							<tbody>
-								{songListStore.page.map((item, index) => (
-									<tr key={index}>
-										<td style={{ width: '75px' }}>
-											{item.song.mainPicture && item.song.mainPicture.urlThumb && (
-												<Link
-													to={EntryUrlMapper.details_song(item.song)}
-													title={item.song.additionalNames}
-												>
-													{/* eslint-disable-next-line jsx-a11y/alt-text */}
-													<img
-														src={item.song.mainPicture.urlThumb}
-														title="Cover picture" /* TODO: localize */
-														className="coverPicThumb img-rounded"
-														referrerPolicy="same-origin"
-													/>
-												</Link>
-											)}
-										</td>
-										<td>
-											{item.song.previewStore &&
-												item.song.previewStore.pvServices && (
-													<div className="pull-right">
-														<Button
-															onClick={(): void =>
-																item.song.previewStore?.togglePreview()
-															}
-															className={classNames(
-																'previewSong',
-																item.song.previewStore.preview && 'active',
-															)}
-														>
-															<i className="icon-film" />{' '}
-															{t('ViewRes.SongList:Details.Preview')}
-														</Button>
-													</div>
-												)}
-											<span>{item.order}</span>.{' '}
-											<Link
-												to={EntryUrlMapper.details_song(item.song)}
-												title={item.song.additionalNames}
-											>
-												{item.song.name}
-											</Link>
-											{item.notes && (
-												<>
-													{' '}
-													<span>
-														(<span>{item.notes}</span>)
-													</span>
-												</>
-											)}{' '}
-											<SongTypeLabel songType={item.song.songType} />{' '}
-											{songListStore.pvServiceIcons
-												.getIconUrls(item.song.pvServices)
-												.map((icon, index) => (
-													<React.Fragment key={icon.service}>
-														{index > 0 && ' '}
-														{/* eslint-disable-next-line jsx-a11y/alt-text */}
-														<img src={icon.url} title={icon.service} />
-													</React.Fragment>
-												))}{' '}
-											<DraftIcon status={item.song.status} />
-											<br />
-											<small className="extraInfo">
-												{item.song.artistString}
-											</small>
-											{item.song.previewStore &&
-												item.song.previewStore.pvServices && (
-													<PVPreviewKnockout
-														previewStore={item.song.previewStore}
-														getPvServiceIcons={
-															songListStore.pvServiceIcons.getIconUrls
-														}
-													/>
-												)}
-										</td>
-										{songListStore.showTags && (
-											<td style={{ width: '33%' }}>
-												{item.song.tags && item.song.tags.length > 0 && (
-													<div>
-														<i className="icon icon-tags fix-icon-margin" />{' '}
-														{item.song.tags.map((tag, index) => (
-															<React.Fragment key={tag.tag.id}>
-																{index > 0 && ', '}
-																<Link
-																	to={songListStore.mapTagUrl(tag)}
-																	title={tag.tag.additionalNames}
-																>
-																	{tag.tag.name}
-																</Link>
-															</React.Fragment>
-														))}
-													</div>
-												)}
-											</td>
-										)}
-									</tr>
-								))}
-							</tbody>
-						</table>
+						<SongListDetailsTable songListStore={songListStore} />
 
 						<ServerSidePaging pagingStore={songListStore.paging} />
 					</div>

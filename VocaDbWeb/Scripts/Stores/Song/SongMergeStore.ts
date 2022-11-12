@@ -12,12 +12,12 @@ import {
 } from 'mobx';
 
 export class SongMergeStore {
-	@observable public submitting = false;
-	public readonly target: BasicEntryLinkStore<SongContract>;
-	@observable public validationError_targetIsLessComplete = false;
-	@observable public validationError_targetIsNewer = false;
+	@observable submitting = false;
+	readonly target: BasicEntryLinkStore<SongContract>;
+	@observable validationError_targetIsLessComplete = false;
+	@observable validationError_targetIsNewer = false;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly songRepo: SongRepository,
 		private readonly song: SongContract,
@@ -40,7 +40,7 @@ export class SongMergeStore {
 		);
 	}
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		targetSongId: number,
 	): Promise<void> => {

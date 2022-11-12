@@ -15,32 +15,32 @@ import {
 } from 'mobx';
 
 export class ImportSongListStore {
-	@observable public description = '';
-	@observable public items: ImportedSongInListContract[] = [];
-	@observable public name = '';
-	@observable public nextPageToken?: string;
-	@observable public onlyRanked = false;
-	@observable public parsed = false;
-	@observable public submitting = false;
-	@observable public totalSongs?: number;
-	@observable public url = '';
+	@observable description = '';
+	@observable items: ImportedSongInListContract[] = [];
+	@observable name = '';
+	@observable nextPageToken?: string;
+	@observable onlyRanked = false;
+	@observable parsed = false;
+	@observable submitting = false;
+	@observable totalSongs?: number;
+	@observable url = '';
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
 		makeObservable(this);
 	}
 
-	@computed public get missingSongs(): boolean {
+	@computed get missingSongs(): boolean {
 		return this.items.some((i) => i.matchedSong == null);
 	}
 
-	@computed public get hasMore(): boolean {
+	@computed get hasMore(): boolean {
 		return this.nextPageToken != null;
 	}
 
-	public loadMore = async (): Promise<void> => {
+	loadMore = async (): Promise<void> => {
 		const result = await this.httpClient.get<PartialImportedSongs>(
 			this.urlMapper.mapRelative('/api/songLists/import-songs'),
 			{
@@ -56,7 +56,7 @@ export class ImportSongListStore {
 		});
 	};
 
-	public parse = async (): Promise<void> => {
+	parse = async (): Promise<void> => {
 		const songList = await this.httpClient.get<ImportedSongListContract>(
 			this.urlMapper.mapRelative('/api/songLists/import'),
 			{
@@ -75,7 +75,7 @@ export class ImportSongListStore {
 		});
 	};
 
-	@action public submit = async (): Promise<number> => {
+	@action submit = async (): Promise<number> => {
 		try {
 			this.submitting = true;
 

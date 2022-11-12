@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { forOwn } from 'lodash-es';
 
 export class AjaxHelper {
-	public static createUrl = (params: {
+	static createUrl = (params: {
 		[key: string]: string[] | number[];
 	}): string | null => {
 		if (!params) return null;
@@ -23,7 +23,7 @@ export class AjaxHelper {
 		return query;
 	};
 
-	public static stringify = (params: any): string => {
+	static stringify = (params: any): string => {
 		// HACK: Removes undefined.
 		// Code from: https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript/30386744#30386744
 		return $.param(JSON.parse(JSON.stringify(params)));

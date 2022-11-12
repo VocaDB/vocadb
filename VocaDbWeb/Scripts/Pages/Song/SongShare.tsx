@@ -51,7 +51,7 @@ const SongShare = ({
 			</div>
 			<div>
 				<a href="http://daringfireball.net/projects/markdown/">
-					Markdown{/* TODO: localize */}
+					Markdown{/* LOC */}
 				</a>
 				<br />
 				<input

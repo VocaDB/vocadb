@@ -8,7 +8,7 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { regionNames } from '@/Components/regions';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -49,7 +49,7 @@ const VenueDetailsLayout = ({
 
 	const title = venue.name;
 
-	useVocaDbTitle(title, true);
+	useVdbTitle(title, true);
 
 	return (
 		<Layout

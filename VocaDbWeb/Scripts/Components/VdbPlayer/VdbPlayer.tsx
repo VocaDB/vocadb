@@ -10,7 +10,10 @@ import {
 	songleWidgetHeight,
 } from '@/Components/VdbPlayer/SongleWidget';
 import { VdbPlayerConsole } from '@/Components/VdbPlayer/VdbPlayerConsole';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -46,7 +49,8 @@ const repeatIcons: Record<RepeatMode, string> = {
 const PlayerCenterControls = observer(
 	(): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handlePrevious = React.useCallback(async () => {
 			if (playQueue.hasPreviousItem) {
@@ -83,7 +87,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title="Previous" /* TODO: localize */
+					title="Previous" /* LOC */
 					onClick={handlePrevious}
 					disabled={playQueue.isEmpty}
 				>
@@ -92,7 +96,7 @@ const PlayerCenterControls = observer(
 				{vdbPlayer.playing ? (
 					<Button
 						variant="inverse"
-						title="Pause" /* TODO: localize */
+						title="Pause" /* LOC */
 						onClick={handlePause}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -105,7 +109,7 @@ const PlayerCenterControls = observer(
 							vdbPlayer.canAutoplay
 								? ''
 								: ' (Unavailable for this video service)'
-						}`} /* TODO: localize */
+						}`} /* LOC */
 						onClick={handlePlay}
 						disabled={!vdbPlayer.canAutoplay}
 					>
@@ -114,7 +118,7 @@ const PlayerCenterControls = observer(
 				)}
 				<Button
 					variant="inverse"
-					title="Next" /* TODO: localize */
+					title="Next" /* LOC */
 					onClick={playQueue.next}
 					disabled={!playQueue.hasNextItem}
 				>
@@ -122,7 +126,7 @@ const PlayerCenterControls = observer(
 				</Button>
 				<Button
 					variant="inverse"
-					title={`Repeat: ${playQueue.repeat}` /* TODO: localize */}
+					title={`Repeat: ${playQueue.repeat}` /* LOC */}
 					onClick={playQueue.toggleRepeat}
 					className="hidden-phone"
 				>
@@ -248,7 +252,8 @@ const PlayerRightControls = observer(
 		const { t } = useTranslation(['ViewRes.Search']);
 
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleClickSkipBack10Seconds = React.useCallback(async () => {
 			const { currentTime } = playQueue;
@@ -314,19 +319,19 @@ const PlayerRightControls = observer(
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 						<Dropdown.Item as={Link} to="/playlist" className="visible-phone">
-							Show play queue{/* TODO: localize */}
+							Show play queue{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipBack10Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip back 10 seconds{/* TODO: localize */}
+							Skip back 10 seconds{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={handleClickSkipForward30Seconds}
 							disabled={!vdbPlayer.canAutoplay}
 						>
-							Skip forward 30 seconds{/* TODO: localize */}
+							Skip forward 30 seconds{/* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleShuffle}
@@ -334,24 +339,20 @@ const PlayerRightControls = observer(
 							className="visible-phone"
 							title="Coming soon!" /* TODO: Remove. */
 						>
-							{
-								`Shuffle: ${
-									playQueue.shuffle ? 'On' : 'Off'
-								}` /* TODO: localize */
-							}
+							{`Shuffle: ${playQueue.shuffle ? 'On' : 'Off'}` /* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Item
 							onClick={playQueue.toggleRepeat}
 							className="visible-phone"
 						>
-							{`Repeat: ${playQueue.repeat}` /* TODO: localize */}
+							{`Repeat: ${playQueue.repeat}` /* LOC */}
 						</Dropdown.Item>
 						<Dropdown.Divider />
 						<Dropdown.Item
 							onClick={handleClickRemoveFromPlayQueue}
 							disabled={playQueue.isEmpty}
 						>
-							Remove from play queue{/* TODO: localize */}
+							Remove from play queue{/* LOC */}
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
@@ -421,7 +422,8 @@ interface PVPlayerProps {
 const EmbedPVWrapper = observer(
 	({ pv }: PVPlayerProps): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleError = React.useCallback((event: any) => {
 			VdbPlayerConsole.error('error', event);
@@ -515,7 +517,8 @@ const EmbedPVWrapper = observer(
 
 const MiniPlayer = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		return (
 			<div
@@ -562,7 +565,7 @@ const MiniPlayer = observer(
 const SeekBar = observer(
 	(): React.ReactElement => {
 		const diva = useNostalgicDiva();
-		const { vdbPlayer } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
 
 		const ref = React.useRef<HTMLDivElement>(undefined!);
 		const handleClick = React.useCallback(
@@ -605,7 +608,7 @@ const SeekBar = observer(
 
 const BottomBar = observer(
 	(): React.ReactElement => {
-		const { vdbPlayer } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
 
 		// Code from: https://github.com/elastic/eui/blob/e07ee756120607b338d522ee8bcedd4228d02673/src/components/bottom_bar/bottom_bar.tsx#L137.
 		React.useEffect(() => {
@@ -651,7 +654,8 @@ export const VdbPlayer = observer(
 		VdbPlayerConsole.debug('VdbPlayer');
 
 		const diva = useNostalgicDiva();
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		useLocalStorageStateStore('PlayQueueStore', playQueue);
 		useLocalStorageStateStore('SkipListStore', playQueue.skipList);

@@ -23,57 +23,57 @@ import { SongType } from '@/Models/Songs/SongType';
 
 // Corresponds to the SongDetails class in C#.
 export class SongDetailsForApi {
-	public readonly additionalNames: string;
-	public readonly albums: AlbumForApiContract[];
-	public readonly alternateVersions: SongApiContract[];
-	public readonly animators: ArtistForSongContract[];
-	public readonly artistString?: string;
-	public readonly bands: ArtistForSongContract[];
-	public readonly browsedAlbumId?: number;
-	public readonly canEditPersonalDescription: boolean;
-	public readonly canRemoveTagUsages: boolean;
-	public readonly commentCount: number;
-	public readonly createDate: string;
-	public readonly deleted: boolean;
-	public readonly draft: boolean;
-	public readonly favoritedTimes: number;
-	public readonly hits: number;
-	public readonly id: number;
-	public readonly illustrators?: ArtistForSongContract[];
-	public readonly jsonModel: SongDetailsAjax;
-	public readonly latestComments: CommentContract[];
-	public readonly length: number;
-	public readonly likedTimes: number;
-	public readonly listCount: number;
-	public readonly lyrics: LyricsForSongContract[];
-	public readonly maxMilliBpm?: number;
-	public readonly mergedTo?: SongApiContract;
-	public readonly minMilliBpm?: number;
-	public readonly name: string;
-	public readonly notes: EnglishTranslatedStringContract;
-	public readonly originalPVs: PVContract[];
-	public readonly originalVersion?: SongApiContract;
-	public readonly otherArtists: ArtistForSongContract[];
-	public readonly otherPVs: PVContract[];
-	public readonly performers: ArtistForSongContract[];
-	public readonly personalDescriptionAuthor?: ArtistApiContract;
-	public readonly personalDescriptionText?: string;
-	public readonly pools: SongListBaseContract[];
-	public readonly primaryPV?: PVContract;
-	public readonly producers: ArtistForSongContract[];
-	public readonly publishDate?: string;
-	public readonly ratingScore: number;
-	public readonly releaseEvent?: ReleaseEventContract;
-	public readonly songType: SongType;
-	public readonly songTypeTag: TagBaseContract;
-	public readonly status: EntryStatus;
-	public readonly subject: ArtistForSongContract[];
-	public readonly suggestions: SongApiContract[];
-	public readonly tags: TagUsageForApiContract[];
-	public readonly userRating: string /* TODO: enum */;
-	public readonly webLinks: WebLinkContract[];
+	readonly additionalNames: string;
+	readonly albums: AlbumForApiContract[];
+	readonly alternateVersions: SongApiContract[];
+	readonly animators: ArtistForSongContract[];
+	readonly artistString?: string;
+	readonly bands: ArtistForSongContract[];
+	readonly browsedAlbumId?: number;
+	readonly canEditPersonalDescription: boolean;
+	readonly canRemoveTagUsages: boolean;
+	readonly commentCount: number;
+	readonly createDate: string;
+	readonly deleted: boolean;
+	readonly draft: boolean;
+	readonly favoritedTimes: number;
+	readonly hits: number;
+	readonly id: number;
+	readonly illustrators?: ArtistForSongContract[];
+	readonly jsonModel: SongDetailsAjax;
+	readonly latestComments: CommentContract[];
+	readonly length: number;
+	readonly likedTimes: number;
+	readonly listCount: number;
+	readonly lyrics: LyricsForSongContract[];
+	readonly maxMilliBpm?: number;
+	readonly mergedTo?: SongApiContract;
+	readonly minMilliBpm?: number;
+	readonly name: string;
+	readonly notes: EnglishTranslatedStringContract;
+	readonly originalPVs: PVContract[];
+	readonly originalVersion?: SongApiContract;
+	readonly otherArtists: ArtistForSongContract[];
+	readonly otherPVs: PVContract[];
+	readonly performers: ArtistForSongContract[];
+	readonly personalDescriptionAuthor?: ArtistApiContract;
+	readonly personalDescriptionText?: string;
+	readonly pools: SongListBaseContract[];
+	readonly primaryPV?: PVContract;
+	readonly producers: ArtistForSongContract[];
+	readonly publishDate?: string;
+	readonly ratingScore: number;
+	readonly releaseEvent?: ReleaseEventContract;
+	readonly songType: SongType;
+	readonly songTypeTag: TagBaseContract;
+	readonly status: EntryStatus;
+	readonly subject: ArtistForSongContract[];
+	readonly suggestions: SongApiContract[];
+	readonly tags: TagUsageForApiContract[];
+	readonly userRating: string /* TODO: enum */;
+	readonly webLinks: WebLinkContract[];
 
-	public constructor(public readonly contract: SongDetailsContract) {
+	constructor(readonly contract: SongDetailsContract) {
 		this.additionalNames = contract.additionalNames;
 		this.albums = contract.albums;
 		this.alternateVersions = contract.alternateVersions.filter(
@@ -210,20 +210,20 @@ export class SongDetailsForApi {
 }
 
 export class SongDetailsAjax {
-	public readonly id: number;
-	public readonly latestComments: CommentContract[];
-	public readonly linkedPages?: string[];
-	public readonly originalVersion?: SongApiContract;
-	public readonly selectedLyricsId: number;
-	public readonly selectedPvId: number;
-	public readonly personalDescriptionAuthor?: ArtistApiContract;
-	public readonly personalDescriptionText?: string;
-	public readonly songType: SongType;
-	public readonly tagUsages: TagUsageForApiContract[];
-	public readonly userRating: string;
-	public readonly version: number;
+	readonly id: number;
+	readonly latestComments: CommentContract[];
+	readonly linkedPages?: string[];
+	readonly originalVersion?: SongApiContract;
+	readonly selectedLyricsId: number;
+	readonly selectedPvId: number;
+	readonly personalDescriptionAuthor?: ArtistApiContract;
+	readonly personalDescriptionText?: string;
+	readonly songType: SongType;
+	readonly tagUsages: TagUsageForApiContract[];
+	readonly userRating: string;
+	readonly version: number;
 
-	public constructor(
+	constructor(
 		model: SongDetailsForApi,
 		preferredLyrics: LyricsForSongContract | undefined,
 		version: number,

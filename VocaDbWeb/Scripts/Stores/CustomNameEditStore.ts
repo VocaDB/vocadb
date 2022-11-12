@@ -2,21 +2,21 @@ import { ArtistForAlbumEditStore } from '@/Stores/ArtistForAlbumEditStore';
 import { action, makeObservable, observable } from 'mobx';
 
 export class CustomNameEditStore {
-	@observable public artistLink?: ArtistForAlbumEditStore;
-	@observable public dialogVisible = false;
-	@observable public name = '';
+	@observable artistLink?: ArtistForAlbumEditStore;
+	@observable dialogVisible = false;
+	@observable name = '';
 
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@action public open = (artist: ArtistForAlbumEditStore): void => {
+	@action open = (artist: ArtistForAlbumEditStore): void => {
 		this.artistLink = artist;
 		this.name = artist.isCustomName ? artist.name : '';
 		this.dialogVisible = true;
 	};
 
-	@action public save = (): void => {
+	@action save = (): void => {
 		const isCustomName = !!this.name;
 
 		this.artistLink!.isCustomName = isCustomName;

@@ -4,7 +4,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
@@ -44,9 +44,9 @@ const UserEditLayout = observer(
 
 		const contract = userEditStore.contract;
 
-		const title = `Edit user - ${contract.name}`; /* TODO: localize */
+		const title = `Edit user - ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const UserEditLayout = observer(
 							}}
 							divider
 						>
-							Users{/* TODO: localize */}
+							Users{/* LOC */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -83,14 +83,14 @@ const UserEditLayout = observer(
 								onClick={(e): void => {
 									if (
 										!window.confirm(
-											'Are you sure you want to clear ratings for this user?' /* TODO: localize */,
+											'Are you sure you want to clear ratings for this user?' /* LOC */,
 										)
 									) {
 										e.preventDefault();
 									}
 								}}
 							>
-								Clear user ratings{/* TODO: localize */}
+								Clear user ratings{/* LOC */}
 							</JQueryUIButton>
 						)}
 					</>
@@ -98,7 +98,7 @@ const UserEditLayout = observer(
 			>
 				{userEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to edit user." /* TODO: localize */
+						message="Unable to edit user." /* LOC */
 						errors={userEditStore.errors}
 					/>
 				)}
@@ -117,7 +117,7 @@ const UserEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to edit user.' /* TODO: localize */,
+									: 'Unable to edit user.' /* LOC */,
 							);
 
 							throw error;
@@ -125,7 +125,7 @@ const UserEditLayout = observer(
 					}}
 				>
 					<fieldset>
-						<legend>Account settings{/* TODO: localize */}</legend>
+						<legend>Account settings{/* LOC */}</legend>
 						<p>
 							<input
 								type="checkbox"
@@ -136,7 +136,7 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Active {/* TODO: localize */}
+							Active {/* LOC */}
 						</p>
 						<p>
 							<input
@@ -148,7 +148,7 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Poisoned (autoban for logging in) {/* TODO: localize */}
+							Poisoned (autoban for logging in) {/* LOC */}
 						</p>
 						<p>
 							<input
@@ -160,10 +160,10 @@ const UserEditLayout = observer(
 									})
 								}
 							/>{' '}
-							Patreon supporter {/* TODO: localize */}
+							Patreon supporter {/* LOC */}
 						</p>
 
-						<label htmlFor="name">Username{/* TODO: localize */}</label>
+						<label htmlFor="name">Username{/* LOC */}</label>
 						<input
 							type="text"
 							id="name"
@@ -176,7 +176,7 @@ const UserEditLayout = observer(
 							maxLength={100}
 						/>
 
-						<label htmlFor="email">Email{/* TODO: localize */}</label>
+						<label htmlFor="email">Email{/* LOC */}</label>
 						<input
 							type="text"
 							id="email"
@@ -189,7 +189,7 @@ const UserEditLayout = observer(
 							maxLength={50}
 						/>
 
-						<label htmlFor="groupId">User group{/* TODO: localize */}</label>
+						<label htmlFor="groupId">User group{/* LOC */}</label>
 						<select
 							id="groupId"
 							value={userEditStore.groupId}
@@ -222,7 +222,7 @@ const UserEditLayout = observer(
 					)}
 
 					<fieldset>
-						<legend>Owned artists{/* TODO: localize */}</legend>
+						<legend>Owned artists{/* LOC */}</legend>
 						<table>
 							<tbody id="ownedArtistsTableBody">
 								{userEditStore.ownedArtists.map((ownedArtist, index) => (

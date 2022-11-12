@@ -23,10 +23,10 @@ import {
 
 export class TagEditStore {
 	// Bitmask for all possible entry types (all bits 1)
-	public static readonly allEntryTypes = 1073741823;
+	static readonly allEntryTypes = 1073741823;
 
-	@observable public defaultNameLanguage: string;
-	public readonly deleteStore = new DeleteEntryStore(
+	@observable defaultNameLanguage: string;
+	readonly deleteStore = new DeleteEntryStore(
 		async (notes) =>
 			await $.ajax(
 				this.urlMapper.mapRelative(
@@ -42,16 +42,16 @@ export class TagEditStore {
 				},
 			),
 	);
-	public readonly description: EnglishTranslatedStringEditStore;
-	@observable public errors?: Record<string, string[]>;
-	@observable public hideFromSuggestions: boolean;
-	public readonly names: NamesEditStore;
-	@observable public parent: BasicEntryLinkStore<TagBaseContract>;
-	@observable public relatedTags: TagBaseContract[];
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
-	@observable public targets: EntryType;
-	public readonly trashStore = new DeleteEntryStore(
+	readonly description: EnglishTranslatedStringEditStore;
+	@observable errors?: Record<string, string[]>;
+	@observable hideFromSuggestions: boolean;
+	readonly names: NamesEditStore;
+	@observable parent: BasicEntryLinkStore<TagBaseContract>;
+	@observable relatedTags: TagBaseContract[];
+	@observable status: EntryStatus;
+	@observable submitting = false;
+	@observable targets: EntryType;
+	readonly trashStore = new DeleteEntryStore(
 		async (notes) =>
 			await $.ajax(
 				this.urlMapper.mapRelative(
@@ -67,13 +67,13 @@ export class TagEditStore {
 				},
 			),
 	);
-	@observable public updateNotes = '';
-	public readonly webLinks: WebLinksEditStore;
+	@observable updateNotes = '';
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly tagRepo: TagRepository,
 		private readonly urlMapper: UrlMapper,
-		public readonly contract: TagForEditContract,
+		readonly contract: TagForEditContract,
 	) {
 		makeObservable(this);
 
@@ -94,35 +94,35 @@ export class TagEditStore {
 		this.webLinks = new WebLinksEditStore(contract.webLinks);
 	}
 
-	@computed public get parentName(): string | undefined {
+	@computed get parentName(): string | undefined {
 		return this.parent?.name ?? undefined;
 	}
 
-	@computed public get validationError_needDescription(): boolean {
+	@computed get validationError_needDescription(): boolean {
 		return !this.description.original && isEmpty(this.webLinks.items);
 	}
 
-	@computed public get hasValidationErrors(): boolean {
+	@computed get hasValidationErrors(): boolean {
 		return this.validationError_needDescription;
 	}
 
-	@action public addRelatedTag = (tag: TagBaseContract): number => {
+	@action addRelatedTag = (tag: TagBaseContract): number => {
 		return this.relatedTags.push(tag);
 	};
 
-	@action public removeRelatedTag = (tag: TagBaseContract): void => {
+	@action removeRelatedTag = (tag: TagBaseContract): void => {
 		pull(this.relatedTags, tag);
 	};
 
-	public denySelf = (tag: TagBaseContract): boolean => {
+	denySelf = (tag: TagBaseContract): boolean => {
 		return tag && tag.id !== this.contract.id;
 	};
 
-	public allowRelatedTag = (tag: TagBaseContract): boolean => {
+	allowRelatedTag = (tag: TagBaseContract): boolean => {
 		return this.denySelf(tag) && this.relatedTags.every((t) => t.id !== tag.id);
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		categoryName: string /* HACK */,
 		thumbPicUpload: File | undefined,
@@ -173,11 +173,11 @@ export class TagEditStore {
 
 	private hasFlag = (t: TagTargetTypes): boolean => (this.targets & t) === t;
 
-	public hasTargetType = (target: TagTargetTypes): boolean => {
+	hasTargetType = (target: TagTargetTypes): boolean => {
 		return this.hasFlag(target);
 	};
 
-	public setTargetType = (target: TagTargetTypes, flag: boolean): void => {
+	setTargetType = (target: TagTargetTypes, flag: boolean): void => {
 		const hasFlag = (t: TagTargetTypes): boolean => (this.targets & t) === t;
 		const checkFlags = (): void => {
 			const types = [

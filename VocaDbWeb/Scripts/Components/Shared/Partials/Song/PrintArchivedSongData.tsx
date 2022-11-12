@@ -24,14 +24,11 @@ export const PrintArchivedSongData = React.memo(
 	({ comparedSongs }: PrintArchivedSongDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* TODO: localize */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
-						<DataRow
-							name="Id" /* TODO: localize */
-							val={comparedSongs.firstData.id}
-						/>
+						<DataRow name="Id" /* LOC */ val={comparedSongs.firstData.id} />
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<TranslatedNameRow_ComparedVersionsContract
 							comparedVersions={comparedSongs}
@@ -41,7 +38,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* TODO: localize */
+							name="Names" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -51,27 +48,27 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Notes" /* TODO: localize */
+							name="Notes" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => data.notes}
 							preserveLineBreaks={true}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Notes (en)" /* TODO: localize */
+							name="Notes (en)" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => data.notesEng}
 							preserveLineBreaks={true}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Song type" /* TODO: localize */
+							name="Song type" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => data.songType}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Original version" /* TODO: localize */
+							name="Original version" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.originalVersion} />
@@ -79,7 +76,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Duration" /* TODO: localize */
+							name="Duration" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode =>
 								DateTimeHelper.formatFromSeconds(data.lengthSeconds)
@@ -87,7 +84,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="BPM" /* TODO: localize */
+							name="BPM" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode =>
 								BpmHelper.formatFromMilliBpm(data.minMilliBpm, data.maxMilliBpm)
@@ -95,7 +92,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Release event" /* TODO: localize */
+							name="Release event" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.releaseEvent} />
@@ -103,13 +100,13 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Publish date" /* TODO: localize */
+							name="Publish date" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode => data.publishDate}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* TODO: localize */
+							name="External links" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (
@@ -119,7 +116,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Artists" /* TODO: localize */
+							name="Artists" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
 								(data.artists ?? [])
@@ -128,13 +125,13 @@ export const PrintArchivedSongData = React.memo(
 										(artist) =>
 											`${artist.nameHint} [${artist.id}] - IsSupport: ${
 												artist.isSupport ? 'True' : 'False'
-											}, Roles: ${artist.roles}` /* TODO: localize */,
+											}, Roles: ${artist.roles}` /* LOC */,
 									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="PVs" /* TODO: localize */
+							name="PVs" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
 								data.pvs?.map((pv, index) => <PVInfo pv={pv} key={index} />) ??
@@ -143,7 +140,7 @@ export const PrintArchivedSongData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Lyrics" /* TODO: localize */
+							name="Lyrics" /* LOC */
 							comparedVersions={comparedSongs}
 							valGetter={(data): React.ReactNode[] =>
 								data.lyrics?.map((l, index) => (

@@ -45,15 +45,14 @@ const validate = ajv.compile(schema);
 
 export class ActivityEntryListStore
 	implements LocationStateStore<ActivityEntryListRouteParams> {
-	@observable public entries: ActivityEntryContract[] = [];
-	@observable public entryEditEvent?: EntryEditEvent;
-	@observable public entryType =
-		EntryType[EntryType.Undefined]; /* TODO: enum */
+	@observable entries: ActivityEntryContract[] = [];
+	@observable entryEditEvent?: EntryEditEvent;
+	@observable entryType = EntryType[EntryType.Undefined]; /* TODO: enum */
 	private lastEntryDate?: Date;
-	@observable public sort = ActivityEntrySortRule.CreateDateDescending;
-	@observable public userId?: number;
+	@observable sort = ActivityEntrySortRule.CreateDateDescending;
+	@observable userId?: number;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
@@ -64,26 +63,26 @@ export class ActivityEntryListStore
 		this.userId = userId;
 	}
 
-	@computed.struct public get locationState(): ActivityEntryListRouteParams {
+	@computed.struct get locationState(): ActivityEntryListRouteParams {
 		return {
 			entryEditEvent: this.entryEditEvent,
 			entryType: this.entryType,
 			sort: this.sort,
 		};
 	}
-	public set locationState(value: ActivityEntryListRouteParams) {
+	set locationState(value: ActivityEntryListRouteParams) {
 		this.entryEditEvent = value.entryEditEvent;
 		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
 		this.sort = value.sort ?? ActivityEntrySortRule.CreateDateDescending;
 	}
 
-	public validateLocationState(
+	validateLocationState(
 		locationState: any,
 	): locationState is ActivityEntryListRouteParams {
 		return validate(locationState);
 	}
 
-	public loadMore = async (): Promise<void> => {
+	loadMore = async (): Promise<void> => {
 		const result = await this.httpClient.get<
 			PartialFindResultContract<ActivityEntryContract>
 		>(this.urlMapper.mapRelative('/api/activityEntries'), {
@@ -123,7 +122,7 @@ export class ActivityEntryListStore
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -133,7 +132,7 @@ export class ActivityEntryListStore
 		this.pauseNotifications = false;
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<ActivityEntryListRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

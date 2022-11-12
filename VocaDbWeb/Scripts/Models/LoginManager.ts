@@ -50,25 +50,25 @@ export enum PermissionToken {
 
 // Corresponds to the LoginManager and EntryPermissionManager classes in C#.
 export class LoginManager {
-	public constructor(private readonly values: GlobalValues) {}
+	constructor(private readonly values: GlobalValues) {}
 
-	public get isLoggedIn(): boolean {
+	get isLoggedIn(): boolean {
 		return this.values.isLoggedIn;
 	}
 
-	public get loggedUserId(): number {
+	get loggedUserId(): number {
 		return this.values.loggedUserId;
 	}
 
-	public get loggedUser(): UserWithPermissionsContract | undefined {
+	get loggedUser(): UserWithPermissionsContract | undefined {
 		return this.values.loggedUser;
 	}
 
-	public get lockdownEnabled(): boolean {
+	get lockdownEnabled(): boolean {
 		return !!this.values.lockdownMessage;
 	}
 
-	public hasPermission = (token: PermissionToken): boolean => {
+	hasPermission = (token: PermissionToken): boolean => {
 		if (token === PermissionToken.Nothing) return true;
 
 		if (!this.loggedUser || !this.loggedUser.active) return false;
@@ -79,115 +79,115 @@ export class LoginManager {
 		return this.loggedUser.effectivePermissions.includes(token);
 	};
 
-	public get canAccessManageMenu(): boolean {
+	get canAccessManageMenu(): boolean {
 		return this.hasPermission(PermissionToken.AccessManageMenu);
 	}
 
-	public get canAdmin(): boolean {
+	get canAdmin(): boolean {
 		return this.hasPermission(PermissionToken.Admin);
 	}
 
-	public get canApproveEntries(): boolean {
+	get canApproveEntries(): boolean {
 		return this.hasPermission(PermissionToken.ApproveEntries);
 	}
 
-	public get canBulkDeletePVs(): boolean {
+	get canBulkDeletePVs(): boolean {
 		return this.hasPermission(PermissionToken.BulkDeletePVs);
 	}
 
-	public get canCreateComments(): boolean {
+	get canCreateComments(): boolean {
 		return this.hasPermission(PermissionToken.CreateComments);
 	}
 
-	public get canDeleteComments(): boolean {
+	get canDeleteComments(): boolean {
 		return this.hasPermission(PermissionToken.DeleteComments);
 	}
 
-	public get canDeleteEntries(): boolean {
+	get canDeleteEntries(): boolean {
 		return this.hasPermission(PermissionToken.DeleteEntries);
 	}
 
-	public get canDisableUsers(): boolean {
+	get canDisableUsers(): boolean {
 		return this.hasPermission(PermissionToken.DisableUsers);
 	}
 
-	public get canEditAllSongLists(): boolean {
+	get canEditAllSongLists(): boolean {
 		return this.hasPermission(PermissionToken.EditAllSongLists);
 	}
 
-	public get canEditFeaturedLists(): boolean {
+	get canEditFeaturedLists(): boolean {
 		return this.hasPermission(PermissionToken.EditFeaturedLists);
 	}
 
-	public get canEditProfile(): boolean {
+	get canEditProfile(): boolean {
 		return this.hasPermission(PermissionToken.EditProfile);
 	}
 
-	public get canLockEntries(): boolean {
+	get canLockEntries(): boolean {
 		return this.hasPermission(PermissionToken.LockEntries);
 	}
 
-	public get canManageDatabase(): boolean {
+	get canManageDatabase(): boolean {
 		return this.hasPermission(PermissionToken.ManageDatabase);
 	}
 
-	public get canEditTags(): boolean {
+	get canEditTags(): boolean {
 		return this.hasPermission(PermissionToken.EditTags);
 	}
 
-	public get canManageUserPermissions(): boolean {
+	get canManageUserPermissions(): boolean {
 		return this.hasPermission(PermissionToken.ManageUserPermissions);
 	}
 
-	public get canManageEntryReports(): boolean {
+	get canManageEntryReports(): boolean {
 		return this.hasPermission(PermissionToken.ManageEntryReports);
 	}
 
-	public get canManageIPRules(): boolean {
+	get canManageIPRules(): boolean {
 		return this.hasPermission(PermissionToken.ManageIPRules);
 	}
 
-	public get canManageTagMappings(): boolean {
+	get canManageTagMappings(): boolean {
 		return this.hasPermission(PermissionToken.ManageTagMappings);
 	}
 
-	public get canMergeEntries(): boolean {
+	get canMergeEntries(): boolean {
 		return this.hasPermission(PermissionToken.MergeEntries);
 	}
 
-	public get canMikuDbImport(): boolean {
+	get canMikuDbImport(): boolean {
 		return this.hasPermission(PermissionToken.MikuDbImport);
 	}
 
-	public get canMoveToTrash(): boolean {
+	get canMoveToTrash(): boolean {
 		return this.hasPermission(PermissionToken.MoveToTrash);
 	}
 
-	public get canRemoveEditPermission(): boolean {
+	get canRemoveEditPermission(): boolean {
 		return this.hasPermission(PermissionToken.RemoveEditPermission);
 	}
 
-	public get canReportUser(): boolean {
+	get canReportUser(): boolean {
 		return this.hasPermission(PermissionToken.ReportUser);
 	}
 
-	public get canRestoreRevisions(): boolean {
+	get canRestoreRevisions(): boolean {
 		return this.hasPermission(PermissionToken.RestoreRevisions);
 	}
 
-	public get canUploadMedia(): boolean {
+	get canUploadMedia(): boolean {
 		return this.hasPermission(PermissionToken.UploadMedia);
 	}
 
-	public get canViewAuditLog(): boolean {
+	get canViewAuditLog(): boolean {
 		return this.hasPermission(PermissionToken.ViewAuditLog);
 	}
 
-	public get canViewHiddenRevisions(): boolean {
+	get canViewHiddenRevisions(): boolean {
 		return this.hasPermission(PermissionToken.ViewHiddenRevisions);
 	}
 
-	public get canManageWebhooks(): boolean {
+	get canManageWebhooks(): boolean {
 		return this.hasPermission(PermissionToken.ManageWebhooks);
 	}
 
@@ -211,7 +211,7 @@ export class LoginManager {
 		EntryStatus.Approved,
 	];
 
-	public canDeleteComment = (comment: CommentContract): boolean => {
+	canDeleteComment = (comment: CommentContract): boolean => {
 		return (
 			this.canDeleteComments ||
 			(!!comment.author &&
@@ -242,7 +242,7 @@ export class LoginManager {
 	/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
 	/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
 	/// <returns>A list of permissions that can be set by the user.</returns>
-	public allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
+	allowedEntryStatuses = (entry?: EntryRefContract): EntryStatus[] => {
 		// Check for basic edit permissions, without these the user is limited or disabled
 		if (!this.canManageDatabase) return [];
 
@@ -269,11 +269,11 @@ export class LoginManager {
 	/// <param name="permissionContext">User permission context. Cannot be null.</param>
 	/// <param name="entry">Entry to be checked. Cannot be null.</param>
 	/// <returns>True if the user can edit the entry, otherwise false.</returns>
-	public canEdit = (entry: IEntryWithStatus): boolean => {
+	canEdit = (entry: IEntryWithStatus): boolean => {
 		return this.allowedEntryStatuses(entry).includes(entry.status);
 	};
 
-	public canEditSongList = (songList: SongListContract): boolean => {
+	canEditSongList = (songList: SongListContract): boolean => {
 		if (songList.featuredCategory !== 'Nothing' && this.canEditFeaturedLists)
 			return true;
 
@@ -282,7 +282,7 @@ export class LoginManager {
 		return songList.author.id === this.loggedUserId;
 	};
 
-	public canEditGroupTo = (groupId: UserGroup): boolean => {
+	canEditGroupTo = (groupId: UserGroup): boolean => {
 		return (
 			!!this.loggedUser &&
 			(this.loggedUser.groupId === UserGroup.Admin ||
@@ -291,11 +291,11 @@ export class LoginManager {
 		);
 	};
 
-	public canEditUser = (groupId: UserGroup): boolean => {
+	canEditUser = (groupId: UserGroup): boolean => {
 		return this.canEditGroupTo(groupId);
 	};
 
-	public canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {
+	canEditTagsForEntry = (entry: IEntryWithStatus): boolean => {
 		return this.canEditTags && this.canEdit(entry);
 	};
 }

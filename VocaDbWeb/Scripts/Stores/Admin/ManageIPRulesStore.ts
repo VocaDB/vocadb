@@ -7,12 +7,12 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 import moment from 'moment';
 
 class IPRule {
-	@observable public address: string;
-	public readonly created: string;
-	public readonly id: number;
-	@observable public notes: string;
+	@observable address: string;
+	readonly created: string;
+	readonly id: number;
+	@observable notes: string;
 
-	public constructor(data: IPRuleContract) {
+	constructor(data: IPRuleContract) {
 		makeObservable(this);
 
 		this.address = data.address!;
@@ -23,12 +23,12 @@ class IPRule {
 }
 
 export class ManageIPRulesStore {
-	@observable public bannedIPs: string[] = [];
-	@observable public newAddress = '';
-	@observable public rules: IPRule[] = [];
-	@observable public submitting = false;
+	@observable bannedIPs: string[] = [];
+	@observable newAddress = '';
+	@observable rules: IPRule[] = [];
+	@observable submitting = false;
 
-	public constructor(private readonly adminRepo: AdminRepository) {
+	constructor(private readonly adminRepo: AdminRepository) {
 		makeObservable(this);
 
 		adminRepo.getIPRules({}).then((data) =>
@@ -43,11 +43,11 @@ export class ManageIPRulesStore {
 		adminRepo.getTempBannedIps({}).then((result) => this.setBannedIPs(result));
 	}
 
-	@action public setBannedIPs = (value: string[]): void => {
+	@action setBannedIPs = (value: string[]): void => {
 		this.bannedIPs = value;
 	};
 
-	@action public add = (addr: string): void => {
+	@action add = (addr: string): void => {
 		this.rules.unshift(
 			new IPRule({
 				address: addr,
@@ -58,18 +58,18 @@ export class ManageIPRulesStore {
 		this.newAddress = '';
 	};
 
-	@action public deleteOldRules = (): void => {
+	@action deleteOldRules = (): void => {
 		const cutOff = moment().subtract(1, 'years').toDate();
 
 		const toBeRemoved = this.rules.filter((r) => new Date(r.created) < cutOff);
 		pull(this.rules, ...toBeRemoved);
 	};
 
-	@action public remove = (rule: IPRule): void => {
+	@action remove = (rule: IPRule): void => {
 		pull(this.rules, rule);
 	};
 
-	@action public save = async (): Promise<void> => {
+	@action save = async (): Promise<void> => {
 		try {
 			this.submitting = true;
 

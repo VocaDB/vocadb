@@ -12,41 +12,33 @@ export interface IPRuleContract {
 }
 
 export class AdminRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
 	// eslint-disable-next-line no-empty-pattern
-	public getIPRules = ({}: {}): Promise<IPRuleContract[]> => {
+	getIPRules = ({}: {}): Promise<IPRuleContract[]> => {
 		return this.httpClient.get<IPRuleContract[]>(
 			this.urlMapper.mapRelative('/api/ip-rules'),
 		);
 	};
 
-	public saveIPRules = ({
-		ipRules,
-	}: {
-		ipRules: IPRuleContract[];
-	}): Promise<void> => {
+	saveIPRules = ({ ipRules }: { ipRules: IPRuleContract[] }): Promise<void> => {
 		return this.httpClient.put<void>(
 			this.urlMapper.mapRelative('/api/ip-rules'),
 			ipRules,
 		);
 	};
 
-	public addIpToBanList = ({
-		rule,
-	}: {
-		rule: IPRuleContract;
-	}): Promise<boolean> => {
+	addIpToBanList = ({ rule }: { rule: IPRuleContract }): Promise<boolean> => {
 		return this.httpClient.post<boolean>(
 			this.urlMapper.mapRelative('/api/ip-rules'),
 			rule,
 		);
 	};
 
-	public checkSFS = ({ ip }: { ip: string }): Promise<string> => {
+	checkSFS = ({ ip }: { ip: string }): Promise<string> => {
 		return this.httpClient.get<string>(
 			this.urlMapper.mapRelative('/Admin/CheckSFS'),
 			{ ip: ip },
@@ -54,20 +46,20 @@ export class AdminRepository {
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getTempBannedIps = ({}: {}): Promise<string[]> => {
+	getTempBannedIps = ({}: {}): Promise<string[]> => {
 		return this.httpClient.get<string[]>(
 			this.urlMapper.mapRelative('/api/admin/tempBannedIPs'),
 		);
 	};
 
 	// eslint-disable-next-line no-empty-pattern
-	public getWebhooks = ({}: {}): Promise<WebhookContract[]> => {
+	getWebhooks = ({}: {}): Promise<WebhookContract[]> => {
 		return this.httpClient.get<WebhookContract[]>(
 			this.urlMapper.mapRelative('/api/webhooks'),
 		);
 	};
 
-	public saveWebhooks = ({
+	saveWebhooks = ({
 		webhooks,
 	}: {
 		webhooks: WebhookContract[];
@@ -76,7 +68,7 @@ export class AdminRepository {
 		return this.httpClient.put<void>(url, webhooks);
 	};
 
-	public getAuditLogEntries = ({
+	getAuditLogEntries = ({
 		excludeUsers,
 		filter,
 		groupId,

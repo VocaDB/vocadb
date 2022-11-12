@@ -16,7 +16,7 @@ export const TranslatedNameRow = React.memo(
 		return (
 			<>
 				<tr>
-					<td>Original language{/* TODO: localize */}</td>
+					<td>Original language{/* LOC */}</td>
 					<td colSpan={compareToName !== undefined ? 1 : 2}>
 						{!!name &&
 							t(
@@ -32,7 +32,7 @@ export const TranslatedNameRow = React.memo(
 					)}
 				</tr>
 				<tr>
-					<td>Primary names{/* TODO: localize */}</td>
+					<td>Primary names{/* LOC */}</td>
 					<td colSpan={compareToName !== undefined ? 1 : 2}>
 						{name && (
 							<>

@@ -78,9 +78,7 @@ const ViewTopic = observer(
 				)}
 
 				{discussionTopicStore.contract.locked ? (
-					<Alert>
-						Comments have been disabled for this topic.{/* TODO: localize */}
-					</Alert>
+					<Alert>Comments have been disabled for this topic.{/* LOC */}</Alert>
 				) : (
 					<div>
 						<EditableComments

@@ -5,7 +5,7 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedEventSeriesData } from '@/Components/Shared/Partials/Event/PrintArchivedEventSeriesData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedEventSeriesVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventSeriesVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -42,9 +42,9 @@ const EventSeriesViewVersionLayout = observer(
 	}: EventSeriesViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -82,7 +82,7 @@ const EventSeriesViewVersionLayout = observer(
 								to: `/Event/SeriesVersions/${contract.releaseEventSeries.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -93,7 +93,7 @@ const EventSeriesViewVersionLayout = observer(
 							href={`/Event/ArchivedSeriesVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOC */}
 						</JQueryUIButton>{' '}
 						{loginManager.canViewHiddenRevisions &&
 							(contract.archivedVersion.hidden ? (
@@ -138,7 +138,7 @@ const EventSeriesViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

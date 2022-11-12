@@ -28,12 +28,12 @@ export interface IRatedSongsAdapterStore {
 
 export class PlayListRepositoryForRatedSongsAdapter
 	implements IPlayListRepository {
-	public constructor(
+	constructor(
 		private readonly userRepo: UserRepository,
 		private readonly ratedSongsAdapterStore: IRatedSongsAdapterStore,
 	) {}
 
-	public getSongs(
+	getSongs(
 		pvServices: PVService[],
 		paging: PagingProperties,
 		fields: SongOptionalField[],

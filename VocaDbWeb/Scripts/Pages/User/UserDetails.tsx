@@ -3,12 +3,13 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -58,12 +59,16 @@ const UserDetailsLayout = observer(
 
 		const title = user.name;
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const ownProfile =
 			loginManager.loggedUser &&
 			loginManager.loggedUser.id === user.id &&
 			loginManager.loggedUser.active;
+
+		const mutedUsers = useMutedUsers();
+
+		const mutedUser = mutedUsers.find(user.id);
 
 		return (
 			<Layout
@@ -78,7 +83,7 @@ const UserDetailsLayout = observer(
 				}
 				toolbar={
 					<>
-						{ownProfile && (
+						{ownProfile ? (
 							<>
 								<JQueryUIButton
 									as={Link}
@@ -96,6 +101,26 @@ const UserDetailsLayout = observer(
 									{t('ViewRes.User:Details.Messages')}
 								</JQueryUIButton>
 							</>
+						) : (
+							<>
+								{mutedUser ? (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => mutedUsers.removeMutedUser(mutedUser)}
+										icons={{ primary: 'ui-icon-volume-on' }}
+									>
+										Unmute{/* LOC */}
+									</JQueryUIButton>
+								) : (
+									<JQueryUIButton
+										as={SafeAnchor}
+										onClick={(): void => mutedUsers.addMutedUser(user.id)}
+										icons={{ primary: 'ui-icon-volume-off' }}
+									>
+										Mute{/* LOC */}
+									</JQueryUIButton>
+								)}
+							</>
 						)}
 
 						{loginManager.loggedUser &&
@@ -104,6 +129,7 @@ const UserDetailsLayout = observer(
 							!user.standalone && (
 								<>
 									{' '}
+									&nbsp;{' '}
 									<JQueryUIButton
 										as={Link}
 										to={`/User/Messages?${qs.stringify({
@@ -196,17 +222,17 @@ const UserDetailsLayout = observer(
 			>
 				{ownProfile && user.groupId === UserGroup.Limited && (
 					<Alert>
-						<h4>Why is my user group "Limited user"?{/* TODO: localize */}</h4>
+						<h4>Why is my user group "Limited user"?{/* LOC */}</h4>
 						<p>
 							In order to prevent spammers and abusers we use automated tools to
 							check users' IP address. If you have a dynamic IP, it's possible
 							that someone with the same IP as you was participating in these
 							activities and your account was mistakenly reduced, preventing you
-							from editing the database.{/* TODO: localize */}
+							from editing the database.{/* LOC */}
 						</p>
 						<p>
 							If this is the case, please <a href="/Help">contact us</a> and
-							we'll take care of it. Thank you.{/* TODO: localize */}
+							we'll take care of it. Thank you.{/* LOC */}
 						</p>
 					</Alert>
 				)}
@@ -239,8 +265,9 @@ const UserDetailsLayout = observer(
 
 				{loginManager.canManageUserPermissions && (
 					<JQueryUIDialog
-						title="StopForumSpam check" /* TODO: localize */
+						title="StopForumSpam check" /* LOC */
 						autoOpen={userDetailsStore.sfsCheckDialog.dialogVisible}
+						width={310}
 						close={(): void =>
 							runInAction(() => {
 								userDetailsStore.sfsCheckDialog.dialogVisible = false;
@@ -260,20 +287,20 @@ const UserDetailsLayout = observer(
 				)}
 
 				<EntryDeletePopupBase
-					confirmText="Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional)." /* TODO: localize */
+					confirmText="Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional)." /* LOC */
 					deleteEntryStore={userDetailsStore.limitedUserStore}
-					title="Remove editing permissions" /* TODO: localize */
+					title="Remove editing permissions" /* LOC */
 					deleteButtonProps={{
-						text: 'Confirm' /* TODO: localize */,
+						text: 'Confirm' /* LOC */,
 						icons: { primary: 'ui-icon-close' },
 					}}
 				/>
 				<EntryDeletePopupBase
-					confirmText="Please confirm that you wish to report user. Please provide additional explanation below." /* TODO: localize */
+					confirmText="Please confirm that you wish to report user. Please provide additional explanation below." /* LOC */
 					deleteEntryStore={userDetailsStore.reportUserStore}
-					title="Report user" /* TODO: localize */
+					title="Report user" /* LOC */
 					deleteButtonProps={{
-						text: 'Confirm' /* TODO: localize */,
+						text: 'Confirm' /* LOC */,
 						icons: { primary: 'ui-icon-alert' },
 					}}
 				/>

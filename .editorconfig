@@ -11,3 +11,9 @@ indent_size = 4
 # https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.globalizationsection.fileencoding?view=netframework-4.8
 [*.cshtml]
 charset = utf-8-bom
+
+[*.cs]
+csharp_style_namespace_declarations=file_scoped:suggestion
+
+[{package.json,package-lock.json}]
+end_of_line = lf

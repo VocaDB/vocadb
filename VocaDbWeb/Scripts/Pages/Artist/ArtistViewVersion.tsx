@@ -6,7 +6,7 @@ import { PrintArchivedArtistData } from '@/Components/Shared/Partials/Artist/Pri
 import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBanner';
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/ArchivedArtistVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -41,9 +41,9 @@ const ArtistViewVersionLayout = observer(
 	}: ArtistViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -81,7 +81,7 @@ const ArtistViewVersionLayout = observer(
 								to: `/Artist/Versions/${contract.artist.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -117,7 +117,7 @@ const ArtistViewVersionLayout = observer(
 							href={`/Artist/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOC */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -170,7 +170,7 @@ const ArtistViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedArtistStore.comparedVersionId}

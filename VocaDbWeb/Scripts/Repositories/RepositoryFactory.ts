@@ -15,60 +15,60 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class RepositoryFactory {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public adminRepository = (): AdminRepository => {
+	adminRepository = (): AdminRepository => {
 		return new AdminRepository(this.httpClient, this.urlMapper);
 	};
 
-	public albumRepository = (): AlbumRepository => {
+	albumRepository = (): AlbumRepository => {
 		return new AlbumRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public artistRepository = (): ArtistRepository => {
+	artistRepository = (): ArtistRepository => {
 		return new ArtistRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public discussionRepository = (): DiscussionRepository => {
+	discussionRepository = (): DiscussionRepository => {
 		return new DiscussionRepository(this.httpClient, this.urlMapper);
 	};
 
-	public entryRepository = (): EntryRepository => {
+	entryRepository = (): EntryRepository => {
 		return new EntryRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public eventRepository = (): ReleaseEventRepository => {
+	eventRepository = (): ReleaseEventRepository => {
 		return new ReleaseEventRepository(this.httpClient, this.urlMapper);
 	};
 
-	public pvRepository = (): PVRepository => {
+	pvRepository = (): PVRepository => {
 		return new PVRepository(this.httpClient, this.urlMapper);
 	};
 
-	public resourceRepository = (): ResourceRepository => {
+	resourceRepository = (): ResourceRepository => {
 		return new ResourceRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public songListRepository = (): SongListRepository => {
+	songListRepository = (): SongListRepository => {
 		return new SongListRepository(this.httpClient, this.urlMapper);
 	};
 
-	public songRepository = (): SongRepository => {
+	songRepository = (): SongRepository => {
 		return new SongRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public tagRepository = (): TagRepository => {
+	tagRepository = (): TagRepository => {
 		return new TagRepository(this.httpClient, this.urlMapper.baseUrl);
 	};
 
-	public userRepository = (): UserRepository => {
+	userRepository = (): UserRepository => {
 		return new UserRepository(this.httpClient, this.urlMapper);
 	};
 
-	public venueRepository = (): VenueRepository => {
+	venueRepository = (): VenueRepository => {
 		return new VenueRepository(this.httpClient, this.urlMapper);
 	};
 }

@@ -3,7 +3,7 @@ import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -30,7 +30,7 @@ const SongListImport = observer(
 
 		const title = t('VocaDb.Web.Resources.Views.SongList:Import.Title');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const navigate = useNavigate();
 

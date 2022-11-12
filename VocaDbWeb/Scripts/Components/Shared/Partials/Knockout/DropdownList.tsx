@@ -81,7 +81,7 @@ export const CultureDropdownList = React.memo(
 				)}
 				{Object.entries(cultures).map(([key, value]) => (
 					<option value={key} key={key}>
-						{value.nativeName} ({value.englishName /* TODO: localize */})
+						{value.nativeName} ({value.englishName /* LOC */})
 					</option>
 				))}
 			</select>
@@ -98,7 +98,7 @@ export const UserLanguageCultureDropdownList = React.memo(
 				)}
 				{Object.entries(userLanguageCultures).map(([key, value]) => (
 					<option value={key} key={key}>
-						{value.nativeName} ({value.englishName /* TODO: localize */})
+						{value.nativeName} ({value.englishName /* LOC */})
 					</option>
 				))}
 			</select>

@@ -6,10 +6,10 @@ import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
 
 export class EventSeriesDetailsStore {
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagUsages: TagListStore;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagUsages: TagListStore;
 
-	public constructor(
+	constructor(
 		userRepo: UserRepository,
 		private readonly seriesId: number,
 		tagUsages: TagUsageForApiContract[],

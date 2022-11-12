@@ -6,7 +6,6 @@ import {
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { functions } from '@/Shared/GlobalFunctions';
 import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
-import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -40,9 +39,8 @@ export const ArtistAutoComplete = ({
 		preferAccurateMatches: true,
 		maxResults: 20,
 		sort: ArtistSortRule.ArtistType,
+		...properties.extraQueryParams,
 	};
-	if (properties.extraQueryParams)
-		$.extend(queryParams, properties.extraQueryParams);
 
 	const params: EntryAutoCompleteParams<ArtistContract> = {
 		acceptSelection: properties.acceptSelection!,

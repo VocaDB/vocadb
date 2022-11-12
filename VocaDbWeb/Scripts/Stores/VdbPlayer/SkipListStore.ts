@@ -23,12 +23,12 @@ const validate = ajv.compile(schema);
 
 export class SkipListStore
 	implements LocalStorageStateStore<SkipListLocalStorageState> {
-	@observable public dialogVisible = false;
-	@observable public removeFromPlayQueueOnSkip = false;
-	public readonly artistFilters: ArtistFilters;
-	public readonly tagFilters: TagFilters;
+	@observable dialogVisible = false;
+	@observable removeFromPlayQueueOnSkip = false;
+	readonly artistFilters: ArtistFilters;
+	readonly tagFilters: TagFilters;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		artistRepo: ArtistRepository,
 		tagRepo: TagRepository,
@@ -39,53 +39,50 @@ export class SkipListStore
 		this.tagFilters = new TagFilters(values, tagRepo);
 	}
 
-	@computed public get artistIds(): number[] {
+	@computed get artistIds(): number[] {
 		return this.artistFilters.artistIds;
 	}
-	public set artistIds(value: number[]) {
+	set artistIds(value: number[]) {
 		this.artistFilters.artistIds = value;
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tagFilters.tagIds;
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	@computed.struct public get localStorageState(): SkipListLocalStorageState {
+	@computed.struct get localStorageState(): SkipListLocalStorageState {
 		return {
 			removeFromPlayQueueOnSkip: this.removeFromPlayQueueOnSkip,
 			artistIds: this.artistIds,
 			tagIds: this.tagIds,
 		};
 	}
-	public set localStorageState(value: SkipListLocalStorageState) {
+	set localStorageState(value: SkipListLocalStorageState) {
 		this.removeFromPlayQueueOnSkip = value.removeFromPlayQueueOnSkip ?? false;
 		this.artistIds = value.artistIds ?? [];
 		this.tagIds = value.tagIds ?? [];
 	}
 
-	public validateLocalStorageState = (
+	validateLocalStorageState = (
 		localStorageState: any,
 	): localStorageState is SkipListLocalStorageState => {
 		return validate(localStorageState);
 	};
 
-	@action public showDialog = (): void => {
+	@action showDialog = (): void => {
 		this.dialogVisible = true;
 	};
 
-	@action public hideDialog = (): void => {
+	@action hideDialog = (): void => {
 		this.dialogVisible = false;
 	};
 
-	public includesAny = ({
-		artistIds,
-		tagIds,
-	}: PlayQueueEntryContract): boolean => {
+	includesAny = ({ artistIds, tagIds }: PlayQueueEntryContract): boolean => {
 		return (
 			includesAny(this.artistIds, artistIds) || includesAny(this.tagIds, tagIds)
 		);

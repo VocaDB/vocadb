@@ -44,10 +44,10 @@ import moment, { Moment } from 'moment';
 // Single artist selection for the track properties dialog.
 export class TrackArtistSelectionStore {
 	// Whether this artist has been selected.
-	@observable public selected: boolean;
+	@observable selected: boolean;
 
-	public constructor(
-		public readonly artist: ArtistContract,
+	constructor(
+		readonly artist: ArtistContract,
 		selected: boolean,
 		private readonly filter: () => string /* TODO */,
 	) {
@@ -57,7 +57,7 @@ export class TrackArtistSelectionStore {
 	}
 
 	// Whether this selection is visible according to current filter.
-	public get visible(): boolean {
+	get visible(): boolean {
 		var f = this.filter();
 		if (f.length === 0) return true;
 
@@ -73,14 +73,11 @@ export class TrackArtistSelectionStore {
 // Store for the track properties dialog, for editing artists for one or more tracks.
 export class TrackPropertiesStore {
 	// Selectable artists.
-	public readonly artistSelections: TrackArtistSelectionStore[];
+	readonly artistSelections: TrackArtistSelectionStore[];
 	// Artist filter string.
-	@observable public filter = '';
+	@observable filter = '';
 
-	public constructor(
-		artists: ArtistContract[],
-		public readonly song?: SongInAlbumEditStore,
-	) {
+	constructor(artists: ArtistContract[], readonly song?: SongInAlbumEditStore) {
 		makeObservable(this);
 
 		this.artistSelections = artists.map(
@@ -94,25 +91,25 @@ export class TrackPropertiesStore {
 	}
 
 	// At least one artist selected for this track.
-	public get somethingSelected(): boolean {
+	get somethingSelected(): boolean {
 		return this.artistSelections.some((a) => a.selected);
 	}
 
 	// At least one artist selectable (not selected and visible).
-	public get somethingSelectable(): boolean {
+	get somethingSelectable(): boolean {
 		return this.artistSelections.some((a) => !a.selected && a.visible);
 	}
 }
 
 export class AlbumEditStore {
 	// Whether all tracks should be selected.
-	@observable public allTracksSelected: boolean;
+	@observable allTracksSelected: boolean;
 	// List of artist links for this album.
-	@observable public artistLinks: ArtistForAlbumEditStore[];
-	public readonly artistRolesEditStore: AlbumArtistRolesEditStore;
-	@observable public catalogNumber: string;
-	@observable public defaultNameLanguage: string;
-	public readonly deleteStore = new DeleteEntryStore(async (notes) => {
+	@observable artistLinks: ArtistForAlbumEditStore[];
+	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
+	@observable catalogNumber: string;
+	@observable defaultNameLanguage: string;
+	readonly deleteStore = new DeleteEntryStore(async (notes) => {
 		await $.ajax(
 			this.urlMapper.mapRelative(
 				`api/albums/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
@@ -127,37 +124,37 @@ export class AlbumEditStore {
 			},
 		);
 	});
-	public readonly description: EnglishTranslatedStringEditStore;
+	readonly description: EnglishTranslatedStringEditStore;
 	// Album disc type.
-	@observable public discType: AlbumType;
-	public readonly discs: AlbumDiscPropertiesListEditStore;
-	public readonly editedArtistLink = new CustomNameEditStore();
+	@observable discType: AlbumType;
+	readonly discs: AlbumDiscPropertiesListEditStore;
+	readonly editedArtistLink = new CustomNameEditStore();
 	// State for the song being edited in the properties dialog.
-	@observable public editedSong?: TrackPropertiesStore;
-	@observable public errors?: Record<string, string[]>;
-	public readonly hasCover: boolean;
-	@observable public identifiers: string[];
-	public readonly names: NamesEditStore;
-	@observable public newIdentifier = '';
-	public readonly pictures: EntryPictureFileListEditStore;
-	public readonly pvs: PVListEditStore;
-	@observable public releaseDay?: number;
-	public readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
-	@observable public releaseMonth?: number;
-	@observable public releaseYear?: number;
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
+	@observable editedSong?: TrackPropertiesStore;
+	@observable errors?: Record<string, string[]>;
+	readonly hasCover: boolean;
+	@observable identifiers: string[];
+	readonly names: NamesEditStore;
+	@observable newIdentifier = '';
+	readonly pictures: EntryPictureFileListEditStore;
+	readonly pvs: PVListEditStore;
+	@observable releaseDay?: number;
+	readonly releaseEvent: BasicEntryLinkStore<ReleaseEventContract>;
+	@observable releaseMonth?: number;
+	@observable releaseYear?: number;
+	@observable status: EntryStatus;
+	@observable submitting = false;
 	// Buttons for the track properties dialog.
 	// Whether the track properties dialog should be visible.
-	@observable public trackPropertiesDialogVisible: boolean;
+	@observable trackPropertiesDialogVisible: boolean;
 	// List of tracks for this album.
-	@observable public tracks: SongInAlbumEditStore[];
-	@observable public updateNotes = '';
+	@observable tracks: SongInAlbumEditStore[];
+	@observable updateNotes = '';
 	// List of external links for this album.
-	public readonly webLinks: WebLinksEditStore;
-	@observable public validationExpanded = false;
+	readonly webLinks: WebLinksEditStore;
+	@observable validationExpanded = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 		private readonly songRepo: SongRepository,
@@ -167,7 +164,7 @@ export class AlbumEditStore {
 		private readonly urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
 		webLinkCategories: WebLinkCategory[],
-		public readonly contract: AlbumForEditContract,
+		readonly contract: AlbumForEditContract,
 		canBulkDeletePVs: boolean,
 	) {
 		makeObservable(this);
@@ -241,7 +238,7 @@ export class AlbumEditStore {
 		this.webLinks = new WebLinksEditStore(contract.webLinks, webLinkCategories);
 	}
 
-	@computed public get validationError_duplicateArtist(): boolean {
+	@computed get validationError_duplicateArtist(): boolean {
 		return some(
 			this.artistLinks.groupBy(
 				(a) => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport,
@@ -250,15 +247,15 @@ export class AlbumEditStore {
 		);
 	}
 
-	@computed public get validationError_needArtist(): boolean {
+	@computed get validationError_needArtist(): boolean {
 		return isEmpty(this.artistLinks);
 	}
 
-	@computed public get validationError_needCover(): boolean {
+	@computed get validationError_needCover(): boolean {
 		return !this.hasCover;
 	}
 
-	@computed public get validationError_needReferences(): boolean {
+	@computed get validationError_needReferences(): boolean {
 		return (
 			isEmpty(this.description.original) &&
 			isEmpty(this.webLinks.items) &&
@@ -266,24 +263,24 @@ export class AlbumEditStore {
 		);
 	}
 
-	@computed public get validationError_needReleaseYear(): boolean {
+	@computed get validationError_needReleaseYear(): boolean {
 		const num = !isNumber(this.releaseYear) || this.releaseYear === undefined;
 		return num;
 	}
 
-	@computed public get validationError_needTracks(): boolean {
+	@computed get validationError_needTracks(): boolean {
 		return this.discType !== AlbumType.Artbook && isEmpty(this.tracks);
 	}
 
-	@computed public get validationError_needType(): boolean {
+	@computed get validationError_needType(): boolean {
 		return this.discType === AlbumType.Unknown;
 	}
 
-	@computed public get validationError_unspecifiedNames(): boolean {
+	@computed get validationError_unspecifiedNames(): boolean {
 		return !this.names.hasPrimaryName();
 	}
 
-	@computed public get hasValidationErrors(): boolean {
+	@computed get hasValidationErrors(): boolean {
 		return (
 			this.validationError_duplicateArtist ||
 			this.validationError_needArtist ||
@@ -296,24 +293,24 @@ export class AlbumEditStore {
 		);
 	}
 
-	@computed public get eventDate(): Moment | undefined {
+	@computed get eventDate(): Moment | undefined {
 		return this.releaseEvent.entry && this.releaseEvent.entry.date
 			? moment(this.releaseEvent.entry.date)
 			: undefined;
 	}
 
-	@computed public get releaseDate(): Moment | undefined {
+	@computed get releaseDate(): Moment | undefined {
 		return this.releaseYear && this.releaseMonth && this.releaseDay
 			? moment([this.releaseYear, this.releaseMonth, this.releaseDay])
 			: undefined;
 	}
-	public set releaseDate(value: Moment | undefined) {
+	set releaseDate(value: Moment | undefined) {
 		this.releaseYear = value?.year();
 		this.releaseMonth = value ? value.month() + 1 : undefined;
 		this.releaseDay = value?.date();
 	}
 
-	@action public acceptTrackSelection = async (
+	@action acceptTrackSelection = async (
 		songId?: number,
 		songName?: string,
 		itemType?: string,
@@ -363,10 +360,7 @@ export class AlbumEditStore {
 	// Adds a new artist to the album
 	// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
 	// customArtistName: Name of the custom artist being added. Can be null, if existing artist.
-	@action public addArtist = (
-		artistId?: number,
-		customArtistName?: string,
-	): void => {
+	@action addArtist = (artistId?: number, customArtistName?: string): void => {
 		if (artistId) {
 			this.artistRepo
 				.getOne({ id: artistId, lang: this.values.languagePreference })
@@ -399,7 +393,7 @@ export class AlbumEditStore {
 	};
 
 	// Adds a list of artists (from the track properties view model) to selected tracks.
-	@action public addArtistsToSelectedTracks = (): void => {
+	@action addArtistsToSelectedTracks = (): void => {
 		for (const song of this.tracks.filter((s) => s.selected)) {
 			const added = this.editedSong!.artistSelections.filter(
 				(a) => a.selected && song.artists.every((a2) => a.artist.id !== a2.id),
@@ -410,18 +404,18 @@ export class AlbumEditStore {
 		this.trackPropertiesDialogVisible = false;
 	};
 
-	@action public createNewIdentifier = (): void => {
+	@action createNewIdentifier = (): void => {
 		if (!this.newIdentifier) return;
 
 		this.identifiers.push(this.newIdentifier);
 		this.newIdentifier = '';
 	};
 
-	public customizeName = (artistLink: ArtistForAlbumEditStore): void => {
+	customizeName = (artistLink: ArtistForAlbumEditStore): void => {
 		this.editedArtistLink.open(artistLink);
 	};
 
-	public editArtistRoles = (artist: ArtistForAlbumEditStore): void => {
+	editArtistRoles = (artist: ArtistForAlbumEditStore): void => {
 		this.artistRolesEditStore.show(artist);
 	};
 
@@ -435,27 +429,25 @@ export class AlbumEditStore {
 			.map((a) => a.artist);
 	};
 
-	@action public editMultipleTrackProperties = (): void => {
+	@action editMultipleTrackProperties = (): void => {
 		const artists = this.artistsForTracks();
 		this.editedSong = new TrackPropertiesStore(artists, undefined);
 		this.trackPropertiesDialogVisible = true;
 	};
 
-	@action public editTrackProperties = (song: SongInAlbumEditStore): void => {
+	@action editTrackProperties = (song: SongInAlbumEditStore): void => {
 		const artists = this.artistsForTracks();
 		this.editedSong = new TrackPropertiesStore(artists, song);
 		this.trackPropertiesDialogVisible = true;
 	};
 
 	// Removes an artist from this album.
-	@action public removeArtist = (
-		artistForAlbum: ArtistForAlbumEditStore,
-	): void => {
+	@action removeArtist = (artistForAlbum: ArtistForAlbumEditStore): void => {
 		pull(this.artistLinks, artistForAlbum);
 	};
 
 	// Removes artists (selected from the track properties view model) from selected tracks.
-	@action public removeArtistsFromSelectedTracks = (): void => {
+	@action removeArtistsFromSelectedTracks = (): void => {
 		for (const song of this.tracks.filter((s) => s.selected)) {
 			const removed = song.artists.filter((a) =>
 				this.editedSong!.artistSelections.some(
@@ -468,17 +460,17 @@ export class AlbumEditStore {
 		this.trackPropertiesDialogVisible = false;
 	};
 
-	@action public removeIdentifier = (identifier: string): void => {
+	@action removeIdentifier = (identifier: string): void => {
 		pull(this.identifiers, identifier);
 	};
 
 	// Removes a track from this album.
-	@action public removeTrack = (song: SongInAlbumEditStore): void => {
+	@action removeTrack = (song: SongInAlbumEditStore): void => {
 		pull(this.tracks, song);
 	};
 
 	// Copies modified state from track properties view model to the single track being edited.
-	@action public saveTrackProperties = (): void => {
+	@action saveTrackProperties = (): void => {
 		this.trackPropertiesDialogVisible = false;
 
 		if (this.editedSong) {
@@ -490,7 +482,7 @@ export class AlbumEditStore {
 		}
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		coverPicUpload: File | undefined,
 		pictureUpload: File[],
@@ -548,7 +540,7 @@ export class AlbumEditStore {
 		}
 	};
 
-	@action public updateTrackNumbers = (): void => {
+	@action updateTrackNumbers = (): void => {
 		let track = 1;
 		let disc = 1;
 

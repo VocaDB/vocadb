@@ -3,7 +3,7 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -27,9 +27,9 @@ const AdminManageWebhooks = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain']);
 
-		const title = 'Manage webhooks'; /* TODO: localize */
+		const title = 'Manage webhooks'; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		return (
 			<Layout
@@ -42,16 +42,16 @@ const AdminManageWebhooks = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* TODO: localize */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
 			>
 				<form className="form-horizontal">
-					<h3>New webhook{/* TODO: localize */}</h3>
+					<h3>New webhook{/* LOC */}</h3>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newUrl">
-							Payload URL{/* TODO: localize */}
+							Payload URL{/* LOC */}
 						</label>
 						<div className="controls">
 							<input
@@ -69,7 +69,7 @@ const AdminManageWebhooks = observer(
 					</div>
 					<div className="control-group">
 						<label className="control-label" htmlFor="newWebhookEvents">
-							Events{/* TODO: localize */}
+							Events{/* LOC */}
 						</label>
 						<div className="controls">
 							<div>
@@ -111,16 +111,14 @@ const AdminManageWebhooks = observer(
 											(w) => w.url === manageWebhooksStore.newUrl,
 										)
 									) {
-										showErrorMessage(
-											'Hook already exists' /* TODO: localize */,
-										);
+										showErrorMessage('Hook already exists' /* LOC */);
 										return;
 									}
 
 									manageWebhooksStore.addWebhook();
 								}}
 							>
-								Add{/* TODO: localize */}
+								Add{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -135,12 +133,12 @@ const AdminManageWebhooks = observer(
 						try {
 							await manageWebhooksStore.save();
 
-							showSuccessMessage('Saved' /* TODO: localize */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save webhooks.' /* TODO: localize */,
+									: 'Unable to save webhooks.' /* LOC */,
 							);
 
 							throw error;
@@ -149,15 +147,15 @@ const AdminManageWebhooks = observer(
 						await manageWebhooksStore.loadWebhooks();
 					}}
 				>
-					<h3>Webhooks{/* TODO: localize */}</h3>
+					<h3>Webhooks{/* LOC */}</h3>
 
 					<SaveBtn submitting={manageWebhooksStore.submitting} />
 
 					<table>
 						<thead>
 							<tr>
-								<th>Payload URL{/* TODO: localize */}</th>
-								<th>Events{/* TODO: localize */}</th>
+								<th>Payload URL{/* LOC */}</th>
+								<th>Events{/* LOC */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -192,7 +190,7 @@ const AdminManageWebhooks = observer(
 											onClick={webhook.deleteWebhook}
 											disabled={webhook.isDeleted}
 										>
-											Delete{/* TODO: localize */}
+											Delete{/* LOC */}
 										</Button>
 									</td>
 								</tr>

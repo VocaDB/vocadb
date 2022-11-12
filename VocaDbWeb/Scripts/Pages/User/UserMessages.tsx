@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import { IconAndNameKnockout } from '@/Components/Shared/Partials/User/IconAndNameKnockout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import ComposeMessage from '@/Pages/User/Partials/ComposeMessage';
@@ -175,7 +175,7 @@ const MessageFolderTabContent = observer(
 												<span>
 													<img
 														src="/Content/star5.png"
-														alt="unread" /* TODO: localize */
+														alt="unread" /* LOC */
 													/>
 													&nbsp;
 												</span>
@@ -217,7 +217,7 @@ const UserMessages = observer(
 	(): React.ReactElement => {
 		const { t, ready } = useTranslation(['ViewRes.User']);
 
-		useVocaDbTitle(t('ViewRes.User:Messages.Messages'), ready);
+		useVdbTitle(t('ViewRes.User:Messages.Messages'), ready);
 
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');

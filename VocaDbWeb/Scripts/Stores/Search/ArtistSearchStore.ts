@@ -62,12 +62,12 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 	ArtistSearchRouteParams,
 	ArtistContract
 > {
-	@observable public artistType = ArtistType.Unknown;
-	@observable public onlyFollowedByMe = false;
-	@observable public onlyRootVoicebanks = false;
-	@observable public sort = ArtistSortRule.Name;
+	@observable artistType = ArtistType.Unknown;
+	@observable onlyFollowedByMe = false;
+	@observable onlyRootVoicebanks = false;
+	@observable sort = ArtistSortRule.Name;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
@@ -77,7 +77,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	@computed public get fields(): ArtistOptionalField[] {
+	@computed get fields(): ArtistOptionalField[] {
 		return this.showTags
 			? [
 					ArtistOptionalField.AdditionalNames,
@@ -87,7 +87,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 			: [ArtistOptionalField.AdditionalNames, ArtistOptionalField.MainPicture];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<ArtistContract>> => {
 		return this.artistRepo.getList({
@@ -109,11 +109,11 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	@computed public get canHaveChildVoicebanks(): boolean {
+	@computed get canHaveChildVoicebanks(): boolean {
 		return ArtistHelper.canHaveChildVoicebanks(this.artistType);
 	}
 
-	@computed.struct public get locationState(): ArtistSearchRouteParams {
+	@computed.struct get locationState(): ArtistSearchRouteParams {
 		return {
 			searchType: SearchType.Artist,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -133,7 +133,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: ArtistSearchRouteParams) {
+	set locationState(value: ArtistSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistType = value.artistType ?? ArtistType.Unknown;
 		this.childTags = value.childTags ?? false;
@@ -146,7 +146,7 @@ export class ArtistSearchStore extends SearchCategoryBaseStore<
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<ArtistSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

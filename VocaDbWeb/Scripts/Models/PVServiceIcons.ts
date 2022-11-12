@@ -4,7 +4,7 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 export class PVServiceIcons {
 	private icons: any;
 
-	public constructor(urlMapper: UrlMapper) {
+	constructor(urlMapper: UrlMapper) {
 		this.icons = {
 			File: urlMapper.mapRelative('/Content/Icons/music.png'),
 			LocalFile: urlMapper.mapRelative('/Content/Icons/music.png'),
@@ -19,14 +19,12 @@ export class PVServiceIcons {
 		};
 	}
 
-	public getIconUrl = (service: string): string => {
+	getIconUrl = (service: string): string => {
 		return this.icons[service];
 	};
 
 	// Gets icon URLs from a comma separated list of services
-	public getIconUrls = (
-		servicesStr: string,
-	): { service: string; url: string }[] => {
+	getIconUrls = (servicesStr: string): { service: string; url: string }[] => {
 		if (!servicesStr || servicesStr === 'Nothing') return [];
 
 		var services = servicesStr.split(',');

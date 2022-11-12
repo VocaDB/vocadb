@@ -5,7 +5,7 @@ import { IPManage } from '@/Components/Shared/KnockoutPartials/IPManage';
 import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -29,9 +29,9 @@ const AdminManageIPRules = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'Manage blocked IPs'; /* TODO: localize */
+		const title = 'Manage blocked IPs'; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		return (
 			<Layout
@@ -44,7 +44,7 @@ const AdminManageIPRules = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* TODO: localize */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -57,12 +57,12 @@ const AdminManageIPRules = observer(
 						try {
 							await manageIPRulesStore.save();
 
-							showSuccessMessage('Saved' /* TODO: localize */);
+							showSuccessMessage('Saved' /* LOC */);
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save IP rules.' /* TODO: localize */,
+									: 'Unable to save IP rules.' /* LOC */,
 							);
 
 							throw error;
@@ -72,11 +72,11 @@ const AdminManageIPRules = observer(
 					<SaveBtn submitting={manageIPRulesStore.submitting} />
 
 					<Button onClick={manageIPRulesStore.deleteOldRules}>
-						Delete rules older than 1 year{/* TODO: localize */}
+						Delete rules older than 1 year{/* LOC */}
 					</Button>
 
 					<div className="editor-label">
-						<label>New address{/* TODO: localize */}</label>
+						<label>New address{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<input
@@ -97,9 +97,7 @@ const AdminManageIPRules = observer(
 								if (!addr) return;
 
 								if (manageIPRulesStore.rules.some((r) => r.address === addr)) {
-									showErrorMessage(
-										'Address already added' /* TODO: localize */,
-									);
+									showErrorMessage('Address already added' /* LOC */);
 									return;
 								}
 
@@ -113,9 +111,9 @@ const AdminManageIPRules = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Address{/* TODO: localize */}</th>
-								<th>Notes{/* TODO: localize */}</th>
-								<th>Created{/* TODO: localize */}</th>
+								<th>Address{/* LOC */}</th>
+								<th>Notes{/* LOC */}</th>
+								<th>Created{/* LOC */}</th>
 								<th />
 							</tr>
 						</thead>
@@ -155,7 +153,7 @@ const AdminManageIPRules = observer(
 				<div>
 					{manageIPRulesStore.bannedIPs.length > 0 && (
 						<>
-							<h2>Automatically banned IPs{/* TODO: localize */}</h2>
+							<h2>Automatically banned IPs{/* LOC */}</h2>
 							<ul>
 								{manageIPRulesStore.bannedIPs.map((bannedIP, index) => (
 									<li key={index}>

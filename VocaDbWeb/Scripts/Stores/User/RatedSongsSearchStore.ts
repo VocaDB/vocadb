@@ -102,34 +102,33 @@ export class RatedSongsSearchStore
 		LocationStateStore<RatedSongsSearchRouteParams>,
 		ISongSearchStore,
 		IRatedSongsAdapterStore {
-	public readonly advancedFilters = new AdvancedSearchFilters();
-	public artistFilters: ArtistFilters;
-	@observable public groupByRating = true;
-	public isInit = false;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: IRatedSongSearchItem[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	public readonly playListStore: PlayListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
-	public pvServiceIcons: PVServiceIcons;
-	@observable public rating: SongVoteRating = 'Nothing' /* TODO: enum */;
-	@observable public searchTerm = '';
-	@observable public showTags = false;
-	@observable public songListId?: number;
-	@observable public songLists: SongListBaseContract[] = [];
-	@observable public sort = RatedSongForUserSortRule.RatingDate;
-	public readonly tagFilters: TagFilters;
-	@observable public viewMode: 'Details' | 'PlayList' =
-		'Details' /* TODO: enum */;
+	readonly advancedFilters = new AdvancedSearchFilters();
+	artistFilters: ArtistFilters;
+	@observable groupByRating = true;
+	isInit = false;
+	@observable loading = true; // Currently loading for data
+	@observable page: IRatedSongSearchItem[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	readonly playListStore: PlayListStore;
+	readonly pvPlayerStore: PVPlayerStore;
+	pvServiceIcons: PVServiceIcons;
+	@observable rating: SongVoteRating = 'Nothing' /* TODO: enum */;
+	@observable searchTerm = '';
+	@observable showTags = false;
+	@observable songListId?: number;
+	@observable songLists: SongListBaseContract[] = [];
+	@observable sort = RatedSongForUserSortRule.RatingDate;
+	readonly tagFilters: TagFilters;
+	@observable viewMode: 'Details' | 'PlayList' = 'Details' /* TODO: enum */;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private readonly userRepo: UserRepository,
 		artistRepo: ArtistRepository,
 		private readonly songRepo: SongRepository,
 		tagRepo: TagRepository,
-		public readonly userId: number,
+		readonly userId: number,
 		pvPlayersFactory: PVPlayersFactory,
 		initialize = true,
 	) {
@@ -163,16 +162,16 @@ export class RatedSongsSearchStore
 		if (initialize) this.init();
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tagFilters.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	@computed public get fields(): SongOptionalField[] {
+	@computed get fields(): SongOptionalField[] {
 		return this.showTags
 			? [
 					SongOptionalField.AdditionalNames,
@@ -182,11 +181,11 @@ export class RatedSongsSearchStore
 			: [SongOptionalField.AdditionalNames, SongOptionalField.MainPicture];
 	}
 
-	@action public selectTag = (tag: TagBaseContract): void => {
+	@action selectTag = (tag: TagBaseContract): void => {
 		this.tagFilters.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public init = async (): Promise<void> => {
+	init = async (): Promise<void> => {
 		if (this.isInit) return;
 
 		const songLists = await this.userRepo.getSongLists({
@@ -205,17 +204,17 @@ export class RatedSongsSearchStore
 		this.isInit = true;
 	};
 
-	public formatDate = (dateStr: string): string => {
+	formatDate = (dateStr: string): string => {
 		return moment(dateStr).format('l');
 	};
 
-	public getPVServiceIcons = (
+	getPVServiceIcons = (
 		services: string,
 	): { service: string; url: string }[] => {
 		return this.pvServiceIcons.getIconUrls(services);
 	};
 
-	@computed public get queryParams(): UserGetRatedSongsListQueryParams {
+	@computed get queryParams(): UserGetRatedSongsListQueryParams {
 		return {
 			userId: this.userId,
 			query: this.searchTerm,
@@ -230,9 +229,9 @@ export class RatedSongsSearchStore
 		};
 	}
 
-	public pauseNotifications = false;
+	pauseNotifications = false;
 
-	@action public updateResults = async (
+	@action updateResults = async (
 		clearResults: boolean = true,
 	): Promise<void> => {
 		// Disable duplicate updates
@@ -294,15 +293,15 @@ export class RatedSongsSearchStore
 		});
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	@computed.struct public get locationState(): RatedSongsSearchRouteParams {
+	@computed.struct get locationState(): RatedSongsSearchRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -327,7 +326,7 @@ export class RatedSongsSearchStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set locationState(value: RatedSongsSearchRouteParams) {
+	set locationState(value: RatedSongsSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -349,13 +348,11 @@ export class RatedSongsSearchStore
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is RatedSongsSearchRouteParams => {
+	validateLocationState = (data: any): data is RatedSongsSearchRouteParams => {
 		return validate(data);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<RatedSongsSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

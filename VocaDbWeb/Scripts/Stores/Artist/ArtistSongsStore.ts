@@ -36,7 +36,7 @@ const validate = ajv.compile(schema);
 export class ArtistSongsStore
 	extends SongSearchStore
 	implements LocationStateStore<ArtistSongsRouteParams> {
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		urlMapper: UrlMapper,
 		songRepo: SongRepository,
@@ -55,7 +55,7 @@ export class ArtistSongsStore
 		);
 	}
 
-	public get locationState(): ArtistSongsRouteParams {
+	get locationState(): ArtistSongsRouteParams {
 		return {
 			page: this.paging.page,
 			pageSize: this.paging.pageSize,
@@ -63,20 +63,18 @@ export class ArtistSongsStore
 			viewMode: this.viewMode,
 		};
 	}
-	public set locationState(value: ArtistSongsRouteParams) {
+	set locationState(value: ArtistSongsRouteParams) {
 		this.paging.page = value.page ?? 1;
 		this.paging.pageSize = value.pageSize ?? 10;
 		this.sort = value.sort ?? SongSortRule.RatingScore;
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public validateLocationState = (
-		data: any,
-	): data is ArtistSongsRouteParams => {
+	validateLocationState = (data: any): data is ArtistSongsRouteParams => {
 		return validate(data);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<ArtistSongsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

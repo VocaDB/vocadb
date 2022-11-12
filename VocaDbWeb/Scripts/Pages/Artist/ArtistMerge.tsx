@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ArtistLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ArtistLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryType } from '@/Models/EntryType';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -38,9 +38,9 @@ const ArtistMergeLayout = observer(
 	}: ArtistMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge artist - ${artist.name}`; /* TODO: localize */
+		const title = `Merge artist - ${artist.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ const ArtistMergeLayout = observer(
 								to: `/Artist/Edit/${artist.id}`,
 							}}
 						>
-							Edit{/* TODO: localize */}
+							Edit{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -97,7 +97,7 @@ const ArtistMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge artist.' /* TODO: localize */,
+									: 'Unable to merge artist.' /* LOC */,
 							);
 
 							throw error;
@@ -141,7 +141,7 @@ const ArtistMergeLayout = observer(
 							!artistMergeStore.target.id || artistMergeStore.submitting
 						}
 					>
-						Merge{/* TODO: localize */}
+						Merge{/* LOC */}
 					</Button>
 				</form>
 			</Layout>

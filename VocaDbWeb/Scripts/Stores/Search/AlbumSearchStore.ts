@@ -69,12 +69,12 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 	AlbumSearchRouteParams,
 	AlbumContract
 > {
-	@observable public albumType = AlbumType.Unknown;
-	public readonly artistFilters: ArtistFilters;
-	@observable public sort = AlbumSortRule.Name;
-	@observable public viewMode = 'Details' /* TODO: enum */;
+	@observable albumType = AlbumType.Unknown;
+	readonly artistFilters: ArtistFilters;
+	@observable sort = AlbumSortRule.Name;
+	@observable viewMode = 'Details' /* TODO: enum */;
 
-	public constructor(
+	constructor(
 		commonSearchStore: ICommonSearchStore,
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
@@ -87,7 +87,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.artistFilters = new ArtistFilters(values, artistRepo);
 	}
 
-	@computed public get fields(): AlbumOptionalField[] {
+	@computed get fields(): AlbumOptionalField[] {
 		return this.showTags
 			? [
 					AlbumOptionalField.AdditionalNames,
@@ -102,7 +102,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 			  ];
 	}
 
-	public loadResults = (
+	loadResults = (
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<AlbumContract>> => {
 		return this.albumRepo.getList({
@@ -124,7 +124,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		});
 	};
 
-	public ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
+	ratingStars = (album: AlbumContract): { enabled: boolean }[] => {
 		if (!album) return [];
 
 		const ratings = [1, 2, 3, 4, 5].map((rating) => ({
@@ -133,7 +133,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		return ratings;
 	};
 
-	@computed.struct public get locationState(): AlbumSearchRouteParams {
+	@computed.struct get locationState(): AlbumSearchRouteParams {
 		return {
 			searchType: SearchType.Album,
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
@@ -156,7 +156,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 			viewMode: this.viewMode,
 		};
 	}
-	public set locationState(value: AlbumSearchRouteParams) {
+	set locationState(value: AlbumSearchRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -175,7 +175,7 @@ export class AlbumSearchStore extends SearchCategoryBaseStore<
 		this.viewMode = value.viewMode ?? 'Details';
 	}
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<AlbumSearchRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

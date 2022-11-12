@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -40,9 +40,9 @@ const UserEntryEditsLayout = observer(
 	}: UserEntryEditsLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['Resources', 'ViewRes.User']);
 
-		const title = `Entry edits - ${user.name}`; /* TODO: localize */
+		const title = `Entry edits - ${user.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		useLocationStateStore(activityEntryListStore);
 
@@ -52,7 +52,7 @@ const UserEntryEditsLayout = observer(
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>
-							Users{/* TODO: localize */}
+							Users{/* LOC */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -101,9 +101,7 @@ const UserEntryEditsLayout = observer(
 					</div>
 
 					<div className="control-group">
-						<div className="control-label">
-							Edit event{/* TODO: localize */}
-						</div>
+						<div className="control-label">Edit event{/* LOC */}</div>
 						<div className="controls">
 							<Button
 								disabled={activityEntryListStore.entryEditEvent === undefined}
@@ -113,7 +111,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								All{/* TODO: localize */}
+								All{/* LOC */}
 							</Button>{' '}
 							<Button
 								disabled={
@@ -127,7 +125,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								Only additions{/* TODO: localize */}
+								Only additions{/* LOC */}
 							</Button>{' '}
 							<Button
 								disabled={
@@ -141,7 +139,7 @@ const UserEntryEditsLayout = observer(
 									})
 								}
 							>
-								Only edits{/* TODO: localize */}
+								Only edits{/* LOC */}
 							</Button>
 						</div>
 					</div>
@@ -160,7 +158,7 @@ const UserEntryEditsLayout = observer(
 				<hr />
 				<h3>
 					<SafeAnchor onClick={activityEntryListStore.loadMore}>
-						View more{/* TODO: localize */}
+						View more{/* LOC */}
 					</SafeAnchor>
 				</h3>
 			</Layout>

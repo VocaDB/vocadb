@@ -6,7 +6,7 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedEventData } from '@/Components/Shared/Partials/Event/PrintArchivedEventData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -43,9 +43,9 @@ const EventViewVersionLayout = observer(
 	}: EventViewVersionLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* TODO: localize */
+		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -83,7 +83,7 @@ const EventViewVersionLayout = observer(
 								to: `/Event/Versions/${contract.releaseEvent.id}`,
 							}}
 						>
-							Revisions{/* TODO: localize */}
+							Revisions{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -94,7 +94,7 @@ const EventViewVersionLayout = observer(
 							href={`/Event/ArchivedVersionXml/${contract.archivedVersion.id}`}
 							icons={{ primary: 'ui-icon-arrowthickstop-1-s' }}
 						>
-							Download XML{/* TODO: localize */}
+							Download XML{/* LOC */}
 						</JQueryUIButton>{' '}
 						<JQueryUIButton
 							as={SafeAnchor}
@@ -147,7 +147,7 @@ const EventViewVersionLayout = observer(
 
 				{contract.comparableVersions.length > 0 && (
 					<form className="form form-inline">
-						Compare to:{/* TODO: localize */}{' '}
+						Compare to:{/* LOC */}{' '}
 						<select
 							className="input-xlarge"
 							value={archivedEntryStore.comparedVersionId}

@@ -61,7 +61,7 @@ export const ArtistTypesDropdownKnockout = React.memo(
 							))}
 						</React.Fragment>
 					) : (
-						<optgroup label={key /* TODO: localize */} key={key}>
+						<optgroup label={key /* LOC */} key={key}>
 							{value.map((artistType) => (
 								<option value={artistType} key={artistType}>
 									{t(`VocaDb.Model.Resources:ArtistTypeNames.${artistType}`)}

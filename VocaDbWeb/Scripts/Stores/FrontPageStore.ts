@@ -8,11 +8,11 @@ import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 export class FrontPagePVPlayerStore {
-	public readonly paging = new ServerSidePagingStore(4);
-	@observable public ratingButtonsStore?: PVRatingButtonsStore;
-	@observable public selectedSong?: SongWithPVAndVoteContract;
+	readonly paging = new ServerSidePagingStore(4);
+	@observable ratingButtonsStore?: PVRatingButtonsStore;
+	@observable selectedSong?: SongWithPVAndVoteContract;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		userRepo: UserRepository,
 		data: FrontPageContract,
@@ -49,10 +49,10 @@ export class FrontPagePVPlayerStore {
 }
 
 export class FrontPageStore {
-	public readonly newsListStore: NewsListStore;
-	public readonly pvPlayerStore: FrontPagePVPlayerStore;
+	readonly newsListStore: NewsListStore;
+	readonly pvPlayerStore: FrontPagePVPlayerStore;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		userRepo: UserRepository,
 		data: FrontPageContract,

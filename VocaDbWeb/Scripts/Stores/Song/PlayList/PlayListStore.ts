@@ -40,13 +40,13 @@ export interface IPlayListRepository {
 }
 
 export class PlayListStore {
-	public isInit = false;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: ISongForPlayList[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(30); // Paging view model
-	public pvServiceIcons: PVServiceIcons;
+	isInit = false;
+	@observable loading = true; // Currently loading for data
+	@observable page: ISongForPlayList[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(30); // Paging view model
+	pvServiceIcons: PVServiceIcons;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: IPlayListRepository,
@@ -77,11 +77,11 @@ export class PlayListStore {
 		return this.page.length < this.paging.totalItems;
 	}
 
-	@computed public get songsLoaded(): number {
+	@computed get songsLoaded(): number {
 		return this.page.length;
 	}
 
-	public formatLength = (length: number): string =>
+	formatLength = (length: number): string =>
 		DateTimeHelper.formatFromSeconds(length);
 
 	private getRandomSongIndex = (): number => {
@@ -112,7 +112,7 @@ export class PlayListStore {
 		this.pvPlayerStore.selectedSong = song;
 	};
 
-	public scrollEnd = (): void => {
+	scrollEnd = (): void => {
 		// For now, disable autoload in shuffle mode
 		if (this.hasMoreSongs && !this.pvPlayerStore.shuffle) {
 			this.paging.nextPage();
@@ -122,7 +122,7 @@ export class PlayListStore {
 
 	private pauseNotifications = false;
 
-	@action public updateResults = async (
+	@action updateResults = async (
 		clearResults: boolean = true,
 		songWithIndex?: number,
 	): Promise<void> => {
@@ -192,13 +192,13 @@ export class PlayListStore {
 		}
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> =>
+	updateResultsWithTotalCount = (): Promise<void> =>
 		this.updateResults(true, undefined);
 
-	public updateResultsWithoutTotalCount = (): Promise<void> =>
+	updateResultsWithoutTotalCount = (): Promise<void> =>
 		this.updateResults(false);
 
-	public nextSong = (): void => {
+	nextSong = (): void => {
 		if (this.paging.totalItems === 0) return;
 
 		if (this.pvPlayerStore.shuffle) {

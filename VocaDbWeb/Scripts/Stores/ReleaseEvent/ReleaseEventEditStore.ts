@@ -36,50 +36,50 @@ import {
 import moment from 'moment';
 
 export class EventArtistRolesEditStore extends ArtistRolesEditStore {
-	public constructor(roleNames: { [key: string]: string | undefined }) {
+	constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistEventRoles[ArtistEventRoles.Default]);
 	}
 }
 
 export class ReleaseEventEditStore {
-	@observable public readonly artistLinks: ArtistForEventEditStore[];
-	public readonly artistRolesEditStore: EventArtistRolesEditStore;
-	@observable public category: EventCategory;
-	@observable public customName: boolean;
+	@observable readonly artistLinks: ArtistForEventEditStore[];
+	readonly artistRolesEditStore: EventArtistRolesEditStore;
+	@observable category: EventCategory;
+	@observable customName: boolean;
 	// Event date. This should always be in UTC.
-	@observable public date?: Date;
-	@observable public defaultNameLanguage: ContentLanguageSelection;
-	public readonly deleteStore = new DeleteEntryStore((notes) =>
+	@observable date?: Date;
+	@observable defaultNameLanguage: ContentLanguageSelection;
+	readonly deleteStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: false,
 		}),
 	);
-	@observable public description: string;
-	@observable public endDate?: Date;
-	@observable public errors?: Record<string, string[]>;
-	@observable public isSeriesEvent: boolean;
-	public readonly names: NamesEditStore;
-	public readonly pvs: PVListEditStore;
-	public readonly series: BasicEntryLinkStore<IEntryWithIdAndName>;
-	@observable public seriesNumber: string;
-	@observable public seriesSuffix: string;
-	public readonly songList: BasicEntryLinkStore<SongListBaseContract>;
-	@observable public status: EntryStatus;
-	@observable public submitting = false;
-	public readonly trashStore = new DeleteEntryStore((notes) =>
+	@observable description: string;
+	@observable endDate?: Date;
+	@observable errors?: Record<string, string[]>;
+	@observable isSeriesEvent: boolean;
+	readonly names: NamesEditStore;
+	readonly pvs: PVListEditStore;
+	readonly series: BasicEntryLinkStore<IEntryWithIdAndName>;
+	@observable seriesNumber: string;
+	@observable seriesSuffix: string;
+	readonly songList: BasicEntryLinkStore<SongListBaseContract>;
+	@observable status: EntryStatus;
+	@observable submitting = false;
+	readonly trashStore = new DeleteEntryStore((notes) =>
 		this.eventRepo.delete({
 			id: this.contract.id,
 			notes: notes,
 			hardDelete: true,
 		}),
 	);
-	public readonly venue: BasicEntryLinkStore<VenueForApiContract>;
-	@observable public venueName: string;
-	public readonly webLinks: WebLinksEditStore;
+	readonly venue: BasicEntryLinkStore<VenueForApiContract>;
+	@observable venueName: string;
+	readonly webLinks: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly eventRepo: ReleaseEventRepository,
 		private readonly artistRepo: ArtistRepository,
@@ -88,7 +88,7 @@ export class ReleaseEventEditStore {
 		venueRepo: VenueRepository,
 		urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
-		public readonly contract: ReleaseEventForEditContract,
+		readonly contract: ReleaseEventForEditContract,
 	) {
 		makeObservable(this);
 
@@ -142,20 +142,20 @@ export class ReleaseEventEditStore {
 		);
 	}
 
-	@computed public get artistLinkContracts(): ArtistForEventContract[] {
+	@computed get artistLinkContracts(): ArtistForEventContract[] {
 		return this.artistLinks.map((artistLink) => artistLink.toContract());
 	}
 
 	// Date as ISO string, in UTC, ready to be posted to server
-	@computed public get dateStr(): string | undefined {
+	@computed get dateStr(): string | undefined {
 		return this.date?.toISOString() ?? undefined;
 	}
 
-	@computed public get endDateStr(): string | undefined {
+	@computed get endDateStr(): string | undefined {
 		return this.endDate?.toISOString() ?? undefined;
 	}
 
-	@action public addArtist = async (
+	@action addArtist = async (
 		artistId?: number,
 		customArtistName?: string,
 	): Promise<void> => {
@@ -189,15 +189,15 @@ export class ReleaseEventEditStore {
 		}
 	};
 
-	public editArtistRoles = (artist: ArtistForEventEditStore): void => {
+	editArtistRoles = (artist: ArtistForEventEditStore): void => {
 		this.artistRolesEditStore.show(artist);
 	};
 
-	@action public removeArtist = (artist: ArtistForEventEditStore): void => {
+	@action removeArtist = (artist: ArtistForEventEditStore): void => {
 		pull(this.artistLinks, artist);
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {

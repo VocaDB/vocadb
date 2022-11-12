@@ -17,7 +17,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -163,7 +163,7 @@ const PropertiesTabContent = observer(
 							<img
 								className="pull-left media-object"
 								src={thumbUrl}
-								alt="Thumb" /* TODO: localize */
+								alt="Thumb" /* LOC */
 							/>
 						)}
 						<div className="media-body">
@@ -304,7 +304,7 @@ const SongListEditLayout = observer(
 					0: contract.name,
 			  });
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const conflictingEditor = useConflictingEditor(EntryType.SongList);
 
@@ -373,7 +373,7 @@ const SongListEditLayout = observer(
 
 				{songListEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOC */
 						errors={songListEditStore.errors}
 					/>
 				)}
@@ -398,7 +398,7 @@ const SongListEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;

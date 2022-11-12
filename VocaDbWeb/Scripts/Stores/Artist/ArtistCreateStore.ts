@@ -19,19 +19,19 @@ import {
 } from 'mobx';
 
 export class ArtistCreateStore {
-	@observable public artistType = ArtistType.Producer;
-	@observable public artistTypeTag?: TagApiContract;
-	@observable public draft = false;
-	@observable public description = '';
-	@observable public dupeEntries: DuplicateEntryResultContract[] = [];
-	@observable public errors?: Record<string, string[]>;
-	@observable public nameOriginal = '';
-	@observable public nameRomaji = '';
-	@observable public nameEnglish = '';
-	@observable public submitting = false;
-	public readonly webLink = new WebLinkEditStore();
+	@observable artistType = ArtistType.Producer;
+	@observable artistTypeTag?: TagApiContract;
+	@observable draft = false;
+	@observable description = '';
+	@observable dupeEntries: DuplicateEntryResultContract[] = [];
+	@observable errors?: Record<string, string[]>;
+	@observable nameOriginal = '';
+	@observable nameRomaji = '';
+	@observable nameEnglish = '';
+	@observable submitting = false;
+	readonly webLink = new WebLinkEditStore();
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 		private readonly tagRepo: TagRepository,
@@ -42,19 +42,19 @@ export class ArtistCreateStore {
 		this.getArtistTypeTag(this.artistType);
 	}
 
-	@computed public get artistTypeName(): string | undefined {
+	@computed get artistTypeName(): string | undefined {
 		return this.artistTypeTag?.name;
 	}
 
-	@computed public get artistTypeInfo(): string | undefined {
+	@computed get artistTypeInfo(): string | undefined {
 		return this.artistTypeTag?.description;
 	}
 
-	@computed public get artistTypeTagUrl(): string | undefined {
+	@computed get artistTypeTagUrl(): string | undefined {
 		return EntryUrlMapper.details_tag_contract(this.artistTypeTag);
 	}
 
-	@action public checkDuplicates = async (): Promise<void> => {
+	@action checkDuplicates = async (): Promise<void> => {
 		const term1 = this.nameOriginal;
 		const term2 = this.nameRomaji;
 		const term3 = this.nameEnglish;
@@ -85,7 +85,7 @@ export class ArtistCreateStore {
 		});
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<number> => {

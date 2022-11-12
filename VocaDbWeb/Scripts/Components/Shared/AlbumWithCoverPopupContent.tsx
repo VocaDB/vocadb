@@ -15,7 +15,7 @@ export const AlbumWithCoverPopupContent = ({
 		<>
 			<img
 				src={UrlHelper.imageThumb(album.mainPicture, ImageSize.SmallThumb)}
-				alt="Cover" /* TODO: localize */
+				alt="Cover" /* LOC */
 				className="smallCover"
 			/>
 			<br />

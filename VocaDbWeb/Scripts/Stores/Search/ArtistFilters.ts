@@ -14,36 +14,36 @@ import {
 // Manages artist filters for search
 // These can be used wherever artist filtering is needed - search page, rated songs page, song list page
 export class ArtistFilters {
-	@observable public artists: ArtistFilter[] = [];
-	@observable public artistParticipationStatus = 'Everything' /* TODO: enum */;
-	@observable public childVoicebanks = false;
-	@observable public includeMembers = false;
+	@observable artists: ArtistFilter[] = [];
+	@observable artistParticipationStatus = 'Everything' /* TODO: enum */;
+	@observable childVoicebanks = false;
+	@observable includeMembers = false;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly artistRepo: ArtistRepository,
 	) {
 		makeObservable(this);
 	}
 
-	@computed public get artistIds(): number[] {
+	@computed get artistIds(): number[] {
 		return this.artists.map((a) => a.id);
 	}
-	public set artistIds(value: number[]) {
+	set artistIds(value: number[]) {
 		// OPTIMIZE
 		this.artists = [];
 		this.selectArtists(value);
 	}
 
-	@computed public get hasMultipleArtists(): boolean {
+	@computed get hasMultipleArtists(): boolean {
 		return this.artists.length > 1;
 	}
 
-	@computed public get hasSingleArtist(): boolean {
+	@computed get hasSingleArtist(): boolean {
 		return this.artists.length === 1;
 	}
 
-	@computed public get showChildVoicebanks(): boolean {
+	@computed get showChildVoicebanks(): boolean {
 		return (
 			this.hasSingleArtist &&
 			ArtistHelper.canHaveChildVoicebanks(this.artists[0].artistType)
@@ -54,7 +54,7 @@ export class ArtistFilters {
 		return this.artists[0];
 	}
 
-	@computed public get showMembers(): boolean {
+	@computed get showMembers(): boolean {
 		return (
 			this.hasSingleArtist &&
 			!!this.firstArtist.artistType &&
@@ -62,7 +62,7 @@ export class ArtistFilters {
 		);
 	}
 
-	@computed public get filters(): any {
+	@computed get filters(): any {
 		return {
 			artistIds: this.artistIds,
 			artistParticipationStatus: this.artistParticipationStatus,
@@ -71,7 +71,7 @@ export class ArtistFilters {
 		};
 	}
 
-	@action public selectArtists = (selectedArtistIds?: number[]): void => {
+	@action selectArtists = (selectedArtistIds?: number[]): void => {
 		if (!selectedArtistIds) return;
 
 		const filters = selectedArtistIds.map((a) => new ArtistFilter(a));
@@ -93,11 +93,11 @@ export class ArtistFilters {
 		}
 	};
 
-	public selectArtist = (selectedArtistId?: number): void => {
+	selectArtist = (selectedArtistId?: number): void => {
 		this.selectArtists([selectedArtistId!]);
 	};
 
-	@action public removeArtist = (artist: ArtistFilter): void => {
+	@action removeArtist = (artist: ArtistFilter): void => {
 		pull(this.artists, artist);
 	};
 }

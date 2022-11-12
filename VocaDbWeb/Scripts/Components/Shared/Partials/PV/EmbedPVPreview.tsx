@@ -1,7 +1,10 @@
 import Button from '@/Bootstrap/Button';
 import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import Dropdown from '@/Bootstrap/Dropdown';
-import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
+import {
+	usePlayQueue,
+	useVdbPlayer,
+} from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PlayMethod } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -9,6 +12,60 @@ import { MoreHorizontal20Filled, Play20Filled } from '@fluentui/react-icons';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+
+interface EmbedPVPreviewDropdownProps {
+	onPlay: (method: PlayMethod) => void;
+	onToggle?: (
+		isOpen: boolean,
+		event: React.SyntheticEvent,
+		metadata: { source: 'select' | 'click' | 'rootClose' | 'keydown' },
+	) => void;
+}
+
+const EmbedPVPreviewDropdown = React.memo(
+	({ onPlay, onToggle }: EmbedPVPreviewDropdownProps): React.ReactElement => {
+		return (
+			<Dropdown
+				as={ButtonGroup}
+				drop="up"
+				css={{ position: 'absolute', right: 8, bottom: 8 }}
+				onToggle={onToggle}
+			>
+				<Dropdown.Toggle
+					style={{
+						padding: 0,
+						width: 40,
+						height: 40,
+						borderRadius: '50%',
+					}}
+				>
+					<span
+						css={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<MoreHorizontal20Filled />
+					</span>
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
+					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayFirst)}>
+						Play first{/* LOC */}
+					</Dropdown.Item>
+					<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
+						Play next{/* LOC */}
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
+					>
+						Add to play queue{/* LOC */}
+					</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
+		);
+	},
+);
 
 interface EmbedPVPreviewButtonsProps {
 	onPlay: (method: PlayMethod) => void;
@@ -44,41 +101,7 @@ export const EmbedPVPreviewButtons = React.memo(
 					</span>
 				</Button>
 
-				<Dropdown
-					as={ButtonGroup}
-					drop="up"
-					css={{ position: 'absolute', right: 8, bottom: 8 }}
-					onToggle={onToggle}
-				>
-					<Dropdown.Toggle
-						style={{
-							padding: 0,
-							width: 40,
-							height: 40,
-							borderRadius: '50%',
-						}}
-					>
-						<span
-							css={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						>
-							<MoreHorizontal20Filled />
-						</span>
-					</Dropdown.Toggle>
-					<Dropdown.Menu>
-						<Dropdown.Item onClick={(): void => onPlay(PlayMethod.PlayNext)}>
-							Play next{/* TODO: localize */}
-						</Dropdown.Item>
-						<Dropdown.Item
-							onClick={(): void => onPlay(PlayMethod.AddToPlayQueue)}
-						>
-							Add to play queue{/* TODO: localize */}
-						</Dropdown.Item>
-					</Dropdown.Menu>
-				</Dropdown>
+				<EmbedPVPreviewDropdown onPlay={onPlay} onToggle={onToggle} />
 			</>
 		);
 	},
@@ -101,7 +124,8 @@ export const EmbedPVPreview = observer(
 		allowInline,
 	}: EmbedPVPreviewProps): React.ReactElement => {
 		const embedPVPreviewRef = React.useRef<HTMLDivElement>(undefined!);
-		const { vdbPlayer, playQueue } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
+		const playQueue = usePlayQueue();
 
 		const handleResize = React.useCallback(() => {
 			if (!allowInline) return;

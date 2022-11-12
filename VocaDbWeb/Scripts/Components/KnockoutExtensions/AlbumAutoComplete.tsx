@@ -5,7 +5,6 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { functions } from '@/Shared/GlobalFunctions';
-import $ from 'jquery';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -37,9 +36,8 @@ export const AlbumAutoComplete = ({
 		lang: vdb.values.languagePreference,
 		preferAccurateMatches: true,
 		maxResults: 15,
+		...properties.extraQueryParams,
 	};
-	if (properties.extraQueryParams)
-		$.extend(queryParams, properties.extraQueryParams);
 
 	const params: EntryAutoCompleteParams<AlbumContract> = {
 		acceptSelection: properties.acceptSelection!,

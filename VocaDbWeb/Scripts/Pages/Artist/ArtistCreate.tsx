@@ -8,7 +8,7 @@ import { ArtistTypesDropdownKnockout } from '@/Components/Shared/Partials/Artist
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -48,7 +48,7 @@ const ArtistCreateLayout = observer(
 
 		const title = t('ViewRes.Artist:Create.AddArtist');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const navigate = useNavigate();
 

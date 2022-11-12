@@ -4,12 +4,12 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class PVRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public getPVByUrl = ({
+	getPVByUrl = ({
 		pvUrl,
 		type,
 	}: {

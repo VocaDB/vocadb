@@ -67,12 +67,12 @@ export class PVPlayerNico implements IPVPlayer {
 	private currentPv?: string;
 	private loadedPv?: string;
 	private player?: nico.NicoPlayer;
-	public readonly service = PVService.NicoNicoDouga;
+	readonly service = PVService.NicoNicoDouga;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 	) {
 		window.addEventListener('message', (e: nico.PlayerEvent) => {
 			if (e.data.eventName === 'loadComplete') {
@@ -82,7 +82,7 @@ export class PVPlayerNico implements IPVPlayer {
 		});
 	}
 
-	public attach = (reset: boolean = false): Promise<void> => {
+	attach = (reset: boolean = false): Promise<void> => {
 		return new Promise((resolve, reject) => {
 			if (reset) {
 				$(this.wrapperElement).empty();
@@ -125,11 +125,11 @@ export class PVPlayerNico implements IPVPlayer {
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		this.player = undefined;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player || this.currentPv !== pvId) {
 			if (!pvId) {
 				pvId = this.loadedPv;

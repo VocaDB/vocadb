@@ -26,17 +26,17 @@ export const PrintArchivedAlbumData = React.memo(
 
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* TODO: localize */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
 						<DataRow
-							name="Album Id" /* TODO: localize */
+							name="Album Id" /* LOC */
 							val={comparedAlbums.firstData.id}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<PictureRow_ComparedVersionsContract
-							name="Main picture" /* TODO: localize */
+							name="Main picture" /* LOC */
 							comparedVersions={comparedAlbums}
 							urlGetter={(id): string =>
 								`/Album/ArchivedVersionCoverPicture/${id}`
@@ -44,7 +44,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Main picture MIME" /* TODO: localize */
+							name="Main picture MIME" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode => data.mainPictureMime}
 						/>
@@ -57,7 +57,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* TODO: localize */
+							name="Names" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -67,21 +67,21 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* TODO: localize */
+							name="Description" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode => data.description}
 							preserveLineBreaks={true}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description (en)" /* TODO: localize */
+							name="Description (en)" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode => data.descriptionEng}
 							preserveLineBreaks={true}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Disc type" /* TODO: localize */
+							name="Disc type" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode =>
 								t(
@@ -91,7 +91,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Release date" /* TODO: localize */
+							name="Release date" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={
 								(data): React.ReactNode =>
@@ -100,7 +100,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Catalog number" /* TODO: localize */
+							name="Catalog number" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode =>
 								data.originalRelease?.catNum
@@ -108,7 +108,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Release event" /* TODO: localize */
+							name="Release event" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.originalRelease?.releaseEvent} />
@@ -116,7 +116,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Barcodes" /* TODO: localize */
+							name="Barcodes" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								data.identifiers.map((identifier) => identifier.value)
@@ -124,7 +124,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* TODO: localize */
+							name="External links" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (
@@ -134,7 +134,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Artists" /* TODO: localize */
+							name="Artists" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								(data.artists ?? [])
@@ -143,26 +143,26 @@ export const PrintArchivedAlbumData = React.memo(
 										(artist) =>
 											`${artist.nameHint} [${artist.id}] - IsSupport: ${
 												artist.isSupport ? 'True' : 'False'
-											}, Roles: ${artist.roles}` /* TODO: localize */,
+											}, Roles: ${artist.roles}` /* LOC */,
 									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Discs" /* TODO: localize */
+							name="Discs" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								(data.discs ?? [])
 									.orderBy((disc) => disc.discNumber)
 									.map(
 										(disc) =>
-											`${disc.discNumber}: ${disc.name} (${disc.mediaType}) [${disc.id}]` /* TODO: localize */,
+											`${disc.discNumber}: ${disc.name} (${disc.mediaType}) [${disc.id}]` /* LOC */,
 									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Tracks" /* TODO: localize */
+							name="Tracks" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								(data.songs ?? [])
@@ -170,13 +170,13 @@ export const PrintArchivedAlbumData = React.memo(
 									.orderBy((song) => song.trackNumber)
 									.map(
 										(song) =>
-											`(Disc ${song.discNumber}) ${song.trackNumber}. ${song.nameHint} [${song.id}]` /* TODO: localize */,
+											`(Disc ${song.discNumber}) ${song.trackNumber}. ${song.nameHint} [${song.id}]` /* LOC */,
 									)
 							}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Pictures" /* TODO: localize */
+							name="Pictures" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								data.pictures?.map((picture, index) => (
@@ -186,7 +186,7 @@ export const PrintArchivedAlbumData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="PVs" /* TODO: localize */
+							name="PVs" /* LOC */
 							comparedVersions={comparedAlbums}
 							valGetter={(data): React.ReactNode[] =>
 								data.pvs?.map((pv, index) => <PVInfo pv={pv} key={index} />) ??

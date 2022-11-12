@@ -22,7 +22,7 @@ export const IconNameAndTypeLinkKnockout = React.memo(
 				to={EntryUrlMapper.details_user_byName(user.name)}
 				title={`${t(`Resources:UserGroupNames.${user.groupId}`)}\nJoined: ${
 					user.memberSince
-				}`} /* TODO: localize */
+				}`} /* LOC */
 			>
 				<ProfileIconKnockout
 					icon={user.mainPicture?.urlThumb}

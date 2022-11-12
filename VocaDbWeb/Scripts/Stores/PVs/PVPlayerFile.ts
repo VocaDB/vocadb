@@ -3,19 +3,19 @@ import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
 export class PVPlayerFile implements IPVPlayer {
-	public readonly service;
+	readonly service;
 	private player?: HTMLAudioElement;
 
-	public constructor(
+	constructor(
 		private readonly playerElementId: string,
 		private readonly wrapperElement: string,
-		public readonly songFinishedCallback?: () => void,
+		readonly songFinishedCallback?: () => void,
 		service: PVService = PVService.File,
 	) {
 		this.service = service;
 	}
 
-	public attach = (reset: boolean = false): Promise<void> => {
+	attach = (reset: boolean = false): Promise<void> => {
 		return new Promise((resolve, reject) => {
 			if (!reset && this.player) {
 				resolve();
@@ -38,7 +38,7 @@ export class PVPlayerFile implements IPVPlayer {
 		});
 	};
 
-	public detach = (): void => {
+	detach = (): void => {
 		if (this.player) {
 			this.player.onended = null;
 		}
@@ -46,7 +46,7 @@ export class PVPlayerFile implements IPVPlayer {
 		this.player = undefined;
 	};
 
-	public play = (pvId?: string): void => {
+	play = (pvId?: string): void => {
 		if (!this.player) this.attach(false);
 
 		if (pvId) {

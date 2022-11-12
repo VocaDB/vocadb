@@ -29,7 +29,7 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -231,7 +231,7 @@ const BasicInfoTabContent = observer(
 				<div className="editor-field">
 					<ReleaseEventLockingAutoComplete
 						basicEntryLinkStore={albumEditStore.releaseEvent}
-						// TODO: createNewItem="Create new event '{0}'" /* TODO: localize */
+						// TODO: createNewItem="Create new event '{0}'" /* LOC */
 					/>
 				</div>
 
@@ -332,7 +332,7 @@ const BasicInfoTabContent = observer(
 							})
 						}
 					>
-						Use event date{/* TODO: localize */}{' '}
+						Use event date{/* LOC */}{' '}
 						<span>
 							{albumEditStore.eventDate && albumEditStore.eventDate.format('L')}
 						</span>
@@ -344,7 +344,7 @@ const BasicInfoTabContent = observer(
 						label={t('ViewRes.Album:Edit.BaCatNum')}
 						dangerouslySetInnerHTML={{
 							__html:
-								'Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.' /* TODO: localize */,
+								'Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.' /* LOC */,
 						}}
 					/>
 				</div>
@@ -364,7 +364,7 @@ const BasicInfoTabContent = observer(
 					<HelpLabel
 						label={t('ViewRes.Album:Edit.BaBarcode')}
 						dangerouslySetInnerHTML={{
-							__html: `Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='/Content/barcode.png' />` /* TODO: localize */,
+							__html: `Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='/Content/barcode.png' />` /* LOC */,
 						}}
 					/>
 				</div>
@@ -389,7 +389,7 @@ const BasicInfoTabContent = observer(
 					</div>
 					<input
 						type="text"
-						placeholder="New barcode" /* TODO: localize */
+						placeholder="New barcode" /* LOC */
 						maxLength={30}
 						value={albumEditStore.newIdentifier}
 						onChange={(e): void =>
@@ -465,10 +465,10 @@ const ArtistsTabContent = observer(
 					<table>
 						<thead>
 							<tr>
-								<th>Artist{/* TODO: localize */}</th>
-								<th>Support{/* TODO: localize */}</th>
-								<th>Roles{/* TODO: localize */}</th>
-								<th>Actions{/* TODO: localize */}</th>
+								<th>Artist{/* LOC */}</th>
+								<th>Support{/* LOC */}</th>
+								<th>Roles{/* LOC */}</th>
+								<th>Actions{/* LOC */}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -670,9 +670,9 @@ const TracksTabContent = observer(
 					type="text"
 					properties={{
 						acceptSelection: albumEditStore.acceptTrackSelection,
-						createNewItem: "Create new song named '{0}'.", // TODO: localize
+						createNewItem: "Create new song named '{0}'.", // LOC
 						createCustomItem: vdb.values.allowCustomTracks
-							? "Create custom track named '{0}'" /* TODO: localize */
+							? "Create custom track named '{0}'" /* LOC */
 							: null!,
 						extraQueryParams: {
 							songTypes: [
@@ -764,7 +764,7 @@ const MediaTabContent = observer(
 								<th>{t('ViewRes.Album:Edit.PvService')}</th>
 								<th>{t('ViewRes.Album:Edit.PvType')}</th>
 								<th colSpan={2}>{t('ViewRes.Album:Edit.PvName')}</th>
-								<th>Date{/* TODO: localize */}</th>
+								<th>Date{/* LOC */}</th>
 								<th>{t('ViewRes.Album:Edit.PvAuthor')}</th>
 								<th />
 							</tr>
@@ -829,7 +829,7 @@ const AlbumEditLayout = observer(
 
 		const title = t('ViewRes.Album:Edit.EditTitle', { 0: contract.name });
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const conflictingEditor = useConflictingEditor(EntryType.Album);
 
@@ -924,7 +924,7 @@ const AlbumEditLayout = observer(
 
 				{albumEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOC */
 						errors={albumEditStore.errors}
 					/>
 				)}
@@ -996,7 +996,7 @@ const AlbumEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;
@@ -1102,17 +1102,17 @@ const AlbumEditLayout = observer(
 						(albumEditStore.editedSong.song
 							? [
 									{
-										text: 'Save' /* TODO: localize */,
+										text: 'Save' /* LOC */,
 										click: albumEditStore.saveTrackProperties,
 									},
 							  ]
 							: [
 									{
-										text: 'Add to tracks' /* TODO: localize */,
+										text: 'Add to tracks' /* LOC */,
 										click: albumEditStore.addArtistsToSelectedTracks,
 									},
 									{
-										text: 'Remove from tracks' /* TODO: localize */,
+										text: 'Remove from tracks' /* LOC */,
 										click: albumEditStore.removeArtistsFromSelectedTracks,
 									},
 							  ])

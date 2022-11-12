@@ -51,7 +51,7 @@ const validate = ajv.compile(schema);
 export class UserSongListsStore
 	extends SongListsBaseStore
 	implements LocationStateStore<UserSongListsRouteParams> {
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		private readonly userId: number,
 		private readonly userRepo: UserRepository,
@@ -60,9 +60,7 @@ export class UserSongListsStore
 		super(values, tagRepo, [], true);
 	}
 
-	public loadMoreItems = (): Promise<
-		PartialFindResultContract<SongListContract>
-	> => {
+	loadMoreItems = (): Promise<PartialFindResultContract<SongListContract>> => {
 		return this.userRepo.getSongLists({
 			userId: this.userId,
 			query: this.query,
@@ -73,15 +71,13 @@ export class UserSongListsStore
 		});
 	};
 
-	public validateLocationState = (
-		data: any,
-	): data is UserSongListsRouteParams => {
+	validateLocationState = (data: any): data is UserSongListsRouteParams => {
 		return validate(data);
 	};
 
 	private pauseNotifications = false;
 
-	public updateResults = async (clearResults: boolean): Promise<void> => {
+	updateResults = async (clearResults: boolean): Promise<void> => {
 		if (this.pauseNotifications) return;
 
 		this.pauseNotifications = true;
@@ -91,7 +87,7 @@ export class UserSongListsStore
 		this.pauseNotifications = false;
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<UserSongListsRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);
@@ -101,17 +97,17 @@ export class UserSongListsStore
 }
 
 export class SfsCheckStore {
-	@observable public html?: string;
-	@observable public dialogVisible = false;
+	@observable html?: string;
+	@observable dialogVisible = false;
 
-	public constructor(
+	constructor(
 		private readonly lastLoginAddress: string,
 		private readonly adminRepo: AdminRepository,
 	) {
 		makeObservable(this);
 	}
 
-	public checkSFS = async (): Promise<void> => {
+	checkSFS = async (): Promise<void> => {
 		const html = await this.adminRepo.checkSFS({ ip: this.lastLoginAddress });
 
 		runInAction(() => {
@@ -122,13 +118,13 @@ export class SfsCheckStore {
 }
 
 export class UserDetailsStore {
-	public readonly comments: EditableCommentsStore;
+	readonly comments: EditableCommentsStore;
 	private eventsLoaded = false;
-	@observable public events: ReleaseEventContract[] = [];
-	@observable public eventsType =
+	@observable events: ReleaseEventContract[] = [];
+	@observable eventsType =
 		UserEventRelationshipType[UserEventRelationshipType.Attending];
 
-	public readonly limitedUserStore = new DeleteEntryStore((notes) => {
+	readonly limitedUserStore = new DeleteEntryStore((notes) => {
 		return this.httpClient
 			.post<void>(
 				this.urlMapper.mapRelative(`/api/users/${this.userId}/status-limited`),
@@ -139,7 +135,7 @@ export class UserDetailsStore {
 			});
 	});
 
-	public readonly reportUserStore = new DeleteEntryStore((notes) => {
+	readonly reportUserStore = new DeleteEntryStore((notes) => {
 		return this.httpClient
 			.post<boolean>(
 				this.urlMapper.mapRelative(`/api/users/${this.userId}/reports`),
@@ -153,11 +149,11 @@ export class UserDetailsStore {
 			});
 	}, true);
 
-	@observable public ratingsByGenreChart?: Options;
-	public readonly songLists: UserSongListsStore;
-	public readonly sfsCheckDialog: SfsCheckStore;
+	@observable ratingsByGenreChart?: Options;
+	readonly songLists: UserSongListsStore;
+	readonly sfsCheckDialog: SfsCheckStore;
 
-	public constructor(
+	constructor(
 		values: GlobalValues,
 		loginManager: LoginManager,
 		private readonly userId: number,
@@ -168,9 +164,9 @@ export class UserDetailsStore {
 		private readonly userRepo: UserRepository,
 		private readonly adminRepo: AdminRepository,
 		tagRepo: TagRepository,
-		public readonly followedArtistsStore: FollowedArtistsStore,
-		public readonly albumCollectionStore: AlbumCollectionStore,
-		public readonly ratedSongsStore: RatedSongsSearchStore,
+		readonly followedArtistsStore: FollowedArtistsStore,
+		readonly albumCollectionStore: AlbumCollectionStore,
+		readonly ratedSongsStore: RatedSongsSearchStore,
 		latestComments: CommentContract[],
 	) {
 		makeObservable(this);
@@ -192,19 +188,19 @@ export class UserDetailsStore {
 		reaction(() => this.eventsType, this.loadEvents);
 	}
 
-	public addBan = ({ name }: { name: string }): Promise<boolean> => {
+	addBan = ({ name }: { name: string }): Promise<boolean> => {
 		return this.adminRepo.addIpToBanList({
 			rule: { address: this.lastLoginAddress, notes: name },
 		});
 	};
 
-	public loadHighcharts = async (): Promise<void> => {
+	loadHighcharts = async (): Promise<void> => {
 		const data = await this.userRepo.getRatingsByGenre({ userId: this.userId });
 
 		runInAction(() => {
 			this.ratingsByGenreChart = HighchartsHelper.simplePieChart(
 				null!,
-				'Songs' /* TODO: localize */,
+				'Songs' /* LOC */,
 				data,
 			);
 		});
@@ -226,7 +222,7 @@ export class UserDetailsStore {
 			);
 	};
 
-	public initEvents = (): void => {
+	initEvents = (): void => {
 		if (this.eventsLoaded) return;
 
 		this.loadEvents();

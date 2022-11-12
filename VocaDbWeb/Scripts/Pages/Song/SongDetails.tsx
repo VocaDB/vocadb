@@ -7,7 +7,7 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -62,7 +62,7 @@ const SongDetailsLayout = observer(
 
 		const titleAndArtist = `${model.name} - ${model.artistString}`;
 
-		useVocaDbTitle(titleAndArtist, true);
+		useVdbTitle(titleAndArtist, true);
 
 		const primaryPV = model.contract.pvs.filter(
 			(pv) => pv.id === songDetailsStore.selectedPvId,
@@ -245,7 +245,7 @@ const SongDetailsLayout = observer(
 									}
 									icons={{ primary: 'ui-icon-wrench' }}
 								>
-									Maintenance actions{/* TODO: localize */}
+									Maintenance actions{/* LOC */}
 								</JQueryUIButton>
 							</>
 						)}{' '}
@@ -282,7 +282,7 @@ const SongDetailsLayout = observer(
 				/>
 
 				<JQueryUIDialog
-					title="Maintenance actions" /* TODO: localize */
+					title="Maintenance actions" /* LOC */
 					autoOpen={songDetailsStore.maintenanceDialogVisible}
 					width={400}
 					close={(): void =>
@@ -297,12 +297,12 @@ const SongDetailsLayout = observer(
 								as="a"
 								href={`/Song/UpdateArtistString/${model.id}`}
 							>
-								Refresh artist string{/* TODO: localize */}
+								Refresh artist string{/* LOC */}
 							</JQueryUIButton>
 						</p>
 						<p>
 							<JQueryUIButton as="a" href={`/Song/UpdateThumbUrl/${model.id}`}>
-								Refresh thumbnail{/* TODO: localize */}
+								Refresh thumbnail{/* LOC */}
 							</JQueryUIButton>
 						</p>
 						<p>
@@ -310,7 +310,7 @@ const SongDetailsLayout = observer(
 								as="a"
 								href={`/Song/RefreshPVMetadatas/${model.id}`}
 							>
-								Refresh PV metadata{/* TODO: localize */}
+								Refresh PV metadata{/* LOC */}
 							</JQueryUIButton>
 						</p>
 					</div>

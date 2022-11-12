@@ -1,8 +1,27 @@
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { RatingsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+interface UserWithSongRatingProps {
+	user: UserApiContract;
+}
+
+const UserWithSongRating = observer(
+	({ user }: UserWithSongRatingProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(user.id)) return <></>;
+
+		return (
+			<li className="link-item user-with-rating">
+				<IconAndNameLinkKnockout user={user} />
+			</li>
+		);
+	},
+);
 
 interface UsersWithSongRatingProps {
 	ratingsStore: RatingsStore;
@@ -28,9 +47,7 @@ const UsersWithSongRating = observer(
 							{ratingsStore.favorites.map((user, index) => (
 								<React.Fragment key={user.id}>
 									{index > 0 && ' '}
-									<li className="link-item user-with-rating">
-										<IconAndNameLinkKnockout user={user} />
-									</li>
+									<UserWithSongRating user={user} />
 								</React.Fragment>
 							))}
 						</ul>
@@ -51,9 +68,7 @@ const UsersWithSongRating = observer(
 							{ratingsStore.likes.map((user, index) => (
 								<React.Fragment key={user.id}>
 									{index > 0 && ' '}
-									<li className="link-item user-with-rating">
-										<IconAndNameLinkKnockout user={user} />
-									</li>
+									<UserWithSongRating user={user} />
 								</React.Fragment>
 							))}
 						</ul>
@@ -62,7 +77,7 @@ const UsersWithSongRating = observer(
 
 				{ratingsStore.hiddenRatingsCount > 0 && (
 					<h4 className="withMargin">{
-						`${ratingsStore.hiddenRatingsCount} hidden ratings` /* TODO: localize */
+						`${ratingsStore.hiddenRatingsCount} hidden ratings` /* LOC */
 					}</h4>
 				)}
 			</>

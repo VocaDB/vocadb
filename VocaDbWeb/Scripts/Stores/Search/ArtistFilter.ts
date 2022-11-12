@@ -2,10 +2,10 @@ import { ArtistType } from '@/Models/Artists/ArtistType';
 import { makeObservable, observable } from 'mobx';
 
 export class ArtistFilter {
-	@observable public artistType?: ArtistType = undefined;
-	@observable public name?: string = undefined;
+	@observable artistType?: ArtistType = undefined;
+	@observable name?: string = undefined;
 
-	public constructor(public readonly id: number) {
+	constructor(readonly id: number) {
 		makeObservable(this);
 	}
 }

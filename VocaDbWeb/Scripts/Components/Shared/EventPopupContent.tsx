@@ -22,7 +22,7 @@ export const EventPopupContent = React.memo(
 					<div className="thumbnail">
 						<img
 							src={event.mainPicture.urlSmallThumb}
-							alt="Thumb" /* TODO: localize */
+							alt="Thumb" /* LOC */
 							className="coverPicThumb"
 							referrerPolicy="same-origin"
 						/>

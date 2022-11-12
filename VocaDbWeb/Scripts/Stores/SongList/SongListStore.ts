@@ -96,29 +96,29 @@ const validate = ajv.compile(schema);
 
 export class SongListStore
 	implements ISongListStore, LocationStateStore<SongListRouteParams> {
-	public readonly advancedFilters = new AdvancedSearchFilters();
-	public readonly artistFilters: ArtistFilters;
-	public readonly comments: EditableCommentsStore;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: (SongInListContract & {
+	readonly advancedFilters = new AdvancedSearchFilters();
+	readonly artistFilters: ArtistFilters;
+	readonly comments: EditableCommentsStore;
+	@observable loading = true; // Currently loading for data
+	@observable page: (SongInListContract & {
 		song: ISongSearchItem;
 	})[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(20); // Paging view model
-	public pauseNotifications = false;
-	@observable public playlistMode = false;
-	public readonly playlistStore: PlayListStore;
-	public readonly pvPlayerStore: PVPlayerStore;
-	public readonly pvServiceIcons: PVServiceIcons;
-	@observable public query = '';
-	@observable public showAdvancedFilters = false;
-	@observable public showTags = false;
-	@observable public sort = '' /* TODO: enum */;
-	@observable public songType = SongType.Unspecified;
-	public readonly tagsEditStore: TagsEditStore;
-	public readonly tagFilters: TagFilters;
-	public readonly tagUsages: TagListStore;
+	readonly paging = new ServerSidePagingStore(20); // Paging view model
+	pauseNotifications = false;
+	@observable playlistMode = false;
+	readonly playlistStore: PlayListStore;
+	readonly pvPlayerStore: PVPlayerStore;
+	readonly pvServiceIcons: PVServiceIcons;
+	@observable query = '';
+	@observable showAdvancedFilters = false;
+	@observable showTags = false;
+	@observable sort = '' /* TODO: enum */;
+	@observable songType = SongType.Unspecified;
+	readonly tagsEditStore: TagsEditStore;
+	readonly tagFilters: TagFilters;
+	readonly tagUsages: TagListStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: SongListRepository,
@@ -189,34 +189,34 @@ export class SongListStore
 		reaction(() => this.showTags, this.updateResultsWithTotalCount);
 	}
 
-	@computed public get childTags(): boolean {
+	@computed get childTags(): boolean {
 		return this.tagFilters.childTags;
 	}
-	public set childTags(value: boolean) {
+	set childTags(value: boolean) {
 		this.tagFilters.childTags = value;
 	}
 
-	@computed public get tags(): TagFilter[] {
+	@computed get tags(): TagFilter[] {
 		return this.tagFilters.tags;
 	}
-	public set tags(value: TagFilter[]) {
+	set tags(value: TagFilter[]) {
 		this.tagFilters.tags = value;
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.tagFilters.tags = [];
 		this.tagFilters.addTags(value);
 	}
 
-	public mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
+	mapTagUrl = (tagUsage: TagUsageForApiContract): string => {
 		return EntryUrlMapper.details_tag(tagUsage.tag.id, tagUsage.tag.urlSlug);
 	};
 
-	@computed.struct public get locationState(): SongListRouteParams {
+	@computed.struct get locationState(): SongListRouteParams {
 		return {
 			advancedFilters: this.advancedFilters.filters.map((filter) => ({
 				description: filter.description,
@@ -237,7 +237,7 @@ export class SongListStore
 			tagId: this.tagIds,
 		};
 	}
-	public set locationState(value: SongListRouteParams) {
+	set locationState(value: SongListRouteParams) {
 		this.advancedFilters.filters = value.advancedFilters ?? [];
 		this.artistFilters.artistIds = ([] as number[]).concat(
 			value.artistId ?? [],
@@ -255,11 +255,11 @@ export class SongListStore
 		this.tagIds = ([] as number[]).concat(value.tagId ?? []);
 	}
 
-	public validateLocationState = (data: any): data is SongListRouteParams => {
+	validateLocationState = (data: any): data is SongListRouteParams => {
 		return validate(data);
 	};
 
-	@computed public get queryParams(): SongListGetSongsQueryParams {
+	@computed get queryParams(): SongListGetSongsQueryParams {
 		return {
 			listId: this.listId,
 			query: this.query,
@@ -296,9 +296,7 @@ export class SongListStore
 		}
 	};
 
-	@action public updateResults = async (
-		clearResults: boolean,
-	): Promise<void> => {
+	@action updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -337,15 +335,15 @@ export class SongListStore
 		});
 	};
 
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public onLocationStateChange = (
+	onLocationStateChange = (
 		event: StateChangeEvent<SongListRouteParams>,
 	): void => {
 		const clearResults = includesAny(clearResultsByQueryKeys, event.keys);

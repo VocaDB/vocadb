@@ -82,7 +82,7 @@ export enum PlayQueueRepositoryType {
 export abstract class PlayQueueRepository<
 	TQueryParams extends PlayQueueRepositoryQueryParams
 > {
-	public static readonly albumOptionalFields = [
+	static readonly albumOptionalFields = [
 		AlbumOptionalField.AdditionalNames,
 		AlbumOptionalField.Artists,
 		AlbumOptionalField.MainPicture,
@@ -91,7 +91,7 @@ export abstract class PlayQueueRepository<
 		AlbumOptionalField.Tracks,
 	];
 
-	public static readonly eventOptionalFields = [
+	static readonly eventOptionalFields = [
 		ReleaseEventOptionalField.AdditionalNames,
 		ReleaseEventOptionalField.Artists,
 		ReleaseEventOptionalField.MainPicture,
@@ -99,7 +99,7 @@ export abstract class PlayQueueRepository<
 		ReleaseEventOptionalField.Tags,
 	];
 
-	public static readonly songOptionalFields = [
+	static readonly songOptionalFields = [
 		SongOptionalField.AdditionalNames,
 		SongOptionalField.Artists,
 		SongOptionalField.MainPicture,
@@ -107,7 +107,7 @@ export abstract class PlayQueueRepository<
 		SongOptionalField.Tags,
 	];
 
-	public abstract getSongs({
+	abstract getSongs({
 		lang,
 		pagingProps,
 		pvServices,
@@ -121,13 +121,13 @@ export abstract class PlayQueueRepository<
 }
 
 export class PlayQueueRepositoryFactory {
-	public constructor(
+	constructor(
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
 		private readonly userRepo: UserRepository,
 	) {}
 
-	public create = (
+	create = (
 		type: PlayQueueRepositoryType,
 	): PlayQueueRepository<PlayQueueRepositoryQueryParams> => {
 		switch (type) {

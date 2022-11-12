@@ -5,9 +5,9 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
 export class FakeArtistRepository extends ArtistRepository {
-	public result: ArtistApiContract = null!;
+	result: ArtistApiContract = null!;
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), '');
 
 		this.getOne = ({

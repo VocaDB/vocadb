@@ -82,7 +82,7 @@ export const LeftMenu = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const { vdbPlayer } = useVdbPlayer();
+		const vdbPlayer = useVdbPlayer();
 
 		return (
 			<div

@@ -15,11 +15,11 @@ enum WebhookEvent {
 }
 
 class WebhookEventSelection {
-	@observable public selected: boolean;
+	@observable selected: boolean;
 
-	public constructor(
+	constructor(
 		// Webhook event Id, for example "EntryReport"
-		public readonly id: WebhookEvent,
+		readonly id: WebhookEvent,
 		selected: boolean,
 	) {
 		makeObservable(this);
@@ -29,9 +29,9 @@ class WebhookEventSelection {
 }
 
 class WebhookEventsEditStore {
-	public readonly webhookEventSelections: WebhookEventSelection[];
+	readonly webhookEventSelections: WebhookEventSelection[];
 
-	public constructor() {
+	constructor() {
 		this.webhookEventSelections = Object.values(WebhookEvent).map(
 			(webhookEvent) => new WebhookEventSelection(webhookEvent, false),
 		);
@@ -39,14 +39,14 @@ class WebhookEventsEditStore {
 }
 
 class WebhookEditStore {
-	public readonly url: string;
-	public readonly webhookEvents: string;
-	public readonly webhookEventsArray: string[];
+	readonly url: string;
+	readonly webhookEvents: string;
+	readonly webhookEventsArray: string[];
 
-	public readonly isNew: boolean;
-	@observable public isDeleted = false;
+	readonly isNew: boolean;
+	@observable isDeleted = false;
 
-	public constructor(webhook: WebhookContract, isNew: boolean) {
+	constructor(webhook: WebhookContract, isNew: boolean) {
 		makeObservable(this);
 
 		this.url = webhook.url;
@@ -57,18 +57,18 @@ class WebhookEditStore {
 		this.isNew = isNew;
 	}
 
-	@action public deleteWebhook = (): void => {
+	@action deleteWebhook = (): void => {
 		this.isDeleted = true;
 	};
 }
 
 export class ManageWebhooksStore {
-	@observable public newUrl = '';
-	@observable public submitting = false;
-	public readonly webhookEventsEditStore: WebhookEventsEditStore;
-	@observable public webhooks: WebhookEditStore[] = [];
+	@observable newUrl = '';
+	@observable submitting = false;
+	readonly webhookEventsEditStore: WebhookEventsEditStore;
+	@observable webhooks: WebhookEditStore[] = [];
 
-	public constructor(private readonly adminRepo: AdminRepository) {
+	constructor(private readonly adminRepo: AdminRepository) {
 		makeObservable(this);
 
 		this.webhookEventsEditStore = new WebhookEventsEditStore();
@@ -76,18 +76,18 @@ export class ManageWebhooksStore {
 		this.loadWebhooks();
 	}
 
-	@computed public get newWebhookEvents(): string {
+	@computed get newWebhookEvents(): string {
 		return this.webhookEventsEditStore.webhookEventSelections
 			.filter((e) => e.selected)
 			.map((e) => e.id)
 			.join(',');
 	}
 
-	@computed public get activeWebhooks(): WebhookEditStore[] {
+	@computed get activeWebhooks(): WebhookEditStore[] {
 		return this.webhooks.filter((m) => !m.isDeleted);
 	}
 
-	public loadWebhooks = async (): Promise<void> => {
+	loadWebhooks = async (): Promise<void> => {
 		const result = await this.adminRepo.getWebhooks({});
 
 		runInAction(() => {
@@ -95,7 +95,7 @@ export class ManageWebhooksStore {
 		});
 	};
 
-	@action public addWebhook = (): void => {
+	@action addWebhook = (): void => {
 		if (!this.newUrl || !this.newWebhookEvents) return;
 
 		this.webhooks.push(
@@ -111,7 +111,7 @@ export class ManageWebhooksStore {
 		this.newUrl = '';
 	};
 
-	@action public save = async (): Promise<void> => {
+	@action save = async (): Promise<void> => {
 		try {
 			this.submitting = true;
 

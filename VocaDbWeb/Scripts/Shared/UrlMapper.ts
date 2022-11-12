@@ -1,13 +1,13 @@
 import { functions } from '@/Shared/GlobalFunctions';
 
 export class UrlMapper {
-	public static buildUrl = (...args: string[]): string => {
+	static buildUrl = (...args: string[]): string => {
 		return args.reduce((list: string, item: string) =>
 			UrlMapper.mergeUrls(list, item),
 		)!;
 	};
 
-	public static mergeUrls = (base: string, relative: string): string => {
+	static mergeUrls = (base: string, relative: string): string => {
 		if (base.charAt(base.length - 1) === '/' && relative.charAt(0) === '/')
 			return base + relative.substr(1);
 
@@ -20,9 +20,9 @@ export class UrlMapper {
 		return base + '/' + relative;
 	};
 
-	public constructor(public baseUrl: string) {}
+	constructor(readonly baseUrl: string) {}
 
-	public mapRelative(relative: string): string {
+	mapRelative(relative: string): string {
 		return functions.mergeUrls(this.baseUrl, relative);
 	}
 }

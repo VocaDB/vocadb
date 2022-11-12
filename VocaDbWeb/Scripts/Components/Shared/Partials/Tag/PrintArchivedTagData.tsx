@@ -24,14 +24,11 @@ export const PrintArchivedTagData = React.memo(
 	({ comparedTags }: PrintArchivedTagDataProps): React.ReactElement => {
 		return (
 			<div className="well well-transparent archived-entry-contents">
-				<h4>Content{/* TODO: localize */}</h4>
+				<h4>Content{/* LOC */}</h4>
 
 				<table className="table table-bordered">
 					<tbody>
-						<DataRow
-							name="Id" /* TODO: localize */
-							val={comparedTags.firstData.id}
-						/>
+						<DataRow name="Id" /* LOC */ val={comparedTags.firstData.id} />
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<TranslatedNameRow_ComparedVersionsContract
 							comparedVersions={comparedTags}
@@ -41,7 +38,7 @@ export const PrintArchivedTagData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="Names" /* TODO: localize */
+							name="Names" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode[] =>
 								data.names?.map((name, index) => (
@@ -51,31 +48,31 @@ export const PrintArchivedTagData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description" /* TODO: localize */
+							name="Description" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode => data.description}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Description English" /* TODO: localize */
+							name="Description English" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode => data.descriptionEng}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<ObjectRefList_ComparedVersionsContract
-							name="Related tags" /* TODO: localize */
+							name="Related tags" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): ObjectRefContract[] => data.relatedTags ?? []}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Valid for" /* TODO: localize */
+							name="Valid for" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode => data.targets}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRowList_ComparedVersionsContract
-							name="External links" /* TODO: localize */
+							name="External links" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode[] =>
 								data.webLinks?.map((webLink, index) => (
@@ -85,13 +82,13 @@ export const PrintArchivedTagData = React.memo(
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Category name" /* TODO: localize */
+							name="Category name" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode => data.categoryName}
 						/>
 						{/* eslint-disable-next-line react/jsx-pascal-case */}
 						<DataRow_ComparedVersionsContract
-							name="Parent" /* TODO: localize */
+							name="Parent" /* LOC */
 							comparedVersions={comparedTags}
 							valGetter={(data): React.ReactNode => (
 								<ObjectRefInfo objRef={data.parent} />

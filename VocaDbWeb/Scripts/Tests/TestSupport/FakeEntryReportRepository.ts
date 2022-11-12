@@ -4,9 +4,9 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { FakePromise } from '@/Tests/TestSupport/FakePromise';
 
 export class FakeEntryReportRepository extends EntryReportRepository {
-	public entryReportCount!: number;
+	entryReportCount!: number;
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), new UrlMapper(''));
 
 		// eslint-disable-next-line no-empty-pattern

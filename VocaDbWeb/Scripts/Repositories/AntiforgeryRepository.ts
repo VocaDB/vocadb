@@ -2,12 +2,12 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class AntiforgeryRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {}
 
-	public getToken = async (): Promise<string> => {
+	getToken = async (): Promise<string> => {
 		await this.httpClient.get<void>(
 			this.urlMapper.mapRelative('/api/antiforgery/token'),
 		);

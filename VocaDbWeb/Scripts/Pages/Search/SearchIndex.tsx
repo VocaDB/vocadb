@@ -10,7 +10,7 @@ import {
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -104,7 +104,7 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useVocaDbTitle(undefined, true);
+		useVdbTitle(undefined, true);
 
 		useLocationStateStore(searchStore);
 
@@ -221,11 +221,11 @@ const SearchIndex = observer(
 													),
 												);
 											}}
-											title="Play" /* TODO: localize */
+											title="Play" /* LOC */
 											className="btn-nomargin"
 										>
 											<i className="icon-play noMargin" /> Play
-											{/* TODO: localize */}
+											{/* LOC */}
 										</Button>
 									</ButtonGroup>
 								</div>

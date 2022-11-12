@@ -11,14 +11,14 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 
 export class VenueRepository extends BaseRepository {
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly urlMapper: UrlMapper,
 	) {
 		super(urlMapper.baseUrl);
 	}
 
-	public createReport = ({
+	createReport = ({
 		entryId: venueId,
 		reportType,
 		notes,
@@ -40,7 +40,7 @@ export class VenueRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	public delete = ({
+	delete = ({
 		id,
 		notes,
 		hardDelete,
@@ -58,7 +58,7 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getList = ({
+	getList = ({
 		query,
 		nameMatchMode,
 		maxResults,
@@ -80,17 +80,13 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<VenueForApiContract> => {
+	getDetails = ({ id }: { id: number }): Promise<VenueForApiContract> => {
 		return this.httpClient.get<VenueForApiContract>(
 			this.urlMapper.mapRelative(`/api/venues/${id}/details`),
 		);
 	};
 
-	public getVenueWithArchivedVersions = ({
+	getVenueWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -100,7 +96,7 @@ export class VenueRepository extends BaseRepository {
 		>(this.urlMapper.mapRelative(`/api/venues/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -113,23 +109,19 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 
-	public getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {
+	getOne = ({ id }: { id: number }): Promise<VenueForApiContract> => {
 		return this.httpClient.get<VenueForApiContract>(
 			this.urlMapper.mapRelative(`/api/venues/${id}`),
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<VenueForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<VenueForEditContract> => {
 		return this.httpClient.get<VenueForEditContract>(
 			this.urlMapper.mapRelative(`/api/venues/${id}/for-edit`),
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: VenueForEditContract,
 	): Promise<number> => {

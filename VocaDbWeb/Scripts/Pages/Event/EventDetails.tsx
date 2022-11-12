@@ -23,9 +23,10 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
+import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -39,6 +40,7 @@ import {
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { useMutedUsers } from '@/MutedUsersContext';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -116,6 +118,23 @@ const ArtistList = React.memo(
 	},
 );
 
+interface UserAttendingProps {
+	user: UserApiContract;
+}
+
+const UserAttending = observer(
+	({ user }: UserAttendingProps): React.ReactElement => {
+		const mutedUsers = useMutedUsers();
+		if (mutedUsers.includes(user.id)) return <></>;
+
+		return (
+			<li>
+				<IconAndNameLinkKnockout user={user} />
+			</li>
+		);
+	},
+);
+
 interface EventDetailsLayoutProps {
 	event: ReleaseEventDetailsContract;
 	releaseEventDetailsStore: ReleaseEventDetailsStore;
@@ -140,7 +159,7 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		useVocaDbTitle(`${event.name} (${subtitle})`, ready);
+		useVdbTitle(`${event.name} (${subtitle})`, ready);
 
 		const primaryPV = PVHelper.primaryPV(event.pvs);
 
@@ -250,7 +269,7 @@ const EventDetailsLayout = observer(
 										event.mainPicture,
 										ImageSize.SmallThumb,
 									)}
-									alt="Thumb" /* TODO: localize */
+									alt="Thumb" /* LOC */
 								/>
 							</a>
 						)}
@@ -286,7 +305,7 @@ const EventDetailsLayout = observer(
 
 							{event.artists.length > 0 && (
 								<p>
-									Participating artists{/* TODO: localize */}:{' '}
+									Participating artists{/* LOC */}:{' '}
 									<ArtistList
 										artists={event.artists}
 										showRoles={true}
@@ -573,9 +592,7 @@ const EventDetailsLayout = observer(
 					<div className="withMargin">
 						<ul>
 							{releaseEventDetailsStore.usersAttending.map((user) => (
-								<li key={user.id}>
-									<IconAndNameLinkKnockout user={user} />
-								</li>
+								<UserAttending user={user} key={user.id} />
 							))}
 						</ul>
 					</div>

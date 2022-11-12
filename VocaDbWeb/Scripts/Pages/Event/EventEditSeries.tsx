@@ -19,7 +19,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -68,10 +68,10 @@ const EventEditSeriesLayout = observer(
 			: EntryUrlMapper.details(EntryType.ReleaseEventSeries, contract.id);
 
 		const title = isNew
-			? 'Create a new series' /* TODO: localize */
-			: `Edit series - ${contract.name}`; /* TODO: localize */
+			? 'Create a new series' /* LOC */
+			: `Edit series - ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -112,7 +112,7 @@ const EventEditSeriesLayout = observer(
 									to: '/Event',
 								}}
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOC */}
 							</Breadcrumb.Item>
 						</>
 					) : (
@@ -124,7 +124,7 @@ const EventEditSeriesLayout = observer(
 								}}
 								divider
 							>
-								Events{/* TODO: localize */}
+								Events{/* LOC */}
 							</Breadcrumb.Item>
 							<Breadcrumb.Item
 								linkAs={Link}
@@ -185,7 +185,7 @@ const EventEditSeriesLayout = observer(
 
 				{releaseEventSeriesEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOC */
 						errors={releaseEventSeriesEditStore.errors}
 					/>
 				)}
@@ -212,7 +212,7 @@ const EventEditSeriesLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;
@@ -245,7 +245,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Names{/* TODO: localize */}</label>
+						<label>Names{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -259,7 +259,7 @@ const EventEditSeriesLayout = observer(
 									<td style={{ verticalAlign: 'top' }}>
 										{releaseEventSeriesEditStore.duplicateName && (
 											<Alert>
-												Series already exists with name{/* TODO: localize */}{' '}
+												Series already exists with name{/* LOC */}{' '}
 												<span>{releaseEventSeriesEditStore.duplicateName}</span>
 											</Alert>
 										)}
@@ -270,9 +270,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label htmlFor="description">
-							Description{/* TODO: localize */}
-						</label>
+						<label htmlFor="description">Description{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<textarea
@@ -288,12 +286,12 @@ const EventEditSeriesLayout = observer(
 							maxLength={4000}
 							className="span4"
 						/>
-						Live preview{/* TODO: localize */}
+						Live preview{/* LOC */}
 						<Markdown>{releaseEventSeriesEditStore.description}</Markdown>
 					</div>
 
 					<div className="editor-label">
-						<label>Category{/* TODO: localize */}</label>
+						<label>Category{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<div className="row-fluid">
@@ -312,7 +310,7 @@ const EventEditSeriesLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Picture{/* TODO: localize */}</label>
+						<label>Picture{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<table>
@@ -325,7 +323,7 @@ const EventEditSeriesLayout = observer(
 												contract.mainPicture,
 												ImageSize.SmallThumb,
 											)}
-											alt="Picture" /* TODO: localize */
+											alt="Picture" /* LOC */
 											className="coverPic"
 										/>
 									</td>

@@ -2,16 +2,16 @@ import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { computed, makeObservable, observable } from 'mobx';
 
 export class SongLengthFilter {
-	@observable public length = 0;
+	@observable length = 0;
 
-	public constructor() {
+	constructor() {
 		makeObservable(this);
 	}
 
-	@computed public get lengthFormatted(): string {
+	@computed get lengthFormatted(): string {
 		return DateTimeHelper.formatFromSeconds(this.length);
 	}
-	public set lengthFormatted(value: string) {
+	set lengthFormatted(value: string) {
 		this.length = DateTimeHelper.parseToSeconds(value);
 	}
 }

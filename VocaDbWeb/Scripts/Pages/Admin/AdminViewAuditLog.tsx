@@ -6,7 +6,7 @@ import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { Layout } from '@/Components/Shared/Layout';
 import { UserGroupDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLinkOrName } from '@/Components/Shared/Partials/User/UserLinkOrName';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -120,7 +120,7 @@ const AuditLogFilters = observer(
 		return (
 			<form className="form-horizontal">
 				<div className="control-group">
-					<div className="control-label">Text query{/* TODO: localize */}</div>
+					<div className="control-label">Text query{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							type="text"
@@ -137,9 +137,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">
-						Show only user{/* TODO: localize */}
-					</div>
+					<div className="control-label">Show only user{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={userNameRef}
@@ -157,9 +155,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">
-						Exclude users{/* TODO: localize */}
-					</div>
+					<div className="control-label">Exclude users{/* LOC */}</div>
 					<div className="controls">
 						<DebounceInput
 							inputRef={excludeUsersRef}
@@ -177,7 +173,7 @@ const AuditLogFilters = observer(
 					</div>
 				</div>
 				<div className="control-group">
-					<div className="control-label">User group{/* TODO: localize */}</div>
+					<div className="control-label">User group{/* LOC */}</div>
 					<div className="controls">
 						<UserGroupDropdownList
 							value={viewAuditLogStore.group}
@@ -201,7 +197,7 @@ const AuditLogFilters = observer(
 									})
 								}
 							/>
-							Only show new users{/* TODO: localize */}
+							Only show new users{/* LOC */}
 						</label>
 					</div>
 				</div>
@@ -214,9 +210,9 @@ const AdminViewAuditLog = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = 'View audit log'; /* TODO: localize */
+		const title = 'View audit log'; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		useLocationStateStore(viewAuditLogStore);
 
@@ -231,7 +227,7 @@ const AdminViewAuditLog = observer(
 								to: '/Admin',
 							}}
 						>
-							Manage{/* TODO: localize */}
+							Manage{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -256,9 +252,9 @@ const AdminViewAuditLog = observer(
 					<table className="table">
 						<thead>
 							<tr>
-								<th>Time{/* TODO: localize */}</th>
-								<th>User{/* TODO: localize */}</th>
-								<th>Action{/* TODO: localize */}</th>
+								<th>Time{/* LOC */}</th>
+								<th>User{/* LOC */}</th>
+								<th>Action{/* LOC */}</th>
 							</tr>
 						</thead>
 						<tbody id="logEntries">
@@ -281,7 +277,7 @@ const AdminViewAuditLog = observer(
 				</div>
 
 				<SafeAnchor id="loadMoreLink" onClick={viewAuditLogStore.loadMore}>
-					Load more{/* TODO: localize */}
+					Load more{/* LOC */}
 				</SafeAnchor>
 			</Layout>
 		);

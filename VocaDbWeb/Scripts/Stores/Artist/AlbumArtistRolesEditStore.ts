@@ -11,11 +11,11 @@ export interface RoleSelection {
 }
 
 class RoleSelectionStore implements RoleSelection {
-	@observable public selected: boolean;
+	@observable selected: boolean;
 
-	public constructor(
-		public readonly id: string,
-		public readonly name: string | undefined,
+	constructor(
+		readonly id: string,
+		readonly name: string | undefined,
 		selected: boolean,
 	) {
 		makeObservable(this);
@@ -25,11 +25,11 @@ class RoleSelectionStore implements RoleSelection {
 }
 
 export class ArtistRolesEditStore {
-	@observable public dialogVisible = false;
-	public readonly roleSelections: RoleSelection[];
-	@observable public selectedArtist?: IEditableArtistWithSupport = undefined;
+	@observable dialogVisible = false;
+	readonly roleSelections: RoleSelection[];
+	@observable selectedArtist?: IEditableArtistWithSupport = undefined;
 
-	public constructor(
+	constructor(
 		roleNames: { [key: string]: string | undefined },
 		private readonly defaultRoleName: string,
 	) {
@@ -48,7 +48,7 @@ export class ArtistRolesEditStore {
 		this.roleSelections = this.roleSelections.sortBy((r) => r.name);
 	}
 
-	@action public save = (): void => {
+	@action save = (): void => {
 		if (!this.selectedArtist) return;
 
 		var selectedRoles = this.roleSelections
@@ -61,7 +61,7 @@ export class ArtistRolesEditStore {
 		this.dialogVisible = false;
 	};
 
-	@action public show = (artist: IEditableArtistWithSupport): void => {
+	@action show = (artist: IEditableArtistWithSupport): void => {
 		for (const r of this.roleSelections) {
 			r.selected = artist && artist.rolesArray.includes(r.id);
 		}
@@ -72,7 +72,7 @@ export class ArtistRolesEditStore {
 }
 
 export class AlbumArtistRolesEditStore extends ArtistRolesEditStore {
-	public constructor(roleNames: { [key: string]: string | undefined }) {
+	constructor(roleNames: { [key: string]: string | undefined }) {
 		super(roleNames, ArtistRoles[ArtistRoles.Default]);
 	}
 }

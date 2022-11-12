@@ -5,7 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { EntryType } from '@/Models/EntryType';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -35,9 +35,9 @@ const SongMergeLayout = observer(
 	({ song, songMergeStore }: SongMergeLayoutProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes']);
 
-		const title = `Merge song - ${song.name}`; /* TODO: localize */
+		const title = `Merge song - ${song.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ const SongMergeLayout = observer(
 								to: `/Song/Edit/${song.id}`,
 							}}
 						>
-							Edit{/* TODO: localize */}
+							Edit{/* LOC */}
 						</Breadcrumb.Item>
 					</>
 				}
@@ -94,7 +94,7 @@ const SongMergeLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to merge song.' /* TODO: localize */,
+									: 'Unable to merge song.' /* LOC */,
 							);
 
 							throw error;
@@ -136,7 +136,7 @@ const SongMergeLayout = observer(
 						id="mergeBtn"
 						disabled={!songMergeStore.target.id || songMergeStore.submitting}
 					>
-						Merge{/* TODO: localize */}
+						Merge{/* LOC */}
 					</Button>
 				</form>
 			</Layout>

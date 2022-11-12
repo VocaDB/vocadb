@@ -7,7 +7,7 @@ export interface Tuple2<T1, T2> {
 }
 
 export class HighchartsHelper {
-	public static dateLineChartWithAverage = (
+	static dateLineChartWithAverage = (
 		title: string,
 		pointsTitle: string,
 		yAxisTitle: string,
@@ -60,7 +60,7 @@ export class HighchartsHelper {
 		} as Options;
 	};
 
-	public static simplePieChart = (
+	static simplePieChart = (
 		title: string,
 		seriesName: string,
 		points: Tuple2<string, number>[],

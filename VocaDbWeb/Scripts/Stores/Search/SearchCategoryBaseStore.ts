@@ -31,13 +31,13 @@ export abstract class SearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams,
 	TEntry extends EntryWithTagUsagesContract
 > implements ISearchCategoryBaseStore<TRouteParams> {
-	public readonly advancedFilters = new AdvancedSearchFilters();
+	readonly advancedFilters = new AdvancedSearchFilters();
 	private readonly commonSearchStore: ICommonSearchStore;
-	@observable public loading = true; // Currently loading for data
-	@observable public page: TEntry[] = []; // Current page of items
-	public readonly paging = new ServerSidePagingStore(); // Paging store
+	@observable loading = true; // Currently loading for data
+	@observable page: TEntry[] = []; // Current page of items
+	readonly paging = new ServerSidePagingStore(); // Paging store
 
-	public constructor(commonSearchStore: ICommonSearchStore) {
+	constructor(commonSearchStore: ICommonSearchStore) {
 		makeObservable(this);
 
 		this.commonSearchStore = commonSearchStore;
@@ -56,77 +56,75 @@ export abstract class SearchCategoryBaseStore<
 		);
 	}
 
-	@computed public get childTags(): boolean {
+	@computed get childTags(): boolean {
 		return this.commonSearchStore.tagFilters.childTags;
 	}
-	public set childTags(value: boolean) {
+	set childTags(value: boolean) {
 		this.commonSearchStore.tagFilters.childTags = value;
 	}
 
-	@computed public get draftsOnly(): boolean {
+	@computed get draftsOnly(): boolean {
 		return this.commonSearchStore.draftsOnly;
 	}
-	public set draftsOnly(value: boolean) {
+	set draftsOnly(value: boolean) {
 		this.commonSearchStore.draftsOnly = value;
 	}
 
-	@computed public get pageSize(): number {
+	@computed get pageSize(): number {
 		return this.commonSearchStore.pageSize;
 	}
-	public set pageSize(value: number) {
+	set pageSize(value: number) {
 		this.commonSearchStore.pageSize = value;
 	}
 
-	@computed public get searchTerm(): string {
+	@computed get searchTerm(): string {
 		return this.commonSearchStore.searchTerm;
 	}
-	public set searchTerm(value: string) {
+	set searchTerm(value: string) {
 		this.commonSearchStore.searchTerm = value;
 	}
 
-	@computed public get showTags(): boolean {
+	@computed get showTags(): boolean {
 		return this.commonSearchStore.showTags;
 	}
-	public set showTags(value: boolean) {
+	set showTags(value: boolean) {
 		this.commonSearchStore.showTags = value;
 	}
 
-	@computed public get tags(): TagFilter[] {
+	@computed get tags(): TagFilter[] {
 		return this.commonSearchStore.tagFilters.tags;
 	}
-	public set tags(value: TagFilter[]) {
+	set tags(value: TagFilter[]) {
 		this.commonSearchStore.tagFilters.tags = value;
 	}
 
-	@computed public get tagIds(): number[] {
+	@computed get tagIds(): number[] {
 		return this.tags.map((t) => t.id);
 	}
-	public set tagIds(value: number[]) {
+	set tagIds(value: number[]) {
 		// OPTIMIZE
 		this.commonSearchStore.tagFilters.tags = [];
 		this.commonSearchStore.tagFilters.addTags(value);
 	}
 
-	public formatDate = (dateStr: string): string => {
+	formatDate = (dateStr: string): string => {
 		return moment(dateStr).utc().format('l');
 	};
 
 	// Method for loading a page of results.
-	public abstract loadResults: (
+	abstract loadResults: (
 		pagingProperties: PagingProperties,
 	) => Promise<PartialFindResultContract<TEntry>>;
 
-	@action public selectTag = (tag: TagBaseContract): void => {
+	@action selectTag = (tag: TagBaseContract): void => {
 		this.tags = [TagFilter.fromContract(tag)];
 	};
 
-	public abstract locationState: TRouteParams;
+	abstract locationState: TRouteParams;
 
 	private pauseNotifications = false;
 
-	@action public updateResults = async (
-		clearResults: boolean,
-	): Promise<void> => {
+	@action updateResults = async (clearResults: boolean): Promise<void> => {
 		// Disable duplicate updates
 		if (this.pauseNotifications) return;
 
@@ -160,15 +158,15 @@ export abstract class SearchCategoryBaseStore<
 
 	// Update results loading the first page and updating total number of items.
 	// Commonly this is done after changing the filters or sorting.
-	public updateResultsWithTotalCount = (): Promise<void> => {
+	updateResultsWithTotalCount = (): Promise<void> => {
 		return this.updateResults(true);
 	};
 
-	public updateResultsWithoutTotalCount = (): Promise<void> => {
+	updateResultsWithoutTotalCount = (): Promise<void> => {
 		return this.updateResults(false);
 	};
 
-	public abstract onLocationStateChange({
+	abstract onLocationStateChange({
 		keys,
 		popState,
 	}: StateChangeEvent<TRouteParams>): void;

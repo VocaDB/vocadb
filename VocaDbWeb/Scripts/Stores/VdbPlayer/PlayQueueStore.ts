@@ -63,15 +63,15 @@ const validate = ajv.compile(schema);
 export class PlayQueueItem {
 	private static nextId = 1;
 
-	public readonly id: number;
+	readonly id: number;
 	// Do not use the name `selected`. See: https://github.com/SortableJS/react-sortablejs/issues/243.
-	@observable public isSelected = false;
+	@observable isSelected = false;
 	private startTime?: number;
-	@observable public currentTime = 0;
+	@observable currentTime = 0;
 
-	public constructor(
-		public readonly entry: PlayQueueEntryContract,
-		public readonly pvId: number,
+	constructor(
+		readonly entry: PlayQueueEntryContract,
+		readonly pvId: number,
 		startTime?: number,
 	) {
 		makeObservable(this);
@@ -80,38 +80,42 @@ export class PlayQueueItem {
 		this.startTime = startTime;
 	}
 
-	public static fromContract = ({
+	static fromContract = ({
 		entry,
 		pvId,
 	}: PlayQueueItemContract): PlayQueueItem => {
 		return new PlayQueueItem(entry, pvId);
 	};
 
-	public get pv(): PVContract {
+	get pv(): PVContract {
 		return this.entry.pvs.find((pv) => pv.id === this.pvId)!;
 	}
 
-	public getAndClearStartTime = (): number | undefined => {
+	getAndClearStartTime = (): number | undefined => {
 		const startTime = this.startTime;
 		this.startTime = undefined;
 		return startTime;
 	};
 
-	@action public setCurrentTime = (value: number): void => {
+	@action setCurrentTime = (value: number): void => {
 		this.currentTime = value;
 	};
 
-	public toContract = (): PlayQueueItemContract => {
+	toContract = (): PlayQueueItemContract => {
 		return { entry: this.entry, pvId: this.pvId };
+	};
+
+	clone = (): PlayQueueItem => {
+		return PlayQueueItem.fromContract(this.toContract());
 	};
 }
 
 export class AutoplayContext<
 	TQueryParams extends PlayQueueRepositoryQueryParams
 > {
-	public constructor(
-		public readonly repositoryType: PlayQueueRepositoryType,
-		public readonly queryParams: TQueryParams,
+	constructor(
+		readonly repositoryType: PlayQueueRepositoryType,
+		readonly queryParams: TQueryParams,
 	) {}
 }
 
@@ -119,21 +123,22 @@ export enum PlayMethod {
 	ClearAndPlay,
 	PlayNext,
 	AddToPlayQueue,
+	PlayFirst,
 }
 
 export class PlayQueueStore
 	implements LocalStorageStateStore<PlayQueueLocalStorageState> {
-	@observable public items: PlayQueueItem[] = [];
-	@observable public currentId?: number;
-	@observable public repeat = RepeatMode.Off;
-	@observable public shuffle = false;
+	@observable items: PlayQueueItem[] = [];
+	@observable currentId?: number;
+	@observable repeat = RepeatMode.Off;
+	@observable shuffle = false;
 
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
-	public readonly skipList: SkipListStore;
+	readonly skipList: SkipListStore;
 
-	public constructor(
+	constructor(
 		private readonly values: GlobalValues,
 		private readonly albumRepo: AlbumRepository,
 		private readonly eventRepo: ReleaseEventRepository,
@@ -147,7 +152,7 @@ export class PlayQueueStore
 		this.skipList = new SkipListStore(values, artistRepo, tagRepo);
 	}
 
-	@computed.struct public get localStorageState(): PlayQueueLocalStorageState {
+	@computed.struct get localStorageState(): PlayQueueLocalStorageState {
 		return {
 			repeat: this.repeat,
 			shuffle: this.shuffle,
@@ -159,7 +164,7 @@ export class PlayQueueStore
 			page: this.paging.page,
 		};
 	}
-	public set localStorageState(value: PlayQueueLocalStorageState) {
+	set localStorageState(value: PlayQueueLocalStorageState) {
 		this.repeat = value.repeat ?? RepeatMode.Off;
 		this.shuffle = value.shuffle ?? false;
 		this.items = value.items?.map(PlayQueueItem.fromContract) ?? [];
@@ -172,33 +177,33 @@ export class PlayQueueStore
 		this.paging.page = value.page ?? 1;
 	}
 
-	public validateLocalStorageState = (
+	validateLocalStorageState = (
 		localStorageState: any,
 	): localStorageState is PlayQueueLocalStorageState => {
 		return validate(localStorageState);
 	};
 
-	@computed public get isEmpty(): boolean {
+	@computed get isEmpty(): boolean {
 		return this.items.length === 0;
 	}
 
-	@computed public get hasMultipleItems(): boolean {
+	@computed get hasMultipleItems(): boolean {
 		return this.items.length > 1;
 	}
 
-	@computed public get currentIndex(): number | undefined {
+	@computed get currentIndex(): number | undefined {
 		return this.currentId !== undefined
 			? this.items.findIndex((item) => item.id === this.currentId)
 			: undefined;
 	}
-	public set currentIndex(value: number | undefined) {
+	set currentIndex(value: number | undefined) {
 		this.currentId =
 			value !== undefined
 				? this.items[value] /* TODO: Replace with this.items.at(value) */?.id
 				: undefined;
 	}
 
-	@computed public get hasPreviousItem(): boolean {
+	@computed get hasPreviousItem(): boolean {
 		return (
 			this.hasMultipleItems &&
 			this.currentIndex !== undefined &&
@@ -206,11 +211,11 @@ export class PlayQueueStore
 		);
 	}
 
-	@computed public get hasMoreItems(): boolean {
+	@computed get hasMoreItems(): boolean {
 		return !this.paging.isLastPage;
 	}
 
-	@computed public get hasNextItem(): boolean {
+	@computed get hasNextItem(): boolean {
 		return (
 			this.hasMoreItems ||
 			(this.hasMultipleItems &&
@@ -219,34 +224,34 @@ export class PlayQueueStore
 		);
 	}
 
-	@computed public get currentItem(): PlayQueueItem | undefined {
+	@computed get currentItem(): PlayQueueItem | undefined {
 		return this.items.find((item) => item.id === this.currentId);
 	}
 
-	@computed public get currentTime(): number | undefined {
+	@computed get currentTime(): number | undefined {
 		return this.currentItem?.currentTime;
 	}
-	public set currentTime(value: number | undefined) {
+	set currentTime(value: number | undefined) {
 		if (!this.currentItem || value === undefined) return;
 
 		this.currentItem.currentTime = value;
 	}
 
-	@computed public get isLastItem(): boolean {
+	@computed get isLastItem(): boolean {
 		return (
 			this.currentIndex !== undefined &&
 			this.currentIndex === this.items.length - 1
 		);
 	}
 
-	@computed public get selectedItems(): PlayQueueItem[] {
+	@computed get selectedItems(): PlayQueueItem[] {
 		return this.items.filter((item) => item.isSelected);
 	}
 
-	@computed public get allItemsSelected(): boolean {
+	@computed get allItemsSelected(): boolean {
 		return this.selectedItems.length === this.items.length;
 	}
-	public set allItemsSelected(value: boolean) {
+	set allItemsSelected(value: boolean) {
 		for (const item of this.items) {
 			item.isSelected = value;
 		}
@@ -256,14 +261,14 @@ export class PlayQueueStore
 		return this.selectedItems.length > 0 ? this.selectedItems : this.items;
 	}
 
-	@computed public get shouldSkipCurrentItem(): boolean {
+	@computed get shouldSkipCurrentItem(): boolean {
 		return (
 			this.currentItem !== undefined &&
 			this.skipList.includesAny(this.currentItem.entry)
 		);
 	}
 
-	@action public clear = (): void => {
+	@action clear = (): void => {
 		this.currentIndex = undefined;
 		this.items = [];
 
@@ -272,13 +277,13 @@ export class PlayQueueStore
 		this.paging.totalItems = 0;
 	};
 
-	@action public unselectAll = (): void => {
+	@action unselectAll = (): void => {
 		for (const item of this.items) {
 			item.isSelected = false;
 		}
 	};
 
-	@action public setCurrentItem = (item: PlayQueueItem | undefined): void => {
+	@action setCurrentItem = (item: PlayQueueItem | undefined): void => {
 		this.currentId = item?.id;
 	};
 
@@ -288,7 +293,7 @@ export class PlayQueueStore
 		this.items.splice(this.currentIndex + 1, 0, ...items);
 	};
 
-	@action public clearAndPlay = (items: PlayQueueItem[]): void => {
+	@action clearAndPlay = (items: PlayQueueItem[]): void => {
 		this.clear();
 
 		// currentId must be set before setNextItems is called.
@@ -297,7 +302,7 @@ export class PlayQueueStore
 		this.setNextItems(items);
 	};
 
-	public playNext = (items: PlayQueueItem[]): void => {
+	playNext = (items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
 			this.clearAndPlay(items);
 			return;
@@ -306,16 +311,14 @@ export class PlayQueueStore
 		this.setNextItems(items);
 	};
 
-	public playSelectedItemsNext = (): void => {
+	playSelectedItemsNext = (): void => {
 		const items = this.selectedItemsOrAllItems;
-		this.playNext(
-			items.map((item) => PlayQueueItem.fromContract(item.toContract())),
-		);
+		this.playNext(items.map((item) => item.clone()));
 
 		this.unselectAll();
 	};
 
-	@action public addToPlayQueue = (items: PlayQueueItem[]): void => {
+	@action addToPlayQueue = (items: PlayQueueItem[]): void => {
 		if (this.isEmpty) {
 			this.clearAndPlay(items);
 			return;
@@ -324,16 +327,26 @@ export class PlayQueueStore
 		this.items.push(...items);
 	};
 
-	public addSelectedItemsToPlayQueue = (): void => {
+	addSelectedItemsToPlayQueue = (): void => {
 		const items = this.selectedItemsOrAllItems;
-		this.addToPlayQueue(
-			items.map((item) => PlayQueueItem.fromContract(item.toContract())),
-		);
+		this.addToPlayQueue(items.map((item) => item.clone()));
 
 		this.unselectAll();
 	};
 
-	@action public removeFromPlayQueue = async (
+	@action playFirst = (items: PlayQueueItem[]): void => {
+		if (this.isEmpty) {
+			this.clearAndPlay(items);
+			return;
+		}
+
+		const { currentIndex } = this;
+		if (currentIndex === undefined) return;
+		this.items.splice(currentIndex, 0, ...items);
+		this.currentIndex = currentIndex;
+	};
+
+	@action removeFromPlayQueue = async (
 		items: PlayQueueItem[],
 	): Promise<void> => {
 		// Note: We need to remove the current (if any) and other (previous and/or next) items separately,
@@ -373,13 +386,27 @@ export class PlayQueueStore
 		}
 	};
 
-	public removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
+	removeSelectedItemsFromPlayQueue = async (): Promise<void> => {
 		await this.removeFromPlayQueue(this.selectedItemsOrAllItems);
 
 		this.unselectAll();
 	};
 
-	public play = (method: PlayMethod, items: PlayQueueItem[]): void => {
+	removeOtherItems = (item: PlayQueueItem): Promise<void> => {
+		const itemId = item.id;
+		return this.removeFromPlayQueue(
+			this.items.filter((item) => item.id !== itemId),
+		);
+	};
+
+	removeItemsAbove = (item: PlayQueueItem): Promise<void> => {
+		const itemIndex = this.items.indexOf(item);
+		return this.removeFromPlayQueue(
+			this.items.filter((_, index) => index < itemIndex),
+		);
+	};
+
+	play = (method: PlayMethod, items: PlayQueueItem[]): void => {
 		switch (method) {
 			case PlayMethod.ClearAndPlay:
 				this.clearAndPlay(items);
@@ -391,6 +418,10 @@ export class PlayQueueStore
 
 			case PlayMethod.AddToPlayQueue:
 				this.addToPlayQueue(items);
+				break;
+
+			case PlayMethod.PlayFirst:
+				this.playFirst(items);
 				break;
 		}
 	};
@@ -581,7 +612,7 @@ export class PlayQueueStore
 		}
 	};
 
-	public loadItemsAndPlay = async (
+	loadItemsAndPlay = async (
 		method: PlayMethod,
 		entry: EntryContract,
 		pv?: PVContract,
@@ -591,7 +622,7 @@ export class PlayQueueStore
 		this.play(method, items);
 	};
 
-	@action public previous = (): void => {
+	@action previous = (): void => {
 		if (this.currentIndex === undefined) return;
 
 		if (!this.hasPreviousItem) return;
@@ -633,7 +664,7 @@ export class PlayQueueStore
 		return this.updateResults(true);
 	};
 
-	public loadMore = async (): Promise<void> => {
+	loadMore = async (): Promise<void> => {
 		if (!this.hasMoreItems) return;
 
 		this.paging.nextPage();
@@ -641,7 +672,7 @@ export class PlayQueueStore
 		await this.updateResultsWithoutTotalCount();
 	};
 
-	@action public next = async (): Promise<void> => {
+	@action next = async (): Promise<void> => {
 		if (this.currentIndex === undefined) return;
 
 		if (!this.hasNextItem) return;
@@ -665,13 +696,13 @@ export class PlayQueueStore
 		}
 	};
 
-	@action public goToFirst = (): void => {
+	@action goToFirst = (): void => {
 		if (this.currentIndex === undefined) return;
 
 		this.currentIndex = 0;
 	};
 
-	@action public startAutoplay = async <
+	@action startAutoplay = async <
 		TQueryParams extends PlayQueueRepositoryQueryParams
 	>(
 		autoplayContext: AutoplayContext<TQueryParams>,
@@ -689,7 +720,7 @@ export class PlayQueueStore
 		}
 	};
 
-	@action public switchPV = (pv: PVContract): void => {
+	@action switchPV = (pv: PVContract): void => {
 		const { currentIndex } = this;
 		if (currentIndex === undefined) return;
 
@@ -699,7 +730,7 @@ export class PlayQueueStore
 		this.currentId = newItem.id;
 	};
 
-	@action public toggleRepeat = (): void => {
+	@action toggleRepeat = (): void => {
 		switch (this.repeat) {
 			case RepeatMode.Off:
 				this.repeat = RepeatMode.All;
@@ -715,7 +746,7 @@ export class PlayQueueStore
 		}
 	};
 
-	@action public toggleShuffle = (): void => {
+	@action toggleShuffle = (): void => {
 		this.shuffle = !this.shuffle;
 	};
 }

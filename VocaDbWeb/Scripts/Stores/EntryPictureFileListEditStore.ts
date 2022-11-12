@@ -4,9 +4,9 @@ import { pull } from 'lodash-es';
 import { action, makeObservable, observable } from 'mobx';
 
 export class EntryPictureFileListEditStore {
-	@observable public readonly pictures: EntryPictureFileEditStore[];
+	@observable readonly pictures: EntryPictureFileEditStore[];
 
-	public constructor(pictures: EntryPictureFileContract[]) {
+	constructor(pictures: EntryPictureFileContract[]) {
 		makeObservable(this);
 
 		this.pictures = pictures.map(
@@ -14,15 +14,15 @@ export class EntryPictureFileListEditStore {
 		);
 	}
 
-	@action public add = (): void => {
+	@action add = (): void => {
 		this.pictures.push(new EntryPictureFileEditStore());
 	};
 
-	@action public remove = (picture: EntryPictureFileEditStore): void => {
+	@action remove = (picture: EntryPictureFileEditStore): void => {
 		pull(this.pictures, picture);
 	};
 
-	public toContracts = (): EntryPictureFileContract[] => {
+	toContracts = (): EntryPictureFileContract[] => {
 		return this.pictures as EntryPictureFileContract[];
 	};
 }

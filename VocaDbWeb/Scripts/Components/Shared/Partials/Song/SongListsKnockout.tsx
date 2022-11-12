@@ -40,7 +40,7 @@ export const SongListsKnockout = observer(
 											{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 											<img
 												className="coverPicThumb"
-												alt="Picture" /* TODO: localize */
+												alt="Picture" /* LOC */
 												src={item.mainPicture.urlSmallThumb}
 											/>
 										</Link>

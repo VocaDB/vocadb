@@ -145,7 +145,7 @@ const EventSearchList = observer(
 											{/* eslint-disable-next-line jsx-a11y/alt-text */}
 											<img
 												src={event.mainPicture.urlSmallThumb}
-												title="Cover picture" /* TODO: localize */
+												title="Cover picture" /* LOC */
 												className="coverPicThumb img-rounded"
 												referrerPolicy="same-origin"
 											/>

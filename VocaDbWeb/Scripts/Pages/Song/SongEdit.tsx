@@ -31,7 +31,7 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
@@ -215,7 +215,7 @@ const BasicInfoTabContent = observer(
 										onClick={songEditStore.findOriginalSongSuggestions}
 										className="textLink searchLink"
 									>
-										Find originals{/* TODO: localize */}
+										Find originals{/* LOC */}
 									</SafeAnchor>
 									<table>
 										<tbody>
@@ -248,7 +248,7 @@ const BasicInfoTabContent = observer(
 																	)
 																}
 															>
-																Select{/* TODO: localize */}
+																Select{/* LOC */}
 															</SafeAnchor>
 														</td>
 													</tr>
@@ -310,12 +310,12 @@ const BasicInfoTabContent = observer(
 				</div>
 
 				<div className="editor-label">
-					<label>Release event{/* TODO: localize */}</label>
+					<label>Release event{/* LOC */}</label>
 				</div>
 				<div className="editor-field">
 					<ReleaseEventLockingAutoComplete
 						basicEntryLinkStore={songEditStore.releaseEvent}
-						// TODO: createNewItem="Create new event '{0}'" /* TODO: localize */
+						// TODO: createNewItem="Create new event '{0}'" /* LOC */
 					/>
 				</div>
 
@@ -613,14 +613,14 @@ const PVsTabContent = observer(
 
 				{loginManager.canUploadMedia && (
 					<>
-						<h4 className="withMargin">Upload file{/* TODO: localize */}</h4>
+						<h4 className="withMargin">Upload file{/* LOC */}</h4>
 						<p>
 							You can use VocaDB for hosting songs you have made (you must be
 							the content creator). Choose the file and click "Upload".
 							<br />
 							Supported formats: .mp3. Maximum file size is {maxMediaSizeMB}MB.
 							PV type will automatically be "original".
-							{/* TODO: localize */}
+							{/* LOC */}
 						</p>
 						<input type="file" id="uploadMedia" ref={uploadMediaRef} />{' '}
 						<SafeAnchor
@@ -635,7 +635,7 @@ const PVsTabContent = observer(
 							href="#"
 							className="textLink addLink"
 						>
-							Upload{/* TODO: localize */}
+							Upload{/* LOC */}
 						</SafeAnchor>
 					</>
 				)}
@@ -719,7 +719,7 @@ const SongEditLayout = observer(
 
 		const title = t('ViewRes.Song:Edit.EditTitle', { 0: contract.name });
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		const conflictingEditor = useConflictingEditor(EntryType.Song);
 
@@ -790,7 +790,7 @@ const SongEditLayout = observer(
 
 				{songEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOC */
 						errors={songEditStore.errors}
 					/>
 				)}
@@ -860,7 +860,7 @@ const SongEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;

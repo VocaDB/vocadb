@@ -17,10 +17,10 @@ import {
 } from 'mobx';
 
 class UserKnownLanguageEditStore {
-	@observable public cultureCode: string;
-	@observable public proficiency: UserLanguageProficiency;
+	@observable cultureCode: string;
+	@observable proficiency: UserLanguageProficiency;
 
-	public constructor(contract?: UserKnownLanguageContract) {
+	constructor(contract?: UserKnownLanguageContract) {
 		makeObservable(this);
 
 		this.cultureCode = contract?.cultureCode ?? '';
@@ -29,34 +29,34 @@ class UserKnownLanguageEditStore {
 }
 
 export class MySettingsStore {
-	@observable public aboutMe: string;
-	@observable public cultureSelection: string;
-	@observable public defaultLanguageSelection: ContentLanguagePreference;
-	@observable public email: string;
-	@observable public emailOptions: UserEmailOptions;
-	@observable public emailVerified: boolean;
-	@observable public emailVerificationSent = false;
-	@observable public errors?: Record<string, string[]>;
-	@observable public interfaceLanguageSelection: string;
-	@observable public knownLanguages: UserKnownLanguageEditStore[];
-	@observable public location: string;
-	@observable public newPass = '';
-	@observable public newPassAgain = '';
-	@observable public oldPass = '';
-	@observable public preferredVideoService: string /* TODO: enum */;
-	@observable public publicAlbumCollection: boolean;
-	@observable public publicRatings: boolean;
-	@observable public showActivity: boolean;
-	@observable public showChatbox: boolean;
-	@observable public stylesheet: string;
-	@observable public submitting = false;
-	@observable public unreadNotificationsToKeep: string;
-	@observable public username: string;
-	public readonly webLinksStore: WebLinksEditStore;
+	@observable aboutMe: string;
+	@observable cultureSelection: string;
+	@observable defaultLanguageSelection: ContentLanguagePreference;
+	@observable email: string;
+	@observable emailOptions: UserEmailOptions;
+	@observable emailVerified: boolean;
+	@observable emailVerificationSent = false;
+	@observable errors?: Record<string, string[]>;
+	@observable interfaceLanguageSelection: string;
+	@observable knownLanguages: UserKnownLanguageEditStore[];
+	@observable location: string;
+	@observable newPass = '';
+	@observable newPassAgain = '';
+	@observable oldPass = '';
+	@observable preferredVideoService: string /* TODO: enum */;
+	@observable publicAlbumCollection: boolean;
+	@observable publicRatings: boolean;
+	@observable showActivity: boolean;
+	@observable showChatbox: boolean;
+	@observable stylesheet: string;
+	@observable submitting = false;
+	@observable unreadNotificationsToKeep: string;
+	@observable username: string;
+	readonly webLinksStore: WebLinksEditStore;
 
-	public constructor(
+	constructor(
 		private readonly userRepo: UserRepository,
-		public readonly contract: UserForMySettingsContract,
+		readonly contract: UserForMySettingsContract,
 	) {
 		makeObservable(this);
 
@@ -83,26 +83,26 @@ export class MySettingsStore {
 	}
 
 	// TODO: support showing the verification button by saving email immediately after it's changed
-	@computed public get canVerifyEmail(): boolean {
+	@computed get canVerifyEmail(): boolean {
 		return !!this.email && !this.emailVerified && !this.emailVerificationSent;
 	}
 
-	@action public addKnownLanguage = (): void => {
+	@action addKnownLanguage = (): void => {
 		this.knownLanguages.push(new UserKnownLanguageEditStore());
 	};
 
-	@action public removeKnownLanguage = (
+	@action removeKnownLanguage = (
 		knownLanguage: UserKnownLanguageEditStore,
 	): void => {
 		pull(this.knownLanguages, knownLanguage);
 	};
 
-	@action public verifyEmail = async (): Promise<void> => {
+	@action verifyEmail = async (): Promise<void> => {
 		this.emailVerificationSent = true;
 		await this.userRepo.requestEmailVerification({});
 	};
 
-	@action public submit = async (
+	@action submit = async (
 		requestToken: string,
 		pictureUpload: File | undefined,
 	): Promise<string> => {

@@ -7,7 +7,7 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import {
@@ -61,7 +61,7 @@ const AlbumDetailsLayout = observer(
 			? `${model.name} - ${model.artistString}`
 			: model.name;
 
-		useVocaDbTitle(titleAndArtist, true);
+		useVdbTitle(titleAndArtist, true);
 
 		return (
 			<Layout

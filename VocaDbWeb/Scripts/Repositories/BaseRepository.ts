@@ -6,7 +6,7 @@ export class BaseRepository {
 		return date ? date.toISOString() : undefined;
 	}
 
-	public constructor(public baseUrl: string) {}
+	constructor(readonly baseUrl: string) {}
 }
 
 // Common parameters for entry queries (listings).

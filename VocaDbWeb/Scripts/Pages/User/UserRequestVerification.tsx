@@ -3,7 +3,7 @@ import Button from '@/Bootstrap/Button';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
 import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
@@ -37,7 +37,7 @@ const UserRequestVerification = observer(
 
 		const title = t('ViewRes.User:RequestVerification.PageTitle');
 
-		useVocaDbTitle(title, ready);
+		useVdbTitle(title, ready);
 
 		return (
 			<Layout title={title}>
@@ -52,12 +52,12 @@ const UserRequestVerification = observer(
 
 									await requestVerificationStore.submit(requestToken);
 
-									showSuccessMessage('Request sent' /* TODO: localize */);
+									showSuccessMessage('Request sent' /* LOC */);
 								} catch (error: any) {
 									showErrorMessage(
 										error.response && error.response.status
 											? getReasonPhrase(error.response.status)
-											: 'Unable to send request.' /* TODO: localize */,
+											: 'Unable to send request.' /* LOC */,
 									);
 
 									throw error;
@@ -129,7 +129,7 @@ const UserRequestVerification = observer(
 								<div>
 									<label>{t('ViewRes.User:RequestVerification.URL')}</label>
 									<div className="inline input-prepend">
-										<span className="add-on" title="URL" /* TODO: localize */>
+										<span className="add-on" title="URL" /* LOC */>
 											<i className="icon-globe" />
 										</span>
 										<input

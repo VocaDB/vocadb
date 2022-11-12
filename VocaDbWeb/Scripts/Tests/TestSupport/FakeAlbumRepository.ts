@@ -2,10 +2,10 @@ import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 
 export class FakeAlbumRepository extends AlbumRepository {
-	public deletedId!: number;
-	public updatedId!: number;
+	deletedId!: number;
+	updatedId!: number;
 
-	public constructor() {
+	constructor() {
 		super(new HttpClient(), '');
 	}
 }

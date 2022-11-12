@@ -3,11 +3,11 @@ import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguage
 import { makeObservable, observable } from 'mobx';
 
 export class LocalizedStringWithIdEditStore {
-	public readonly id: number;
-	@observable public language = ContentLanguageSelection.Unspecified;
-	@observable public value: string;
+	readonly id: number;
+	@observable language = ContentLanguageSelection.Unspecified;
+	@observable value: string;
 
-	public constructor(
+	constructor(
 		language: ContentLanguageSelection = ContentLanguageSelection.Unspecified,
 		value: string = '',
 		id: number = 0,
@@ -19,7 +19,7 @@ export class LocalizedStringWithIdEditStore {
 		this.id = id;
 	}
 
-	public static fromContract(
+	static fromContract(
 		contract: LocalizedStringWithIdContract,
 	): LocalizedStringWithIdEditStore {
 		return new LocalizedStringWithIdEditStore(

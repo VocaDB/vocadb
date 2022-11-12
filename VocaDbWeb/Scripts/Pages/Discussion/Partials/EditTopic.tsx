@@ -59,7 +59,7 @@ const EditTopic = observer(
 						<>
 							{discussionTopicEditStore.folders.length > 0 && (
 								<div>
-									<label>Folder{/* TODO: localize */}</label>
+									<label>Folder{/* LOC */}</label>
 									<select
 										value={discussionTopicEditStore.folderId}
 										onChange={(e): void =>
@@ -89,7 +89,7 @@ const EditTopic = observer(
 											})
 										}
 									/>{' '}
-									Locked{/* TODO: localize */}
+									Locked{/* LOC */}
 								</label>
 							</p>
 						</>

@@ -54,7 +54,7 @@ export class AlbumRepository
 
 	private readonly urlMapper: UrlMapper;
 
-	public constructor(private readonly httpClient: HttpClient, baseUrl: string) {
+	constructor(private readonly httpClient: HttpClient, baseUrl: string) {
 		super(baseUrl);
 
 		this.urlMapper = new UrlMapper(baseUrl);
@@ -64,7 +64,7 @@ export class AlbumRepository
 		};
 	}
 
-	public createComment = ({
+	createComment = ({
 		entryId: albumId,
 		contract,
 	}: {
@@ -77,7 +77,7 @@ export class AlbumRepository
 		);
 	};
 
-	public createOrUpdateReview({
+	createOrUpdateReview({
 		albumId,
 		reviewContract,
 	}: {
@@ -91,7 +91,7 @@ export class AlbumRepository
 		return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
 	}
 
-	public createReport = ({
+	createReport = ({
 		albumId,
 		reportType,
 		notes,
@@ -118,17 +118,13 @@ export class AlbumRepository
 		);
 	};
 
-	public deleteComment = ({
-		commentId,
-	}: {
-		commentId: number;
-	}): Promise<void> => {
+	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
 		);
 	};
 
-	public deleteReview({
+	deleteReview({
 		albumId,
 		reviewId,
 	}: {
@@ -142,7 +138,7 @@ export class AlbumRepository
 		return this.httpClient.delete(url);
 	}
 
-	public findDuplicate = ({
+	findDuplicate = ({
 		params,
 	}: {
 		params: {
@@ -155,7 +151,7 @@ export class AlbumRepository
 		return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
 	};
 
-	public getComments = ({
+	getComments = ({
 		entryId: albumId,
 	}: {
 		entryId: number;
@@ -165,16 +161,12 @@ export class AlbumRepository
 		);
 	};
 
-	public getForEdit = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<AlbumForEditContract> => {
+	getForEdit = ({ id }: { id: number }): Promise<AlbumForEditContract> => {
 		var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
 		return this.httpClient.get<AlbumForEditContract>(url);
 	};
 
-	public getOne = ({
+	getOne = ({
 		id,
 		lang,
 	}: {
@@ -188,7 +180,7 @@ export class AlbumRepository
 		});
 	};
 
-	public getOneWithComponents = ({
+	getOneWithComponents = ({
 		id,
 		fields,
 		lang,
@@ -207,7 +199,7 @@ export class AlbumRepository
 		});
 	};
 
-	public getList = ({
+	getList = ({
 		paging,
 		lang,
 		query,
@@ -268,7 +260,7 @@ export class AlbumRepository
 		);
 	};
 
-	public getReviews = ({
+	getReviews = ({
 		albumId,
 	}: {
 		albumId: number;
@@ -280,7 +272,7 @@ export class AlbumRepository
 		return this.httpClient.get<AlbumReviewContract[]>(url);
 	};
 
-	public getTagSuggestions = ({
+	getTagSuggestions = ({
 		albumId,
 	}: {
 		albumId: number;
@@ -290,7 +282,7 @@ export class AlbumRepository
 		);
 	};
 
-	public getTracks = ({
+	getTracks = ({
 		id,
 		fields,
 		lang,
@@ -308,7 +300,7 @@ export class AlbumRepository
 		);
 	};
 
-	public async getUserCollections({
+	async getUserCollections({
 		albumId,
 	}: {
 		albumId: number;
@@ -320,7 +312,7 @@ export class AlbumRepository
 		return this.httpClient.get<AlbumForUserForApiContract[]>(url);
 	}
 
-	public updateComment = ({
+	updateComment = ({
 		commentId,
 		contract,
 	}: {
@@ -333,7 +325,7 @@ export class AlbumRepository
 		);
 	};
 
-	public updatePersonalDescription = ({
+	updatePersonalDescription = ({
 		albumId,
 		text,
 		author,
@@ -353,17 +345,13 @@ export class AlbumRepository
 		);
 	};
 
-	public getDetails = ({
-		id,
-	}: {
-		id: number;
-	}): Promise<AlbumDetailsContract> => {
+	getDetails = ({ id }: { id: number }): Promise<AlbumDetailsContract> => {
 		return this.httpClient.get<AlbumDetailsContract>(
 			this.urlMapper.mapRelative(`/api/albums/${id}/details`),
 		);
 	};
 
-	public getAlbumWithArchivedVersions = ({
+	getAlbumWithArchivedVersions = ({
 		id,
 	}: {
 		id: number;
@@ -373,7 +361,7 @@ export class AlbumRepository
 		>(this.urlMapper.mapRelative(`/api/albums/${id}/versions`));
 	};
 
-	public getVersionDetails = ({
+	getVersionDetails = ({
 		id,
 		comparedVersionId,
 	}: {
@@ -386,7 +374,7 @@ export class AlbumRepository
 		);
 	};
 
-	public create = (
+	create = (
 		requestToken: string,
 		contract: CreateAlbumContract,
 	): Promise<number> => {
@@ -405,7 +393,7 @@ export class AlbumRepository
 		);
 	};
 
-	public edit = (
+	edit = (
 		requestToken: string,
 		contract: AlbumForEditContract,
 		coverPicUpload: File | undefined,
@@ -430,7 +418,7 @@ export class AlbumRepository
 		);
 	};
 
-	public merge = (
+	merge = (
 		requestToken: string,
 		{ id, targetAlbumId }: { id: number; targetAlbumId: number },
 	): Promise<void> => {

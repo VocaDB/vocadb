@@ -417,18 +417,14 @@ const UserOverview = observer(
 												});
 
 												if (result) {
-													showSuccessMessage(
-														'Added to ban list' /* TODO: localize */,
-													);
+													showSuccessMessage('Added to ban list' /* LOC */);
 												} else {
-													showErrorMessage(
-														'Already in the ban list' /* TODO: localize */,
-													);
+													showErrorMessage('Already in the ban list' /* LOC */);
 												}
 											}}
 											href="#"
 										>
-											Add to banned IPs{/* TODO: localize */}
+											Add to banned IPs{/* LOC */}
 										</SafeAnchor>
 										{user.additionalPermissions.length > 0 && (
 											<>
@@ -452,7 +448,7 @@ const UserOverview = observer(
 														{/* eslint-disable-next-line jsx-a11y/alt-text */}
 														<img
 															src="/Content/Icons/tick.png"
-															title="Verified email" /* TODO: localize */
+															title="Verified email" /* LOC */
 														/>
 													</>
 												)}

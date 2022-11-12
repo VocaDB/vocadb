@@ -23,7 +23,7 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVocaDbTitle } from '@/Components/useVocaDbTitle';
+import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -73,9 +73,9 @@ const TagEditLayout = observer(
 
 		const contract = tagEditStore.contract;
 
-		const title = `Edit tag - ${contract.name}`; /* TODO: localize */
+		const title = `Edit tag - ${contract.name}`; /* LOC */
 
-		useVocaDbTitle(title, true);
+		useVdbTitle(title, true);
 
 		const thumbUrl = UrlHelper.imageThumb(
 			contract.mainPicture,
@@ -102,7 +102,7 @@ const TagEditLayout = observer(
 							}}
 							divider
 						>
-							Tags{/* TODO: localize */}
+							Tags{/* LOC */}
 						</Breadcrumb.Item>
 						<Breadcrumb.Item
 							linkAs={Link}
@@ -166,7 +166,7 @@ const TagEditLayout = observer(
 
 				{tagEditStore.errors && (
 					<ValidationSummaryPanel
-						message="Unable to save properties." /* TODO: localize */
+						message="Unable to save properties." /* LOC */
 						errors={tagEditStore.errors}
 					/>
 				)}
@@ -204,7 +204,7 @@ const TagEditLayout = observer(
 							showErrorMessage(
 								error.response && error.response.status
 									? getReasonPhrase(error.response.status)
-									: 'Unable to save properties.' /* TODO: localize */,
+									: 'Unable to save properties.' /* LOC */,
 							);
 
 							throw error;
@@ -218,7 +218,7 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Default language" /* TODO: localize */
+							label="Default language" /* LOC */
 							dangerouslySetInnerHTML={{ __html: '' }}
 						/>
 					</div>
@@ -235,7 +235,7 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Names" /* TODO: localize */
+							label="Names" /* LOC */
 							dangerouslySetInnerHTML={{ __html: '' }}
 						/>{' '}
 						<RequiredField />
@@ -245,7 +245,7 @@ const TagEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Category{/* TODO: localize */}</label>
+						<label>Category{/* LOC */}</label>
 					</div>
 					<div className="editor-field">
 						<TagCategoryAutoComplete
@@ -261,10 +261,10 @@ const TagEditLayout = observer(
 
 					<div className="editor-label">
 						<HelpLabel
-							label="Parent" /* TODO: localize */
+							label="Parent" /* LOC */
 							dangerouslySetInnerHTML={{
 								__html:
-									'Parent tag groups related tags under one parent. Child tags are still considered separate.' /* TODO: localize */,
+									'Parent tag groups related tags under one parent. Child tags are still considered separate.' /* LOC */,
 							}}
 						/>
 					</div>
@@ -278,7 +278,7 @@ const TagEditLayout = observer(
 					</div>
 
 					<div className="editor-label">
-						<label>Description{/* TODO: localize */}</label>
+						<label>Description{/* LOC */}</label>
 						<MarkdownNotice />
 					</div>
 					<div className="editor-field entry-edit-description">
@@ -294,7 +294,7 @@ const TagEditLayout = observer(
 								<img
 									className="pull-left media-object"
 									src={thumbUrl}
-									alt="Thumb" /* TODO: localize */
+									alt="Thumb" /* LOC */
 								/>
 							)}
 							<div className="media-body">
@@ -311,7 +311,7 @@ const TagEditLayout = observer(
 
 					<div
 						className="editor-field withMargin"
-						title="Hides this tag from suggested tags for albums and artists" /* TODO: localize */
+						title="Hides this tag from suggested tags for albums and artists" /* LOC */
 					>
 						<input
 							type="checkbox"
@@ -323,7 +323,7 @@ const TagEditLayout = observer(
 								})
 							}
 						/>{' '}
-						Hide from suggestions{/* TODO: localize */}
+						Hide from suggestions{/* LOC */}
 					</div>
 
 					<div className="editor-label withMargin">
@@ -382,7 +382,7 @@ const TagEditLayout = observer(
 										})
 									}
 								/>{' '}
-								{TagTargetTypes[entryType] /* TODO: localize */}
+								{TagTargetTypes[entryType] /* LOC */}
 								<br />
 							</React.Fragment>
 						))}

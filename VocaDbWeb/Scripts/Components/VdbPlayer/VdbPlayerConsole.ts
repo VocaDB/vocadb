@@ -1,7 +1,7 @@
 export class VdbPlayerConsole {
 	private static title = 'VdbPlayer';
 
-	public static assert = (
+	static assert = (
 		condition?: boolean | undefined,
 		message?: any,
 		...optionalParams: any
@@ -12,12 +12,12 @@ export class VdbPlayerConsole {
 			...optionalParams,
 		);
 
-	public static debug = (message?: any, ...optionalParams: any): void =>
+	static debug = (message?: any, ...optionalParams: any): void =>
 		console.debug(`[${VdbPlayerConsole.title}] ${message}`, ...optionalParams);
 
-	public static error = (message?: any, ...optionalParams: any): void =>
+	static error = (message?: any, ...optionalParams: any): void =>
 		console.error(`[${VdbPlayerConsole.title}] ${message}`, ...optionalParams);
 
-	public static warn = (message?: any, ...optionalParams: any): void =>
+	static warn = (message?: any, ...optionalParams: any): void =>
 		console.warn(`[${VdbPlayerConsole.title}] ${message}`, ...optionalParams);
 }
