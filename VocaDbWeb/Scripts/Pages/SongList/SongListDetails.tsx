@@ -612,6 +612,7 @@ const SongListDetails = (): React.ReactElement => {
 					songList: songList,
 					songListStore: new SongListStore(
 						vdb.values,
+						loginManager,
 						urlMapper,
 						songListRepo,
 						songRepo,

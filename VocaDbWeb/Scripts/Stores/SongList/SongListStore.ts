@@ -5,7 +5,7 @@ import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { TagSelectionContract } from '@/DataContracts/Tag/TagSelectionContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
+import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -118,6 +118,7 @@ export class SongListStore
 
 	constructor(
 		private readonly values: GlobalValues,
+		loginManager: LoginManager,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
