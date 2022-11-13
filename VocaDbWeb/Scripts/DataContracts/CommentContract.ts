@@ -6,6 +6,7 @@ export interface CommentContract {
 	authorName?: string;
 	canBeDeleted?: boolean;
 	canBeEdited?: boolean;
+	/** DateTime */
 	created: string;
 	entry?: EntryContract;
 	id?: number;

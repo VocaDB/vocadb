@@ -8,6 +8,7 @@ export interface DiscussionTopicContract {
 	commentCount: number;
 	comments: CommentContract[];
 	content: string;
+	/** DateTime */
 	created: string;
 	folderId: number;
 	id: number;

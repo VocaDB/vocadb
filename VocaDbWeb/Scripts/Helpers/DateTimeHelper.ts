@@ -57,4 +57,8 @@ export class DateTimeHelper {
 	static DateTime_format_l = (dateTime?: string): string => {
 		return moment(dateTime).format('l');
 	};
+
+	static DateTime_format_lll = (dateTime?: string): string => {
+		return moment(dateTime).format('lll');
+	};
 }
