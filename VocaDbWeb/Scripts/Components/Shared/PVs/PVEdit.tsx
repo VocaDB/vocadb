@@ -1,9 +1,9 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVType } from '@/Models/PVs/PVType';
 import { PVEditStore, PVListEditStore } from '@/Stores/PVs/PVListEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -48,7 +48,7 @@ export const PVEdit = observer(
 				{pvListEditStore.showPublishDates && (
 					<td>
 						{pvListEditStore.showPublishDates && (
-							<>{moment(contract.publishDate).format('l')}</>
+							<>{DateTimeHelper.DateTime_format_l(contract.publishDate)}</>
 						)}
 					</td>
 				)}

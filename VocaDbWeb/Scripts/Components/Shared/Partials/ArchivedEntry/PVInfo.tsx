@@ -2,7 +2,6 @@ import { ArchivedPVContract } from '@/DataContracts/PVs/ArchivedPVContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
-import moment from 'moment';
 import React from 'react';
 
 interface PVInfoProps {
@@ -21,7 +20,9 @@ export const PVInfo = React.memo(
 					{pv.pvId}
 				</a>{' '}
 				by {pv.author} ({DateTimeHelper.formatFromSeconds(pv.length)})
-				{pv.publishDate && <> at {moment(pv.publishDate).format('l')}</>}
+				{pv.publishDate && (
+					<> at {DateTimeHelper.DateTime_format_l(pv.publishDate)}</>
+				)}
 				{pv.disabled && <> (unavailable)</>}
 			</>
 		);

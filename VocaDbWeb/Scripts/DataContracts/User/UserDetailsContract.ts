@@ -11,6 +11,7 @@ import { PermissionToken } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 
 export interface OldUsernameContract {
+	/** DateTime */
 	date: string;
 	oldName: string;
 }
@@ -22,6 +23,7 @@ interface UserDetailsContractBase {
 	anonymousActivity: boolean;
 	artistCount: number;
 	commentCount: number;
+	/** DateTime */
 	createDate: string;
 	customTitle: string;
 	designatedStaff: boolean;

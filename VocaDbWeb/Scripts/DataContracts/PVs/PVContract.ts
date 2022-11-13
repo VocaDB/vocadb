@@ -9,6 +9,7 @@ interface PVContractBase {
 	length?: number;
 	name?: string;
 	pvId: string;
+	/** DateTime */
 	publishDate?: string;
 	pvType: PVType;
 	thumbUrl?: string;

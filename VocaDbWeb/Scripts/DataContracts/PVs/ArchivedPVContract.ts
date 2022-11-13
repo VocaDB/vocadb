@@ -6,6 +6,7 @@ export interface ArchivedPVContract {
 	disabled: boolean;
 	length: number;
 	name: string;
+	/** DateTime */
 	publishDate?: string;
 	pvId: string;
 	pvType: PVType;

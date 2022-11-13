@@ -16,6 +16,7 @@ import {
 	UserKnownLanguageContract,
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
 import { LoginManager, PermissionToken } from '@/Models/LoginManager';
 import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
@@ -25,7 +26,6 @@ import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -249,7 +249,7 @@ const UserOverview = observer(
 						<h4 className="withMargin">
 							{t('ViewRes.User:Details.MemberSince')}
 						</h4>
-						{moment(user.createDate).format('l')}
+						{DateTimeHelper.DateTime_format_l(user.createDate)}
 
 						{user.oldUsernames.length > 0 && (
 							<>
@@ -261,7 +261,7 @@ const UserOverview = observer(
 										{index > 0 && ', '}
 										{oldName.oldName}{' '}
 										{t('ViewRes.User:Details.OldNameUntil', {
-											0: moment(oldName.date).format('l'),
+											0: DateTimeHelper.DateTime_format_l(oldName.date),
 										})}
 									</React.Fragment>
 								))}

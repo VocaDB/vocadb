@@ -42,7 +42,6 @@ import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -161,7 +160,9 @@ const PVButton = observer(
 				title={
 					pv.publishDate && pv.author
 						? `${t('ViewRes.Song:Details.PVDescription', {
-								0: moment(pv.publishDate).format('l') /* REVIEW */,
+								0: DateTimeHelper.DateTime_format_l(
+									pv.publishDate,
+								) /* REVIEW */,
 								1: pv.author,
 						  })}${
 								pv.disabled ? ` ${t('ViewRes.Song:Details.PVUnavailable')}` : ''

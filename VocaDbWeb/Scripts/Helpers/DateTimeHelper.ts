@@ -53,4 +53,8 @@ export class DateTimeHelper {
 	static DateOnly_utc_format_l = (dateOnly?: string): string => {
 		return moment(dateOnly).utc().format('l');
 	};
+
+	static DateTime_format_l = (dateTime?: string): string => {
+		return moment(dateTime).format('l');
+	};
 }

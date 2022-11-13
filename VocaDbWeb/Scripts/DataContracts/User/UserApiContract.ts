@@ -6,6 +6,7 @@ export interface UserApiContract extends UserBaseContract {
 	active?: boolean;
 	groupId?: UserGroup;
 	mainPicture?: EntryThumbContract;
+	/** DateTime */
 	memberSince?: string;
 	verifiedArtist?: boolean;
 }
