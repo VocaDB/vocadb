@@ -18,12 +18,10 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { SongType } from '@/Models/Songs/SongType';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { truncate } from 'lodash-es';
@@ -32,14 +30,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 interface SongCreateLayoutProps {
 	songCreateStore: SongCreateStore;

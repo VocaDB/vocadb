@@ -8,10 +8,10 @@ import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partial
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import {
 	ActivityEntryListStore,
 	ActivityEntrySortRule,
@@ -22,11 +22,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface UserEntryEditsLayoutProps {
 	user: UserDetailsContract;

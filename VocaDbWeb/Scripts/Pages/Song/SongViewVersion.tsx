@@ -10,10 +10,9 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { loginManager } from '@/Models/LoginManager';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArchivedSongStore } from '@/Stores/Song/ArchivedSongStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -22,12 +21,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface SongViewVersionLayoutProps {
 	contract: ArchivedSongVersionDetailsContract;

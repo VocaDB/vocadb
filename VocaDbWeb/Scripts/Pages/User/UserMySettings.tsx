@@ -26,11 +26,9 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { PVService } from '@/Models/PVs/PVService';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { MySettingsStore } from '@/Stores/User/MySettingsStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -139,12 +137,6 @@ function parsePath(
 
 	return ret;
 }
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface AccountSettingsTabContentProps {
 	mySettingsStore: MySettingsStore;

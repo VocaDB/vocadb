@@ -8,11 +8,11 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { SongVoteRating } from '@/Models/SongVoteRating';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
@@ -24,12 +24,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const rankingsStore = new RankingsStore(
 	httpClient,

@@ -8,23 +8,15 @@ import { showErrorMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { TagMergeStore } from '@/Stores/Tag/TagMergeStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 interface TagMergeLayoutProps {
 	tag: TagBaseContract;

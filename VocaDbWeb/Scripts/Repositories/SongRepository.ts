@@ -28,7 +28,12 @@ import {
 } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import qs from 'qs';
@@ -650,3 +655,5 @@ export interface SongQueryParams extends CommonQueryParams {
 
 	songTypes?: SongType[];
 }
+
+export const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);

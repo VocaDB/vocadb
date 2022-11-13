@@ -19,7 +19,12 @@ import {
 } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import qs from 'qs';
@@ -372,3 +377,8 @@ export class ArtistRepository
 export interface ArtistQueryParams extends CommonQueryParams {
 	artistTypes: string /* TODO: ArtistType[] */;
 }
+
+export const artistRepo = new ArtistRepository(
+	httpClient,
+	vdb.values.baseAddress,
+);

@@ -55,8 +55,6 @@ import {
 	runInAction,
 } from 'mobx';
 
-const loginManager = new LoginManager(vdb.values);
-
 interface SongListRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
 	artistId?: number[];
@@ -120,6 +118,7 @@ export class SongListStore
 
 	constructor(
 		private readonly values: GlobalValues,
+		loginManager: LoginManager,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,

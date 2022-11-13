@@ -35,7 +35,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
@@ -49,8 +49,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface LatestAlbumReviewProps {
 	latestReview: AlbumReviewContract;

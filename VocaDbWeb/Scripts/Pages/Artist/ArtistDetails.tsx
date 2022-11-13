@@ -16,15 +16,14 @@ import {
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
 import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { userRepo } from '@/Repositories/UserRepository';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
@@ -37,16 +36,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

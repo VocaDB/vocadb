@@ -4,7 +4,7 @@ import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User
 import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -14,8 +14,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const ViewFolderTableHeader = React.memo(
 	(): React.ReactElement => {

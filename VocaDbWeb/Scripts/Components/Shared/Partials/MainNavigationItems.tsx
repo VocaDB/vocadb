@@ -1,12 +1,10 @@
 import Nav from '@/Bootstrap/Nav';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {

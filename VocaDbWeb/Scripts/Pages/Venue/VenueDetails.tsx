@@ -13,28 +13,19 @@ import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import {
 	VenueReportType,
 	venueReportTypesWithRequiredNotes,
 } from '@/Models/Venues/VenueReportType';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueDetailsStore } from '@/Stores/Venue/VenueDetailsStore';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface VenueDetailsLayoutProps {
 	venue: VenueForApiContract;

@@ -1,7 +1,7 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVType } from '@/Models/PVs/PVType';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class PVRepository {
 	constructor(
@@ -20,3 +20,5 @@ export class PVRepository {
 		return this.httpClient.get<PVContract>(url, { pvUrl: pvUrl, type: type });
 	};
 }
+
+export const pvRepo = new PVRepository(httpClient, urlMapper);

@@ -1,8 +1,8 @@
 import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export interface IPRuleContract {
 	address?: string;
@@ -96,3 +96,5 @@ export class AdminRepository {
 		);
 	};
 }
+
+export const adminRepo = new AdminRepository(httpClient, urlMapper);

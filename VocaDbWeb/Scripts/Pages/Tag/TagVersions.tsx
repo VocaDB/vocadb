@@ -6,15 +6,11 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 interface TagVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<TagApiContract>;

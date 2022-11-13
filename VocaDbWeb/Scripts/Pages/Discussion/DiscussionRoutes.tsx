@@ -1,9 +1,7 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { discussionRepo } from '@/Repositories/DiscussionRepository';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -25,12 +23,6 @@ export const DiscussionLayout = ({
 }: DiscussionLayoutProps): React.ReactElement => {
 	return <Layout title={title}>{children}</Layout>;
 };
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const discussionRepo = new DiscussionRepository(httpClient, urlMapper);
 
 const discussionIndexStore = new DiscussionIndexStore(
 	loginManager,

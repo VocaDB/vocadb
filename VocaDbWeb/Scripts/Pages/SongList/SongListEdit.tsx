@@ -27,14 +27,12 @@ import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -43,15 +41,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface PropertiesTabContentProps {
 	songListEditStore: SongListEditStore;

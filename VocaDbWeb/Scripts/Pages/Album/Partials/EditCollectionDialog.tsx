@@ -5,7 +5,7 @@ import {
 	PurchaseStatus,
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import $ from 'jquery';
 import JqxRating from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxrating';
@@ -13,8 +13,6 @@ import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 interface EditCollectionDialogProps {
 	albumDetailsStore: AlbumDetailsStore;
