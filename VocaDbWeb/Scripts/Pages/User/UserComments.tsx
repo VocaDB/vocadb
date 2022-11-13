@@ -1,12 +1,10 @@
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface UserCommentsProps {
 	user: UserDetailsContract;

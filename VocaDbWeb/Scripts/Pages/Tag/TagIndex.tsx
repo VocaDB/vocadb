@@ -5,10 +5,9 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { LoginManager } from '@/Models/LoginManager';
-import { TagRepository } from '@/Repositories/TagRepository';
+import { loginManager } from '@/Models/LoginManager';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { TagCreateStore } from '@/Stores/Tag/TagCreateStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -16,12 +15,6 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
 
 const tagCreateStore = new TagCreateStore(tagRepo);
 

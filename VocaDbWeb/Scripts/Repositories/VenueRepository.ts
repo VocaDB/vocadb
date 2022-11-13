@@ -7,8 +7,8 @@ import { AjaxHelper } from '@/Helpers/AjaxHelper';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { BaseRepository } from '@/Repositories/BaseRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class VenueRepository extends BaseRepository {
 	constructor(
@@ -132,3 +132,5 @@ export class VenueRepository extends BaseRepository {
 		);
 	};
 }
+
+export const venueRepo = new VenueRepository(httpClient, urlMapper);

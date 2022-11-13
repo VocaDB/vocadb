@@ -1,5 +1,5 @@
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class EntryReportRepository {
 	constructor(
@@ -13,3 +13,5 @@ export class EntryReportRepository {
 		return this.httpClient.get<number>(url);
 	};
 }
+
+export const entryReportRepo = new EntryReportRepository(httpClient, urlMapper);

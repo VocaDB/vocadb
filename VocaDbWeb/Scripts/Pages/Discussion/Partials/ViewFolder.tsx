@@ -3,7 +3,7 @@ import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSi
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -14,8 +14,6 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 const ViewFolderTableHeader = React.memo(
 	(): React.ReactElement => {

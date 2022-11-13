@@ -22,15 +22,14 @@ import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import SongSearchOptions from '@/Pages/Search/Partials/SongSearchOptions';
 import TagSearchList from '@/Pages/Search/Partials/TagSearchList';
 import TagSearchOptions from '@/Pages/Search/Partials/TagSearchOptions';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { EntryRepository } from '@/Repositories/EntryRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { entryRepo } from '@/Repositories/EntryRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -44,17 +43,6 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const entryRepo = new EntryRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const pvPlayersFactory = new PVPlayersFactory();
 

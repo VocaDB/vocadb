@@ -26,3 +26,5 @@ export class UrlMapper {
 		return functions.mergeUrls(this.baseUrl, relative);
 	}
 }
+
+export const urlMapper = new UrlMapper(vdb.values.baseAddress);

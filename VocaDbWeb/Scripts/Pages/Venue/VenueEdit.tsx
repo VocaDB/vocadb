@@ -24,12 +24,10 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
-import { LoginManager } from '@/Models/LoginManager';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { loginManager } from '@/Models/LoginManager';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueEditStore } from '@/Stores/Venue/VenueEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { debounce } from 'lodash-es';
@@ -38,14 +36,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface VenueEditLayoutProps {
 	venueEditStore: VenueEditStore;

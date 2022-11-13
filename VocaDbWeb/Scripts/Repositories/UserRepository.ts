@@ -34,8 +34,13 @@ import { ArtistOptionalField } from '@/Repositories/ArtistRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { SongListOptionalField } from '@/Repositories/SongListRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	HeaderNames,
+	HttpClient,
+	httpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
+import { UrlMapper, urlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
 export enum UserInboxType {
@@ -859,3 +864,5 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 }
+
+export const userRepo = new UserRepository(httpClient, urlMapper);

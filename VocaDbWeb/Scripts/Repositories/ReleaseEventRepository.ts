@@ -15,8 +15,8 @@ import {
 	CommonQueryParams,
 } from '@/Repositories/BaseRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export enum ReleaseEventOptionalField {
 	'AdditionalNames' = 'AdditionalNames',
@@ -358,3 +358,5 @@ export interface EventQueryParams extends CommonQueryParams {
 
 	userCollectionId?: number;
 }
+
+export const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);

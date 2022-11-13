@@ -9,9 +9,8 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import NewsItems from '@/Pages/Home/Partials/NewsItems';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { userRepo } from '@/Repositories/UserRepository';
+import { httpClient } from '@/Shared/HttpClient';
 import {
 	FrontPagePVPlayerStore,
 	FrontPageStore,
@@ -26,11 +25,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface PVPlayerProps {
 	model: FrontPageContract;

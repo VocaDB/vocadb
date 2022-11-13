@@ -6,15 +6,11 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumForApiContract } from '@/DataContracts/Album/AlbumForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { albumRepo } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<AlbumForApiContract>;

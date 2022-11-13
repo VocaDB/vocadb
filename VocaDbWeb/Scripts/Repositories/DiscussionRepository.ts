@@ -4,8 +4,8 @@ import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTo
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 
 export class DiscussionRepository implements ICommentRepository {
 	constructor(
@@ -136,3 +136,5 @@ export class DiscussionRepository implements ICommentRepository {
 		);
 	};
 }
+
+export const discussionRepo = new DiscussionRepository(httpClient, urlMapper);

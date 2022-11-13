@@ -17,7 +17,7 @@ import {
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
-import { LoginManager, PermissionToken } from '@/Models/LoginManager';
+import { loginManager, PermissionToken } from '@/Models/LoginManager';
 import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -30,8 +30,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface AvatarImgProps {
 	user: UserDetailsContract;

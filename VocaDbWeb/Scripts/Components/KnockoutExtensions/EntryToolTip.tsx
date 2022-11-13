@@ -15,40 +15,19 @@ import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { EntryType } from '@/Models/EntryType';
 import { QTipToolTip } from '@/QTip/QTipToolTip';
-import {
-	AlbumOptionalField,
-	AlbumRepository,
-} from '@/Repositories/AlbumRepository';
+import { AlbumOptionalField, albumRepo } from '@/Repositories/AlbumRepository';
 import {
 	ArtistOptionalField,
-	ArtistRepository,
+	artistRepo,
 } from '@/Repositories/ArtistRepository';
 import {
+	eventRepo,
 	ReleaseEventOptionalField,
-	ReleaseEventRepository,
 } from '@/Repositories/ReleaseEventRepository';
-import {
-	SongOptionalField,
-	SongRepository,
-} from '@/Repositories/SongRepository';
-import { TagOptionalField, TagRepository } from '@/Repositories/TagRepository';
-import {
-	UserOptionalField,
-	UserRepository,
-} from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { SongOptionalField, songRepo } from '@/Repositories/SongRepository';
+import { TagOptionalField, tagRepo } from '@/Repositories/TagRepository';
+import { UserOptionalField, userRepo } from '@/Repositories/UserRepository';
 import React from 'react';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface AlbumToolTipProps {
 	id: number;

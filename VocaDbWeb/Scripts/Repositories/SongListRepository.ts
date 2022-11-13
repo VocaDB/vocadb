@@ -10,8 +10,8 @@ import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
 export interface SongListGetSongsQueryParams {
@@ -191,3 +191,5 @@ export class SongListRepository {
 		);
 	};
 }
+
+export const songListRepo = new SongListRepository(httpClient, urlMapper);

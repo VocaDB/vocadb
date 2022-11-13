@@ -19,7 +19,7 @@ import {
 } from '@/Repositories/BaseRepository';
 import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import qs from 'qs';
 
@@ -286,3 +286,5 @@ export interface TagQueryParams extends CommonQueryParams {
 
 	sort?: string;
 }
+
+export const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);

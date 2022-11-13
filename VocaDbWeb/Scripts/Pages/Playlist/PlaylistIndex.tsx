@@ -14,7 +14,7 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
@@ -176,7 +176,6 @@ const PlaylistTableRowDropdown = observer(
 	},
 );
 
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const pvServiceIcons = new PVServiceIcons(urlMapper);
 
 interface PlaylistTableRowProps {

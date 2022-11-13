@@ -15,15 +15,13 @@ import {
 	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
+import { loginManager } from '@/Models/LoginManager';
 import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
 import DownloadTagsDialog from '@/Pages/Album/Partials/DownloadTagsDialog';
 import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -31,15 +29,6 @@ import NProgress from 'nprogress';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumDetailsLayoutProps {
 	model: AlbumDetailsForApi;

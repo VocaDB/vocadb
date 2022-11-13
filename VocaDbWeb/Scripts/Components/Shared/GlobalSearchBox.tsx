@@ -9,12 +9,11 @@ import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { loginManager } from '@/Models/LoginManager';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -33,12 +32,6 @@ const allObjectTypes = [
 	EntryType.ReleaseEvent,
 	EntryType.SongList,
 ]; /* TODO */
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 export const apiEndpointsForEntryType: Record<EntryType, string> = {
 	[EntryType.Undefined]: '/api/entries',

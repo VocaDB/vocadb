@@ -1,9 +1,7 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
@@ -16,11 +14,6 @@ const UserMySettings = React.lazy(() => import('./UserMySettings'));
 const UserRequestVerification = React.lazy(
 	() => import('./UserRequestVerification'),
 );
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const UserDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();

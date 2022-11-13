@@ -2,13 +2,11 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient } from '@/Shared/HttpClient';
 import { css } from '@emotion/react';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const httpClient = new HttpClient();
 
 const paddingTop = 4;
 const seekBarHeight = 12;

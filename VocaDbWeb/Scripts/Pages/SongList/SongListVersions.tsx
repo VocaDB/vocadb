@@ -6,17 +6,11 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { SongListRepository } from '@/Repositories/SongListRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
 
 interface SongListVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<SongListContract>;
