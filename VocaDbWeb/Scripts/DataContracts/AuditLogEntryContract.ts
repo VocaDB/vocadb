@@ -4,6 +4,7 @@ export interface AuditLogEntryContract {
 	action: string;
 	agentName: string;
 	id: number;
+	/** DateTime */
 	time: string;
 	user?: UserApiContract;
 }

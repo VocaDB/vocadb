@@ -6,6 +6,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { useVdbTitle } from '@/Components/useVdbTitle';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
@@ -13,7 +14,6 @@ import { ManageIPRulesStore } from '@/Stores/Admin/ManageIPRulesStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -132,7 +132,7 @@ const AdminManageIPRules = observer(
 											}
 										/>
 									</td>
-									<td>{moment(rule.created).format('L LT')}</td>
+									<td>{DateTimeHelper.DateTime_format_L_LT(rule.created)}</td>
 									<td>
 										<SafeAnchor
 											href="#"

@@ -7,6 +7,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { UserGroupDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLinkOrName } from '@/Components/Shared/Partials/User/UserLinkOrName';
 import { useVdbTitle } from '@/Components/useVdbTitle';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -19,7 +20,6 @@ import $ from 'jquery';
 import 'jquery-ui';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
@@ -260,7 +260,7 @@ const AdminViewAuditLog = observer(
 						<tbody id="logEntries">
 							{viewAuditLogStore.items.map((logEntry, index) => (
 								<tr key={index}>
-									<td>{moment(logEntry.time).format('L LT')}</td>
+									<td>{DateTimeHelper.DateTime_format_L_LT(logEntry.time)}</td>
 									<td>
 										<UserLinkOrName
 											user={logEntry.user}

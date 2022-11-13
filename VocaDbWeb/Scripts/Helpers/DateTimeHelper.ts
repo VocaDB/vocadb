@@ -54,8 +54,20 @@ export class DateTimeHelper {
 		return moment(dateOnly).utc().format('l');
 	};
 
+	static DateTime_utc_format_lll = (dateTime?: string): string => {
+		return moment(dateTime).utc().format('lll');
+	};
+
 	static DateTime_format_l = (dateTime?: string): string => {
 		return moment(dateTime).format('l');
+	};
+
+	static DateTime_format_L = (dateTime?: string): string => {
+		return moment(dateTime).format('L');
+	};
+
+	static DateTime_format_L_LT = (dateTime?: string): string => {
+		return moment(dateTime).format('L LT');
 	};
 
 	static DateTime_format_lll = (dateTime?: string): string => {

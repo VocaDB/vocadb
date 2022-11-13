@@ -8,6 +8,7 @@ import moment from 'moment';
 
 class IPRule {
 	@observable address: string;
+	/** DateTime */
 	readonly created: string;
 	readonly id: number;
 	@observable notes: string;
