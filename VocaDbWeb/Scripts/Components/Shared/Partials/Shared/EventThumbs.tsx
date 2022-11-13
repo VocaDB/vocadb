@@ -1,12 +1,12 @@
 import { VenueLinkOrVenueName } from '@/Components/Shared/Partials/Event/VenueLinkOrVenueName';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import classNames from 'classnames';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -84,8 +84,13 @@ export const EventThumbs = ({
 							<>
 								<br />
 								<small className="extraInfo">
-									{moment(event.date).format('l')}
-									{event.endDate && <> - {moment(event.endDate).format('l')}</>}
+									{DateTimeHelper.DateOnly_utc_format_l(event.date)}
+									{event.endDate && (
+										<>
+											{' '}
+											- {DateTimeHelper.DateOnly_utc_format_l(event.endDate)}
+										</>
+									)}
 								</small>
 							</>
 						)}

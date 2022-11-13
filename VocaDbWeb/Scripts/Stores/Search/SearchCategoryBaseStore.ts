@@ -16,7 +16,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export interface ISearchCategoryBaseStore<
 	TRouteParams extends SearchRouteParams
@@ -106,10 +105,6 @@ export abstract class SearchCategoryBaseStore<
 		this.commonSearchStore.tagFilters.tags = [];
 		this.commonSearchStore.tagFilters.addTags(value);
 	}
-
-	formatDate = (dateStr: string): string => {
-		return moment(dateStr).utc().format('l');
-	};
 
 	// Method for loading a page of results.
 	abstract loadResults: (

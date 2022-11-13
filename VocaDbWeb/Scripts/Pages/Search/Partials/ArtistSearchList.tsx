@@ -3,6 +3,7 @@ import { ArtistTypeLabel } from '@/Components/Shared/Partials/Artist/ArtistTypeL
 import { EntryCountBox } from '@/Components/Shared/Partials/EntryCountBox';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import {
@@ -112,7 +113,9 @@ const ArtistSearchList = observer(
 												{t('ViewRes.Search:Index.VoicebankReleaseDate')}
 											</span>{' '}
 											<span>
-												{artistSearchStore.formatDate(artist.releaseDate)}
+												{DateTimeHelper.DateOnly_utc_format_l(
+													artist.releaseDate,
+												)}
 											</span>
 										</>
 									)}

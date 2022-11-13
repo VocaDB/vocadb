@@ -59,7 +59,7 @@ export const ArtistLink = ({
 				<>
 					{' '}
 					<small className="muted">
-						({new Date(artist.releaseDate).getFullYear() /* REVIEW */})
+						({new Date(artist.releaseDate).getUTCFullYear() /* REVIEW */})
 					</small>
 				</>
 			)}

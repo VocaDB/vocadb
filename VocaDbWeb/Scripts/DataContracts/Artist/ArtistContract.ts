@@ -7,6 +7,7 @@ export interface ArtistContract extends CommonEntryContract {
 	additionalNames?: string;
 	artistType: ArtistType;
 	mainPicture?: EntryThumbContract;
+	/**  DateOnly */
 	releaseDate?: string;
 	tags?: TagUsageForApiContract[];
 }

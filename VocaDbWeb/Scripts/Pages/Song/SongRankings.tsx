@@ -6,6 +6,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbTitle } from '@/Components/useVdbTitle';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
@@ -19,7 +20,6 @@ import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -154,7 +154,7 @@ const SongRankingsTableRow = observer(
 						/>
 					)}
 				</td>
-				<td>{moment(song.publishDate).format('l')}</td>
+				<td>{DateTimeHelper.DateOnly_utc_format_l(song.publishDate)}</td>
 				<td className="search-tags-column">
 					{song.tags && song.tags.length > 0 && (
 						<>

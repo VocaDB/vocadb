@@ -1,8 +1,8 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { truncate } from 'lodash-es';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -55,8 +55,10 @@ export const EventPopupContent = React.memo(
 				{event.date && (
 					<p>
 						{t('ViewRes.Event:Details:OccurrenceDate')}{' '}
-						{moment(event.date).format('l')}
-						{event.endDate && ` - ${moment(event.endDate).format('l')}`}
+						{DateTimeHelper.DateOnly_utc_format_l(event.date)}
+						{event.endDate && (
+							<> - {DateTimeHelper.DateOnly_utc_format_l(event.endDate)}</>
+						)}
 					</p>
 				)}
 			</>

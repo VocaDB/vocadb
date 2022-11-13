@@ -11,6 +11,7 @@ export interface SongContract extends CommonEntryContract {
 	lengthSeconds: number;
 	mainPicture?: EntryThumbContract;
 	// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
+	/**  DateOnly */
 	publishDate?: string;
 	pvs?: PVContract[];
 	pvServices: string;

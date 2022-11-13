@@ -10,6 +10,7 @@ import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntrySta
 import { regionNames } from '@/Components/regions';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
 import { LoginManager } from '@/Models/LoginManager';
@@ -22,7 +23,6 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueDetailsStore } from '@/Stores/Venue/VenueDetailsStore';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -160,7 +160,9 @@ const VenueDetailsLayout = ({
 						{event.date && (
 							<>
 								{' '}
-								<small>({moment(event.date).format('l')})</small>
+								<small>
+									({DateTimeHelper.DateOnly_utc_format_l(event.date)})
+								</small>
 							</>
 						)}
 					</li>

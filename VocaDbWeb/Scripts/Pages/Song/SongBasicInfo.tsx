@@ -622,7 +622,13 @@ const SongBasicInfo = observer(
 						{model.publishDate && (
 							<tr>
 								<td>{t('ViewRes:EntryDetails.PublishDate')}</td>
-								<td>{moment(model.publishDate).format('l') /* REVIEW */}</td>
+								<td>
+									{
+										DateTimeHelper.DateOnly_utc_format_l(
+											model.publishDate,
+										) /* REVIEW */
+									}
+								</td>
 							</tr>
 						)}
 

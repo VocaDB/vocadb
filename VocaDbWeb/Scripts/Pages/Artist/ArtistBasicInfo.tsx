@@ -17,6 +17,7 @@ import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/Us
 import { ArtistApiContract } from '@/DataContracts/Artist/ArtistApiContract';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -34,7 +35,6 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -199,7 +199,13 @@ const ArtistBasicInfo = observer(
 							{artist.releaseDate && (
 								<tr>
 									<td>{t('ViewRes.Artist:Details.ReleaseDate')}</td>
-									<td>{moment(artist.releaseDate).format('l') /* REVIEW */}</td>
+									<td>
+										{
+											DateTimeHelper.DateOnly_utc_format_l(
+												artist.releaseDate,
+											) /* REVIEW */
+										}
+									</td>
 								</tr>
 							)}
 

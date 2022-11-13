@@ -7,6 +7,7 @@ import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -33,7 +34,6 @@ export interface ISongSearchStore {
 	sort: string;
 	viewMode: 'Details' | 'PlayList' /* TODO: enum */;
 
-	formatDate: (dateStr: string) => string;
 	getPVServiceIcons: (services: string) => { service: string; url: string }[];
 	selectTag: (tag: TagBaseContract) => void;
 }
@@ -183,7 +183,7 @@ const SongSearchListTableRow = observer(
 							{' '}
 							<i
 								className="icon-calendar"
-								title={`Published: ${songSearchStore.formatDate(
+								title={`Published: ${DateTimeHelper.DateOnly_utc_format_l(
 									song.publishDate,
 								)}`} /* LOC */
 								/* TODO: tooltip */

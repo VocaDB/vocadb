@@ -14,6 +14,7 @@ export interface SongListContract
 	author: UserBaseContract;
 	deleted?: boolean;
 	description: string;
+	/**  DateOnly */
 	eventDate?: string;
 	events?: ReleaseEventContract[];
 	featuredCategory: SongListFeaturedCategory;

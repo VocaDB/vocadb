@@ -45,7 +45,6 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
-import moment from 'moment';
 
 export enum RatedSongForUserSortRule {
 	None = 'None',
@@ -202,10 +201,6 @@ export class RatedSongsSearchStore
 		});
 
 		this.isInit = true;
-	};
-
-	formatDate = (dateStr: string): string => {
-		return moment(dateStr).format('l');
 	};
 
 	getPVServiceIcons = (

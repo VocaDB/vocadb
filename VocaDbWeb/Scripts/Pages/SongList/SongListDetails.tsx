@@ -26,6 +26,7 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryStatus } from '@/Models/EntryStatus';
@@ -50,7 +51,6 @@ import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -369,7 +369,7 @@ const SongListDetailsLayout = observer(
 						{songList.eventDate && (
 							<p>
 								{t('ViewRes.SongList:Details.Date', {
-									0: moment(songList.eventDate).format('l'),
+									0: DateTimeHelper.DateOnly_utc_format_l(songList.eventDate),
 								})}
 							</p>
 						)}
@@ -426,11 +426,11 @@ const SongListDetailsLayout = observer(
 												{event.date ? (
 													event.venue || event.venueName ? (
 														<>
-															{moment(event.date).format('l')}
+															{DateTimeHelper.DateOnly_utc_format_l(event.date)}
 															, <VenueLinkOrVenueName event={event} />
 														</>
 													) : (
-														moment(event.date).format('l')
+														DateTimeHelper.DateOnly_utc_format_l(event.date)
 													)
 												) : (
 													(event.venue || event.venueName) && (

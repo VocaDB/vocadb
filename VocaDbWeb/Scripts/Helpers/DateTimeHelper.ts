@@ -49,4 +49,8 @@ export class DateTimeHelper {
 		};
 		return clamp(parseToSecondsInternal(formatted), 0, 60 * 3939);
 	};
+
+	static DateOnly_utc_format_l = (dateOnly?: string): string => {
+		return moment(dateOnly).utc().format('l');
+	};
 }

@@ -9,6 +9,7 @@ import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -22,7 +23,6 @@ import { HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSeriesDetailsStore } from '@/Stores/ReleaseEvent/EventSeriesDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -220,7 +220,9 @@ const EventSeriesDetailsLayout = ({
 						{event.date && (
 							<>
 								{' '}
-								<small>({moment(event.date).format('l')})</small>
+								<small>
+									({DateTimeHelper.DateOnly_utc_format_l(event.date)})
+								</small>
 							</>
 						)}
 					</li>

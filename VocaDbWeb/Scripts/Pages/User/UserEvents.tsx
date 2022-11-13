@@ -1,5 +1,6 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { EntryType } from '@/Models/EntryType';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
@@ -8,7 +9,6 @@ import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -106,7 +106,9 @@ const Events = observer(
 									{event.date && (
 										<span>
 											<br />
-											<small>{moment(event.date).format('l')}</small>
+											<small>
+												{DateTimeHelper.DateOnly_utc_format_l(event.date)}
+											</small>
 										</span>
 									)}
 								</td>

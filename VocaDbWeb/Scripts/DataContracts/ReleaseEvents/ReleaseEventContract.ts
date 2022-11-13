@@ -15,9 +15,11 @@ export interface ReleaseEventContract {
 	additionalNames?: string;
 	artists: ArtistForEventContract[];
 	category: EventCategory;
+	/**  DateOnly */
 	date?: string;
 	defaultNameLanguage: string;
 	description?: string;
+	/**  DateOnly */
 	endDate?: string;
 	id: number;
 	mainPicture?: EntryThumbContract;

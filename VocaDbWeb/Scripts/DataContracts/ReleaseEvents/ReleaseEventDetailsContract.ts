@@ -21,9 +21,11 @@ export interface ReleaseEventDetailsContract {
 	albums: AlbumForApiContract[];
 	artists: ArtistForEventContract[];
 	canRemoveTagUsages: boolean;
+	/**  DateOnly */
 	date?: string;
 	deleted: boolean;
 	description: string;
+	/**  DateOnly */
 	endDate?: string;
 	eventAssociationType: string /* TODO: enum */;
 	id: number;

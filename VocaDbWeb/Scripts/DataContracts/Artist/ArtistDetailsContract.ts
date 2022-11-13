@@ -70,6 +70,7 @@ export interface ArtistDetailsContract {
 	ownerUsers: UserApiContract[];
 	personalStats?: PersonalArtistStatsContract;
 	pictures: EntryThumbContract[];
+	/**  DateOnly */
 	releaseDate?: string;
 	sharedStats: SharedArtistStatsContract;
 	siteNotifications: boolean;

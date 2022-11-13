@@ -1,8 +1,8 @@
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -70,9 +70,9 @@ export const SongGrid = ({
 											<i
 												className="icon-calendar"
 												title={`Published: ${
-													moment(song.publishDate)
-														.utc()
-														.format('l') /* REVIEW */
+													DateTimeHelper.DateOnly_utc_format_l(
+														song.publishDate,
+													) /* REVIEW */
 												}`} /* LOC */
 												/* TODO: tooltip */
 											/>

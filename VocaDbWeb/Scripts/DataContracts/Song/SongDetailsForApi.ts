@@ -61,6 +61,7 @@ export class SongDetailsForApi {
 	readonly pools: SongListBaseContract[];
 	readonly primaryPV?: PVContract;
 	readonly producers: ArtistForSongContract[];
+	/**  DateOnly */
 	readonly publishDate?: string;
 	readonly ratingScore: number;
 	readonly releaseEvent?: ReleaseEventContract;

@@ -27,6 +27,7 @@ import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -49,7 +50,6 @@ import { UrlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { observer } from 'mobx-react-lite';
-import moment from 'moment';
 import NProgress from 'nprogress';
 import qs from 'qs';
 import React from 'react';
@@ -290,9 +290,12 @@ const EventDetailsLayout = observer(
 							{event.date && (
 								<p>
 									{t('ViewRes.Event:Details.OccurrenceDate')}:{' '}
-									{moment(event.date).format('l')}
+									{DateTimeHelper.DateOnly_utc_format_l(event.date)}
 									{event.endDate && event.endDate > event.date && (
-										<> - {moment(event.endDate).format('l')}</>
+										<>
+											{' '}
+											- {DateTimeHelper.DateOnly_utc_format_l(event.endDate)}
+										</>
 									)}
 								</p>
 							)}
