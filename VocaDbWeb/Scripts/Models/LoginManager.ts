@@ -223,7 +223,7 @@ export class LoginManager {
 	private isDirectlyVerifiedFor = (entry?: EntryRefContract): boolean => {
 		return (
 			!!entry &&
-			entry.entryType === EntryType[EntryType.Artist] &&
+			entry.entryType === EntryType.Artist &&
 			!!this.loggedUser &&
 			this.loggedUser.verifiedArtist &&
 			this.loggedUser.ownedArtistEntries.some((a) => a.artist.id === entry.id)

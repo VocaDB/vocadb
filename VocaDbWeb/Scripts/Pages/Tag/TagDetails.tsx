@@ -73,7 +73,7 @@ const useEntrySubTypeName = (): ((
 
 	return React.useCallback(
 		(fullEntryType: EntryTypeAndSubTypeContract): string => {
-			switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+			switch (fullEntryType.entryType) {
 				case EntryType.Album:
 					return t(
 						`VocaDb.Model.Resources.Albums:DiscTypeNames.${fullEntryType.subType}`,
@@ -396,7 +396,7 @@ const TagDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...tag,
-									entryType: EntryType[EntryType.Tag],
+									entryType: EntryType.Tag,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -531,11 +531,7 @@ const TagDetailsLayout = observer(
 													(tag.targets & Number(e)) !== 0,
 											)
 											.map((e) =>
-												t(
-													`VocaDb.Web.Resources.Domain:EntryTypeNames.${
-														EntryType[e as keyof typeof EntryType]
-													}`,
-												),
+												t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${e}`),
 											)
 											.join(', ')}
 									</p>

@@ -52,7 +52,7 @@ export const ShowRandomPageButton = React.memo(
 						const index = random(result.totalCount);
 
 						return httpClient.get<
-							PartialFindResultContract<{ id: number; entryType: string }>
+							PartialFindResultContract<{ id: number; entryType: EntryType }>
 						>(
 							urlMapper.mapRelative(
 								`${apiEndpoint}?${qs.stringify({ ...params, start: index })}`,
@@ -63,9 +63,7 @@ export const ShowRandomPageButton = React.memo(
 
 				navigate(
 					EntryUrlMapper.details(
-						entryType === EntryType.Undefined
-							? EntryType[entry.entryType as keyof typeof EntryType]
-							: entryType,
+						entryType === EntryType.Undefined ? entry.entryType : entryType,
 						entry.id,
 					),
 				);

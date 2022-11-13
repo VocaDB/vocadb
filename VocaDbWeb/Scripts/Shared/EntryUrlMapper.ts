@@ -14,15 +14,11 @@ export class EntryUrlMapper {
 	// typeName: entry type name.
 	// id: entry Id.
 	static details(
-		typeName: string | EntryType,
+		typeName: EntryType,
 		id: number,
 		urlFriendlyName?: string,
 	): string {
 		var prefix;
-
-		if (typeof typeName === 'string') {
-			typeName = EntryType[typeName as keyof typeof EntryType];
-		}
 
 		switch (typeName) {
 			case EntryType.Album:
@@ -96,7 +92,7 @@ export class EntryUrlMapper {
 	}
 
 	static index = (fullEntryType: EntryTypeAndSubTypeContract): string => {
-		switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+		switch (fullEntryType.entryType) {
 			case EntryType.Artist:
 				return `/Search?${qs.stringify({
 					searchType: SearchType.Artist,

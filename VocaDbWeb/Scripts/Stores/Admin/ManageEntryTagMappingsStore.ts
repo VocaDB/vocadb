@@ -89,11 +89,7 @@ export class ManageEntryTagMappingsStore {
 		| ArtistType[]
 		| SongType[]
 		| EventCategory[] {
-		return (
-			this.entrySubTypesByType[
-				EntryType[this.newEntryType as keyof typeof EntryType]
-			] ?? []
-		);
+		return this.entrySubTypesByType[this.newEntryType] ?? [];
 	}
 
 	@action addMapping = (): void => {

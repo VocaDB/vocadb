@@ -87,9 +87,7 @@ export const GlobalSearchBox = observer(
 		]);
 
 		const entryTypeName = t(
-			`VocaDb.Web.Resources.Domain:EntryTypeNames.${
-				EntryType[topBarStore.entryType]
-			}`,
+			`VocaDb.Web.Resources.Domain:EntryTypeNames.${topBarStore.entryType}`,
 		);
 
 		const formRef = React.useRef<HTMLFormElement>(undefined!);
@@ -110,8 +108,7 @@ export const GlobalSearchBox = observer(
 					value={topBarStore.entryType}
 					onChange={(event): void => {
 						runInAction(() => {
-							topBarStore.entryType =
-								EntryType[event.target.value as keyof typeof EntryType];
+							topBarStore.entryType = event.target.value as EntryType;
 						});
 					}}
 				/>
@@ -134,9 +131,7 @@ export const GlobalSearchBox = observer(
 									}
 									key={entryType}
 								>
-									{t(
-										`VocaDb.Web.Resources.Domain:EntryTypeNames.${EntryType[entryType]}`,
-									)}
+									{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
 								</Dropdown.Item>
 							))}
 						</Dropdown.Menu>

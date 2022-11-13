@@ -258,7 +258,7 @@ const ArtistBasicInfo = observer(
 									) : (
 										<a
 											href={`/Tag/DetailsByEntryType?${qs.stringify({
-												entryType: EntryType[EntryType.Artist],
+												entryType: EntryType.Artist,
 												subType: artist.artistType,
 											})}`}
 										>
@@ -284,7 +284,7 @@ const ArtistBasicInfo = observer(
 											disabled={
 												!loginManager.canEditTagsForEntry({
 													...artist,
-													entryType: EntryType[EntryType.Artist],
+													entryType: EntryType.Artist,
 												})
 											}
 											icons={{ primary: 'ui-icon-tag' }}

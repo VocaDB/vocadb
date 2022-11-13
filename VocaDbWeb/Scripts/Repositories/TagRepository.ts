@@ -105,7 +105,7 @@ export class TagRepository extends BaseRepository {
 	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
-			`/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
+			`/api/entry-types/${entryType}/${subType}/tag`,
 		);
 		return this.httpClient.get<TagApiContract>(url, {
 			fields: [TagOptionalField.Description].join(','),

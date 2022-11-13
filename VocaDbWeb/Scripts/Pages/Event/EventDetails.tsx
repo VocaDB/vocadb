@@ -204,7 +204,7 @@ const EventDetailsLayout = observer(
 								<EmbedPVPreview
 									entry={{
 										...event,
-										entryType: EntryType[EntryType.ReleaseEvent],
+										entryType: EntryType.ReleaseEvent,
 									}}
 									pv={primaryPV}
 									allowInline
@@ -217,7 +217,7 @@ const EventDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...event,
-									entryType: EntryType[EntryType.ReleaseEvent],
+									entryType: EntryType.ReleaseEvent,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -317,7 +317,7 @@ const EventDetailsLayout = observer(
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
-											entryType: EntryType[EntryType.ReleaseEvent],
+											entryType: EntryType.ReleaseEvent,
 											subType: event.inheritedCategory,
 										})}`}
 									>
@@ -359,7 +359,7 @@ const EventDetailsLayout = observer(
 										disabled={
 											!loginManager.canEditTagsForEntry({
 												...event,
-												entryType: EntryType[EntryType.ReleaseEvent],
+												entryType: EntryType.ReleaseEvent,
 											})
 										}
 										icons={{ primary: 'ui-icon-tag' }}
