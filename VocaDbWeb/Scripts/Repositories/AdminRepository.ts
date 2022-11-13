@@ -1,15 +1,9 @@
-import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
+import { AuditLogEntryContract } from '@/DataContracts/Security/AuditLogEntryContract';
+import { IPRuleContract } from '@/DataContracts/Security/IPRuleContract';
 import { WebhookContract } from '@/DataContracts/WebhookContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
-
-export interface IPRuleContract {
-	address?: string;
-	created?: string;
-	id?: number;
-	notes?: string;
-}
 
 export class AdminRepository {
 	constructor(

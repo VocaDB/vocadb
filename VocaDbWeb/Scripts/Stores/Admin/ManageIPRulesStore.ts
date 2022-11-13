@@ -1,7 +1,5 @@
-import {
-	AdminRepository,
-	IPRuleContract,
-} from '@/Repositories/AdminRepository';
+import { IPRuleContract } from '@/DataContracts/Security/IPRuleContract';
+import { AdminRepository } from '@/Repositories/AdminRepository';
 import { pull } from 'lodash-es';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import moment from 'moment';

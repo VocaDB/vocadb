@@ -62,6 +62,7 @@ export interface UserDetailsContract extends UserDetailsContractBase {
 	additionalPermissions: PermissionToken[];
 	effectivePermissions: PermissionToken[];
 	email: string;
+	/** DateTime */
 	lastLogin: string;
 	lastLoginAddress: string;
 }

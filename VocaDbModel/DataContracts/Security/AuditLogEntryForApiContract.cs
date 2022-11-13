@@ -26,7 +26,7 @@ public sealed record AuditLogEntryForApiContract
 		Action = new HtmlSanitizer().Sanitize(entry.Action);
 		AgentName = entry.AgentName;
 		Id = entry.Id;
-		Time = entry.Time;
+		Time = entry.Time.ToUniversalTime();
 		User = entry.User != null ? new UserForApiContract(entry.User) : null;
 	}
 }

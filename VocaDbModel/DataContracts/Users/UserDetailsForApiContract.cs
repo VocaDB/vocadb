@@ -147,7 +147,7 @@ namespace VocaDb.Model.DataContracts.Users
 			AboutMe = user.Options.AboutMe;
 			Active = user.Active;
 			AnonymousActivity = user.AnonymousActivity;
-			CreateDate = user.CreateDate;
+			CreateDate = user.CreateDate.ToUniversalTime();
 			CustomTitle = user.Options.CustomTitle;
 			DesignatedStaff = user.EffectivePermissions.Contains(PermissionToken.DesignatedStaff);
 			EmailVerified = user.Options.EmailVerified;
@@ -221,7 +221,7 @@ namespace VocaDb.Model.DataContracts.Users
 				AdditionalPermissions = user.AdditionalPermissions.PermissionTokens.Select(p => p.Id).ToArray();
 				EffectivePermissions = user.EffectivePermissions.PermissionTokens.Select(p => p.Id).ToArray();
 				Email = user.Email;
-				LastLogin = user.LastLogin;
+				LastLogin = user.LastLogin.ToUniversalTime();
 				LastLoginAddress = user.Options.LastLoginAddress;
 			}
 			else

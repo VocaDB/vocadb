@@ -1,5 +1,5 @@
-import { AuditLogEntryContract } from '@/DataContracts/AuditLogEntryContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { AuditLogEntryContract } from '@/DataContracts/Security/AuditLogEntryContract';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';

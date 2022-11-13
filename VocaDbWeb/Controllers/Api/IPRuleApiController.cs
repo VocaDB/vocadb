@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
@@ -56,13 +57,14 @@ namespace VocaDb.Web.Controllers.Api
 		}
 
 		[HttpGet("")]
-		public async Task<IEnumerable<IPRule>> GetIPRules()
+		public async Task<IEnumerable<IPRuleContract>> GetIPRules()
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			return await _repo.HandleQueryAsync(async ctx =>
 			{
-				return await ctx.Query<IPRule>().ToListAsync();
+				var rules = await ctx.Query<IPRule>().ToListAsync();
+				return rules.Select(rule => new IPRuleContract(rule));
 			});
 		}
 
