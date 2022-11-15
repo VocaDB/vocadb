@@ -60,22 +60,12 @@ export class ManageEntryTagMappingsStore {
 		return this.mappings.filter((m) => !m.isDeleted);
 	}
 
-	private getEnumValues = <TEnum>(
-		Enum: any,
-		selected?: Array<TEnum>,
-	): string[] =>
-		Object.keys(Enum).filter(
-			(k) =>
-				(!selected || selected.includes(Enum[k])) &&
-				typeof Enum[k as any] === 'number',
-		);
-
-	entryTypes = this.getEnumValues<EntryType>(EntryType, [
+	readonly entryTypes = [
 		EntryType.Album,
 		EntryType.Artist,
 		EntryType.Song,
 		EntryType.ReleaseEvent,
-	]);
+	];
 
 	private readonly entrySubTypesByType = {
 		[EntryType.Album]: Object.values(AlbumType),
