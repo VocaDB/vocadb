@@ -31,9 +31,9 @@ const allObjectTypes = [
 	EntryType.User,
 	EntryType.ReleaseEvent,
 	EntryType.SongList,
-]; /* TODO */
+] as const; /* TODO */
 
-export const apiEndpointsForEntryType: Record<EntryType, string> = {
+export const apiEndpointsForEntryType = {
 	[EntryType.Undefined]: '/api/entries',
 	[EntryType.Album]: '/api/albums',
 	[EntryType.Artist]: '/api/artists',
@@ -45,7 +45,7 @@ export const apiEndpointsForEntryType: Record<EntryType, string> = {
 };
 
 const globalSearchBoxSource = (
-	entryType: EntryType,
+	entryType: typeof TopBarStore.entryTypes[number],
 	query: string,
 ): Promise<string[]> => {
 	const apiEndpoint = apiEndpointsForEntryType[entryType];
@@ -87,9 +87,7 @@ export const GlobalSearchBox = observer(
 		]);
 
 		const entryTypeName = t(
-			`VocaDb.Web.Resources.Domain:EntryTypeNames.${
-				EntryType[topBarStore.entryType]
-			}`,
+			`VocaDb.Web.Resources.Domain:EntryTypeNames.${topBarStore.entryType}`,
 		);
 
 		const formRef = React.useRef<HTMLFormElement>(undefined!);
@@ -110,8 +108,8 @@ export const GlobalSearchBox = observer(
 					value={topBarStore.entryType}
 					onChange={(event): void => {
 						runInAction(() => {
-							topBarStore.entryType =
-								EntryType[event.target.value as keyof typeof EntryType];
+							topBarStore.entryType = event.target
+								.value as typeof TopBarStore.entryTypes[number];
 						});
 					}}
 				/>
@@ -134,9 +132,7 @@ export const GlobalSearchBox = observer(
 									}
 									key={entryType}
 								>
-									{t(
-										`VocaDb.Web.Resources.Domain:EntryTypeNames.${EntryType[entryType]}`,
-									)}
+									{t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`)}
 								</Dropdown.Item>
 							))}
 						</Dropdown.Menu>

@@ -6,7 +6,6 @@ import { PrintArchivedArtistData } from '@/Components/Shared/Partials/Artist/Pri
 import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBanner';
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/ArchivedArtistVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -36,14 +35,14 @@ const ArtistViewVersionLayout = observer(
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const changedFieldNames = useChangedFieldNames();
 
 		useLocationStateStore(archivedArtistStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

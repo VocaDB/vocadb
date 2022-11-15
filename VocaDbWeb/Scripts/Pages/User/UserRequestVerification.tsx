@@ -3,7 +3,6 @@ import Button from '@/Bootstrap/Button';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
 import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -27,10 +26,8 @@ const UserRequestVerification = observer(
 
 		const title = t('ViewRes.User:RequestVerification.PageTitle');
 
-		useVdbTitle(title, ready);
-
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<div className="row-fluid">
 					{loginManager.isLoggedIn ? (
 						<form

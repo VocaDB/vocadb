@@ -1,8 +1,9 @@
 import { EntryPictureFileContract } from '@/DataContracts/EntryPictureFileContract';
+import { EntryType } from '@/Models/EntryType';
 import { makeObservable, observable } from 'mobx';
 
 export class EntryPictureFileEditStore {
-	readonly entryType!: string /* TODO: enum */;
+	readonly entryType!: EntryType;
 	readonly id!: number;
 	readonly mime!: string;
 	@observable name: string;

@@ -23,7 +23,7 @@ export const AlbumThumbItem = React.memo(
 			async (method: PlayMethod) => {
 				await playQueue.loadItemsAndPlay(method, {
 					...album,
-					entryType: EntryType[EntryType.Album],
+					entryType: EntryType.Album,
 				});
 			},
 			[album, playQueue],
@@ -59,7 +59,7 @@ export const AlbumThumbItem = React.memo(
 					'/Content/unknown.png'
 				}
 				caption={album.name}
-				entry={{ entryType: EntryType[EntryType.Album], id: album.id }}
+				entry={{ entryType: EntryType.Album, id: album.id }}
 				tooltip={tooltip}
 				ref={thumbItemRef}
 			>

@@ -10,7 +10,6 @@ import { AlbumTypeDropdownList } from '@/Components/Shared/Partials/Knockout/Dro
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -33,12 +32,12 @@ const AlbumCreateLayout = observer(
 
 		const title = t('ViewRes.Album:Create.SubmitAlbum');
 
-		useVdbTitle(title, ready);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

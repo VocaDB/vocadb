@@ -1,6 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { loginManager } from '@/Models/LoginManager';
@@ -25,10 +24,10 @@ const EventIndexLayout = ({
 
 	const title = t('ViewRes:Shared.ReleaseEvents');
 
-	useVdbTitle(title, ready);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={ready}
 			title={title}
 			toolbar={
 				<>

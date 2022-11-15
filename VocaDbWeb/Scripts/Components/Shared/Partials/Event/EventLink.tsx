@@ -11,9 +11,7 @@ interface EventLinkBaseProps {
 
 const EventLinkBase = ({ event }: EventLinkBaseProps): React.ReactElement => {
 	return (
-		<Link
-			to={EntryUrlMapper.details(EntryType[EntryType.ReleaseEvent], event.id)}
-		>
+		<Link to={EntryUrlMapper.details(EntryType.ReleaseEvent, event.id)}>
 			{event.name}
 		</Link>
 	);

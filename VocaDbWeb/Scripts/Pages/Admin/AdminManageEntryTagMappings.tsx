@@ -20,6 +20,8 @@ const AdminManageEntryTagMappings = observer(
 	(): React.ReactElement => {
 		return (
 			<Layout
+				pageTitle={undefined}
+				ready={true}
 				title="Manage entry type to tag mappings" /* LOC */
 				parents={
 					<>
@@ -45,12 +47,13 @@ const AdminManageEntryTagMappings = observer(
 								value={manageEntryTagMappingsStore.newEntryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										manageEntryTagMappingsStore.newEntryType = e.target.value;
+										manageEntryTagMappingsStore.newEntryType = e.target
+											.value as typeof ManageEntryTagMappingsStore.entryTypes[number];
 									})
 								}
 							>
 								<option value="" />
-								{manageEntryTagMappingsStore.entryTypes.map((entryType) => (
+								{ManageEntryTagMappingsStore.entryTypes.map((entryType) => (
 									<option value={entryType} key={entryType}>
 										{entryType}
 									</option>

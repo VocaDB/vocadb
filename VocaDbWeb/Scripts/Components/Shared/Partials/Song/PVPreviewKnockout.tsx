@@ -67,7 +67,7 @@ export const PVPreviewKnockout = observer(
 						<EmbedPVPreview
 							entry={{
 								...previewStore.selectedSong,
-								entryType: EntryType[EntryType.Song],
+								entryType: EntryType.Song,
 							}}
 							pv={primaryPV}
 						/>

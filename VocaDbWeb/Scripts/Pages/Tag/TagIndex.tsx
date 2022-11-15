@@ -1,7 +1,6 @@
 import Alert from '@/Bootstrap/Alert';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -31,8 +30,6 @@ const TagIndexLayout = observer(
 
 		const title = t('ViewRes:Shared.Tags');
 
-		useVdbTitle(title, ready);
-
 		const tagCount = model.sumBy((m) => m.tags.length);
 		const avgUsageCount =
 			model.sumBy((m) => m.tags.sumBy((t) => t.usageCount)) / tagCount;
@@ -41,6 +38,8 @@ const TagIndexLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				toolbar={
 					<>

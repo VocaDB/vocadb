@@ -3,7 +3,6 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { adminRepo } from '@/Repositories/AdminRepository';
 import { ManageWebhooksStore } from '@/Stores/Admin/ManageWebhooksStore';
 import classNames from 'classnames';
@@ -22,10 +21,10 @@ const AdminManageWebhooks = observer(
 
 		const title = 'Manage webhooks'; /* LOC */
 
-		useVdbTitle(title, true);
-
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

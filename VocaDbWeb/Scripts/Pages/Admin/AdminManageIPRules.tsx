@@ -5,7 +5,6 @@ import { IPManage } from '@/Components/Shared/KnockoutPartials/IPManage';
 import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { adminRepo } from '@/Repositories/AdminRepository';
 import { ManageIPRulesStore } from '@/Stores/Admin/ManageIPRulesStore';
@@ -24,10 +23,10 @@ const AdminManageIPRules = observer(
 
 		const title = 'Manage blocked IPs'; /* LOC */
 
-		useVdbTitle(title, true);
-
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

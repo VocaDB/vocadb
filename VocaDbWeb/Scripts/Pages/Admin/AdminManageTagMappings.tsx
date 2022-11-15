@@ -23,6 +23,8 @@ const AdminManageTagMappings = observer(
 
 		return (
 			<Layout
+				pageTitle={undefined}
+				ready={true}
 				title="Manage NicoNicoDouga tag mappings" /* LOC */
 				parents={
 					<>

@@ -8,7 +8,6 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { regionNames } from '@/Components/regions';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -40,10 +39,10 @@ const VenueDetailsLayout = ({
 
 	const title = venue.name;
 
-	useVdbTitle(title, true);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={true}
 			title={title}
 			subtitle={t('ViewRes.Venue:Details.Venue')}
 			parents={
@@ -61,7 +60,7 @@ const VenueDetailsLayout = ({
 						disabled={
 							!loginManager.canEdit({
 								...venue,
-								entryType: EntryType[EntryType.Venue],
+								entryType: EntryType.Venue,
 							})
 						}
 						icons={{ primary: 'ui-icon-wrench' }}

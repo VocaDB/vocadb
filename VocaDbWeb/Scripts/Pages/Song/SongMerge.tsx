@@ -5,7 +5,6 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/SongLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongContract } from '@/DataContracts/Song/SongContract';
 import { EntryType } from '@/Models/EntryType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -29,12 +28,12 @@ const SongMergeLayout = observer(
 
 		const title = `Merge song - ${song.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

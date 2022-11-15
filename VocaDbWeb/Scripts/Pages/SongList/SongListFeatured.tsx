@@ -2,7 +2,6 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
@@ -38,12 +37,12 @@ const SongListFeatured = observer(
 
 		const title = t('ViewRes:Shared.FeaturedSongLists');
 
-		useVdbTitle(title, ready);
-
 		useLocationStateStore(featuredSongListsStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				toolbar={
 					<>

@@ -4,7 +4,7 @@ import { LocalizedStringWithIdContract } from '@/DataContracts/Globalization/Loc
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { EntryType } from '@/Models/EntryType';
+import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 
 // Corresponds to the TagForEditForApiContract record class in C#.
 export interface TagForEditContract {
@@ -21,7 +21,7 @@ export interface TagForEditContract {
 	parent?: TagBaseContract;
 	relatedTags: TagBaseContract[];
 	status: EntryStatus;
-	targets: EntryType;
+	targets: TagTargetTypes;
 	updateNotes: string;
 	webLinks: WebLinkContract[];
 }

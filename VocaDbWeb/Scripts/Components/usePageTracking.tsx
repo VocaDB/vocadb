@@ -3,5 +3,5 @@
 // Set ready to false while translations are not yet loaded.
 // This prevents Google Analytics from using an incomplete page title (e.g. `Index.Discussions - Vocaloid Database`).
 export const usePageTracking = (ready: boolean): void => {
-	// Do nothing.
+	// nop
 };

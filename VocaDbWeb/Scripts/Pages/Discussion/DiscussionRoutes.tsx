@@ -13,15 +13,23 @@ const DiscussionIndex = React.lazy(() => import('./DiscussionIndex'));
 const DiscussionTopics = React.lazy(() => import('./DiscussionTopics'));
 
 interface DiscussionLayoutProps {
+	pageTitle: string;
+	ready: boolean;
 	children?: React.ReactNode;
 	title?: string;
 }
 
 export const DiscussionLayout = ({
+	pageTitle,
+	ready,
 	children,
 	title,
 }: DiscussionLayoutProps): React.ReactElement => {
-	return <Layout title={title}>{children}</Layout>;
+	return (
+		<Layout pageTitle={pageTitle} ready={ready} title={title}>
+			{children}
+		</Layout>
+	);
 };
 
 const discussionIndexStore = new DiscussionIndexStore(

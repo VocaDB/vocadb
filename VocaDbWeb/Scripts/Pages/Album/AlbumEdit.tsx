@@ -29,7 +29,6 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -816,8 +815,6 @@ const AlbumEditLayout = observer(
 
 		const title = t('ViewRes.Album:Edit.EditTitle', { 0: contract.name });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.Album);
 
 		const navigate = useNavigate();
@@ -826,6 +823,8 @@ const AlbumEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

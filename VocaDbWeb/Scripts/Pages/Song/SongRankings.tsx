@@ -5,7 +5,6 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { songRepo } from '@/Repositories/SongRepository';
@@ -216,12 +215,12 @@ const SongRankings = observer(
 	(): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
-		useVdbTitle(vdb.resources.song.rankingsTitle, true);
-
 		useLocationStateStore(rankingsStore);
 
 		return (
 			<Layout
+				pageTitle={vdb.resources.song.rankingsTitle}
+				ready={true}
 				title={vdb.resources.song.rankingsTitle}
 				parents={
 					<>

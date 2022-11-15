@@ -10,7 +10,6 @@ import {
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -92,14 +91,12 @@ const SearchIndex = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useVdbTitle(undefined, true);
-
 		useLocationStateStore(searchStore);
 
 		const { playQueue } = useVdbPlayer();
 
 		return (
-			<Layout>
+			<Layout pageTitle={undefined} ready={true}>
 				<ul className="nav nav-pills">
 					<SearchCategory
 						entryType={SearchType.Anything}

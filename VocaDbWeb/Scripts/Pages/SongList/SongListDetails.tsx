@@ -23,7 +23,6 @@ import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/Son
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
@@ -253,8 +252,6 @@ const SongListDetailsLayout = observer(
 
 		const { pageTitle, title, subtitle, ready } = usePageProperties(songList);
 
-		useVdbTitle(pageTitle, ready);
-
 		useLocationStateStore(songListStore);
 
 		const smallThumbUrl = UrlHelper.imageThumb(
@@ -270,6 +267,8 @@ const SongListDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={pageTitle}
+				ready={ready}
 				title={title}
 				subtitle={subtitle}
 				parents={
@@ -382,7 +381,7 @@ const SongListDetailsLayout = observer(
 									disabled={
 										!loginManager.canEditTagsForEntry({
 											...songList,
-											entryType: EntryType[EntryType.SongList],
+											entryType: EntryType.SongList,
 										})
 									}
 									icons={{ primary: 'ui-icon-tag' }}

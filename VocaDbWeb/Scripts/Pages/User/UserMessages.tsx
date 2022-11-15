@@ -5,7 +5,6 @@ import { Layout } from '@/Components/Shared/Layout';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import { IconAndNameKnockout } from '@/Components/Shared/Partials/User/IconAndNameKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import ComposeMessage from '@/Pages/User/Partials/ComposeMessage';
@@ -211,7 +210,7 @@ const UserMessages = observer(
 	(): React.ReactElement => {
 		const { t, ready } = useTranslation(['ViewRes.User']);
 
-		useVdbTitle(t('ViewRes.User:Messages.Messages'), ready);
+		const title = t('ViewRes.User:Messages.Messages');
 
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');
@@ -247,7 +246,9 @@ const UserMessages = observer(
 
 		return (
 			<Layout
-				title={t('ViewRes.User:Messages.Messages')}
+				pageTitle={title}
+				ready={ready}
+				title={title}
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>

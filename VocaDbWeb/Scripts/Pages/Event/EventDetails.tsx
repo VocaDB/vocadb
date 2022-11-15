@@ -23,7 +23,6 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
@@ -151,12 +150,12 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		useVdbTitle(`${event.name} (${subtitle})`, ready);
-
 		const primaryPV = PVHelper.primaryPV(event.pvs);
 
 		return (
 			<Layout
+				pageTitle={`${event.name} (${subtitle})`}
+				ready={ready}
 				title={event.name}
 				subtitle={subtitle}
 				parents={
@@ -204,7 +203,7 @@ const EventDetailsLayout = observer(
 								<EmbedPVPreview
 									entry={{
 										...event,
-										entryType: EntryType[EntryType.ReleaseEvent],
+										entryType: EntryType.ReleaseEvent,
 									}}
 									pv={primaryPV}
 									allowInline
@@ -217,7 +216,7 @@ const EventDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...event,
-									entryType: EntryType[EntryType.ReleaseEvent],
+									entryType: EntryType.ReleaseEvent,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -320,7 +319,7 @@ const EventDetailsLayout = observer(
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
-											entryType: EntryType[EntryType.ReleaseEvent],
+											entryType: EntryType.ReleaseEvent,
 											subType: event.inheritedCategory,
 										})}`}
 									>
@@ -362,7 +361,7 @@ const EventDetailsLayout = observer(
 										disabled={
 											!loginManager.canEditTagsForEntry({
 												...event,
-												entryType: EntryType[EntryType.ReleaseEvent],
+												entryType: EntryType.ReleaseEvent,
 											})
 										}
 										icons={{ primary: 'ui-icon-tag' }}

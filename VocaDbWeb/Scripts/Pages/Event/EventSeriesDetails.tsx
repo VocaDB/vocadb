@@ -7,7 +7,6 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
@@ -51,10 +50,10 @@ const EventSeriesDetailsLayout = ({
 					`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${series.category}`,
 			  );
 
-	useVdbTitle(`${series.name} (${subtitle})`, ready);
-
 	return (
 		<Layout
+			pageTitle={`${series.name} (${subtitle})`}
+			ready={ready}
 			title={series.name}
 			subtitle={subtitle}
 			parents={
@@ -75,7 +74,7 @@ const EventSeriesDetailsLayout = ({
 						<>
 							{loginManager.canEdit({
 								...series,
-								entryType: EntryType[EntryType.ReleaseEventSeries],
+								entryType: EntryType.ReleaseEventSeries,
 							}) && (
 								<>
 									<JQueryUIButton
@@ -181,7 +180,7 @@ const EventSeriesDetailsLayout = ({
 							disabled={
 								!loginManager.canEditTagsForEntry({
 									...series,
-									entryType: EntryType[EntryType.ReleaseEventSeries],
+									entryType: EntryType.ReleaseEventSeries,
 								})
 							}
 							icons={{ primary: 'ui-icon-tag' }}

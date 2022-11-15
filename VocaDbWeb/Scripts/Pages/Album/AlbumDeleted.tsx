@@ -1,6 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { DeletedAlbumsStore } from '@/Stores/Album/DeletedAlbumsStore';
@@ -20,12 +19,12 @@ const AlbumDeleted = observer(
 
 		const title = 'Deleted albums'; /* LOC */
 
-		useVdbTitle(title, true);
-
 		useLocationStateStore(deletedAlbumsStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

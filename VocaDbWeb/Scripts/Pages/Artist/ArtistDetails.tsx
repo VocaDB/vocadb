@@ -8,7 +8,6 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { AlbumSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import {
@@ -110,8 +109,6 @@ const ArtistDetailsLayout = observer(
 
 		const title = artist.name;
 
-		useVdbTitle(title, true);
-
 		React.useEffect(() => {
 			// Returns the disposer.
 			return reaction(
@@ -129,6 +126,8 @@ const ArtistDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				subtitle={`(${t(
 					`VocaDb.Model.Resources:ArtistTypeNames.${artist.artistType}`,
@@ -188,7 +187,7 @@ const ArtistDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...artist,
-									entryType: EntryType[EntryType.Artist],
+									entryType: EntryType.Artist,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -218,7 +217,7 @@ const ArtistDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							artist.mergedTo
-								? { ...artist.mergedTo, entryType: EntryType[EntryType.Artist] }
+								? { ...artist.mergedTo, entryType: EntryType.Artist }
 								: undefined
 						}
 					/>

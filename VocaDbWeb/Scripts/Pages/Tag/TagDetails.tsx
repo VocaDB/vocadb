@@ -15,7 +15,6 @@ import { ShowMore } from '@/Components/Shared/Partials/Shared/ShowMore';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { TagLinkList } from '@/Components/Shared/Partials/Tag/TagLinkList';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagDetailsContract } from '@/DataContracts/Tag/TagDetailsContract';
@@ -73,7 +72,7 @@ const useEntrySubTypeName = (): ((
 
 	return React.useCallback(
 		(fullEntryType: EntryTypeAndSubTypeContract): string => {
-			switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+			switch (fullEntryType.entryType) {
 				case EntryType.Album:
 					return t(
 						`VocaDb.Model.Resources.Albums:DiscTypeNames.${fullEntryType.subType}`,
@@ -331,6 +330,25 @@ const HierarchyContainer = React.memo(
 	},
 );
 
+const entryTypes = [
+	EntryType.Album,
+	EntryType.Artist,
+	EntryType.ReleaseEvent,
+	EntryType.Song,
+	EntryType.SongList,
+] as const;
+
+const entryTypeTagTargetTypesMap: Record<
+	typeof entryTypes[number],
+	TagTargetTypes
+> = {
+	[EntryType.Album]: TagTargetTypes.Album,
+	[EntryType.Artist]: TagTargetTypes.Artist,
+	[EntryType.ReleaseEvent]: TagTargetTypes.Event,
+	[EntryType.Song]: TagTargetTypes.Song,
+	[EntryType.SongList]: TagTargetTypes.SongList,
+};
+
 interface TagDetailsLayoutProps {
 	tag: TagDetailsContract;
 	tagDetailsStore: TagDetailsStore;
@@ -344,8 +362,6 @@ const TagDetailsLayout = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useVdbTitle(tag.name, true);
-
 		const [tab, setTab] = React.useState('latestComments');
 
 		React.useEffect(() => {
@@ -357,6 +373,8 @@ const TagDetailsLayout = observer(
 		return (
 			<Layout
 				// TODO: globalSearchType
+				pageTitle={tag.name}
+				ready={true}
 				title={tag.name}
 				subtitle={t('ViewRes.Tag:Details.Tag')}
 				// TODO: canonicalUrl
@@ -396,7 +414,7 @@ const TagDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...tag,
-									entryType: EntryType[EntryType.Tag],
+									entryType: EntryType.Tag,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -524,17 +542,16 @@ const TagDetailsLayout = observer(
 								tag.targets !== TagTargetTypes.All && (
 									<p>
 										{t('ViewRes.Tag:Details.ValidFor')}:{' '}
-										{Object.values(EntryType)
+										{entryTypes
 											.filter(
-												(e) =>
-													e !== EntryType.Undefined &&
-													(tag.targets & Number(e)) !== 0,
+												(entryType) =>
+													(tag.targets &
+														Number(entryTypeTagTargetTypesMap[entryType])) !==
+													0,
 											)
-											.map((e) =>
+											.map((entryType) =>
 												t(
-													`VocaDb.Web.Resources.Domain:EntryTypeNames.${
-														EntryType[e as keyof typeof EntryType]
-													}`,
+													`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
 												),
 											)
 											.join(', ')}

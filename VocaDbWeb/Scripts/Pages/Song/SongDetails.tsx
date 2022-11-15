@@ -7,7 +7,6 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -52,14 +51,14 @@ const SongDetailsLayout = observer(
 
 		const titleAndArtist = `${model.name} - ${model.artistString}`;
 
-		useVdbTitle(titleAndArtist, true);
-
 		const primaryPV = model.contract.pvs.filter(
 			(pv) => pv.id === songDetailsStore.selectedPvId,
 		)[0];
 
 		return (
 			<Layout
+				pageTitle={titleAndArtist}
+				ready={true}
 				title={model.name}
 				subtitle={`${model.artistString} (${t(
 					`VocaDb.Model.Resources.Songs:SongTypeNames.${model.songType}`,
@@ -85,7 +84,7 @@ const SongDetailsLayout = observer(
 									<EmbedPVPreview
 										entry={{
 											...model.contract.song,
-											entryType: EntryType[EntryType.Song],
+											entryType: EntryType.Song,
 										}}
 										pv={primaryPV}
 										allowInline
@@ -200,7 +199,7 @@ const SongDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...model.contract.song,
-									entryType: EntryType[EntryType.Song],
+									entryType: EntryType.Song,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -248,7 +247,7 @@ const SongDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							model.mergedTo
-								? { ...model.mergedTo, entryType: EntryType[EntryType.Song] }
+								? { ...model.mergedTo, entryType: EntryType.Song }
 								: undefined
 						}
 					/>

@@ -3,6 +3,7 @@ import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
+import { EntryType } from '@/Models/EntryType';
 import { SongType } from '@/Models/Songs/SongType';
 
 // Base data contract for entries from the API.
@@ -12,7 +13,7 @@ export interface EntryContract extends EntryWithTagUsagesContract {
 	artistString?: string;
 	artistType?: ArtistType;
 	discType?: AlbumType;
-	entryType: string;
+	entryType: EntryType;
 	eventCategory?: string;
 	id: number;
 	mainPicture?: EntryThumbContract;

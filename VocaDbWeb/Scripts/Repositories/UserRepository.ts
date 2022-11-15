@@ -619,7 +619,7 @@ export class UserRepository implements ICommentRepository {
 	}): Promise<EntryEditDataContract> => {
 		return this.httpClient.post<EntryEditDataContract>(
 			this.urlMapper.mapRelative(
-				`/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
+				`/api/users/current/refreshEntryEdit/?entryType=${entryType}&entryId=${entryId}`,
 			),
 		);
 	};

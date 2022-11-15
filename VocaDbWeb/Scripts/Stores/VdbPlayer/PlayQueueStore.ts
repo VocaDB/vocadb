@@ -598,13 +598,13 @@ export class PlayQueueStore
 		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		switch (entry.entryType) {
-			case EntryType[EntryType.Album]:
+			case EntryType.Album:
 				return this.loadItemsFromAlbum(entry, pv);
 
-			case EntryType[EntryType.ReleaseEvent]:
+			case EntryType.ReleaseEvent:
 				return this.loadItemsFromEvent(entry, pv);
 
-			case EntryType[EntryType.Song]:
+			case EntryType.Song:
 				return this.loadItemsFromSong(entry, pv);
 
 			default:

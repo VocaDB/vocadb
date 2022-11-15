@@ -5,9 +5,9 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
+import { EntryType } from '@/Models/EntryType';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { httpClient } from '@/Shared/HttpClient';
@@ -37,12 +37,12 @@ const UserEntryEditsLayout = observer(
 
 		const title = `Entry edits - ${user.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		useLocationStateStore(activityEntryListStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>
@@ -88,7 +88,8 @@ const UserEntryEditsLayout = observer(
 								value={activityEntryListStore.entryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										activityEntryListStore.entryType = e.target.value;
+										activityEntryListStore.entryType = e.target
+											.value as EntryType;
 									})
 								}
 							/>

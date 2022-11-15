@@ -1,7 +1,6 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { loginManager } from '@/Models/LoginManager';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
@@ -27,14 +26,12 @@ const ActivityEntryIndex = observer(
 			'VocaDb.Web.Resources.Views.ActivityEntry:Index.RecentActivity',
 		);
 
-		useVdbTitle(title, ready);
-
 		React.useEffect(() => {
 			activityEntryListStore.loadMore();
 		}, []);
 
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<ul className="nav nav-pills">
 					<li className="active">
 						<Link to="/ActivityEntry">

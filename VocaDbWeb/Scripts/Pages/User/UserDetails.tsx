@@ -3,7 +3,6 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
@@ -47,8 +46,6 @@ const UserDetailsLayout = observer(
 
 		const title = user.name;
 
-		useVdbTitle(title, true);
-
 		const ownProfile =
 			loginManager.loggedUser &&
 			loginManager.loggedUser.id === user.id &&
@@ -60,6 +57,8 @@ const UserDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				subtitle={t(`Resources:UserGroupNames.${user.groupId}`)}
 				parents={

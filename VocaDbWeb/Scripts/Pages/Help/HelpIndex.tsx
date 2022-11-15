@@ -1,5 +1,4 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
@@ -1005,10 +1004,8 @@ const Guidelines = React.memo(
 const HelpIndex = (): React.ReactElement => {
 	const title = 'Help / About';
 
-	useVdbTitle(title, true);
-
 	return (
-		<Layout title={title}>
+		<Layout pageTitle={title} ready={true} title={title}>
 			<Routes>
 				<Route path="" element={<AboutVocaDb />} />
 				<Route path="aboutvocaloid" element={<AboutVocaloid />} />

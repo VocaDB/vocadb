@@ -5,8 +5,8 @@ import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEn
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { EntryType } from '@/Models/EntryType';
 import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { userRepo } from '@/Repositories/UserRepository';
@@ -69,7 +69,7 @@ const CommentsFilters = observer(
 							value={commentListStore.entryType}
 							onChange={(e): void =>
 								runInAction(() => {
-									commentListStore.entryType = e.target.value;
+									commentListStore.entryType = e.target.value as EntryType;
 								})
 							}
 						/>
@@ -147,12 +147,10 @@ const CommentIndex = observer(
 
 		const title = t('ViewRes.Comment:Index.RecentComments');
 
-		useVdbTitle(title, ready);
-
 		useLocationStateStore(commentListStore);
 
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<ul className="nav nav-pills">
 					<li>
 						<Link to="/ActivityEntry">All activity{/* LOC */}</Link>
