@@ -1,5 +1,4 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import ListUsers from '@/Pages/User/Partials/ListUsers';
 import { userRepo } from '@/Repositories/UserRepository';
 import { ListUsersStore } from '@/Stores/User/ListUsersStore';
@@ -14,12 +13,10 @@ const UserIndex = (): React.ReactElement => {
 
 	const title = t('ViewRes:Shared.Users');
 
-	useVdbTitle(title, ready);
-
 	useLocationStateStore(listUsersStore);
 
 	return (
-		<Layout title={title}>
+		<Layout pageTitle={title} ready={ready} title={title}>
 			<ListUsers listUsersStore={listUsersStore} />
 		</Layout>
 	);

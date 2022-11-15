@@ -31,7 +31,6 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
@@ -707,14 +706,14 @@ const SongEditLayout = observer(
 
 		const title = t('ViewRes.Song:Edit.EditTitle', { 0: contract.name });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.Song);
 
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

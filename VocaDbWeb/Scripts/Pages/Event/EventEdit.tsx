@@ -25,7 +25,6 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -607,8 +606,6 @@ const EventEditLayout = observer(
 			? 'Create a new event' /* LOC */
 			: `Edit event - ${contract.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const backAction = isNew
 			? '/Event'
 			: EntryUrlMapper.details(EntryType.ReleaseEvent, contract.id);
@@ -621,6 +618,8 @@ const EventEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					isNew ? (

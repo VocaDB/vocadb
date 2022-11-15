@@ -5,7 +5,6 @@ import { Layout } from '@/Components/Shared/Layout';
 import { AlbumLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/AlbumLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { EntryType } from '@/Models/EntryType';
 import { albumRepo } from '@/Repositories/AlbumRepository';
@@ -29,12 +28,12 @@ const AlbumMergeLayout = observer(
 
 		const title = `Merge album - ${album.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

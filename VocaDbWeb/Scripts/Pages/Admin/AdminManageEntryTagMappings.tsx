@@ -20,6 +20,8 @@ const AdminManageEntryTagMappings = observer(
 	(): React.ReactElement => {
 		return (
 			<Layout
+				pageTitle={undefined}
+				ready={true}
 				title="Manage entry type to tag mappings" /* LOC */
 				parents={
 					<>

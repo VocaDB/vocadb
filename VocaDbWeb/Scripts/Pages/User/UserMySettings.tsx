@@ -17,7 +17,6 @@ import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNoti
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
@@ -735,8 +734,6 @@ const UserMySettingsLayout = observer(
 
 		const title = t('ViewRes.User:MySettings.MySettingsTitle');
 
-		useVdbTitle(title, ready);
-
 		const contract = mySettingsStore.contract;
 
 		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
@@ -745,6 +742,8 @@ const UserMySettingsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

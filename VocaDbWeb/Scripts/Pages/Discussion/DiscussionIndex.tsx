@@ -1,4 +1,3 @@
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolders from '@/Pages/Discussion/Partials/ViewFolders';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -17,8 +16,6 @@ const DiscussionIndex = observer(
 
 		const title = t('ViewRes.Discussion:Index.Discussions');
 
-		useVdbTitle(title, ready);
-
 		React.useEffect(() => {
 			runInAction(() => {
 				discussionIndexStore.selectedFolder = undefined;
@@ -27,7 +24,7 @@ const DiscussionIndex = observer(
 		}, [discussionIndexStore]);
 
 		return (
-			<DiscussionLayout title={title}>
+			<DiscussionLayout pageTitle={title} ready={ready} title={title}>
 				<ViewFolders discussionIndexStore={discussionIndexStore} />
 			</DiscussionLayout>
 		);

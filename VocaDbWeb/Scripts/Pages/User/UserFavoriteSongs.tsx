@@ -1,6 +1,5 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
 import { artistRepo } from '@/Repositories/ArtistRepository';
@@ -30,12 +29,12 @@ const UserFavoriteSongsLayout = ({
 }: UserFavoriteSongsLayoutProps): React.ReactElement => {
 	const title = `Songs rated by ${user.name}`; /* LOC */
 
-	useVdbTitle(title, true);
-
 	useLocationStateStore(ratedSongsStore);
 
 	return (
 		<Layout
+			pageTitle={title}
+			ready={true}
 			title={title}
 			parents={
 				<>

@@ -5,7 +5,6 @@ import { Layout } from '@/Components/Shared/Layout';
 import { TagLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -29,12 +28,12 @@ const TagMergeLayout = observer(
 
 		const title = `Merge tag - ${tag.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

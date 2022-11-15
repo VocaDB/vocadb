@@ -8,7 +8,6 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { regionNames } from '@/Components/regions';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -40,10 +39,10 @@ const VenueDetailsLayout = ({
 
 	const title = venue.name;
 
-	useVdbTitle(title, true);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={true}
 			title={title}
 			subtitle={t('ViewRes.Venue:Details.Venue')}
 			parents={

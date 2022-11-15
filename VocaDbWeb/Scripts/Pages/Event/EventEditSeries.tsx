@@ -19,7 +19,6 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -61,8 +60,6 @@ const EventEditSeriesLayout = observer(
 			? 'Create a new series' /* LOC */
 			: `Edit series - ${contract.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		const conflictingEditor = useConflictingEditor(
@@ -92,6 +89,8 @@ const EventEditSeriesLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					isNew ? (

@@ -7,7 +7,6 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
@@ -51,10 +50,10 @@ const EventSeriesDetailsLayout = ({
 					`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${series.category}`,
 			  );
 
-	useVdbTitle(`${series.name} (${subtitle})`, ready);
-
 	return (
 		<Layout
+			pageTitle={`${series.name} (${subtitle})`}
+			ready={ready}
 			title={series.name}
 			subtitle={subtitle}
 			parents={

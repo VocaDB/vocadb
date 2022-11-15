@@ -15,7 +15,6 @@ import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { SongType } from '@/Models/Songs/SongType';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
@@ -41,12 +40,12 @@ const SongCreateLayout = observer(
 
 		const title = t('ViewRes.Song:Create.SubmitSong');
 
-		useVdbTitle(title, ready);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

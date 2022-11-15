@@ -1,5 +1,4 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscussionLayout } from '@/Pages/Discussion/DiscussionRoutes';
 import ViewFolder from '@/Pages/Discussion/Partials/ViewFolder';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -19,8 +18,6 @@ const DiscussionFolders = observer(
 
 		const title = t('ViewRes.Discussion:Index.Discussions');
 
-		useVdbTitle(title, ready);
-
 		const { folderId } = useParams();
 
 		React.useEffect(() => {
@@ -34,7 +31,7 @@ const DiscussionFolders = observer(
 		}, [discussionIndexStore, discussionIndexStore.folders, folderId]);
 
 		return (
-			<DiscussionLayout title={title}>
+			<DiscussionLayout pageTitle={title} ready={ready} title={title}>
 				<Breadcrumb>
 					<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/discussion' }}>
 						{t('ViewRes.Discussion:Index.Discussions')}

@@ -8,7 +8,6 @@ import { ArtistTypesDropdownKnockout } from '@/Components/Shared/Partials/Artist
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -39,14 +38,14 @@ const ArtistCreateLayout = observer(
 
 		const title = t('ViewRes.Artist:Create.AddArtist');
 
-		useVdbTitle(title, ready);
-
 		const navigate = useNavigate();
 
 		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>

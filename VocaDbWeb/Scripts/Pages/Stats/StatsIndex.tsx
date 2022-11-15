@@ -1,5 +1,4 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { httpClient } from '@/Shared/HttpClient';
 import { StatsStore } from '@/Stores/StatsStore';
 import Highcharts from 'highcharts';
@@ -14,10 +13,8 @@ const StatsIndex = observer(
 	(): React.ReactElement => {
 		const title = 'Statistics / Reports'; /* LOC */
 
-		useVdbTitle(title, true);
-
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={true} title={title}>
 				<select
 					value={JSON.stringify(statsStore.selectedReport)}
 					onChange={(e): void =>

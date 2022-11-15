@@ -6,7 +6,6 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedTagData } from '@/Components/Shared/Partials/Tag/PrintArchivedTagData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedTagVersionDetailsContract } from '@/DataContracts/Tag/ArchivedTagVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { EntryType } from '@/Models/EntryType';
@@ -36,14 +35,14 @@ const TagViewVersionLayout = observer(
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const changedFieldNames = useChangedFieldNames();
 
 		useLocationStateStore(archivedEntryStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

@@ -15,7 +15,6 @@ import { ShowMore } from '@/Components/Shared/Partials/Shared/ShowMore';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { TagLinkList } from '@/Components/Shared/Partials/Tag/TagLinkList';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagDetailsContract } from '@/DataContracts/Tag/TagDetailsContract';
@@ -344,8 +343,6 @@ const TagDetailsLayout = observer(
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useVdbTitle(tag.name, true);
-
 		const [tab, setTab] = React.useState('latestComments');
 
 		React.useEffect(() => {
@@ -357,6 +354,8 @@ const TagDetailsLayout = observer(
 		return (
 			<Layout
 				// TODO: globalSearchType
+				pageTitle={tag.name}
+				ready={true}
 				title={tag.name}
 				subtitle={t('ViewRes.Tag:Details.Tag')}
 				// TODO: canonicalUrl
