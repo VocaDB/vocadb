@@ -6,6 +6,7 @@ import { NameMatchMode } from '@/Models/NameMatchMode';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
+import { TopBarStore } from '@/Stores/TopBarStore';
 import qs from 'qs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const random = (max: number): number => Math.floor(Math.random() * max);
 
 interface ShowRandomPageButtonProps {
-	entryType: EntryType;
-
+	entryType: typeof TopBarStore.entryTypes[number];
 	// HACK: Replace this with a normal property after removing jQuery UI's Autocomplete.
 	globalSearchTermRef: React.MutableRefObject<HTMLInputElement>;
 }

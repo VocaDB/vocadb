@@ -39,9 +39,18 @@ class EditEntryTagMappingStore {
 }
 
 export class ManageEntryTagMappingsStore {
+	static readonly entryTypes = [
+		EntryType.Album,
+		EntryType.Artist,
+		EntryType.Song,
+		EntryType.ReleaseEvent,
+	] as const;
+
 	@observable mappings: EditEntryTagMappingStore[] = [];
 	readonly paging = new ServerSidePagingStore(50);
-	@observable newEntryType: EntryType | '' = '';
+	@observable newEntryType:
+		| typeof ManageEntryTagMappingsStore.entryTypes[number]
+		| '' = '';
 	@observable newEntrySubType = '';
 	readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
 	@observable submitting = false;
@@ -60,22 +69,12 @@ export class ManageEntryTagMappingsStore {
 		return this.mappings.filter((m) => !m.isDeleted);
 	}
 
-	readonly entryTypes = [
-		EntryType.Album,
-		EntryType.Artist,
-		EntryType.Song,
-		EntryType.ReleaseEvent,
-	];
-
 	private readonly entrySubTypesByType = {
 		[EntryType.Album]: Object.values(AlbumType),
 		[EntryType.Artist]: Object.values(ArtistType),
 		[EntryType.Song]: Object.values(SongType),
 		[EntryType.ReleaseEvent]: Object.values(EventCategory),
-	} as Record<
-		EntryType,
-		AlbumType[] | ArtistType[] | SongType[] | EventCategory[]
-	>;
+	};
 
 	@computed get entrySubTypes():
 		| AlbumType[]

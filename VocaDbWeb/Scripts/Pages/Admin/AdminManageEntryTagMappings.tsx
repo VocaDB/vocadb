@@ -5,7 +5,6 @@ import { Layout } from '@/Components/Shared/Layout';
 import { TagLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { EntryType } from '@/Models/EntryType';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { ManageEntryTagMappingsStore } from '@/Stores/Admin/ManageEntryTagMappingsStore';
 import classNames from 'classnames';
@@ -47,12 +46,12 @@ const AdminManageEntryTagMappings = observer(
 								onChange={(e): void =>
 									runInAction(() => {
 										manageEntryTagMappingsStore.newEntryType = e.target
-											.value as EntryType;
+											.value as typeof ManageEntryTagMappingsStore.entryTypes[number];
 									})
 								}
 							>
 								<option value="" />
-								{manageEntryTagMappingsStore.entryTypes.map((entryType) => (
+								{ManageEntryTagMappingsStore.entryTypes.map((entryType) => (
 									<option value={entryType} key={entryType}>
 										{entryType}
 									</option>

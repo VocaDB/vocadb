@@ -31,7 +31,7 @@ const allObjectTypes = [
 	EntryType.User,
 	EntryType.ReleaseEvent,
 	EntryType.SongList,
-]; /* TODO */
+] as const; /* TODO */
 
 export const apiEndpointsForEntryType = {
 	[EntryType.Undefined]: '/api/entries',
@@ -42,10 +42,10 @@ export const apiEndpointsForEntryType = {
 	[EntryType.SongList]: '/api/songLists/featured',
 	[EntryType.Tag]: '/api/tags',
 	[EntryType.User]: '/api/users',
-} as Record<EntryType, string>;
+};
 
 const globalSearchBoxSource = (
-	entryType: EntryType,
+	entryType: typeof TopBarStore.entryTypes[number],
 	query: string,
 ): Promise<string[]> => {
 	const apiEndpoint = apiEndpointsForEntryType[entryType];
@@ -108,7 +108,8 @@ export const GlobalSearchBox = observer(
 					value={topBarStore.entryType}
 					onChange={(event): void => {
 						runInAction(() => {
-							topBarStore.entryType = event.target.value as EntryType;
+							topBarStore.entryType = event.target
+								.value as typeof TopBarStore.entryTypes[number];
 						});
 					}}
 				/>
