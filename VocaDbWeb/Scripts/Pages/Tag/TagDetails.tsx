@@ -331,6 +331,25 @@ const HierarchyContainer = React.memo(
 	},
 );
 
+const entryTypes = [
+	EntryType.Album,
+	EntryType.Artist,
+	EntryType.ReleaseEvent,
+	EntryType.Song,
+	EntryType.SongList,
+] as const;
+
+const entryTypeTagTargetTypesMap: Record<
+	typeof entryTypes[number],
+	TagTargetTypes
+> = {
+	[EntryType.Album]: TagTargetTypes.Album,
+	[EntryType.Artist]: TagTargetTypes.Artist,
+	[EntryType.ReleaseEvent]: TagTargetTypes.Event,
+	[EntryType.Song]: TagTargetTypes.Song,
+	[EntryType.SongList]: TagTargetTypes.SongList,
+};
+
 interface TagDetailsLayoutProps {
 	tag: TagDetailsContract;
 	tagDetailsStore: TagDetailsStore;
@@ -524,11 +543,12 @@ const TagDetailsLayout = observer(
 								tag.targets !== TagTargetTypes.All && (
 									<p>
 										{t('ViewRes.Tag:Details.ValidFor')}:{' '}
-										{Object.values(EntryType)
+										{entryTypes
 											.filter(
 												(entryType) =>
-													entryType !== EntryType.Undefined &&
-													(tag.targets & Number(entryType)) !== 0,
+													(tag.targets &
+														Number(entryTypeTagTargetTypesMap[entryType])) !==
+													0,
 											)
 											.map((entryType) =>
 												t(
