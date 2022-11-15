@@ -33,7 +33,7 @@ const allObjectTypes = [
 	EntryType.SongList,
 ]; /* TODO */
 
-export const apiEndpointsForEntryType: Record<EntryType, string> = {
+export const apiEndpointsForEntryType = {
 	[EntryType.Undefined]: '/api/entries',
 	[EntryType.Album]: '/api/albums',
 	[EntryType.Artist]: '/api/artists',
@@ -42,7 +42,7 @@ export const apiEndpointsForEntryType: Record<EntryType, string> = {
 	[EntryType.SongList]: '/api/songLists/featured',
 	[EntryType.Tag]: '/api/tags',
 	[EntryType.User]: '/api/users',
-};
+} as Record<EntryType, string>;
 
 const globalSearchBoxSource = (
 	entryType: EntryType,
