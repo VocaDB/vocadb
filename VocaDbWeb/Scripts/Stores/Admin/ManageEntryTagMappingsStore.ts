@@ -41,7 +41,7 @@ class EditEntryTagMappingStore {
 export class ManageEntryTagMappingsStore {
 	@observable mappings: EditEntryTagMappingStore[] = [];
 	readonly paging = new ServerSidePagingStore(50);
-	@observable newEntryType = '';
+	@observable newEntryType: EntryType | '' = '';
 	@observable newEntrySubType = '';
 	readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
 	@observable submitting = false;
@@ -82,14 +82,19 @@ export class ManageEntryTagMappingsStore {
 		[EntryType.Artist]: Object.values(ArtistType),
 		[EntryType.Song]: Object.values(SongType),
 		[EntryType.ReleaseEvent]: Object.values(EventCategory),
-	};
+	} as Record<
+		EntryType,
+		AlbumType[] | ArtistType[] | SongType[] | EventCategory[]
+	>;
 
 	@computed get entrySubTypes():
 		| AlbumType[]
 		| ArtistType[]
 		| SongType[]
 		| EventCategory[] {
-		return this.entrySubTypesByType[this.newEntryType] ?? [];
+		return this.newEntryType !== ''
+			? this.entrySubTypesByType[this.newEntryType]
+			: [];
 	}
 
 	@action addMapping = (): void => {
