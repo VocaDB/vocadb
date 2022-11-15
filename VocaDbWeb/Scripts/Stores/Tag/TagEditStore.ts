@@ -1,7 +1,6 @@
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { EntryType } from '@/Models/EntryType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { TagRepository } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -50,7 +49,7 @@ export class TagEditStore {
 	@observable relatedTags: TagBaseContract[];
 	@observable status: EntryStatus;
 	@observable submitting = false;
-	@observable targets: EntryType;
+	@observable targets: TagTargetTypes;
 	readonly trashStore = new DeleteEntryStore(
 		async (notes) =>
 			await $.ajax(
