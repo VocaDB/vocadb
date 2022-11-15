@@ -526,12 +526,14 @@ const TagDetailsLayout = observer(
 										{t('ViewRes.Tag:Details.ValidFor')}:{' '}
 										{Object.values(EntryType)
 											.filter(
-												(e) =>
-													e !== EntryType.Undefined &&
-													(tag.targets & Number(e)) !== 0,
+												(entryType) =>
+													entryType !== EntryType.Undefined &&
+													(tag.targets & Number(entryType)) !== 0,
 											)
-											.map((e) =>
-												t(`VocaDb.Web.Resources.Domain:EntryTypeNames.${e}`),
+											.map((entryType) =>
+												t(
+													`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
+												),
 											)
 											.join(', ')}
 									</p>
