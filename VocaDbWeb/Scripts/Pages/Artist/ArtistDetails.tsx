@@ -187,7 +187,7 @@ const ArtistDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...artist,
-									entryType: EntryType[EntryType.Artist],
+									entryType: EntryType.Artist,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -217,7 +217,7 @@ const ArtistDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							artist.mergedTo
-								? { ...artist.mergedTo, entryType: EntryType[EntryType.Artist] }
+								? { ...artist.mergedTo, entryType: EntryType.Artist }
 								: undefined
 						}
 					/>

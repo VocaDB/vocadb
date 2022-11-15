@@ -385,7 +385,7 @@ const SongBasicInfo = observer(
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
-											entryType: EntryType[EntryType.Song],
+											entryType: EntryType.Song,
 											subType: model.songType,
 										})}`}
 									>
@@ -444,7 +444,7 @@ const SongBasicInfo = observer(
 										disabled={
 											!loginManager.canEditTagsForEntry({
 												...model.contract.song,
-												entryType: EntryType[EntryType.Song],
+												entryType: EntryType.Song,
 											})
 										}
 										icons={{ primary: 'ui-icon-tag' }}

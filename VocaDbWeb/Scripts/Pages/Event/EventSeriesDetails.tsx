@@ -74,7 +74,7 @@ const EventSeriesDetailsLayout = ({
 						<>
 							{loginManager.canEdit({
 								...series,
-								entryType: EntryType[EntryType.ReleaseEventSeries],
+								entryType: EntryType.ReleaseEventSeries,
 							}) && (
 								<>
 									<JQueryUIButton
@@ -180,7 +180,7 @@ const EventSeriesDetailsLayout = ({
 							disabled={
 								!loginManager.canEditTagsForEntry({
 									...series,
-									entryType: EntryType[EntryType.ReleaseEventSeries],
+									entryType: EntryType.ReleaseEventSeries,
 								})
 							}
 							icons={{ primary: 'ui-icon-tag' }}

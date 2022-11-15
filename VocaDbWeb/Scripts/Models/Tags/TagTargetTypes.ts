@@ -1,11 +1,9 @@
-import { EntryType } from '@/Models/EntryType';
-
 export enum TagTargetTypes {
-	Nothing = EntryType.Undefined,
-	Album = EntryType.Album,
-	Artist = EntryType.Artist,
-	Song = EntryType.Song,
-	Event = EntryType.ReleaseEvent,
-	SongList = EntryType.SongList,
+	Nothing = 0,
+	Album = 1 << 0,
+	Artist = 1 << 1,
+	Event = 1 << 4,
+	Song = 1 << 6,
+	SongList = 1 << 7,
 	All = 1073741823,
 }

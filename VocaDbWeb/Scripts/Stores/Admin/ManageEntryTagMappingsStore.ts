@@ -39,9 +39,18 @@ class EditEntryTagMappingStore {
 }
 
 export class ManageEntryTagMappingsStore {
+	static readonly entryTypes = [
+		EntryType.Album,
+		EntryType.Artist,
+		EntryType.Song,
+		EntryType.ReleaseEvent,
+	] as const;
+
 	@observable mappings: EditEntryTagMappingStore[] = [];
 	readonly paging = new ServerSidePagingStore(50);
-	@observable newEntryType = '';
+	@observable newEntryType:
+		| typeof ManageEntryTagMappingsStore.entryTypes[number]
+		| '' = '';
 	@observable newEntrySubType = '';
 	readonly newTargetTag: BasicEntryLinkStore<TagBaseContract>;
 	@observable submitting = false;
@@ -60,23 +69,6 @@ export class ManageEntryTagMappingsStore {
 		return this.mappings.filter((m) => !m.isDeleted);
 	}
 
-	private getEnumValues = <TEnum>(
-		Enum: any,
-		selected?: Array<TEnum>,
-	): string[] =>
-		Object.keys(Enum).filter(
-			(k) =>
-				(!selected || selected.includes(Enum[k])) &&
-				typeof Enum[k as any] === 'number',
-		);
-
-	entryTypes = this.getEnumValues<EntryType>(EntryType, [
-		EntryType.Album,
-		EntryType.Artist,
-		EntryType.Song,
-		EntryType.ReleaseEvent,
-	]);
-
 	private readonly entrySubTypesByType = {
 		[EntryType.Album]: Object.values(AlbumType),
 		[EntryType.Artist]: Object.values(ArtistType),
@@ -89,11 +81,9 @@ export class ManageEntryTagMappingsStore {
 		| ArtistType[]
 		| SongType[]
 		| EventCategory[] {
-		return (
-			this.entrySubTypesByType[
-				EntryType[this.newEntryType as keyof typeof EntryType]
-			] ?? []
-		);
+		return this.newEntryType !== ''
+			? this.entrySubTypesByType[this.newEntryType]
+			: [];
 	}
 
 	@action addMapping = (): void => {

@@ -27,7 +27,7 @@ const useEntryCategoryName = (): ((
 
 	return React.useCallback(
 		(entry: EntryContract): string | undefined => {
-			switch (EntryType[entry.entryType as keyof typeof EntryType]) {
+			switch (entry.entryType) {
 				case EntryType.Artist:
 					return t(
 						`VocaDb.Model.Resources:ArtistTypeNames.${entry.artistType}`,

@@ -372,22 +372,22 @@ export const EntryToolTip = ({
 	children,
 }: EntryToolTipProps): React.ReactElement => {
 	switch (entry.entryType) {
-		case EntryType[EntryType.Album]:
+		case EntryType.Album:
 			return <AlbumToolTip id={entry.id}>{children}</AlbumToolTip>;
 
-		case EntryType[EntryType.Artist]:
+		case EntryType.Artist:
 			return <ArtistToolTip id={entry.id}>{children}</ArtistToolTip>;
 
-		case EntryType[EntryType.ReleaseEvent]:
+		case EntryType.ReleaseEvent:
 			return <EventToolTip id={entry.id}>{children}</EventToolTip>;
 
-		case EntryType[EntryType.Song]:
+		case EntryType.Song:
 			return <SongToolTip id={entry.id}>{children}</SongToolTip>;
 
-		case EntryType[EntryType.Tag]:
+		case EntryType.Tag:
 			return <TagToolTip id={entry.id}>{children}</TagToolTip>;
 
-		case EntryType[EntryType.User]:
+		case EntryType.User:
 			return <UserToolTip id={entry.id}>{children}</UserToolTip>;
 
 		default:

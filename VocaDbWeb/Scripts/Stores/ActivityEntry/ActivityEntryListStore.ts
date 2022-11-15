@@ -26,7 +26,7 @@ export enum ActivityEntrySortRule {
 
 interface ActivityEntryListRouteParams {
 	entryEditEvent?: EntryEditEvent;
-	entryType?: string /* TODO: enum */;
+	entryType?: EntryType;
 	sort?: ActivityEntrySortRule;
 }
 
@@ -47,7 +47,7 @@ export class ActivityEntryListStore
 	implements LocationStateStore<ActivityEntryListRouteParams> {
 	@observable entries: ActivityEntryContract[] = [];
 	@observable entryEditEvent?: EntryEditEvent;
-	@observable entryType = EntryType[EntryType.Undefined]; /* TODO: enum */
+	@observable entryType = EntryType.Undefined;
 	private lastEntryDate?: Date;
 	@observable sort = ActivityEntrySortRule.CreateDateDescending;
 	@observable userId?: number;
@@ -72,7 +72,7 @@ export class ActivityEntryListStore
 	}
 	set locationState(value: ActivityEntryListRouteParams) {
 		this.entryEditEvent = value.entryEditEvent;
-		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
+		this.entryType = value.entryType ?? EntryType.Undefined;
 		this.sort = value.sort ?? ActivityEntrySortRule.CreateDateDescending;
 	}
 

@@ -57,7 +57,7 @@ export const PlayList = observer(
 										<EmbedPVPreview
 											entry={{
 												...pvPlayerStore.selectedSong.song,
-												entryType: EntryType[EntryType.Song],
+												entryType: EntryType.Song,
 											}}
 											pv={pvPlayerStore.primaryPV}
 										/>

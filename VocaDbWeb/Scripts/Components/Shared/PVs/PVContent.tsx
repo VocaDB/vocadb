@@ -144,7 +144,7 @@ export const PVContent = observer(
 				<div className="pv-embed-wrapper">
 					{primaryPV && (
 						<EmbedPVPreview
-							entry={{ ...selectedSong, entryType: EntryType[EntryType.Song] }}
+							entry={{ ...selectedSong, entryType: EntryType.Song }}
 							pv={primaryPV}
 							width={560}
 							height={340}

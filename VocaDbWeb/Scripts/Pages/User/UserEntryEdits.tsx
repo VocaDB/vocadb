@@ -7,6 +7,7 @@ import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
+import { EntryType } from '@/Models/EntryType';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { httpClient } from '@/Shared/HttpClient';
@@ -87,7 +88,8 @@ const UserEntryEditsLayout = observer(
 								value={activityEntryListStore.entryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										activityEntryListStore.entryType = e.target.value;
+										activityEntryListStore.entryType = e.target
+											.value as EntryType;
 									})
 								}
 							/>

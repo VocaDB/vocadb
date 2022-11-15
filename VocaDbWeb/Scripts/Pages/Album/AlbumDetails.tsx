@@ -79,7 +79,7 @@ const AlbumDetailsLayout = observer(
 								<EmbedPVPreview
 									entry={{
 										...model.contract,
-										entryType: EntryType[EntryType.Album],
+										entryType: EntryType.Album,
 									}}
 									pv={model.primaryPV}
 									allowInline
@@ -121,7 +121,7 @@ const AlbumDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...model.contract,
-									entryType: EntryType[EntryType.Album],
+									entryType: EntryType.Album,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -169,7 +169,7 @@ const AlbumDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							model.mergedTo
-								? { ...model.mergedTo, entryType: EntryType[EntryType.Album] }
+								? { ...model.mergedTo, entryType: EntryType.Album }
 								: undefined
 						}
 					/>

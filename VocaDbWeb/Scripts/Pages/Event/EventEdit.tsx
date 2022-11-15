@@ -394,7 +394,7 @@ const BasicInfoTabContent = observer(
 					<EntryStatusDropdownList
 						allowedEntryStatuses={loginManager.allowedEntryStatuses({
 							id: releaseEventEditStore.contract.id,
-							entryType: EntryType[EntryType.ReleaseEvent],
+							entryType: EntryType.ReleaseEvent,
 						})}
 						value={releaseEventEditStore.status}
 						onChange={(e): void =>

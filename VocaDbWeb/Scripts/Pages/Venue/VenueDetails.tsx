@@ -60,7 +60,7 @@ const VenueDetailsLayout = ({
 						disabled={
 							!loginManager.canEdit({
 								...venue,
-								entryType: EntryType[EntryType.Venue],
+								entryType: EntryType.Venue,
 							})
 						}
 						icons={{ primary: 'ui-icon-wrench' }}

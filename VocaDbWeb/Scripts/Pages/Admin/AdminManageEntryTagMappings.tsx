@@ -47,12 +47,13 @@ const AdminManageEntryTagMappings = observer(
 								value={manageEntryTagMappingsStore.newEntryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										manageEntryTagMappingsStore.newEntryType = e.target.value;
+										manageEntryTagMappingsStore.newEntryType = e.target
+											.value as typeof ManageEntryTagMappingsStore.entryTypes[number];
 									})
 								}
 							>
 								<option value="" />
-								{manageEntryTagMappingsStore.entryTypes.map((entryType) => (
+								{ManageEntryTagMappingsStore.entryTypes.map((entryType) => (
 									<option value={entryType} key={entryType}>
 										{entryType}
 									</option>

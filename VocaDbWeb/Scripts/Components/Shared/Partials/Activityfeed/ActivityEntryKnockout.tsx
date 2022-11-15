@@ -51,7 +51,7 @@ const useEntryTypeName = (): ((entry: EntryContract) => string | undefined) => {
 
 	return React.useCallback(
 		(entry: EntryContract): string | undefined => {
-			switch (EntryType[entry.entryType as keyof typeof EntryType]) {
+			switch (entry.entryType) {
 				case EntryType.Album:
 					return t(
 						`VocaDb.Model.Resources.Albums:DiscTypeNames.${entry.discType}`,
@@ -126,12 +126,7 @@ export const ActivityEntryKnockout = observer(
 										(
 										{entry.archivedVersion.changedFields
 											.map((changedField) =>
-												changedFieldNames(
-													EntryType[
-														entry.entry.entryType as keyof typeof EntryType
-													],
-													changedField,
-												),
+												changedFieldNames(entry.entry.entryType, changedField),
 											)
 											.join(', ')}
 										)
@@ -143,8 +138,8 @@ export const ActivityEntryKnockout = observer(
 									<span>"{entry.archivedVersion.notes}"</span>
 								</>
 							)}{' '}
-							{entry.entry.entryType !== 'SongList' &&
-								entry.entry.entryType !== 'ReleaseEvent' && (
+							{entry.entry.entryType !== EntryType.SongList &&
+								entry.entry.entryType !== EntryType.ReleaseEvent && (
 									<span>
 										(
 										<Link
