@@ -5,7 +5,7 @@ import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { LocationStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import {
 	action,
 	computed,
@@ -13,6 +13,8 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
+
+import schema from './DiscussionTopicRouteParams.schema.json';
 
 interface DiscussionTopicRouteParams {
 	page?: number;
@@ -22,8 +24,7 @@ interface DiscussionTopicRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<DiscussionTopicRouteParams> = require('./DiscussionTopicRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<DiscussionTopicRouteParams>(schema);
 
 export class DiscussionTopicStore
 	implements LocationStateStore<DiscussionTopicRouteParams> {

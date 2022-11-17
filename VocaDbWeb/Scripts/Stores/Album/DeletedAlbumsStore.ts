@@ -11,8 +11,10 @@ import {
 	LocationStateStore,
 	StateChangeEvent,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
+
+import schema from './DeletedAlbumsRouteParams.schema.json';
 
 export interface DeletedAlbumsRouteParams {
 	filter?: string;
@@ -31,8 +33,7 @@ const clearResultsByQueryKeys: (keyof DeletedAlbumsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<DeletedAlbumsRouteParams> = require('./DeletedAlbumsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<DeletedAlbumsRouteParams>(schema);
 
 export class DeletedAlbumsStore
 	implements LocationStateStore<DeletedAlbumsRouteParams> {

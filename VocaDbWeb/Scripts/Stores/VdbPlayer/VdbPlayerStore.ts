@@ -8,8 +8,10 @@ import { GlobalValues } from '@/Shared/GlobalValues';
 import { PlayQueueRepositoryFactory } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { PlayQueueStore } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
+
+import schema from './VdbPlayerLocalStorageState.schema.json';
 
 interface Rectangle {
 	x: number;
@@ -26,8 +28,7 @@ interface VdbPlayerLocalStorageState {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<VdbPlayerLocalStorageState> = require('./VdbPlayerLocalStorageState.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<VdbPlayerLocalStorageState>(schema);
 
 export class VdbPlayerStore
 	implements LocalStorageStateStore<VdbPlayerLocalStorageState> {

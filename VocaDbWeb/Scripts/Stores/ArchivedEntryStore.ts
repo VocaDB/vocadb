@@ -1,7 +1,9 @@
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { LocationStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable } from 'mobx';
+
+import schema from './ArchivedEntryRouteParams.schema.json';
 
 export interface ArchivedEntryRouteParams {
 	comparedVersionId?: number;
@@ -11,8 +13,7 @@ export interface ArchivedEntryRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ArchivedEntryRouteParams> = require('./ArchivedEntryRouteParams.schema');
-export const validate = ajv.compile(schema);
+export const validate = ajv.compile<ArchivedEntryRouteParams>(schema);
 
 interface IEntryReportsRepository {
 	createReport({

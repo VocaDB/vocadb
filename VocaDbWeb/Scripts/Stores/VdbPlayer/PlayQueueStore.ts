@@ -24,7 +24,7 @@ import {
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { pull } from 'lodash-es';
 import {
@@ -34,6 +34,8 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
+
+import schema from './PlayQueueLocalStorageState.schema.json';
 
 export enum RepeatMode {
 	Off = 'Off',
@@ -57,8 +59,7 @@ const ajv = new Ajv({ coerceTypes: true });
 addFormats(ajv);
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<PlayQueueLocalStorageState> = require('./PlayQueueLocalStorageState.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<PlayQueueLocalStorageState>(schema);
 
 export class PlayQueueItem {
 	private static nextId = 1;

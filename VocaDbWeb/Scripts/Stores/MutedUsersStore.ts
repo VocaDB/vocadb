@@ -1,8 +1,10 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { pull } from 'lodash-es';
 import { action, computed, makeObservable, observable } from 'mobx';
+
+import schema from './MutedUsersLocalStorageState.schema.json';
 
 interface MutedUsersLocalStorageState {
 	mutedUserIds?: number[];
@@ -12,8 +14,7 @@ interface MutedUsersLocalStorageState {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<MutedUsersLocalStorageState> = require('./MutedUsersLocalStorageState.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<MutedUsersLocalStorageState>(schema);
 
 export class MutedUsersStore
 	implements LocalStorageStateStore<MutedUsersLocalStorageState> {

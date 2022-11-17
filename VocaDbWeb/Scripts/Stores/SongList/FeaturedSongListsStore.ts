@@ -13,8 +13,10 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { action, computed, makeObservable, observable } from 'mobx';
+
+import schema from './FeaturedSongListsRouteParams.schema.json';
 
 export class FeaturedSongListCategoryStore extends SongListsBaseStore {
 	constructor(
@@ -65,8 +67,7 @@ const clearResultsByQueryKeys: (keyof FeaturedSongListsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<FeaturedSongListsRouteParams> = require('./FeaturedSongListsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<FeaturedSongListsRouteParams>(schema);
 
 export class FeaturedSongListsStore
 	implements LocationStateStore<FeaturedSongListsRouteParams> {

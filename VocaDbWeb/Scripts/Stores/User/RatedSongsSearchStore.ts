@@ -27,7 +27,7 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import {
 	action,
 	computed,
@@ -37,6 +37,8 @@ import {
 	runInAction,
 } from 'mobx';
 import moment from 'moment';
+
+import schema from './RatedSongsSearchRouteParams.schema.json';
 
 export enum RatedSongForUserSortRule {
 	None = 'None',
@@ -85,8 +87,7 @@ const clearResultsByQueryKeys: (keyof RatedSongsSearchRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<RatedSongsSearchRouteParams> = require('./RatedSongsSearchRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<RatedSongsSearchRouteParams>(schema);
 
 export class RatedSongsSearchStore
 	implements LocationStateStore<RatedSongsSearchRouteParams>, ISongSearchStore {

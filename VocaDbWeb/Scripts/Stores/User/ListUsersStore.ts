@@ -10,8 +10,10 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
+
+import schema from './ListUsersRouteParams.schema.json';
 
 // Corresponds to the UserSortRule enum in C#.
 export enum UserSortRule {
@@ -44,8 +46,7 @@ const clearResultsByQueryKeys: (keyof ListUsersRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ListUsersRouteParams> = require('./ListUsersRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<ListUsersRouteParams>(schema);
 
 export class ListUsersStore
 	implements LocationStateStore<ListUsersRouteParams> {

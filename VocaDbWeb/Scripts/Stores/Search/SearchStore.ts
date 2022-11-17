@@ -38,7 +38,7 @@ import {
 } from '@/Stores/Search/TagSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import { StateChangeEvent, LocationStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import {
 	computed,
@@ -47,6 +47,8 @@ import {
 	reaction,
 	runInAction,
 } from 'mobx';
+
+import schema from './SearchRouteParams.schema.json';
 
 export enum SearchType {
 	Anything = 'Anything',
@@ -70,8 +72,7 @@ const ajv = new Ajv({ coerceTypes: true });
 addFormats(ajv);
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SearchRouteParams> = require('./SearchRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<SearchRouteParams>(schema);
 
 export class SearchStore
 	implements ICommonSearchStore, LocationStateStore<SearchRouteParams> {
