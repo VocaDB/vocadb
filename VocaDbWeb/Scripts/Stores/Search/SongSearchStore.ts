@@ -8,8 +8,8 @@ import { SongType } from '@/Models/Songs/SongType';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import type { SongGetListQueryParams } from '@/Repositories/SongRepository';
 import {
-	SongGetListQueryParams,
 	SongOptionalField,
 	SongRepository,
 } from '@/Repositories/SongRepository';

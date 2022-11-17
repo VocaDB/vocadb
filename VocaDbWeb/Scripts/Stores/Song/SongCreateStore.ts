@@ -3,7 +3,7 @@ import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResu
 import { LocalizedStringContract } from '@/DataContracts/Globalization/LocalizedStringContract';
 import { ArtistForSongContract } from '@/DataContracts/Song/ArtistForSongContract';
 import { SongContract } from '@/DataContracts/Song/SongContract';
-import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import type { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';

@@ -1,5 +1,5 @@
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
-import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import type { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { NewsListStore } from '@/Stores/NewsListStore';

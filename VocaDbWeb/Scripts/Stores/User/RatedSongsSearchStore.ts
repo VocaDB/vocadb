@@ -8,10 +8,8 @@ import {
 	SongRepository,
 } from '@/Repositories/SongRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
-import {
-	UserGetRatedSongsListQueryParams,
-	UserRepository,
-} from '@/Repositories/UserRepository';
+import type { UserGetRatedSongsListQueryParams } from '@/Repositories/UserRepository';
+import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
@@ -19,10 +17,8 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
-import {
-	IRatedSongSearchItem,
-	SongVoteRating,
-} from '@/Stores/Search/SongSearchStore';
+import { IRatedSongSearchItem } from '@/Stores/Search/SongSearchStore';
+import type { SongVoteRating } from '@/Stores/Search/SongSearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';

@@ -2,6 +2,12 @@ import { PVService } from '@/Models/PVs/PVService';
 import { IPVPlayer } from '@/Stores/PVs/PVPlayerStore';
 import $ from 'jquery';
 
+enum PlayerStatus {
+	Play = 2,
+	Pause = 3,
+	End = 4,
+}
+
 declare namespace nico {
 	export interface NicoPlayerFactory {
 		create(element: HTMLElement, watchId: string): Promise<NicoPlayer>;
@@ -47,12 +53,6 @@ declare namespace nico {
 	export interface NicoPlayer {
 		play(): void;
 		pause(): void;
-	}
-
-	export const enum PlayerStatus {
-		Play = 2,
-		Pause = 3,
-		End = 4,
 	}
 }
 
@@ -102,7 +102,7 @@ export class PVPlayerNico implements IPVPlayer {
 
 					window.addEventListener('message', (e: nico.PlayerEvent) => {
 						if (e.data.eventName === 'playerStatusChange') {
-							if (e.data.data.playerStatus === nico.PlayerStatus.End) {
+							if (e.data.data.playerStatus === PlayerStatus.End) {
 								this.songFinishedCallback?.();
 							}
 						}

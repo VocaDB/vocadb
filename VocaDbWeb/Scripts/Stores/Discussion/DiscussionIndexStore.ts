@@ -1,4 +1,4 @@
-import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
+import type { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
 import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
 import { LoginManager } from '@/Models/LoginManager';
 import { DiscussionRepository } from '@/Repositories/DiscussionRepository';

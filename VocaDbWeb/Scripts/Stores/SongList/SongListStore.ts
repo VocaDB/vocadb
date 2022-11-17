@@ -9,10 +9,8 @@ import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import {
-	SongListGetSongsQueryParams,
-	SongListRepository,
-} from '@/Repositories/SongListRepository';
+import type { SongListGetSongsQueryParams } from '@/Repositories/SongListRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
 import {
 	SongOptionalField,
 	SongRepository,

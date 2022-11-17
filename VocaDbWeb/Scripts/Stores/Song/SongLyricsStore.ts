@@ -1,4 +1,4 @@
-import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import type { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongRepository } from '@/Repositories/SongRepository';
 import {
 	includesAny,

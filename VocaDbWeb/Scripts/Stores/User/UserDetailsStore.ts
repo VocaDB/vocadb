@@ -26,7 +26,7 @@ import {
 	LocationStateStore,
 } from '@vocadb/route-sphere';
 import Ajv, { JSONSchemaType } from 'ajv';
-import { Options } from 'highcharts';
+import type { Options } from 'highcharts';
 import { makeObservable, observable, reaction, runInAction } from 'mobx';
 
 interface UserSongListsRouteParams {

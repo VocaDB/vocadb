@@ -1,4 +1,4 @@
-import { PVContract } from '@/DataContracts/PVs/PVContract';
+import type { PVContract } from '@/DataContracts/PVs/PVContract';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongRepository } from '@/Repositories/SongRepository';

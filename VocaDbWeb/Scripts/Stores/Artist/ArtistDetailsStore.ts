@@ -20,7 +20,7 @@ import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import { Options } from 'highcharts';
+import type { Options } from 'highcharts';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class CustomizeArtistSubscriptionStore {

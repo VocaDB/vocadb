@@ -1,8 +1,6 @@
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import {
-	ArchivedEntryRouteParams,
-	validate,
-} from '@/Stores/ArchivedEntryStore';
+import type { ArchivedEntryRouteParams } from '@/Stores/ArchivedEntryStore';
+import { validate } from '@/Stores/ArchivedEntryStore';
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { LocationStateStore } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';

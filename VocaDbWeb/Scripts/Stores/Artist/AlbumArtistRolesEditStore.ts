@@ -1,5 +1,5 @@
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
-import { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
+import type { IEditableArtistWithSupport } from '@/Stores/ArtistForAlbumEditStore';
 import { action, makeObservable, observable } from 'mobx';
 
 export interface RoleSelection {

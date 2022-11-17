@@ -1,5 +1,5 @@
 import { DiscussionFolderContract } from '@/DataContracts/Discussion/DiscussionFolderContract';
-import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import type { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
 import { LoginManager } from '@/Models/LoginManager';
 import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
