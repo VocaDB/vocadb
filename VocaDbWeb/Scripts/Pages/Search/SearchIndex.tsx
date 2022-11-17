@@ -29,7 +29,6 @@ import { songRepo } from '@/Repositories/SongRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { urlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
@@ -43,8 +42,6 @@ import { useTranslation } from 'react-i18next';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
 
-const pvPlayersFactory = new PVPlayersFactory();
-
 const searchStore = new SearchStore(
 	vdb.values,
 	urlMapper,
@@ -55,7 +52,6 @@ const searchStore = new SearchStore(
 	eventRepo,
 	tagRepo,
 	userRepo,
-	pvPlayersFactory,
 );
 
 interface SearchCategoryProps {

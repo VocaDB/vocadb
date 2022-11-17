@@ -2,7 +2,6 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import {
@@ -41,7 +40,6 @@ export class ArtistSongsStore
 		urlMapper: UrlMapper,
 		songRepo: SongRepository,
 		userRepo: UserRepository,
-		pvPlayersFactory: PVPlayersFactory,
 	) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -51,7 +49,6 @@ export class ArtistSongsStore
 			userRepo,
 			undefined!,
 			undefined!,
-			pvPlayersFactory,
 		);
 	}
 

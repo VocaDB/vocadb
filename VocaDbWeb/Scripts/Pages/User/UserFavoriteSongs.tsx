@@ -8,15 +8,12 @@ import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface UserFavoriteSongsLayoutProps {
 	user: UserDetailsContract;
@@ -75,7 +72,6 @@ const UserFavoriteSongs = (): React.ReactElement => {
 						songRepo,
 						tagRepo,
 						user.id,
-						pvPlayersFactory,
 						true,
 					),
 				}),

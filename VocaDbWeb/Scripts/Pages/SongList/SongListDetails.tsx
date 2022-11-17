@@ -39,7 +39,6 @@ import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
@@ -57,8 +56,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface SongListDetailsTableRowProps {
 	songListStore: SongListStore;
@@ -567,10 +564,7 @@ const SongListDetailsLayout = observer(
 
 				{songListStore.playlistMode ? (
 					<div className="well well-transparent songlist-playlist">
-						<PlayList
-							playListStore={songListStore.playlistStore}
-							pvPlayerStore={songListStore.pvPlayerStore}
-						/>
+						<PlayList />
 					</div>
 				) : (
 					<div className={classNames(songListStore.loading && 'loading')}>
@@ -621,7 +615,6 @@ const SongListDetails = (): React.ReactElement => {
 						songList.latestComments ?? [],
 						songList.id,
 						songList.tags ?? [],
-						pvPlayersFactory,
 						loginManager.canDeleteComments,
 					),
 				});

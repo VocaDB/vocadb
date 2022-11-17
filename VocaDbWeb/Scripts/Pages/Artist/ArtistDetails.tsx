@@ -24,7 +24,6 @@ import { songRepo } from '@/Repositories/SongRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
@@ -35,8 +34,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface AlbumOptionsProps {
 	albumSearchStore: AlbumSearchStore;
@@ -286,7 +283,6 @@ const ArtistDetails = (): React.ReactElement => {
 						songRepo,
 						userRepo,
 						loginManager.canDeleteComments,
-						pvPlayersFactory,
 						artist.latestComments,
 					),
 				});

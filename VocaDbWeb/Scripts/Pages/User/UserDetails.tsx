@@ -18,7 +18,6 @@ import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
@@ -32,8 +31,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface UserDetailsLayoutProps {
 	user: UserDetailsContract;
@@ -335,7 +332,6 @@ const UserDetails = (): React.ReactElement => {
 					songRepo,
 					tagRepo,
 					user.id,
-					pvPlayersFactory,
 					false,
 				);
 

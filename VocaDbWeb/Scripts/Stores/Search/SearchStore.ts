@@ -9,7 +9,6 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import {
 	AlbumSearchRouteParams,
 	AlbumSearchStore,
@@ -102,7 +101,6 @@ export class SearchStore
 		eventRepo: ReleaseEventRepository,
 		tagRepo: TagRepository,
 		userRepo: UserRepository,
-		pvPlayersFactory: PVPlayersFactory,
 	) {
 		makeObservable(this);
 
@@ -130,7 +128,6 @@ export class SearchStore
 			userRepo,
 			eventRepo,
 			artistRepo,
-			pvPlayersFactory,
 		);
 		this.tagSearchStore = new TagSearchStore(this, values, tagRepo);
 

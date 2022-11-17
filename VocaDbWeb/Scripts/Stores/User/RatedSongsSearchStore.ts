@@ -12,8 +12,6 @@ import type { UserGetRatedSongsListQueryParams } from '@/Repositories/UserReposi
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
@@ -22,9 +20,6 @@ import type { SongVoteRating } from '@/Stores/Search/SongSearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { IRatedSongsAdapterStore } from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import { PlayListRepositoryForRatedSongsAdapter } from '@/Stores/Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
-import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import {
@@ -94,10 +89,7 @@ const schema: JSONSchemaType<RatedSongsSearchRouteParams> = require('./RatedSong
 const validate = ajv.compile(schema);
 
 export class RatedSongsSearchStore
-	implements
-		LocationStateStore<RatedSongsSearchRouteParams>,
-		ISongSearchStore,
-		IRatedSongsAdapterStore {
+	implements LocationStateStore<RatedSongsSearchRouteParams>, ISongSearchStore {
 	readonly advancedFilters = new AdvancedSearchFilters();
 	artistFilters: ArtistFilters;
 	@observable groupByRating = true;
@@ -105,8 +97,6 @@ export class RatedSongsSearchStore
 	@observable loading = true; // Currently loading for data
 	@observable page: IRatedSongSearchItem[] = []; // Current page of items
 	readonly paging = new ServerSidePagingStore(20); // Paging view model
-	readonly playListStore: PlayListStore;
-	readonly pvPlayerStore: PVPlayerStore;
 	pvServiceIcons: PVServiceIcons;
 	@observable rating: SongVoteRating = 'Nothing' /* TODO: enum */;
 	@observable searchTerm = '';
@@ -125,7 +115,6 @@ export class RatedSongsSearchStore
 		private readonly songRepo: SongRepository,
 		tagRepo: TagRepository,
 		readonly userId: number,
-		pvPlayersFactory: PVPlayersFactory,
 		initialize = true,
 	) {
 		makeObservable(this);
@@ -135,25 +124,6 @@ export class RatedSongsSearchStore
 		this.tagFilters = new TagFilters(values, tagRepo);
 
 		reaction(() => this.showTags, this.updateResultsWithoutTotalCount);
-
-		this.pvPlayerStore = new PVPlayerStore(
-			values,
-			songRepo,
-			userRepo,
-			pvPlayersFactory,
-		);
-
-		const songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(
-			userRepo,
-			this,
-		);
-
-		this.playListStore = new PlayListStore(
-			values,
-			urlMapper,
-			songsRepoAdapter,
-			this.pvPlayerStore,
-		);
 
 		if (initialize) this.init();
 	}
@@ -239,8 +209,6 @@ export class RatedSongsSearchStore
 		const pagingProperties = this.paging.getPagingProperties(clearResults);
 
 		if (this.viewMode === 'PlayList') {
-			await this.playListStore.updateResultsWithTotalCount();
-
 			this.pauseNotifications = false;
 			runInAction(() => {
 				this.loading = false;
