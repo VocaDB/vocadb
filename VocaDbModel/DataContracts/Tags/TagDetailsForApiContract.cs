@@ -142,6 +142,9 @@ namespace VocaDb.Model.DataContracts.Tags
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; init; }
 
+		[DataMember]
+		public int AllUsageCount { get; init; }
+
 		[DataMember(EmitDefaultValue = false)]
 		public string CategoryName { get; init; }
 
@@ -223,6 +226,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		)
 		{
 			AdditionalNames = tag.Names.AdditionalNamesString;
+			AllUsageCount = stats.ArtistCount + stats.AlbumCount + stats.SongCount + stats.EventCount + stats.SongListCount;
 			CategoryName = tag.CategoryName;
 			Children = tag.Children
 				.Select(a => new TagBaseContract(a, languagePreference))
@@ -259,8 +263,5 @@ namespace VocaDb.Model.DataContracts.Tags
 				.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl))
 				.ToArray();
 		}
-
-		[DataMember]
-		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
 	}
 }
