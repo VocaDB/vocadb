@@ -38,19 +38,19 @@ const EventIndexLayout = ({
 							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsBySeries">
+							<Link to="/Event/EventsBySeries">
 								{t('ViewRes.Event:EventsBySeries.ViewBySeries')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsByVenue">
+							<Link to="/Event/EventsByVenue">
 								{t('ViewRes.Event:EventsBySeries.ViewByVenue')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsByDate">
+							<Link to="/Event/EventsByDate">
 								{t('ViewRes.Event:EventsBySeries.ViewByDate')}
-							</a>
+							</Link>
 						</li>
 					</ul>
 
@@ -88,9 +88,7 @@ const EventIndexLayout = ({
 };
 
 const EventIndex = (): React.ReactElement => {
-	const [model, setModel] = React.useState<
-		ReleaseEventContract[] | undefined
-	>();
+	const [model, setModel] = React.useState<ReleaseEventContract[]>();
 
 	React.useEffect(() => {
 		eventRepo

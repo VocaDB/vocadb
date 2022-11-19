@@ -393,18 +393,24 @@ namespace VocaDb.Model.Database.Queries
 				return contract;
 			});
 		}
-#nullable disable
 
-		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false)
+		public ReleaseEventForApiContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false)
 		{
 			return _repository.HandleQuery(ctx => ctx
 				.Query()
 				.Where(e => e.Date.DateTime != null)
 				.OrderBy(sortRule, LanguagePreference, sortDirection)
 				.ToArray()
-				.Select(e => new ReleaseEventContract(e, LanguagePreference, includeSeries))
-				.ToArray());
+				.Select(e => new ReleaseEventForApiContract(
+					rel: e,
+					languagePreference: LanguagePreference,
+					fields: includeSeries ? ReleaseEventOptionalFields.Series : ReleaseEventOptionalFields.None,
+					thumbPersister: null
+				))
+				.ToArray()
+			);
 		}
+#nullable disable
 
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields)
 		{
@@ -993,6 +999,43 @@ namespace VocaDb.Model.Database.Queries
 				languagePreference: LanguagePreference,
 				thumbPersister: _imageUrlFactory
 			));
+		}
+
+		public ReleaseEventSeriesWithEventsForApiContract[] GetReleaseEventsBySeries()
+		{
+			return HandleQuery(session =>
+			{
+				var allEvents = session.Query<ReleaseEvent>()
+					.Where(e => !e.Deleted)
+					.ToArray();
+				var series = session.Query<ReleaseEventSeries>()
+					.Where(e => !e.Deleted)
+					.OrderByName(LanguagePreference)
+					.ToArray();
+
+				var seriesContracts = series.Select(s => new ReleaseEventSeriesWithEventsForApiContract(
+					series: s,
+					events: allEvents.Where(e => s.Equals(e.Series)),
+					languagePreference: PermissionContext.LanguagePreference,
+					thumbPersister: _imageUrlFactory
+				));
+				var ungrouped = allEvents
+					.Where(e => e.Series == null)
+					.OrderBy(e => e.TranslatedName[LanguagePreference]);
+
+				return seriesContracts.Append(new ReleaseEventSeriesWithEventsForApiContract
+				{
+					Name = string.Empty,
+					Events = ungrouped
+						.Select(e => new ReleaseEventForApiContract(
+							rel: e,
+							languagePreference: LanguagePreference,
+							fields: ReleaseEventOptionalFields.None,
+							thumbPersister: null
+						))
+						.ToArray(),
+				}).ToArray();
+			});
 		}
 #nullable disable
 	}

@@ -7,6 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -273,6 +274,27 @@ namespace VocaDb.Web.Controllers.Api
 				ModelState.AddModelError("Names", x.Message);
 				return ValidationProblem(ModelState);
 			}
+		}
+
+		[HttpGet("by-date")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ReleaseEventForApiContract[] GetReleaseEventsByDate()
+		{
+			return _queries.List(EventSortRule.Date, SortDirection.Descending);
+		}
+
+		[HttpGet("by-series")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public ReleaseEventSeriesWithEventsForApiContract[] GetReleaseEventsBySeries()
+		{
+			return _queries.GetReleaseEventsBySeries();
+		}
+
+		[HttpGet("by-venue")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public VenueForApiContract[] GetReleaseEventsByVenue()
+		{
+			return _queries.GetReleaseEventsByVenue();
 		}
 #nullable disable
 	}
