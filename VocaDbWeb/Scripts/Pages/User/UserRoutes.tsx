@@ -9,6 +9,7 @@ const UserIndex = React.lazy(() => import('./UserIndex'));
 const UserEdit = React.lazy(() => import('./UserEdit'));
 const UserEntryEdits = React.lazy(() => import('./UserEntryEdits'));
 const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
+const UserLogin = React.lazy(() => import('./UserLogin'));
 const UserMessages = React.lazy(() => import('./UserMessages'));
 const UserMySettings = React.lazy(() => import('./UserMySettings'));
 const UserRequestVerification = React.lazy(
@@ -52,6 +53,7 @@ const UserRoutes = (): React.ReactElement => {
 			<Route path="Edit/:id" element={<UserEdit />} />
 			<Route path="EntryEdits/:id" element={<UserEntryEdits />} />
 			<Route path="FavoriteSongs/:id" element={<UserFavoriteSongs />} />
+			<Route path="Login" element={<UserLogin />} />
 			<Route path="Messages" element={<UserMessages />} />
 			<Route path="MySettings" element={<UserMySettings />} />
 			<Route path="RequestVerification" element={<UserRequestVerification />} />

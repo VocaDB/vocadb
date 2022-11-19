@@ -88,7 +88,7 @@ const AlbumCreateLayout = observer(
 							<div className="editor-field">
 								{albumCreateStore.errors && albumCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{albumCreateStore.errors.names}
+										{albumCreateStore.errors.names[0]}
 									</span>
 								)}
 
@@ -197,7 +197,7 @@ const AlbumCreateLayout = observer(
 							<div className="editor-field">
 								{albumCreateStore.errors && albumCreateStore.errors.artists && (
 									<span className="field-validation-error">
-										{albumCreateStore.errors.artists}
+										{albumCreateStore.errors.artists[0]}
 									</span>
 								)}
 								<table>

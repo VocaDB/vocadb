@@ -194,7 +194,10 @@ export const GlobalSearchBox = observer(
 					<Dropdown.Menu>
 						{!vdb.values.loggedUser ? (
 							<>
-								<Dropdown.Item href={'/User/Login'} /* TODO: showLoginPopup */>
+								<Dropdown.Item
+									as={Link}
+									to="/User/Login" /* TODO: showLoginPopup */
+								>
 									{t('ViewRes:Layout.LogIn')}
 								</Dropdown.Item>
 								<Dropdown.Item href={'/User/Create'}>
