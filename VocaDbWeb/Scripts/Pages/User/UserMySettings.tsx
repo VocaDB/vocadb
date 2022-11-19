@@ -223,7 +223,7 @@ const AccountSettingsTabContent = observer(
 					)}{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.email && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.email}
+							{mySettingsStore.errors.email[0]}
 						</span>
 					)}
 				</div>
@@ -331,7 +331,7 @@ const PasswordSettingsTabContent = observer(
 							/>{' '}
 							{mySettingsStore.errors && mySettingsStore.errors.oldPass && (
 								<span className="field-validation-error">
-									{mySettingsStore.errors.oldPass}
+									{mySettingsStore.errors.oldPass[0]}
 								</span>
 							)}
 						</div>
@@ -353,7 +353,7 @@ const PasswordSettingsTabContent = observer(
 					/>{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.newPass && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.newPass}
+							{mySettingsStore.errors.newPass[0]}
 						</span>
 					)}
 				</div>
@@ -373,7 +373,7 @@ const PasswordSettingsTabContent = observer(
 					/>{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.newPassAgain && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.newPassAgain}
+							{mySettingsStore.errors.newPassAgain[0]}
 						</span>
 					)}
 				</div>

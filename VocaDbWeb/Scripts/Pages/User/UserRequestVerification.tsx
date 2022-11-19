@@ -169,9 +169,9 @@ const UserRequestVerification = observer(
 								i18nKey="ViewRes.User:RequestVerification.NotLoggedInMessage"
 								components={{
 									1: (
-										<a href="/User/Login">
+										<Link to="/User/Login">
 											{t('ViewRes.User:RequestVerification.Login')}
-										</a>
+										</Link>
 									),
 									2: (
 										<a href="/User/Create">

@@ -150,7 +150,7 @@ const SongCreateLayout = observer(
 							<div className="editor-field">
 								{songCreateStore.errors && songCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{songCreateStore.errors.names}
+										{songCreateStore.errors.names[0]}
 									</span>
 								)}
 
@@ -345,7 +345,7 @@ const SongCreateLayout = observer(
 							<div className="editor-field">
 								{songCreateStore.errors && songCreateStore.errors.artists && (
 									<span className="field-validation-error">
-										{songCreateStore.errors.artists}
+										{songCreateStore.errors.artists[0]}
 									</span>
 								)}
 								<table>

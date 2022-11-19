@@ -168,7 +168,8 @@ export const MainNavigationItems = React.memo(
 					<>
 						<Nav.Item>
 							<Nav.Link
-								href={'/User/Login'}
+								as={Link}
+								to="/User/Login"
 								onClick={(): void => {} /* TODO: showLoginPopup */}
 							>
 								{t('ViewRes:Layout.LogIn')}
