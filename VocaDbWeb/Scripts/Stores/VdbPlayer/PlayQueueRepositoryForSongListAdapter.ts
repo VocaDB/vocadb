@@ -1,5 +1,6 @@
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { PVService } from '@/Models/PVs/PVService';
 import {
@@ -7,10 +8,7 @@ import {
 	SongListRepository,
 } from '@/Repositories/SongListRepository';
 import { PlayQueueRepository } from '@/Stores/VdbPlayer/PlayQueueRepository';
-import {
-	EntryType,
-	PlayQueueSongContract,
-} from '@/Stores/VdbPlayer/PlayQueueRepository';
+import { PlayQueueSongContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 
 export class PlayQueueRepositoryForSongListAdapter
 	implements PlayQueueRepository<SongListGetSongsQueryParams> {

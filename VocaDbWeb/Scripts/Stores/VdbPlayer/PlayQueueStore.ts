@@ -2,6 +2,7 @@ import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -11,7 +12,6 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
-	EntryType,
 	PlayQueueAlbumContract,
 	PlayQueueEntryContract,
 	PlayQueueItemContract,
