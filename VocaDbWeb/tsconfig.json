@@ -13,7 +13,7 @@
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		/* TODO: "noEmit": true, */
+		"noEmit": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "@emotion/react",
 		"baseUrl": "./",
@@ -23,5 +23,10 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
 	},
-	"include": ["Scripts"]
+	"include": ["Scripts"],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
 }
