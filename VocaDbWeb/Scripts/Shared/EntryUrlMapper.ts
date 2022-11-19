@@ -4,7 +4,6 @@ import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { EntryType } from '@/Models/EntryType';
-import { functions } from '@/Shared/GlobalFunctions';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import qs from 'qs';
 
@@ -22,37 +21,37 @@ export class EntryUrlMapper {
 
 		switch (typeName) {
 			case EntryType.Album:
-				prefix = functions.mapAbsoluteUrl(`/Al/${id}`);
+				prefix = `/Al/${id}`;
 				break;
 			case EntryType.Artist:
-				prefix = functions.mapAbsoluteUrl(`/Ar/${id}`);
+				prefix = `/Ar/${id}`;
 				break;
 			case EntryType.DiscussionTopic:
-				prefix = functions.mapAbsoluteUrl(`/discussion/topics/${id}`);
+				prefix = `/discussion/topics/${id}`;
 				break;
 			case EntryType.ReleaseEvent:
-				prefix = functions.mapAbsoluteUrl(`/E/${id}`);
+				prefix = `/E/${id}`;
 				break;
 			case EntryType.ReleaseEventSeries:
-				prefix = functions.mapAbsoluteUrl(`/Es/${id}`);
+				prefix = `/Es/${id}`;
 				break;
 			case EntryType.Song:
-				prefix = functions.mapAbsoluteUrl(`/S/${id}`);
+				prefix = `/S/${id}`;
 				break;
 			case EntryType.SongList:
-				prefix = functions.mapAbsoluteUrl(`/L/${id}`);
+				prefix = `/L/${id}`;
 				break;
 			case EntryType.Tag:
-				prefix = functions.mapAbsoluteUrl(`/T/${id}`);
+				prefix = `/T/${id}`;
 				break;
 			case EntryType.User:
-				prefix = functions.mapAbsoluteUrl(`/User/Details/${id}`);
+				prefix = `/User/Details/${id}`;
 				break;
 			case EntryType.Venue:
-				prefix = functions.mapAbsoluteUrl(`/Venue/Details/${id}`);
+				prefix = `/Venue/Details/${id}`;
 				break;
 			default:
-				prefix = functions.mapAbsoluteUrl(`/${typeName}/Details/${id}`);
+				prefix = `/${typeName}/Details/${id}`;
 				break;
 		}
 
@@ -88,7 +87,7 @@ export class EntryUrlMapper {
 	}
 
 	static details_user_byName(name?: string): string {
-		return functions.mapAbsoluteUrl(`/Profile/${name}`);
+		return `/Profile/${name}`;
 	}
 
 	static index = (fullEntryType: EntryTypeAndSubTypeContract): string => {
