@@ -222,7 +222,7 @@ export class AlbumRepository
 		advancedFilters,
 	}: {
 		paging: PagingProperties;
-		lang?: ContentLanguagePreference;
+		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
 		discTypes?: AlbumType[];

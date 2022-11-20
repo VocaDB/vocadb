@@ -189,7 +189,7 @@ export class ArtistRepository
 		advancedFilters,
 	}: {
 		paging: PagingProperties;
-		lang?: ContentLanguagePreference;
+		lang: ContentLanguagePreference;
 		query: string;
 		sort: string;
 		artistTypes?: ArtistType[];

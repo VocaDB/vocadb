@@ -343,7 +343,7 @@ export class SongRepository
 		queryParams,
 	}: {
 		fields?: SongOptionalField[];
-		lang?: ContentLanguagePreference;
+		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;

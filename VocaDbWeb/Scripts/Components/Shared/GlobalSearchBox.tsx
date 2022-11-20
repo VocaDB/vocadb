@@ -115,6 +115,7 @@ export const GlobalSearchBox = observer(
 			const tryRedirectEntry = async (filter: string): Promise<void> => {
 				const { items } = await entryRepo.getList({
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
 					query: filter,
 				});
 
@@ -132,6 +133,7 @@ export const GlobalSearchBox = observer(
 			const tryRedirectAlbum = async (filter: string): Promise<void> => {
 				const { items } = await albumRepo.getList({
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
 					query: filter,
 					sort: AlbumSortRule.None,
 				});
@@ -151,6 +153,7 @@ export const GlobalSearchBox = observer(
 			const tryRedirectArtist = async (filter: string): Promise<void> => {
 				const { items } = await artistRepo.getList({
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
 					query: filter,
 					sort: ArtistSortRule.None,
 				});
@@ -171,6 +174,7 @@ export const GlobalSearchBox = observer(
 				const { items } = await eventRepo.getList({
 					queryParams: {
 						getTotalCount: false,
+						lang: vdb.values.languagePreference,
 						maxResults: 2,
 						start: 0,
 						query: filter,
@@ -191,6 +195,7 @@ export const GlobalSearchBox = observer(
 
 			const tryRedirectSong = async (filter: string): Promise<void> => {
 				const { items } = await songRepo.getList({
+					lang: vdb.values.languagePreference,
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
 					queryParams: {
 						query: filter,
@@ -233,6 +238,7 @@ export const GlobalSearchBox = observer(
 				const { items } = await tagRepo.getList({
 					queryParams: {
 						getTotalCount: false,
+						lang: vdb.values.languagePreference,
 						maxResults: 2,
 						start: 0,
 						query: filter,

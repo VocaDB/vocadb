@@ -37,7 +37,7 @@ export class EntryRepository {
 		status,
 	}: {
 		paging: PagingProperties;
-		lang?: ContentLanguagePreference;
+		lang: ContentLanguagePreference;
 		query: string;
 		tags?: number[];
 		childTags?: boolean;
