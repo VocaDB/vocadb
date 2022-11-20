@@ -12,6 +12,7 @@ import { ImageSize } from '@/Models/Images/ImageSize';
 import { loginManager } from '@/Models/LoginManager';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { entryRepo } from '@/Repositories/EntryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -105,11 +106,23 @@ export const GlobalSearchBox = observer(
 			const { entryType } = topBarStore;
 			switch (entryType) {
 				case EntryType.Undefined:
-					navigate(
-						`/Search?${qs.stringify({
-							filter: filter,
-						})}`,
-					);
+					const { items: entries } = await entryRepo.getList({
+						paging: { start: 0, maxEntries: 2, getTotalCount: false },
+						lang: vdb.values.languagePreference,
+						query: filter,
+						tags: [],
+						childTags: false,
+					});
+
+					if (entries.length === 1) {
+						navigate(EntryUrlMapper.details_entry(entries[0]));
+					} else {
+						navigate(
+							`/Search?${qs.stringify({
+								filter: filter,
+							})}`,
+						);
+					}
 					break;
 
 				case EntryType.Album:
@@ -139,8 +152,8 @@ export const GlobalSearchBox = observer(
 					break;
 
 				case EntryType.User:
-					const { totalCount, items } = await userRepo.getList({
-						paging: { start: 0, maxEntries: 1, getTotalCount: true },
+					const { items: users } = await userRepo.getList({
+						paging: { start: 0, maxEntries: 2, getTotalCount: false },
 						query: filter,
 						groups: UserGroup.Nothing,
 						includeDisabled: false,
@@ -148,8 +161,8 @@ export const GlobalSearchBox = observer(
 						nameMatchMode: NameMatchMode.Auto,
 					});
 
-					if (totalCount === 1 && items.length === 1) {
-						navigate(EntryUrlMapper.details_user_byName(items[0].name));
+					if (users.length === 1) {
+						navigate(EntryUrlMapper.details_user_byName(users[0].name));
 					} else {
 						navigate(
 							`/User?${qs.stringify({

@@ -1,7 +1,10 @@
 import { EntryContract } from '@/DataContracts/EntryContract';
 import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
-import { EntryRepository } from '@/Repositories/EntryRepository';
+import {
+	EntryOptionalField,
+	EntryRepository,
+} from '@/Repositories/EntryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
@@ -43,10 +46,14 @@ export class AnythingSearchStore extends SearchCategoryBaseStore<
 		makeObservable(this);
 	}
 
-	@computed get fields(): string {
+	@computed get fields(): EntryOptionalField[] {
 		return this.showTags
-			? 'AdditionalNames,MainPicture,Tags'
-			: 'AdditionalNames,MainPicture';
+			? [
+					EntryOptionalField.AdditionalNames,
+					EntryOptionalField.MainPicture,
+					EntryOptionalField.Tags,
+			  ]
+			: [EntryOptionalField.AdditionalNames, EntryOptionalField.MainPicture];
 	}
 
 	loadResults = (
