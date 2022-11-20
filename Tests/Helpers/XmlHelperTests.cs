@@ -76,7 +76,7 @@ public class XmlHelperTests
 
 		album.Description.IsNormalized().Should().BeTrue();
 
-		this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+		Invoking(() => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
 	}
 
 	[TestMethod]
@@ -87,6 +87,6 @@ public class XmlHelperTests
 
 		album.Description.IsNormalized().Should().BeTrue();
 
-		this.Invoking(_ => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
+		Invoking(() => SerializeToObjectAndBack(album)).Should().Throw<InvalidOperationException>();
 	}
 }

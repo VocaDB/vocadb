@@ -142,12 +142,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Create_NoPermission()
+		public async Task Create_NoPermission()
 		{
 			_user.GroupId = UserGroupId.Limited;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			_queries.Awaiting(subject => subject.Create(_newArtistContract)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => _queries.Create(_newArtistContract)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -366,13 +366,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Revert_NotAllowed()
+		public async Task Revert_NotAllowed()
 		{
 			// Regular users can't revert
 			_user.GroupId = UserGroupId.Regular;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			_queries.Awaiting(subject => subject.RevertToVersion(0)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => _queries.RevertToVersion(0)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]

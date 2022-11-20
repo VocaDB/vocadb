@@ -55,7 +55,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void CreateTopic_NoPermission()
 		{
 			var contract = new DiscussionTopicContract { Author = new UserForApiContract { Id = 2 }, Name = "New topic", Content = "Content" };
-			_queries.Invoking(subject => subject.CreateTopic(_folder.Id, contract)).Should().Throw<NotAllowedException>();
+			Invoking(() => _queries.CreateTopic(_folder.Id, contract)).Should().Throw<NotAllowedException>();
 		}
 	}
 }

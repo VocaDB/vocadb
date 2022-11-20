@@ -207,7 +207,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void ClearRatings_NoPermission()
 		{
-			_data.Invoking(subject => subject.ClearRatings(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
+			Invoking(() => _data.ClearRatings(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -232,34 +232,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Create_NameAlreadyExists()
+		public async Task Create_NameAlreadyExists()
 		{
-			this.Awaiting(subject => subject.CallCreate(name: "already_exists")).Should().Throw<UserNameAlreadyExistsException>();
+			await Awaiting(() => CallCreate(name: "already_exists")).Should().ThrowAsync<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void Create_NameAlreadyExistsDifferentCase()
+		public async Task Create_NameAlreadyExistsDifferentCase()
 		{
-			this.Awaiting(subject => subject.CallCreate(name: "Already_Exists")).Should().Throw<UserNameAlreadyExistsException>();
+			await Awaiting(() => CallCreate(name: "Already_Exists")).Should().ThrowAsync<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void Create_EmailAlreadyExists()
+		public async Task Create_EmailAlreadyExists()
 		{
-			this.Awaiting(subject => subject.CallCreate(email: "already_in_use@vocadb.net")).Should().Throw<UserEmailAlreadyExistsException>();
+			await Awaiting(() => CallCreate(email: "already_in_use@vocadb.net")).Should().ThrowAsync<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void Create_EmailAlreadyExistsButDisabled()
+		public async Task Create_EmailAlreadyExistsButDisabled()
 		{
 			_userWithEmail.Active = false;
-			this.Awaiting(subject => subject.CallCreate(email: "already_in_use@vocadb.net")).Should().Throw<UserEmailAlreadyExistsException>();
+			await Awaiting(() => CallCreate(email: "already_in_use@vocadb.net")).Should().ThrowAsync<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void Create_InvalidEmailFormat()
+		public async Task Create_InvalidEmailFormat()
 		{
-			this.Awaiting(subject => subject.CallCreate(email: "mikumiku")).Should().Throw<InvalidEmailFormatException>();
+			await Awaiting(() => CallCreate(email: "mikumiku")).Should().ThrowAsync<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -307,10 +307,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Create_MalicousIP_Banned()
+		public async Task Create_MalicousIP_Banned()
 		{
 			_stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
-			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
+			await Awaiting(() => CallCreate()).Should().ThrowAsync<RestrictedIPException>("User is malicious");
 			_ipRuleManager.PermBannedIPs.Contains(DefaultHostname).Should().BeTrue("User was banned");
 
 			_repository.List<UserReport>().Should().BeEmpty("Report was not created");
@@ -320,16 +320,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Create_RegistrationTimeTrigger()
+		public async Task Create_RegistrationTimeTrigger()
 		{
-			this.Awaiting(subject => subject.CallCreate(timeSpan: TimeSpan.FromSeconds(4))).Should().Throw<TooFastRegistrationException>();
+			await Awaiting(() => CallCreate(timeSpan: TimeSpan.FromSeconds(4))).Should().ThrowAsync<TooFastRegistrationException>();
 			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeTrue("Was not banned");
 		}
 
 		[TestMethod]
-		public void Create_RegistrationTimeAndBanTrigger()
+		public async Task Create_RegistrationTimeAndBanTrigger()
 		{
-			this.Awaiting(subject => subject.CallCreate(timeSpan: TimeSpan.FromSeconds(1))).Should().Throw<TooFastRegistrationException>();
+			await Awaiting(() => CallCreate(timeSpan: TimeSpan.FromSeconds(1))).Should().ThrowAsync<TooFastRegistrationException>();
 			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeFalse("Was banned");
 		}
 
@@ -378,21 +378,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void CreateTwitter_NameAlreadyExists()
+		public async Task CreateTwitter_NameAlreadyExists()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserNameAlreadyExistsException>();
+			await Awaiting(() => _data.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().ThrowAsync<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void CreateTwitter_EmailAlreadyExists()
+		public async Task CreateTwitter_EmailAlreadyExists()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserEmailAlreadyExistsException>();
+			await Awaiting(() => _data.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().ThrowAsync<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void CreateTwitter_InvalidEmailFormat()
+		public async Task CreateTwitter_InvalidEmailFormat()
 		{
-			_data.Awaiting(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<InvalidEmailFormatException>();
+			await Awaiting(() => _data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().ThrowAsync<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -468,7 +468,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void DisableUser_NoPermission()
 		{
-			_data.Invoking(subject => subject.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
+			Invoking(() => _data.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -478,7 +478,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithoutEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			RefreshLoggedUser();
 
-			_data.Invoking(subject => subject.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
+			Invoking(() => _data.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -576,16 +576,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void RequestPasswordReset_NotFound()
+		public async Task RequestPasswordReset_NotFound()
 		{
-			_data.Awaiting(subject => subject.RequestPasswordReset(_userWithEmail.Name, "notfound@vocadb.net", string.Empty)).Should().Throw<UserNotFoundException>();
+			await Awaiting(() => _data.RequestPasswordReset(_userWithEmail.Name, "notfound@vocadb.net", string.Empty)).Should().ThrowAsync<UserNotFoundException>();
 		}
 
 		[TestMethod]
-		public void RequestPasswordReset_Disabled()
+		public async Task RequestPasswordReset_Disabled()
 		{
 			_userWithEmail.Active = false;
-			_data.Awaiting(subject => subject.RequestPasswordReset(_userWithEmail.Name, _userWithEmail.Email, string.Empty)).Should().Throw<UserNotFoundException>();
+			await Awaiting(() => _data.RequestPasswordReset(_userWithEmail.Name, _userWithEmail.Email, string.Empty)).Should().ThrowAsync<UserNotFoundException>();
 		}
 
 		[TestMethod]
@@ -637,14 +637,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void SendMessage_NoPermission()
+		public async Task SendMessage_NoPermission()
 		{
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver");
 			_repository.Save(sender, receiver);
 
 			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
-			_data.Awaiting(subject => subject.SendMessage(contract, string.Empty, string.Empty)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => _data.SendMessage(contract, string.Empty, string.Empty)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -747,7 +747,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				Name = _userWithEmail.Name,
 			};
 
-			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<UserNameAlreadyExistsException>();
+			Invoking(() => _data.UpdateUser(contract)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -761,14 +761,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				Name = "Miku!",
 			};
 
-			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<InvalidUserNameException>();
+			Invoking(() => _data.UpdateUser(contract)).Should().Throw<InvalidUserNameException>();
 		}
 
 		[TestMethod]
 		public void UpdateUser_NotAllowed()
 		{
 			var contract = new UserForEditForApiContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<NotAllowedException>();
+			Invoking(() => _data.UpdateUser(contract)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -803,7 +803,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Password_InvalidOldPassword()
+		public async Task UpdateUserSettings_Password_InvalidOldPassword()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
@@ -812,22 +812,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPassAgain = "39393939",
 			};
 
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidPasswordException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<InvalidPasswordException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_NoPermission()
+		public async Task UpdateUserSettings_NoPermission()
 		{
-			_data.Awaiting(subject => subject.UpdateUserSettings(new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail), pictureData: null)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => _data.UpdateUserSettings(new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail), pictureData: null)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_EmailTaken()
+		public async Task UpdateUserSettings_EmailTaken()
 		{
 			_permissionContext.LoggedUser = new ServerOnlyUserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserEmailAlreadyExistsException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -845,11 +845,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_InvalidEmailFormat()
+		public async Task UpdateUserSettings_InvalidEmailFormat()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Email = "mikumiku" };
 
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidEmailFormatException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -866,96 +866,96 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_ChangeName_Invalid()
+		public async Task UpdateUserSettings_ChangeName_Invalid()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "miku miku" };
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<InvalidUserNameException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<InvalidUserNameException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_ChangeName_AlreadyInUse()
+		public async Task UpdateUserSettings_ChangeName_AlreadyInUse()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = _userWithoutEmail.Name };
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameAlreadyExistsException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_ChangeName_TooSoon()
+		public async Task UpdateUserSettings_ChangeName_TooSoon()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail) { Name = "mikumiku" };
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null)).Should().Throw<UserNameTooSoonException>();
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null)).Should().ThrowAsync<UserNameTooSoonException>();
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Location_TooLong()
+		public async Task UpdateUserSettings_Location_TooLong()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				Location = string.Concat(Enumerable.Repeat(' ', 51)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- Location: The length of 'Location' must be 50 characters or fewer. You entered 51 characters. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Email_TooLong()
+		public async Task UpdateUserSettings_Email_TooLong()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				Email = $"{string.Concat(Enumerable.Repeat('a', 40))}@vocadb.net",
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- Email: The length of 'Email' must be 50 characters or fewer. You entered 51 characters. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Name_TooShort()
+		public async Task UpdateUserSettings_Name_TooShort()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				Name = string.Concat(Enumerable.Repeat('a', 2)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- Name: 'Name' must be between 3 and 100 characters. You entered 2 characters. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Name_TooLong()
+		public async Task UpdateUserSettings_Name_TooLong()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				Name = string.Concat(Enumerable.Repeat('a', 101)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- Name: 'Name' must be between 3 and 100 characters. You entered 101 characters. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Name_Whitespace()
+		public async Task UpdateUserSettings_Name_Whitespace()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				Name = string.Concat(Enumerable.Repeat(' ', 3)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- Name: 'Name' must not be empty. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Password_TooShort()
+		public async Task UpdateUserSettings_Password_TooShort()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
@@ -963,14 +963,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = string.Concat(Enumerable.Repeat('a', 7)),
 				NewPassAgain = string.Concat(Enumerable.Repeat('a', 7)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- NewPass: 'New Pass' must be between 8 and 100 characters. You entered 7 characters. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Password_TooLong()
+		public async Task UpdateUserSettings_Password_TooLong()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
@@ -978,8 +978,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = string.Concat(Enumerable.Repeat('a', 101)),
 				NewPassAgain = string.Concat(Enumerable.Repeat('a', 101)),
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- OldPass: The length of 'Old Pass' must be 100 characters or fewer. You entered 101 characters. Severity: Error
  -- NewPass: 'New Pass' must be between 8 and 100 characters. You entered 101 characters. Severity: Error
@@ -987,7 +987,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_InvalidNewPassAgain()
+		public async Task UpdateUserSettings_InvalidNewPassAgain()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
@@ -995,34 +995,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = "39393939",
 				NewPassAgain = "",
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- NewPass: Passwords must match Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_UnreadNotificationsToKeep_TooSmall()
+		public async Task UpdateUserSettings_UnreadNotificationsToKeep_TooSmall()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				UnreadNotificationsToKeep = 0,
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- UnreadNotificationsToKeep: 'Unread Notifications To Keep' must be greater than or equal to '1'. Severity: Error");
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_UnreadNotificationsToKeep_TooLarge()
+		public async Task UpdateUserSettings_UnreadNotificationsToKeep_TooLarge()
 		{
 			var contract = new ServerOnlyUpdateUserSettingsForApiContract(_userWithEmail)
 			{
 				UnreadNotificationsToKeep = 391,
 			};
-			_data.Awaiting(subject => subject.UpdateUserSettings(contract, pictureData: null))
-				.Should().Throw<ValidationException>()
+			await Awaiting(() => _data.UpdateUserSettings(contract, pictureData: null))
+				.Should().ThrowAsync<ValidationException>()
 				.WithMessage(@"Validation failed: 
  -- UnreadNotificationsToKeep: 'Unread Notifications To Keep' must be less than or equal to '390'. Severity: Error");
 		}
@@ -1042,14 +1042,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void VerifyEmail_DifferentUser()
 		{
 			_request.User = _userWithoutEmail;
-			_data.Invoking(subject => subject.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
+			Invoking(() => _data.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
 		}
 
 		[TestMethod]
 		public void VerifyEmail_DifferentEmail()
 		{
 			_request.Email = "new@vocadb.net";
-			_data.Invoking(subject => subject.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
+			Invoking(() => _data.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
 
 			/*
 			userWithEmail.Options.EmailVerified.Should().BeTrue("EmailVerified");
