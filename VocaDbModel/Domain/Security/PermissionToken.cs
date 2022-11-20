@@ -84,6 +84,7 @@ namespace VocaDb.Model.Domain.Security
 		public static readonly PermissionToken ViewHiddenRevisions = New("c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d", nameof(ViewHiddenRevisions));
 		public static readonly PermissionToken ManageWebhooks = New("838dde1d-51ba-423b-ad8e-c1e2c2024a37", nameof(ManageWebhooks));
 		public static readonly PermissionToken CreateDatabaseDump = New("d3dffb90-2408-4434-ae3a-c26352293281", nameof(CreateDatabaseDump));
+		public static readonly PermissionToken ViewOldUsernames = New("452a66b3-baa8-4ad8-8f8a-00655d37be80", nameof(ViewOldUsernames));
 
 		/// <summary>
 		/// All tokens except Nothing

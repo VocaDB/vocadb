@@ -51,7 +51,8 @@ public class UserGroup
 		PermissionToken.ViewAuditLog,
 		PermissionToken.ViewHiddenRatings,
 		PermissionToken.ViewHiddenRevisions,
-		PermissionToken.UploadMedia
+		PermissionToken.UploadMedia,
+		PermissionToken.ViewOldUsernames
 	);
 
 	private static readonly UserGroup s_admin = new(UserGroupId.Admin,

@@ -46,6 +46,7 @@ export enum PermissionToken {
 	ViewHiddenRevisions = 'c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d',
 	ManageWebhooks = '838dde1d-51ba-423b-ad8e-c1e2c2024a37',
 	CreateDatabaseDump = 'd3dffb90-2408-4434-ae3a-c26352293281',
+	ViewOldUsernames = '452a66b3-baa8-4ad8-8f8a-00655d37be80',
 }
 
 // Corresponds to the LoginManager and EntryPermissionManager classes in C#.
@@ -189,6 +190,10 @@ export class LoginManager {
 
 	get canManageWebhooks(): boolean {
 		return this.hasPermission(PermissionToken.ManageWebhooks);
+	}
+
+	get canViewOldUsernames(): boolean {
+		return this.hasPermission(PermissionToken.ViewOldUsernames);
 	}
 
 	private static readonly allPermissions: EntryStatus[] = [

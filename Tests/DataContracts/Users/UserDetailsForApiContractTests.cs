@@ -33,6 +33,10 @@ namespace VocaDb.Tests.DataContracts.Users
 			_user.AdditionalPermissions.AddAll(s_additionalPermissions);
 			_user.Options.LastLoginAddress = "::1";
 
+			_user.OldUsernames.Add(new OldUsername(_user, "miku"));
+			_user.OldUsernames.Add(new OldUsername(_user, "rin"));
+			_user.OldUsernames.Add(new OldUsername(_user, "luka"));
+
 			_viewer = CreateEntry.User(id: 2);
 		}
 
@@ -118,6 +122,54 @@ namespace VocaDb.Tests.DataContracts.Users
 			contract.Email.Should().Be("miku@vocadb.net");
 			contract.LastLogin.Should().Be(new DateTime(2022, 8, 31, 3, 9, 39));
 			contract.LastLoginAddress.Should().Be("::1");
+		}
+
+		[TestMethod]
+		public void LimitedUserCannotViewOldUsernames()
+		{
+			var contract = CreateContract(viewerGroup: UserGroupId.Limited);
+
+			contract.OldUsernames.Should().BeNull();
+		}
+
+		[TestMethod]
+		public void RegularUserCannotViewOldUsernames()
+		{
+			var contract = CreateContract(viewerGroup: UserGroupId.Regular);
+
+			contract.OldUsernames.Should().BeNull();
+		}
+
+		[TestMethod]
+		public void TrustedUserCannotViewOldUsernames()
+		{
+			var contract = CreateContract(viewerGroup: UserGroupId.Trusted);
+
+			contract.OldUsernames.Should().BeNull();
+		}
+
+		[TestMethod]
+		public void ModeratorCanViewOldUsernames()
+		{
+			var contract = CreateContract(viewerGroup: UserGroupId.Moderator);
+
+			contract.OldUsernames.Should().NotBeNull();
+			contract.OldUsernames.Length.Should().Be(3);
+			contract.OldUsernames[0].OldName.Should().Be("miku");
+			contract.OldUsernames[1].OldName.Should().Be("rin");
+			contract.OldUsernames[2].OldName.Should().Be("luka");
+		}
+
+		[TestMethod]
+		public void AdminCanViewOldUsernames()
+		{
+			var contract = CreateContract(viewerGroup: UserGroupId.Admin);
+
+			contract.OldUsernames.Should().NotBeNull();
+			contract.OldUsernames.Length.Should().Be(3);
+			contract.OldUsernames[0].OldName.Should().Be("miku");
+			contract.OldUsernames[1].OldName.Should().Be("rin");
+			contract.OldUsernames[2].OldName.Should().Be("luka");
 		}
 	}
 }
