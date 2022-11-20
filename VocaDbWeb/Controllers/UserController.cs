@@ -7,20 +7,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
-using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
@@ -279,6 +274,11 @@ namespace VocaDb.Web.Controllers
 
 			var model = Data.GetUserDetails(id);
 
+			if (!EntryPermissionManager.CanViewUser(PermissionContext, model))
+			{
+				return NotFound();
+			}
+
 			return RenderDetails(model);
 		}
 
@@ -288,6 +288,11 @@ namespace VocaDb.Web.Controllers
 
 			if (model == null)
 				return NotFound();
+
+			if (!EntryPermissionManager.CanViewUser(PermissionContext, model))
+			{
+				return NotFound();
+			}
 
 			ViewBag.ArtistId = artistId;
 			ViewBag.ChildVoicebanks = childVoicebanks;
