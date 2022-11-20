@@ -10,6 +10,8 @@ import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { loginManager } from '@/Models/LoginManager';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -137,11 +139,24 @@ export const GlobalSearchBox = observer(
 					break;
 
 				case EntryType.User:
-					navigate(
-						`/User?${qs.stringify({
-							filter: filter,
-						})}`,
-					);
+					const { totalCount, items } = await userRepo.getList({
+						paging: { start: 0, maxEntries: 1, getTotalCount: true },
+						query: filter,
+						groups: UserGroup.Nothing,
+						includeDisabled: false,
+						onlyVerified: false,
+						nameMatchMode: NameMatchMode.Auto,
+					});
+
+					if (totalCount === 1 && items.length === 1) {
+						navigate(EntryUrlMapper.details_user_byName(items[0].name));
+					} else {
+						navigate(
+							`/User?${qs.stringify({
+								filter: filter,
+							})}`,
+						);
+					}
 					break;
 			}
 		}, [topBarStore, navigate]);
