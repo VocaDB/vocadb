@@ -1,9 +1,6 @@
-#nullable disable
-
 using System.Net;
 using System.Runtime.Serialization;
 using NLog;
-using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Helpers
 {
@@ -13,41 +10,39 @@ namespace VocaDb.Model.Helpers
 		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
-		public static async Task<ValidateCaptchaResponse> ValidateAsync(IHttpRequest request, string privateKey)
+		public static async Task<ValidateCaptchaResponse> ValidateAsync(string userResponse, string userIp, string privateKey)
 		{
-			var userResponse = request.Form[ResponseFieldName];
-
 			if (string.IsNullOrEmpty(userResponse))
 			{
 				s_log.Warn("CAPTCHA response was empty");
-				return new ValidateCaptchaResponse(false);
+				return new ValidateCaptchaResponse(success: false);
 			}
-
-			var userIp = request.UserHostAddress;
-
-			var requestUrl = $"{VerifyApi}?secret={privateKey}&response={userResponse}&remoteip={userIp}";
-			VerifyResponse verifyResponse;
 
 			try
 			{
-				verifyResponse = await JsonRequest.ReadObjectAsync<VerifyResponse>(requestUrl);
+				var requestUrl = $"{VerifyApi}?secret={privateKey}&response={userResponse}&remoteip={userIp}";
+				var verifyResponse = (await JsonRequest.ReadObjectAsync<VerifyResponse>(requestUrl))!;
+
+				return new ValidateCaptchaResponse(
+					success: verifyResponse.Success,
+					userResponse: userResponse,
+					errorCodes: verifyResponse.ErrorCodes != null
+						? string.Join(", ", verifyResponse.ErrorCodes)
+						: string.Empty
+				);
 			}
 			catch (WebException x)
 			{
 				s_log.Error(x, "Unable to get response from ReCAPTCHA");
-				return new ValidateCaptchaResponse(false);
+				return new ValidateCaptchaResponse(success: false);
 			}
-
-			return new ValidateCaptchaResponse(verifyResponse.Success,
-				userResponse,
-				verifyResponse.ErrorCodes != null ? string.Join(", ", verifyResponse.ErrorCodes) : string.Empty);
 		}
 
 		[DataContract]
 		public class VerifyResponse
 		{
 			[DataMember(Name = "error-codes")]
-			public string[] ErrorCodes { get; set; }
+			public string[]? ErrorCodes { get; set; }
 
 			[DataMember]
 			public bool Success { get; set; }

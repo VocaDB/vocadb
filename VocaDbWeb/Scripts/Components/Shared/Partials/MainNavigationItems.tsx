@@ -176,7 +176,7 @@ export const MainNavigationItems = React.memo(
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link href={'/User/Create'}>
+							<Nav.Link as={Link} to="/User/Create">
 								{t('ViewRes:Layout.Register')}
 							</Nav.Link>
 						</Nav.Item>
