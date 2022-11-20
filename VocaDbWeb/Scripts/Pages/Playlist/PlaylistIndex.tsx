@@ -332,7 +332,6 @@ const PlaylistIndex = observer(
 			<Layout
 				pageTitle={title}
 				ready={ready}
-				title={title}
 				toolbar={
 					<>
 						{playQueue.currentItem && (
