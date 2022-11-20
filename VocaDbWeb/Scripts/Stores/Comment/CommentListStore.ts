@@ -3,6 +3,7 @@ import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsCont
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
 import { EntryType } from '@/Models/EntryType';
+import { EntryOptionalField } from '@/Repositories/EntryRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -32,11 +33,6 @@ export enum CommentSortRule {
 
 enum CommentOptionalField {
 	Entry = 'Entry',
-}
-
-enum EntryOptionalField {
-	AdditionalNames = 'AdditionalNames',
-	MainPicture = 'MainPicture',
 }
 
 interface CommentListRouteParams {

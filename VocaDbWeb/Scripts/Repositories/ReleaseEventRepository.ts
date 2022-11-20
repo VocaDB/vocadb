@@ -352,30 +352,18 @@ export class ReleaseEventRepository extends BaseRepository {
 
 export interface EventQueryParams extends CommonQueryParams {
 	afterDate?: Date;
-
 	artistId?: number[];
-
 	beforeDate?: Date;
-
 	category?: string;
-
-	childTags: boolean;
-
+	childTags?: boolean;
 	childVoicebanks?: boolean;
-
 	// Comma-separated list of optional fields
 	fields?: ReleaseEventOptionalField[];
-
 	includeMembers?: boolean;
-
 	sort?: string;
-
 	sortDirection?: 'Ascending' | 'Descending';
-
 	status?: string;
-
-	tagIds: number[];
-
+	tagIds?: number[];
 	userCollectionId?: number;
 }
 

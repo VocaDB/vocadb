@@ -1,4 +1,5 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
+import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import {
 	UserOptionalField,
@@ -108,7 +109,7 @@ export class ListUsersStore
 			includeDisabled: this.disabledUsers,
 			onlyVerified: this.onlyVerifiedArtists,
 			knowsLanguage: this.knowsLanguage,
-			nameMatchMode: 'Auto' /* TODO: enum */,
+			nameMatchMode: NameMatchMode.Auto,
 			fields: [UserOptionalField.MainPicture],
 		});
 

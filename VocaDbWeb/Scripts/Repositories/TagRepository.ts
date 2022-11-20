@@ -86,6 +86,19 @@ export class TagRepository extends BaseRepository {
 		});
 	};
 
+	getByName = ({
+		name,
+		lang,
+	}: {
+		name: string;
+		lang?: ContentLanguagePreference;
+	}): Promise<TagApiContract> => {
+		return this.httpClient.get<TagApiContract>(
+			this.urlMapper.mapRelative(`/api/tags/byName/${name}`),
+			{ lang: lang },
+		);
+	};
+
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
@@ -278,12 +291,9 @@ export class TagRepository extends BaseRepository {
 
 export interface TagQueryParams extends CommonQueryParams {
 	allowAliases?: boolean;
-
 	categoryName?: string;
-
 	// Comma-separated list of optional fields
 	fields?: TagOptionalField[];
-
 	sort?: string;
 }
 
