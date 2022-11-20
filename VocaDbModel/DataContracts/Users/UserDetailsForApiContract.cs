@@ -94,9 +94,6 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public string Name { get; set; }
 
-		[DataMember]
-		public OldUsernameContract[] OldUsernames { get; init; }
-
 		/// <summary>
 		/// List of artist entries owned by the user. Cannot be null.
 		/// </summary>
@@ -162,7 +159,6 @@ namespace VocaDb.Model.DataContracts.Users
 			Location = user.Options.Location;
 			MainPicture = iconFactory.GetUserIcons(user, ImageSizes.All);
 			Name = user.Name;
-			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 
 			OwnedArtistEntries = user.OwnedArtists
 				.Select(a => new ArtistForUserForApiContract(
@@ -207,6 +203,9 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public string? LastLoginAddress { get; init; }
 
+		[DataMember]
+		public OldUsernameContract[]? OldUsernames { get; init; }
+
 		public UserDetailsForApiContract(
 			User user,
 			IUserIconFactory iconFactory,
@@ -229,7 +228,14 @@ namespace VocaDb.Model.DataContracts.Users
 				// SECURITY NOTE: Never include sensitive information here!
 
 				if (permissionContext.IsLoggedIn && permissionContext.LoggedUser.Id == user.Id && permissionContext.LoggedUser.Active)
+				{
 					AdditionalPermissions = user.AdditionalPermissions.PermissionTokens.Select(p => p.Id).ToArray();
+				}
+			}
+
+			if (permissionContext.HasPermission(PermissionToken.ViewOldUsernames))
+			{
+				OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 			}
 		}
 	}

@@ -319,7 +319,14 @@ namespace VocaDb.Model.Database.Queries
 				var user = ctx.Query().FirstOrDefault(u => u.Name == name);
 
 				if (user is null)
+				{
 					return null;
+				}
+
+				if (!EntryPermissionManager.CanViewUser(_permissionContext, user))
+				{
+					return null;
+				}
 
 				var contract = new UserDetailsForApiContract(
 					user: user,

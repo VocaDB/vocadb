@@ -249,22 +249,24 @@ const UserOverview = observer(
 						</h4>
 						{moment(user.createDate).format('l')}
 
-						{user.oldUsernames.length > 0 && (
-							<>
-								<h4 className="withMargin">
-									{t('ViewRes.User:Details.OldUsernames')}
-								</h4>
-								{user.oldUsernames.map((oldName, index) => (
-									<React.Fragment key={index}>
-										{index > 0 && ', '}
-										{oldName.oldName}{' '}
-										{t('ViewRes.User:Details.OldNameUntil', {
-											0: moment(oldName.date).format('l'),
-										})}
-									</React.Fragment>
-								))}
-							</>
-						)}
+						{loginManager.canViewOldUsernames &&
+							user.oldUsernames &&
+							user.oldUsernames.length > 0 && (
+								<>
+									<h4 className="withMargin">
+										{t('ViewRes.User:Details.OldUsernames')}
+									</h4>
+									{user.oldUsernames.map((oldName, index) => (
+										<React.Fragment key={index}>
+											{index > 0 && ', '}
+											{oldName.oldName}{' '}
+											{t('ViewRes.User:Details.OldNameUntil', {
+												0: moment(oldName.date).format('l'),
+											})}
+										</React.Fragment>
+									))}
+								</>
+							)}
 
 						{user.supporter && (
 							<div className="withMargin media">

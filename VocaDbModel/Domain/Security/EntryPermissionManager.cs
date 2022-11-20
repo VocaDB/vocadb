@@ -240,6 +240,16 @@ namespace VocaDb.Model.Domain.Security
 			return IsVerifiedFor(permissionContext, entry);
 		}
 
+		public static bool CanViewUser(IUserPermissionContext permissionContext, IDeletableUser user)
+		{
+			if (!user.Active && !permissionContext.HasPermission(PermissionToken.ViewDisabledUsers))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		/// <summary>
 		/// Verifies that user passes an access check for an entry.
 		/// </summary>

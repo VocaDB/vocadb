@@ -904,9 +904,10 @@ namespace VocaDb.Web.Controllers.Api
 #nullable enable
 		[HttpGet("~/api/profiles/{name}")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public UserDetailsForApiContract? GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
+		public ActionResult<UserDetailsForApiContract> GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
 		{
-			return _queries.GetUserDetailsForApi(name);
+			var user = _queries.GetUserDetailsForApi(name);
+			return user is not null ? user : NotFound();
 		}
 
 		[HttpGet("current/for-my-settings")]
