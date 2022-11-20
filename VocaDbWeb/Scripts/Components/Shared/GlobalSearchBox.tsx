@@ -14,13 +14,14 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -52,7 +53,9 @@ const globalSearchBoxSource = (
 
 	if (!apiEndpoint) return Promise.reject();
 
-	const endpoint = functions.mergeUrls(apiEndpoint, '/names');
+	const endpoint = urlMapper.mapRelative(
+		functions.mergeUrls(apiEndpoint, '/names'),
+	);
 
 	return httpClient.get<string[]>(endpoint, { query: query });
 };
@@ -90,17 +93,61 @@ export const GlobalSearchBox = observer(
 			`VocaDb.Web.Resources.Domain:EntryTypeNames.${topBarStore.entryType}`,
 		);
 
-		const formRef = React.useRef<HTMLFormElement>(undefined!);
 		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
+		const navigate = useNavigate();
+		const submit = React.useCallback(() => {
+			const filter = globalSearchTermRef.current.value;
+			const { entryType } = topBarStore;
+			switch (entryType) {
+				case EntryType.Undefined:
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+					break;
+
+				case EntryType.Album:
+				case EntryType.Artist:
+				case EntryType.ReleaseEvent:
+				case EntryType.Song:
+				case EntryType.SongList:
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: entryType,
+						})}`,
+					);
+					break;
+
+				case EntryType.Tag:
+					navigate(
+						`/Tag?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+					break;
+
+				case EntryType.User:
+					navigate(
+						`/User?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+					break;
+			}
+		}, [topBarStore, navigate]);
+
 		return (
 			<form
-				action="/Home/GlobalSearch"
-				method="post"
 				className="navbar-form form-inline pull-left navbar-search"
 				id="globalSearchBox"
-				ref={formRef}
+				onSubmit={(e): void => {
+					e.preventDefault();
+					submit();
+				}}
 			>
 				<input
 					type="hidden"
@@ -154,7 +201,7 @@ export const GlobalSearchBox = observer(
 						}}
 						select={(event: Event, ui): void => {
 							globalSearchTermRef.current.value = ui.item.value;
-							formRef.current.submit();
+							submit();
 						}}
 						ref={globalSearchTermRef}
 					/>
