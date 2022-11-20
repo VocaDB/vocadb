@@ -27,7 +27,6 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
-import { TagSortRule } from '@/Stores/Search/TagSearchStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
@@ -235,20 +234,13 @@ export const GlobalSearchBox = observer(
 			};
 
 			const tryRedirectTag = async (filter: string): Promise<void> => {
-				const { items } = await tagRepo.getList({
-					queryParams: {
-						getTotalCount: false,
+				try {
+					const tag = await tagRepo.getByName({
+						name: filter,
 						lang: vdb.values.languagePreference,
-						maxResults: 2,
-						start: 0,
-						query: filter,
-						sort: TagSortRule.Nothing,
-					},
-				});
-
-				if (items.length === 1) {
-					navigate(EntryUrlMapper.details(EntryType.Tag, items[0].id));
-				} else {
+					});
+					navigate(EntryUrlMapper.details(EntryType.Tag, tag.id));
+				} catch {
 					navigate(
 						`/Search?${qs.stringify({
 							filter: filter,
