@@ -10,6 +10,7 @@ import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { loginManager } from '@/Models/LoginManager';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -97,7 +98,7 @@ export const GlobalSearchBox = observer(
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
 		const navigate = useNavigate();
-		const submit = React.useCallback(() => {
+		const submit = React.useCallback(async (): Promise<void> => {
 			const filter = globalSearchTermRef.current.value;
 			const { entryType } = topBarStore;
 			switch (entryType) {
@@ -123,11 +124,16 @@ export const GlobalSearchBox = observer(
 					break;
 
 				case EntryType.Tag:
-					navigate(
-						`/Tag?${qs.stringify({
-							filter: filter,
-						})}`,
-					);
+					try {
+						const tag = await tagRepo.getByName({ name: filter });
+						navigate(EntryUrlMapper.details_tag(tag.id, tag.urlSlug));
+					} catch (error) {
+						navigate(
+							`/Tag?${qs.stringify({
+								filter: filter,
+							})}`,
+						);
+					}
 					break;
 
 				case EntryType.User:
@@ -144,9 +150,9 @@ export const GlobalSearchBox = observer(
 			<form
 				className="navbar-form form-inline pull-left navbar-search"
 				id="globalSearchBox"
-				onSubmit={(e): void => {
+				onSubmit={async (e): Promise<void> => {
 					e.preventDefault();
-					submit();
+					await submit();
 				}}
 			>
 				<input

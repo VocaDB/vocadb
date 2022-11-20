@@ -86,6 +86,19 @@ export class TagRepository extends BaseRepository {
 		});
 	};
 
+	getByName = ({
+		name,
+		lang,
+	}: {
+		name: string;
+		lang?: ContentLanguagePreference;
+	}): Promise<TagApiContract> => {
+		return this.httpClient.get<TagApiContract>(
+			this.urlMapper.mapRelative(`/api/tags/byName/${name}`),
+			{ lang: lang },
+		);
+	};
+
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
