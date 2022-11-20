@@ -36,6 +36,7 @@ import {
 } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import qs from 'qs';
 
 export enum SongOptionalField {
@@ -52,19 +53,19 @@ export enum SongOptionalField {
 
 export interface SongGetListQueryParams {
 	query: string;
-	sort: string;
+	sort: SongSortRule;
 	songTypes?: SongType[];
 	afterDate?: Date;
 	beforeDate?: Date;
-	tagIds: number[];
-	childTags: boolean;
-	unifyTypesAndTags: boolean;
-	artistIds: number[];
-	artistParticipationStatus: string;
-	childVoicebanks: boolean;
-	includeMembers: boolean;
+	tagIds?: number[];
+	childTags?: boolean;
+	unifyTypesAndTags?: boolean;
+	artistIds?: number[];
+	artistParticipationStatus?: string;
+	childVoicebanks?: boolean;
+	includeMembers?: boolean;
 	eventId?: number;
-	onlyWithPvs: boolean;
+	onlyWithPvs?: boolean;
 	since?: number;
 	minScore?: number;
 	userCollectionId?: number;
@@ -341,8 +342,8 @@ export class SongRepository
 		pvServices,
 		queryParams,
 	}: {
-		fields: SongOptionalField[];
-		lang: ContentLanguagePreference;
+		fields?: SongOptionalField[];
+		lang?: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
 		queryParams: SongGetListQueryParams;
@@ -380,7 +381,7 @@ export class SongRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,

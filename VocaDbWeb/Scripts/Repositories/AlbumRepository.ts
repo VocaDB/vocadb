@@ -222,7 +222,7 @@ export class AlbumRepository
 		advancedFilters,
 	}: {
 		paging: PagingProperties;
-		lang: ContentLanguagePreference;
+		lang?: ContentLanguagePreference;
 		query: string;
 		sort: string;
 		discTypes?: AlbumType[];
@@ -232,9 +232,9 @@ export class AlbumRepository
 		artistParticipationStatus?: string;
 		childVoicebanks?: boolean;
 		includeMembers?: boolean;
-		fields: AlbumOptionalField[];
+		fields?: AlbumOptionalField[];
 		status?: string;
-		deleted: boolean;
+		deleted?: boolean;
 		advancedFilters?: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<AlbumContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/albums');
@@ -243,7 +243,7 @@ export class AlbumRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,

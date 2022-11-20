@@ -12,13 +12,22 @@ import { ImageSize } from '@/Models/Images/ImageSize';
 import { loginManager } from '@/Models/LoginManager';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { entryRepo } from '@/Repositories/EntryRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -102,76 +111,171 @@ export const GlobalSearchBox = observer(
 
 		const navigate = useNavigate();
 		const submit = React.useCallback(async (): Promise<void> => {
-			const filter = globalSearchTermRef.current.value;
-			const { entryType } = topBarStore;
-			switch (entryType) {
-				case EntryType.Undefined:
-					const { items: entries } = await entryRepo.getList({
-						paging: { start: 0, maxEntries: 2, getTotalCount: false },
-						lang: vdb.values.languagePreference,
-						query: filter,
-						tags: [],
-						childTags: false,
-					});
+			const tryRedirectEntry = async (filter: string): Promise<void> => {
+				const { items: entries } = await entryRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					query: filter,
+				});
 
-					if (entries.length === 1) {
-						navigate(EntryUrlMapper.details_entry(entries[0]));
-					} else {
-						navigate(
-							`/Search?${qs.stringify({
-								filter: filter,
-							})}`,
-						);
-					}
-					break;
-
-				case EntryType.Album:
-				case EntryType.Artist:
-				case EntryType.ReleaseEvent:
-				case EntryType.Song:
-				case EntryType.SongList:
+				if (entries.length === 1) {
+					navigate(EntryUrlMapper.details_entry(entries[0]));
+				} else {
 					navigate(
 						`/Search?${qs.stringify({
 							filter: filter,
-							searchType: entryType,
 						})}`,
 					);
-					break;
+				}
+			};
 
-				case EntryType.Tag:
-					try {
-						const tag = await tagRepo.getByName({ name: filter });
-						navigate(EntryUrlMapper.details_tag(tag.id, tag.urlSlug));
-					} catch (error) {
-						navigate(
-							`/Tag?${qs.stringify({
-								filter: filter,
-							})}`,
-						);
-					}
-					break;
+			const tryRedirectAlbum = async (filter: string): Promise<void> => {
+				const { items } = await albumRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					query: filter,
+					sort: AlbumSortRule.None,
+				});
 
-				case EntryType.User:
-					const { items: users } = await userRepo.getList({
-						paging: { start: 0, maxEntries: 2, getTotalCount: false },
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Album, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Album,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectArtist = async (filter: string): Promise<void> => {
+				const { items } = await artistRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					query: filter,
+					sort: ArtistSortRule.None,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Artist, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Artist,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectReleaseEvent = async (filter: string): Promise<void> => {
+				const { items } = await eventRepo.getList({
+					queryParams: {
+						getTotalCount: false,
+						maxResults: 2,
+						start: 0,
 						query: filter,
-						groups: UserGroup.Nothing,
-						includeDisabled: false,
-						onlyVerified: false,
-						nameMatchMode: NameMatchMode.Auto,
-					});
+					},
+				});
 
-					if (users.length === 1) {
-						navigate(EntryUrlMapper.details_user_byName(users[0].name));
-					} else {
-						navigate(
-							`/User?${qs.stringify({
-								filter: filter,
-							})}`,
-						);
-					}
-					break;
-			}
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.ReleaseEvent,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectSong = async (filter: string): Promise<void> => {
+				const { items } = await songRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					queryParams: {
+						query: filter,
+						sort: SongSortRule.None,
+					},
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Song, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Song,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectSongList = async (filter: string): Promise<void> => {
+				const { items } = await songListRepo.getFeatured({
+					query: filter,
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					sort: SongListSortRule.None,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.SongList,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectTag = async (filter: string): Promise<void> => {
+				try {
+					const tag = await tagRepo.getByName({ name: filter });
+					navigate(EntryUrlMapper.details_tag(tag.id, tag.urlSlug));
+				} catch (error) {
+					navigate(
+						`/Tag?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectUser = async (filter: string): Promise<void> => {
+				const { items: users } = await userRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					query: filter,
+					groups: UserGroup.Nothing,
+					includeDisabled: false,
+					onlyVerified: false,
+					nameMatchMode: NameMatchMode.Auto,
+				});
+
+				if (users.length === 1) {
+					navigate(EntryUrlMapper.details_user_byName(users[0].name));
+				} else {
+					navigate(
+						`/User?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectFuncs = {
+				[EntryType.Undefined]: tryRedirectEntry,
+				[EntryType.Album]: tryRedirectAlbum,
+				[EntryType.Artist]: tryRedirectArtist,
+				[EntryType.ReleaseEvent]: tryRedirectReleaseEvent,
+				[EntryType.Song]: tryRedirectSong,
+				[EntryType.SongList]: tryRedirectSongList,
+				[EntryType.Tag]: tryRedirectTag,
+				[EntryType.User]: tryRedirectUser,
+			};
+
+			await tryRedirectFuncs[topBarStore.entryType](
+				globalSearchTermRef.current.value,
+			);
 		}, [topBarStore, navigate]);
 
 		return (

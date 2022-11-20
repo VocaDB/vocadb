@@ -71,10 +71,10 @@ export class SongListRepository {
 		sort,
 	}: {
 		query: string;
-		category: string;
+		category?: string;
 		paging: PagingProperties;
-		tagIds: number[];
-		fields: SongListOptionalField[];
+		tagIds?: number[];
+		fields?: SongListOptionalField[];
 		sort: string;
 	}): Promise<PartialFindResultContract<SongListContract>> => {
 		var url = this.urlMapper.mapRelative('/api/songLists/featured');
@@ -87,7 +87,7 @@ export class SongListRepository {
 				getTotalCount: paging.getTotalCount,
 				maxResults: paging.maxEntries,
 				tagId: tagIds,
-				fields: fields.join(','),
+				fields: fields?.join(','),
 				sort: sort,
 			},
 		);

@@ -37,10 +37,10 @@ export class EntryRepository {
 		status,
 	}: {
 		paging: PagingProperties;
-		lang: ContentLanguagePreference;
+		lang?: ContentLanguagePreference;
 		query: string;
-		tags: number[];
-		childTags: boolean;
+		tags?: number[];
+		childTags?: boolean;
 		fields?: EntryOptionalField[];
 		status?: string;
 	}): Promise<PartialFindResultContract<EntryContract>> => {
