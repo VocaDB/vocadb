@@ -11,6 +11,7 @@ import moment from 'moment';
 
 // Corresponds to the SongListSortRule enum in C#.
 export enum SongListSortRule {
+	None = 'None',
 	Name = 'Name',
 	Date = 'Date',
 	CreateDate = 'CreateDate',

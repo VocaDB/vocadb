@@ -193,13 +193,13 @@ export class ArtistRepository
 		query: string;
 		sort: string;
 		artistTypes?: ArtistType[];
-		allowBaseVoicebanks: boolean;
-		tags: number[];
-		childTags: boolean;
+		allowBaseVoicebanks?: boolean;
+		tags?: number[];
+		childTags?: boolean;
 		followedByUserId?: number;
-		fields: ArtistOptionalField[];
+		fields?: ArtistOptionalField[];
 		status?: string;
-		advancedFilters: AdvancedSearchFilter[];
+		advancedFilters?: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
 		var data = {
@@ -207,7 +207,7 @@ export class ArtistRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,

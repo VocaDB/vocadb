@@ -26,9 +26,11 @@ import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { NameMatchMode } from '@/Models/NameMatchMode';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import { AlbumOptionalField } from '@/Repositories/AlbumRepository';
 import { ArtistOptionalField } from '@/Repositories/ArtistRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
@@ -337,11 +339,11 @@ export class UserRepository implements ICommentRepository {
 		paging?: PagingProperties;
 		query: string;
 		sort?: string;
-		groups?: string;
+		groups?: UserGroup;
 		includeDisabled: boolean;
 		onlyVerified: boolean;
 		knowsLanguage?: string;
-		nameMatchMode: string;
+		nameMatchMode: NameMatchMode;
 		fields?: UserOptionalField[];
 	}): Promise<PartialFindResultContract<UserApiContract>> => {
 		var url = this.urlMapper.mapRelative('/api/users');
@@ -390,7 +392,7 @@ export class UserRepository implements ICommentRepository {
 			includeDisabled: false,
 			onlyVerified: false,
 			knowsLanguage: undefined,
-			nameMatchMode: 'Exact',
+			nameMatchMode: NameMatchMode.Exact,
 			fields: undefined,
 		});
 		return result.items.length === 1 ? result.items[0] : undefined;

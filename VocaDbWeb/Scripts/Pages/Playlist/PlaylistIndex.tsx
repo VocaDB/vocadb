@@ -321,11 +321,12 @@ const PlaylistIndex = observer(
 			// TODO: Implement.
 		}, []);
 
+		// Close the "Edit skip list" dialog when moving away from the playlist page.
 		React.useEffect(() => {
 			return (): void => {
 				playQueue.skipList.hideDialog();
 			};
-		});
+		}, [playQueue]);
 
 		return (
 			<Layout

@@ -10,17 +10,31 @@ import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { loginManager } from '@/Models/LoginManager';
+import { NameMatchMode } from '@/Models/NameMatchMode';
+import { UserGroup } from '@/Models/Users/UserGroup';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { entryRepo } from '@/Repositories/EntryRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
+import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
+import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const allObjectTypes = [
 	EntryType.Undefined,
@@ -52,7 +66,9 @@ const globalSearchBoxSource = (
 
 	if (!apiEndpoint) return Promise.reject();
 
-	const endpoint = functions.mergeUrls(apiEndpoint, '/names');
+	const endpoint = urlMapper.mapRelative(
+		functions.mergeUrls(apiEndpoint, '/names'),
+	);
 
 	return httpClient.get<string[]>(endpoint, { query: query });
 };
@@ -90,17 +106,195 @@ export const GlobalSearchBox = observer(
 			`VocaDb.Web.Resources.Domain:EntryTypeNames.${topBarStore.entryType}`,
 		);
 
-		const formRef = React.useRef<HTMLFormElement>(undefined!);
 		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
 
+		const navigate = useNavigate();
+		const submit = React.useCallback(async (): Promise<void> => {
+			const tryRedirectEntry = async (filter: string): Promise<void> => {
+				const { items } = await entryRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
+					query: filter,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details_entry(items[0]));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectAlbum = async (filter: string): Promise<void> => {
+				const { items } = await albumRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
+					query: filter,
+					sort: AlbumSortRule.None,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Album, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Album,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectArtist = async (filter: string): Promise<void> => {
+				const { items } = await artistRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					lang: vdb.values.languagePreference,
+					query: filter,
+					sort: ArtistSortRule.None,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Artist, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Artist,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectReleaseEvent = async (filter: string): Promise<void> => {
+				const { items } = await eventRepo.getList({
+					queryParams: {
+						getTotalCount: false,
+						lang: vdb.values.languagePreference,
+						maxResults: 2,
+						start: 0,
+						query: filter,
+					},
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.ReleaseEvent, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.ReleaseEvent,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectSong = async (filter: string): Promise<void> => {
+				const { items } = await songRepo.getList({
+					lang: vdb.values.languagePreference,
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					queryParams: {
+						query: filter,
+						sort: SongSortRule.None,
+					},
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Song, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Song,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectSongList = async (filter: string): Promise<void> => {
+				const { items } = await songListRepo.getFeatured({
+					query: filter,
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					sort: SongListSortRule.None,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
+				} else {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.SongList,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectTag = async (filter: string): Promise<void> => {
+				try {
+					const tag = await tagRepo.getByName({
+						name: filter,
+						lang: vdb.values.languagePreference,
+					});
+					navigate(EntryUrlMapper.details(EntryType.Tag, tag.id));
+				} catch {
+					navigate(
+						`/Search?${qs.stringify({
+							filter: filter,
+							searchType: EntryType.Tag,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectUser = async (filter: string): Promise<void> => {
+				const { items } = await userRepo.getList({
+					paging: { start: 0, maxEntries: 2, getTotalCount: false },
+					query: filter,
+					groups: UserGroup.Nothing,
+					includeDisabled: false,
+					onlyVerified: false,
+					nameMatchMode: NameMatchMode.Auto,
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details_user_byName(items[0].name));
+				} else {
+					navigate(
+						`/User?${qs.stringify({
+							filter: filter,
+						})}`,
+					);
+				}
+			};
+
+			const tryRedirectFuncs = {
+				[EntryType.Undefined]: tryRedirectEntry,
+				[EntryType.Album]: tryRedirectAlbum,
+				[EntryType.Artist]: tryRedirectArtist,
+				[EntryType.ReleaseEvent]: tryRedirectReleaseEvent,
+				[EntryType.Song]: tryRedirectSong,
+				[EntryType.SongList]: tryRedirectSongList,
+				[EntryType.Tag]: tryRedirectTag,
+				[EntryType.User]: tryRedirectUser,
+			};
+
+			await tryRedirectFuncs[topBarStore.entryType](
+				globalSearchTermRef.current.value,
+			);
+		}, [topBarStore, navigate]);
+
 		return (
 			<form
-				action="/Home/GlobalSearch"
-				method="post"
 				className="navbar-form form-inline pull-left navbar-search"
 				id="globalSearchBox"
-				ref={formRef}
+				onSubmit={async (e): Promise<void> => {
+					e.preventDefault();
+					await submit();
+				}}
 			>
 				<input
 					type="hidden"
@@ -154,7 +348,7 @@ export const GlobalSearchBox = observer(
 						}}
 						select={(event: Event, ui): void => {
 							globalSearchTermRef.current.value = ui.item.value;
-							formRef.current.submit();
+							submit();
 						}}
 						ref={globalSearchTermRef}
 					/>

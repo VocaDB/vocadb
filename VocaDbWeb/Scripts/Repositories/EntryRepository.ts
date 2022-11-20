@@ -5,6 +5,12 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 
+export enum EntryOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	MainPicture = 'MainPicture',
+	Tags = 'Tags',
+}
+
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
 export class EntryRepository {
@@ -33,9 +39,9 @@ export class EntryRepository {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
 		query: string;
-		tags: number[];
-		childTags: boolean;
-		fields: string;
+		tags?: number[];
+		childTags?: boolean;
+		fields?: EntryOptionalField[];
 		status?: string;
 	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
@@ -44,7 +50,7 @@ export class EntryRepository {
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			tagId: tags,

@@ -279,22 +279,18 @@ const PlayerRightControls = observer(
 		return (
 			<>
 				{playQueue.currentItem && (
-					<>
-						<ButtonGroup>
-							<Button
-								variant="inverse"
-								title="Songle"
-								onClick={vdbPlayer.toggleSongleWidget}
-								className={classNames(
-									vdbPlayer.songleWidgetEnabled && 'active',
-								)}
-							>
-								<SongleIcon />
-							</Button>
-						</ButtonGroup>
-						<PVServiceDropdown item={playQueue.currentItem} />
-					</>
+					<PVServiceDropdown item={playQueue.currentItem} />
 				)}{' '}
+				<ButtonGroup>
+					<Button
+						variant="inverse"
+						title="Songle"
+						onClick={vdbPlayer.toggleSongleWidget}
+						className={classNames(vdbPlayer.songleWidgetEnabled && 'active')}
+					>
+						<SongleIcon />
+					</Button>
+				</ButtonGroup>{' '}
 				<ButtonGroup className="hidden-phone">
 					<Button
 						variant="inverse"
