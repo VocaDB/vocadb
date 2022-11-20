@@ -224,12 +224,7 @@ export const GlobalSearchBox = observer(
 				if (items.length === 1) {
 					navigate(EntryUrlMapper.details(EntryType.SongList, items[0].id));
 				} else {
-					navigate(
-						`/Search?${qs.stringify({
-							filter: filter,
-							searchType: EntryType.SongList,
-						})}`,
-					);
+					navigate('/SongList/Featured');
 				}
 			};
 
