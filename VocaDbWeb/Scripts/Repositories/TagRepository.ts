@@ -291,12 +291,9 @@ export class TagRepository extends BaseRepository {
 
 export interface TagQueryParams extends CommonQueryParams {
 	allowAliases?: boolean;
-
 	categoryName?: string;
-
 	// Comma-separated list of optional fields
 	fields?: TagOptionalField[];
-
 	sort?: string;
 }
 

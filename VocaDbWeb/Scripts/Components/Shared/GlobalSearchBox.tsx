@@ -27,6 +27,7 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { TagSortRule } from '@/Stores/Search/TagSearchStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
 import { runInAction } from 'mobx';
@@ -112,13 +113,13 @@ export const GlobalSearchBox = observer(
 		const navigate = useNavigate();
 		const submit = React.useCallback(async (): Promise<void> => {
 			const tryRedirectEntry = async (filter: string): Promise<void> => {
-				const { items: entries } = await entryRepo.getList({
+				const { items } = await entryRepo.getList({
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
 					query: filter,
 				});
 
-				if (entries.length === 1) {
-					navigate(EntryUrlMapper.details_entry(entries[0]));
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details_entry(items[0]));
 				} else {
 					navigate(
 						`/Search?${qs.stringify({
@@ -229,20 +230,30 @@ export const GlobalSearchBox = observer(
 			};
 
 			const tryRedirectTag = async (filter: string): Promise<void> => {
-				try {
-					const tag = await tagRepo.getByName({ name: filter });
-					navigate(EntryUrlMapper.details_tag(tag.id, tag.urlSlug));
-				} catch (error) {
+				const { items } = await tagRepo.getList({
+					queryParams: {
+						getTotalCount: false,
+						maxResults: 2,
+						start: 0,
+						query: filter,
+						sort: TagSortRule.Nothing,
+					},
+				});
+
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details(EntryType.Tag, items[0].id));
+				} else {
 					navigate(
-						`/Tag?${qs.stringify({
+						`/Search?${qs.stringify({
 							filter: filter,
+							searchType: EntryType.Tag,
 						})}`,
 					);
 				}
 			};
 
 			const tryRedirectUser = async (filter: string): Promise<void> => {
-				const { items: users } = await userRepo.getList({
+				const { items } = await userRepo.getList({
 					paging: { start: 0, maxEntries: 2, getTotalCount: false },
 					query: filter,
 					groups: UserGroup.Nothing,
@@ -251,8 +262,8 @@ export const GlobalSearchBox = observer(
 					nameMatchMode: NameMatchMode.Auto,
 				});
 
-				if (users.length === 1) {
-					navigate(EntryUrlMapper.details_user_byName(users[0].name));
+				if (items.length === 1) {
+					navigate(EntryUrlMapper.details_user_byName(items[0].name));
 				} else {
 					navigate(
 						`/User?${qs.stringify({
