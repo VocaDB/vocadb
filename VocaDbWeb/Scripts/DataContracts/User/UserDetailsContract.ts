@@ -41,7 +41,7 @@ interface UserDetailsContractBase {
 	location: string;
 	mainPicture?: EntryThumbContract;
 	name: string;
-	oldUsernames: OldUsernameContract[];
+	oldUsernames?: OldUsernameContract[];
 	ownedArtistEntries: ArtistForUserForApiContract[];
 	possibleProducerAccount: boolean;
 	power: number;

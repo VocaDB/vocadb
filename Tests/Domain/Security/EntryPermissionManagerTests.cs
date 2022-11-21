@@ -19,6 +19,7 @@ namespace VocaDb.Tests.Domain.Security
 		private User _user;
 		private Artist _verifiedArtist;
 		private User _verifiedUser;
+		private User _disabledUser;
 
 		private bool CanDelete<T>(User user, T entry) where T : IEntryWithVersions, IEntryWithStatus
 		{
@@ -57,6 +58,9 @@ namespace VocaDb.Tests.Domain.Security
 			_verifiedArtist.Status = EntryStatus.Approved;
 			_verifiedUser.GroupId = UserGroupId.Regular;
 			_verifiedUser.AddOwnedArtist(_verifiedArtist);
+
+			_disabledUser = CreateEntry.User(id: 4);
+			_disabledUser.Active = false;
 		}
 
 		[TestMethod]
@@ -132,6 +136,46 @@ namespace VocaDb.Tests.Domain.Security
 			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_verifiedUser), _verifiedArtist);
 
 			result.Should().BeTrue("result");
+		}
+
+		[TestMethod]
+		public void LimitedUserCannotViewDisabledUser()
+		{
+			var user = CreateEntry.User(group: UserGroupId.Limited);
+			var actual = EntryPermissionManager.CanViewUser(new FakePermissionContext(user), _disabledUser);
+			actual.Should().BeFalse();
+		}
+
+		[TestMethod]
+		public void RegularUserCannotViewDisabledUser()
+		{
+			var user = CreateEntry.User(group: UserGroupId.Regular);
+			var actual = EntryPermissionManager.CanViewUser(new FakePermissionContext(user), _disabledUser);
+			actual.Should().BeFalse();
+		}
+
+		[TestMethod]
+		public void TrustedUserCannotViewDisabledUser()
+		{
+			var user = CreateEntry.User(group: UserGroupId.Trusted);
+			var actual = EntryPermissionManager.CanViewUser(new FakePermissionContext(user), _disabledUser);
+			actual.Should().BeFalse();
+		}
+
+		[TestMethod]
+		public void ModeratorCanViewDisabledUser()
+		{
+			var user = CreateEntry.User(group: UserGroupId.Moderator);
+			var actual = EntryPermissionManager.CanViewUser(new FakePermissionContext(user), _disabledUser);
+			actual.Should().BeTrue();
+		}
+
+		[TestMethod]
+		public void AdminCanViewViewDisabledUser()
+		{
+			var user = CreateEntry.User(group: UserGroupId.Admin);
+			var actual = EntryPermissionManager.CanViewUser(new FakePermissionContext(user), _disabledUser);
+			actual.Should().BeTrue();
 		}
 	}
 }

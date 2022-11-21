@@ -6,6 +6,7 @@ import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const UserIndex = React.lazy(() => import('./UserIndex'));
+const UserCreate = React.lazy(() => import('./UserCreate'));
 const UserEdit = React.lazy(() => import('./UserEdit'));
 const UserEntryEdits = React.lazy(() => import('./UserEntryEdits'));
 const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
@@ -49,6 +50,7 @@ const UserRoutes = (): React.ReactElement => {
 	return (
 		<Routes>
 			<Route path="" element={<UserIndex />} />
+			<Route path="Create" element={<UserCreate />} />
 			<Route path="Details/:id" element={<UserDetailsNavigate />} />
 			<Route path="Edit/:id" element={<UserEdit />} />
 			<Route path="EntryEdits/:id" element={<UserEntryEdits />} />

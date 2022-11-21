@@ -114,7 +114,7 @@ namespace VocaDb.Tests.Helpers
 			var entries = EntityList("Meiko", "Rin", "Miku", "Luka", "Kaito");
 			var idList = new[] { 1, 5, 3, 2 }; // Meiko, Kaito, Miku, Rin
 
-			this.Invoking(_ => CollectionHelper.SortByIds(entries, idList)).Should().Throw<InvalidOperationException>();
+			Invoking(() => CollectionHelper.SortByIds(entries, idList)).Should().Throw<InvalidOperationException>();
 		}
 
 		[TestMethod]

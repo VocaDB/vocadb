@@ -851,6 +851,35 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
+	create = ({
+		email,
+		entryTime,
+		extra,
+		password,
+		recaptchaResponse,
+		userName,
+	}: {
+		email: string;
+		entryTime: Date;
+		extra: string;
+		password: string;
+		recaptchaResponse: string;
+		userName: string;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/register'),
+			{
+				email: email,
+				// https://stackoverflow.com/questions/7966559/how-to-convert-javascript-date-object-to-ticks/7968483#7968483
+				entryTime: entryTime.getTime() * 10000 + 621355968000000000,
+				extra: extra,
+				'g-recaptcha-response': recaptchaResponse,
+				password: password,
+				userName: userName,
+			},
+		);
+	};
+
 	edit = (
 		requestToken: string,
 		contract: UserForEditContract,

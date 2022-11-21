@@ -42,7 +42,7 @@ namespace VocaDb.Tests.Domain.Users
 			var artist = new Artist { Id = 1 };
 
 			_user.AddOwnedArtist(artist);
-			_user.Invoking(subject => subject.AddOwnedArtist(artist)).Should().Throw<ArgumentException>();
+			Invoking(() => _user.AddOwnedArtist(artist)).Should().Throw<ArgumentException>();
 		}
 
 		[TestMethod]

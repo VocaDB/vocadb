@@ -73,6 +73,9 @@ namespace VocaDb.Web.Models.Shared
 		public MenuPageLink[] SmallBanners { get; init; }
 		public MenuPageLink[] SocialLinks { get; init; }
 
+		public bool SignupsDisabled { get; init; }
+		public string ReCAPTCHAPublicKey { get; init; }
+
 		public GlobalValues(VocaDbPage model)
 		{
 			AllowCustomArtistName = AppConfig.AllowCustomArtistName;
@@ -115,6 +118,9 @@ namespace VocaDb.Web.Models.Shared
 			BigBanners = MenuPage.BigBanners.Select(l => new MenuPageLink(l)).ToArray();
 			SmallBanners = MenuPage.SmallBanners.Select(l => new MenuPageLink(l)).ToArray();
 			SocialLinks = MenuPage.SocialLinks.Select(l => new MenuPageLink(l)).ToArray();
+
+			SignupsDisabled = AppConfig.SiteSettings.SignupsDisabled;
+			ReCAPTCHAPublicKey = AppConfig.ReCAPTCHAPublicKey;
 		}
 	}
 }
