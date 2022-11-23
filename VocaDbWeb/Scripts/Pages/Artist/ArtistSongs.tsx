@@ -49,6 +49,7 @@ const ArtistSongs = observer(
 											PlayQueueRepositoryType.Songs,
 											songsStore.queryParams,
 										),
+										false,
 									);
 								}}
 								title="Play" /* LOC */
@@ -59,7 +60,15 @@ const ArtistSongs = observer(
 						</ButtonGroup>
 						<ButtonGroup>
 							<Button
-								// TODO: onClick
+								onClick={async (): Promise<void> => {
+									await playQueue.startAutoplay(
+										new AutoplayContext(
+											PlayQueueRepositoryType.Songs,
+											songsStore.queryParams,
+										),
+										true,
+									);
+								}}
 								title="Shuffle and play" /* LOC */
 								className="btn-nomargin"
 							>

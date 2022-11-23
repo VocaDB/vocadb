@@ -713,10 +713,12 @@ export class PlayQueueStore
 		TQueryParams extends PlayQueueRepositoryQueryParams
 	>(
 		autoplayContext: AutoplayContext<TQueryParams>,
+		shuffle: boolean,
 	): Promise<void> => {
 		this.clear();
 
 		this.autoplayContext = autoplayContext;
+		this.shuffle = shuffle;
 
 		await this.updateResultsWithTotalCount();
 

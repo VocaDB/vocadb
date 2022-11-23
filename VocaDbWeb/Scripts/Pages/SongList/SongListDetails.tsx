@@ -441,6 +441,7 @@ const SongListDetailsLayout = observer(
 											PlayQueueRepositoryType.SongList,
 											songListStore.queryParams,
 										),
+										false,
 									);
 								}}
 								title="Play" /* LOC */
@@ -451,7 +452,15 @@ const SongListDetailsLayout = observer(
 						</ButtonGroup>
 						<ButtonGroup>
 							<Button
-								// TODO: onClick
+								onClick={async (): Promise<void> => {
+									await playQueue.startAutoplay(
+										new AutoplayContext(
+											PlayQueueRepositoryType.SongList,
+											songListStore.queryParams,
+										),
+										true,
+									);
+								}}
 								title="Shuffle and play" /* LOC */
 								className="btn-nomargin"
 							>

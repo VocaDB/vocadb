@@ -200,6 +200,7 @@ const SearchIndex = observer(
 														PlayQueueRepositoryType.Songs,
 														searchStore.songSearchStore.queryParams,
 													),
+													false,
 												);
 											}}
 											title="Play" /* LOC */
@@ -211,7 +212,15 @@ const SearchIndex = observer(
 									</ButtonGroup>
 									<ButtonGroup>
 										<Button
-											// TODO: onClick
+											onClick={async (): Promise<void> => {
+												await playQueue.startAutoplay(
+													new AutoplayContext(
+														PlayQueueRepositoryType.Songs,
+														searchStore.songSearchStore.queryParams,
+													),
+													true,
+												);
+											}}
 											title="Shuffle and play" /* LOC */
 											className="btn-nomargin"
 										>

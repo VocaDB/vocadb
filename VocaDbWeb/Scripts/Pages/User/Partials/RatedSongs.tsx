@@ -57,6 +57,7 @@ const RatedSongs = observer(
 												PlayQueueRepositoryType.RatedSongs,
 												ratedSongsStore.queryParams,
 											),
+											false,
 										);
 									}}
 									title="Play" /* LOC */
@@ -68,7 +69,15 @@ const RatedSongs = observer(
 							</ButtonGroup>
 							<ButtonGroup>
 								<Button
-									// TODO: onClick
+									onClick={async (): Promise<void> => {
+										await playQueue.startAutoplay(
+											new AutoplayContext(
+												PlayQueueRepositoryType.RatedSongs,
+												ratedSongsStore.queryParams,
+											),
+											true,
+										);
+									}}
 									title="Shuffle and play" /* LOC */
 									className="btn-nomargin"
 								>
