@@ -10,6 +10,7 @@ import { UrlHelper } from '@/Helpers/UrlHelper';
 import NewsItems from '@/Pages/Home/Partials/NewsItems';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import {
 	FrontPagePVPlayerStore,
 	FrontPageStore,
@@ -250,12 +251,14 @@ const HomeIndex = (): React.ReactElement => {
 	>();
 
 	React.useEffect(() => {
-		httpClient.get<FrontPageContract>('/api/frontpage').then((contract) =>
-			setModel({
-				contract: contract,
-				frontPageStore: new FrontPageStore(vdb.values, userRepo, contract),
-			}),
-		);
+		httpClient
+			.get<FrontPageContract>(urlMapper.mapRelative('/api/frontpage'))
+			.then((contract) =>
+				setModel({
+					contract: contract,
+					frontPageStore: new FrontPageStore(vdb.values, userRepo, contract),
+				}),
+			);
 	}, [vdb]);
 
 	return model ? (
