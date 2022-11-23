@@ -432,22 +432,33 @@ const SongListDetailsLayout = observer(
 				</div>
 
 				<div className="clearfix well well-transparent">
-					<ButtonGroup className="songlist-mode-selection pull-left">
-						<Button
-							onClick={async (): Promise<void> => {
-								await playQueue.startAutoplay(
-									new AutoplayContext(
-										PlayQueueRepositoryType.SongList,
-										songListStore.queryParams,
-									),
-								);
-							}}
-							title="Play" /* LOC */
-							className="btn-nomargin"
-						>
-							<i className="icon-play noMargin" /> Play{/* LOC */}
-						</Button>
-					</ButtonGroup>
+					<div className="songlist-mode-selection pull-left">
+						<ButtonGroup>
+							<Button
+								onClick={async (): Promise<void> => {
+									await playQueue.startAutoplay(
+										new AutoplayContext(
+											PlayQueueRepositoryType.SongList,
+											songListStore.queryParams,
+										),
+									);
+								}}
+								title="Play" /* LOC */
+								className="btn-nomargin"
+							>
+								<i className="icon-play noMargin" /> Play{/* LOC */}
+							</Button>
+						</ButtonGroup>
+						<ButtonGroup>
+							<Button
+								// TODO: onClick
+								title="Shuffle and play" /* LOC */
+								className="btn-nomargin"
+							>
+								<i className="icon icon-random" /> Shuffle and play{/* LOC */}
+							</Button>
+						</ButtonGroup>
+					</div>
 					{!songListStore.playlistMode && (
 						<Button
 							className={classNames(

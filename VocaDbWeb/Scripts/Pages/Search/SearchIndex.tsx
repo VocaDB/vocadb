@@ -209,6 +209,16 @@ const SearchIndex = observer(
 											{/* LOC */}
 										</Button>
 									</ButtonGroup>
+									<ButtonGroup>
+										<Button
+											// TODO: onClick
+											title="Shuffle and play" /* LOC */
+											className="btn-nomargin"
+										>
+											<i className="icon icon-random" /> Shuffle and play
+											{/* LOC */}
+										</Button>
+									</ButtonGroup>
 								</div>
 							</>
 						)}

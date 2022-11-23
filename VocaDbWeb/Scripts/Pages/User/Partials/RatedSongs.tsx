@@ -1,4 +1,5 @@
 import Button from '@/Bootstrap/Button';
+import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { TagAutoComplete } from '@/Components/KnockoutExtensions/TagAutoComplete';
 import { ArtistFilters } from '@/Components/Shared/Partials/Knockout/ArtistFilters';
 import { RatedSongsSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
@@ -48,7 +49,7 @@ const RatedSongs = observer(
 							{t('ViewRes.User:RatedSongs.GroupByRating')}
 						</Button>{' '}
 						<div className="inline-block">
-							<div className="btn-group">
+							<ButtonGroup>
 								<Button
 									onClick={async (): Promise<void> => {
 										await playQueue.startAutoplay(
@@ -64,7 +65,16 @@ const RatedSongs = observer(
 									<i className="icon-play noMargin" /> Play
 									{/* LOC */}
 								</Button>
-							</div>
+							</ButtonGroup>
+							<ButtonGroup>
+								<Button
+									// TODO: onClick
+									title="Shuffle and play" /* LOC */
+									className="btn-nomargin"
+								>
+									<i className="icon icon-random" /> Shuffle and play{/* LOC */}
+								</Button>
+							</ButtonGroup>
 						</div>{' '}
 						<Button
 							onClick={(): void =>
