@@ -134,6 +134,7 @@ export class PlayQueueStore
 	@observable repeat = RepeatMode.Off;
 	@observable shuffle = false;
 
+	@observable
 	private autoplayContext?: AutoplayContext<PlayQueueRepositoryQueryParams>;
 	private readonly paging = new ServerSidePagingStore(30);
 
@@ -213,7 +214,11 @@ export class PlayQueueStore
 	}
 
 	@computed get hasMoreItems(): boolean {
-		return !this.paging.isLastPage;
+		if (this.shuffle) {
+			return this.autoplayContext !== undefined;
+		} else {
+			return !this.paging.isLastPage;
+		}
 	}
 
 	@computed get hasNextItem(): boolean {
