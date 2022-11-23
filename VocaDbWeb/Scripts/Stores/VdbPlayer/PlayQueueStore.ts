@@ -640,7 +640,9 @@ export class PlayQueueStore
 		const { repositoryType, queryParams } = this.autoplayContext;
 
 		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
-		const pagingProps = this.paging.getPagingProperties(getTotalCount);
+		const pagingProps = this.shuffle
+			? { start: 0, maxEntries: 1, getTotalCount: getTotalCount }
+			: this.paging.getPagingProperties(getTotalCount);
 		const { items: songs, totalCount } = await playQueueRepo.getSongs({
 			lang: this.values.languagePreference,
 			pagingProps: pagingProps,
@@ -666,9 +668,13 @@ export class PlayQueueStore
 	};
 
 	loadMore = async (): Promise<void> => {
-		if (!this.hasMoreItems) return;
+		if (!this.hasMoreItems) {
+			return;
+		}
 
-		this.paging.nextPage();
+		if (!this.shuffle) {
+			this.paging.nextPage();
+		}
 
 		await this.updateResultsWithoutTotalCount();
 	};
