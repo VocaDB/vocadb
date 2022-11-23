@@ -27,6 +27,7 @@ import {
 import { SongOptionalField, songRepo } from '@/Repositories/SongRepository';
 import { TagOptionalField, tagRepo } from '@/Repositories/TagRepository';
 import { UserOptionalField, userRepo } from '@/Repositories/UserRepository';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 interface AlbumToolTipProps {
@@ -37,6 +38,8 @@ interface AlbumToolTipProps {
 
 export const AlbumToolTip = React.memo(
 	({ id, children, withCover }: AlbumToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [album, setAlbum] = React.useState<AlbumContract>();
@@ -56,7 +59,7 @@ export const AlbumToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((album) => setAlbum(album));
-		}, [album, show, id]);
+		}, [vdb, album, show, id]);
 
 		return (
 			<OverlayTrigger
@@ -92,6 +95,8 @@ interface ArtistToolTipProps {
 
 export const ArtistToolTip = React.memo(
 	({ id, children }: ArtistToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [artist, setArtist] = React.useState<ArtistContract>();
@@ -111,7 +116,7 @@ export const ArtistToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((artist) => setArtist(artist));
-		}, [artist, show, id]);
+		}, [vdb, artist, show, id]);
 
 		return (
 			<OverlayTrigger
@@ -204,6 +209,8 @@ interface SongToolTipProps {
 
 export const SongToolTip = React.memo(
 	({ id, children, foreignDomain }: SongToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [song, setSong] = React.useState<SongWithPVAndVoteContract>();
@@ -241,7 +248,7 @@ export const SongToolTip = React.memo(
 
 					setSong({ ...song, pvs: [], vote: vote });
 				});
-		}, [song, show, id, foreignDomain]);
+		}, [vdb, song, show, id, foreignDomain]);
 
 		return (
 			<OverlayTrigger
@@ -273,6 +280,8 @@ interface TagToolTipProps {
 
 export const TagToolTip = React.memo(
 	({ id, children }: TagToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [tag, setTag] = React.useState<TagApiContract>();
@@ -293,7 +302,7 @@ export const TagToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((tag) => setTag(tag));
-		}, [tag, show, id]);
+		}, [vdb, tag, show, id]);
 
 		return (
 			<OverlayTrigger

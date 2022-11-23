@@ -16,6 +16,7 @@ import {
 	ActivityEntryListStore,
 	ActivityEntrySortRule,
 } from '@/Stores/ActivityEntry/ActivityEntryListStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -163,6 +164,8 @@ const UserEntryEditsLayout = observer(
 );
 
 const UserEntryEdits = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -193,7 +196,7 @@ const UserEntryEdits = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<UserEntryEditsLayout

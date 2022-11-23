@@ -3,6 +3,7 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage } from '@/Components/ui';
 import { UserCreateStore } from '@/Stores/User/UserCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -16,6 +17,8 @@ interface UserCreateLayoutProps {
 
 const UserCreateLayout = observer(
 	({ userCreateStore }: UserCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes.User']);
 
 		const title = t('ViewRes.User:Create.Register');

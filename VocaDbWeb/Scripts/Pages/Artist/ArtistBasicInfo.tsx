@@ -30,6 +30,7 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';
@@ -140,6 +141,8 @@ const ArtistBasicInfo = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistBasicInfoProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',

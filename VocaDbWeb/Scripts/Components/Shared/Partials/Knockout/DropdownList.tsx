@@ -12,6 +12,7 @@ import { PVType } from '@/Models/PVs/PVType';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -280,6 +281,8 @@ export const AssociatedArtistTypeDropdownList = React.memo(
 
 export const AlbumTypeDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['VocaDb.Model.Resources.Albums']);
 
 		return (
@@ -296,6 +299,8 @@ export const AlbumTypeDropdownList = React.memo(
 
 export const SongTypeDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
 
 		return (

@@ -2,6 +2,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 
@@ -270,6 +271,8 @@ const AboutVocaloid = React.memo(
 
 const Guidelines = React.memo(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		return (
 			<HelpIndexTabs tab="guidelines">
 				<h3 id="glmain">General principles</h3>

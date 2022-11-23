@@ -3,6 +3,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { DeletedAlbumsStore } from '@/Stores/Album/DeletedAlbumsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -11,10 +12,14 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const deletedAlbumsStore = new DeletedAlbumsStore(vdb.values, albumRepo);
-
 const AlbumDeleted = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [deletedAlbumsStore] = React.useState(
+			() => new DeletedAlbumsStore(vdb.values, albumRepo),
+		);
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = 'Deleted albums'; /* LOC */

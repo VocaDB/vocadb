@@ -4,6 +4,7 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 interface VenueAutoCompleteProps
@@ -15,6 +16,8 @@ export const VenueAutoComplete = ({
 	onAcceptSelection,
 	...props
 }: VenueAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const queryParams = {
 		nameMatchMode: 'Auto',
 		lang: vdb.values.languagePreference,

@@ -26,6 +26,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -310,6 +311,8 @@ const SongDetailsLayout = observer(
 );
 
 const SongDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		{ model: SongDetailsForApi; songDetailsStore: SongDetailsStore } | undefined
 	>();
@@ -358,7 +361,7 @@ const SongDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id, albumId]);
+	}, [vdb, id, albumId]);
 
 	return model ? (
 		<SongDetailsLayout

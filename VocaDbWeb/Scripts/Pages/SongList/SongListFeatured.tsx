@@ -8,6 +8,7 @@ import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCat
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { FeaturedSongListsStore } from '@/Stores/SongList/FeaturedSongListsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,16 +19,22 @@ import { Link } from 'react-router-dom';
 const categories = Object.values(SongListFeaturedCategory).filter(
 	(value) => value !== SongListFeaturedCategory.Nothing,
 );
-const featuredSongListsStore = new FeaturedSongListsStore(
-	vdb.values,
-	songListRepo,
-	tagRepo,
-	[],
-	categories,
-);
 
 const SongListFeatured = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [featuredSongListsStore] = React.useState(
+			() =>
+				new FeaturedSongListsStore(
+					vdb.values,
+					songListRepo,
+					tagRepo,
+					[],
+					categories,
+				),
+		);
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',

@@ -53,6 +53,7 @@ import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { map } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -577,6 +578,8 @@ interface TracksTabContentProps {
 
 const TracksTabContent = observer(
 	({ albumEditStore }: TracksTabContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -1123,6 +1126,8 @@ const AlbumEditLayout = observer(
 );
 
 const AlbumEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -1133,7 +1138,7 @@ const AlbumEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -1170,7 +1175,7 @@ const AlbumEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id]);
+	}, [vdb, artistRoleNames, id]);
 
 	return model ? (
 		<AlbumEditLayout albumEditStore={model.albumEditStore} />

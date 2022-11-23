@@ -7,6 +7,7 @@ import { LeftMenu } from '@/Components/Shared/Partials/LeftMenu';
 import { miniPlayerHeight, VdbPlayer } from '@/Components/VdbPlayer/VdbPlayer';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
+import { VdbProvider } from '@/VdbContext';
 import '@/i18n';
 import { NostalgicDivaProvider } from '@vocadb/nostalgic-diva';
 import { ScrollToTop } from '@vocadb/route-sphere';
@@ -39,22 +40,24 @@ const AppContainer = (): React.ReactElement => {
 
 const App = (): React.ReactElement => {
 	return (
-		<BrowserRouter>
-			<NostalgicDivaProvider>
-				<VdbPlayerProvider>
-					<MutedUsersProvider>
-						<ScrollToTop />
-						<Header />
-						<div css={{ display: 'flex' }}>
-							<LeftMenu />
-							<AppContainer />
-						</div>
-						<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
-						<VdbPlayer />
-					</MutedUsersProvider>
-				</VdbPlayerProvider>
-			</NostalgicDivaProvider>
-		</BrowserRouter>
+		<VdbProvider>
+			<BrowserRouter>
+				<NostalgicDivaProvider>
+					<VdbPlayerProvider>
+						<MutedUsersProvider>
+							<ScrollToTop />
+							<Header />
+							<div css={{ display: 'flex' }}>
+								<LeftMenu />
+								<AppContainer />
+							</div>
+							<Toaster containerStyle={{ top: '10vh' }} gutter={0} />
+							<VdbPlayer />
+						</MutedUsersProvider>
+					</VdbPlayerProvider>
+				</NostalgicDivaProvider>
+			</BrowserRouter>
+		</VdbProvider>
 	);
 };
 

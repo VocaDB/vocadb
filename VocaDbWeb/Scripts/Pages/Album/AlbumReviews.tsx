@@ -16,6 +16,7 @@ import {
 	AlbumDetailsStore,
 	AlbumReviewStore,
 } from '@/Stores/Album/AlbumDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -28,6 +29,8 @@ interface AlbumReviewProps {
 
 const AlbumReview = observer(
 	({ albumDetailsStore, review }: AlbumReviewProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();

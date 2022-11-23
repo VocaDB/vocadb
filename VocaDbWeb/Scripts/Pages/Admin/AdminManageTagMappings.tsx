@@ -8,6 +8,7 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { ManageTagMappingsStore } from '@/Stores/Admin/ManageTagMappingsStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -19,6 +20,8 @@ const manageTagMappingsStore = new ManageTagMappingsStore(tagRepo);
 
 const AdminManageTagMappings = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		const siteName = vdb.values.siteName;
 
 		return (

@@ -8,6 +8,7 @@ import {
 	ReleaseEventOptionalField,
 } from '@/Repositories/ReleaseEventRepository';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
+import { useVdb } from '@/VdbContext';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -88,6 +89,8 @@ const EventIndexLayout = ({
 };
 
 const EventIndex = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<ReleaseEventContract[]>();
 
 	React.useEffect(() => {
@@ -111,7 +114,7 @@ const EventIndex = (): React.ReactElement => {
 				},
 			})
 			.then((result) => setModel(result.items));
-	}, []);
+	}, [vdb]);
 
 	return model ? <EventIndexLayout model={model} /> : <></>;
 };

@@ -11,6 +11,7 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagMergeStore } from '@/Stores/Tag/TagMergeStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -133,6 +134,8 @@ const TagMergeLayout = observer(
 );
 
 const TagMerge = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -149,7 +152,7 @@ const TagMerge = (): React.ReactElement => {
 					tagMergeStore: new TagMergeStore(tagRepo, tag),
 				}),
 			);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<TagMergeLayout tag={model.tag} tagMergeStore={model.tagMergeStore} />

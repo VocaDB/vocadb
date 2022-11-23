@@ -1,7 +1,10 @@
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 export const PatreonLink = React.memo(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		return (
 			<>
 				<p>

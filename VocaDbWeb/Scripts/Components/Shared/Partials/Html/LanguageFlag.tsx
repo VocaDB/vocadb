@@ -1,4 +1,5 @@
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +9,8 @@ interface LanguageFlagProps {
 
 export const LanguageFlag = React.memo(
 	({ languageCode }: LanguageFlagProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
 
 		return languageCode ? (
