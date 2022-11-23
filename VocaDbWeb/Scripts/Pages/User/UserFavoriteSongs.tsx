@@ -9,6 +9,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -50,6 +51,8 @@ const UserFavoriteSongsLayout = ({
 };
 
 const UserFavoriteSongs = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -84,7 +87,7 @@ const UserFavoriteSongs = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<UserFavoriteSongsLayout

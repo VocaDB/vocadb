@@ -43,6 +43,7 @@ import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -589,6 +590,8 @@ const SongListDetailsLayout = observer(
 );
 
 const SongListDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		{ songList: SongListContract; songListStore: SongListStore } | undefined
 	>();
@@ -629,7 +632,7 @@ const SongListDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<SongListDetailsLayout

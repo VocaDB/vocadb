@@ -5,6 +5,7 @@ import {
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,8 @@ export const ReleaseEventAutoComplete = ({
 	onAcceptSelection,
 	...props
 }: ReleaseEventAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
 
 	const queryParams = {

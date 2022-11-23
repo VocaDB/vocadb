@@ -5,6 +5,7 @@ import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,8 @@ interface BannerLinkProps {
 
 const BannerLink = React.memo(
 	({ title, url, img }: BannerLinkProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		return (
 			<a
 				href={url}
@@ -80,6 +83,8 @@ const SocialLink = React.memo(
 
 export const LeftMenu = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const vdbPlayer = useVdbPlayer();

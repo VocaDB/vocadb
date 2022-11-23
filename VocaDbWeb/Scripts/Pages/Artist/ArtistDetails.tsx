@@ -25,6 +25,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -253,6 +254,8 @@ const ArtistDetailsLayout = observer(
 );
 
 const ArtistDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<
@@ -297,7 +300,7 @@ const ArtistDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<ArtistDetailsLayout

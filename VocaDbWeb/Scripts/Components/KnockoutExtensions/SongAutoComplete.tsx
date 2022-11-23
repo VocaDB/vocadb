@@ -9,6 +9,7 @@ import { NameMatchMode } from '@/Models/NameMatchMode';
 import { SongQueryParams } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -21,6 +22,8 @@ export const SongAutoComplete = ({
 	properties,
 	...props
 }: SongAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
 
 	var filter = properties.filter;

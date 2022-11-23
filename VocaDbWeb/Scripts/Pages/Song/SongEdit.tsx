@@ -53,6 +53,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -932,6 +933,8 @@ const SongEditLayout = observer(
 );
 
 const SongEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -942,7 +945,7 @@ const SongEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -979,7 +982,7 @@ const SongEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id, albumId]);
+	}, [vdb, artistRoleNames, id, albumId]);
 
 	return model ? <SongEditLayout songEditStore={model.songEditStore} /> : <></>;
 };

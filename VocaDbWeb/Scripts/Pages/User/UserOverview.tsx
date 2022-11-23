@@ -22,6 +22,7 @@ import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';
@@ -90,6 +91,8 @@ interface UserOverviewProps {
 
 const UserOverview = observer(
 	({ user, userDetailsStore }: UserOverviewProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',

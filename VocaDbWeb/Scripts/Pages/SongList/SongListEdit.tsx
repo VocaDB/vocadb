@@ -33,6 +33,7 @@ import { songListRepo } from '@/Repositories/SongListRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -466,6 +467,8 @@ const defaultModel: SongListForEditContract = {
 };
 
 const SongListEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -504,7 +507,7 @@ const SongListEdit = (): React.ReactElement => {
 				),
 			});
 		}
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<SongListEditLayout songListEditStore={model.songListEditStore} />

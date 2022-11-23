@@ -36,6 +36,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { TagDetailsStore } from '@/Stores/Tag/TagDetailsStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { drop, some } from 'lodash-es';
@@ -872,6 +873,8 @@ const TagDetailsLayout = observer(
 );
 
 const TagDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		{ tag: TagDetailsContract; tagDetailsStore: TagDetailsStore } | undefined
 	>();
@@ -912,7 +915,7 @@ const TagDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<TagDetailsLayout tag={model.tag} tagDetailsStore={model.tagDetailsStore} />

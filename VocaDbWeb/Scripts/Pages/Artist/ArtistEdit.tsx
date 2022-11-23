@@ -41,6 +41,7 @@ import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { map, pull } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -749,6 +750,8 @@ const ArtistEditLayout = observer(
 );
 
 const ArtistEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -776,7 +779,7 @@ const ArtistEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<ArtistEditLayout artistEditStore={model.artistEditStore} />

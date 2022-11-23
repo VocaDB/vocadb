@@ -29,6 +29,7 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { MySettingsStore } from '@/Stores/User/MySettingsStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -390,6 +391,8 @@ const InterfaceSettingsTabContent = observer(
 	({
 		mySettingsStore,
 	}: InterfaceSettingsTabContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes.User']);
 
 		return (

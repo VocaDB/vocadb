@@ -17,6 +17,7 @@ import {
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -121,6 +122,8 @@ const HomeIndexLayout = ({
 	model,
 	frontPageStore,
 }: HomeIndexLayoutProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['ViewRes.Comment', 'ViewRes.Home']);
 
 	return (
@@ -240,6 +243,8 @@ const HomeIndexLayout = ({
 };
 
 const HomeIndex = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		{ contract: FrontPageContract; frontPageStore: FrontPageStore } | undefined
 	>();
@@ -251,7 +256,7 @@ const HomeIndex = (): React.ReactElement => {
 				frontPageStore: new FrontPageStore(vdb.values, userRepo, contract),
 			}),
 		);
-	}, []);
+	}, [vdb]);
 
 	return model ? (
 		<HomeIndexLayout

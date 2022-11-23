@@ -22,6 +22,7 @@ import { albumRepo } from '@/Repositories/AlbumRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -202,6 +203,8 @@ const AlbumDetailsLayout = observer(
 );
 
 const AlbumDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<
@@ -242,7 +245,7 @@ const AlbumDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<AlbumDetailsLayout

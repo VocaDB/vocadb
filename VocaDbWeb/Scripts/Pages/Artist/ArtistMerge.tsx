@@ -11,6 +11,7 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArtistMergeStore } from '@/Stores/Artist/ArtistMergeStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -141,6 +142,8 @@ const ArtistMergeLayout = observer(
 );
 
 const ArtistMerge = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -161,7 +164,7 @@ const ArtistMerge = (): React.ReactElement => {
 					),
 				}),
 			);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<ArtistMergeLayout

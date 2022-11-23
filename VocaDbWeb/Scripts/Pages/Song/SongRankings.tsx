@@ -14,6 +14,7 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -23,14 +24,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const rankingsStore = new RankingsStore(
-	httpClient,
-	urlMapper,
-	songRepo,
-	userRepo,
-	vdb.values.languagePreference,
-);
 
 const SongRankingsTableHeader = React.memo(
 	(): React.ReactElement => {
@@ -213,6 +206,19 @@ const SongRankingsTable = observer(
 
 const SongRankings = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [rankingsStore] = React.useState(
+			() =>
+				new RankingsStore(
+					httpClient,
+					urlMapper,
+					songRepo,
+					userRepo,
+					vdb.values.languagePreference,
+				),
+		);
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		useLocationStateStore(rankingsStore);
