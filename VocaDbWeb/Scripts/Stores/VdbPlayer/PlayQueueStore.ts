@@ -640,13 +640,21 @@ export class PlayQueueStore
 		}
 	};
 
+	private getRandomSongIndex = (): number => {
+		return Math.floor(Math.random() * this.paging.totalItems);
+	};
+
 	private updateResults = async (getTotalCount: boolean): Promise<void> => {
 		if (!this.autoplayContext) return;
 		const { repositoryType, queryParams } = this.autoplayContext;
 
 		const playQueueRepo = this.playQueueRepoFactory.create(repositoryType);
 		const pagingProps = this.shuffle
-			? { start: 0, maxEntries: 1, getTotalCount: getTotalCount }
+			? {
+					start: this.getRandomSongIndex(),
+					maxEntries: 1,
+					getTotalCount: getTotalCount,
+			  }
 			: this.paging.getPagingProperties(getTotalCount);
 		const { items: songs, totalCount } = await playQueueRepo.getSongs({
 			lang: this.values.languagePreference,
