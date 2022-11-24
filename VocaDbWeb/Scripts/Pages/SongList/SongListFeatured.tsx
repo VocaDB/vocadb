@@ -3,7 +3,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
@@ -23,6 +23,7 @@ const categories = Object.values(SongListFeaturedCategory).filter(
 const SongListFeatured = observer(
 	(): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const [featuredSongListsStore] = React.useState(
 			() =>

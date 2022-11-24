@@ -1,6 +1,6 @@
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
 import { observer } from 'mobx-react-lite';
@@ -13,6 +13,8 @@ interface AlbumDiscussionProps {
 
 const AlbumDiscussion = observer(
 	({ model, albumDetailsStore }: AlbumDiscussionProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		React.useEffect(() => {
 			albumDetailsStore.comments.initComments();
 		}, [albumDetailsStore]);

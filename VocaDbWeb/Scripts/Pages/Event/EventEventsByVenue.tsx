@@ -2,8 +2,8 @@ import { Layout } from '@/Components/Shared/Layout';
 import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
@@ -18,6 +18,8 @@ interface EventEventsByVenueLayoutProps {
 const EventEventsByVenueLayout = ({
 	model,
 }: EventEventsByVenueLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');

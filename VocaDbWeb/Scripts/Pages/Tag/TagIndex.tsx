@@ -4,7 +4,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { TagCategoryContract } from '@/DataContracts/Tag/TagCategoryContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { TagCreateStore } from '@/Stores/Tag/TagCreateStore';
@@ -26,6 +26,8 @@ interface TagIndexLayoutProps {
 
 const TagIndexLayout = observer(
 	({ model }: TagIndexLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation(['ViewRes']);
 
 		const title = t('ViewRes:Shared.Tags');

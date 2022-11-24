@@ -1,5 +1,5 @@
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -13,6 +13,8 @@ export const LatestCommentsKnockout = observer(
 	({
 		editableCommentsStore,
 	}: LatestCommentsKnockoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		return (

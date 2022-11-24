@@ -28,8 +28,8 @@ import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -241,6 +241,8 @@ interface SongBasicInfoProps {
 
 const SongBasicInfo = observer(
 	({ model, songDetailsStore }: SongBasicInfoProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		const webLinks = React.useMemo(() => {

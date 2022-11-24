@@ -8,8 +8,8 @@ import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/En
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ArchivedArtistVersionDetailsContract } from '@/DataContracts/Artist/ArchivedArtistVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedArtistStore } from '@/Stores/Artist/ArchivedArtistStore';
@@ -31,6 +31,8 @@ const ArtistViewVersionLayout = observer(
 		contract,
 		archivedArtistStore,
 	}: ArtistViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */

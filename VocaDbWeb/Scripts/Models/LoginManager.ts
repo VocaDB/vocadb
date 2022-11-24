@@ -305,5 +305,3 @@ export class LoginManager {
 		return this.canEditTags && this.canEdit(entry);
 	};
 }
-
-export const loginManager = new LoginManager(vdb.values);

@@ -6,7 +6,7 @@ import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
@@ -40,6 +40,8 @@ interface UserDetailsLayoutProps {
 
 const UserDetailsLayout = observer(
 	({ user, userDetailsStore }: UserDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.User']);
 
 		const title = user.name;
@@ -296,6 +298,7 @@ const UserDetailsLayout = observer(
 
 const UserDetails = (): React.ReactElement => {
 	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
 	const [model, setModel] = React.useState<
 		| { user: UserDetailsContract; userDetailsStore: UserDetailsStore }
@@ -368,7 +371,7 @@ const UserDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [vdb, name]);
+	}, [vdb, loginManager, name]);
 
 	return model ? (
 		<UserDetailsLayout

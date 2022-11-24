@@ -1,7 +1,7 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ActivityEntryListStore } from '@/Stores/ActivityEntry/ActivityEntryListStore';
@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 const ActivityEntryIndex = observer(
 	(): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const [activityEntryListStore] = React.useState(
 			() => new ActivityEntryListStore(vdb.values, httpClient, urlMapper),

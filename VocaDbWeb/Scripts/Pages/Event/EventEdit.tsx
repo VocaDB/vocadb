@@ -31,13 +31,13 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
@@ -71,6 +71,8 @@ const BasicInfoTabContent = observer(
 		releaseEventEditStore,
 		pictureUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		return (
@@ -598,6 +600,8 @@ interface EventEditLayoutProps {
 
 const EventEditLayout = observer(
 	({ releaseEventEditStore }: EventEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const contract = releaseEventEditStore.contract;

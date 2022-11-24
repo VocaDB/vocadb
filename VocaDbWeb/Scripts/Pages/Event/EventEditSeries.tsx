@@ -22,12 +22,12 @@ import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -48,6 +48,8 @@ const EventEditSeriesLayout = observer(
 	({
 		releaseEventSeriesEditStore,
 	}: EventEditSeriesLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		const contract = releaseEventSeriesEditStore.contract;

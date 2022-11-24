@@ -2,7 +2,7 @@ import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import {
 	UserDetailsStore,
@@ -21,6 +21,8 @@ interface SongListsProps {
 
 const SongLists = observer(
 	({ user, songLists }: SongListsProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.User']);
 
 		useLocationStateStore(songLists);

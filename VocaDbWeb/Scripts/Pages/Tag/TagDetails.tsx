@@ -22,10 +22,10 @@ import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import {
 	TagReportType,
 	tagReportTypesWithRequiredNotes,
@@ -357,6 +357,8 @@ interface TagDetailsLayoutProps {
 
 const TagDetailsLayout = observer(
 	({ tag, tagDetailsStore }: TagDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Tag',
@@ -874,6 +876,7 @@ const TagDetailsLayout = observer(
 
 const TagDetails = (): React.ReactElement => {
 	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
 	const [model, setModel] = React.useState<
 		{ tag: TagDetailsContract; tagDetailsStore: TagDetailsStore } | undefined
@@ -915,7 +918,7 @@ const TagDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [vdb, id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<TagDetailsLayout tag={model.tag} tagDetailsStore={model.tagDetailsStore} />

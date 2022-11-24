@@ -20,10 +20,10 @@ import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
 import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
-import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -42,6 +42,8 @@ interface VenueEditLayoutProps {
 
 const VenueEditLayout = observer(
 	({ venueEditStore }: VenueEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Venue']);
 
 		const contract = venueEditStore.contract;

@@ -1,5 +1,5 @@
 import Nav from '@/Bootstrap/Nav';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { useVdb } from '@/VdbContext';
 import qs from 'qs';
@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const { t } = useTranslation(['ViewRes']);
 

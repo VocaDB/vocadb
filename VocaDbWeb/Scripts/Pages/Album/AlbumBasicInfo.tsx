@@ -33,9 +33,9 @@ import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
@@ -110,6 +110,8 @@ interface AlbumBasicInfoProps {
 
 const AlbumBasicInfo = observer(
 	({ model, albumDetailsStore }: AlbumBasicInfoProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
