@@ -4,6 +4,7 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { useVdb } from '@/VdbContext';
 import qs from 'qs';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -61,6 +62,8 @@ export const contributors = [
 ];
 
 const AboutVocaDb = React.memo(() => {
+	const vdb = useVdb();
+
 	return (
 		<HelpIndexTabs tab="aboutvocadb">
 			<h4 id="vocadbdescription">Overview</h4>
@@ -433,6 +436,8 @@ const AboutVocaloid = React.memo(
 
 const Guidelines = React.memo(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		return (
 			<HelpIndexTabs tab="guidelines">
 				<h3 id="glmain">General principles</h3>

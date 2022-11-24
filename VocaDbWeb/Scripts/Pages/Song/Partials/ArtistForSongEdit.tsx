@@ -3,6 +3,7 @@ import { ArtistLink } from '@/Components/Shared/Partials/Artist/ArtistLink';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
 import { ArtistForAlbumEditStore } from '@/Stores/ArtistForAlbumEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -18,6 +19,8 @@ const ArtistForSongEdit = observer(
 		songEditStore,
 		artistForAlbumEditStore,
 	}: ArtistForSongEditProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Album']);
 
 		return (

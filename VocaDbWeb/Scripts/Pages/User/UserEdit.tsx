@@ -15,6 +15,7 @@ import { artistRepo } from '@/Repositories/ArtistRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserEditStore } from '@/Stores/User/UserEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -240,6 +241,8 @@ const UserEditLayout = observer(
 );
 
 const UserEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{ userEditStore: UserEditStore }>();
@@ -255,7 +258,7 @@ const UserEdit = (): React.ReactElement => {
 				),
 			}),
 		);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? <UserEditLayout userEditStore={model.userEditStore} /> : <></>;
 };

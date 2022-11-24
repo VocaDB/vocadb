@@ -11,6 +11,7 @@ import { albumRepo } from '@/Repositories/AlbumRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { AlbumMergeStore } from '@/Stores/Album/AlbumMergeStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -136,6 +137,8 @@ const AlbumMergeLayout = observer(
 );
 
 const AlbumMerge = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -152,7 +155,7 @@ const AlbumMerge = (): React.ReactElement => {
 					albumMergeStore: new AlbumMergeStore(vdb.values, albumRepo, album),
 				}),
 			);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<AlbumMergeLayout

@@ -15,6 +15,7 @@ import { albumRepo } from '@/Repositories/AlbumRepository';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { AlbumCreateStore } from '@/Stores/Album/AlbumCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -28,6 +29,8 @@ interface AlbumCreateLayoutProps {
 
 const AlbumCreateLayout = observer(
 	({ albumCreateStore }: AlbumCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Album']);
 
 		const title = t('ViewRes.Album:Create.SubmitAlbum');
@@ -270,6 +273,8 @@ const AlbumCreateLayout = observer(
 );
 
 const AlbumCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [albumCreateStore] = React.useState(
 		() => new AlbumCreateStore(vdb.values, albumRepo, artistRepo),
 	);

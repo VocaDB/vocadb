@@ -29,6 +29,7 @@ import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListSortRule } from '@/Stores/SongList/SongListsBaseStore';
 import { TopBarStore } from '@/Stores/TopBarStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
@@ -73,28 +74,14 @@ const globalSearchBoxSource = (
 	return httpClient.get<string[]>(endpoint, { query: query });
 };
 
-const setLanguagePreferenceCookie = (
-	languagePreference: ContentLanguagePreference,
-): boolean => {
-	userRepo
-		.updateUserSetting({
-			userId: vdb.values.loggedUserId,
-			settingName: 'languagePreference',
-			value: languagePreference,
-		})
-		.then(() => {
-			window.location.reload();
-		});
-
-	return false;
-};
-
 interface GlobalSearchBoxProps {
 	topBarStore: TopBarStore;
 }
 
 export const GlobalSearchBox = observer(
 	({ topBarStore }: GlobalSearchBoxProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -108,6 +95,23 @@ export const GlobalSearchBox = observer(
 
 		// HACK: jQuery UI's Autocomplete doesn't work properly when controlled.
 		const globalSearchTermRef = React.useRef<HTMLInputElement>(undefined!);
+
+		const setLanguagePreferenceCookie = React.useCallback(
+			(languagePreference: ContentLanguagePreference): boolean => {
+				userRepo
+					.updateUserSetting({
+						userId: vdb.values.loggedUserId,
+						settingName: 'languagePreference',
+						value: languagePreference,
+					})
+					.then(() => {
+						window.location.reload();
+					});
+
+				return false;
+			},
+			[vdb],
+		);
 
 		const navigate = useNavigate();
 		const submit = React.useCallback(async (): Promise<void> => {
@@ -280,7 +284,7 @@ export const GlobalSearchBox = observer(
 			await tryRedirectFuncs[topBarStore.entryType](
 				globalSearchTermRef.current.value,
 			);
-		}, [topBarStore, navigate]);
+		}, [vdb, topBarStore, navigate]);
 
 		return (
 			<form

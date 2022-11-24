@@ -11,6 +11,7 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongMergeStore } from '@/Stores/Song/SongMergeStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -136,6 +137,8 @@ const SongMergeLayout = observer(
 );
 
 const SongMerge = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -152,7 +155,7 @@ const SongMerge = (): React.ReactElement => {
 					songMergeStore: new SongMergeStore(vdb.values, songRepo, song),
 				}),
 			);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<SongMergeLayout song={model.song} songMergeStore={model.songMergeStore} />

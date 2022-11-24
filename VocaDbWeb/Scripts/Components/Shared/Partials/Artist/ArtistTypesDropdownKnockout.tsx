@@ -1,4 +1,5 @@
 import { ArtistType } from '@/Models/Artists/ArtistType';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -33,12 +34,6 @@ const groupsForTypes: Record<ArtistType, ArtistTypeGroup> = {
 	[ArtistType.CoverArtist]: ArtistTypeGroup.Producer,
 };
 
-const artistTypeGroups = vdb.values.artistTypes
-	.orderBy((artistType) =>
-		Object.values(ArtistTypeGroup).indexOf(groupsForTypes[artistType]),
-	)
-	.groupBy((artistType) => groupsForTypes[artistType]);
-
 interface ArtistTypesDropdownKnockoutProps
 	extends React.DetailedHTMLProps<
 		React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -47,6 +42,18 @@ interface ArtistTypesDropdownKnockoutProps
 
 export const ArtistTypesDropdownKnockout = React.memo(
 	({ ...props }: ArtistTypesDropdownKnockoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
+		const artistTypeGroups = React.useMemo(
+			() =>
+				vdb.values.artistTypes
+					.orderBy((artistType) =>
+						Object.values(ArtistTypeGroup).indexOf(groupsForTypes[artistType]),
+					)
+					.groupBy((artistType) => groupsForTypes[artistType]),
+			[vdb],
+		);
+
 		const { t } = useTranslation('VocaDb.Model.Resources');
 
 		return (

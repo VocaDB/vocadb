@@ -15,6 +15,7 @@ import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
 import { truncate } from 'lodash-es';
@@ -30,6 +31,8 @@ interface ArtistCreateLayoutProps {
 
 const ArtistCreateLayout = observer(
 	({ artistCreateStore }: ArtistCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -389,6 +392,8 @@ const ArtistCreateLayout = observer(
 );
 
 const ArtistCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [artistCreateStore] = React.useState(
 		() => new ArtistCreateStore(vdb.values, artistRepo, tagRepo),
 	);

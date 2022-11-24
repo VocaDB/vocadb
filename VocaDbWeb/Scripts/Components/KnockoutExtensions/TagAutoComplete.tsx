@@ -4,6 +4,7 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 interface TagAutoCompleteProps
@@ -30,6 +31,8 @@ export const TagAutoComplete = React.forwardRef<
 		}: TagAutoCompleteProps,
 		ref,
 	): React.ReactElement => {
+		const vdb = useVdb();
+
 		const queryParams = {
 			nameMatchMode: 'Auto',
 			fields: 'AdditionalNames',

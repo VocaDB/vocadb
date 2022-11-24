@@ -32,6 +32,7 @@ import { urlMapper } from '@/Shared/UrlMapper';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -42,25 +43,18 @@ import { useTranslation } from 'react-i18next';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
 
-const searchStore = new SearchStore(
-	vdb.values,
-	urlMapper,
-	entryRepo,
-	artistRepo,
-	albumRepo,
-	songRepo,
-	eventRepo,
-	tagRepo,
-	userRepo,
-);
-
 interface SearchCategoryProps {
+	searchStore: SearchStore;
 	entryType: SearchType;
 	title: string;
 }
 
 const SearchCategory = observer(
-	({ entryType, title }: SearchCategoryProps): React.ReactElement => {
+	({
+		searchStore,
+		entryType,
+		title,
+	}: SearchCategoryProps): React.ReactElement => {
 		return (
 			<li
 				className={classNames(searchStore.searchType === entryType && 'active')}
@@ -81,6 +75,23 @@ const SearchCategory = observer(
 
 const SearchIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [searchStore] = React.useState(
+			() =>
+				new SearchStore(
+					vdb.values,
+					urlMapper,
+					entryRepo,
+					artistRepo,
+					albumRepo,
+					songRepo,
+					eventRepo,
+					tagRepo,
+					userRepo,
+				),
+		);
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Search',
@@ -95,26 +106,32 @@ const SearchIndex = observer(
 			<Layout pageTitle={undefined} ready={true}>
 				<ul className="nav nav-pills">
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Anything}
 						title={t('VocaDb.Web.Resources.Domain:EntryTypeNames.Undefined')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Artist}
 						title={t('ViewRes:Shared.Artists')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Album}
 						title={t('ViewRes:Shared.Albums')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Song}
 						title={t('ViewRes:Shared.Songs')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.ReleaseEvent}
 						title={t('ViewRes:Shared.ReleaseEvents')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Tag}
 						title={t('ViewRes:Shared.Tags')}
 					/>

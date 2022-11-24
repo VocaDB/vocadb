@@ -22,6 +22,7 @@ import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -294,6 +295,8 @@ const UserDetailsLayout = observer(
 );
 
 const UserDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		| { user: UserDetailsContract; userDetailsStore: UserDetailsStore }
 		| undefined
@@ -365,7 +368,7 @@ const UserDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [name]);
+	}, [vdb, name]);
 
 	return model ? (
 		<UserDetailsLayout
