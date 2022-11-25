@@ -1,4 +1,4 @@
-import { regionNames } from '@/Components/regions';
+import { useRegionNames } from '@/Components/useRegionNames';
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
@@ -476,15 +476,21 @@ const regionCodes = [
 	'ZW',
 ];
 
-const regions: Record<string, string | undefined> = Object.fromEntries(
-	regionCodes
-		.map((regionCode) => [regionCode, regionNames.of(regionCode)])
-		.orderBy(([, value]) => value),
-);
-
 export const RegionDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
+
+		const regionNames = useRegionNames();
+
+		const regions: Record<string, string | undefined> = React.useMemo(
+			() =>
+				Object.fromEntries(
+					regionCodes
+						.map((regionCode) => [regionCode, regionNames.of(regionCode)])
+						.orderBy(([, value]) => value),
+				),
+			[regionNames],
+		);
 
 		return (
 			<select {...props}>
