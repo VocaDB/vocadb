@@ -10,10 +10,10 @@ import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -35,6 +35,8 @@ const EventSeriesDetailsLayout = ({
 	series,
 	eventSeriesDetailsStore,
 }: EventSeriesDetailsLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation([
 		'ViewRes',
 		'ViewRes.Event',

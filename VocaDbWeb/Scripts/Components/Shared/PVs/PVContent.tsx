@@ -3,8 +3,8 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { showSuccessMessage } from '@/Components/ui';
 import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { PVHelper } from '@/Helpers/PVHelper';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
@@ -20,6 +20,8 @@ interface RatingBarProps {
 
 const RatingBar = observer(
 	({ pvRatingButtonsStore }: RatingBarProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['AjaxRes', 'ViewRes.Song']);
 
 		if (!pvRatingButtonsStore) {

@@ -8,8 +8,8 @@ import { PrintArchivedEventData } from '@/Components/Shared/Partials/Event/Print
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
@@ -31,6 +31,8 @@ const EventViewVersionLayout = observer(
 		contract,
 		archivedEntryStore,
 	}: EventViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */

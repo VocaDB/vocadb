@@ -10,8 +10,8 @@ import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntrySta
 import { regionNames } from '@/Components/regions';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import {
 	VenueReportType,
 	venueReportTypesWithRequiredNotes,
@@ -35,6 +35,8 @@ const VenueDetailsLayout = ({
 	venue,
 	venueDetailsStore,
 }: VenueDetailsLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Event', 'ViewRes.Venue']);
 
 	const title = venue.name;

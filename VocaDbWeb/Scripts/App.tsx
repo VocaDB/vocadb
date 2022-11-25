@@ -7,6 +7,7 @@ import { LeftMenu } from '@/Components/Shared/Partials/LeftMenu';
 import { miniPlayerHeight, VdbPlayer } from '@/Components/VdbPlayer/VdbPlayer';
 import { VdbPlayerProvider } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { Compose } from '@/Compose';
+import { LoginManagerProvider } from '@/LoginManagerContext';
 import { MutedUsersProvider } from '@/MutedUsersContext';
 import { VdbProvider } from '@/VdbContext';
 import '@/i18n';
@@ -44,6 +45,7 @@ const App = (): React.ReactElement => {
 		<Compose
 			components={[
 				VdbProvider,
+				LoginManagerProvider,
 				BrowserRouter,
 				NostalgicDivaProvider,
 				VdbPlayerProvider,

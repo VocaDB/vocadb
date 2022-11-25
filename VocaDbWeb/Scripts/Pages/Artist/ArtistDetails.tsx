@@ -10,12 +10,12 @@ import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	ArtistReportType,
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
 import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
 import { albumRepo } from '@/Repositories/AlbumRepository';
@@ -98,6 +98,8 @@ const ArtistDetailsLayout = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',
@@ -255,6 +257,7 @@ const ArtistDetailsLayout = observer(
 
 const ArtistDetails = (): React.ReactElement => {
 	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
 	const { id } = useParams();
 
@@ -300,7 +303,7 @@ const ArtistDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [vdb, id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<ArtistDetailsLayout

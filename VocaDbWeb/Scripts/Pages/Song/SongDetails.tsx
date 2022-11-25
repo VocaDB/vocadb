@@ -10,9 +10,9 @@ import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
-import { loginManager } from '@/Models/LoginManager';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import {
 	SongReportType,
@@ -42,6 +42,8 @@ interface SongDetailsLayoutProps {
 
 const SongDetailsLayout = observer(
 	({ model, songDetailsStore }: SongDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -312,6 +314,7 @@ const SongDetailsLayout = observer(
 
 const SongDetails = (): React.ReactElement => {
 	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
 	const [model, setModel] = React.useState<
 		{ model: SongDetailsForApi; songDetailsStore: SongDetailsStore } | undefined
@@ -361,7 +364,7 @@ const SongDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [vdb, id, albumId]);
+	}, [vdb, loginManager, id, albumId]);
 
 	return model ? (
 		<SongDetailsLayout

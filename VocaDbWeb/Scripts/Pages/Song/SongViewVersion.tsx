@@ -8,8 +8,8 @@ import { PrintArchivedSongData } from '@/Components/Shared/Partials/Song/PrintAr
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedSongStore } from '@/Stores/Song/ArchivedSongStore';
@@ -31,6 +31,8 @@ const SongViewVersionLayout = observer(
 		contract,
 		archivedSongStore,
 	}: SongViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */

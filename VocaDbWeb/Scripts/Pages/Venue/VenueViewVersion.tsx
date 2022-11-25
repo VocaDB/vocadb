@@ -8,8 +8,8 @@ import { PrintArchivedVenueData } from '@/Components/Shared/Partials/Venue/Print
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ArchivedVenueVersionDetailsContract } from '@/DataContracts/Venue/ArchivedVenueVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
@@ -31,6 +31,8 @@ const VenueViewVersionLayout = observer(
 		contract,
 		archivedEntryStore,
 	}: VenueViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */

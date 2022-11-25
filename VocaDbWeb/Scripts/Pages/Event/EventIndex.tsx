@@ -2,7 +2,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	eventRepo,
 	ReleaseEventOptionalField,
@@ -21,6 +21,8 @@ interface EventIndexLayoutProps {
 const EventIndexLayout = ({
 	model,
 }: EventIndexLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');

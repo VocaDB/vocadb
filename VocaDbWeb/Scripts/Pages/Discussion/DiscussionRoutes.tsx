@@ -1,5 +1,5 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { discussionRepo } from '@/Repositories/DiscussionRepository';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -32,13 +32,18 @@ export const DiscussionLayout = ({
 	);
 };
 
-const discussionIndexStore = new DiscussionIndexStore(
-	loginManager,
-	discussionRepo,
-	loginManager.canDeleteComments,
-);
-
 const DiscussionRoutes = (): React.ReactElement => {
+	const loginManager = useLoginManager();
+
+	const [discussionIndexStore] = React.useState(
+		() =>
+			new DiscussionIndexStore(
+				loginManager,
+				discussionRepo,
+				loginManager.canDeleteComments,
+			),
+	);
+
 	return (
 		<Routes>
 			<Route
