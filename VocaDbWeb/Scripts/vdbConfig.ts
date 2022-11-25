@@ -7,13 +7,10 @@ interface VdbConfig {
 	baseAddress: string;
 }
 
-// HACK
-const values = vdb.values as any;
-
 export const vdbConfig: VdbConfig = {
-	staticContentHost: values.staticContentHost,
-	amazonComAffiliateId: values.amazonComAffiliateId,
-	amazonJpAffiliateId: values.amazonJpAffiliateId,
-	playAsiaAffiliateId: values.playAsiaAffiliateId,
-	baseAddress: values.baseAddress,
+	staticContentHost: 'https://localhost:44398/static' /* TODO */,
+	amazonComAffiliateId: 'vocvocdat-20' /* TODO */,
+	amazonJpAffiliateId: '' /* TODO */,
+	playAsiaAffiliateId: '852809' /* TODO */,
+	baseAddress: '/' /* TODO */,
 };
