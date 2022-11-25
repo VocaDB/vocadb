@@ -21,7 +21,6 @@ export interface GlobalValues {
 	hostAddress: string;
 	lockdownMessage?: string;
 	songTypes: SongType[];
-	staticContentHost: string;
 
 	siteName: string;
 	siteTitle: string;
@@ -32,9 +31,6 @@ export interface GlobalValues {
 	sitewideAnnouncement?: string;
 	stylesheets: string[];
 
-	amazonComAffiliateId: string;
-	amazonJpAffiliateId: string;
-	playAsiaAffiliateId: string;
 	freeTagId: number;
 	instrumentalTagId: number;
 

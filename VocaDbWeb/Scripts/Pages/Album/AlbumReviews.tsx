@@ -16,7 +16,7 @@ import {
 	AlbumDetailsStore,
 	AlbumReviewStore,
 } from '@/Stores/Album/AlbumDetailsStore';
-import { useVdb } from '@/VdbContext';
+import { vdbConfig } from '@/vdbConfig';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -29,8 +29,6 @@ interface AlbumReviewProps {
 
 const AlbumReview = observer(
 	({ albumDetailsStore, review }: AlbumReviewProps): React.ReactElement => {
-		const vdb = useVdb();
-
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();
@@ -44,7 +42,7 @@ const AlbumReview = observer(
 					<div className="pull-right">
 						<img
 							src={functions.mergeUrls(
-								vdb.values.staticContentHost,
+								vdbConfig.staticContentHost,
 								`/img/languageFlags/${review.languageCode}.png`,
 							)}
 							title={review.languageCode}
