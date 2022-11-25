@@ -54,8 +54,8 @@
 	<script>
 		window.vdb = @ToJS(new
 		{
-			Resources = new GlobalResources(this),
-			Values = new GlobalValues(this),
+			Resources = new GlobalResources(BrandableStrings),
+			Values = new GlobalValues(BrandableStrings, Config, UserContext),
 		});
 	</script>
 	<remikus path="/bundles/manifest.js" />
