@@ -32,6 +32,7 @@ import {
 } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum AlbumOptionalField {
@@ -447,7 +448,4 @@ export interface AlbumQueryParams extends CommonQueryParams {
 	discTypes: AlbumType[];
 }
 
-export const albumRepo = new AlbumRepository(
-	httpClient,
-	vdb.values.baseAddress,
-);
+export const albumRepo = new AlbumRepository(httpClient, vdbConfig.baseAddress);

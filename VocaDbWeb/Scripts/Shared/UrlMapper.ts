@@ -1,4 +1,5 @@
 import { functions } from '@/Shared/GlobalFunctions';
+import { vdbConfig } from '@/vdbConfig';
 
 export class UrlMapper {
 	static buildUrl = (...args: string[]): string => {
@@ -27,4 +28,4 @@ export class UrlMapper {
 	}
 }
 
-export const urlMapper = new UrlMapper(vdb.values.baseAddress);
+export const urlMapper = new UrlMapper(vdbConfig.baseAddress);

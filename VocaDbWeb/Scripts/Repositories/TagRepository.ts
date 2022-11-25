@@ -21,6 +21,7 @@ import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum TagOptionalField {
@@ -297,4 +298,4 @@ export interface TagQueryParams extends CommonQueryParams {
 	sort?: string;
 }
 
-export const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
+export const tagRepo = new TagRepository(httpClient, vdbConfig.baseAddress);

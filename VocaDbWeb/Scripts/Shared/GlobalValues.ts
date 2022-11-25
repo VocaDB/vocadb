@@ -38,8 +38,6 @@ export interface GlobalValues {
 	freeTagId: number;
 	instrumentalTagId: number;
 
-	/** URL of the site path, for example "/" */
-	baseAddress: string;
 	languagePreference: ContentLanguagePreference;
 	/** Whether the user is logged in. */
 	isLoggedIn: boolean;
