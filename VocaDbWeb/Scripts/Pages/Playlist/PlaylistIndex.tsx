@@ -25,8 +25,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
 
+interface SkipListEditProps {
+	open: boolean;
+	onClose: () => void;
+}
+
 const SkipListEdit = observer(
-	(): React.ReactElement => {
+	({ open, onClose }: SkipListEditProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'VocaDb.Web.Resources.Domain']);
 
 		const { playQueue } = useVdbPlayer();
@@ -34,13 +39,13 @@ const SkipListEdit = observer(
 		return (
 			<JQueryUIDialog
 				title="Edit skip list" /* LOC */
-				autoOpen={playQueue.skipList.dialogVisible}
+				autoOpen={open}
 				width={550}
-				close={playQueue.skipList.hideDialog}
+				close={onClose}
 				buttons={[
 					{
 						text: 'Done' /* LOC */,
-						click: playQueue.skipList.hideDialog,
+						click: onClose,
 					},
 				]}
 			>
@@ -321,12 +326,7 @@ const PlaylistIndex = observer(
 			// TODO: Implement.
 		}, []);
 
-		// Close the "Edit skip list" dialog when moving away from the playlist page.
-		React.useEffect(() => {
-			return (): void => {
-				playQueue.skipList.hideDialog();
-			};
-		}, [playQueue]);
+		const [skipListDialogOpen, setSkipListDialogOpen] = React.useState(false);
 
 		return (
 			<Layout
@@ -392,7 +392,7 @@ const PlaylistIndex = observer(
 								<JQueryUIButton
 									as={SafeAnchor}
 									href="#"
-									onClick={playQueue.skipList.showDialog}
+									onClick={(): void => setSkipListDialogOpen(true)}
 								>
 									Edit skip list{/* LOC */}
 								</JQueryUIButton>
@@ -411,7 +411,10 @@ const PlaylistIndex = observer(
 					</h3>
 				)}
 
-				<SkipListEdit />
+				<SkipListEdit
+					open={skipListDialogOpen}
+					onClose={(): void => setSkipListDialogOpen(false)}
+				/>
 			</Layout>
 		);
 	},
