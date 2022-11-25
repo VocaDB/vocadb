@@ -19,7 +19,6 @@ import {
 } from '@/DataContracts/User/AlbumForUserForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
 import { AlbumHelper } from '@/Helpers/AlbumHelper';
-import { PVHelper } from '@/Helpers/PVHelper';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
 import { ArtistRoles } from '@/Models/Artists/ArtistRoles';
@@ -115,7 +114,10 @@ export class AlbumDetailsForApi {
 	readonly webLinks: WebLinkContract[];
 	readonly wishlistedBy: number;
 
-	constructor(readonly contract: AlbumDetailsContract) {
+	constructor(
+		readonly contract: AlbumDetailsContract,
+		primaryPV: PVContract | undefined,
+	) {
 		this.additionalNames = contract.additionalNames;
 		this.artistString = contract.artistString;
 		this.canEditPersonalDescription = contract.canEditPersonalDescription;
@@ -262,7 +264,7 @@ export class AlbumDetailsForApi {
 						.includes(ArtistCategories.Illustrator)),
 		);
 
-		this.primaryPV = PVHelper.primaryPV(this.pvs);
+		this.primaryPV = primaryPV;
 	}
 
 	get jsonModel(): AlbumDetailsAjax {

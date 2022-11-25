@@ -1,4 +1,5 @@
 import { PVContract } from '@/DataContracts/PVs/PVContract';
+import { UserWithPermissionsContract } from '@/DataContracts/User/UserWithPermissionsContract';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import { PVService } from '@/Models/PVs/PVService';
 
@@ -14,11 +15,12 @@ export class PVHelper {
 
 	static primaryPV = (
 		pvs: PVContract[],
+		loggedUser: UserWithPermissionsContract | undefined,
 		autoplay?: boolean,
 	): PVContract | undefined => {
 		return VideoServiceHelper.primaryPV(
 			pvs,
-			vdb.values.loggedUser?.preferredVideoService,
+			loggedUser?.preferredVideoService,
 			autoplay,
 		);
 	};

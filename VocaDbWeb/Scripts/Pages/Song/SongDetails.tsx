@@ -8,6 +8,7 @@ import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
+import { PVHelper } from '@/Helpers/PVHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { useLoginManager } from '@/LoginManagerContext';
@@ -333,7 +334,10 @@ const SongDetails = (): React.ReactElement => {
 				albumId: albumId ? Number(albumId) : undefined,
 			})
 			.then((song) => {
-				const model = new SongDetailsForApi(song);
+				const model = new SongDetailsForApi(
+					song,
+					PVHelper.primaryPV(song.pvs, vdb.values.loggedUser),
+				);
 
 				setModel({
 					model: model,
