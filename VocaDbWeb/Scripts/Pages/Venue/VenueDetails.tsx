@@ -7,11 +7,11 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { regionNames } from '@/Components/regions';
+import { useRegionNames } from '@/Components/useRegionNames';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import {
 	VenueReportType,
 	venueReportTypesWithRequiredNotes,
@@ -35,7 +35,11 @@ const VenueDetailsLayout = ({
 	venue,
 	venueDetailsStore,
 }: VenueDetailsLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Event', 'ViewRes.Venue']);
+
+	const regionNames = useRegionNames();
 
 	const title = venue.name;
 

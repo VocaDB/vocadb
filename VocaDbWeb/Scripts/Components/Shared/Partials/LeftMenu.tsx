@@ -6,6 +6,7 @@ import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { useVdb } from '@/VdbContext';
+import { vdbConfig } from '@/vdbConfig';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +20,6 @@ interface BannerLinkProps {
 
 const BannerLink = React.memo(
 	({ title, url, img }: BannerLinkProps): React.ReactElement => {
-		const vdb = useVdb();
-
 		return (
 			<a
 				href={url}
@@ -30,7 +29,7 @@ const BannerLink = React.memo(
 			>
 				<img
 					src={functions.mergeUrls(
-						vdb.values.staticContentHost,
+						vdbConfig.staticContentHost,
 						`/banners/${img}`,
 					)}
 					alt={title}
@@ -113,7 +112,7 @@ export const LeftMenu = observer(
 							src={
 								vdb.values.bannerUrl ??
 								functions.mergeUrls(
-									vdb.values.staticContentHost,
+									vdbConfig.staticContentHost,
 									'/img/vocaDB-title.png',
 								)
 							}

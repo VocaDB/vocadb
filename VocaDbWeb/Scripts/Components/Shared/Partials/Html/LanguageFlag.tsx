@@ -1,5 +1,5 @@
 import { functions } from '@/Shared/GlobalFunctions';
-import { useVdb } from '@/VdbContext';
+import { vdbConfig } from '@/vdbConfig';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,14 +9,12 @@ interface LanguageFlagProps {
 
 export const LanguageFlag = React.memo(
 	({ languageCode }: LanguageFlagProps): React.ReactElement => {
-		const vdb = useVdb();
-
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
 
 		return languageCode ? (
 			<img
 				src={functions.mergeUrls(
-					vdb.values.staticContentHost,
+					vdbConfig.staticContentHost,
 					`/img/languageFlags/${languageCode}.png`,
 				)}
 				alt={languageCode}
@@ -25,7 +23,7 @@ export const LanguageFlag = React.memo(
 		) : (
 			<img
 				src={functions.mergeUrls(
-					vdb.values.staticContentHost,
+					vdbConfig.staticContentHost,
 					'/img/languageFlags/unknown.png',
 				)}
 				alt={t(

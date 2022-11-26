@@ -8,7 +8,7 @@ import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNoti
 import { IconAndLinkKnockout } from '@/Components/Shared/Partials/User/IconAndLinkKnockout';
 import { NameLinkKnockout } from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -16,7 +16,7 @@ import {
 	AlbumDetailsStore,
 	AlbumReviewStore,
 } from '@/Stores/Album/AlbumDetailsStore';
-import { useVdb } from '@/VdbContext';
+import { vdbConfig } from '@/vdbConfig';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -29,8 +29,6 @@ interface AlbumReviewProps {
 
 const AlbumReview = observer(
 	({ albumDetailsStore, review }: AlbumReviewProps): React.ReactElement => {
-		const vdb = useVdb();
-
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();
@@ -44,7 +42,7 @@ const AlbumReview = observer(
 					<div className="pull-right">
 						<img
 							src={functions.mergeUrls(
-								vdb.values.staticContentHost,
+								vdbConfig.staticContentHost,
 								`/img/languageFlags/${review.languageCode}.png`,
 							)}
 							title={review.languageCode}
@@ -177,6 +175,8 @@ interface AlbumReviewsProps {
 
 const AlbumReviews = observer(
 	({ model, albumDetailsStore }: AlbumReviewsProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Album']);
 
 		React.useEffect(() => {

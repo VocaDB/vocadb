@@ -29,6 +29,7 @@ import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
@@ -37,7 +38,6 @@ import {
 	eventReportTypesWithRequiredNotes,
 } from '@/Models/Events/EventReportType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
@@ -47,6 +47,7 @@ import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import NProgress from 'nprogress';
@@ -136,6 +137,9 @@ const EventDetailsLayout = observer(
 		event,
 		releaseEventDetailsStore,
 	}: EventDetailsLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Event',
@@ -150,7 +154,7 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		const primaryPV = PVHelper.primaryPV(event.pvs);
+		const primaryPV = PVHelper.primaryPV(event.pvs, vdb.values.loggedUser);
 
 		return (
 			<Layout
@@ -609,6 +613,8 @@ const EventDetailsLayout = observer(
 );
 
 const EventDetails = (): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		| {
 				event: ReleaseEventDetailsContract;
@@ -654,7 +660,7 @@ const EventDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [loginManager, id]);
 
 	return model ? (
 		<EventDetailsLayout

@@ -31,11 +31,11 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -60,6 +60,8 @@ const BasicInfoTabContent = observer(
 		artistEditStore,
 		coverPicUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Artist']);
 
 		const contract = artistEditStore.contract;
@@ -540,6 +542,8 @@ interface ArtistEditLayoutProps {
 
 const ArtistEditLayout = observer(
 	({ artistEditStore }: ArtistEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',

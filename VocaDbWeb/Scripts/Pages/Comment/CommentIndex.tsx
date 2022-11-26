@@ -6,8 +6,8 @@ import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
@@ -135,6 +135,7 @@ const CommentSearchList = observer(
 const CommentIndex = observer(
 	(): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const [commentListStore] = React.useState(
 			() => new CommentListStore(vdb.values, httpClient, urlMapper, userRepo),

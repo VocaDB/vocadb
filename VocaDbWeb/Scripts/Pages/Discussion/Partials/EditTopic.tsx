@@ -1,5 +1,5 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -12,6 +12,8 @@ interface EditTopicProps {
 
 const EditTopic = observer(
 	({ discussionTopicEditStore }: EditTopicProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Discussion']);
 
 		return (

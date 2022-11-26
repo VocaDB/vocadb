@@ -27,6 +27,7 @@ import {
 } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum ArtistOptionalField {
@@ -380,5 +381,5 @@ export interface ArtistQueryParams extends CommonQueryParams {
 
 export const artistRepo = new ArtistRepository(
 	httpClient,
-	vdb.values.baseAddress,
+	vdbConfig.baseAddress,
 );

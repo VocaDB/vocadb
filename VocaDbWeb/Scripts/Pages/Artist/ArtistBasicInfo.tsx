@@ -19,9 +19,9 @@ import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContr
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -142,6 +142,7 @@ const ArtistBasicInfo = observer(
 		artistDetailsStore,
 	}: ArtistBasicInfoProps): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const { t } = useTranslation([
 			'ViewRes',

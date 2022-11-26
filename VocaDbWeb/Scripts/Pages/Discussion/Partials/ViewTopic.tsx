@@ -2,7 +2,7 @@ import Alert from '@/Bootstrap/Alert';
 import Button from '@/Bootstrap/Button';
 import { CommentKnockout } from '@/Components/Shared/Partials/Comment/CommentKnockout';
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import { DiscussionTopicStore } from '@/Stores/Discussion/DiscussionTopicStore';
@@ -22,6 +22,8 @@ const ViewTopic = observer(
 		discussionIndexStore,
 		discussionTopicStore,
 	}: ViewTopicProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 		const navigate = useNavigate();
 

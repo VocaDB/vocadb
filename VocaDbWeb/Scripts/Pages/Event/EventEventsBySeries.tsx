@@ -3,9 +3,9 @@ import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown
 import { ReleaseEventSeriesWithEventsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesWithEventsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
@@ -20,6 +20,8 @@ interface EventEventsBySeriesLayoutProps {
 const EventEventsBySeriesLayout = ({
 	model,
 }: EventEventsBySeriesLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');

@@ -3,8 +3,8 @@ import Button from '@/Bootstrap/Button';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 const UserRequestVerification = observer(
 	(): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const [requestVerificationStore] = React.useState(
 			() => new RequestVerificationStore(vdb.values, artistRepo),

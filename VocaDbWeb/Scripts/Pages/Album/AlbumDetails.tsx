@@ -8,13 +8,14 @@ import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
+import { PVHelper } from '@/Helpers/PVHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	AlbumReportType,
 	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
 import DownloadTagsDialog from '@/Pages/Album/Partials/DownloadTagsDialog';
 import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
@@ -40,6 +41,8 @@ const AlbumDetailsLayout = observer(
 		model,
 		albumDetailsStore,
 	}: AlbumDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -204,6 +207,7 @@ const AlbumDetailsLayout = observer(
 
 const AlbumDetails = (): React.ReactElement => {
 	const vdb = useVdb();
+	const loginManager = useLoginManager();
 
 	const { id } = useParams();
 
@@ -218,7 +222,10 @@ const AlbumDetails = (): React.ReactElement => {
 		albumRepo
 			.getDetails({ id: Number(id) })
 			.then((album) => {
-				const model = new AlbumDetailsForApi(album);
+				const model = new AlbumDetailsForApi(
+					album,
+					PVHelper.primaryPV(album.pvs, vdb.values.loggedUser),
+				);
 
 				setModel({
 					model: model,
@@ -245,7 +252,7 @@ const AlbumDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [vdb, id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<AlbumDetailsLayout

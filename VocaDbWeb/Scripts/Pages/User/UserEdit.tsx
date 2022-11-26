@@ -5,8 +5,8 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { OwnedArtistForUserEditRow } from '@/Pages/User/Partials/OwnedArtistForUserEditRow';
 import { PermissionEditRow } from '@/Pages/User/Partials/PermissionEditRow';
@@ -29,6 +29,8 @@ interface UserEditLayoutProps {
 
 const UserEditLayout = observer(
 	({ userEditStore }: UserEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources']);
 
 		const contract = userEditStore.contract;

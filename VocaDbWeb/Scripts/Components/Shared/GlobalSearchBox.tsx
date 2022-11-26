@@ -6,10 +6,10 @@ import { MainNavigationItems } from '@/Components/Shared/Partials/MainNavigation
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { ShowRandomPageButton } from '@/Components/Shared/ShowRandomPageButton';
 import JQueryUIAutocomplete from '@/JQueryUI/JQueryUIAutocomplete';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { NameMatchMode } from '@/Models/NameMatchMode';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { albumRepo } from '@/Repositories/AlbumRepository';
@@ -81,6 +81,7 @@ interface GlobalSearchBoxProps {
 export const GlobalSearchBox = observer(
 	({ topBarStore }: GlobalSearchBoxProps): React.ReactElement => {
 		const vdb = useVdb();
+		const loginManager = useLoginManager();
 
 		const { t } = useTranslation([
 			'Resources',
