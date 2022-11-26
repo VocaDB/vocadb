@@ -62,7 +62,7 @@ export function setLanguagePreferenceCookie(
 	);
 	userRepo
 		.updateUserSetting({
-			userId: vdb.values.loggedUserId,
+			userId: (window as any).vdb.values.loggedUserId,
 			settingName: 'languagePreference',
 			value: languagePreference,
 		})
