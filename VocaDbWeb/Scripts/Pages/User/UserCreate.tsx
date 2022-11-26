@@ -45,7 +45,6 @@ const UserCreateLayout = observer(
 
 								await userCreateStore.submit(recaptchaResponse);
 
-								// TODO: Replace window.location.href with navigate.
 								navigate('/');
 
 								await vdb.refresh();
