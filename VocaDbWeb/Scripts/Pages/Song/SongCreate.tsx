@@ -22,6 +22,7 @@ import { artistRepo } from '@/Repositories/ArtistRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { truncate } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -36,6 +37,8 @@ interface SongCreateLayoutProps {
 
 const SongCreateLayout = observer(
 	({ songCreateStore }: SongCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		const title = t('ViewRes.Song:Create.SubmitSong');
@@ -462,6 +465,8 @@ const SongCreateLayout = observer(
 );
 
 const SongCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [searchParams] = useSearchParams();
 	const pvUrl = searchParams.get('pvUrl');
 

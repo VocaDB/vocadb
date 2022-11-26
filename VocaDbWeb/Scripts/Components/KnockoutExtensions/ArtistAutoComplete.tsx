@@ -6,6 +6,7 @@ import {
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { functions } from '@/Shared/GlobalFunctions';
 import { ArtistSortRule } from '@/Stores/Search/ArtistSearchStore';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +19,8 @@ export const ArtistAutoComplete = ({
 	properties,
 	...props
 }: ArtistAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['VocaDb.Model.Resources']);
 
 	var filter = properties.filter;

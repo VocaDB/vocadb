@@ -4,6 +4,7 @@ import { PartialFindResultContract } from '@/DataContracts/PartialFindResultCont
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { vdbConfig } from '@/vdbConfig';
 
 export enum EntryOptionalField {
 	AdditionalNames = 'AdditionalNames',
@@ -65,7 +66,4 @@ export class EntryRepository {
 	};
 }
 
-export const entryRepo = new EntryRepository(
-	httpClient,
-	vdb.values.baseAddress,
-);
+export const entryRepo = new EntryRepository(httpClient, vdbConfig.baseAddress);

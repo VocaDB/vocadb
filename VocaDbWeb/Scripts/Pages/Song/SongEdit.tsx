@@ -35,9 +35,9 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
@@ -53,6 +53,7 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -74,6 +75,8 @@ interface BasicInfoTabContentProps {
 
 const BasicInfoTabContent = observer(
 	({ songEditStore }: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -513,6 +516,8 @@ interface PVsTabContentProps {
 
 const PVsTabContent = observer(
 	({ songEditStore }: PVsTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Song']);
 
 		const uploadMediaRef = React.useRef<HTMLInputElement>(undefined!);
@@ -696,6 +701,8 @@ interface SongEditLayoutProps {
 
 const SongEditLayout = observer(
 	({ songEditStore }: SongEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Song',
@@ -932,6 +939,9 @@ const SongEditLayout = observer(
 );
 
 const SongEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -942,7 +952,7 @@ const SongEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -979,7 +989,7 @@ const SongEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id, albumId]);
+	}, [vdb, loginManager, artistRoleNames, id, albumId]);
 
 	return model ? <SongEditLayout songEditStore={model.songEditStore} /> : <></>;
 };

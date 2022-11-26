@@ -5,6 +5,7 @@ import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,8 @@ const SongShare = ({
 	model,
 	songDetailsStore,
 }: SongShareProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 	const url = functions.mergeUrls(

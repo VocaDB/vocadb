@@ -2,8 +2,8 @@ import Button from '@/Bootstrap/Button';
 import { ServerSidePaging } from '@/Components/Shared/Partials/Knockout/ServerSidePaging';
 import { ProfileIconKnockout_ImageSize } from '@/Components/Shared/Partials/User/ProfileIconKnockout_ImageSize';
 import { DiscussionTopicContract } from '@/DataContracts/Discussion/DiscussionTopicContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import EditTopic from '@/Pages/Discussion/Partials/EditTopic';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
@@ -118,6 +118,8 @@ interface ViewFolderProps {
 
 const ViewFolder = observer(
 	({ discussionIndexStore }: ViewFolderProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Discussion']);
 		const navigate = useNavigate();
 

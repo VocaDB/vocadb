@@ -3,17 +3,15 @@ import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown
 import { ReleaseEventSeriesWithEventsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesWithEventsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface EventEventsBySeriesLayoutProps {
 	model: ReleaseEventSeriesWithEventsContract[];
@@ -22,6 +20,8 @@ interface EventEventsBySeriesLayoutProps {
 const EventEventsBySeriesLayout = ({
 	model,
 }: EventEventsBySeriesLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');

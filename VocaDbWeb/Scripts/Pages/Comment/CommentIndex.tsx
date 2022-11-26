@@ -6,8 +6,8 @@ import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { userRepo } from '@/Repositories/UserRepository';
 import { httpClient } from '@/Shared/HttpClient';
@@ -16,19 +16,13 @@ import {
 	CommentListStore,
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const commentListStore = new CommentListStore(
-	vdb.values,
-	httpClient,
-	urlMapper,
-	userRepo,
-);
 
 interface CommentsFiltersProps {
 	commentListStore: CommentListStore;
@@ -140,6 +134,13 @@ const CommentSearchList = observer(
 
 const CommentIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [commentListStore] = React.useState(
+			() => new CommentListStore(vdb.values, httpClient, urlMapper, userRepo),
+		);
+
 		const { t, ready } = useTranslation([
 			'ViewRes.Comment',
 			'VocaDb.Web.Resources.Views.ActivityEntry',

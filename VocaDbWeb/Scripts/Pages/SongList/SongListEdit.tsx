@@ -23,16 +23,17 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -51,6 +52,8 @@ const PropertiesTabContent = observer(
 		songListEditStore,
 		thumbPicUploadRef,
 	}: PropertiesTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.SongList']);
 
 		const thumbUrl = UrlHelper.imageThumb(
@@ -466,6 +469,8 @@ const defaultModel: SongListForEditContract = {
 };
 
 const SongListEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -504,7 +509,7 @@ const SongListEdit = (): React.ReactElement => {
 				),
 			});
 		}
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<SongListEditLayout songListEditStore={model.songListEditStore} />

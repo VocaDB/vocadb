@@ -19,9 +19,9 @@ import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContr
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
@@ -30,6 +30,7 @@ import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { runInAction } from 'mobx';
@@ -140,6 +141,9 @@ const ArtistBasicInfo = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistBasicInfoProps): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',

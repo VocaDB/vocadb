@@ -1,5 +1,5 @@
+using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.BrandableStrings.Collections;
-using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Shared
 {
@@ -80,14 +80,14 @@ namespace VocaDb.Web.Models.Shared
 		public SongResources Song { get; }
 		public UserResources User { get; }
 
-		public GlobalResources(VocaDbPage model)
+		public GlobalResources(BrandableStringsManager brandableStrings)
 		{
-			Album = new AlbumResources(model.BrandableStrings.Album);
-			Artist = new ArtistResources(model.BrandableStrings.Artist);
-			Home = new HomeResources(model.BrandableStrings.Home);
-			Layout = new LayoutResources(model.BrandableStrings.Layout);
-			Song = new SongResources(model.BrandableStrings.Song);
-			User = new UserResources(model.BrandableStrings.User);
+			Album = new AlbumResources(brandableStrings.Album);
+			Artist = new ArtistResources(brandableStrings.Artist);
+			Home = new HomeResources(brandableStrings.Home);
+			Layout = new LayoutResources(brandableStrings.Layout);
+			Song = new SongResources(brandableStrings.Song);
+			User = new UserResources(brandableStrings.User);
 		}
 	}
 }

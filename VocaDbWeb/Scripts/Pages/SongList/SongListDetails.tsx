@@ -27,10 +27,10 @@ import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { loginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { songListRepo } from '@/Repositories/SongListRepository';
@@ -43,6 +43,7 @@ import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -239,6 +240,8 @@ const SongListDetailsLayout = observer(
 		songList,
 		songListStore,
 	}: SongListDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -609,6 +612,9 @@ const SongListDetailsLayout = observer(
 );
 
 const SongListDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		{ songList: SongListContract; songListStore: SongListStore } | undefined
 	>();
@@ -649,7 +655,7 @@ const SongListDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<SongListDetailsLayout

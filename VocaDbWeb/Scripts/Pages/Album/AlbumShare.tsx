@@ -6,6 +6,7 @@ import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +19,8 @@ const AlbumShare = ({
 	model,
 	albumDetailsStore,
 }: AlbumShareProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['ViewRes']);
 
 	const url = functions.mergeUrls(

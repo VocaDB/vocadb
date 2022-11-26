@@ -3,12 +3,14 @@ import Button from '@/Bootstrap/Button';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage } from '@/Components/ui';
 import { UserCreateStore } from '@/Stores/User/UserCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 interface UserCreateLayoutProps {
 	userCreateStore: UserCreateStore;
@@ -16,11 +18,15 @@ interface UserCreateLayoutProps {
 
 const UserCreateLayout = observer(
 	({ userCreateStore }: UserCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes.User']);
 
 		const title = t('ViewRes.User:Create.Register');
 
 		const recaptchaRef = React.useRef<ReCAPTCHA>(undefined!);
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout pageTitle={title} ready={ready} title={title} /* TODO */>
@@ -39,8 +45,9 @@ const UserCreateLayout = observer(
 
 								await userCreateStore.submit(recaptchaResponse);
 
-								// TODO: Replace window.location.href with navigate.
-								window.location.href = '/';
+								navigate('/');
+
+								await vdb.refresh();
 							} catch (error: any) {
 								recaptchaRef.current.reset();
 

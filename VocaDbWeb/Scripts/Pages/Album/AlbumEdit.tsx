@@ -35,10 +35,10 @@ import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
@@ -53,6 +53,7 @@ import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { map } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -72,6 +73,8 @@ const BasicInfoTabContent = observer(
 		albumEditStore,
 		coverPicUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -577,6 +580,8 @@ interface TracksTabContentProps {
 
 const TracksTabContent = observer(
 	({ albumEditStore }: TracksTabContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -805,6 +810,8 @@ interface AlbumEditLayoutProps {
 
 const AlbumEditLayout = observer(
 	({ albumEditStore }: AlbumEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -1123,6 +1130,9 @@ const AlbumEditLayout = observer(
 );
 
 const AlbumEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -1133,7 +1143,7 @@ const AlbumEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -1170,7 +1180,7 @@ const AlbumEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id]);
+	}, [vdb, loginManager, artistRoleNames, id]);
 
 	return model ? (
 		<AlbumEditLayout albumEditStore={model.albumEditStore} />

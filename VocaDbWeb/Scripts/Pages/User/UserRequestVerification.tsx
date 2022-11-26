@@ -3,25 +3,29 @@ import Button from '@/Bootstrap/Button';
 import { ArtistAutoComplete } from '@/Components/KnockoutExtensions/ArtistAutoComplete';
 import { Layout } from '@/Components/Shared/Layout';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import RequestVerificationStore from '@/Stores/User/RequestVerificationStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const requestVerificationStore = new RequestVerificationStore(
-	vdb.values,
-	artistRepo,
-);
-
 const UserRequestVerification = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [requestVerificationStore] = React.useState(
+			() => new RequestVerificationStore(vdb.values, artistRepo),
+		);
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.User']);
 
 		const title = t('ViewRes.User:RequestVerification.PageTitle');

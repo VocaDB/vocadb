@@ -8,8 +8,8 @@ import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/En
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { albumRepo } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
@@ -31,6 +31,8 @@ const AlbumViewVersionLayout = observer(
 		contract,
 		archivedAlbumStore,
 	}: AlbumViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */

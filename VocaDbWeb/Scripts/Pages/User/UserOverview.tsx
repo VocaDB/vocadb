@@ -16,12 +16,14 @@ import {
 	UserKnownLanguageContract,
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
-import { loginManager, PermissionToken } from '@/Models/LoginManager';
+import { PermissionToken } from '@/Models/LoginManager';
 import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';
@@ -53,6 +55,8 @@ interface AvatarProps {
 }
 
 const Avatar = ({ user }: AvatarProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	return loginManager.loggedUser &&
 		loginManager.loggedUser.id === user.id &&
 		loginManager.loggedUser.active ? (
@@ -90,6 +94,9 @@ interface UserOverviewProps {
 
 const UserOverview = observer(
 	({ user, userDetailsStore }: UserOverviewProps): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',

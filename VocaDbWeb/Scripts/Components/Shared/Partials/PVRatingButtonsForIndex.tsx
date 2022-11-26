@@ -1,6 +1,6 @@
 import Button from '@/Bootstrap/Button';
 import { showSuccessMessage } from '@/Components/ui';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
 import classNames from 'classnames';
@@ -16,6 +16,8 @@ export const PVRatingButtonsForIndex = observer(
 	({
 		pvRatingButtonsStore,
 	}: PVRatingButtonsForIndexProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['AjaxRes', 'Resources', 'ViewRes.Song']);
 
 		return loginManager.isLoggedIn ? (

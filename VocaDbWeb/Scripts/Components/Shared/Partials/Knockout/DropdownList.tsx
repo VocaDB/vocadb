@@ -1,5 +1,4 @@
-import { cultures } from '@/Components/cultures';
-import { regions } from '@/Components/regions';
+import { useRegionNames } from '@/Components/useRegionNames';
 import { userLanguageCultures } from '@/Components/userLanguageCultures';
 import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
@@ -12,6 +11,7 @@ import { PVType } from '@/Models/PVs/PVType';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
 import { UserGroup } from '@/Models/Users/UserGroup';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -71,6 +71,35 @@ export const UserGroupDropdownList = React.memo(
 		);
 	},
 );
+
+const cultures = Object.fromEntries(
+	Object.entries({
+		'en-US': {
+			nativeName: 'English (United States)',
+			englishName: 'English (United States)',
+		},
+		'de-DE': {
+			nativeName: 'Deutsch (Deutschland)',
+			englishName: 'German (Germany)',
+		},
+		es: { nativeName: 'espa\u00F1ol', englishName: 'Spanish' },
+		'fi-Fi': { nativeName: 'suomi (Suomi)', englishName: 'Finnish (Finland)' },
+		pt: { nativeName: 'portugu\u00EAs', englishName: 'Portuguese' },
+		'ru-RU': {
+			nativeName:
+				'\u0440\u0443\u0441\u0441\u043A\u0438\u0439 (\u0420\u043E\u0441\u0441\u0438\u044F)',
+			englishName: 'Russian (Russia)',
+		},
+		'ja-JP': {
+			nativeName: '\u65E5\u672C\u8A9E (\u65E5\u672C)',
+			englishName: 'Japanese (Japan)',
+		},
+		'zh-Hans': {
+			nativeName: '\u4E2D\u6587\uFF08\u7B80\u4F53\uFF09',
+			englishName: 'Chinese (Simplified)',
+		},
+	}).orderBy(([_, value]) => value.nativeName),
+); /* TODO */
 
 export const CultureDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
@@ -196,9 +225,272 @@ export const LanguagePreferenceDropdownList = React.memo(
 	},
 );
 
+const regionCodes = [
+	'AF',
+	'AX',
+	'AL',
+	'DZ',
+	'AS',
+	'AD',
+	'AO',
+	'AI',
+	'AG',
+	'AR',
+	'AM',
+	'AW',
+	'AU',
+	'AT',
+	'AZ',
+	'BS',
+	'BH',
+	'BD',
+	'BB',
+	'BY',
+	'BE',
+	'BZ',
+	'BJ',
+	'BM',
+	'BT',
+	'BO',
+	'BQ',
+	'BA',
+	'BW',
+	'BR',
+	'IO',
+	'VG',
+	'BN',
+	'BG',
+	'BF',
+	'BI',
+	'CV',
+	'KH',
+	'CM',
+	'CA',
+	//'029',
+	'KY',
+	'CF',
+	'TD',
+	'CL',
+	'CN',
+	'CX',
+	'CC',
+	'CO',
+	'KM',
+	'CG',
+	'CD',
+	'CK',
+	'CR',
+	'CI',
+	'HR',
+	'CU',
+	'CW',
+	'CY',
+	'CZ',
+	'DK',
+	'DJ',
+	'DM',
+	'DO',
+	'EC',
+	'EG',
+	'SV',
+	'GQ',
+	'ER',
+	'EE',
+	'SZ',
+	'ET',
+	//'150',
+	'FK',
+	'FO',
+	'FJ',
+	'FI',
+	'FR',
+	'GF',
+	'PF',
+	'GA',
+	'GM',
+	'GE',
+	'DE',
+	'GH',
+	'GI',
+	'GR',
+	'GL',
+	'GD',
+	'GP',
+	'GU',
+	'GT',
+	'GG',
+	'GN',
+	'GW',
+	'GY',
+	'HT',
+	'HN',
+	'HK',
+	'HU',
+	'IS',
+	'IN',
+	'ID',
+	'IR',
+	'IQ',
+	'IE',
+	'IM',
+	'IL',
+	'IT',
+	'JM',
+	'JP',
+	'JE',
+	'JO',
+	'KZ',
+	'KE',
+	'KI',
+	'KR',
+	'XK',
+	'KW',
+	'KG',
+	'LA',
+	//'419',
+	'LV',
+	'LB',
+	'LS',
+	'LR',
+	'LY',
+	'LI',
+	'LT',
+	'LU',
+	'MO',
+	'MG',
+	'MW',
+	'MY',
+	'MV',
+	'ML',
+	'MT',
+	'MH',
+	'MQ',
+	'MR',
+	'MU',
+	'YT',
+	'MX',
+	'FM',
+	'MD',
+	'MC',
+	'MN',
+	'ME',
+	'MS',
+	'MA',
+	'MZ',
+	'MM',
+	'NA',
+	'NR',
+	'NP',
+	'NL',
+	'NC',
+	'NZ',
+	'NI',
+	'NE',
+	'NG',
+	'NU',
+	'NF',
+	'KP',
+	'MK',
+	'MP',
+	'NO',
+	'OM',
+	'PK',
+	'PW',
+	'PS',
+	'PA',
+	'PG',
+	'PY',
+	'PE',
+	'PH',
+	'PN',
+	'PL',
+	'PT',
+	'PR',
+	'QA',
+	'RE',
+	'RO',
+	'RU',
+	'RW',
+	'WS',
+	'SM',
+	'ST',
+	'SA',
+	'SN',
+	'RS',
+	'SC',
+	'SL',
+	'SG',
+	'SX',
+	'SK',
+	'SI',
+	'SB',
+	'SO',
+	'ZA',
+	'SS',
+	'ES',
+	'LK',
+	'SH',
+	'BL',
+	'KN',
+	'LC',
+	'MF',
+	'PM',
+	'VC',
+	'SD',
+	'SR',
+	'SJ',
+	'SE',
+	'CH',
+	'SY',
+	'TW',
+	'TJ',
+	'TZ',
+	'TH',
+	'TL',
+	'TG',
+	'TK',
+	'TO',
+	'TT',
+	'TN',
+	'TR',
+	'TM',
+	'TC',
+	'TV',
+	'UM',
+	'VI',
+	'UG',
+	'UA',
+	'AE',
+	'GB',
+	'US',
+	'UY',
+	'UZ',
+	'VU',
+	'VA',
+	'VE',
+	'VN',
+	'WF',
+	//'001',
+	'YE',
+	'ZM',
+	'ZW',
+];
+
 export const RegionDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
 		const { t } = useTranslation(['VocaDb.Web.Resources.Domain.Globalization']);
+
+		const regionNames = useRegionNames();
+
+		const regions: Record<string, string | undefined> = React.useMemo(
+			() =>
+				Object.fromEntries(
+					regionCodes
+						.map((regionCode) => [regionCode, regionNames.of(regionCode)])
+						.orderBy(([, value]) => value),
+				),
+			[regionNames],
+		);
 
 		return (
 			<select {...props}>
@@ -280,6 +572,8 @@ export const AssociatedArtistTypeDropdownList = React.memo(
 
 export const AlbumTypeDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['VocaDb.Model.Resources.Albums']);
 
 		return (
@@ -296,6 +590,8 @@ export const AlbumTypeDropdownList = React.memo(
 
 export const SongTypeDropdownList = React.memo(
 	(props: DropdownListProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['VocaDb.Model.Resources.Songs']);
 
 		return (

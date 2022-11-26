@@ -1,10 +1,9 @@
 import { AffiliateLinkGenerator } from '@/Helpers/UrlHelper';
-import { GlobalValues } from '@/Shared/GlobalValues';
 
 const generator = new AffiliateLinkGenerator({
 	amazonJpAffiliateId: 'vocadb',
 	playAsiaAffiliateId: '852809',
-} as GlobalValues);
+} as ConstructorParameters<typeof AffiliateLinkGenerator>[0]);
 
 test('PlayAsia', () => {
 	const input =

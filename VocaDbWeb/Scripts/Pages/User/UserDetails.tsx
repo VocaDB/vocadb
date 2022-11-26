@@ -6,7 +6,7 @@ import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
@@ -22,6 +22,7 @@ import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -39,6 +40,8 @@ interface UserDetailsLayoutProps {
 
 const UserDetailsLayout = observer(
 	({ user, userDetailsStore }: UserDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.User']);
 
 		const title = user.name;
@@ -294,6 +297,9 @@ const UserDetailsLayout = observer(
 );
 
 const UserDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		| { user: UserDetailsContract; userDetailsStore: UserDetailsStore }
 		| undefined
@@ -365,7 +371,7 @@ const UserDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [name]);
+	}, [vdb, loginManager, name]);
 
 	return model ? (
 		<UserDetailsLayout

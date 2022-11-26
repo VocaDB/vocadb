@@ -3,11 +3,12 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SongListsKnockout } from '@/Components/Shared/Partials/Song/SongListsKnockout';
 import { SongListsFilters } from '@/Components/Shared/Partials/SongListsFilters';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { songListRepo } from '@/Repositories/SongListRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { FeaturedSongListsStore } from '@/Stores/SongList/FeaturedSongListsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,16 +19,23 @@ import { Link } from 'react-router-dom';
 const categories = Object.values(SongListFeaturedCategory).filter(
 	(value) => value !== SongListFeaturedCategory.Nothing,
 );
-const featuredSongListsStore = new FeaturedSongListsStore(
-	vdb.values,
-	songListRepo,
-	tagRepo,
-	[],
-	categories,
-);
 
 const SongListFeatured = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [featuredSongListsStore] = React.useState(
+			() =>
+				new FeaturedSongListsStore(
+					vdb.values,
+					songListRepo,
+					tagRepo,
+					[],
+					categories,
+				),
+		);
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',

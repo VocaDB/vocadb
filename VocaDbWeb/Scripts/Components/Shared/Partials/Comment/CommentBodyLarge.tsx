@@ -3,7 +3,7 @@ import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
 import { CommentContract } from '@/DataContracts/CommentContract';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { observer } from 'mobx-react-lite';
@@ -22,6 +22,8 @@ export const CommentBodyLarge = observer(
 		allowDelete,
 		alwaysAllowDelete = false,
 	}: CommentBodyLargeProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const mutedUsers = useMutedUsers();
 		if (mutedUsers.includes(contract.author.id)) return <></>;
 

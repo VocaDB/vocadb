@@ -10,12 +10,12 @@ import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	ArtistReportType,
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
 import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
 import { albumRepo } from '@/Repositories/AlbumRepository';
@@ -25,6 +25,7 @@ import { userRepo } from '@/Repositories/UserRepository';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -97,6 +98,8 @@ const ArtistDetailsLayout = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',
@@ -253,6 +256,9 @@ const ArtistDetailsLayout = observer(
 );
 
 const ArtistDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<
@@ -297,7 +303,7 @@ const ArtistDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<ArtistDetailsLayout

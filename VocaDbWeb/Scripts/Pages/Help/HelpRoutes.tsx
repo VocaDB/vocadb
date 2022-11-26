@@ -1,3 +1,4 @@
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 const HelpIndexEn = React.lazy(() => import('./HelpIndex'));
@@ -5,6 +6,8 @@ const HelpIndexJa = React.lazy(() => import('./HelpIndex.ja'));
 const HelpIndexZhHans = React.lazy(() => import('./HelpIndex.zh-Hans'));
 
 const HelpRoutes = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	if (vdb.values.externalHelpPath) {
 		return (
 			// eslint-disable-next-line jsx-a11y/iframe-has-title

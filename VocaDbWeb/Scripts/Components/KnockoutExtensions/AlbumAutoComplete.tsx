@@ -5,6 +5,7 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { AlbumContract } from '@/DataContracts/Album/AlbumContract';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,8 @@ export const AlbumAutoComplete = ({
 	properties,
 	...props
 }: AlbumAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['VocaDb.Model.Resources.Albums']);
 
 	var filter = properties.filter;

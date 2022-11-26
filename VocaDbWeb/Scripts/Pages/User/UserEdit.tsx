@@ -5,8 +5,8 @@ import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { loginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { OwnedArtistForUserEditRow } from '@/Pages/User/Partials/OwnedArtistForUserEditRow';
 import { PermissionEditRow } from '@/Pages/User/Partials/PermissionEditRow';
@@ -15,6 +15,7 @@ import { artistRepo } from '@/Repositories/ArtistRepository';
 import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserEditStore } from '@/Stores/User/UserEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -28,6 +29,8 @@ interface UserEditLayoutProps {
 
 const UserEditLayout = observer(
 	({ userEditStore }: UserEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources']);
 
 		const contract = userEditStore.contract;
@@ -240,6 +243,8 @@ const UserEditLayout = observer(
 );
 
 const UserEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{ userEditStore: UserEditStore }>();
@@ -255,7 +260,7 @@ const UserEdit = (): React.ReactElement => {
 				),
 			}),
 		);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? <UserEditLayout userEditStore={model.userEditStore} /> : <></>;
 };

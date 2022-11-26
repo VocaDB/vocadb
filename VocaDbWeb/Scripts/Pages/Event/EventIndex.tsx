@@ -2,12 +2,13 @@ import { Layout } from '@/Components/Shared/Layout';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	eventRepo,
 	ReleaseEventOptionalField,
 } from '@/Repositories/ReleaseEventRepository';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
+import { useVdb } from '@/VdbContext';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +21,8 @@ interface EventIndexLayoutProps {
 const EventIndexLayout = ({
 	model,
 }: EventIndexLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');
@@ -88,6 +91,8 @@ const EventIndexLayout = ({
 };
 
 const EventIndex = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<ReleaseEventContract[]>();
 
 	React.useEffect(() => {
@@ -111,7 +116,7 @@ const EventIndex = (): React.ReactElement => {
 				},
 			})
 			.then((result) => setModel(result.items));
-	}, []);
+	}, [vdb]);
 
 	return model ? <EventIndexLayout model={model} /> : <></>;
 };

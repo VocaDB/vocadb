@@ -1,23 +1,25 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import { loginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ActivityEntryListStore } from '@/Stores/ActivityEntry/ActivityEntryListStore';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const activityEntryListStore = new ActivityEntryListStore(
-	vdb.values,
-	httpClient,
-	urlMapper,
-);
-
 const ActivityEntryIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [activityEntryListStore] = React.useState(
+			() => new ActivityEntryListStore(vdb.values, httpClient, urlMapper),
+		);
+
 		const { t, ready } = useTranslation([
 			'VocaDb.Web.Resources.Views.ActivityEntry',
 		]);
@@ -28,7 +30,7 @@ const ActivityEntryIndex = observer(
 
 		React.useEffect(() => {
 			activityEntryListStore.loadMore();
-		}, []);
+		}, [activityEntryListStore]);
 
 		return (
 			<Layout pageTitle={title} ready={ready} title={title}>
