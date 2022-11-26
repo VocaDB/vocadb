@@ -1,5 +1,7 @@
 import { GlobalResources } from '@/Shared/GlobalResources';
 import { GlobalValues } from '@/Shared/GlobalValues';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 
 interface VdbContextProps {
@@ -16,10 +18,25 @@ interface VdbProviderProps {
 export const VdbProvider = ({
 	children,
 }: VdbProviderProps): React.ReactElement => {
-	return (
-		<VdbContext.Provider value={(window as any).vdb /* TODO */}>
-			{children}
-		</VdbContext.Provider>
+	const [vdb, setVdb] = React.useState<VdbContextProps>();
+
+	React.useEffect(() => {
+		Promise.all([
+			httpClient.get<GlobalResources>(
+				urlMapper.mapRelative('/api/globals/resources'),
+			),
+			httpClient.get<GlobalValues>(
+				urlMapper.mapRelative('/api/globals/values'),
+			),
+		]).then(([resources, values]) => {
+			setVdb({ resources, values });
+		});
+	}, []);
+
+	return vdb ? (
+		<VdbContext.Provider value={vdb}>{children}</VdbContext.Provider>
+	) : (
+		<></>
 	);
 };
 
