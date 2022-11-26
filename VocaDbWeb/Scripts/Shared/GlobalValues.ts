@@ -21,19 +21,15 @@ export interface GlobalValues {
 	hostAddress: string;
 	lockdownMessage?: string;
 	songTypes: SongType[];
-
 	siteName: string;
 	siteTitle: string;
-
 	bannerUrl?: string;
 	blogUrl?: string;
 	patreonLink?: string;
 	sitewideAnnouncement?: string;
 	stylesheets: string[];
-
 	freeTagId: number;
 	instrumentalTagId: number;
-
 	languagePreference: ContentLanguagePreference;
 	/** Whether the user is logged in. */
 	isLoggedIn: boolean;
@@ -42,14 +38,11 @@ export interface GlobalValues {
 	culture: string;
 	/** UI language code, for example "en" */
 	uiCulture: string;
-
 	slogan: string;
-
 	appLinks: MenuPageLink[];
 	bigBanners: MenuPageLink[];
 	smallBanners: MenuPageLink[];
 	socialLinks: MenuPageLink[];
-
 	signupsDisabled: boolean;
 	// TODO Move to .env.
 	reCAPTCHAPublicKey: string;

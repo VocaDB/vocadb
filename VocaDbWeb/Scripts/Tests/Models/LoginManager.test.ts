@@ -37,11 +37,10 @@ const createValues = (
 	lockdownMessage?: string,
 ): GlobalValues => {
 	return {
-		...vdb.values,
 		isLoggedIn: !!loggedUser,
 		loggedUser,
 		lockdownMessage,
-	};
+	} as GlobalValues;
 };
 
 describe('hasPermission', () => {

@@ -18,7 +18,7 @@
 
 <script type="text/javascript">
 	vdb = {};
-	vdb.values = @ToJS(new GlobalValues(this));
+	vdb.values = @ToJS(new GlobalValues(BrandableStrings, Config, UserContext));
 	vdb.resources = vdb.resources || {};
 
 	var model = {

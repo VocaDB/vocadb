@@ -3,13 +3,14 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { UserLoginStore } from '@/Stores/User/UserLoginStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface UserLoginLayoutProps {
 	userLoginStore: UserLoginStore;
@@ -17,12 +18,16 @@ interface UserLoginLayoutProps {
 
 const UserLoginLayout = observer(
 	({ userLoginStore }: UserLoginLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.User']);
 
 		const title = t('ViewRes.User:Login.Login');
 
 		const [searchParams] = useSearchParams();
 		const returnUrl = searchParams.get('returnUrl');
+
+		const navigate = useNavigate();
 
 		return (
 			<Layout pageTitle={title} ready={ready} title={title}>
@@ -42,8 +47,9 @@ const UserLoginLayout = observer(
 							// TODO: TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
 
 							// TODO: should not allow redirection to URLs outside the site
-							// TODO: Replace window.location.href with navigate.
-							window.location.href = returnUrl ?? '/';
+							navigate(returnUrl ?? '/');
+
+							await vdb.refresh();
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status
