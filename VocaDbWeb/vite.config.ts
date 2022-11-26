@@ -16,4 +16,14 @@ export default defineConfig({
 			jsxImportSource: '@emotion/react',
 		}),
 	],
+	server: {
+		proxy: {
+			'/api': {
+				target: 'https://localhost:44398',
+				changeOrigin: true,
+				// https://stackoverflow.com/questions/74033733/vite-self-signed-certificate-error-when-calling-local-api/74033815#74033815
+				secure: false,
+			},
+		},
+	},
 });
