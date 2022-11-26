@@ -1,7 +1,7 @@
 import { EntryThumbContract } from '@/DataContracts/EntryThumbContract';
 import { RegexLinkMatcher } from '@/Helpers/RegexLinkMatcher';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { GlobalValues } from '@/Shared/GlobalValues';
+import { vdbConfig } from '@/vdbConfig';
 
 // Corresponds to the AffiliateLinkGenerator class in C#.
 /// <summary>
@@ -50,10 +50,18 @@ export class AffiliateLinkGenerator {
 		return this.addOrReplaceParam(url, '(\\d+)', 'affiliate_id', this.paAffId);
 	};
 
-	constructor(values: GlobalValues) {
-		this.amazonComAffId = values.amazonComAffiliateId;
-		this.amazonJpAffId = values.amazonJpAffiliateId;
-		this.paAffId = values.playAsiaAffiliateId;
+	constructor({
+		amazonComAffiliateId,
+		amazonJpAffiliateId,
+		playAsiaAffiliateId,
+	}: {
+		amazonComAffiliateId: string;
+		amazonJpAffiliateId: string;
+		playAsiaAffiliateId: string;
+	}) {
+		this.amazonComAffId = amazonComAffiliateId;
+		this.amazonJpAffId = amazonJpAffiliateId;
+		this.paAffId = playAsiaAffiliateId;
 	}
 
 	generateAffiliateLink = (url?: string): string | undefined => {
@@ -102,7 +110,11 @@ export class UrlHelper {
 	): string | undefined => {
 		const link = UrlHelper.makeLink(partialLink);
 
-		return new AffiliateLinkGenerator(vdb.values).generateAffiliateLink(link);
+		return new AffiliateLinkGenerator({
+			amazonComAffiliateId: vdbConfig.amazonComAffiliateId,
+			amazonJpAffiliateId: vdbConfig.amazonJpAffiliateId,
+			playAsiaAffiliateId: vdbConfig.playAsiaAffiliateId,
+		}).generateAffiliateLink(link);
 	};
 
 	/// <summary>

@@ -8,6 +8,7 @@ import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
+import { PVHelper } from '@/Helpers/PVHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import { useLoginManager } from '@/LoginManagerContext';
 import {
@@ -221,7 +222,10 @@ const AlbumDetails = (): React.ReactElement => {
 		albumRepo
 			.getDetails({ id: Number(id) })
 			.then((album) => {
-				const model = new AlbumDetailsForApi(album);
+				const model = new AlbumDetailsForApi(
+					album,
+					PVHelper.primaryPV(album.pvs, vdb.values.loggedUser),
+				);
 
 				setModel({
 					model: model,

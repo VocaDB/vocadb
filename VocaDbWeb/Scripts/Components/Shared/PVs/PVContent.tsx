@@ -8,6 +8,7 @@ import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -105,12 +106,17 @@ interface PVContentProps {
 
 export const PVContent = observer(
 	({ pvPlayerStore, selectedSong }: PVContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes.Home',
 			'VocaDb.Model.Resources.Songs',
 		]);
 
-		const primaryPV = PVHelper.primaryPV(selectedSong.pvs);
+		const primaryPV = PVHelper.primaryPV(
+			selectedSong.pvs,
+			vdb.values.loggedUser,
+		);
 
 		return (
 			<>

@@ -37,6 +37,7 @@ import {
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum SongOptionalField {
@@ -657,4 +658,4 @@ export interface SongQueryParams extends CommonQueryParams {
 	songTypes?: SongType[];
 }
 
-export const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
+export const songRepo = new SongRepository(httpClient, vdbConfig.baseAddress);

@@ -12,7 +12,6 @@ import { SongListBaseContract } from '@/DataContracts/SongListBaseContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagUsageForApiContract } from '@/DataContracts/Tag/TagUsageForApiContract';
 import { WebLinkContract } from '@/DataContracts/WebLinkContract';
-import { PVHelper } from '@/Helpers/PVHelper';
 import { RelatedSitesHelper } from '@/Helpers/RelatedSitesHelper';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { ArtistCategories } from '@/Models/Artists/ArtistCategories';
@@ -73,7 +72,10 @@ export class SongDetailsForApi {
 	readonly userRating: string /* TODO: enum */;
 	readonly webLinks: WebLinkContract[];
 
-	constructor(readonly contract: SongDetailsContract) {
+	constructor(
+		readonly contract: SongDetailsContract,
+		primaryPV: PVContract | undefined,
+	) {
 		this.additionalNames = contract.additionalNames;
 		this.albums = contract.albums;
 		this.alternateVersions = contract.alternateVersions.filter(
@@ -199,7 +201,7 @@ export class SongDetailsForApi {
 
 		this.otherPVs = contract.pvs.filter((pv) => pv.pvType !== PVType.Original);
 
-		this.primaryPV = PVHelper.primaryPV(contract.pvs);
+		this.primaryPV = primaryPV;
 
 		this.jsonModel = new SongDetailsAjax(
 			this,

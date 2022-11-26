@@ -47,6 +47,7 @@ import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import NProgress from 'nprogress';
@@ -136,6 +137,7 @@ const EventDetailsLayout = observer(
 		event,
 		releaseEventDetailsStore,
 	}: EventDetailsLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
 		const loginManager = useLoginManager();
 
 		const { t, ready } = useTranslation([
@@ -152,7 +154,7 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		const primaryPV = PVHelper.primaryPV(event.pvs);
+		const primaryPV = PVHelper.primaryPV(event.pvs, vdb.values.loggedUser);
 
 		return (
 			<Layout

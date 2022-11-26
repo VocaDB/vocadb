@@ -7,6 +7,7 @@ import {
 import { PVService } from '@/Models/PVs/PVService';
 import { PVType } from '@/Models/PVs/PVType';
 import { functions } from '@/Shared/GlobalFunctions';
+import { vdbConfig } from '@/vdbConfig';
 
 interface BandcampMetadata {
 	Url?: string;
@@ -98,7 +99,7 @@ export class VideoServiceHelper {
 
 			case PVService.LocalFile:
 				return functions.mergeUrls(
-					vdb.values.staticContentHost,
+					vdbConfig.staticContentHost,
 					`/media/${pv.pvId}`,
 				);
 

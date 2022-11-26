@@ -427,13 +427,17 @@ export class PlayQueueStore
 		}
 	};
 
-	private static createItemsFromSongs = (
+	private createItemsFromSongs = (
 		songs: PlayQueueSongContract[],
 		autoplay: boolean,
 	): PlayQueueItem[] => {
 		return songs
 			.map((song) => {
-				const primaryPV = PVHelper.primaryPV(song.pvs, autoplay);
+				const primaryPV = PVHelper.primaryPV(
+					song.pvs,
+					this.values.loggedUser,
+					autoplay,
+				);
 				return primaryPV ? new PlayQueueItem(song, primaryPV.id) : undefined;
 			})
 			.filter((item) => !!item)
@@ -505,10 +509,11 @@ export class PlayQueueStore
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(album.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(album.pvs, this.values.loggedUser, false);
 		return [
 			...(primaryPV ? [new PlayQueueItem(album, primaryPV.id)] : []),
-			...PlayQueueStore.createItemsFromSongs(songs, true),
+			...this.createItemsFromSongs(songs, true),
 		];
 	};
 
@@ -546,7 +551,8 @@ export class PlayQueueStore
 			id: entry.id,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(event.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(event.pvs, this.values.loggedUser, false);
 		return primaryPV ? [new PlayQueueItem(event, primaryPV.id)] : [];
 	};
 
@@ -590,7 +596,8 @@ export class PlayQueueStore
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(song.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(song.pvs, this.values.loggedUser, false);
 		return primaryPV ? [new PlayQueueItem(song, primaryPV.id)] : [];
 	};
 
@@ -648,7 +655,7 @@ export class PlayQueueStore
 			queryParams: queryParams,
 		});
 
-		const songItems = PlayQueueStore.createItemsFromSongs(songs, true);
+		const songItems = this.createItemsFromSongs(songs, true);
 
 		runInAction(() => {
 			this.items.push(...songItems);
