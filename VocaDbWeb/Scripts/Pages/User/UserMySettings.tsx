@@ -733,6 +733,8 @@ interface UserMySettingsLayoutProps {
 
 const UserMySettingsLayout = observer(
 	({ mySettingsStore }: UserMySettingsLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.User']);
 
 		const title = t('ViewRes.User:MySettings.MySettingsTitle');
@@ -793,6 +795,8 @@ const UserMySettingsLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details_user_byName(name));
+
+							await vdb.refresh();
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status

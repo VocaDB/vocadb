@@ -134,7 +134,7 @@ export class SongRepository
 			songId: number;
 		}): Promise<SongWithPVPlayerAndVoteContract> => {
 			return this.getJSON<SongWithPVPlayerAndVoteContract>(
-				'/PVPlayerWithRating',
+				this.urlMapper.mapRelative('/PVPlayerWithRating'),
 				{ songId: songId },
 			);
 		};

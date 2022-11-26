@@ -909,6 +909,18 @@ export class UserRepository implements ICommentRepository {
 			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
 		);
 	};
+
+	logout = (requestToken: string): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/logout'),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
 }
 
 export const userRepo = new UserRepository(httpClient, urlMapper);
