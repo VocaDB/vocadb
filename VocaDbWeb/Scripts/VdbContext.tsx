@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 interface VdbContextProps {
 	resources: GlobalResources;
 	values: GlobalValues;
+	refresh(): Promise<void>;
 }
 
 const VdbContext = React.createContext<VdbContextProps>(undefined!);
@@ -24,21 +25,25 @@ export const VdbProvider = ({
 
 	const { i18n } = useTranslation();
 
-	React.useEffect(() => {
-		Promise.all([
+	const refresh = React.useCallback(async () => {
+		const [resources, values] = await Promise.all([
 			httpClient.get<GlobalResources>(
 				urlMapper.mapRelative('/api/globals/resources'),
 			),
 			httpClient.get<GlobalValues>(
 				urlMapper.mapRelative('/api/globals/values'),
 			),
-		]).then(([resources, values]) => {
-			i18n.changeLanguage(values.uiCulture);
-			moment.locale(values.culture);
+		]);
 
-			setVdb({ resources, values });
-		});
+		i18n.changeLanguage(values.uiCulture);
+		moment.locale(values.culture);
+
+		setVdb({ resources, values, refresh });
 	}, [i18n]);
+
+	React.useEffect(() => {
+		refresh();
+	}, [refresh]);
 
 	return vdb ? (
 		<VdbContext.Provider value={vdb}>{children}</VdbContext.Provider>
