@@ -1148,6 +1148,17 @@ namespace VocaDb.Web.Controllers.Api
 
 			return ValidationProblem(ModelState);
 		}
+
+		[HttpPost("logout")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> Logout()
+		{
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return NoContent();
+		}
 #nullable disable
 	}
 }

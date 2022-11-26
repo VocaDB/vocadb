@@ -451,6 +451,7 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
+		[Obsolete]
 		public async Task<ActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
