@@ -2,6 +2,7 @@ import { EntryContract } from '@/DataContracts/EntryContract';
 import { PVContract } from '@/DataContracts/PVs/PVContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
+import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { AlbumRepository } from '@/Repositories/AlbumRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
@@ -11,7 +12,6 @@ import { TagRepository } from '@/Repositories/TagRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
 import {
-	EntryType,
 	PlayQueueAlbumContract,
 	PlayQueueEntryContract,
 	PlayQueueItemContract,
@@ -24,7 +24,7 @@ import {
 } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { SkipListStore } from '@/Stores/VdbPlayer/SkipListStore';
 import { LocalStorageStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { pull } from 'lodash-es';
 import {
@@ -34,6 +34,8 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
+
+import schema from './PlayQueueLocalStorageState.schema.json';
 
 export enum RepeatMode {
 	Off = 'Off',
@@ -57,8 +59,7 @@ const ajv = new Ajv({ coerceTypes: true });
 addFormats(ajv);
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<PlayQueueLocalStorageState> = require('./PlayQueueLocalStorageState.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<PlayQueueLocalStorageState>(schema);
 
 export class PlayQueueItem {
 	private static nextId = 1;
@@ -426,13 +427,17 @@ export class PlayQueueStore
 		}
 	};
 
-	private static createItemsFromSongs = (
+	private createItemsFromSongs = (
 		songs: PlayQueueSongContract[],
 		autoplay: boolean,
 	): PlayQueueItem[] => {
 		return songs
 			.map((song) => {
-				const primaryPV = PVHelper.primaryPV(song.pvs, autoplay);
+				const primaryPV = PVHelper.primaryPV(
+					song.pvs,
+					this.values.loggedUser,
+					autoplay,
+				);
 				return primaryPV ? new PlayQueueItem(song, primaryPV.id) : undefined;
 			})
 			.filter((item) => !!item)
@@ -504,10 +509,11 @@ export class PlayQueueStore
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(album.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(album.pvs, this.values.loggedUser, false);
 		return [
 			...(primaryPV ? [new PlayQueueItem(album, primaryPV.id)] : []),
-			...PlayQueueStore.createItemsFromSongs(songs, true),
+			...this.createItemsFromSongs(songs, true),
 		];
 	};
 
@@ -545,7 +551,8 @@ export class PlayQueueStore
 			id: entry.id,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(event.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(event.pvs, this.values.loggedUser, false);
 		return primaryPV ? [new PlayQueueItem(event, primaryPV.id)] : [];
 	};
 
@@ -589,7 +596,8 @@ export class PlayQueueStore
 			lang: this.values.languagePreference,
 		});
 
-		const primaryPV = pv ?? PVHelper.primaryPV(song.pvs, false);
+		const primaryPV =
+			pv ?? PVHelper.primaryPV(song.pvs, this.values.loggedUser, false);
 		return primaryPV ? [new PlayQueueItem(song, primaryPV.id)] : [];
 	};
 
@@ -598,13 +606,13 @@ export class PlayQueueStore
 		pv?: PVContract,
 	): Promise<PlayQueueItem[]> => {
 		switch (entry.entryType) {
-			case EntryType[EntryType.Album]:
+			case EntryType.Album:
 				return this.loadItemsFromAlbum(entry, pv);
 
-			case EntryType[EntryType.ReleaseEvent]:
+			case EntryType.ReleaseEvent:
 				return this.loadItemsFromEvent(entry, pv);
 
-			case EntryType[EntryType.Song]:
+			case EntryType.Song:
 				return this.loadItemsFromSong(entry, pv);
 
 			default:
@@ -647,7 +655,7 @@ export class PlayQueueStore
 			queryParams: queryParams,
 		});
 
-		const songItems = PlayQueueStore.createItemsFromSongs(songs, true);
+		const songItems = this.createItemsFromSongs(songs, true);
 
 		runInAction(() => {
 			this.items.push(...songItems);

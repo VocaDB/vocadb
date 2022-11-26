@@ -1,27 +1,18 @@
 import { Layout } from '@/Components/Shared/Layout';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
+	eventRepo,
 	ReleaseEventOptionalField,
-	ReleaseEventRepository,
 } from '@/Repositories/ReleaseEventRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSortRule } from '@/Stores/Search/EventSearchStore';
+import { useVdb } from '@/VdbContext';
 import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventIndexLayoutProps {
 	model: ReleaseEventContract[];
@@ -30,14 +21,16 @@ interface EventIndexLayoutProps {
 const EventIndexLayout = ({
 	model,
 }: EventIndexLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Event']);
 
 	const title = t('ViewRes:Shared.ReleaseEvents');
 
-	useVdbTitle(title, ready);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={ready}
 			title={title}
 			toolbar={
 				<>
@@ -48,19 +41,19 @@ const EventIndexLayout = ({
 							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsBySeries">
+							<Link to="/Event/EventsBySeries">
 								{t('ViewRes.Event:EventsBySeries.ViewBySeries')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsByVenue">
+							<Link to="/Event/EventsByVenue">
 								{t('ViewRes.Event:EventsBySeries.ViewByVenue')}
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="/Event/EventsByDate">
+							<Link to="/Event/EventsByDate">
 								{t('ViewRes.Event:EventsBySeries.ViewByDate')}
-							</a>
+							</Link>
 						</li>
 					</ul>
 
@@ -98,9 +91,9 @@ const EventIndexLayout = ({
 };
 
 const EventIndex = (): React.ReactElement => {
-	const [model, setModel] = React.useState<
-		ReleaseEventContract[] | undefined
-	>();
+	const vdb = useVdb();
+
+	const [model, setModel] = React.useState<ReleaseEventContract[]>();
 
 	React.useEffect(() => {
 		eventRepo
@@ -123,7 +116,7 @@ const EventIndex = (): React.ReactElement => {
 				},
 			})
 			.then((result) => setModel(result.items));
-	}, []);
+	}, [vdb]);
 
 	return model ? <EventIndexLayout model={model} /> : <></>;
 };

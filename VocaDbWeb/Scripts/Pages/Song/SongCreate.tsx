@@ -15,16 +15,14 @@ import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { SongType } from '@/Models/Songs/SongType';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { SongCreateStore } from '@/Stores/Song/SongCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { truncate } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -33,30 +31,24 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-
 interface SongCreateLayoutProps {
 	songCreateStore: SongCreateStore;
 }
 
 const SongCreateLayout = observer(
 	({ songCreateStore }: SongCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		const title = t('ViewRes.Song:Create.SubmitSong');
-
-		useVdbTitle(title, ready);
 
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -161,7 +153,7 @@ const SongCreateLayout = observer(
 							<div className="editor-field">
 								{songCreateStore.errors && songCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{songCreateStore.errors.names}
+										{songCreateStore.errors.names[0]}
 									</span>
 								)}
 
@@ -356,7 +348,7 @@ const SongCreateLayout = observer(
 							<div className="editor-field">
 								{songCreateStore.errors && songCreateStore.errors.artists && (
 									<span className="field-validation-error">
-										{songCreateStore.errors.artists}
+										{songCreateStore.errors.artists[0]}
 									</span>
 								)}
 								<table>
@@ -473,6 +465,8 @@ const SongCreateLayout = observer(
 );
 
 const SongCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [searchParams] = useSearchParams();
 	const pvUrl = searchParams.get('pvUrl');
 

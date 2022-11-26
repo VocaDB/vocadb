@@ -15,40 +15,20 @@ import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { EntryType } from '@/Models/EntryType';
 import { QTipToolTip } from '@/QTip/QTipToolTip';
-import {
-	AlbumOptionalField,
-	AlbumRepository,
-} from '@/Repositories/AlbumRepository';
+import { AlbumOptionalField, albumRepo } from '@/Repositories/AlbumRepository';
 import {
 	ArtistOptionalField,
-	ArtistRepository,
+	artistRepo,
 } from '@/Repositories/ArtistRepository';
 import {
+	eventRepo,
 	ReleaseEventOptionalField,
-	ReleaseEventRepository,
 } from '@/Repositories/ReleaseEventRepository';
-import {
-	SongOptionalField,
-	SongRepository,
-} from '@/Repositories/SongRepository';
-import { TagOptionalField, TagRepository } from '@/Repositories/TagRepository';
-import {
-	UserOptionalField,
-	UserRepository,
-} from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { SongOptionalField, songRepo } from '@/Repositories/SongRepository';
+import { TagOptionalField, tagRepo } from '@/Repositories/TagRepository';
+import { UserOptionalField, userRepo } from '@/Repositories/UserRepository';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface AlbumToolTipProps {
 	id: number;
@@ -58,6 +38,8 @@ interface AlbumToolTipProps {
 
 export const AlbumToolTip = React.memo(
 	({ id, children, withCover }: AlbumToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [album, setAlbum] = React.useState<AlbumContract>();
@@ -77,7 +59,7 @@ export const AlbumToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((album) => setAlbum(album));
-		}, [album, show, id]);
+		}, [vdb, album, show, id]);
 
 		return (
 			<OverlayTrigger
@@ -113,6 +95,8 @@ interface ArtistToolTipProps {
 
 export const ArtistToolTip = React.memo(
 	({ id, children }: ArtistToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [artist, setArtist] = React.useState<ArtistContract>();
@@ -132,7 +116,7 @@ export const ArtistToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((artist) => setArtist(artist));
-		}, [artist, show, id]);
+		}, [vdb, artist, show, id]);
 
 		return (
 			<OverlayTrigger
@@ -225,6 +209,8 @@ interface SongToolTipProps {
 
 export const SongToolTip = React.memo(
 	({ id, children, foreignDomain }: SongToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [song, setSong] = React.useState<SongWithPVAndVoteContract>();
@@ -262,7 +248,7 @@ export const SongToolTip = React.memo(
 
 					setSong({ ...song, pvs: [], vote: vote });
 				});
-		}, [song, show, id, foreignDomain]);
+		}, [vdb, song, show, id, foreignDomain]);
 
 		return (
 			<OverlayTrigger
@@ -294,6 +280,8 @@ interface TagToolTipProps {
 
 export const TagToolTip = React.memo(
 	({ id, children }: TagToolTipProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const [show, setShow] = React.useState(false);
 
 		const [tag, setTag] = React.useState<TagApiContract>();
@@ -314,7 +302,7 @@ export const TagToolTip = React.memo(
 					lang: vdb.values.languagePreference,
 				})
 				.then((tag) => setTag(tag));
-		}, [tag, show, id]);
+		}, [vdb, tag, show, id]);
 
 		return (
 			<OverlayTrigger
@@ -393,22 +381,22 @@ export const EntryToolTip = ({
 	children,
 }: EntryToolTipProps): React.ReactElement => {
 	switch (entry.entryType) {
-		case EntryType[EntryType.Album]:
+		case EntryType.Album:
 			return <AlbumToolTip id={entry.id}>{children}</AlbumToolTip>;
 
-		case EntryType[EntryType.Artist]:
+		case EntryType.Artist:
 			return <ArtistToolTip id={entry.id}>{children}</ArtistToolTip>;
 
-		case EntryType[EntryType.ReleaseEvent]:
+		case EntryType.ReleaseEvent:
 			return <EventToolTip id={entry.id}>{children}</EventToolTip>;
 
-		case EntryType[EntryType.Song]:
+		case EntryType.Song:
 			return <SongToolTip id={entry.id}>{children}</SongToolTip>;
 
-		case EntryType[EntryType.Tag]:
+		case EntryType.Tag:
 			return <TagToolTip id={entry.id}>{children}</TagToolTip>;
 
-		case EntryType[EntryType.User]:
+		case EntryType.User:
 			return <UserToolTip id={entry.id}>{children}</UserToolTip>;
 
 		default:

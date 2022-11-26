@@ -14,8 +14,10 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
+
+import schema from './RankingsRouteParams.schema.json';
 
 interface RankingsRouteParams {
 	dateFilterType?: string;
@@ -33,8 +35,7 @@ const clearResultsByQueryKeys: (keyof RankingsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<RankingsRouteParams> = require('./RankingsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<RankingsRouteParams>(schema);
 
 export class RankingsStore implements LocationStateStore<RankingsRouteParams> {
 	@observable dateFilterType = 'CreateDate' /* TODO: enum */;

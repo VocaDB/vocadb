@@ -5,26 +5,18 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ArtistLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/ArtistLockingAutoComplete';
 import { MergeEntryInfo } from '@/Components/Shared/Partials/Shared/MergeEntryInfo';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { EntryType } from '@/Models/EntryType';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArtistMergeStore } from '@/Stores/Artist/ArtistMergeStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface ArtistMergeLayoutProps {
 	artist: ArtistContract;
@@ -40,12 +32,12 @@ const ArtistMergeLayout = observer(
 
 		const title = `Merge artist - ${artist.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>
@@ -150,6 +142,8 @@ const ArtistMergeLayout = observer(
 );
 
 const ArtistMerge = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -170,7 +164,7 @@ const ArtistMerge = (): React.ReactElement => {
 					),
 				}),
 			);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<ArtistMergeLayout

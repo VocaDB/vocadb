@@ -4,20 +4,18 @@ import { Layout } from '@/Components/Shared/Layout';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { OwnedArtistForUserEditRow } from '@/Pages/User/Partials/OwnedArtistForUserEditRow';
 import { PermissionEditRow } from '@/Pages/User/Partials/PermissionEditRow';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { UserEditStore } from '@/Stores/User/UserEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -25,33 +23,26 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
 interface UserEditLayoutProps {
 	userEditStore: UserEditStore;
 }
 
 const UserEditLayout = observer(
 	({ userEditStore }: UserEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources']);
 
 		const contract = userEditStore.contract;
 
 		const title = `Edit user - ${contract.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>
@@ -252,6 +243,8 @@ const UserEditLayout = observer(
 );
 
 const UserEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{ userEditStore: UserEditStore }>();
@@ -267,7 +260,7 @@ const UserEdit = (): React.ReactElement => {
 				),
 			}),
 		);
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? <UserEditLayout userEditStore={model.userEditStore} /> : <></>;
 };

@@ -33,9 +33,9 @@ import { ArtistLinkContract } from '@/DataContracts/Song/ArtistLinkContract';
 import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ContentFocus } from '@/Models/ContentFocus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { SongType } from '@/Models/Songs/SongType';
@@ -49,8 +49,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface LatestAlbumReviewProps {
 	latestReview: AlbumReviewContract;
@@ -112,6 +110,8 @@ interface AlbumBasicInfoProps {
 
 const AlbumBasicInfo = observer(
 	({ model, albumDetailsStore }: AlbumBasicInfoProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -312,7 +312,7 @@ const AlbumBasicInfo = observer(
 									) : (
 										<a
 											href={`/Tag/DetailsByEntryType?${qs.stringify({
-												entryType: EntryType[EntryType.Album],
+												entryType: EntryType.Album,
 												subType: model.discType,
 											})}`}
 										>
@@ -338,7 +338,7 @@ const AlbumBasicInfo = observer(
 											disabled={
 												!loginManager.canEditTagsForEntry({
 													...model,
-													entryType: EntryType[EntryType.Album],
+													entryType: EntryType.Album,
 												})
 											}
 											icons={{ primary: 'ui-icon-tag' }}

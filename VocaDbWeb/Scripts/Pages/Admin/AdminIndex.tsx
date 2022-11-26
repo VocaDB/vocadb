@@ -1,18 +1,15 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
 const AdminIndex = (): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const title = 'Site management'; /* LOC */
 
-	useVdbTitle(title, true);
-
 	return (
-		<Layout title={title}>
+		<Layout pageTitle={title} ready={true} title={title}>
 			<h3>Common tasks{/* LOC */}</h3>
 
 			<p>

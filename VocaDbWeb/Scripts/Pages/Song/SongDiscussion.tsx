@@ -1,12 +1,10 @@
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { SongDetailsForApi } from '@/DataContracts/Song/SongDetailsForApi';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongDetailsTabs } from '@/Pages/Song/SongDetailsRoutes';
 import { SongDetailsStore } from '@/Stores/Song/SongDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface SongDiscussionProps {
 	model: SongDetailsForApi;
@@ -15,6 +13,8 @@ interface SongDiscussionProps {
 
 const SongDiscussion = observer(
 	({ model, songDetailsStore }: SongDiscussionProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		React.useEffect(() => {
 			songDetailsStore.comments.initComments();
 		}, [songDetailsStore]);

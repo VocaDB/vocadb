@@ -9,12 +9,11 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftIcon } from '@/Components/Shared/Partials/Shared/DraftIcon';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { PlayMethod, PlayQueueItem } from '@/Stores/VdbPlayer/PlayQueueStore';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { useNostalgicDiva } from '@vocadb/nostalgic-diva';
@@ -26,8 +25,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
 
+interface SkipListEditProps {
+	open: boolean;
+	onClose: () => void;
+}
+
 const SkipListEdit = observer(
-	(): React.ReactElement => {
+	({ open, onClose }: SkipListEditProps): React.ReactElement => {
 		const { t } = useTranslation(['ViewRes', 'VocaDb.Web.Resources.Domain']);
 
 		const { playQueue } = useVdbPlayer();
@@ -35,13 +39,13 @@ const SkipListEdit = observer(
 		return (
 			<JQueryUIDialog
 				title="Edit skip list" /* LOC */
-				autoOpen={playQueue.skipList.dialogVisible}
+				autoOpen={open}
 				width={550}
-				close={playQueue.skipList.hideDialog}
+				close={onClose}
 				buttons={[
 					{
 						text: 'Done' /* LOC */,
-						click: playQueue.skipList.hideDialog,
+						click: onClose,
 					},
 				]}
 			>
@@ -176,7 +180,6 @@ const PlaylistTableRowDropdown = observer(
 	},
 );
 
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
 const pvServiceIcons = new PVServiceIcons(urlMapper);
 
 interface PlaylistTableRowProps {
@@ -317,23 +320,18 @@ const PlaylistIndex = observer(
 
 		const title = t('ViewRes.Search:Index.Playlist');
 
-		useVdbTitle(title, ready);
-
 		const { playQueue } = useVdbPlayer();
 
 		const handleClickAddToNewSongList = React.useCallback(() => {
 			// TODO: Implement.
 		}, []);
 
-		React.useEffect(() => {
-			return (): void => {
-				playQueue.skipList.hideDialog();
-			};
-		});
+		const [skipListDialogOpen, setSkipListDialogOpen] = React.useState(false);
 
 		return (
 			<Layout
-				title={title}
+				pageTitle={title}
+				ready={ready}
 				toolbar={
 					<>
 						{playQueue.currentItem && (
@@ -394,7 +392,7 @@ const PlaylistIndex = observer(
 								<JQueryUIButton
 									as={SafeAnchor}
 									href="#"
-									onClick={playQueue.skipList.showDialog}
+									onClick={(): void => setSkipListDialogOpen(true)}
 								>
 									Edit skip list{/* LOC */}
 								</JQueryUIButton>
@@ -413,7 +411,10 @@ const PlaylistIndex = observer(
 					</h3>
 				)}
 
-				<SkipListEdit />
+				<SkipListEdit
+					open={skipListDialogOpen}
+					onClose={(): void => setSkipListDialogOpen(false)}
+				/>
 			</Layout>
 		);
 	},

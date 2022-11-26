@@ -7,39 +7,29 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
+import { PVHelper } from '@/Helpers/PVHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	AlbumReportType,
 	albumReportTypesWithRequiredNotes,
 } from '@/Models/Albums/AlbumReportType';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import AlbumDetailsRoutes from '@/Pages/Album/AlbumDetailsRoutes';
 import DownloadTagsDialog from '@/Pages/Album/Partials/DownloadTagsDialog';
 import EditCollectionDialog from '@/Pages/Album/Partials/EditCollectionDialog';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { AlbumDetailsStore } from '@/Stores/Album/AlbumDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumDetailsLayoutProps {
 	model: AlbumDetailsForApi;
@@ -51,6 +41,8 @@ const AlbumDetailsLayout = observer(
 		model,
 		albumDetailsStore,
 	}: AlbumDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -61,10 +53,10 @@ const AlbumDetailsLayout = observer(
 			? `${model.name} - ${model.artistString}`
 			: model.name;
 
-		useVdbTitle(titleAndArtist, true);
-
 		return (
 			<Layout
+				pageTitle={titleAndArtist}
+				ready={true}
 				title={model.name}
 				subtitle={`${model.artistString} (${t(
 					`VocaDb.Model.Resources.Albums:DiscTypeNames.${model.discType}`,
@@ -91,7 +83,7 @@ const AlbumDetailsLayout = observer(
 								<EmbedPVPreview
 									entry={{
 										...model.contract,
-										entryType: EntryType[EntryType.Album],
+										entryType: EntryType.Album,
 									}}
 									pv={model.primaryPV}
 									allowInline
@@ -133,7 +125,7 @@ const AlbumDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...model.contract,
-									entryType: EntryType[EntryType.Album],
+									entryType: EntryType.Album,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -181,7 +173,7 @@ const AlbumDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							model.mergedTo
-								? { ...model.mergedTo, entryType: EntryType[EntryType.Album] }
+								? { ...model.mergedTo, entryType: EntryType.Album }
 								: undefined
 						}
 					/>
@@ -214,6 +206,9 @@ const AlbumDetailsLayout = observer(
 );
 
 const AlbumDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<
@@ -227,7 +222,10 @@ const AlbumDetails = (): React.ReactElement => {
 		albumRepo
 			.getDetails({ id: Number(id) })
 			.then((album) => {
-				const model = new AlbumDetailsForApi(album);
+				const model = new AlbumDetailsForApi(
+					album,
+					PVHelper.primaryPV(album.pvs, vdb.values.loggedUser),
+				);
 
 				setModel({
 					model: model,
@@ -254,7 +252,7 @@ const AlbumDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<AlbumDetailsLayout

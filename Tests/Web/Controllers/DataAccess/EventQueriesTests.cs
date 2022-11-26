@@ -250,18 +250,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		public void Update_ChangeName_DuplicateOfAnotherEvent()
+		public async Task Update_ChangeName_DuplicateOfAnotherEvent()
 		{
 			var contract = new ReleaseEventForEditForApiContract(_existingEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null)
 			{
 				Id = 0, // Simulate new event
 			};
 
-			_queries.Awaiting(subject => subject.Update(contract, null)).Should().Throw<DuplicateEventNameException>();
+			await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<DuplicateEventNameException>();
 		}
 
 		[TestMethod]
-		public void Update_ChangeName_DuplicateForSameEvent()
+		public async Task Update_ChangeName_DuplicateForSameEvent()
 		{
 			var releaseEvent = _repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 			var contract = new ReleaseEventForEditForApiContract(releaseEvent, ContentLanguagePreference.Default, _permissionContext, allSeries: null!, thumbPersister: null)
@@ -272,7 +272,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				}
 			};
 
-			_queries.Awaiting(subject => subject.Update(contract, null)).Should().Throw<DuplicateEventNameException>();
+			await Awaiting(() => _queries.Update(contract, null)).Should().ThrowAsync<DuplicateEventNameException>();
 		}
 
 		[TestMethod]
@@ -350,7 +350,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
 			contract.Names[0].Value = "M3.9";
 
-			_queries.Invoking(subject => subject.UpdateSeries(contract, null)).Should().Throw<DuplicateEventNameException>();
+			Invoking(() => _queries.UpdateSeries(contract, null)).Should().Throw<DuplicateEventNameException>();
 		}
 
 		[TestMethod]
@@ -360,7 +360,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_permissionContext.RefreshLoggedUser(_repository);
 
 			var contract = new ReleaseEventSeriesForEditForApiContract(_series, ContentLanguagePreference.English, thumbPersister: null);
-			_queries.Invoking(subject => subject.UpdateSeries(contract, null)).Should().Throw<NotAllowedException>();
+			Invoking(() => _queries.UpdateSeries(contract, null)).Should().Throw<NotAllowedException>();
 		}
 	}
 }

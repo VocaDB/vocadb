@@ -1,8 +1,8 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { JQueryUINavItemComponent } from '@/JQueryUI/JQueryUITabs';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 
@@ -271,6 +271,8 @@ const AboutVocaloid = React.memo(
 
 const Guidelines = React.memo(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		return (
 			<HelpIndexTabs tab="guidelines">
 				<h3 id="glmain">General principles</h3>
@@ -842,10 +844,8 @@ const Guidelines = React.memo(
 const HelpIndex = (): React.ReactElement => {
 	const title = 'Help / About';
 
-	useVdbTitle(title, true);
-
 	return (
-		<Layout title={title}>
+		<Layout pageTitle={title} ready={true} title={title}>
 			<Routes>
 				<Route path="" element={<AboutVocaDb />} />
 				<Route path="aboutvocaloid" element={<AboutVocaloid />} />

@@ -1,26 +1,21 @@
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 const UserIndex = React.lazy(() => import('./UserIndex'));
+const UserCreate = React.lazy(() => import('./UserCreate'));
 const UserEdit = React.lazy(() => import('./UserEdit'));
 const UserEntryEdits = React.lazy(() => import('./UserEntryEdits'));
 const UserFavoriteSongs = React.lazy(() => import('./UserFavoriteSongs'));
+const UserLogin = React.lazy(() => import('./UserLogin'));
 const UserMessages = React.lazy(() => import('./UserMessages'));
 const UserMySettings = React.lazy(() => import('./UserMySettings'));
 const UserRequestVerification = React.lazy(
 	() => import('./UserRequestVerification'),
 );
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 const UserDetailsNavigate = (): React.ReactElement => {
 	const { id } = useParams();
@@ -55,10 +50,12 @@ const UserRoutes = (): React.ReactElement => {
 	return (
 		<Routes>
 			<Route path="" element={<UserIndex />} />
+			<Route path="Create" element={<UserCreate />} />
 			<Route path="Details/:id" element={<UserDetailsNavigate />} />
 			<Route path="Edit/:id" element={<UserEdit />} />
 			<Route path="EntryEdits/:id" element={<UserEntryEdits />} />
 			<Route path="FavoriteSongs/:id" element={<UserFavoriteSongs />} />
+			<Route path="Login" element={<UserLogin />} />
 			<Route path="Messages" element={<UserMessages />} />
 			<Route path="MySettings" element={<UserMySettings />} />
 			<Route path="RequestVerification" element={<UserRequestVerification />} />

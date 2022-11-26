@@ -2,21 +2,14 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
 import { ArchivedObjectVersions } from '@/Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
 import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface VenueVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<VenueForApiContract>;
@@ -29,10 +22,10 @@ const VenueVersionsLayout = ({
 
 	const title = `${t('ViewRes:EntryDetails.Revisions')} - ${model.entry.name}`;
 
-	useVdbTitle(title, ready);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={ready}
 			title={title}
 			parents={
 				<>

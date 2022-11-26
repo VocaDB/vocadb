@@ -2,21 +2,14 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
 import { ArchivedObjectVersions } from '@/Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
 import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventContract } from '@/DataContracts/ReleaseEvents/ReleaseEventContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<ReleaseEventContract>;
@@ -29,10 +22,10 @@ const EventVersionsLayout = ({
 
 	const title = `${t('ViewRes:EntryDetails.Revisions')} - ${model.entry.name}`;
 
-	useVdbTitle(title, ready);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={ready}
 			title={title}
 			parents={
 				<>

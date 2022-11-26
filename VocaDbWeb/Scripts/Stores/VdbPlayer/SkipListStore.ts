@@ -5,8 +5,10 @@ import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { PlayQueueEntryContract } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { includesAny, LocalStorageStateStore } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
-import { action, computed, makeObservable, observable } from 'mobx';
+import Ajv from 'ajv';
+import { computed, makeObservable, observable } from 'mobx';
+
+import schema from './SkipListLocalStorageState.schema.json';
 
 export interface SkipListLocalStorageState {
 	removeFromPlayQueueOnSkip?: boolean;
@@ -18,12 +20,10 @@ export interface SkipListLocalStorageState {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SkipListLocalStorageState> = require('./SkipListLocalStorageState.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<SkipListLocalStorageState>(schema);
 
 export class SkipListStore
 	implements LocalStorageStateStore<SkipListLocalStorageState> {
-	@observable dialogVisible = false;
 	@observable removeFromPlayQueueOnSkip = false;
 	readonly artistFilters: ArtistFilters;
 	readonly tagFilters: TagFilters;
@@ -72,14 +72,6 @@ export class SkipListStore
 		localStorageState: any,
 	): localStorageState is SkipListLocalStorageState => {
 		return validate(localStorageState);
-	};
-
-	@action showDialog = (): void => {
-		this.dialogVisible = true;
-	};
-
-	@action hideDialog = (): void => {
-		this.dialogVisible = false;
 	};
 
 	includesAny = ({ artistIds, tagIds }: PlayQueueEntryContract): boolean => {

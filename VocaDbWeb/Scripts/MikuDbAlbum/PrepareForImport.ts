@@ -6,7 +6,7 @@ function initPage(): void {
 	function acceptArtistSelection(albumId?: number): void {
 		$.get(
 			'../../api/albums/' + albumId,
-			{ lang: vdb.values.languagePreference },
+			{ lang: (window as any).vdb.values.languagePreference },
 			function (album) {
 				$('#mergedAlbumId').append(
 					"<option value='" + albumId + "'>" + album.name + '</option>',
@@ -25,7 +25,7 @@ function initPage(): void {
 		createOptionSecondRow: (item: AlbumContract) => item.additionalNames,
 		extraQueryParams: {
 			nameMatchMode: 'Auto',
-			lang: vdb.values.languagePreference,
+			lang: (window as any).vdb.values.languagePreference,
 		},
 		termParamName: 'query',
 	});

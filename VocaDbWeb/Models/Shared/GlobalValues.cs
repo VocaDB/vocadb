@@ -4,9 +4,12 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Shared
@@ -57,7 +60,6 @@ namespace VocaDb.Web.Models.Shared
 		public int FreeTagId { get; init; }
 		public int InstrumentalTagId { get; init; }
 
-		public string? BaseAddress { get; init; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguagePreference LanguagePreference { get; init; }
 		public bool IsLoggedIn { get; init; }
@@ -73,7 +75,14 @@ namespace VocaDb.Web.Models.Shared
 		public MenuPageLink[] SmallBanners { get; init; }
 		public MenuPageLink[] SocialLinks { get; init; }
 
-		public GlobalValues(VocaDbPage model)
+		public bool SignupsDisabled { get; init; }
+		public string ReCAPTCHAPublicKey { get; init; }
+
+		public GlobalValues(
+			BrandableStringsManager brandableStrings,
+			VdbConfigManager config,
+			IUserPermissionContext userContext
+		)
 		{
 			AllowCustomArtistName = AppConfig.AllowCustomArtistName;
 			AlbumTypes = AppConfig.AlbumTypes;
@@ -86,28 +95,27 @@ namespace VocaDb.Web.Models.Shared
 			SongTypes = AppConfig.SongTypes;
 			StaticContentHost = AppConfig.StaticContentHost;
 
-			SiteName = model.BrandableStrings.SiteName;
-			SiteTitle = model.BrandableStrings.SiteTitle;
+			SiteName = brandableStrings.SiteName;
+			SiteTitle = brandableStrings.SiteTitle;
 
-			BannerUrl = model.Config.SiteSettings.BannerUrl.EmptyToNull();
-			BlogUrl = model.Config.SiteSettings.BlogUrl.EmptyToNull();
-			PatreonLink = model.Config.SiteSettings.PatreonLink.EmptyToNull();
-			SitewideAnnouncement = model.Config.SiteSettings.SitewideAnnouncement.EmptyToNull();
+			BannerUrl = config.SiteSettings.BannerUrl.EmptyToNull();
+			BlogUrl = config.SiteSettings.BlogUrl.EmptyToNull();
+			PatreonLink = config.SiteSettings.PatreonLink.EmptyToNull();
+			SitewideAnnouncement = config.SiteSettings.SitewideAnnouncement.EmptyToNull();
 			Stylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-			AmazonComAffiliateId = model.Config.Affiliates.AmazonComAffiliateId;
-			AmazonJpAffiliateId = model.Config.Affiliates.amazonJpAffiliateId;
-			PlayAsiaAffiliateId = model.Config.Affiliates.PlayAsiaAffiliateId;
-			FreeTagId = model.Config.SpecialTags.Free;
-			InstrumentalTagId = model.Config.SpecialTags.Instrumental;
+			AmazonComAffiliateId = config.Affiliates.AmazonComAffiliateId;
+			AmazonJpAffiliateId = config.Affiliates.amazonJpAffiliateId;
+			PlayAsiaAffiliateId = config.Affiliates.PlayAsiaAffiliateId;
+			FreeTagId = config.SpecialTags.Free;
+			InstrumentalTagId = config.SpecialTags.Instrumental;
 
-			BaseAddress = model.RootPath;
-			LanguagePreference = model.UserContext.LanguagePreference;
-			IsLoggedIn = model.UserContext.IsLoggedIn;
-			LoggedUserId = model.UserContext.LoggedUserId;
-			LoggedUser = model.UserContext.LoggedUser is ServerOnlyUserWithPermissionsContract loggedUser ? new SanitizedUserWithPermissionsContract(loggedUser) : null;
-			Culture = model.Culture;
-			UICulture = model.UICulture;
+			LanguagePreference = userContext.LanguagePreference;
+			IsLoggedIn = userContext.IsLoggedIn;
+			LoggedUserId = userContext.LoggedUserId;
+			LoggedUser = userContext.LoggedUser is ServerOnlyUserWithPermissionsContract loggedUser ? new SanitizedUserWithPermissionsContract(loggedUser) : null;
+			Culture = Thread.CurrentThread.CurrentCulture.Name;
+			UICulture = Thread.CurrentThread.CurrentUICulture.Name;
 
 			Slogan = SloganGenerator.Generate();
 
@@ -115,6 +123,9 @@ namespace VocaDb.Web.Models.Shared
 			BigBanners = MenuPage.BigBanners.Select(l => new MenuPageLink(l)).ToArray();
 			SmallBanners = MenuPage.SmallBanners.Select(l => new MenuPageLink(l)).ToArray();
 			SocialLinks = MenuPage.SocialLinks.Select(l => new MenuPageLink(l)).ToArray();
+
+			SignupsDisabled = AppConfig.SiteSettings.SignupsDisabled;
+			ReCAPTCHAPublicKey = AppConfig.ReCAPTCHAPublicKey;
 		}
 	}
 }

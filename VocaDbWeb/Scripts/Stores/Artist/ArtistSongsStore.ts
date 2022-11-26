@@ -2,7 +2,6 @@ import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { CommonSearchStore } from '@/Stores/Search/CommonSearchStore';
 import { SongSearchStore, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import {
@@ -10,7 +9,9 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
+
+import schema from './ArtistSongsRouteParams.schema.json';
 
 export interface ArtistSongsRouteParams {
 	page?: number;
@@ -30,8 +31,7 @@ const clearResultsByQueryKeys: (keyof ArtistSongsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ArtistSongsRouteParams> = require('./ArtistSongsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<ArtistSongsRouteParams>(schema);
 
 export class ArtistSongsStore
 	extends SongSearchStore
@@ -41,7 +41,6 @@ export class ArtistSongsStore
 		urlMapper: UrlMapper,
 		songRepo: SongRepository,
 		userRepo: UserRepository,
-		pvPlayersFactory: PVPlayersFactory,
 	) {
 		super(
 			new CommonSearchStore(values, undefined!),
@@ -51,7 +50,6 @@ export class ArtistSongsStore
 			userRepo,
 			undefined!,
 			undefined!,
-			pvPlayersFactory,
 		);
 	}
 

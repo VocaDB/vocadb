@@ -8,8 +8,8 @@ import { SongType } from '@/Models/Songs/SongType';
 import { ISongSearchStore } from '@/Pages/Search/Partials/SongSearchList';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import type { SongGetListQueryParams } from '@/Repositories/SongRepository';
 import {
-	SongGetListQueryParams,
 	SongOptionalField,
 	SongRepository,
 } from '@/Repositories/SongRepository';
@@ -17,8 +17,6 @@ import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
-import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
 import { ICommonSearchStore } from '@/Stores/Search/CommonSearchStore';
@@ -26,11 +24,6 @@ import { SearchCategoryBaseStore } from '@/Stores/Search/SearchCategoryBaseStore
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
 import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
-import {
-	ISongsAdapterStore,
-	PlayListRepositoryForSongsAdapter,
-} from '@/Stores/Song/PlayList/PlayListRepositoryForSongsAdapter';
-import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { includesAny, StateChangeEvent } from '@vocadb/route-sphere';
 import { computed, makeObservable, observable } from 'mobx';
@@ -127,7 +120,7 @@ const clearResultsByQueryKeys: (keyof SongSearchRouteParams)[] = [
 
 export class SongSearchStore
 	extends SearchCategoryBaseStore<SongSearchRouteParams, ISongSearchItem>
-	implements ISongSearchStore, ISongsAdapterStore {
+	implements ISongSearchStore {
 	readonly artistFilters: ArtistFilters;
 	@observable dateDay?: number = undefined;
 	@observable dateMonth?: number = undefined;
@@ -136,8 +129,6 @@ export class SongSearchStore
 	@observable minScore?: number;
 	@observable onlyRatedSongs = false;
 	readonly parentVersion: BasicEntryLinkStore<SongContract>;
-	readonly playListStore: PlayListStore;
-	readonly pvPlayerStore: PVPlayerStore;
 	@observable pvsOnly = false;
 	private readonly pvServiceIcons: PVServiceIcons;
 	@observable since?: number;
@@ -158,7 +149,6 @@ export class SongSearchStore
 		private readonly userRepo: UserRepository,
 		eventRepo: ReleaseEventRepository,
 		artistRepo: ArtistRepository,
-		pvPlayersFactory: PVPlayersFactory,
 	) {
 		super(commonSearchStore);
 
@@ -177,26 +167,6 @@ export class SongSearchStore
 
 		this.parentVersion = new BasicEntryLinkStore<SongContract>((entryId) =>
 			songRepo.getOne({ id: entryId, lang: values.languagePreference }),
-		);
-
-		this.pvPlayerStore = new PVPlayerStore(
-			values,
-			songRepo,
-			userRepo,
-			pvPlayersFactory,
-		);
-
-		const songsRepoAdapter = new PlayListRepositoryForSongsAdapter(
-			values,
-			songRepo,
-			this,
-		);
-
-		this.playListStore = new PlayListStore(
-			values,
-			urlMapper,
-			songsRepoAdapter,
-			this.pvPlayerStore,
 		);
 	}
 
@@ -288,7 +258,6 @@ export class SongSearchStore
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<ISongSearchItem>> => {
 		if (this.viewMode === 'PlayList') {
-			this.playListStore.updateResultsWithTotalCount();
 			return { items: [], totalCount: 0 };
 		} else {
 			const result = await this.songRepo.getList({

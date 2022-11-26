@@ -28,9 +28,16 @@ import {
 } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum SongOptionalField {
@@ -47,19 +54,19 @@ export enum SongOptionalField {
 
 export interface SongGetListQueryParams {
 	query: string;
-	sort: string;
+	sort: SongSortRule;
 	songTypes?: SongType[];
 	afterDate?: Date;
 	beforeDate?: Date;
-	tagIds: number[];
-	childTags: boolean;
-	unifyTypesAndTags: boolean;
-	artistIds: number[];
-	artistParticipationStatus: string;
-	childVoicebanks: boolean;
-	includeMembers: boolean;
+	tagIds?: number[];
+	childTags?: boolean;
+	unifyTypesAndTags?: boolean;
+	artistIds?: number[];
+	artistParticipationStatus?: string;
+	childVoicebanks?: boolean;
+	includeMembers?: boolean;
 	eventId?: number;
-	onlyWithPvs: boolean;
+	onlyWithPvs?: boolean;
 	since?: number;
 	minScore?: number;
 	userCollectionId?: number;
@@ -127,7 +134,7 @@ export class SongRepository
 			songId: number;
 		}): Promise<SongWithPVPlayerAndVoteContract> => {
 			return this.getJSON<SongWithPVPlayerAndVoteContract>(
-				'/PVPlayerWithRating',
+				this.urlMapper.mapRelative('/PVPlayerWithRating'),
 				{ songId: songId },
 			);
 		};
@@ -336,7 +343,7 @@ export class SongRepository
 		pvServices,
 		queryParams,
 	}: {
-		fields: SongOptionalField[];
+		fields?: SongOptionalField[];
 		lang: ContentLanguagePreference;
 		paging: PagingProperties;
 		pvServices?: PVService[];
@@ -375,7 +382,7 @@ export class SongRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -650,3 +657,5 @@ export interface SongQueryParams extends CommonQueryParams {
 
 	songTypes?: SongType[];
 }
+
+export const songRepo = new SongRepository(httpClient, vdbConfig.baseAddress);

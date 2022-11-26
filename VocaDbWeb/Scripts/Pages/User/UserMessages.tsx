@@ -5,19 +5,17 @@ import { Layout } from '@/Components/Shared/Layout';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
 import { NotificationIcon } from '@/Components/Shared/Partials/Shared/NotificationIcon';
 import { IconAndNameKnockout } from '@/Components/Shared/Partials/User/IconAndNameKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
 import ComposeMessage from '@/Pages/User/Partials/ComposeMessage';
 import UserMessageKnockout from '@/Pages/User/Partials/UserMessageKnockout';
-import { UserInboxType, UserRepository } from '@/Repositories/UserRepository';
+import { UserInboxType, userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import {
 	UserMessageFolderStore,
 	UserMessagesStore,
 } from '@/Stores/User/UserMessagesStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -25,18 +23,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const userMessagesStore = new UserMessagesStore(
-	vdb.values,
-	userRepo,
-	vdb.values.loggedUserId,
-	UserInboxType.Received,
-);
-
 interface MessageFolderTabContentProps {
+	userMessagesStore: UserMessagesStore;
 	userMessageFolderStore: UserMessageFolderStore;
 	id: string;
 	colFrom: boolean;
@@ -47,6 +35,7 @@ interface MessageFolderTabContentProps {
 
 const MessageFolderTabContent = observer(
 	({
+		userMessagesStore,
 		userMessageFolderStore,
 		id,
 		colFrom,
@@ -215,9 +204,21 @@ const MessageFolderTabContent = observer(
 
 const UserMessages = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [userMessagesStore] = React.useState(
+			() =>
+				new UserMessagesStore(
+					vdb.values,
+					userRepo,
+					vdb.values.loggedUserId,
+					UserInboxType.Received,
+				),
+		);
+
 		const { t, ready } = useTranslation(['ViewRes.User']);
 
-		useVdbTitle(t('ViewRes.User:Messages.Messages'), ready);
+		const title = t('ViewRes.User:Messages.Messages');
 
 		const [searchParams] = useSearchParams();
 		const messageId = searchParams.get('messageId');
@@ -238,7 +239,7 @@ const UserMessages = observer(
 					userMessageFolderStore,
 				);
 			});
-		}, [messageId, inbox]);
+		}, [userMessagesStore, messageId, inbox]);
 
 		React.useEffect(() => {
 			if (!receiverName) return;
@@ -249,11 +250,13 @@ const UserMessages = observer(
 					userMessagesStore.newMessageStore.receiver.id = result?.id;
 				}),
 			);
-		}, [receiverName]);
+		}, [userMessagesStore, receiverName]);
 
 		return (
 			<Layout
-				title={t('ViewRes.User:Messages.Messages')}
+				pageTitle={title}
+				ready={ready}
+				title={title}
 				parents={
 					<>
 						<Breadcrumb.Item linkAs={Link} linkProps={{ to: '/User' }} divider>
@@ -315,6 +318,7 @@ const UserMessages = observer(
 					>
 						<MessageFolderTabContent
 							id="receivedTabContent"
+							userMessagesStore={userMessagesStore}
 							userMessageFolderStore={userMessagesStore.receivedMessages}
 							colFrom={true}
 							colTo={false}
@@ -328,6 +332,7 @@ const UserMessages = observer(
 					>
 						<MessageFolderTabContent
 							id="sentTabContent"
+							userMessagesStore={userMessagesStore}
 							userMessageFolderStore={userMessagesStore.sentMessages}
 							colFrom={false}
 							colTo={true}
@@ -354,6 +359,7 @@ const UserMessages = observer(
 					>
 						<MessageFolderTabContent
 							id="notificationsTabContent"
+							userMessagesStore={userMessagesStore}
 							userMessageFolderStore={userMessagesStore.notifications}
 							colFrom={false}
 							colTo={false}

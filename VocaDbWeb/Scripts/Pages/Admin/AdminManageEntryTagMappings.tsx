@@ -5,8 +5,7 @@ import { Layout } from '@/Components/Shared/Layout';
 import { TagLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/TagLockingAutoComplete';
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { HttpClient } from '@/Shared/HttpClient';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { ManageEntryTagMappingsStore } from '@/Stores/Admin/ManageEntryTagMappingsStore';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
@@ -15,16 +14,14 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-
 const manageEntryTagMappingsStore = new ManageEntryTagMappingsStore(tagRepo);
 
 const AdminManageEntryTagMappings = observer(
 	(): React.ReactElement => {
 		return (
 			<Layout
+				pageTitle={undefined}
+				ready={true}
 				title="Manage entry type to tag mappings" /* LOC */
 				parents={
 					<>
@@ -50,12 +47,13 @@ const AdminManageEntryTagMappings = observer(
 								value={manageEntryTagMappingsStore.newEntryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										manageEntryTagMappingsStore.newEntryType = e.target.value;
+										manageEntryTagMappingsStore.newEntryType = e.target
+											.value as typeof ManageEntryTagMappingsStore.entryTypes[number];
 									})
 								}
 							>
 								<option value="" />
-								{manageEntryTagMappingsStore.entryTypes.map((entryType) => (
+								{ManageEntryTagMappingsStore.entryTypes.map((entryType) => (
 									<option value={entryType} key={entryType}>
 										{entryType}
 									</option>

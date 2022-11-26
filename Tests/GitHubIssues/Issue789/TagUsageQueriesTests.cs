@@ -72,56 +72,56 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 		}
 
 		[TestMethod]
-		public void AddNewTagByName()
+		public async Task AddNewTagByName()
 		{
 			var tags = new[] { Contract("vocarock") };
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, tags)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, tags)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddExistingTagByName()
+		public async Task AddExistingTagByName()
 		{
 			_repository.Save(CreateEntry.Tag("vocarock", 39));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract("vocarock"))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract("vocarock"))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddTagById()
+		public async Task AddTagById()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("vocarock"));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract(tag.Id))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract(tag.Id))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		/// <summary>
 		/// Add tag based on translated name
 		/// </summary>
 		[TestMethod]
-		public void AddTagByTranslation()
+		public async Task AddTagByTranslation()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract("ロック"))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract("ロック"))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		/// <summary>
 		/// Add renamed tag by name
 		/// </summary>
 		[TestMethod]
-		public void AddNewTag_TagIsRenamed()
+		public async Task AddNewTag_TagIsRenamed()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("vocarock", 39));
 			tag.Names.First().Value = "rock";
 			tag.Names.UpdateSortNames();
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract("vocarock"))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract("vocarock"))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void SkipDuplicates()
+		public async Task SkipDuplicates()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
@@ -132,11 +132,11 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 				Contract("ロック")
 			};
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, tags)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, tags)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddMultiple()
+		public async Task AddMultiple()
 		{
 			var tag1 = _repository.Save(CreateEntry.Tag("vocarock"));
 
@@ -145,21 +145,21 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 				new TagBaseContract { Name = "power metal" }
 			};
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, tags)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, tags)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddAndRemoveMultiple()
+		public async Task AddAndRemoveMultiple()
 		{
 			var tag1 = _repository.Save(CreateEntry.Tag("vocarock"));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, new TagBaseContract { Id = tag1.Id })).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, new TagBaseContract { Id = tag1.Id })).Should().ThrowAsync<NotAllowedException>();
 
 			var tags = new[] {
 				new TagBaseContract { Name = "power metal" }
 			};
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, tags)).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, tags)).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -170,26 +170,26 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 			var usage = _repository.Save(_entry.AddTag(tag).Result);
 			_repository.Save(_entry.AddTag(tag2).Result);
 
-			_queries.Invoking(subject => subject.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<Song>())).Should().Throw<NotAllowedException>();
+			Invoking(() => _queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<Song>())).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications()
+		public async Task AddTag_SendNotifications()
 		{
 			var followingUser = _repository.Save(CreateEntry.User(name: "Rin"));
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			_repository.Save(followingUser.AddTag(tag));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract(tag.Id))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract(tag.Id))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications_IgnoreSelf()
+		public async Task AddTag_SendNotifications_IgnoreSelf()
 		{
 			var tag = _repository.Save(CreateEntry.Tag("rock"));
 			_repository.Save(_user.AddTag(tag));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract(tag.Id))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract(tag.Id))).Should().ThrowAsync<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -206,12 +206,12 @@ namespace VocaDb.Tests.GitHubIssues.Issue789
 		}
 
 		[TestMethod]
-		public void SkipInvalidTarget()
+		public async Task SkipInvalidTarget()
 		{
 			_existingTag.Targets = TagTargetTypes.Album;
 			var tag = _repository.Save(CreateEntry.Tag("vocarock", 39));
 
-			this.Awaiting(subject => subject.AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id))).Should().Throw<NotAllowedException>();
+			await Awaiting(() => AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id))).Should().ThrowAsync<NotAllowedException>();
 		}
 	}
 }

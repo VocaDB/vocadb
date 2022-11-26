@@ -123,25 +123,21 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-			return View(_queries.List(EventSortRule.Date, SortDirection.Descending));
+			return View("React/Index");
 		}
 
 		public ActionResult EventsBySeries()
 		{
-			var events = Service.GetReleaseEventsBySeries();
-
 			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-			return View(events);
+			return View("React/Index");
 		}
 
 		public ActionResult EventsByVenue()
 		{
-			var events = _queries.GetReleaseEventsByVenue();
-
 			PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 
-			return View(events);
+			return View("React/Index");
 		}
 
 		//

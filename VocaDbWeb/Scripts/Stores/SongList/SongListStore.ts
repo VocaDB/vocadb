@@ -9,10 +9,8 @@ import { LoginManager } from '@/Models/LoginManager';
 import { PVServiceIcons } from '@/Models/PVServiceIcons';
 import { SongType } from '@/Models/Songs/SongType';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import {
-	SongListGetSongsQueryParams,
-	SongListRepository,
-} from '@/Repositories/SongListRepository';
+import type { SongListGetSongsQueryParams } from '@/Repositories/SongListRepository';
+import { SongListRepository } from '@/Repositories/SongListRepository';
 import {
 	SongOptionalField,
 	SongRepository,
@@ -23,8 +21,6 @@ import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
-import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 import { AdvancedSearchFilters } from '@/Stores/Search/AdvancedSearchFilters';
 import { ArtistFilters } from '@/Stores/Search/ArtistFilters';
@@ -32,11 +28,6 @@ import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { TagFilter } from '@/Stores/Search/TagFilter';
 import { TagFilters } from '@/Stores/Search/TagFilters';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import {
-	ISongListStore,
-	PlayListRepositoryForSongListAdapter,
-} from '@/Stores/Song/PlayList/PlayListRepositoryForSongListAdapter';
-import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import { SongWithPreviewStore } from '@/Stores/Song/SongWithPreviewStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
@@ -45,7 +36,7 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import {
 	action,
 	computed,
@@ -55,7 +46,7 @@ import {
 	runInAction,
 } from 'mobx';
 
-const loginManager = new LoginManager(vdb.values);
+import schema from './SongListRouteParams.schema.json';
 
 interface SongListRouteParams {
 	advancedFilters?: AdvancedSearchFilter[];
@@ -91,11 +82,9 @@ const clearResultsByQueryKeys: (keyof SongListRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SongListRouteParams> = require('./SongListRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<SongListRouteParams>(schema);
 
-export class SongListStore
-	implements ISongListStore, LocationStateStore<SongListRouteParams> {
+export class SongListStore implements LocationStateStore<SongListRouteParams> {
 	readonly advancedFilters = new AdvancedSearchFilters();
 	readonly artistFilters: ArtistFilters;
 	readonly comments: EditableCommentsStore;
@@ -106,8 +95,6 @@ export class SongListStore
 	readonly paging = new ServerSidePagingStore(20); // Paging view model
 	pauseNotifications = false;
 	@observable playlistMode = false;
-	readonly playlistStore: PlayListStore;
-	readonly pvPlayerStore: PVPlayerStore;
 	readonly pvServiceIcons: PVServiceIcons;
 	@observable query = '';
 	@observable showAdvancedFilters = false;
@@ -120,6 +107,7 @@ export class SongListStore
 
 	constructor(
 		private readonly values: GlobalValues,
+		loginManager: LoginManager,
 		urlMapper: UrlMapper,
 		private readonly songListRepo: SongListRepository,
 		private readonly songRepo: SongRepository,
@@ -129,7 +117,6 @@ export class SongListStore
 		latestComments: CommentContract[],
 		private readonly listId: number,
 		tagUsages: TagUsageForApiContract[],
-		pvPlayersFactory: PVPlayersFactory,
 		canDeleteAllComments: boolean,
 	) {
 		makeObservable(this);
@@ -147,23 +134,6 @@ export class SongListStore
 		);
 
 		// TODO
-		this.pvPlayerStore = new PVPlayerStore(
-			values,
-			songRepo,
-			userRepo,
-			pvPlayersFactory,
-		);
-		const playListRepoAdapter = new PlayListRepositoryForSongListAdapter(
-			songListRepo,
-			listId,
-			this,
-		);
-		this.playlistStore = new PlayListStore(
-			values,
-			urlMapper,
-			playListRepoAdapter,
-			this.pvPlayerStore,
-		);
 		this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
 		this.tagsEditStore = new TagsEditStore(
@@ -279,7 +249,6 @@ export class SongListStore
 		pagingProperties: PagingProperties,
 	): Promise<PartialFindResultContract<SongInListContract>> => {
 		if (this.playlistMode) {
-			this.playlistStore.updateResultsWithTotalCount();
 			return Promise.resolve({ items: [], totalCount: 0 });
 		} else {
 			return this.songListRepo.getSongs({

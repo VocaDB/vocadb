@@ -3,11 +3,10 @@ import Button from '@/Bootstrap/Button';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { HelpLabel } from '@/Components/Shared/Partials/Shared/HelpLabel';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryType } from '@/Models/EntryType';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ImportSongListStore } from '@/Stores/SongList/ImportSongListStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -15,9 +14,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
 
 const importSongListStore = new ImportSongListStore(httpClient, urlMapper);
 
@@ -30,12 +26,10 @@ const SongListImport = observer(
 
 		const title = t('VocaDb.Web.Resources.Views.SongList:Import.Title');
 
-		useVdbTitle(title, ready);
-
 		const navigate = useNavigate();
 
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<form className="form-horizontal">
 					<div className="control-group">
 						<div className="control-label">

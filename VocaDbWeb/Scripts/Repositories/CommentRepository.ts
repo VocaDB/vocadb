@@ -25,13 +25,13 @@ export class CommentRepository
 		contract: CommentContract;
 	}): Promise<CommentContract> => {
 		contract.entry = {
-			entryType: EntryType[this.entryType],
+			entryType: this.entryType,
 			id: entryId,
 			name: undefined!,
 			status: undefined!,
 		};
 		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),
+			UrlMapper.buildUrl(`api/comments/${this.entryType}-comments`),
 		);
 		return this.httpClient.post<CommentContract>(url, contract);
 	};
@@ -39,7 +39,7 @@ export class CommentRepository
 	deleteComment = ({ commentId }: { commentId: number }): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
-				`api/comments/${EntryType[this.entryType]}-comments/`,
+				`api/comments/${this.entryType}-comments/`,
 				commentId.toString(),
 			),
 		);
@@ -52,7 +52,7 @@ export class CommentRepository
 		entryId: number;
 	}): Promise<CommentContract[]> => {
 		var url = this.urlMapper.mapRelative(
-			UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments/`),
+			UrlMapper.buildUrl(`api/comments/${this.entryType}-comments/`),
 		);
 		const result = await this.httpClient.get<
 			PartialFindResultContract<CommentContract>
@@ -69,7 +69,7 @@ export class CommentRepository
 	}): Promise<void> => {
 		var url = this.urlMapper.mapRelative(
 			UrlMapper.buildUrl(
-				`api/comments/${EntryType[this.entryType]}-comments/`,
+				`api/comments/${this.entryType}-comments/`,
 				commentId.toString(),
 			),
 		);

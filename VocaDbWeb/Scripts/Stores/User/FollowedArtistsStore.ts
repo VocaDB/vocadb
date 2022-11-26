@@ -10,7 +10,7 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import {
 	action,
 	computed,
@@ -18,6 +18,8 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
+
+import schema from './FollowedArtistsRouteParams.schema.json';
 
 export interface FollowedArtistsRouteParams {
 	artistType?: ArtistType;
@@ -36,8 +38,7 @@ const clearResultsByQueryKeys: (keyof FollowedArtistsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<FollowedArtistsRouteParams> = require('./FollowedArtistsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<FollowedArtistsRouteParams>(schema);
 
 export class FollowedArtistsStore
 	implements LocationStateStore<FollowedArtistsRouteParams> {

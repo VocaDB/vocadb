@@ -1,4 +1,5 @@
 import { functions } from '@/Shared/GlobalFunctions';
+import { vdbConfig } from '@/vdbConfig';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +14,7 @@ export const LanguageFlag = React.memo(
 		return languageCode ? (
 			<img
 				src={functions.mergeUrls(
-					vdb.values.staticContentHost,
+					vdbConfig.staticContentHost,
 					`/img/languageFlags/${languageCode}.png`,
 				)}
 				alt={languageCode}
@@ -22,7 +23,7 @@ export const LanguageFlag = React.memo(
 		) : (
 			<img
 				src={functions.mergeUrls(
-					vdb.values.staticContentHost,
+					vdbConfig.staticContentHost,
 					'/img/languageFlags/unknown.png',
 				)}
 				alt={t(

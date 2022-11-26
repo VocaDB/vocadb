@@ -31,30 +31,29 @@ import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/Vali
 import { SongLink } from '@/Components/Shared/Partials/Song/SongLink';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import SongBpmFilter from '@/Pages/Search/Partials/SongBpmFilter';
 import SongLengthFilter from '@/Pages/Search/Partials/SongLengthFilter';
 import ArtistForSongEdit from '@/Pages/Song/Partials/ArtistForSongEdit';
 import LyricsForSongEdit from '@/Pages/Song/Partials/LyricsForSongEdit';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { PVRepository } from '@/Repositories/PVRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { pvRepo } from '@/Repositories/PVRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { SongEditStore } from '@/Stores/Song/SongEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -70,23 +69,14 @@ import {
 
 const maxMediaSizeMB = 20;
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const pvRepo = new PVRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-
 interface BasicInfoTabContentProps {
 	songEditStore: SongEditStore;
 }
 
 const BasicInfoTabContent = observer(
 	({ songEditStore }: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -526,6 +516,8 @@ interface PVsTabContentProps {
 
 const PVsTabContent = observer(
 	({ songEditStore }: PVsTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Song']);
 
 		const uploadMediaRef = React.useRef<HTMLInputElement>(undefined!);
@@ -709,6 +701,8 @@ interface SongEditLayoutProps {
 
 const SongEditLayout = observer(
 	({ songEditStore }: SongEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Song',
@@ -719,14 +713,14 @@ const SongEditLayout = observer(
 
 		const title = t('ViewRes.Song:Edit.EditTitle', { 0: contract.name });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.Song);
 
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -945,6 +939,9 @@ const SongEditLayout = observer(
 );
 
 const SongEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -955,7 +952,7 @@ const SongEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -992,7 +989,7 @@ const SongEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id, albumId]);
+	}, [vdb, loginManager, artistRoleNames, id, albumId]);
 
 	return model ? <SongEditLayout songEditStore={model.songEditStore} /> : <></>;
 };

@@ -1,4 +1,4 @@
-import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
+import type { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { SongRepository } from '@/Repositories/SongRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';

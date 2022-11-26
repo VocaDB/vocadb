@@ -5,6 +5,8 @@ import { bottomBarHeight } from '@/Components/VdbPlayer/VdbPlayer';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
+import { vdbConfig } from '@/vdbConfig';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +29,7 @@ const BannerLink = React.memo(
 			>
 				<img
 					src={functions.mergeUrls(
-						vdb.values.staticContentHost,
+						vdbConfig.staticContentHost,
 						`/banners/${img}`,
 					)}
 					alt={title}
@@ -80,6 +82,8 @@ const SocialLink = React.memo(
 
 export const LeftMenu = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const vdbPlayer = useVdbPlayer();
@@ -108,7 +112,7 @@ export const LeftMenu = observer(
 							src={
 								vdb.values.bannerUrl ??
 								functions.mergeUrls(
-									vdb.values.staticContentHost,
+									vdbConfig.staticContentHost,
 									'/img/vocaDB-title.png',
 								)
 							}

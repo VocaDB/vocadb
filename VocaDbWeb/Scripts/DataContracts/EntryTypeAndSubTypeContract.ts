@@ -1,5 +1,7 @@
+import { EntryType } from '@/Models/EntryType';
+
 export interface EntryTypeAndSubTypeContract {
-	entryType: string;
+	entryType: EntryType;
 	hasSubType?: boolean;
 	hasValue?: boolean;
 	subType: string;

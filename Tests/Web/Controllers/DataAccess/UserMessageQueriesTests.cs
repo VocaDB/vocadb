@@ -70,7 +70,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Get_NoPermission()
 		{
-			this.Invoking(subject => subject.CallGet(39)).Should().Throw<NotAllowedException>();
+			Invoking(() => CallGet(39)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]

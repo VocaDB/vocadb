@@ -1,3 +1,4 @@
+import { vdbConfig } from '@/vdbConfig';
 import $ from 'jquery';
 
 export class functions {
@@ -15,7 +16,7 @@ export class functions {
 	}
 
 	static mapAbsoluteUrl(relative: string): string {
-		return functions.mergeUrls(vdb.values.baseAddress, relative);
+		return functions.mergeUrls(vdbConfig.baseAddress, relative);
 	}
 
 	static mergeUrls(base: string, relative: string): string {

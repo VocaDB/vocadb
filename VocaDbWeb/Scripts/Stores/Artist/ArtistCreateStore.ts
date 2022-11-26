@@ -1,6 +1,6 @@
 import { DuplicateEntryResultContract } from '@/DataContracts/DuplicateEntryResultContract';
 import { LocalizedStringContract } from '@/DataContracts/Globalization/LocalizedStringContract';
-import { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
+import type { TagApiContract } from '@/DataContracts/Tag/TagApiContract';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';

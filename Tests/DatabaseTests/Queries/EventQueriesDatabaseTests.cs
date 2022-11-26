@@ -112,18 +112,18 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_DuplicateName()
+		public async Task Update_DuplicateName()
 		{
 			// Name "Comiket 39" is already taken by ReleaseEvent2
 			var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null);
 			contract.Names[0].Value = "Comiket 39";
 
-			this.Awaiting(subject => subject.Update(contract)).Should().Throw<DuplicateEventNameException>();
+			await Awaiting(() => Update(contract)).Should().ThrowAsync<DuplicateEventNameException>();
 		}
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_DuplicateNameFromSeries()
+		public async Task Update_DuplicateNameFromSeries()
 		{
 			// Generated name is "Comiket 39", which is already taken
 			var contract = new ReleaseEventForEditForApiContract(Db.ReleaseEvent, ContentLanguagePreference.Default, _userContext, allSeries: null!, thumbPersister: null)
@@ -132,7 +132,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 				SeriesNumber = 39
 			};
 
-			this.Awaiting(subject => subject.Update(contract)).Should().Throw<DuplicateEventNameException>();
+			await Awaiting(() => Update(contract)).Should().ThrowAsync<DuplicateEventNameException>();
 		}
 
 		[TestMethod]

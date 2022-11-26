@@ -19,21 +19,18 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventSeriesEditStore } from '@/Stores/ReleaseEvent/ReleaseEventSeriesEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { debounce } from 'lodash-es';
@@ -43,14 +40,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-
 interface EventEditSeriesLayoutProps {
 	releaseEventSeriesEditStore: ReleaseEventSeriesEditStore;
 }
@@ -59,6 +48,8 @@ const EventEditSeriesLayout = observer(
 	({
 		releaseEventSeriesEditStore,
 	}: EventEditSeriesLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		const contract = releaseEventSeriesEditStore.contract;
@@ -70,8 +61,6 @@ const EventEditSeriesLayout = observer(
 		const title = isNew
 			? 'Create a new series' /* LOC */
 			: `Edit series - ${contract.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const navigate = useNavigate();
 
@@ -102,6 +91,8 @@ const EventEditSeriesLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					isNew ? (

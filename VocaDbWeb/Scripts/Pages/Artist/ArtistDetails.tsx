@@ -8,26 +8,24 @@ import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDeta
 import { AlbumSearchDropdown } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { DraftMessage } from '@/Components/Shared/Partials/Shared/DraftMessage';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import {
 	ArtistReportType,
 	artistReportTypesWithRequiredNotes,
 } from '@/Models/Artists/ArtistReportType';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import ArtistDetailsRoutes from '@/Pages/Artist/ArtistDetailsRoutes';
 import CustomizeArtistSubscriptionDialog from '@/Pages/Artist/Partials/CustomizeArtistSubscriptionDialog';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { userRepo } from '@/Repositories/UserRepository';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { AlbumSearchStore } from '@/Stores/Search/AlbumSearchStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -37,18 +35,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface AlbumOptionsProps {
 	albumSearchStore: AlbumSearchStore;
@@ -112,6 +98,8 @@ const ArtistDetailsLayout = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Artist',
@@ -120,8 +108,6 @@ const ArtistDetailsLayout = observer(
 		]);
 
 		const title = artist.name;
-
-		useVdbTitle(title, true);
 
 		React.useEffect(() => {
 			// Returns the disposer.
@@ -140,6 +126,8 @@ const ArtistDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				subtitle={`(${t(
 					`VocaDb.Model.Resources:ArtistTypeNames.${artist.artistType}`,
@@ -199,7 +187,7 @@ const ArtistDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...artist,
-									entryType: EntryType[EntryType.Artist],
+									entryType: EntryType.Artist,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -229,7 +217,7 @@ const ArtistDetailsLayout = observer(
 					<DeletedBanner
 						mergedTo={
 							artist.mergedTo
-								? { ...artist.mergedTo, entryType: EntryType[EntryType.Artist] }
+								? { ...artist.mergedTo, entryType: EntryType.Artist }
 								: undefined
 						}
 					/>
@@ -268,6 +256,9 @@ const ArtistDetailsLayout = observer(
 );
 
 const ArtistDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<
@@ -298,7 +289,6 @@ const ArtistDetails = (): React.ReactElement => {
 						songRepo,
 						userRepo,
 						loginManager.canDeleteComments,
-						pvPlayersFactory,
 						artist.latestComments,
 					),
 				});
@@ -313,7 +303,7 @@ const ArtistDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<ArtistDetailsLayout

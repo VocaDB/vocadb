@@ -5,6 +5,7 @@ import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { functions } from '@/Shared/GlobalFunctions';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,8 @@ const ArtistShare = ({
 	artist,
 	artistDetailsStore,
 }: ArtistShareProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['ViewRes']);
 
 	const url = functions.mergeUrls(

@@ -3,6 +3,7 @@ import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsCont
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { UserBaseContract } from '@/DataContracts/User/UserBaseContract';
 import { EntryType } from '@/Models/EntryType';
+import { EntryOptionalField } from '@/Repositories/EntryRepository';
 import { UserRepository } from '@/Repositories/UserRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { HttpClient } from '@/Shared/HttpClient';
@@ -13,7 +14,7 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { map } from 'lodash-es';
 import {
 	action,
@@ -22,6 +23,8 @@ import {
 	observable,
 	runInAction,
 } from 'mobx';
+
+import schema from './CommentListRouteParams.schema.json';
 
 export enum CommentSortRule {
 	CreateDateDescending = 'CreateDateDescending',
@@ -32,13 +35,8 @@ enum CommentOptionalField {
 	Entry = 'Entry',
 }
 
-enum EntryOptionalField {
-	AdditionalNames = 'AdditionalNames',
-	MainPicture = 'MainPicture',
-}
-
 interface CommentListRouteParams {
-	entryType?: string /* TODO: enum */;
+	entryType?: EntryType;
 	sort?: CommentSortRule;
 	userId?: number;
 }
@@ -53,13 +51,12 @@ const clearResultsByQueryKeys: (keyof CommentListRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<CommentListRouteParams> = require('./CommentListRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<CommentListRouteParams>(schema);
 
 export class CommentListStore
 	implements LocationStateStore<CommentListRouteParams> {
 	@observable entries: EntryWithCommentsContract[] = [];
-	@observable entryType = EntryType[EntryType.Undefined];
+	@observable entryType = EntryType.Undefined;
 	@observable lastEntryDate?: Date;
 	@observable sort = CommentSortRule.CreateDateDescending;
 	readonly user: BasicEntryLinkStore<UserBaseContract>;
@@ -85,7 +82,7 @@ export class CommentListStore
 		};
 	}
 	set locationState(value: CommentListRouteParams) {
-		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
+		this.entryType = value.entryType ?? EntryType.Undefined;
 		this.sort = value.sort ?? CommentSortRule.CreateDateDescending;
 		this.user.id = value.userId;
 	}

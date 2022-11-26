@@ -5,28 +5,24 @@ import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { ActivityEntryTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { EntryType } from '@/Models/EntryType';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import {
 	ActivityEntryListStore,
 	ActivityEntrySortRule,
 } from '@/Stores/ActivityEntry/ActivityEntryListStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface UserEntryEditsLayoutProps {
 	user: UserDetailsContract;
@@ -42,12 +38,12 @@ const UserEntryEditsLayout = observer(
 
 		const title = `Entry edits - ${user.name}`; /* LOC */
 
-		useVdbTitle(title, true);
-
 		useLocationStateStore(activityEntryListStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>
@@ -93,7 +89,8 @@ const UserEntryEditsLayout = observer(
 								value={activityEntryListStore.entryType}
 								onChange={(e): void =>
 									runInAction(() => {
-										activityEntryListStore.entryType = e.target.value;
+										activityEntryListStore.entryType = e.target
+											.value as EntryType;
 									})
 								}
 							/>
@@ -167,6 +164,8 @@ const UserEntryEditsLayout = observer(
 );
 
 const UserEntryEdits = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -197,7 +196,7 @@ const UserEntryEdits = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<UserEntryEditsLayout

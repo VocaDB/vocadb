@@ -1,14 +1,12 @@
 import Button from '@/Bootstrap/Button';
 import { showSuccessMessage } from '@/Components/ui';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface PVRatingButtonsForIndexProps {
 	pvRatingButtonsStore: PVRatingButtonsStore;
@@ -18,6 +16,8 @@ export const PVRatingButtonsForIndex = observer(
 	({
 		pvRatingButtonsStore,
 	}: PVRatingButtonsForIndexProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['AjaxRes', 'Resources', 'ViewRes.Song']);
 
 		return loginManager.isLoggedIn ? (

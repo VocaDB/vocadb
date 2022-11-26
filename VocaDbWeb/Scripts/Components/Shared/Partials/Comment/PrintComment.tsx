@@ -4,13 +4,11 @@ import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown
 import { UserIconLink_UserForApiContract } from '@/Components/Shared/Partials/User/UserIconLink_UserForApiContract';
 import { truncateWithEllipsis } from '@/Components/truncateWithEllipsis';
 import { CommentContract } from '@/DataContracts/CommentContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface PrintCommentProps {
 	contract: CommentContract;
@@ -26,6 +24,8 @@ export const PrintComment = observer(
 		alwaysAllowDelete = false,
 		maxLength = 2147483647,
 	}: PrintCommentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const mutedUsers = useMutedUsers();

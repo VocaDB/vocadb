@@ -6,15 +6,12 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedEventData } from '@/Components/Shared/Partials/Event/PrintArchivedEventData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedEventVersionDetailsContract } from '@/DataContracts/ReleaseEvents/ArchivedEventVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ArchivedEntryStore } from '@/Stores/ArchivedEntryStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -23,13 +20,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface EventViewVersionLayoutProps {
 	contract: ArchivedEventVersionDetailsContract;
@@ -41,11 +31,11 @@ const EventViewVersionLayout = observer(
 		contract,
 		archivedEntryStore,
 	}: EventViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -53,6 +43,8 @@ const EventViewVersionLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

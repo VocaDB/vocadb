@@ -6,12 +6,9 @@ import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
 import { Layout } from '@/Components/Shared/Layout';
 import { UserGroupDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLinkOrName } from '@/Components/Shared/Partials/User/UserLinkOrName';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserGroup } from '@/Models/Users/UserGroup';
-import { AdminRepository } from '@/Repositories/AdminRepository';
+import { adminRepo } from '@/Repositories/AdminRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { ViewAuditLogStore } from '@/Stores/Admin/ViewAuditLogStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
@@ -24,11 +21,6 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const adminRepo = new AdminRepository(httpClient, urlMapper);
 
 const viewAuditLogStore = new ViewAuditLogStore(adminRepo);
 
@@ -212,12 +204,12 @@ const AdminViewAuditLog = observer(
 
 		const title = 'View audit log'; /* LOC */
 
-		useVdbTitle(title, true);
-
 		useLocationStateStore(viewAuditLogStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

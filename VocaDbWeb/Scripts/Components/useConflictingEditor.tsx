@@ -1,15 +1,8 @@
 import { EntryEditDataContract } from '@/DataContracts/User/EntryEditDataContract';
 import { EntryType } from '@/Models/EntryType';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { userRepo } from '@/Repositories/UserRepository';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 export const useConflictingEditor = (
 	entryType: EntryType,

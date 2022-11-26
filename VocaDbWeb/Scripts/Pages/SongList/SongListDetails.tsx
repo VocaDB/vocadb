@@ -23,29 +23,27 @@ import { SongTypesDropdownKnockout } from '@/Components/Shared/Partials/Song/Son
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongInListContract } from '@/DataContracts/Song/SongInListContract';
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ISongSearchItem, SongSortRule } from '@/Stores/Search/SongSearchStore';
 import { SongListStore } from '@/Stores/SongList/SongListStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -59,19 +57,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface SongListDetailsTableRowProps {
 	songListStore: SongListStore;
@@ -255,6 +240,8 @@ const SongListDetailsLayout = observer(
 		songList,
 		songListStore,
 	}: SongListDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -264,8 +251,6 @@ const SongListDetailsLayout = observer(
 		]);
 
 		const { pageTitle, title, subtitle, ready } = usePageProperties(songList);
-
-		useVdbTitle(pageTitle, ready);
 
 		useLocationStateStore(songListStore);
 
@@ -282,6 +267,8 @@ const SongListDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={pageTitle}
+				ready={ready}
 				title={title}
 				subtitle={subtitle}
 				parents={
@@ -394,7 +381,7 @@ const SongListDetailsLayout = observer(
 									disabled={
 										!loginManager.canEditTagsForEntry({
 											...songList,
-											entryType: EntryType[EntryType.SongList],
+											entryType: EntryType.SongList,
 										})
 									}
 									icons={{ primary: 'ui-icon-tag' }}
@@ -580,10 +567,7 @@ const SongListDetailsLayout = observer(
 
 				{songListStore.playlistMode ? (
 					<div className="well well-transparent songlist-playlist">
-						<PlayList
-							playListStore={songListStore.playlistStore}
-							pvPlayerStore={songListStore.pvPlayerStore}
-						/>
+						<PlayList />
 					</div>
 				) : (
 					<div className={classNames(songListStore.loading && 'loading')}>
@@ -608,6 +592,9 @@ const SongListDetailsLayout = observer(
 );
 
 const SongListDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		{ songList: SongListContract; songListStore: SongListStore } | undefined
 	>();
@@ -624,6 +611,7 @@ const SongListDetails = (): React.ReactElement => {
 					songList: songList,
 					songListStore: new SongListStore(
 						vdb.values,
+						loginManager,
 						urlMapper,
 						songListRepo,
 						songRepo,
@@ -633,7 +621,6 @@ const SongListDetails = (): React.ReactElement => {
 						songList.latestComments ?? [],
 						songList.id,
 						songList.tags ?? [],
-						pvPlayersFactory,
 						loginManager.canDeleteComments,
 					),
 				});
@@ -648,7 +635,7 @@ const SongListDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<SongListDetailsLayout

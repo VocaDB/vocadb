@@ -3,18 +3,17 @@ import { EmbedPVPreview } from '@/Components/Shared/Partials/PV/EmbedPVPreview';
 import { showSuccessMessage } from '@/Components/ui';
 import { SongWithPVAndVoteContract } from '@/DataContracts/Song/SongWithPVAndVoteContract';
 import { PVHelper } from '@/Helpers/PVHelper';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { FrontPagePVPlayerStore } from '@/Stores/FrontPageStore';
 import { PVRatingButtonsStore } from '@/Stores/PVRatingButtonsStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface RatingBarProps {
 	pvRatingButtonsStore: PVRatingButtonsStore | undefined;
@@ -22,6 +21,8 @@ interface RatingBarProps {
 
 const RatingBar = observer(
 	({ pvRatingButtonsStore }: RatingBarProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['AjaxRes', 'ViewRes.Song']);
 
 		if (!pvRatingButtonsStore) {
@@ -105,12 +106,17 @@ interface PVContentProps {
 
 export const PVContent = observer(
 	({ pvPlayerStore, selectedSong }: PVContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes.Home',
 			'VocaDb.Model.Resources.Songs',
 		]);
 
-		const primaryPV = PVHelper.primaryPV(selectedSong.pvs);
+		const primaryPV = PVHelper.primaryPV(
+			selectedSong.pvs,
+			vdb.values.loggedUser,
+		);
 
 		return (
 			<>
@@ -146,7 +152,7 @@ export const PVContent = observer(
 				<div className="pv-embed-wrapper">
 					{primaryPV && (
 						<EmbedPVPreview
-							entry={{ ...selectedSong, entryType: EntryType[EntryType.Song] }}
+							entry={{ ...selectedSong, entryType: EntryType.Song }}
 							pv={primaryPV}
 							width={560}
 							height={340}

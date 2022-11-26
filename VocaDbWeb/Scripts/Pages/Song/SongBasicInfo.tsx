@@ -28,8 +28,8 @@ import { DateTimeHelper } from '@/Helpers/DateTimeHelper';
 import { VideoServiceHelper } from '@/Helpers/VideoServiceHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
@@ -47,8 +47,6 @@ import qs from 'qs';
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface AlbumLinkWithReleaseYearProps {
 	album: AlbumForApiContract;
@@ -243,6 +241,8 @@ interface SongBasicInfoProps {
 
 const SongBasicInfo = observer(
 	({ model, songDetailsStore }: SongBasicInfoProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		const webLinks = React.useMemo(() => {
@@ -387,7 +387,7 @@ const SongBasicInfo = observer(
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
-											entryType: EntryType[EntryType.Song],
+											entryType: EntryType.Song,
 											subType: model.songType,
 										})}`}
 									>
@@ -446,7 +446,7 @@ const SongBasicInfo = observer(
 										disabled={
 											!loginManager.canEditTagsForEntry({
 												...model.contract.song,
-												entryType: EntryType[EntryType.Song],
+												entryType: EntryType.Song,
 											})
 										}
 										icons={{ primary: 'ui-icon-tag' }}

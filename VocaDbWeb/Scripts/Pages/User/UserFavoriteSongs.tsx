@@ -1,32 +1,20 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import RatedSongs from '@/Pages/User/Partials/RatedSongs';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-
-const pvPlayersFactory = new PVPlayersFactory();
 
 interface UserFavoriteSongsLayoutProps {
 	user: UserDetailsContract;
@@ -39,12 +27,12 @@ const UserFavoriteSongsLayout = ({
 }: UserFavoriteSongsLayoutProps): React.ReactElement => {
 	const title = `Songs rated by ${user.name}`; /* LOC */
 
-	useVdbTitle(title, true);
-
 	useLocationStateStore(ratedSongsStore);
 
 	return (
 		<Layout
+			pageTitle={title}
+			ready={true}
 			title={title}
 			parents={
 				<>
@@ -63,6 +51,8 @@ const UserFavoriteSongsLayout = ({
 };
 
 const UserFavoriteSongs = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -85,7 +75,6 @@ const UserFavoriteSongs = (): React.ReactElement => {
 						songRepo,
 						tagRepo,
 						user.id,
-						pvPlayersFactory,
 						true,
 					),
 				}),
@@ -98,7 +87,7 @@ const UserFavoriteSongs = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<UserFavoriteSongsLayout

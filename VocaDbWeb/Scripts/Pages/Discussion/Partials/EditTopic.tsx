@@ -1,12 +1,10 @@
 import { Markdown } from '@/Components/KnockoutExtensions/Markdown';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { DiscussionTopicEditStore } from '@/Stores/Discussion/DiscussionTopicEditStore';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface EditTopicProps {
 	discussionTopicEditStore: DiscussionTopicEditStore;
@@ -14,6 +12,8 @@ interface EditTopicProps {
 
 const EditTopic = observer(
 	({ discussionTopicEditStore }: EditTopicProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Discussion']);
 
 		return (

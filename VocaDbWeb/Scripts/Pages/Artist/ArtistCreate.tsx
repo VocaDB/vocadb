@@ -8,16 +8,14 @@ import { ArtistTypesDropdownKnockout } from '@/Components/Shared/Partials/Artist
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
 import { ArtistCreateStore } from '@/Stores/Artist/ArtistCreateStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { getReasonPhrase } from 'http-status-codes';
 import { truncate } from 'lodash-es';
@@ -27,19 +25,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-
 interface ArtistCreateLayoutProps {
 	artistCreateStore: ArtistCreateStore;
 }
 
 const ArtistCreateLayout = observer(
 	({ artistCreateStore }: ArtistCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -48,14 +41,14 @@ const ArtistCreateLayout = observer(
 
 		const title = t('ViewRes.Artist:Create.AddArtist');
 
-		useVdbTitle(title, ready);
-
 		const navigate = useNavigate();
 
 		const pictureUploadRef = React.useRef<HTMLInputElement>(undefined!);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -113,7 +106,7 @@ const ArtistCreateLayout = observer(
 							<div className="editor-field">
 								{artistCreateStore.errors && artistCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{artistCreateStore.errors.names}
+										{artistCreateStore.errors.names[0]}
 									</span>
 								)}
 
@@ -399,6 +392,8 @@ const ArtistCreateLayout = observer(
 );
 
 const ArtistCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [artistCreateStore] = React.useState(
 		() => new ArtistCreateStore(vdb.values, artistRepo, tagRepo),
 	);

@@ -7,20 +7,17 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { ReportEntryPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryPopupKnockout';
 import { EmbedOpenStreetMap } from '@/Components/Shared/Partials/Shared/EmbedOpenStreetMap';
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
-import { regionNames } from '@/Components/regions';
-import { useVdbTitle } from '@/Components/useVdbTitle';
+import { useRegionNames } from '@/Components/useRegionNames';
 import { VenueForApiContract } from '@/DataContracts/Venue/VenueForApiContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import {
 	VenueReportType,
 	venueReportTypesWithRequiredNotes,
 } from '@/Models/Venues/VenueReportType';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueDetailsStore } from '@/Stores/Venue/VenueDetailsStore';
 import moment from 'moment';
 import NProgress from 'nprogress';
@@ -28,13 +25,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const venueRepo = new VenueRepository(httpClient, urlMapper);
 
 interface VenueDetailsLayoutProps {
 	venue: VenueForApiContract;
@@ -45,19 +35,26 @@ const VenueDetailsLayout = ({
 	venue,
 	venueDetailsStore,
 }: VenueDetailsLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['ViewRes', 'ViewRes.Event', 'ViewRes.Venue']);
+
+	const regionNames = useRegionNames();
 
 	const title = venue.name;
 
-	useVdbTitle(title, true);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={true}
 			title={title}
 			subtitle={t('ViewRes.Venue:Details.Venue')}
 			parents={
 				<>
-					<Breadcrumb.Item href="/Event/EventsByVenue">
+					<Breadcrumb.Item
+						linkAs={Link}
+						linkProps={{ to: '/Event/EventsByVenue' }}
+					>
 						{t('ViewRes:Shared.Venues')}
 					</Breadcrumb.Item>
 				</>
@@ -70,7 +67,7 @@ const VenueDetailsLayout = ({
 						disabled={
 							!loginManager.canEdit({
 								...venue,
-								entryType: EntryType[EntryType.Venue],
+								entryType: EntryType.Venue,
 							})
 						}
 						icons={{ primary: 'ui-icon-wrench' }}

@@ -25,31 +25,30 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventForEditContract } from '@/DataContracts/ReleaseEvents/ReleaseEventForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { PVRepository } from '@/Repositories/PVRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { pvRepo } from '@/Repositories/PVRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventEditStore } from '@/Stores/ReleaseEvent/ReleaseEventEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -62,18 +61,6 @@ import {
 	useSearchParams,
 } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const pvRepo = new PVRepository(httpClient, urlMapper);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const venueRepo = new VenueRepository(httpClient, urlMapper);
-
 interface BasicInfoTabContentProps {
 	releaseEventEditStore: ReleaseEventEditStore;
 	pictureUploadRef: React.MutableRefObject<HTMLInputElement>;
@@ -84,6 +71,8 @@ const BasicInfoTabContent = observer(
 		releaseEventEditStore,
 		pictureUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes']);
 
 		return (
@@ -408,7 +397,7 @@ const BasicInfoTabContent = observer(
 					<EntryStatusDropdownList
 						allowedEntryStatuses={loginManager.allowedEntryStatuses({
 							id: releaseEventEditStore.contract.id,
-							entryType: EntryType[EntryType.ReleaseEvent],
+							entryType: EntryType.ReleaseEvent,
 						})}
 						value={releaseEventEditStore.status}
 						onChange={(e): void =>
@@ -611,6 +600,8 @@ interface EventEditLayoutProps {
 
 const EventEditLayout = observer(
 	({ releaseEventEditStore }: EventEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const contract = releaseEventEditStore.contract;
@@ -619,8 +610,6 @@ const EventEditLayout = observer(
 		const title = isNew
 			? 'Create a new event' /* LOC */
 			: `Edit event - ${contract.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const backAction = isNew
 			? '/Event'
@@ -634,6 +623,8 @@ const EventEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					isNew ? (
@@ -827,6 +818,8 @@ const defaultModel: ReleaseEventForEditContract = {
 };
 
 const EventEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['VocaDb.Web.Resources.Domain.ReleaseEvents']);
 
 	const artistRoleNames = React.useMemo(
@@ -897,7 +890,7 @@ const EventEdit = (): React.ReactElement => {
 				),
 			});
 		}
-	}, [artistRoleNames, id, seriesId, venueId]);
+	}, [vdb, artistRoleNames, id, seriesId, venueId]);
 
 	return model ? (
 		<EventEditLayout releaseEventEditStore={model.releaseEventEditStore} />

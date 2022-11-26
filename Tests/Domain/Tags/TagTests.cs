@@ -53,14 +53,14 @@ namespace VocaDb.Tests.Domain.Tags
 		[TestMethod]
 		public void SetParent_Self()
 		{
-			_tag.Invoking(subject => subject.SetParent(_tag)).Should().Throw<ArgumentException>();
+			Invoking(() => _tag.SetParent(_tag)).Should().Throw<ArgumentException>();
 		}
 
 		[TestMethod]
 		public void SetParent_Ancestor()
 		{
 			_tag.SetParent(_tag2);
-			_tag2.Invoking(subject => subject.SetParent(_tag)).Should().Throw<ArgumentException>(); // Circular parenthood not allowed
+			Invoking(() => _tag2.SetParent(_tag)).Should().Throw<ArgumentException>(); // Circular parenthood not allowed
 		}
 
 		[TestMethod]

@@ -1,12 +1,14 @@
-import { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
+import type { LyricsForSongContract } from '@/DataContracts/Song/LyricsForSongContract';
 import { SongRepository } from '@/Repositories/SongRepository';
 import {
 	includesAny,
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable, runInAction } from 'mobx';
+
+import schema from './SongLyricsRouteParams.schema.json';
 
 interface SongLyricsRouteParams {
 	albumId?: number;
@@ -19,8 +21,7 @@ const clearResultsByQueryKeys: (keyof SongLyricsRouteParams)[] = [];
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<SongLyricsRouteParams> = require('./SongLyricsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<SongLyricsRouteParams>(schema);
 
 export class SongLyricsStore
 	implements LocationStateStore<SongLyricsRouteParams> {

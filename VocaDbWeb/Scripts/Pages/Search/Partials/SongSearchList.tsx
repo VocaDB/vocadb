@@ -9,13 +9,11 @@ import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { PVPlayerStore } from '@/Stores/PVs/PVPlayerStore';
 import {
 	IRatedSongSearchItem,
 	SongSortRule,
 } from '@/Stores/Search/SongSearchStore';
 import { ServerSidePagingStore } from '@/Stores/ServerSidePagingStore';
-import { PlayListStore } from '@/Stores/Song/PlayList/PlayListStore';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -27,8 +25,6 @@ export interface ISongSearchStore {
 	loading: boolean;
 	page: IRatedSongSearchItem[];
 	paging: ServerSidePagingStore;
-	playListStore: PlayListStore;
-	pvPlayerStore: PVPlayerStore;
 	showTags: boolean;
 	sort: string;
 	viewMode: 'Details' | 'PlayList' /* TODO: enum */;
@@ -289,10 +285,7 @@ const SongSearchList = observer(
 
 				{songSearchStore.viewMode === 'PlayList' && (
 					<div className="well well-transparent songlist-playlist">
-						<PlayList
-							playListStore={songSearchStore.playListStore}
-							pvPlayerStore={songSearchStore.pvPlayerStore}
-						/>
+						<PlayList />
 					</div>
 				)}
 			</>

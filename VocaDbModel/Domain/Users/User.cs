@@ -26,7 +26,8 @@ public class User :
 	IEquatable<IUser>,
 	IWebLinkFactory<UserWebLink>,
 	IEntryWithComments,
-	IEntryImageInformation
+	IEntryImageInformation,
+	IDeletableUser
 {
 	private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 	public const string NameRegex = "^[a-zA-Z0-9_]+$";

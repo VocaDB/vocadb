@@ -18,18 +18,15 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { VenueForEditContract } from '@/DataContracts/Venue/VenueForEditContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguageSelection } from '@/Models/Globalization/ContentLanguageSelection';
-import { LoginManager } from '@/Models/LoginManager';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { VenueRepository } from '@/Repositories/VenueRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { venueRepo } from '@/Repositories/VenueRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { VenueEditStore } from '@/Stores/Venue/VenueEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { debounce } from 'lodash-es';
@@ -39,20 +36,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const venueRepo = new VenueRepository(httpClient, urlMapper);
-
 interface VenueEditLayoutProps {
 	venueEditStore: VenueEditStore;
 }
 
 const VenueEditLayout = observer(
 	({ venueEditStore }: VenueEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes', 'ViewRes.Venue']);
 
 		const contract = venueEditStore.contract;
@@ -61,8 +52,6 @@ const VenueEditLayout = observer(
 		const title = isNew
 			? `Create a new venue` /* LOC */
 			: `Edit venue - ${venueEditStore.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const backAction = isNew
 			? '/Event/EventsByVenue'
@@ -90,17 +79,19 @@ const VenueEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					isNew ? (
 						<>
-							<Breadcrumb.Item href="/Event/EventsByVenue">
+							<Breadcrumb.Item as={Link} to="/Event/EventsByVenue">
 								{t('ViewRes:Shared.Venues')}
 							</Breadcrumb.Item>
 						</>
 					) : (
 						<>
-							<Breadcrumb.Item href="/Event/EventsByVenue" divider>
+							<Breadcrumb.Item as={Link} to="/Event/EventsByVenue" divider>
 								{t('ViewRes:Shared.Venues')}
 							</Breadcrumb.Item>
 							<Breadcrumb.Item

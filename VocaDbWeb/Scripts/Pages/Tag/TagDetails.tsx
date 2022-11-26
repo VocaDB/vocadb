@@ -15,7 +15,6 @@ import { ShowMore } from '@/Components/Shared/Partials/Shared/ShowMore';
 import { UniversalTimeLabel } from '@/Components/Shared/Partials/Shared/UniversalTimeLabel';
 import { SongGrid } from '@/Components/Shared/Partials/Song/SongGrid';
 import { TagLinkList } from '@/Components/Shared/Partials/Tag/TagLinkList';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryTypeAndSubTypeContract } from '@/DataContracts/EntryTypeAndSubTypeContract';
 import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagDetailsContract } from '@/DataContracts/Tag/TagDetailsContract';
@@ -23,22 +22,21 @@ import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import {
 	TagReportType,
 	tagReportTypesWithRequiredNotes,
 } from '@/Models/Tags/TagReportType';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { TagDetailsStore } from '@/Stores/Tag/TagDetailsStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { drop, some } from 'lodash-es';
@@ -48,14 +46,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface NicoTagLinkProps {
 	item: string;
@@ -83,7 +73,7 @@ const useEntrySubTypeName = (): ((
 
 	return React.useCallback(
 		(fullEntryType: EntryTypeAndSubTypeContract): string => {
-			switch (EntryType[fullEntryType.entryType as keyof typeof EntryType]) {
+			switch (fullEntryType.entryType) {
 				case EntryType.Album:
 					return t(
 						`VocaDb.Model.Resources.Albums:DiscTypeNames.${fullEntryType.subType}`,
@@ -341,6 +331,25 @@ const HierarchyContainer = React.memo(
 	},
 );
 
+const entryTypes = [
+	EntryType.Album,
+	EntryType.Artist,
+	EntryType.ReleaseEvent,
+	EntryType.Song,
+	EntryType.SongList,
+] as const;
+
+const entryTypeTagTargetTypesMap: Record<
+	typeof entryTypes[number],
+	TagTargetTypes
+> = {
+	[EntryType.Album]: TagTargetTypes.Album,
+	[EntryType.Artist]: TagTargetTypes.Artist,
+	[EntryType.ReleaseEvent]: TagTargetTypes.Event,
+	[EntryType.Song]: TagTargetTypes.Song,
+	[EntryType.SongList]: TagTargetTypes.SongList,
+};
+
 interface TagDetailsLayoutProps {
 	tag: TagDetailsContract;
 	tagDetailsStore: TagDetailsStore;
@@ -348,13 +357,13 @@ interface TagDetailsLayoutProps {
 
 const TagDetailsLayout = observer(
 	({ tag, tagDetailsStore }: TagDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Tag',
 			'VocaDb.Web.Resources.Domain',
 		]);
-
-		useVdbTitle(tag.name, true);
 
 		const [tab, setTab] = React.useState('latestComments');
 
@@ -367,6 +376,8 @@ const TagDetailsLayout = observer(
 		return (
 			<Layout
 				// TODO: globalSearchType
+				pageTitle={tag.name}
+				ready={true}
 				title={tag.name}
 				subtitle={t('ViewRes.Tag:Details.Tag')}
 				// TODO: canonicalUrl
@@ -406,7 +417,7 @@ const TagDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...tag,
-									entryType: EntryType[EntryType.Tag],
+									entryType: EntryType.Tag,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -534,17 +545,16 @@ const TagDetailsLayout = observer(
 								tag.targets !== TagTargetTypes.All && (
 									<p>
 										{t('ViewRes.Tag:Details.ValidFor')}:{' '}
-										{Object.values(EntryType)
+										{entryTypes
 											.filter(
-												(e) =>
-													e !== EntryType.Undefined &&
-													(tag.targets & Number(e)) !== 0,
+												(entryType) =>
+													(tag.targets &
+														Number(entryTypeTagTargetTypesMap[entryType])) !==
+													0,
 											)
-											.map((e) =>
+											.map((entryType) =>
 												t(
-													`VocaDb.Web.Resources.Domain:EntryTypeNames.${
-														EntryType[e as keyof typeof EntryType]
-													}`,
+													`VocaDb.Web.Resources.Domain:EntryTypeNames.${entryType}`,
 												),
 											)
 											.join(', ')}
@@ -865,6 +875,9 @@ const TagDetailsLayout = observer(
 );
 
 const TagDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		{ tag: TagDetailsContract; tagDetailsStore: TagDetailsStore } | undefined
 	>();
@@ -905,7 +918,7 @@ const TagDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, loginManager, id]);
 
 	return model ? (
 		<TagDetailsLayout tag={model.tag} tagDetailsStore={model.tagDetailsStore} />

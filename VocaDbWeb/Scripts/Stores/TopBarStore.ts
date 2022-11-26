@@ -7,8 +7,20 @@ import { computed, makeObservable, observable, runInAction } from 'mobx';
 
 // Store for the top bar.
 export class TopBarStore {
+	static readonly entryTypes = [
+		EntryType.Undefined,
+		EntryType.Album,
+		EntryType.Artist,
+		EntryType.ReleaseEvent,
+		EntryType.Song,
+		EntryType.SongList,
+		EntryType.Tag,
+		EntryType.User,
+	] as const;
+
 	// entryType: currently selected entry type (for search).
-	@observable entryType = EntryType.Undefined;
+	@observable entryType: typeof TopBarStore.entryTypes[number] =
+		EntryType.Undefined;
 	@observable isLoaded = false;
 	@observable reportCount = 0;
 	@observable searchTerm = '';

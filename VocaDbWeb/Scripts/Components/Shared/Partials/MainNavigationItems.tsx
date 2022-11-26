@@ -1,15 +1,17 @@
 import Nav from '@/Bootstrap/Nav';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { useVdb } from '@/VdbContext';
 import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
 export const MainNavigationItems = React.memo(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		return (
@@ -170,14 +172,15 @@ export const MainNavigationItems = React.memo(
 					<>
 						<Nav.Item>
 							<Nav.Link
-								href={'/User/Login'}
+								as={Link}
+								to="/User/Login"
 								onClick={(): void => {} /* TODO: showLoginPopup */}
 							>
 								{t('ViewRes:Layout.LogIn')}
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link href={'/User/Create'}>
+							<Nav.Link as={Link} to="/User/Create">
 								{t('ViewRes:Layout.Register')}
 							</Nav.Link>
 						</Nav.Item>

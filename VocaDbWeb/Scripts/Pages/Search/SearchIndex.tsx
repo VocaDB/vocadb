@@ -10,7 +10,6 @@ import {
 } from '@/Components/Shared/Partials/Knockout/SearchDropdown';
 import { TagFilters } from '@/Components/Shared/Partials/Knockout/TagFilters';
 import { useVdbPlayer } from '@/Components/VdbPlayer/VdbPlayerContext';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
 import AlbumSearchOptions from '@/Pages/Search/Partials/AlbumSearchOptions';
 import AnythingSearchList from '@/Pages/Search/Partials/AnythingSearchList';
@@ -22,19 +21,18 @@ import SongSearchList from '@/Pages/Search/Partials/SongSearchList';
 import SongSearchOptions from '@/Pages/Search/Partials/SongSearchOptions';
 import TagSearchList from '@/Pages/Search/Partials/TagSearchList';
 import TagSearchOptions from '@/Pages/Search/Partials/TagSearchOptions';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { EntryRepository } from '@/Repositories/EntryRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { entryRepo } from '@/Repositories/EntryRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { SearchStore, SearchType } from '@/Stores/Search/SearchStore';
 import { PlayQueueRepositoryType } from '@/Stores/VdbPlayer/PlayQueueRepository';
 import { AutoplayContext } from '@/Stores/VdbPlayer/PlayQueueStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -45,39 +43,18 @@ import { useTranslation } from 'react-i18next';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const entryRepo = new EntryRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const pvPlayersFactory = new PVPlayersFactory();
-
-const searchStore = new SearchStore(
-	vdb.values,
-	urlMapper,
-	entryRepo,
-	artistRepo,
-	albumRepo,
-	songRepo,
-	eventRepo,
-	tagRepo,
-	userRepo,
-	pvPlayersFactory,
-);
-
 interface SearchCategoryProps {
+	searchStore: SearchStore;
 	entryType: SearchType;
 	title: string;
 }
 
 const SearchCategory = observer(
-	({ entryType, title }: SearchCategoryProps): React.ReactElement => {
+	({
+		searchStore,
+		entryType,
+		title,
+	}: SearchCategoryProps): React.ReactElement => {
 		return (
 			<li
 				className={classNames(searchStore.searchType === entryType && 'active')}
@@ -98,42 +75,63 @@ const SearchCategory = observer(
 
 const SearchIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [searchStore] = React.useState(
+			() =>
+				new SearchStore(
+					vdb.values,
+					urlMapper,
+					entryRepo,
+					artistRepo,
+					albumRepo,
+					songRepo,
+					eventRepo,
+					tagRepo,
+					userRepo,
+				),
+		);
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Search',
 			'VocaDb.Web.Resources.Domain',
 		]);
 
-		useVdbTitle(undefined, true);
-
 		useLocationStateStore(searchStore);
 
 		const { playQueue } = useVdbPlayer();
 
 		return (
-			<Layout>
+			<Layout pageTitle={undefined} ready={true}>
 				<ul className="nav nav-pills">
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Anything}
 						title={t('VocaDb.Web.Resources.Domain:EntryTypeNames.Undefined')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Artist}
 						title={t('ViewRes:Shared.Artists')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Album}
 						title={t('ViewRes:Shared.Albums')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Song}
 						title={t('ViewRes:Shared.Songs')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.ReleaseEvent}
 						title={t('ViewRes:Shared.ReleaseEvents')}
 					/>
 					<SearchCategory
+						searchStore={searchStore}
 						entryType={SearchType.Tag}
 						title={t('ViewRes:Shared.Tags')}
 					/>

@@ -1,9 +1,7 @@
 import { Layout } from '@/Components/Shared/Layout';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import ErrorNotFound from '@/Pages/Error/ErrorNotFound';
-import { DiscussionRepository } from '@/Repositories/DiscussionRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { discussionRepo } from '@/Repositories/DiscussionRepository';
 import { DiscussionIndexStore } from '@/Stores/Discussion/DiscussionIndexStore';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -15,30 +13,37 @@ const DiscussionIndex = React.lazy(() => import('./DiscussionIndex'));
 const DiscussionTopics = React.lazy(() => import('./DiscussionTopics'));
 
 interface DiscussionLayoutProps {
+	pageTitle: string;
+	ready: boolean;
 	children?: React.ReactNode;
 	title?: string;
 }
 
 export const DiscussionLayout = ({
+	pageTitle,
+	ready,
 	children,
 	title,
 }: DiscussionLayoutProps): React.ReactElement => {
-	return <Layout title={title}>{children}</Layout>;
+	return (
+		<Layout pageTitle={pageTitle} ready={ready} title={title}>
+			{children}
+		</Layout>
+	);
 };
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-const discussionRepo = new DiscussionRepository(httpClient, urlMapper);
-
-const discussionIndexStore = new DiscussionIndexStore(
-	loginManager,
-	discussionRepo,
-	loginManager.canDeleteComments,
-);
-
 const DiscussionRoutes = (): React.ReactElement => {
+	const loginManager = useLoginManager();
+
+	const [discussionIndexStore] = React.useState(
+		() =>
+			new DiscussionIndexStore(
+				loginManager,
+				discussionRepo,
+				loginManager.canDeleteComments,
+			),
+	);
+
 	return (
 		<Routes>
 			<Route

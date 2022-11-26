@@ -1,29 +1,25 @@
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed/ActivityEntryKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
-import { LoginManager } from '@/Models/LoginManager';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { useLoginManager } from '@/LoginManagerContext';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ActivityEntryListStore } from '@/Stores/ActivityEntry/ActivityEntryListStore';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const activityEntryListStore = new ActivityEntryListStore(
-	vdb.values,
-	httpClient,
-	urlMapper,
-);
-
 const ActivityEntryIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [activityEntryListStore] = React.useState(
+			() => new ActivityEntryListStore(vdb.values, httpClient, urlMapper),
+		);
+
 		const { t, ready } = useTranslation([
 			'VocaDb.Web.Resources.Views.ActivityEntry',
 		]);
@@ -32,14 +28,12 @@ const ActivityEntryIndex = observer(
 			'VocaDb.Web.Resources.Views.ActivityEntry:Index.RecentActivity',
 		);
 
-		useVdbTitle(title, ready);
-
 		React.useEffect(() => {
 			activityEntryListStore.loadMore();
-		}, []);
+		}, [activityEntryListStore]);
 
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<ul className="nav nav-pills">
 					<li className="active">
 						<Link to="/ActivityEntry">

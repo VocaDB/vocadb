@@ -5,6 +5,7 @@ import {
 import { SongListContract } from '@/DataContracts/Song/SongListContract';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 interface SongListAutoCompleteProps
@@ -20,6 +21,8 @@ export const SongListAutoComplete = ({
 	songListCategory,
 	...props
 }: SongListAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const queryParams = {
 		nameMatchMode: 'Auto',
 		lang: vdb.values.languagePreference,

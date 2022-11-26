@@ -8,7 +8,7 @@ import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNoti
 import { IconAndLinkKnockout } from '@/Components/Shared/Partials/User/IconAndLinkKnockout';
 import { NameLinkKnockout } from '@/Components/Shared/Partials/User/NameLinkKnockout';
 import { AlbumDetailsForApi } from '@/DataContracts/Album/AlbumDetailsForApi';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { AlbumDetailsTabs } from '@/Pages/Album/AlbumDetailsRoutes';
 import { functions } from '@/Shared/GlobalFunctions';
@@ -16,12 +16,11 @@ import {
 	AlbumDetailsStore,
 	AlbumReviewStore,
 } from '@/Stores/Album/AlbumDetailsStore';
+import { vdbConfig } from '@/vdbConfig';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface AlbumReviewProps {
 	albumDetailsStore: AlbumDetailsStore;
@@ -43,7 +42,7 @@ const AlbumReview = observer(
 					<div className="pull-right">
 						<img
 							src={functions.mergeUrls(
-								vdb.values.staticContentHost,
+								vdbConfig.staticContentHost,
 								`/img/languageFlags/${review.languageCode}.png`,
 							)}
 							title={review.languageCode}
@@ -176,6 +175,8 @@ interface AlbumReviewsProps {
 
 const AlbumReviews = observer(
 	({ model, albumDetailsStore }: AlbumReviewsProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes.Album']);
 
 		React.useEffect(() => {

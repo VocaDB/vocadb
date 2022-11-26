@@ -2,17 +2,28 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Users;
 
+public enum UserGroupId
+{
+	Nothing,
+	Limited,
+	Regular,
+	Trusted,
+	Moderator,
+	Admin,
+}
+
 public class UserGroup
 {
 	/// <summary>
 	/// User group with no permissions.
 	/// </summary>
-	public static readonly UserGroup Nothing = new(UserGroupId.Nothing);
+	public static readonly UserGroup Nothing = new(id: UserGroupId.Nothing);
 
-	private static readonly UserGroup s_limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
+	private static readonly UserGroup s_limited = new(id: UserGroupId.Limited, PermissionToken.EditProfile);
 
-	public static readonly UserGroup s_regular = new(UserGroupId.Regular,
-		s_limited,
+	public static readonly UserGroup s_regular = new(
+		id: UserGroupId.Regular,
+		parent: s_limited,
 		PermissionToken.CreateComments,
 		PermissionToken.ManageDatabase,
 		PermissionToken.EditTags,
@@ -20,8 +31,9 @@ public class UserGroup
 		PermissionToken.ManageEventSeries
 	);
 
-	private static readonly UserGroup s_trusted = new(UserGroupId.Trusted,
-		s_regular,
+	private static readonly UserGroup s_trusted = new(
+		id: UserGroupId.Trusted,
+		parent: s_regular,
 		PermissionToken.AddRawFileMedia,
 		PermissionToken.ApproveEntries,
 		PermissionToken.DeleteEntries,
@@ -32,8 +44,9 @@ public class UserGroup
 		PermissionToken.RemoveTagUsages
 	);
 
-	private static readonly UserGroup s_mod = new(UserGroupId.Moderator,
-		s_trusted,
+	private static readonly UserGroup s_mod = new(
+		id: UserGroupId.Moderator,
+		parent: s_trusted,
 		PermissionToken.AccessManageMenu,
 		PermissionToken.ApplyAnyTag,
 		PermissionToken.BulkDeletePVs,
@@ -51,18 +64,26 @@ public class UserGroup
 		PermissionToken.ViewAuditLog,
 		PermissionToken.ViewHiddenRatings,
 		PermissionToken.ViewHiddenRevisions,
-		PermissionToken.UploadMedia
+		PermissionToken.UploadMedia,
+		PermissionToken.ViewOldUsernames,
+		PermissionToken.ViewDisabledUsers
 	);
 
-	private static readonly UserGroup s_admin = new(UserGroupId.Admin,
-		s_mod,
+	private static readonly UserGroup s_admin = new(
+		id: UserGroupId.Admin,
+		parent: s_mod,
 		PermissionToken.Admin,
 		PermissionToken.ManageWebhooks,
 		PermissionToken.CreateDatabaseDump
 	);
 
-	private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {
-		s_limited, s_regular, s_trusted, s_mod, s_admin
+	private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[]
+	{
+		s_limited,
+		s_regular,
+		s_trusted,
+		s_mod,
+		s_admin,
 	}.ToDictionary(g => g.Id);
 
 	/// <summary>
@@ -109,19 +130,4 @@ public class UserGroup
 	public UserGroupId Id { get; private set; }
 
 	public PermissionCollection Permissions { get; private set; }
-}
-
-public enum UserGroupId
-{
-	Nothing,
-
-	Limited,
-
-	Regular,
-
-	Trusted,
-
-	Moderator,
-
-	Admin,
 }

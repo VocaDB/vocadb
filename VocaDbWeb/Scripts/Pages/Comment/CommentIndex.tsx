@@ -5,37 +5,24 @@ import { CommentEntryItem } from '@/Components/Shared/Partials/Comment/CommentEn
 import { Dropdown } from '@/Components/Shared/Partials/Knockout/Dropdown';
 import { CommentTargetTypeDropdownList } from '@/Components/Shared/Partials/Knockout/DropdownList';
 import { UserLockingAutoComplete } from '@/Components/Shared/Partials/Knockout/UserLockingAutoComplete';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { EntryWithCommentsContract } from '@/DataContracts/EntryWithCommentsContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
+import { EntryType } from '@/Models/EntryType';
 import { useMutedUsers } from '@/MutedUsersContext';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { userRepo } from '@/Repositories/UserRepository';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import {
 	CommentListStore,
 	CommentSortRule,
 } from '@/Stores/Comment/CommentListStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const commentListStore = new CommentListStore(
-	vdb.values,
-	httpClient,
-	urlMapper,
-	userRepo,
-);
 
 interface CommentsFiltersProps {
 	commentListStore: CommentListStore;
@@ -76,7 +63,7 @@ const CommentsFilters = observer(
 							value={commentListStore.entryType}
 							onChange={(e): void =>
 								runInAction(() => {
-									commentListStore.entryType = e.target.value;
+									commentListStore.entryType = e.target.value as EntryType;
 								})
 							}
 						/>
@@ -147,6 +134,13 @@ const CommentSearchList = observer(
 
 const CommentIndex = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
+		const [commentListStore] = React.useState(
+			() => new CommentListStore(vdb.values, httpClient, urlMapper, userRepo),
+		);
+
 		const { t, ready } = useTranslation([
 			'ViewRes.Comment',
 			'VocaDb.Web.Resources.Views.ActivityEntry',
@@ -154,12 +148,10 @@ const CommentIndex = observer(
 
 		const title = t('ViewRes.Comment:Index.RecentComments');
 
-		useVdbTitle(title, ready);
-
 		useLocationStateStore(commentListStore);
 
 		return (
-			<Layout title={title}>
+			<Layout pageTitle={title} ready={ready} title={title}>
 				<ul className="nav nav-pills">
 					<li>
 						<Link to="/ActivityEntry">All activity{/* LOC */}</Link>

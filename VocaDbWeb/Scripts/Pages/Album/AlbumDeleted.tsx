@@ -1,10 +1,9 @@
 import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import AlbumSearchList from '@/Pages/Search/Partials/AlbumSearchList';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { HttpClient } from '@/Shared/HttpClient';
+import { albumRepo } from '@/Repositories/AlbumRepository';
 import { DeletedAlbumsStore } from '@/Stores/Album/DeletedAlbumsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -13,24 +12,24 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-
-const deletedAlbumsStore = new DeletedAlbumsStore(vdb.values, albumRepo);
-
 const AlbumDeleted = observer(
 	(): React.ReactElement => {
+		const vdb = useVdb();
+
+		const [deletedAlbumsStore] = React.useState(
+			() => new DeletedAlbumsStore(vdb.values, albumRepo),
+		);
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = 'Deleted albums'; /* LOC */
-
-		useVdbTitle(title, true);
 
 		useLocationStateStore(deletedAlbumsStore);
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

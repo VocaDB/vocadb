@@ -6,7 +6,7 @@ import { DataRowList_ComparedVersionsContract } from '@/Components/Shared/Partia
 import { NameInfo } from '@/Components/Shared/Partials/ArchivedEntry/NameInfo';
 import { TranslatedNameRow_ComparedVersionsContract } from '@/Components/Shared/Partials/ArchivedEntry/TranslatedNameRow';
 import { WebLinkInfo } from '@/Components/Shared/Partials/ArchivedEntry/WebLinkInfo';
-import { regionNames } from '@/Components/regions';
+import { useRegionNames } from '@/Components/useRegionNames';
 import { ArchivedTranslatedStringContract } from '@/DataContracts/ArchivedTranslatedStringContract';
 import { ArchivedVenueContract } from '@/DataContracts/Venue/ArchivedVenueContract';
 import { ComparedVersionsContract } from '@/DataContracts/Versioning/ComparedVersionsContract';
@@ -18,6 +18,8 @@ interface PrintArchivedVenueDataProps {
 
 export const PrintArchivedVenueData = React.memo(
 	({ comparedVenues }: PrintArchivedVenueDataProps): React.ReactElement => {
+		const regionNames = useRegionNames();
+
 		return (
 			<div className="well well-transparent archived-entry-contents">
 				<h4>Content{/* LOC */}</h4>

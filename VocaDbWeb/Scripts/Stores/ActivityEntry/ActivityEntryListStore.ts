@@ -10,7 +10,7 @@ import {
 	LocationStateStore,
 	StateChangeEvent,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import {
 	action,
 	computed,
@@ -19,6 +19,8 @@ import {
 	runInAction,
 } from 'mobx';
 
+import schema from './ActivityEntryListRouteParams.schema.json';
+
 export enum ActivityEntrySortRule {
 	CreateDateDescending = 'CreateDateDescending',
 	CreateDate = 'CreateDate',
@@ -26,7 +28,7 @@ export enum ActivityEntrySortRule {
 
 interface ActivityEntryListRouteParams {
 	entryEditEvent?: EntryEditEvent;
-	entryType?: string /* TODO: enum */;
+	entryType?: EntryType;
 	sort?: ActivityEntrySortRule;
 }
 
@@ -40,14 +42,13 @@ const clearResultsByQueryKeys: (keyof ActivityEntryListRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ActivityEntryListRouteParams> = require('./ActivityEntryListRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<ActivityEntryListRouteParams>(schema);
 
 export class ActivityEntryListStore
 	implements LocationStateStore<ActivityEntryListRouteParams> {
 	@observable entries: ActivityEntryContract[] = [];
 	@observable entryEditEvent?: EntryEditEvent;
-	@observable entryType = EntryType[EntryType.Undefined]; /* TODO: enum */
+	@observable entryType = EntryType.Undefined;
 	private lastEntryDate?: Date;
 	@observable sort = ActivityEntrySortRule.CreateDateDescending;
 	@observable userId?: number;
@@ -72,7 +73,7 @@ export class ActivityEntryListStore
 	}
 	set locationState(value: ActivityEntryListRouteParams) {
 		this.entryEditEvent = value.entryEditEvent;
-		this.entryType = value.entryType ?? EntryType[EntryType.Undefined];
+		this.entryType = value.entryType ?? EntryType.Undefined;
 		this.sort = value.sort ?? ActivityEntrySortRule.CreateDateDescending;
 	}
 

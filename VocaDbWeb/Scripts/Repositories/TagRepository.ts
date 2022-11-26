@@ -19,8 +19,9 @@ import {
 } from '@/Repositories/BaseRepository';
 import { EntryCommentRepository } from '@/Repositories/EntryCommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum TagOptionalField {
@@ -86,6 +87,19 @@ export class TagRepository extends BaseRepository {
 		});
 	};
 
+	getByName = ({
+		name,
+		lang,
+	}: {
+		name: string;
+		lang?: ContentLanguagePreference;
+	}): Promise<TagApiContract> => {
+		return this.httpClient.get<TagApiContract>(
+			this.urlMapper.mapRelative(`/api/tags/byName/${name}`),
+			{ lang: lang },
+		);
+	};
+
 	// eslint-disable-next-line no-empty-pattern
 	getComments = ({}: {}): EntryCommentRepository =>
 		new EntryCommentRepository(
@@ -105,7 +119,7 @@ export class TagRepository extends BaseRepository {
 	}): Promise<TagApiContract> => {
 		var url = functions.mergeUrls(
 			this.baseUrl,
-			`/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
+			`/api/entry-types/${entryType}/${subType}/tag`,
 		);
 		return this.httpClient.get<TagApiContract>(url, {
 			fields: [TagOptionalField.Description].join(','),
@@ -278,11 +292,10 @@ export class TagRepository extends BaseRepository {
 
 export interface TagQueryParams extends CommonQueryParams {
 	allowAliases?: boolean;
-
 	categoryName?: string;
-
 	// Comma-separated list of optional fields
 	fields?: TagOptionalField[];
-
 	sort?: string;
 }
+
+export const tagRepo = new TagRepository(httpClient, vdbConfig.baseAddress);

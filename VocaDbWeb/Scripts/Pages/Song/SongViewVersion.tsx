@@ -6,14 +6,12 @@ import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBa
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { PrintArchivedSongData } from '@/Components/Shared/Partials/Song/PrintArchivedSongData';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedSongVersionDetailsContract } from '@/DataContracts/Song/ArchivedSongVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArchivedSongStore } from '@/Stores/Song/ArchivedSongStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -22,12 +20,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface SongViewVersionLayoutProps {
 	contract: ArchivedSongVersionDetailsContract;
@@ -39,11 +31,11 @@ const SongViewVersionLayout = observer(
 		contract,
 		archivedSongStore,
 	}: SongViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -51,6 +43,8 @@ const SongViewVersionLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

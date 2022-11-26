@@ -16,12 +16,14 @@ import {
 	UserKnownLanguageContract,
 	UserLanguageProficiency,
 } from '@/DataContracts/User/UserKnownLanguageContract';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryEditEvent } from '@/Models/ActivityEntries/EntryEditEvent';
-import { LoginManager, PermissionToken } from '@/Models/LoginManager';
+import { PermissionToken } from '@/Models/LoginManager';
 import { PermissionTokenName } from '@/Pages/User/Partials/PermissionTokenName';
 import { UserDetailsNav } from '@/Pages/User/UserDetailsRoutes';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { observer } from 'mobx-react-lite';
@@ -30,8 +32,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface AvatarImgProps {
 	user: UserDetailsContract;
@@ -55,6 +55,8 @@ interface AvatarProps {
 }
 
 const Avatar = ({ user }: AvatarProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	return loginManager.loggedUser &&
 		loginManager.loggedUser.id === user.id &&
 		loginManager.loggedUser.active ? (
@@ -92,6 +94,9 @@ interface UserOverviewProps {
 
 const UserOverview = observer(
 	({ user, userDetailsStore }: UserOverviewProps): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -251,22 +256,24 @@ const UserOverview = observer(
 						</h4>
 						{moment(user.createDate).format('l')}
 
-						{user.oldUsernames.length > 0 && (
-							<>
-								<h4 className="withMargin">
-									{t('ViewRes.User:Details.OldUsernames')}
-								</h4>
-								{user.oldUsernames.map((oldName, index) => (
-									<React.Fragment key={index}>
-										{index > 0 && ', '}
-										{oldName.oldName}{' '}
-										{t('ViewRes.User:Details.OldNameUntil', {
-											0: moment(oldName.date).format('l'),
-										})}
-									</React.Fragment>
-								))}
-							</>
-						)}
+						{loginManager.canViewOldUsernames &&
+							user.oldUsernames &&
+							user.oldUsernames.length > 0 && (
+								<>
+									<h4 className="withMargin">
+										{t('ViewRes.User:Details.OldUsernames')}
+									</h4>
+									{user.oldUsernames.map((oldName, index) => (
+										<React.Fragment key={index}>
+											{index > 0 && ', '}
+											{oldName.oldName}{' '}
+											{t('ViewRes.User:Details.OldNameUntil', {
+												0: moment(oldName.date).format('l'),
+											})}
+										</React.Fragment>
+									))}
+								</>
+							)}
 
 						{user.supporter && (
 							<div className="withMargin media">

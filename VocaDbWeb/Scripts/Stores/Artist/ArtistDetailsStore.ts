@@ -16,11 +16,10 @@ import { ArtistAlbumsStore } from '@/Stores/Artist/ArtistAlbumsStore';
 import { ArtistSongsStore } from '@/Stores/Artist/ArtistSongsStore';
 import { EditableCommentsStore } from '@/Stores/EditableCommentsStore';
 import { EnglishTranslatedStringStore } from '@/Stores/Globalization/EnglishTranslatedStringStore';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
 import { ReportEntryStore } from '@/Stores/ReportEntryStore';
 import { TagListStore } from '@/Stores/Tag/TagListStore';
 import { TagsEditStore } from '@/Stores/Tag/TagsEditStore';
-import { Options } from 'highcharts';
+import type { Options } from 'highcharts';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 
 export class CustomizeArtistSubscriptionStore {
@@ -71,7 +70,6 @@ export class ArtistDetailsStore {
 		private readonly songRepo: SongRepository,
 		private readonly userRepo: UserRepository,
 		canDeleteAllComments: boolean,
-		private readonly pvPlayersFactory: PVPlayersFactory,
 		latestComments: CommentContract[],
 	) {
 		makeObservable(this);
@@ -140,7 +138,6 @@ export class ArtistDetailsStore {
 			this.urlMapper,
 			this.songRepo,
 			this.userRepo,
-			this.pvPlayersFactory,
 		);
 	}
 

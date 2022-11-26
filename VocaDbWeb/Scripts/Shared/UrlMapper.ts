@@ -1,4 +1,5 @@
 import { functions } from '@/Shared/GlobalFunctions';
+import { vdbConfig } from '@/vdbConfig';
 
 export class UrlMapper {
 	static buildUrl = (...args: string[]): string => {
@@ -26,3 +27,5 @@ export class UrlMapper {
 		return functions.mergeUrls(this.baseUrl, relative);
 	}
 }
+
+export const urlMapper = new UrlMapper(vdbConfig.baseAddress);

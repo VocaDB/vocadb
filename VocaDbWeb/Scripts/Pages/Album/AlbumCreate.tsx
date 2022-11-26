@@ -10,14 +10,12 @@ import { AlbumTypeDropdownList } from '@/Components/Shared/Partials/Knockout/Dro
 import { RequiredField } from '@/Components/Shared/Partials/Shared/RequiredField';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { AlbumType } from '@/Models/Albums/AlbumType';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { AlbumCreateStore } from '@/Stores/Album/AlbumCreateStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -25,29 +23,24 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-
 interface AlbumCreateLayoutProps {
 	albumCreateStore: AlbumCreateStore;
 }
 
 const AlbumCreateLayout = observer(
 	({ albumCreateStore }: AlbumCreateLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.Album']);
 
 		const title = t('ViewRes.Album:Create.SubmitAlbum');
-
-		useVdbTitle(title, ready);
 
 		const navigate = useNavigate();
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -98,7 +91,7 @@ const AlbumCreateLayout = observer(
 							<div className="editor-field">
 								{albumCreateStore.errors && albumCreateStore.errors.names && (
 									<span className="field-validation-error">
-										{albumCreateStore.errors.names}
+										{albumCreateStore.errors.names[0]}
 									</span>
 								)}
 
@@ -207,7 +200,7 @@ const AlbumCreateLayout = observer(
 							<div className="editor-field">
 								{albumCreateStore.errors && albumCreateStore.errors.artists && (
 									<span className="field-validation-error">
-										{albumCreateStore.errors.artists}
+										{albumCreateStore.errors.artists[0]}
 									</span>
 								)}
 								<table>
@@ -280,6 +273,8 @@ const AlbumCreateLayout = observer(
 );
 
 const AlbumCreate = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [albumCreateStore] = React.useState(
 		() => new AlbumCreateStore(vdb.values, albumRepo, artistRepo),
 	);

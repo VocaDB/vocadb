@@ -10,7 +10,9 @@ import {
 	StateChangeEvent,
 	LocationStateStore,
 } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
+
+import schema from './ArtistAlbumsRouteParams.schema.json';
 
 export interface ArtistAlbumsRouteParams {
 	page?: number;
@@ -29,8 +31,7 @@ const clearResultsByQueryKeys: (keyof ArtistAlbumsRouteParams)[] = [
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ArtistAlbumsRouteParams> = require('./ArtistAlbumsRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<ArtistAlbumsRouteParams>(schema);
 
 export class ArtistAlbumsStore
 	extends AlbumSearchStore

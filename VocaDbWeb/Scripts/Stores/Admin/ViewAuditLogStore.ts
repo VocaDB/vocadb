@@ -4,8 +4,10 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { AdminRepository } from '@/Repositories/AdminRepository';
 import { PagedItemsStore } from '@/Stores/PagedItemsStore';
 import { LocationStateStore, StateChangeEvent } from '@vocadb/route-sphere';
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv from 'ajv';
 import { computed, makeObservable, observable } from 'mobx';
+
+import schema from './ViewAuditLogRouteParams.schema.json';
 
 export interface ViewAuditLogRouteParams {
 	excludeUsers?: string;
@@ -19,8 +21,7 @@ export interface ViewAuditLogRouteParams {
 const ajv = new Ajv({ coerceTypes: true });
 
 // TODO: Make sure that we compile schemas only once and re-use compiled validation functions. See https://ajv.js.org/guide/getting-started.html.
-const schema: JSONSchemaType<ViewAuditLogRouteParams> = require('./ViewAuditLogRouteParams.schema');
-const validate = ajv.compile(schema);
+const validate = ajv.compile<ViewAuditLogRouteParams>(schema);
 
 export class ViewAuditLogStore
 	extends PagedItemsStore<AuditLogEntryContract>

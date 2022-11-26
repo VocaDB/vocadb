@@ -5,16 +5,16 @@ import ButtonGroup from '@/Bootstrap/ButtonGroup';
 import { Layout } from '@/Components/Shared/Layout';
 import { PVPreviewKnockout } from '@/Components/Shared/Partials/Song/PVPreviewKnockout';
 import { SongTypeLabel } from '@/Components/Shared/Partials/Song/SongTypeLabel';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongVoteRating } from '@/Models/SongVoteRating';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { ISongSearchItem } from '@/Stores/Search/SongSearchStore';
 import { RankingsStore } from '@/Stores/Song/RankingsStore';
+import { useVdb } from '@/VdbContext';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
@@ -24,20 +24,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
-const rankingsStore = new RankingsStore(
-	httpClient,
-	urlMapper,
-	songRepo,
-	userRepo,
-	vdb.values.languagePreference,
-);
 
 const SongRankingsTableHeader = React.memo(
 	(): React.ReactElement => {
@@ -220,14 +206,27 @@ const SongRankingsTable = observer(
 
 const SongRankings = observer(
 	(): React.ReactElement => {
-		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
+		const vdb = useVdb();
 
-		useVdbTitle(vdb.resources.song.rankingsTitle, true);
+		const [rankingsStore] = React.useState(
+			() =>
+				new RankingsStore(
+					httpClient,
+					urlMapper,
+					songRepo,
+					userRepo,
+					vdb.values.languagePreference,
+				),
+		);
+
+		const { t } = useTranslation(['ViewRes', 'ViewRes.Song']);
 
 		useLocationStateStore(rankingsStore);
 
 		return (
 			<Layout
+				pageTitle={vdb.resources.song.rankingsTitle}
+				ready={true}
 				title={vdb.resources.song.rankingsTitle}
 				parents={
 					<>

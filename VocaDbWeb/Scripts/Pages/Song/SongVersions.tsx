@@ -2,19 +2,14 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import { Layout } from '@/Components/Shared/Layout';
 import { ArchivedObjectVersions } from '@/Components/Shared/Partials/ArchivedEntry/ArchivedObjectVersions';
 import { CurrentVersionMessage } from '@/Components/Shared/Partials/ArchivedEntry/CurrentVersionMessage';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongApiContract } from '@/DataContracts/Song/SongApiContract';
 import { EntryWithArchivedVersionsContract } from '@/DataContracts/Versioning/EntryWithArchivedVersionsForApiContract';
 import { EntryType } from '@/Models/EntryType';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface SongVersionsLayoutProps {
 	model: EntryWithArchivedVersionsContract<SongApiContract>;
@@ -27,10 +22,10 @@ const SongVersionsLayout = ({
 
 	const title = `${t('ViewRes:EntryDetails.Revisions')} - ${model.entry.name}`;
 
-	useVdbTitle(title, ready);
-
 	return (
 		<Layout
+			pageTitle={title}
+			ready={ready}
 			title={title}
 			parents={
 				<>

@@ -3,27 +3,26 @@ import Breadcrumb from '@/Bootstrap/Breadcrumb';
 import SafeAnchor from '@/Bootstrap/SafeAnchor';
 import { Layout } from '@/Components/Shared/Layout';
 import { EntryDeletePopupBase } from '@/Components/Shared/Partials/EntryDetails/EntryDeletePopupBase';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserDetailsContract } from '@/DataContracts/User/UserDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
-import { AdminRepository } from '@/Repositories/AdminRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
-import { TagRepository } from '@/Repositories/TagRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
-import { PVPlayersFactory } from '@/Stores/PVs/PVPlayersFactory';
+import { adminRepo } from '@/Repositories/AdminRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
+import { tagRepo } from '@/Repositories/TagRepository';
+import { userRepo } from '@/Repositories/UserRepository';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
 import { RatedSongsSearchStore } from '@/Stores/User/RatedSongsSearchStore';
 import { UserDetailsStore } from '@/Stores/User/UserDetailsStore';
+import { useVdb } from '@/VdbContext';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NProgress from 'nprogress';
@@ -34,20 +33,6 @@ import { Link, useParams } from 'react-router-dom';
 
 import '../../../wwwroot/Content/Styles/songlist.less';
 
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
-const tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const adminRepo = new AdminRepository(httpClient, urlMapper);
-
-const pvPlayersFactory = new PVPlayersFactory();
-
 interface UserDetailsLayoutProps {
 	user: UserDetailsContract;
 	userDetailsStore: UserDetailsStore;
@@ -55,11 +40,11 @@ interface UserDetailsLayoutProps {
 
 const UserDetailsLayout = observer(
 	({ user, userDetailsStore }: UserDetailsLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.User']);
 
 		const title = user.name;
-
-		useVdbTitle(title, true);
 
 		const ownProfile =
 			loginManager.loggedUser &&
@@ -72,6 +57,8 @@ const UserDetailsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				subtitle={t(`Resources:UserGroupNames.${user.groupId}`)}
 				parents={
@@ -267,6 +254,7 @@ const UserDetailsLayout = observer(
 					<JQueryUIDialog
 						title="StopForumSpam check" /* LOC */
 						autoOpen={userDetailsStore.sfsCheckDialog.dialogVisible}
+						width={310}
 						close={(): void =>
 							runInAction(() => {
 								userDetailsStore.sfsCheckDialog.dialogVisible = false;
@@ -309,6 +297,9 @@ const UserDetailsLayout = observer(
 );
 
 const UserDetails = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		| { user: UserDetailsContract; userDetailsStore: UserDetailsStore }
 		| undefined
@@ -347,7 +338,6 @@ const UserDetails = (): React.ReactElement => {
 					songRepo,
 					tagRepo,
 					user.id,
-					pvPlayersFactory,
 					false,
 				);
 
@@ -381,7 +371,7 @@ const UserDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [name]);
+	}, [vdb, loginManager, name]);
 
 	return model ? (
 		<UserDetailsLayout

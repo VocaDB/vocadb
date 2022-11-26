@@ -17,7 +17,6 @@ import { MarkdownNotice } from '@/Components/Shared/Partials/Shared/MarkdownNoti
 import { SaveBtn } from '@/Components/Shared/Partials/Shared/SaveBtn';
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage, showSuccessMessage } from '@/Components/ui';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { UserLanguageProficiency } from '@/DataContracts/User/UserKnownLanguageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
@@ -26,12 +25,11 @@ import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguag
 import { ImageSize } from '@/Models/Images/ImageSize';
 import { PVService } from '@/Models/PVs/PVService';
 import { UserEmailOptions } from '@/Models/Users/UserEmailOptions';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { MySettingsStore } from '@/Stores/User/MySettingsStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -140,12 +138,6 @@ function parsePath(
 	return ret;
 }
 
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
-
 interface AccountSettingsTabContentProps {
 	mySettingsStore: MySettingsStore;
 }
@@ -232,7 +224,7 @@ const AccountSettingsTabContent = observer(
 					)}{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.email && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.email}
+							{mySettingsStore.errors.email[0]}
 						</span>
 					)}
 				</div>
@@ -340,7 +332,7 @@ const PasswordSettingsTabContent = observer(
 							/>{' '}
 							{mySettingsStore.errors && mySettingsStore.errors.oldPass && (
 								<span className="field-validation-error">
-									{mySettingsStore.errors.oldPass}
+									{mySettingsStore.errors.oldPass[0]}
 								</span>
 							)}
 						</div>
@@ -362,7 +354,7 @@ const PasswordSettingsTabContent = observer(
 					/>{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.newPass && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.newPass}
+							{mySettingsStore.errors.newPass[0]}
 						</span>
 					)}
 				</div>
@@ -382,7 +374,7 @@ const PasswordSettingsTabContent = observer(
 					/>{' '}
 					{mySettingsStore.errors && mySettingsStore.errors.newPassAgain && (
 						<span className="field-validation-error">
-							{mySettingsStore.errors.newPassAgain}
+							{mySettingsStore.errors.newPassAgain[0]}
 						</span>
 					)}
 				</div>
@@ -399,6 +391,8 @@ const InterfaceSettingsTabContent = observer(
 	({
 		mySettingsStore,
 	}: InterfaceSettingsTabContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation(['ViewRes.User']);
 
 		return (
@@ -739,11 +733,11 @@ interface UserMySettingsLayoutProps {
 
 const UserMySettingsLayout = observer(
 	({ mySettingsStore }: UserMySettingsLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t, ready } = useTranslation(['ViewRes', 'ViewRes.User']);
 
 		const title = t('ViewRes.User:MySettings.MySettingsTitle');
-
-		useVdbTitle(title, ready);
 
 		const contract = mySettingsStore.contract;
 
@@ -753,6 +747,8 @@ const UserMySettingsLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -799,6 +795,8 @@ const UserMySettingsLayout = observer(
 							);
 
 							navigate(EntryUrlMapper.details_user_byName(name));
+
+							await vdb.refresh();
 						} catch (error: any) {
 							showErrorMessage(
 								error.response && error.response.status

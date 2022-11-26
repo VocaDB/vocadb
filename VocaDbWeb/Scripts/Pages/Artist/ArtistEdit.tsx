@@ -26,23 +26,22 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistLinkType } from '@/Models/Artists/ArtistLinkType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ArtistEditStore } from '@/Stores/Artist/ArtistEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { map, pull } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -50,14 +49,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
 
 interface BasicInfoTabContentProps {
 	artistEditStore: ArtistEditStore;
@@ -69,6 +60,8 @@ const BasicInfoTabContent = observer(
 		artistEditStore,
 		coverPicUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.Artist']);
 
 		const contract = artistEditStore.contract;
@@ -549,6 +542,8 @@ interface ArtistEditLayoutProps {
 
 const ArtistEditLayout = observer(
 	({ artistEditStore }: ArtistEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -560,8 +555,6 @@ const ArtistEditLayout = observer(
 
 		const title = t('ViewRes.Artist:Edit.EditTitle', { 0: contract.name });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.Artist);
 
 		const navigate = useNavigate();
@@ -570,6 +563,8 @@ const ArtistEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -759,6 +754,8 @@ const ArtistEditLayout = observer(
 );
 
 const ArtistEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -786,7 +783,7 @@ const ArtistEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<ArtistEditLayout artistEditStore={model.artistEditStore} />

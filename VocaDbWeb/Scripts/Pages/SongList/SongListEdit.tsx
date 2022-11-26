@@ -17,25 +17,23 @@ import { SaveAndBackBtn } from '@/Components/Shared/Partials/Shared/SaveAndBackB
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { SongListForEditContract } from '@/DataContracts/Song/SongListForEditContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDatepicker from '@/JQueryUI/JQueryUIDatepicker';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import { SongListFeaturedCategory } from '@/Models/SongLists/SongListFeaturedCategory';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { SongListRepository } from '@/Repositories/SongListRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { songListRepo } from '@/Repositories/SongListRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { SongListEditStore } from '@/Stores/SongList/SongListEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -43,15 +41,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const songListRepo = new SongListRepository(httpClient, urlMapper);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
 
 interface PropertiesTabContentProps {
 	songListEditStore: SongListEditStore;
@@ -63,6 +52,8 @@ const PropertiesTabContent = observer(
 		songListEditStore,
 		thumbPicUploadRef,
 	}: PropertiesTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['Resources', 'ViewRes', 'ViewRes.SongList']);
 
 		const thumbUrl = UrlHelper.imageThumb(
@@ -304,8 +295,6 @@ const SongListEditLayout = observer(
 					0: contract.name,
 			  });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.SongList);
 
 		const navigate = useNavigate();
@@ -314,6 +303,8 @@ const SongListEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					!isNew && (
@@ -478,6 +469,8 @@ const defaultModel: SongListForEditContract = {
 };
 
 const SongListEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { id } = useParams();
 
 	const [model, setModel] = React.useState<{
@@ -516,7 +509,7 @@ const SongListEdit = (): React.ReactElement => {
 				),
 			});
 		}
-	}, [id]);
+	}, [vdb, id]);
 
 	return model ? (
 		<SongListEditLayout songListEditStore={model.songListEditStore} />

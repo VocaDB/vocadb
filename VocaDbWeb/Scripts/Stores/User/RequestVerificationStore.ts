@@ -1,4 +1,4 @@
-import { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
+import type { ArtistContract } from '@/DataContracts/Artist/ArtistContract';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { action, makeObservable, observable, runInAction } from 'mobx';

@@ -23,13 +23,13 @@ import { TagLink } from '@/Components/Shared/Partials/Tag/TagLink';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
 import { IconAndNameLinkKnockout } from '@/Components/Shared/Partials/User/IconAndNameLinkKnockout';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArtistForEventContract } from '@/DataContracts/ReleaseEvents/ArtistForEventContract';
 import { ReleaseEventDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventDetailsContract';
 import { UserApiContract } from '@/DataContracts/User/UserApiContract';
 import { PVHelper } from '@/Helpers/PVHelper';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { ArtistEventRoles } from '@/Models/Events/ArtistEventRoles';
 import { EventCategory } from '@/Models/Events/EventCategory';
@@ -38,16 +38,16 @@ import {
 	eventReportTypesWithRequiredNotes,
 } from '@/Models/Events/EventReportType';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
 import { useMutedUsers } from '@/MutedUsersContext';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { ReleaseEventDetailsStore } from '@/Stores/ReleaseEvent/ReleaseEventDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
+import { useVdb } from '@/VdbContext';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import NProgress from 'nprogress';
@@ -55,14 +55,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface ArtistListProps {
 	artists: ArtistForEventContract[];
@@ -145,6 +137,9 @@ const EventDetailsLayout = observer(
 		event,
 		releaseEventDetailsStore,
 	}: EventDetailsLayoutProps): React.ReactElement => {
+		const vdb = useVdb();
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Event',
@@ -159,12 +154,12 @@ const EventDetailsLayout = observer(
 						`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${event.inheritedCategory}`,
 				  );
 
-		useVdbTitle(`${event.name} (${subtitle})`, ready);
-
-		const primaryPV = PVHelper.primaryPV(event.pvs);
+		const primaryPV = PVHelper.primaryPV(event.pvs, vdb.values.loggedUser);
 
 		return (
 			<Layout
+				pageTitle={`${event.name} (${subtitle})`}
+				ready={ready}
 				title={event.name}
 				subtitle={subtitle}
 				parents={
@@ -212,7 +207,7 @@ const EventDetailsLayout = observer(
 								<EmbedPVPreview
 									entry={{
 										...event,
-										entryType: EntryType[EntryType.ReleaseEvent],
+										entryType: EntryType.ReleaseEvent,
 									}}
 									pv={primaryPV}
 									allowInline
@@ -225,7 +220,7 @@ const EventDetailsLayout = observer(
 							disabled={
 								!loginManager.canEdit({
 									...event,
-									entryType: EntryType[EntryType.ReleaseEvent],
+									entryType: EntryType.ReleaseEvent,
 								})
 							}
 							icons={{ primary: 'ui-icon-wrench' }}
@@ -325,7 +320,7 @@ const EventDetailsLayout = observer(
 								) : (
 									<a
 										href={`/Tag/DetailsByEntryType?${qs.stringify({
-											entryType: EntryType[EntryType.ReleaseEvent],
+											entryType: EntryType.ReleaseEvent,
 											subType: event.inheritedCategory,
 										})}`}
 									>
@@ -367,7 +362,7 @@ const EventDetailsLayout = observer(
 										disabled={
 											!loginManager.canEditTagsForEntry({
 												...event,
-												entryType: EntryType[EntryType.ReleaseEvent],
+												entryType: EntryType.ReleaseEvent,
 											})
 										}
 										icons={{ primary: 'ui-icon-tag' }}
@@ -618,6 +613,8 @@ const EventDetailsLayout = observer(
 );
 
 const EventDetails = (): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const [model, setModel] = React.useState<
 		| {
 				event: ReleaseEventDetailsContract;
@@ -663,7 +660,7 @@ const EventDetails = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [id]);
+	}, [loginManager, id]);
 
 	return model ? (
 		<EventDetailsLayout

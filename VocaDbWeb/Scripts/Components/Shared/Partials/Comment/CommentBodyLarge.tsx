@@ -3,14 +3,12 @@ import { FormatMarkdown } from '@/Components/Shared/Partials/Html/FormatMarkdown
 import { ProfileIcon } from '@/Components/Shared/Partials/User/ProfileIcon';
 import { UserLink } from '@/Components/Shared/Partials/User/UserLink';
 import { CommentContract } from '@/DataContracts/CommentContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { useMutedUsers } from '@/MutedUsersContext';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface CommentBodyLargeProps {
 	contract: CommentContract;
@@ -24,6 +22,8 @@ export const CommentBodyLarge = observer(
 		allowDelete,
 		alwaysAllowDelete = false,
 	}: CommentBodyLargeProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const mutedUsers = useMutedUsers();
 		if (mutedUsers.includes(contract.author.id)) return <></>;
 

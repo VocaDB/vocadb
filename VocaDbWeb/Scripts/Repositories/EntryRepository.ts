@@ -3,7 +3,14 @@ import { PagingProperties } from '@/DataContracts/PagingPropertiesContract';
 import { PartialFindResultContract } from '@/DataContracts/PartialFindResultContract';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HttpClient } from '@/Shared/HttpClient';
+import { httpClient, HttpClient } from '@/Shared/HttpClient';
+import { vdbConfig } from '@/vdbConfig';
+
+export enum EntryOptionalField {
+	AdditionalNames = 'AdditionalNames',
+	MainPicture = 'MainPicture',
+	Tags = 'Tags',
+}
 
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
@@ -33,9 +40,9 @@ export class EntryRepository {
 		paging: PagingProperties;
 		lang: ContentLanguagePreference;
 		query: string;
-		tags: number[];
-		childTags: boolean;
-		fields: string;
+		tags?: number[];
+		childTags?: boolean;
+		fields?: EntryOptionalField[];
 		status?: string;
 	}): Promise<PartialFindResultContract<EntryContract>> => {
 		var url = this.mapUrl('');
@@ -44,7 +51,7 @@ export class EntryRepository {
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields,
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			tagId: tags,
@@ -58,3 +65,5 @@ export class EntryRepository {
 		);
 	};
 }
+
+export const entryRepo = new EntryRepository(httpClient, vdbConfig.baseAddress);

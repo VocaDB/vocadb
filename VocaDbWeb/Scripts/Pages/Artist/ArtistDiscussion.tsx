@@ -1,12 +1,10 @@
 import { EditableComments } from '@/Components/Shared/Partials/Comment/EditableComments';
 import { ArtistDetailsContract } from '@/DataContracts/Artist/ArtistDetailsContract';
-import { LoginManager } from '@/Models/LoginManager';
+import { useLoginManager } from '@/LoginManagerContext';
 import { ArtistDetailsTabs } from '@/Pages/Artist/ArtistDetailsRoutes';
 import { ArtistDetailsStore } from '@/Stores/Artist/ArtistDetailsStore';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-const loginManager = new LoginManager(vdb.values);
 
 interface ArtistDiscussionProps {
 	artist: ArtistDetailsContract;
@@ -18,6 +16,8 @@ const ArtistDiscussion = observer(
 		artist,
 		artistDetailsStore,
 	}: ArtistDiscussionProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		React.useEffect(() => {
 			artistDetailsStore.comments.initComments();
 		}, [artistDetailsStore]);

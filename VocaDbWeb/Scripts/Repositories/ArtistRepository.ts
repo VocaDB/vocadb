@@ -19,9 +19,15 @@ import {
 } from '@/Repositories/BaseRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum ArtistOptionalField {
@@ -188,13 +194,13 @@ export class ArtistRepository
 		query: string;
 		sort: string;
 		artistTypes?: ArtistType[];
-		allowBaseVoicebanks: boolean;
-		tags: number[];
-		childTags: boolean;
+		allowBaseVoicebanks?: boolean;
+		tags?: number[];
+		childTags?: boolean;
 		followedByUserId?: number;
-		fields: ArtistOptionalField[];
+		fields?: ArtistOptionalField[];
 		status?: string;
-		advancedFilters: AdvancedSearchFilter[];
+		advancedFilters?: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<ArtistContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/artists');
 		var data = {
@@ -202,7 +208,7 @@ export class ArtistRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -372,3 +378,8 @@ export class ArtistRepository
 export interface ArtistQueryParams extends CommonQueryParams {
 	artistTypes: string /* TODO: ArtistType[] */;
 }
+
+export const artistRepo = new ArtistRepository(
+	httpClient,
+	vdbConfig.baseAddress,
+);

@@ -24,9 +24,15 @@ import {
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
 import { functions } from '@/Shared/GlobalFunctions';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
+import {
+	HeaderNames,
+	httpClient,
+	HttpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
+import { vdbConfig } from '@/vdbConfig';
 import qs from 'qs';
 
 export enum AlbumOptionalField {
@@ -227,9 +233,9 @@ export class AlbumRepository
 		artistParticipationStatus?: string;
 		childVoicebanks?: boolean;
 		includeMembers?: boolean;
-		fields: AlbumOptionalField[];
+		fields?: AlbumOptionalField[];
 		status?: string;
-		deleted: boolean;
+		deleted?: boolean;
 		advancedFilters?: AdvancedSearchFilter[];
 	}): Promise<PartialFindResultContract<AlbumContract>> => {
 		var url = functions.mergeUrls(this.baseUrl, '/api/albums');
@@ -238,7 +244,7 @@ export class AlbumRepository
 			getTotalCount: paging.getTotalCount,
 			maxResults: paging.maxEntries,
 			query: query,
-			fields: fields.join(','),
+			fields: fields?.join(','),
 			lang: lang,
 			nameMatchMode: 'Auto',
 			sort: sort,
@@ -441,3 +447,5 @@ export class AlbumRepository
 export interface AlbumQueryParams extends CommonQueryParams {
 	discTypes: AlbumType[];
 }
+
+export const albumRepo = new AlbumRepository(httpClient, vdbConfig.baseAddress);

@@ -5,13 +5,12 @@ import { ActivityEntryKnockout } from '@/Components/Shared/Partials/Activityfeed
 import { AlbumThumbs } from '@/Components/Shared/Partials/Album/AlbumThumbs';
 import { CommentWithEntryVertical } from '@/Components/Shared/Partials/Comment/CommentWithEntryVertical';
 import { EventThumbs } from '@/Components/Shared/Partials/Shared/EventThumbs';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { FrontPageContract } from '@/DataContracts/FrontPageContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import NewsItems from '@/Pages/Home/Partials/NewsItems';
-import { UserRepository } from '@/Repositories/UserRepository';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { userRepo } from '@/Repositories/UserRepository';
+import { httpClient } from '@/Shared/HttpClient';
+import { urlMapper } from '@/Shared/UrlMapper';
 import {
 	FrontPagePVPlayerStore,
 	FrontPageStore,
@@ -19,6 +18,7 @@ import {
 import { AlbumSortRule } from '@/Stores/Search/AlbumSearchStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import { SongSortRule } from '@/Stores/Search/SongSearchStore';
+import { useVdb } from '@/VdbContext';
 import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -26,11 +26,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface PVPlayerProps {
 	model: FrontPageContract;
@@ -128,12 +123,12 @@ const HomeIndexLayout = ({
 	model,
 	frontPageStore,
 }: HomeIndexLayoutProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const { t } = useTranslation(['ViewRes.Comment', 'ViewRes.Home']);
 
-	useVdbTitle(undefined, true);
-
 	return (
-		<Layout>
+		<Layout pageTitle={undefined} ready={true}>
 			{/* TODO: <link rel="alternate" type="application/rss+xml" title="RSS" href='@Url.Action("LatestVideos", "Song")'> */}
 			<h1 className="page-title home-title">
 				{vdb.resources.home.welcome}
@@ -249,18 +244,22 @@ const HomeIndexLayout = ({
 };
 
 const HomeIndex = (): React.ReactElement => {
+	const vdb = useVdb();
+
 	const [model, setModel] = React.useState<
 		{ contract: FrontPageContract; frontPageStore: FrontPageStore } | undefined
 	>();
 
 	React.useEffect(() => {
-		httpClient.get<FrontPageContract>('/api/frontpage').then((contract) =>
-			setModel({
-				contract: contract,
-				frontPageStore: new FrontPageStore(vdb.values, userRepo, contract),
-			}),
-		);
-	}, []);
+		httpClient
+			.get<FrontPageContract>(urlMapper.mapRelative('/api/frontpage'))
+			.then((contract) =>
+				setModel({
+					contract: contract,
+					frontPageStore: new FrontPageStore(vdb.values, userRepo, contract),
+				}),
+			);
+	}, [vdb]);
 
 	return model ? (
 		<HomeIndexLayout

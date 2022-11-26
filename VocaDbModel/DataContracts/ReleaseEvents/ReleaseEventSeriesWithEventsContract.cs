@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
+	[Obsolete]
 	public class ReleaseEventSeriesWithEventsContract : ReleaseEventSeriesContract
 	{
 		public ReleaseEventSeriesWithEventsContract() { }

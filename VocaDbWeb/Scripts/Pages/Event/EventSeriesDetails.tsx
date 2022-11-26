@@ -7,19 +7,16 @@ import { ExternalLinksList } from '@/Components/Shared/Partials/EntryDetails/Ext
 import { EntryStatusMessage } from '@/Components/Shared/Partials/Shared/EntryStatusMessage';
 import { TagList } from '@/Components/Shared/Partials/TagList';
 import { TagsEdit } from '@/Components/Shared/Partials/TagsEdit';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ReleaseEventSeriesDetailsContract } from '@/DataContracts/ReleaseEvents/ReleaseEventSeriesDetailsContract';
 import { UrlHelper } from '@/Helpers/UrlHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
 import { EventCategory } from '@/Models/Events/EventCategory';
 import { ImageSize } from '@/Models/Images/ImageSize';
-import { LoginManager } from '@/Models/LoginManager';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { UserRepository } from '@/Repositories/UserRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { userRepo } from '@/Repositories/UserRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { EventSeriesDetailsStore } from '@/Stores/ReleaseEvent/EventSeriesDetailsStore';
 import { SearchType } from '@/Stores/Search/SearchStore';
 import moment from 'moment';
@@ -28,14 +25,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
-const userRepo = new UserRepository(httpClient, urlMapper);
 
 interface EventSeriesDetailsLayoutProps {
 	series: ReleaseEventSeriesDetailsContract;
@@ -46,6 +35,8 @@ const EventSeriesDetailsLayout = ({
 	series,
 	eventSeriesDetailsStore,
 }: EventSeriesDetailsLayoutProps): React.ReactElement => {
+	const loginManager = useLoginManager();
+
 	const { t, ready } = useTranslation([
 		'ViewRes',
 		'ViewRes.Event',
@@ -61,10 +52,10 @@ const EventSeriesDetailsLayout = ({
 					`VocaDb.Web.Resources.Domain.ReleaseEvents:EventCategoryNames.${series.category}`,
 			  );
 
-	useVdbTitle(`${series.name} (${subtitle})`, ready);
-
 	return (
 		<Layout
+			pageTitle={`${series.name} (${subtitle})`}
+			ready={ready}
 			title={series.name}
 			subtitle={subtitle}
 			parents={
@@ -85,7 +76,7 @@ const EventSeriesDetailsLayout = ({
 						<>
 							{loginManager.canEdit({
 								...series,
-								entryType: EntryType[EntryType.ReleaseEventSeries],
+								entryType: EntryType.ReleaseEventSeries,
 							}) && (
 								<>
 									<JQueryUIButton
@@ -191,7 +182,7 @@ const EventSeriesDetailsLayout = ({
 							disabled={
 								!loginManager.canEditTagsForEntry({
 									...series,
-									entryType: EntryType[EntryType.ReleaseEventSeries],
+									entryType: EntryType.ReleaseEventSeries,
 								})
 							}
 							icons={{ primary: 'ui-icon-tag' }}

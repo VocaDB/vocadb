@@ -26,16 +26,23 @@ import { AlbumType } from '@/Models/Albums/AlbumType';
 import { ArtistType } from '@/Models/Artists/ArtistType';
 import { EntryType } from '@/Models/EntryType';
 import { ContentLanguagePreference } from '@/Models/Globalization/ContentLanguagePreference';
+import { NameMatchMode } from '@/Models/NameMatchMode';
 import { PVService } from '@/Models/PVs/PVService';
 import { SongVoteRating } from '@/Models/SongVoteRating';
 import { UserEventRelationshipType } from '@/Models/Users/UserEventRelationshipType';
+import { UserGroup } from '@/Models/Users/UserGroup';
 import { AlbumOptionalField } from '@/Repositories/AlbumRepository';
 import { ArtistOptionalField } from '@/Repositories/ArtistRepository';
 import { ICommentRepository } from '@/Repositories/ICommentRepository';
 import { SongListOptionalField } from '@/Repositories/SongListRepository';
 import { SongOptionalField } from '@/Repositories/SongRepository';
-import { HeaderNames, HttpClient, MediaTypes } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import {
+	HeaderNames,
+	HttpClient,
+	httpClient,
+	MediaTypes,
+} from '@/Shared/HttpClient';
+import { UrlMapper, urlMapper } from '@/Shared/UrlMapper';
 import { AdvancedSearchFilter } from '@/Stores/Search/AdvancedSearchFilter';
 
 export enum UserInboxType {
@@ -332,11 +339,11 @@ export class UserRepository implements ICommentRepository {
 		paging?: PagingProperties;
 		query: string;
 		sort?: string;
-		groups?: string;
+		groups?: UserGroup;
 		includeDisabled: boolean;
 		onlyVerified: boolean;
 		knowsLanguage?: string;
-		nameMatchMode: string;
+		nameMatchMode: NameMatchMode;
 		fields?: UserOptionalField[];
 	}): Promise<PartialFindResultContract<UserApiContract>> => {
 		var url = this.urlMapper.mapRelative('/api/users');
@@ -385,7 +392,7 @@ export class UserRepository implements ICommentRepository {
 			includeDisabled: false,
 			onlyVerified: false,
 			knowsLanguage: undefined,
-			nameMatchMode: 'Exact',
+			nameMatchMode: NameMatchMode.Exact,
 			fields: undefined,
 		});
 		return result.items.length === 1 ? result.items[0] : undefined;
@@ -614,7 +621,7 @@ export class UserRepository implements ICommentRepository {
 	}): Promise<EntryEditDataContract> => {
 		return this.httpClient.post<EntryEditDataContract>(
 			this.urlMapper.mapRelative(
-				`/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
+				`/api/users/current/refreshEntryEdit/?entryType=${entryType}&entryId=${entryId}`,
 			),
 		);
 	};
@@ -844,6 +851,35 @@ export class UserRepository implements ICommentRepository {
 		);
 	};
 
+	create = ({
+		email,
+		entryTime,
+		extra,
+		password,
+		recaptchaResponse,
+		userName,
+	}: {
+		email: string;
+		entryTime: Date;
+		extra: string;
+		password: string;
+		recaptchaResponse: string;
+		userName: string;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/register'),
+			{
+				email: email,
+				// https://stackoverflow.com/questions/7966559/how-to-convert-javascript-date-object-to-ticks/7968483#7968483
+				entryTime: entryTime.getTime() * 10000 + 621355968000000000,
+				extra: extra,
+				'g-recaptcha-response': recaptchaResponse,
+				password: password,
+				userName: userName,
+			},
+		);
+	};
+
 	edit = (
 		requestToken: string,
 		contract: UserForEditContract,
@@ -858,4 +894,33 @@ export class UserRepository implements ICommentRepository {
 			},
 		);
 	};
+
+	login = ({
+		keepLoggedIn,
+		password,
+		userName,
+	}: {
+		keepLoggedIn: boolean;
+		password: string;
+		userName: string;
+	}): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/login'),
+			{ keepLoggedIn: keepLoggedIn, password: password, userName: userName },
+		);
+	};
+
+	logout = (requestToken: string): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative('/api/users/logout'),
+			undefined,
+			{
+				headers: {
+					requestVerificationToken: requestToken,
+				},
+			},
+		);
+	};
 }
+
+export const userRepo = new UserRepository(httpClient, urlMapper);

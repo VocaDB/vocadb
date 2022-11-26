@@ -4,6 +4,7 @@ import {
 } from '@/Components/KnockoutExtensions/EntryAutoComplete';
 import { IEntryWithIdAndName } from '@/Models/IEntryWithIdAndName';
 import { functions } from '@/Shared/GlobalFunctions';
+import { useVdb } from '@/VdbContext';
 import React from 'react';
 
 interface ReleaseEventSeriesAutoCompleteProps
@@ -17,6 +18,8 @@ export const ReleaseEventSeriesAutoComplete = ({
 	seriesFilter,
 	...props
 }: ReleaseEventSeriesAutoCompleteProps): React.ReactElement => {
+	const vdb = useVdb();
+
 	const queryParams = {
 		nameMatchMode: 'Auto',
 		preferAccurateMatches: true,

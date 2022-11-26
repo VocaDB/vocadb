@@ -29,32 +29,31 @@ import { ValidationErrorIcon } from '@/Components/Shared/Partials/Shared/Validat
 import { ValidationSummaryPanel } from '@/Components/Shared/Partials/Shared/ValidationSummaryPanel';
 import { showErrorMessage } from '@/Components/ui';
 import { useConflictingEditor } from '@/Components/useConflictingEditor';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { DiscMediaType } from '@/DataContracts/Album/AlbumDetailsForApi';
 import { ImageHelper } from '@/Helpers/ImageHelper';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
 import JQueryUIDialog from '@/JQueryUI/JQueryUIDialog';
 import JQueryUITab from '@/JQueryUI/JQueryUITab';
 import JQueryUITabs from '@/JQueryUI/JQueryUITabs';
+import { useLoginManager } from '@/LoginManagerContext';
 import { AlbumType } from '@/Models/Albums/AlbumType';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
 import ArtistForAlbumEdit from '@/Pages/Album/Partials/ArtistForAlbumEdit';
 import SongInAlbumEdit from '@/Pages/Album/Partials/SongInAlbumEdit';
 import TrackProperties from '@/Pages/Album/Partials/TrackProperties';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
-import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
-import { ArtistRepository } from '@/Repositories/ArtistRepository';
-import { PVRepository } from '@/Repositories/PVRepository';
-import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
-import { SongRepository } from '@/Repositories/SongRepository';
+import { albumRepo } from '@/Repositories/AlbumRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
+import { artistRepo } from '@/Repositories/ArtistRepository';
+import { pvRepo } from '@/Repositories/PVRepository';
+import { eventRepo } from '@/Repositories/ReleaseEventRepository';
+import { songRepo } from '@/Repositories/SongRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
-import { UrlMapper } from '@/Shared/UrlMapper';
+import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumEditStore } from '@/Stores/Album/AlbumEditStore';
+import { useVdb } from '@/VdbContext';
 import { getReasonPhrase } from 'http-status-codes';
 import { map } from 'lodash-es';
 import { runInAction } from 'mobx';
@@ -63,18 +62,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ReactSortable } from 'react-sortablejs';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-const urlMapper = new UrlMapper(vdb.values.baseAddress);
-
-const antiforgeryRepo = new AntiforgeryRepository(httpClient, urlMapper);
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
-const songRepo = new SongRepository(httpClient, vdb.values.baseAddress);
-const artistRepo = new ArtistRepository(httpClient, vdb.values.baseAddress);
-const pvRepo = new PVRepository(httpClient, urlMapper);
-const eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
 
 interface BasicInfoTabContentProps {
 	albumEditStore: AlbumEditStore;
@@ -86,6 +73,8 @@ const BasicInfoTabContent = observer(
 		albumEditStore,
 		coverPicUploadRef,
 	}: BasicInfoTabContentProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation([
 			'Resources',
 			'ViewRes',
@@ -591,6 +580,8 @@ interface TracksTabContentProps {
 
 const TracksTabContent = observer(
 	({ albumEditStore }: TracksTabContentProps): React.ReactElement => {
+		const vdb = useVdb();
+
 		const { t } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -819,6 +810,8 @@ interface AlbumEditLayoutProps {
 
 const AlbumEditLayout = observer(
 	({ albumEditStore }: AlbumEditLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t, ready } = useTranslation([
 			'ViewRes',
 			'ViewRes.Album',
@@ -829,8 +822,6 @@ const AlbumEditLayout = observer(
 
 		const title = t('ViewRes.Album:Edit.EditTitle', { 0: contract.name });
 
-		useVdbTitle(title, ready);
-
 		const conflictingEditor = useConflictingEditor(EntryType.Album);
 
 		const navigate = useNavigate();
@@ -839,6 +830,8 @@ const AlbumEditLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={ready}
 				title={title}
 				parents={
 					<>
@@ -1137,6 +1130,9 @@ const AlbumEditLayout = observer(
 );
 
 const AlbumEdit = (): React.ReactElement => {
+	const vdb = useVdb();
+	const loginManager = useLoginManager();
+
 	const { t } = useTranslation(['Resources']);
 
 	const artistRoleNames = React.useMemo(
@@ -1147,7 +1143,7 @@ const AlbumEdit = (): React.ReactElement => {
 					string | undefined,
 				] => [artistRole, t(`Resources:ArtistRoleNames.${artistRole}`)]),
 			),
-		[t],
+		[vdb, t],
 	);
 
 	const { id } = useParams();
@@ -1184,7 +1180,7 @@ const AlbumEdit = (): React.ReactElement => {
 
 				throw error;
 			});
-	}, [artistRoleNames, id]);
+	}, [vdb, loginManager, artistRoleNames, id]);
 
 	return model ? (
 		<AlbumEditLayout albumEditStore={model.albumEditStore} />

@@ -6,14 +6,12 @@ import { ArchivedObjectVersionProperties } from '@/Components/Shared/Partials/Ar
 import { HiddenBanner } from '@/Components/Shared/Partials/EntryDetails/HiddenBanner';
 import { ReportEntryVersionPopupKnockout } from '@/Components/Shared/Partials/EntryDetails/ReportEntryVersionPopupKnockout';
 import { useChangedFieldNames } from '@/Components/useChangedFieldNames';
-import { useVdbTitle } from '@/Components/useVdbTitle';
 import { ArchivedAlbumVersionDetailsContract } from '@/DataContracts/Album/ArchivedAlbumVersionDetailsContract';
 import JQueryUIButton from '@/JQueryUI/JQueryUIButton';
+import { useLoginManager } from '@/LoginManagerContext';
 import { EntryType } from '@/Models/EntryType';
-import { LoginManager } from '@/Models/LoginManager';
-import { AlbumRepository } from '@/Repositories/AlbumRepository';
+import { albumRepo } from '@/Repositories/AlbumRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { HttpClient } from '@/Shared/HttpClient';
 import { ArchivedAlbumStore } from '@/Stores/Album/ArchivedAlbumStore';
 import { useLocationStateStore } from '@vocadb/route-sphere';
 import { runInAction } from 'mobx';
@@ -22,12 +20,6 @@ import qs from 'qs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
-const loginManager = new LoginManager(vdb.values);
-
-const httpClient = new HttpClient();
-
-const albumRepo = new AlbumRepository(httpClient, vdb.values.baseAddress);
 
 interface AlbumViewVersionLayoutProps {
 	contract: ArchivedAlbumVersionDetailsContract;
@@ -39,11 +31,11 @@ const AlbumViewVersionLayout = observer(
 		contract,
 		archivedAlbumStore,
 	}: AlbumViewVersionLayoutProps): React.ReactElement => {
+		const loginManager = useLoginManager();
+
 		const { t } = useTranslation(['ViewRes']);
 
 		const title = `Revision ${contract.archivedVersion.version} for ${contract.name}`; /* LOC */
-
-		useVdbTitle(title, true);
 
 		const changedFieldNames = useChangedFieldNames();
 
@@ -51,6 +43,8 @@ const AlbumViewVersionLayout = observer(
 
 		return (
 			<Layout
+				pageTitle={title}
+				ready={true}
 				title={title}
 				parents={
 					<>

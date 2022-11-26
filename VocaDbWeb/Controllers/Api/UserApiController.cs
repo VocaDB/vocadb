@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -36,15 +37,19 @@ using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models;
 using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
+	using NLog;
+
 	/// <summary>
 	/// API queries for users.
 	/// </summary>
@@ -62,6 +67,9 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 		private readonly IUserIconFactory _userIconFactory;
 		private readonly LoginManager _loginManager;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly VdbConfigManager _config;
+		private readonly OtherService _otherService;
 
 		public UserApiController(
 			UserQueries queries,
@@ -70,7 +78,10 @@ namespace VocaDb.Web.Controllers.Api
 			IUserPermissionContext permissionContext,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			IUserIconFactory userIconFactory,
-			LoginManager loginManager
+			LoginManager loginManager,
+			IPRuleManager ipRuleManager,
+			VdbConfigManager config,
+			OtherService otherService
 		)
 		{
 			_queries = queries;
@@ -80,6 +91,9 @@ namespace VocaDb.Web.Controllers.Api
 			_thumbPersister = thumbPersister;
 			_userIconFactory = userIconFactory;
 			_loginManager = loginManager;
+			_ipRuleManager = ipRuleManager;
+			_config = config;
+			_otherService = otherService;
 		}
 
 		[Authorize]
@@ -890,9 +904,10 @@ namespace VocaDb.Web.Controllers.Api
 #nullable enable
 		[HttpGet("~/api/profiles/{name}")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public UserDetailsForApiContract? GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
+		public ActionResult<UserDetailsForApiContract> GetDetails(string name/* TODO: , int? artistId = null, bool? childVoicebanks = null */)
 		{
-			return _queries.GetUserDetailsForApi(name);
+			var user = _queries.GetUserDetailsForApi(name);
+			return user is not null ? user : NotFound();
 		}
 
 		[HttpGet("current/for-my-settings")]
@@ -982,6 +997,104 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public ServerOnlyUserWithPermissionsForApiContract GetForEdit(int id) => _queries.GetUserWithPermissions(id);
 
+		// TODO: Move.
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+
+		[HttpPost("register")]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> Create(RegisterModel model)
+		{
+			const string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
+
+			var hostname = WebHelper.GetRealHost(Request);
+
+			if (ModelState[nameof(model.Extra)]?.Errors.Any() == true)
+			{
+				s_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", hostname, ModelState[nameof(model.Extra)]);
+				_ipRuleManager.AddTempBannedIP(hostname, "Attempt to fill the bot decoy field");
+				return ValidationProblem(ModelState);
+			}
+
+			if (_config.SiteSettings.SignupsDisabled)
+			{
+				ModelState.AddModelError(string.Empty, "Signups are disabled");
+			}
+
+			if (!string.IsNullOrEmpty(AppConfig.ReCAPTCHAKey))
+			{
+				var recaptchaResult = await ReCaptcha2.ValidateAsync(
+					userResponse: model.ReCAPTCHAResponse,
+					userIp: new AspNetCoreHttpRequest(Request).UserHostAddress,
+					privateKey: AppConfig.ReCAPTCHAKey
+				);
+				if (!recaptchaResult.Success)
+				{
+					ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
+					_otherService.AuditLog("failed CAPTCHA", hostname, AuditLogCategory.UserCreateFailCaptcha);
+					ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
+				}
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return ValidationProblem(ModelState);
+			}
+
+			if (!_ipRuleManager.IsAllowed(hostname))
+			{
+				s_log.Warn("Restricting blocked IP {0}.", hostname);
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return ValidationProblem(ModelState);
+			}
+
+			var time = TimeSpan.FromTicks(DateTime.Now.Ticks - model.EntryTime);
+
+			// Attempt to register the user
+			try
+			{
+				var verifyEmailUrl = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
+				var user = await _queries.Create(
+					model.UserName,
+					model.Password,
+					model.Email ?? string.Empty,
+					hostname,
+					Request.Headers[HeaderNames.UserAgent],
+					WebHelper.GetInterfaceCultureName(Request),
+					time,
+					_ipRuleManager,
+					verifyEmailUrl
+				);
+				await UserController.SetAuthCookieAsync(HttpContext, user.Name, createPersistentCookie: false);
+				return NoContent();
+			}
+			catch (UserNameAlreadyExistsException)
+			{
+				ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
+				return ValidationProblem(ModelState);
+			}
+			catch (UserEmailAlreadyExistsException)
+			{
+				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
+				return ValidationProblem(ModelState);
+			}
+			catch (InvalidEmailFormatException)
+			{
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
+				return ValidationProblem(ModelState);
+			}
+			catch (TooFastRegistrationException)
+			{
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return ValidationProblem(ModelState);
+			}
+			catch (RestrictedIPException)
+			{
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return ValidationProblem(ModelState);
+			}
+		}
+
 		[HttpPost("{id:int}")]
 		[Authorize]
 		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
@@ -1005,6 +1118,46 @@ namespace VocaDb.Web.Controllers.Api
 			}
 
 			return contract.Id;
+		}
+
+		[HttpPost("login")]
+		[RestrictBannedIP]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> Login(LoginModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var host = WebHelper.GetRealHost(Request);
+				var culture = WebHelper.GetInterfaceCultureName(Request);
+				var result = _queries.CheckAuthentication(model.UserName, model.Password, host, culture, delayFailedLogin: true);
+
+				if (!result.IsOk)
+				{
+					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
+
+					if (result.Error == LoginError.AccountPoisoned)
+						_ipRuleManager.AddTempBannedIP(host, "Account poisoned");
+				}
+				else
+				{
+					await UserController.SetAuthCookieAsync(HttpContext, result.User.Name, model.KeepLoggedIn);
+					return NoContent();
+				}
+			}
+
+			return ValidationProblem(ModelState);
+		}
+
+		[HttpPost("logout")]
+		[Authorize]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ValidateAntiForgeryToken]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public async Task<ActionResult> Logout()
+		{
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return NoContent();
 		}
 #nullable disable
 	}

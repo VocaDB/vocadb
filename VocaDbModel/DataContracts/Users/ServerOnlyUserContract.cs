@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Users
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb, Name = "UserContract")]
-	public class ServerOnlyUserContract : ServerOnlyUserWithEmailContract
+	public class ServerOnlyUserContract : ServerOnlyUserWithEmailContract, IDeletableUser
 	{
 		public ServerOnlyUserContract()
 		{
