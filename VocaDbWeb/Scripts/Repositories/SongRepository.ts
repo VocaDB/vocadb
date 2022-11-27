@@ -261,6 +261,25 @@ export class SongRepository
 		});
 	}
 
+	getByPV = ({
+		pvService,
+		pvId,
+		fields,
+	}: {
+		pvService: PVService;
+		pvId: string;
+		fields?: SongOptionalField[];
+	}): Promise<SongApiContract | undefined> => {
+		return this.httpClient.get<SongApiContract | undefined>(
+			this.urlMapper.mapRelative('/api/songs/byPv'),
+			{
+				pvService: pvService,
+				pvId: pvId,
+				fields: fields?.join(','),
+			},
+		);
+	};
+
 	getComments = ({
 		entryId: songId,
 	}: {
