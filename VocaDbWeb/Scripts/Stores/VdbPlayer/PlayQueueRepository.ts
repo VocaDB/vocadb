@@ -57,10 +57,15 @@ export interface PlayQueueSongContract extends PlayQueueCommonEntryContract {
 	songType: SongType;
 }
 
+export interface PlayQueuePVContract extends PlayQueueCommonEntryContract {
+	entryType: EntryType.PV;
+}
+
 export type PlayQueueEntryContract =
 	| PlayQueueAlbumContract
 	| PlayQueueReleaseEventContract
-	| PlayQueueSongContract;
+	| PlayQueueSongContract
+	| PlayQueuePVContract;
 
 export interface PlayQueueItemContract {
 	entry: PlayQueueEntryContract;

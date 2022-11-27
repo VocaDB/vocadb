@@ -1,13 +1,34 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"definitions": {
+		"AdvancedFilterType": {
+			"enum": [
+				"ArtistType",
+				"HasAlbum",
+				"HasMedia",
+				"HasMultipleVoicebanks",
+				"HasOriginalMedia",
+				"HasPublishDate",
+				"HasStoreLink",
+				"HasTracks",
+				"HasUserAccount",
+				"Lyrics",
+				"LyricsContent",
+				"NoCoverPicture",
+				"Nothing",
+				"RootVoicebank",
+				"VoiceProvider",
+				"WebLink"
+			],
+			"type": "string"
+		},
 		"AdvancedSearchFilter": {
 			"properties": {
 				"description": {
 					"type": "string"
 				},
 				"filterType": {
-					"type": "string"
+					"$ref": "#/definitions/AdvancedFilterType"
 				},
 				"negate": {
 					"type": "boolean"
@@ -17,6 +38,52 @@
 				}
 			},
 			"required": ["filterType", "param"],
+			"type": "object"
+		},
+		"BandcampPVContract": {
+			"properties": {
+				"author": {
+					"type": "string"
+				},
+				"createdBy": {
+					"type": "number"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"extendedMetadata": {
+					"$ref": "#/definitions/PVExtendedMetadata"
+				},
+				"id": {
+					"type": "number"
+				},
+				"length": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"publishDate": {
+					"type": "string"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"$ref": "#/definitions/PVType"
+				},
+				"service": {
+					"enum": ["Bandcamp"],
+					"type": "string"
+				},
+				"thumbUrl": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"required": ["id", "pvId", "pvType", "service"],
 			"type": "object"
 		},
 		"DefaultPVContract": {
@@ -67,17 +134,23 @@
 		},
 		"Exclude": {
 			"enum": [
-				"Bandcamp",
 				"Bilibili",
 				"Creofuga",
 				"File",
 				"LocalFile",
 				"NicoNicoDouga",
-				"SoundCloud",
 				"Vimeo",
 				"Youtube"
 			],
 			"type": "string"
+		},
+		"PVExtendedMetadata": {
+			"properties": {
+				"json": {
+					"type": "string"
+				}
+			},
+			"type": "object"
 		},
 		"PVType": {
 			"enum": ["Original", "Other", "Reprint"],
@@ -95,12 +168,7 @@
 					"type": "boolean"
 				},
 				"extendedMetadata": {
-					"properties": {
-						"json": {
-							"type": "string"
-						}
-					},
-					"type": "object"
+					"$ref": "#/definitions/PVExtendedMetadata"
 				},
 				"id": {
 					"type": "number"
@@ -162,7 +230,13 @@
 					"items": {
 						"anyOf": [
 							{
+								"$ref": "#/definitions/BandcampPVContract"
+							},
+							{
 								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/SoundCloudPVContract"
 							},
 							{
 								"$ref": "#/definitions/DefaultPVContract"
@@ -210,6 +284,9 @@
 						},
 						{
 							"$ref": "#/definitions/PlayQueueSongContract"
+						},
+						{
+							"$ref": "#/definitions/PlayQueuePVContract"
 						}
 					]
 				},
@@ -218,6 +295,72 @@
 				}
 			},
 			"required": ["entry", "pvId"],
+			"type": "object"
+		},
+		"PlayQueuePVContract": {
+			"properties": {
+				"additionalNames": {
+					"type": "string"
+				},
+				"artistIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"entryType": {
+					"enum": ["PV"],
+					"type": "string"
+				},
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"pvs": {
+					"items": {
+						"anyOf": [
+							{
+								"$ref": "#/definitions/BandcampPVContract"
+							},
+							{
+								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/SoundCloudPVContract"
+							},
+							{
+								"$ref": "#/definitions/DefaultPVContract"
+							}
+						]
+					},
+					"type": "array"
+				},
+				"status": {
+					"$ref": "#/definitions/EntryStatus"
+				},
+				"tagIds": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"urlThumb": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"additionalNames",
+				"artistIds",
+				"entryType",
+				"id",
+				"name",
+				"pvs",
+				"status",
+				"tagIds",
+				"urlThumb"
+			],
 			"type": "object"
 		},
 		"PlayQueueReleaseEventContract": {
@@ -245,7 +388,13 @@
 					"items": {
 						"anyOf": [
 							{
+								"$ref": "#/definitions/BandcampPVContract"
+							},
+							{
 								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/SoundCloudPVContract"
 							},
 							{
 								"$ref": "#/definitions/DefaultPVContract"
@@ -308,7 +457,13 @@
 					"items": {
 						"anyOf": [
 							{
+								"$ref": "#/definitions/BandcampPVContract"
+							},
+							{
 								"$ref": "#/definitions/PiaproPVContract"
+							},
+							{
+								"$ref": "#/definitions/SoundCloudPVContract"
 							},
 							{
 								"$ref": "#/definitions/DefaultPVContract"
@@ -419,7 +574,7 @@
 					"type": "array"
 				},
 				"sort": {
-					"type": "string"
+					"$ref": "#/definitions/SongSortRule"
 				},
 				"status": {
 					"type": "string"
@@ -437,18 +592,7 @@
 					"type": "number"
 				}
 			},
-			"required": [
-				"artistIds",
-				"artistParticipationStatus",
-				"childTags",
-				"childVoicebanks",
-				"includeMembers",
-				"onlyWithPvs",
-				"query",
-				"sort",
-				"tagIds",
-				"unifyTypesAndTags"
-			],
+			"required": ["query", "sort"],
 			"type": "object"
 		},
 		"SongListGetSongsQueryParams": {
@@ -509,6 +653,19 @@
 			],
 			"type": "object"
 		},
+		"SongSortRule": {
+			"enum": [
+				"AdditionDate",
+				"FavoritedTimes",
+				"Name",
+				"None",
+				"PublishDate",
+				"RatingScore",
+				"SongType",
+				"TagUsageCount"
+			],
+			"type": "string"
+		},
 		"SongType": {
 			"enum": [
 				"Arrangement",
@@ -526,6 +683,49 @@
 				"Unspecified"
 			],
 			"type": "string"
+		},
+		"SoundCloudPVContract": {
+			"properties": {
+				"author": {
+					"type": "string"
+				},
+				"createdBy": {
+					"type": "number"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"id": {
+					"type": "number"
+				},
+				"length": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"publishDate": {
+					"type": "string"
+				},
+				"pvId": {
+					"type": "string"
+				},
+				"pvType": {
+					"$ref": "#/definitions/PVType"
+				},
+				"service": {
+					"enum": ["SoundCloud"],
+					"type": "string"
+				},
+				"thumbUrl": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				}
+			},
+			"required": ["id", "pvId", "pvType", "service"],
+			"type": "object"
 		},
 		"UserGetRatedSongsListQueryParams": {
 			"properties": {
@@ -599,10 +799,10 @@
 		"queryParams": {
 			"anyOf": [
 				{
-					"$ref": "#/definitions/UserGetRatedSongsListQueryParams"
+					"$ref": "#/definitions/SongListGetSongsQueryParams"
 				},
 				{
-					"$ref": "#/definitions/SongListGetSongsQueryParams"
+					"$ref": "#/definitions/UserGetRatedSongsListQueryParams"
 				},
 				{
 					"$ref": "#/definitions/SongGetListQueryParams"
