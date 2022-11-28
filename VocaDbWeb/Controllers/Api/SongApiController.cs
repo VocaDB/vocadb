@@ -225,16 +225,20 @@ namespace VocaDb.Web.Controllers.Api
 		public void PostRating(int id, SongRatingContract rating) =>
 			_userService.UpdateSongRating(_userPermissionContext.LoggedUserId, id, rating.Rating);
 
+#nullable enable
 		[HttpGet("by-names")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongForApiContract[] GetByNames(
 			[FromQuery(Name = "names[]")] string[] names,
 			[FromQuery(Name = "ignoreIds[]")] int[] ignoreIds,
 			ContentLanguagePreference lang,
-			[FromQuery(Name = "songTypes[]")] SongType[] songTypes = null,
+			[FromQuery(Name = "songTypes[]")] SongType[]? songTypes = null,
 			int maxResults = 3
-		) =>
-			_queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+		)
+		{
+			return _queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+		}
+#nullable disable
 
 		/// <summary>
 		/// Gets related songs.
@@ -414,6 +418,7 @@ namespace VocaDb.Web.Controllers.Api
 		) =>
 			_service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
+#nullable enable
 		/// <summary>
 		/// Gets a song by PV.
 		/// </summary>
@@ -428,13 +433,16 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Song data.</returns>
 		/// <example>http://vocadb.net/api/songs?pvId=sm19923781&amp;pvService=NicoNicoDouga</example>
 		[HttpGet("byPv")]
-		public SongForApiContract GetByPV(
+		public SongForApiContract? GetByPV(
 			PVService pvService,
 			string pvId,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
-		) =>
-			_service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+		)
+		{
+			return _service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+		}
+#nullable disable
 
 		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
