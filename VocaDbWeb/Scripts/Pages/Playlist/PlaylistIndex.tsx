@@ -57,12 +57,14 @@ interface ImportPlaylistDialogProps {
 	open: boolean;
 	onClose: () => void;
 	pvs: PartialPVContract[];
+	useApi: boolean;
 }
 
 const ImportPlaylistDialog = ({
 	open,
 	onClose,
 	pvs,
+	useApi,
 }: ImportPlaylistDialogProps): React.ReactElement => {
 	const [loading, setLoading] = React.useState(false);
 
@@ -70,7 +72,9 @@ const ImportPlaylistDialog = ({
 	const handleClickAddToPlayQueue = React.useCallback(async (): Promise<void> => {
 		setLoading(true);
 
-		const songs = await Promise.all(pvs.map(getByPV));
+		const songs = useApi
+			? await Promise.all(pvs.map(getByPV))
+			: pvs.map((pv) => ({ pv: pv, song: undefined }));
 
 		setLoading(false);
 
@@ -122,7 +126,7 @@ const ImportPlaylistDialog = ({
 		playQueue.addToPlayQueue(items);
 
 		onClose();
-	}, [playQueue, pvs, onClose]);
+	}, [playQueue, pvs, useApi, onClose]);
 
 	return (
 		<JQueryUIDialog
@@ -173,11 +177,13 @@ const ImportPlaylist = (): React.ReactElement => {
 	const { hash } = useLocation();
 	const searchParams = new URLSearchParams(hash.slice(1));
 	const pvsString = searchParams.get('pvs');
+	const useApiString = searchParams.get('useApi');
 	const pvs =
 		pvsString
 			?.split(',')
 			.map((pvString) => tryParsePVString(pvString))
 			.filter((pv): pv is PartialPVContract => pv !== undefined) ?? [];
+	const useApi = useApiString === 'true';
 
 	const navigate = useNavigate();
 
@@ -186,6 +192,7 @@ const ImportPlaylist = (): React.ReactElement => {
 			open={pvs.length > 0}
 			onClose={(): void => navigate('/playlist', { replace: true })}
 			pvs={pvs}
+			useApi={useApi}
 		/>
 	);
 };
