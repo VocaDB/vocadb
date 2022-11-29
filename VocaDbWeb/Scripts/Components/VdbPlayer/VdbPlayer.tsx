@@ -529,7 +529,7 @@ const MiniPlayer = observer(
 									: 0,
 								width: miniPlayerWidth,
 								height: miniPlayerHeight,
-								zIndex: 3939,
+								zIndex: 998,
 						  }
 						: {
 								position: 'absolute',
@@ -625,7 +625,7 @@ const BottomBar = observer(
 					left: 0,
 					right: 0,
 					bottom: 0,
-					zIndex: 3939,
+					zIndex: 998,
 					backgroundColor: 'rgb(39, 39, 39)',
 					display: 'flex',
 					flexDirection: 'column',
