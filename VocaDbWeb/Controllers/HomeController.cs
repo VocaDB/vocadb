@@ -27,7 +27,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.Title = "IRC chat";
 
-			return View();
+			return View("React/Index");
 		}
 
 		// Might still be used by some clients with opensearch
@@ -97,7 +97,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Wiki()
 		{
-			return View();
+			return View("React/Index");
 		}
 	}
 }
