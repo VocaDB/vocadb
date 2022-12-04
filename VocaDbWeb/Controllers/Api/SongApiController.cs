@@ -53,6 +53,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly SongAggregateQueries _songAggregateQueries;
 		private readonly UserService _userService;
 		private readonly IUserPermissionContext _userPermissionContext;
+		private readonly PVHelper _pvHelper;
 
 		/// <summary>
 		/// Initializes controller.
@@ -64,7 +65,8 @@ namespace VocaDb.Web.Controllers.Api
 			IEntryLinkFactory entryLinkFactory,
 			IUserPermissionContext userPermissionContext,
 			UserService userService,
-			OtherService otherService
+			OtherService otherService,
+			PVHelper pvHelper
 		)
 		{
 			_service = service;
@@ -74,6 +76,7 @@ namespace VocaDb.Web.Controllers.Api
 			_entryLinkFactory = entryLinkFactory;
 			_userPermissionContext = userPermissionContext;
 			_otherService = otherService;
+			_pvHelper = pvHelper;
 		}
 
 		/// <summary>
@@ -96,6 +99,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="notes">Notes.</param>
 		[HttpDelete("{id:int}")]
 		[Authorize]
+		[ValidateAntiForgeryToken]
 		public void Delete(int id, string notes = "") =>
 			_service.Delete(id, notes ?? string.Empty);
 
@@ -225,16 +229,20 @@ namespace VocaDb.Web.Controllers.Api
 		public void PostRating(int id, SongRatingContract rating) =>
 			_userService.UpdateSongRating(_userPermissionContext.LoggedUserId, id, rating.Rating);
 
+#nullable enable
 		[HttpGet("by-names")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongForApiContract[] GetByNames(
 			[FromQuery(Name = "names[]")] string[] names,
 			[FromQuery(Name = "ignoreIds[]")] int[] ignoreIds,
 			ContentLanguagePreference lang,
-			[FromQuery(Name = "songTypes[]")] SongType[] songTypes = null,
+			[FromQuery(Name = "songTypes[]")] SongType[]? songTypes = null,
 			int maxResults = 3
-		) =>
-			_queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+		)
+		{
+			return _queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+		}
+#nullable disable
 
 		/// <summary>
 		/// Gets related songs.
@@ -414,6 +422,7 @@ namespace VocaDb.Web.Controllers.Api
 		) =>
 			_service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
+#nullable enable
 		/// <summary>
 		/// Gets a song by PV.
 		/// </summary>
@@ -428,13 +437,16 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Song data.</returns>
 		/// <example>http://vocadb.net/api/songs?pvId=sm19923781&amp;pvService=NicoNicoDouga</example>
 		[HttpGet("byPv")]
-		public SongForApiContract GetByPV(
+		public SongForApiContract? GetByPV(
 			PVService pvService,
 			string pvId,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
-		) =>
-			_service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+		)
+		{
+			return _service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+		}
+#nullable disable
 
 		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
@@ -661,6 +673,29 @@ namespace VocaDb.Web.Controllers.Api
 			_queries.Merge(id, targetSongId.Value);
 
 			return NoContent();
+		}
+
+		/// <summary>
+		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
+		/// </summary>
+		[HttpGet("{id:int}/with-rating")]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongWithPVPlayerAndVoteContract? PVPlayerWithRating(int id)
+		{
+			var song = _queries.GetSongWithPVAndVote(id, true, WebHelper.GetHostnameForValidHit(Request));
+			var pv = _pvHelper.PrimaryPV(song.PVs!);
+
+			if (pv is null)
+			{
+				return null;
+			}
+
+			return new SongWithPVPlayerAndVoteContract
+			{
+				Song = song,
+				PVService = pv.Service,
+			};
 		}
 #nullable disable
 	}

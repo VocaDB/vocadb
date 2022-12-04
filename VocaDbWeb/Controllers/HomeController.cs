@@ -80,16 +80,6 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		public ActionResult PVContent(int songId = InvalidId)
-		{
-			if (songId == InvalidId)
-				return NoId();
-
-			var song = _songService.GetSongWithPVAndVote(songId, false);
-
-			return PartialView("PVs/_PVContent", song);
-		}
-
 		public ActionResult Search(string filter)
 		{
 			return RedirectToAction("Index", "Search", new { filter });

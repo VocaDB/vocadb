@@ -33,7 +33,6 @@ import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
 import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { urlMapper } from '@/Shared/UrlMapper';
 import { TagEditStore } from '@/Stores/Tag/TagEditStore';
 import { getReasonPhrase } from 'http-status-codes';
 import { runInAction } from 'mobx';
@@ -440,10 +439,14 @@ const TagEditLayout = observer(
 				<EntryDeletePopup
 					confirmText={t('ViewRes:EntryEdit.ConfirmDelete')}
 					deleteEntryStore={tagEditStore.deleteStore}
+					onDelete={(): void =>
+						navigate(EntryUrlMapper.details_tag(contract.id))
+					}
 				/>
 				<EntryTrashPopup
 					confirmText={t('ViewRes:EntryEdit.ConfirmMoveToTrash')}
 					deleteEntryStore={tagEditStore.trashStore}
+					onDelete={(): void => navigate('/Tag')}
 				/>
 			</Layout>
 		);
@@ -459,7 +462,9 @@ const TagEdit = (): React.ReactElement => {
 		tagRepo
 			.getForEdit({ id: Number(id) })
 			.then((model) =>
-				setModel({ tagEditStore: new TagEditStore(tagRepo, urlMapper, model) }),
+				setModel({
+					tagEditStore: new TagEditStore(antiforgeryRepo, tagRepo, model),
+				}),
 			)
 			.catch((error) => {
 				if (error.response) {

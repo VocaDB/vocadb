@@ -128,17 +128,6 @@ export class SongRepository
 			});
 		};
 
-		this.pvPlayerWithRating = ({
-			songId,
-		}: {
-			songId: number;
-		}): Promise<SongWithPVPlayerAndVoteContract> => {
-			return this.getJSON<SongWithPVPlayerAndVoteContract>(
-				this.urlMapper.mapRelative('/PVPlayerWithRating'),
-				{ songId: songId },
-			);
-		};
-
 		this.songListsForSong = ({
 			songId,
 		}: {
@@ -260,6 +249,25 @@ export class SongRepository
 			ignoreIds: ignoreIds,
 		});
 	}
+
+	getByPV = ({
+		pvService,
+		pvId,
+		fields,
+	}: {
+		pvService: PVService;
+		pvId: string;
+		fields?: SongOptionalField[];
+	}): Promise<SongApiContract | undefined> => {
+		return this.httpClient.get<SongApiContract | undefined>(
+			this.urlMapper.mapRelative('/api/songs/byPv'),
+			{
+				pvService: pvService,
+				pvId: pvId,
+				fields: fields?.join(','),
+			},
+		);
+	};
 
 	getComments = ({
 		entryId: songId,
@@ -492,12 +500,6 @@ export class SongRepository
 		);
 	};
 
-	pvPlayerWithRating: ({
-		songId,
-	}: {
-		songId: number;
-	}) => Promise<SongWithPVPlayerAndVoteContract>;
-
 	//songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
 	songListsForSong: ({ songId }: { songId: number }) => Promise<string>;
@@ -640,6 +642,30 @@ export class SongRepository
 					requestVerificationToken: requestToken,
 				},
 			},
+		);
+	};
+
+	pvPlayerWithRating = ({
+		songId,
+	}: {
+		songId: number;
+	}): Promise<SongWithPVPlayerAndVoteContract> => {
+		return this.httpClient.get<SongWithPVPlayerAndVoteContract>(
+			this.urlMapper.mapRelative(`/api/songs/${songId}/with-rating`),
+		);
+	};
+
+	delete = (
+		requestToken: string,
+		{ id, notes }: { id: number; notes: string },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/songs/${id}?${qs.stringify({
+					notes: notes,
+				})}`,
+			),
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 }

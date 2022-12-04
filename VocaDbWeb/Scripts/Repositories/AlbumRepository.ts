@@ -442,6 +442,21 @@ export class AlbumRepository
 			},
 		);
 	};
+
+	delete = (
+		requestToken: string,
+		{ id, notes }: { id: number; notes: string },
+	): Promise<void> => {
+		return this.httpClient.delete(
+			this.urlMapper.mapRelative(
+				`/api/albums/${id}?${qs.stringify({
+					id: id,
+					notes: notes,
+				})}`,
+			),
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export interface AlbumQueryParams extends CommonQueryParams {

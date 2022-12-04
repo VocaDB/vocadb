@@ -11,12 +11,12 @@ import { UserGroup } from '@/Models/Users/UserGroup';
 import { useMutedUsers } from '@/MutedUsersContext';
 import UserDetailsRoutes from '@/Pages/User/UserDetailsRoutes';
 import { adminRepo } from '@/Repositories/AdminRepository';
+import { antiforgeryRepo } from '@/Repositories/AntiforgeryRepository';
 import { artistRepo } from '@/Repositories/ArtistRepository';
 import { eventRepo } from '@/Repositories/ReleaseEventRepository';
 import { songRepo } from '@/Repositories/SongRepository';
 import { tagRepo } from '@/Repositories/TagRepository';
 import { userRepo } from '@/Repositories/UserRepository';
-import { httpClient } from '@/Shared/HttpClient';
 import { urlMapper } from '@/Shared/UrlMapper';
 import { AlbumCollectionStore } from '@/Stores/User/AlbumCollectionStore';
 import { FollowedArtistsStore } from '@/Stores/User/FollowedArtistsStore';
@@ -281,6 +281,10 @@ const UserDetailsLayout = observer(
 						text: 'Confirm' /* LOC */,
 						icons: { primary: 'ui-icon-close' },
 					}}
+					onDelete={(): void => {
+						// TODO
+						window.location.reload();
+					}}
 				/>
 				<EntryDeletePopupBase
 					confirmText="Please confirm that you wish to report user. Please provide additional explanation below." /* LOC */
@@ -289,6 +293,12 @@ const UserDetailsLayout = observer(
 					deleteButtonProps={{
 						text: 'Confirm' /* LOC */,
 						icons: { primary: 'ui-icon-alert' },
+					}}
+					onDelete={(): void => {
+						// TODO: showSuccessMessage
+						runInAction(() => {
+							userDetailsStore.reportUserStore.notes = '';
+						});
 					}}
 				/>
 			</Layout>
@@ -349,8 +359,7 @@ const UserDetails = (): React.ReactElement => {
 						user.id,
 						user.lastLoginAddress,
 						loginManager.canDeleteComments,
-						httpClient,
-						urlMapper,
+						antiforgeryRepo,
 						userRepo,
 						adminRepo,
 						tagRepo,

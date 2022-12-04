@@ -695,6 +695,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[Authorize]
 		[HttpPost("{id:int}/reports")]
+		[ValidateAntiForgeryToken]
 		public bool PostReport(int id, [FromBody] CreateReportModel model) =>
 			_queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason).created;
 
@@ -878,6 +879,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[HttpPost("{id:int}/status-limited")]
 		[ApiExplorerSettings(IgnoreApi = true)]
+		[ValidateAntiForgeryToken]
 		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) =>
 			_queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
 

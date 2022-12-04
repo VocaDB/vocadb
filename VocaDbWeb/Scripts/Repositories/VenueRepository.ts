@@ -9,6 +9,7 @@ import { BaseRepository } from '@/Repositories/BaseRepository';
 import { functions } from '@/Shared/GlobalFunctions';
 import { httpClient, HttpClient } from '@/Shared/HttpClient';
 import { urlMapper, UrlMapper } from '@/Shared/UrlMapper';
+import qs from 'qs';
 
 export class VenueRepository extends BaseRepository {
 	constructor(
@@ -40,21 +41,26 @@ export class VenueRepository extends BaseRepository {
 		return this.httpClient.post<void>(url);
 	};
 
-	delete = ({
-		id,
-		notes,
-		hardDelete,
-	}: {
-		id: number;
-		notes: string;
-		hardDelete: boolean;
-	}): Promise<void> => {
+	delete = (
+		requestToken: string,
+		{
+			id,
+			notes,
+			hardDelete,
+		}: {
+			id: number;
+			notes: string;
+			hardDelete: boolean;
+		},
+	): Promise<void> => {
 		return this.httpClient.delete<void>(
 			this.urlMapper.mapRelative(
-				`/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
-					notes,
-				)}`,
+				`/api/venues/${id}?${qs.stringify({
+					hardDelete: hardDelete,
+					notes: notes,
+				})}`,
 			),
+			{ headers: { requestVerificationToken: requestToken } },
 		);
 	};
 

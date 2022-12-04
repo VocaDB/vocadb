@@ -467,7 +467,6 @@ namespace VocaDb.Model.Database.Queries
 				);
 			});
 		}
-#nullable disable
 
 		public SongForApiContract[] GetByNames(string[] names, SongType[] songTypes, int[] ignoreIds, ContentLanguagePreference lang, int maxResults)
 		{
@@ -484,6 +483,7 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray();
 			});
 		}
+#nullable disable
 
 		public CommentForApiContract[] GetComments(int songId)
 		{
@@ -670,7 +670,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(session =>
 			{
 				var song = session.Load<Song>(songId);
-				FavoriteSongForUser vote = null;
+				FavoriteSongForUser? vote = null;
 
 				if (PermissionContext.IsLoggedIn)
 				{

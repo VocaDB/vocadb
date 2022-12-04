@@ -2,15 +2,13 @@ import { TagBaseContract } from '@/DataContracts/Tag/TagBaseContract';
 import { TagForEditContract } from '@/DataContracts/Tag/TagForEditContract';
 import { EntryStatus } from '@/Models/EntryStatus';
 import { TagTargetTypes } from '@/Models/Tags/TagTargetTypes';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { TagRepository } from '@/Repositories/TagRepository';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
-import { UrlMapper } from '@/Shared/UrlMapper';
 import { BasicEntryLinkStore } from '@/Stores/BasicEntryLinkStore';
 import { DeleteEntryStore } from '@/Stores/DeleteEntryStore';
 import { EnglishTranslatedStringEditStore } from '@/Stores/Globalization/EnglishTranslatedStringEditStore';
 import { NamesEditStore } from '@/Stores/Globalization/NamesEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import $ from 'jquery';
 import { isEmpty, pull } from 'lodash-es';
 import {
 	action,
@@ -25,22 +23,7 @@ export class TagEditStore {
 	static readonly allEntryTypes = 1073741823;
 
 	@observable defaultNameLanguage: string;
-	readonly deleteStore = new DeleteEntryStore(
-		async (notes) =>
-			await $.ajax(
-				this.urlMapper.mapRelative(
-					`api/tags/${
-						this.contract.id
-					}?hardDelete=false&notes=${encodeURIComponent(notes)}`,
-				),
-				{
-					type: 'DELETE',
-					success: () => {
-						window.location.href = EntryUrlMapper.details_tag(this.contract.id);
-					},
-				},
-			),
-	);
+	readonly deleteStore: DeleteEntryStore;
 	readonly description: EnglishTranslatedStringEditStore;
 	@observable errors?: Record<string, string[]>;
 	@observable hideFromSuggestions: boolean;
@@ -50,31 +33,36 @@ export class TagEditStore {
 	@observable status: EntryStatus;
 	@observable submitting = false;
 	@observable targets: TagTargetTypes;
-	readonly trashStore = new DeleteEntryStore(
-		async (notes) =>
-			await $.ajax(
-				this.urlMapper.mapRelative(
-					`api/tags/${
-						this.contract.id
-					}?hardDelete=true&notes=${encodeURIComponent(notes)}`,
-				),
-				{
-					type: 'DELETE',
-					success: () => {
-						window.location.href = this.urlMapper.mapRelative('/Tag');
-					},
-				},
-			),
-	);
+	readonly trashStore: DeleteEntryStore;
 	@observable updateNotes = '';
 	readonly webLinks: WebLinksEditStore;
 
 	constructor(
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly tagRepo: TagRepository,
-		private readonly urlMapper: UrlMapper,
 		readonly contract: TagForEditContract,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				tagRepo.delete(requestToken, {
+					id: contract.id,
+					notes: notes,
+					hardDelete: false,
+				}),
+		);
+
+		this.trashStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				tagRepo.delete(requestToken, {
+					id: contract.id,
+					notes: notes,
+					hardDelete: true,
+				}),
+		);
 
 		this.parent = new BasicEntryLinkStore<TagBaseContract>((entryId) =>
 			tagRepo.getById({ id: entryId }),

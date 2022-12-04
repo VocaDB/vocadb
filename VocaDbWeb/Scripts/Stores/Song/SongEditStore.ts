@@ -5,15 +5,14 @@ import { SongForEditContract } from '@/DataContracts/Song/SongForEditContract';
 import { ArtistHelper } from '@/Helpers/ArtistHelper';
 import { SongHelper } from '@/Helpers/SongHelper';
 import { EntryStatus } from '@/Models/EntryStatus';
-import { EntryType } from '@/Models/EntryType';
 import { PVType } from '@/Models/PVs/PVType';
 import { SongType } from '@/Models/Songs/SongType';
 import { WebLinkCategory } from '@/Models/WebLinkCategory';
+import { AntiforgeryRepository } from '@/Repositories/AntiforgeryRepository';
 import { ArtistRepository } from '@/Repositories/ArtistRepository';
 import { PVRepository } from '@/Repositories/PVRepository';
 import { ReleaseEventRepository } from '@/Repositories/ReleaseEventRepository';
 import { SongRepository } from '@/Repositories/SongRepository';
-import { EntryUrlMapper } from '@/Shared/EntryUrlMapper';
 import { GlobalValues } from '@/Shared/GlobalValues';
 import { UrlMapper } from '@/Shared/UrlMapper';
 import { AlbumArtistRolesEditStore } from '@/Stores/Artist/AlbumArtistRolesEditStore';
@@ -28,7 +27,6 @@ import { SongBpmFilter } from '@/Stores/Search/SongBpmFilter';
 import { SongLengthFilter } from '@/Stores/Search/SongLengthFilter';
 import { LyricsForSongListEditStore } from '@/Stores/Song/LyricsForSongListEditStore';
 import { WebLinksEditStore } from '@/Stores/WebLinksEditStore';
-import $ from 'jquery';
 import { isEmpty, pull, some, unionBy } from 'lodash-es';
 import {
 	action,
@@ -51,21 +49,7 @@ export class SongEditStore {
 	@observable artistLinks: ArtistForAlbumEditStore[] = [];
 	readonly artistRolesEditStore: AlbumArtistRolesEditStore;
 	@observable defaultNameLanguage: string; /* TODO: enum */
-	readonly deleteStore = new DeleteEntryStore(async (notes) => {
-		await $.ajax(
-			this.urlMapper.mapRelative(
-				`api/songs/${this.contract.id}?notes=${encodeURIComponent(notes)}`,
-			),
-			{
-				type: 'DELETE',
-				success: () => {
-					window.location.href = this.urlMapper.mapRelative(
-						EntryUrlMapper.details(EntryType.Song, this.contract.id),
-					);
-				},
-			},
-		);
-	});
+	readonly deleteStore: DeleteEntryStore;
 	readonly editedArtistLink = new CustomNameEditStore();
 	@observable errors?: Record<string, string[]>;
 	readonly hasAlbums: boolean;
@@ -90,11 +74,12 @@ export class SongEditStore {
 
 	constructor(
 		private readonly values: GlobalValues,
+		antiforgeryRepo: AntiforgeryRepository,
 		private readonly songRepo: SongRepository,
 		private readonly artistRepo: ArtistRepository,
 		pvRepo: PVRepository,
 		eventRepo: ReleaseEventRepository,
-		private readonly urlMapper: UrlMapper,
+		urlMapper: UrlMapper,
 		artistRoleNames: { [key: string]: string | undefined },
 		readonly contract: SongForEditContract,
 		canBulkDeletePVs: boolean,
@@ -102,6 +87,15 @@ export class SongEditStore {
 		readonly albumId?: number,
 	) {
 		makeObservable(this);
+
+		this.deleteStore = new DeleteEntryStore(
+			antiforgeryRepo,
+			(requestToken, notes) =>
+				songRepo.delete(requestToken, {
+					id: contract.id,
+					notes: notes,
+				}),
+		);
 
 		this.originalVersion = new BasicEntryLinkStore((entryId) =>
 			songRepo.getOne({

@@ -921,6 +921,34 @@ export class UserRepository implements ICommentRepository {
 			},
 		);
 	};
+
+	postStatusLimited = (
+		requestToken: string,
+		{
+			id,
+			notes,
+		}: {
+			id: number;
+			notes: string;
+		},
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(`/api/users/${id}/status-limited`),
+			{ reason: notes, createReport: true },
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
+
+	postReport = (
+		requestToken: string,
+		{ id, notes }: { id: number; notes: string },
+	): Promise<void> => {
+		return this.httpClient.post<void>(
+			this.urlMapper.mapRelative(`/api/users/${id}/reports`),
+			{ reason: notes, reportType: 'Spamming' },
+			{ headers: { requestVerificationToken: requestToken } },
+		);
+	};
 }
 
 export const userRepo = new UserRepository(httpClient, urlMapper);

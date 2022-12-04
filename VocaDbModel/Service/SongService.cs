@@ -298,7 +298,8 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference, _userIconFactory));
 		}
 
-		public T GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId)
+#nullable enable
+		public T? GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId)
 			where T : class
 		{
 			return HandleQuery(session =>
@@ -309,6 +310,7 @@ namespace VocaDb.Model.Service
 				return (pv != null ? fac(pv.Song) : null);
 			});
 		}
+#nullable disable
 
 		public SongContract GetSongWithPV(PVService service, string pvId)
 		{
